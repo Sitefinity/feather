@@ -11,10 +11,6 @@ The Feather Project
 
 [How to base a page template on a layout file by using convention](https://github.com/Sitefinity/feather/wiki/How-to-base-a-page-template-on-a-layout-file-by-using-convention)
 
-[How to base a page template on a layout file by explicitly selecting the file](https://github.com/Sitefinity/feather/wiki/How-to-base-a-page-template-on-a-layout-file-by-explicitly-selecting-the-file)
-
-[How to change layout control templates](https://github.com/Sitefinity/feather/wiki/How-to-change-layout-control-templates)
-
 [How to replace commands displayed in ZoneEditor that are specific for a widget](https://github.com/Sitefinity/feather/wiki/How-to-replace-commands-displayed-in-ZoneEditor-that-are-specific-for-a-widget)
 
 [How to use a custom client window for designers](https://github.com/Sitefinity/feather/wiki/How-to-use-a-custom-client-window-for-designers)
@@ -23,8 +19,7 @@ The Feather Project
 
 [Page templates based on layout files explained](https://github.com/Sitefinity/feather/wiki/Page-templates-based-on-layout-files-explained)
 
-[Virtual File Structure](https://github.com/Sitefinity/feather/wiki/Virtual-File-Structure)
-
+[VirtualFile structure explained](https://github.com/Sitefinity/feather/wiki/VirtualFile-structure-explained)
 
 # License Information
 
