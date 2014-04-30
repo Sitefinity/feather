@@ -1,18 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend", "Telerik.Sitefinity.Frontend\Telerik.Sitefinity.Frontend.csproj", "{17ED04C3-0AB9-4055-9908-6C70720DAF77}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.Test", "Telerik.Sitefinity.Frontend.Test\Telerik.Sitefinity.Frontend.Test.csproj", "{D607959E-5DE3-43B9-8731-C22E495FCEF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3E1F3A5-2C9C-4223-ADBC-86904842C274}"
 	ProjectSection(SolutionItems) = preProject
-		TestSettings1.testsettings = TestSettings1.testsettings
+		TestSettings.testsettings = TestSettings.testsettings
 	EndProjectSection
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 1
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs.telerik.com:8082/defaultcollection
+		SccProjectUniqueName0 = Telerik.Sitefinity.Frontend\\Telerik.Sitefinity.Frontend.csproj
+		SccProjectName0 = Telerik.Sitefinity.Frontend
+		SccAuxPath0 = http://tfs.telerik.com:8082/defaultcollection
+		SccLocalPath0 = Telerik.Sitefinity.Frontend
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

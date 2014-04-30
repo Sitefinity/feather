@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<TestSettings name="TestSettings1" id="0405c8bd-84c8-43a9-8d4c-47fb7bf862b7" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+<TestSettings name="TestSettings" id="0405c8bd-84c8-43a9-8d4c-47fb7bf862b7" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <Description>These are default test settings for a local test run.</Description>
   <Deployment enabled="false" />
   <NamingScheme baseName="testresults" appendTimeStamp="false" useDefault="false" />
@@ -36,5 +36,4 @@
       </DataCollectors>
     </AgentRule>
   </Execution>
-  <Properties />
 </TestSettings>
