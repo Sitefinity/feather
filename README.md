@@ -1,6 +1,8 @@
 The Feather Project
 =======
 
+This repository contains the core project related to the Feather project. Note that the current implementation is not final, that it is a subject to changes as well as breaking API changes and should not be used in production.
+
 [Getting Started](https://github.com/Sitefinity/feather/wiki/Getting-Started)
 
 [How to change MVC widget templates](https://github.com/Sitefinity/feather/wiki/How-to-change-MVC-widget-templates)
