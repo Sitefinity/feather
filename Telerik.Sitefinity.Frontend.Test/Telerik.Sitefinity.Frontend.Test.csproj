@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D607959E-5DE3-43B9-8731-C22E495FCEF7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Telerik.Sitefinity.Frontend.Test</RootNamespace>
+    <AssemblyName>Telerik.Sitefinity.Frontend.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ServiceStack, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceAssemblies\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.OpenAccess, Version=2013.1.219.3, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceAssemblies\Telerik.OpenAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity, Version=7.0.5003.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceAssemblies\Telerik.Sitefinity.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Model, Version=7.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceAssemblies\Telerik.Sitefinity.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Utilities, Version=7.0.5003.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceAssemblies\Telerik.Sitefinity.Utilities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="DummyClasses\DummyConfigProvider.cs" />
+    <Compile Include="DummyClasses\DummyPageTemplateWithTitle.cs" />
+    <Compile Include="DummyClasses\DummyResolverStrategy.cs" />
+    <Compile Include="DummyClasses\DummyVirtualFileResolver.cs" />
+    <Compile Include="DummyClasses\DummyControllerResoruces.cs" />
+    <Compile Include="DummyClasses\DummyGridSystemInitializer.cs" />
+    <Compile Include="DummyClasses\DummyToolboxesConfig.cs" />
+    <Compile Include="GridSystemTests\GridSystemInitializerTests.cs" />
+    <Compile Include="InlineEditing\InlineEditingTests.cs" />
+    <Compile Include="DummyClasses\DummyResourceResolverNode.cs" />
+    <Compile Include="Mvc\Infrastructure\ControllerRegistryTest.cs" />
+    <Compile Include="GridSystemTests\GridControlTest.cs" />
+    <Compile Include="Designers\DesignerResolverTests.cs" />
+    <Compile Include="DummyClasses\DummyControl.cs" />
+    <Compile Include="DummyClasses\DummyController.cs" />
+    <Compile Include="DummyClasses\DummyControllerFactory.cs" />
+    <Compile Include="DummyClasses\DummyCustomDesignerController.cs" />
+    <Compile Include="DummyClasses\DummyGridControl.cs" />
+    <Compile Include="DummyClasses\DummyLayoutRenderer.cs" />
+    <Compile Include="DummyClasses\DummyLayoutVirtualFileResolver.cs" />
+    <Compile Include="DummyClasses\DummyMvcDesignerControl.cs" />
+    <Compile Include="DummyClasses\DummyFrameworkSpecificPageTemplate.cs" />
+    <Compile Include="DummyClasses\DummyPageTemplate.cs" />
+    <Compile Include="DummyClasses\DummyView.cs" />
+    <Compile Include="DummyClasses\DummyAuthenticationEvaluator.cs" />
+    <Compile Include="DummyClasses\DummyHttpContext.cs" />
+    <Compile Include="DummyClasses\DummyHttpRequest.cs" />
+    <Compile Include="DummyClasses\DummyHttpResponse.cs" />
+    <Compile Include="Helpers\UrlHelpersTest.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensionsTests.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutResolverTests.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutRendererTests.cs" />
+    <Compile Include="Designers\DesignerControllerTest.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\MasterPageBuilderTests.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilderTests.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParserTests.cs" />
+    <Compile Include="Mvc\Infrastructure\MultiplePathsControllerFactoryTest.cs" />
+    <Compile Include="Resources\PackagesManagerTests.cs" />
+    <Compile Include="Resources\Resolvers\ResourceResolverNodeTest.cs" />
+    <Compile Include="Resources\Resolvers\ResourceResolverStrategyTest.cs" />
+    <Compile Include="Resources\ResourceHttpHandlerTest.cs" />
+    <Compile Include="TestUtilities\ControllerFactoryRegion.cs" />
+    <Compile Include="TestUtilities\ObjectFactoryContainerRegion.cs" />
+    <Compile Include="Resources\Resolvers\DatabaseResourceResolverTest.cs" />
+    <Compile Include="Resources\Resolvers\EmbeddedResourceResolverTest.cs" />
+    <Compile Include="Resources\Resolvers\ResourceResolverTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Mvc\Infrastructure\ControllerInitializerTest.cs" />
+    <Compile Include="Resources\VirtualPathBuilderTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Telerik.Sitefinity.Frontend\Telerik.Sitefinity.Frontend.csproj">
+      <Project>{17ed04c3-0ab9-4055-9908-6c70720daf77}</Project>
+      <Name>Telerik.Sitefinity.Frontend</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClientScripts\test.bat" />
+    <None Include="ClientScripts\test.debug.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Master.Designer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientScripts\config\karma.conf.js" />
+    <Content Include="ClientScripts\helpers\PropertyDataServiceMock.js" />
+    <Content Include="ClientScripts\helpers\PageControlDataServiceMock.js" />
+    <Content Include="ClientScripts\helpers\jquery-1.8.3.min.js" />
+    <Content Include="ClientScripts\unit\controllersSpec.js" />
+  </ItemGroup>
+  <ItemGroup />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

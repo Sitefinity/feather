@@ -1,0 +1,18 @@
+{
+  "name": "Telerik.Sitefinity.Frontend",
+  "description": "This project integrates Telerik Sitefinity with the most modern frameworks and technologies related to the frontend development.",
+  "author": "Tihomir Petrov",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sitefinity/feather"
+  },
+  "bugs": {
+    "url": "https://github.com/Sitefinity/feather/issues"
+  },
+  "homepage": "https://github.com/Sitefinity/feather",
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-jasmine": "^0.6.3"
+  }
+}

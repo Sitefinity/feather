@@ -1,0 +1,12 @@
+<ul ng-model="propertyPath" breadcrumb></ul>
+
+<div id="advancedProperties" class="s-items-list-wrp">
+        
+   <div data-ng-repeat="item in Items | propertyHierarchy:propertyName:propertyPath |orderBy:'PropertyName'" class="form-group"> 
+       <div ng-hide="item.NeedsEditor"> 
+           <label for="prop-{{item.PropertyName}}" ng-bind="item.PropertyName"></label>
+           <input id="prop-{{item.PropertyName}}" type="text" class="form-control" ng-model="item.PropertyValue"/>
+       </div>
+       <button type="button" class="btn btn-default btn-xs" ng-show="item.NeedsEditor" ng-click="DrillDownPropertyHierarchy(item.PropertyPath, item.PropertyName)" ng-bind="item.PropertyName"></button>
+   </div>
+</div>

@@ -1,0 +1,57 @@
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers
+
+<div id="masterDesigner" ng-controller="MasterDesignerCtrl">
+    <script type="text/ng-template" id="editDialogContent">
+         <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="Cancel($event)">&times;</button>
+			<h1 class="modal-title"> @Html.Raw(ViewBag.ControlName)</h1>
+         </div>
+         <div class="modal-body">
+            <div ng-show="ShowError" class="alert alert-danger">
+                <a class="close" data-dismiss="alert">x</a>
+                <strong>Error!</strong> <span ng-bind="ErrorMessage"></span>
+            </div>
+
+            <div ng-show="ShowLoadingIndicator" class="s-loading m-bottom-sm"></div>
+
+            <div id="viewsPlaceholder" ng-view></div>
+           
+         </div>
+         <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="Save(false)">Save</button>
+            <button class="btn btn-default" ng-click="Save(true)" ng-hide="HideSaveAllTranslations">Save All Translations</button>
+            <a class="btn btn-link" data-dismiss="modal" ng-click="Cancel($event)">Cancel</a>
+         </div>
+    </script>
+
+    <script type="text/ng-template" id="advanced-designer-view">
+        @{
+            Html.RenderAction("GetDesignerPartialView", "Designer", new { widgetName = ViewBag.ControlName, viewType = "Advanced" });
+        }
+    </script>
+</div>
+
+@* Latest compiled and minified CSS *@
+<link rel="stylesheet" href='@Url.WidgetContent("Mvc/Scripts/Bootstrap/css/bootstrap.min.css")'>
+@* Optional theme *@
+<link rel="stylesheet" href='@Url.WidgetContent("Mvc/Styles/sitefinity-theme.min.css")'>
+
+<script src='@Url.WidgetContent("Mvc/Scripts/MasterDesignerCtrl.js")'></script>
+<script src='@Url.WidgetContent("Mvc/Scripts/AdvancedDesignerModule.js")'></script>
+<script src='@Url.WidgetContent("Mvc/Scripts/BreadCrumbModule.js")'></script>
+
+<script type="text/javascript">
+    var designerModule = angular.module('designer', ['masterDesigner', 'advancedDesignerModule', 'controlPropertyServices', 'ngRoute']);
+
+    designerModule.config(function ($routeProvider) {
+        $routeProvider
+              //the route points to a MVC controller action that returns a proper view
+              .when('/advanced', {
+                  templateUrl: 'advanced-designer-view', controller: 'AdvancedDesignerModuleCtrl'
+              })
+              .when('/', {
+                  templateUrl: 'advanced-designer-view', controller: 'AdvancedDesignerModuleCtrl'
+              });
+    });
+    angular.bootstrap($("#masterDesigner"), ['designer']);
+</script>
