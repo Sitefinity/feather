@@ -10,16 +10,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Socials the share options. Redirect to the SocialShare control if exist else render error message
         /// </summary>
         /// <param name="helper">The HTML helper.</param>
-        public static MvcHtmlString SocialShareOptions(this HtmlHelper helper)
+        public static System.Web.Mvc.MvcHtmlString SocialShareOptions(this HtmlHelper helper)
         {
-            MvcHtmlString result;
+            System.Web.Mvc.MvcHtmlString result;
             try
             {
                 result = helper.Action("Index", "SocialShare");
             }
             catch (HttpException e)
             {
-                result = new MvcHtmlString("The SocialShare widget could not be found.");
+                result = new System.Web.Mvc.MvcHtmlString("The SocialShare widget could not be found.");
             }
             return result;
         }

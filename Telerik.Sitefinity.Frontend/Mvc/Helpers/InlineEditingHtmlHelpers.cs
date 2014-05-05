@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="model">The model.</param>
         /// <param name="propName">Name of the property.</param>
         /// <returns></returns>
-        public static MvcHtmlString TextField(this HtmlHelper helper, object model, string propName)
+        public static System.Web.Mvc.MvcHtmlString TextField(this HtmlHelper helper, object model, string propName)
         {
             var htmlProcessor = new HtmlProcessor();
             string htmlString = htmlProcessor.GetStringContent(model, propName);
