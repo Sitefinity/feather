@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
