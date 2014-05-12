@@ -21,10 +21,11 @@
         <!-- The official NuGet package source (https://www.nuget.org/api/v2/) will be excluded if package sources are specified and it does not appear in the list -->
         <!--
             <PackageSource Include="https://my-nuget-source/nuget/" />
+            <PackageSource Include="https://www.nuget.org/api/v2/" />
         -->
-        <PackageSource Include="https://www.nuget.org/api/v2/" />
-        <PackageSource Include="http://nuget.sitefinity.com/nuget/" />
-      
+       
+            <PackageSource Include="D:\GIT\FetherRepo" />
+     
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(OS)' == 'Windows_NT'">
