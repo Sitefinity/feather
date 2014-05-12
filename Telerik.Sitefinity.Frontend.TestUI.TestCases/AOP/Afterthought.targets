@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+
+  <PropertyGroup>
+    <ProjectName>Telerik.Sitefinity.Frontend.TestUI.TestCases</ProjectName>
+  </PropertyGroup>
+  
+  <Target Name="AfterBuild">
+      <Exec Command="&quot;$(SolutionDir)$(ProjectName)\AOP\Afterthought.Amender.exe&quot; &quot;$(TargetPath)&quot; &quot;$(SolutionDir)$(ProjectName)\AOP\Logging.Amender.dll&quot;" />
+    </Target>
+</Project>
