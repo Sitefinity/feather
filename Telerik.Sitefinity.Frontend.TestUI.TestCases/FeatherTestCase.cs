@@ -1,5 +1,4 @@
-﻿using Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Telerik.Sitefinity.MS.TestUI.Framework.MSTest;
 using Telerik.TestUI.Core.Configuration;
@@ -9,14 +8,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases
     /// <summary>
     /// This test case is responsible for initializing the ArtOfTest.WebAii.Core.Manager
     /// </summary>
-    [Logging]
     public class FeatherTestCase : SitefinityBaseTestCase
     {
         /// <summary>
         /// Forces calling initialize methods that will prepare test with data and resources. This method must be overridden if you want
         /// in your test case.
         /// </summary>
-        [EnableLogging]
         protected override void ServerSetup()
         {
             base.ServerSetup();
@@ -25,7 +22,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases
         /// <summary>
         /// Forces cleanup of the test data. This method is thrown if test setup fails. This method must be overridden in your test case.
         /// </summary>
-        [EnableLogging]
         protected override void ServerCleanup()
         {
             base.ServerCleanup();
@@ -35,7 +31,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases
         /// The method will be executed before methods marked with the ClassInitializeAttribute, TestInitializeAttribute, and TestMethodAttribute attributes. 
         /// </summary>
         /// <param name="context">The test context.</param>
-        [EnableLogging]
         [AssemblyInitialize]
         public static void AssemblyInitalize(TestContext context)
         {
@@ -56,7 +51,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases
         /// This method will be executed after methods marked with the TestCleanupAttribute and the ClassCleanupAttribute attributes. 
         /// This will not execute if an unhandled exception is thrown.
         /// </summary>
-        [EnableLogging]
         [AssemblyCleanup()]
         public static void AssemblyCleanup()
         {
