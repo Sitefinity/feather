@@ -11,6 +11,7 @@
   <defaultWebsiteRootDirectory>C:\Tests\SitefinityWebApp</defaultWebsiteRootDirectory>
   <secondWebsiteRootDirectory>C:\Tests\SitefinityWebApp_2</secondWebsiteRootDirectory>
   <databaseServer>.\SQLSERVER2012</databaseServer>
+  <dbName>FeatherIntegrationTests</dbName>
   <analyticsEnabled>false</analyticsEnabled>
   <multilingualEnabled>false</multilingualEnabled>
   <siteSyncEnabled>false</siteSyncEnabled>
