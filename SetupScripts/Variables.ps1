@@ -1,8 +1,9 @@
-$doc = New-Object System.Xml.XmlDocument
-$doc.Load("Variables.xml") 
-
 $machineName = gc env:computername
 $currentPath = Split-Path $script:MyInvocation.MyCommand.Path
+
+$doc = New-Object System.Xml.XmlDocument
+$doc.Load($currentPath + "\Variables.xml") 
+
 
 #Modules
 $iisModule = Join-Path $currentPath "\IIS.ps1"
