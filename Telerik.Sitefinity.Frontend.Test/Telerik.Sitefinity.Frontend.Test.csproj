@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.IdentityModel.6.1.7600.16394\lib\net35\Microsoft.IdentityModel.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -121,6 +125,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FileMonitoring\FileMonitorTests.cs" />
     <Compile Include="GridSystemTests\GridSystemInitializerTests.cs" />
     <Compile Include="InlineEditing\InlineEditingTests.cs" />
     <Compile Include="Mvc\Infrastructure\ControllerRegistryTest.cs" />
@@ -171,7 +176,9 @@
     <Content Include="ClientScripts\helpers\jquery-1.8.3.min.js" />
     <Content Include="ClientScripts\unit\controllersSpec.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DummyClasses\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -8,6 +8,9 @@ using Telerik.Sitefinity.Model;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 {
+    /// <summary>
+    /// A concrete implementation of the <see cref="OpenAccessFluentMappingBase"/> for the file monitoring.
+    /// </summary>
     public class FileMonitorFluentMapping : OpenAccessFluentMappingBase
     {
         #region Contructors
@@ -21,11 +24,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 
         #region Public methods
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <inheritdoc />
-        /// <returns></returns>
         public override IList<MappingConfiguration> GetMapping()
         {
             var mappings = new List<MappingConfiguration>();

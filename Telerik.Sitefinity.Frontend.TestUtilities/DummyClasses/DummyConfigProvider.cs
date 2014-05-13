@@ -16,5 +16,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses
         {
             return true;
         }
+
+        public override void SaveSection(Configuration.ConfigSection section)
+        {
+        }
     }
 }

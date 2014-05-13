@@ -7,15 +7,25 @@ using Telerik.Sitefinity.Model;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 {
-    public class FileMonitorFluentMetadataSource : SitefinityMetadataSourceBase
+    /// <summary>
+    /// A concrete implementation of the <see cref="SitefinityMetadataSourceBase"/> for the file monitoring.
+    /// </summary>
+    internal class FileMonitorFluentMetadataSource : SitefinityMetadataSourceBase
     {
         #region Contructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileMonitorFluentMetadataSource"/> class.
+        /// </summary>
         public FileMonitorFluentMetadataSource()
             : base(null)
         { }
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileMonitorFluentMetadataSource"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
          public FileMonitorFluentMetadataSource(IDatabaseMappingContext context)
             : base(context)
         {
@@ -34,6 +44,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
         {
             var sitefinityMappings = new List<IOpenAccessFluentMapping>();
             sitefinityMappings.Add(new FileMonitorFluentMapping(this.Context) { });
+
             return sitefinityMappings;
         }
 

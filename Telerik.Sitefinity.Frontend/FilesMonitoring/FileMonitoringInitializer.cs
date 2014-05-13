@@ -13,10 +13,13 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
     /// </summary>
     public class FileMonitoringInitializer
     {
+        /// <summary>
+        /// Initializes and configure file monitoring functionality.
+        /// </summary>
         public void Initialize()
         {
-            ObjectFactory.Container.RegisterType<IFilesMonitor, FileMonitor>(new ContainerControlledLifetimeManager());
-            ObjectFactory.Container.RegisterType<IFileManager, LayoutFilesManager>(ResourceTypes.Layouts.ToString(), new ContainerControlledLifetimeManager());
+            ObjectFactory.Container.RegisterType<IFileMonitor, FileMonitor>(new ContainerControlledLifetimeManager());
+            ObjectFactory.Container.RegisterType<IFileManager, LayoutFileManager>(ResourceType.Layouts.ToString(), new ContainerControlledLifetimeManager());
 
             this.RegisterFileObservers();
         }
@@ -26,13 +29,13 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         private void RegisterFileObservers()
         {
-            var fileObserver = ObjectFactory.Resolve<IFilesMonitor>();
+            var fileObserver = ObjectFactory.Resolve<IFileMonitor>();
 
-            var direcotoriesInfo = new Dictionary<string, bool>();
-            direcotoriesInfo.Add("~/" + PackagesManager.PackagesFolder, true);
-            direcotoriesInfo.Add("~/Mvc/Views/Layouts", false);
+            var monitoredDirectories = new List<MonitoredDirectory>();
+            monitoredDirectories.Add(new MonitoredDirectory("~/" + PackagesManager.PackagesFolder, true));
+            monitoredDirectories.Add(new MonitoredDirectory("~/Mvc/Views/Layouts", false));
 
-            fileObserver.Start(direcotoriesInfo);
+            fileObserver.Start(monitoredDirectories);
         }
     }
 }

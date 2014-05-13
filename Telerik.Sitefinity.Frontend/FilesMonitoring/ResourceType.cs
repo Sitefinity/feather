@@ -4,11 +4,10 @@ using System.Linq;
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 {
     /// <summary>
-    /// This enumeration reoresents the types of resources
-    /// which type must corenspone to a folder
-    /// where the resource can be found
+    /// This enumeration represents the types of resources.
+    /// Each type should correspond to a folder where the resource can be found.
     /// </summary>
-    public enum ResourceTypes
+    public enum ResourceType
     {
         Css,
         Fonts,
@@ -17,6 +16,5 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         Grid,
         Views,
         Layouts
-
     }
 }
