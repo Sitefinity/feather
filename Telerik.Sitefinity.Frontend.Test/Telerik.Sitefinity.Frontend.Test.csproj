@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.IdentityModel.6.1.7600.16394\lib\net35\Microsoft.IdentityModel.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -167,12 +171,16 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DummyClasses\DummyConfigProvider.cs" />
+    <Compile Include="DummyClasses\DummyFileInfo.cs" />
+    <Compile Include="DummyClasses\DummyFileMonitor.cs" />
     <Compile Include="DummyClasses\DummyPageTemplateWithTitle.cs" />
     <Compile Include="DummyClasses\DummyResolverStrategy.cs" />
+    <Compile Include="DummyClasses\DummyResourceFileManager.cs" />
     <Compile Include="DummyClasses\DummyVirtualFileResolver.cs" />
     <Compile Include="DummyClasses\DummyControllerResoruces.cs" />
     <Compile Include="DummyClasses\DummyGridSystemInitializer.cs" />
     <Compile Include="DummyClasses\DummyToolboxesConfig.cs" />
+    <Compile Include="FileMonitoring\FileMonitorTests.cs" />
     <Compile Include="GridSystemTests\GridSystemInitializerTests.cs" />
     <Compile Include="InlineEditing\InlineEditingTests.cs" />
     <Compile Include="DummyClasses\DummyResourceResolverNode.cs" />

@@ -10,10 +10,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Controls
     [TestClass]
     public class GridControlTest
     {
-        /// <summary>
-        /// Checks whether a non-server div with class sf_cols will have runat="server" appended to it.
-        /// </summary>
         [TestMethod]
+        [Owner("Bonchev")]
         [Description("Checks whether a non-server div with class sf_cols will have runat='server' appended to it.")]
         public void ProcessLayoutString_NonServerControlCols_DivIsServerControl()
         {
@@ -23,10 +21,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Controls
             Assert.AreEqual(@"<div class=""sf_cols"" runat=""server""></div>", result);
         }
 
-        /// <summary>
-        /// Checks whether a non-server div with class sf_colsIn will have runat="server" appended to it.
-        /// </summary>
         [TestMethod]
+        [Owner("Bonchev")]
         [Description("Checks whether a non-server div with class sf_colsIn will have runat='server' appended to it.")]
         public void ProcessLayoutString_NonServerControlColsIn_DivIsServerControl()
         {
@@ -36,10 +32,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Controls
             Assert.AreEqual(@"<div class=""sf_colsIn"" runat=""server""></div>", result);
         }
 
-        /// <summary>
-        /// Checks whether a non-server div with class sf_colsOut will have runat="server" appended to it.
-        /// </summary>
         [TestMethod]
+        [Owner("Bonchev")]
         [Description(" Checks whether a non-server div with class sf_colsOut will have runat='server' appended to it.")]
         public void ProcessLayoutString_NonServerControlColsOut_DivIsServerControl()
         {
@@ -49,10 +43,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Controls
             Assert.AreEqual(@"<div class=""sf_colsOut"" runat=""server""></div>", result);
         }
 
-        /// <summary>
-        /// Checks whether a non-server div with class sf_colsOut will have runat="server" appended to it and it will be wrapped with a sf_cols div when ensureSfColsWrapper is set.
-        /// </summary>
         [TestMethod]
+        [Owner("Bonchev")]
         [Description("Checks whether a non-server div with class sf_colsOut will have runat='server' appended to it and it will be wrapped with a sf_cols div when ensureSfColsWrapper is set.")]
         public void ProcessLayoutString_NonServerControlColsOutAndEnsureSfCols_DivIsServerControlAndWrapped()
         {
@@ -62,9 +54,6 @@ namespace Telerik.Sitefinity.Frontend.Test.Controls
             Assert.AreEqual(@"<div runat=""server"" class=""sf_cols""><div class=""sf_colsOut"" runat=""server""></div></div>", result);
         }
 
-        /// <summary>
-        /// Checks whether a server div with class sf_colsOut will be returned unchanged.
-        /// </summary>
         [TestMethod]
         [Description("Checks whether a server div with class sf_colsOut will be returned unchanged.")]
         public void PrecessLayoutString_ServerControlColsOut_ReturnsUnchangedTemplate()
@@ -88,7 +77,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Controls
             string attributeName = "class";
             var template = string.Format(@"<div {0}=""{1}"" runat=""server""></div>", attributeName, expectedAttributeValue);
 
-            //Act: parse the HTML template and then get the value of the class atribute
+            //Act: parse the HTML template and then get the value of the class attribute
             using (HtmlParser parser = new HtmlParser(template))
             {
                 parser.SetChunkHashMode(false);

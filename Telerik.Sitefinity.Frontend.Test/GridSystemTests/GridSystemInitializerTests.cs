@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.Test.GridSystemTests
         [TestMethod]
         [Owner("Bonchev")]
         [Description("Checks whether the GridSystemInitializer properly creates a new section for the layout controls")]
-        public void DummyGridSystemInitializer_CreateFakeToolboxSection_VerifySectionIsAddedAndHasProperData()
+        public void GetOrCreateToolBoxSection_CreateFakeToolboxSection_VerifySectionIsAddedAndHasProperData()
         {
             //Arrange: Initialize the GridSystemInitializer, ToolboxesConfig and add a PageLayouts section
             DummyGridSystemInitializer initializer = new DummyGridSystemInitializer();
@@ -39,7 +39,7 @@ namespace Telerik.Sitefinity.Frontend.Test.GridSystemTests
         [TestMethod]
         [Owner("Bonchev")]
         [Description("Checks whether the GridSystemInitializer properly creates a new set of layout controls")]
-        public void DummyGridSystemInitializer_CreateDummyLayoutControls_VerifyControlsAreProperlyCreated()
+        public void CreateLayoutControlsData_FakeTemplatePath_VerifyControlsAreProperlyCreated()
         {
             //Arrange: Initialize the GridSystemInitializer, ToolboxesConfig and add a PageLayouts section
             DummyGridSystemInitializer initializer = new DummyGridSystemInitializer();
@@ -61,7 +61,7 @@ namespace Telerik.Sitefinity.Frontend.Test.GridSystemTests
         [TestMethod]
         [Owner("Bonchev")]
         [Description("Checks whether the GridSystemInitializer properly adds a new set of layout controls to the toolbox")]
-        public void DummyGridSystemInitializer_AddLayoutControl_VerifyControlIsProperlyAddedToTheToolbox()
+        public void AddLayoutControl_ExistingToolboxSection_VerifyControlIsProperlyAddedToTheToolbox()
         {
             //Arrange: Initialize the GridSystemInitializer, ToolboxesConfig and add a PageLayouts section, create a layouts section, create a dummy grid controls 
             DummyGridSystemInitializer initializer = new DummyGridSystemInitializer();

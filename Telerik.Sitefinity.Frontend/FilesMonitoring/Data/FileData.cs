@@ -6,6 +6,9 @@ using Telerik.OpenAccess;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 {
+    /// <summary>
+    /// This class represent file data persisted by the file monitoring functionality. 
+    /// </summary>
     [Persistent]
     [ManagerType(typeof(FileMonitorDataManager))]
     public class FileData

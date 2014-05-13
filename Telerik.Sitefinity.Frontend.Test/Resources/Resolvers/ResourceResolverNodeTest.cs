@@ -9,6 +9,9 @@ using Telerik.Sitefinity.Frontend.Test.DummyClasses;
 
 namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
 {
+    /// <summary>
+    /// Ensures that the ResourceResolverNode class is working correctly.
+    /// </summary>
     [TestClass]
     public class ResourceResolverNodeTest
     {
@@ -17,25 +20,24 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
         [Description("Checks whether GetCacheDependency returns aggregated dependency containing the current cache dependency and that of the next node when the current node does not contain the resource on the given virtual path.")]
         public void GetCacheDependency_HasCurrentDependencyCurrentExistsFalse_AggregatesCurrentCacheDependencyWithNext()
         {
+            //Arrange
             var currentNode = new DummyResourceResolverNode();
-            var nextNode = new DummyResourceResolverNode();
 
             var currentCacheDependency = new CacheDependency(Directory.GetCurrentDirectory());
             currentNode.GetCurrentCacheDependencyMock = (pathDefinition, virtualPath, virtualPathDependencies, utcDate) => currentCacheDependency;
             currentNode.CurrentExistsMock = (pathDefinition, virtualPath) => false;
 
-            var nextCacheDependency = new CacheDependency(Directory.GetCurrentDirectory());
-            nextNode.GetCurrentCacheDependencyMock = (pathDefinition, virtualPath, virtualPathDependencies, utcDate) => nextCacheDependency;
-            nextNode.CurrentExistsMock = (pathDefinition, virtualPath) => true;
+            var nextCacheDependency = this.SetNextNode(currentNode);
 
-            currentNode.SetNext(nextNode);
-
+            //Act
             var result = currentNode.GetCacheDependency(new PathDefinition(), "~/Test", null, DateTime.UtcNow);
+
+            //Assert
             Assert.IsInstanceOfType(result, typeof(AggregateCacheDependency), "Resulting cache dependency is not aggregated.");
 
             var dependencies = this.GetAggregatedDependencies((AggregateCacheDependency)result);
 
-            Assert.AreEqual(2, dependencies.Count);
+            Assert.AreEqual(2, dependencies.Count, "The dependencies count is not correct.");
             Assert.IsTrue(dependencies.Contains(currentCacheDependency), "The resulting aggregated cache dependency does not contain the dependency of the first node.");
             Assert.IsTrue(dependencies.Contains(nextCacheDependency), "The resulting aggregated cache dependency does not contain the dependency of the second node.");
         }
@@ -45,21 +47,19 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
         [Description("Checks whether GetCacheDependency returns the cache dependency of the next node when the current node has no dependency on the current virtual path and does not contain a resource on it.")]
         public void GetCacheDependency_NoCurrentDependencyCurrentExistsFalse_ReturnsNextCacheDependency()
         {
+            //Arrange
             var currentNode = new DummyResourceResolverNode();
-            var nextNode = new DummyResourceResolverNode();
 
             currentNode.GetCurrentCacheDependencyMock = (pathDefinition, virtualPath, virtualPathDependencies, utcDate) => null;
             currentNode.CurrentExistsMock = (pathDefinition, virtualPath) => false;
 
-            var nextCacheDependency = new CacheDependency(Directory.GetCurrentDirectory());
-            nextNode.GetCurrentCacheDependencyMock = (pathDefinition, virtualPath, virtualPathDependencies, utcDate) => nextCacheDependency;
-            nextNode.CurrentExistsMock = (pathDefinition, virtualPath) => true;
+            var nextCacheDependency = this.SetNextNode(currentNode);
 
-            currentNode.SetNext(nextNode);
-
+            //Act
             var result = currentNode.GetCacheDependency(new PathDefinition(), "~/Test", null, DateTime.UtcNow);
-            Assert.IsNotInstanceOfType(result, typeof(AggregateCacheDependency));
-
+            
+            //Assert
+            Assert.IsNotInstanceOfType(result, typeof(AggregateCacheDependency), "The result of GetCacheDependency methods should be instance of AggregateCacheDependency");
             Assert.AreSame(nextCacheDependency, result, "The returned cache dependency is not that of the second node.");
         }
 
@@ -68,6 +68,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
         [Description("Checks whether Open method returns the result of Open on the next node if the resource does not exist on the current node.")]
         public void Open_CurrentExistsFalse_ReturnsNextOpenResult()
         {
+            //Arrange
             var currentNode = new DummyResourceResolverNode();
             var nextNode = new DummyResourceResolverNode();
 
@@ -83,8 +84,26 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
 
             currentNode.SetNext(nextNode);
 
+            //Act
             var result = currentNode.Open(new PathDefinition(), "~/Test");
+
+            //Assert
             Assert.AreSame(nextStream, result, "The returned stream is not that of the second node.");
+        }
+
+        #region Helper methods
+
+        private CacheDependency SetNextNode(DummyResourceResolverNode currentNode)
+        {
+            var nextNode = new DummyResourceResolverNode();
+
+            var nextCacheDependency = new CacheDependency(Directory.GetCurrentDirectory());
+            nextNode.GetCurrentCacheDependencyMock = (pathDefinition, virtualPath, virtualPathDependencies, utcDate) => nextCacheDependency;
+            nextNode.CurrentExistsMock = (pathDefinition, virtualPath) => true;
+
+            currentNode.SetNext(nextNode);
+
+            return nextCacheDependency;
         }
 
         private ArrayList GetAggregatedDependencies(AggregateCacheDependency aggregatedDependency)
@@ -92,5 +111,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
             var fieldInfo = typeof(AggregateCacheDependency).GetField("_dependencies", BindingFlags.Instance | BindingFlags.NonPublic);
             return (ArrayList)fieldInfo.GetValue(aggregatedDependency);
         }
+
+        #endregion 
     }
 }
