@@ -1,19 +1,12 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Web;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
-using Telerik.Sitefinity.Services;
 using System.Web.Mvc;
-using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using System.Web.Routing;
-using Telerik.Sitefinity.Localization.Configuration;
-using Telerik.Sitefinity.Abstractions;
-using Telerik.Microsoft.Practices.Unity;
-using Telerik.Sitefinity.Configuration.Data;
-using Telerik.Sitefinity.Configuration;
-using Telerik.Microsoft.Practices.EnterpriseLibrary.Caching;
-using Telerik.Sitefinity.Data.Metadata;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
+using Telerik.Sitefinity.Frontend.Test.TestUtilities;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Telerik.Sitefinity.Frontend.Designers;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
-using Telerik.Sitefinity.Frontend.Test.Mvc.Controllers;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
+using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 
 namespace Telerik.Sitefinity.Frontend.Test.Designers
 {

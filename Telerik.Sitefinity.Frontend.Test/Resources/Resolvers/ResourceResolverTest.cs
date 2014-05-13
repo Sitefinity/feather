@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Web.Caching;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Microsoft.Practices.Unity;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
 
 namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
 {

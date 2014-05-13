@@ -1,8 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 
 namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts

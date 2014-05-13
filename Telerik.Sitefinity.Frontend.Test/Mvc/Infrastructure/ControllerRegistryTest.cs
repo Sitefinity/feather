@@ -2,8 +2,9 @@
 using System;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
-using Telerik.Sitefinity.Frontend.Test.Mvc.Controllers;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
+using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
+
 
 namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure
 {

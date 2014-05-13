@@ -17,17 +17,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F98855
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.TestIntegration", "Telerik.Sitefinity.Frontend.TestIntegration\Telerik.Sitefinity.Frontend.TestIntegration.csproj", "{49B06F58-0510-4279-B6F1-90F23AB3768D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.TestUtilities", "Telerik.Sitefinity.Frontend.TestUtilities\Telerik.Sitefinity.Frontend.TestUtilities.csproj", "{1C663AB5-AEBC-41B5-A861-F635C37DAB47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UITests", "UITests", "{EFF407A4-62ED-4B78-9573-7F65D70482C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.TestUI.Arrangements", "Telerik.Sitefinity.Frontend.TestUI.Arrangements\Telerik.Sitefinity.Frontend.TestUI.Arrangements.csproj", "{637A9A4D-A6D1-4C84-9A00-58AA440C2D58}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 1
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://tfs.telerik.com:8082/defaultcollection
-		SccProjectUniqueName0 = Telerik.Sitefinity.Frontend\\Telerik.Sitefinity.Frontend.csproj
-		SccProjectName0 = Telerik.Sitefinity.Frontend
-		SccAuxPath0 = http://tfs.telerik.com:8082/defaultcollection
-		SccLocalPath0 = Telerik.Sitefinity.Frontend
-		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -41,8 +39,23 @@ Global
 		{D607959E-5DE3-43B9-8731-C22E495FCEF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D607959E-5DE3-43B9-8731-C22E495FCEF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D607959E-5DE3-43B9-8731-C22E495FCEF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49B06F58-0510-4279-B6F1-90F23AB3768D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49B06F58-0510-4279-B6F1-90F23AB3768D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49B06F58-0510-4279-B6F1-90F23AB3768D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49B06F58-0510-4279-B6F1-90F23AB3768D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C663AB5-AEBC-41B5-A861-F635C37DAB47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C663AB5-AEBC-41B5-A861-F635C37DAB47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C663AB5-AEBC-41B5-A861-F635C37DAB47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C663AB5-AEBC-41B5-A861-F635C37DAB47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{637A9A4D-A6D1-4C84-9A00-58AA440C2D58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{637A9A4D-A6D1-4C84-9A00-58AA440C2D58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{637A9A4D-A6D1-4C84-9A00-58AA440C2D58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{637A9A4D-A6D1-4C84-9A00-58AA440C2D58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{637A9A4D-A6D1-4C84-9A00-58AA440C2D58} = {EFF407A4-62ED-4B78-9573-7F65D70482C6}
 	EndGlobalSection
 EndGlobal
