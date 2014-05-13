@@ -61,7 +61,7 @@
       <HintPath>..\packages\Telerik.Sitefinity.TestUI.Core.1.0.2\lib\net45\Telerik.Sitefinity.TestUI.Core.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.Framework">
-      <HintPath>..\packages\Telerik.Sitefinity.TestUI.Framework.1.0.2\lib\net45\Telerik.Sitefinity.TestUI.Framework.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.TestUI.Framework.1.0.3\lib\net45\Telerik.Sitefinity.TestUI.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.UIArrangement">
       <HintPath>..\packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.0\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
@@ -91,7 +91,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
