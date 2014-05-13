@@ -14,9 +14,10 @@ using Telerik.Sitefinity.Configuration.Data;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
-using Telerik.Sitefinity.Frontend.Test.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
+using Telerik.Sitefinity.Frontend.TestUtilities;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
+using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Localization.Configuration;
 using Telerik.Sitefinity.Mvc;
@@ -117,7 +118,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure
         public void GetControllers_CurrentAssembly_GetsControllers()
         {
             var initializer = new DummyInitializer();
-            var types = initializer.GetControllersPublic(new[] { Assembly.GetExecutingAssembly() });
+
+            var types = initializer.GetControllersPublic(new[] { AssemblyLoaderHelper.GetTestUtilitiesAssembly() });
 
             Assert.IsNotNull(types, "GetControllers returned null.");
 

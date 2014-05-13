@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
-using Telerik.Sitefinity.Configuration;
-
 
 namespace Telerik.Sitefinity.Frontend.Test.GridSystemTests
 {

@@ -3,8 +3,9 @@ using System.Linq;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
-using Telerik.Sitefinity.Frontend.Test.Mvc.Controllers;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
+using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
+
 
 namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure
 {
@@ -27,9 +28,9 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure
                 var controllerVe = controller.ViewEngineCollection.OfType<RazorViewEngine>().FirstOrDefault();
 
                 Assert.IsNotNull(controllerVe, "The newly created controller does not have the expected view engine.");
-                
+
                 var containerVp = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(DummyController).Assembly);
-                Assert.IsTrue(controllerVe.ViewLocationFormats.Any(v => v.StartsWith(containerVp)), 
+                Assert.IsTrue(controllerVe.ViewLocationFormats.Any(v => v.StartsWith(containerVp)),
                     "The newly created controller does not have its container path in the view locations.");
             }
             finally

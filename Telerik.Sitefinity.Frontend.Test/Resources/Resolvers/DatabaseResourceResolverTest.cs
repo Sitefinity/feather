@@ -10,8 +10,8 @@ using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Configuration.Data;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 

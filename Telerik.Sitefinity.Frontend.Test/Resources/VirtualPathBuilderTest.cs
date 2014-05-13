@@ -2,9 +2,9 @@
 using System;
 using System.Reflection;
 using Telerik.Sitefinity.Frontend.Resources;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
-using Telerik.Sitefinity.Frontend.Test.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
+using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 
 namespace Telerik.Sitefinity.Frontend.Test.Resources
 {

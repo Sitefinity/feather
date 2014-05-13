@@ -1,20 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Telerik.Microsoft.Practices.EnterpriseLibrary.Caching;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Abstractions.VirtualPath.Configuration;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Configuration.Data;
-using Telerik.Sitefinity.Data.Metadata;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
-using Telerik.Sitefinity.Localization.Configuration;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Web.Configuration;
 
