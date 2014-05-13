@@ -25,6 +25,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UITests", "UITests", "{EFF4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.TestUI.Arrangements", "Telerik.Sitefinity.Frontend.TestUI.Arrangements\Telerik.Sitefinity.Frontend.TestUI.Arrangements.csproj", "{637A9A4D-A6D1-4C84-9A00-58AA440C2D58}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SetupScripts", "SetupScripts", "{C9DF549F-1595-4163-B5CE-AFAB8F4048BB}"
+	ProjectSection(SolutionItems) = preProject
+		SetupScripts\Cleanup.bat = SetupScripts\Cleanup.bat
+		SetupScripts\Cleanup.ps1 = SetupScripts\Cleanup.ps1
+		SetupScripts\Functions.ps1 = SetupScripts\Functions.ps1
+		SetupScripts\IIS.ps1 = SetupScripts\IIS.ps1
+		SetupScripts\Setup.bat = SetupScripts\Setup.bat
+		SetupScripts\Setup.ps1 = SetupScripts\Setup.ps1
+		SetupScripts\SitefinitySetup.ps1 = SetupScripts\SitefinitySetup.ps1
+		SetupScripts\SQL.ps1 = SetupScripts\SQL.ps1
+		SetupScripts\Variables.ps1 = SetupScripts\Variables.ps1
+		SetupScripts\Variables.xml = SetupScripts\Variables.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
