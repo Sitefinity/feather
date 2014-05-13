@@ -5,10 +5,10 @@ using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
-using Telerik.Sitefinity.Frontend.Test.DummyClasses;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
-using Telerik.Sitefinity.Frontend.Test.Mvc.Controllers;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
+using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 
 namespace Telerik.Sitefinity.Frontend.Test.Helpers
 {
@@ -86,7 +86,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Helpers
             }
 
             //Assert
-            Assert.AreEqual("/Frontend-Assembly/Telerik.Sitefinity.Frontend.Test/Test/MyScript.js", result);
+            Assert.AreEqual("/Frontend-Assembly/Telerik.Sitefinity.Frontend.TestUtilities/Test/MyScript.js", result);
         }
 
         [TestMethod]
@@ -111,7 +111,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Helpers
             }
 
             //Assert
-            Assert.AreEqual("/Frontend-Assembly/Telerik.Sitefinity.Frontend.Test/Test/MyScript.js", result);
+            Assert.AreEqual("/Frontend-Assembly/Telerik.Sitefinity.Frontend.TestUtilities/Test/MyScript.js", result);
         }
     }
 }

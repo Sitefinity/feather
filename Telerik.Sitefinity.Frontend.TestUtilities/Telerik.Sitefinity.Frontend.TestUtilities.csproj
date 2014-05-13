@@ -169,6 +169,8 @@
     <Compile Include="DummyClasses\DummyControllerFactory.cs" />
     <Compile Include="DummyClasses\DummyControllerResoruces.cs" />
     <Compile Include="DummyClasses\DummyCustomDesignerController.cs" />
+    <Compile Include="DummyClasses\DummyFileInfo.cs" />
+    <Compile Include="DummyClasses\DummyFileMonitor.cs" />
     <Compile Include="DummyClasses\DummyFrameworkSpecificPageTemplate.cs" />
     <Compile Include="DummyClasses\DummyGridControl.cs" />
     <Compile Include="DummyClasses\DummyGridSystemInitializer.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="DummyClasses\DummyPageTemplate.cs" />
     <Compile Include="DummyClasses\DummyPageTemplateWithTitle.cs" />
     <Compile Include="DummyClasses\DummyResolverStrategy.cs" />
+    <Compile Include="DummyClasses\DummyResourceFileManager.cs" />
     <Compile Include="DummyClasses\DummyResourceResolverNode.cs" />
     <Compile Include="DummyClasses\DummyToolboxesConfig.cs" />
     <Compile Include="DummyClasses\DummyView.cs" />

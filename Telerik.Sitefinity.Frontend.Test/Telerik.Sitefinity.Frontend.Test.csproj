@@ -125,16 +125,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DummyClasses\DummyConfigProvider.cs" />
-    <Compile Include="DummyClasses\DummyFileInfo.cs" />
-    <Compile Include="DummyClasses\DummyFileMonitor.cs" />
-    <Compile Include="DummyClasses\DummyPageTemplateWithTitle.cs" />
-    <Compile Include="DummyClasses\DummyResolverStrategy.cs" />
-    <Compile Include="DummyClasses\DummyResourceFileManager.cs" />
-    <Compile Include="DummyClasses\DummyVirtualFileResolver.cs" />
-    <Compile Include="DummyClasses\DummyControllerResoruces.cs" />
-    <Compile Include="DummyClasses\DummyGridSystemInitializer.cs" />
-    <Compile Include="DummyClasses\DummyToolboxesConfig.cs" />
     <Compile Include="FileMonitoring\FileMonitorTests.cs" />
     <Compile Include="GridSystemTests\GridSystemInitializerTests.cs" />
     <Compile Include="InlineEditing\InlineEditingTests.cs" />
@@ -186,7 +176,9 @@
     <Content Include="ClientScripts\helpers\jquery-1.8.3.min.js" />
     <Content Include="ClientScripts\unit\controllersSpec.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DummyClasses\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

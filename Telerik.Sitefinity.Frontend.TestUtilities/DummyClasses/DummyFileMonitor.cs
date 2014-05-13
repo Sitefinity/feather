@@ -5,9 +5,12 @@ using System.Linq;
 using System.Text;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
 
-namespace Telerik.Sitefinity.Frontend.Test.DummyClasses
+namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses
 {
-    public class DummyFileMonitor:FileMonitor
+    /// <summary>
+    /// Dummies the FileMonitor functionality to make it testable.
+    /// </summary>
+    public class DummyFileMonitor : FileMonitor
     {
         #region Public properties 
 

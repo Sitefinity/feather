@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
 
-namespace Telerik.Sitefinity.Frontend.Test.DummyClasses
+namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses
 {
     /// <summary>
     /// This class represents dummy DTO which contains file details.
