@@ -11,6 +11,8 @@ This repository contains the core project related to the Feather project. Note t
 
 [Getting Started](https://github.com/Sitefinity/feather/wiki/Getting-Started)
 
+[How to create a "Hello World" MVC widget](https://github.com/Sitefinity/feather/wiki/How-to-create-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-separate-assembly)
+
 [How to change MVC widget templates](https://github.com/Sitefinity/feather/wiki/How-to-change-MVC-widget-templates)
 
 [How to replace the default simple designer view](https://github.com/Sitefinity/feather/wiki/How-to-replace-the-default-simple-designer-view)
