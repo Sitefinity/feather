@@ -26,6 +26,7 @@ function EnsureDBDeleted($databaseServer, $dbName)
          write-output $_.Exception.InnerException
          write-output $_.Exception.Stack
          write-output $_.Exception.GetBaseException().Message	
+		 write-output "username is:" $env:username
 	  }
     }
 }
