@@ -35,6 +35,7 @@ $appPollName = $siteName
 $secondAppPollName = $secondSiteName
 $databaseName = $siteName
 $secondSiteDatabaseName = $secondSiteName
+$websiteBinariesDirectory = $defaultWebsiteRootDirectory + "/bin"
 
 #TEST AGENT
 $testAgentExe = "C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\QTAgentProcessUI.exe"
