@@ -39,6 +39,7 @@ write-output "Sitefinity successfully deployed."
 
 function CopyTestAssemblies($workingDirectory, $destinationDirectory)
 {
+   write-output "Start copying test assemblies from $workingDirectory to $destinationDirectory."
    Get-ChildItem *Test*.dll -recurse  -path $workingDirectory | Copy-Item -destination $destinationDirectory
 }
 
