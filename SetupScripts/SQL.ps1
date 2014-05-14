@@ -13,6 +13,7 @@ function EnsureDBDeleted($databaseServer, $dbName)
         #instead of drop we will use KillDatabase
         #KillDatabase drops all active connections before dropping the database.
 	    write-output "Deleting $dbName database from SqlServer."
+		$Server.KillAllProcesses($dbName)
 	    $Server.KillDatabase($dbName)
     }
 }
