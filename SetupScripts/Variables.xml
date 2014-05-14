@@ -10,8 +10,7 @@
   <projectDeploymentDirectory>C:\Tests\</projectDeploymentDirectory>
   <defaultWebsiteRootDirectory>C:\Tests\SitefinityWebApp</defaultWebsiteRootDirectory>
   <secondWebsiteRootDirectory>C:\Tests\SitefinityWebApp_2</secondWebsiteRootDirectory>
-  <databaseServer>.\SQLSERVER2012</databaseServer>
-  <dbName>FeatherIntegrationTests</dbName>
+  <databaseServer>.\SQLSERVER</databaseServer>
   <analyticsEnabled>false</analyticsEnabled>
   <multilingualEnabled>false</multilingualEnabled>
   <siteSyncEnabled>false</siteSyncEnabled>
