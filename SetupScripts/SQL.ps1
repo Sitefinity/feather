@@ -23,7 +23,6 @@ function EnsureDBDeleted($databaseServer, $dbName)
 		   $error = $error.InnerException
 		   write-output  $error.Message
 		};
-		continue
     }
 }
 
