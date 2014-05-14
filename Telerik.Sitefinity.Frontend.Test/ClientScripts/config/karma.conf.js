@@ -4,8 +4,8 @@ module.exports = function(config){
 
       files : [
 	  'ClientScripts/helpers/jquery-1.8.3.min.js',
-      '../Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/angular.js',
-      '../Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/angular-*.js',
+	  'ClientScripts/helpers/angular.js',
+      'ClientScripts/helpers/angular-route.js',
       '../Telerik.Sitefinity.Frontend/Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls-0.10.0.min.js',
       '../Telerik.Sitefinity.Frontend/Mvc/Scripts/ModalDialogModule.js',
       '../Telerik.Sitefinity.Frontend/Mvc/Scripts/*.js',

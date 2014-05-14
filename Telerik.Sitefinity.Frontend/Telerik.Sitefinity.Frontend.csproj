@@ -294,6 +294,8 @@
     <EmbeddedResource Include="Mvc\Views\DynamicContent\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js.map" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js.map" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -308,7 +310,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
