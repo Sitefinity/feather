@@ -15,6 +15,15 @@ function EnsureDBDeleted($databaseServer, $dbName)
 	    write-output "Deleting $dbName database from SqlServer."
 		$Server.KillAllProcesses($dbName)
 	    $Server.KillDatabase($dbName)
+
+		#show if there are errors
+		$error = $_.Exception
+		while($error.InnerException)
+		{
+		   $error = $error.InnerException
+		   write-output  $error.Message
+		};
+		continue
     }
 }
 
