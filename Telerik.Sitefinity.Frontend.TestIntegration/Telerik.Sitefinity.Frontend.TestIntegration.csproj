@@ -52,11 +52,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.Sitefinity.Utilities">
-      <HintPath>..\..\..\Temp\UX_70\ux.sitefinity.com\bin\Telerik.Sitefinity.Utilities.dll</HintPath>
-    </Reference>
     <Reference Include="Telerik.WebTestRunner.Server">
-      <HintPath>..\packages\Telerik.WebTestRunner.Server.1.0.0.1\lib\Telerik.WebTestRunner.Server.dll</HintPath>
+      <HintPath>..\packages\Telerik.WebTestRunner.Server.1.0.0.1\lib\net40\Telerik.WebTestRunner.Server.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
