@@ -162,32 +162,36 @@
   <ItemGroup>
     <Compile Include="AssemblyLoaderHelper.cs" />
     <Compile Include="ControllerFactoryRegion.cs" />
-    <Compile Include="DummyClasses\DummyAuthenticationEvaluator.cs" />
-    <Compile Include="DummyClasses\DummyConfigProvider.cs" />
-    <Compile Include="DummyClasses\DummyControl.cs" />
-    <Compile Include="DummyClasses\DummyController.cs" />
-    <Compile Include="DummyClasses\DummyControllerFactory.cs" />
-    <Compile Include="DummyClasses\DummyControllerResoruces.cs" />
-    <Compile Include="DummyClasses\DummyCustomDesignerController.cs" />
-    <Compile Include="DummyClasses\DummyFileInfo.cs" />
-    <Compile Include="DummyClasses\DummyFileMonitor.cs" />
-    <Compile Include="DummyClasses\DummyFrameworkSpecificPageTemplate.cs" />
-    <Compile Include="DummyClasses\DummyGridControl.cs" />
-    <Compile Include="DummyClasses\DummyGridSystemInitializer.cs" />
-    <Compile Include="DummyClasses\DummyHttpContext.cs" />
-    <Compile Include="DummyClasses\DummyHttpRequest.cs" />
-    <Compile Include="DummyClasses\DummyHttpResponse.cs" />
-    <Compile Include="DummyClasses\DummyLayoutRenderer.cs" />
-    <Compile Include="DummyClasses\DummyLayoutVirtualFileResolver.cs" />
-    <Compile Include="DummyClasses\DummyMvcDesignerControl.cs" />
-    <Compile Include="DummyClasses\DummyPageTemplate.cs" />
-    <Compile Include="DummyClasses\DummyPageTemplateWithTitle.cs" />
-    <Compile Include="DummyClasses\DummyResolverStrategy.cs" />
-    <Compile Include="DummyClasses\DummyResourceFileManager.cs" />
-    <Compile Include="DummyClasses\DummyResourceResolverNode.cs" />
-    <Compile Include="DummyClasses\DummyToolboxesConfig.cs" />
-    <Compile Include="DummyClasses\DummyView.cs" />
-    <Compile Include="DummyClasses\DummyVirtualFileResolver.cs" />
+    <Compile Include="DummyClasses\Authentication\DummyAuthenticationEvaluator.cs" />
+    <Compile Include="DummyClasses\Configs\DummyConfigProvider.cs" />
+    <Compile Include="DummyClasses\Controls\DummyControl.cs" />
+    <Compile Include="DummyClasses\Mvc\Controllers\DummyController.cs" />
+    <Compile Include="DummyClasses\Mvc\Controllers\DummyControllerFactory.cs" />
+    <Compile Include="DummyClasses\LocalizationResources\DummyControllerResoruces.cs" />
+    <Compile Include="DummyClasses\Mvc\Controllers\DummyCustomDesignerController.cs" />
+    <Compile Include="DummyClasses\ResourceResolvers\DummyDatabaseResourceResolver.cs" />
+    <Compile Include="DummyClasses\FileMonitoring\DummyFileInfo.cs" />
+    <Compile Include="DummyClasses\FileMonitoring\DummyFileMonitor.cs" />
+    <Compile Include="DummyClasses\Mvc\Controllers\DummyEnhancedController.cs" />
+    <Compile Include="DummyClasses\PageTemplates\DummyFrameworkSpecificPageTemplate.cs" />
+    <Compile Include="DummyClasses\Controls\DummyGridControl.cs" />
+    <Compile Include="DummyClasses\GridSystem\DummyGridSystemInitializer.cs" />
+    <Compile Include="DummyClasses\HttpContext\DummyHttpContext.cs" />
+    <Compile Include="DummyClasses\HttpContext\DummyHttpRequest.cs" />
+    <Compile Include="DummyClasses\HttpContext\DummyHttpResponse.cs" />
+    <Compile Include="DummyClasses\Layouts\DummyLayoutRenderer.cs" />
+    <Compile Include="DummyClasses\Controls\DummyMvcDesignerControl.cs" />
+    <Compile Include="DummyClasses\PageTemplates\DummyPageTemplate.cs" />
+    <Compile Include="DummyClasses\PageTemplates\DummyPageTemplateWithTitle.cs" />
+    <Compile Include="DummyClasses\ResourceResolvers\DummyResolverStrategy.cs" />
+    <Compile Include="DummyClasses\FileMonitoring\DummyResourceFileManager.cs" />
+    <Compile Include="DummyClasses\ResourceResolvers\DummyResourceResolverNode.cs" />
+    <Compile Include="DummyClasses\Configs\DummyToolboxesConfig.cs" />
+    <Compile Include="DummyClasses\Mvc\DummyView.cs" />
+    <Compile Include="DummyClasses\ResourceResolvers\DummyVirtualFileResolver.cs" />
+    <Compile Include="DummyClasses\Models\DummyWidgetModel.cs" />
+    <Compile Include="DummyClasses\Mvc\DummyControllerContainerInitializer.cs" />
+    <Compile Include="DummyClasses\ResourceResolvers\DummyResourceHttpHandler.cs" />
     <Compile Include="ObjectFactoryContainerRegion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -201,6 +205,7 @@
       <Name>Telerik.Sitefinity.Frontend</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

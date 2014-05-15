@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Security;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
-using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Authentication;
 
 namespace Telerik.Sitefinity.Frontend.Test.Designers
 {
@@ -33,6 +33,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
             this.designerController.Dispose();
             this.designerController = null;
         }
+
+        #region GetDesigner
 
         [TestMethod]
         [Owner("EGaneva")]
@@ -64,6 +66,10 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
             //Assert
             Assert.AreEqual(expectedDesignerName, designerView.ViewName, string.Format("ViewName should equals {0}.", expectedDesignerName));
         }
+
+        #endregion
+
+        #region GetDesignerPartialView
 
         [TestMethod]
         [Owner("EGaneva")]
@@ -98,11 +104,12 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
             Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should equals {0}.", expectedDesignerViewName));
         }
 
+        #endregion
+
         #region Private fields and constants
 
         private DesignerController designerController;
         private ObjectFactoryContainerRegion objectFactoryCotnainerRegion;
-        private Type authenticationEvaluatorType = typeof(AuthenticationEvaluator); 
 
         #endregion
 

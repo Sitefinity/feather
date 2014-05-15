@@ -9,7 +9,8 @@ using Telerik.Sitefinity.Configuration.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
-using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Configs;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring;
 using Telerik.Sitefinity.Localization.Configuration;
 using Telerik.Sitefinity.Project.Configuration;
 using Telerik.Sitefinity.Security.Configuration;
@@ -23,13 +24,10 @@ namespace Telerik.Sitefinity.Frontend.Test.FileMonitoring
     [TestClass]
     public class FileMonitorTests
     {
-        private ObjectFactoryContainerRegion objectFactoryContainerRegion;
-        private HttpContextWrapper context;
-
         [TestInitialize]
         public void TestInitialize()
         {
-            objectFactoryContainerRegion = new ObjectFactoryContainerRegion();
+            this.objectFactoryContainerRegion = new ObjectFactoryContainerRegion();
             ObjectFactory.Container.RegisterType<ConfigManager, ConfigManager>(typeof(XmlConfigProvider).Name.ToUpperInvariant(),
                 new InjectionConstructor(typeof(XmlConfigProvider).Name));
             ObjectFactory.Container.RegisterType<XmlConfigProvider, DummyConfigProvider>();
@@ -37,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Test.FileMonitoring
             Config.RegisterSection<SecurityConfig>();
             Config.RegisterSection<ProjectConfig>();
 
-            context = new HttpContextWrapper(new HttpContext(
+            this.context = new HttpContextWrapper(new HttpContext(
                 new HttpRequest(null, "http://tempuri.org", null),
                 new HttpResponse(null)));
         }
@@ -45,10 +43,12 @@ namespace Telerik.Sitefinity.Frontend.Test.FileMonitoring
         [TestCleanup]
         public void TestCleanup()
         {
-            objectFactoryContainerRegion.Dispose();
-            objectFactoryContainerRegion = null;
-            context = null;
+            this.objectFactoryContainerRegion.Dispose();
+            this.objectFactoryContainerRegion = null;
+            this.context = null;
         }
+
+        #region FileChanged
 
         [TestMethod]
         [Owner("EGaneva")]
@@ -60,7 +60,7 @@ namespace Telerik.Sitefinity.Frontend.Test.FileMonitoring
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
             var filePath = fileMonitor.AppPhysicalPath + "\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml";
 
-            SystemManager.RunWithHttpContext(context, () =>
+            SystemManager.RunWithHttpContext(this.context, () =>
             {
                 //Act
                 fileMonitor.FileChangedTest(filePath, FileChangeType.Created);
@@ -84,7 +84,7 @@ namespace Telerik.Sitefinity.Frontend.Test.FileMonitoring
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
             var filePath = fileMonitor.AppPhysicalPath + "\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml";
 
-            SystemManager.RunWithHttpContext(context, () =>
+            SystemManager.RunWithHttpContext(this.context, () =>
             {
                 //Act
                 fileMonitor.FileChangedTest(filePath, FileChangeType.Deleted);
@@ -107,7 +107,7 @@ namespace Telerik.Sitefinity.Frontend.Test.FileMonitoring
             var oldFilePath = fileMonitor.AppPhysicalPath + "\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml";
             var newFilePath = fileMonitor.AppPhysicalPath + "\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\renamedTest.cshtml";
 
-            SystemManager.RunWithHttpContext(context, () =>
+            SystemManager.RunWithHttpContext(this.context, () =>
             {
                 //Act
                 fileMonitor.FileChangedTest(newFilePath, FileChangeType.Renamed, oldFilePath);
@@ -122,6 +122,10 @@ namespace Telerik.Sitefinity.Frontend.Test.FileMonitoring
             Assert.AreEqual(oldFilePath, fileMonitor.ResourceFileManager.DummyFileInfos.First().OldFilePath, "FileRenamed is called with wrong old file path.");
             Assert.AreEqual("My package", fileMonitor.ResourceFileManager.DummyFileInfos.First().PackageName, "FileRenamed is called with wrong package name.");
         }
+
+        #endregion
+
+        #region Start
 
         [TestMethod]
         [Owner("EGaneva")]
@@ -147,5 +151,14 @@ namespace Telerik.Sitefinity.Frontend.Test.FileMonitoring
             Assert.AreEqual(baseMvcPath, fileMonitor.QueuedFoldersAndPackages[1].Path, "The base Mvc folder path is not added correctly.");
             Assert.IsFalse(fileMonitor.QueuedFoldersAndPackages[1].IsPackage, "The values in QueuedFoldersAndPackages are not correct.");
         }
+
+        #endregion
+
+        #region Private fields and constants
+
+        private ObjectFactoryContainerRegion objectFactoryContainerRegion;
+        private HttpContextWrapper context;
+
+        #endregion
     }
 }

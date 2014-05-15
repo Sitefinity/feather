@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using Telerik.Sitefinity.Frontend.InlineEditing;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Models;
 using Telerik.Sitefinity.Utilities.HtmlParsing;
-using Telerik.Sitefinity.Frontend.InlineEditing.Attributes;
 
 namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
 {
@@ -15,6 +13,8 @@ namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
     [TestClass]
     public class InlineEditingTests
     {
+        #region HtmlRegion class tests
+
         [TestMethod]
         [Owner("Bonchev")]
         [Description("Checks whether the HtmlRegion class properly closes a given region when disposed")]
@@ -23,10 +23,10 @@ namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
             //Arrange: create text writer and dummy content 
             TextWriter writer = new StringWriter();
 
-            string dummyHtmlContent = string.Format("<{0}>{1}", htmlWrapperTag, dummyContent);
+            string dummyHtmlContent = string.Format("<{0}>{1}", this.htmlWrapperTag, this.dummyContent);
 
             //Act: create the HTML region 
-            using (new HtmlRegion(writer, htmlWrapperTag))
+            using (new HtmlRegion(writer, this.htmlWrapperTag))
             {
                 writer.WriteLine(dummyHtmlContent);
             }
@@ -37,14 +37,17 @@ namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
             using (HtmlParser parser = new HtmlParser(outPut))
             {
                 var chunk = parser.ParseNext();
-                Assert.IsNotNull(chunk);
-
-                //checks if the HTML tag is of type div
-                Assert.IsTrue(chunk.TagName.Equals(htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase));
-
+                Assert.IsNotNull(chunk, "Chunk shouldn't be null.");
+                Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase), "The html tag is not div.");
                 this.AssertContentAndCloseTag(parser);
             }
         }
+
+        #endregion
+
+        #region HtmlProcessor class tests
+
+        #region CreateInlineEditingRegion
 
         [TestMethod]
         [Owner("Bonchev")]
@@ -62,7 +65,7 @@ namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
 
             using (htmlProcessor.CreateInlineEditingRegion(writer, providerName, type, id))
             {
-                writer.WriteLine(dummyContent);
+                writer.WriteLine(this.dummyContent);
             }
 
             var outPut = writer.ToString();
@@ -76,19 +79,23 @@ namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
                 Assert.IsNotNull(chunk);
 
                 //checks if the HTML tag is of type div and if it has the required attributes
-                Assert.IsTrue(chunk.TagName.Equals(htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase));
-                Assert.IsTrue(chunk.HasAttribute(idAttribute));
-                Assert.IsTrue(chunk.HasAttribute(providerAttribute));
-                Assert.IsTrue(chunk.HasAttribute(typeAttribute));
+                Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase));
+                Assert.IsTrue(chunk.HasAttribute(this.idAttribute), "The id of the item is not appended as attribute correctly.");
+                Assert.IsTrue(chunk.HasAttribute(this.providerAttribute), "The provider is not appended as attribute correctly.");
+                Assert.IsTrue(chunk.HasAttribute(this.typeAttribute), "The id type the item is not appended as attribute correctly.");
 
                 //checks if the required attributes has proper values assigned to them
-                Assert.AreEqual<string>(providerName, chunk.GetParamValue(providerAttribute));
-                Assert.AreEqual<string>(type, chunk.GetParamValue(typeAttribute));
-                Assert.AreEqual<string>(id.ToString(), chunk.GetParamValue(idAttribute));
+                Assert.AreEqual<string>(providerName, chunk.GetParamValue(this.providerAttribute), "The value of the provider attribute is not correct.");
+                Assert.AreEqual<string>(type, chunk.GetParamValue(this.typeAttribute), "The value of the provider attribute is not correct.");
+                Assert.AreEqual<string>(id.ToString(), chunk.GetParamValue(this.idAttribute), "The value of the id attribute is not correct.");
 
                 this.AssertContentAndCloseTag(parser);
             }
         }
+
+        #endregion
+
+        #region GetStringContent
 
         [TestMethod]
         [Owner("Bonchev")]
@@ -97,7 +104,7 @@ namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
         {
             //Arrange
             var htmlProcessor = new HtmlProcessor();
-            var dummyWidgetModel = new DummyWidgetModel { EditableContent = dummyContent, NonEditableContent = dummyContent };
+            var dummyWidgetModel = new DummyWidgetModel { EditableContent = this.dummyContent, NonEditableContent = this.dummyContent };
 
             string fieldName = "DummyWidget";
             string type = "LongText";
@@ -112,13 +119,13 @@ namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
                 Assert.IsNotNull(chunk);
 
                 //checks if the HTML tag is of type div and if it has the required attributes
-                Assert.IsTrue(chunk.TagName.Equals(htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase));
-                Assert.IsTrue(chunk.HasAttribute(fieldAttribute));
-                Assert.IsTrue(chunk.HasAttribute(fieldTypeAttribute));
+                Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase), "There is no wrapper div appended to the property representation.");
+                Assert.IsTrue(chunk.HasAttribute(this.fieldAttribute), "The field attribute is not appended correctly.");
+                Assert.IsTrue(chunk.HasAttribute(this.fieldTypeAttribute), "The field type attribute is not appended correctly.");
 
                 //checks if the required attributes has proper values assigned to them
-                Assert.AreEqual<string>(fieldName, chunk.GetParamValue(fieldAttribute));
-                Assert.AreEqual<string>(type, chunk.GetParamValue(fieldTypeAttribute));
+                Assert.AreEqual<string>(fieldName, chunk.GetParamValue(this.fieldAttribute), "The value of the field attribute is not correct.");
+                Assert.AreEqual<string>(type, chunk.GetParamValue(this.fieldTypeAttribute), "The value of the fieldType attribute is not correct.");
 
                 this.AssertContentAndCloseTag(parser);
             }
@@ -137,8 +144,12 @@ namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
             var nonInlineeditingAwareContent = htmlProcessor.GetStringContent(dummyWidgetModel, "NonEditableContent");
 
             //Assert
-            Assert.AreEqual<string>(dummyContent, nonInlineeditingAwareContent);
+            Assert.AreEqual<string>(this.dummyContent, nonInlineeditingAwareContent, "The content is not preserved correctly.");
         }
+
+        #endregion
+
+        #endregion
 
         #region Helper methods
 
@@ -160,12 +171,11 @@ namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
                 }
             }
 
-            //checks if the region inner content is what it should be
-            Assert.IsTrue(content.StartsWith(dummyContent, StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(content.StartsWith(dummyContent, StringComparison.InvariantCultureIgnoreCase), "The inner content is not preserved correctly.");
 
             //checks if the region is properly closed
-            Assert.IsTrue(chunk.TagName.Equals(htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(chunk.Type == HtmlChunkType.CloseTag);
+            Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase), "The last tag is not div.");
+            Assert.IsTrue(chunk.Type == HtmlChunkType.CloseTag, "The last tag is not closing tag.");
         } 
 
         #endregion
@@ -181,23 +191,5 @@ namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
         private string fieldTypeAttribute = "data-sf-ftype"; 
 
         #endregion
-    }
-
-    /// <summary>
-    /// This class is used for a fake widget property model one of its properties is marked with FieldInfoAttribute and the other is not
-    /// </summary>
-    public class DummyWidgetModel
-    {
-        /// <summary>
-        /// Gets or sets the HTML which must be wrapped into InlineEditing region.
-        /// </summary>
-        [FieldInfo("DummyWidget", "LongText")]
-        public string EditableContent { get; set; }
-
-        /// <summary>
-        /// Gets or sets the non editable content.
-        /// </summary>
-        public string NonEditableContent { get; set; }
-    }
-
+    } 
 }

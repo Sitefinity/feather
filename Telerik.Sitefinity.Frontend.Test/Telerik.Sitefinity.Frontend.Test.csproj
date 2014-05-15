@@ -126,12 +126,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FileMonitoring\FileMonitorTests.cs" />
-    <Compile Include="GridSystemTests\GridSystemInitializerTests.cs" />
+    <Compile Include="GridSystem\GridSystemInitializerTests.cs" />
     <Compile Include="InlineEditing\InlineEditingTests.cs" />
-    <Compile Include="Mvc\Infrastructure\ControllerRegistryTest.cs" />
-    <Compile Include="GridSystemTests\GridControlTest.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensionsTests.cs" />
+    <Compile Include="GridSystem\GridControlTests.cs" />
     <Compile Include="Designers\DesignerResolverTests.cs" />
-    <Compile Include="Helpers\UrlHelpersTest.cs" />
+    <Compile Include="Mvc\Helpers\UrlHelpersTests.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensionsTests.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutResolverTests.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutRendererTests.cs" />
@@ -139,17 +139,17 @@
     <Compile Include="Mvc\Infrastructure\Layouts\MasterPageBuilderTests.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilderTests.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParserTests.cs" />
-    <Compile Include="Mvc\Infrastructure\MultiplePathsControllerFactoryTest.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\FrontendControllerFactoryTests.cs" />
     <Compile Include="Resources\PackagesManagerTests.cs" />
-    <Compile Include="Resources\Resolvers\ResourceResolverNodeTest.cs" />
-    <Compile Include="Resources\Resolvers\ResourceResolverStrategyTest.cs" />
-    <Compile Include="Resources\ResourceHttpHandlerTest.cs" />
-    <Compile Include="Resources\Resolvers\DatabaseResourceResolverTest.cs" />
-    <Compile Include="Resources\Resolvers\EmbeddedResourceResolverTest.cs" />
-    <Compile Include="Resources\Resolvers\ResourceResolverTest.cs" />
+    <Compile Include="Resources\Resolvers\ResourceResolverNodeTests.cs" />
+    <Compile Include="Resources\Resolvers\ResourceResolverStrategyTests.cs" />
+    <Compile Include="Resources\ResourceHttpHandlerTests.cs" />
+    <Compile Include="Resources\Resolvers\DatabaseResourceResolverTests.cs" />
+    <Compile Include="Resources\Resolvers\EmbeddedResourceResolverTests.cs" />
+    <Compile Include="Resources\Resolvers\ResourceResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Mvc\Infrastructure\ControllerInitializerTest.cs" />
-    <Compile Include="Resources\VirtualPathBuilderTest.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\ControllerContainerInitializerTests.cs" />
+    <Compile Include="Resources\VirtualPathBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Telerik.Sitefinity.Frontend.TestUtilities\Telerik.Sitefinity.Frontend.TestUtilities.csproj">
@@ -176,9 +176,7 @@
     <Content Include="ClientScripts\helpers\jquery-1.8.3.min.js" />
     <Content Include="ClientScripts\unit\controllersSpec.js" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DummyClasses\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
