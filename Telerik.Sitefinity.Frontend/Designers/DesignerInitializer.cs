@@ -37,20 +37,19 @@ namespace Telerik.Sitefinity.Frontend.Designers
         /// <param name="event">The event.</param>
         private void RegisteringScriptsHandler(IScriptsRegisteringEvent @event)
         {
-            var packagesManager = new PackagesManager();
             if (@event.Sender.GetType() == typeof(ZoneEditor))
             {
                 var scriptRootPath = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly);
 
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Angular/angular.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Angular/angular-route.min.js"));
-
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls-0.10.0.min.js"));
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor-services.js"));
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor.js"));
+
+                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/lib/page-editor-services.js"));
+                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/lib/page-editor.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/angular-kendo.js"));
 
-                var currentPackage = packagesManager.GetCurrentPackage();
+                var currentPackage = new PackagesManager().GetCurrentPackage();
                 if (!currentPackage.IsNullOrEmpty())
                 {
                     var packageVar = "var sf_package = '{0}';".Arrange(currentPackage);

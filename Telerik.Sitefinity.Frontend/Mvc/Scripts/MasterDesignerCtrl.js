@@ -2,7 +2,7 @@
     var masterDesignerModule = angular.module('masterDesigner', ['advancedDesignerModule', 'pageEditorServices', 'ngRoute', 'ui.bootstrap']);
 
     //controller for the "$modalInstance"
-    var EditDialogContentCtrl = function ($scope, $modalInstance, PropertyDataService, PageControlDataService) {
+    var EditDialogContentCtrl = function ($scope, $modalInstance, propertyService, widgetContext) {
 
         var ifSaveToAllTranslations = true;
         // ------------------------------------------------------------------------
@@ -42,11 +42,11 @@
             };
 
             var currentSaveMode = saveMode.Default;
-            if (PageControlDataService.data.PropertyValueCulture) {
+            if (widgetContext.culture) {
                 currentSaveMode = ifSaveToAllTranslations ? saveMode.AllTranslations : saveMode.CurrentTranslationOnly;
             }
 
-            PropertyDataService.saveProperties(dialogClose, onError, currentSaveMode, modifiedProperties);
+            propertyService.save(currentSaveMode, modifiedProperties).then(dialogClose, onError);
         };
 
         var showError = function(message){
@@ -75,7 +75,7 @@
             var args = { Cancel: false };
 
             if (typeof ($telerik) != "undefined") {
-                PropertyDataService.getProperties(function (data) {
+                propertyService.get().then(function (data) {
                     $telerik.$(document).trigger("controlPropertiesUpdating", [{ "Items": data.Items, "args": args }]);
                 }, onError);
             }
@@ -86,11 +86,11 @@
 
         $scope.Cancel = function () {
             if (typeof ($telerik) != "undefined") {
-                PropertyDataService.getProperties(function (data) {
+                propertyService.get().then(function (data) {
                     $telerik.$(document).trigger("controlPropertiesUpdateCanceling", [{ "Items": data.Items }]);
                 }, onError);
             }
-            PropertyDataService.resetPropertyChanges();
+            propertyService.reset();
             dialogClose();
         };
 
@@ -102,9 +102,9 @@
             $scope.IsSimpleVisible = !$scope.IsSimpleVisible;
         };
 
-        $scope.HideSaveAllTranslations = PageControlDataService.data.HideSaveAllTranslations;
+        $scope.HideSaveAllTranslations = widgetContext.hideSaveAllTranslations;
 
-        PropertyDataService.getProperties(onGetPropertiesSuccess, onError);
+        propertyService.get().then(onGetPropertiesSuccess, onError);
 
         if (typeof ($telerik) != "undefined") {
             $telerik.$(document).one("controlPropertiesUpdate", function (e, params) {
@@ -116,7 +116,7 @@
                     dialogClose();
             });
             $telerik.$(document).one("controlPropertiesLoaded", function (e, params) {
-                PropertyDataService.setProperties(params.Items);
+                propertyService.set(params.Items);
             });
         }
     }

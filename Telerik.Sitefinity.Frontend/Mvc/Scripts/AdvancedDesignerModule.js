@@ -3,8 +3,8 @@
     var advancedDesignerModule = angular.module('advancedDesignerModule', ['breadCrumbModule', 'pageEditorServices']);
 
     //basic controller for the advanced designer view
-    advancedDesignerModule.controller('AdvancedDesignerModuleCtrl', ['$scope', 'PropertyDataService',
-        function ($scope, PropertyDataService) {
+    advancedDesignerModule.controller('AdvancedDesignerModuleCtrl', ['$scope', 'propertyService',
+        function ($scope, propertyService) {
 
             var onGetPropertiesSuccess = function (data) {
                 if (data.Items)
@@ -21,14 +21,14 @@
             }
 
             $scope.$on('saveButtonPressed', function (event, e) {
-                PropertyDataService.setProperties($scope.Items);
+                propertyService.set($scope.Items);
             });
 
             $scope.$on("$destroy", function () {
-                PropertyDataService.setProperties($scope.Items);
+                propertyService.set($scope.Items);
             });
 
-            PropertyDataService.getProperties(onGetPropertiesSuccess, onGetError);
+            propertyService.get().then(onGetPropertiesSuccess, onGetError);
 
             $scope.ShowLoadingIndicator = true;
 

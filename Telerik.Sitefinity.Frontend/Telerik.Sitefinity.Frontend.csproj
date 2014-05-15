@@ -278,7 +278,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Mvc\Scripts\Kendo\angular-kendo.js" />
-    <EmbeddedResource Include="Mvc\Scripts\ModalDialogModule.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\ui-bootstrap-tpls-0.10.0.min.js" />
   </ItemGroup>
   <ItemGroup>
@@ -300,10 +299,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Designers\Scripts\page-editor-services.js" />
+    <EmbeddedResource Include="Designers\lib\page-editor-services.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Designers\Scripts\page-editor.js" />
+    <EmbeddedResource Include="Designers\lib\page-editor.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />

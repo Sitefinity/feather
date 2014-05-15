@@ -1,6 +1,6 @@
 @using Telerik.Sitefinity.Frontend.Mvc.Helpers
 
-<div id="masterDesigner" ng-controller="MasterDesignerCtrl">
+<div class="modal-dialog" ng-controller="MasterDesignerCtrl">
     <script type="text/ng-template" id="editDialogContent">
          <div class="modal-header">
              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="Cancel($event)">&times;</button>
@@ -54,6 +54,6 @@
                       templateUrl: 'advanced-designer-view', controller: 'AdvancedDesignerModuleCtrl'
                   });
         });
-        angular.bootstrap($("#masterDesigner"), ['designer']);
+        angular.bootstrap($(".modal-dialog"), ['designer']);
     })(jQuery);
 </script>
