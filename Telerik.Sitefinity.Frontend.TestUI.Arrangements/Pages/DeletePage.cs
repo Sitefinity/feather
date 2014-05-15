@@ -7,7 +7,7 @@ using Telerik.Sitefinity.TestUI.Arrangements.Framework;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
-namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements.Pages
+namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
     /// Sample arragement that Creates and dletes a page.
