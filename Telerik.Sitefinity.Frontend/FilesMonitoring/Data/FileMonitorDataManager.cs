@@ -9,6 +9,9 @@ using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 {
+    /// <summary>
+    /// Represents the data manager for the file monitoring functionality.
+    /// </summary>
     public class FileMonitorDataManager : ManagerBase<FileMonitorDataProvider>
     {
         #region Constructors

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 
@@ -33,3 +34,5 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 [assembly: AssemblyFileVersion("0.1.1000.1")]
 
 [assembly: ControllerContainer]
+
+[assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.Test")]

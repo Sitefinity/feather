@@ -8,7 +8,7 @@ using Telerik.Sitefinity.Data.OA;
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 {
     /// <summary>
-    /// 
+    /// OpenAccess implementation of the <see cref="FileMonitorDataProvider"/>.
     /// </summary>
     public class OpenAccessFileMonitorDataProvider : FileMonitorDataProvider, IOpenAccessDataProvider, IOpenAccessUpgradableProvider
     {

@@ -18,10 +18,10 @@ namespace Telerik.Sitefinity.Frontend
         {
             get
             {
-                if (virtualPathBuilder == null)
-                    virtualPathBuilder = new VirtualPathBuilder();
+                if (FrontendManager.virtualPathBuilder == null)
+                    FrontendManager.virtualPathBuilder = new VirtualPathBuilder();
 
-                return virtualPathBuilder;
+                return FrontendManager.virtualPathBuilder;
             }
         }
 
@@ -32,10 +32,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             get
             {
-                if (controllerRegistry == null)
-                    controllerRegistry = ControllerBuilder.Current.GetControllerFactory() as ISitefinityControllerFactory;
-
-                return controllerRegistry;
+                return ControllerBuilder.Current.GetControllerFactory() as ISitefinityControllerFactory;;
             }
         }
 
@@ -46,19 +43,18 @@ namespace Telerik.Sitefinity.Frontend
         {
             get
             {
-                if (authenticationEvaluator == null)
-                    authenticationEvaluator = new AuthenticationEvaluator();
+                if (FrontendManager.authenticationEvaluator == null)
+                    FrontendManager.authenticationEvaluator = new AuthenticationEvaluator();
 
-                return authenticationEvaluator;
+                return FrontendManager.authenticationEvaluator;
             }
             set
             {
-                authenticationEvaluator = value;
+                FrontendManager.authenticationEvaluator = value;
             }
         }
 
         private static VirtualPathBuilder virtualPathBuilder;
-        private static ISitefinityControllerFactory controllerRegistry;
         private static AuthenticationEvaluator authenticationEvaluator;
     }
 }

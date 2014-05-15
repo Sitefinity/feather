@@ -9,6 +9,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
     [TestClass]
     public class TemplateTitleParserTests
     {
+        #region GetLayoutName
+
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether GetLayoutName method replaces invalid characters.")]
@@ -41,5 +43,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
             //Assert
             Assert.AreEqual(templateTitle, resultLayoutName, "The initial template title should be preserved.");
         }
+
+        #endregion
     }
 }

@@ -164,7 +164,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FilesMonitoring\FileChangeType.cs" />
     <Compile Include="FilesMonitoring\FileMonitoringInitializer.cs" />
+    <Compile Include="FilesMonitoring\MonitoredDirectory.cs" />
     <Compile Include="GridSystem\GridSystemInitializer.cs" />
     <Compile Include="GridSystem\GridControlData.cs" />
     <Compile Include="InlineEditing\HtmlProcessor.cs" />
@@ -183,9 +185,9 @@
     <Compile Include="FilesMonitoring\Data\OpenAccessFileMonitorDataProvider.cs" />
     <Compile Include="Designers\DesignerResolver.cs" />
     <Compile Include="FilesMonitoring\IFileManager.cs" />
-    <Compile Include="FilesMonitoring\LayoutFilesManager.cs" />
+    <Compile Include="FilesMonitoring\LayoutFileManager.cs" />
     <Compile Include="FilesMonitoring\FileMonitor.cs" />
-    <Compile Include="FilesMonitoring\IFilesMonitor.cs" />
+    <Compile Include="FilesMonitoring\IFileMonitor.cs" />
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />
@@ -205,7 +207,7 @@
     <Compile Include="Resources\PackagesManager.cs" />
     <Compile Include="FrontendManager.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\LocalizationAttribute.cs" />
-    <Compile Include="FilesMonitoring\ResourceTypes.cs" />
+    <Compile Include="FilesMonitoring\ResourceType.cs" />
     <Compile Include="Resources\ResourceHttpHandler.cs" />
     <Compile Include="Resources\ResourcesInitiliazer.cs" />
     <Compile Include="Security\AuthenticationEvaluator.cs" />
