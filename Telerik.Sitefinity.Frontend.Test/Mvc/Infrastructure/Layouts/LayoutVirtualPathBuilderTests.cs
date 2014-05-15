@@ -10,6 +10,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
     [TestClass]
     public class LayoutVirtualPathBuilderTests
     {
+        #region BuildPathFromTitle
+
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether BuildPathFromTitle prepends layout suffix and appends master suffix.")]
@@ -26,6 +28,10 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
             //Assert
             Assert.AreEqual(expectedVirtualPath, resultVirtualPath, "The virtual path is not constructed correctly.");
         }
+
+        #endregion
+
+        #region GetLayoutName
 
         [TestMethod]
         [Owner("EGaneva")]
@@ -64,5 +70,6 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
             Assert.IsNull(resultLayoutName, "The result layout name should be null if the virtual path doesn't end with 'master'.");
         }
 
+        #endregion
     }
 }
