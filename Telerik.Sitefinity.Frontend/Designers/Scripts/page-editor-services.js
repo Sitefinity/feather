@@ -1,5 +1,6 @@
-﻿//this is the service responsible for managing the properties data for all interested parties
-angular.module("controlPropertyServices").factory('PropertyDataService', function ($http, PageControlDataService) {
+﻿
+//this is the service responsible for managing the properties data for all interested parties
+angular.module('pageEditorServices', []).factory('PropertyDataService', function ($http, PageControlDataService) {
     var propertyData;
     var initialData;
 
@@ -25,8 +26,9 @@ angular.module("controlPropertyServices").factory('PropertyDataService', functio
 
         var putUrl = basePropertyServiceUrl + "batch/" + id + "/?pageId=" + pageId + "&mediaType=" + mediaType + "&propertyLocalization=" + saveMode;
 
-        if (!modifiedData || modifiedData.length == 0)
+        if (!modifiedData || modifiedData.length === 0)
             modifiedData = this.getChangedProperties();
+
         return $http.put(putUrl, modifiedData, { headers: cultureHeaders })
             .success(
                 function (xhrData, status, headers, config) {

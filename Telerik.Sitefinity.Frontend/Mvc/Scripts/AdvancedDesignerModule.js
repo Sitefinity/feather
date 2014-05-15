@@ -1,54 +1,54 @@
 ﻿(function () {
     //angular controller responsible for the Advanced mode logic
-    var advancedDesignerModule = angular.module('advancedDesignerModule', ['breadCrumbModule', 'controlPropertyServices']);
+    var advancedDesignerModule = angular.module('advancedDesignerModule', ['breadCrumbModule', 'pageEditorServices']);
 
     //basic controller for the advanced designer view
-    advancedDesignerModule.controller('AdvancedDesignerModuleCtrl', ['$scope','PropertyDataService',
-            function ($scope, PropertyDataService) {
+    advancedDesignerModule.controller('AdvancedDesignerModuleCtrl', ['$scope', 'PropertyDataService',
+        function ($scope, PropertyDataService) {
 
-                var onGetPropertiesSuccess = function (data) {
-                    if (data.Items)
-                        $scope.Items = data.Items;
-                    $scope.ShowLoadingIndicator = false;
-                };
+            var onGetPropertiesSuccess = function (data) {
+                if (data.Items)
+                    $scope.Items = data.Items;
+                $scope.ShowLoadingIndicator = false;
+            };
 
-                var onGetError = function (data, status, headers, config) {
-                    $scope.ShowError = true;
-                    if (data)
-                        $scope.ErrorMessage = data.Detail;
+            var onGetError = function (data, status, headers, config) {
+                $scope.ShowError = true;
+                if (data)
+                    $scope.ErrorMessage = data.Detail;
 
-                    $scope.ShowLoadingIndicator = false;
-                }
+                $scope.ShowLoadingIndicator = false;
+            }
 
-                $scope.$on('saveButtonPressed', function (event, e) {
-                    PropertyDataService.setProperties($scope.Items);
+            $scope.$on('saveButtonPressed', function (event, e) {
+                PropertyDataService.setProperties($scope.Items);
+            });
+
+            $scope.$on("$destroy", function () {
+                PropertyDataService.setProperties($scope.Items);
+            });
+
+            PropertyDataService.getProperties(onGetPropertiesSuccess, onGetError);
+
+            $scope.ShowLoadingIndicator = true;
+
+            $scope.ShowSimpleButton();
+
+            $scope.DrillDownPropertyHierarchy = function (propertyPath, propertyName) {
+                $scope.propertyPath = propertyPath;
+                $scope.propertyName = propertyName;
+            };
+
+            if (typeof ($telerik) != "undefined") {
+                $telerik.$(document).one("controlPropertiesLoaded", function (e, params) {
+                    if (params.Items) {
+                        $scope.Items = params.Items;
+                        $scope.$apply();
+                    }
                 });
+            }
 
-                $scope.$on("$destroy", function () {
-                    PropertyDataService.setProperties($scope.Items);
-                });
-
-                PropertyDataService.getProperties(onGetPropertiesSuccess, onGetError);
-
-                $scope.ShowLoadingIndicator = true;
-
-                $scope.ShowSimpleButton();
-
-                $scope.DrillDownPropertyHierarchy = function (propertyPath, propertyName) {
-                    $scope.propertyPath = propertyPath;
-                    $scope.propertyName = propertyName;
-                };
-
-                if (typeof ($telerik) != "undefined") {
-                    $telerik.$(document).one("controlPropertiesLoaded", function (e, params) {
-                        if (params.Items) {
-                            $scope.Items = params.Items;
-                            $scope.$apply();
-                        }
-                    });
-                }
-
-            }]);
+        }]);
 
     //filters property hierarchy
     advancedDesignerModule.filter('propertyHierarchy', function () {

@@ -41,17 +41,19 @@
 <script src='@Url.WidgetContent("Mvc/Scripts/BreadCrumbModule.js")'></script>
 
 <script type="text/javascript">
-    var designerModule = angular.module('designer', ['masterDesigner', 'advancedDesignerModule', 'controlPropertyServices', 'ngRoute']);
+    (function ($) {
+        var designerModule = angular.module('designer', ['masterDesigner', 'advancedDesignerModule', 'pageEditorServices', 'ngRoute']);
 
-    designerModule.config(function ($routeProvider) {
-        $routeProvider
-              //the route points to a MVC controller action that returns a proper view
-              .when('/advanced', {
-                  templateUrl: 'advanced-designer-view', controller: 'AdvancedDesignerModuleCtrl'
-              })
-              .when('/', {
-                  templateUrl: 'advanced-designer-view', controller: 'AdvancedDesignerModuleCtrl'
-              });
-    });
-    angular.bootstrap($("#masterDesigner"), ['designer']);
+        designerModule.config(function ($routeProvider) {
+            $routeProvider
+                  //the route points to a MVC controller action that returns a proper view
+                  .when('/advanced', {
+                      templateUrl: 'advanced-designer-view', controller: 'AdvancedDesignerModuleCtrl'
+                  })
+                  .when('/', {
+                      templateUrl: 'advanced-designer-view', controller: 'AdvancedDesignerModuleCtrl'
+                  });
+        });
+        angular.bootstrap($("#masterDesigner"), ['designer']);
+    })(jQuery);
 </script>

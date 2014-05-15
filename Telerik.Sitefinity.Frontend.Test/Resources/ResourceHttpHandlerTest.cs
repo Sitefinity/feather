@@ -43,8 +43,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
         {
             string stylesContent = "my expected styles";
 
-            var responseWriter = new StringWriter();
-            var response = new HttpResponse(responseWriter);
+            var outputStream = new MemoryStream();
+            var response = new HttpResponse(new StringWriter());
             var context = new HttpContext(
                new HttpRequest(null, "http://tempuri.org/test-style.css", null),
                response);
@@ -58,10 +58,21 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
                     str.Position = 0;
                     return str;
                 };
+            handler.WriteToOutputMock = (ctx, buffer) =>
+                {
+                    outputStream.Write(buffer, 0, buffer.Length);
+                    outputStream.Position = 0;
+                };
 
             handler.ProcessRequest(context);
-            
-            Assert.AreEqual(stylesContent, responseWriter.GetStringBuilder().ToString());
+
+            string responseText;
+            using (var reader = new StreamReader(outputStream))
+            {
+                responseText = reader.ReadToEnd();
+            }
+
+            Assert.AreEqual(stylesContent, responseText);
             Assert.AreEqual("text/css", response.ContentType);
         }
 
@@ -73,6 +84,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
         {
             public Func<string, bool> FileExistsMock;
             public Func<string, Stream> OpenFileMock;
+            public Action<HttpContext, byte[]> WriteToOutputMock;
 
             protected override bool FileExists(string path)
             {
@@ -95,6 +107,18 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
                 else
                 {
                     return base.OpenFile(path);
+                }
+            }
+
+            protected override void WriteToOutput(HttpContext context, byte[] buffer)
+            {
+                if (this.WriteToOutputMock != null)
+                {
+                    this.WriteToOutputMock(context, buffer);
+                }
+                else
+                {
+                    base.WriteToOutput(context, buffer);
                 }
             }
         }

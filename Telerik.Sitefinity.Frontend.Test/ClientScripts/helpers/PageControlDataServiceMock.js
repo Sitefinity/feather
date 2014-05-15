@@ -1,6 +1,6 @@
-var controlPropertyServices = angular.module('controlPropertyServices');
+var pageEditorServices = angular.module('pageEditorServices');
 
-controlPropertyServices.factory('PageControlDataService', function () {
+pageEditorServices.factory('PageControlDataService', function () {
         return {
             data: {
 					"Id": "902033f3-aceb-6a2e-a9a3-ff0000ffeb85",

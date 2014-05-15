@@ -19,6 +19,7 @@
     <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2014.1.403.2\tools\enhancer\enhancer.exe</EnhancerAssembly>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <JSLintSkip>\Mvc\Scripts\Angular\angular.min.js|\Mvc\Scripts\Angular\angular-route.min.js</JSLintSkip>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -245,7 +246,6 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\css\bootstrap.min.css" />
-    <EmbeddedResource Include="Mvc\Scripts\ControlPropertyServices.js" />
     <EmbeddedResource Include="Mvc\Scripts\BreadCrumbModule.js" />
     <EmbeddedResource Include="GridSystem\Templates\grid-3+9.html">
       <SubType>ASPXCodeBehind</SubType>
@@ -298,6 +298,12 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js.map" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Designers\Scripts\page-editor-services.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Designers\Scripts\page-editor.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />

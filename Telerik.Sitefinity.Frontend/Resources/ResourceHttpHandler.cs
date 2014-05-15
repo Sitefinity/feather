@@ -36,13 +36,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 using (var fileStream = this.OpenFile(context.Request.Url.AbsolutePath))
                 {
                     var fileName = VirtualPathUtility.GetFileName(context.Request.Url.AbsolutePath);
+                    var buffer = new byte[fileStream.Length];
+                    fileStream.Read(buffer, 0, (int)fileStream.Length);
 
-                    using (var strReader = new StreamReader(fileStream))
-                    {
-                        var fileContent = strReader.ReadToEnd();
-                        context.Response.Write(fileContent);
-                    }
-
+                    this.WriteToOutput(context, buffer);
                     context.Response.ContentType = ResourceHttpHandler.GetMimeMapping(fileName);
                 }
             }
@@ -72,6 +69,16 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             var file = HostingEnvironment.VirtualPathProvider.GetFile(path);
             return file.Open();
+        }
+
+        /// <summary>
+        /// Writes the given buffer to output.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="buffer">The buffer.</param>
+        protected virtual void WriteToOutput(HttpContext context, byte[] buffer)
+        {
+            context.Response.OutputStream.Write(buffer, 0, buffer.Length);
         }
 
         /// <summary>

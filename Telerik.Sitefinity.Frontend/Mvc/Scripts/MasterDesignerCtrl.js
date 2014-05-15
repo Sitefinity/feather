@@ -1,5 +1,5 @@
 ﻿(function () {
-    var masterDesignerModule = angular.module('masterDesigner', ['advancedDesignerModule', 'controlPropertyServices', 'ngRoute', 'ui.bootstrap']);
+    var masterDesignerModule = angular.module('masterDesigner', ['advancedDesignerModule', 'pageEditorServices', 'ngRoute', 'ui.bootstrap']);
 
     //controller for the "$modalInstance"
     var EditDialogContentCtrl = function ($scope, $modalInstance, PropertyDataService, PageControlDataService) {
