@@ -7,7 +7,7 @@
     <DeploymentItem filename="Telerik.Sitefinity.Frontend.TestUI.TestCases\app.config" />
   </Deployment>
   <NamingScheme baseName="TestExecution@Sitefinity_UITestCases" useDefault="false" />
-  <RemoteController name="idimitrov" />
+  <RemoteController name="featherci" />
   <Execution location="Remote">
     <Timeouts agentNotRespondingTimeout="90000" scriptTimeout="600000" />
     <TestTypeSpecific>
