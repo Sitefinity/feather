@@ -1,4 +1,6 @@
-﻿(function ($) {
+﻿/*global angular, designerExtensions */
+
+(function ($) {
     var designerModule = angular.module('designer', designerExtensions.dependencies);
 
     designerModule.config(designerExtensions.config);

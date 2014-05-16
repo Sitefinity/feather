@@ -19,17 +19,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
     public class DesignerController : Controller
     {
         /// <summary>
-        /// Returns the designer view which handles the property editing for the particular widget. 
+        /// Returns the designer view which handles the property editing for a particular widget. 
         /// If there is custom designer for the particular widget it will be retrieved, otherwise it will fallback to the default designer.
         /// The default designer is located under <see cref="Telerik.Sitefinity.Frontend.Mvc.Views.Designer.Designer.cshtml"/>.
         /// </summary>
         /// <param name="widgetName">The name of the widget.</param>
-        public virtual ActionResult Designer(string widgetName)
+        public virtual ActionResult Master(string widgetName)
         {
             FrontendManager.AuthenticationEvaluator.RequestBackendUserAuthentication();
 
             this.ViewBag.ControlName = widgetName;
-            return this.View();
+            return this.View(DesignerController.defaultView);
         }
 
         /// <summary>
@@ -50,6 +50,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             return this.PartialView(viewName);
         }
 
+        private const string defaultView = "Designer";
         private const string designerNameTemplate = "{0}.Designer";
     }
 }

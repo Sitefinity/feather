@@ -93,7 +93,7 @@
 //    var element;
 //    var scope;
 
-//    beforeEach(module('breadCrumbModule'));
+//    beforeEach(module('breadcrumbModule'));
 
 //    beforeEach(inject(function($rootScope, $compile) {
 //        element = angular.element('<ul ng-model="propertyPath" breadcrumb></ul>');

@@ -34,18 +34,18 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
             this.designerController = null;
         }
 
-        #region Designer
+        #region Master
 
         [TestMethod]
         [Owner("EGaneva")]
-        [Description("Validates whether Designer action sets the correct ControlName in the ViewBag.")]
-        public void Designer_ByWidgetName_SetsControlName()
+        [Description("Validates whether Master action sets the correct ControlName in the ViewBag.")]
+        public void Master_ByWidgetName_SetsControlName()
         {
             //Arrange
             var widgetName = "Dummy";
 
             //Act
-            var designer = this.designerController.Designer(widgetName) as ViewResult;
+            var designer = this.designerController.Master(widgetName) as ViewResult;
 
             //Assert
             Assert.AreEqual(widgetName, designer.ViewBag.ControlName, string.Format("ViewBag.ControlName should be equal to {0}.", widgetName));

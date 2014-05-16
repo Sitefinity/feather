@@ -37,7 +37,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
             var url = resolver.GetUrl(typeof(DummyController));
 
             //Assert
-            Assert.AreEqual("~/Telerik.Sitefinity.Frontend/Designer/Designer/Dummy", url, "The default designer URL is not retrieved properly.");
+            Assert.AreEqual("~/Telerik.Sitefinity.Frontend/Designer/Master/Dummy", url, "The default designer URL is not retrieved properly.");
         }
 
         [TestMethod]
