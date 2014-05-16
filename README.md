@@ -1,9 +1,17 @@
 The Feather Project
 =======
 
-This repository contains the core project related to the Feather project. Note that the current implementation is not final, that it is a subject to changes as well as breaking API changes and should not be used in production.
+This repository contains the core infrastructure related to the Feather project. Note that the current implementation is not final, that it is a subject to changes as well as breaking API changes and should not be used in production.
+
+# Related Repositories
+
+[feather-widgets](https://github.com/Sitefinity/feather-widgets) - This repository contains custom MVC widgets which are part of the Feather project.
+
+# Documentation
 
 [Getting Started](https://github.com/Sitefinity/feather/wiki/Getting-Started)
+
+[How to create a "Hello World" MVC widget](https://github.com/Sitefinity/feather/wiki/How-to-create-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-separate-assembly)
 
 [How to change MVC widget templates](https://github.com/Sitefinity/feather/wiki/How-to-change-MVC-widget-templates)
 

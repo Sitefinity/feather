@@ -6,9 +6,8 @@ using Telerik.Sitefinity.Data;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 {
-
     /// <summary>
-    /// Defines the basic functionality that should be implemented by Comments data providers
+    /// Represents the data provider for the file monitoring functionality.
     /// </summary>
     [Telerik.Microsoft.Practices.Unity.InterceptionExtension.ApplyNoPolicies]
     public abstract class FileMonitorDataProvider : DataProviderBase
@@ -41,9 +40,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
             get { return "FileMonitorDataProvider"; }
         }
 
-        #endregion
-
-        #region Package
+        #region Package Methods
 
         /// <summary>
         /// Creates the file data.
@@ -72,7 +69,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
         public abstract IQueryable<FileData> GetFilesData();
 
         /// <summary>
-        /// Deletes the specified file data to delete.
+        /// Deletes the specified file data.
         /// </summary>
         /// <param name="fileDataToDelete">The file data to delete.</param>
         public abstract void Delete(FileData fileDataToDelete);
@@ -133,6 +130,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
             else
                 throw GetInvalidItemTypeException(itemType, this.GetKnownTypes());
         }
+
+        #endregion
 
         #endregion
 

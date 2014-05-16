@@ -7,7 +7,9 @@ using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Configuration.Data;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
-using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Configs;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Web.Configuration;
 
@@ -19,6 +21,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
     [TestClass]
     public class LayoutResolverTests
     {
+        #region GetVirtualPath
+
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether invalid characters are trimmed when constructing virtual path.")]
@@ -74,7 +78,6 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
                 Config.RegisterSection<VirtualPathSettingsConfig>();
                 Config.RegisterSection<ControlsConfig>();
 
-
                 VirtualPathManager.AddVirtualFileResolver<DummyVirtualFileResolver>(LayoutResolverTests.testVp, "DummyVirtualFileResolver");
 
                 //Act
@@ -92,7 +95,6 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
             }
         }
 
-
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether GetVirtualPath methods returns empty string when template is not pure MVC.")]
@@ -109,9 +111,15 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
             Assert.IsNull(resolvedVirtualPath, "The resolved virtual path should be null when the page template is not in MVC mode.");
         }
 
+        #endregion
+
+        #region Private fields and constants
+
         /// <summary>
         /// Virtual path used for test purposes only.
         /// </summary>
         private const string testVp = "~/SfLayouts/*";
+
+        #endregion
     }
 }
