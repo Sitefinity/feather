@@ -118,3 +118,4 @@ Telerik.Sitefinity.Frontend.Test/lib
 
 .nuget/NuGet.exe
 Telerik.Sitefinity.Frontend.Test/test-results.xml
+UpgradeLog*.htm

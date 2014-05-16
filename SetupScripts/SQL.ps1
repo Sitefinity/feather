@@ -10,10 +10,24 @@ function EnsureDBDeleted($databaseServer, $dbName)
     #check database exists on server
     if ($DBObject)
     {
-        #instead of drop we will use KillDatabase
+
+	  Try
+	  {
+	    #instead of drop we will use KillDatabase
         #KillDatabase drops all active connections before dropping the database.
 	    write-output "Deleting $dbName database from SqlServer."
+		$Server.KillAllProcesses($dbName)
 	    $Server.KillDatabase($dbName)
+	  }
+
+	  Catch
+	  {
+		 write-output $_.Exception.Message
+         write-output $_.Exception.InnerException
+         write-output $_.Exception.Stack
+         write-output $_.Exception.GetBaseException().Message	
+		 write-output "username is:" $env:username
+	  }
     }
 }
 

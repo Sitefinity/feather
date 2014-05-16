@@ -1,8 +1,9 @@
-$doc = New-Object System.Xml.XmlDocument
-$doc.Load("Variables.xml") 
-
 $machineName = gc env:computername
 $currentPath = Split-Path $script:MyInvocation.MyCommand.Path
+
+$doc = New-Object System.Xml.XmlDocument
+$doc.Load($currentPath + "\Variables.xml") 
+
 
 #Modules
 $iisModule = Join-Path $currentPath "\IIS.ps1"
@@ -34,6 +35,7 @@ $appPollName = $siteName
 $secondAppPollName = $secondSiteName
 $databaseName = $siteName
 $secondSiteDatabaseName = $secondSiteName
+$websiteBinariesDirectory = $defaultWebsiteRootDirectory + "\bin"
 
 #TEST AGENT
 $testAgentExe = "C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\QTAgentProcessUI.exe"
