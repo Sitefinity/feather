@@ -117,3 +117,4 @@ ReferenceAssemblies
 Telerik.Sitefinity.Frontend.Test/lib
 
 .nuget/NuGet.exe
+UpgradeLog*.htm
