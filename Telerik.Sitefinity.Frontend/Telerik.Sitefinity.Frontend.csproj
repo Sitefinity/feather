@@ -232,10 +232,10 @@
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerContainerInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Views\Designer\Advanced.Designer.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Designer\PropertyGrid.Designer.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Views\Designer\Master.Designer.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Designer\Designer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mvc\Views\Shared\" />
@@ -243,12 +243,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Styles\Images\loading.gif" />
     <EmbeddedResource Include="Mvc\Scripts\Selectors\ProviderSelectorModule.js" />
-    <EmbeddedResource Include="Mvc\Scripts\AdvancedDesignerModule.js" />
-    <EmbeddedResource Include="Mvc\Scripts\MasterDesignerCtrl.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Designer\property-grid.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Designer\designer.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\css\bootstrap.min.css" />
-    <EmbeddedResource Include="Mvc\Scripts\BreadCrumbModule.js" />
+    <EmbeddedResource Include="Mvc\Scripts\breadcrumb.js" />
     <EmbeddedResource Include="GridSystem\Templates\grid-3+9.html">
       <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>
@@ -310,6 +310,9 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.js" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Designer\designer-extensions.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -321,7 +324,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

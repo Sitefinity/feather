@@ -1,4 +1,4 @@
-﻿angular.module('breadCrumbModule', []).factory('BreadCrumbService', function ($rootScope) {
+﻿angular.module('breadcrumb', []).factory('BreadCrumbService', function ($rootScope) {
     var breadCrumbElements = [];    
 
     var breadCrumbElement = function (propPath, propName) {

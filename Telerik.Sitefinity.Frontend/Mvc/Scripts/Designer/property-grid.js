@@ -1,9 +1,8 @@
 ﻿(function () {
-    //angular controller responsible for the Advanced mode logic
-    var advancedDesignerModule = angular.module('advancedDesignerModule', ['breadCrumbModule', 'pageEditorServices']);
+    var designerModule = angular.module('designer');
 
     //basic controller for the advanced designer view
-    advancedDesignerModule.controller('AdvancedDesignerModuleCtrl', ['$scope', 'propertyService',
+    designerModule.controller('propertyGridCtrl', ['$scope', 'propertyService',
         function ($scope, propertyService) {
 
             var onGetPropertiesSuccess = function (data) {
@@ -51,7 +50,7 @@
         }]);
 
     //filters property hierarchy
-    advancedDesignerModule.filter('propertyHierarchy', function () {
+    designerModule.filter('propertyHierarchy', function () {
 
         return function (inputArray, propertyName, propertyPath) {
             var currentLevel;

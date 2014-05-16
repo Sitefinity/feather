@@ -28,7 +28,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Checks whether GetUrl returns the default MVC designer URL.")]
-        public void GetUrl_MvcController_ReturnsDefaultMvcDesignerUrl()
+        public void GetUrl_Controller_ReturnsDefaultMvcDesignerUrl()
         {
             //Arrange
             var resolver = new DesignerResolver();
@@ -37,7 +37,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
             var url = resolver.GetUrl(typeof(DummyController));
 
             //Assert
-            Assert.AreEqual("~/Telerik.Sitefinity.Frontend/Designer/GetDesigner/Dummy", url, "The default designer URL is not retrieved properly.");
+            Assert.AreEqual("~/Telerik.Sitefinity.Frontend/Designer/Designer/Dummy", url, "The default designer URL is not retrieved properly.");
         }
 
         [TestMethod]

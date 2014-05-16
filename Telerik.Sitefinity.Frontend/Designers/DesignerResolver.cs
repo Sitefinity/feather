@@ -86,7 +86,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
 
         #region Constants
         
-        private const string defaultActionUrlTemplate = "~/Telerik.Sitefinity.Frontend/Designer/GetDesigner/{0}";
+        private const string defaultActionUrlTemplate = "~/Telerik.Sitefinity.Frontend/Designer/Designer/{0}";
 
         #endregion 
     }

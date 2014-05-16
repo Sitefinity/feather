@@ -21,16 +21,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <summary>
         /// Returns the designer view which handles the property editing for the particular widget. 
         /// If there is custom designer for the particular widget it will be retrieved, otherwise it will fallback to the default designer.
-        /// The default designer is located under <see cref="Telerik.Sitefinity.Frontend.Mvc.Views.Designer.Master.Designer.cshtml"/>.
+        /// The default designer is located under <see cref="Telerik.Sitefinity.Frontend.Mvc.Views.Designer.Designer.cshtml"/>.
         /// </summary>
         /// <param name="widgetName">The name of the widget.</param>
-        public virtual ActionResult GetDesigner(string widgetName)
+        public virtual ActionResult Designer(string widgetName)
         {
             FrontendManager.AuthenticationEvaluator.RequestBackendUserAuthentication();
 
-            string desinerName = DesignerController.designerNameTemplate.Arrange(DesignerController.defaultDesignerViewType);
             this.ViewBag.ControlName = widgetName;
-            return this.View(desinerName);
+            return this.View();
         }
 
         /// <summary>
@@ -42,7 +41,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <param name="viewType">Type of the view which is requested. For example Simple, Advanced</param>
         /// <returns></returns>
         /// <exception cref="System.InvalidOperationException">View cannot be found on the searched locations.</exception>
-        public ActionResult GetDesignerPartialView(string widgetName, string viewType)
+        public virtual ActionResult DesignerView(string widgetName, string viewType)
         {
             FrontendManager.AuthenticationEvaluator.RequestBackendUserAuthentication();
        
@@ -51,7 +50,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             return this.PartialView(viewName);
         }
 
-        private const string defaultDesignerViewType = "Master";
         private const string designerNameTemplate = "{0}.Designer";
     }
 }

@@ -34,55 +34,39 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
             this.designerController = null;
         }
 
-        #region GetDesigner
+        #region Designer
 
         [TestMethod]
         [Owner("EGaneva")]
-        [Description("Validates whether GetDesigner action returns view with correct name.")]
-        public void GetDesigner_ByWidgetName_ReturnsDesigner()
+        [Description("Validates whether Designer action sets the correct ControlName in the ViewBag.")]
+        public void Designer_ByWidgetName_SetsControlName()
         {
             //Arrange
             var widgetName = "Dummy";
-            var expectedDesignerName = "Master.Designer";
 
             //Act
-            var designerView = this.designerController.GetDesigner(widgetName) as ViewResult;
+            var designer = this.designerController.Designer(widgetName) as ViewResult;
 
             //Assert
-            Assert.AreEqual(expectedDesignerName, designerView.ViewName, string.Format("ViewName should equals {0}.", expectedDesignerName));
-        }
-
-        [TestMethod]
-        [Owner("EGaneva")]
-        [Description("Validates whether GetDesigner action returns default view when the widget name is not provided.")]
-        public void GetDesigner_NoLocalDesigner_ReturnsDefaultDesigner()
-        {
-            //Arrange
-            var expectedDesignerName = "Master.Designer";
-
-            //Act
-            var designerView = this.designerController.GetDesigner("") as ViewResult;
-
-            //Assert
-            Assert.AreEqual(expectedDesignerName, designerView.ViewName, string.Format("ViewName should equals {0}.", expectedDesignerName));
+            Assert.AreEqual(widgetName, designer.ViewBag.ControlName, string.Format("ViewBag.ControlName should be equal to {0}.", widgetName));
         }
 
         #endregion
 
-        #region GetDesignerPartialView
+        #region DesignerPartialView
 
         [TestMethod]
         [Owner("EGaneva")]
-        [Description("Validates whether GetDesignerPartialView action returns view with correct name with requested view type when such is available.")]
-        public void GetDesignerPartialView_WithLocalAdvancedDesigner_ReturnsAdvancedDesigner()
+        [Description("Validates whether DesignerPartialView action returns view with correct name with requested view type when such is available.")]
+        public void DesignerPartialView_WithLocalAdvancedDesigner_ReturnsPropertyGridDesigner()
         {
             //Arrange
             var widgetName = "Dummy";
-            var viewType = "Advanced";
-            var expectedDesignerViewName = "Advanced.Designer";
+            var viewType = "PropertyGrid";
+            var expectedDesignerViewName = "PropertyGrid.Designer";
 
             //Act
-            var designerView = this.designerController.GetDesignerPartialView(widgetName, viewType) as PartialViewResult;
+            var designerView = this.designerController.DesignerView(widgetName, viewType) as PartialViewResult;
 
             //Assert
             Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should equals {0}.", expectedDesignerViewName));
@@ -90,15 +74,15 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
 
         [TestMethod]
         [Owner("EGaneva")]
-        [Description("Validates whether GetDesignerPartialView action returns default view with the requested view type when such is available.")]
-        public void GetDesignerPartialView_NoLocalAdvancedDesigner_ReturnsDefaultAdvancedDesigner()
+        [Description("Validates whether DesignerPartialView action returns default view with the requested view type when such is available.")]
+        public void DesignerPartialView_NoLocalPropertyGridDesigner_ReturnsDefaultPropertyGridDesigner()
         {
             //Arrange
-            var viewType = "Advanced";
-            var expectedDesignerViewName = "Advanced.Designer";
+            var viewType = "PropertyGrid";
+            var expectedDesignerViewName = "PropertyGrid.Designer";
 
             //Act
-            var designerView = this.designerController.GetDesignerPartialView("", viewType) as PartialViewResult;
+            var designerView = this.designerController.DesignerView("", viewType) as PartialViewResult;
 
             //Assert
             Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should equals {0}.", expectedDesignerViewName));
