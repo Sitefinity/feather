@@ -42,5 +42,7 @@
 <script src='@Url.WidgetContent("Mvc/Scripts/breadcrumb.js")'></script>
 
 <script type="text/javascript">
-    angular.bootstrap($('.designer'), ['designer']);
+    (function ($) {
+        angular.bootstrap($('.designer'), ['designer']);
+    })(jQuery);
 </script>
