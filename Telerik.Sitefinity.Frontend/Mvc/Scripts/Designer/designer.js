@@ -27,8 +27,9 @@
             // ------------------------------------------------------------------------
 
             var onGetPropertiesSuccess = function (data) {
-                if (typeof ($telerik) != "undefined")
-                    $telerik.$(document).trigger("controlPropertiesLoad", [{ "Items": data.Items }]);
+                if (typeof ($telerik) != 'undefined')
+                    $telerik.$(document).trigger('controlPropertiesLoad', [{ 'Items': data.Items }]);
+
                 $scope.ShowLoadingIndicator = false;
             };
 
@@ -40,11 +41,11 @@
                 try {
                     $modalInstance.close()
                 } catch (e) { }
+
                 $scope.ShowLoadingIndicator = false;
 
-                if (typeof ($telerik) != "undefined") {
-                    $telerik.$(document).trigger("modalDialogClosed");
-                }
+                if (typeof ($telerik) != 'undefined')
+                    $telerik.$(document).trigger('modalDialogClosed');
             };
 
             // ------------------------------------------------------------------------
@@ -91,9 +92,9 @@
 
                 var args = { Cancel: false };
 
-                if (typeof ($telerik) != "undefined") {
+                if (typeof ($telerik) != 'undefined') {
                     propertyService.get().then(function (data) {
-                        $telerik.$(document).trigger("controlPropertiesUpdating", [{ "Items": data.Items, "args": args }]);
+                        $telerik.$(document).trigger('controlPropertiesUpdating', [{ 'Items': data.Items, 'args': args }]);
                     }, onError);
                 }
 
@@ -102,9 +103,9 @@
             };
 
             $scope.Cancel = function () {
-                if (typeof ($telerik) != "undefined") {
+                if (typeof ($telerik) != 'undefined') {
                     propertyService.get().then(function (data) {
-                        $telerik.$(document).trigger("controlPropertiesUpdateCanceling", [{ "Items": data.Items }]);
+                        $telerik.$(document).trigger('controlPropertiesUpdateCanceling', [{ 'Items': data.Items }]);
                     }, onError);
                 }
                 propertyService.reset();
@@ -123,8 +124,8 @@
 
             propertyService.get().then(onGetPropertiesSuccess, onError);
 
-            if (typeof ($telerik) != "undefined") {
-                $telerik.$(document).one("controlPropertiesUpdate", function (e, params) {
+            if (typeof ($telerik) != 'undefined') {
+                $telerik.$(document).one('controlPropertiesUpdate', function (e, params) {
                     if(params.Items)
                         saveProperties(params.Items);
                     if (params.error)
@@ -132,7 +133,7 @@
                     else
                         dialogClose();
                 });
-                $telerik.$(document).one("controlPropertiesLoaded", function (e, params) {
+                $telerik.$(document).one('controlPropertiesLoaded', function (e, params) {
                     propertyService.set(params.Items);
                 });
             }

@@ -2,7 +2,7 @@
 
     var breadcrumbModule = angular.module('breadcrumb', []);
     
-    breadcrumbModule.factory('BreadcrumbFactory', function ($rootScope) {
+    breadcrumbModule.factory('breadcrumbService', function ($rootScope) {
         var breadcrumbElements = [];
 
         var breadcrumbElement = function (propPath, propName) {
@@ -28,7 +28,7 @@
         };
     });
     
-    breadcrumbModule.directive('breadcrumb', function (BreadcrumbFactory) {
+    breadcrumbModule.directive('breadcrumb', function (breadcrumbService) {
         return {
             restrict: 'A',
             template: '<ul class="breadcrumb"><li ng-repeat=\'bc in Breadcrumbs\' ng-class="{\'active\': {{$last}} }"><a ng-click="RefreshHierarchy(bc.PropertyPath, bc.PropertyName)" ng-bind="bc.PropertyName"></a></li></ul>',
@@ -44,23 +44,23 @@
                 //adds single path element at the end of the breadcrumb.
                 addSingleBreadcrumbElement = function (propPath) {
                     if (propPath) {
-                        if (BreadcrumbFactory.getAll().length === 0)
-                            BreadcrumbFactory.push('', 'Home');
+                        if (breadcrumbService.getAll().length === 0)
+                            breadcrumbService.push('', 'Home');
 
                         var containingProperties = propPath.split('/');
                         var propName = containingProperties[containingProperties.length - 1];
-                        BreadcrumbFactory.push(propPath, propName);
+                        breadcrumbService.push(propPath, propName);
 
                         var breadcrumbElement = $(".breadcrumb");
                         breadcrumbElement.show();
                     }
-                    scope.Breadcrumbs = BreadcrumbFactory.getAll();
+                    scope.Breadcrumbs = breadcrumbService.getAll();
                 };
 
                 //generates all elements of the breadcrumb
                 generateCurrentBreadcrumbElements = function (proeprtyPath, propName) {
-                    BreadcrumbFactory.removeAll();
-                    BreadcrumbFactory.push('', 'Home');
+                    breadcrumbService.removeAll();
+                    breadcrumbService.push('', 'Home');
                     var breadcrumbElement = $('.breadcrumb');
                     if (proeprtyPath) {
                         breadcrumbElement.show();
@@ -68,14 +68,14 @@
                         containingProperties.forEach(function (propName) {
                             if (propName) {
                                 var propPath = proeprtyPath.substr(0, proeprtyPath.indexOf(propName)) + propName;
-                                BreadcrumbFactory.push(propPath, propName);
+                                breadcrumbService.push(propPath, propName);
                             }
                         });
                     }
                     else {
                         breadcrumbElement.hide();
                     }
-                    return BreadcrumbFactory.getAll();
+                    return breadcrumbService.getAll();
                 }
 
                 //initial populate of the breadcrumb elements

@@ -246,7 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Styles\Images\loading.gif" />
-    <EmbeddedResource Include="Mvc\Scripts\Selectors\ProviderSelectorModule.js" />
+    <EmbeddedResource Include="Mvc\Scripts\data-providers.js" />
     <EmbeddedResource Include="Mvc\Scripts\Designer\property-grid.js" />
     <EmbeddedResource Include="Mvc\Scripts\Designer\designer.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js" />
@@ -328,7 +328,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

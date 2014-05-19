@@ -111,7 +111,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                     result = result.Replace("{1}", widgetName);
                 }
 
-                if (currentPackage.IsNullOrEmpty())
+                if (!currentPackage.IsNullOrEmpty())
                     result = result + "#" + currentPackage + Path.GetExtension(path);
 
                 return result;
