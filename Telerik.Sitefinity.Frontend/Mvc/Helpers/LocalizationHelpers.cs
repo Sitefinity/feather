@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Localization;
 
@@ -10,10 +11,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
     /// </summary>
     public static class LocalizationHelpers
     {
+
+        /// <summary>
+        /// Get the label with the specified key from the resource files.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        public static string Label(this HtmlHelper helper, string key)
+        {
+            var controller = helper.ViewContext.Controller;
+            return LocalizationHelpers.Label(controller, key);
+        }
+
         /// <summary>
         /// Get the label with the specified key from the resource files.
         /// </summary>
         /// <param name="key">The key.</param>
+        [Obsolete("Use the Html.Label(key) instead")]
         public static string Label(this WebViewPage page, string key)
         {
             var controller = LocalizationHelpers.GetController(page);
@@ -25,6 +40,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Get the label with the specified key from the resource files.
         /// </summary>
         /// <param name="key">The key.</param>
+        [Obsolete("Use the Html.Label(key) instead")]
         public static string Label(this ViewPage page, string key)
         {
             var controller = LocalizationHelpers.GetController(page);

@@ -169,6 +169,9 @@
     <Compile Include="DummyClasses\Mvc\Controllers\DummyControllerFactory.cs" />
     <Compile Include="DummyClasses\LocalizationResources\DummyControllerResoruces.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyCustomDesignerController.cs" />
+    <Compile Include="DummyClasses\Mvc\Helpers\DummyLocalizationControllerResources.cs" />
+    <Compile Include="DummyClasses\Mvc\Helpers\DummyLocalizedController.cs" />
+    <Compile Include="DummyClasses\Mvc\Helpers\DummyViewDataContainer.cs" />
     <Compile Include="DummyClasses\ResourceResolvers\DummyDatabaseResourceResolver.cs" />
     <Compile Include="DummyClasses\FileMonitoring\DummyFileInfo.cs" />
     <Compile Include="DummyClasses\FileMonitoring\DummyFileMonitor.cs" />

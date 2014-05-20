@@ -16,6 +16,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
     {
         #region Public Properties
 
+        /// <summary>
+        /// Gets the page.
+        /// </summary>
+        /// <value>
+        /// The page.
+        /// </value>
         public static PageDataViewModel Page
         {
             get
@@ -24,6 +30,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
         }
 
+        /// <summary>
+        /// Gets the site.
+        /// </summary>
+        /// <value>
+        /// The site.
+        /// </value>
         public static SiteViewModel Site
         {
             get
@@ -32,6 +44,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
         }
 
+        /// <summary>
+        /// Gets the profile.
+        /// </summary>
+        /// <value>
+        /// The profile.
+        /// </value>
         public static ProfileViewModel Profile
         {
             get

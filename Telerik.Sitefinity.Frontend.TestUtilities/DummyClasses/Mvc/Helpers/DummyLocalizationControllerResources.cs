@@ -4,15 +4,12 @@ using System.Linq;
 using System.Text;
 using Telerik.Sitefinity.Localization;
 
-namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.LocalizationResources
+namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Helpers
 {
-    /// <summary>
-    /// This class is used to test localization for the controllers.
-    /// </summary>
-    [ObjectInfo(typeof(DummyControllerResoruces), Title = "DummyControllerResoruces", Description = "DummyControllerResorucesDescription")]
-    public class DummyControllerResoruces : Resource
+    [ObjectInfo(typeof(DummyLocalizationControllerResources), Title = "DummyLocalizationControllerResources", Description = "DummyLocalizationControllerResourcesDescription")]
+    public class DummyLocalizationControllerResources : Resource
     {
-         /// <summary>
+        /// <summary>
         /// Resources for Comments
         /// </summary>
         [ResourceEntry("DummyResource",
@@ -27,4 +24,5 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.LocalizationRes
             }
         }
     }
+
 }
