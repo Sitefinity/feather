@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
-using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Frontend.Security;
-using Telerik.Sitefinity.Frontend.Resources.Resolvers;
-using Telerik.Sitefinity.Modules.Pages;
-using Telerik.Sitefinity.Modules.Pages.Web.Services;
-using Telerik.Sitefinity.Modules.Pages.Web.Services.Model;
-using Telerik.Sitefinity.Pages.Model;
-using Telerik.Sitefinity.Services;
-using Telerik.Sitefinity.Web.Services;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
+using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 {
     /// <summary>
     /// This class contains logic for resolving the views of the MVC designer of a widget.
     /// </summary>
+    [Localization(typeof(DesignerResources))]
     public class DesignerController : Controller
     {
         /// <summary>

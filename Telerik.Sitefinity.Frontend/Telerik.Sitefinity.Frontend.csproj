@@ -208,6 +208,7 @@
     <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParser.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilder.cs" />
+    <Compile Include="Mvc\StringResources\DesignerResources.cs" />
     <Compile Include="Resources\PackagesManager.cs" />
     <Compile Include="FrontendManager.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\LocalizationAttribute.cs" />

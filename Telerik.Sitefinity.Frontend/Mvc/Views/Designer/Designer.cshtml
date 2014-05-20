@@ -4,12 +4,12 @@
     <script type="text/ng-template" id="dialog-template">
          <div class="modal-header">
              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="Cancel($event)">&times;</button>
-			<h1 class="modal-title"> @Html.Raw(ViewBag.ControlName)</h1>
+			<h1 class="modal-title">@Html.Raw(ViewBag.ControlName)</h1>
          </div>
          <div class="modal-body">
             <div ng-show="ShowError" class="alert alert-danger">
                 <a class="close" data-dismiss="alert">x</a>
-                <strong>Error!</strong> <span ng-bind="ErrorMessage"></span>
+                <strong>@this.Label("Error")</strong> <span ng-bind="ErrorMessage"></span>
             </div>
 
             <div ng-show="ShowLoadingIndicator" class="s-loading m-bottom-sm"></div>
@@ -18,9 +18,9 @@
            
          </div>
          <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="Save(false)">Save</button>
-            <button class="btn btn-default" ng-click="Save(true)" ng-hide="HideSaveAllTranslations">Save All Translations</button>
-            <a class="btn btn-link" data-dismiss="modal" ng-click="Cancel($event)">Cancel</a>
+            <button class="btn btn-primary" ng-click="Save(false)">@this.Label("Save")</button>
+            <button class="btn btn-default" ng-click="Save(true)" ng-hide="HideSaveAllTranslations">@this.Label("SaveAllTranslations")</button>
+            <a class="btn btn-link" data-dismiss="modal" ng-click="Cancel($event)">@this.Label("Cancel")</a>
          </div>
     </script>
 
