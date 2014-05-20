@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SetupScripts", "SetupScript
 	ProjectSection(SolutionItems) = preProject
 		SetupScripts\Cleanup.bat = SetupScripts\Cleanup.bat
 		SetupScripts\Cleanup.ps1 = SetupScripts\Cleanup.ps1
+		SetupScripts\FeatherSetup.ps1 = SetupScripts\FeatherSetup.ps1
 		SetupScripts\Functions.ps1 = SetupScripts\Functions.ps1
 		SetupScripts\IIS.ps1 = SetupScripts\IIS.ps1
 		SetupScripts\Setup.bat = SetupScripts\Setup.bat
