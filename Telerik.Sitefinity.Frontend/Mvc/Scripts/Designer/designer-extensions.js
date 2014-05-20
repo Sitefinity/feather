@@ -17,5 +17,5 @@ var designerExtensions = {
     /**
      * Dependencies of the designer module.
      */
-    dependencies: ['pageEditorServices', 'breadcrumb', 'ngRoute', 'ui.bootstrap']
+    dependencies: ['pageEditorServices', 'breadcrumb', 'ngRoute', 'modalDialog']
 };

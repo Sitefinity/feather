@@ -81,7 +81,7 @@
         };
     });
     
-    dataProvidersModule.directive('provider-selector', function (providerService) {
+    dataProvidersModule.directive('providerSelector', function (providerService) {
         return {
             restrict: 'E',
             template: '<div class="dropdown s-bg-source-wrp" ng-show="IsProviderSelectorVisible">'
@@ -99,7 +99,6 @@
                      + '</div>',
             replace: true,
             link: function (scope, tElement, tAttrs) {
-
                 var onGetProvidersSuccess = function (data) {
                     scope.Providers = data.Items;
                     scope.SelectedProvider = providerService.getDefault(data.Items);

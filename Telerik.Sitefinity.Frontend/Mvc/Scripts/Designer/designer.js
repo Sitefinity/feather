@@ -5,21 +5,7 @@
 
     designerModule.config(designerExtensions.config);
 
-    designerModule.directive('modal', function ($modal) {
-        return {
-            restrict: 'A',
-            link: function (scope, elem, attrs) {
-                var modalInstance = $modal.open({
-                    backdrop: 'static',
-                    templateUrl: 'dialog-template',
-                    controller: 'DialogCtrl',
-                    windowClass: "sf-designer-dlg"
-                });
-            }
-        };
-    });
-
-    designerModule.controller('DialogCtrl', ['$scope', '$modalInstance', 'propertyService', 'widgetContext',
+    designerModule.controller('dialogCtrl', ['$scope', '$modalInstance', 'propertyService', 'widgetContext',
         function ($scope, $modalInstance, propertyService, widgetContext) {
             var ifSaveToAllTranslations = true;
             // ------------------------------------------------------------------------
