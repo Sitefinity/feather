@@ -129,6 +129,8 @@
     <Compile Include="FileMonitoring\FileMonitorTests.cs" />
     <Compile Include="GridSystem\GridSystemInitializerTests.cs" />
     <Compile Include="InlineEditing\InlineEditingTests.cs" />
+    <Compile Include="Mvc\Helpers\LayoutsHelpersTests.cs" />
+    <Compile Include="Mvc\Helpers\LocalizationHelpersTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensionsTests.cs" />
     <Compile Include="GridSystem\GridControlTests.cs" />
     <Compile Include="Designers\DesignerResolverTests.cs" />
