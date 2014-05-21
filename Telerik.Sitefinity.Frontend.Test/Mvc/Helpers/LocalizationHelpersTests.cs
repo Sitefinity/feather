@@ -52,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Helpers
 
                 //Act
                 initializer.RegisterControllerPublic(controller);
-                var resourceString = urlHelper.Label("DummyResource");
+                var resourceString = urlHelper.SfRes("DummyResource");
 
                 //Assert
                 var resourceRegistered = ObjectFactory.Container.IsRegistered(typeof(DummyLocalizationControllerResources), Res.GetResourceClassId(typeof(DummyLocalizationControllerResources)));

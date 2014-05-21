@@ -9,7 +9,7 @@ var designerExtensions = {
     config: function ($routeProvider) {
         $routeProvider
             //the route points to a MVC controller action that returns a proper view
-            .when('/', {
+            .otherwise({
                 templateUrl: 'property-grid-view', controller: 'propertyGridCtrl'
             });
     },

@@ -35,6 +35,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             controller.ViewEngineCollection = viewEngines;
         }
 
+        /// <summary>
+        /// Disables the view location cache.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        public static void DisableViewLocationCache(this Controller controller)
+        {
+            foreach (var engine in controller.ViewEngineCollection)
+            {
+                var vppEngine = engine as VirtualPathProviderViewEngine;
+                if (vppEngine != null)
+                {
+                    vppEngine.ViewLocationCache = new VoidViewLocationCache();
+                }
+            }
+        }
+
         #endregion
 
         #region Private methods

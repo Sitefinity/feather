@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Mvc.StringResources;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 {
@@ -20,6 +21,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         public virtual ActionResult Master(string widgetName)
         {
             FrontendManager.AuthenticationEvaluator.RequestBackendUserAuthentication();
+            this.DisableViewLocationCache();
 
             this.ViewBag.ControlName = widgetName;
             return this.View(DesignerController.defaultView);
@@ -37,9 +39,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         public virtual ActionResult DesignerView(string widgetName, string viewType)
         {
             FrontendManager.AuthenticationEvaluator.RequestBackendUserAuthentication();
-       
-            string viewName = DesignerController.designerNameTemplate.Arrange(viewType); 
+            this.DisableViewLocationCache();
 
+            string viewName = DesignerController.designerNameTemplate.Arrange(viewType);
             return this.PartialView(viewName);
         }
 

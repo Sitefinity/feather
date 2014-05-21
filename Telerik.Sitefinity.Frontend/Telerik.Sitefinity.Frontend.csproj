@@ -193,6 +193,7 @@
     <Compile Include="FilesMonitoring\IFileMonitor.cs" />
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutResolver.cs" />

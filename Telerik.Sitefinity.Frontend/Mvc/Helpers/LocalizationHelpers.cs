@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.WebPages;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Localization;
@@ -18,21 +19,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="helper">The helper.</param>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        public static string Label(this HtmlHelper helper, string key)
+        public static string SfRes(this HtmlHelper helper, string key)
         {
             var controller = helper.ViewContext.Controller;
-            return LocalizationHelpers.Label(controller, key);
+            return LocalizationHelpers.SfRes(controller, helper.ViewContext.RouteData, key);
         }
 
         /// <summary>
         /// Get the label with the specified key from the resource files.
         /// </summary>
         /// <param name="key">The key.</param>
-        [Obsolete("Use the Html.Label(key) instead")]
+        [Obsolete("Use Html.SfRes(key) instead.")]
         public static string Label(this WebViewPage page, string key)
         {
             var controller = LocalizationHelpers.GetController(page);
-            var resClass = LocalizationHelpers.FindResourceStringClassType(controller);
+            var resClass = LocalizationHelpers.FindResourceStringClassType(controller.GetType());
             return Res.Get(resClass, key);
         }
 
@@ -40,11 +41,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Get the label with the specified key from the resource files.
         /// </summary>
         /// <param name="key">The key.</param>
-        [Obsolete("Use the Html.Label(key) instead")]
+        [Obsolete("Use Html.SfRes(key) instead.")]
         public static string Label(this ViewPage page, string key)
         {
             var controller = LocalizationHelpers.GetController(page);
-            var resClass = LocalizationHelpers.FindResourceStringClassType(controller);
+            var resClass = LocalizationHelpers.FindResourceStringClassType(controller.GetType());
             return Res.Get(resClass, key);
         }
 
@@ -53,9 +54,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// </summary>
         /// <param name="controller">Controller that requests the resource.</param>
         /// <param name="key">The key.</param>
-        public static string Label(IController controller, string key)
+        private static string SfRes(ControllerBase controller, RouteData routeData, string key)
         {
-            var resClass = LocalizationHelpers.FindResourceStringClassType(controller);
+            var resClass = LocalizationHelpers.FindResourceStringClassType(controller.GetType());
+
+            var widgetName = routeData != null ? routeData.Values["widgetName"] as string : null;
+            if (!string.IsNullOrEmpty(widgetName))
+            {
+                var widget = FrontendManager.ControllerFactory.ResolveControllerType(widgetName);
+                if (widget != null)
+                {
+                    var widgetResClass = LocalizationHelpers.FindResourceStringClassType(widget);
+                    string res;
+                    if (widgetResClass != null && Res.TryGet(widgetResClass.Name, key, out res))
+                    {
+                        return res;
+                    }
+                }
+            }
+
             return Res.Get(resClass, key);
         }
 
@@ -69,9 +86,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return page.ViewContext.Controller;
         }
 
-        private static Type FindResourceStringClassType(IController controller)
+        private static Type FindResourceStringClassType(Type controller)
         {
-            LocalizationAttribute rcdAttribute = Attribute.GetCustomAttribute(controller.GetType(), typeof(LocalizationAttribute)) as LocalizationAttribute;
+            LocalizationAttribute rcdAttribute = Attribute.GetCustomAttribute(controller, typeof(LocalizationAttribute)) as LocalizationAttribute;
 
             if (rcdAttribute != null)
             {

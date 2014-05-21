@@ -9,18 +9,17 @@
          <div class="modal-body">
             <div ng-show="ShowError" class="alert alert-danger">
                 <a class="close" data-dismiss="alert">x</a>
-                <strong>@this.Label("Error")</strong> <span ng-bind="ErrorMessage"></span>
+                <strong>@Html.SfRes("Error")</strong> <span ng-bind="ErrorMessage"></span>
             </div>
 
             <div ng-show="ShowLoadingIndicator" class="s-loading m-bottom-sm"></div>
 
             <div id="viewsPlaceholder" ng-view></div>
-           
          </div>
          <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="Save(false)">@this.Label("Save")</button>
-            <button class="btn btn-default" ng-click="Save(true)" ng-hide="HideSaveAllTranslations">@this.Label("SaveAllTranslations")</button>
-            <a class="btn btn-link" data-dismiss="modal" ng-click="Cancel($event)">@this.Label("Cancel")</a>
+            <button class="btn btn-primary" ng-click="Save(false)">@Html.SfRes("Save")</button>
+            <button class="btn btn-default" ng-click="Save(true)" ng-hide="HideSaveAllTranslations">@Html.SfRes("SaveAllTranslations")</button>
+            <a class="btn btn-link" data-dismiss="modal" ng-click="Cancel($event)">@Html.SfRes("Cancel")</a>
          </div>
     </script>
 
