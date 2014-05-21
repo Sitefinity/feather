@@ -84,9 +84,7 @@ var sf = sf || {};
 		widgetContext: null
 
 	};
-})(sf);
 
-(function ($) {
 	/**
 	 * Register the global Sitefinity events with the pageEditor component.
 	 */
@@ -94,4 +92,4 @@ var sf = sf || {};
 		$telerik.$(document).on('needsModalDialog', $.proxy(sf.pageEditor.openDialog, sf.pageEditor));
 		$telerik.$(document).on('modalDialogClosed', $.proxy(sf.pageEditor.destroyDialog, sf.pageEditor));
 	}
-})(jQuery);
+})(sf);

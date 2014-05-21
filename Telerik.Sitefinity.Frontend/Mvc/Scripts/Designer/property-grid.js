@@ -23,7 +23,7 @@
                 propertyService.set($scope.Items);
             });
 
-            $scope.$on("$destroy", function () {
+            $scope.$on('$destroy', function () {
                 propertyService.set($scope.Items);
             });
 
@@ -38,8 +38,8 @@
                 $scope.propertyName = propertyName;
             };
 
-            if (typeof ($telerik) != "undefined") {
-                $telerik.$(document).one("controlPropertiesLoaded", function (e, params) {
+            if (typeof ($telerik) != 'undefined') {
+                $telerik.$(document).one('controlPropertiesLoaded', function (e, params) {
                     if (params.Items) {
                         $scope.Items = params.Items;
                         $scope.$apply();

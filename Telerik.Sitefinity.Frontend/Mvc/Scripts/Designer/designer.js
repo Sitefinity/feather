@@ -92,10 +92,10 @@
                 if (typeof ($telerik) != 'undefined') {
                     propertyService.get().then(function (data) {
                         $telerik.$(document).trigger('controlPropertiesUpdateCanceling', [{ 'Items': data.Items }]);
+                        propertyService.reset();
+                        dialogClose();
                     }, onError);
                 }
-                propertyService.reset();
-                dialogClose();
             };
 
             $scope.ShowSimpleButton = function (event) {
