@@ -36,11 +36,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             var assemblies = this.GetAssemblies();
 
-            foreach (var asm in assemblies)
-            {
-                this.InitializeControllerContainer(asm);
-            }
-
             this.RegisterVirtualPaths(assemblies);
 
             var controllerTypes = this.GetControllers(assemblies);
@@ -64,6 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 if (this.IsControllerContainer(assemblyFileName))
                 {
                     var assembly = this.LoadAssembly(assemblyFileName);
+                    this.InitializeControllerContainer(assembly);
                     result.Add(assembly);
                 }
             }

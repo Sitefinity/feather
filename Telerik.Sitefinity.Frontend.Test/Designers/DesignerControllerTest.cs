@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Web.Mvc;
+using Telerik.Microsoft.Practices.Unity;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
+using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Frontend.Security;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Authentication;
@@ -43,12 +45,16 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
         {
             //Arrange
             var widgetName = "Dummy";
+            using (new ObjectFactoryContainerRegion())
+            {
+                ObjectFactory.Container.RegisterType<IResourceResolverStrategy, ResourceResolverStrategy>();
 
-            //Act
-            var designer = this.designerController.Master(widgetName) as ViewResult;
+                //Act
+                var designer = this.designerController.Master(widgetName) as ViewResult;
 
-            //Assert
-            Assert.AreEqual(widgetName, designer.ViewBag.ControlName, string.Format("ViewBag.ControlName should be equal to {0}.", widgetName));
+                //Assert
+                Assert.AreEqual(widgetName, designer.ViewBag.ControlName, string.Format("ViewBag.ControlName should be equal to {0}.", widgetName));
+            }
         }
 
         #endregion
@@ -63,13 +69,13 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
             //Arrange
             var widgetName = "Dummy";
             var viewType = "PropertyGrid";
-            var expectedDesignerViewName = "Designer.PropertyGrid";
+            var expectedDesignerViewName = "DesignerView.PropertyGrid";
 
             //Act
             var designerView = this.designerController.View(widgetName, viewType) as PartialViewResult;
 
             //Assert
-            Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should equals {0}.", expectedDesignerViewName));
+            Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should be equal to {0}.", expectedDesignerViewName));
         }
 
         [TestMethod]
@@ -79,13 +85,13 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
         {
             //Arrange
             var viewType = "PropertyGrid";
-            var expectedDesignerViewName = "Designer.PropertyGrid";
+            var expectedDesignerViewName = "DesignerView.PropertyGrid";
 
             //Act
             var designerView = this.designerController.View("", viewType) as PartialViewResult;
 
             //Assert
-            Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should equals {0}.", expectedDesignerViewName));
+            Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should be equal to {0}.", expectedDesignerViewName));
         }
 
         #endregion

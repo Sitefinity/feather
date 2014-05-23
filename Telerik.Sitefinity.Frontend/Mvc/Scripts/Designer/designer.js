@@ -1,5 +1,4 @@
-﻿/*global angular, designerExtensions */
-
+﻿
 (function ($) {
     if (typeof ($telerik) != 'undefined') {
         $telerik.$(document).one('dialogRendered', function () {
@@ -24,6 +23,10 @@
         return $('input#defaultView').val();
     };
 
+    var resolverControllerName = function (view) {
+        return view + 'Ctrl';
+    };
+
     var designerModule = angular.module('designer', resolveDepdendencies());
 
     designerModule.config(['$routeProvider', function ($routeProvider) {
@@ -35,21 +38,28 @@
                         return templateId;
                     }
                     else {
-                        return resolveDefaultView();
+                        return resolveDefaultView() + '-template';
                     }
                 },
-                controller: function (params) {
-                    return params.view + 'Ctrl';
-                }
+                controller: 'RoutingCtrl'
             })
             .otherwise({
                 redirectTo: '/' + resolveDefaultView()
             });
     }]);
 
-    designerModule.controller('dialogCtrl', ['$scope', '$modalInstance', '$routeParams', 'propertyService', 'widgetContext',
-        function ($scope, $modalInstance, $routeParams, propertyService, widgetContext) {
-            var ifSaveToAllTranslations = true;
+    designerModule.controller('RoutingCtrl', ['$scope', '$routeParams', '$controller', '$location', function ($scope, $routeParams, $controller, $location) {
+        try {
+            $controller(resolverControllerName($routeParams.view), { $scope: $scope });
+        }
+        catch (err) {
+            $location.path('/' + resolveDefaultView());
+        }
+    }]);
+
+    designerModule.controller('DialogCtrl', ['$scope', '$modalInstance', '$routeParams', '$location', 'propertyService', 'widgetContext',
+        function ($scope, $modalInstance, $routeParams, $location, propertyService, widgetContext) {
+            var isSaveToAllTranslations = true;
             // ------------------------------------------------------------------------
             // Event handlers
             // ------------------------------------------------------------------------
@@ -89,7 +99,7 @@
 
                 var currentSaveMode = saveMode.Default;
                 if (widgetContext.culture) {
-                    currentSaveMode = ifSaveToAllTranslations ? saveMode.AllTranslations : saveMode.CurrentTranslationOnly;
+                    currentSaveMode = isSaveToAllTranslations ? saveMode.AllTranslations : saveMode.CurrentTranslationOnly;
                 }
 
                 propertyService.save(currentSaveMode, modifiedProperties).then(dialogClose, onError);
@@ -112,7 +122,7 @@
 
             //the save action - it will check which properties are changed and send only them to the server 
             $scope.Save = function (saveToAllTranslations) {
-                ifSaveToAllTranslations = saveToAllTranslations;
+                isSaveToAllTranslations = saveToAllTranslations;
 
                 $scope.$broadcast('saveButtonPressed', null);
 
