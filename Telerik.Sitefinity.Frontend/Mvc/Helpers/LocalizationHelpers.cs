@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Get the label with the specified key from the resource files.
         /// </summary>
         /// <param name="key">The key.</param>
-        [Obsolete("Use the Html.Label(key) instead")]
+        [Obsolete("Use the Html.Resource(key) instead")]
         public static string Label(this WebViewPage page, string key)
         {
             var controller = LocalizationHelpers.GetController(page);
@@ -39,7 +39,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Get the label with the specified key from the resource files.
         /// </summary>
         /// <param name="key">The key.</param>
-        [Obsolete("Use the Html.Label(key) instead")]
+        [Obsolete("Use the Html.Resource(key) instead")]
         public static string Label(this ViewPage page, string key)
         {
             var controller = LocalizationHelpers.GetController(page);

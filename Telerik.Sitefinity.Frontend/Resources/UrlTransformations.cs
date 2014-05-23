@@ -6,6 +6,9 @@ using System.Web;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {
+    /// <summary>
+    /// This is a static class that contains methods for URL manipulations.
+    /// </summary>
     public static class UrlTransformations
     {
         /// <summary>
