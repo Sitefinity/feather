@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -51,6 +52,12 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             {
                 throw new ArgumentException("Could not find resource at " + virtualPath + " in the database.");
             }
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerable<string> GetCurrentAvailableFiles(PathDefinition definition, string path)
+        {
+            return null;
         }
 
         /// <summary>

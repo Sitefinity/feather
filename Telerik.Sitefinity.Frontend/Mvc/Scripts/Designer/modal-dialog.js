@@ -3,7 +3,7 @@
 (function () {
     var modalDialogModule = angular.module('modalDialog', ['ui.bootstrap']);
 
-    modalDialogModule.directive('modal', function ($modal) {
+    modalDialogModule.directive('modal', ['$modal', function ($modal) {
         return {
             restrict: 'A',
             link: function (scope, elem, attrs) {
@@ -15,5 +15,5 @@
                 });
             }
         };
-    });
+    }]);
 })();

@@ -67,8 +67,8 @@
 
         var toAssociativeArray = function (propertyBag) {
             var widget = {};
-            for (var i = 0; i < propertyBag.Items.length; i++) {
-                var prop = propertyBag.Items[i];
+            for (var i = 0; i < propertyBag.length; i++) {
+                var prop = propertyBag[i];
                 widget[prop.PropertyName] = prop;
             }
             return widget;
@@ -168,8 +168,16 @@
                     }
                 }
                 return modifiedData;
-            }
+            },
 
+            /**
+             * Converts the property bag that is returned by the "get" method of the service to an associative array.
+             *
+             * @param {Array} propertyBag 
+             */
+            toAssociativeArray: function (propertyBag) {
+                return toAssociativeArray(propertyBag);
+            }
         };
 
         return service;

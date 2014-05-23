@@ -57,16 +57,16 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
 
         [TestMethod]
         [Owner("EGaneva")]
-        [Description("Validates whether DesignerPartialView action returns view with correct name with requested view type when such is available.")]
-        public void DesignerPartialView_WithLocalAdvancedDesigner_ReturnsPropertyGridDesigner()
+        [Description("Validates whether View action returns view with correct name with requested view type when such is available.")]
+        public void View_WithLocalAdvancedDesigner_ReturnsPropertyGridDesigner()
         {
             //Arrange
             var widgetName = "Dummy";
             var viewType = "PropertyGrid";
-            var expectedDesignerViewName = "PropertyGrid.Designer";
+            var expectedDesignerViewName = "Designer.PropertyGrid";
 
             //Act
-            var designerView = this.designerController.DesignerView(widgetName, viewType) as PartialViewResult;
+            var designerView = this.designerController.View(widgetName, viewType) as PartialViewResult;
 
             //Assert
             Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should equals {0}.", expectedDesignerViewName));
@@ -74,15 +74,15 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
 
         [TestMethod]
         [Owner("EGaneva")]
-        [Description("Validates whether DesignerPartialView action returns default view with the requested view type when such is available.")]
-        public void DesignerPartialView_NoLocalPropertyGridDesigner_ReturnsDefaultPropertyGridDesigner()
+        [Description("Validates whether View action returns default view with the requested view type when such is available.")]
+        public void View_NoLocalPropertyGridDesigner_ReturnsDefaultPropertyGridDesigner()
         {
             //Arrange
             var viewType = "PropertyGrid";
-            var expectedDesignerViewName = "PropertyGrid.Designer";
+            var expectedDesignerViewName = "Designer.PropertyGrid";
 
             //Act
-            var designerView = this.designerController.DesignerView("", viewType) as PartialViewResult;
+            var designerView = this.designerController.View("", viewType) as PartialViewResult;
 
             //Assert
             Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should equals {0}.", expectedDesignerViewName));

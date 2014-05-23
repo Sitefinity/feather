@@ -170,7 +170,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Master.Designer.cshtml" />
+    <EmbeddedResource Include="Resources\Designer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientScripts\config\karma.conf.js" />

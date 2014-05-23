@@ -1,12 +1,51 @@
 ﻿/*global angular, designerExtensions */
 
 (function ($) {
-    var designerModule = angular.module('designer', designerExtensions.dependencies);
+    if (typeof ($telerik) != 'undefined') {
+        $telerik.$(document).one('dialogRendered', function () {
+            angular.bootstrap($('.designer'), ['designer']);
+        });
+    }
 
-    designerModule.config(designerExtensions.config);
+    var resolveDepdendencies = function () {
+        var defaultDependencies = ['pageEditorServices', 'breadcrumb', 'ngRoute', 'modalDialog'];
+        var rawAdditionalDependencies = $('input#additionalDependencies').val();
 
-    designerModule.controller('dialogCtrl', ['$scope', '$modalInstance', 'propertyService', 'widgetContext',
-        function ($scope, $modalInstance, propertyService, widgetContext) {
+        if (rawAdditionalDependencies) {
+            var additionalDependencies = $.parseJSON(rawAdditionalDependencies);
+            return defaultDependencies.concat(additionalDependencies);
+        }
+        else {
+            return defaultDependencies;
+        }
+    };
+
+    var resolveDefaultView = function () {
+        return $('input#defaultView').val();
+    };
+
+    var designerModule = angular.module('designer', resolveDepdendencies());
+
+    designerModule.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider
+            .when('/:view', {
+                templateUrl: function (params) {
+                    var templateId = params.view + '-template';
+                    if (document.getElementById(templateId)) {
+                        return templateId;
+                    }
+                    else {
+                        return resolveDefaultView();
+                    }
+                }
+            })
+            .otherwise({
+                redirectTo: '/' + resolveDefaultView()
+            });
+    }]);
+
+    designerModule.controller('dialogCtrl', ['$scope', '$modalInstance', '$routeParams', 'propertyService', 'widgetContext',
+        function ($scope, $modalInstance, $routeParams, propertyService, widgetContext) {
             var ifSaveToAllTranslations = true;
             // ------------------------------------------------------------------------
             // Event handlers
@@ -98,15 +137,11 @@
                 }
             };
 
-            $scope.ShowSimpleButton = function (event) {
-                $scope.IsSimpleVisible = true;
-            };
-
-            $scope.ChangeView = function (event) {
-                $scope.IsSimpleVisible = !$scope.IsSimpleVisible;
-            };
-
             $scope.HideSaveAllTranslations = widgetContext.hideSaveAllTranslations;
+
+            $scope.IsCurrentView = function (view) {
+                return $routeParams.view === view;
+            };
 
             propertyService.get().then(onGetPropertiesSuccess, onError);
 

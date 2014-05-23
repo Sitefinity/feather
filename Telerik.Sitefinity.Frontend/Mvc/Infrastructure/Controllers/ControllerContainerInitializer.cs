@@ -35,6 +35,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         public virtual void Initialize()
         {
             var assemblies = this.GetAssemblies();
+
+            foreach (var asm in assemblies)
+            {
+                this.InitializeControllerContainer(asm);
+            }
+
             this.RegisterVirtualPaths(assemblies);
 
             var controllerTypes = this.GetControllers(assemblies);
@@ -44,7 +50,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #endregion
 
         #region Protected members
-        
+
         /// <summary>
         /// Gets the assemblies that are marked as controller containers with the <see cref="ControllerContainerAttribute"/> attribute.
         /// </summary>
@@ -58,9 +64,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 if (this.IsControllerContainer(assemblyFileName))
                 {
                     var assembly = this.LoadAssembly(assemblyFileName);
-                    
-                    this.InitializeControllerContainer(assembly);
-                                        
                     result.Add(assembly);
                 }
             }
@@ -69,7 +72,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// Executes the intialization method specified in the <see cref="ControllerContainerAttribute"/> attribute.
+        /// Executes the initialization method specified in the <see cref="ControllerContainerAttribute"/> attribute.
         /// </summary>
         /// <param name="container"></param>
         protected virtual void InitializeControllerContainer(Assembly container)

@@ -1,3 +1,5 @@
+@model Telerik.Sitefinity.Frontend.Mvc.Models.IDesignerModel
+
 @using Telerik.Sitefinity.Frontend.Mvc.Helpers
 
 <div class="designer" modal dialog-controller="dialogCtrl">
@@ -20,29 +22,27 @@
             <button class="btn btn-primary" ng-click="Save(false)">@Html.SfRes("Save")</button>
             <button class="btn btn-default" ng-click="Save(true)" ng-hide="HideSaveAllTranslations">@Html.SfRes("SaveAllTranslations")</button>
             <a class="btn btn-link" data-dismiss="modal" ng-click="Cancel($event)">@Html.SfRes("Cancel")</a>
+
+            @if (Model.AvailableViews.Count() > 1)
+            {
+                foreach (var view in Model.AvailableViews)
+                {
+                    <a class="btn btn-default btn-xs pull-right m-top-xs" ng-hide="IsCurrentView('@view')" href="#/@view">@Html.SfRes(view)</a>
+                }
+            }
          </div>
     </script>
 
-    <script type="text/ng-template" id="property-grid-view">
-        @{
-            Html.RenderAction("DesignerView", "Designer", new { widgetName = ViewBag.ControlName, viewType = "PropertyGrid" });
-        }
-    </script>
+    @foreach (var view in Model.AvailableViews)
+    { 
+        <script type="text/ng-template" id='@Html.Raw(view)-template'>
+            @{
+                Html.RenderAction("View", "Designer", new { widgetName = ViewBag.ControlName, viewType = view });
+            }
+        </script>
+    }
 </div>
 
-@* Latest compiled and minified CSS *@
-<link rel="stylesheet" href='@Url.WidgetContent("Mvc/Scripts/Bootstrap/css/bootstrap.min.css")'>
-@* Optional theme *@
-<link rel="stylesheet" href='@Url.WidgetContent("Mvc/Styles/sitefinity-theme.min.css")'>
-
-<script src='@Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js")'></script>
-<script src='@Url.WidgetContent("Mvc/Scripts/Designer/designer-extensions.js")'></script>
-<script src='@Url.WidgetContent("Mvc/Scripts/Designer/designer.js")'></script>
-<script src='@Url.WidgetContent("Mvc/Scripts/Designer/property-grid.js")'></script>
-<script src='@Url.WidgetContent("Mvc/Scripts/breadcrumb.js")'></script>
-
-<script type="text/javascript">
-    (function ($) {
-        angular.bootstrap($('.designer'), ['designer']);
-    })(jQuery);
-</script>
+@{
+    Html.RenderAction("ClientReferences", "Designer");
+}

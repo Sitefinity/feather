@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -33,6 +34,27 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 throw new ArgumentNullException("assembly");
 
             return VirtualPathBuilder.frontendAssemblyBasePath.Arrange(assembly.GetName().Name);
+        }
+
+        /// <summary>
+        /// Gets the path definition for the given assembly that is used by the virtual file resolvers.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        public PathDefinition GetPathDefinition(Assembly assembly)
+        {
+            if (assembly == null)
+                throw new ArgumentNullException("assembly");
+
+            var name = assembly.GetName().Name;
+            var result = new PathDefinition()
+            {
+                IsWildcard = true,
+                ResolverName = name,
+                ResourceLocation = assembly.CodeBase,
+                VirtualPath = "/" + VirtualPathBuilder.frontendAssemblyBasePath.Arrange(name),
+            };
+            result.Items.Add("Assembly", assembly);
+            return result;
         }
 
         private const string frontendAssemblyBasePath = "Frontend-Assembly/{0}/";

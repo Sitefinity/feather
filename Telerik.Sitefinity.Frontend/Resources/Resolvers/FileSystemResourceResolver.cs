@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Caching;
@@ -72,6 +74,17 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             return File.OpenRead(this.GetFileName(definition, virtualPath));
         }
 
+        /// <inheritdoc />
+        protected override IEnumerable<string> GetCurrentAvailableFiles(PathDefinition definition, string path)
+        {
+            var mappedPath = this.GetFileName(definition, path);
+            if (mappedPath != null && Directory.Exists(mappedPath))
+                return Directory.GetFiles(mappedPath)
+                    .Select(f => f.Replace(mappedPath, path));
+            else
+                return null;
+        }
+
         /// <summary>
         /// Gets the filename of the requested resource.
         /// </summary>
@@ -85,6 +98,10 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
             var vp = VirtualPathUtility.ToAppRelative(virtualPath);
             var definitionVp = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAppRelative(definition.VirtualPath));
+
+            if (!vp.StartsWith(definitionVp))
+                return null;
+
             var relativePath = vp.Substring(definitionVp.Length).Replace('/', '\\');
 
             var mappedPath = Path.Combine(HostingEnvironment.MapPath(rootPath), relativePath);

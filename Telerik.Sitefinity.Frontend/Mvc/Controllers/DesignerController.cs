@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
-using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
+using Telerik.Sitefinity.Frontend.Mvc.Models;
+using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 {
@@ -24,7 +26,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             this.DisableViewLocationCache();
 
             this.ViewBag.ControlName = widgetName;
-            return this.View(DesignerController.defaultView);
+
+            var model = this.GetModel(widgetName);
+            return this.View(DesignerController.defaultView, model);
         }
 
         /// <summary>
@@ -36,16 +40,43 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <param name="viewType">Type of the view which is requested. For example Simple, Advanced</param>
         /// <returns></returns>
         /// <exception cref="System.InvalidOperationException">View cannot be found on the searched locations.</exception>
-        public virtual ActionResult DesignerView(string widgetName, string viewType)
+        public virtual ActionResult View(string widgetName, string viewType)
         {
             FrontendManager.AuthenticationEvaluator.RequestBackendUserAuthentication();
             this.DisableViewLocationCache();
 
-            string viewName = DesignerController.designerNameTemplate.Arrange(viewType);
+            string viewName = DesignerController.designerViewTemplate.Arrange(viewType);
             return this.PartialView(viewName);
         }
 
+        /// <summary>
+        /// Returns a view containing client references for scripts and styles.
+        /// </summary>
+        public virtual ActionResult ClientReferences()
+        {
+            FrontendManager.AuthenticationEvaluator.RequestBackendUserAuthentication();
+            this.DisableViewLocationCache();
+
+            return this.View(DesignerController.clientReferencesView);
+        }
+
+        /// <summary>
+        /// Gets the model of the designer.
+        /// </summary>
+        private IDesignerModel GetModel(string widgetName)
+        {
+            var constructorParameters = new Dictionary<string, object> 
+                        {
+                           {"widgetName", widgetName},
+                           {"viewLocations", this.GetPartialViewLocations()},
+                           {"viewExtensions", this.GetViewFileExtensions()}
+                        };
+
+            return ControllerModelFactory.GetModel<IDesignerModel>(typeof(DesignerController), constructorParameters);
+        }
+
         private const string defaultView = "Designer";
-        private const string designerNameTemplate = "{0}.Designer";
+        private const string designerViewTemplate = "DesignerView.{0}";
+        private const string clientReferencesView = "Designer.ClientReferences";
     }
 }

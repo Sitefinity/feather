@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -46,6 +47,23 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             return stream;
         }
 
+        /// <inheritdoc />
+        protected override IEnumerable<string> GetCurrentAvailableFiles(PathDefinition definition, string path)
+        {
+            var resourceName = this.GetResourceName(definition, path);
+            if (resourceName != null)
+            {
+                var assembly = this.GetAssembly(definition);
+                return assembly.GetManifestResourceNames()
+                    .Where(r => r.StartsWith(resourceName, StringComparison.OrdinalIgnoreCase))
+                    .Select(r => r.Replace(resourceName, path));
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Gets the resource name based on the virtual path.
         /// </summary>
@@ -59,7 +77,11 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             {
                 var definitionVp = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAppRelative(definition.VirtualPath));
                 var vp = VirtualPathUtility.ToAppRelative(virtualPath);
-                var dir = VirtualPathUtility.GetDirectory(vp);
+
+                if (!vp.StartsWith(definitionVp))
+                    return null;
+
+                var dir = !vp.EndsWith("/") ? VirtualPathUtility.GetDirectory(vp) : vp;
                 vp = Regex.Replace(dir, @"[ \-]", "_") + Path.GetFileName(vp);
                 path = assemblyName + "." + vp.Substring(definitionVp.Length).Replace('/', '.');
             }

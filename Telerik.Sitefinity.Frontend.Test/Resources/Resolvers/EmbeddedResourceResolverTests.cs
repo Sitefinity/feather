@@ -25,7 +25,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
                 IsWildcard = true,
                 VirtualPath = "~/Test/",
                 ResourceLocation = Assembly.GetExecutingAssembly().CodeBase
-            }, "~/Test/Resources/Master.Designer.cshtml");
+            }, "~/Test/Resources/Designer.cshtml");
 
             Assert.IsTrue(result, "The method returns that resource doesn't exist when it does.");
         }
@@ -44,7 +44,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
                 IsWildcard = true,
                 VirtualPath = "~/Test/",
                 ResourceLocation = Assembly.GetExecutingAssembly().CodeBase
-            }, "~/Test/Resources/Imaginary/Master.Designer.cshtml");
+            }, "~/Test/Resources/Imaginary/Designer.cshtml");
 
             //Assert
             Assert.IsFalse(result, "The method returns that resource exist when it doesn't.");
@@ -65,7 +65,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
                 IsWildcard = true,
                 VirtualPath = "~/Test/",
                 ResourceLocation = Assembly.GetExecutingAssembly().CodeBase
-            }, "~/Test/Resources/Master.Designer.cshtml");
+            }, "~/Test/Resources/Designer.cshtml");
 
             string resultString;
             using (var sr = new StreamReader(result))

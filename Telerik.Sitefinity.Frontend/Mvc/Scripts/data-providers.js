@@ -3,8 +3,9 @@
 
     var dataProvidersModule = angular.module('dataProviders', []);
 
-    dataProvidersModule.factory('providerService', function ($http, $q, urlService) {
-        var defaultProviderName = '',
+    dataProvidersModule.factory('providerService', function ($http, $q) {
+        var defaultProviderName = $('input#defaultProviderName').val(),
+            providerDataServiceUrl = $('input#providerDataServiceUrl').val(),
             defaulltProvider;
 
         var getCookie = function (cname) {
@@ -21,7 +22,7 @@
         //returns an array of available providers
         var getAll = function (managerName) {
 
-            var getUrl = urlService.providersDataServiceUrl
+            var getUrl = providerDataServiceUrl
                 + 'providers/?sortExpression=Title'
                 + '&dataSourceName=' + managerName
                 + '&siteId=' + getCookie('sf_site')
@@ -45,9 +46,6 @@
 
         //return the default provider
         var getDefault = function (providerList) {
-            if (!defaultProviderName)
-                defaultProviderName = urlService.defaultProviderName;
-
             if (providerList && providerList.length > 0) {
                 for (var i = 0; i < providerList.length; i++) {
                     if (providerList[i].Name === defaultProviderName) {
@@ -67,8 +65,6 @@
 
         //gets the default provider name
         var getDefaultProviderName = function () {
-            if (!defaultProviderName)
-                defaultProviderName = UrlHelperService.defaultProviderName;
             return defaultProviderName;
         };
 

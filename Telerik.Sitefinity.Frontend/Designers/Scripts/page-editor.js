@@ -2,10 +2,9 @@
 
 var sf = sf || {};
 
-(function (sf) {
+(function ($) {
 
-	var $ = jQuery,
-		loader,
+    var loader,
 		loaderMarkup = '<div style="opacity:0.5; width:100%; z-index:3100; position:absolute;' +
 					   'top:0; height:100%; background: black center no-repeat ' +
 					   'url(#= appPath #Frontend-Assembly/Telerik.Sitefinity.Frontend/Mvc/Styles/Images/loading.gif);">' +
@@ -45,12 +44,20 @@ var sf = sf || {};
 		 * @param {String} markup The HTML markup to be rendered within the dialog.
 		 */
 		renderDialog: function (markup) {
+		    var jQueryAjaxSettingsCache = $.ajaxSettings.cache;
+		    $.ajaxSettings.cache = true;
+
 			dialog = $('<div />');
 			$('body').append(dialog);
 			dialog.append(markup);
 			this.hideLoader();
+			$.ajaxSettings.cache = jQueryAjaxSettingsCache;
 
 			$(dialog).on('hidden.bs.modal', this.destroyDialog);
+
+			if (typeof ($telerik) != 'undefined') {
+			    $telerik.$(document).trigger('dialogRendered');
+			}
 		},
 
 		/**
@@ -88,8 +95,8 @@ var sf = sf || {};
 	/**
 	 * Register the global Sitefinity events with the pageEditor component.
 	 */
-	if ($telerik) {
-		$telerik.$(document).on('needsModalDialog', $.proxy(sf.pageEditor.openDialog, sf.pageEditor));
-		$telerik.$(document).on('modalDialogClosed', $.proxy(sf.pageEditor.destroyDialog, sf.pageEditor));
+	if (typeof ($telerik) != 'undefined') {
+	    $telerik.$(document).on('needsModalDialog', $.proxy(sf.pageEditor.openDialog, sf.pageEditor));
+	    $telerik.$(document).on('modalDialogClosed', $.proxy(sf.pageEditor.destroyDialog, sf.pageEditor));
 	}
-})(sf);
+})(jQuery);

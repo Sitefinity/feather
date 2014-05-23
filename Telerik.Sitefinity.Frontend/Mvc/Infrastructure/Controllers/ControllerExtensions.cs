@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Web.Mvc;
 using System.Linq;
-using Telerik.Sitefinity.Frontend.Resources;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -49,6 +48,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                     vppEngine.ViewLocationCache = new VoidViewLocationCache();
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the partial view paths of the given controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        public static IEnumerable<string> GetPartialViewLocations(this Controller controller)
+        {
+            return controller.ViewEngineCollection.OfType<VirtualPathProviderViewEngine>()
+                .SelectMany(v => v.PartialViewLocationFormats)
+                .Distinct()
+                .Select(v => v.Replace("{1}", FrontendManager.ControllerFactory.GetControllerName(controller.GetType())))
+                .Select(VirtualPathUtility.GetDirectory)
+                .Distinct();
+        }
+
+        /// <summary>
+        /// Gets the file extensions that this controller will recognize when resolving view templates.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        public static IEnumerable<string> GetViewFileExtensions(this Controller controller)
+        {
+            return controller.ViewEngineCollection.OfType<VirtualPathProviderViewEngine>()
+                .SelectMany(v => v.FileExtensions);
         }
 
         #endregion

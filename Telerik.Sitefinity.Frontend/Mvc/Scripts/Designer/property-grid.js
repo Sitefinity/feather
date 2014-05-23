@@ -31,8 +31,6 @@
 
             $scope.ShowLoadingIndicator = true;
 
-            $scope.ShowSimpleButton();
-
             $scope.DrillDownPropertyHierarchy = function (propertyPath, propertyName) {
                 $scope.propertyPath = propertyPath;
                 $scope.propertyName = propertyName;

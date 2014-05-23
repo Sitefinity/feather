@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Web.Caching;
+using System.Linq;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 
 namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
@@ -35,6 +37,13 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// </summary>
         /// <param name="virtualPath">The virtual path of the file to open.</param>
         protected abstract Stream CurrentOpen(PathDefinition definition, string virtualPath);
+
+        /// <summary>
+        /// Gets the available files in the given path using the current resolver node.
+        /// </summary>
+        /// <param name="definition">The definition.</param>
+        /// <param name="path">The path.</param>
+        protected abstract IEnumerable<string> GetCurrentAvailableFiles(PathDefinition definition, string path);
 
         #endregion
 
@@ -131,6 +140,20 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             {
                 return this.next;
             }
+        }
+
+        /// <inheritdoc />
+        public virtual IEnumerable<string> GetAvailableFiles(PathDefinition definition, string path)
+        {
+            var result = this.GetCurrentAvailableFiles(definition, path);
+            if (this.Next != null)
+            {
+                var nextFiles = this.Next.GetAvailableFiles(definition, path);
+                if (nextFiles != null)
+                    result = result != null ? result.Union(nextFiles) : nextFiles;
+            }
+
+            return result;
         }
 
         #endregion
