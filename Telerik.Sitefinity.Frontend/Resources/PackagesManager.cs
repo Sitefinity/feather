@@ -130,27 +130,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return packageVirtualPath;
         }
 
-        /// <summary>
-        /// Appends the package name as query parameter on the given path.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <param name="packageName">Name of the package.</param>
-        public string AppendPackageParam(string path, string packageName)
-        {
-            if (packageName.IsNullOrEmpty())
-            {
-                return path;
-            }
-            else if (path.Contains("?"))
-            {
-                return path + "&package=" + HttpUtility.UrlEncode(packageName);
-            }
-            else
-            {
-                return path + "?package=" + HttpUtility.UrlEncode(packageName);
-            }
-        }
-
         #endregion
 
         #region Private methods
@@ -249,6 +228,9 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// The current package key
         /// </summary>
         public const string CurrentPackageKey = "CurrentResourcePackage";
+
+
+        public const string PackageUrlParamterName = "package";
 
         #endregion
          

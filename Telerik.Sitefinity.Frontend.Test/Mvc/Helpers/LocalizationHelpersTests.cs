@@ -8,16 +8,12 @@ using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Configuration.Data;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Configs;
-using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.LocalizationResources;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Helpers;
-using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Localization.Configuration;
 using Telerik.Sitefinity.Project.Configuration;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
-using System.Web.Routing;
-using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.HttpContext;
 
 
 namespace Telerik.Sitefinity.Frontend.Test.Mvc.Helpers
@@ -52,7 +48,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Helpers
 
                 //Act
                 initializer.RegisterControllerPublic(controller);
-                var resourceString = urlHelper.Label("DummyResource");
+                var resourceString = urlHelper.Resource("DummyResource");
 
                 //Assert
                 var resourceRegistered = ObjectFactory.Container.IsRegistered(typeof(DummyLocalizationControllerResources), Res.GetResourceClassId(typeof(DummyLocalizationControllerResources)));

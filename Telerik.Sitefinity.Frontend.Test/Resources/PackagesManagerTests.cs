@@ -22,8 +22,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
         [Description("Checks whether the PackagesManager properly appends the package parameter to a given URL.")]
         public void AppendPackageParam_GivenUrl_VerifyThePackageNameIsAppendedCorrectly()
         {
-            //Arrange: Initialize the PackagesManager and create variables holding the package name and fake URL to which the package will be appended
-            var packageManager = new PackagesManager();
+            //Arrange: Create variables holding the package name and fake URL to which the package will be appended
             string urlWithParamters = @"http://fakedomain.org/homePage?fakeParam=0";
             string urlWithNoParamters = @"http://fakedomain.org/homePage";
             string packageName = "fakePackageName";
@@ -33,9 +32,10 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
 
 
             //Act: append the package name
-            appendedUrlWithEmptyPackagename = packageManager.AppendPackageParam(urlWithNoParamters, null);
-            appendedUrhWithParams = packageManager.AppendPackageParam(urlWithParamters, packageName);
-            appendedUrWithNoParams = packageManager.AppendPackageParam(urlWithNoParamters, packageName);
+            appendedUrlWithEmptyPackagename = UrlTransformations.AppendParam(urlWithNoParamters, PackagesManager.PackageUrlParamterName, null);
+            appendedUrhWithParams = UrlTransformations.AppendParam(urlWithParamters, PackagesManager.PackageUrlParamterName, packageName);
+            appendedUrWithNoParams = UrlTransformations.AppendParam(urlWithNoParamters, PackagesManager.PackageUrlParamterName, packageName);
+
 
             //Assert: Verify the package name is properly appended
             Assert.AreEqual<string>(urlWithNoParamters, appendedUrlWithEmptyPackagename, "The URL must not be changed due to empty package name passed as parameter");
@@ -73,7 +73,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
             Assert.AreEqual<string>(string.Format("~/{0}/{1}", PackagesManager.PackagesFolder, packageName), packageVirtualpath, "Package virtual path is not correct");
         }
 
-        #endregion 
+        #endregion
 
         #region StripInvalidCharacters
 

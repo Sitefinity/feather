@@ -11,14 +11,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
     /// </summary>
     public static class LocalizationHelpers
     {
-
         /// <summary>
-        /// Get the label with the specified key from the resource files.
+        /// Get the resource string with the specified key from the resource files.
         /// </summary>
         /// <param name="helper">The helper.</param>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        public static string Label(this HtmlHelper helper, string key)
+        public static string Resource(this HtmlHelper helper, string key)
         {
             var controller = helper.ViewContext.Controller;
             return LocalizationHelpers.Label(controller, key);
