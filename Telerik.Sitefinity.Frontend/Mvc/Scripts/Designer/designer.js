@@ -37,6 +37,9 @@
                     else {
                         return resolveDefaultView();
                     }
+                },
+                controller: function (params) {
+                    return params.view + 'Ctrl';
                 }
             })
             .otherwise({

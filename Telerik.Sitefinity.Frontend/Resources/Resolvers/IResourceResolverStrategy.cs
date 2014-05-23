@@ -1,4 +1,5 @@
-﻿using Telerik.Sitefinity.Abstractions.VirtualPath;
+﻿using System.Collections.Generic;
+using Telerik.Sitefinity.Abstractions.VirtualPath;
 
 namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 {
@@ -21,5 +22,12 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// The first resolver.
         /// </value>
         IResourceResolverNode First { get; }
+
+        /// <summary>
+        /// Gets the available files in the given path.
+        /// </summary>
+        /// <param name="definition">The definition.</param>
+        /// <param name="virtualPath">The path.</param>
+        IEnumerable<string> GetAvailableFiles(PathDefinition definition, string virtualPath);
     }
 }

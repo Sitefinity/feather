@@ -71,7 +71,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         public static IEnumerable<string> GetViewFileExtensions(this Controller controller)
         {
             return controller.ViewEngineCollection.OfType<VirtualPathProviderViewEngine>()
-                .SelectMany(v => v.FileExtensions);
+                .SelectMany(v => v.FileExtensions)
+                .Distinct();
         }
 
         #endregion

@@ -86,7 +86,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private IEnumerable<string> GetAvailableViewsForAssembly(Assembly assembly)
         {
-            var widgetAssembly = FrontendManager.ControllerFactory.ResolveControllerType(this.WidgetName).Assembly;
             var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly);
             return this.viewLocations
                 .SelectMany(l => this.GetAvailableViewsForPath(pathDef, l))
@@ -95,7 +94,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private IEnumerable<string> GetAvailableViewsForPath(PathDefinition definition, string path)
         {
-            var availableFiles = this.resolverStrategy.First.GetAvailableFiles(definition, path);
+            var availableFiles = this.resolverStrategy.GetAvailableFiles(definition, path);
 
             if (availableFiles != null)
             {

@@ -143,12 +143,12 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         }
 
         /// <inheritdoc />
-        public virtual IEnumerable<string> GetAvailableFiles(PathDefinition definition, string path)
+        public virtual IEnumerable<string> GetAvailableFiles(PathDefinition definition, string virtualPath)
         {
-            var result = this.GetCurrentAvailableFiles(definition, path);
+            var result = this.GetCurrentAvailableFiles(definition, virtualPath);
             if (this.Next != null)
             {
-                var nextFiles = this.Next.GetAvailableFiles(definition, path);
+                var nextFiles = this.Next.GetAvailableFiles(definition, virtualPath);
                 if (nextFiles != null)
                     result = result != null ? result.Union(nextFiles) : nextFiles;
             }

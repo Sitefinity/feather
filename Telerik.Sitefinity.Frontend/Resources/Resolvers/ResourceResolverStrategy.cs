@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Web.Caching;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
@@ -68,6 +69,14 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             this.AssertFirstNodeExists();
 
             return this.First.Open(definition, virtualPath);
+        }
+
+        /// <inheritdoc />
+        public virtual IEnumerable<string> GetAvailableFiles(PathDefinition definition, string virtualPath)
+        {
+            this.AssertFirstNodeExists();
+
+            return this.First.GetAvailableFiles(definition, virtualPath);
         }
 
         /// <summary>

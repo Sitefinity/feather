@@ -28,7 +28,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// Gets the available files in the given path.
         /// </summary>
         /// <param name="definition">The definition.</param>
-        /// <param name="path">The path.</param>
-        IEnumerable<string> GetAvailableFiles(PathDefinition definition, string path);
+        /// <param name="virtualPath">The path.</param>
+        IEnumerable<string> GetAvailableFiles(PathDefinition definition, string virtualPath);
     }
 }

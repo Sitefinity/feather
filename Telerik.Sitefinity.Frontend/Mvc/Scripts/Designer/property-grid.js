@@ -2,7 +2,7 @@
     var designerModule = angular.module('designer');
 
     //basic controller for the advanced designer view
-    designerModule.controller('propertyGridCtrl', ['$scope', 'propertyService',
+    designerModule.controller('PropertyGridCtrl', ['$scope', 'propertyService',
         function ($scope, propertyService) {
 
             var onGetPropertiesSuccess = function (data) {
