@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Security;
@@ -55,6 +56,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             get
             {
                 return SitefinityContext.GetCurrentSitefinityUserProfile();
+            }
+        }
+
+        /// <summary>
+        /// Determines whether this method is invoked from Sitefinity's backend.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsBackend
+        {
+            get 
+            { 
+                return ControlExtensions.IsBackend(); 
             }
         }
 

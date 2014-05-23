@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             System.Web.Mvc.MvcHtmlString result;
             try
             {
-                result = helper.Action("Index", "SocialShare");
+                result = helper.Action(ActionName, ControllerName);
             }
             catch (HttpException e)
             {
@@ -23,5 +23,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
             return result;
         }
+
+        private const string ActionName = "Index";
+        private const string ControllerName = "SocialShare";
     }
 }

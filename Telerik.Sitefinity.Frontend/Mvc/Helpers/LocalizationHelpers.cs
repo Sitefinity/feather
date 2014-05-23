@@ -12,24 +12,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
     /// </summary>
     public static class LocalizationHelpers
     {
-
         /// <summary>
-        /// Get the label with the specified key from the resource files.
+        /// Get the resource string with the specified key from the resource files.
         /// </summary>
         /// <param name="helper">The helper.</param>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        public static string SfRes(this HtmlHelper helper, string key)
+        public static string Resource(this HtmlHelper helper, string key)
         {
             var controller = helper.ViewContext.Controller;
-            return LocalizationHelpers.SfRes(controller, helper.ViewContext.RouteData, key);
+            return LocalizationHelpers.Resource(controller, helper.ViewContext.RouteData, key);
         }
 
         /// <summary>
         /// Get the label with the specified key from the resource files.
         /// </summary>
         /// <param name="key">The key.</param>
-        [Obsolete("Use Html.SfRes(key) instead.")]
+        [Obsolete("Use the Html.Resource(key) instead")]
         public static string Label(this WebViewPage page, string key)
         {
             var controller = LocalizationHelpers.GetController(page);
@@ -41,7 +40,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Get the label with the specified key from the resource files.
         /// </summary>
         /// <param name="key">The key.</param>
-        [Obsolete("Use Html.SfRes(key) instead.")]
+        [Obsolete("Use the Html.Resource(key) instead")]
         public static string Label(this ViewPage page, string key)
         {
             var controller = LocalizationHelpers.GetController(page);
@@ -54,7 +53,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// </summary>
         /// <param name="controller">Controller that requests the resource.</param>
         /// <param name="key">The key.</param>
-        private static string SfRes(ControllerBase controller, RouteData routeData, string key)
+        private static string Resource(ControllerBase controller, RouteData routeData, string key)
         {
             var resClass = LocalizationHelpers.FindResourceStringClassType(controller.GetType());
 
