@@ -48,13 +48,31 @@
             });
     }]);
 
-    designerModule.controller('RoutingCtrl', ['$scope', '$routeParams', '$controller', '$location', function ($scope, $routeParams, $controller, $location) {
+    designerModule.controller('RoutingCtrl', ['$scope', '$routeParams', '$controller', function ($scope, $routeParams, $controller) {
         try {
             $controller(resolverControllerName($routeParams.view), { $scope: $scope });
         }
         catch (err) {
-            $location.path('/' + resolveDefaultView());
+            $controller('DefaultCtrl', { $scope: $scope });
         }
+    }]);
+
+    designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', function ($scope, propertyService) {
+        $scope.ShowLoadingIndicator = true;
+
+        propertyService.get().then(function (data) {
+            if (data) {
+                $scope.Items = data.Items;
+                $scope.Properties = propertyService.toAssociativeArray(data.Items);
+            }
+            $scope.ShowLoadingIndicator = false;
+        }, 
+        function (data) {
+            $scope.ShowError = true;
+            if (data)
+                $scope.ErrorMessage = data.Detail;
+            $scope.ShowLoadingIndicator = false;
+        });
     }]);
 
     designerModule.controller('DialogCtrl', ['$scope', '$modalInstance', '$routeParams', '$location', 'propertyService', 'widgetContext',

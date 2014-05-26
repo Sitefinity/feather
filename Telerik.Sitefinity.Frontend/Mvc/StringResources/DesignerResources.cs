@@ -97,5 +97,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["Save"];
             }
         }
+
+        /// <summary>
+        /// Advanced
+        /// </summary>
+        [ResourceEntry("PropertyGrid",
+            Value = "Advanced",
+            Description = "Advanced",
+            LastModified = "2014/05/26")]
+        public string PropertyGrid
+        {
+            get
+            {
+                return this["PropertyGrid"];
+            }
+        }
     }
 }
