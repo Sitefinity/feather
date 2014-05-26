@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -51,28 +55,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// Gets the partial view paths of the given controller.
+        /// Gets the partial views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public static IEnumerable<string> GetPartialViewLocations(this Controller controller)
+        public static IEnumerable<string> GetPartialViews(this Controller controller)
         {
-            return controller.ViewEngineCollection.OfType<VirtualPathProviderViewEngine>()
-                .SelectMany(v => v.PartialViewLocationFormats)
-                .Distinct()
-                .Select(v => v.Replace("{1}", FrontendManager.ControllerFactory.GetControllerName(controller.GetType())))
-                .Select(VirtualPathUtility.GetDirectory)
-                .Distinct();
+            var viewLocations = ControllerExtensions.GetPartialViewLocations(controller);
+            return ControllerExtensions.GetViews(controller, viewLocations);
         }
 
         /// <summary>
-        /// Gets the file extensions that this controller will recognize when resolving view templates.
+        /// Gets the views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public static IEnumerable<string> GetViewFileExtensions(this Controller controller)
+        public static IEnumerable<string> GetViews(this Controller controller)
         {
-            return controller.ViewEngineCollection.OfType<VirtualPathProviderViewEngine>()
-                .SelectMany(v => v.FileExtensions)
-                .Distinct();
+            var viewLocations = ControllerExtensions.GetViewLocations(controller);
+            return ControllerExtensions.GetViews(controller, viewLocations);
         }
 
         #endregion
@@ -106,6 +105,89 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 result.AddRange(originalPaths.Select(transform));
             }
             return result.ToArray();
+        }
+
+        /// <summary>
+        /// Gets the partial view paths of the given controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        private static IEnumerable<string> GetPartialViewLocations(Controller controller)
+        {
+            return ControllerExtensions.GetControllerViewEngineLocations(controller, v => v.PartialViewLocationFormats);
+        }
+
+        /// <summary>
+        /// Gets the view paths of the given controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        private static IEnumerable<string> GetViewLocations(Controller controller)
+        {
+            return ControllerExtensions.GetControllerViewEngineLocations(controller, v => v.ViewLocationFormats);
+        }
+
+        private static IEnumerable<string> GetControllerViewEngineLocations(Controller controller, Func<VirtualPathProviderViewEngine, string[]> locationExtractor)
+        {
+            return controller.ViewEngineCollection.OfType<VirtualPathProviderViewEngine>()
+                .SelectMany(v => locationExtractor(v))
+                .Distinct()
+                .Select(v => v.Replace("{1}", FrontendManager.ControllerFactory.GetControllerName(controller.GetType())))
+                .Select(VirtualPathUtility.GetDirectory)
+                .Distinct();
+        }
+
+        /// <summary>
+        /// Gets the file extensions that this controller will recognize when resolving view templates.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        private static IEnumerable<string> GetViewFileExtensions(Controller controller)
+        {
+            return controller.ViewEngineCollection.OfType<VirtualPathProviderViewEngine>()
+                .SelectMany(v => v.FileExtensions.Select(e => "." + e))
+                .Distinct();
+        }
+
+        private static IEnumerable<string> GetViews(Controller controller, IEnumerable<string> viewLocations)
+        {
+            var viewExtensions = ControllerExtensions.GetViewFileExtensions(controller);
+            var widgetName = controller.RouteData != null ? controller.RouteData.Values["widgetName"] as string : null;
+
+            var baseFiles = ControllerExtensions.GetViewsForAssembly(controller.GetType().Assembly, viewLocations, viewExtensions);
+            if (!widgetName.IsNullOrEmpty())
+            {
+                var widgetAssembly = FrontendManager.ControllerFactory.ResolveControllerType(widgetName).Assembly;
+                var widgetFiles = ControllerExtensions.GetViewsForAssembly(widgetAssembly, viewLocations, viewExtensions);
+                return baseFiles.Union(widgetFiles);
+            }
+            else
+            {
+                return baseFiles;
+            }
+        }
+
+        private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions)
+        {
+            var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly);
+            return viewLocations
+                .SelectMany(l => ControllerExtensions.GetViewsForPath(pathDef, l, viewExtensions))
+                .Distinct();
+        }
+
+        private static IEnumerable<string> GetViewsForPath(PathDefinition definition, string path, IEnumerable<string> viewExtensions)
+        {
+            var files = ObjectFactory.Resolve<IResourceResolverStrategy>().GetAvailableFiles(definition, path);
+
+            if (files != null)
+            {
+                return files
+                    .Where(f => viewExtensions.Any(e => f.EndsWith(e)))
+                    .Select(VirtualPathUtility.GetFileName)
+                    .Select(System.IO.Path.GetFileNameWithoutExtension)
+                    .Distinct();
+            }
+            else
+            {
+                return new string[] { };
+            }
         }
 
         #endregion

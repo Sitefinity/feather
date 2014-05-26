@@ -62,7 +62,8 @@
          * that returns the properties of a widget.
          */
         var updateUrl = function (saveMode) {
-            return widgetContext.webServiceUrl + 'batch/' + widgetContext.widgetId + '/?pageId=' + widgetContext.pageId + '&mediaType=' + widgetContext.mediaType + '&propertyLocalization=' + saveMode;
+            return widgetContext.webServiceUrl + 'batch/' + widgetContext.widgetId + '/?pageId=' +
+                widgetContext.pageId + '&mediaType=' + widgetContext.mediaType + '&propertyLocalization=' + saveMode;
         };
 
         var toAssociativeArray = function (propertyBag) {

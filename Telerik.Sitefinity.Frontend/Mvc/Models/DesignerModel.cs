@@ -1,12 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Generic;
-using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Frontend.Resources.Resolvers;
-using System.Web;
-using System.Reflection;
-using System.Web.Mvc;
-using Telerik.Sitefinity.Abstractions.VirtualPath;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
@@ -18,30 +11,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DesignerModel"/> class.
         /// </summary>
-        /// <param name="widgetName">Name of the widget that is being edited.</param>
-        /// <param name="viewLocations">The locations where designer views could be found.</param>
-        /// <param name="viewExtensions">The extensions of view files.</param>
-        public DesignerModel(string widgetName, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions)
+        /// <param name="views">The views that are available to the controller.</param>
+        public DesignerModel(IEnumerable<string> views)
         {
-            this.WidgetName = widgetName;
-            this.viewLocations = viewLocations;
-            this.viewExtensions = viewExtensions.Select(e => e.StartsWith(".") ? e : "." + e);
-            this.resolverStrategy = ObjectFactory.Resolve<IResourceResolverStrategy>();
+            this.views = views.Where(this.IsDesignerView).Select(this.ExtractViewName);
         }
 
         /// <inheritdoc />
-        public virtual string WidgetName { get; private set; }
-
-        /// <inheritdoc />
-        public virtual IEnumerable<string> AvailableViews
+        public virtual IEnumerable<string> Views
         {
             get 
             {
-                if (this.availableViews == null)
-                {
-                    this.availableViews = this.GetAvailableViews();
-                }
-                return this.availableViews;
+                return this.views;
             }
         }
 
@@ -51,7 +32,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="filename">The filename.</param>
         protected virtual bool IsDesignerView(string filename)
         {
-            return filename.StartsWith("DesignerView.") && viewExtensions.Any(e => filename.EndsWith(e));
+            return filename.StartsWith("DesignerView.");
         }
 
         /// <summary>
@@ -69,49 +50,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 return filename;
         }
 
-        private IEnumerable<string> GetAvailableViews()
-        {
-            var designerFiles = this.GetAvailableViewsForAssembly(typeof(DesignerModel).Assembly);
-            if (!this.WidgetName.IsNullOrEmpty())
-            {
-                var widgetAssembly = FrontendManager.ControllerFactory.ResolveControllerType(this.WidgetName).Assembly;
-                var widgetFiles = this.GetAvailableViewsForAssembly(widgetAssembly);
-                return designerFiles.Union(widgetFiles);
-            }
-            else
-            {
-                return designerFiles;
-            }
-        }
-
-        private IEnumerable<string> GetAvailableViewsForAssembly(Assembly assembly)
-        {
-            var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly);
-            return this.viewLocations
-                .SelectMany(l => this.GetAvailableViewsForPath(pathDef, l))
-                .Distinct();
-        }
-
-        private IEnumerable<string> GetAvailableViewsForPath(PathDefinition definition, string path)
-        {
-            var availableFiles = this.resolverStrategy.GetAvailableFiles(definition, path);
-
-            if (availableFiles != null)
-            {
-                return availableFiles
-                    .Select(f => VirtualPathUtility.GetFileName(f))
-                    .Where(this.IsDesignerView)
-                    .Select(this.ExtractViewName);
-            }
-            else
-            {
-                return new string[] { };
-            }
-        }
-
-        private IResourceResolverStrategy resolverStrategy;
-        private IEnumerable<string> availableViews;
-        private IEnumerable<string> viewLocations;
-        private IEnumerable<string> viewExtensions;
+        private IEnumerable<string> views;
     }
 }

@@ -75,8 +75,8 @@
         });
     }]);
 
-    designerModule.controller('DialogCtrl', ['$scope', '$modalInstance', '$routeParams', '$location', 'propertyService', 'widgetContext',
-        function ($scope, $modalInstance, $routeParams, $location, propertyService, widgetContext) {
+    designerModule.controller('DialogCtrl', ['$scope', '$modalInstance', '$routeParams', 'propertyService', 'widgetContext',
+        function ($scope, $modalInstance, $routeParams, propertyService, widgetContext) {
             var isSaveToAllTranslations = true;
             // ------------------------------------------------------------------------
             // Event handlers

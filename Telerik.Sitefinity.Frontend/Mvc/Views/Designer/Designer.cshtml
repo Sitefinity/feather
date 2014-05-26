@@ -5,7 +5,7 @@
 <div class="designer" modal dialog-controller="DialogCtrl">
     <script type="text/ng-template" id="dialog-template">
          <div class="modal-header">
-             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="Cancel($event)">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="Cancel($event)">&times;</button>
 			<h1 class="modal-title">@Html.Raw(ViewBag.ControlName)</h1>
          </div>
          <div class="modal-body">
@@ -23,9 +23,9 @@
             <button class="btn btn-default" ng-click="Save(true)" ng-hide="HideSaveAllTranslations">@Html.Resource("SaveAllTranslations")</button>
             <a class="btn btn-link" data-dismiss="modal" ng-click="Cancel($event)">@Html.Resource("Cancel")</a>
 
-            @if (Model.AvailableViews.Count() > 1)
+            @if (Model.Views.Count() > 1)
             {
-                foreach (var view in Model.AvailableViews)
+                foreach (var view in Model.Views)
                 {
                     <a class="btn btn-default btn-xs pull-right m-top-xs" ng-hide="IsCurrentView('@view')" href="#/@view">@Html.Resource(view)</a>
                 }
@@ -33,7 +33,7 @@
          </div>
     </script>
 
-    @foreach (var view in Model.AvailableViews)
+    @foreach (var view in Model.Views)
     { 
         <script type="text/ng-template" id='@Html.Raw(view)-template'>
             @{

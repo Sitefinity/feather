@@ -58,11 +58,7 @@
             var levelFilter = function (property) {
                 var level = property.PropertyPath.split('/').length - 2;
                 if (propertyName == null || propertyName.length == 0 || propertyName == 'Home') {
-                    if (level > 0) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                    return level <= 0;
                 } else {
                     if (property.PropertyPath.indexOf(propertyPath) >= 0) {
                         return currentLevel == level;

@@ -8,13 +8,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
     public interface IDesignerModel
     {
         /// <summary>
-        /// Gets the name of the widget that is being edited.
-        /// </summary>
-        string WidgetName { get; }
-
-        /// <summary>
         /// Gets the available designer views.
         /// </summary>
-        IEnumerable<string> AvailableViews { get; }
+        IEnumerable<string> Views { get; }
     }
 }
