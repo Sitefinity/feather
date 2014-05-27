@@ -9,8 +9,9 @@ module.exports = function (grunt) {
 		jshint: {
 			//define the files to lint
 			files: ['gruntfile.js',
-					'Mvc/Scripts/**/*.js',
-					'JsTest/**/*.js'
+					'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
+					'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
+					'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js'
 			]
 		},
 		
@@ -29,6 +30,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	
 	//Default task(s)
-	grunt.registerTask('default', ['jshint', 'jasmine']);
+	grunt.registerTask('default', ['jshint']);
 	
 };
