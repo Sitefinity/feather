@@ -30,7 +30,8 @@
         var httpGetUrl,
             properties,
             initialData,
-            CULTURE_HEADER = 'SF_UI_CULTURE';
+            CULTURE_HEADER = 'SF_UI_CULTURE',
+            loadingPromise;
 
         /**
          * Generates the headers dictionary for the HTTP request
@@ -77,6 +78,9 @@
 
         //get the property data from the service
         var load = function () {
+            if (loadingPromise)
+                return loadingPromise;
+
             var deferred = $q.defer();
 
             $http.get(getUrl(), requestOptions())
@@ -84,13 +88,16 @@
                     properties = data;
                     //clone the result in initialData
                     initialData = $.extend(true, {}, data);
+                    loadingPromise = null;
                     deferred.resolve(data);
                 })
                 .error(function (data) {
+                    loadingPromise = null;
                     deferred.reject(data);
                 });
 
-            return deferred.promise;
+            loadingPromise = deferred.promise;
+            return loadingPromise;
         };
 
         var service = {
