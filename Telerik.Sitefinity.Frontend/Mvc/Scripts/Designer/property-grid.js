@@ -2,49 +2,36 @@
     var designerModule = angular.module('designer');
 
     //basic controller for the advanced designer view
-    designerModule.controller('PropertyGridCtrl', ['$scope', 'propertyService',
-        function ($scope, propertyService) {
+    designerModule.controller('PropertyGridCtrl', ['$scope', 'propertyService', 'dialogFeedbackService',
+        function ($scope, propertyService, dialogFeedbackService) {
 
             var onGetPropertiesSuccess = function (data) {
                 if (data.Items)
                     $scope.Items = data.Items;
-                $scope.ShowLoadingIndicator = false;
+                $scope.Feedback.ShowLoadingIndicator = false;
             };
 
             var onGetError = function (data, status, headers, config) {
-                $scope.ShowError = true;
+                $scope.Feedback.ShowError = true;
                 if (data)
-                    $scope.ErrorMessage = data.Detail;
+                    $scope.Feedback.ErrorMessage = data.Detail;
 
-                $scope.ShowLoadingIndicator = false;
+                $scope.Feedback.ShowLoadingIndicator = false;
             }
 
             $scope.$on('saveButtonPressed', function (event, e) {
                 propertyService.set($scope.Items);
             });
 
-            $scope.$on('$destroy', function () {
-                propertyService.set($scope.Items);
-            });
-
             propertyService.get().then(onGetPropertiesSuccess, onGetError);
 
-            $scope.ShowLoadingIndicator = true;
+            $scope.Feedback = dialogFeedbackService;
+            $scope.Feedback.ShowLoadingIndicator = true;
 
             $scope.DrillDownPropertyHierarchy = function (propertyPath, propertyName) {
                 $scope.propertyPath = propertyPath;
                 $scope.propertyName = propertyName;
             };
-
-            if (typeof ($telerik) != 'undefined') {
-                $telerik.$(document).one('controlPropertiesLoaded', function (e, params) {
-                    if (params.Items) {
-                        $scope.Items = params.Items;
-                        $scope.$apply();
-                    }
-                });
-            }
-
         }]);
 
     //filters property hierarchy

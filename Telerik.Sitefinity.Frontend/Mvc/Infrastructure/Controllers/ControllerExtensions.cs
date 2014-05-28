@@ -39,22 +39,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// Disables the view location cache.
-        /// </summary>
-        /// <param name="controller">The controller.</param>
-        public static void DisableViewLocationCache(this Controller controller)
-        {
-            foreach (var engine in controller.ViewEngineCollection)
-            {
-                var vppEngine = engine as VirtualPathProviderViewEngine;
-                if (vppEngine != null)
-                {
-                    vppEngine.ViewLocationCache = new VoidViewLocationCache();
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the partial views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
@@ -174,7 +158,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         private static IEnumerable<string> GetViewsForPath(PathDefinition definition, string path, IEnumerable<string> viewExtensions)
         {
-            var files = ObjectFactory.Resolve<IResourceResolverStrategy>().GetAvailableFiles(definition, path);
+            var files = ObjectFactory.Resolve<IResourceResolverStrategy>().GetFiles(definition, path);
 
             if (files != null)
             {

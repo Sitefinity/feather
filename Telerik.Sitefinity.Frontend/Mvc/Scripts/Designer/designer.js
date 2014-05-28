@@ -57,26 +57,35 @@
         }
     }]);
 
-    designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', function ($scope, propertyService) {
-        $scope.ShowLoadingIndicator = true;
+    designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', 'dialogFeedbackService', function ($scope, propertyService, dialogFeedbackService) {
+        $scope.Feedback = dialogFeedbackService;
+        $scope.Feedback.ShowLoadingIndicator = true;
 
         propertyService.get().then(function (data) {
             if (data) {
                 $scope.Items = data.Items;
                 $scope.Properties = propertyService.toAssociativeArray(data.Items);
             }
-            $scope.ShowLoadingIndicator = false;
+            $scope.Feedback.ShowLoadingIndicator = false;
         }, 
         function (data) {
-            $scope.ShowError = true;
+            $scope.Feedback.ShowError = true;
             if (data)
-                $scope.ErrorMessage = data.Detail;
-            $scope.ShowLoadingIndicator = false;
+                $scope.Feedback.ErrorMessage = data.Detail;
+            $scope.Feedback.ShowLoadingIndicator = false;
         });
     }]);
 
-    designerModule.controller('DialogCtrl', ['$scope', '$modalInstance', '$routeParams', 'propertyService', 'widgetContext',
-        function ($scope, $modalInstance, $routeParams, propertyService, widgetContext) {
+    designerModule.factory('dialogFeedbackService', [function () {
+        return {
+            ShowLoadingIndicator: false,
+            ShowError: false,
+            ErrorMessage: null
+        };
+    }]);
+
+    designerModule.controller('DialogCtrl', ['$scope', '$modalInstance', '$routeParams', 'propertyService', 'widgetContext', 'dialogFeedbackService',
+        function ($scope, $modalInstance, $routeParams, propertyService, widgetContext, dialogFeedbackService) {
             var isSaveToAllTranslations = true;
             // ------------------------------------------------------------------------
             // Event handlers
@@ -86,7 +95,7 @@
                 if (typeof ($telerik) != 'undefined')
                     $telerik.$(document).trigger('controlPropertiesLoad', [{ 'Items': data.Items }]);
 
-                $scope.ShowLoadingIndicator = false;
+                $scope.Feedback.ShowLoadingIndicator = false;
             };
 
             var onError = function (data, status, headers, config) {
@@ -98,7 +107,7 @@
                     $modalInstance.close()
                 } catch (e) { }
 
-                $scope.ShowLoadingIndicator = false;
+                $scope.Feedback.ShowLoadingIndicator = false;
 
                 if (typeof ($telerik) != 'undefined')
                     $telerik.$(document).trigger('modalDialogClosed');
@@ -123,20 +132,21 @@
                 propertyService.save(currentSaveMode, modifiedProperties).then(dialogClose, onError);
             };
 
-            var showError = function(message){
-                $scope.ShowError = true;
+            var showError = function (message) {
+                $scope.Feedback.ShowError = true;
                 if (message)
-                    $scope.ErrorMessage = message;
+                    $scope.Feedback.ErrorMessage = message;
 
-                $scope.ShowLoadingIndicator = false;
+                $scope.Feedback.ShowLoadingIndicator = false;
             };
 
             // ------------------------------------------------------------------------
             // Scope variables and setup
             // ------------------------------------------------------------------------
 
-            $scope.ShowLoadingIndicator = true;
-            $scope.ShowError = false;
+            $scope.Feedback = dialogFeedbackService;
+            $scope.Feedback.ShowLoadingIndicator = true;
+            $scope.Feedback.ShowError = false;
 
             //the save action - it will check which properties are changed and send only them to the server 
             $scope.Save = function (saveToAllTranslations) {
@@ -144,7 +154,7 @@
 
                 $scope.$broadcast('saveButtonPressed', null);
 
-                $scope.ShowLoadingIndicator = true;
+                $scope.Feedback.ShowLoadingIndicator = true;
 
                 var args = { Cancel: false };
 
@@ -173,6 +183,11 @@
             $scope.IsCurrentView = function (view) {
                 return $routeParams.view === view;
             };
+            
+            $scope.HideError = function () {
+                $scope.Feedback.ShowError = false;
+                $scope.Feedback.ErrorMessage = null;
+            };
 
             propertyService.get().then(onGetPropertiesSuccess, onError);
 
@@ -184,9 +199,6 @@
                         showError(params.error);
                     else
                         dialogClose();
-                });
-                $telerik.$(document).one('controlPropertiesLoaded', function (e, params) {
-                    propertyService.set(params.Items);
                 });
             }
         }

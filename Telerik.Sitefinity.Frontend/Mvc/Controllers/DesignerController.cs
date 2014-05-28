@@ -12,6 +12,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
     /// This class contains logic for resolving the views of the MVC designer of a widget.
     /// </summary>
     [Localization(typeof(DesignerResources))]
+    [RequestBackendUserAuthentication]
+    [DisableViewLocationCache]
     public class DesignerController : Controller
     {
         /// <summary>
@@ -22,9 +24,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <param name="widgetName">The name of the widget.</param>
         public virtual ActionResult Master(string widgetName)
         {
-            FrontendManager.AuthenticationEvaluator.RequestBackendUserAuthentication();
-            this.DisableViewLocationCache();
-
             this.ViewBag.ControlName = widgetName;
 
             var model = this.GetModel(widgetName);
@@ -42,9 +41,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <exception cref="System.InvalidOperationException">View cannot be found on the searched locations.</exception>
         public virtual ActionResult View(string widgetName, string viewType)
         {
-            FrontendManager.AuthenticationEvaluator.RequestBackendUserAuthentication();
-            this.DisableViewLocationCache();
-
             string viewName = DesignerController.designerViewTemplate.Arrange(viewType);
             return this.PartialView(viewName);
         }
@@ -54,9 +50,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// </summary>
         public virtual ActionResult ClientReferences()
         {
-            FrontendManager.AuthenticationEvaluator.RequestBackendUserAuthentication();
-            this.DisableViewLocationCache();
-
             return this.View(DesignerController.clientReferencesView);
         }
 

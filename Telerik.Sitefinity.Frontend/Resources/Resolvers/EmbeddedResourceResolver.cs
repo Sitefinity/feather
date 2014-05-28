@@ -48,7 +48,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         }
 
         /// <inheritdoc />
-        protected override IEnumerable<string> GetCurrentAvailableFiles(PathDefinition definition, string path)
+        protected override IEnumerable<string> GetCurrentFiles(PathDefinition definition, string path)
         {
             var resourceName = this.GetResourceName(definition, path);
             if (resourceName != null)

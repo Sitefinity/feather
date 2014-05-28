@@ -72,11 +72,11 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         }
 
         /// <inheritdoc />
-        public virtual IEnumerable<string> GetAvailableFiles(PathDefinition definition, string virtualPath)
+        public virtual IEnumerable<string> GetFiles(PathDefinition definition, string virtualPath)
         {
             this.AssertFirstNodeExists();
 
-            return this.First.GetAvailableFiles(definition, virtualPath);
+            return this.First.GetFiles(definition, virtualPath);
         }
 
         /// <summary>
