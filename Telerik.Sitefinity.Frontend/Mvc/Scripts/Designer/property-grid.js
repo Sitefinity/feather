@@ -8,22 +8,18 @@
             var onGetPropertiesSuccess = function (data) {
                 if (data.Items)
                     $scope.Items = data.Items;
-                $scope.Feedback.ShowLoadingIndicator = false;
             };
 
             var onGetError = function (data, status, headers, config) {
                 $scope.Feedback.ShowError = true;
                 if (data)
                     $scope.Feedback.ErrorMessage = data.Detail;
-
-                $scope.Feedback.ShowLoadingIndicator = false;
             }
 
-            $scope.$on('saveButtonPressed', function (event, e) {
-                propertyService.set($scope.Items);
-            });
-
-            propertyService.get().then(onGetPropertiesSuccess, onGetError);
+            propertyService.get().then(onGetPropertiesSuccess, onGetError)
+                .finally(function () {
+                    $scope.Feedback.ShowLoadingIndicator = false;
+                });
 
             $scope.Feedback = dialogFeedbackService;
             $scope.Feedback.ShowLoadingIndicator = true;
