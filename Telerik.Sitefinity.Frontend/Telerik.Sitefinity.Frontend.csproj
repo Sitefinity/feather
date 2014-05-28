@@ -175,6 +175,7 @@
     <Compile Include="InlineEditing\HtmlProcessor.cs" />
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
+    <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerContainerAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\DisableViewLocationCacheAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\EnhanceViewEnginesAttribute.cs" />
@@ -328,6 +329,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Designer\modal-dialog.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\expander.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />
