@@ -77,7 +77,7 @@
         };
     });
     
-    dataProvidersModule.directive('providerSelector', function (providerService) {
+    dataProvidersModule.directive('providerSelector', ['providerService', function (providerService) {
         return {
             restrict: 'E',
             template: '<div class="dropdown s-bg-source-wrp" ng-show="IsProviderSelectorVisible">'
@@ -86,61 +86,56 @@
                         + '</a>'
                         + '<ul class="dropdown-menu" >'
                             + '<li>'
-                                + '<a href="#">-Provider-</a>'
+                                + '<a href="#">- {{providerLabel}} -</a>'
                             + '</li>'
                             + '<li ng-repeat="provider in Providers">'
-                                + '<a href="#" ng-click="SelectedProviderChanged(provider)">{{provider.Title}}</a>'
+                                + '<a href="#" ng-click="selectProvider(provider)">{{provider.Title}}</a>'
                             + '</li>'
                         + '</ul>'
                      + '</div>',
+            require: 'ngModel',
             replace: true,
-            link: function (scope, tElement, tAttrs) {
+            link: function (scope, tElement, tAttrs, ngModelCtrl) {
                 var onGetProvidersSuccess = function (data) {
                     scope.Providers = data.Items;
                     scope.SelectedProvider = providerService.getDefault(data.Items);
-                    scope.SelectedProviderName = providerService.getDefaultProviderName();
-
-                    var currentSelectedProviderName;
-                    if (data && data.Items && data.Items.length >= 2) {
-                        scope.IsProviderSelectorVisible = true;
-                        if (scope.SelectedProvider)
-                            currentSelectedProviderName = scope.SelectedProvider.Name;
-                    }
-                    else {
-                        scope.IsProviderSelectorVisible = false;
-                    }
+                    scope.IsProviderSelectorVisible = data && data.Items && data.Items.length >= 2;
                 };
 
                 var onGetProvidersError = function () {
-                    scope.$emit('errorOccurred', { message: 'Error occurred while populating providers list!' });
+                    throw 'Error occurred while populating providers list!';
                 };
 
+                scope.providerLabel = tAttrs.providerLabel ? tAttrs.providerLabel : 'Provider';
+                scope.managerType = tAttrs.managerType;
                 scope.SelectedProvider = null;
-
-                //if provider name is set explicitly the dropdown will be updated
-                scope.$watch('SelectedProviderName', function () {
-                    scope.SelectedProvider = providerService.getDefault(scope.Providers);
-                    if (scope.SelectedProvider)
-                        scope.$emit('providerSelectionChanged', { providerName: scope.SelectedProvider.Name });
-                });
+                scope.IsProviderSelectorVisible = false;
 
                 //if selection is changed manually from the dropdown
-                scope.SelectedProviderChanged = function (provider) {
+                scope.selectProvider = function (provider) {
                     scope.SelectedProvider = provider;
                     if (provider) {
-                        var currentSelectedProviderName = provider.Name;
-                        scope.$emit('providerSelectionChanged', { providerName: currentSelectedProviderName });
+                        ngModelCtrl.$setViewValue(provider.Name);
                     }
                 };
 
-                scope.IsProviderSelectorVisible = false;
+                ngModelCtrl.$render = function () {
+                    if (scope.Providers) {
+                        for (var i = 0; i < scope.Providers.length; i++) {
+                            if (scope.Providers[i].Name == ngModelCtrl.$viewValue) {
+                                scope.SelectedProvider = scope.Providers[i];
+                                break;
+                            }
+                        }
+                    }
+                };
 
-                if (tAttrs && tAttrs.managerType)
-                    providerService.getAll(tAttrs.managerType).then(onGetProvidersSuccess, onGetProvidersError);
+                if (scope.managerType)
+                    providerService.getAll(scope.managerType).then(onGetProvidersSuccess, onGetProvidersError);
                 else
-                    scope.$emit('errorOccurred', { message: 'Error occurred while populating provider list! Please provide value to the managerType attribute!' });
+                    throw 'Error occurred while populating provider list! Please provide value to the managerType attribute!';
             }
         };
-    });
+    }]);
 
 })(jQuery);
