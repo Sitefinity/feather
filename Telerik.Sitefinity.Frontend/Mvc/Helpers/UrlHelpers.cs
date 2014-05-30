@@ -74,11 +74,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var controllerType = FrontendManager.ControllerFactory.ResolveControllerType(controllerName);
             var alternatePath = FrontendManager.VirtualPathBuilder.GetVirtualPath(controllerType);
             var baseUrl = "~/" + alternatePath + contentPath;
-            alternatePath = UrlTransformations.AppendParam(baseUrl, paramaterName, packageName);
-            if (HostingEnvironment.VirtualPathProvider == null || HostingEnvironment.VirtualPathProvider.FileExists(alternatePath))
+
+            if (HostingEnvironment.VirtualPathProvider == null || HostingEnvironment.VirtualPathProvider.FileExists(baseUrl))
             {
+                alternatePath = UrlTransformations.AppendParam(baseUrl, paramaterName, packageName);
                 return alternatePath;
             }
+
             return string.Empty;
         }
     }
