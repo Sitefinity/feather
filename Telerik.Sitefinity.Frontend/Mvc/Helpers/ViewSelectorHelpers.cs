@@ -27,7 +27,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (controller == null)
                 throw new ArgumentException("Controller cannot be resolved.");
 
-            var views = controller.GetViews().Where(view => Regex.IsMatch(view, templateNamePattern));
+            Regex regex = new Regex(templateNamePattern, RegexOptions.IgnoreCase);
+            var views = controller.GetViews().Where(view => Regex.IsMatch(view, templateNamePattern)).Select(view => regex.Match(view).Groups["viewName"].Value);
 
             return views;
         }
