@@ -57,40 +57,51 @@
         }
     }]);
 
-    designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', function ($scope, propertyService) {
-        $scope.ShowLoadingIndicator = true;
+    designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', 'dialogFeedbackService', function ($scope, propertyService, dialogFeedbackService) {
+        $scope.Feedback = dialogFeedbackService;
+        $scope.Feedback.ShowLoadingIndicator = true;
 
-        propertyService.get().then(function (data) {
-            if (data) {
-                $scope.Items = data.Items;
-                $scope.Properties = propertyService.toAssociativeArray(data.Items);
-            }
-            $scope.ShowLoadingIndicator = false;
-        }, 
-        function (data) {
-            $scope.ShowError = true;
-            if (data)
-                $scope.ErrorMessage = data.Detail;
-            $scope.ShowLoadingIndicator = false;
-        });
+        propertyService.get()
+            .then(function (data) {
+                if (data) {
+                    $scope.Properties = propertyService.toAssociativeArray(data.Items);
+                }
+            }, 
+            function (data) {
+                $scope.Feedback.ShowError = true;
+                if (data)
+                    $scope.Feedback.ErrorMessage = data.Detail;
+            })
+            .finally(function () {
+                $scope.Feedback.ShowLoadingIndicator = false;
+            });
     }]);
 
-    designerModule.controller('DialogCtrl', ['$scope', '$modalInstance', '$routeParams', 'propertyService', 'widgetContext',
-        function ($scope, $modalInstance, $routeParams, propertyService, widgetContext) {
-            var isSaveToAllTranslations = true;
+    designerModule.factory('dialogFeedbackService', [function () {
+        return {
+            ShowLoadingIndicator: false,
+            ShowError: false,
+            ErrorMessage: null,
+
+            SavingPromise: null,
+            CancelingPromise: null
+        };
+    }]);
+
+    designerModule.controller('DialogCtrl', ['$scope', '$q', '$modalInstance', '$routeParams', 'propertyService', 'widgetContext', 'dialogFeedbackService',
+        function ($scope, $q, $modalInstance, $routeParams, propertyService, widgetContext, dialogFeedbackService) {
+            var isSaveToAllTranslations = true,
+                futureSave = $q.defer(),
+                futureCancel = $q.defer();
+
             // ------------------------------------------------------------------------
             // Event handlers
             // ------------------------------------------------------------------------
 
-            var onGetPropertiesSuccess = function (data) {
-                if (typeof ($telerik) != 'undefined')
-                    $telerik.$(document).trigger('controlPropertiesLoad', [{ 'Items': data.Items }]);
-
-                $scope.ShowLoadingIndicator = false;
-            };
-
-            var onError = function (data, status, headers, config) {
-                showError(data.Detail);
+            var onError = function (data) {
+                $scope.Feedback.ShowError = true;
+                if (data)
+                    $scope.Feedback.ErrorMessage = data.Detail;
             }
 
             var dialogClose = function () {
@@ -98,7 +109,7 @@
                     $modalInstance.close()
                 } catch (e) { }
 
-                $scope.ShowLoadingIndicator = false;
+                $scope.Feedback.ShowLoadingIndicator = false;
 
                 if (typeof ($telerik) != 'undefined')
                     $telerik.$(document).trigger('modalDialogClosed');
@@ -108,64 +119,63 @@
             // helper methods
             // ------------------------------------------------------------------------
 
-            var saveProperties = function (modifiedProperties) {
+            var saveProperties = function () {
                 var saveMode = {
                     Default: 0,
                     AllTranslations: 1,
                     CurrentTranslationOnly: 2
                 };
 
-                var currentSaveMode = saveMode.Default;
                 if (widgetContext.culture) {
                     currentSaveMode = isSaveToAllTranslations ? saveMode.AllTranslations : saveMode.CurrentTranslationOnly;
                 }
+                else {
+                    currentSaveMode = saveMode.Default;
+                }
 
-                propertyService.save(currentSaveMode, modifiedProperties).then(dialogClose, onError);
-            };
-
-            var showError = function(message){
-                $scope.ShowError = true;
-                if (message)
-                    $scope.ErrorMessage = message;
-
-                $scope.ShowLoadingIndicator = false;
+                return propertyService.save(currentSaveMode);
             };
 
             // ------------------------------------------------------------------------
             // Scope variables and setup
             // ------------------------------------------------------------------------
 
-            $scope.ShowLoadingIndicator = true;
-            $scope.ShowError = false;
+            $scope.Feedback = dialogFeedbackService;
+            $scope.Feedback.ShowLoadingIndicator = true;
+            $scope.Feedback.ShowError = false;
+
+            $scope.Feedback.SavingPromise = futureSave.promise;
+            $scope.Feedback.CancelingPromise = futureCancel.promise;
 
             //the save action - it will check which properties are changed and send only them to the server 
             $scope.Save = function (saveToAllTranslations) {
                 isSaveToAllTranslations = saveToAllTranslations;
 
-                $scope.$broadcast('saveButtonPressed', null);
+                $scope.Feedback.SavingPromise
+                    .then(saveProperties)
+                    .then(dialogClose)
+                    .catch(onError)
+                    .finally(function () {
+                        $scope.Feedback.ShowLoadingIndicator = false;
+                    });
 
-                $scope.ShowLoadingIndicator = true;
-
-                var args = { Cancel: false };
-
-                if (typeof ($telerik) != 'undefined') {
-                    propertyService.get().then(function (data) {
-                        $telerik.$(document).trigger('controlPropertiesUpdating', [{ 'Items': data.Items, 'args': args }]);
-                    }, onError);
-                }
-
-                if (!args.Cancel)
-                    saveProperties();
+                $scope.Feedback.ShowLoadingIndicator = true;
+                futureSave.resolve();
             };
 
             $scope.Cancel = function () {
-                if (typeof ($telerik) != 'undefined') {
-                    propertyService.get().then(function (data) {
-                        $telerik.$(document).trigger('controlPropertiesUpdateCanceling', [{ 'Items': data.Items }]);
+                $scope.Feedback.CancelingPromise
+                    .then(function () {
                         propertyService.reset();
                         dialogClose();
-                    }, onError);
-                }
+                    })
+                    .catch(onError)
+                    .finally(function () {
+                        $scope.Feedback.ShowLoadingIndicator = false;
+                    });
+
+                $scope.Feedback.ShowLoadingIndicator = true;
+                futureCancel.resolve();
             };
 
             $scope.HideSaveAllTranslations = widgetContext.hideSaveAllTranslations;
@@ -173,22 +183,13 @@
             $scope.IsCurrentView = function (view) {
                 return $routeParams.view === view;
             };
+            
+            $scope.HideError = function () {
+                $scope.Feedback.ShowError = false;
+                $scope.Feedback.ErrorMessage = null;
+            };
 
-            propertyService.get().then(onGetPropertiesSuccess, onError);
-
-            if (typeof ($telerik) != 'undefined') {
-                $telerik.$(document).one('controlPropertiesUpdate', function (e, params) {
-                    if(params.Items)
-                        saveProperties(params.Items);
-                    if (params.error)
-                        showError(params.error);
-                    else
-                        dialogClose();
-                });
-                $telerik.$(document).one('controlPropertiesLoaded', function (e, params) {
-                    propertyService.set(params.Items);
-                });
-            }
+            propertyService.get().catch(onError);
         }
     ]);
 })(jQuery);

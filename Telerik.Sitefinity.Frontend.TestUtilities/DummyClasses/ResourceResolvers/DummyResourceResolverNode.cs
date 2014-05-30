@@ -45,7 +45,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
             return this.CurrentOpenMock(definition, virtualPath);
         }
 
-        protected override System.Collections.Generic.IEnumerable<string> GetCurrentAvailableFiles(PathDefinition definition, string path)
+        protected override System.Collections.Generic.IEnumerable<string> GetCurrentFiles(PathDefinition definition, string path)
         {
             return null;
         }
