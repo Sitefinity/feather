@@ -28,6 +28,6 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// </summary>
         /// <param name="definition">The definition.</param>
         /// <param name="virtualPath">The path.</param>
-        IEnumerable<string> GetAvailableFiles(PathDefinition definition, string virtualPath);
+        IEnumerable<string> GetFiles(PathDefinition definition, string virtualPath);
     }
 }

@@ -177,9 +177,11 @@
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerContainerAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\DisableViewLocationCacheAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\EnhanceViewEnginesAttribute.cs" />
     <Compile Include="InlineEditing\Attributes\FieldInfoAttribute.cs" />
     <Compile Include="Designers\DesignerInitializer.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\RequestBackendUserAuthenticationAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerExtensions.cs" />
     <Compile Include="GridSystem\GridControl.cs" />
     <Compile Include="FilesMonitoring\Data\FileData.cs" />

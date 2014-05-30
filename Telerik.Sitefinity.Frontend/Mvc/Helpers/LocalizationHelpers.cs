@@ -17,11 +17,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// </summary>
         /// <param name="helper">The helper.</param>
         /// <param name="key">The key.</param>
-        /// <returns></returns>
-        public static string Resource(this HtmlHelper helper, string key)
+        /// <param name="fallbackToKey">If true then if a resource is not found with the specified key the key is returned.</param>
+        public static string Resource(this HtmlHelper helper, string key,bool fallbackToKey = false)
         {
             var controller = helper.ViewContext.Controller;
-            return LocalizationHelpers.Resource(controller, helper.ViewContext.RouteData, key);
+            return LocalizationHelpers.Resource(controller, helper.ViewContext.RouteData, key, fallbackToKey);
         }
 
         /// <summary>
@@ -53,7 +53,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// </summary>
         /// <param name="controller">Controller that requests the resource.</param>
         /// <param name="key">The key.</param>
-        private static string Resource(ControllerBase controller, RouteData routeData, string key)
+        /// <param name="fallbackToKey">If true then if a resource is not found with the specified key the key is returned.</param>
+        private static string Resource(ControllerBase controller, RouteData routeData, string key, bool fallbackToKey)
         {
             var resClass = LocalizationHelpers.FindResourceStringClassType(controller.GetType());
 
@@ -72,7 +73,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 }
             }
 
-            return Res.Get(resClass, key);
+            string result;
+            if (Res.TryGet(resClass.Name, key, out result))
+            {
+                return result;
+            }
+            else if (fallbackToKey)
+            {
+                return key;
+            }
+            else
+            {
+                return "#ResourceNotFound: {0}, {1}#".Arrange(resClass.Name, key);
+            }
         }
 
         private static IController GetController(WebViewPage page)

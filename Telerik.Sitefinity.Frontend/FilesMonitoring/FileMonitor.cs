@@ -446,7 +446,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
             var queuedDirInfo = this.QueuedFoldersAndPackages.FirstOrDefault(dirInfo => dirInfo.Path.StartsWith(virtualFilePath, StringComparison.InvariantCultureIgnoreCase));
 
-            if (queuedDirInfo.Equals(default(KeyValuePair<string, bool>)))
+            if (queuedDirInfo == null)
                 return;
 
             this.QueuedFoldersAndPackages.Remove(queuedDirInfo);

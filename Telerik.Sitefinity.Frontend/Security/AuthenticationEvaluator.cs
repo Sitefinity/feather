@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Telerik.Sitefinity.Web.Services;
+﻿using Telerik.Sitefinity.Web.Services;
 
 namespace Telerik.Sitefinity.Frontend.Security
 {

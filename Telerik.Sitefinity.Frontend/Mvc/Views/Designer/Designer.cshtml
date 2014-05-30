@@ -9,12 +9,12 @@
 			<h1 class="modal-title">@Html.Raw(ViewBag.ControlName)</h1>
          </div>
          <div class="modal-body">
-            <div ng-show="ShowError" class="alert alert-danger">
-                <a class="close" data-dismiss="alert">x</a>
-                <strong>@Html.Resource("Error")</strong> <span ng-bind="ErrorMessage"></span>
+            <div ng-show="Feedback.ShowError" class="alert alert-danger">
+                <a class="close" data-dismiss="alert" ng-click="HideError()">x</a>
+                <strong>@Html.Resource("Error")</strong> <span ng-bind="Feedback.ErrorMessage"></span>
             </div>
 
-            <div ng-show="ShowLoadingIndicator" class="s-loading m-bottom-sm"></div>
+            <div ng-show="Feedback.ShowLoadingIndicator" class="s-loading m-bottom-sm"></div>
 
             <div id="viewsPlaceholder" ng-view></div>
          </div>
@@ -27,7 +27,7 @@
             {
                 foreach (var view in Model.Views)
                 {
-                    <a class="btn btn-default btn-xs pull-right m-top-xs" ng-hide="IsCurrentView('@view')" href="#/@view">@Html.Resource(view)</a>
+                    <a class="btn btn-default btn-xs pull-right m-top-xs" ng-hide="IsCurrentView('@view')" href="#/@view">@Html.Resource(view, fallbackToKey: true)</a>
                 }
             }
          </div>

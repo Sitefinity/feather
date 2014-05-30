@@ -43,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// </summary>
         /// <param name="definition">The definition.</param>
         /// <param name="path">The path.</param>
-        protected abstract IEnumerable<string> GetCurrentAvailableFiles(PathDefinition definition, string path);
+        protected abstract IEnumerable<string> GetCurrentFiles(PathDefinition definition, string path);
 
         #endregion
 
@@ -143,12 +143,12 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         }
 
         /// <inheritdoc />
-        public virtual IEnumerable<string> GetAvailableFiles(PathDefinition definition, string virtualPath)
+        public virtual IEnumerable<string> GetFiles(PathDefinition definition, string virtualPath)
         {
-            var result = this.GetCurrentAvailableFiles(definition, virtualPath);
+            var result = this.GetCurrentFiles(definition, virtualPath);
             if (this.Next != null)
             {
-                var nextFiles = this.Next.GetAvailableFiles(definition, virtualPath);
+                var nextFiles = this.Next.GetFiles(definition, virtualPath);
                 if (nextFiles != null)
                     result = result != null ? result.Union(nextFiles) : nextFiles;
             }
