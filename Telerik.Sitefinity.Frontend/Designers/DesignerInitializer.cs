@@ -23,7 +23,10 @@ namespace Telerik.Sitefinity.Frontend.Designers
         /// </summary>
         public void Initialize()
         {
-            RouteTable.Routes.MapRoute("MvcDesigner","Telerik.Sitefinity.Frontend/{controller}/{action}/{widgetName}", new { controller = "DesignerController", action = "Index" });
+            if (RouteTable.Routes["MvcDesigner"] == null)
+            {
+                RouteTable.Routes.MapRoute("MvcDesigner", "Telerik.Sitefinity.Frontend/{controller}/{action}/{widgetName}", new { controller = "DesignerController", action = "Index" });
+            }
 
             ObjectFactory.Container.RegisterType<IDesignerResolver, DesignerResolver>(new ContainerControlledLifetimeManager());
 
