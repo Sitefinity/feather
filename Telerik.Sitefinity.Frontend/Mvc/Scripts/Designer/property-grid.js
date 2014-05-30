@@ -10,11 +10,11 @@
                     $scope.Items = data.Items;
             };
 
-            var onGetError = function (data, status, headers, config) {
+            var onGetError = function (data) {
                 $scope.Feedback.ShowError = true;
                 if (data)
                     $scope.Feedback.ErrorMessage = data.Detail;
-            }
+            };
 
             propertyService.get().then(onGetPropertiesSuccess, onGetError)
                 .finally(function () {
@@ -40,7 +40,7 @@
 
             var levelFilter = function (property) {
                 var level = property.PropertyPath.split('/').length - 2;
-                if (propertyName == null || propertyName.length == 0 || propertyName == 'Home') {
+                if (propertyName === null || propertyName.length === 0 || propertyName == 'Home') {
                     return level <= 0;
                 } else {
                     if (property.PropertyPath.indexOf(propertyPath) >= 0) {
@@ -53,7 +53,7 @@
 
             var proxyFilter = function (property) {
                 return !property.IsProxy;
-            }
+            };
 
             var result = inputArray;
             if (inputArray && inputArray[0].IsProxy)

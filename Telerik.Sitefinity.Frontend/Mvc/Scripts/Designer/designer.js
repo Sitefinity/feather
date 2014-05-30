@@ -102,14 +102,12 @@
                 $scope.Feedback.ShowError = true;
                 if (data)
                     $scope.Feedback.ErrorMessage = data.Detail;
-            }
+            };
 
             var dialogClose = function () {
                 try {
-                    $modalInstance.close()
+                    $modalInstance.close();
                 } catch (e) { }
-
-                $scope.Feedback.ShowLoadingIndicator = false;
 
                 if (typeof ($telerik) != 'undefined')
                     $telerik.$(document).trigger('modalDialogClosed');
