@@ -167,7 +167,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         private void AppendRequiredHeaderContent(StringBuilder stringBuilder, bool setTitle = true)
         {
             var pageData = this.GetRequestedPageData();
-            stringBuilder.Append(this.ResourceRegistrations(string.Empty));
+            stringBuilder.Append(this.ResourceRegistrations());
             var robotsTag = this.GetRobotsMetaTag(pageData);
 
             if (!string.IsNullOrEmpty(robotsTag))
@@ -240,27 +240,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         }
 
         /// <summary>
-        /// Generates HTML link tags to include CSS for all stylesheets needed on the page (coming from the theme).
-        /// Provides an alternative for MVC where resources are inserted as pure HTML link tags instead of a ResourceLinks control, which is the case in the
-        /// WebForms and hybrid modes.
+        /// Generates scripts tag needed on the page. Doesn't include any resources for the default themes as opposite to the hybrid mode which always includes the default frontend theme.
         /// </summary>
-        /// <param name="theme">The name of the theme</param>
         /// <returns></returns>
-        private string ResourceRegistrations(string theme)
+        private string ResourceRegistrations()
         {
-            var pageProxy = new PageProxy(theme);
-            var resources = ThemeController.GetGlobalStyles(pageProxy);
-
-            if (resources == null)
-                return null;
-
+            var pageProxy = new PageProxy(string.Empty);
+            
             StringBuilder sb = new StringBuilder();
-            this.AppendStylesheetResourceTag(pageProxy, ref sb, "Telerik.Sitefinity.Resources.Reference", "Telerik.Sitefinity.Resources.Themes.LayoutsBasics.css");
-
-            foreach (var link in resources.Links)
-            {
-                this.AppendStylesheetResourceTag(pageProxy, ref sb, link.AssemblyInfo, link.Name);
-            }
 
             string appPath = System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
 
@@ -314,34 +301,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             return RouteHelper.GetFirstPageDataNode(node, true);
         }
-//<<<<<<< HEAD:Telerik.Sitefinity.Frontend/Mvc/Infrastructure/Layouts/LayoutTemplateBuilder.cs
-//        }
-
-//        private IList<Func<string, string>> GetPathTransformations(Controller controller)
-//        {
-//            var packagesManager = new PackagesManager();
-//            var currentPackage = packagesManager.GetCurrentPackage();
-//            var pathTransformations = new List<Func<string, string>>(1);
-//            var baseVirtualPath = MvcIntegrationManager.GetVirtualPathBuilder().GetVirtualPath(this.GetType().Assembly);
-
-//            pathTransformations.Add(path =>
-//                {
-//                    //{1} is the ControllerName argument in VirtualPathProviderViewEngines
-//                    var result = path
-//                                    .Replace("{1}", "Layouts")
-//                                    .Replace("~/", "~/{0}Mvc/".Arrange(baseVirtualPath));
-
-//                    if (currentPackage.IsNullOrEmpty())
-//                        result += "#" + currentPackage + Path.GetExtension(path);
-
-//                    return result;
-//                });
-
-//            return pathTransformations;
-//        }
-//=======
-//        } 
-//>>>>>>> 7d900388018c61332bf547cb8cdf9ce5812b3377:Telerik.Sitefinity.Frontend/Mvc/Infrastructure/Layouts/MasterPageBuilder.cs
 
         #endregion
 
