@@ -20,8 +20,8 @@
 							scope.classExpanded = "glyphicon-chevron-down";
 						else
 							scope.classExpanded = "glyphicon-chevron-right";
-					}
+					};
 				}
-			}
+			};
 		});
 })(jQuery);
