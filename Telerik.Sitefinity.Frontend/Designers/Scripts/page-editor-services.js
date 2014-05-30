@@ -40,7 +40,10 @@
          */
         var requestOptions = function () {
             var header = {};
-            header[CULTURE_HEADER] = widgetContext.culture;
+
+            if (widgetContext.culture)
+                header[CULTURE_HEADER] = widgetContext.culture;
+
             return {
                 cache: false,
                 headers: header
