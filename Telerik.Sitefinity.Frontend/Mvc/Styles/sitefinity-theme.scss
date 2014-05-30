@@ -5,6 +5,7 @@ $md-margin: 15px;
 $lg-margin: 25px;
 
 $white: #fff;
+$gray: #666;
 $gray-lighter: #e4e4e4;
 $gray-lightest: #f2f2f2;
 
@@ -81,6 +82,27 @@ $system-bg: $gray-lightest;
 		{
 			margin-top: -15px;
 			margin-left: 20px;
+		}
+	}
+	.s-more-options-wrp
+	{
+		.glyphicon-chevron-down, .glyphicon-chevron-right
+		{
+			color: $gray;
+			font-size: 12px;
+		}
+		.s-title
+		{
+			cursor: pointer;
+			font-weight: bold;
+		}
+		.s-body
+		{
+			margin-top: $sm-margin;
+		}
+		.form-group
+		{
+			margin-left: $md-margin;
 		}
 	}
 }

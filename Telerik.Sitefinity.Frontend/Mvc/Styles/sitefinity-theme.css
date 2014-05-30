@@ -38,3 +38,13 @@
     .sf-designer-dlg .s-bg-source-wrp .dropdown-menu {
       margin-top: -15px;
       margin-left: 20px; }
+  .sf-designer-dlg .s-more-options-wrp .glyphicon-chevron-down, .sf-designer-dlg .s-more-options-wrp .glyphicon-chevron-right {
+    color: #666;
+    font-size: 12px; }
+  .sf-designer-dlg .s-more-options-wrp .s-title {
+    cursor: pointer;
+    font-weight: bold; }
+  .sf-designer-dlg .s-more-options-wrp .s-body {
+    margin-top: 10px; }
+  .sf-designer-dlg .s-more-options-wrp .form-group {
+    margin-left: 15px; }
