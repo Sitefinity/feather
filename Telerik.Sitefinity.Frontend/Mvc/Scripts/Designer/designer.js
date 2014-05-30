@@ -64,7 +64,6 @@
         propertyService.get()
             .then(function (data) {
                 if (data) {
-                    $scope.Items = data.Items;
                     $scope.Properties = propertyService.toAssociativeArray(data.Items);
                 }
             }, 
