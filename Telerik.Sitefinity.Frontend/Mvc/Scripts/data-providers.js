@@ -13,7 +13,7 @@
             var ca = document.cookie.split(';');
             for (var i = 0; i < ca.length; i++) {
                 var c = ca[i].trim();
-                if (c.indexOf(name) == 0)
+                if (c.indexOf(name) === 0)
                     return c.substring(name.length, c.length);
             }
             return '';
@@ -22,15 +22,15 @@
         //returns an array of available providers
         var getAll = function (managerName) {
 
-            var getUrl = providerDataServiceUrl
-                + 'providers/?sortExpression=Title'
-                + '&dataSourceName=' + managerName
-                + '&siteId=' + getCookie('sf_site')
-                + '&itemType=Telerik.Sitefinity.Multisite.Web.Services.ViewModel.SiteDataSourceLinkViewModel'
-                + '&itemSurrogateType=Telerik.Sitefinity.Multisite.Web.Services.ViewModel.SiteDataSourceLinkViewModel'
-                + '&allProviders=true'
-                + '&skip=0'
-                + '&take=50';
+            var getUrl = providerDataServiceUrl +
+                'providers/?sortExpression=Title' +
+                '&dataSourceName=' + managerName +
+                '&siteId=' + getCookie('sf_site') +
+                '&itemType=Telerik.Sitefinity.Multisite.Web.Services.ViewModel.SiteDataSourceLinkViewModel' +
+                '&itemSurrogateType=Telerik.Sitefinity.Multisite.Web.Services.ViewModel.SiteDataSourceLinkViewModel' +
+                '&allProviders=true' +
+                '&skip=0' +
+                '&take=50';
 
             var deferred = $q.defer();
             $http.get(getUrl, { cache: false })
@@ -80,19 +80,19 @@
     dataProvidersModule.directive('providerSelector', ['providerService', function (providerService) {
         return {
             restrict: 'E',
-            template: '<div class="dropdown s-bg-source-wrp" ng-show="IsProviderSelectorVisible">'
-                        + '<a class="btn btn-default dropdown-toggle" >'
-                            + '{{SelectedProvider.Title}} <span class="caret"></span>'
-                        + '</a>'
-                        + '<ul class="dropdown-menu" >'
-                            + '<li>'
-                                + '<a href="#">- {{providerLabel}} -</a>'
-                            + '</li>'
-                            + '<li ng-repeat="provider in Providers">'
-                                + '<a href="#" ng-click="selectProvider(provider)">{{provider.Title}}</a>'
-                            + '</li>'
-                        + '</ul>'
-                     + '</div>',
+            template: '<div class="dropdown s-bg-source-wrp" ng-show="IsProviderSelectorVisible">' +
+                          '<a class="btn btn-default dropdown-toggle" >' +
+                            '{{SelectedProvider.Title}} <span class="caret"></span>' +
+                          '</a>' +
+                          '<ul class="dropdown-menu" >' +
+                              '<li>' +
+                                '<a href="#">- {{providerLabel}} -</a>' +
+                              '</li>' +
+                              '<li ng-repeat="provider in Providers">' +
+                                '<a href="#" ng-click="selectProvider(provider)">{{provider.Title}}</a>' +
+                              '</li>' +
+                          '</ul>' +
+                      '</div>',
             require: 'ngModel',
             replace: true,
             link: function (scope, tElement, tAttrs, ngModelCtrl) {

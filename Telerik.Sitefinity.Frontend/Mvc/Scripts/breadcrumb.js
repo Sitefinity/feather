@@ -6,8 +6,8 @@
         var breadcrumbElements = [];
 
         var breadcrumbElement = function (propPath, propName) {
-            this.PropertyPath = propPath,
-            this.PropertyName = propName
+            this.PropertyPath = propPath;
+            this.PropertyName = propName;
         };
 
         return {
@@ -76,7 +76,7 @@
                         breadcrumbElement.hide();
                     }
                     return breadcrumbService.getAll();
-                }
+                };
 
                 //initial populate of the breadcrumb elements
                 scope.Breadcrumbs = generateCurrentBreadcrumbElements();
