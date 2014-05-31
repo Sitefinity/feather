@@ -4,6 +4,7 @@ using System.Linq;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
+using Telerik.Sitefinity.Frontend.Resources;
 
 namespace Telerik.Sitefinity.Frontend.Designers
 {
@@ -78,7 +79,17 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 string controllerName = controllerRegistry.GetControllerName(widgetType);
                 designerUrl = string.Format(DesignerResolver.defaultActionUrlTemplate, controllerName);
             }
-            
+
+            if (!designerUrl.IsNullOrEmpty())
+            {
+                var currentPackage = new PackagesManager().GetCurrentPackage();
+                if (!currentPackage.IsNullOrEmpty())
+                {
+                    char glue = designerUrl.Contains('?') ? '&' : '?';
+                    designerUrl = designerUrl + glue + "package=" + currentPackage;
+                }
+            }
+
             return designerUrl;
         }
 

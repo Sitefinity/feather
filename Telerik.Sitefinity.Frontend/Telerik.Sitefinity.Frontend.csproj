@@ -177,7 +177,6 @@
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerContainerAttribute.cs" />
-    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\DisableViewLocationCacheAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\EnhanceViewEnginesAttribute.cs" />
     <Compile Include="InlineEditing\Attributes\FieldInfoAttribute.cs" />
     <Compile Include="Designers\DesignerInitializer.cs" />
@@ -344,7 +343,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
