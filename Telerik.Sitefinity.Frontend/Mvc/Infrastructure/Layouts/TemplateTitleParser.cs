@@ -24,7 +24,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         {
             templateTitle = this.StripPackageNameFromTemplateName(templateTitle);
 
-            var packagesManager = new PackagesManager();
+            var packagesManager = new PackageManager();
             return packagesManager.StripInvalidCharacters(templateTitle);
         } 
 
@@ -44,7 +44,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             if (parts.Length > 1)
             {
-                var packagesManager = new PackagesManager();
+                var packagesManager = new PackageManager();
                 var packageVirtualPath = packagesManager.GetPackageVirtualPath(parts[0]);
                 var packagePath = HostingEnvironment.MapPath(packageVirtualPath);
                 if (Directory.Exists(packagePath))

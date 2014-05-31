@@ -13,9 +13,9 @@ using Telerik.Sitefinity.Web;
 namespace Telerik.Sitefinity.Frontend.Resources
 {
     /// <summary>
-    /// This class is used for packages management.
+    /// This class is used for package management.
     /// </summary>
-    public class PackagesManager
+    public class PackageManager
     {
         #region Public Methods
 
@@ -39,7 +39,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (packageName.IsNullOrEmpty())
                 packageName = this.GetPackageFromPageInfo();
 
-            context.Items[PackagesManager.CurrentPackageKey] = packageName;
+            context.Items[PackageManager.CurrentPackageKey] = packageName;
 
             return packageName;
         }
@@ -75,9 +75,9 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public string GetPackageFromContext()
         {
             string packageName = null;
-            if (SystemManager.CurrentHttpContext.Items.Contains(PackagesManager.CurrentPackageKey))
+            if (SystemManager.CurrentHttpContext.Items.Contains(PackageManager.CurrentPackageKey))
             {
-                packageName = SystemManager.CurrentHttpContext.Items[PackagesManager.CurrentPackageKey] as string;
+                packageName = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] as string;
             }
             return packageName;
         }
@@ -100,7 +100,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public string StripInvalidCharacters(string title)
         {
             var result = System.Text.RegularExpressions.Regex.Replace(title,
-                PackagesManager.FileNameStripingRegexPattern, PackagesManager.FileNameInvalidCharactersSubstitute);
+                PackageManager.FileNameStripingRegexPattern, PackageManager.FileNameInvalidCharactersSubstitute);
 
             return result;
         }
@@ -115,7 +115,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (packageName.IsNullOrEmpty())
                 throw new ArgumentNullException("packageName");
 
-            var path = string.Format("~/{0}/{1}", PackagesManager.PackagesFolder, packageName);
+            var path = string.Format("~/{0}/{1}", PackageManager.PackagesFolder, packageName);
             return path;
         }
 
@@ -128,6 +128,24 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var packageName = this.GetCurrentPackage();
             var packageVirtualPath = !packageName.IsNullOrEmpty() ? this.GetPackageVirtualPath(packageName) : null;
             return packageVirtualPath;
+        }
+
+        /// <summary>
+        /// Enhances the given URL with information about the current package.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        public string EnhanceUrl(string url)
+        {
+            if (url != null)
+            {
+                var currentPackage = this.GetCurrentPackage();
+                if (!currentPackage.IsNullOrEmpty())
+                {
+                    return UrlTransformations.AppendParam(url, PackageManager.PackageUrlParamterName, currentPackage);
+                }
+            }
+
+            return url;
         }
 
         #endregion
@@ -194,7 +212,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                     var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
                     if (Directory.Exists(path))
                     {
-                        SystemManager.CurrentHttpContext.Items[PackagesManager.CurrentPackageKey] = expectedPackageName;
+                        SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
                         return expectedPackageName;
                     }
                 }
@@ -228,7 +246,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// The current package key
         /// </summary>
         public const string CurrentPackageKey = "CurrentResourcePackage";
-
 
         public const string PackageUrlParamterName = "package";
 

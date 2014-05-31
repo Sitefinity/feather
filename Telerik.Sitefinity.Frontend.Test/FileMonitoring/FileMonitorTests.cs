@@ -133,7 +133,7 @@ namespace Telerik.Sitefinity.Frontend.Test.FileMonitoring
         public void Start_NonExistingDirectories_AddedInQueuedFoldersAndPackages()
         {
             //Arrange
-            var packageFolderPath = "~/" + PackagesManager.PackagesFolder;
+            var packageFolderPath = "~/" + PackageManager.PackagesFolder;
             var baseMvcPath = "~/Mvc/Views/Layouts";
             var fileMonitor = new DummyFileMonitor();
 

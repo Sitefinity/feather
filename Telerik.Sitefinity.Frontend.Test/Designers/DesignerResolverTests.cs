@@ -1,9 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Web;
 using Telerik.Sitefinity.Frontend.Designers;
+using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Controls;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.HttpContext;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.Test.Designers
 {
@@ -38,6 +43,28 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
 
             //Assert
             Assert.AreEqual("~/Telerik.Sitefinity.Frontend/Designer/Master/Dummy", url, "The default designer URL is not retrieved properly.");
+        }
+
+        [TestMethod]
+        [Owner("Boyko-Karadzhov")]
+        [Description("Checks whether GetUrl returns the MVC designer URL with package URL parameter when the current request has a package.")]
+        public void GetUrl_ControllerWithPackage_ReturnsMvcDesignerUrlWithPackageQuery()
+        {
+            //Arrange
+            var resolver = new DesignerResolver();
+            var context = new HttpContextWrapper(new HttpContext(
+               new HttpRequest(null, "http://tempuri.org/test?package=MyPackage", "package=MyPackage"),
+               new HttpResponse(null)));
+
+            //Act
+            string url = null;
+            SystemManager.RunWithHttpContext(context, () =>
+            {
+                url = resolver.GetUrl(typeof(DummyController));
+            });
+
+            //Assert
+            Assert.AreEqual("~/Telerik.Sitefinity.Frontend/Designer/Master/Dummy?package=MyPackage", url, "The default designer URL is not retrieved properly.");
         }
 
         [TestMethod]

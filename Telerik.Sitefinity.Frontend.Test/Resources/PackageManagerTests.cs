@@ -10,16 +10,16 @@ using Telerik.Sitefinity.Frontend.Resources;
 namespace Telerik.Sitefinity.Frontend.Test.Resources
 {
     /// <summary>
-    /// Ensures that PackagesManager class works correctly.
+    /// Ensures that PackageManager class works correctly.
     /// </summary>
     [TestClass]
-    public class PackagesManagerTests
+    public class PackageManagerTests
     {
         #region AppendPackageParam
 
         [TestMethod]
         [Owner("Bonchev")]
-        [Description("Checks whether the PackagesManager properly appends the package parameter to a given URL.")]
+        [Description("Checks whether the PackageManager properly appends the package parameter to a given URL.")]
         public void AppendPackageParam_GivenUrl_VerifyThePackageNameIsAppendedCorrectly()
         {
             //Arrange: Create variables holding the package name and fake URL to which the package will be appended
@@ -32,9 +32,9 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
 
 
             //Act: append the package name
-            appendedUrlWithEmptyPackagename = UrlTransformations.AppendParam(urlWithNoParamters, PackagesManager.PackageUrlParamterName, null);
-            appendedUrhWithParams = UrlTransformations.AppendParam(urlWithParamters, PackagesManager.PackageUrlParamterName, packageName);
-            appendedUrWithNoParams = UrlTransformations.AppendParam(urlWithNoParamters, PackagesManager.PackageUrlParamterName, packageName);
+            appendedUrlWithEmptyPackagename = UrlTransformations.AppendParam(urlWithNoParamters, PackageManager.PackageUrlParamterName, null);
+            appendedUrhWithParams = UrlTransformations.AppendParam(urlWithParamters, PackageManager.PackageUrlParamterName, packageName);
+            appendedUrWithNoParams = UrlTransformations.AppendParam(urlWithNoParamters, PackageManager.PackageUrlParamterName, packageName);
 
 
             //Assert: Verify the package name is properly appended
@@ -49,11 +49,11 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
 
         [TestMethod]
         [Owner("Bonchev")]
-        [Description("Checks whether the PackagesManager properly return the virtual path of a given package")]
+        [Description("Checks whether the PackageManager properly return the virtual path of a given package")]
         public void GetPackageVirtualPath_GivenPackage_VerifyTheVirtualPathIsCorrect()
         {
-            //Arrange: Initialize the PackagesManager and a fake package name
-            var packageManager = new PackagesManager();
+            //Arrange: Initialize the PackageManager and a fake package name
+            var packageManager = new PackageManager();
             string packageName = "fakePackageName";
             string packageVirtualpath;
 
@@ -70,7 +70,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
             {
             }
 
-            Assert.AreEqual<string>(string.Format("~/{0}/{1}", PackagesManager.PackagesFolder, packageName), packageVirtualpath, "Package virtual path is not correct");
+            Assert.AreEqual<string>(string.Format("~/{0}/{1}", PackageManager.PackagesFolder, packageName), packageVirtualpath, "Package virtual path is not correct");
         }
 
         #endregion
@@ -79,11 +79,11 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
 
         [TestMethod]
         [Owner("Bonchev")]
-        [Description("Checks whether the PackagesManager properly strips all invalid chars and replace them with a proper substitute")]
+        [Description("Checks whether the PackageManager properly strips all invalid chars and replace them with a proper substitute")]
         public void StripInvalidCharacters_TitleWithInvalidCharacters_VerifyStringIsProperlyInvalidated()
         {
-            //Arrange: Initialize the PackagesManager and a fake package name
-            var packageManager = new PackagesManager();
+            //Arrange: Initialize the PackageManager and a fake package name
+            var packageManager = new PackageManager();
             string title = "fake\\/Title<Name>With:Invalid?Chars\"And*Symbols|Included";
             string cleanedTitle;
 
@@ -103,14 +103,14 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
         [Description("Checks whether the GetCurrentPackage extracts properly the currernt package name form the HttpContext.")]
         public void GetCurrentPackage_FakeContext_VerifyThePackageNameIsCorrect()
         {
-            //Arrange: Initialize the PackagesManager and create fake HttpContextWrapper which has fake package name set as parameter in its parameters collection
-            var packageManager = new PackagesManager();
+            //Arrange: Initialize the PackageManager and create fake HttpContextWrapper which has fake package name set as parameter in its parameters collection
+            var packageManager = new PackageManager();
             string packageName = string.Empty;
 
             var context = new HttpContextWrapper(new HttpContext(
                 new HttpRequest(null, "http://tempuri.org", null),
                 new HttpResponse(null)));
-            context.Items[PackagesManager.CurrentPackageKey] = "testPackageName";
+            context.Items[PackageManager.CurrentPackageKey] = "testPackageName";
 
             //Act:  Get the package name from the request parameters collection 
             SystemManager.RunWithHttpContext(context, () =>
@@ -128,11 +128,11 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
 
         [TestMethod]
         [Owner("Bonchev")]
-        [Description("Checks whether the PackagesManager properly gets a package name from the request URL query string")]
+        [Description("Checks whether the PackageManager properly gets a package name from the request URL query string.")]
         public void GetPackageFromUrl_FakeCurrentUrlInHttpContext_VerifyThePackageNameIsCorrect()
         {
-            //Arrange: Initialize the PackagesManager and create fake HttpContextWrapper which has fake request URL with the package name set as query parameter
-            var packageManager = new PackagesManager();
+            //Arrange: Initialize the PackageManager and create fake HttpContextWrapper which has fake request URL with the package name set as query parameter
+            var packageManager = new PackageManager();
             string packageName = string.Empty;
 
             var context = new HttpContextWrapper(new HttpContext(
@@ -147,6 +147,49 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
 
             //Assert: Verify if the manager properly strips all invalid characters
             Assert.AreEqual<string>("testPackageName", packageName, "The package name was not resolved correctly");
+        }
+
+        #endregion
+
+        #region EnhanceUrl
+
+        [TestMethod]
+        [Owner("Boyko-Karadzhov")]
+        [Description("Checks whether EnhanceUrl method will append the package url param to a given url.")]
+        public void EnhanceUrl_HasPackage_AppendsPackageUrlParam()
+        {
+            //Arrange: Initialize the PackageManager and create fake HttpContextWrapper which has fake request URL with the package name set as query parameter.
+            string url = "http://mysite/";
+            string expectedEnhancedUrl = url + "?package=testPackageName";
+
+            var context = new HttpContextWrapper(new HttpContext(
+                new HttpRequest(null, "http://tempuri.org", "package=testPackageName"),
+                new HttpResponse(null)));
+
+            //Act: Get the enhanced URL from the package manager.
+            SystemManager.RunWithHttpContext(context, () =>
+            {
+                url = new PackageManager().EnhanceUrl(url);
+            });
+
+            //Assert: Verify if the manager appends package param.
+            Assert.AreEqual(expectedEnhancedUrl, url, "The URL does not contain the package name.");
+        }
+
+        [TestMethod]
+        [Owner("Boyko-Karadzhov")]
+        [Description("Checks whether EnhanceUrl will not modify a given URL when there is no package.")]
+        public void EnhanceUrl_NoPackage_AppendsPackageUrlParam()
+        {
+            //Arrange
+            string url = "http://mysite/";
+            string expectedEnhancedUrl = url;
+
+            //Act
+            url = new PackageManager().EnhanceUrl(url);
+
+            //Assert
+            Assert.AreEqual(expectedEnhancedUrl, url, "The URL was modified.");
         }
 
         #endregion

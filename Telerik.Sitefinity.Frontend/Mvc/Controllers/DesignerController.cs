@@ -13,7 +13,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
     /// </summary>
     [Localization(typeof(DesignerResources))]
     [RequestBackendUserAuthentication]
-    [DisableViewLocationCache]
     public class DesignerController : Controller
     {
         /// <summary>

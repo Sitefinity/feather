@@ -84,7 +84,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// </summary>
         protected virtual void InitializeChain()
         {
-            var packagesManager = new PackagesManager();
+            var packagesManager = new PackageManager();
 
             this.SetFirst(new FileSystemResourceResolver(() => packagesManager.GetCurrentPackageVirtualPath()))
                 .SetNext(new DatabaseResourceResolver())

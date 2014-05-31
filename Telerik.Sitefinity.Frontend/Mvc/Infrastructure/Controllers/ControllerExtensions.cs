@@ -77,7 +77,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             newEngine.ViewLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.ViewLocationFormats, pathTransformations);
             newEngine.MasterLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.MasterLocationFormats, pathTransformations);
             newEngine.PartialViewLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.PartialViewLocationFormats, pathTransformations);
-            
+
+            newEngine.ViewLocationCache = new VoidViewLocationCache();
+
             return newEngine;
         }
 

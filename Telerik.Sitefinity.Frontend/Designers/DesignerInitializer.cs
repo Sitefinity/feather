@@ -52,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/angular-kendo.js"));
 
-                var currentPackage = new PackagesManager().GetCurrentPackage();
+                var currentPackage = new PackageManager().GetCurrentPackage();
                 if (!currentPackage.IsNullOrEmpty())
                 {
                     var packageVar = "var sf_package = '{0}';".Arrange(currentPackage);
