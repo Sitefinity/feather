@@ -22,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var attributes = new KeyValuePair<string,string>[2];
             attributes[0] = new KeyValuePair<string, string>("src", scriptPath);
-            attributes[0] = new KeyValuePair<string, string>("type", "text/javascript");
+            attributes[1] = new KeyValuePair<string, string>("type", "text/javascript");
 
             var register = new ClientResourceRegister("JsRegister", "script", "src");
 
