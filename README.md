@@ -11,21 +11,25 @@ This repository contains the core infrastructure related to the Feather project.
 
 [Getting Started](https://github.com/Sitefinity/feather/wiki/Getting-Started)
 
-[How to create a "Hello World" MVC widget](https://github.com/Sitefinity/feather/wiki/How-to-create-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-separate-assembly)
-
 [How to change MVC widget templates](https://github.com/Sitefinity/feather/wiki/How-to-change-MVC-widget-templates)
 
-[How to replace the default simple designer view](https://github.com/Sitefinity/feather/wiki/How-to-replace-the-default-simple-designer-view)
+[How to create “Hello World” MVC widget in separate assembly](https://github.com/Sitefinity/feather/wiki/How-to-create-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-separate-assembly)
 
-[How to refer resources inside MVC views](https://github.com/Sitefinity/feather/wiki/How-to-refer-resources-inside-MVC-views)
+[How to create a designer view](https://github.com/Sitefinity/feather/wiki/How-to-create-a-designer-view)
+
+[How to extend the designer with additional client logic](https://github.com/Sitefinity/feather/wiki/How-to-extend-the-designer-with-additional-client-logic)
+
+[How to refer resources inside MVC views](https://github.com/Sitefinity/feather/wiki/How-to-refer-to-resources-inside-MVC-views)
 
 [How to base a page template on a layout file by using convention](https://github.com/Sitefinity/feather/wiki/How-to-base-a-page-template-on-a-layout-file-by-using-convention)
 
-[How to replace commands displayed in ZoneEditor that are specific for a widget](https://github.com/Sitefinity/feather/wiki/How-to-replace-commands-displayed-in-ZoneEditor-that-are-specific-for-a-widget)
+[How to replace commands displayed in the ZoneEditor that are specific for a widget](https://github.com/Sitefinity/feather/wiki/How-to-replace-commands-displayed-in-the-ZoneEditor-that-are-specific-for-a-widget)
+
+[How to keep using the old WebForms widget designer after the installation of Feather?](https://github.com/Sitefinity/feather/wiki/How-to-keep-using-the-old-WebForms-widget-designer-after-the-installation-of-Feather%3F)
 
 [How to use a custom client window for designers](https://github.com/Sitefinity/feather/wiki/How-to-use-a-custom-client-window-for-designers)
 
-[How to use resource from a package] (https://github.com/Sitefinity/feather/wiki/How-to-use-resource-from-a-package)
+[How to use a resource from a package] (https://github.com/Sitefinity/feather/wiki/How-to-use-a-resource-from-a-package)
 
 [Page templates based on layout files explained](https://github.com/Sitefinity/feather/wiki/Page-templates-based-on-layout-files-explained)
 
