@@ -130,6 +130,24 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return packageVirtualPath;
         }
 
+        /// <summary>
+        /// Enhances the given URL with information about the current package.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        public string EnhanceUrl(string url)
+        {
+            if (url != null)
+            {
+                var currentPackage = this.GetCurrentPackage();
+                if (!currentPackage.IsNullOrEmpty())
+                {
+                    return UrlTransformations.AppendParam(url, PackageManager.PackageUrlParamterName, currentPackage);
+                }
+            }
+
+            return url;
+        }
+
         #endregion
 
         #region Private methods

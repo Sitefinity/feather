@@ -33,17 +33,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
             if (!this.TryResolveUrlFromAttribute(widgetType, out designerUrl))
                 designerUrl = this.GetDefaultUrl(widgetType);
 
-            if (!designerUrl.IsNullOrEmpty())
-            {
-                var currentPackage = new PackageManager().GetCurrentPackage();
-                if (!currentPackage.IsNullOrEmpty())
-                {
-                    char glue = designerUrl.Contains('?') ? '&' : '?';
-                    designerUrl = designerUrl + glue + "package=" + currentPackage;
-                }
-            }
-
-            return designerUrl;
+            return new PackageManager().EnhanceUrl(designerUrl);
         }
 
         #endregion 

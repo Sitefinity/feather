@@ -52,23 +52,16 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
         {
             //Arrange
             var resolver = new DesignerResolver();
-            var context = new HttpContext(
-               new HttpRequest(null, "http://tempuri.org/test?package=MyPackage", null),
-               new HttpResponse(null));
-            context.Items[PackageManager.CurrentPackageKey] = "MyPackage";
-            var originalContext = HttpContext.Current;
-            HttpContext.Current = context;
-            
+            var context = new HttpContextWrapper(new HttpContext(
+               new HttpRequest(null, "http://tempuri.org/test?package=MyPackage", "package=MyPackage"),
+               new HttpResponse(null)));
+
             //Act
-            string url;
-            try
+            string url = null;
+            SystemManager.RunWithHttpContext(context, () =>
             {
                 url = resolver.GetUrl(typeof(DummyController));
-            }
-            finally
-            {
-                HttpContext.Current = originalContext;
-            }
+            });
 
             //Assert
             Assert.AreEqual("~/Telerik.Sitefinity.Frontend/Designer/Master/Dummy?package=MyPackage", url, "The default designer URL is not retrieved properly.");
