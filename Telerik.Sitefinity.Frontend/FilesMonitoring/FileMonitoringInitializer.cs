@@ -32,7 +32,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var fileObserver = ObjectFactory.Resolve<IFileMonitor>();
 
             var monitoredDirectories = new List<MonitoredDirectory>();
-            monitoredDirectories.Add(new MonitoredDirectory("~/" + PackagesManager.PackagesFolder, true));
+            monitoredDirectories.Add(new MonitoredDirectory("~/" + PackageManager.PackagesFolder, true));
             monitoredDirectories.Add(new MonitoredDirectory("~/Mvc/Views/Layouts", false));
 
             fileObserver.Start(monitoredDirectories);

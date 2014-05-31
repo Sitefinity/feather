@@ -30,11 +30,20 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 throw new ArgumentNullException("widgetType");
 
             string designerUrl;
+            if (!this.TryResolveUrlFromAttribute(widgetType, out designerUrl))
+                designerUrl = this.GetDefaultUrl(widgetType);
 
-            if (this.TryResolveUrlFromAttribute(widgetType, out designerUrl))
-                return designerUrl;
-            else
-               return this.GetDefaultUrl(widgetType);
+            if (!designerUrl.IsNullOrEmpty())
+            {
+                var currentPackage = new PackageManager().GetCurrentPackage();
+                if (!currentPackage.IsNullOrEmpty())
+                {
+                    char glue = designerUrl.Contains('?') ? '&' : '?';
+                    designerUrl = designerUrl + glue + "package=" + currentPackage;
+                }
+            }
+
+            return designerUrl;
         }
 
         #endregion 
@@ -78,16 +87,6 @@ namespace Telerik.Sitefinity.Frontend.Designers
             {
                 string controllerName = controllerRegistry.GetControllerName(widgetType);
                 designerUrl = string.Format(DesignerResolver.defaultActionUrlTemplate, controllerName);
-            }
-
-            if (!designerUrl.IsNullOrEmpty())
-            {
-                var currentPackage = new PackagesManager().GetCurrentPackage();
-                if (!currentPackage.IsNullOrEmpty())
-                {
-                    char glue = designerUrl.Contains('?') ? '&' : '?';
-                    designerUrl = designerUrl + glue + "package=" + currentPackage;
-                }
             }
 
             return designerUrl;

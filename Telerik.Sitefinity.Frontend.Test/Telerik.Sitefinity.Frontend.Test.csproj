@@ -143,7 +143,7 @@
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilderTests.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParserTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\FrontendControllerFactoryTests.cs" />
-    <Compile Include="Resources\PackagesManagerTests.cs" />
+    <Compile Include="Resources\PackageManagerTests.cs" />
     <Compile Include="Resources\Resolvers\ResourceResolverNodeTests.cs" />
     <Compile Include="Resources\Resolvers\ResourceResolverStrategyTests.cs" />
     <Compile Include="Resources\ResourceHttpHandlerTests.cs" />

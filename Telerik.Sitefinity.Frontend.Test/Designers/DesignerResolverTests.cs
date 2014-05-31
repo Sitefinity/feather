@@ -1,9 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Web;
 using Telerik.Sitefinity.Frontend.Designers;
+using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Controls;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.HttpContext;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.Test.Designers
 {
@@ -38,6 +43,35 @@ namespace Telerik.Sitefinity.Frontend.Test.Designers
 
             //Assert
             Assert.AreEqual("~/Telerik.Sitefinity.Frontend/Designer/Master/Dummy", url, "The default designer URL is not retrieved properly.");
+        }
+
+        [TestMethod]
+        [Owner("Boyko-Karadzhov")]
+        [Description("Checks whether GetUrl returns the MVC designer URL with package URL parameter when the current request has a package.")]
+        public void GetUrl_ControllerWithPackage_ReturnsMvcDesignerUrlWithPackageQuery()
+        {
+            //Arrange
+            var resolver = new DesignerResolver();
+            var context = new HttpContext(
+               new HttpRequest(null, "http://tempuri.org/test?package=MyPackage", null),
+               new HttpResponse(null));
+            context.Items[PackageManager.CurrentPackageKey] = "MyPackage";
+            var originalContext = HttpContext.Current;
+            HttpContext.Current = context;
+            
+            //Act
+            string url;
+            try
+            {
+                url = resolver.GetUrl(typeof(DummyController));
+            }
+            finally
+            {
+                HttpContext.Current = originalContext;
+            }
+
+            //Assert
+            Assert.AreEqual("~/Telerik.Sitefinity.Frontend/Designer/Master/Dummy?package=MyPackage", url, "The default designer URL is not retrieved properly.");
         }
 
         [TestMethod]

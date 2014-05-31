@@ -35,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (helper.RequestContext.RouteData == null)
                 throw new InvalidOperationException("Could not resolve the given URL because RouteData of the current context is null.");
 
-            var packagesManager = new PackagesManager();
+            var packagesManager = new PackageManager();
             var packageName = packagesManager.GetCurrentPackage();
 
             string contentResolvedPath = string.Empty;
@@ -43,12 +43,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             //where we first check for the requested resource in the widget assembly and then fallback to the current controller assembly.
             object controllerName;
             if (helper.RequestContext.RouteData.Values.TryGetValue("widgetName", out controllerName))
-                contentResolvedPath = UrlHelpers.GetResourcePath((string)controllerName, contentPath, PackagesManager.PackageUrlParamterName, packageName);
+                contentResolvedPath = UrlHelpers.GetResourcePath((string)controllerName, contentPath, PackageManager.PackageUrlParamterName, packageName);
 
             if (string.IsNullOrEmpty(contentResolvedPath))
             {
                 if (helper.RequestContext.RouteData.Values.TryGetValue("controller", out controllerName))
-                    contentResolvedPath = UrlHelpers.GetResourcePath((string)controllerName, contentPath, PackagesManager.PackageUrlParamterName, packageName);
+                    contentResolvedPath = UrlHelpers.GetResourcePath((string)controllerName, contentPath, PackageManager.PackageUrlParamterName, packageName);
                 else
                     throw new InvalidOperationException("Could not resolve the given URL because RouteData does not contain \"controller\" key.");
             }
@@ -56,7 +56,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (string.IsNullOrEmpty(contentResolvedPath))
             {
                 var url = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(UrlHelpers).Assembly) + contentPath;
-                contentResolvedPath = UrlTransformations.AppendParam(url, PackagesManager.PackageUrlParamterName, packageName);
+                contentResolvedPath = UrlTransformations.AppendParam(url, PackageManager.PackageUrlParamterName, packageName);
             }
             return helper.Content(contentResolvedPath);
         }

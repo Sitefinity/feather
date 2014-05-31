@@ -183,7 +183,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <returns></returns>
         private IList<Func<string, string>> GetPathTransformations(Controller controller)
         {
-            var packagesManager = new PackagesManager();
+            var packagesManager = new PackageManager();
 
             var currentPackage = packagesManager.GetCurrentPackage();
             var pathTransformations = new List<Func<string, string>>(1);
