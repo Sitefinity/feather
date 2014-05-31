@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// <summary>
     /// This class provides functionality for registering client resources.
     /// </summary>
-    public class ClientResourceRegister
+    internal class ClientResourceRegister
     {
         #region Constructors
         
@@ -17,7 +17,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// Constructs a new instances of the <see cref="ClientResourceRegister"/> class.
         /// </summary>
         /// <param name="name">The name of the register.</param>
-        /// <param name="resourceTag">The type of the resource tag.</param>
+        /// <param name="resourceTag">The type of the HTML tag that would be generated for every registered resource.</param>
         /// <param name="keyAttribute">The attribute that will be used as identifier in order to ensure that there aren't duplication of resources.</param>
         public ClientResourceRegister(string name, string resourceTag, string keyAttribute)
         {
