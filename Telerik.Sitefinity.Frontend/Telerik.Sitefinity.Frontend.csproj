@@ -175,6 +175,7 @@
     <Compile Include="InlineEditing\HtmlProcessor.cs" />
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
+    <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerContainerAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\DisableViewLocationCacheAttribute.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Mvc\Models\DesignerModel.cs" />
     <Compile Include="Mvc\Models\IDesignerModel.cs" />
     <Compile Include="Mvc\StringResources\DesignerResources.cs" />
+    <Compile Include="Resources\ClientResourceRegister.cs" />
     <Compile Include="Resources\PackagesManager.cs" />
     <Compile Include="FrontendManager.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\LocalizationAttribute.cs" />
@@ -344,7 +346,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
