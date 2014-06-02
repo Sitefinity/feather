@@ -51,7 +51,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 IsWildcard = true,
                 ResolverName = name,
                 ResourceLocation = assembly.CodeBase,
-                VirtualPath = "/" + VirtualPathBuilder.frontendAssemblyBasePath.Arrange(name),
+                VirtualPath = "~/" + VirtualPathBuilder.frontendAssemblyBasePath.Arrange(name),
             };
             result.Items.Add("Assembly", assembly);
             return result;
