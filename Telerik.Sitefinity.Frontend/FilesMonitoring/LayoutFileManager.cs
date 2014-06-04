@@ -8,6 +8,7 @@ using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 {
@@ -194,6 +195,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     template.Name = templateTitle;
                     template.Title = templateTitle;
                     template.Framework = Pages.Model.PageTemplateFramework.Mvc;
+                    template.Theme = ThemeController.NoThemeName;
 
                     var languageData = pageManager.CreatePublishedInvarianLanguageData();
                     template.LanguageData.Add(languageData);
