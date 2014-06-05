@@ -77,12 +77,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (SystemManager.CurrentHttpContext == null)
                 throw new InvalidOperationException("Current HttpContext is null. Cannot add cache dependencies.");
 
-            IList<CacheDependencyKey> dependencies;
+            IList<CacheDependencyKey> dependencies = null;
             if (SystemManager.CurrentHttpContext.Items.Contains(PageCacheDependencyKeys.PageData))
             {
-                dependencies = (IList<CacheDependencyKey>)SystemManager.CurrentHttpContext.Items[PageCacheDependencyKeys.PageData];
+                dependencies = SystemManager.CurrentHttpContext.Items[PageCacheDependencyKeys.PageData] as IList<CacheDependencyKey>;
             }
-            else
+            
+            if (dependencies == null)
             {
                 dependencies = new List<CacheDependencyKey>();
                 SystemManager.CurrentHttpContext.Items.Add(PageCacheDependencyKeys.PageData, dependencies);
