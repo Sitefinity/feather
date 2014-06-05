@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Telerik.Sitefinity.Clients.JS;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
-using Telerik.Sitefinity.Modules.Pages;
-using Telerik.Sitefinity.Mvc.Rendering;
-using Telerik.Sitefinity.Pages.Model;
-using Telerik.Sitefinity.Services;
-using Telerik.Sitefinity.Utilities.HtmlParsing;
-using Telerik.Sitefinity.Utilities.TypeConverters;
-using Telerik.Sitefinity.Web;
-using Telerik.Sitefinity.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 {
@@ -98,6 +89,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                     //the view must be released
                     viewEngineResult.ViewEngine.ReleaseView(context, view);
                     result = writer.ToString();
+                }
+
+                //Add cache dependency on the virtual file that is used for rendering the view.
+                var httpContext = SystemManager.CurrentHttpContext;
+                var builtView = view as BuildManagerCompiledView;
+                if (httpContext != null && builtView != null)
+                {
+                    var vpDependency = HostingEnvironment.VirtualPathProvider != null ?
+                        HostingEnvironment.VirtualPathProvider.GetCacheDependency(builtView.ViewPath, null, DateTime.UtcNow) : null;
+                    if (vpDependency != null)
+                    {
+                        httpContext.Response.AddCacheDependency(vpDependency);
+                    }
                 }
             }
 

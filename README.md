@@ -1,7 +1,7 @@
 The Feather Project
 =======
 
-This repository contains the core infrastructure related to the Feather project. Note that the current implementation is not final, that it is a subject to changes as well as breaking API changes and should not be used in production.
+This repository contains the core infrastructure related to the [Feather project](http://projectfeather.sitefinity.com). Note that the current implementation is not final, that it is a subject to changes as well as breaking API changes and should not be used in production.
 
 # Related Repositories
 
