@@ -5,9 +5,13 @@ using System.Linq;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Multisite;
+using Telerik.Sitefinity.Project.Configuration;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
@@ -184,27 +188,45 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="templateTitle">The template title.</param>
         private void CreateTemplate(string templateTitle)
         {
-            PageManager pageManager = PageManager.GetManager();
-
-            using (new ElevatedModeRegion(pageManager))
+            var multisiteContext = SystemManager.CurrentContext as MultisiteContext;
+            var prevSite = SystemManager.CurrentContext.CurrentSite;
+            if (multisiteContext != null)
             {
-                if (pageManager.GetTemplates().Where(pt => pt.Title.Equals(templateTitle, StringComparison.InvariantCultureIgnoreCase)).Count() == 0)
+                var id = Config.Get<ProjectConfig>().DefaultSite.Id;
+                multisiteContext.ChangeCurrentSite(multisiteContext.GetSiteById(id));
+            }
+
+            try
+            {
+                PageManager pageManager = PageManager.GetManager();
+                using (new ElevatedModeRegion(pageManager))
                 {
-                    var template = pageManager.CreateTemplate();
-                    template.Category = SiteInitializer.CustomTemplatesCategoryId;
-                    template.Name = templateTitle;
-                    template.Title = templateTitle;
-                    template.Framework = Pages.Model.PageTemplateFramework.Mvc;
-                    template.Theme = ThemeController.NoThemeName;
+                    if (pageManager.GetTemplates().Where(pt => pt.Title.Equals(templateTitle, StringComparison.InvariantCultureIgnoreCase)).Count() == 0)
+                    {
+                        var template = pageManager.CreateTemplate();
+                    
+                        template.Category = SiteInitializer.CustomTemplatesCategoryId;
+                        template.Name = templateTitle;
+                        template.Title = templateTitle;
+                        template.Framework = Pages.Model.PageTemplateFramework.Mvc;
+                        template.Theme = ThemeController.NoThemeName;
 
-                    var languageData = pageManager.CreatePublishedInvarianLanguageData();
-                    template.LanguageData.Add(languageData);
+                        var languageData = pageManager.CreatePublishedInvarianLanguageData();
+                        template.LanguageData.Add(languageData);
+                    
+                        pageManager.SaveChanges();
 
-                    pageManager.SaveChanges();
-
-                    var master = pageManager.TemplatesLifecycle.Edit(template);
-                    pageManager.TemplatesLifecycle.Publish(master);
-                    pageManager.SaveChanges();
+                        var master = pageManager.TemplatesLifecycle.Edit(template);
+                        pageManager.TemplatesLifecycle.Publish(master);
+                        pageManager.SaveChanges();
+                    }
+                }
+            }
+            finally
+            {
+                if (multisiteContext != null)
+                {
+                    multisiteContext.ChangeCurrentSite(prevSite);
                 }
             }
         }

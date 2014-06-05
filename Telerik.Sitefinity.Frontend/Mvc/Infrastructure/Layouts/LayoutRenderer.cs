@@ -200,7 +200,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                                     .Replace("{1}", "Layouts")
                                     .Replace("~/", "~/{0}Mvc/".Arrange(baseVirtualPath));
 
-                    if (currentPackage.IsNullOrEmpty())
+                    if (!currentPackage.IsNullOrEmpty())
                         result += "#" + currentPackage + Path.GetExtension(path);
 
                     return result;
