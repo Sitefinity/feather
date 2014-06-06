@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <param name="virtualPath">The virtual path to check.</param>
         public virtual bool Exists(PathDefinition definition, string virtualPath)
         {
-            virtualPath = this.RemoveParams(virtualPath);
+            virtualPath = virtualPathBuilder.RemoveParams(virtualPath);
 
             var resolverStrategy = ObjectFactory.Resolve<IResourceResolverStrategy>();
             return resolverStrategy.Exists(definition, virtualPath);
@@ -39,7 +39,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// </returns>
         public virtual CacheDependency GetCacheDependency(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            virtualPath = this.RemoveParams(virtualPath);
+            virtualPath = virtualPathBuilder.RemoveParams(virtualPath);
 
             var resolverStrategy = ObjectFactory.Resolve<IResourceResolverStrategy>();
             return resolverStrategy.GetCacheDependency(definition, virtualPath, virtualPathDependencies, utcStart);
@@ -51,23 +51,12 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <param name="virtualPath">The virtual path of the file to open.</param>
         public virtual Stream Open(PathDefinition definition, string virtualPath)
         {
-            virtualPath = this.RemoveParams(virtualPath);
+            virtualPath = virtualPathBuilder.RemoveParams(virtualPath);
 
             var resolverStrategy = ObjectFactory.Resolve<IResourceResolverStrategy>();
             return resolverStrategy.Open(definition, virtualPath);
         }
 
-        private string RemoveParams(string virtualPath)
-        {
-            var idx = virtualPath.IndexOf('#');
-            if (idx == -1)
-            {
-                return virtualPath;
-            }
-            else
-            {
-                return virtualPath.Substring(0, idx);
-            }
-        }
+        private VirtualPathBuilder virtualPathBuilder = new VirtualPathBuilder();
     }
 }

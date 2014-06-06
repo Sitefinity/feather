@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
@@ -55,6 +56,38 @@ namespace Telerik.Sitefinity.Frontend.Resources
             };
             result.Items.Add("Assembly", assembly);
             return result;
+        }
+
+        /// <summary>
+        /// Removes the parameters from the virtual path. This will strip everything after the "#".
+        /// </summary>
+        /// <param name="virtualPath">The virtual path.</param>
+        /// <returns></returns>
+        public string RemoveParams(string virtualPath)
+        {
+            var idx = virtualPath.IndexOf('#');
+            if (idx == -1)
+            {
+                return virtualPath;
+            }
+            else
+            {
+                return virtualPath.Substring(0, idx);
+            }
+        }
+
+        /// <summary>
+        /// Adds the parameters.
+        /// </summary>
+        /// <param name="virtualPath">The virtual path.</param>
+        /// <param name="pathParams">The path parameters.</param>
+        /// <returns></returns>
+        public string AddParams(string virtualPath, string pathParams)
+        {
+            if (!pathParams.IsNullOrEmpty())
+                virtualPath += "#" + pathParams + Path.GetExtension(virtualPath);
+
+            return virtualPath;
         }
 
         private const string frontendAssemblyBasePath = "Frontend-Assembly/{0}/";

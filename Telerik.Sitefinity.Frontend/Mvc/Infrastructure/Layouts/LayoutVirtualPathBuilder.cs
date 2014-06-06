@@ -28,7 +28,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             var fileName = templateFileNameParser.GetLayoutName(templateTitle);
 
             var layoutVirtualPath = string.Format(LayoutVirtualPathBuilder.layoutVirtualPathTemplate, LayoutVirtualPathBuilder.layoutsPrefix, fileName, LayoutVirtualPathBuilder.layoutSuffix);
-            
+
+            var packagesManager = new PackageManager();
+            var currentPackage = packagesManager.GetCurrentPackage();
+
+            layoutVirtualPath = (new VirtualPathBuilder()).AddParams(layoutVirtualPath, currentPackage);
+
             return layoutVirtualPath;
         }
 
