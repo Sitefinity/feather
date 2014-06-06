@@ -34,6 +34,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         public virtual void Initialize()
         {
+            GlobalFilters.Filters.Add(new CacheDependentAttribute());
+
             var assemblies = this.GetAssemblies();
 
             this.RegisterVirtualPaths(assemblies);
