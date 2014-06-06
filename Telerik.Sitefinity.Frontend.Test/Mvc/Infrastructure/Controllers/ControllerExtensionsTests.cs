@@ -55,6 +55,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Controllers
             var context = new HttpContextWrapper(new HttpContext(
                new HttpRequest(null, "http://tempuri.org/", null),
                new HttpResponse(null)));
+
             var controller = new DesignerController();
             var dependencies = new List<CacheDependencyKey>();
             var depKey1 = new CacheDependencyKey() { Key = "mykey1", Type = this.GetType() };
@@ -76,7 +77,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Controllers
             var cacheList = (IList<CacheDependencyKey>)cacheObject;
             Assert.IsTrue(cacheList.Contains(depKey1), "The first cache dependency was not added.");
             Assert.IsTrue(cacheList.Contains(depKey2), "The second cache dependency was not added.");
-            Assert.AreEqual(dependencies.Count, cacheList.Count, "There is an unexpecred count of cache dependency keys.");
+            Assert.AreEqual(dependencies.Count, cacheList.Count, "There is an unexpected count of cache dependency keys.");
         }
 
         [TestMethod]

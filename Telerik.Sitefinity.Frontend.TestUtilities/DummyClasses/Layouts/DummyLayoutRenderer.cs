@@ -85,9 +85,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Layouts
         /// <param name="viewPath">The view path.</param>
         /// <param name="partial">if set to <c>true</c> method requests only partial views.</param>
         /// <returns></returns>
-        public override System.Web.Mvc.ViewEngineResult GetViewEngineResult(System.Web.Mvc.ControllerContext context, string viewPath, bool partial = false)
+        public override ViewEngineResult GetViewEngineResult(ControllerContext context, string viewPath, bool partial = false)
         {
-            return new System.Web.Mvc.ViewEngineResult(new DummyView { InnerHtml = this.InnerHtmlStringWithoutForm }, ViewEngines.Engines.FirstOrDefault());
+            return new ViewEngineResult(new DummyView { InnerHtml = this.InnerHtmlStringWithoutForm }, ViewEngines.Engines.FirstOrDefault());
         }
 
         #endregion
