@@ -325,8 +325,12 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
             foreach (var file in files)
             {
-                var filePath = file.FullName;
-                this.FileChanged(filePath, FileChangeType.Created);
+                try
+                {
+                    var filePath = file.FullName;
+                    this.FileChanged(filePath, FileChangeType.Created);
+                }
+                catch(Exception) {}
             }
         }
 
