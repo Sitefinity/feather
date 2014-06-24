@@ -6,7 +6,10 @@ using System.Web;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
+using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -56,6 +59,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             var viewLocations = ControllerExtensions.GetViewLocations(controller);
             return ControllerExtensions.GetViews(controller, viewLocations);
+        }
+
+        /// <summary>
+        /// Adds cache dependencies for the current response.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="keys">The cache dependency keys to be added.</param>
+        public static void AddCacheDependencies(this Controller controller, IEnumerable<CacheDependencyKey> keys)
+        {
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+
+            if (keys == null)
+                throw new ArgumentNullException("keys");
+
+            if (SystemManager.CurrentHttpContext == null)
+                throw new InvalidOperationException("Current HttpContext is null. Cannot add cache dependencies.");
+
+            IList<CacheDependencyKey> dependencies = null;
+            if (SystemManager.CurrentHttpContext.Items.Contains(PageCacheDependencyKeys.PageData))
+            {
+                dependencies = SystemManager.CurrentHttpContext.Items[PageCacheDependencyKeys.PageData] as IList<CacheDependencyKey>;
+            }
+            
+            if (dependencies == null)
+            {
+                dependencies = new List<CacheDependencyKey>();
+                SystemManager.CurrentHttpContext.Items.Add(PageCacheDependencyKeys.PageData, dependencies);
+            }
+
+            foreach (var key in keys)
+                dependencies.Add(key);
         }
 
         #endregion

@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
+using Telerik.Sitefinity.Frontend.Resources;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 {
@@ -28,6 +29,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <param name="virtualPath">The virtual path to check.</param>
         public virtual bool Exists(PathDefinition definition, string virtualPath)
         {
+            virtualPath = virtualPathBuilder.RemoveParams(virtualPath);
             virtualPath = VirtualPathUtility.ToAppRelative(virtualPath);
 
             var vpBuilder = new LayoutVirtualPathBuilder();
@@ -49,6 +51,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <param name="virtualPath">The virtual path of the file to open.</param>
         public virtual Stream Open(PathDefinition definition, string virtualPath)
         {
+            virtualPath = virtualPathBuilder.RemoveParams(virtualPath);
+
             MemoryStream outPutStream = null;
             virtualPath = VirtualPathUtility.ToAppRelative(virtualPath);
             var vpBuilder = new LayoutVirtualPathBuilder();
@@ -105,16 +109,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             var layoutTemplateBuilder = new LayoutRenderer();
 
             return layoutTemplateBuilder.GetLayoutTemplate(pageTemplateName);
-        } 
+        }
+
 
         #endregion
 
-        #region Constants
+        #region Private fields and constants
 
         /// <summary>
         /// The resolver path.
         /// </summary>
         public const string ResolverPath = "SfLayouts/";
+
+        /// <summary>
+        /// The virtual path builder instance
+        /// </summary>
+        private VirtualPathBuilder virtualPathBuilder = new VirtualPathBuilder();
 
         #endregion
     }

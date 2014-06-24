@@ -163,12 +163,16 @@
     <Compile Include="AssemblyLoaderHelper.cs" />
     <Compile Include="ControllerFactoryRegion.cs" />
     <Compile Include="DummyClasses\Authentication\DummyAuthenticationEvaluator.cs" />
+    <Compile Include="DummyClasses\Cache\DummyCacheDependency.cs" />
     <Compile Include="DummyClasses\Configs\DummyConfigProvider.cs" />
     <Compile Include="DummyClasses\Controls\DummyControl.cs" />
+    <Compile Include="DummyClasses\Mvc\Controllers\DummyCacheDependentAttribute.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyController.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyControllerFactory.cs" />
     <Compile Include="DummyClasses\LocalizationResources\DummyControllerResoruces.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyCustomDesignerController.cs" />
+    <Compile Include="DummyClasses\Mvc\DummyBuildManagerCompiledView.cs" />
+    <Compile Include="DummyClasses\Mvc\DummyViewResult.cs" />
     <Compile Include="DummyClasses\Mvc\Helpers\DummyLocalizationControllerResources.cs" />
     <Compile Include="DummyClasses\Mvc\Helpers\DummyLocalizedController.cs" />
     <Compile Include="DummyClasses\Mvc\Helpers\DummyViewDataContainer.cs" />

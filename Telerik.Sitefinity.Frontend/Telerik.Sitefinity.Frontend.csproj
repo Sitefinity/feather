@@ -177,6 +177,7 @@
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerContainerAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\EnhanceViewEnginesAttribute.cs" />
     <Compile Include="InlineEditing\Attributes\FieldInfoAttribute.cs" />

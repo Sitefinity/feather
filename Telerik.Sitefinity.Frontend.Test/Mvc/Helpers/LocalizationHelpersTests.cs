@@ -26,8 +26,8 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Helpers
     {
         [TestMethod]
         [Owner("Bonchev")]
-        [Description("Checks whether  the LocalizationHelpers returns a proper resource value for localized controller.")]
-        public void LocalizationHelpersTests_GetLabelForDummyLocalizedController_EnsuresTheResourceStringIsFound()
+        [Description("Checks whether the LocalizationHelpers returns a proper resource value for localized controller.")]
+        public void GetLabel_DummyLocalizedController_EnsuresTheResourceStringIsFound()
         {
             //Arrange
             var initializer = new DummyControllerContainerInitializer();

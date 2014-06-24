@@ -132,6 +132,8 @@
     <Compile Include="Mvc\Helpers\LayoutsHelpersTests.cs" />
     <Compile Include="Mvc\Helpers\LocalizationHelpersTests.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelperTests.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttributeTests.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\ControllerExtensionsTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensionsTests.cs" />
     <Compile Include="GridSystem\GridControlTests.cs" />
     <Compile Include="Designers\DesignerResolverTests.cs" />

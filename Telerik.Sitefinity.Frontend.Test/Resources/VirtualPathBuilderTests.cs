@@ -62,7 +62,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
                 var result = vpBuilder.GetVirtualPath(typeof(DummyController));
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Assert.AreEqual(expected, result, "The virtual path is not retrieved properly.");
             }
         }
 
@@ -73,6 +73,80 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
         public void GetVirtualPath_PassNull_ThrowsArgumentNullException()
         {
             new VirtualPathBuilder().GetVirtualPath(type: null);
+        }
+
+        #endregion
+
+        #region RemoveParams
+
+        [TestMethod]
+        [Owner("EGaneva")]
+        [Description("Checks whether RemoveParams removes the parameters from the URL correctly.")]
+        public void RemoveParams_UrlWithParams_RemovesParams()
+        {
+            //Arrange
+            var vpBuilder = new VirtualPathBuilder(); 
+            var urlWithParams = "/sfLayouts/test.master#someParam.master";
+            var expectedUrl = "/sfLayouts/test.master";
+   
+                //Act
+            var resultUrl = vpBuilder.RemoveParams(urlWithParams);
+
+                //Assert
+            Assert.AreEqual(expectedUrl, resultUrl, "The parameters are not stripped correctly from the URL.");
+        }
+
+        [TestMethod]
+        [Owner("EGaneva")]
+        [Description("Checks whether RemoveParams preserves the URL when no parameters are available.")]
+        public void RemoveParams_WithoutParams_PreservesUrl()
+        {
+            //Arrange
+            var vpBuilder = new VirtualPathBuilder();
+            var urlWithoutParams = "/sfLayouts/test.master";
+
+            //Act
+            var resultUrl = vpBuilder.RemoveParams(urlWithoutParams);
+
+            //Assert
+            Assert.AreEqual(urlWithoutParams, resultUrl, "The URL has been changed.");
+        }
+
+        #endregion
+
+        #region AddParams
+
+        [TestMethod]
+        [Owner("EGaneva")]
+        [Description("Checks whether AddParams preserves the URL when no parameters are available.")]
+        public void AddParams_WithoutParams_PreservesUrl()
+        {
+            //Arrange
+            var vpBuilder = new VirtualPathBuilder();
+            var urlWithoutParams = "/sfLayouts/test.master";
+
+            //Act
+            var resultUrl = vpBuilder.AddParams(urlWithoutParams, "");
+
+            //Assert
+            Assert.AreEqual(urlWithoutParams, resultUrl, "The URL has been changed.");
+        }
+
+        [TestMethod]
+        [Owner("EGaneva")]
+        [Description("Checks whether AddParams preserves the URL when no parameters are available.")]
+        public void AddParams_WithParams_AddsParams()
+        {
+            //Arrange
+            var vpBuilder = new VirtualPathBuilder();
+            var urlWithParams = "/sfLayouts/test.master#someParam.master";
+            var url = "/sfLayouts/test.master";
+
+            //Act
+            var resultUrl = vpBuilder.AddParams(url, "someParam");
+
+            //Assert
+            Assert.AreEqual(urlWithParams, resultUrl, "The parameters are not added correctly from the URL.");
         }
 
         #endregion
