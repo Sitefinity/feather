@@ -20,28 +20,56 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns>MvcHtmlString</returns>
         public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, bool throwException = false)
         {
-            var attributes = new KeyValuePair<string,string>[2];
+            var attributes = new KeyValuePair<string, string>[2];
             attributes[0] = new KeyValuePair<string, string>("src", scriptPath);
             attributes[1] = new KeyValuePair<string, string>("type", "text/javascript");
 
-            var register = new ClientResourceRegister("JsRegister", "script", "src");
+            var register = new ResourceRegister("JsRegister", helper.ViewContext.HttpContext);
 
-            return ResourceHelper.RegisterResource(register, attributes, throwException);
+            return ResourceHelper.RegisterResource(register, scriptPath, throwException, tagName: "script", attribbutes: attributes);
         }
-        
-        private static MvcHtmlString RegisterResource(ClientResourceRegister register, KeyValuePair<string,string>[] attributes, bool throwException)
+
+        /// <summary>
+        /// Registers resource reference.
+        /// </summary>
+        private static MvcHtmlString RegisterResource(ResourceRegister register, string resourceKey, bool throwException, string tagName, KeyValuePair<string, string>[] attribbutes)
         {
             string output;
             MvcHtmlString result;
 
             if (throwException)
-                result = new MvcHtmlString(register.RegisterResource(attributes));
-            else if (register.TryRegisterResource(out output, attributes))
+            {
+                register.RegisterResource(resourceKey);
+                output = ResourceHelper.GenerateTag(tagName, attribbutes);
                 result = new MvcHtmlString(output);
+            }
+            else if (register.TryRegisterResource(resourceKey))
+            {
+                output = ResourceHelper.GenerateTag(tagName, attribbutes);
+                result = new MvcHtmlString(output);
+            }
             else
+            {
                 result = MvcHtmlString.Empty;
+            }
 
             return result;
+        }
+
+        /// <summary>
+        /// Creates a string representation of a tag. 
+        /// </summary>
+        /// <param name="tag">The type of the HTML tag that would be generated for every registered resource.</param>
+        /// <param name="attributes">The attributes associated with the tag.</param>
+        /// <returns>The string representation of a tag.</returns>
+        private static string GenerateTag(string tagName, params KeyValuePair<string, string>[] attribbutes)
+        {
+            var tag = new TagBuilder(tagName);
+
+            foreach (var attr in attribbutes)
+                tag.Attributes[attr.Key] = attr.Value;
+
+            return tag.ToString();
         }
     }
 }

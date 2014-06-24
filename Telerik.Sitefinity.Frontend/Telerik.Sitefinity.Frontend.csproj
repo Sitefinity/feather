@@ -216,7 +216,7 @@
     <Compile Include="Mvc\Models\DesignerModel.cs" />
     <Compile Include="Mvc\Models\IDesignerModel.cs" />
     <Compile Include="Mvc\StringResources\DesignerResources.cs" />
-    <Compile Include="Resources\ClientResourceRegister.cs" />
+    <Compile Include="Resources\ResourceRegister.cs" />
     <Compile Include="Resources\PackageManager.cs" />
     <Compile Include="FrontendManager.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\LocalizationAttribute.cs" />
@@ -347,7 +347,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
