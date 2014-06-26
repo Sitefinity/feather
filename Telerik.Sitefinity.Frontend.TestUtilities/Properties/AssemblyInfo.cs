@@ -34,3 +34,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.2.1000.1")]
 [assembly: AssemblyFileVersion("0.2.1000.1")]
+
+[assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.Test")]

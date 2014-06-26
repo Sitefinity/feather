@@ -131,6 +131,7 @@
     <Compile Include="InlineEditing\InlineEditingTests.cs" />
     <Compile Include="Mvc\Helpers\LayoutsHelpersTests.cs" />
     <Compile Include="Mvc\Helpers\LocalizationHelpersTests.cs" />
+    <Compile Include="Mvc\Helpers\ResourceHelperTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttributeTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerExtensionsTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensionsTests.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Resources\Resolvers\ResourceResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerContainerInitializerTests.cs" />
+    <Compile Include="Resources\ResourceRegisterTests.cs" />
     <Compile Include="Resources\VirtualPathBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
