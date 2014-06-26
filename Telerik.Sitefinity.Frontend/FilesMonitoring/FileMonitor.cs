@@ -330,7 +330,9 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     var filePath = file.FullName;
                     this.FileChanged(filePath, FileChangeType.Created);
                 }
-                catch(Exception) {}
+                catch(Exception ex) {
+                    Log.Write(String.Format("Exception occurred while processing the file named {0}, details: {1}", file.Name, ex));
+                }
             }
         }
 
