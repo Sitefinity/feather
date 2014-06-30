@@ -9,6 +9,8 @@ This repository contains the core infrastructure related to the [Feather project
 
 [feather-packages](https://github.com/Sitefinity/feather-packages) - This repository contains front-end packages for the Feather project.
 
+[feather-samples](https://github.com/Sitefinity/feather-samples) - This repository contains code samples related to the Feather project.
+
 # Documentation
 
 [Getting Started](https://github.com/Sitefinity/feather/wiki/Getting-Started)
