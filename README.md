@@ -9,33 +9,41 @@ This repository contains the core infrastructure related to the [Feather project
 
 [feather-packages](https://github.com/Sitefinity/feather-packages) - This repository contains front-end packages for the Feather project.
 
+[feather-samples](https://github.com/Sitefinity/feather-samples) - This repository contains code samples related to the Feather project.
+
 # Documentation
 
 [Getting Started](https://github.com/Sitefinity/feather/wiki/Getting-Started)
 
-[How to change MVC widget templates](https://github.com/Sitefinity/feather/wiki/How-to-change-MVC-widget-templates)
+[FAQ](https://github.com/Sitefinity/feather/wiki/FAQ)
 
-[How to create “Hello World” MVC widget in separate assembly](https://github.com/Sitefinity/feather/wiki/How-to-create-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-separate-assembly)
+[Create a MVC List widget](https://github.com/Sitefinity/feather/wiki/Create-a-MVC-List-widget)
 
-[How to create a designer view](https://github.com/Sitefinity/feather/wiki/How-to-create-a-designer-view)
+[Change MVC widget templates](https://github.com/Sitefinity/feather/wiki/Change-MVC-widget-templates)
 
-[How to extend the designer with additional client logic](https://github.com/Sitefinity/feather/wiki/How-to-extend-the-designer-with-additional-client-logic)
+[Create a custom designer view](https://github.com/Sitefinity/feather/wiki/Create-a-custom-designer-view)
 
-[How to refer resources inside MVC views](https://github.com/Sitefinity/feather/wiki/How-to-refer-to-resources-inside-MVC-views)
+[Create a layout file](https://github.com/Sitefinity/feather/wiki/Create-a-layout-file)
 
-[How to base a page template on a layout file by using convention](https://github.com/Sitefinity/feather/wiki/How-to-base-a-page-template-on-a-layout-file-by-using-convention)
+[Extend widget designer with additional client logic](https://github.com/Sitefinity/feather/wiki/Extend-widget-designer-with-additional-client-logic)
 
-[How to replace commands displayed in the ZoneEditor that are specific for a widget](https://github.com/Sitefinity/feather/wiki/How-to-replace-commands-displayed-in-the-ZoneEditor-that-are-specific-for-a-widget)
-
-[How to keep using the old WebForms widget designer after the installation of Feather?](https://github.com/Sitefinity/feather/wiki/How-to-keep-using-the-old-WebForms-widget-designer-after-the-installation-of-Feather%3F)
-
-[How to use a custom client window for designers](https://github.com/Sitefinity/feather/wiki/How-to-use-a-custom-client-window-for-designers)
-
-[How to use a resource from a package] (https://github.com/Sitefinity/feather/wiki/How-to-use-a-resource-from-a-package)
+[Feather resource packages](https://github.com/Sitefinity/feather/wiki/Feather-resource-packages)
 
 [Page templates based on layout files explained](https://github.com/Sitefinity/feather/wiki/Page-templates-based-on-layout-files-explained)
 
+[Page templates based on layout files with Feather](https://github.com/Sitefinity/feather/wiki/Page-templates-based-on-layout-files-with-Feather)
+
+[Refer to resources inside MVC views](https://github.com/Sitefinity/feather/wiki/Refer-to-resources-inside-MVC-views)
+
+[Use the old WebForms widget designer with Feather widgets](https://github.com/Sitefinity/feather/wiki/Use-the-old-WebForms-widget-designer-with-Feather-widgets)
+
 [VirtualFile structure explained](https://github.com/Sitefinity/feather/wiki/VirtualFile-structure-explained)
+
+[How to create “Hello World” MVC widget in separate assembly](https://github.com/Sitefinity/feather/wiki/How-to-create-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-separate-assembly)
+
+[How to replace commands displayed in the ZoneEditor that are specific for a widget](https://github.com/Sitefinity/feather/wiki/How-to-replace-commands-displayed-in-the-ZoneEditor-that-are-specific-for-a-widget)
+
+[How to use a custom client window for designers](https://github.com/Sitefinity/feather/wiki/How-to-use-a-custom-client-window-for-designers)
 
 # License Information
 
