@@ -11,5 +11,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Gets the available designer views.
         /// </summary>
         IEnumerable<string> Views { get; }
+
+        /// <summary>
+        /// Gets the script references for the designer views.
+        /// </summary>
+        IEnumerable<string> ViewScriptReferences { get; }
     }
 }

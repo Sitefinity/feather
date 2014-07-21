@@ -58,8 +58,8 @@
     }]);
 
     designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', 'dialogFeedbackService', function ($scope, propertyService, dialogFeedbackService) {
-        $scope.Feedback = dialogFeedbackService;
-        $scope.Feedback.ShowLoadingIndicator = true;
+        $scope.feedback = dialogFeedbackService;
+        $scope.feedback.ShowLoadingIndicator = true;
 
         propertyService.get()
             .then(function (data) {
@@ -68,12 +68,12 @@
                 }
             }, 
             function (data) {
-                $scope.Feedback.ShowError = true;
+                $scope.feedback.ShowError = true;
                 if (data)
-                    $scope.Feedback.ErrorMessage = data.Detail;
+                    $scope.feedback.ErrorMessage = data.Detail;
             })
             .finally(function () {
-                $scope.Feedback.ShowLoadingIndicator = false;
+                $scope.feedback.ShowLoadingIndicator = false;
             });
     }]);
 
@@ -99,9 +99,9 @@
             // ------------------------------------------------------------------------
 
             var onError = function (data) {
-                $scope.Feedback.ShowError = true;
+                $scope.feedback.ShowError = true;
                 if (data)
-                    $scope.Feedback.ErrorMessage = data.Detail;
+                    $scope.feedback.ErrorMessage = data.Detail;
             };
 
             var dialogClose = function () {
@@ -138,41 +138,41 @@
             // Scope variables and setup
             // ------------------------------------------------------------------------
 
-            $scope.Feedback = dialogFeedbackService;
-            $scope.Feedback.ShowLoadingIndicator = true;
-            $scope.Feedback.ShowError = false;
+            $scope.feedback = dialogFeedbackService;
+            $scope.feedback.ShowLoadingIndicator = true;
+            $scope.feedback.ShowError = false;
 
-            $scope.Feedback.SavingPromise = futureSave.promise;
-            $scope.Feedback.CancelingPromise = futureCancel.promise;
+            $scope.feedback.SavingPromise = futureSave.promise;
+            $scope.feedback.CancelingPromise = futureCancel.promise;
 
             //the save action - it will check which properties are changed and send only them to the server 
             $scope.Save = function (saveToAllTranslations) {
                 isSaveToAllTranslations = saveToAllTranslations;
 
-                $scope.Feedback.SavingPromise
+                $scope.feedback.SavingPromise
                     .then(saveProperties)
                     .then(dialogClose)
                     .catch(onError)
                     .finally(function () {
-                        $scope.Feedback.ShowLoadingIndicator = false;
+                        $scope.feedback.ShowLoadingIndicator = false;
                     });
 
-                $scope.Feedback.ShowLoadingIndicator = true;
+                $scope.feedback.ShowLoadingIndicator = true;
                 futureSave.resolve();
             };
 
             $scope.Cancel = function () {
-                $scope.Feedback.CancelingPromise
+                $scope.feedback.CancelingPromise
                     .then(function () {
                         propertyService.reset();
                         dialogClose();
                     })
                     .catch(onError)
                     .finally(function () {
-                        $scope.Feedback.ShowLoadingIndicator = false;
+                        $scope.feedback.ShowLoadingIndicator = false;
                     });
 
-                $scope.Feedback.ShowLoadingIndicator = true;
+                $scope.feedback.ShowLoadingIndicator = true;
                 futureCancel.resolve();
             };
 
@@ -183,8 +183,8 @@
             };
             
             $scope.HideError = function () {
-                $scope.Feedback.ShowError = false;
-                $scope.Feedback.ErrorMessage = null;
+                $scope.feedback.ShowError = false;
+                $scope.feedback.ErrorMessage = null;
             };
 
             propertyService.get().catch(onError);

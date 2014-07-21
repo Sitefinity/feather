@@ -258,7 +258,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Styles\Images\loading.gif" />
     <EmbeddedResource Include="Mvc\Scripts\data-providers.js" />
-    <EmbeddedResource Include="Mvc\Scripts\Designer\property-grid.js" />
     <EmbeddedResource Include="Mvc\Scripts\Designer\designer.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js" />
@@ -337,6 +336,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\ui-bootstrap-tpls-0.11.0.min.js" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Designer\designerview-propertygrid.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -348,7 +350,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
