@@ -6,39 +6,30 @@
         });
     }
 
-    var resolveDepdendencies = function () {
-        var defaultDependencies = ['pageEditorServices', 'breadcrumb', 'ngRoute', 'modalDialog'];
-        var rawAdditionalDependencies = $('input#additionalDependencies').val();
-
-        if (rawAdditionalDependencies) {
-            var additionalDependencies = $.parseJSON(rawAdditionalDependencies);
-            return defaultDependencies.concat(additionalDependencies);
-        }
-        else {
-            return defaultDependencies;
-        }
-    };
-
     var resolveDefaultView = function () {
         return $('input#defaultView').val();
     };
 
-    var resolverControllerName = function (view) {
+    var resolveControllerName = function (view) {
         return view + 'Ctrl';
     };
 
-    var designerModule = angular.module('designer', resolveDepdendencies());
+    var resolveTemplateId = function (view) {
+        return view + '-template';
+    };
+
+    var designerModule = angular.module('designer', ['pageEditorServices', 'ngRoute', 'modalDialog']);
 
     designerModule.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/:view', {
                 templateUrl: function (params) {
-                    var templateId = params.view + '-template';
+                    var templateId = resolveTemplateId(params.view);
                     if (document.getElementById(templateId)) {
                         return templateId;
                     }
                     else {
-                        return resolveDefaultView() + '-template';
+                        return resolveTemplateId(resolveDefaultView());
                     }
                 },
                 controller: 'RoutingCtrl'
@@ -48,14 +39,16 @@
             });
     }]);
 
-    designerModule.controller('RoutingCtrl', ['$scope', '$routeParams', '$controller', function ($scope, $routeParams, $controller) {
-        try {
-            $controller(resolverControllerName($routeParams.view), { $scope: $scope });
+    designerModule.controller('RoutingCtrl', ['$scope', '$routeParams', '$controller',
+        function ($scope, $routeParams, $controller) {
+            try {
+                $controller(resolveControllerName($routeParams.view), { $scope: $scope });
+            }
+            catch (err) {
+                $controller('DefaultCtrl', { $scope: $scope });
+            }
         }
-        catch (err) {
-            $controller('DefaultCtrl', { $scope: $scope });
-        }
-    }]);
+    ]);
 
     designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', 'dialogFeedbackService', function ($scope, propertyService, dialogFeedbackService) {
         $scope.feedback = dialogFeedbackService;

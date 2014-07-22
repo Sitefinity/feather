@@ -1,8 +1,9 @@
 ﻿(function () {
-    var designerModule = angular.module('designer');
+    var propertyGridModule = angular.module('PropertyGridModule', ['designer', 'breadcrumb']);
+    angular.module('designer').requires.push('PropertyGridModule');
 
     //basic controller for the advanced designer view
-    designerModule.controller('PropertyGridCtrl', ['$scope', 'propertyService', 'dialogFeedbackService',
+    propertyGridModule.controller('PropertyGridCtrl', ['$scope', 'propertyService', 'dialogFeedbackService',
         function ($scope, propertyService, dialogFeedbackService) {
 
             var onGetPropertiesSuccess = function (data) {
@@ -31,7 +32,7 @@
         }]);
 
     //filters property hierarchy
-    designerModule.filter('propertyHierarchy', function () {
+    propertyGridModule.filter('propertyHierarchy', function () {
 
         return function (inputArray, propertyName, propertyPath) {
             var currentLevel;
@@ -65,5 +66,4 @@
         };
 
     });
-
 })();
