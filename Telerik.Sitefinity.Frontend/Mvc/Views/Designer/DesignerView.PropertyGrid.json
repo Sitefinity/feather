@@ -1,0 +1,5 @@
+﻿{
+  "scripts": [
+    "Mvc/Scripts/breadcrumb.js"
+  ]
+}

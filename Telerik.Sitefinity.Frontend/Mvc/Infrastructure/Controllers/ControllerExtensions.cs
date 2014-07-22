@@ -93,6 +93,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 dependencies.Add(key);
         }
 
+        /// <summary>
+        /// Gets the partial view paths of the given controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        public static IEnumerable<string> GetPartialViewLocations(this Controller controller)
+        {
+            return ControllerExtensions.GetControllerViewEngineLocations(controller, v => v.PartialViewLocationFormats);
+        }
+
         #endregion
 
         #region Private methods
@@ -126,15 +135,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 result.AddRange(originalPaths.Select(transform));
             }
             return result.ToArray();
-        }
-
-        /// <summary>
-        /// Gets the partial view paths of the given controller.
-        /// </summary>
-        /// <param name="controller">The controller.</param>
-        private static IEnumerable<string> GetPartialViewLocations(Controller controller)
-        {
-            return ControllerExtensions.GetControllerViewEngineLocations(controller, v => v.PartialViewLocationFormats);
         }
 
         /// <summary>

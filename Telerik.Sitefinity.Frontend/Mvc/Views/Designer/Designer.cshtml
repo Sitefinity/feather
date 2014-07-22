@@ -48,18 +48,13 @@
 @* Optional theme *@
 <link rel="stylesheet" href='@Url.WidgetContent("Mvc/Styles/sitefinity-theme.min.css")'>
 
-<script src='@Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js")'></script>
-<script src='@Url.WidgetContent("Mvc/Scripts/Designer/designer.js")'></script>
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/designer.js"))
 
-@if (Model.ViewScriptReferences.Count() > 0)
+@foreach (var scriptPath in Model.ScriptReferences)
 {
-    foreach (var scriptPath in Model.ViewScriptReferences)
-    { 
-        <script src='@Url.WidgetContent(scriptPath)'></script>
-    }
+    @Html.Script(Url.WidgetContent(scriptPath))
 }
-
-<script src='@Url.WidgetContent("Mvc/Scripts/breadcrumb.js")'></script>
 
 @{
     Html.RenderAction("ClientReferences", "Designer");

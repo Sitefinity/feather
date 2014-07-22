@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Web;
+using System.Web.Script.Serialization;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
-using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
+using Telerik.Sitefinity.Frontend.Resources;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
@@ -18,7 +19,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Initializes a new instance of the <see cref="DesignerModel"/> class.
         /// </summary>
         /// <param name="views">The views that are available to the controller.</param>
-        public DesignerModel(IEnumerable<string> views, string widgetName)
+        /// <param name="viewLocations">The locations where view files can be found.</param>
+        /// <param name="widgetName">Name of the widget that is being edited.</param>
+        public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName)
         {
             this.views = views.Where(this.IsDesignerView).Select(this.ExtractViewName);
 
@@ -27,10 +30,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             var designerWidgetName = FrontendManager.ControllerFactory.GetControllerName(typeof(DesignerController));
 
-            this.viewScriptReferences = this.views
+            var viewScriptReferences = this.views
                 .Where(v => this.IsScriptExisting(v, widgetName, packageName) || this.IsScriptExisting(v, designerWidgetName, packageName))
-                .Select(v => DesignerModel.DesignerScriptsPath + "/" + designerWidgetName + "/" + this.GetViewScriptFileName(v))
-                .ToArray();
+                .Select(v => DesignerModel.DesignerScriptsPath + "/" + designerWidgetName + "/" + this.GetViewScriptFileName(v));
+
+            var configuredScriptReferences = this.views
+                .Select(v => this.GetViewConfig(v, viewLocations))
+                .Where(c => c != null)
+                .SelectMany(c => c.Scripts);
+
+            this.scriptReferences = viewScriptReferences
+                .Union(configuredScriptReferences)
+                .Distinct();
         }
 
         /// <inheritdoc />
@@ -43,11 +54,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <inheritdoc />
-        public virtual IEnumerable<string> ViewScriptReferences
+        public virtual IEnumerable<string> ScriptReferences
         {
             get
             {
-                return this.viewScriptReferences;
+                return this.scriptReferences;
             }
         }
 
@@ -57,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="filename">The filename.</param>
         protected virtual bool IsDesignerView(string filename)
         {
-            return filename.StartsWith("DesignerView.");
+            return filename.StartsWith(DesignerModel.DesignerViewPrefix);
         }
 
         /// <summary>
@@ -101,12 +112,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns>File name of the client script file for a given view.</returns>
         protected virtual string GetViewScriptFileName(string view)
         {
-            return DesignerModel.ScriptPrefix + "-" + view.Replace('.', '-').ToLower() + ".js";
+            return DesignerModel.ScriptPrefix + view.Replace('.', '-').ToLower() + ".js";
+        }
+
+        /// <summary>
+        /// Gets the view configuration.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="viewLocations">Locations where view files can be found.</param>
+        /// <returns>Config for the given view if such config exists.</returns>
+        protected virtual DesignerViewConfigModel GetViewConfig(string view, IEnumerable<string> viewLocations)
+        {
+            foreach (var viewLocation in viewLocations)
+            {
+                var expectedConfigFileName = viewLocation + "/" + DesignerModel.DesignerViewPrefix + view + ".json";
+                if (VirtualPathManager.FileExists(expectedConfigFileName))
+                {
+                    var fileStream = VirtualPathManager.OpenFile(expectedConfigFileName);
+                    using (var streamReader = new StreamReader(fileStream))
+                    {
+                        var text = streamReader.ReadToEnd();
+                        return new JavaScriptSerializer().Deserialize<DesignerViewConfigModel>(text);
+                    }
+                }
+            }
+
+            return null;
         }
 
         private IEnumerable<string> views;
-        private IEnumerable<string> viewScriptReferences;
-        private const string ScriptPrefix = "designerview";
+        private IEnumerable<string> scriptReferences;
+        private const string DesignerViewPrefix = "DesignerView.";
+        private const string ScriptPrefix = "designerview-";
         private const string DesignerScriptsPath = "Mvc/Scripts";
     }
 }

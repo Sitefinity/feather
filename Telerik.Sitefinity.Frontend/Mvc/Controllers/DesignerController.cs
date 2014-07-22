@@ -60,6 +60,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             var constructorParameters = new Dictionary<string, object> 
                         {
                            {"views", this.GetPartialViews()},
+                           {"viewLocations", this.GetPartialViewLocations()},
                            {"widgetName", widgetName}
                         };
 
