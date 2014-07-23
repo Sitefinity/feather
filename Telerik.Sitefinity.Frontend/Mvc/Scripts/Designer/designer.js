@@ -52,32 +52,32 @@
 
     designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', 'dialogFeedbackService', function ($scope, propertyService, dialogFeedbackService) {
         $scope.feedback = dialogFeedbackService;
-        $scope.feedback.ShowLoadingIndicator = true;
+        $scope.feedback.showLoadingIndicator = true;
 
         propertyService.get()
             .then(function (data) {
                 if (data) {
-                    $scope.Properties = propertyService.toAssociativeArray(data.Items);
+                    $scope.properties = propertyService.toAssociativeArray(data.Items);
                 }
             }, 
             function (data) {
-                $scope.feedback.ShowError = true;
+                $scope.feedback.showError = true;
                 if (data)
-                    $scope.feedback.ErrorMessage = data.Detail;
+                    $scope.feedback.errorMessage = data.Detail;
             })
             .finally(function () {
-                $scope.feedback.ShowLoadingIndicator = false;
+                $scope.feedback.showLoadingIndicator = false;
             });
     }]);
 
     designerModule.factory('dialogFeedbackService', [function () {
         return {
-            ShowLoadingIndicator: false,
-            ShowError: false,
-            ErrorMessage: null,
+            showLoadingIndicator: false,
+            showError: false,
+            errorMessage: null,
 
-            SavingPromise: null,
-            CancelingPromise: null
+            savingPromise: null,
+            cancelingPromise: null
         };
     }]);
 
@@ -92,9 +92,9 @@
             // ------------------------------------------------------------------------
 
             var onError = function (data) {
-                $scope.feedback.ShowError = true;
+                $scope.feedback.showError = true;
                 if (data)
-                    $scope.feedback.ErrorMessage = data.Detail;
+                    $scope.feedback.errorMessage = data.Detail;
             };
 
             var dialogClose = function () {
@@ -132,40 +132,40 @@
             // ------------------------------------------------------------------------
 
             $scope.feedback = dialogFeedbackService;
-            $scope.feedback.ShowLoadingIndicator = true;
-            $scope.feedback.ShowError = false;
+            $scope.feedback.showLoadingIndicator = true;
+            $scope.feedback.showError = false;
 
-            $scope.feedback.SavingPromise = futureSave.promise;
-            $scope.feedback.CancelingPromise = futureCancel.promise;
+            $scope.feedback.savingPromise = futureSave.promise;
+            $scope.feedback.cancelingPromise = futureCancel.promise;
 
             //the save action - it will check which properties are changed and send only them to the server 
             $scope.Save = function (saveToAllTranslations) {
                 isSaveToAllTranslations = saveToAllTranslations;
 
-                $scope.feedback.SavingPromise
+                $scope.feedback.savingPromise
                     .then(saveProperties)
                     .then(dialogClose)
                     .catch(onError)
                     .finally(function () {
-                        $scope.feedback.ShowLoadingIndicator = false;
+                        $scope.feedback.showLoadingIndicator = false;
                     });
 
-                $scope.feedback.ShowLoadingIndicator = true;
+                $scope.feedback.showLoadingIndicator = true;
                 futureSave.resolve();
             };
 
             $scope.Cancel = function () {
-                $scope.feedback.CancelingPromise
+                $scope.feedback.cancelingPromise
                     .then(function () {
                         propertyService.reset();
                         dialogClose();
                     })
                     .catch(onError)
                     .finally(function () {
-                        $scope.feedback.ShowLoadingIndicator = false;
+                        $scope.feedback.showLoadingIndicator = false;
                     });
 
-                $scope.feedback.ShowLoadingIndicator = true;
+                $scope.feedback.showLoadingIndicator = true;
                 futureCancel.resolve();
             };
 
@@ -176,8 +176,8 @@
             };
             
             $scope.HideError = function () {
-                $scope.feedback.ShowError = false;
-                $scope.feedback.ErrorMessage = null;
+                $scope.feedback.showError = false;
+                $scope.feedback.errorMessage = null;
             };
 
             propertyService.get().catch(onError);

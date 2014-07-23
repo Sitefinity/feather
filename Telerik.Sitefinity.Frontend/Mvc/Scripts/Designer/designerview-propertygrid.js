@@ -12,18 +12,18 @@
             };
 
             var onGetError = function (data) {
-                $scope.feedback.ShowError = true;
+                $scope.feedback.showError = true;
                 if (data)
-                    $scope.feedback.ErrorMessage = data.Detail;
+                    $scope.feedback.errorMessage = data.Detail;
             };
 
             propertyService.get().then(onGetPropertiesSuccess, onGetError)
                 .finally(function () {
-                    $scope.feedback.ShowLoadingIndicator = false;
+                    $scope.feedback.showLoadingIndicator = false;
                 });
 
             $scope.feedback = dialogFeedbackService;
-            $scope.feedback.ShowLoadingIndicator = true;
+            $scope.feedback.showLoadingIndicator = true;
 
             $scope.DrillDownPropertyHierarchy = function (propertyPath, propertyName) {
                 $scope.propertyPath = propertyPath;

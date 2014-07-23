@@ -9,12 +9,12 @@
 			<h1 class="modal-title">@Html.Raw(ViewBag.ControlName)</h1>
          </div>
          <div class="modal-body">
-            <div ng-show="Feedback.ShowError" class="alert alert-danger">
+            <div ng-show="Feedback.showError" class="alert alert-danger">
                 <a class="close" data-dismiss="alert" ng-click="HideError()">x</a>
-                <strong>@Html.Resource("Error")</strong> <span ng-bind="Feedback.ErrorMessage"></span>
+                <strong>@Html.Resource("Error")</strong> <span ng-bind="Feedback.errorMessage"></span>
             </div>
 
-            <div ng-show="Feedback.ShowLoadingIndicator" class="s-loading m-bottom-sm"></div>
+            <div ng-show="Feedback.showLoadingIndicator" class="s-loading m-bottom-sm"></div>
 
             <div id="viewsPlaceholder" ng-view></div>
          </div>
