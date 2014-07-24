@@ -6,38 +6,91 @@
         });
     }
 
-    var resolveDefaultView = function () {
-        return $('input#defaultView').val();
+    var resolveDefaultView = function (serverDataProvider) {
+        return serverDataProvider.get('defaultView');
     };
 
     var resolveControllerName = function (view) {
         return view + 'Ctrl';
     };
 
-    var resolveTemplateId = function (view) {
-        return view + '-template';
+    var resolveTemplateUrl = function (view, serverDataProvider) {
+        var appRoot = serverDataProvider.get('applicationRoot');
+        if (appRoot.slice(-1) !== '/')
+            appRoot = appRoot + '/';
+
+        var widgetName = serverDataProvider.get('widgetName');
+
+        return appRoot + String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}', widgetName, view);
     };
 
     var designerModule = angular.module('designer', ['pageEditorServices', 'ngRoute', 'modalDialog']);
 
-    designerModule.config(['$routeProvider', function ($routeProvider) {
+    designerModule.provider('serverData', function () {
+        var serverData = {};
+        
+        this.get = function (key) {
+            return serverData[key];
+        };
+
+        this.set = function (key, value) {
+            serverData[key] = value;
+            return value;
+        };
+
+        this.has = function (key) {
+            return serverData.hasOwnProperty(key);
+        };
+
+        this.$get = function () {
+            return serverData;
+        };
+    });
+
+    designerModule.directive('serverData', ['serverDataProvider', function (serverDataProvider) {
+        return {
+            restrict: 'E',
+            replace: true,
+            link: function (scope, element, attrs) {
+                angular.forEach(attrs.$attrs, function (value, key) {
+                    serverDataProvider.set(attrs[key], value);
+                });
+            }
+        };
+    }]);
+
+    designerModule.config(['$routeProvider', 'serverDataProvider', function ($routeProvider, serverDataProvider) {
+        $('server-data')
+            .each(function () {
+                $.each(this.attributes, function (i, attribute) {
+                    serverDataProvider.set($.camelCase(attribute.name), attribute.value);
+                });
+            })
+            .remove();
+
         $routeProvider
             .when('/:view', {
                 templateUrl: function (params) {
-                    var templateId = resolveTemplateId(params.view);
-                    if (document.getElementById(templateId)) {
-                        return templateId;
-                    }
-                    else {
-                        return resolveTemplateId(resolveDefaultView());
-                    }
+                    return resolveTemplateUrl(params.view, serverDataProvider);
                 },
                 controller: 'RoutingCtrl'
             })
             .otherwise({
-                redirectTo: '/' + resolveDefaultView()
+                redirectTo: '/' + resolveDefaultView(serverDataProvider)
             });
     }]);
+
+    designerModule.factory('dialogFeedbackService', function () {
+        return {
+            showLoadingIndicator: false,
+            showError: false,
+            errorMessage: null,
+            showView: true,
+
+            savingPromise: null,
+            cancelingPromise: null
+        };
+    });
 
     designerModule.controller('RoutingCtrl', ['$scope', '$routeParams', '$controller',
         function ($scope, $routeParams, $controller) {
@@ -70,19 +123,8 @@
             });
     }]);
 
-    designerModule.factory('dialogFeedbackService', [function () {
-        return {
-            showLoadingIndicator: false,
-            showError: false,
-            errorMessage: null,
-
-            savingPromise: null,
-            cancelingPromise: null
-        };
-    }]);
-
-    designerModule.controller('DialogCtrl', ['$scope', '$q', '$modalInstance', '$routeParams', 'propertyService', 'widgetContext', 'dialogFeedbackService',
-        function ($scope, $q, $modalInstance, $routeParams, propertyService, widgetContext, dialogFeedbackService) {
+    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', '$routeParams', 'propertyService', 'widgetContext', 'dialogFeedbackService',
+        function ($rootScope, $scope, $q, $modalInstance, $routeParams, propertyService, widgetContext, dialogFeedbackService) {
             var isSaveToAllTranslations = true,
                 futureSave = $q.defer(),
                 futureCancel = $q.defer();
@@ -105,6 +147,22 @@
                 if (typeof ($telerik) != 'undefined')
                     $telerik.$(document).trigger('modalDialogClosed');
             };
+
+            $rootScope.$on('$routeChangeStart', function () {
+                $scope.feedback.showLoadingIndicator = true;
+                $scope.feedback.showView = false;
+            });
+
+            $rootScope.$on('$routeChangeSuccess', function () {
+                $scope.feedback.showLoadingIndicator = false;
+                $scope.feedback.showView = true;
+            });
+
+            $rootScope.$on('$routeChangeError', function () {
+                $scope.feedback.showLoadingIndicator = false;
+                $scope.feedback.errorMessage = 'Could not load designer view!';
+                $scope.feedback.showError = true;
+            });
 
             // ------------------------------------------------------------------------
             // helper methods
@@ -139,7 +197,7 @@
             $scope.feedback.cancelingPromise = futureCancel.promise;
 
             //the save action - it will check which properties are changed and send only them to the server 
-            $scope.Save = function (saveToAllTranslations) {
+            $scope.save = function (saveToAllTranslations) {
                 isSaveToAllTranslations = saveToAllTranslations;
 
                 $scope.feedback.savingPromise
@@ -154,7 +212,7 @@
                 futureSave.resolve();
             };
 
-            $scope.Cancel = function () {
+            $scope.cancel = function () {
                 $scope.feedback.cancelingPromise
                     .then(function () {
                         propertyService.reset();
@@ -169,13 +227,13 @@
                 futureCancel.resolve();
             };
 
-            $scope.HideSaveAllTranslations = widgetContext.hideSaveAllTranslations;
+            $scope.hideSaveAllTranslations = widgetContext.hideSaveAllTranslations;
 
-            $scope.IsCurrentView = function (view) {
+            $scope.isCurrentView = function (view) {
                 return $routeParams.view === view;
             };
             
-            $scope.HideError = function () {
+            $scope.hideError = function () {
                 $scope.feedback.showError = false;
                 $scope.feedback.errorMessage = null;
             };

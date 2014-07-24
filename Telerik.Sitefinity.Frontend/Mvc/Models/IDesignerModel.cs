@@ -16,5 +16,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Gets the script references that the designer should render.
         /// </summary>
         IEnumerable<string> ScriptReferences { get; }
+
+        /// <summary>
+        /// Gets the default view.
+        /// </summary>
+        string DefaultView { get; }
     }
 }

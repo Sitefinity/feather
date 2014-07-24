@@ -1,8 +1,7 @@
 ﻿(function ($) {
-
     var breadcrumbModule = angular.module('breadcrumb', []);
     
-    breadcrumbModule.factory('breadcrumbService', function ($rootScope) {
+    breadcrumbModule.factory('breadcrumbService', ['$rootScope', function ($rootScope) {
         var breadcrumbElements = [];
 
         var breadcrumbElement = function (propPath, propName) {
@@ -26,17 +25,16 @@
                 breadcrumbElements = [];
             }
         };
-    });
+    }]);
     
-    breadcrumbModule.directive('breadcrumb', function (breadcrumbService) {
+    breadcrumbModule.directive('breadcrumb', ['breadcrumbService', function (breadcrumbService) {
         return {
             restrict: 'A',
-            template: '<ul class="breadcrumb"><li ng-repeat=\'bc in Breadcrumbs\' ng-class="{\'active\': {{$last}} }"><a ng-click="RefreshHierarchy(bc.PropertyPath, bc.PropertyName)" ng-bind="bc.PropertyName"></a></li></ul>',
+            template: '<ul class="breadcrumb"><li ng-repeat=\'bc in breadcrumbs\' ng-class="{\'active\': {{$last}} }"><a ng-click="RefreshHierarchy(bc.PropertyPath, bc.PropertyName)" ng-bind="bc.PropertyName"></a></li></ul>',
             replace: true,
-            link: function (scope, tElement, tAttrs) {
-
+            link: function (scope, element, attrs) {
                 //inspect whether the current view has been modified
-                scope.$watch(tAttrs.ngModel, function (v) {
+                scope.$watch(attrs.ngModel, function (v) {
                     addSingleBreadcrumbElement(v);
                     $('.properties-grid').scrollTop(0);
                 });
@@ -51,19 +49,19 @@
                         var propName = containingProperties[containingProperties.length - 1];
                         breadcrumbService.push(propPath, propName);
 
-                        var breadcrumbElement = $(".breadcrumb");
-                        breadcrumbElement.show();
+                        element.show();
                     }
-                    scope.Breadcrumbs = breadcrumbService.getAll();
+
+                    scope.breadcrumbs = breadcrumbService.getAll();
                 };
 
                 //generates all elements of the breadcrumb
                 generateCurrentBreadcrumbElements = function (proeprtyPath, propName) {
                     breadcrumbService.removeAll();
                     breadcrumbService.push('', 'Home');
-                    var breadcrumbElement = $('.breadcrumb');
+
                     if (proeprtyPath) {
-                        breadcrumbElement.show();
+                        element.show();
                         var containingProperties = proeprtyPath.split('/');
                         containingProperties.forEach(function (propName) {
                             if (propName) {
@@ -73,22 +71,23 @@
                         });
                     }
                     else {
-                        breadcrumbElement.hide();
+                        element.hide();
                     }
+
                     return breadcrumbService.getAll();
                 };
 
                 //initial populate of the breadcrumb elements
-                scope.Breadcrumbs = generateCurrentBreadcrumbElements();
+                scope.breadcrumbs = generateCurrentBreadcrumbElements();
 
                 scope.RefreshHierarchy = function (propertyPath, propertyName) {
                     scope.propertyPath = propertyPath;
                     scope.propertyName = propertyName;
-                    scope.Breadcrumbs = generateCurrentBreadcrumbElements(propertyPath, propertyName);
+                    scope.breadcrumbs = generateCurrentBreadcrumbElements(propertyPath, propertyName);
                 };
             }
         };
 
-    });
+    }]);
 
 })(jQuery);

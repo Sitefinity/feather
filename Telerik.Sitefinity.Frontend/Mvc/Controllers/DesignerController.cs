@@ -45,14 +45,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         }
 
         /// <summary>
-        /// Returns a view containing client references for scripts and styles.
-        /// </summary>
-        public virtual ActionResult ClientReferences()
-        {
-            return this.View(DesignerController.clientReferencesView);
-        }
-
-        /// <summary>
         /// Gets the model of the designer.
         /// </summary>
         private IDesignerModel GetModel(string widgetName)
@@ -69,6 +61,5 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 
         private const string defaultView = "Designer";
         private const string designerViewTemplate = "DesignerView.{0}";
-        private const string clientReferencesView = "Designer.ClientReferences";
     }
 }

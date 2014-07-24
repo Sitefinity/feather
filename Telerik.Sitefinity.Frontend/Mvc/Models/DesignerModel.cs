@@ -34,14 +34,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 .Where(v => this.IsScriptExisting(v, widgetName, packageName) || this.IsScriptExisting(v, designerWidgetName, packageName))
                 .Select(v => DesignerModel.DesignerScriptsPath + "/" + designerWidgetName + "/" + this.GetViewScriptFileName(v));
 
-            var configuredScriptReferences = this.views
-                .Select(v => this.GetViewConfig(v, viewLocations))
-                .Where(c => c != null)
-                .SelectMany(c => c.Scripts);
+            var viewConfigs = this.views
+                .Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations)))
+                .Where(c => c.Value != null);
+
+            var configuredScriptReferences = viewConfigs
+                .SelectMany(c => c.Value.Scripts);
 
             this.scriptReferences = viewScriptReferences
                 .Union(configuredScriptReferences)
                 .Distinct();
+
+            this.defaultView = viewConfigs.OrderByDescending(c => c.Value.Priority).Select(c => c.Key).FirstOrDefault();
         }
 
         /// <inheritdoc />
@@ -59,6 +63,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             get
             {
                 return this.scriptReferences;
+            }
+        }
+
+        /// <inheritdoc />
+        public virtual string DefaultView
+        {
+            get
+            {
+                return this.defaultView;
             }
         }
 
@@ -145,5 +158,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         private const string DesignerViewPrefix = "DesignerView.";
         private const string ScriptPrefix = "designerview-";
         private const string DesignerScriptsPath = "Mvc/Scripts";
+        private string defaultView;
     }
 }

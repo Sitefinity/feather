@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Routing;
 using System.Web.Mvc;
-using Telerik.Sitefinity.Abstractions;
+using System.Web.Routing;
+using System.Web.UI;
 using Telerik.Microsoft.Practices.Unity;
+using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web.UI;
-using System.Web.UI;
-using Telerik.Sitefinity.Frontend.Resources;
 
 namespace Telerik.Sitefinity.Frontend.Designers
 {
@@ -25,7 +22,12 @@ namespace Telerik.Sitefinity.Frontend.Designers
         {
             if (RouteTable.Routes["MvcDesigner"] == null)
             {
-                RouteTable.Routes.MapRoute("MvcDesigner", "Telerik.Sitefinity.Frontend/{controller}/{action}/{widgetName}", new { controller = "DesignerController", action = "Index" });
+                RouteTable.Routes.MapRoute("MvcDesigner", "Telerik.Sitefinity.Frontend/{controller}/{action}/{widgetName}", new { controller = "DesignerController", action = "Master" });
+            }
+
+            if (RouteTable.Routes["MvcDesignerView"] == null)
+            {
+                RouteTable.Routes.MapRoute("MvcDesignerView", "Telerik.Sitefinity.Frontend/{controller}/{action}/{widgetName}/{viewType}", new { controller = "DesignerController", action = "View", viewType = "PropertyGrid" });
             }
 
             ObjectFactory.Container.RegisterType<IDesignerResolver, DesignerResolver>(new ContainerControlledLifetimeManager());
