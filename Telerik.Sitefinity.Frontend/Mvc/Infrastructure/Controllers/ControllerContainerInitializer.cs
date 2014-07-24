@@ -222,7 +222,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         private Assembly CurrentDomain_ReflectionOnlyAssemblyResolve(object sender, ResolveEventArgs args)
         {
-            return Assembly.ReflectionOnlyLoad(args.Name);
+            var assWithPolicy = AppDomain.CurrentDomain.ApplyPolicy(args.Name);
+
+            return Assembly.ReflectionOnlyLoad(assWithPolicy);
         }
 
         private void RegisterAssemblyPaths(Assembly assembly)
