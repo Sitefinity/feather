@@ -9,9 +9,8 @@
                 return serverData[key];
             },
 
-            set: function (key, value) {
-                serverData[key] = value;
-                return value;
+            has: function (key) {
+                return serverData.hasOwnProperty(key);
             },
 
             update: function () {

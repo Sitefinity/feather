@@ -178,9 +178,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private IEnumerable<string> views;
         private IEnumerable<string> scriptReferences;
+        private string defaultView;
+
         private const string DesignerViewPrefix = "DesignerView.";
         private const string ScriptPrefix = "designerview-";
         private const string DesignerScriptsPath = "Mvc/Scripts";
-        private string defaultView;
     }
 }
