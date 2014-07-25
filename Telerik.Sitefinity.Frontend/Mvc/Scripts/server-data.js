@@ -3,7 +3,7 @@
 
     serverDataModule.provider('serverData', function () {
         var serverData = {};
-        
+
         var serverDataService = {
             get: function (key) {
                 return serverData[key];
@@ -27,20 +27,9 @@
 
         return $.extend(serverDataService, {
             $get: function () {
+                serverDataService.update();
                 return serverDataService;
             }
         });
     });
-
-    serverDataModule.directive('serverData', ['serverData', function (serverData) {
-        return {
-            restrict: 'E',
-            replace: true,
-            link: function (scope, element, attrs) {
-                angular.forEach(attrs.$attrs, function (value, key) {
-                    serverData.set(attrs[key], value);
-                });
-            }
-        };
-    }]);
 })(jQuery);
