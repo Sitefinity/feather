@@ -35,14 +35,14 @@
     propertyGridModule.filter('propertyHierarchy', function () {
 
         return function (inputArray, propertyName, propertyPath) {
-            var currentLevel;
+            var currentLevel = 0;
             if (propertyPath)
                 currentLevel = propertyPath.split('/').length - 1;
 
             var levelFilter = function (property) {
                 var level = property.PropertyPath.split('/').length - 2;
-                if (propertyName === null || propertyName.length === 0 || propertyName == 'Home') {
-                    return level <= 0;
+                if (!propertyName || propertyName == 'Home') {
+                    return level <= currentLevel;
                 } else {
                     if (property.PropertyPath.indexOf(propertyPath) >= 0) {
                         return currentLevel == level;
@@ -53,7 +53,14 @@
             };
 
             var proxyFilter = function (property) {
-                return !property.IsProxy;
+                if (property.IsProxy)
+                    return false;
+                else {
+                    if (!currentLevel)
+                        currentLevel = 1;
+
+                    return levelFilter(property);
+                }
             };
 
             var result = inputArray;
