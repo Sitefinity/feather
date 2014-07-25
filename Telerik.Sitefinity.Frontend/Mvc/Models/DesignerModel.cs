@@ -25,25 +25,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         {
             this.views = views.Where(this.IsDesignerView).Select(this.ExtractViewName);
 
-            var packagesManager = new PackageManager();
-            var packageName = packagesManager.GetCurrentPackage();
-
-            var designerWidgetName = FrontendManager.ControllerFactory.GetControllerName(typeof(DesignerController));
-
-            var viewScriptReferences = this.views
-                .Where(v => this.IsScriptExisting(v, widgetName, packageName) || this.IsScriptExisting(v, designerWidgetName, packageName))
-                .Select(v => DesignerModel.DesignerScriptsPath + "/" + designerWidgetName + "/" + this.GetViewScriptFileName(v));
-
             var viewConfigs = this.views
                 .Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations)))
-                .Where(c => c.Value != null);
+                .Where(c => c.Value != null)
+                .ToArray();
 
-            var configuredScriptReferences = viewConfigs
-                .SelectMany(c => c.Value.Scripts);
-
-            this.scriptReferences = viewScriptReferences
-                .Union(configuredScriptReferences)
-                .Distinct();
+            this.PopulateScriptReferences(widgetName, viewConfigs);
 
             this.defaultView = viewConfigs.OrderByDescending(c => c.Value.Priority).Select(c => c.Key).FirstOrDefault();
         }
@@ -100,22 +87,41 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
-        /// Determines whether a script is existing for the specified view in the context of the given widget name.
+        /// Populates the script references.
         /// </summary>
-        /// <param name="view">The view.</param>
         /// <param name="widgetName">Name of the widget.</param>
-        /// <param name="packageName">Name of the package.</param>
-        /// <returns>Whether a script is existing.</returns>
-        protected virtual bool IsScriptExisting(string view, string widgetName, string packageName)
+        /// <param name="viewConfigs">The view configs.</param>
+        protected virtual void PopulateScriptReferences(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
         {
-            var widgetType = FrontendManager.ControllerFactory.ResolveControllerType(widgetName);
-            var path = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(widgetType);
+            var packagesManager = new PackageManager();
+            var packageName = packagesManager.GetCurrentPackage();
 
-            var scriptVirtualPath = path + DesignerModel.DesignerScriptsPath + "/" + widgetName + "/" + this.GetViewScriptFileName(view);
-            scriptVirtualPath = packageName.IsNullOrEmpty() ? 
-                scriptVirtualPath : UrlTransformations.AppendParam(scriptVirtualPath, PackageManager.PackageUrlParamterName, packageName);
+            var designerWidgetName = FrontendManager.ControllerFactory.GetControllerName(typeof(DesignerController));
 
-            return VirtualPathManager.FileExists(scriptVirtualPath);
+            var viewScriptReferences = new List<string>(this.Views.Count());
+
+            foreach (var view in this.Views)
+            {
+                var scriptFileName = this.GetViewScriptFileName(view);
+                var scriptPath = this.GetScriptPath(scriptFileName, widgetName, packageName);
+                if (VirtualPathManager.FileExists(scriptPath))
+                {
+                    viewScriptReferences.Add(this.GetScriptReferencePath(widgetName, scriptFileName));
+                }
+                else
+                {
+                    scriptPath = this.GetScriptPath(scriptFileName, designerWidgetName, packageName);
+                    if (VirtualPathManager.FileExists(scriptPath))
+                        viewScriptReferences.Add(this.GetScriptReferencePath(designerWidgetName, scriptFileName));
+                }
+            }
+
+            var configuredScriptReferences = viewConfigs
+                .SelectMany(c => c.Value.Scripts);
+
+            this.scriptReferences = viewScriptReferences
+                .Union(configuredScriptReferences)
+                .Distinct();
         }
 
         /// <summary>
@@ -151,6 +157,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             return null;
+        }
+
+        private string GetScriptReferencePath(string widgetName, string scriptFileName)
+        {
+            return DesignerModel.DesignerScriptsPath + "/" + widgetName + "/" + scriptFileName;
+        }
+
+        private string GetScriptPath(string scriptFileName, string widgetName, string packageName)
+        {
+            var widgetType = FrontendManager.ControllerFactory.ResolveControllerType(widgetName);
+            var path = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(widgetType);
+
+            var scriptVirtualPath = path + this.GetScriptReferencePath(widgetName, scriptFileName);
+            scriptVirtualPath = packageName.IsNullOrEmpty() ?
+                scriptVirtualPath : UrlTransformations.AppendParam(scriptVirtualPath, PackageManager.PackageUrlParamterName, packageName);
+
+            return scriptVirtualPath;
         }
 
         private IEnumerable<string> views;

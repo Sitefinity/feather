@@ -24,49 +24,10 @@
         return appRoot + String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}', widgetName, view);
     };
 
-    var designerModule = angular.module('designer', ['pageEditorServices', 'ngRoute', 'modalDialog']);
-
-    designerModule.provider('serverData', function () {
-        var serverData = {};
-        
-        this.get = function (key) {
-            return serverData[key];
-        };
-
-        this.set = function (key, value) {
-            serverData[key] = value;
-            return value;
-        };
-
-        this.has = function (key) {
-            return serverData.hasOwnProperty(key);
-        };
-
-        this.$get = function () {
-            return serverData;
-        };
-    });
-
-    designerModule.directive('serverData', ['serverDataProvider', function (serverDataProvider) {
-        return {
-            restrict: 'E',
-            replace: true,
-            link: function (scope, element, attrs) {
-                angular.forEach(attrs.$attrs, function (value, key) {
-                    serverDataProvider.set(attrs[key], value);
-                });
-            }
-        };
-    }]);
+    var designerModule = angular.module('designer', ['pageEditorServices', 'ngRoute', 'modalDialog', 'serverDataModule']);
 
     designerModule.config(['$routeProvider', 'serverDataProvider', function ($routeProvider, serverDataProvider) {
-        $('server-data')
-            .each(function () {
-                $.each(this.attributes, function (i, attribute) {
-                    serverDataProvider.set($.camelCase(attribute.name), attribute.value);
-                });
-            })
-            .remove();
+        serverDataProvider.update();
 
         $routeProvider
             .when('/:view', {

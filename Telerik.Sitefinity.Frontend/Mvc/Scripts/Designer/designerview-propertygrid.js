@@ -8,7 +8,7 @@
 
             var onGetPropertiesSuccess = function (data) {
                 if (data.Items)
-                    $scope.Items = data.Items;
+                    $scope.items = data.Items;
             };
 
             var onGetError = function (data) {
@@ -25,7 +25,7 @@
             $scope.feedback = dialogFeedbackService;
             $scope.feedback.showLoadingIndicator = true;
 
-            $scope.DrillDownPropertyHierarchy = function (propertyPath, propertyName) {
+            $scope.drillDownPropertyHierarchy = function (propertyPath, propertyName) {
                 $scope.propertyPath = propertyPath;
                 $scope.propertyName = propertyName;
             };
@@ -64,6 +64,5 @@
 
             return result;
         };
-
     });
 })();
