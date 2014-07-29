@@ -27,6 +27,11 @@
     var designerModule = angular.module('designer', ['pageEditorServices', 'ngRoute', 'modalDialog', 'serverDataModule']);
 
     designerModule.config(['$routeProvider', 'serverDataProvider', function ($routeProvider, serverDataProvider) {
+        // Removes the angularjs route params from the URL.
+        if (!!window.location.hash) {
+            history.pushState('', document.title, window.location.pathname + window.location.search);
+        }
+
         var serverData = serverDataProvider.$get();
 
         $routeProvider
