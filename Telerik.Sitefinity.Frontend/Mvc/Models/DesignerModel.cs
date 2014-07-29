@@ -21,14 +21,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="views">The views that are available to the controller.</param>
         /// <param name="viewLocations">The locations where view files can be found.</param>
         /// <param name="widgetName">Name of the widget that is being edited.</param>
-        public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName)
+        /// <param name="preselectedView">Name of the preselected view if there is one. Otherwise use null.</param>
+        public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, string preselectedView)
         {
-            this.views = views.Where(this.IsDesignerView).Select(this.ExtractViewName);
+            if (preselectedView.IsNullOrEmpty())
+            {
+                this.views = views.Where(this.IsDesignerView).Select(this.ExtractViewName);
+            }
+            else
+            {
+                this.views = new[] { preselectedView };
+            }
 
             var viewConfigs = this.views
                 .Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations)))
-                .Where(c => c.Value != null)
-                .ToArray();
+                .Where(c => c.Value != null);
+
+            if (preselectedView.IsNullOrEmpty())
+            {
+                viewConfigs = viewConfigs.Where(c => !c.Value.Hidden);
+                this.views = viewConfigs.Select(c => c.Key);
+            }
 
             this.PopulateScriptReferences(widgetName, viewConfigs);
 

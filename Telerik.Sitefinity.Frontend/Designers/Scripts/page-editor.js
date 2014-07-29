@@ -53,7 +53,7 @@ var sf = sf || {};
 			this.hideLoader();
 			$.ajaxSettings.cache = jQueryAjaxSettingsCache;
 
-			$(dialog).on('hidden.bs.modal', this.destroyDialog);
+			dialog.on('hidden.bs.modal', this.destroyDialog);
 
 			if (typeof ($telerik) != 'undefined') {
 			    $telerik.$(document).trigger('dialogRendered');

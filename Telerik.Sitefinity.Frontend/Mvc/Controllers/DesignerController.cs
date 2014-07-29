@@ -53,7 +53,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
                         {
                            {"views", this.GetPartialViews()},
                            {"viewLocations", this.GetPartialViewLocations()},
-                           {"widgetName", widgetName}
+                           {"widgetName", widgetName},
+                           {"preselectedView", this.Request["view"]}
                         };
 
             return ControllerModelFactory.GetModel<IDesignerModel>(typeof(DesignerController), constructorParameters);

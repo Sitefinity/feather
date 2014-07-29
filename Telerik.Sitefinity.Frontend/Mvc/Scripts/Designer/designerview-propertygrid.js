@@ -3,8 +3,8 @@
     angular.module('designer').requires.push('PropertyGridModule');
 
     //basic controller for the advanced designer view
-    propertyGridModule.controller('PropertyGridCtrl', ['$scope', 'propertyService', 'dialogFeedbackService',
-        function ($scope, propertyService, dialogFeedbackService) {
+    propertyGridModule.controller('PropertyGridCtrl', ['$scope', 'propertyService',
+        function ($scope, propertyService) {
 
             var onGetPropertiesSuccess = function (data) {
                 if (data.Items)
@@ -22,7 +22,6 @@
                     $scope.feedback.showLoadingIndicator = false;
                 });
 
-            $scope.feedback = dialogFeedbackService;
             $scope.feedback.showLoadingIndicator = true;
 
             $scope.drillDownPropertyHierarchy = function (propertyPath, propertyName) {

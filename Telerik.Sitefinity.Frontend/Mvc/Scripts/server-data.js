@@ -4,6 +4,16 @@
     serverDataModule.provider('serverData', function () {
         var serverData = {};
 
+        var updateServerData = function () {
+            $('server-data')
+                .each(function () {
+                    $.each(this.attributes, function (i, attribute) {
+                        serverData[$.camelCase(attribute.name)] = attribute.value;
+                    });
+                })
+                .remove();
+        };
+
         var serverDataService = {
             get: function (key) {
                 return serverData[key];
@@ -13,22 +23,17 @@
                 return serverData.hasOwnProperty(key);
             },
 
-            update: function () {
-                $('server-data')
-                    .each(function () {
-                        $.each(this.attributes, function (i, attribute) {
-                            serverData[$.camelCase(attribute.name)] = attribute.value;
-                        });
-                    })
-                    .remove();
+            refresh: function () {
+                updateServerData();
+                return this;
             }
         };
 
-        return $.extend(serverDataService, {
+        return {
             $get: function () {
-                serverDataService.update();
+                updateServerData();
                 return serverDataService;
             }
-        });
+        };
     });
 })(jQuery);

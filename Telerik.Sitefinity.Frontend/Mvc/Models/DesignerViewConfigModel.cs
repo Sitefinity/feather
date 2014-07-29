@@ -19,6 +19,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public int Priority { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this view is hidden.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if hidden; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember(Name = "hidden")]
+        public bool Hidden { get; set; }
+
+        /// <summary>
         /// Gets or sets the scripts that the view requires to be loaded.
         /// </summary>
         /// <value>

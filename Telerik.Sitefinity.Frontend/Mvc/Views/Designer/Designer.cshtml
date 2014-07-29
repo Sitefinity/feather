@@ -18,12 +18,16 @@
 
 			<div ng-show="feedback.showLoadingIndicator" class="s-loading m-bottom-sm"></div>
 
-			<div id="viewsPlaceholder" ng-show="feedback.showView" ng-view></div>
+			<div id="viewsPlaceholder" ng-show="!feedback.showLoadingIndicator" ng-view></div>
 		</div>
-		<div class="modal-footer">
+		<div class="modal-footer" ng-show="!feedback.showLoadingIndicator" placeholder="modal-footer">
+
+		</div>
+
+		<script type="text/ng-template" section="modal-footer">
 			<button class="btn btn-primary" ng-click="save(false)">@Html.Resource("Save")</button>
 			<button class="btn btn-default" ng-click="save(true)" ng-hide="hideSaveAllTranslations">@Html.Resource("SaveAllTranslations")</button>
-			<a class="btn btn-link" data-dismiss="modal" ng-click="cancel($event)">@Html.Resource("Cancel")</a>
+			<a class="btn btn-link" data-dismiss="modal" ng-click="cancel()">@Html.Resource("Cancel")</a>
 
 			@if (Model.Views.Count() > 1)
 			{
@@ -32,7 +36,7 @@
 					<a class="btn btn-default btn-xs pull-right m-top-xs" ng-hide="isCurrentView('@view')" href="#/@view">@Html.Resource(view, fallbackToKey: true)</a>
 				}
 			}
-		</div>
+		</script>
 	</script>
 </div>
 

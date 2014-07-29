@@ -6,20 +6,20 @@
         });
     }
 
-    var resolveDefaultView = function (serverDataProvider) {
-        return serverDataProvider.get('defaultView');
+    var resolveDefaultView = function (serverData) {
+        return serverData.get('defaultView');
     };
 
     var resolveControllerName = function (view) {
         return view + 'Ctrl';
     };
 
-    var resolveTemplateUrl = function (view, serverDataProvider) {
-        var appRoot = serverDataProvider.get('applicationRoot');
+    var resolveTemplateUrl = function (view, serverData) {
+        var appRoot = serverData.get('applicationRoot');
         if (appRoot.slice(-1) !== '/')
             appRoot = appRoot + '/';
 
-        var widgetName = serverDataProvider.get('widgetName');
+        var widgetName = serverData.get('widgetName');
 
         return appRoot + String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}', widgetName, view);
     };
@@ -27,18 +27,36 @@
     var designerModule = angular.module('designer', ['pageEditorServices', 'ngRoute', 'modalDialog', 'serverDataModule']);
 
     designerModule.config(['$routeProvider', 'serverDataProvider', function ($routeProvider, serverDataProvider) {
-        serverDataProvider.update();
+        var serverData = serverDataProvider.$get();
 
         $routeProvider
             .when('/:view', {
                 templateUrl: function (params) {
-                    return resolveTemplateUrl(params.view, serverDataProvider);
+                    return resolveTemplateUrl(params.view, serverData);
                 },
                 controller: 'RoutingCtrl'
             })
             .otherwise({
-                redirectTo: '/' + resolveDefaultView(serverDataProvider)
+                redirectTo: '/' + resolveDefaultView(serverData)
             });
+    }]);
+
+    designerModule.run(['$rootScope', 'dialogFeedbackService', function ($rootScope, dialogFeedbackService) {
+        $rootScope.feedback = dialogFeedbackService;
+
+        $rootScope.$on('$routeChangeStart', function () {
+            $rootScope.feedback.showLoadingIndicator = true;
+        });
+
+        $rootScope.$on('$routeChangeSuccess', function () {
+            $rootScope.feedback.showLoadingIndicator = false;
+        });
+
+        $rootScope.$on('$routeChangeError', function () {
+            $rootScope.feedback.showLoadingIndicator = false;
+            $rootScope.feedback.errorMessage = 'Could not load designer view!';
+            $rootScope.feedback.showError = true;
+        });
     }]);
 
     designerModule.factory('dialogFeedbackService', function () {
@@ -46,12 +64,23 @@
             showLoadingIndicator: false,
             showError: false,
             errorMessage: null,
-            showView: true,
 
             savingPromise: null,
             cancelingPromise: null
         };
     });
+
+    designerModule.directive('section', ['$compile', function ($compile) {
+        return {
+            restrict: 'AC',
+            link: function (scope, element, attr) {
+                var placeholder = $('[placeholder="' + attr.section + '"]');
+                if (placeholder.length > 0) {
+                    placeholder.html($compile(element.html())(scope));
+                }
+            }
+        };
+    }]);
 
     designerModule.controller('RoutingCtrl', ['$scope', '$routeParams', '$controller',
         function ($scope, $routeParams, $controller) {
@@ -65,7 +94,6 @@
     ]);
 
     designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', 'dialogFeedbackService', function ($scope, propertyService, dialogFeedbackService) {
-        $scope.feedback = dialogFeedbackService;
         $scope.feedback.showLoadingIndicator = true;
 
         propertyService.get()
@@ -84,8 +112,8 @@
             });
     }]);
 
-    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', '$routeParams', 'propertyService', 'widgetContext', 'dialogFeedbackService',
-        function ($rootScope, $scope, $q, $modalInstance, $routeParams, propertyService, widgetContext, dialogFeedbackService) {
+    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', '$route', '$timeout', 'propertyService', 'widgetContext', 'dialogFeedbackService',
+        function ($rootScope, $scope, $q, $modalInstance, $route, $timeout, propertyService, widgetContext, dialogFeedbackService) {
             var isSaveToAllTranslations = true,
                 futureSave = $q.defer(),
                 futureCancel = $q.defer();
@@ -99,31 +127,6 @@
                 if (data)
                     $scope.feedback.errorMessage = data.Detail;
             };
-
-            var dialogClose = function () {
-                try {
-                    $modalInstance.close();
-                } catch (e) { }
-
-                if (typeof ($telerik) != 'undefined')
-                    $telerik.$(document).trigger('modalDialogClosed');
-            };
-
-            $rootScope.$on('$routeChangeStart', function () {
-                $scope.feedback.showLoadingIndicator = true;
-                $scope.feedback.showView = false;
-            });
-
-            $rootScope.$on('$routeChangeSuccess', function () {
-                $scope.feedback.showLoadingIndicator = false;
-                $scope.feedback.showView = true;
-            });
-
-            $rootScope.$on('$routeChangeError', function () {
-                $scope.feedback.showLoadingIndicator = false;
-                $scope.feedback.errorMessage = 'Could not load designer view!';
-                $scope.feedback.showError = true;
-            });
 
             // ------------------------------------------------------------------------
             // helper methods
@@ -150,7 +153,6 @@
             // Scope variables and setup
             // ------------------------------------------------------------------------
 
-            $scope.feedback = dialogFeedbackService;
             $scope.feedback.showLoadingIndicator = true;
             $scope.feedback.showError = false;
 
@@ -163,7 +165,7 @@
 
                 $scope.feedback.savingPromise
                     .then(saveProperties)
-                    .then(dialogClose)
+                    .then($scope.close)
                     .catch(onError)
                     .finally(function () {
                         $scope.feedback.showLoadingIndicator = false;
@@ -177,7 +179,7 @@
                 $scope.feedback.cancelingPromise
                     .then(function () {
                         propertyService.reset();
-                        dialogClose();
+                        $scope.close();
                     })
                     .catch(onError)
                     .finally(function () {
@@ -188,10 +190,19 @@
                 futureCancel.resolve();
             };
 
+            $scope.close = function () {
+                try {
+                    $modalInstance.close();
+                } catch (e) { }
+
+                if (typeof ($telerik) != 'undefined')
+                    $telerik.$(document).trigger('modalDialogClosed');
+            };
+
             $scope.hideSaveAllTranslations = widgetContext.hideSaveAllTranslations;
 
             $scope.isCurrentView = function (view) {
-                return $routeParams.view === view;
+                return $route.current && $route.current.params.view === view;
             };
             
             $scope.hideError = function () {
