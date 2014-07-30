@@ -98,7 +98,7 @@
         }
     ]);
 
-    designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', 'dialogFeedbackService', function ($scope, propertyService, dialogFeedbackService) {
+    designerModule.controller('DefaultCtrl', ['$scope', 'propertyService', function ($scope, propertyService) {
         $scope.feedback.showLoadingIndicator = true;
 
         propertyService.get()
@@ -117,8 +117,8 @@
             });
     }]);
 
-    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', '$route', '$timeout', 'propertyService', 'widgetContext', 'dialogFeedbackService',
-        function ($rootScope, $scope, $q, $modalInstance, $route, $timeout, propertyService, widgetContext, dialogFeedbackService) {
+    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', '$route', '$timeout', 'propertyService', 'widgetContext',
+        function ($rootScope, $scope, $q, $modalInstance, $route, $timeout, propertyService, widgetContext) {
             var isSaveToAllTranslations = true,
                 futureSave = $q.defer(),
                 futureCancel = $q.defer();
