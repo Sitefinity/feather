@@ -130,6 +130,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             var configuredScriptReferences = viewConfigs
+                .Where(c => c.Value.Scripts != null)
                 .SelectMany(c => c.Value.Scripts);
 
             this.scriptReferences = viewScriptReferences
