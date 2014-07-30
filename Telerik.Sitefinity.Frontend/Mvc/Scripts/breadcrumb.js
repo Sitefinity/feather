@@ -64,7 +64,7 @@
                         element.show();
                         var containingProperties = proeprtyPath.split('/');
                         containingProperties.forEach(function (propName) {
-                            if (propName) {
+                            if (propName && propName !== "Settings") {
                                 var propPath = proeprtyPath.substr(0, proeprtyPath.indexOf(propName)) + propName;
                                 breadcrumbService.push(propPath, propName);
                             }
