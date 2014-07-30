@@ -1,5 +1,5 @@
 ﻿(function () {
-    var propertyGridModule = angular.module('PropertyGridModule', ['designer', 'breadcrumb']);
+    var propertyGridModule = angular.module('PropertyGridModule', ['pageEditorServices', 'breadcrumb']);
     angular.module('designer').requires.push('PropertyGridModule');
 
     //basic controller for the advanced designer view
