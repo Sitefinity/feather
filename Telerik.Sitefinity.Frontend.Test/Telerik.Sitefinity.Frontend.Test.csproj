@@ -126,6 +126,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Designers\DesignerModelTests.cs" />
     <Compile Include="FileMonitoring\FileMonitorTests.cs" />
     <Compile Include="GridSystem\GridSystemInitializerTests.cs" />
     <Compile Include="InlineEditing\InlineEditingTests.cs" />
@@ -156,6 +157,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerContainerInitializerTests.cs" />
     <Compile Include="Resources\ResourceRegisterTests.cs" />
+    <Compile Include="Resources\StringResourcesTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Resources\VirtualPathBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
