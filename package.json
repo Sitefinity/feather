@@ -13,6 +13,9 @@
   "devDependencies": {
     "grunt": "^0.4.4",
     "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-jasmine": "^0.6.3"
+    "grunt-contrib-jasmine": "^0.6.3",
+    "karma": "~0.12.19",
+    "karma-coverage": "~0.2.5",
+    "karma-junit-reporter": "~0.2.2"
   }
 }

@@ -182,10 +182,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientScripts\config\karma.conf.js" />
-    <Content Include="ClientScripts\helpers\PropertyDataServiceMock.js" />
-    <Content Include="ClientScripts\helpers\PageControlDataServiceMock.js" />
+    <Content Include="ClientScripts\helpers\angular-mocks.js" />
+    <Content Include="ClientScripts\helpers\angular-route.js" />
+    <Content Include="ClientScripts\helpers\angular.js" />
+    <Content Include="ClientScripts\helpers\mocks\propertyServiceMock.js" />
+    <Content Include="ClientScripts\helpers\mocks\widgetContextMock.js" />
     <Content Include="ClientScripts\helpers\jquery-1.8.3.min.js" />
-    <Content Include="ClientScripts\unit\controllersSpec.js" />
+    <Content Include="ClientScripts\unit\Designer\pageEditorServiceSpec.js" />
+    <Content Include="ClientScripts\unit\propertyGridSpec.js" />
+    <Content Include="ClientScripts\unit\breadcrumbSpec.js" />
   </ItemGroup>
   <ItemGroup />
   <Choose>
