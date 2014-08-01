@@ -90,7 +90,7 @@ AppPackages/
 
 # Coverage
 *.js.html
-*/coverage/*
+**/coverage/**
 Telerik.Sitefinity.Frontend/Designers/Scripts/index.html
 Telerik.Sitefinity.Frontend/Mvc/Scripts/Designer/index.html
 Telerik.Sitefinity.Frontend/Mvc/Scripts/index.html
