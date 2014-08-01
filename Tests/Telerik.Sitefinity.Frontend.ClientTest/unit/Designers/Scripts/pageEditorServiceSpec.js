@@ -1,5 +1,5 @@
-/* tests for the controlPropertiesServices */
-describe('PropertyServices tests.', function () {
+/* tests for the pageEditorServices */
+describe('pageEditorServices tests.', function () {
 
     beforeEach(module('pageEditorServices'));
     var $httpBackend;
