@@ -10,12 +10,12 @@ describe('pageEditorServices tests.', function () {
 
     }));
 
-    it('Ensure the properties are initially requested.', inject(function (propertyService) {
+    it('[EGaneva] / Ensure the properties are initially requested.', inject(function (propertyService) {
         $httpBackend.expectGET('/Sitefinity/Services/Pages/ControlPropertyService.svc/902033f3-aceb-6a2e-a9a3-ff0000ffeb85/');
         propertyService.get();
     }));
 
-    it('Ensure put call is executed.', inject(function (propertyService) {
+    it('[EGaneva] / Ensure put call is executed.', inject(function (propertyService) {
         $httpBackend.expectPUT('/Sitefinity/Services/Pages/ControlPropertyService.svc/batch/902033f3-aceb-6a2e-a9a3-ff0000ffeb85/?pageId=111033f3-aceb-6a2e-a9a3-ff0000ffeb85&mediaType=Page');
         propertyService.save();
     }));

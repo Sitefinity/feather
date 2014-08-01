@@ -22,7 +22,7 @@ describe('PropertyGridModule tests.', function () {
             };
         }));
 
-        it('The items are populated correctly from the angular service.', function () {
+        it('[EGaneva] / The items are populated correctly from the angular service.', function () {
             var controller = createController();
             $rootScope.$digest();
 
@@ -36,14 +36,14 @@ describe('PropertyGridModule tests.', function () {
     });
 
     describe('Filters tests.', function () {
-        it('Should return all non-proxy properties when the first property is a proxy',
+        it('[EGaneva] / Should return all non-proxy properties when the first property is a proxy',
             inject(function (propertyHierarchyFilter) {
                 var inputArray = [{ "PropertyId": "a5775131-8df5-6bde-b650-ff000086cdf6", "PropertyName": "Settings", "PropertyPath": "/Settings", "ItemTypeName": "System.Object", "ClientPropertyTypeName": "System.Object", "InCategoryOrdinal": 5, "ElementCssClass": null, "CategoryName": "Misc", "CategoryNameSafe": "Misc", "PropertyValue": null, "NeedsEditor": false, "IsProxy": true, "TypeEditor": null }, { "PropertyId": "a5775131-8df5-6bde-b650-ff000086cdf6", "PropertyName": "ReadTemplateName", "PropertyPath": "/Settings/ReadTemplateName", "ItemTypeName": "System.String", "ClientPropertyTypeName": "System.String", "InCategoryOrdinal": 5, "ElementCssClass": null, "CategoryName": "Misc", "CategoryNameSafe": "Misc", "PropertyValue": "Special", "NeedsEditor": false, "IsProxy": false, "TypeEditor": null, "$$hashKey": "006" }, { "PropertyId": "a5775131-8df5-6bde-b650-ff000086cdf6", "PropertyName": "Message", "PropertyPath": "/Settings/Message", "ItemTypeName": "System.String", "ClientPropertyTypeName": "System.String", "InCategoryOrdinal": 5, "ElementCssClass": null, "CategoryName": "Misc", "CategoryNameSafe": "Misc", "PropertyValue": "Hello, World!!!", "NeedsEditor": false, "IsProxy": false, "TypeEditor": null, "$$hashKey": "007" }, { "PropertyId": "a5775131-8df5-6bde-b650-ff000086cdf6", "PropertyName": "AsyncManager", "PropertyPath": "/Settings/AsyncManager", "ItemTypeName": "System.String", "ClientPropertyTypeName": "System.String", "InCategoryOrdinal": 5, "ElementCssClass": null, "CategoryName": "Misc", "CategoryNameSafe": "Misc", "PropertyValue": "", "NeedsEditor": false, "IsProxy": false, "TypeEditor": null, "$$hashKey": "008" }, { "PropertyId": "a5775131-8df5-6bde-b650-ff000086cdf6", "PropertyName": "Profile", "PropertyPath": "/Settings/Profile", "ItemTypeName": "System.String", "ClientPropertyTypeName": "System.String", "InCategoryOrdinal": 5, "ElementCssClass": null, "CategoryName": "Misc", "CategoryNameSafe": "Misc", "PropertyValue": "", "NeedsEditor": false, "IsProxy": false, "TypeEditor": null, "$$hashKey": "009" }, { "PropertyId": "a5775131-8df5-6bde-b650-ff000086cdf6", "PropertyName": "ViewEngineCollection", "PropertyPath": "/Settings/ViewEngineCollection", "ItemTypeName": "System.String", "ClientPropertyTypeName": "System.String", "InCategoryOrdinal": 5, "ElementCssClass": null, "CategoryName": "Misc", "CategoryNameSafe": "Misc", "PropertyValue": "", "NeedsEditor": false, "IsProxy": false, "TypeEditor": null, "$$hashKey": "00A" }];
 
                 expect(propertyHierarchyFilter(inputArray).length).toEqual(inputArray.length - 1);
             }));
 
-        it('Should return all only the properties from the same level as requested property',
+        it('[EGaneva] / Should return all only the properties from the same level as requested property',
             inject(function (propertyHierarchyFilter) {
                 var inputArray = [{ "PropertyId": "a5775131-8df5-6bde-b650-ff000086cdf6", "PropertyName": "prop1", "PropertyPath": "/First/Second/prop1", "ItemTypeName": "System.Object", "ClientPropertyTypeName": "System.Object", "InCategoryOrdinal": 5, "ElementCssClass": null, "CategoryName": "Misc", "CategoryNameSafe": "Misc", "PropertyValue": null, "NeedsEditor": false, "IsProxy": false, "TypeEditor": null }, 
                     { "PropertyId": "a5775131-8df5-6bde-b650-ff000086cdf6", "PropertyName": "prop2", "PropertyPath": "/First/Second/prop2", "ItemTypeName": "System.String", "ClientPropertyTypeName": "System.String", "InCategoryOrdinal": 5, "ElementCssClass": null, "CategoryName": "Misc", "CategoryNameSafe": "Misc", "PropertyValue": "Special", "NeedsEditor": false, "IsProxy": false, "TypeEditor": null, "$$hashKey": "006" }, 
