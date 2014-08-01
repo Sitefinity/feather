@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="PhantomJS 1.9.7 (Windows 7)" package="" timestamp="2014-08-01T14:07:25" id="0" hostname="KARADZHOV" tests="7" errors="0" failures="0" time="0.047">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.7 Safari/534.34"/>
+    </properties>
+    <testcase name="[EGaneva] / Ensure the properties are initially requested." time="0.012" classname="PhantomJS 1.9.7 (Windows 7).pageEditorServices tests_"/>
+    <testcase name="[EGaneva] / Ensure put call is executed." time="0.001" classname="PhantomJS 1.9.7 (Windows 7).pageEditorServices tests_"/>
+    <testcase name="[EGaneva] / The items are populated correctly from the angular service." time="0.006" classname="PhantomJS 1.9.7 (Windows 7).PropertyGridModule tests_ Controllers test_"/>
+    <testcase name="[EGaneva] / Should return all non-proxy properties when the first property is a proxy" time="0.002" classname="PhantomJS 1.9.7 (Windows 7).PropertyGridModule tests_ Filters tests_"/>
+    <testcase name="[EGaneva] / Should return all only the properties from the same level as requested property" time="0.002" classname="PhantomJS 1.9.7 (Windows 7).PropertyGridModule tests_ Filters tests_"/>
+    <testcase name="[EGaneva] / Can refreshes the whole breadcrumb content." time="0.017" classname="PhantomJS 1.9.7 (Windows 7).BreadCrumb directive test Directives tests"/>
+    <testcase name="[EGaneva] / Adds single element to the breadcrumb when proeprtyPath has been changed" time="0.007" classname="PhantomJS 1.9.7 (Windows 7).BreadCrumb directive test Directives tests"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+</testsuites>
