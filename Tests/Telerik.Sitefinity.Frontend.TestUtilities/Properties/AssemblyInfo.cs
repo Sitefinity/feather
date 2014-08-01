@@ -35,4 +35,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.3.1000.4")]
 [assembly: AssemblyFileVersion("0.3.1000.4")]
 
-[assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.Test")]
+[assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestUnit")]

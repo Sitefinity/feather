@@ -4,7 +4,7 @@ using System.Reflection;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 
-namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
 {
     /// <summary>
     /// Tests for the EmbeddedResourceResolver class.

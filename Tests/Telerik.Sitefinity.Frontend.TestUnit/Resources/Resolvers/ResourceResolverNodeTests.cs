@@ -7,7 +7,7 @@ using System.Web.Caching;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers;
 
-namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
 {
     /// <summary>
     /// Ensures that the ResourceResolverNode class is working correctly.

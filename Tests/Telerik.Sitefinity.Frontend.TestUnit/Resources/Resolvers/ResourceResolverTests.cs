@@ -13,7 +13,7 @@ using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers;
 
-namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
 {
     /// <summary>
     /// Ensures that the ResourceResolver class is working correctly.

@@ -35,5 +35,5 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 
 [assembly: ControllerContainer]
 
-[assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.Test")]
+[assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestUnit")]
 [assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestUtilities")]

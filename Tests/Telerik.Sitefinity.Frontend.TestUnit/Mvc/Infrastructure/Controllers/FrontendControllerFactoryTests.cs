@@ -8,7 +8,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Controllers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
 {
     /// <summary>
     /// Ensures that FrontendControllerFactory class is working correctly.

@@ -7,7 +7,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Views;
 using Telerik.Sitefinity.Services;
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Controllers.Attributes
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers.Attributes
 {
     [TestClass]
     public class CacheDependentAttributeTests

@@ -7,7 +7,7 @@ using System.Web;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Frontend.Resources;
 
-namespace Telerik.Sitefinity.Frontend.Test.Resources
+namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 {
     /// <summary>
     /// Ensures that PackageManager class works correctly.

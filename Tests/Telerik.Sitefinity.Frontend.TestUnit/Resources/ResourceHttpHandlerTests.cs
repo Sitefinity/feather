@@ -4,7 +4,7 @@ using System.Text;
 using System.Web;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers;
 
-namespace Telerik.Sitefinity.Frontend.Test.Resources
+namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 {
     /// <summary>
     /// Ensures that ResourceHttpHandler class works correctly.

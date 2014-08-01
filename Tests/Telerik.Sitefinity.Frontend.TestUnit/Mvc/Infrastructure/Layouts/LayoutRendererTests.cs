@@ -7,7 +7,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Layouts;
 using Telerik.Sitefinity.Services;
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
 {
     /// <summary>
     /// Ensures that the LayoutRenderer class is working correctly.

@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
 {    
     /// <summary>
     /// Ensures that TemplateTitleParser class is working correctly.

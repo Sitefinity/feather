@@ -8,7 +8,7 @@ using Telerik.Sitefinity.Frontend.Security;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Authentication;
 
-namespace Telerik.Sitefinity.Frontend.Test.Designers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
 {
     /// <summary>
     /// These tests are meant to ensure that the DesignerController class is working correctly.

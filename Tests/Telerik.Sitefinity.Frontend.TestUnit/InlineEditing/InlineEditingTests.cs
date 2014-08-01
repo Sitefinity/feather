@@ -5,7 +5,7 @@ using Telerik.Sitefinity.Frontend.InlineEditing;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Models;
 using Telerik.Sitefinity.Utilities.HtmlParsing;
 
-namespace Telerik.Sitefinity.Frontend.Test.InlineEditing
+namespace Telerik.Sitefinity.Frontend.TestUnit.InlineEditing
 {
     /// <summary>
     /// Tests the InlineEditing functionality.

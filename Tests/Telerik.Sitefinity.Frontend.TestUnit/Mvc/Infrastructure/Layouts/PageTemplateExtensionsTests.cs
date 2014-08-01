@@ -3,7 +3,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates;
 using Telerik.Sitefinity.Pages.Model;
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
 {
     /// <summary>
     /// Ensures that PageTemplateExtensions class is working correctly.

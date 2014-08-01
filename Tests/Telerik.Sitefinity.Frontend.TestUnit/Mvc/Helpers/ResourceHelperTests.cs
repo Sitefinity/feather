@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.HttpContext;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Helpers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
 {
     /// <summary>
     /// This class contains tests methods for the <see cref="ResourceHelper"/>

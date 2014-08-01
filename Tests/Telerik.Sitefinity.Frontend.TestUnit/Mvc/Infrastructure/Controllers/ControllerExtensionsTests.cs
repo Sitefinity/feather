@@ -9,7 +9,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Controllers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
 {
     [TestClass]
     public class ControllerExtensionsTests

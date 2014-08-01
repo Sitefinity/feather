@@ -4,7 +4,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Configs;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.GridSystem;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 
-namespace Telerik.Sitefinity.Frontend.Test.GridSystem
+namespace Telerik.Sitefinity.Frontend.TestUnit.GridSystem
 {
     /// <summary>
     /// Tests related to the GridSystemInitializer class

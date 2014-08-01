@@ -28,7 +28,7 @@ using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Project.Configuration;
 using Telerik.Sitefinity.Web.Configuration;
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Controllers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
 {
     /// <summary>
     /// Ensures that ControllerContainerInitializer class is working correctly.
@@ -183,7 +183,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Controllers
 
             //Assert
             Assert.AreNotEqual(0, RouteTable.Routes.Count, "No routes were registered.");
-            Assert.IsNotNull(RouteTable.Routes.OfType<Route>().FirstOrDefault(r => r.Url == "Frontend-Assembly/Telerik.Sitefinity.Frontend.Test/{*Params}"));
+            Assert.IsNotNull(RouteTable.Routes.OfType<Route>().FirstOrDefault(r => r.Url == "Frontend-Assembly/Telerik.Sitefinity.Frontend.TestUnit/{*Params}"));
             Assert.IsNotNull(vpDefinition, "Virtual path definition was not found.");
             Assert.AreEqual(vpDefinition.ResourceLocation, assembly.CodeBase, "The resolved virtual path definition was not expected.");
         }

@@ -14,7 +14,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 
-namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
 {
     /// <summary>
     /// Tests methods of DatabaseResourceResolver class.

@@ -16,7 +16,7 @@ using Telerik.Sitefinity.Project.Configuration;
 using Telerik.Sitefinity.Security.Configuration;
 using Telerik.Sitefinity.Services;
 
-namespace Telerik.Sitefinity.Frontend.Test.FileMonitoring
+namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
 {
      /// <summary>
     /// Ensures that FileMonitor class works correctly.

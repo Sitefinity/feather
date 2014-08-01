@@ -13,7 +13,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Web.Configuration;
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Layouts
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
 {
     /// <summary>
     /// Ensures that LayoutResolver class is working correctly.

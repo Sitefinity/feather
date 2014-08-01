@@ -6,7 +6,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Controls;
 using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Infrastructure.Controllers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
 {
     /// <summary>
     /// Ensures that SitefinityControllerFactroryExtensions class works correctly.

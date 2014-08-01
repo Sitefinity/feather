@@ -15,7 +15,7 @@ using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Localization.Configuration;
 using Telerik.Sitefinity.Project.Configuration;
 
-namespace Telerik.Sitefinity.Frontend.Test.Resources
+namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 {
     [TestClass]
     public class StringResourcesTests

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Telerik.Sitefinity.Frontend.Resources;
 
-namespace Telerik.Sitefinity.Frontend.Test.Resources
+namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 {
     /// <summary>
     /// This class contains tests that ensure that the <see cref="ResourceRegister"/> works properly

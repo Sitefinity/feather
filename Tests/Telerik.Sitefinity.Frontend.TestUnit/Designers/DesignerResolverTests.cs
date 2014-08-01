@@ -10,7 +10,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 using Telerik.Sitefinity.Services;
 
-namespace Telerik.Sitefinity.Frontend.Test.Designers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
 {
     /// <summary>
     /// Ensures that DesignerResolver class works correctly.

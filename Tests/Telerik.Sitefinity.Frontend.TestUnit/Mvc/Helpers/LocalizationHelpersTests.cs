@@ -16,7 +16,7 @@ using Telerik.Sitefinity.Project.Configuration;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 
 
-namespace Telerik.Sitefinity.Frontend.Test.Mvc.Helpers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
 {
     /// <summary>
     /// Tests methods of the LocalizationHelpers class.

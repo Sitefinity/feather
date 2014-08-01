@@ -6,7 +6,7 @@ using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 
-namespace Telerik.Sitefinity.Frontend.Test.Resources
+namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 {
     /// <summary>
     /// Ensures that VirtualPathBuilder class works correctly.
@@ -28,7 +28,7 @@ namespace Telerik.Sitefinity.Frontend.Test.Resources
             var result = new VirtualPathBuilder().GetVirtualPath(controllerAssembly);
 
             //Assert
-            Assert.AreEqual("Frontend-Assembly/Telerik.Sitefinity.Frontend.Test/", result, "The virtual path is not resolved correctly.");
+            Assert.AreEqual("Frontend-Assembly/Telerik.Sitefinity.Frontend.TestUnit/", result, "The virtual path is not resolved correctly.");
         }
 
         [TestMethod]

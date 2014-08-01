@@ -21,7 +21,7 @@ using Telerik.Sitefinity.Localization.Configuration;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Web.Configuration;
 
-namespace Telerik.Sitefinity.Frontend.Test.Designers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
 {
     /// <summary>
     /// These tests are meant to ensure that the DesignerModel class is working correctly.

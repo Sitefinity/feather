@@ -6,7 +6,7 @@ using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers;
 
-namespace Telerik.Sitefinity.Frontend.Test.Resources.Resolvers
+namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
 {
     /// <summary>
     /// Ensures that the ResourceResolverStrategy class is working correctly.

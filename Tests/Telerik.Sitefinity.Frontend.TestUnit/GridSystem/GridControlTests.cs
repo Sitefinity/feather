@@ -3,7 +3,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Controls;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.GridSystem;
 using Telerik.Sitefinity.Utilities.HtmlParsing;
 
-namespace Telerik.Sitefinity.Frontend.Test.GridSystem
+namespace Telerik.Sitefinity.Frontend.TestUnit.GridSystem
 {
     /// <summary>
     /// Tests methods of GridControl class.
