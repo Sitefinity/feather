@@ -12,14 +12,13 @@ module.exports = function(config){
       '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/*.js',
       '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Designer/*.js',
       'helpers/mocks/*.js',
-      'unit/*.js',
-      'unit/Designer/*.js'
+      'unit/**'
     ],
 
     exclude : [
       '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/*.min.js',
-	'../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/angular-loader.js',
-	'../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/angular-scenario.js',
+	  '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/angular-loader.js',
+	  '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/angular-scenario.js',
       '../../Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js'
     ],
 
