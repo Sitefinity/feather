@@ -39,7 +39,8 @@ This repository contains the core infrastructure related to the [Feather project
 
 [VirtualFile structure explained](https://github.com/Sitefinity/feather/wiki/VirtualFile-structure-explained)
 
-[How to create “Hello World” MVC widget in separate assembly](https://github.com/Sitefinity/feather/wiki/How-to-create-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-separate-assembly)
+[How to create “Hello World” MVC widget in separate assembly](https://github.com/Sitefinity/feather/wiki/Create-a-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-a-separate-assembly)
+
 
 [How to replace commands displayed in the ZoneEditor that are specific for a widget](https://github.com/Sitefinity/feather/wiki/How-to-replace-commands-displayed-in-the-ZoneEditor-that-are-specific-for-a-widget)
 
