@@ -185,7 +185,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             var scriptVirtualPath = path + this.GetScriptReferencePath(widgetName, scriptFileName);
             scriptVirtualPath = packageName.IsNullOrEmpty() ?
-                scriptVirtualPath : UrlTransformations.AppendParam(scriptVirtualPath, PackageManager.PackageUrlParamterName, packageName);
+                scriptVirtualPath : FrontendManager.VirtualPathBuilder.AddParams(scriptVirtualPath, packageName);
 
             return scriptVirtualPath;
         }
