@@ -88,6 +88,13 @@ csx
 # Windows Store app package directory
 AppPackages/
 
+# Coverage
+*.js.html
+**/coverage/**
+Telerik.Sitefinity.Frontend/Designers/Scripts/index.html
+Telerik.Sitefinity.Frontend/Mvc/Scripts/Designer/index.html
+Telerik.Sitefinity.Frontend/Mvc/Scripts/index.html
+
 # Others
 [Bb]in
 [Oo]bj

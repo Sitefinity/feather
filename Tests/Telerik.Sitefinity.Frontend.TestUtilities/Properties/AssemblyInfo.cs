@@ -1,16 +1,18 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Telerik.Sitefinity.Frontend")]
-[assembly: AssemblyCompany("Telerik")]
-[assembly: AssemblyProduct("Telerik Sitefinity CMS")]
-[assembly: AssemblyCopyright("Copyright © Telerik 2014")]
-[assembly: AssemblyTrademark("Sitefinity")]
+[assembly: AssemblyTitle("Telerik.Sitefinity.Frontend.TestUtilities")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Telerik.Sitefinity.Frontend.TestUtilities")]
+[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -18,7 +20,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("11b4c603-bf5d-4ef3-8843-d3f047a07377")]
+[assembly: Guid("c1e741f4-4fc8-40b2-848e-e8f6415dfdf3")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,7 +35,4 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 [assembly: AssemblyVersion("0.4.1000.2")]
 [assembly: AssemblyFileVersion("0.4.1000.2")]
 
-[assembly: ControllerContainer]
-
 [assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestUnit")]
-[assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestUtilities")]
