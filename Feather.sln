@@ -5,6 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3E1F3A5-2C9C-4223-ADBC-86904842C274}"
 	ProjectSection(SolutionItems) = preProject
+		Feather.vsmdi = Feather.vsmdi
 		Tests\TestSettings.testsettings = Tests\TestSettings.testsettings
 	EndProjectSection
 EndProject
@@ -45,6 +46,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.TestUnit", "Tests\Telerik.Sitefinity.Frontend.TestUnit\Telerik.Sitefinity.Frontend.TestUnit.csproj", "{D607959E-5DE3-43B9-8731-C22E495FCEF7}"
 EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Feather.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

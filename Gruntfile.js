@@ -17,9 +17,16 @@ module.exports = function (grunt) {
 		
 		jasmine: {
 			unit:{
-				src: 'Mvc/Scripts/**/*.js',
+				src: ['Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/jquery-1.8.3.min.js',
+	  'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js',
+      'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-route.js',
+      'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js',
+      'Telerik.Sitefinity.Frontend/**/*.js',     
+      '!Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/**',
+	  '!Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js',
+	  'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
 				options: {
-					specs: 'JsTest/**/*.js'
+					specs: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/**/*.js'
 				}
 			}			
 		}
@@ -30,6 +37,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	
 	//Default task(s)
-	grunt.registerTask('default', ['jshint']);
+	grunt.registerTask('default', ['jshint', 'jasmine']);
 	
 };
