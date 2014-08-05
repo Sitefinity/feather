@@ -2,8 +2,6 @@
 <TestSettings name="Sitefinity_UITestCases" id="1f0ef6b0-c503-44d1-945c-82040291076c" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <Description>Set of test cases which will be executed every night.</Description>
   <Deployment>
-    <DeploymentItem filename="Telerik.Sitefinity.Frontend.TestUI.TestCases\DummyFiles\" />
-    <DeploymentItem filename="Telerik.Sitefinity.Frontend.TestUI.TestCases\Data\" />
     <DeploymentItem filename="Telerik.Sitefinity.Frontend.TestUI.TestCases\app.config" />
   </Deployment>
   <NamingScheme baseName="TestExecution@Sitefinity_UITestCases" useDefault="false" />
