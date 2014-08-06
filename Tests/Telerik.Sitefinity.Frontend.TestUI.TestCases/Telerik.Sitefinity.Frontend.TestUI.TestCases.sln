@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2C8168
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B60345A-BCB4-48D3-9D65-BFA7EDECB779}"
 	ProjectSection(SolutionItems) = preProject
+		Telerik.Sitefinity.Frontend.TestUI.TestCases1.vsmdi = Telerik.Sitefinity.Frontend.TestUI.TestCases1.vsmdi
 		UITestCasesLocal.testsettings = UITestCasesLocal.testsettings
 	EndProjectSection
 EndProject
@@ -18,6 +19,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.TestUI.TestCases", "Telerik.Sitefinity.Frontend.TestUI.TestCases.csproj", "{E90A06CF-7889-4A32-A941-4FD76332C179}"
 EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Telerik.Sitefinity.Frontend.TestUI.TestCases1.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
