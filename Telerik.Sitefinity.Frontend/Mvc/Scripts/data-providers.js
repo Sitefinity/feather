@@ -79,16 +79,16 @@
     dataProvidersModule.directive('providerSelector', ['providerService', function (providerService) {
         return {
             restrict: 'E',
-            template: '<div class="dropdown s-bg-source-wrp" ng-show="IsProviderSelectorVisible">' +
+            template: '<div class="dropdown s-bg-source-wrp" ng-show="isProviderSelectorVisible" is-open="isOpen">' +
                           '<a class="btn btn-default dropdown-toggle" >' +
-                            '{{SelectedProvider.Title}} <span class="caret"></span>' +
+                            '{{selectedProvider.Title}} <span class="caret"></span>' +
                           '</a>' +
                           '<ul class="dropdown-menu" >' +
                               '<li>' +
-                                '<a href="#">- {{providerLabel}} -</a>' +
+                                '<a href="">- {{providerLabel}} -</a>' +
                               '</li>' +
-                              '<li ng-repeat="provider in Providers">' +
-                                '<a href="#" ng-click="selectProvider(provider)">{{provider.Title}}</a>' +
+                              '<li ng-repeat="provider in providers">' +
+                                '<a href="" ng-click="selectProvider(provider);">{{provider.Title}}</a>' +
                               '</li>' +
                           '</ul>' +
                       '</div>',
@@ -96,33 +96,46 @@
             replace: true,
             link: function (scope, tElement, tAttrs, ngModelCtrl) {
                 var onGetProvidersSuccess = function (data) {
-                    scope.Providers = data.Items;
-                    scope.SelectedProvider = providerService.getDefault(data.Items);
-                    scope.IsProviderSelectorVisible = data && data.Items && data.Items.length >= 2;
+                    scope.providers = data.Items;
+                    if (ngModelCtrl.$viewValue) {
+                        refreshSelectedProvider();
+                    }
+                    else {
+                        scope.selectedProvider = providerService.getDefault(data.Items);
+                        ngModelCtrl.$setViewValue(scope.selectedProvider);
+                    }
+
+                    scope.isProviderSelectorVisible = data && data.Items && data.Items.length >= 2;
                 };
 
                 var onGetProvidersError = function () {
                     throw 'Error occurred while populating providers list!';
                 };
 
+                scope.isOpen = false;
                 scope.providerLabel = tAttrs.providerLabel ? tAttrs.providerLabel : 'Provider';
                 scope.managerType = tAttrs.managerType;
-                scope.SelectedProvider = null;
-                scope.IsProviderSelectorVisible = false;
+                scope.selectedProvider = null;
+                scope.isProviderSelectorVisible = false;
 
                 //if selection is changed manually from the dropdown
                 scope.selectProvider = function (provider) {
-                    scope.SelectedProvider = provider;
+                    scope.isOpen = false;
+                    scope.selectedProvider = provider;
                     if (provider) {
                         ngModelCtrl.$setViewValue(provider.Name);
                     }
                 };
 
                 ngModelCtrl.$render = function () {
-                    if (scope.Providers) {
-                        for (var i = 0; i < scope.Providers.length; i++) {
-                            if (scope.Providers[i].Name == ngModelCtrl.$viewValue) {
-                                scope.SelectedProvider = scope.Providers[i];
+                    refreshSelectedProvider();
+                };
+
+                var refreshSelectedProvider = function () {
+                    if (scope.providers) {
+                        for (var i = 0; i < scope.providers.length; i++) {
+                            if (scope.providers[i].Name == ngModelCtrl.$viewValue) {
+                                scope.selectedProvider = scope.providers[i];
                                 break;
                             }
                         }
