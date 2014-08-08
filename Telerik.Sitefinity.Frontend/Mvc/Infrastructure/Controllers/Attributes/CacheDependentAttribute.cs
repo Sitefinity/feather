@@ -27,10 +27,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
                     var builtView = viewResult.View as BuildManagerCompiledView;
                     if (builtView != null)
                     {
-                        var vpDependency = this.GetCacheDependency(builtView.ViewPath);
-                        if (vpDependency != null)
+                        var cacheDependency = this.GetCacheDependency(builtView.ViewPath);
+                        if (cacheDependency != null)
                         {
-                            SystemManager.CurrentHttpContext.Response.AddCacheDependency(vpDependency);
+                            SystemManager.CurrentHttpContext.Response.AddCacheDependency(cacheDependency);
                         }
                     }
                 }
@@ -44,9 +44,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
         protected virtual CacheDependency GetCacheDependency(string virtualPath)
         {
             if (HostingEnvironment.VirtualPathProvider != null)
+            {
                 return HostingEnvironment.VirtualPathProvider.GetCacheDependency(virtualPath, null, DateTime.UtcNow);
-            else
-                return null;
+            }
+
+            return null;
         }
     }
 }

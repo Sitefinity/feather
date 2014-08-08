@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Web.Caching;
-using System.Web.Hosting;
+
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 
@@ -20,10 +19,12 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <summary>
         /// Determines whether a file with the specified virtual path exists.
         /// </summary>
+        /// <param name="definition">The definition.</param>
         /// <param name="virtualPath">The virtual path to check.</param>
+        /// <returns>bool result</returns>
         public virtual bool Exists(PathDefinition definition, string virtualPath)
         {
-            virtualPath = virtualPathBuilder.RemoveParams(virtualPath);
+            virtualPath = this.virtualPathBuilder.RemoveParams(virtualPath);
 
             var resolverStrategy = ObjectFactory.Resolve<IResourceResolverStrategy>();
             return resolverStrategy.Exists(definition, virtualPath);
@@ -39,7 +40,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// </returns>
         public virtual CacheDependency GetCacheDependency(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            virtualPath = virtualPathBuilder.RemoveParams(virtualPath);
+            virtualPath = this.virtualPathBuilder.RemoveParams(virtualPath);
 
             var resolverStrategy = ObjectFactory.Resolve<IResourceResolverStrategy>();
             return resolverStrategy.GetCacheDependency(definition, virtualPath, virtualPathDependencies, utcStart);
@@ -51,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <param name="virtualPath">The virtual path of the file to open.</param>
         public virtual Stream Open(PathDefinition definition, string virtualPath)
         {
-            virtualPath = virtualPathBuilder.RemoveParams(virtualPath);
+            virtualPath = this.virtualPathBuilder.RemoveParams(virtualPath);
 
             var resolverStrategy = ObjectFactory.Resolve<IResourceResolverStrategy>();
             return resolverStrategy.Open(definition, virtualPath);

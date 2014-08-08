@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Resources;
 
@@ -65,7 +63,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
         /// <summary>
         /// Gets the default designer URL.
         /// </summary>
-        /// <param name="widgetName">Name of the widget.</param>
+        /// <param name="widgetType">Type of the widget.</param>
         /// <returns></returns>
         private string GetDefaultUrl(Type widgetType)
         {
@@ -76,7 +74,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
             if (isController)
             {
                 string controllerName = controllerRegistry.GetControllerName(widgetType);
-                designerUrl = string.Format(DesignerResolver.defaultActionUrlTemplate, controllerName);
+                designerUrl = string.Format(DesignerResolver.DefaultActionUrlTemplate, controllerName);
             }
 
             return designerUrl;
@@ -85,8 +83,8 @@ namespace Telerik.Sitefinity.Frontend.Designers
         #endregion
 
         #region Constants
-        
-        private const string defaultActionUrlTemplate = "~/Telerik.Sitefinity.Frontend/Designer/Master/{0}";
+
+        private const string DefaultActionUrlTemplate = "~/Telerik.Sitefinity.Frontend/Designer/Master/{0}";
 
         #endregion 
     }

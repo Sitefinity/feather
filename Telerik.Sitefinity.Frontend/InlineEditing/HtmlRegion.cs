@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Telerik.Sitefinity.Frontend.InlineEditing
 {
@@ -25,12 +24,11 @@ namespace Telerik.Sitefinity.Frontend.InlineEditing
         /// </summary>
         public void Dispose()
         {
-            string closeHtmlTag = string.Format("</{0}>", this.htmlTagType);
+            var closeHtmlTag = string.Format("</{0}>", this.htmlTagType);
             this.writer.Write(closeHtmlTag);
         }
 
         private readonly string htmlTagType;
         private readonly System.IO.TextWriter writer;
-
     }
 }

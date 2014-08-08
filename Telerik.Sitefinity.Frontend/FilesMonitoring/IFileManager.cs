@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace Telerik.Sitefinity.Frontend.FilesMonitoring
+﻿namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 {
     /// <summary>
     /// Classes that implement this interface should define the Sitefinity's behavior when a file is moved over the application folder structure.
@@ -29,6 +26,5 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="path">The file path.</param>
         /// <param name="packageName">Name of the package.</param>
         void FileRenamed(string newFileName, string oldFileName, string newFilePath, string oldFilePath, string packageName = "");
-
     }
 }

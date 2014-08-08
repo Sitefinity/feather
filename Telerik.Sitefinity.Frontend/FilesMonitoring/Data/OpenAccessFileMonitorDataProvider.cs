@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Data.OA;
 
@@ -87,6 +85,5 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
         }
 
         #endregion
-
     }
 }

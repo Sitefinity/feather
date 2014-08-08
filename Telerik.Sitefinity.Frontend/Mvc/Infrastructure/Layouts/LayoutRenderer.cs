@@ -45,12 +45,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             // add the controller routing if not existing
             if (!routeData.Values.ContainsKey("controller") &&
                 !routeData.Values.ContainsKey("Controller"))
-                routeData.Values.Add("controller",
-                                     controller.GetType().Name.ToLower().Replace("controller", ""));
+                routeData.Values.Add(
+                                    "controller",
+                                    controller.GetType().Name.ToLower().Replace("controller", string.Empty));
 
             controller.UpdateViewEnginesCollection(this.GetPathTransformations(controller));
 
-            //here we create the context for the controller passing the just created controller the httpcontext and the route data that we built above
+            // here we create the context for the controller passing the just created controller the httpcontext and the route data that we built above
             controller.ControllerContext = new ControllerContext(context, routeData, controller);
 
             return controller;
@@ -70,7 +71,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             string result = null;
             IView view = null;
 
-            //Obtaining the view engine result
+            // Obtaining the view engine result
             var viewEngineResult = this.GetViewEngineResult(context, viewPath, partial);
 
             if (viewEngineResult != null)
@@ -78,7 +79,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             if (view != null)
             {
-                //assigning the model so it can be available to the view 
+                // assigning the model so it can be available to the view 
                 context.Controller.ViewData.Model = model;
 
                 using (var writer = new StringWriter())
@@ -86,21 +87,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                     var viewConext = new ViewContext(context, view, context.Controller.ViewData, context.Controller.TempData, writer);
                     view.Render(viewConext, writer);
 
-                    //the view must be released
+                    // the view must be released
                     viewEngineResult.ViewEngine.ReleaseView(context, view);
                     result = writer.ToString();
                 }
 
-                //Add cache dependency on the virtual file that is used for rendering the view.
+                // Add cache dependency on the virtual file that is used for rendering the view.
                 var httpContext = SystemManager.CurrentHttpContext;
                 var builtView = view as BuildManagerCompiledView;
                 if (httpContext != null && builtView != null)
                 {
-                    var vpDependency = HostingEnvironment.VirtualPathProvider != null ?
+                    var virtualPathDependency = HostingEnvironment.VirtualPathProvider != null ?
                         HostingEnvironment.VirtualPathProvider.GetCacheDependency(builtView.ViewPath, null, DateTime.UtcNow) : null;
-                    if (vpDependency != null)
+                    if (virtualPathDependency != null)
                     {
-                        httpContext.Response.AddCacheDependency(vpDependency);
+                        httpContext.Response.AddCacheDependency(virtualPathDependency);
                     }
                 }
             }
@@ -195,7 +196,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             pathTransformations.Add(path =>
                 {
-                    //{1} is the ControllerName argument in VirtualPathProviderViewEngines
+                    // {1} is the ControllerName argument in VirtualPathProviderViewEngines
                     var result = path
                                     .Replace("{1}", "Layouts")
                                     .Replace("~/", "~/{0}Mvc/".Arrange(baseVirtualPath));

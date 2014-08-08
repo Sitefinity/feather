@@ -90,17 +90,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             {
                 var pm = new PageManager();
                 var pageNode = pm.GetPageNode(new Guid(siteMapProvider.CurrentNode.Key));
-                var result = new PageDataViewModel()
+                var result = new PageDataViewModel
                 {
                     Title = pageNode.Page.Title,
                     Keywords = pageNode.Page.Keywords
                 };
                 return result;
             }
-            else
-            {
-                return new PageDataViewModel();
-            }
+
+            return new PageDataViewModel();
         }
 
         private static ProfileViewModel GetCurrentSitefinityUserProfile()
@@ -109,7 +107,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var currentUserGuid = identity.UserId;
             if (currentUserGuid != Guid.Empty)
             {
-                UserProfileManager profileManager = UserProfileManager.GetManager();
+                var profileManager = UserProfileManager.GetManager();
                 var user = SecurityManager.GetUser(currentUserGuid);
                 if (user != null)
                 {

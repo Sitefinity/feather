@@ -9,19 +9,19 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     public interface IResourceResolverStrategy : IVirtualFileResolver
     {
         /// <summary>
-        /// Sets the first resolver in the chain.
-        /// </summary>
-        /// <param name="resolver">The first resolver in the chain.</param>
-        /// <returns>The first resolver in the chain.</returns>
-        IResourceResolverNode SetFirst(IResourceResolverNode resolver);
-
-        /// <summary>
         /// Gets the first resolver.
         /// </summary>
         /// <value>
         /// The first resolver.
         /// </value>
         IResourceResolverNode First { get; }
+
+        /// <summary>
+        /// Sets the first resolver in the chain.
+        /// </summary>
+        /// <param name="resolver">The first resolver in the chain.</param>
+        /// <returns>The first resolver in the chain.</returns>
+        IResourceResolverNode SetFirst(IResourceResolverNode resolver);
 
         /// <summary>
         /// Gets the available files in the given path.

@@ -91,12 +91,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         protected virtual string ExtractViewName(string filename)
         {
             var parts = filename.Split('.');
+
             if (parts.Length > 2)
+            {
                 return string.Join(".", parts.Skip(1).Take(parts.Length - 2));
-            else if (parts.Length == 2)
+            }
+
+            if (parts.Length == 2)
+            {
                 return string.Join(".", parts.Skip(1));
-            else
-                return filename;
+            }
+
+            return filename;
         }
 
         /// <summary>
@@ -158,7 +164,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         {
             foreach (var viewLocation in viewLocations)
             {
-                var expectedConfigFileName = viewLocation + "/" + DesignerModel.DesignerViewPrefix + view + ".json";
+                var expectedConfigFileName = viewLocation + "/" + DesignerViewPrefix + view + ".json";
                 if (VirtualPathManager.FileExists(expectedConfigFileName))
                 {
                     var fileStream = VirtualPathManager.OpenFile(expectedConfigFileName);
@@ -190,12 +196,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return scriptVirtualPath;
         }
 
-        private IEnumerable<string> views;
-        private IEnumerable<string> scriptReferences;
-        private string defaultView;
-
         private const string DesignerViewPrefix = "DesignerView.";
         private const string ScriptPrefix = "designerview-";
         private const string DesignerScriptsPath = "Mvc/Scripts";
+
+        private IEnumerable<string> views;
+        private IEnumerable<string> scriptReferences;
+        private string defaultView;
     }
 }

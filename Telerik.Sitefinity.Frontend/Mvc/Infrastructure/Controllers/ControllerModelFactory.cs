@@ -1,10 +1,10 @@
-﻿using Ninject;
-using Ninject.Parameters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
+using Ninject;
+using Ninject.Parameters;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -44,7 +44,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             var result = new List<Assembly>();
             var currentType = type;
-            while (currentType != null && currentType != typeof(Controller) && currentType != typeof(Object))
+
+            while (currentType != null && currentType != typeof(Controller) && currentType != typeof(object))
             {
                 result.Add(currentType.Assembly);
                 currentType = currentType.BaseType;

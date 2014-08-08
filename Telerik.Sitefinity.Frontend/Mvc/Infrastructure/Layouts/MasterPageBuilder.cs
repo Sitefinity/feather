@@ -67,7 +67,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                             isOpenBodyTag = true;
                         else if (chunk.TagName.Equals("title", StringComparison.OrdinalIgnoreCase))
                             setTitle = false;
-
                     }
                     else if (chunk.Type == HtmlChunkType.CloseTag)
                     {
@@ -103,7 +102,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <returns></returns>
         public virtual string AddMasterPageDirectives(string layoutHtmlString)
         {
-            layoutHtmlString = string.Format("{0}{1}", MasterPageBuilder.masterPageDirective, layoutHtmlString);
+            layoutHtmlString = string.Format("{0}{1}", MasterPageBuilder.MasterPageDirective, layoutHtmlString);
 
             return layoutHtmlString;
         }
@@ -204,7 +203,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (pageData.NavigationNode.Crawlable)
                 return null;
 
-            return MasterPageBuilder.robotsMetaTag;
+            return MasterPageBuilder.RobotsMetaTag;
         }
 
         /// <summary>
@@ -220,7 +219,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (string.IsNullOrEmpty(pageData.Keywords))
                 return null;
 
-            return string.Format(MasterPageBuilder.keywordsMetaTag, pageData.Keywords);
+            return string.Format(MasterPageBuilder.KeywordsMetaTag, pageData.Keywords);
         }
 
         /// <summary>
@@ -236,7 +235,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (string.IsNullOrEmpty(pageData.Description))
                 return null;
 
-            return string.Format(MasterPageBuilder.pageDescriptionMetaTag, pageData.Description);
+            return string.Format(MasterPageBuilder.PageDescriptionMetaTag, pageData.Description);
         }
 
         /// <summary>
@@ -254,7 +253,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (!appPath.EndsWith("/"))
                 appPath = string.Concat(appPath, "/");
 
-            sb.Append(String.Concat("\t<script type=\"text/javascript\">var sf_appPath='", appPath, "';</script>"));
+            sb.Append(string.Concat("\t<script type=\"text/javascript\">var sf_appPath='", appPath, "';</script>"));
 
             // add the scripts for personalization in the page
             sb.Append("\t<script src=\"");
@@ -306,10 +305,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
         #region Constants
 
-        private const string masterPageDirective = "<%@ Master Language=\"C#\" AutoEventWireup=\"true\" %>\r\n \r\n";
-        private const string pageDescriptionMetaTag = "<meta name=\"description\" content=\"{0}\" />";
-        private const string robotsMetaTag = "<meta name=\"robots\" content=\"noindex\" />";
-        private const string keywordsMetaTag = "<meta name=\"keywords\" content=\"{0}\" />"; 
+        private const string MasterPageDirective = "<%@ Master Language=\"C#\" AutoEventWireup=\"true\" %>\r\n \r\n";
+        private const string PageDescriptionMetaTag = "<meta name=\"description\" content=\"{0}\" />";
+        private const string RobotsMetaTag = "<meta name=\"robots\" content=\"noindex\" />";
+        private const string KeywordsMetaTag = "<meta name=\"keywords\" content=\"{0}\" />"; 
 
         #endregion
     }

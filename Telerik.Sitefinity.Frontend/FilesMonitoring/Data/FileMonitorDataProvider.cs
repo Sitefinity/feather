@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Telerik.Sitefinity.Data;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
@@ -26,8 +24,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
                 {
                     typeof(FileData),
                 };
-
             }
+
             return knownTypes;
         }
 
@@ -87,7 +85,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
             if (itemType == typeof(FileData))
                 return this.CreateFileData(id);
 
-            throw GetInvalidItemTypeException(itemType, this.GetKnownTypes());
+            throw Telerik.Sitefinity.Data.DataProviderBase.GetInvalidItemTypeException(itemType, this.GetKnownTypes());
         }
 
         /// <inheritdoc />
@@ -114,7 +112,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
             if (itemType == null)
                 throw new ArgumentNullException("itemType");
 
-            throw GetInvalidItemTypeException(itemType, this.GetKnownTypes());
+            throw Telerik.Sitefinity.Data.DataProviderBase.GetInvalidItemTypeException(itemType, this.GetKnownTypes());
         }
 
         /// <inheritdoc />
@@ -128,7 +126,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
             if (itemType == typeof(FileData))
                 this.Delete((FileData)item);
             else
-                throw GetInvalidItemTypeException(itemType, this.GetKnownTypes());
+                throw Telerik.Sitefinity.Data.DataProviderBase.GetInvalidItemTypeException(itemType, this.GetKnownTypes());
         }
 
         #endregion

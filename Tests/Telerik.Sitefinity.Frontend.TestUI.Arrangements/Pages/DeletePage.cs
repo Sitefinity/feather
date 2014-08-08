@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telerik.Sitefinity.TestUI.Arrangements.Framework;
+﻿using Telerik.Sitefinity.TestUI.Arrangements.Framework;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// Sample arragement that Creates and dletes a page.
+    /// Sample arragement that Creates and deletes a page.
     /// </summary>
     public class DeletePage : ITestArrangement
     {

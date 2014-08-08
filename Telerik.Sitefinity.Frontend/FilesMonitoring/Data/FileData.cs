@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Telerik.OpenAccess;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
@@ -40,6 +37,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
             {
                 return this.id;
             }
+
             set
             {
                 this.id = value;
@@ -56,6 +54,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
             {
                 return this.fileName;
             }
+
             set
             {
                 this.fileName = value;
@@ -74,6 +73,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
             {
                 return this.filePath;
             }
+
             set
             {
                 this.filePath = value;
@@ -92,6 +92,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
             {
                 return this.packageName;
             }
+
             set
             {
                 this.packageName = value;

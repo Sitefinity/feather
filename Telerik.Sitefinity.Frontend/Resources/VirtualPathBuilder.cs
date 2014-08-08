@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {
@@ -20,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             if (type == null)
                 throw new ArgumentNullException("type");
-            
+
             var assembly = Assembly.GetAssembly(type);
             return this.GetVirtualPath(assembly);
         }
@@ -32,9 +31,11 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public string GetVirtualPath(Assembly assembly)
         {
             if (assembly == null)
+            {
                 throw new ArgumentNullException("assembly");
+            }
 
-            return VirtualPathBuilder.frontendAssemblyBasePath.Arrange(assembly.GetName().Name);
+            return VirtualPathBuilder.FrontendAssemblyBasePath.Arrange(assembly.GetName().Name);
         }
 
         /// <summary>
@@ -47,13 +48,15 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 throw new ArgumentNullException("assembly");
 
             var name = assembly.GetName().Name;
-            var result = new PathDefinition()
+            var result = new PathDefinition
             {
                 IsWildcard = true,
                 ResolverName = name,
                 ResourceLocation = assembly.CodeBase,
-                VirtualPath = "~/" + VirtualPathBuilder.frontendAssemblyBasePath.Arrange(name),
+                VirtualPath =
+                    "~/" + VirtualPathBuilder.FrontendAssemblyBasePath.Arrange(name),
             };
+
             result.Items.Add("Assembly", assembly);
             return result;
         }
@@ -66,14 +69,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public string RemoveParams(string virtualPath)
         {
             var idx = virtualPath.IndexOf('#');
-            if (idx == -1)
-            {
-                return virtualPath;
-            }
-            else
-            {
-                return virtualPath.Substring(0, idx);
-            }
+
+            return idx == -1 ? virtualPath : virtualPath.Substring(0, idx);
         }
 
         /// <summary>
@@ -90,6 +87,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return virtualPath;
         }
 
-        private const string frontendAssemblyBasePath = "Frontend-Assembly/{0}/";
+        private const string FrontendAssemblyBasePath = "Frontend-Assembly/{0}/";
     }
 }

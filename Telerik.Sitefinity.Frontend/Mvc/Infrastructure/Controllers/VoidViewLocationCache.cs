@@ -29,7 +29,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <param name="virtualPath">The virtual path.</param>
         public void InsertViewLocation(HttpContextBase httpContext, string key, string virtualPath)
         {
-            //Do nothing. We don't want cache.
+            // Do nothing. We don't want cache.
         }
     }
 }

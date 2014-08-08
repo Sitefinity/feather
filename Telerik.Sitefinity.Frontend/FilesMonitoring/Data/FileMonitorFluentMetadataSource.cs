@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Telerik.Sitefinity.Data.OA;
 using Telerik.Sitefinity.Model;
 
@@ -19,8 +16,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
         /// </summary>
         public FileMonitorFluentMetadataSource()
             : base(null)
-        { }
-
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileMonitorFluentMetadataSource"/> class.
@@ -29,7 +26,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
          public FileMonitorFluentMetadataSource(IDatabaseMappingContext context)
             : base(context)
         {
-
         }
 
         #endregion
@@ -49,6 +45,5 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
         }
 
          #endregion
-
     }
 }

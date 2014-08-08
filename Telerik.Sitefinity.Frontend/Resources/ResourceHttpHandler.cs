@@ -1,10 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Web;
 using System.Web.Hosting;
-using Telerik.Sitefinity.Abstractions.VirtualPath;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {

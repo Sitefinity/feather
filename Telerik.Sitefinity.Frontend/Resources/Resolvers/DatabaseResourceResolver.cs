@@ -32,11 +32,9 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             {
                 return new ControlPresentationCacheDependency(controlPresentation.Id.ToString());
             }
-            else
-            {
-                //Change to any ControlPresentation record will invalidate the cache for this virtual path.
-                return new ControlPresentationCacheDependency(typeof(ControlPresentation));
-            }
+
+            // Change to any ControlPresentation record will invalidate the cache for this virtual path.
+            return new ControlPresentationCacheDependency(typeof(ControlPresentation));
         }
 
         /// <inheritdoc />
@@ -48,10 +46,8 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                 var bytes = RouteHelper.GetContentWithPreamble(controlPresentation.Data);
                 return new MemoryStream(bytes);
             }
-            else
-            {
+
                 throw new ArgumentException("Could not find resource at " + virtualPath + " in the database.");
-            }
         }
 
         /// <inheritdoc />
@@ -74,6 +70,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             var controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
                 .FirstOrDefault(cp => cp.AreaName == areaName && cp.NameForDevelopers == resourceName 
                     && cp.DataType == extension);
+
             return controlPresentation;
         }
     }

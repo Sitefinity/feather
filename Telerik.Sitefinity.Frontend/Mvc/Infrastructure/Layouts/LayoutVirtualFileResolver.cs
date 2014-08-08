@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
-using System.Web.Hosting;
-using System.Web.Mvc;
-using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
-using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Resources;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
@@ -29,11 +23,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <param name="virtualPath">The virtual path to check.</param>
         public virtual bool Exists(PathDefinition definition, string virtualPath)
         {
-            virtualPath = virtualPathBuilder.RemoveParams(virtualPath);
+            virtualPath = this.virtualPathBuilder.RemoveParams(virtualPath);
             virtualPath = VirtualPathUtility.ToAppRelative(virtualPath);
 
-            var vpBuilder = new LayoutVirtualPathBuilder();
-            string viewName = vpBuilder.GetLayoutName(definition, virtualPath);
+            var virtualPathBuilder = new LayoutVirtualPathBuilder();
+            string viewName = virtualPathBuilder.GetLayoutName(definition, virtualPath);
             var layoutTemplateBuilder = new LayoutRenderer();
 
             if (string.IsNullOrEmpty(viewName))
@@ -51,12 +45,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <param name="virtualPath">The virtual path of the file to open.</param>
         public virtual Stream Open(PathDefinition definition, string virtualPath)
         {
-            virtualPath = virtualPathBuilder.RemoveParams(virtualPath);
+            virtualPath = this.virtualPathBuilder.RemoveParams(virtualPath);
 
             MemoryStream outPutStream = null;
             virtualPath = VirtualPathUtility.ToAppRelative(virtualPath);
-            var vpBuilder = new LayoutVirtualPathBuilder();
-            string viewName = vpBuilder.GetLayoutName(definition, virtualPath);
+            var virtualBuilder = new LayoutVirtualPathBuilder();
+            var viewName = virtualBuilder.GetLayoutName(definition, virtualPath);
             var layoutHtmlString = this.RenderLayout(viewName);
 
             if (!string.IsNullOrEmpty(layoutHtmlString))
@@ -110,7 +104,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             return layoutTemplateBuilder.GetLayoutTemplate(pageTemplateName);
         }
-
 
         #endregion
 

@@ -38,9 +38,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var packagesManager = new PackageManager();
             var packageName = packagesManager.GetCurrentPackage();
 
-            string contentResolvedPath = string.Empty;
-            //"widgetName" is a parameter in the route of the Designer. It allows us to have a special fallback logic
-            //where we first check for the requested resource in the widget assembly and then fallback to the current controller assembly.
+            var contentResolvedPath = string.Empty;
+
+            // "widgetName" is a parameter in the route of the Designer. It allows us to have a special fallback logic
+            // where we first check for the requested resource in the widget assembly and then fallback to the current controller assembly.
             object controllerName;
             if (helper.RequestContext.RouteData.Values.TryGetValue("widgetName", out controllerName))
                 contentResolvedPath = UrlHelpers.GetResourcePath((string)controllerName, contentPath, PackageManager.PackageUrlParamterName, packageName);
@@ -58,6 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 var url = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(UrlHelpers).Assembly) + contentPath;
                 contentResolvedPath = UrlTransformations.AppendParam(url, PackageManager.PackageUrlParamterName, packageName);
             }
+
             return helper.Content(contentResolvedPath);
         }
 

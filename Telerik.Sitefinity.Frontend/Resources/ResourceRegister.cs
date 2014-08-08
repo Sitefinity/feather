@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {
@@ -28,17 +26,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
         #region Properties
 
         /// <summary>
-        /// Gets the current <see cref="HttpContextBase"/> instance.
-        /// </summary>
-        protected virtual HttpContextBase Context
-        {
-            get
-            {
-                return this.context;
-            }
-        }
-
-        /// <summary>
         /// Gets the current container that contains the registered resources.
         /// </summary>
         protected internal virtual HashSet<string> Container
@@ -54,7 +41,19 @@ namespace Telerik.Sitefinity.Frontend.Resources
                     this.container = new HashSet<string>();
                     this.Context.Items.Add(this.name, this.container);
                 }
+
                 return this.container;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current <see cref="HttpContextBase"/> instance.
+        /// </summary>
+        protected virtual HttpContextBase Context
+        {
+            get
+            {
+                return this.context;
             }
         }
 

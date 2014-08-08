@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.Hosting;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
@@ -26,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public string GetCurrentPackage()
         {
             string packageName;
-            HttpContextBase context = SystemManager.CurrentHttpContext;
+            var context = SystemManager.CurrentHttpContext;
 
             if (context == null)
                 return null;
@@ -65,6 +61,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var currentNode = SiteMapBase.GetActualCurrentNode();
                 packageName = currentNode != null ? this.GetPackageFromNodeId(currentNode.Id.ToString()) : null;
             }
+
             return packageName;
         }
 
@@ -79,6 +76,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             {
                 packageName = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] as string;
             }
+
             return packageName;
         }
 
@@ -99,8 +97,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <param name="title">The title.</param>
         public string StripInvalidCharacters(string title)
         {
-            var result = System.Text.RegularExpressions.Regex.Replace(title,
-                PackageManager.FileNameStripingRegexPattern, PackageManager.FileNameInvalidCharactersSubstitute);
+            var result = System.Text.RegularExpressions.Regex.Replace(
+                title,
+                FileNameStripingRegexPattern, 
+                FileNameInvalidCharactersSubstitute);
 
             return result;
         }
@@ -141,7 +141,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var currentPackage = this.GetCurrentPackage();
                 if (!currentPackage.IsNullOrEmpty())
                 {
-                    return UrlTransformations.AppendParam(url, PackageManager.PackageUrlParamterName, currentPackage);
+                    return UrlTransformations.AppendParam(url, PackageUrlParamterName, currentPackage);
                 }
             }
 
@@ -163,18 +163,17 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (!Guid.TryParse(nodeId, out id))
                 return null;
 
-            var pManager = PageManager.GetManager();
-            var pageNode = pManager.GetPageNode(id);
+            var pageManager = PageManager.GetManager();
+
+            var pageNode = pageManager.GetPageNode(id);
             if (SystemManager.IsDesignMode)
             {
-                var draft = pManager.GetPageDraft(pageNode.PageId);
+                var draft = pageManager.GetPageDraft(pageNode.PageId);
                 return draft.TemplateId != Guid.Empty ? this.GetPackageFromTemplateId(draft.TemplateId.ToString()) : null;
             }
-            else
-            {
-                var pageData = pageNode.GetPageData();
-                return this.GetPackageFromTemplate(pageData.Template);
-            }
+
+            var pageData = pageNode.GetPageData();
+            return this.GetPackageFromTemplate(pageData.Template);
         }
 
         /// <summary>
@@ -188,8 +187,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (!Guid.TryParse(templateId, out id))
                 return null;
 
-            var pManager = PageManager.GetManager();
-            var template = pManager.GetTemplate(id);
+            var pageManager = PageManager.GetManager();
+            var template = pageManager.GetTemplate(id);
 
             return this.GetPackageFromTemplate(template);
         }
@@ -210,7 +209,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 {
                     var expectedPackageName = this.StripInvalidCharacters(parts[0]);
                     var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
-                    if (Directory.Exists(path))
+                    if (path != null && Directory.Exists(path))
                     {
                         SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
                         return expectedPackageName;
@@ -250,6 +249,5 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public const string PackageUrlParamterName = "package";
 
         #endregion
-         
     }
 }

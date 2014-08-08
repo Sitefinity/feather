@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -21,17 +18,12 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public static string AppendParam(string url, string paramaterName, string paramterValue)
         {
             if (paramterValue.IsNullOrEmpty())
-            {
                 return url;
-            }
-            else if (url.Contains("?"))
-            {
+
+            if (url.Contains("?"))
                 return string.Format("{0}&{1}={2}", url, paramaterName, HttpUtility.UrlEncode(paramterValue));
-            }
-            else
-            {
-                return string.Format("{0}?{1}={2}", url, paramaterName, HttpUtility.UrlEncode(paramterValue));
-            }
+
+            return string.Format("{0}?{1}={2}", url, paramaterName, HttpUtility.UrlEncode(paramterValue));
         }
     }
 }

@@ -38,6 +38,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 var newEngine = vppEngine != null ? ControllerExtensions.GetViewEngine(vppEngine, controller, pathTransformations) : globalEngine;
                 viewEngines.Add(newEngine);
             }
+
             controller.ViewEngineCollection = viewEngines;
         }
 
@@ -134,6 +135,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 result.AddRange(originalPaths.Select(transform));
             }
+
             return result.ToArray();
         }
 
@@ -179,10 +181,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 var widgetFiles = ControllerExtensions.GetViewsForAssembly(widgetAssembly, viewLocations, viewExtensions);
                 return baseFiles.Union(widgetFiles);
             }
-            else
-            {
-                return baseFiles;
-            }
+
+            return baseFiles;
         }
 
         private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions)
@@ -205,10 +205,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                     .Select(System.IO.Path.GetFileNameWithoutExtension)
                     .Distinct();
             }
-            else
-            {
-                return new string[] { };
-            }
+
+            return new string[] { };
         }
 
         #endregion
