@@ -1,6 +1,4 @@
 ﻿using System;
-using Telerik.Sitefinity.Frontend.Mvc.Controllers;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 
 namespace Telerik.Sitefinity.Frontend.Designers
 {

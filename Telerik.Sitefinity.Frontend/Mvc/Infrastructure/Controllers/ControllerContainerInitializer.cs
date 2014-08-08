@@ -190,9 +190,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                             reflOnlyAssembly.GetCustomAttributesData()
                                 .Any(d => d.Constructor.DeclaringType.AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName);
                 }
-                //We might not be able to load some .DLL files as .NET assemblies. Those files cannot contain controllers.
-                catch (IOException)
+                catch (IOException) 
                 {
+                    // We might not be able to load some .DLL files as .NET assemblies. Those files cannot contain controllers.
                     result = false;
                 }
                 catch (BadImageFormatException)
@@ -247,20 +247,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var assemblyName = assembly.GetName();
             var virtualPath = FrontendManager.VirtualPathBuilder.GetVirtualPath(assembly);
 
-            VirtualPathManager.AddVirtualFileResolver<ResourceResolver>("~/" + virtualPath + "*", assemblyName.Name,
-                assemblyName.CodeBase);
+            VirtualPathManager.AddVirtualFileResolver<ResourceResolver>(
+                                                                        "~/" + virtualPath + "*", 
+                                                                        assemblyName.Name,
+                                                                        assemblyName.CodeBase);
 
-            SystemManager.RegisterRoute(assemblyName.Name, new Route(virtualPath + "{*Params}", new RouteHandler<ResourceHttpHandler>()),
-                    assemblyName.Name, requireBasicAuthentication: false);
+            SystemManager.RegisterRoute(
+                                        assemblyName.Name, 
+                                        new Route(
+                                                  virtualPath + "{*Params}", 
+                                                  new RouteHandler<ResourceHttpHandler>()),
+                                                  assemblyName.Name, 
+                                                  requireBasicAuthentication: false);
         }
 
         private void RemoveSitefinityViewEngine()
         {
-            var sfViewEngine = ViewEngines.Engines.FirstOrDefault(v => v is SitefinityViewEngine);
+            var sitefinityViewEngine = ViewEngines.Engines.FirstOrDefault(v => v is SitefinityViewEngine);
 
-            if (sfViewEngine != null)
+            if (sitefinityViewEngine != null)
             {
-                ViewEngines.Engines.Remove(sfViewEngine);
+                ViewEngines.Engines.Remove(sitefinityViewEngine);
             }
         }
 

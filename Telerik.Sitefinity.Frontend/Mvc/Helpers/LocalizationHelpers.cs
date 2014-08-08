@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.WebPages;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Localization;
 
@@ -18,7 +17,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="helper">The helper.</param>
         /// <param name="key">The key.</param>
         /// <param name="fallbackToKey">If true then if a resource is not found with the specified key the key is returned.</param>
-        public static string Resource(this HtmlHelper helper, string key,bool fallbackToKey = false)
+        public static string Resource(this HtmlHelper helper, string key, bool fallbackToKey = false)
         {
             var controller = helper.ViewContext.Controller;
             return LocalizationHelpers.Resource(controller, helper.ViewContext.RouteData, key, fallbackToKey);
@@ -78,14 +77,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             {
                 return result;
             }
-            else if (fallbackToKey)
+
+            if (fallbackToKey)
             {
                 return key;
             }
-            else
-            {
-                return "#ResourceNotFound: {0}, {1}#".Arrange(resClass.Name, key);
-            }
+            
+            return "#ResourceNotFound: {0}, {1}#".Arrange(resClass.Name, key);
         }
 
         private static IController GetController(WebViewPage page)
@@ -100,16 +98,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
         private static Type FindResourceStringClassType(Type controller)
         {
-            LocalizationAttribute rcdAttribute = Attribute.GetCustomAttribute(controller, typeof(LocalizationAttribute)) as LocalizationAttribute;
+            var rcdAttribute = Attribute.GetCustomAttribute(controller, typeof(LocalizationAttribute)) as LocalizationAttribute;
 
             if (rcdAttribute != null)
             {
                 return rcdAttribute.ResourceClass;
             }
-            else
-            {
-                return typeof(Labels);
-            }
+            
+            return typeof(Labels);
         }
     }
 }

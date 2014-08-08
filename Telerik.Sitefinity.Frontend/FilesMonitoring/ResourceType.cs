@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace Telerik.Sitefinity.Frontend.FilesMonitoring
+﻿namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 {
     /// <summary>
     /// This enumeration represents the types of resources.

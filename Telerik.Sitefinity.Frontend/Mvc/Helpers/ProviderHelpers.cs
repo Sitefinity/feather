@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.DynamicModules;
@@ -22,7 +19,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         public static string DefaultProviderName(this HtmlHelper helper, IManager manager, string dynamicModuleName = "")
         {
-            var defaultProviderName = String.Empty;
+            var defaultProviderName = string.Empty;
+
             if (manager is IProviderResolver)
             {
                 if (manager is DynamicModuleManager)

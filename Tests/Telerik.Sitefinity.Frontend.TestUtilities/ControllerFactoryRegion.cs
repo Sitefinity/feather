@@ -11,6 +11,7 @@ namespace Telerik.Sitefinity.Frontend.Test.TestUtilities
     public sealed class ControllerFactoryRegion<TFactory> : IDisposable where TFactory : ISitefinityControllerFactory, new()
     {
         private IControllerFactory prevFactory;
+
         private TFactory factory;
 
         /// <summary>

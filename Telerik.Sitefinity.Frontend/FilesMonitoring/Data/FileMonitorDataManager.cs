@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Services;
@@ -47,20 +45,42 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 
         #endregion
 
-        #region Protected methods
+        #region Base Overrides
 
-        protected override void Initialize()
+        /// <inheritdoc />
+        public override string ModuleName
         {
-            this.providerSettings = new ConfigElementDictionary<string,DataProviderSettings>(Config.Get<SystemConfig>());
-            this.providerSettings.Add(new DataProviderSettings(providerSettings)
-            {
-                Name = "OpenAccessDataProvider",
-                Description = "A provider that stores File monitor data in database using OpenAccess ORM.",
-                ProviderType = typeof(OpenAccessFileMonitorDataProvider),
-                Parameters = new NameValueCollection() { { "applicationName", "/Telerik.Sitefinity.Frontend" } }
-            });
+            get { return "Telerik.Sitefinity.Frontend"; }
+        }
 
-            base.Initialize();
+        /// <inheritdoc />
+        public static FileMonitorDataManager GetManager()
+        {
+            return ManagerBase<FileMonitorDataProvider>.GetManager<FileMonitorDataManager>();
+        }
+
+        /// <inheritdoc />
+        public static FileMonitorDataManager GetManager(string providerName, string transactionName)
+        {
+            return ManagerBase<FileMonitorDataProvider>.GetManager<FileMonitorDataManager>(providerName, transactionName);
+        }
+
+        /// <inheritdoc />
+        public static FileMonitorDataManager GetManager(string providerName)
+        {
+            return ManagerBase<FileMonitorDataProvider>.GetManager<FileMonitorDataManager>(providerName);
+        }
+
+        /// <inheritdoc />
+        protected override GetDefaultProvider DefaultProviderDelegate
+        {
+            get { return () => "OpenAccessDataProvider"; }
+        }
+
+        /// <inheritdoc />
+        protected override ConfigElementDictionary<string, DataProviderSettings> ProvidersSettings
+        {
+            get { return this.providerSettings; }
         }
 
         #endregion
@@ -112,42 +132,20 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 
         #endregion
 
-        #region Base Overrides
+        #region Protected methods
 
-        /// <inheritdoc />
-        protected override GetDefaultProvider DefaultProviderDelegate
+        protected override void Initialize()
         {
-            get { return () => "OpenAccessDataProvider"; }
-        }
+            this.providerSettings = new ConfigElementDictionary<string, DataProviderSettings>(Config.Get<SystemConfig>());
+            this.providerSettings.Add(new DataProviderSettings(this.providerSettings)
+            {
+                Name = "OpenAccessDataProvider",
+                Description = "A provider that stores File monitor data in database using OpenAccess ORM.",
+                ProviderType = typeof(OpenAccessFileMonitorDataProvider),
+                Parameters = new NameValueCollection() { { "applicationName", "/Telerik.Sitefinity.Frontend" } }
+            });
 
-        /// <inheritdoc />
-        public override string ModuleName
-        {
-            get { return "Telerik.Sitefinity.Frontend"; }
-        }
-
-        /// <inheritdoc />
-        public static FileMonitorDataManager GetManager()
-        {
-            return ManagerBase<FileMonitorDataProvider>.GetManager<FileMonitorDataManager>();
-        }
-
-        /// <inheritdoc />
-        public static FileMonitorDataManager GetManager(string providerName, string transactionName)
-        {
-            return ManagerBase<FileMonitorDataProvider>.GetManager<FileMonitorDataManager>(providerName, transactionName);
-        }
-
-        /// <inheritdoc />
-        public static FileMonitorDataManager GetManager(string providerName)
-        {
-            return ManagerBase<FileMonitorDataProvider>.GetManager<FileMonitorDataManager>(providerName);
-        }
-
-        /// <inheritdoc />
-        protected override ConfigElementDictionary<string, DataProviderSettings> ProvidersSettings
-        {
-            get { return this.providerSettings; }
+            base.Initialize();
         }
 
         #endregion

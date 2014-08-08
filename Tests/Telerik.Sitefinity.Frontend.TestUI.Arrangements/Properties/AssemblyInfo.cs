@@ -35,4 +35,4 @@ using Telerik.Sitefinity.TestUI.Arrangements.Core.Framework.Attributes;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.4.1000.2")]
 [assembly: AssemblyFileVersion("0.4.1000.2")]
-[assembly: UIArrangement()]
+[assembly: UIArrangement]

@@ -1,5 +1,4 @@
-﻿
-namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels
+﻿namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels
 {
     /// <summary>
     /// Exposes properties data for the current Sitefinity site.

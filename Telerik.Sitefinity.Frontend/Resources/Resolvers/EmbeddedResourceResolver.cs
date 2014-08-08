@@ -58,10 +58,8 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                     .Where(r => r.StartsWith(resourceName, StringComparison.OrdinalIgnoreCase))
                     .Select(r => r.Replace(resourceName, path));
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         /// <summary>

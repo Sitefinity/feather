@@ -39,7 +39,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// <param name="ensureSfColsWrapper">if set to <c>true</c> ensures sf_cols containers exists in the template.</param>
         protected virtual string ProcessLayoutString(string template, bool ensureSfColsWrapper)
         {
-            using (HtmlParser parser = new HtmlParser(template))
+            using (var parser = new HtmlParser(template))
             {
                 parser.SetChunkHashMode(false);
                 parser.AutoExtractBetweenTagsOnly = false;
@@ -76,10 +76,8 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 {
                     return "<div runat=\"server\" class=\"sf_cols\">" + output.ToString() + "</div>";
                 }
-                else
-                {
-                    return output.ToString();
-                }
+
+                return output.ToString();
             }
         }
 
@@ -99,7 +97,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                     throw new ArgumentException(Res.Get<ErrorMessages>("CannotFindTemplate", layout));
                 }
 
-                using (StreamReader reader = new StreamReader(HostingEnvironment.VirtualPathProvider.GetFile(layout).Open()))
+                using (var reader = new StreamReader(HostingEnvironment.VirtualPathProvider.GetFile(layout).Open()))
                 {
                     layout = reader.ReadToEnd();
                 }
@@ -111,7 +109,8 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             else if (layout.EndsWith(".ascx", StringComparison.OrdinalIgnoreCase))
             {
                 Type assemblyInfo;
-                if (String.IsNullOrEmpty(this.AssemblyInfo))
+
+                if (string.IsNullOrEmpty(this.AssemblyInfo))
                     assemblyInfo = Config.Get<ControlsConfig>().ResourcesAssemblyInfo;
                 else
                     assemblyInfo = TypeResolutionService.ResolveType(this.AssemblyInfo, true);
@@ -119,7 +118,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 return ControlUtilities.GetTemplate(null, layout, assemblyInfo, null);
             }
 
-            //Add sf_cols wrapper for back end pages and email campaigns.
+            // Add sf_cols wrapper for back end pages and email campaigns.
             var currentNode = SiteMapBase.GetActualCurrentNode();
             var rootNode = currentNode != null ? currentNode.RootNode as PageSiteNode : null;
             var ensureSfColsWrapper = this.IsBackend() || rootNode == null || rootNode.Id == NewslettersModule.standardCampaignRootNodeId ||
@@ -139,10 +138,11 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         {
             var idx = Array.FindIndex(chunk.Attributes, 0, chunk.ParamsCount, i => i.Equals(attributeName, StringComparison.OrdinalIgnoreCase));
             if (idx != -1)
+            {
                 return chunk.Values[idx];
-            else
-                return null;
-        }
+            }
 
+            return null;
+        }
     }
 }

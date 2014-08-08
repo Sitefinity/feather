@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Security;
 using Telerik.Sitefinity.Mvc;
@@ -19,7 +18,9 @@ namespace Telerik.Sitefinity.Frontend
             get
             {
                 if (FrontendManager.virtualPathBuilder == null)
+                {
                     FrontendManager.virtualPathBuilder = new VirtualPathBuilder();
+                }
 
                 return FrontendManager.virtualPathBuilder;
             }
@@ -32,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             get
             {
-                return ControllerBuilder.Current.GetControllerFactory() as ISitefinityControllerFactory;;
+                return ControllerBuilder.Current.GetControllerFactory() as ISitefinityControllerFactory;
             }
         }
 
@@ -43,11 +44,9 @@ namespace Telerik.Sitefinity.Frontend
         {
             get
             {
-                if (FrontendManager.authenticationEvaluator == null)
-                    FrontendManager.authenticationEvaluator = new AuthenticationEvaluator();
-
-                return FrontendManager.authenticationEvaluator;
+                return FrontendManager.authenticationEvaluator ?? (FrontendManager.authenticationEvaluator = new AuthenticationEvaluator());
             }
+
             set
             {
                 FrontendManager.authenticationEvaluator = value;

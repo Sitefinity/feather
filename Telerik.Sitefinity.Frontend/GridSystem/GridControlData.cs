@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Telerik.Sitefinity.Frontend.GridSystem
+﻿namespace Telerik.Sitefinity.Frontend.GridSystem
 {
     /// <summary>
-    ///This class is used as a data model when creating grid controls 
+    /// This class is used as a data model when creating grid controls 
     /// </summary>
     public class GridControlData
     {

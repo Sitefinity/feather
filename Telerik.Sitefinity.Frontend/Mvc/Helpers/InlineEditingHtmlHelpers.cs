@@ -1,9 +1,6 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.InlineEditing;
-using Telerik.Sitefinity.Frontend.InlineEditing.Attributes;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -22,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         public static System.Web.Mvc.MvcHtmlString TextField(this HtmlHelper helper, object model, string propName)
         {
             var htmlProcessor = new HtmlProcessor();
-            string htmlString = htmlProcessor.GetStringContent(model, propName);
+            var htmlString = htmlProcessor.GetStringContent(model, propName);
             return new System.Web.Mvc.MvcHtmlString(htmlString);
         }
        
@@ -34,14 +31,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="type">The type.</param>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public static HtmlRegion InlineEditingRegion(this HtmlHelper htmlHelper,
+        public static HtmlRegion InlineEditingRegion(
+                                   this HtmlHelper htmlHelper,
                                    string providerName,
-                                   string type, Guid id)
+                                   string type, 
+                                   Guid id)
         {
             var htmlProcessor = new HtmlProcessor();
-            return htmlProcessor.CreateInlineEditingRegion(htmlHelper.ViewContext.Writer,
-                providerName, type, id);
-        }
 
+            return htmlProcessor.CreateInlineEditingRegion(
+                htmlHelper.ViewContext.Writer,
+                providerName, 
+                type, 
+                id);
+        }
     }
 }

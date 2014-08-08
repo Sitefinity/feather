@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Telerik.Microsoft.Practices.Unity;
+﻿using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Telerik.Microsoft.Practices.Unity;
+﻿using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 
@@ -20,8 +16,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         {
             ObjectFactory.Container.RegisterType<ILayoutResolver, LayoutResolver>(new ContainerControlledLifetimeManager());
 
-            VirtualPathManager.AddVirtualFileResolver<LayoutVirtualFileResolver>("~/" + LayoutVirtualFileResolver.ResolverPath + "*",
-                typeof(LayoutVirtualFileResolver).FullName);
+            VirtualPathManager.AddVirtualFileResolver<LayoutVirtualFileResolver>(string.Format("{0}{1}{2}", "~/", LayoutVirtualFileResolver.ResolverPath, "*"), typeof(LayoutVirtualFileResolver).FullName);
         }
     }
 }

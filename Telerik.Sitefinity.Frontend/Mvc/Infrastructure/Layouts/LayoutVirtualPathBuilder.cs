@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             var templateFileNameParser = new TemplateTitleParser();
             var fileName = templateFileNameParser.GetLayoutName(templateTitle);
 
-            var layoutVirtualPath = string.Format(LayoutVirtualPathBuilder.layoutVirtualPathTemplate, LayoutVirtualPathBuilder.layoutsPrefix, fileName, LayoutVirtualPathBuilder.layoutSuffix);
+            var layoutVirtualPath = string.Format(LayoutVirtualPathBuilder.LayoutVirtualPathTemplate, LayoutVirtualPathBuilder.LayoutsPrefix, fileName, LayoutVirtualPathBuilder.LayoutSuffix);
 
             var packagesManager = new PackageManager();
             var currentPackage = packagesManager.GetCurrentPackage();
@@ -45,11 +45,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <returns></returns>
         public virtual string GetLayoutName(PathDefinition definition, string virtualPath)
         {
-            if (!virtualPath.EndsWith(LayoutVirtualPathBuilder.layoutSuffix, StringComparison.OrdinalIgnoreCase))
+            if (!virtualPath.EndsWith(LayoutVirtualPathBuilder.LayoutSuffix, StringComparison.OrdinalIgnoreCase))
                 return null;
 
             var definitionVp = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAppRelative(definition.VirtualPath));
-            var pageTemplateNameLength= virtualPath.Length - definitionVp.Length - LayoutVirtualPathBuilder.layoutSuffix.Length - 1;
+            var pageTemplateNameLength = virtualPath.Length - definitionVp.Length - LayoutVirtualPathBuilder.LayoutSuffix.Length - 1;
             string pageTemplateName = virtualPath.Substring(definitionVp.Length, pageTemplateNameLength);
 
             while (!string.IsNullOrEmpty(pageTemplateName) && pageTemplateName.EndsWith("."))
@@ -67,17 +67,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <summary>
         /// The layouts prefix.
         /// </summary>
-        public const string layoutsPrefix = "SfLayouts";
+        public const string LayoutsPrefix = "SfLayouts";
 
         /// <summary>
         /// This suffix is recognized by the VirtualPathResolver for resolving the layout page.
         /// </summary>
-        public const string layoutSuffix = "master";
+        public const string LayoutSuffix = "master";
 
         /// <summary>
         /// The template used when resolving the layout virtual path. 
         /// </summary>
-        private const string layoutVirtualPathTemplate = "~/{0}/{1}.{2}"; 
+        private const string LayoutVirtualPathTemplate = "~/{0}/{1}.{2}"; 
 
         #endregion
     }

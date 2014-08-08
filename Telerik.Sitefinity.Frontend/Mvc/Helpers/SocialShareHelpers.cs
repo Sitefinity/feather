@@ -17,10 +17,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             {
                 result = helper.Action(ActionName, ControllerName);
             }
-            catch (HttpException e)
+            catch (HttpException)
             {
                 result = new System.Web.Mvc.MvcHtmlString("The SocialShare widget could not be found.");
             }
+
             return result;
         }
 

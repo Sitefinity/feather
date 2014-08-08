@@ -10,11 +10,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
     public class LocalizationAttribute : Attribute
     {
         /// <summary>
-        /// Gets or sets the resource class.
-        /// </summary>
-        public Type ResourceClass { set; get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="LocalizationAttribute"/> class.
         /// </summary>
         /// <param name="resourceClass">The resource class.</param>
@@ -22,5 +17,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
         {
             this.ResourceClass = resourceClass;
         }
+
+        /// <summary>
+        /// Gets or sets the resource class.
+        /// </summary>
+        public Type ResourceClass { get; set; }
     }
 }

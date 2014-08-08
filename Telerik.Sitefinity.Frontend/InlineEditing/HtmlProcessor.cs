@@ -29,7 +29,7 @@ namespace Telerik.Sitefinity.Frontend.InlineEditing
             if (id != Guid.Empty)
                 tagBuilder.Attributes.Add("data-sf-id", id.ToString());
 
-            writer.Write(tagBuilder.ToString(System.Web.Mvc.TagRenderMode.StartTag));
+            writer.Write(tagBuilder.ToString(TagRenderMode.StartTag));
 
             return new HtmlRegion(writer, htmlTagType);
         }
@@ -57,8 +57,9 @@ namespace Telerik.Sitefinity.Frontend.InlineEditing
             }
             else
             {
-                htmlString = String.Format(HtmlProcessor.InlineEditingHtmlWrapper, fieldInfoAttr.Name, fieldInfoAttr.Type, propValue);
+                htmlString = string.Format(HtmlProcessor.InlineEditingHtmlWrapper, fieldInfoAttr.Name, fieldInfoAttr.Type, propValue);
             }
+
             return htmlString;
         }
 

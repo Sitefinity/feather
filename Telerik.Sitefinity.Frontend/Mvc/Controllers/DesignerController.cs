@@ -26,7 +26,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             this.ViewBag.ControlName = widgetName;
 
             var model = this.GetModel(widgetName);
-            return this.View(DesignerController.defaultView, model);
+            return this.View(DesignerController.DefaultView, model);
         }
 
         /// <summary>
@@ -38,9 +38,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <param name="viewType">Type of the view which is requested. For example Simple, Advanced</param>
         /// <returns></returns>
         /// <exception cref="System.InvalidOperationException">View cannot be found on the searched locations.</exception>
-        public virtual ActionResult View(string widgetName, string viewType)
+        public new virtual ActionResult View(string widgetName, string viewType)
         {
-            string viewName = DesignerController.designerViewTemplate.Arrange(viewType);
+            var viewName = DesignerController.DesignerViewTemplate.Arrange(viewType);
+
             return this.PartialView(viewName);
         }
 
@@ -51,16 +52,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         {
             var constructorParameters = new Dictionary<string, object> 
                         {
-                           {"views", this.GetPartialViews()},
-                           {"viewLocations", this.GetPartialViewLocations()},
-                           {"widgetName", widgetName},
-                           {"preselectedView", this.Request != null ? this.Request["view"] : null}
+                           { "views", this.GetPartialViews() },
+                           { "viewLocations", this.GetPartialViewLocations() },
+                           { "widgetName", widgetName },
+                           { "preselectedView", this.Request != null ? this.Request["view"] : null }
                         };
 
             return ControllerModelFactory.GetModel<IDesignerModel>(typeof(DesignerController), constructorParameters);
         }
 
-        private const string defaultView = "Designer";
-        private const string designerViewTemplate = "DesignerView.{0}";
+        private const string DefaultView = "Designer";
+        private const string DesignerViewTemplate = "DesignerView.{0}";
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Telerik.Sitefinity.Configuration;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
-using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 
 namespace Telerik.Sitefinity.Frontend.GridSystem
@@ -24,8 +21,9 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
                 var htmlLayoutsSection = this.GetOrCreateToolBoxSection(toolboxConfig);
 
-                var baseTemplatePath = string.Format(GridSystemInitializer.GridFolderPathStringTemplate,
-                    FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendService).Assembly));
+                var baseTemplatePath = string.Format(
+                                                    GridSystemInitializer.GridFolderPathStringTemplate,
+                                                    FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendService).Assembly));
                 var layoutControls = this.CreateLayoutControlsData(baseTemplatePath);
 
                 foreach (var layoutControl in layoutControls)
@@ -51,11 +49,13 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             {
                 htmlLayoutsSection = new ToolboxSection(layoutsToolbox.Sections);
                 htmlLayoutsSection.Name = "HtmlLayouts";
-                //TODO: Set resource class id and use resource keys for Title and Description.
+
+                /// TODO: Set resource class id and use resource keys for Title and Description.
                 htmlLayoutsSection.Title = "Bootstrap grid widgets";
 
                 layoutsToolbox.Sections.Add(htmlLayoutsSection);
             }
+
             return htmlLayoutsSection;
         }
 

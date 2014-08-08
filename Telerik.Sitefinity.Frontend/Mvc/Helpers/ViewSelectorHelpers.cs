@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
@@ -25,9 +24,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var controller = FrontendManager.ControllerFactory.CreateController(helper.ViewContext.RequestContext, controllerName) as Controller;
             if (controller == null)
+            {
                 throw new ArgumentException("Controller cannot be resolved.");
+            }
 
-            Regex regex = new Regex(templateNamePattern, RegexOptions.IgnoreCase);
+            var regex = new Regex(templateNamePattern, RegexOptions.IgnoreCase);
             var views = controller.GetViews().Where(view => Regex.IsMatch(view, templateNamePattern)).Select(view => regex.Match(view).Groups["viewName"].Value);
 
             return views;

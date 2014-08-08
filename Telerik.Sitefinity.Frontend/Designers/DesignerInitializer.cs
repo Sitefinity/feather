@@ -10,6 +10,9 @@ using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Designers
 {
+    using System.Diagnostics.CodeAnalysis;
+    using System.Text;
+
     /// <summary>
     /// This class contains logic for initializing the MVC designer.
     /// </summary>
@@ -57,16 +60,21 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 var currentPackage = new PackageManager().GetCurrentPackage();
                 if (!currentPackage.IsNullOrEmpty())
                 {
+                    var sb = new StringBuilder();
+                    sb.AppendLine(@"Sys.Net.WebRequestManager.add_invokingRequest(function (executor, args) {");
+                    sb.AppendLine("var url = args.get_webRequest().get_url();");
+                    sb.AppendLine("if (url.indexOf('?') == -1)");
+                    sb.AppendLine(" url += '?package=' + encodeURIComponent(sf_package);");
+                    sb.AppendLine("else");
+                    sb.AppendLine(" url += '&package=' + encodeURIComponent(sf_package); ");    
+                    sb.AppendLine("args.get_webRequest().set_url(url); ");    
+                    sb.AppendLine("});");    
+
                     var packageVar = "var sf_package = '{0}';".Arrange(currentPackage);
-                    ((ZoneEditor)@event.Sender).Page.ClientScript.RegisterStartupScript(@event.Sender.GetType(), "sf_package",
-                        packageVar + @"Sys.Net.WebRequestManager.add_invokingRequest(function (executor, args) { 
-                            var url = args.get_webRequest().get_url();
-                            if (url.indexOf('?') == -1) 
-                                url += '?package=' + encodeURIComponent(sf_package); 
-                            else 
-                                url += '&package=' + encodeURIComponent(sf_package); 
-                            args.get_webRequest().set_url(url); 
-                        });",
+                    ((ZoneEditor)@event.Sender).Page.ClientScript.RegisterStartupScript(
+                        @event.Sender.GetType(), 
+                        "sf_package",
+                        packageVar + sb,
                         addScriptTags: true);
                 }
             }

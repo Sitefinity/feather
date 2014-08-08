@@ -11,7 +11,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
         public ControllerContainerAttribute()
             : this(null, null)
         {
-
         }
 
         public ControllerContainerAttribute(Type initializationType, string initializationMethodName)
@@ -21,6 +20,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
         }
 
         public Type InitializationType { get; private set; }
-        public string InitializationMethod { get; private set; }
+
+        public string InitializationMethod { get; private set; }
     }
 }

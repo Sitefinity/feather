@@ -26,6 +26,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
             {
                 return this.virtualPath;
             }
+
             set
             {
                 this.virtualPath = VirtualPathUtility.AppendTrailingSlash(value);
