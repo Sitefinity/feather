@@ -8,6 +8,8 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Services;
+using Telerik.Microsoft.Practices.Unity;
+using Telerik.Sitefinity.Mvc;
 
 namespace Telerik.Sitefinity.Frontend
 {
