@@ -198,18 +198,6 @@
     <Compile Include="FilesMonitoring\IFileMonitor.cs" />
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\CategoryParamResolver.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\CustomActionParamsMapper.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\DefaultUrlParamsMapper.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\DetailActionParamsMapper.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\DynamicUrlParamsResolver.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\IRouteParamResolver.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\IUrlParamsMapper.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\RouteParamResolverBase.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\TagParamResolver.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\TaxonParamResolver.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\UrlParamsMapperBase.cs" />
-    <Compile Include="Mvc\Infrastructure\Controllers\IUrlMappingController.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />
@@ -370,7 +358,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

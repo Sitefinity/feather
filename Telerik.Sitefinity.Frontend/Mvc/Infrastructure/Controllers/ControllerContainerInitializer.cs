@@ -11,7 +11,6 @@ using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Localization;
@@ -222,13 +221,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         protected virtual void InitializeCustomRouting()
         {
-            var defaultResolver = ObjectFactory.Container.Resolve<IMvcUrlParamsResolver>();
-            ObjectFactory.Container.RegisterType(typeof(IMvcUrlParamsResolver), defaultResolver.GetType(), DynamicUrlParamsResolver.DefaultResolverName, new ContainerControlledLifetimeManager());
+            //Sf 7.2: 
+            //var defaultResolver = ObjectFactory.Container.Resolve<IMvcUrlParamsResolver>();
+            //ObjectFactory.Container.RegisterType(typeof(IMvcUrlParamsResolver), defaultResolver.GetType(), DynamicUrlParamsResolver.DefaultResolverName, new ContainerControlledLifetimeManager());
 
-            ObjectFactory.Container.RegisterType<IMvcUrlParamsResolver, DynamicUrlParamsResolver>(new ContainerControlledLifetimeManager());
+            //ObjectFactory.Container.RegisterType<IMvcUrlParamsResolver, DynamicUrlParamsResolver>(new ContainerControlledLifetimeManager());
 
-            ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
-            ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
+            //ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
+            //ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
         }
 
         #endregion
