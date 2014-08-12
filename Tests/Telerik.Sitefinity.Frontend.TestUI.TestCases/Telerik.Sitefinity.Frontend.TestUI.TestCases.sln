@@ -1,6 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2C81681A-30FC-4F70-9A7B-A477FC08DB02}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B60345A-BCB4-48D3-9D65-BFA7EDECB779}"
 	ProjectSection(SolutionItems) = preProject
 		Telerik.Sitefinity.Frontend.TestUI.TestCases1.vsmdi = Telerik.Sitefinity.Frontend.TestUI.TestCases1.vsmdi
@@ -10,12 +17,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SetupScripts", "SetupScripts", "{09C90231-CCE5-4897-9F10-6568A15D4744}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.TestUI.TestCases", "Telerik.Sitefinity.Frontend.TestUI.TestCases.csproj", "{E90A06CF-7889-4A32-A941-4FD76332C179}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{128DAB00-F697-4EC9-9240-AD6E6EF6A7C7}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\.nuget\NuGet.Config = ..\..\.nuget\NuGet.Config
-		..\..\.nuget\NuGet.targets = ..\..\.nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
