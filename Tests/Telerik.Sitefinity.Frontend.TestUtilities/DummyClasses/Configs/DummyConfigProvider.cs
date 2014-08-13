@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Telerik.Sitefinity.Configuration.Data;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Configs
@@ -12,11 +9,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Configs
     public class DummyConfigProvider : XmlConfigProvider
     {
         /// <inheritdoc />
-        protected override void Initialize(string providerName, System.Collections.Specialized.NameValueCollection config, Type managerType)
-        {
-        }
-
-        /// <inheritdoc />
         public override bool LoadSection(Configuration.ConfigSection section, Configuration.ConfigPolicyHandler policyHandler, string policyName)
         {
             return true;
@@ -24,6 +16,11 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Configs
 
         /// <inheritdoc />
         public override void SaveSection(Configuration.ConfigSection section)
+        {
+        }
+
+        /// <inheritdoc />
+        protected override void Initialize(string providerName, System.Collections.Specialized.NameValueCollection config, Type managerType)
         {
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Web.Caching;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
@@ -12,21 +13,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
     /// </summary>
     public class DummyResourceResolverNode : ResourceResolverNode
     {
-        /// <summary>
-        /// A function that will be called through <see cref="CurrentExists"/> method.
-        /// </summary>
-        public Func<PathDefinition, string, bool> CurrentExistsMock;
-
-        /// <summary>
-        /// A function that will be called through <see cref="GetCurrentCacheDependency"/> method.
-        /// </summary>
-        public Func<PathDefinition, string, IEnumerable, DateTime, CacheDependency> GetCurrentCacheDependencyMock;
-
-        /// <summary>
-        /// A function that will be called through <see cref="CurrentOpen"/> method.
-        /// </summary>
-        public Func<PathDefinition, string, Stream> CurrentOpenMock;
-
         /// <inheritdoc />
         protected override bool CurrentExists(PathDefinition definition, string virtualPath)
         {
@@ -45,9 +31,25 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
             return this.CurrentOpenMock(definition, virtualPath);
         }
 
-        protected override System.Collections.Generic.IEnumerable<string> GetCurrentFiles(PathDefinition definition, string path)
+        /// <inheritdoc />
+        protected override IEnumerable<string> GetCurrentFiles(PathDefinition definition, string path)
         {
             return null;
         }
+
+        /// <summary>
+        /// A function that will be called through <see cref="CurrentExists"/> method.
+        /// </summary>
+        public Func<PathDefinition, string, bool> CurrentExistsMock { get; set; }
+
+        /// <summary>
+        /// A function that will be called through <see cref="GetCurrentCacheDependency"/> method.
+        /// </summary>
+        public Func<PathDefinition, string, IEnumerable, DateTime, CacheDependency> GetCurrentCacheDependencyMock { get; set; }
+
+        /// <summary>
+        /// A function that will be called through <see cref="CurrentOpen"/> method.
+        /// </summary>
+        public Func<PathDefinition, string, Stream> CurrentOpenMock { get; set; }
     }
 }

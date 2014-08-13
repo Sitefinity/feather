@@ -56,7 +56,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
             get { throw new NotImplementedException(); }
         }
 
-
         /// <inheritdoc />
         public string Theme
         {

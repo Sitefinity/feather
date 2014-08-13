@@ -22,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Views
         /// <param name="writer">The writer object.</param>
         public void Render(ViewContext viewContext, System.IO.TextWriter writer)
         {
-            writer.Write(InnerHtml);
+            writer.Write(this.InnerHtml);
         }
     }
 }

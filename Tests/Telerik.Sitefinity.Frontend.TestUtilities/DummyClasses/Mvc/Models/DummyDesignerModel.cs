@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyDesignerModel"/> class.
         /// </summary>
-        public DummyDesignerModel(): base(new List<string>(), new List<string>(), "", "")
+        public DummyDesignerModel() : base(new List<string>(), new List<string>(), string.Empty, string.Empty)
         { 
         }
 

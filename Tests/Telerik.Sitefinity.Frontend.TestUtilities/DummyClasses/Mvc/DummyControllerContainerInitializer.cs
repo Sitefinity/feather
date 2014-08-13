@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
+
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
@@ -12,57 +11,56 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
     /// </summary>
     public class DummyControllerContainerInitializer : ControllerContainerInitializer
     {
-        #region Public Properties and fields
-
         /// <summary>
         /// A function that will be called through <see cref="GetAssemblies"/> method.
         /// </summary>
-        public Func<IEnumerable<Assembly>> GetAssembliesMock;
+        public Func<IEnumerable<Assembly>> GetAssembliesMock { get; set; }
 
+        #region Public Properties and fields
         /// <summary>
         /// A function that will be called through <see cref="GetControllers"/> method.
         /// </summary>
-        public Func<IEnumerable<Assembly>, IEnumerable<Type>> GetControllersMock;
+        public Func<IEnumerable<Assembly>, IEnumerable<Type>> GetControllersMock { get; set; }
 
         /// <summary>
         /// An action that will be called through <see cref="RegisterVirtualPaths"/> method.
         /// </summary>
-        public Action<IEnumerable<Assembly>> RegisterVirtualPathsMock;
+        public Action<IEnumerable<Assembly>> RegisterVirtualPathsMock { get; set; }
 
         /// <summary>
         /// An action that will be called through <see cref="InitializeControllers"/> method.
         /// </summary>
-        public Action<IEnumerable<Type>> InitializeControllersMock;
+        public Action<IEnumerable<Type>> InitializeControllersMock { get; set; }
 
         /// <summary>
         /// An action that will be called through <see cref="InitializeControllerContainer"/> method.
         /// </summary>
-        public Action<Assembly> InitializeControllerContainerMock;
+        public Action<Assembly> InitializeControllerContainerMock { get; set; }
 
         /// <summary>
         /// A function that will be called through <see cref="GetAssemblyFileNames"/> method.
         /// </summary>
-        public Func<IEnumerable<string>> GetAssemblyFileNamesMock;
+        public Func<IEnumerable<string>> GetAssemblyFileNamesMock { get; set; }
 
         /// <summary>
         /// A function that will be called through <see cref="LoadAssembly"/> method.
         /// </summary>
-        public Func<string, Assembly> LoadAssemblyMock;
+        public Func<string, Assembly> LoadAssemblyMock { get; set; }
 
         /// <summary>
         /// A function that will be called through <see cref="IsControllerContainer"/> method.
         /// </summary>
-        public Func<string, bool> IsControllerContainerMock;
+        public Func<string, bool> IsControllerContainerMock { get; set; }
 
         /// <summary>
         /// An action that will be called through <see cref="RegisterController"/> method.
         /// </summary>
-        public Action<Type> RegisterControllerMock;
+        public Action<Type> RegisterControllerMock { get; set; }
 
         /// <summary>
         /// An action that will be called through <see cref="RegisterControllerFactory"/> method.
         /// </summary>
-        public Action RegisterControllerFactoryMock;
+        public Action RegisterControllerFactoryMock { get; set; }
 
         #endregion
 
@@ -71,7 +69,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         /// <summary>
         /// Exposes <see cref="GetAssemblies"/> for test purposes.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// The <see cref="IEnumerable"/>.
+        /// </returns>
         public IEnumerable<Assembly> GetAssembliesPublic()
         {
             return this.GetAssemblies();
@@ -80,7 +80,12 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         /// <summary>
         /// Exposes <see cref="GetControllers"/> for test purposes.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="assemblies">
+        /// The assemblies.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IEnumerable"/>.
+        /// </returns>
         public IEnumerable<Type> GetControllersPublic(IEnumerable<Assembly> assemblies)
         {
             return this.GetControllers(assemblies);
@@ -89,7 +94,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         /// <summary>
         /// Exposes <see cref="RegisterVirtualPaths"/> for test purposes.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="assemblies">
+        /// The assemblies.
+        /// </param>
         public void RegisterVirtualPathsPublic(IEnumerable<Assembly> assemblies)
         {
             this.RegisterVirtualPaths(assemblies);
@@ -98,7 +105,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         /// <summary>
         /// Exposes <see cref="InitializeControllers"/> for test purposes.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="controllers">
+        /// The controllers.
+        /// </param>
         public void InitializeControllersPublic(IEnumerable<Type> controllers)
         {
             this.InitializeControllers(controllers);
@@ -107,7 +116,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         /// <summary>
         /// Exposes <see cref="RegisterController"/> for test purposes.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="widgetType">
+        /// The widget Type.
+        /// </param>
         public void RegisterControllerPublic(Type widgetType)
         {
             this.RegisterController(widgetType);
@@ -116,7 +127,12 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         /// <summary>
         /// Exposes <see cref="IsControllerContainer"/> for test purposes.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="assemblyFileName">
+        /// The assembly File Name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         public bool IsControllerContainerPublic(string assemblyFileName)
         {
             return this.IsControllerContainer(assemblyFileName);
@@ -132,7 +148,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
             if (this.GetAssembliesMock != null)
                 return this.GetAssembliesMock();
             else
-                return base.GetAssemblies(); ;
+                return base.GetAssemblies();
         }
 
         /// <inheritdoc />
@@ -162,6 +178,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
                 base.InitializeControllers(controllers);
         }
 
+        /// <summary>
+        /// The register controller factory.
+        /// </summary>
         protected override void RegisterControllerFactory()
         {
             if (this.RegisterControllerFactoryMock != null)
@@ -179,12 +198,18 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
                 base.InitializeControllerContainer(container);
         }
 
+        /// <summary>
+        /// The get assembly file names.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IEnumerable"/>.
+        /// </returns>
         protected override IEnumerable<string> GetAssemblyFileNames()
         {
             if (this.GetAssemblyFileNamesMock != null)
                 return this.GetAssemblyFileNamesMock();
-            else
-                return base.GetAssemblyFileNames();
+
+            return base.GetAssemblyFileNames();
         }
 
         /// <inheritdoc />
@@ -192,16 +217,25 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         {
             if (this.LoadAssemblyMock != null)
                 return this.LoadAssemblyMock(assemblyFileName);
-            else
-                return base.LoadAssembly(assemblyFileName);
+
+            return base.LoadAssembly(assemblyFileName);
         }
 
+        /// <summary>
+        /// The is controller container.
+        /// </summary>
+        /// <param name="assemblyFileName">
+        /// The assembly file name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         protected override bool IsControllerContainer(string assemblyFileName)
         {
             if (this.IsControllerContainerMock != null)
                 return this.IsControllerContainerMock(assemblyFileName);
-            else
-                return base.IsControllerContainer(assemblyFileName);
+
+            return base.IsControllerContainer(assemblyFileName);
         }
 
         /// <inheritdoc />
