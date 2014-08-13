@@ -247,6 +247,12 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
                 base.RegisterController(controller);
         }
 
+        /// <inheritdoc />
+        protected override void InitializeCustomRouting()
+        {
+            // Skip registering types.
+        }
+
         #endregion
     }
 }

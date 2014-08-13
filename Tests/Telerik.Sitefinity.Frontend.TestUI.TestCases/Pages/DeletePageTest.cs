@@ -82,7 +82,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Pages
         public void HandleDeletePageDialog()
         {
             var confirmDeleteButtons = ActiveBrowser.Find.AllByAttributes("class=sfLinkBtn sfDelete");
-            var deleteSingleItemButton = confirmDeleteButtons.Where(c => c.InnerText == "Yes, Delete this item").FirstOrDefault().As<HtmlAnchor>();
+            var deleteSingleItemButton = confirmDeleteButtons.Where(c => c.InnerText == "Yes, Move to the Recycle Bin").FirstOrDefault().As<HtmlAnchor>();
             Assert.IsNotNull(deleteSingleItemButton, "The confirm button was not found");
             deleteSingleItemButton.Click();
         }
