@@ -34,12 +34,12 @@ function InstallFeather($featherBinDirectory)
     Get-ChildItem Telerik.Sitefinity.Frontend.dll -recurse  -path $featherBinDirectory | Copy-Item -destination $websiteBinariesDirectory
     Get-ChildItem Ninject.dll -recurse  -path $featherBinDirectory | Copy-Item -destination $websiteBinariesDirectory
         
-    Write-Output "Updating Sitefinity SystemConfig.config..."
-    UpdateSystemConfig
+    # Write-Output "Updating Sitefinity SystemConfig.config..."
+    # UpdateSystemConfig
     
-    Write-Output "Restarting $appPollName application pool..."
-    Restart-WebAppPool $appPollName -ErrorAction Continue
-    GetRequest $defaultWebsiteUrl
+    # Write-Output "Restarting $appPollName application pool..."
+    # Restart-WebAppPool $appPollName -ErrorAction Continue
+    # GetRequest $defaultWebsiteUrl
 
     Write-Output "----- Feather successfully installed ------"
 }
