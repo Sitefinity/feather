@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
@@ -18,55 +18,36 @@ using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
 {
-     /// <summary>
+    /// <summary>
     /// Ensures that FileMonitor class works correctly.
     /// </summary>
     [TestClass]
     public class FileMonitorTests
     {
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            this.objectFactoryContainerRegion = new ObjectFactoryContainerRegion();
-            ObjectFactory.Container.RegisterType<ConfigManager, ConfigManager>(typeof(XmlConfigProvider).Name.ToUpperInvariant(),
-                new InjectionConstructor(typeof(XmlConfigProvider).Name));
-            ObjectFactory.Container.RegisterType<XmlConfigProvider, DummyConfigProvider>();
-            Config.RegisterSection<ResourcesConfig>();
-            Config.RegisterSection<SecurityConfig>();
-            Config.RegisterSection<ProjectConfig>();
+        #region Public Methods and Operators
 
-            this.context = new HttpContextWrapper(new HttpContext(
-                new HttpRequest(null, "http://tempuri.org", null),
-                new HttpResponse(null)));
-        }
-
-        [TestCleanup]
-        public void TestCleanup()
-        {
-            this.objectFactoryContainerRegion.Dispose();
-            this.objectFactoryContainerRegion = null;
-            this.context = null;
-        }
-
-        #region FileChanged
-
+        /// <summary>
+        /// The file changed_ created_ invokes file manager.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether FileChanged method invoked with FileChangeTypes.Created will call FileAdded method of IFileManager with proper arguments.")]
         public void FileChanged_Created_InvokesFileManager()
         {
-            //Arrange
+            // Arrange
             var fileMonitor = new DummyFileMonitor();
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
-            var filePath = fileMonitor.AppPhysicalPath + "\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml";
+            var filePath = string.Format("{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
 
-            SystemManager.RunWithHttpContext(this.context, () =>
-            {
-                //Act
-                fileMonitor.FileChangedTest(filePath, FileChangeType.Created);
-            });
+            SystemManager.RunWithHttpContext(
+                this.context, 
+                () =>
+                    {
+                        // Act
+                        fileMonitor.FileChangedTest(filePath, FileChangeType.Created);
+                    });
 
-            //Assert
+            // Assert
             Assert.AreEqual(1, fileMonitor.ResourceFileManager.DummyFileInfos.Count(), "FileAdded method should be called.");
             Assert.AreEqual(FileChangeType.Created, fileMonitor.ResourceFileManager.DummyFileInfos.First().FileOperation, "FileAdded method is not called.");
             Assert.AreEqual("test.cshtml", fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFileName, "FileAdded is called with wrong file name.");
@@ -74,46 +55,57 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             Assert.AreEqual("My package", fileMonitor.ResourceFileManager.DummyFileInfos.First().PackageName, "FileAdded is called with wrong package name.");
         }
 
+        /// <summary>
+        /// The file changed_ deleted_ invokes file manager.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether FileChanged method invoked with FileChangeTypes.Deleted will call FileDeleted method of IFileManager with proper arguments.")]
         public void FileChanged_Deleted_InvokesFileManager()
         {
-            //Arrange
+            // Arrange
             var fileMonitor = new DummyFileMonitor();
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
-            var filePath = fileMonitor.AppPhysicalPath + "\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml";
+            var filePath = string.Format("{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
 
-            SystemManager.RunWithHttpContext(this.context, () =>
-            {
-                //Act
-                fileMonitor.FileChangedTest(filePath, FileChangeType.Deleted);
-            });
+            SystemManager.RunWithHttpContext(
+                this.context, 
+                () =>
+                    {
+                        // Act
+                        fileMonitor.FileChangedTest(filePath, FileChangeType.Deleted);
+                    });
 
-            //Assert
+            // Assert
             Assert.AreEqual(1, fileMonitor.ResourceFileManager.DummyFileInfos.Count(), "FileDeleted method should be called.");
             Assert.AreEqual(FileChangeType.Deleted, fileMonitor.ResourceFileManager.DummyFileInfos.First().FileOperation, "FileDeleted method should be called.");
             Assert.AreEqual(filePath, fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFilePath, "FileDeleted is called with wrong file name.");
         }
 
+        /// <summary>
+        /// The file changed_ renamed_ invokes file manager.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether FileChanged method invoked with FileChangeTypes.Renamed will call FileRenamed method of IFileManager with proper arguments.")]
         public void FileChanged_Renamed_InvokesFileManager()
         {
-            //Arrange
+            // Arrange
             var fileMonitor = new DummyFileMonitor();
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
-            var oldFilePath = fileMonitor.AppPhysicalPath + "\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml";
-            var newFilePath = fileMonitor.AppPhysicalPath + "\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\renamedTest.cshtml";
+            var oldFilePath = string.Format("{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
 
-            SystemManager.RunWithHttpContext(this.context, () =>
-            {
-                //Act
-                fileMonitor.FileChangedTest(newFilePath, FileChangeType.Renamed, oldFilePath);
-            });
+            var newFilePath = string.Format("{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\renamedTest.cshtml", fileMonitor.AppPhysicalPath);
 
-            //Assert
+            SystemManager.RunWithHttpContext(
+                this.context, 
+                () =>
+                    {
+                        // Act
+                        fileMonitor.FileChangedTest(newFilePath, FileChangeType.Renamed, oldFilePath);
+                    });
+
+            // Assert
             Assert.AreEqual(1, fileMonitor.ResourceFileManager.DummyFileInfos.Count(), "FileRenamed should be invoked.");
             Assert.AreEqual(FileChangeType.Renamed, fileMonitor.ResourceFileManager.DummyFileInfos.First().FileOperation, "FileRenamed should be invoked.");
             Assert.AreEqual("renamedTest.cshtml", fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFileName, "FileRenamed is called with wrong file name.");
@@ -123,16 +115,15 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             Assert.AreEqual("My package", fileMonitor.ResourceFileManager.DummyFileInfos.First().PackageName, "FileRenamed is called with wrong package name.");
         }
 
-        #endregion
-
-        #region Start
-
+        /// <summary>
+        /// The start_ non existing directories_ added in queued folders and packages.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Check whether Start method adds the non existing directories in QueuedFoldersAndPackages.")]
         public void Start_NonExistingDirectories_AddedInQueuedFoldersAndPackages()
         {
-            //Arrange
+            // Arrange
             var packageFolderPath = "~/" + PackageManager.PackagesFolder;
             var baseMvcPath = "~/Mvc/Views/Layouts";
             var fileMonitor = new DummyFileMonitor();
@@ -140,11 +131,11 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             var directoriesInfo = new List<MonitoredDirectory>();
             directoriesInfo.Add(new MonitoredDirectory(packageFolderPath, true));
             directoriesInfo.Add(new MonitoredDirectory(baseMvcPath, false));
-            
-            //Act
+
+            // Act
             fileMonitor.Start(directoriesInfo);
-            
-            //Assert
+
+            // Assert
             Assert.AreEqual(2, fileMonitor.QueuedFoldersAndPackages.Count(), "Both folders should be added in QueuedFoldersAndPackages");
             Assert.AreEqual(packageFolderPath, fileMonitor.QueuedFoldersAndPackages[0].Path, "The package folder path is not added correctly.");
             Assert.IsTrue(fileMonitor.QueuedFoldersAndPackages[0].IsPackage, "The values in QueuedFoldersAndPackages are not correct.");
@@ -152,12 +143,40 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             Assert.IsFalse(fileMonitor.QueuedFoldersAndPackages[1].IsPackage, "The values in QueuedFoldersAndPackages are not correct.");
         }
 
+        /// <summary>
+        /// The test cleanup.
+        /// </summary>
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            this.objectFactoryContainerRegion.Dispose();
+            this.objectFactoryContainerRegion = null;
+            this.context = null;
+        }
+
+        /// <summary>
+        /// The test initialize.
+        /// </summary>
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.objectFactoryContainerRegion = new ObjectFactoryContainerRegion();
+            ObjectFactory.Container.RegisterType<ConfigManager, ConfigManager>(typeof(XmlConfigProvider).Name.ToUpperInvariant(), new InjectionConstructor(typeof(XmlConfigProvider).Name));
+            ObjectFactory.Container.RegisterType<XmlConfigProvider, DummyConfigProvider>();
+            Config.RegisterSection<ResourcesConfig>();
+            Config.RegisterSection<SecurityConfig>();
+            Config.RegisterSection<ProjectConfig>();
+
+            this.context = new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null)));
+        }
+
         #endregion
 
-        #region Private fields and constants
+        #region Fields
+
+        private HttpContextWrapper context;
 
         private ObjectFactoryContainerRegion objectFactoryContainerRegion;
-        private HttpContextWrapper context;
 
         #endregion
     }

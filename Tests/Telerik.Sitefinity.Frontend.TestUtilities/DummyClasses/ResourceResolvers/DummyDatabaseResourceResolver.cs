@@ -32,5 +32,4 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
                 return null;
         }
     }
-
 }

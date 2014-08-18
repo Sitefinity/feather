@@ -1,8 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
@@ -18,7 +16,6 @@ using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Models;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers;
 using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 using Telerik.Sitefinity.Localization.Configuration;
-using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Web.Configuration;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
@@ -29,120 +26,125 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
     [TestClass]
     public class DesignerModelTests
     {
-        #region IsDesignerView
+        #region Public Methods and Operators
 
-        [TestMethod]
-        [Owner("EGaneva")]
-        [Description("Checks whether IsDesignerView method returns true when starting with the designer prefix.")]
-        public void IsDesignerView_DesignerPrefix_ReturnsTrue()
-        {
-            //Arrange
-            var dummyModel = new DummyDesignerModel();
-            var fileName = "DesignerView.someViewName";
-
-            //Act
-            var isDesignerView = dummyModel.IsDesignerViewPublic(fileName);
-
-            //Assert
-            Assert.IsTrue(isDesignerView, "The fileName is not recognized as valid designer view");
-        }
-
-        #endregion
-
-        #region ExtractViewName
-
+        /// <summary>
+        /// The extract view name_ correct file name_ extracts view name.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether ExtractViewName method returns the correct view name.")]
         public void ExtractViewName_CorrectFileName_ExtractsViewName()
         {
-            //Arrange
+            // Arrange
             var dummyModel = new DummyDesignerModel();
-            var fileName = "DesignerView.someViewName.cshtml";
+            string fileName = "DesignerView.someViewName.cshtml";
 
-            //Act
-            var viewName = dummyModel.ExtractViewNamePublic(fileName);
+            // Act
+            string viewName = dummyModel.ExtractViewNamePublic(fileName);
 
-            //Assert
+            // Assert
             Assert.AreEqual("someViewName", viewName, "The viewName is not extracted correctly.");
         }
 
+        /// <summary>
+        /// The extract view name_ full file name_ extracts view name.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
-        [Description("Checks whether ExtractViewName method returns the correct view name from file name which contains'.'.")]
+        [Description(
+            "Checks whether ExtractViewName method returns the correct view name from file name which contains'.'.")]
         public void ExtractViewName_FullFileName_ExtractsViewName()
         {
-            //Arrange
+            // Arrange
             var dummyModel = new DummyDesignerModel();
-            var fileName = "DesignerView.Property.Grid.cshtml";
+            string fileName = "DesignerView.Property.Grid.cshtml";
 
-            //Act
-            var viewName = dummyModel.ExtractViewNamePublic(fileName);
+            // Act
+            string viewName = dummyModel.ExtractViewNamePublic(fileName);
 
-            //Assert
+            // Assert
             Assert.AreEqual("Property.Grid", viewName, "The viewName is not extracted correctly.");
         }
 
-        #endregion 
-
-        #region GetViewScriptFileName
-
+        /// <summary>
+        /// The get view script file name_ view name with dot_ construct script name.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether GetViewScriptFileName method constructs correct script name from view name which contains'.'.")]
         public void GetViewScriptFileName_ViewNameWithDot_ConstructScriptName()
         {
-            //Arrange
+            // Arrange
             var dummyModel = new DummyDesignerModel();
             var viewName = "Property.Grid";
 
-            //Act
-            var scriptName = dummyModel.GetViewScriptFileNamePublic(viewName);
+            // Act
+            string scriptName = dummyModel.GetViewScriptFileNamePublic(viewName);
 
-            //Assert
+            // Assert
             Assert.AreEqual("designerview-property-grid.js", scriptName, "The script name is not constructed correctly.");
         }
 
-        #endregion
+        /// <summary>
+        /// The is designer view_ designer prefix_ returns true.
+        /// </summary>
+        [TestMethod]
+        [Owner("EGaneva")]
+        [Description("Checks whether IsDesignerView method returns true when starting with the designer prefix.")]
+        public void IsDesignerView_DesignerPrefix_ReturnsTrue()
+        {
+            // Arrange
+            var dummyModel = new DummyDesignerModel();
+            var fileName = "DesignerView.someViewName";
 
-        #region PopulateScriptReferences
+            // Act
+            var isDesignerView = dummyModel.IsDesignerViewPublic(fileName);
 
+            // Assert
+            Assert.IsTrue(isDesignerView, "The fileName is not recognized as valid designer view");
+        }
+
+        /// <summary>
+        /// The populate script references_ empty views collection_ construct script refences collection.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether PopulateScriptReferences method populates script collection correctly when Views collection is empty.")]
         public void PopulateScriptReferences_EmptyViewsCollection_ConstructScriptRefencesCollection()
         {
-            //Arrange
+            // Arrange
             var dummyModel = new DummyDesignerModel();
             var widgetName = "Dummy";
             var designerViewConfigs = this.CreateDummyDesignerViewConfigModel();
 
-            //Act
+            // Act
             dummyModel.PopulateScriptReferencesPublic(widgetName, designerViewConfigs);
 
-            //Assert
+            // Assert
             Assert.AreEqual(3, dummyModel.ScriptReferences.Count(), "The script count is not as expected.");
-            Assert.IsTrue(dummyModel.ScriptReferences.Contains(DesignerModelTests.script1), "ScriptReferences doesn't contain expected scripts.");
-            Assert.IsTrue(dummyModel.ScriptReferences.Contains(DesignerModelTests.script2), "ScriptReferences doesn't contain expected scripts.");
-            Assert.IsTrue(dummyModel.ScriptReferences.Contains(DesignerModelTests.script3), "ScriptReferences doesn't contain expected scripts.");
+            Assert.IsTrue(dummyModel.ScriptReferences.Contains(Script1), "ScriptReferences doesn't contain expected scripts.");
+            Assert.IsTrue(dummyModel.ScriptReferences.Contains(Script2), "ScriptReferences doesn't contain expected scripts.");
+            Assert.IsTrue(dummyModel.ScriptReferences.Contains(Script3), "ScriptReferences doesn't contain expected scripts.");
         }
 
+        /// <summary>
+        /// The populate script references_ views collection_ construct script refences collection.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether PopulateScriptReferences method populates script collection correctly when Views collection is empty.")]
         public void PopulateScriptReferences_ViewsCollection_ConstructScriptRefencesCollection()
         {
-            //Arrange
-            var widgetName = "Dummy";
+            // Arrange
+            string widgetName = "Dummy";
             var views = new List<string>();
-            views.Add("DesignerView.someViewName");           
+            views.Add("DesignerView.someViewName");
             var designerViewConfigs = this.CreateDummyDesignerViewConfigModel();
 
             using (var objFactory = new ObjectFactoryContainerRegion())
             {
-
-                ObjectFactory.Container.RegisterType<ConfigManager, ConfigManager>(typeof(XmlConfigProvider).Name.ToUpperInvariant(),
-                    new InjectionConstructor(typeof(XmlConfigProvider).Name));
+                ObjectFactory.Container.RegisterType<ConfigManager, ConfigManager>(typeof(XmlConfigProvider).Name.ToUpperInvariant(), new InjectionConstructor(typeof(XmlConfigProvider).Name));
                 ObjectFactory.Container.RegisterType<XmlConfigProvider, DummyConfigProvider>();
                 Config.RegisterSection<VirtualPathSettingsConfig>();
                 Config.RegisterSection<ControlsConfig>();
@@ -160,7 +162,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
 
                     try
                     {
-                        //Act
+                        // Act
                         dummyModel.PopulateScriptReferencesPublic(widgetName, designerViewConfigs);
                     }
                     finally
@@ -169,19 +171,19 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
                         VirtualPathManager.Reset();
                     }
 
-                    //Assert
+                    // Assert
                     Assert.AreEqual(4, dummyModel.ScriptReferences.Count(), "The script count is not as expected.");
                     Assert.IsTrue(dummyModel.ScriptReferences.Contains("Mvc/Scripts/Dummy/designerview-someviewname.js"), "ScriptReferences doesn't contain scripts for the view.");
-                    Assert.IsTrue(dummyModel.ScriptReferences.Contains(DesignerModelTests.script1), "ScriptReferences doesn't contain expected scripts.");
-                    Assert.IsTrue(dummyModel.ScriptReferences.Contains(DesignerModelTests.script2), "ScriptReferences doesn't contain expected scripts.");
-                    Assert.IsTrue(dummyModel.ScriptReferences.Contains(DesignerModelTests.script3), "ScriptReferences doesn't contain expected scripts.");
+                    Assert.IsTrue(dummyModel.ScriptReferences.Contains(Script1), "ScriptReferences doesn't contain expected scripts.");
+                    Assert.IsTrue(dummyModel.ScriptReferences.Contains(Script2), "ScriptReferences doesn't contain expected scripts.");
+                    Assert.IsTrue(dummyModel.ScriptReferences.Contains(Script3), "ScriptReferences doesn't contain expected scripts.");
                 }
             }
         }
 
         #endregion
 
-        #region Helper methods
+        #region Methods
 
         private List<KeyValuePair<string, DesignerViewConfigModel>> CreateDummyDesignerViewConfigModel()
         {
@@ -190,22 +192,25 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
             var designerConfig1 = new DesignerViewConfigModel();
             designerConfig1.Hidden = true;
             designerConfig1.Priority = 5;
-            designerConfig1.Scripts = new List<string>() { DesignerModelTests.script1 };
+            designerConfig1.Scripts = new List<string> { Script1 };
             designerViewConfigs.Add(new KeyValuePair<string, DesignerViewConfigModel>("View1", designerConfig1));
 
             var designerConfig2 = new DesignerViewConfigModel();
             designerConfig2.Hidden = true;
             designerConfig2.Priority = 1;
-            designerConfig2.Scripts = new List<string>(){DesignerModelTests.script2,
-                DesignerModelTests.script3,};
+            designerConfig2.Scripts = new List<string> { Script2, Script3, };
             designerViewConfigs.Add(new KeyValuePair<string, DesignerViewConfigModel>("View2", designerConfig2));
 
             return designerViewConfigs;
         }
 
-        private const string script1 = "Mvc/Scripts/Dummy/config-script1.js";
-        private const string script2 = "Mvc/Scripts/Dummy/config-script2-1.js";
-        private const string script3 = "Mvc/Scripts/Dummy/config-script2-2.js";
+        #endregion
+
+        #region Constants
+
+        private const string Script1 = "Mvc/Scripts/Dummy/config-script1.js";
+        private const string Script2 = "Mvc/Scripts/Dummy/config-script2-1.js";
+        private const string Script3 = "Mvc/Scripts/Dummy/config-script2-2.js";
 
         #endregion
     }

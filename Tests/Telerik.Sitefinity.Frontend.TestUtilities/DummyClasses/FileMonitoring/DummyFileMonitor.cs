@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
@@ -12,7 +8,20 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
     /// </summary>
     public class DummyFileMonitor : FileMonitor
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DummyFileMonitor"/> class.
+        /// </summary>
+        public DummyFileMonitor()
+        {
+            this.ResourceFileManager = new DummyResourceFileManager();
+        }
+
         #region Public properties 
+
+        /// <summary>
+        /// The resource file manager
+        /// </summary>
+        public DummyResourceFileManager ResourceFileManager { get; set; }
 
         /// <summary>
         /// Gets the application physical path.
@@ -38,6 +47,16 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
 
         #region Overrides 
 
+        #region Public methods
+
+        /// <inheritdoc />
+        public void FileChangedTest(string filePath, FileChangeType changeType, string oldFilePath = "")
+        {
+            this.FileChanged(filePath, changeType, oldFilePath);
+        }
+
+        #endregion 
+
         /// <summary>
         /// Gets the application physical path.
         /// </summary>
@@ -54,7 +73,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
         /// <returns></returns>
         protected override string MapPath(string virtualPath)
         {
-            var path =  Directory.GetCurrentDirectory() + virtualPath.Replace("~","").Replace("/", "\\");
+            var path = Directory.GetCurrentDirectory() + virtualPath.Replace("~", string.Empty).Replace("/", "\\");
 
             return path;
         }
@@ -75,25 +94,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
         {
             return this.ResourceFileManager;
         }
-
-        #endregion 
-
-        #region Public methods
-
-        /// <inheritdoc />
-        public void FileChangedTest(string filePath, FileChangeType changeType, string oldFilePath = "") 
-        {
-            this.FileChanged(filePath, changeType, oldFilePath);
-        }
-
-        #endregion 
-
-        #region Fields and constants
-
-        /// <summary>
-        /// The resource file manager
-        /// </summary>
-        public DummyResourceFileManager ResourceFileManager = new DummyResourceFileManager();
 
         #endregion 
     }

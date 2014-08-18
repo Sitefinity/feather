@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Web.Caching;
+using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
@@ -22,22 +22,22 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
     [TestClass]
     public class DatabaseResourceResolverTests
     {
-        #region Exists
+        #region Public Methods and Operators
 
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Tests whether Exists method returns True for existing resource.")]
         public void Exists_ExistingResource_ReturnsTrue()
         {
-            //Arrange
-            const string virtualPath = "Test/MyTemplate.cshtml";
+            // Arrange
+            const string VirtualPath = "Test/MyTemplate.cshtml";
             var resolver = new DummyDatabaseResourceResolver();
-            resolver.ControlPresentationResult[virtualPath] = new ControlPresentation() { Data = "<div>Content</div>" };
+            resolver.ControlPresentationResult[VirtualPath] = new ControlPresentation { Data = "<div>Content</div>" };
 
-            //Act
-            var result = resolver.Exists(new PathDefinition(), virtualPath);
+            // Act
+            var result = resolver.Exists(new PathDefinition(), VirtualPath);
 
-            //Assert
+            // Assert
             Assert.IsTrue(result, "DatabaseResourceResolver.Exists returned False for an existing resource.");
         }
 
@@ -46,13 +46,13 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
         [Description("Tests whether Exists method returns False for non-existing resource.")]
         public void Exists_NonExistingResource_ReturnsFalse()
         {
-            //Arrange
+            // Arrange
             var resolver = new DummyDatabaseResourceResolver();
 
-            //Act
+            // Act
             var result = resolver.Exists(new PathDefinition(), "Test/MyTemplate.cshtml");
 
-            //Assert
+            // Assert
             Assert.IsFalse(result, "DatabaseResourceResolver.Exists returned True for a non-existing resource.");
         }
 
@@ -61,41 +61,38 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
         [Description("Tests whether Exists method returns False for resource with empty content.")]
         public void Exists_ResourceWithNullContent_ReturnsFalse()
         {
-            //Arrange
-            const string virtualPath = "Test/MyTemplate.cshtml";
+            // Arrange
+            const string VirtualPath = "Test/MyTemplate.cshtml";
+
             var resolver = new DummyDatabaseResourceResolver();
-            resolver.ControlPresentationResult[virtualPath] = new ControlPresentation() { Data = null };
+            resolver.ControlPresentationResult[VirtualPath] = new ControlPresentation { Data = null };
 
-            //Act
-            var result = resolver.Exists(new PathDefinition(), virtualPath);
+            // Act
+            var result = resolver.Exists(new PathDefinition(), VirtualPath);
 
-            //Assert
+            // Assert
             Assert.IsFalse(result, "DatabaseResourceResolver.Exists returned True for resource with null content.");
         }
 
-        #endregion
-
-        #region GetCacheDependency
-        
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Tests whether GetCacheDependency method returns ControlPresentationCacheDependency associated with Id of an existing resource.")]
         public void GetCacheDependency_ExistingResource_ReturnsDependencyWithId()
         {
-            //Arrange
-            const string virtualPath = "Test/MyTemplate.cshtml";
-            Guid presentationId = new Guid("4B9F6715-014E-4B1E-887F-428AF942EAC8");
+            // Arrange
+            const string VirtualPath = "Test/MyTemplate.cshtml";
+            var presentationId = new Guid("4B9F6715-014E-4B1E-887F-428AF942EAC8");
 
             var resolver = new DummyDatabaseResourceResolver();
-            resolver.ControlPresentationResult[virtualPath] = new ControlPresentation(null, presentationId);
+            resolver.ControlPresentationResult[VirtualPath] = new ControlPresentation(null, presentationId);
 
-            //Act
-            var presentationDependency = this.GetCacheDependencyResult(resolver, virtualPath);
+            // Act
+            var presentationDependency = this.GetCacheDependencyResult(resolver, VirtualPath);
 
-            //Assert
+            // Assert
             var itemId = presentationDependency.GetType().GetField("itemId", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(presentationDependency) as string;
-            Assert.AreEqual(presentationId.ToString().ToLower(), itemId.ToLower(), 
-                "GetCacheDependency did not return dependency on the expected object.");
+
+            Assert.AreEqual(presentationId.ToString().ToLower(), itemId.ToLower(), "GetCacheDependency did not return dependency on the expected object.");
         }
 
         [TestMethod]
@@ -103,43 +100,40 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
         [Description("Tests whether GetCacheDependency method returns ControlPresentationCacheDependency without key for non existing resource.")]
         public void GetCacheDependency_NonExistingResource_ReturnsDependencyWithoutId()
         {
-            //Arrange
-            const string virtualPath = "Test/MyTemplate.cshtml";
+            // Arrange
+            const string VirtualPath = "Test/MyTemplate.cshtml";
             var resolver = new DummyDatabaseResourceResolver();
 
-            //Act
-            var presentationDependency = this.GetCacheDependencyResult(resolver, virtualPath);
+            // Act
+            var presentationDependency = this.GetCacheDependencyResult(resolver, VirtualPath);
 
-            //Assert
+            // Assert
             var itemId = presentationDependency.GetType().GetField("itemId", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(presentationDependency) as string;
+
             Assert.IsNull(itemId, "The returned CacheDependency has an unexpected key.");
         }
-
-        #endregion
-
-        #region Open
 
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Tests whether Open method will return a stream with the resource Data for existing resource.")]
         public void Open_ExistingResource_StreamsResourceData()
         {
-            //Arrange
-            const string virtualPath = "Test/MyTemplate.cshtml";
-            const string content = "<div>Content</div>";
+            // Arrange
+            const string VirtualPath = "Test/MyTemplate.cshtml";
+            const string Content = "<div>Content</div>";
 
-            //Act
+            // Act
             var resolver = new DummyDatabaseResourceResolver();
-            resolver.ControlPresentationResult[virtualPath] = new ControlPresentation() { Data = content };
-            var result = resolver.Open(new PathDefinition(), virtualPath);
+            resolver.ControlPresentationResult[VirtualPath] = new ControlPresentation { Data = Content };
+            var result = resolver.Open(new PathDefinition(), VirtualPath);
 
-            //Assert
+            // Assert
             Assert.IsNotNull(result, "Open method returned null.");
 
             using (var reader = new StreamReader(result))
             {
                 var returnedData = reader.ReadToEnd();
-                Assert.AreEqual(content, returnedData, "The stream did not contain the expected data.");
+                Assert.AreEqual(Content, returnedData, "The stream did not contain the expected data.");
             }
         }
 
@@ -149,16 +143,16 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
         [ExpectedException(typeof(ArgumentException))]
         public void Open_NonExistingResource_ThrowsArgumentException()
         {
-            //Arrange
-            const string virtualPath = "Test/MyTemplate.cshtml";
+            // Arrange
+            const string VirtualPath = "Test/MyTemplate.cshtml";
 
-            //Act
-            new DummyDatabaseResourceResolver().Open(new PathDefinition(), virtualPath);
+            // Act
+            new DummyDatabaseResourceResolver().Open(new PathDefinition(), VirtualPath);
         }
 
         #endregion
 
-        #region Helper methods
+        #region Methods
 
         /// <summary>
         /// Gets the cache dependency result.
@@ -172,8 +166,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
 
             using (var objFactory = new ObjectFactoryContainerRegion())
             {
-                ObjectFactory.Container.RegisterType<ConfigManager, ConfigManager>(typeof(XmlConfigProvider).Name.ToUpperInvariant(),
-                    new InjectionConstructor(typeof(XmlConfigProvider).Name));
+                ObjectFactory.Container.RegisterType<ConfigManager, ConfigManager>(typeof(XmlConfigProvider).Name.ToUpperInvariant(), new InjectionConstructor(typeof(XmlConfigProvider).Name));
                 ObjectFactory.Container.RegisterType<XmlConfigProvider, DummyConfigProvider>();
                 Config.RegisterSection<SystemConfig>();
 
@@ -187,6 +180,6 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
             return presentationDependency;
         }
 
-        #endregion 
+        #endregion
     }
 }

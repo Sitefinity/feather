@@ -1,5 +1,5 @@
-﻿using MbUnit.Framework;
-using System;
+﻿using System;
+using MbUnit.Framework;
 
 namespace Telerik.Sitefinity.Frontend.TestIntegration.Sample
 {
@@ -7,7 +7,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Sample
     [Description("This is a sample class with a test that always passes.")]
     public class SampleTestsThatAlwaysPasses
     {
-
         [Test]
         [Category(TestCategories.Samples)]
         [Author("idimitrov")]
@@ -17,6 +16,5 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Sample
             var actual = new Guid("28AABFCA-6FFF-49FD-96C1-B7C1023DAE7A");
             Assert.AreEqual(expected, actual);
         }
-
     }
 }

@@ -35,6 +35,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +53,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MvcWidgets\DummyTextController.cs" />
+    <Compile Include="MvcWidgets\MvcWidgetDefaultFeatherDesigner.cs" />
     <Compile Include="Pages\DeletePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,6 +64,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Telerik.Sitefinity.Frontend\Telerik.Sitefinity.Frontend.csproj">
+      <Project>{17ed04c3-0ab9-4055-9908-6c70720daf77}</Project>
+      <Name>Telerik.Sitefinity.Frontend</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Telerik.Sitefinity.Frontend.TestUtilities\Telerik.Sitefinity.Frontend.TestUtilities.csproj">
       <Project>{1c663ab5-aebc-41b5-a861-f635c37dab47}</Project>
       <Name>Telerik.Sitefinity.Frontend.TestUtilities</Name>

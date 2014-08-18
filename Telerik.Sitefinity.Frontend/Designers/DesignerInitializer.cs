@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.UI;
@@ -10,9 +11,6 @@ using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Designers
 {
-    using System.Diagnostics.CodeAnalysis;
-    using System.Text;
-
     /// <summary>
     /// This class contains logic for initializing the MVC designer.
     /// </summary>

@@ -1,6 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Helpers;
 
@@ -12,43 +11,56 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Test.Helpers
     [TestClass]
     public class LayoutsHelpersTests
     {
-        private readonly string placeHolderHtmlFormatString = "<div class='sfPublicWrapper' id='PublicWrapper' runat='server'><asp:contentplaceholder id='{0}' runat='server' /></div>";
+        #region Public Methods and Operators
 
+        /// <summary>
+        /// The layouts helpers tests_ get content placeholder with default id_ ensures proper result is returned.
+        /// </summary>
         [TestMethod]
         [Owner("Bonchev")]
         [Description("Checks whether  the LayoutsHelper returns a proper content place holder with an default id of 'Body'.")]
         public void LayoutsHelpersTests_GetContentPlaceholderWithDefaultId_EnsuresProperResultIsReturned()
         {
-            //Arrange
-            ViewContext context = new ViewContext();
-            var contentPlaceHolderString = String.Format(this.placeHolderHtmlFormatString, "Body");
+            // Arrange
+            var context = new ViewContext();
+            var contentPlaceHolderString = string.Format(this.placeHolderHtmlFormatString, "Body");
             var urlHelper = new HtmlHelper(context, new DummyViewDataContainer());
 
-            //Act
+            // Act
             var resultString = urlHelper.SfPlaceHolder().ToHtmlString();
 
-            //Assert
-            Assert.AreEqual<string>(contentPlaceHolderString, resultString);
+            // Assert
+            Assert.AreEqual(contentPlaceHolderString, resultString);
         }
 
+        /// <summary>
+        /// The layouts helpers tests_ get content placeholder_ ensures proper result is returned.
+        /// </summary>
         [TestMethod]
         [Owner("Bonchev")]
         [Description("Checks whether  the LayoutsHelper returns a proper content place holder.")]
         public void LayoutsHelpersTests_GetContentPlaceholder_EnsuresProperResultIsReturned()
         {
             var contentPlaceHolderTagId = "FakeId";
-            //Arrange
-            ViewContext context = new ViewContext();
-            var contentPlaceHolderString = String.Format(this.placeHolderHtmlFormatString, contentPlaceHolderTagId);
+
+            // Arrange
+            var context = new ViewContext();
+            var contentPlaceHolderString = string.Format(this.placeHolderHtmlFormatString, contentPlaceHolderTagId);
             var urlHelper = new HtmlHelper(context, new DummyViewDataContainer());
 
-            //Act
+            // Act
             var resultString = urlHelper.SfPlaceHolder(contentPlaceHolderTagId).ToHtmlString();
 
-            //Assert
-            Assert.AreEqual<string>(contentPlaceHolderString, resultString);
+            // Assert
+            Assert.AreEqual(contentPlaceHolderString, resultString);
         }
+
+        #endregion
+
+        #region Fields
+
+        private readonly string placeHolderHtmlFormatString = "<div class='sfPublicWrapper' id='PublicWrapper' runat='server'><asp:contentplaceholder id='{0}' runat='server' /></div>";
+
+        #endregion
     }
-
-
 }

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.TestUI.Arrangements.Core.Framework.Attributes;
 
 // General Information about an assembly is controlled through the following 
@@ -36,3 +37,4 @@ using Telerik.Sitefinity.TestUI.Arrangements.Core.Framework.Attributes;
 [assembly: AssemblyVersion("0.4.1000.2")]
 [assembly: AssemblyFileVersion("0.4.1000.2")]
 [assembly: UIArrangement]
+[assembly: ControllerContainer] 

@@ -10,21 +10,13 @@ namespace Telerik.Sitefinity.Frontend.Test.TestUtilities
     /// </summary>
     public sealed class ObjectFactoryContainerRegion : IDisposable
     {
-        private FieldInfo containerField;
-        private FieldInfo queryableQueryableExtensionField;
-        private IUnityContainer previousContainer;
-        private QueryableContainerExtension previousQueryableExtension;
-
-        private IUnityContainer container;
-        private QueryableContainerExtension queryableExtension;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectFactoryContainerRegion"/> class.
         /// </summary>
         public ObjectFactoryContainerRegion() :
             this(new UnityContainer(), new QueryableContainerExtension())
         {
-            this.container.AddExtension(queryableExtension);
+            this.container.AddExtension(this.queryableExtension);
         }
 
         /// <summary>
@@ -54,5 +46,13 @@ namespace Telerik.Sitefinity.Frontend.Test.TestUtilities
             this.containerField.SetValue(null, this.previousContainer);
             this.queryableQueryableExtensionField.SetValue(null, this.previousQueryableExtension);
         }
+
+        private FieldInfo containerField;
+        private FieldInfo queryableQueryableExtensionField;
+        private IUnityContainer previousContainer;
+        private QueryableContainerExtension previousQueryableExtension;
+
+        private IUnityContainer container;
+        private QueryableContainerExtension queryableExtension;
     }
 }
