@@ -1,17 +1,15 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
-using Telerik.Sitefinity.TestUI.Arrangements.Core.Framework.Attributes;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Telerik.Sitefinity.Frontend.TestUI.Arrangements")]
+[assembly: AssemblyTitle("Telerik.Sitefinity.Frontend.TestUI.Framework")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Telerik.Sitefinity.Frontend.TestUI.Arrangements")]
+[assembly: AssemblyProduct("Telerik.Sitefinity.Frontend.TestUI.Framework")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +20,7 @@ using Telerik.Sitefinity.TestUI.Arrangements.Core.Framework.Attributes;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ea1806b3-fb25-4b38-afd4-307184cdfa6a")]
+[assembly: Guid("66efba37-dd90-476e-8127-68a09deddcc9")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,7 +32,5 @@ using Telerik.Sitefinity.TestUI.Arrangements.Core.Framework.Attributes;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.4.1000.2")]
-[assembly: AssemblyFileVersion("0.4.1000.2")]
-[assembly: UIArrangement]
-[assembly: ControllerContainer] 
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
