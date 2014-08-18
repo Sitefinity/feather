@@ -17,30 +17,31 @@
                 //templateUrl: '/Views/template.cshtml',
                 //templateUrl: sf.pageEditor.widgetContext.AppPath + 'Views/template.html',
                 template:
-//'<div class="contentSelector" modal>' +
-    '<div ng-show="isListEmpty" class="alert alert-info">NoItemsHaveBeedCreatedYet</div>' +
-    '<div ng-hide="isListEmpty">' +
-        '<div class="input-group m-bottom-sm">' +
-            '<span class="input-group-addon">' +
-                '<i class="glyphicon glyphicon-search"></i>' +
-            '</span>' +
-            '<input type="text" ng-model="filter.search" class="form-control" placeholder="NarrowByTyping" />' +
+'<button id="openSelectorBtn">Select</button>' +
+'<div class="contentSelector" modal template-url="selector-template" open-button="#openSelectorBtn" window-class="sf-designer-dlg" existing-scope="true">' +
+    '<script type="text/ng-template" id="selector-template">' +
+        '<div ng-show="isListEmpty" class="alert alert-info">NoItemsHaveBeedCreatedYet</div>' +
+        '<div ng-hide="isListEmpty">' +
+            '<div class="input-group m-bottom-sm">' +
+                '<span class="input-group-addon">' +
+                    '<i class="glyphicon glyphicon-search"></i>' +
+                '</span>' +
+                '<input type="text" ng-model="filter.search" class="form-control" placeholder="NarrowByTyping" />' +
+            '</div>' +
+            '<div class="list-group s-items-list-wrp">' +
+                '<a ng-repeat="item in contentItems"' +
+                        "ng-class=\"{'list-group-item':true, 'active': item.Id==selectedContentItem.Id }\" " +
+                        'ng-click="contentItemClicked($index, item)"> ' +
+                    '<span ng-bind="item.Title"></span>' +
+                '</a>' +
+            '</div>' +
+            '<pagination ng-show="filter.paging.isVisible" items-per-page="filter.paging.itemsPerPage" total-items="filter.paging.totalItems" ng-model="filter.paging.currentPage"></pagination>' +
+            '<div ng-hide="contentItems.length">NoItemsFound</div>' +
         '</div>' +
-        '<div class="list-group s-items-list-wrp">' +
-            '<a ng-repeat="item in contentItems"' +
-                    "ng-class=\"{'list-group-item':true, 'active': item.Id==selectedContentItem.Id }\" " +
-                    'ng-click="contentItemClicked($index, item)"> ' +
-                '<span ng-bind="item.Title"></span>' +
-            '</a>' +
-        '</div>' +
-        '<pagination ng-show="filter.paging.isVisible" items-per-page="filter.paging.itemsPerPage" total-items="filter.paging.totalItems" ng-model="filter.paging.currentPage"></pagination>' +
-        '<div ng-hide="contentItems.length">NoItemsFound</div>' +
-    '</div>' +
-    '<script type="text/ng-template" section="modal-footer">' +
         '<button type="button" ng-hide="isListEmpty" class="btn btn-primary" ng-click="selectSharedContent()">DoneSelecting</button>' +
         '<button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>' +
-    '</script>',
-//'</div>',
+    '</script>'+
+'</div>',
                 link: function (scope, element, attrs) {
 
                     // ------------------------------------------------------------------------
@@ -145,7 +146,6 @@
                     };
 
                     scope.selectSharedContent = function () {
-                        debugger;
                         if (scope.selectedContentItem) {
                             var selectedContentItemId = scope.selectedContentItem.Id;
                             //var providerName = scope.SelectedContentItem.ProviderName;
@@ -161,8 +161,7 @@
                             //    .finally(hideLoadingIndicator);
                         }
                         
-                        //TODO: remove the commented line
-                        //scope.close();
+                        scope.$modalInstance.close();
                     };
 
                     scope.HideError = function () {
@@ -170,14 +169,14 @@
                         scope.Feedback.errorMessage = null;
                     };
 
-                    //scope.close = function () {
-                    //    try {
-                    //        $modalInstance.close();
-                    //    } catch (e) { }
+                    scope.cancel = function () {
+                        try {
+                            scope.$modalInstance.close();
+                        } catch (e) { }
 
-                    //    if (typeof ($telerik) != 'undefined')
-                    //        $telerik.$(document).trigger('modalDialogClosed');
-                    //};
+                        //if (typeof ($telerik) != 'undefined')
+                            //$telerik.$(document).trigger('modalDialogClosed');
+                    };
 
                     scope.showLoadingIndicator = true;
                     genericDataService.getItems(scope.ItemType, scope.ItemProvider, scope.filter.paging.get_itemsToSkip(), 

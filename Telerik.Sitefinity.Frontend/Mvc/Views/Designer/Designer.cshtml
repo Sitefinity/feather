@@ -2,7 +2,7 @@
 
 @using Telerik.Sitefinity.Frontend.Mvc.Helpers
 
-<div class="designer" modal dialog-controller="DialogCtrl">
+<div class="designer" modal dialog-controller="DialogCtrl" template-url="dialog-template" auto-open="true" window-class="sf-designer-dlg">
 	<server-data default-view='@Model.DefaultView' application-root='@Url.Content("~/")' widget-name='@ViewBag.ControlName'></server-data>
 
 	<script type="text/ng-template" id="dialog-template">
@@ -20,9 +20,8 @@
 
 			<div id="viewsPlaceholder" ng-show="!feedback.showLoadingIndicator" ng-view></div>
 		</div>
-		<div class="modal-footer" ng-show="!feedback.showLoadingIndicator" placeholder="modal-footer">
 
-		</div>
+        <div class="modal-footer" ng-show="!feedback.showLoadingIndicator" placeholder="modal-footer"></div>
 
 		<script type="text/ng-template" section="modal-footer">
 			<button class="btn btn-primary" ng-click="save(false)">@Html.Resource("Save")</button>
