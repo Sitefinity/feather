@@ -33,89 +33,34 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         /// <inheritdoc />
-        protected override void ResolveUrlParamsInternal(string[] urlParams, RequestContext requestContext)
+        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
         {
             if (urlParams == null)
-                return;
+                return false;
 
             var routeTemplate = routeTemplateResolver();
 
             var metaParams = routeTemplate
                 .Split(new [] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (metaParams.Length != urlParams.Length)
-                return;
+            var parameterMap = this.MapParams(this.actionMethod, metaParams, urlParams);
 
-            var parameterMap = new Dictionary<string, object>();
-            for (int i = 0; i < urlParams.Length; i++)
-            {
-                if (metaParams[i].Length > 2 && metaParams[i].First() == '{' && metaParams[i].Last() == '}')
-                {
-                    var routeParam = metaParams[i].Sub(1, metaParams[i].Length - 2);
-                    if (!this.TryResolveRouteParam(routeParam, urlParams[i], parameterMap))
-                        return;
-                }
-                else if (!string.Equals(metaParams[i], urlParams[i], StringComparison.OrdinalIgnoreCase))
-                {
-                    return;
-                }
-            }
+            if (parameterMap == null)
+                return false;
 
             requestContext.RouteData.Values[UrlParamsMapperBase.ActionNameKey] = this.actionName;
             this.PopulateRouteData(requestContext.RouteData.Values, parameterMap);
             RouteHelper.SetUrlParametersResolved();
-        }
 
-        private bool TryResolveRouteParam(string routeParam, string urlParam, IDictionary<string, object> parameterMap)
-        {
-            if (routeParam.IsNullOrEmpty())
-                return false;
-
-            var parts = routeParam.Split(':');
-            var paramName = parts[0];
-            object paramValue = urlParam;
-
-            if (parts.Length >= 2)
-            {
-                var actionParam = this.actionMethod.GetParameters().FirstOrDefault(p => p.Name == paramName);
-                if (actionParam != null)
-                {
-                    var routeConstraints = parts[1]
-                        .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                        .Select(r => r.Trim());
-
-                    IRouteParamResolver first = null;
-                    IRouteParamResolver last = null;
-                    foreach (var resolverName in routeConstraints)
-                    {
-                        var resolver = ObjectFactory.Resolve<IRouteParamResolver>(resolverName);
-                        if (resolver != null)
-                        {
-                            if (last != null)
-                            {
-                                last = last.SetNext(resolver);
-                            }
-                            else
-                            {
-                                first = last = resolver;
-                            }
-                        }
-                    }
-
-                    if (first == null || first.TryResolveParam(urlParam, out paramValue) == false)
-                        return false;
-                }
-            }
-
-            parameterMap[paramName] = paramValue;
             return true;
         }
 
-        private void PopulateRouteData(RouteValueDictionary routeDataValues, IDictionary<string, object> parameters)
+
+        private void PopulateRouteData(RouteValueDictionary routeDataValues, IList<UrlSegmentInfo> parameters)
         {
             foreach (var parameter in parameters)
             {
-                routeDataValues[parameter.Key] = parameter.Value;
+                routeDataValues[parameter.ParameterName] = parameter.ParameterValue;
             }
         }
 

@@ -21,12 +21,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         /// <inheritdoc />
-        protected override void ResolveUrlParamsInternal(string[] urlParams, RequestContext requestContext)
+        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
         {
             var controllerName = requestContext.RouteData.Values[DynamicUrlParamsResolver.ControllerNameKey] as string;
             requestContext.RouteData.Values.Remove(DynamicUrlParamsResolver.ControllerNameKey);
             ObjectFactory.Resolve<IMvcUrlParamsResolver>(DynamicUrlParamsResolver.DefaultResolverName)
                 .ResolveUrlParams(urlParams, requestContext, this.Controller, controllerName);
+
+            return true;
         }
     }
 }
