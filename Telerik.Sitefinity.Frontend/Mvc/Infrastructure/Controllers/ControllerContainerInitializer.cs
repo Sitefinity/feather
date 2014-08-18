@@ -281,9 +281,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (var attribute in localizationAttributes)
             {
                 var localAttr = (LocalizationAttribute)attribute;
-                if (!ObjectFactory.Container.IsRegistered(localAttr.ResourceClass, Res.GetResourceClassId(localAttr.ResourceClass)))
+                var resourceClass = localAttr.ResourceClass;
+                var resourceClassId = Res.GetResourceClassId(resourceClass);
+
+                if (!ObjectFactory.Container.IsRegistered(resourceClass, resourceClassId))
                 {
-                    Res.RegisterResource(localAttr.ResourceClass);
+                    Res.RegisterResource(resourceClass);
                 }
             }
         }

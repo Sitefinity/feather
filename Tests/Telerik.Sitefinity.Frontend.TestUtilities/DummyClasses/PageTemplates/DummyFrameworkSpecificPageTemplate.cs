@@ -79,9 +79,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
         /// <inheritdoc />
         public Guid Id
         {
-            get { return DummyFrameworkSpecificPageTemplate.CurrentId; }
+            get { return DummyFrameworkSpecificPageTemplate.currentId; }
         }
-
 
         /// <inheritdoc />
         public string Theme
@@ -99,7 +98,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
 
         #region Private fields and constants
 
-        public static Guid CurrentId = Guid.Parse("18c314b8-e38f-4119-9191-485538955f02");
+        private static Guid currentId = Guid.Parse("18c314b8-e38f-4119-9191-485538955f02");
 
         #endregion
     }

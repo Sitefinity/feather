@@ -1,37 +1,21 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Web;
+
+using global::Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using Telerik.Sitefinity.Frontend.Resources;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 {
     /// <summary>
-    /// This class contains tests that ensure that the <see cref="ResourceRegister"/> works properly
+    ///     This class contains tests that ensure that the <see cref="ResourceRegister" /> works properly
     /// </summary>
     [TestClass]
     public class ResourceRegisterTests
     {
-        [TestMethod]
-        [Owner("Tihomir Petrov")]
-        [Description("Verifies that a resource can be registered successfully.")]
-        public void RegisterResource_NewResource_ResourceIsRegistered()
-        {
-            //Arrange
-            var registerName = "TestRegister";
-            var context = this.CreateHttpContext();
-            var register = new ResourceRegister(registerName, context);
-
-            var fakeResourceKey = "test-resource";
-            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 0);
-
-            //Act
-            register.RegisterResource(fakeResourceKey);
-
-            //Assert
-            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
-        }
+        #region Public Methods and Operators
 
         [TestMethod]
         [Owner("Tihomir Petrov")]
@@ -39,40 +23,39 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
         [ExpectedException(typeof(ArgumentException), "There should be exception regarding the duplication of the resource registration!")]
         public void RegisterResource_AlreadyRegisteredResource_ExceptionIsThrown()
         {
-            //Arrange
-            var registerName = "TestRegister";
-            var context = this.CreateHttpContext();
+            // Arrange
+            string registerName = "TestRegister";
+            HttpContextBase context = this.CreateHttpContext();
             var register = new ResourceRegister(registerName, context);
 
-            var fakeResourceKey = "test-resource";
+            string fakeResourceKey = "test-resource";
             register.RegisterResource(fakeResourceKey);
             Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
 
-            //Act
+            // Act
             register.RegisterResource(fakeResourceKey);
 
-            //Assert
+            // Assert
             Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
         }
 
         [TestMethod]
         [Owner("Tihomir Petrov")]
-        [Description("Verifies that a resource can be successfully registered.")]
-        public void TryRegisterResource_NewResource_ResourceIsRegistered()
+        [Description("Verifies that a resource can be registered successfully.")]
+        public void RegisterResource_NewResource_ResourceIsRegistered()
         {
-            //Arrange
-            var registerName = "TestRegister";
-            var context = this.CreateHttpContext();
+            // Arrange
+            string registerName = "TestRegister";
+            HttpContextBase context = this.CreateHttpContext();
             var register = new ResourceRegister(registerName, context);
 
-            var fakeResourceKey = "test-resource";
+            string fakeResourceKey = "test-resource";
             Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 0);
 
-            //Act
-            var result = register.TryRegisterResource(fakeResourceKey);
+            // Act
+            register.RegisterResource(fakeResourceKey);
 
-            //Assert
-            Assert.IsTrue(result);
+            // Assert
             Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
         }
 
@@ -81,31 +64,58 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
         [Description("Verifies that resource will not be registered again if it is already registered.")]
         public void TryRegisterResource_AlreadyRegisteredResource_ResourceIsNotRegisteredTwice()
         {
-            //Arrange
-            var registerName = "TestRegister";
-            var context = this.CreateHttpContext();
+            // Arrange
+            string registerName = "TestRegister";
+            HttpContextBase context = this.CreateHttpContext();
             var register = new ResourceRegister(registerName, context);
 
-            var fakeResourceKey = "test-resource";
+            string fakeResourceKey = "test-resource";
             register.RegisterResource(fakeResourceKey);
             Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
 
-            //Act
-            var result = register.TryRegisterResource(fakeResourceKey);
-            
-            //Assert
+            // Act
+            bool result = register.TryRegisterResource(fakeResourceKey);
+
+            // Assert
             Assert.IsFalse(result);
             Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
         }
 
-        private System.Web.HttpContextBase CreateHttpContext()
+        [TestMethod]
+        [Owner("Tihomir Petrov")]
+        [Description("Verifies that a resource can be successfully registered.")]
+        public void TryRegisterResource_NewResource_ResourceIsRegistered()
         {
-            var request = new System.Web.HttpRequest("", "http://tempuri.org", "");
-            var response = new System.Web.HttpResponse(new System.IO.StringWriter());
-            var httpContext = new System.Web.HttpContext(request, response);
-            var result = new System.Web.HttpContextWrapper(httpContext);
+            // Arrange
+            string registerName = "TestRegister";
+            HttpContextBase context = this.CreateHttpContext();
+            var register = new ResourceRegister(registerName, context);
+
+            string fakeResourceKey = "test-resource";
+            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 0);
+
+            // Act
+            bool result = register.TryRegisterResource(fakeResourceKey);
+
+            // Assert
+            Assert.IsTrue(result);
+            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private HttpContextBase CreateHttpContext()
+        {
+            var request = new HttpRequest(string.Empty, "http://tempuri.org", string.Empty);
+            var response = new HttpResponse(new StringWriter());
+            var httpContext = new HttpContext(request, response);
+            var result = new HttpContextWrapper(httpContext);
 
             return result;
         }
+
+        #endregion
     }
 }

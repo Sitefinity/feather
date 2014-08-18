@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Telerik.Sitefinity.Localization;
+﻿using Telerik.Sitefinity.Localization;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.LocalizationResources
 {

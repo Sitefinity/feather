@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Globalization;
+
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Pages.Model;
 
@@ -15,8 +15,12 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyPageTemplateWithTitle"/> class.
         /// </summary>
-        /// <param name="framework">The framework.</param>
-        /// <param name="title">The title.</param>
+        /// <param name="framework">
+        /// The framework.
+        /// </param>
+        /// <param name="title">
+        /// The title.
+        /// </param>
         public DummyPageTemplateWithTitle(PageTemplateFramework framework, string title) 
         {
             this.Framework = framework;
@@ -26,9 +30,13 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
         /// <summary>
         /// Gets the title.
         /// </summary>
-        /// <param name="culture">The culture.</param>
-        /// <returns></returns>
-        public string GetTitle(System.Globalization.CultureInfo culture = null)
+        /// <param name="culture">
+        /// The culture.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        public string GetTitle(CultureInfo culture = null)
         {
             return this.Title;
         }
@@ -67,6 +75,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
@@ -80,6 +89,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
@@ -93,6 +103,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
@@ -106,6 +117,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
@@ -119,6 +131,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
@@ -132,6 +145,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
@@ -145,6 +159,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();

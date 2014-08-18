@@ -1,12 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
+using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.HttpContext;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
-
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
 {
@@ -16,44 +14,17 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
     [TestClass]
     public class FrontendControllerFactoryTests
     {
-        #region CreateController
+        #region Public Methods and Operators
 
-        [TestMethod]
-        [Owner("Boyko-Karadzhov")]
-        [Description("Checks whether CreateController will return a new controller with updated view engines collection.")]
-        public void CreateController_DummyController_NewControllerViewEnginesHaveAdditinalSearchPaths()
-        {
-            //Arrange
-            var controllerFactory = new FrontendControllerFactory();
-            controllerFactory.RegisterController(typeof(DummyController).Name, typeof(DummyController));
-
-            var viewEngine = new RazorViewEngine();
-            ViewEngines.Engines.Add(viewEngine);
-            try
-            {
-                //Act
-                var controller = (Controller)controllerFactory.CreateController(new DummyHttpContext().Request.RequestContext, "Dummy");
-                
-                //Assert
-                var controllerVe = controller.ViewEngineCollection.OfType<RazorViewEngine>().FirstOrDefault();
-                Assert.IsNotNull(controllerVe, "The newly created controller does not have the expected view engine.");
-
-                var containerVp = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(DummyController).Assembly);
-                Assert.IsTrue(controllerVe.ViewLocationFormats.Any(v => v.StartsWith(containerVp)),
-                    "The newly created controller does not have its container path in the view locations.");
-            }
-            finally
-            {
-                ViewEngines.Engines.Remove(viewEngine);
-            }
-        }
-
+        /// <summary>
+        /// The create controller_ decorated with view enhance view engines attribute_ new controllers view engines have custom transformations.
+        /// </summary>
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Checks whether CreateController will return a new controller with customized search locations when controller is decorated with EnhanceViewEnginesAttribute.")]
         public void CreateController_DecoratedWithViewEnhanceViewEnginesAttribute_NewControllersViewEnginesHaveCustomTransformations()
         {
-            //Arrange
+            // Arrange
             var controllerFactory = new FrontendControllerFactory();
             controllerFactory.RegisterController(typeof(DummyEnhancedController).Name, typeof(DummyEnhancedController));
 
@@ -61,15 +32,50 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
             ViewEngines.Engines.Add(viewEngine);
             try
             {
-                //Act
+                // Act
                 var controller = (Controller)controllerFactory.CreateController(new DummyHttpContext().Request.RequestContext, "DummyEnhanced");
-                
-                //Assert
+
+                // Assert
+                RazorViewEngine controllerVe = controller.ViewEngineCollection.OfType<RazorViewEngine>().FirstOrDefault();
+                Assert.IsNotNull(controllerVe, "The newly created controller does not have the expected view engine.");
+
+                var viewLocationExists = controllerVe.ViewLocationFormats.Any(p => p.StartsWith("~/" + DummyEnhancedController.CustomControllerPath));
+
+                Assert.IsTrue(viewLocationExists, "The newly created controller does not have its custom path in the view locations.");
+            }
+            finally
+            {
+                ViewEngines.Engines.Remove(viewEngine);
+            }
+        }
+
+        /// <summary>
+        /// The create controller_ dummy controller_ new controller view engines have additinal search paths.
+        /// </summary>
+        [TestMethod]
+        [Owner("Boyko-Karadzhov")]
+        [Description("Checks whether CreateController will return a new controller with updated view engines collection.")]
+        public void CreateController_DummyController_NewControllerViewEnginesHaveAdditinalSearchPaths()
+        {
+            // Arrange
+            var controllerFactory = new FrontendControllerFactory();
+            controllerFactory.RegisterController(typeof(DummyController).Name, typeof(DummyController));
+
+            var viewEngine = new RazorViewEngine();
+            ViewEngines.Engines.Add(viewEngine);
+
+            try
+            {
+                // Act
+                var controller = (Controller)controllerFactory.CreateController(new DummyHttpContext().Request.RequestContext, "Dummy");
+
+                // Assert
                 var controllerVe = controller.ViewEngineCollection.OfType<RazorViewEngine>().FirstOrDefault();
                 Assert.IsNotNull(controllerVe, "The newly created controller does not have the expected view engine.");
 
-                Assert.IsTrue(controllerVe.ViewLocationFormats.Any(p => p.StartsWith("~/" + DummyEnhancedController.CustomControllerPath)),
-                    "The newly created controller does not have its custom path in the view locations.");
+                var containerVp = string.Format("~/{0}", FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(DummyController).Assembly));
+
+                Assert.IsTrue(controllerVe.ViewLocationFormats.Any(v => v.StartsWith(containerVp)), "The newly created controller does not have its container path in the view locations.");
             }
             finally
             {

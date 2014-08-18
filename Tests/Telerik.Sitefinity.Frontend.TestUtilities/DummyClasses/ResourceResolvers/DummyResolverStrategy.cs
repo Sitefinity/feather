@@ -14,12 +14,12 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
         /// <summary>
         /// A function that will be called through <see cref="Exists"/> method.
         /// </summary>
-        public Func<PathDefinition, string, bool> ExistsMock;
+        public Func<PathDefinition, string, bool> ExistsMock { get; set; }
 
         /// <summary>
         /// A function that will be called through <see cref="GetCacheDependency"/> method.
         /// </summary>
-        public Func<PathDefinition, string, IEnumerable, DateTime, CacheDependency> GetCacheDependencyMock;
+        public Func<PathDefinition, string, IEnumerable, DateTime, CacheDependency> GetCacheDependencyMock { get; set; }
 
         /// <inheritdoc />
         public override bool Exists(PathDefinition definition, string virtualPath)

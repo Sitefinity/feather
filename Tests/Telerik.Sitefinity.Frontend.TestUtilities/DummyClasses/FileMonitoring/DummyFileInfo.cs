@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Telerik.Sitefinity.Frontend.FilesMonitoring;
+﻿using Telerik.Sitefinity.Frontend.FilesMonitoring;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
 {

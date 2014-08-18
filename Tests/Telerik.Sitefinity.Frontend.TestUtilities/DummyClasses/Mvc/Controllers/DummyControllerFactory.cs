@@ -9,10 +9,15 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers
     /// </summary>
     public class DummyControllerFactory : ISitefinityControllerFactory
     {
+        public DummyControllerFactory()
+        {
+            this.ControllerRegistry = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+        }
+
         /// <summary>
         /// The controller registry. Map ControllerName to ControllerType using this dictionary to emulate controller registration.
         /// </summary>
-        public IDictionary<string, Type> ControllerRegistry = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, Type> ControllerRegistry { get; set; }
 
         /// <inheritdoc />
         public void RegisterController(string controllerName, Type controllerType)

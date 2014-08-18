@@ -17,11 +17,13 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Helpers
             {
                 return this.viewData;
             }
+
             set
             {
-                viewData = value;
+                this.viewData = value;
             }
         }
+
         private ViewDataDictionary viewData = new ViewDataDictionary();
     }
 }
