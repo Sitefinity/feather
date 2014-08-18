@@ -13,32 +13,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Pages
     public class DeletePageTest : FeatherTestCase
     {
         /// <summary>
-        /// Pefroms Server Setup and prepare the system with needed data.
+        /// UI test DeletePage.
         /// </summary>
-        protected override void ServerSetup()
-        {
-            BAT.Macros().User().EnsureAdminLoggedIn();
-            BAT.Arrange(this.TestName).ExecuteSetUp();
-        }
-
-        /// <summary>
-        /// Performs clean up and clears all data created by the test.
-        /// </summary>
-        protected override void ServerCleanup()
-        {
-            BAT.Arrange(this.TestName).ExecuteTearDown();
-        }
-
         [TestMethod,
         Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Feather team"),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void DeletePage()
         {
-            NavigateToPages();
-            SelectPageForDelete();
-            ClickDeleteButton();
-            HandleDeletePageDialog();
-            CheckCreatePageLinkNotPresent();
+            this.NavigateToPages();
+            this.SelectPageForDelete();
+            this.ClickDeleteButton();
+            this.HandleDeletePageDialog();
+            this.CheckCreatePageLinkNotPresent();
         }
 
         /// <summary>
@@ -88,12 +74,29 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Pages
         }
 
         /// <summary>
-        /// Check if the create page link is not visble.
+        /// Check if the create page link is not visible.
         /// </summary>
         public void CheckCreatePageLinkNotPresent()
         {
             var createPageLink = BAT.Wrappers().Backend().Pages().PagesWrapper().GetCreatePageFromDecisionScreen();
             Assert.IsNotNull(createPageLink, "The Create Page button was not found.");
+        }
+
+        /// <summary>
+        /// Performs Server Setup and prepare the system with needed data.
+        /// </summary>
+        protected override void ServerSetup()
+        {
+            BAT.Macros().User().EnsureAdminLoggedIn();
+            BAT.Arrange(this.TestName).ExecuteSetUp();
+        }
+
+        /// <summary>
+        /// Performs clean up and clears all data created by the test.
+        /// </summary>
+        protected override void ServerCleanup()
+        {
+            BAT.Arrange(this.TestName).ExecuteTearDown();
         }
     }
 }

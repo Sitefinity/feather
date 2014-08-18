@@ -1,20 +1,23 @@
-﻿using ArtOfTest.Common.UnitTesting;
-using ArtOfTest.WebAii.Core;
-using ArtOfTest.WebAii.Controls.HtmlControls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArtOfTest.Common.UnitTesting;
+using ArtOfTest.WebAii.Controls.HtmlControls;
+using ArtOfTest.WebAii.Core;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 {
+    /// <summary>
+    /// Widgets base actions. 
+    /// </summary>
     public class WidgetsWrapper : BaseWrapper
     {
         /// <summary>
-        /// Verifies that feather widget has the proper title
+        /// Verifies that feather widget has the proper title.
         /// </summary>
-        /// <param name="title">the widget title</param>
+        /// <param name="title">The widget title.</param>
         public void VerifyWidgetTitle(string title)
         {
             HtmlControl widgetTitleText = this.EM.Widgets.FeatherWidget.WidgetTitleText
@@ -24,9 +27,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
-        /// Verifies that the feather widget designer has the proper label text
+        /// Verifies that the feather widget designer has the proper label text.
         /// </summary>
-        /// <param name="text">the label text</param>
+        /// <param name="text">The label text.</param>
         public void VerifyWidgetInputFieldLabelText(string text)
         {
             HtmlControl label = this.EM.Widgets.FeatherWidget.Label
@@ -36,7 +39,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
-        /// Verifies that input text field is present  for the mvc Dummy widget 
+        /// Verifies that input text field is present  for the MVC Dummy widget. 
         /// </summary>
         public void VerifyDummyWidgetInputTextField()
         {
@@ -45,7 +48,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
-        /// Verifies that the save button is present in the designer
+        /// Verifies that the save button is present in the designer.
         /// </summary>
         public void VerifyWidgetSaveButton()
         {
@@ -56,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
-        /// Verifies that the Cancel button is present in the designer
+        /// Verifies that the Cancel button is present in the designer.
         /// </summary>
         public void VerifyWidgetCancelButton()
         {
@@ -67,7 +70,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
-        /// Verifies that the close button is present in the designer
+        /// Verifies that the close button is present in the designer.
         /// </summary>
         public void VerifyWidgetCloseButton()
         {
@@ -76,9 +79,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
-        /// Adds text to the dummy mvc widget input text field
+        /// Adds text to the dummy MVC widget input text field.
         /// </summary>
-        /// <param name="text">the text</param>
+        /// <param name="text">The text message.</param>
         public void SetTextDummyWidget(string text)
         {
             HtmlInputText input = this.EM.Widgets.FeatherWidget.DummyWidgetInput
@@ -92,7 +95,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
-        /// Clicks the save button
+        /// Clicks the save button.
         /// </summary>
         public void ClickSaveButton()
         {

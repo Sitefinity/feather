@@ -1,13 +1,16 @@
-﻿using ArtOfTest.WebAii.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArtOfTest.WebAii.Core;
 using Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap
 {
+    /// <summary>
+    /// Feather map, used for EM facade.
+    /// </summary>
     public class FeatherElementMap
     {
         /// <summary>
@@ -18,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap
         }
 
         /// <summary>
-        /// Gets or sets the widgets element map.
+        /// Gets the widgets element map.
         /// It contains the finding expressions for all back-end events screens.
         /// </summary>
         /// <value>An initialized instance of widgets element map.</value>
@@ -31,11 +34,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap
                     this.EnsureFindIsInitialized();
                     this.widgetsMap = new WidgetsMap(this.find);
                 }
-                return widgetsMap;
+
+                return this.widgetsMap;
             }
+
             private set
             {
-                widgetsMap = value;
+                this.widgetsMap = value;
             }
         }
 
