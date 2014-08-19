@@ -52,7 +52,7 @@ function InstallFeatherWidgets($featherWidgetsBinDirectory, $featherNavigationWi
     InstallFeather $featherBinDirectory
 }
 
-function InstallFeatherPackages($featherPackageDirectory)
+function InstallFeatherPackages($featherPackagesDirectory)
 {
 	Write-Output "----- Create Resource Packages directory in SitefinityWebApp ------"
 	
@@ -61,6 +61,8 @@ function InstallFeatherPackages($featherPackageDirectory)
 		New-Item -ItemType directory -Path $resourcePackagesFolder
 	}
 	
-	Write-Output "----- Copy package ------"
-	Copy-Item $featherPackageDirectory $resourcePackagesFolder -recurse
+	Write-Output "----- Copy packages ------"
+	Get-ChildItem Bootstrap -recurse  -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder
+	Get-ChildItem Foundation -recurse  -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder
+	Get-ChildItem SemanticUI -recurse  -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder
 }
