@@ -14,6 +14,9 @@
         };
 
         var open = function (scope, attrs) {
+            //Hide already opened dialogs.
+            $(".modal-dialog").hide();
+
             var modalInstance = $modal.open({
                 backdrop: 'static',
                 scope: attrs.existingScope && scope,
@@ -21,17 +24,28 @@
                 controller: resolveControllerName(attrs),
                 windowClass: attrs.windowClass
             });
+
             scope.$modalInstance = modalInstance;
+
+            scope.$modalInstance.result.finally(function () {
+                if ($('.' + attrs.windowClass).length <= 1) {                    
+                    //Another dialog uses the same class so don't remove it.
+                    $('.' + attrs.windowClass).remove();
+                }
+
+                if ($(".modal-dialog").length > 0) {
+                    //There is another dialog except this one. Show it and keep the backdrop.
+                    $(".modal-dialog").show(); 
+                }
+                else {
+                    $('div.modal-backdrop').remove();
+                }                
+            });
         };
 
         return {
             restrict: 'A',
             link: function (scope, elem, attrs) {
-                elem.on('remove', function () {
-                    $('.' + attrs.windowClass).remove();
-                    $('div.modal-backdrop').remove();
-                });
-
                 if (attrs.autoOpen) {
                     open(scope, attrs);
                 }
