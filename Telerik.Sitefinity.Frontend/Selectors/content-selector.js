@@ -14,9 +14,8 @@
                     ItemProvider: "@itemprovider",
                     SelectedItemId: "=selecteditemid"
                 },
-                //templateUrl: '/Views/template.cshtml',
-                //templateUrl: sf.pageEditor.widgetContext.AppPath + 'Views/template.html',
                 template:
+'<span ng-bind="selectedContentItem.Title"></span>' +
 '<button id="openSelectorBtn">Select</button>' +
 '<div class="contentSelector" modal template-url="selector-template" open-button="#openSelectorBtn" window-class="sf-designer-dlg" existing-scope="true">' +
     '<script type="text/ng-template" id="selector-template">' +
@@ -44,7 +43,7 @@
             '</div>' +
         '</div>' +
         '<div class="modal-footer">' +
-            '<button type="button" ng-hide="isListEmpty" class="btn btn-primary" ng-click="selectSharedContent()">DoneSelecting</button>' +
+            '<button type="button" ng-hide="isListEmpty" class="btn btn-primary" ng-click="selectContent()">DoneSelecting</button>' +
             '<button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>' +
         '</div>' +
     '</script>'+
@@ -55,22 +54,13 @@
                     // Event handlers
                     // ------------------------------------------------------------------------
 
-                    //var onGetPropertiesSuccess = function (data) {
-                    //    if (data) {
-                    //        scope.Properties = propertyService.toAssociativeArray(data.Items);
-                    //        scope.filter.providerName = scope.Properties.ProviderName.PropertyValue;
-
-                    //        providerService.setDefaultProviderName(scope.filter.providerName);
-                    //    }
-                    //};
-
-                    //invoked when the content blocks for a provider are loaded
+                    //invoked when the content items are loaded
                     var onLoadedSuccess = function (data) {
                         if (data && data.Items) {
                             scope.contentItems = data.Items;
                             scope.filter.paging.set_totalItems(data.TotalCount);
 
-                            //select current cotnentBlock if it exists
+                            //select current item if it exists
                             for (var i = 0; i < data.Items.length; i++) {
                                 if (data.Items[i].Id == scope.SelectedItemId) {
                                     scope.selectedContentItem = data.Items[i];
@@ -93,17 +83,6 @@
                     // ------------------------------------------------------------------------
                     // helper methods
                     // ------------------------------------------------------------------------
-
-                    //var saveProperties = function (data) {
-                    //    scope.SelectedItemId = data.Item.Id;
-                    //    //scope.Properties.SharedContentID.PropertyValue = data.Item.Id;
-                    //    //scope.Properties.ProviderName.PropertyValue = scope.SelectedContentItem.ProviderName;
-                    //    //scope.Properties.Content.PropertyValue = data.Item.Content.Value;
-
-                    //    //var modifiedProperties = [scope.Properties.SharedContentID, scope.Properties.ProviderName, scope.Properties.Content];
-                    //    //var currentSaveMode = widgetContext.culture ? 1 : 0;
-                    //    //return propertyService.save(currentSaveMode, modifiedProperties);
-                    //};
 
                     var loadContentItems = function () {
                         var skip = scope.filter.paging.get_itemsToSkip();
@@ -152,20 +131,11 @@
                         scope.selectedContentItem = item;
                     };
 
-                    scope.selectSharedContent = function () {
+                    scope.selectContent = function () {
                         if (scope.selectedContentItem) {
                             var selectedContentItemId = scope.selectedContentItem.Id;
-                            //var providerName = scope.SelectedContentItem.ProviderName;
-                            //var checkout = false;
 
                             scope.SelectedItemId = selectedContentItemId;
-
-                            //scope.ShowLoadingIndicator = true;
-                            //sharedContentService.get(selectedContentItemId, providerName, checkout)
-                            //    .then(saveProperties)
-                            //    .then(dialogClose)
-                            //    .catch(onError)
-                            //    .finally(hideLoadingIndicator);
                         }
                         
                         scope.$modalInstance.close();
@@ -180,9 +150,6 @@
                         try {
                             scope.$modalInstance.close();
                         } catch (e) { }
-
-                        //if (typeof ($telerik) != 'undefined')
-                            //$telerik.$(document).trigger('modalDialogClosed');
                     };
 
                     scope.showLoadingIndicator = true;
