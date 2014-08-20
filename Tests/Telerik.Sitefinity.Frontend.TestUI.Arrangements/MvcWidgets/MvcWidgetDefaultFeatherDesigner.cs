@@ -7,7 +7,7 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// MvcWidgetDefaultFeatherDesigner arragement
+    /// MvcWidgetDefaultFeatherDesigner arragement.
     /// </summary>
     public class MvcWidgetDefaultFeatherDesigner : ITestArrangement
     {

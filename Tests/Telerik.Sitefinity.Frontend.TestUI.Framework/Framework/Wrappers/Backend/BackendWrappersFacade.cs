@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend.PageTemplates;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 {
@@ -27,6 +28,15 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public WidgetsWrapperFacade Widgets()
         {
             return new WidgetsWrapperFacade();
+        }
+
+        /// <summary>
+        /// Provides access to the Page Templates Wrapper.
+        /// </summary>
+        /// <returns>Page Templates wrapper facade.</returns>
+        public PageTemplatesWrapperFacade PageTemplates()
+        {
+            return new PageTemplatesWrapperFacade();
         }
     }
 }
