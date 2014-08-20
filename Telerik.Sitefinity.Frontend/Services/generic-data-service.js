@@ -1,10 +1,15 @@
 ﻿(function () {
     angular.module('services')
-        .factory('genericDataService', ['$resource', function ($resource) {
+        .factory('genericDataService', ['$resource', 'serverData', function ($resource, serverData) {
+            serverData.refresh();
+
             /* Private methods and variables */
             var getResource = function () {
-                var appPath = sf.pageEditor.widgetContext.AppPath;
-                return $resource(appPath + "restapi/sitefinity/generic-data/:items");
+                var appRoot = serverData.get('applicationRoot');
+                if (appRoot.slice(-1) !== '/')
+                    appRoot = appRoot + '/';
+
+                return $resource(appRoot + "restapi/sitefinity/generic-data/:items");
             };
 
             var DataItem = getResource();
