@@ -15,13 +15,9 @@
     };
 
     var resolveTemplateUrl = function (view, serverData) {
-        var appRoot = serverData.get('applicationRoot');
-        if (appRoot.slice(-1) !== '/')
-            appRoot = appRoot + '/';
-
         var widgetName = serverData.get('widgetName');
-
-        return appRoot + String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}', widgetName, view);
+        var templatePath = String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}', widgetName, view);
+        return sitefinity.getRootedUrl(templatePath);
     };
 
     var designerModule = angular.module('designer', ['pageEditorServices', 'ngRoute', 'modalDialog', 'serverDataModule']);
