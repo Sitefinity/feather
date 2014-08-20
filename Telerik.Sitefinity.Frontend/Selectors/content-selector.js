@@ -9,14 +9,17 @@
         .directive('contentSelector', ['genericDataService', function (genericDataService) {
             return {
                 restrict: "EA",
+                transclude: true,
                 scope: {
                     ItemType: "@itemtype",
                     ItemProvider: "@itemprovider",
                     SelectedItemId: "=selecteditemid"
                 },
                 template:
-'<span ng-bind="selectedContentItem.Title"></span>' +
-'<button id="openSelectorBtn">Select</button>' +
+'<div id="selectedItemsPlaceholder">' +
+    '<span ng-bind="selectedContentItem.Title"></span>' +
+    '<button id="openSelectorBtn">Select</button>' +
+'</div>' +
 '<div class="contentSelector" modal template-url="selector-template" open-button="#openSelectorBtn" window-class="sf-designer-dlg" existing-scope="true">' +
     '<script type="text/ng-template" id="selector-template">' +
         '<div class="modal-header">' +
@@ -48,7 +51,7 @@
         '</div>' +
     '</script>'+
 '</div>',
-                link: function (scope, element, attrs) {
+                link: function (scope, element, attrs, ctrl, translude) {
 
                     // ------------------------------------------------------------------------
                     // Event handlers
@@ -163,6 +166,12 @@
                         })
                         .catch(onError)
                         .finally(hideLoadingIndicator);
+
+                    translude(function (clone) {
+                        if (clone.html() && clone.html().trim()) {
+                            element.find("#selectedItemsPlaceholder").empty().append(clone);
+                        }
+                    });
                 }
             };
         }]);

@@ -50,7 +50,7 @@
                     open(scope, attrs);
                 }
                 else {                    
-                    $(attrs.openButton).click(function () {
+                    $(document).on("click", attrs.openButton, function () {
                         open(scope, attrs);
                     });                    
                 }
