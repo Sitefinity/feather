@@ -118,7 +118,7 @@
                         paging: {
                             totalItems: 0,
                             currentPage: 1,
-                            itemsPerPage: 50,
+                            itemsPerPage: 20,
                             get_itemsToSkip: function () {
                                 return (this.currentPage - 1) * this.itemsPerPage;
                             },
