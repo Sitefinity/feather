@@ -31,6 +31,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         public void TearDown()
         {
             ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+            ServerOperations.SystemManager().RestartApplication(true);
+
+            string filePath = this.GetDestinationFilePath(PackageName, LayoutFileName);           
+            File.Delete(filePath);
         }
 
         internal Assembly GetArrangementsAssembly()
