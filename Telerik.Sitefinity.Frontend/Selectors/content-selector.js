@@ -1,10 +1,4 @@
 ﻿(function ($) {
-    //if (typeof ($telerik) != 'undefined') {
-    //    $telerik.$(document).one('dialogRendered', function () {
-    //        angular.bootstrap($('.contentSelector'), ['selectors']);
-    //    });
-    //}
-
     angular.module('selectors')
         .directive('contentSelector', ['genericDataService', function (genericDataService) {
             return {
