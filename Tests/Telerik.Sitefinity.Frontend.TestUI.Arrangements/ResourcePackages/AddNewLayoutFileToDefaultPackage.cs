@@ -28,21 +28,22 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 
             string filePath = FileInjectHelper.GetDestinationFilePath(path);
             Stream destination = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-
+            
             FileInjectHelper.CopyStream(source, destination);
         }
 
         [ServerTearDown]
         public void TearDown()
         {
+            ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+            ServerOperations.SystemManager().RestartApplication(true);
+         
             var path = Path.Combine("ResourcePackages", PackageName, "MVC", "Views", "Layouts", LayoutFileName);
             string filePath = FileInjectHelper.GetDestinationFilePath(path);
-
-            ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
             File.Delete(filePath); 
         }
 
-      
+
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Data.TestLayout.cshtml";
         private const string PackageName = "Foundation";
         private const string LayoutFileName = "TestLayout.cshtml";
