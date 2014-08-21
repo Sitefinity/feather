@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MvcWidgets\DummyTextController.cs" />
+    <Compile Include="MvcWidgets\MvcSelector.cs" />
     <Compile Include="MvcWidgets\MvcWidgetDefaultFeatherDesigner.cs" />
     <Compile Include="Pages\DeletePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\TestLayout.cshtml" />
+    <EmbeddedResource Include="Data\DesignerView.Selector.cshtml" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
