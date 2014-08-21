@@ -200,6 +200,7 @@
     <Compile Include="DummyClasses\Models\DummyWidgetModel.cs" />
     <Compile Include="DummyClasses\Mvc\DummyControllerContainerInitializer.cs" />
     <Compile Include="DummyClasses\ResourceResolvers\DummyResourceHttpHandler.cs" />
+    <Compile Include="FileInjectHelper.cs" />
     <Compile Include="ObjectFactoryContainerRegion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
