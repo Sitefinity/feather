@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers
@@ -16,7 +13,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
         /// </summary>
         /// <param name="definition">The definition.</param>
         /// <param name="virtualPath">The virtual path.</param>
-        /// <returns></returns>
+        /// <returns>boolean result</returns>
         public bool Exists(PathDefinition definition, string virtualPath)
         {
             return true;
@@ -28,7 +25,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
             throw new NotImplementedException();
         }
 
-        /// <inheritdoc />
         public System.IO.Stream Open(PathDefinition definition, string virtualPaht)
         {
             throw new NotImplementedException();

@@ -222,10 +222,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         protected virtual void InitializeCustomRouting()
         {
             //Sf 7.2: 
-            //var defaultResolver = ObjectFactory.Container.Resolve<IMvcUrlParamsResolver>();
-            //ObjectFactory.Container.RegisterType(typeof(IMvcUrlParamsResolver), defaultResolver.GetType(), DynamicUrlParamsResolver.DefaultResolverName, new ContainerControlledLifetimeManager());
-
-            //ObjectFactory.Container.RegisterType<IMvcUrlParamsResolver, DynamicUrlParamsResolver>(new ContainerControlledLifetimeManager());
+            //ObjectFactory.Container.RegisterType<IControllerActionInvoker, DynamicUrlParamActionInvoker>(new ContainerControlledLifetimeManager());
 
             //ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
             //ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
@@ -281,9 +278,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (var attribute in localizationAttributes)
             {
                 var localAttr = (LocalizationAttribute)attribute;
-                if (!ObjectFactory.Container.IsRegistered(localAttr.ResourceClass, Res.GetResourceClassId(localAttr.ResourceClass)))
+                var resourceClass = localAttr.ResourceClass;
+                var resourceClassId = Res.GetResourceClassId(resourceClass);
+
+                if (!ObjectFactory.Container.IsRegistered(resourceClass, resourceClassId))
                 {
-                    Res.RegisterResource(localAttr.ResourceClass);
+                    Res.RegisterResource(resourceClass);
                 }
             }
         }

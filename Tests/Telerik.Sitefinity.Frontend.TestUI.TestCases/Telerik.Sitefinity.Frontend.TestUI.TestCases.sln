@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SetupScripts", "SetupScript
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.TestUI.TestCases", "Telerik.Sitefinity.Frontend.TestUI.TestCases.csproj", "{E90A06CF-7889-4A32-A941-4FD76332C179}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.TestUI.Framework", "..\Telerik.Sitefinity.Frontend.TestUI.Framework\Telerik.Sitefinity.Frontend.TestUI.Framework.csproj", "{36E7ADAD-8C01-425F-A425-E35B0696D8B6}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Telerik.Sitefinity.Frontend.TestUI.TestCases1.vsmdi
@@ -31,6 +33,10 @@ Global
 		{E90A06CF-7889-4A32-A941-4FD76332C179}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E90A06CF-7889-4A32-A941-4FD76332C179}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E90A06CF-7889-4A32-A941-4FD76332C179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36E7ADAD-8C01-425F-A425-E35B0696D8B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E7ADAD-8C01-425F-A425-E35B0696D8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E7ADAD-8C01-425F-A425-E35B0696D8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E7ADAD-8C01-425F-A425-E35B0696D8B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

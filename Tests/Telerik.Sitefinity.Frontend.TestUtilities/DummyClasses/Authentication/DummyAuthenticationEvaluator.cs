@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Telerik.Sitefinity.Frontend.Security;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Authentication
@@ -12,14 +9,14 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Authentication
     public class DummyAuthenticationEvaluator : AuthenticationEvaluator
     {
         /// <summary>
-        /// Defines whether current user is backend user.
+        /// Get Defines whether current user is backend user.
         /// </summary>
-        public bool IsBackendUser { set; get; }
+        public bool IsBackendUser { get; set; }
 
         /// <inheritdoc />
         public override void RequestBackendUserAuthentication()
         {
-            if (!IsBackendUser)
+            if (!this.IsBackendUser)
                 throw new UnauthorizedAccessException();
         }
     }

@@ -16,7 +16,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Views
         public DummyBuildManagerCompiledView(ControllerContext controllerContext, string viewPath)
             : base(controllerContext, viewPath)
         {
-
         }
 
         /// <summary>
@@ -28,7 +27,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Views
         protected DummyBuildManagerCompiledView(ControllerContext controllerContext, string viewPath, IViewPageActivator viewPageActivator)
             : base(controllerContext, viewPath, viewPageActivator)
         {
-
         }
 
         /// <summary>
@@ -39,7 +37,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Views
         /// <param name="instance">An object that contains additional information that can be used in the view.</param>
         protected override void RenderView(ViewContext viewContext, TextWriter writer, object instance)
         {
-            //
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace Telerik.Sitefinity.Frontend.TestIntegration
+﻿namespace Telerik.Sitefinity.Frontend.TestIntegration
 {
     /// <summary>
     /// Defines the integration test category names.

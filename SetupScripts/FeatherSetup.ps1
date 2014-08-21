@@ -44,9 +44,30 @@ function InstallFeather($featherBinDirectory)
     Write-Output "----- Feather successfully installed ------"
 }
 
-function InstallFeatherWidgets($featherWidgetsBinDirectory)
+function InstallFeatherWidgets($featherWidgetsBinDirectory, $featherNavigationWidgetBinDirectory)
 {
     Write-Output "Deploying feather widgets assembly to '$websiteBinariesDirectory'..."
     Get-ChildItem ContentBlock.dll -recurse  -path $featherWidgetsBinDirectory | Copy-Item -destination $websiteBinariesDirectory
+	Get-ChildItem Navigation.dll -recurse  -path $featherNavigationWidgetBinDirectory | Copy-Item -destination $websiteBinariesDirectory
     InstallFeather $featherBinDirectory
+}
+
+function InstallFeatherPackages($featherPackagesDirectory)
+{
+	Write-Output "----- Create Resource Packages directory in SitefinityWebApp ------"
+	
+	$resourcePackagesFolder = $defaultWebsiteRootDirectory + "\ResourcePackages"
+	if(!(Test-Path -Path $resourcePackagesFolder )){
+		New-Item -ItemType directory -Path $resourcePackagesFolder
+	}
+	
+	Write-Output "----- Copy packages ------"
+	Get-ChildItem Bootstrap -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -recurse
+	Get-ChildItem Foundation -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -recurse
+	Get-ChildItem SemanticUI -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -recurse
+	Write-Output "----- Packages copied successfully ------"
+	
+	Write-Output "Restarting $appPollName application pool..."
+    Restart-WebAppPool $appPollName -ErrorAction Continue
+    GetRequest $defaultWebsiteUrl
 }

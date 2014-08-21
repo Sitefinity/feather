@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates;
 using Telerik.Sitefinity.Pages.Model;
@@ -11,35 +11,41 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
     [TestClass]
     public class PageTemplateExtensionsTests
     {
-        #region GetTemplateFramework
+        #region Public Methods and Operators
 
+        /// <summary>
+        /// The get template framework_ no specific fremework_ returns hybrid.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether the GetTemplateFramework method returns Hybrid if the template doesn't implement IFrameworkSpecificPageTemplate")]
         public void GetTemplateFramework_NoSpecificFremework_ReturnsHybrid()
         {
-            //Arrange
-            DummyPageTemplate pTemplate = new DummyPageTemplate();
+            // Arrange
+            var template = new DummyPageTemplate();
 
-            //Act
-            var framework = pTemplate.GetTemplateFramework();
+            // Act
+            var framework = template.GetTemplateFramework();
 
-            //Assert
+            // Assert
             Assert.AreEqual(PageTemplateFramework.Hybrid, framework, "The framework of the template should be Hybrid.");
         }
 
+        /// <summary>
+        /// The get template framework_ specific fremework_ returns correct framework.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether the GetTemplateFramework method returns the correct framework if the template is IFrameworkSpecificPageTemplate")]
         public void GetTemplateFramework_SpecificFremework_ReturnsCorrectFramework()
         {
-            //Arrange
-            DummyFrameworkSpecificPageTemplate pTemplate = new DummyFrameworkSpecificPageTemplate(PageTemplateFramework.Mvc);
-            
-            //Act
-            var framework = pTemplate.GetTemplateFramework();
+            // Arrange
+            var template = new DummyFrameworkSpecificPageTemplate(PageTemplateFramework.Mvc);
 
-            //Assert
+            // Act
+            var framework = template.GetTemplateFramework();
+
+            // Assert
             Assert.AreEqual(PageTemplateFramework.Mvc, framework, "The framework of the template should be Mvc.");
         }
 

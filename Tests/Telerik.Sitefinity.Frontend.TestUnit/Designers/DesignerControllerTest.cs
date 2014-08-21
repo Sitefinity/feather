@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
@@ -16,16 +16,33 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
     [TestClass]
     public class DesignerControllerTest
     {
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            this.objectFactoryCotnainerRegion = new ObjectFactoryContainerRegion();
+        #region Public Methods and Operators
 
-            FrontendManager.AuthenticationEvaluator = new DummyAuthenticationEvaluator() { IsBackendUser = true };
-            
-            this.designerController = new DesignerController();
+        /// <summary>
+        /// The master_ by widget name_ sets control name.
+        /// </summary>
+        [TestMethod]
+        [Owner("EGaneva")]
+        [Description("Validates whether Master action sets the correct ControlName in the ViewBag.")]
+        public void Master_ByWidgetName_SetsControlName()
+        {
+            // Arrange
+            string widgetName = "Dummy";
+            using (new ObjectFactoryContainerRegion())
+            {
+                ObjectFactory.Container.RegisterType<IResourceResolverStrategy, ResourceResolverStrategy>();
+
+                // Act
+                var designer = this.designerController.Master(widgetName) as ViewResult;
+
+                // Assert
+                Assert.AreEqual(widgetName, designer.ViewBag.ControlName, string.Format("ViewBag.ControlName should be equal to {0}.", widgetName));
+            }
         }
 
+        /// <summary>
+        /// The test cleanup.
+        /// </summary>
         [TestCleanup]
         public void TestCleanup()
         {
@@ -36,72 +53,65 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
             this.designerController = null;
         }
 
-        #region Master
-
-        [TestMethod]
-        [Owner("EGaneva")]
-        [Description("Validates whether Master action sets the correct ControlName in the ViewBag.")]
-        public void Master_ByWidgetName_SetsControlName()
+        /// <summary>
+        /// The test initialize.
+        /// </summary>
+        [TestInitialize]
+        public void TestInitialize()
         {
-            //Arrange
-            var widgetName = "Dummy";
-            using (new ObjectFactoryContainerRegion())
-            {
-                ObjectFactory.Container.RegisterType<IResourceResolverStrategy, ResourceResolverStrategy>();
+            this.objectFactoryCotnainerRegion = new ObjectFactoryContainerRegion();
 
-                //Act
-                var designer = this.designerController.Master(widgetName) as ViewResult;
+            FrontendManager.AuthenticationEvaluator = new DummyAuthenticationEvaluator { IsBackendUser = true };
 
-                //Assert
-                Assert.AreEqual(widgetName, designer.ViewBag.ControlName, string.Format("ViewBag.ControlName should be equal to {0}.", widgetName));
-            }
+            this.designerController = new DesignerController();
         }
 
-        #endregion
-
-        #region DesignerPartialView
-
-        [TestMethod]
-        [Owner("EGaneva")]
-        [Description("Validates whether View action returns view with correct name with requested view type when such is available.")]
-        public void View_WithLocalAdvancedDesigner_ReturnsPropertyGridDesigner()
-        {
-            //Arrange
-            var widgetName = "Dummy";
-            var viewType = "PropertyGrid";
-            var expectedDesignerViewName = "DesignerView.PropertyGrid";
-
-            //Act
-            var designerView = this.designerController.View(widgetName, viewType) as PartialViewResult;
-
-            //Assert
-            Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should be equal to {0}.", expectedDesignerViewName));
-        }
-
+        /// <summary>
+        /// The view_ no local property grid designer_ returns default property grid designer.
+        /// </summary>
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Validates whether View action returns default view with the requested view type when such is available.")]
         public void View_NoLocalPropertyGridDesigner_ReturnsDefaultPropertyGridDesigner()
         {
-            //Arrange
+            // Arrange
             var viewType = "PropertyGrid";
             var expectedDesignerViewName = "DesignerView.PropertyGrid";
 
-            //Act
-            var designerView = this.designerController.View("", viewType) as PartialViewResult;
+            // Act
+            var designerView = this.designerController.View(string.Empty, viewType) as PartialViewResult;
 
-            //Assert
+            // Assert
+            Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should be equal to {0}.", expectedDesignerViewName));
+        }
+
+        /// <summary>
+        /// The view_ with local advanced designer_ returns property grid designer.
+        /// </summary>
+        [TestMethod]
+        [Owner("EGaneva")]
+        [Description("Validates whether View action returns view with correct name with requested view type when such is available.")]
+        public void View_WithLocalAdvancedDesigner_ReturnsPropertyGridDesigner()
+        {
+            // Arrange
+            var widgetName = "Dummy";
+            var viewType = "PropertyGrid";
+            var expectedDesignerViewName = "DesignerView.PropertyGrid";
+
+            // Act
+            var designerView = this.designerController.View(widgetName, viewType) as PartialViewResult;
+
+            // Assert
             Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should be equal to {0}.", expectedDesignerViewName));
         }
 
         #endregion
 
-        #region Private fields and constants
+        #region Fields
 
         private DesignerController designerController;
         private ObjectFactoryContainerRegion objectFactoryCotnainerRegion;
 
         #endregion
-
     }
 }

@@ -39,18 +39,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             this.actionName = actionName;
             this.providerNameResolver = providerNameResolver;
 
-            this.actionMethod = this.Controller.GetType().GetMethod(actionName, BindingFlags.Public | BindingFlags.Instance);
-            if (this.actionMethod == null)
+            this.ActionMethod = this.Controller.GetType().GetMethod(actionName, BindingFlags.Public | BindingFlags.Instance);
+            if (this.ActionMethod == null)
                 throw new ArgumentException("The controller {0} does not have action '{1}'.".Arrange(controller.GetType().Name, actionName));
 
-            this.manager = this.ResolveManager();
+            this.Manager = this.ResolveManager();
         }
 
         /// <inheritdoc />
-        protected override void ResolveUrlParamsInternal(string[] urlParams, RequestContext requestContext)
+        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
         {
             if (urlParams == null)
-                return;
+                return false;
 
             var url = RouteHelper.GetUrlParameterString(urlParams);
             string redirectUrl;
@@ -58,36 +58,62 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             if (item != null)
             {
-                requestContext.RouteData.Values[UrlParamsMapperBase.ActionNameKey] = this.actionName;
+                this.AddContentItemToRouteData(requestContext, redirectUrl, item);
 
-                var parameters = this.actionMethod.GetParameters();
-                if (parameters.Length > 0 && typeof(TContent).IsAssignableFrom(parameters[0].ParameterType))
-                {
-                    requestContext.RouteData.Values[parameters[0].Name] = item;
-                }
-
-                if (redirectUrl.IsNullOrEmpty() == false && parameters.Length > 1 && parameters[1].ParameterType == typeof(string))
-                {
-                    requestContext.RouteData.Values[parameters[1].Name] = redirectUrl;
-                }
-
-                RouteHelper.SetUrlParametersResolved();
+                return true;
             }
+
+            return false;
         }
 
-        private TContent GetItemByUrl(string url, out string redirectUrl)
+        /// <summary>
+        /// Adds the content item to route data.
+        /// </summary>
+        /// <param name="requestContext">The request context.</param>
+        /// <param name="redirectUrl">The redirect URL.</param>
+        /// <param name="item">The item.</param>
+        protected void AddContentItemToRouteData(RequestContext requestContext, string redirectUrl, TContent item)
         {
-            if (this.manager is IContentManager)
+            requestContext.RouteData.Values[UrlParamsMapperBase.ActionNameKey] = this.actionName;
+
+            var parameters = this.ActionMethod.GetParameters();
+            if (parameters.Length > 0 && typeof(TContent).IsAssignableFrom(parameters[0].ParameterType))
             {
-                return ((IContentManager)this.manager).GetItemFromUrl(typeof(TContent), url, out redirectUrl) as TContent;
+                requestContext.RouteData.Values[parameters[0].Name] = item;
+            }
+
+            if (redirectUrl.IsNullOrEmpty() == false && parameters.Length > 1 && parameters[1].ParameterType == typeof(string))
+            {
+                requestContext.RouteData.Values[parameters[1].Name] = redirectUrl;
+            }
+
+            RouteHelper.SetUrlParametersResolved();
+        }
+
+        /// <summary>
+        /// Gets content item by URL.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="redirectUrl">The redirect URL.</param>
+        /// <returns></returns>
+        protected TContent GetItemByUrl(string url, out string redirectUrl)
+        {
+            if (this.Manager is IContentManager)
+            {
+                return ((IContentManager)this.Manager).GetItemFromUrl(typeof(TContent), url, out redirectUrl) as TContent;
             }
             else
             {
-                return ((IUrlProvider)this.manager.Provider).GetItemFromUrl(typeof(TContent), url, out redirectUrl) as TContent;
+                return ((IUrlProvider)this.Manager.Provider).GetItemFromUrl(typeof(TContent), url, out redirectUrl) as TContent;
             }
         }
 
-        private IManager ResolveManager()
+        /// <summary>
+        /// Resolves the manager.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.InvalidOperationException">Items of the {0} type cannot be found by URL..Arrange(typeof(TContent).FullName)</exception>
+        protected IManager ResolveManager()
         {
             var providerName = this.providerNameResolver != null ? this.providerNameResolver() : null;
             var manager = ManagerBase.GetMappedManager(typeof(TContent), providerName);
@@ -98,9 +124,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return manager;
         }
 
-        private IManager manager;
+        protected IManager Manager { get; private set; }
+        protected MethodInfo ActionMethod { get; private set; }
         private string actionName;
         private Func<string> providerNameResolver;
-        private MethodInfo actionMethod;
     }
 }

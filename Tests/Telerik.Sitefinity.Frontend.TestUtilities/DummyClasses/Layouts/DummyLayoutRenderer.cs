@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
-using Telerik.Sitefinity.Pages.Model;
-using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Views;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Layouts
 {
@@ -68,12 +64,11 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Layouts
                new HttpResponse(null)));
             context.Items["CurrentResourcePackage"] = "test";
 
-            var baseTemplateBuilder =(LayoutRenderer)this;
+            var baseTemplateBuilder = (LayoutRenderer)this;
 
-            SystemManager.RunWithHttpContext(context, () =>
-            {
-                controller = baseTemplateBuilder.CreateController(routeData);
-            });
+            SystemManager.RunWithHttpContext(
+                context, 
+                () => { controller = baseTemplateBuilder.CreateController(routeData); });
 
             return controller;
         }
@@ -89,8 +84,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Layouts
         {
             return new ViewEngineResult(new DummyView { InnerHtml = this.InnerHtmlStringWithoutForm }, ViewEngines.Engines.FirstOrDefault());
         }
-
         #endregion
-
     }
 }

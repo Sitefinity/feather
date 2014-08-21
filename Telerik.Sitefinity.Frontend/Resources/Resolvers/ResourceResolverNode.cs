@@ -14,8 +14,6 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// </summary>
     public abstract class ResourceResolverNode : IResourceResolverNode
     {
-
-
         #region IResourceResolverNode
 
         #region IVirtualFileResolver

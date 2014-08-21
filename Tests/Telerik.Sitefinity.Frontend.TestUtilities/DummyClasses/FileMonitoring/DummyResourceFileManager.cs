@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
@@ -11,27 +8,35 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
     /// </summary>
     public class DummyResourceFileManager : IFileManager
     {
-        /// <inheritdoc />
-        public void FileAdded(string fileName, string filePath, string packageName = "")
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DummyResourceFileManager"/> class.
+        /// </summary>
+        public DummyResourceFileManager()
         {
-            DummyFileInfos.Add(new DummyFileInfo(fileName, filePath, FileChangeType.Created, packageName: packageName));
-        }
-
-        /// <inheritdoc />
-        public void FileDeleted(string filePath)
-        {
-            DummyFileInfos.Add(new DummyFileInfo("", filePath, FileChangeType.Deleted));
-        }
-
-        /// <inheritdoc />
-        public void FileRenamed(string newFileName, string oldFileName, string newFilePath, string oldFilePath, string packageName = "")
-        {
-            DummyFileInfos.Add(new DummyFileInfo(newFileName, newFilePath, FileChangeType.Renamed, oldFileName, oldFilePath, packageName));
+            this.DummyFileInfos = new List<DummyFileInfo>();
         }
 
         /// <summary>
         /// The dummy file infos
         /// </summary>
-        public List<DummyFileInfo> DummyFileInfos = new List<DummyFileInfo>();
+        public List<DummyFileInfo> DummyFileInfos { get; set; }
+
+        /// <inheritdoc />
+        public void FileAdded(string fileName, string filePath, string packageName = "")
+        {
+            this.DummyFileInfos.Add(new DummyFileInfo(fileName, filePath, FileChangeType.Created, packageName: packageName));
+        }
+
+        /// <inheritdoc />
+        public void FileDeleted(string filePath)
+        {
+            this.DummyFileInfos.Add(new DummyFileInfo(string.Empty, filePath, FileChangeType.Deleted));
+        }
+
+        /// <inheritdoc />
+        public void FileRenamed(string newFileName, string oldFileName, string newFilePath, string oldFilePath, string packageName = "")
+        {
+            this.DummyFileInfos.Add(new DummyFileInfo(newFileName, newFilePath, FileChangeType.Renamed, oldFileName, oldFilePath, packageName));
+        }
     }
 }

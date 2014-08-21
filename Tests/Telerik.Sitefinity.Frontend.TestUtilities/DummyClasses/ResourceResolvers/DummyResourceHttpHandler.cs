@@ -1,31 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using Telerik.Sitefinity.Frontend.Resources;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers
 {
     /// <summary>
-    /// This class mocks the functionality of <see cref="Telerik.Sitefinity.Frontend.Resources.ResourceHttpHandler"/> for test purposes.
+    /// This class mocks the functionality of <see cref="Telerik.Sitefinity.Frontend.Resources.ResourceHttpHandler" /> for
+    /// test purposes.
     /// </summary>
     public class DummyResourceHttpHandler : ResourceHttpHandler
     {
-        /// <summary>
-        /// A function that will be called through <see cref="FileExists"/> method.
-        /// </summary>
-        public Func<string, bool> FileExistsMock;
+        #region Fields
 
         /// <summary>
-        /// A function that will be called through <see cref="OpenFile"/> method.
+        /// A function that will be called through <see cref="FileExists" /> method.
         /// </summary>
-        public Func<string, Stream> OpenFileMock;
+        public Func<string, bool> FileExistsMock { get; set; }
 
         /// <summary>
-        /// A function that will be called through <see cref="WriteToOutput"/> method.
+        /// A function that will be called through <see cref="OpenFile" /> method.
         /// </summary>
-        public Action<System.Web.HttpContext, byte[]> WriteToOutputMock;
+        public Func<string, Stream> OpenFileMock { get; set; }
+
+        /// <summary>
+        /// A function that will be called through <see cref="WriteToOutput" /> method.
+        /// </summary>
+        public Action<System.Web.HttpContext, byte[]> WriteToOutputMock { get; set; }
+
+        #endregion
+
+        #region Methods
 
         /// <inheritdoc />
         protected override bool FileExists(string path)
@@ -34,10 +38,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
             {
                 return this.FileExistsMock(path);
             }
-            else
-            {
-                return base.FileExists(path);
-            }
+
+            return base.FileExists(path);
         }
 
         /// <inheritdoc />
@@ -47,10 +49,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
             {
                 return this.OpenFileMock(path);
             }
-            else
-            {
-                return base.OpenFile(path);
-            }
+
+            return base.OpenFile(path);
         }
 
         /// <inheritdoc />
@@ -65,6 +65,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
                 base.WriteToOutput(context, buffer);
             }
         }
-    }
 
+        #endregion
+    }
 }
