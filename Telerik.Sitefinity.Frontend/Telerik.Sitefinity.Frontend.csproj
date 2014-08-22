@@ -175,7 +175,9 @@
     <Compile Include="InlineEditing\HtmlProcessor.cs" />
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
+    <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerContainerAttribute.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="FilesMonitoring\IFileMonitor.cs" />
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\IUrlMappingController.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />
@@ -214,6 +217,18 @@
     <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParser.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilder.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\CategoryParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\CustomActionParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\DefaultUrlParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\DetailActionParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\DynamicUrlParamActionInvoker.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\IRouteParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\IUrlParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\RouteParamResolverBase.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\TagParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\TaxonParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\UrlParamsMapperBase.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\UrlSegmentInfo.cs" />
     <Compile Include="Mvc\Models\DesignerModel.cs" />
     <Compile Include="Mvc\Models\DesignerViewConfigModel.cs" />
     <Compile Include="Mvc\Models\IDesignerModel.cs" />
@@ -313,6 +328,7 @@
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.json" />
     <EmbeddedResource Include="Mvc\Styles\sitefinity-backend.scss" />
+    <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>
