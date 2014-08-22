@@ -11,7 +11,9 @@ module.exports = function (grunt) {
 			files: ['gruntfile.js',
 					'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
-					'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js'
+					'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
+					'Telerik.Sitefinity.Frontend/Selectors/*.js',
+					'Telerik.Sitefinity.Frontend/Services/*.js'
 			]
 		},
 		

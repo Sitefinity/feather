@@ -5,13 +5,14 @@
                 restrict: "EA",
                 transclude: true,
                 scope: {
-                    ItemType: "@itemtype",
-                    ItemProvider: "@itemprovider",
-                    SelectedItemId: "=selecteditemid"
+                    itemType: '@',
+                    itemProvider: '@',
+                    selectedItemId: '=',
+                    selectedItem: '='
                 },
                 template:
 '<div id="selectedItemsPlaceholder">' +
-    '<span ng-bind="selectedContentItem.Title"></span>' +
+    '<span ng-bind="selectedItem.Title"></span>' +
     '<button id="openSelectorBtn">Select</button>' +
 '</div>' +
 '<div class="contentSelector" modal template-url="selector-template" open-button="#openSelectorBtn" window-class="sf-designer-dlg" existing-scope="true">' +
@@ -30,7 +31,7 @@
                 '</div>' +
                 '<div class="list-group s-items-list-wrp">' +
                     '<a ng-repeat="item in contentItems"' +
-                            "ng-class=\"{'list-group-item':true, 'active': item.Id==selectedContentItem.Id }\" " +
+                            "ng-class=\"{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }\" " +
                             'ng-click="contentItemClicked($index, item)"> ' +
                         '<span ng-bind="item.Title"></span>' +
                     '</a>' +
@@ -59,8 +60,11 @@
 
                             //select current item if it exists
                             for (var i = 0; i < data.Items.length; i++) {
-                                if (data.Items[i].Id == scope.SelectedItemId) {
-                                    scope.selectedContentItem = data.Items[i];
+                                var id = data.Items[i].Id;
+                                if (id === scope.selectedItemId ||
+                                    (scope.selectedItem && id === scope.selectedItem.Id)) {
+                                    scope.selectedItemInTheDialog = data.Items[i];
+                                    scope.selectedItem = data.Items[i];
                                 }
                             }
                         }
@@ -85,7 +89,7 @@
                         var skip = scope.filter.paging.get_itemsToSkip();
                         var take = scope.filter.paging.itemsPerPage;
 
-                        return genericDataService.getItems(scope.ItemType, scope.ItemProvider, skip, take, scope.filter.search)
+                        return genericDataService.getItems(scope.itemType, scope.itemProvider, skip, take, scope.filter.search)
                             .then(onLoadedSuccess, onError);
                     };
 
@@ -107,7 +111,6 @@
                     scope.isListEmpty = false;
                     scope.contentItems = [];
                     scope.filter = {
-                        //providerName: null,
                         search: null,
                         paging: {
                             totalItems: 0,
@@ -125,14 +128,14 @@
                     };
 
                     scope.contentItemClicked = function (index, item) {
-                        scope.selectedContentItem = item;
+                        scope.selectedItemInTheDialog = item;
                     };
 
                     scope.selectContent = function () {
-                        if (scope.selectedContentItem) {
-                            var selectedContentItemId = scope.selectedContentItem.Id;
-
-                            scope.SelectedItemId = selectedContentItemId;
+                        if (scope.selectedItemInTheDialog) {
+                            //set the selected item and its id to the mapped isolated scope properties
+                            scope.selectedItem = scope.selectedItemInTheDialog;
+                            scope.selectedItemId = scope.selectedItemInTheDialog.Id;
                         }
                         
                         scope.$modalInstance.close();
@@ -150,12 +153,11 @@
                     };
 
                     scope.showLoadingIndicator = true;
-                    genericDataService.getItems(scope.ItemType, scope.ItemProvider, scope.filter.paging.get_itemsToSkip(), 
+                    genericDataService.getItems(scope.itemType, scope.itemProvider, scope.filter.paging.get_itemsToSkip(), 
                         scope.filter.paging.itemsPerPage, scope.filter.search)
                         .then(onLoadedSuccess, onError)
                         .then(function () {
                             scope.$watch('filter.search', reloadContentItems);
-                            //scope.$watch('filter.providerName', reloadContentItems);
                             scope.$watch('filter.paging.currentPage', reloadContentItems);
                         })
                         .catch(onError)

@@ -3,7 +3,23 @@
 (function () {
     var modalDialogModule = angular.module('modalDialog', ['ui.bootstrap']);
 
-    modalDialogModule.directive('modal', ['$modal', function ($modal) {
+    //Keeps track of the number of opened modal dialogs.
+    modalDialogModule.factory('dialogsService', function () {
+        var openedDialogsCount = 0;
+        return {
+            increaseDialogsCount: function () {
+                openedDialogsCount++;
+            },
+            decreaseDialogsCount: function () {
+                openedDialogsCount--;
+            },
+            getOpenedDialogsCount: function () {
+                return openedDialogsCount;
+            }
+        };
+    });
+
+    modalDialogModule.directive('modal', ['$modal', 'dialogsService', function ($modal, dialogsService) {
         var resolveControllerName = function (attrs) {
             if (!attrs.dialogController && !attrs.existingScope) {
                 throw 'Please either insert an attribute named "dialog-controller" with the name of the controller for the modal dialog next to the "modal" directive ' +
@@ -14,6 +30,10 @@
         };
 
         var open = function (scope, attrs) {
+            //It will be used for identifying the opened window in order to be removed from the DOM when the dialog is closed.
+            //It is set as a class because of a limitation in the angular-bootstrap directive.
+            var modalWindowId = 'id' + Date.now();
+
             //Hide already opened dialogs.
             $(".modal-dialog").hide();
 
@@ -22,20 +42,21 @@
                 scope: attrs.existingScope && scope,
                 templateUrl: attrs.templateUrl,
                 controller: resolveControllerName(attrs),
-                windowClass: attrs.windowClass
+                windowClass: attrs.windowClass + ' ' + modalWindowId
             });
 
             scope.$modalInstance = modalInstance;
 
-            scope.$modalInstance.result.finally(function () {
-                if ($('.' + attrs.windowClass).length <= 1) {                    
-                    //Another dialog uses the same class so don't remove it.
-                    $('.' + attrs.windowClass).remove();
-                }
+            dialogsService.increaseDialogsCount();
 
-                if ($(".modal-dialog").length > 0) {
+            scope.$modalInstance.result.finally(function () {
+                dialogsService.decreaseDialogsCount();
+
+                $('.' + modalWindowId).remove();
+
+                if (dialogsService.getOpenedDialogsCount() > 0) {
                     //There is another dialog except this one. Show it and keep the backdrop.
-                    $(".modal-dialog").show(); 
+                    $(".modal-dialog").show();
                 }
                 else {
                     $('div.modal-backdrop').remove();
@@ -49,7 +70,8 @@
                 if (attrs.autoOpen) {
                     open(scope, attrs);
                 }
-                else {                    
+                else {
+                    $(document).off("click", attrs.openButton);
                     $(document).on("click", attrs.openButton, function () {
                         open(scope, attrs);
                     });                    
