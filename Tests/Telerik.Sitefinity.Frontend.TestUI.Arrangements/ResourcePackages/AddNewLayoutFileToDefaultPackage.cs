@@ -33,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             File.Delete(filePath);
         } 
         
-        private const string FileResource = "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Data.TestLayout.cshtml";
+        private const string FileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayout.cshtml";
         private const string PackageName = "Foundation";
         private const string LayoutFileName = "TestLayout.cshtml";
         private const string TemplateTitle = "Foundation.TestLayout";
