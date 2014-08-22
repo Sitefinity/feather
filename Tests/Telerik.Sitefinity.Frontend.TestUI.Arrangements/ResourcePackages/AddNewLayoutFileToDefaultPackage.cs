@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
@@ -30,9 +31,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 
             string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(PackageName, LayoutFileName);           
             File.Delete(filePath);
-        }
-
-        private const string FileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayout.cshtml";
+        } 
+        
+        private const string FileResource = "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Data.TestLayout.cshtml";
         private const string PackageName = "Foundation";
         private const string LayoutFileName = "TestLayout.cshtml";
         private const string TemplateTitle = "Foundation.TestLayout";
