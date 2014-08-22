@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MvcWidgets\DummyTextController.cs" />
-    <Compile Include="MvcWidgets\MvcSelector.cs" />
+    <Compile Include="MvcWidgets\MvcSelectorTest.cs" />
     <Compile Include="MvcWidgets\MvcWidgetDefaultFeatherDesigner.cs" />
     <Compile Include="Pages\DeletePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +66,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Data\TestLayout.cshtml" />
     <EmbeddedResource Include="Data\DesignerView.Selector.cshtml" />
+    <EmbeddedResource Include="Data\DesignerView.Selector.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -80,7 +81,9 @@
       <Name>Telerik.Sitefinity.Frontend.TestUtilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Data\designerview-selector.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

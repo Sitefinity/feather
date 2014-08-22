@@ -105,5 +105,70 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             saveButton.Click();
             ActiveBrowser.WaitForAsyncRequests();
         }
+
+        /// <summary>
+        /// Selects the content.
+        /// </summary>
+        public void SelectContent()
+        {
+            HtmlButton saveButton = this.EM.Widgets.FeatherWidget.SelectButton
+                .AssertIsPresent("save button");
+
+            saveButton.Click();
+            ActiveBrowser.WaitForAsyncRequests();
+        }
+
+        /// <summary>
+        /// Selects the item.
+        /// </summary>
+        /// <param name="itemName">Name of the item.</param>
+        public void SelectItem(string itemName)
+        {
+            var anchor = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlAnchor>(a => a.InnerText.Contains(itemName));
+            anchor.AssertIsPresent("item name not present");
+
+            anchor.Click();
+        }
+
+        /// <summary>
+        /// Dones the selecting.
+        /// </summary>
+        public void DoneSelecting()
+        {
+            HtmlButton doneButton = this.EM.Widgets.FeatherWidget.DoneButton
+                .AssertIsPresent("done button");
+
+            doneButton.Click();
+            ActiveBrowser.WaitForAsyncRequests();
+        }
+
+        /// <summary>
+        /// Verifies the selected item.
+        /// </summary>
+        /// <param name="itemName">Name of the item.</param>
+        public void VerifySelectedItem(string itemName)
+        {
+            var item = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlSpan>(a => a.InnerText.Contains(itemName));
+            item.AssertIsPresent("item name not present");
+        }
+
+        public void SetSearchText(string text)
+        {
+            HtmlInputText input = this.EM.Widgets.FeatherWidget.SearchInput
+                .AssertIsPresent("input");
+
+            input.MouseClick();
+
+            Manager.Current.Desktop.KeyBoard.TypeText(text);
+
+            ActiveBrowser.WaitForAsyncRequests();
+            ActiveBrowser.RefreshDomTree();
+        }
+
+        public int CountItems()
+        {
+            var items = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in contentItems");
+            return items.Count;
+        }
     }
 }

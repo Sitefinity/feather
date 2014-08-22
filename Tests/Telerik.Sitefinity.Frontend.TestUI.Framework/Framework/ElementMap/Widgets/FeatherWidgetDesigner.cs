@@ -94,5 +94,37 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
                 return this.Get<HtmlInputText>("id=prop-DummyText");
             }
         }
+
+        /// <summary>
+        /// Gets the select button.
+        /// </summary>
+        /// <value>The select button.</value>
+        public HtmlButton SelectButton
+        {
+            get
+            {
+                return this.Get<HtmlButton>("id=openSelectorBtn");
+            }
+        }
+
+        /// <summary>
+        /// Gets the done button.
+        /// </summary>
+        /// <value>The done button.</value>
+        public HtmlButton DoneButton
+        {
+            get
+            {
+                return this.Get<HtmlButton>("ng-click=selectContent()");
+            }
+        }
+
+        public HtmlInputText SearchInput
+        {
+            get
+            {
+                return this.Get<HtmlInputText>("ng-model=filter.search");
+            }
+        }
     }
 }

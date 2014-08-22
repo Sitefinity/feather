@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MvcWidgets\MvcSelector.cs" />
     <Compile Include="MvcWidgets\MvcWidgetDefaultDesigner.cs" />
     <Compile Include="Pages\DeletePageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
