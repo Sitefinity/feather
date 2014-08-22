@@ -1,0 +1,10 @@
+﻿{
+  "priority": 1,
+  "scripts": [
+	"Mvc/Scripts/Angular/angular-resource.min.js",
+	"Services/services.js",
+	"Services/generic-data-service.js",
+	"Selectors/selectors.js",
+	"Selectors/content-selector.js"
+  ]
+}
