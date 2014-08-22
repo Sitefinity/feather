@@ -11,40 +11,42 @@
                     selectedItem: '='
                 },
                 template:
-'<div id="selectedItemsPlaceholder">' +
-    '<span ng-bind="selectedItem.Title"></span>' +
-    '<button id="openSelectorBtn">Select</button>' +
-'</div>' +
-'<div class="contentSelector" modal template-url="selector-template" open-button="#openSelectorBtn" window-class="sf-designer-dlg" existing-scope="true">' +
-    '<script type="text/ng-template" id="selector-template">' +
-        '<div class="modal-header">' +
-            '<h1 class="modal-title">Select content</h1>' +
-        '</div>' +
-        '<div class="modal-body">' +
-            '<div ng-show="isListEmpty" class="alert alert-info">NoItemsHaveBeedCreatedYet</div>' +
-            '<div ng-hide="isListEmpty">' +
-                '<div class="input-group m-bottom-sm">' +
-                    '<span class="input-group-addon">' +
-                        '<i class="glyphicon glyphicon-search"></i>' +
-                    '</span>' +
-                    '<input type="text" ng-model="filter.search" class="form-control" placeholder="NarrowByTyping" />' +
-                '</div>' +
-                '<div class="list-group s-items-list-wrp">' +
-                    '<a ng-repeat="item in contentItems"' +
-                            "ng-class=\"{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }\" " +
-                            'ng-click="contentItemClicked($index, item)"> ' +
-                        '<span ng-bind="item.Title"></span>' +
-                    '</a>' +
-                '</div>' +
-                '<pagination ng-show="filter.paging.isVisible" items-per-page="filter.paging.itemsPerPage" total-items="filter.paging.totalItems" ng-model="filter.paging.currentPage"></pagination>' +
-                '<div ng-hide="contentItems.length">NoItemsFound</div>' +
+'<div id="{{selectorId}}">' +
+    '<div id="selectedItemsPlaceholder">' +
+        '<span ng-bind="selectedItem.Title"></span>' +
+        '<button id="openSelectorBtn">Select</button>' +
+    '</div>' +
+    '<div class="contentSelector" modal template-url="selector-template" open-button="#{{selectorId}} #openSelectorBtn" window-class="sf-designer-dlg" existing-scope="true">' +
+        '<script type="text/ng-template" id="selector-template">' +
+            '<div class="modal-header">' +
+                '<h1 class="modal-title">Select content</h1>' +
             '</div>' +
-        '</div>' +
-        '<div class="modal-footer">' +
-            '<button type="button" ng-hide="isListEmpty" class="btn btn-primary" ng-click="selectContent()">DoneSelecting</button>' +
-            '<button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>' +
-        '</div>' +
-    '</script>'+
+            '<div class="modal-body">' +
+                '<div ng-show="isListEmpty" class="alert alert-info">NoItemsHaveBeedCreatedYet</div>' +
+                '<div ng-hide="isListEmpty">' +
+                    '<div class="input-group m-bottom-sm">' +
+                        '<span class="input-group-addon">' +
+                            '<i class="glyphicon glyphicon-search"></i>' +
+                        '</span>' +
+                        '<input type="text" ng-model="filter.search" class="form-control" placeholder="NarrowByTyping" />' +
+                    '</div>' +
+                    '<div class="list-group s-items-list-wrp">' +
+                        '<a ng-repeat="item in contentItems"' +
+                                "ng-class=\"{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }\" " +
+                                'ng-click="contentItemClicked($index, item)"> ' +
+                            '<span ng-bind="item.Title"></span>' +
+                        '</a>' +
+                    '</div>' +
+                    '<pagination ng-show="filter.paging.isVisible" items-per-page="filter.paging.itemsPerPage" total-items="filter.paging.totalItems" ng-model="filter.paging.currentPage"></pagination>' +
+                    '<div ng-hide="contentItems.length">NoItemsFound</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="modal-footer">' +
+                '<button type="button" ng-hide="isListEmpty" class="btn btn-primary" ng-click="selectContent()">DoneSelecting</button>' +
+                '<button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>' +
+            '</div>' +
+        '</script>'+
+    '</div>' +
 '</div>',
                 link: function (scope, element, attrs, ctrl, translude) {
 
@@ -94,7 +96,7 @@
                     };
 
                     var reloadContentItems = function (newValue, oldValue) {
-                        if (newValue != oldValue) {
+                        if (newValue !== oldValue) {
                             loadContentItems();
                         }
                     };
@@ -106,6 +108,9 @@
                     // ------------------------------------------------------------------------
                     // Scope variables and setup
                     // ------------------------------------------------------------------------
+
+                    //Will be set to the id of the wrapper div of the template. This way we avoid issues when there are several selectors on one page.
+                    scope.selectorId = "sf" + Date.now();
 
                     scope.showError = false;
                     scope.isListEmpty = false;
@@ -153,7 +158,7 @@
                     };
 
                     scope.showLoadingIndicator = true;
-                    genericDataService.getItems(scope.itemType, scope.itemProvider, scope.filter.paging.get_itemsToSkip(), 
+                    genericDataService.getItems(scope.itemType, scope.itemProvider, scope.filter.paging.get_itemsToSkip(),
                         scope.filter.paging.itemsPerPage, scope.filter.search)
                         .then(onLoadedSuccess, onError)
                         .then(function () {
