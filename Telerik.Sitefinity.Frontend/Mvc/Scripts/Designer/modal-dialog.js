@@ -71,10 +71,13 @@
                     open(scope, attrs);
                 }
                 else {
-                    $(document).off("click", attrs.openButton);
-                    $(document).on("click", attrs.openButton, function () {
-                        open(scope, attrs);
-                    });                    
+                    // The open button selector attribute can be binded to a property of the scope.
+                    attrs.$observe("openButton", function (value) {
+                        $(document).off("click", value);
+                        $(document).on("click", value, function () {
+                            open(scope, attrs);
+                        });
+                    });
                 }
             }
         };
