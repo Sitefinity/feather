@@ -24,9 +24,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             ActiveBrowser.RefreshDomTree();
             var widgetHeader = ActiveBrowser
-                                      .Find
-                                      .AllByCustom<HtmlDiv>(d => d.CssClass.StartsWith("rdTitleBar") && d.ChildNodes.First().InnerText.Equals(widgetName))[dropZoneIndex]
-                                      .AssertIsPresent(widgetName);
+                                            .Find
+                                            .AllByCustom<HtmlDiv>(d => d.CssClass.StartsWith("rdTitleBar") && d.ChildNodes.First().InnerText.Equals(widgetName))[dropZoneIndex]
+                                                                                                                                                                               .AssertIsPresent(widgetName);
             widgetHeader.ScrollToVisible();
             HtmlAnchor editLink = widgetHeader.Find
                                               .ByCustom<HtmlAnchor>(a => a.TagName == "a" && a.Title.Equals("Edit"))
@@ -35,6 +35,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             editLink.Click();
             ActiveBrowser.WaitUntilReady();
             ActiveBrowser.WaitForAsyncOperations();
+        }
+
+        public void VerifyContentInWidget(string content)
+        {
+            ActiveBrowser.Find.ByCustom<HtmlDiv>(d => d.InnerText.Equals(content)).AssertIsPresent("edit link");                                                                                                                                                           
         }
     }
 }

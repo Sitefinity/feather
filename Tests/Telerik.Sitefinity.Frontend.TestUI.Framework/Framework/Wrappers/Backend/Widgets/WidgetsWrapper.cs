@@ -107,6 +107,30 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
+        /// Clicks the advanced button.
+        /// </summary>
+        public void ClickAdvancedButton()
+        {
+            HtmlAnchor saveButton = this.EM.Widgets.FeatherWidget.AdvancedButton
+                .AssertIsPresent("advanced button");
+
+            saveButton.Click();
+            ActiveBrowser.WaitForAsyncRequests();
+        }
+
+        /// <summary>
+        /// Clicks the selector button.
+        /// </summary>
+        public void ClickSelectorButton()
+        {
+            HtmlAnchor saveButton = this.EM.Widgets.FeatherWidget.SelectorButton
+                .AssertIsPresent("selector button");
+
+            saveButton.Click();
+            ActiveBrowser.WaitForAsyncRequests();
+        }
+
+        /// <summary>
         /// Selects the content.
         /// </summary>
         public void SelectContent()

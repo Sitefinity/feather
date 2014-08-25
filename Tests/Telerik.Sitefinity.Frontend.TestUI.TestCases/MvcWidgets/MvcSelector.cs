@@ -37,13 +37,33 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText("Title1");
              var newActualCount = BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CountItems();
              Assert.AreEqual(1, newActualCount);
-             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedItemName);
+             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedNewsName1);
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
-             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(SelectedItemName);
+             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(SelectedNewsName1);
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
 
+             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().VerifyContentInWidget(SelectedNewsName1);
 
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
+            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().VerifyContentInWidget(SelectedNewsName1);
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
+
+            for (int i = 0; i < 2; i++)
+            {
+                BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickAdvancedButton();
+                BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSelectorButton();
+                
+            }            
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent();
+            actualCount = BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CountItems();
+            Assert.AreEqual(3, actualCount);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedNewsName2);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(SelectedNewsName2);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
+
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().VerifyContentInWidget(SelectedNewsName2);
         }
 
         /// <summary>
@@ -68,6 +88,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         private const string WidgetTitle = "DummyText";
         private const string WidgetCaption = "SelectorWidget";
         private const string DummyText = "Dummy Text";
-        private const string SelectedItemName = "News Item Title1";
+        private const string SelectedNewsName1 = "News Item Title1";
+        private const string SelectedNewsName2 = "News Item Title2";
+
     }
 }

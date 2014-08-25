@@ -6,7 +6,9 @@
     //This is basic controller for the "ManageItems" designer view.
     designerModule.controller('SelectorCtrl', ['$scope', 'propertyService', function ($scope, propertyService) {
         $scope.feedback.showLoadingIndicator = true;
-
+        $scope.$watch("selectedItem.Title", function(newValue){
+            $scope.properties["DummyText"].PropertyValue = newValue;
+        });
         propertyService.get()
             .then(function (data) {
                 if (data) {

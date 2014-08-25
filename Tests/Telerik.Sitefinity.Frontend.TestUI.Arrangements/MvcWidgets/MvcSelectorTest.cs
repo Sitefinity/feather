@@ -20,6 +20,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             {
                 ServerOperations.News().CreatePublishedNewsItem(newsTitle: NewsItemTitle + i, newsContent: NewsItemContent +i, author: NewsItemAuthor + i);                
             }
+            
+            for (int i = 0; i < 3; i++)
+            {
+                ServerOperations.ContentBlocks().CreateContentBlock(ContentBlockTitle + i, ContentBlockContent + i);
+            }
+
             Guid pageId = ServerOperations.Pages().CreatePage(PageName);
         
             var assembly = FileInjectHelper.GetArrangementsAssembly();
@@ -70,6 +76,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         {
             ServerOperations.Pages().DeleteAllPages();
             ServerOperations.News().DeleteAllNews();
+            ServerOperations.ContentBlocks().DeleteAllContentBlocks();
 
             var path = Path.Combine("MVC", "Views", "DummyText", DesignerViewFileName);
             string filePath = FileInjectHelper.GetDestinationFilePath(path);
@@ -98,5 +105,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string NewsItemTitle = "News Item Title";
         private const string NewsItemContent = "This is a news item.";
         private const string NewsItemAuthor = "NewsWriter";
+
+        private const string ContentBlockTitle = "Content Block Title";
+        private const string ContentBlockContent = "Content block content!";
     }
 }

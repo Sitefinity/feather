@@ -72,6 +72,30 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         }
 
         /// <summary>
+        /// Gets the advanced button.
+        /// </summary>
+        /// <value>The advanced button.</value>
+        public HtmlAnchor AdvancedButton
+        {
+            get
+            {
+                return this.Get<HtmlAnchor>("ng-hide=isCurrentView('PropertyGrid')");
+            }
+        }
+
+        /// <summary>
+        /// Gets the selector button.
+        /// </summary>
+        /// <value>The selector button.</value>
+        public HtmlAnchor SelectorButton
+        {
+            get
+            {
+                return this.Get<HtmlAnchor>("ng-hide=isCurrentView('Selector')");
+            }
+        }
+
+        /// <summary>
         /// Gets the close button of the widget designer.
         /// </summary>
         /// <value>Close button.</value>
