@@ -169,9 +169,18 @@
                         .finally(hideLoadingIndicator);
 
                     translude(function (clone) {
-                        if (clone.html() && clone.html().trim()) {
-                            element.find("#selectedItemsPlaceholder").empty().append(clone);
-                        }
+                        var hasContent;
+                        for (var i = 0; i < clone.length; i++) {
+                            var currentHtml = clone[i] && clone[i].outerHTML;
+
+                            //check if the content is not empty string or white space only
+                            hasContent = currentHtml && !/^\s*$/.test(currentHtml);
+
+                            if (hasContent) {
+                                element.find('#selectedItemsPlaceholder').empty().append(clone);
+                                break;
+                            }
+                        }                                               
                     });
                 }
             };

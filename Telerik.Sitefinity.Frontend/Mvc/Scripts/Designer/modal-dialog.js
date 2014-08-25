@@ -73,7 +73,6 @@
                 else {
                     // The open button selector attribute can be binded to a property of the scope.
                     attrs.$observe("openButton", function (value) {
-                        debugger;
                         $(document).off("click", value);
                         $(document).on("click", value, function () {
                             open(scope, attrs);
