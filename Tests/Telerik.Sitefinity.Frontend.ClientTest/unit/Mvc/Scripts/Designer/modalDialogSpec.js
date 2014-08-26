@@ -69,7 +69,7 @@ describe('modal directive', function () {
         $modal.open.reset();
     }
 
-    it('[GMateev / should open dialog on page load with given controller.]', function () {
+    it('[GMateev] / should open dialog on page load with given controller.]', function () {
         var template =
         '<div class="designer" modal dialog-controller="TestCtrl" template-url="dialog-template" auto-open="true">' +
             '<script type="text/ng-template" id="dialog-template">' +
@@ -84,7 +84,7 @@ describe('modal directive', function () {
         assertOpenWithController();
     });
 
-    it('[GMateev / should open dialog on page load with already existing scope.]', function () {
+    it('[GMateev] / should open dialog on page load with already existing scope.]', function () {
         var template =
         '<div class="designer" modal existing-scope="true" template-url="dialog-template" auto-open="true">' +
             '<script type="text/ng-template" id="dialog-template">' +
@@ -99,7 +99,7 @@ describe('modal directive', function () {
         assertOpenWithScope();
     });
 
-    it('[GMateev / should open dialog when button is clicked.]', function () {
+    it('[GMateev] / should open dialog when button is clicked.]', function () {
         var template =
         '<button id="openSelectorBtn">Open</button>' +
         '<div class="designer" modal existing-scope="true" template-url="dialog-template" open-button="#openSelectorBtn">' +
