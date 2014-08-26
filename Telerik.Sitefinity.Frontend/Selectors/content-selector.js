@@ -13,8 +13,11 @@
                 template:
 '<div id="{{selectorId}}">' +
     '<div id="selectedItemsPlaceholder">' +
-        '<span ng-bind="selectedItem.Title"></span>' +
-        '<button id="openSelectorBtn">Select</button>' +
+        '<alert type="danger" ng-show="showError">{{errorMessage}}</alert>' +
+        '<div ng-hide="showError">' +
+            '<span ng-bind="selectedItem.Title"></span>' +
+            '<button id="openSelectorBtn">Select</button>' +
+        '</div>' +
     '</div>' +
     '<div class="contentSelector" modal template-url="selector-template" open-button="#{{selectorId}} #openSelectorBtn" window-class="sf-designer-dlg" existing-scope="true">' +
         '<script type="text/ng-template" id="selector-template">' +
@@ -74,10 +77,10 @@
                         scope.isListEmpty = scope.contentItems.length === 0 && !scope.filter.search;
                     };
 
-                    var onError = function () {
+                    var onError = function (error) {
                         var errorMessage = '';
-                        if (data)
-                            errorMessage = data.Detail;
+                        if (error && error.data.ResponseStatus)
+                            errorMessage = error.data.ResponseStatus.Message;
 
                         scope.showError = true;
                         scope.errorMessage = errorMessage;
