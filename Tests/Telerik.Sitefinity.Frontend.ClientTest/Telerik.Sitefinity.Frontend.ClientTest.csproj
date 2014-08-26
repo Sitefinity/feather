@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="unit\Mvc\Scripts\Designer\modalDialogSpec.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\karma.conf.js" />
