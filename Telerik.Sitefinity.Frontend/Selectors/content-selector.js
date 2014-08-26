@@ -8,7 +8,7 @@
                     itemType: '@',
                     itemProvider: '=',
                     selectedItemId: '=',
-                    selectedItem: '='
+                    selectedItem: '&'
                 },
                 template:
 '<div id="selectedItemsPlaceholder">' +
