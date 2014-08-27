@@ -161,7 +161,6 @@
                     };
 
                     scope.showLoadingIndicator = true;
-                    debugger;
 
                     genericDataService.getItems(scope.itemType, scope.itemProvider, scope.filter.paging.get_itemsToSkip(),
                         scope.filter.paging.itemsPerPage, scope.filter.search)

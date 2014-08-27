@@ -1,6 +1,6 @@
 ﻿/* global $telerik, document, kendo */
 
-var sf = sf || {};
+var sitefinity = sitefinity || {};
 
 (function ($) {
 
@@ -15,7 +15,7 @@ var sf = sf || {};
 	/**
 	 * Represents the Sitefinity page editor.
 	 */
-	sf.pageEditor = {
+    sitefinity.pageEditor = {
 
 		/**
 		 * Shows the loading animation in the page editor.
@@ -96,7 +96,7 @@ var sf = sf || {};
 	 * Register the global Sitefinity events with the pageEditor component.
 	 */
 	if (typeof ($telerik) != 'undefined') {
-	    $telerik.$(document).on('needsModalDialog', $.proxy(sf.pageEditor.openDialog, sf.pageEditor));
-	    $telerik.$(document).on('modalDialogClosed', $.proxy(sf.pageEditor.destroyDialog, sf.pageEditor));
+	    $telerik.$(document).on('needsModalDialog', $.proxy(sitefinity.pageEditor.openDialog, sitefinity.pageEditor));
+	    $telerik.$(document).on('modalDialogClosed', $.proxy(sitefinity.pageEditor.destroyDialog, sitefinity.pageEditor));
 	}
 })(jQuery);
