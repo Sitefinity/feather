@@ -1,0 +1,40 @@
+﻿<div ng-attr-id="{{selectorId}}">
+    <div id="selectedItemsPlaceholder">
+        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+        <div ng-hide="showError">
+            <span ng-bind="selectedItem.Title"></span>
+            <button id="openSelectorBtn">Select</button>
+        </div>
+    </div>
+    <div class="contentSelector" modal template-url="selector-template" open-button="{{openSelectorButtonId}}" window-class="sf-designer-dlg" existing-scope="true">
+        <script type="text/ng-template" id="selector-template">
+            <div class="modal-header">
+                <h1 class="modal-title">Select content</h1>
+            </div>
+            <div class="modal-body">
+                <div ng-show="isListEmpty" class="alert alert-info">NoItemsHaveBeedCreatedYet</div>
+                <div ng-hide="isListEmpty">
+                    <div class="input-group m-bottom-sm">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </span>
+                        <input type="text" ng-model="filter.search" class="form-control" placeholder="NarrowByTyping" />
+                    </div>
+                    <div class="list-group s-items-list-wrp">
+                        <a ng-repeat="item in contentItems"
+                                ng-class="{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }"
+                                ng-click="contentItemClicked($index, item)">
+                            <span ng-bind="item.Title"></span>
+                        </a>
+                    </div>
+                    <pagination ng-show="filter.paging.isVisible" items-per-page="filter.paging.itemsPerPage" total-items="filter.paging.totalItems" ng-model="filter.paging.currentPage"></pagination>
+                    <div ng-hide="contentItems.length">NoItemsFound</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-hide="isListEmpty" class="btn btn-primary" ng-click="selectContent()">DoneSelecting</button>
+                <button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>
+            </div>
+        </script>
+    </div>
+</div>
