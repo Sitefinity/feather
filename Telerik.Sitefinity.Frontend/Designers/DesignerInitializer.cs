@@ -6,6 +6,7 @@ using System.Web.UI;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web.UI;
 
@@ -46,6 +47,12 @@ namespace Telerik.Sitefinity.Frontend.Designers
             if (@event.Sender.GetType() == typeof(ZoneEditor))
             {
                 var scriptRootPath = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly);
+
+                var references = PageManager.GetScriptReferences(ScriptRef.KendoWeb);
+                foreach (var scriptRef in references)
+                {
+                    @event.Scripts.Add(scriptRef);
+                }
 
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Angular/angular.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Angular/angular-route.min.js"));
