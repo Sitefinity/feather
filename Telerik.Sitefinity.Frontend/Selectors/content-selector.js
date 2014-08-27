@@ -11,12 +11,15 @@
                     selectedItem: '='
                 },
                 template:
-'<div id="{{selectorId}}">' +
+'<div ng-attr-id="{{selectorId}}">' +
     '<div id="selectedItemsPlaceholder">' +
-        '<span ng-bind="selectedItem.Title"></span>' +
-        '<button id="openSelectorBtn">Select</button>' +
+        '<alert type="danger" ng-show="showError">{{errorMessage}}</alert>' +
+        '<div ng-hide="showError">' +
+            '<span ng-bind="selectedItem.Title"></span>' +
+            '<button id="openSelectorBtn">Select</button>' +
+        '</div>' +
     '</div>' +
-    '<div class="contentSelector" modal template-url="selector-template" open-button="#{{selectorId}} #openSelectorBtn" window-class="sf-designer-dlg" existing-scope="true">' +
+    '<div class="contentSelector" modal template-url="selector-template" open-button="{{openSelectorButtonId}}" window-class="sf-designer-dlg" existing-scope="true">' +
         '<script type="text/ng-template" id="selector-template">' +
             '<div class="modal-header">' +
                 '<h1 class="modal-title">Select content</h1>' +
@@ -74,10 +77,10 @@
                         scope.isListEmpty = scope.contentItems.length === 0 && !scope.filter.search;
                     };
 
-                    var onError = function () {
+                    var onError = function (error) {
                         var errorMessage = '';
-                        if (data)
-                            errorMessage = data.Detail;
+                        if (error && error.data.ResponseStatus)
+                            errorMessage = error.data.ResponseStatus.Message;
 
                         scope.showError = true;
                         scope.errorMessage = errorMessage;
@@ -108,9 +111,19 @@
                     // ------------------------------------------------------------------------
                     // Scope variables and setup
                     // ------------------------------------------------------------------------
+                                        
+                    var selectorId;
+                    if (attrs.id) {
+                        selectorId = attrs.id;
+                    }
+                    else {
+                        //selectorId will be set to the id of the wrapper div of the template. This way we avoid issues when there are several selectors on one page.
+                        selectorId = 'sf' + Math.floor((Math.random() * 1000) + 1);
+                        scope.selectorId = selectorId;
+                    }
 
-                    //Will be set to the id of the wrapper div of the template. This way we avoid issues when there are several selectors on one page.
-                    scope.selectorId = "sf" + Date.now();
+                    // This id is used by the modal dialog to know which button will open him.
+                    scope.openSelectorButtonId = '#' + selectorId + ' #openSelectorBtn';
 
                     scope.showError = false;
                     scope.isListEmpty = false;

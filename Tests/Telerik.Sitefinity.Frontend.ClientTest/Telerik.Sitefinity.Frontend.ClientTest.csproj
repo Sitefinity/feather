@@ -40,10 +40,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="unit\Mvc\Scripts\Designer\modalDialogSpec.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\karma.conf.js" />
     <Content Include="helpers\angular-mocks.js" />
+    <Content Include="helpers\angular-resource.js" />
     <Content Include="helpers\angular-route.js" />
     <Content Include="helpers\angular.js" />
     <Content Include="helpers\jquery-1.8.3.min.js" />
@@ -52,6 +54,7 @@
     <Content Include="unit\Mvc\Scripts\breadcrumbSpec.js" />
     <Content Include="unit\Designers\Scripts\pageEditorServiceSpec.js" />
     <Content Include="unit\Mvc\Scripts\Designer\propertyGridSpec.js" />
+    <Content Include="unit\Services\genericDataServiceSpec.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
@@ -62,6 +65,7 @@
     <Folder Include="bin\Debug\" />
     <Folder Include="bin\Release\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="unit\Selectors\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

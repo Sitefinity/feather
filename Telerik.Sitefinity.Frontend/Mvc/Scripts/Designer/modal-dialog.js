@@ -32,7 +32,7 @@
         var open = function (scope, attrs) {
             //It will be used for identifying the opened window in order to be removed from the DOM when the dialog is closed.
             //It is set as a class because of a limitation in the angular-bootstrap directive.
-            var modalWindowId = 'id' + Date.now();
+            var modalWindowId = 'id' + Math.floor((Math.random() * 1000) + 1);
 
             //Hide already opened dialogs.
             $(".modal-dialog").hide();
