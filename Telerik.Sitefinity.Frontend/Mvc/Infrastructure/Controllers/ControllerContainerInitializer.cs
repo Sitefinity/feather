@@ -11,6 +11,7 @@ using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Localization;
@@ -222,10 +223,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         protected virtual void InitializeCustomRouting()
         {
             //Sf 7.2: 
-            //ObjectFactory.Container.RegisterType<IControllerActionInvoker, DynamicUrlParamActionInvoker>(new ContainerControlledLifetimeManager());
+            ObjectFactory.Container.RegisterType<IControllerActionInvoker, DynamicUrlParamActionInvoker>(new ContainerControlledLifetimeManager());
 
-            //ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
-            //ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
+            ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
+            ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
         }
 
         #endregion

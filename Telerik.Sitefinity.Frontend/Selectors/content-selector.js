@@ -6,9 +6,9 @@
                 transclude: true,
                 scope: {
                     itemType: '@',
-                    itemProvider: '@',
+                    itemProvider: '=',
                     selectedItemId: '=',
-                    selectedItem: '='
+                    selectedItem: '&'
                 },
                 template:
 '<div ng-attr-id="{{selectorId}}">' +
@@ -48,7 +48,7 @@
                 '<button type="button" ng-hide="isListEmpty" class="btn btn-primary" ng-click="selectContent()">DoneSelecting</button>' +
                 '<button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>' +
             '</div>' +
-        '</script>'+
+        '</script>' +
     '</div>' +
 '</div>',
                 link: function (scope, element, attrs, ctrl, translude) {
@@ -155,7 +155,7 @@
                             scope.selectedItem = scope.selectedItemInTheDialog;
                             scope.selectedItemId = scope.selectedItemInTheDialog.Id;
                         }
-                        
+
                         scope.$modalInstance.close();
                     };
 
@@ -171,6 +171,7 @@
                     };
 
                     scope.showLoadingIndicator = true;
+
                     genericDataService.getItems(scope.itemType, scope.itemProvider, scope.filter.paging.get_itemsToSkip(),
                         scope.filter.paging.itemsPerPage, scope.filter.search)
                         .then(onLoadedSuccess, onError)
@@ -193,7 +194,7 @@
                                 element.find('#selectedItemsPlaceholder').empty().append(clone);
                                 break;
                             }
-                        }                                               
+                        }
                     });
                 }
             };

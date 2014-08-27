@@ -2,7 +2,7 @@
 describe('genericDataService', function () {
     beforeEach(module('services'));
 
-    //Mock serviceData dependency
+    //Mock serverData dependency
     beforeEach(module(function ($provide) {
         $provide.value('serverData', {
             get: function (value) {

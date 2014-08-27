@@ -1,4 +1,4 @@
-﻿/* global sf, angular, jQuery */
+﻿/* global sitefinity, angular, jQuery */
 
 (function ($) {
 
@@ -10,7 +10,7 @@
      * the page and so on.
      */
     pageEditorServices.provider('widgetContext', function () {
-        var context = sf.pageEditor.widgetContext;
+        var context = sitefinity.pageEditor.widgetContext;
 
         this.$get = function () {
             return {
