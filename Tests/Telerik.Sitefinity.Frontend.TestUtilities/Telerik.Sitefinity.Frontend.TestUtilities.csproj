@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyLoaderHelper.cs" />
+    <Compile Include="CommonOperations\ResourcePackages\ResourcePackagesOperations.cs" />
     <Compile Include="ControllerFactoryRegion.cs" />
     <Compile Include="DummyClasses\Authentication\DummyAuthenticationEvaluator.cs" />
     <Compile Include="DummyClasses\Cache\DummyCacheDependency.cs" />
@@ -201,10 +202,13 @@
     <Compile Include="DummyClasses\Models\DummyWidgetModel.cs" />
     <Compile Include="DummyClasses\Mvc\DummyControllerContainerInitializer.cs" />
     <Compile Include="DummyClasses\ResourceResolvers\DummyResourceHttpHandler.cs" />
+    <Compile Include="FileInjectHelper.cs" />
     <Compile Include="ObjectFactoryContainerRegion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CommonOperations\FeatherServerOperations.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Data\TestLayout.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>
