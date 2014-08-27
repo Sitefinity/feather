@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -65,7 +64,6 @@
     <Compile Include="ResourcePackages\AddNewLayoutFileToDefaultPackage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\TestLayout.cshtml" />
     <EmbeddedResource Include="Data\DesignerView.Selector.cshtml" />
     <EmbeddedResource Include="Data\DesignerView.Selector.json" />
     <None Include="packages.config">
@@ -94,97 +92,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-=======
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{637A9A4D-A6D1-4C84-9A00-58AA440C2D58}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Telerik.Sitefinity.Frontend.TestUI.Arrangements</RootNamespace>
-    <AssemblyName>Telerik.Sitefinity.Frontend.TestUI.Arrangements</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Telerik.Sitefinity.TestArrangementService.Core">
-      <HintPath>..\..\packages\\Telerik.Sitefinity.TestArrangementService.Core.1.0.1\lib\net40\Telerik.Sitefinity.TestArrangementService.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Sitefinity.TestUtilities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\\Telerik.Sitefinity.TestUtilities.1.0.0.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="MvcWidgets\DummyTextController.cs" />
-    <Compile Include="MvcWidgets\MvcSelector.cs" />
-    <Compile Include="MvcWidgets\MvcWidgetDefaultFeatherDesigner.cs" />
-    <Compile Include="Pages\DeletePage.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourcePackages\AddNewLayoutFileToDefaultPackage.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Data\DesignerView.Selector.cshtml" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Telerik.Sitefinity.Frontend\Telerik.Sitefinity.Frontend.csproj">
-      <Project>{17ed04c3-0ab9-4055-9908-6c70720daf77}</Project>
-      <Name>Telerik.Sitefinity.Frontend</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Telerik.Sitefinity.Frontend.TestUtilities\Telerik.Sitefinity.Frontend.TestUtilities.csproj">
-      <Project>{1c663ab5-aebc-41b5-a861-f635c37dab47}</Project>
-      <Name>Telerik.Sitefinity.Frontend.TestUtilities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
->>>>>>> 4b5f4799224e1b48572ebf672487c4203b42418e
 </Project>
