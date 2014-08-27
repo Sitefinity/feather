@@ -5,11 +5,7 @@
 
             /* Private methods and variables */
             var getResource = function () {
-                var appRoot = serverData.get('applicationRoot');
-                if (appRoot.slice(-1) !== '/')
-                    appRoot = appRoot + '/';
-
-                return $resource(appRoot + "restapi/sitefinity/generic-data/:items");
+                return $resource(sitefinity.getRootedUrl('restapi/sitefinity/generic-data/:items'));
             };
 
             var DataItem = getResource();
