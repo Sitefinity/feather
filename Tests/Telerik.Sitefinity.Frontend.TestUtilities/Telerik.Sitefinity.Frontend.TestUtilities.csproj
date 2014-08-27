@@ -167,6 +167,7 @@
     <Compile Include="DummyClasses\Cache\DummyCacheDependency.cs" />
     <Compile Include="DummyClasses\Configs\DummyConfigProvider.cs" />
     <Compile Include="DummyClasses\Controls\DummyControl.cs" />
+    <Compile Include="DummyClasses\DummyServerContextHandler.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyCacheDependentAttribute.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyController.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyControllerFactory.cs" />

@@ -15,13 +15,9 @@
     };
 
     var resolveTemplateUrl = function (view, serverData) {
-        var appRoot = serverData.get('applicationRoot');
-        if (appRoot.slice(-1) !== '/')
-            appRoot = appRoot + '/';
-
         var widgetName = serverData.get('widgetName');
-
-        return appRoot + String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}', widgetName, view);
+        var templatePath = String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}', widgetName, view);
+        return sitefinity.getRootedUrl(templatePath);
     };
 
     var designerModule = angular.module('designer', ['pageEditorServices', 'ngRoute', 'modalDialog', 'serverDataModule']);
@@ -70,8 +66,8 @@
             showError: false,
             errorMessage: null,
 
-            savingPromise: null,
-            cancelingPromise: null
+            savingHandlers: [],
+            cancelingHandlers: []
         };
     });
 
@@ -117,11 +113,9 @@
             });
     }]);
 
-    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', '$route', '$timeout', 'propertyService', 'widgetContext',
-        function ($rootScope, $scope, $q, $modalInstance, $route, $timeout, propertyService, widgetContext) {
-            var isSaveToAllTranslations = true,
-                futureSave = $q.defer(),
-                futureCancel = $q.defer();
+    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', '$route', 'propertyService', 'widgetContext',
+        function ($rootScope, $scope, $q, $modalInstance, $route, propertyService, widgetContext) {
+            var isSaveToAllTranslations = true;
 
             // ------------------------------------------------------------------------
             // Event handlers
@@ -130,7 +124,7 @@
             var onError = function (data) {
                 $scope.feedback.showError = true;
                 if (data)
-                    $scope.feedback.errorMessage = data.Detail;
+                    $scope.feedback.errorMessage = data.Detail ? data.Detail : data;
             };
 
             // ------------------------------------------------------------------------
@@ -154,6 +148,19 @@
                 return propertyService.save(currentSaveMode);
             };
 
+            var executeHandlers = function (handlers) {
+                return function () {
+                    return $q.all(handlers.map(function (h) {
+                        if (angular.isFunction(h)) {
+                            return h();
+                        }
+                        else {
+                            throw 'Handlers should be functions!';
+                        }
+                    }));
+                };
+            };
+
             // ------------------------------------------------------------------------
             // Scope variables and setup
             // ------------------------------------------------------------------------
@@ -161,14 +168,13 @@
             $scope.feedback.showLoadingIndicator = true;
             $scope.feedback.showError = false;
 
-            $scope.feedback.savingPromise = futureSave.promise;
-            $scope.feedback.cancelingPromise = futureCancel.promise;
-
             //the save action - it will check which properties are changed and send only them to the server 
             $scope.save = function (saveToAllTranslations) {
                 isSaveToAllTranslations = saveToAllTranslations;
 
-                $scope.feedback.savingPromise
+                var saving = $q.defer();
+                saving.promise
+                    .then(executeHandlers($scope.feedback.savingHandlers))
                     .then(saveProperties)
                     .then($scope.close)
                     .catch(onError)
@@ -177,11 +183,13 @@
                     });
 
                 $scope.feedback.showLoadingIndicator = true;
-                futureSave.resolve();
+                saving.resolve();
             };
 
             $scope.cancel = function () {
-                $scope.feedback.cancelingPromise
+                var canceling = $q.defer();
+                canceling.promise
+                    .then(executeHandlers($scope.feedback.cancelingHandlers))
                     .then(function () {
                         propertyService.reset();
                         $scope.close();
@@ -192,7 +200,7 @@
                     });
 
                 $scope.feedback.showLoadingIndicator = true;
-                futureCancel.resolve();
+                canceling.resolve();
             };
 
             $scope.close = function () {

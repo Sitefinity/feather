@@ -47,8 +47,12 @@
     <Content Include="helpers\angular-route.js" />
     <Content Include="helpers\angular.js" />
     <Content Include="helpers\jquery-1.8.3.min.js" />
+    <Content Include="helpers\mocks\microsoftAjaxMock.js" />
+    <Content Include="helpers\mocks\modalInstanceMock.js" />
     <Content Include="helpers\mocks\propertyServiceMock.js" />
+    <Content Include="helpers\mocks\serverDataMock.js" />
     <Content Include="helpers\mocks\widgetContextMock.js" />
+    <Content Include="unit\Mvc\Scripts\Designer\designerSpec.js" />
     <Content Include="unit\Mvc\Scripts\breadcrumbSpec.js" />
     <Content Include="unit\Designers\Scripts\pageEditorServiceSpec.js" />
     <Content Include="unit\Mvc\Scripts\Designer\propertyGridSpec.js" />

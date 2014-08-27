@@ -3,7 +3,7 @@
 @using Telerik.Sitefinity.Frontend.Mvc.Helpers
 
 <div class="designer" modal dialog-controller="DialogCtrl">
-	<server-data default-view='@Model.DefaultView' application-root='@Url.Content("~/")' widget-name='@ViewBag.ControlName'></server-data>
+	<server-data default-view='@Model.DefaultView' widget-name='@ViewBag.ControlName'></server-data>
 
 	<script type="text/ng-template" id="dialog-template">
 		<div class="modal-header">
@@ -45,6 +45,8 @@
 @* Optional theme *@
 <link rel="stylesheet" href='@Url.WidgetContent("Mvc/Styles/sitefinity-theme.min.css")'>
 <link rel="stylesheet" href='@Url.WidgetContent("Mvc/Styles/sitefinity-backend.min.css")'>
+
+@Html.Script(Url.Content("~/Telerik.Sitefinity.Frontend/ServerContext.js"))
 
 @Html.Script(Url.WidgetContent("Mvc/Scripts/server-data.js"))
 @Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js"))
