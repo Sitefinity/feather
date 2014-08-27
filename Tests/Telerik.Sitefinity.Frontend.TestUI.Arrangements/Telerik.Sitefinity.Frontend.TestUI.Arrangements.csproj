@@ -64,7 +64,6 @@
     <Compile Include="ResourcePackages\AddNewLayoutFileToDefaultPackage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\TestLayout.cshtml" />
     <EmbeddedResource Include="Data\DesignerView.Selector.cshtml" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

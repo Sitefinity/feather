@@ -25,6 +25,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         }
         
         private const string PageName = "FeatherPage";
-        private const string WidgetCaption = "SelectorWidget";
+        private const string WidgetCaption = "DummyWidget";
     }
 }

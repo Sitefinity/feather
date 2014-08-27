@@ -16,6 +16,7 @@
             var dataItemPromise;
 
             var getItems = function (itemType, itemProvider, skip, take, filter) {
+
                 var generatedFilter = 'STATUS = MASTER';
                 if (filter) {
                     generatedFilter = generatedFilter + ' AND (Title.ToUpper().Contains("' + filter + '".ToUpper()))';
