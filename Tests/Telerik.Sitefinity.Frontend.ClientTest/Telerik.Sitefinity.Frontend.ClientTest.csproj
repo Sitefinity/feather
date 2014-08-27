@@ -51,6 +51,7 @@
     <Content Include="helpers\mocks\microsoftAjaxMock.js" />
     <Content Include="helpers\mocks\modalInstanceMock.js" />
     <Content Include="helpers\mocks\propertyServiceMock.js" />
+    <Content Include="helpers\mocks\serverContextMock.js" />
     <Content Include="helpers\mocks\serverDataMock.js" />
     <Content Include="helpers\mocks\widgetContextMock.js" />
     <Content Include="unit\Mvc\Scripts\Designer\designerSpec.js" />

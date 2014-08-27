@@ -18,7 +18,7 @@ describe('designer tests.', function () {
 
             var $route = $injector.get('$route');
             var propertyService = $injector.get('PropertyServiceMock');
-            var widgetContext = sf.pageEditor.widgetContext;
+            var widgetContext = sitefinity.pageEditor.widgetContext;
 
             $httpBackend = $injector.get('$httpBackend');
             $httpBackend.when('GET', '/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid')

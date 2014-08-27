@@ -1,21 +1,156 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="Chrome 36.0.1985 (Windows 7)" package="" timestamp="2014-08-25T14:50:57" id="0" hostname="KARADZHOV" tests="12" errors="0" failures="0" time="51.105">
+  <testsuite name="Chrome 36.0.1985 (Windows 7)" package="" timestamp="2014-08-27T11:23:31" id="0" hostname="KARADZHOV" tests="17" errors="0" failures="5" time="94.333">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.143 Safari/537.36"/>
     </properties>
-    <testcase name="[EGaneva] / Ensure the properties are initially requested." time="4.916" classname="Chrome 36.0.1985 (Windows 7).pageEditorServices tests_"/>
+    <testcase name="[EGaneva] / Ensure the properties are initially requested." time="4.906" classname="Chrome 36.0.1985 (Windows 7).pageEditorServices tests_"/>
     <testcase name="[EGaneva] / Ensure put call is executed." time="5.001" classname="Chrome 36.0.1985 (Windows 7).pageEditorServices tests_"/>
     <testcase name="[Boyko-Karadzhov] / Saving handler is called and dialog is closed." time="5" classname="Chrome 36.0.1985 (Windows 7).designer tests_ DialogCtrl test_"/>
     <testcase name="[Boyko-Karadzhov] / Saving handler that throws error is called and dialog is not closed." time="5" classname="Chrome 36.0.1985 (Windows 7).designer tests_ DialogCtrl test_"/>
     <testcase name="[Boyko-Karadzhov] / Canceling handler is called and dialog is closed." time="5" classname="Chrome 36.0.1985 (Windows 7).designer tests_ DialogCtrl test_"/>
-    <testcase name="[Boyko-Karadzhov] / Canceling handler that throws error is called and dialog is not closed." time="5" classname="Chrome 36.0.1985 (Windows 7).designer tests_ DialogCtrl test_"/>
-    <testcase name="[Boyko-Karadzhov] / Can save and close after one failed attempt." time="4.999" classname="Chrome 36.0.1985 (Windows 7).designer tests_ DialogCtrl test_"/>
+    <testcase name="[Boyko-Karadzhov] / Canceling handler that throws error is called and dialog is not closed." time="11.846" classname="Chrome 36.0.1985 (Windows 7).designer tests_ DialogCtrl test_"/>
+    <testcase name="[Boyko-Karadzhov] / Can save and close after one failed attempt." time="4.577" classname="Chrome 36.0.1985 (Windows 7).designer tests_ DialogCtrl test_"/>
     <testcase name="[EGaneva] / The items are populated correctly from the angular service." time="5" classname="Chrome 36.0.1985 (Windows 7).PropertyGridModule tests_ Controllers test_"/>
-    <testcase name="[EGaneva] / Should return all non-proxy properties when the first property is a proxy" time="3.999" classname="Chrome 36.0.1985 (Windows 7).PropertyGridModule tests_ Filters tests_"/>
-    <testcase name="[EGaneva] / Should return all only the properties from the same level as requested property" time="4.009" classname="Chrome 36.0.1985 (Windows 7).PropertyGridModule tests_ Filters tests_"/>
-    <testcase name="[EGaneva] / Can refreshes the whole breadcrumb content." time="3.169" classname="Chrome 36.0.1985 (Windows 7).BreadCrumb directive test Directives tests"/>
-    <testcase name="[EGaneva] / Adds single element to the breadcrumb when proeprtyPath has been changed" time="0.012" classname="Chrome 36.0.1985 (Windows 7).BreadCrumb directive test Directives tests"/>
+    <testcase name="[EGaneva] / Should return all non-proxy properties when the first property is a proxy" time="4" classname="Chrome 36.0.1985 (Windows 7).PropertyGridModule tests_ Filters tests_"/>
+    <testcase name="[EGaneva] / Should return all only the properties from the same level as requested property" time="4.003" classname="Chrome 36.0.1985 (Windows 7).PropertyGridModule tests_ Filters tests_"/>
+    <testcase name="[EGaneva] / Can refreshes the whole breadcrumb content." time="5" classname="Chrome 36.0.1985 (Windows 7).BreadCrumb directive test Directives tests"/>
+    <testcase name="[EGaneva] / Adds single element to the breadcrumb when proeprtyPath has been changed" time="5" classname="Chrome 36.0.1985 (Windows 7).BreadCrumb directive test Directives tests"/>
+    <testcase name="[GMateev] / should retrieve items without filter and paging." time="6" classname="Chrome 36.0.1985 (Windows 7).genericDataService">
+      <failure type="">Error: [$injector:modulerr] Failed to instantiate module services due to:
+Error: [$injector:nomod] Module &apos;services&apos; is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.
+http://errors.angularjs.org/1.2.16/$injector/nomod?p0=services
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:78:12
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1611:17
+    at ensure (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1535:38)
+    at module (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1609:14)
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3781:22
+    at Array.forEach (native)
+    at forEach (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:323:11)
+    at loadModules (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3775:5)
+    at Object.createInjector [as injector] (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3715:11)
+    at workFn (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js:2101:52)
+http://errors.angularjs.org/1.2.16/$injector/modulerr?p0=services&amp;p1=Error%3A%20%5B%24injector%3Anomod%5D%20Module%20&apos;services&apos;%20is%20not%20available!%20You%20either%20misspelled%20the%20module%20name%20or%20forgot%20to%20load%20it.%20If%20registering%20a%20module%20ensure%20that%20you%20specify%20the%20dependencies%20as%20the%20second%20argument.%0Ahttp%3A%2F%2Ferrors.angularjs.org%2F1.2.16%2F%24injector%2Fnomod%3Fp0%3Dservices%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A78%3A12%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1611%3A17%0A%20%20%20%20at%20ensure%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1535%3A38)%0A%20%20%20%20at%20module%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1609%3A14)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3781%3A22%0A%20%20%20%20at%20Array.forEach%20(native)%0A%20%20%20%20at%20forEach%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A323%3A11)%0A%20%20%20%20at%20loadModules%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3775%3A5)%0A%20%20%20%20at%20Object.createInjector%20%5Bas%20injector%5D%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3715%3A11)%0A%20%20%20%20at%20workFn%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular-mocks.js%3F1406900850000%3A2101%3A52)
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:78:12
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3809:15
+    at Array.forEach (native)
+    at forEach (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:323:11)
+    at loadModules (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3775:5)
+    at Object.createInjector [as injector] (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3715:11)
+    at workFn (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js:2101:52)
+</failure>
+      <failure type="">TypeError: Cannot read property &apos;expectGET&apos; of undefined
+    at null.&lt;anonymous&gt; (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/Services/genericDataServiceSpec.js:79:21)
+</failure>
+    </testcase>
+    <testcase name="[GMateev] / should retrieve items with paging." time="6" classname="Chrome 36.0.1985 (Windows 7).genericDataService">
+      <failure type="">Error: [$injector:modulerr] Failed to instantiate module services due to:
+Error: [$injector:nomod] Module &apos;services&apos; is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.
+http://errors.angularjs.org/1.2.16/$injector/nomod?p0=services
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:78:12
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1611:17
+    at ensure (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1535:38)
+    at module (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1609:14)
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3781:22
+    at Array.forEach (native)
+    at forEach (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:323:11)
+    at loadModules (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3775:5)
+    at Object.createInjector [as injector] (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3715:11)
+    at workFn (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js:2101:52)
+http://errors.angularjs.org/1.2.16/$injector/modulerr?p0=services&amp;p1=Error%3A%20%5B%24injector%3Anomod%5D%20Module%20&apos;services&apos;%20is%20not%20available!%20You%20either%20misspelled%20the%20module%20name%20or%20forgot%20to%20load%20it.%20If%20registering%20a%20module%20ensure%20that%20you%20specify%20the%20dependencies%20as%20the%20second%20argument.%0Ahttp%3A%2F%2Ferrors.angularjs.org%2F1.2.16%2F%24injector%2Fnomod%3Fp0%3Dservices%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A78%3A12%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1611%3A17%0A%20%20%20%20at%20ensure%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1535%3A38)%0A%20%20%20%20at%20module%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1609%3A14)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3781%3A22%0A%20%20%20%20at%20Array.forEach%20(native)%0A%20%20%20%20at%20forEach%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A323%3A11)%0A%20%20%20%20at%20loadModules%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3775%3A5)%0A%20%20%20%20at%20Object.createInjector%20%5Bas%20injector%5D%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3715%3A11)%0A%20%20%20%20at%20workFn%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular-mocks.js%3F1406900850000%3A2101%3A52)
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:78:12
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3809:15
+    at Array.forEach (native)
+    at forEach (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:323:11)
+    at loadModules (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3775:5)
+    at Object.createInjector [as injector] (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3715:11)
+    at workFn (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js:2101:52)
+</failure>
+      <failure type="">TypeError: Cannot read property &apos;expectGET&apos; of undefined
+    at null.&lt;anonymous&gt; (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/Services/genericDataServiceSpec.js:87:21)
+</failure>
+    </testcase>
+    <testcase name="[GMateev] / should retrieve items with provider." time="6" classname="Chrome 36.0.1985 (Windows 7).genericDataService">
+      <failure type="">Error: [$injector:modulerr] Failed to instantiate module services due to:
+Error: [$injector:nomod] Module &apos;services&apos; is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.
+http://errors.angularjs.org/1.2.16/$injector/nomod?p0=services
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:78:12
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1611:17
+    at ensure (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1535:38)
+    at module (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1609:14)
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3781:22
+    at Array.forEach (native)
+    at forEach (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:323:11)
+    at loadModules (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3775:5)
+    at Object.createInjector [as injector] (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3715:11)
+    at workFn (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js:2101:52)
+http://errors.angularjs.org/1.2.16/$injector/modulerr?p0=services&amp;p1=Error%3A%20%5B%24injector%3Anomod%5D%20Module%20&apos;services&apos;%20is%20not%20available!%20You%20either%20misspelled%20the%20module%20name%20or%20forgot%20to%20load%20it.%20If%20registering%20a%20module%20ensure%20that%20you%20specify%20the%20dependencies%20as%20the%20second%20argument.%0Ahttp%3A%2F%2Ferrors.angularjs.org%2F1.2.16%2F%24injector%2Fnomod%3Fp0%3Dservices%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A78%3A12%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1611%3A17%0A%20%20%20%20at%20ensure%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1535%3A38)%0A%20%20%20%20at%20module%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1609%3A14)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3781%3A22%0A%20%20%20%20at%20Array.forEach%20(native)%0A%20%20%20%20at%20forEach%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A323%3A11)%0A%20%20%20%20at%20loadModules%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3775%3A5)%0A%20%20%20%20at%20Object.createInjector%20%5Bas%20injector%5D%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3715%3A11)%0A%20%20%20%20at%20workFn%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular-mocks.js%3F1406900850000%3A2101%3A52)
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:78:12
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3809:15
+    at Array.forEach (native)
+    at forEach (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:323:11)
+    at loadModules (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3775:5)
+    at Object.createInjector [as injector] (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3715:11)
+    at workFn (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js:2101:52)
+</failure>
+      <failure type="">TypeError: Cannot read property &apos;expectGET&apos; of undefined
+    at null.&lt;anonymous&gt; (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/Services/genericDataServiceSpec.js:96:21)
+</failure>
+    </testcase>
+    <testcase name="[GMateev] / should retrieve items with filter." time="6" classname="Chrome 36.0.1985 (Windows 7).genericDataService">
+      <failure type="">Error: [$injector:modulerr] Failed to instantiate module services due to:
+Error: [$injector:nomod] Module &apos;services&apos; is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.
+http://errors.angularjs.org/1.2.16/$injector/nomod?p0=services
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:78:12
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1611:17
+    at ensure (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1535:38)
+    at module (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1609:14)
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3781:22
+    at Array.forEach (native)
+    at forEach (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:323:11)
+    at loadModules (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3775:5)
+    at Object.createInjector [as injector] (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3715:11)
+    at workFn (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js:2101:52)
+http://errors.angularjs.org/1.2.16/$injector/modulerr?p0=services&amp;p1=Error%3A%20%5B%24injector%3Anomod%5D%20Module%20&apos;services&apos;%20is%20not%20available!%20You%20either%20misspelled%20the%20module%20name%20or%20forgot%20to%20load%20it.%20If%20registering%20a%20module%20ensure%20that%20you%20specify%20the%20dependencies%20as%20the%20second%20argument.%0Ahttp%3A%2F%2Ferrors.angularjs.org%2F1.2.16%2F%24injector%2Fnomod%3Fp0%3Dservices%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A78%3A12%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1611%3A17%0A%20%20%20%20at%20ensure%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1535%3A38)%0A%20%20%20%20at%20module%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1609%3A14)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3781%3A22%0A%20%20%20%20at%20Array.forEach%20(native)%0A%20%20%20%20at%20forEach%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A323%3A11)%0A%20%20%20%20at%20loadModules%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3775%3A5)%0A%20%20%20%20at%20Object.createInjector%20%5Bas%20injector%5D%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3715%3A11)%0A%20%20%20%20at%20workFn%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular-mocks.js%3F1406900850000%3A2101%3A52)
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:78:12
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3809:15
+    at Array.forEach (native)
+    at forEach (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:323:11)
+    at loadModules (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3775:5)
+    at Object.createInjector [as injector] (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3715:11)
+    at workFn (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js:2101:52)
+</failure>
+      <failure type="">TypeError: Cannot read property &apos;expectGET&apos; of undefined
+    at null.&lt;anonymous&gt; (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/Services/genericDataServiceSpec.js:105:21)
+</failure>
+    </testcase>
+    <testcase name="[GMateev] / should return error." time="6" classname="Chrome 36.0.1985 (Windows 7).genericDataService">
+      <failure type="">Error: [$injector:modulerr] Failed to instantiate module services due to:
+Error: [$injector:nomod] Module &apos;services&apos; is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.
+http://errors.angularjs.org/1.2.16/$injector/nomod?p0=services
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:78:12
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1611:17
+    at ensure (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1535:38)
+    at module (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:1609:14)
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3781:22
+    at Array.forEach (native)
+    at forEach (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:323:11)
+    at loadModules (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3775:5)
+    at Object.createInjector [as injector] (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3715:11)
+    at workFn (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js:2101:52)
+http://errors.angularjs.org/1.2.16/$injector/modulerr?p0=services&amp;p1=Error%3A%20%5B%24injector%3Anomod%5D%20Module%20&apos;services&apos;%20is%20not%20available!%20You%20either%20misspelled%20the%20module%20name%20or%20forgot%20to%20load%20it.%20If%20registering%20a%20module%20ensure%20that%20you%20specify%20the%20dependencies%20as%20the%20second%20argument.%0Ahttp%3A%2F%2Ferrors.angularjs.org%2F1.2.16%2F%24injector%2Fnomod%3Fp0%3Dservices%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A78%3A12%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1611%3A17%0A%20%20%20%20at%20ensure%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1535%3A38)%0A%20%20%20%20at%20module%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A1609%3A14)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3781%3A22%0A%20%20%20%20at%20Array.forEach%20(native)%0A%20%20%20%20at%20forEach%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A323%3A11)%0A%20%20%20%20at%20loadModules%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3775%3A5)%0A%20%20%20%20at%20Object.createInjector%20%5Bas%20injector%5D%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular.js%3F1406900850000%3A3715%3A11)%0A%20%20%20%20at%20workFn%20(http%3A%2F%2Flocalhost%3A9876%2Fbase%2Fhelpers%2Fangular-mocks.js%3F1406900850000%3A2101%3A52)
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:78:12
+    at C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3809:15
+    at Array.forEach (native)
+    at forEach (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:323:11)
+    at loadModules (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3775:5)
+    at Object.createInjector [as injector] (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js:3715:11)
+    at workFn (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js:2101:52)
+</failure>
+      <failure type="">TypeError: Cannot read property &apos;expectGET&apos; of undefined
+    at null.&lt;anonymous&gt; (C:/Users/karadzhov/Documents/GitHub/feather/Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/Services/genericDataServiceSpec.js:114:21)
+</failure>
+    </testcase>
     <system-out><![CDATA[
 ]]></system-out>
     <system-err/>
