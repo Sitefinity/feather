@@ -2,18 +2,16 @@
 describe('genericDataService', function () {
     beforeEach(module('services'));
 
-    //Mock serverData dependency
-    beforeEach(module(function ($provide) {
-        $provide.value('serverData', {
-            get: function (value) {
-                if (value === 'applicationRoot') {
-                    return 'http://mysite.com:9999/myapp';
-                }
-            },
-            refresh: function () {
+    //Mock sitefinity global variable
+    beforeEach(function () {
+        spyOn(sitefinity, 'getRootedUrl').andCallFake(function (path) {
+            if (path.length > 0 && path.charAt(0) === '/') {
+                path = path.substring(1, path.length);
             }
+
+            return 'http://mysite.com:9999/myapp/' + path;
         });
-    }));
+    });
 
     var $httpBackend;
     var genericDataService;

@@ -1,3 +1,3 @@
 ﻿(function () {
-    angular.module('services', ['ngResource', 'serverDataModule']);
+    angular.module('services', ['ngResource']);
 })();
