@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+﻿using System.IO;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
-using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
@@ -20,14 +14,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerArrangement]
         public void AddNewLayoutFile()
         {
-            FeatherServerOperations.ResourcePackages().AddNewLayoutFileToPackage(PackageName, LayoutFileName, FileResource);
+            string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(PackageName, LayoutFileName);
+            FeatherServerOperations.ResourcePackages().AddNewResource(FileResource, filePath);
         }
 
         [ServerTearDown]
         public void TearDown()
         {
             ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
-            ServerOperations.SystemManager().RestartApplication(true);
 
             string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(PackageName, LayoutFileName);           
             File.Delete(filePath);
