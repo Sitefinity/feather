@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ArtOfTest.WebAii.Controls.HtmlControls;
 using ArtOfTest.WebAii.Core;
 using ArtOfTest.WebAii.TestTemplates;
+using ArtOfTest.WebAii.ObjectModel;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
 {
@@ -148,6 +149,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
             get
             {
                 return this.Get<HtmlInputText>("ng-model=filter.search");
+            }
+        }        
+
+        public HtmlDiv ContentContainer
+        {
+            get
+            {
+                return this.Find.ById<HtmlDiv>("viewsPlaceholder");
             }
         }
     }

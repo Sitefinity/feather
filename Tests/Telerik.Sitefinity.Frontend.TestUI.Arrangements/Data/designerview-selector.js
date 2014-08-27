@@ -9,6 +9,7 @@
         $scope.$watch("selectedItem.Title", function(newValue){
             $scope.properties["DummyText"].PropertyValue = newValue;
         });
+
         propertyService.get()
             .then(function (data) {
                 if (data) {

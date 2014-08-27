@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ArtOfTest.Common.UnitTesting;
 using ArtOfTest.WebAii.Controls.HtmlControls;
 using ArtOfTest.WebAii.Core;
+using ArtOfTest.WebAii.ObjectModel;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 {
@@ -21,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void VerifyWidgetTitle(string title)
         {
             HtmlControl widgetTitleText = this.EM.Widgets.FeatherWidget.WidgetTitleText
-                .AssertIsPresent("widget title text");
+                                              .AssertIsPresent("widget title text");
 
             widgetTitleText.AssertTextContentIsEqualTo(title, "widget title is not as expected");
         }
@@ -33,7 +34,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void VerifyWidgetInputFieldLabelText(string text)
         {
             HtmlControl label = this.EM.Widgets.FeatherWidget.Label
-                .AssertIsPresent("label");
+                                    .AssertIsPresent("label");
 
             label.AssertTextContentIsEqualTo(text, "Label is incorrect");
         }
@@ -44,7 +45,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void VerifyDummyWidgetInputTextField()
         {
             HtmlInputText inputTextField = this.EM.Widgets.FeatherWidget.DummyWidgetInput
-                .AssertIsPresent("Input Text Field");
+                                               .AssertIsPresent("Input Text Field");
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void VerifyWidgetSaveButton()
         {
             HtmlButton saveButton = this.EM.Widgets.FeatherWidget.SaveButton
-                .AssertIsPresent("save button");
+                                        .AssertIsPresent("save button");
 
             Assert.IsTrue(saveButton.InnerText.Equals("Save"), "Save button text is not correct");
         }
@@ -64,7 +65,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void VerifyWidgetCancelButton()
         {
             HtmlAnchor cancelButton = this.EM.Widgets.FeatherWidget.CancelButton
-                .AssertIsPresent("Cancel button");
+                                          .AssertIsPresent("Cancel button");
 
             Assert.IsTrue(cancelButton.InnerText.Equals("Cancel"), "Cancel button text is not correct");
         }
@@ -75,7 +76,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void VerifyWidgetCloseButton()
         {
             HtmlButton closeButton = this.EM.Widgets.FeatherWidget.CloseButton
-                .AssertIsPresent("close button");
+                                         .AssertIsPresent("close button");
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void SetTextDummyWidget(string text)
         {
             HtmlInputText input = this.EM.Widgets.FeatherWidget.DummyWidgetInput
-                .AssertIsPresent("input");
+                                      .AssertIsPresent("input");
 
             input.ScrollToVisible();
             input.Focus();
@@ -100,10 +101,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void ClickSaveButton()
         {
             HtmlButton saveButton = this.EM.Widgets.FeatherWidget.SaveButton
-                .AssertIsPresent("save button");
+                                        .AssertIsPresent("save button");
 
             saveButton.Click();
             ActiveBrowser.WaitForAsyncRequests();
+            ActiveBrowser.RefreshDomTree();
         }
 
         /// <summary>
@@ -112,10 +114,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void ClickAdvancedButton()
         {
             HtmlAnchor saveButton = this.EM.Widgets.FeatherWidget.AdvancedButton
-                .AssertIsPresent("advanced button");
+                                        .AssertIsPresent("advanced button");
 
             saveButton.Click();
             ActiveBrowser.WaitForAsyncRequests();
+            ActiveBrowser.RefreshDomTree();
         }
 
         /// <summary>
@@ -124,22 +127,40 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void ClickSelectorButton()
         {
             HtmlAnchor saveButton = this.EM.Widgets.FeatherWidget.SelectorButton
-                .AssertIsPresent("selector button");
+                                        .AssertIsPresent("selector button");
 
             saveButton.Click();
             ActiveBrowser.WaitForAsyncRequests();
+            ActiveBrowser.RefreshDomTree();
         }
 
         /// <summary>
         /// Selects the content.
         /// </summary>
-        public void SelectContent()
+        public void SelectContent(bool isNewsSelector = true)
         {
-            HtmlButton saveButton = this.EM.Widgets.FeatherWidget.SelectButton
-                .AssertIsPresent("save button");
+            if (isNewsSelector)
+            {
+                var contentSelector = this.GetContentSelectorByType("Telerik.Sitefinity.News.Model.NewsItem").As<HtmlControl>()
+                                          .AssertIsPresent("selector directive");
 
-            saveButton.Click();
-            ActiveBrowser.WaitForAsyncRequests();
+                HtmlButton selectButton = contentSelector.Find.ByTagIndex<HtmlButton>("button", 0).AssertIsPresent("select button");
+
+                selectButton.Click();
+                ActiveBrowser.WaitForAsyncRequests();
+                ActiveBrowser.RefreshDomTree();
+            }
+            else
+            {
+                var contentSelector = this.GetContentSelectorByType("Telerik.Sitefinity.GenericContent.Model.ContentItem").As<HtmlControl>()
+                                          .AssertIsPresent("selector directive");
+
+                HtmlButton selectButton = contentSelector.Find.ByTagIndex<HtmlButton>("button", 0).AssertIsPresent("select button");
+
+                selectButton.Click();
+                ActiveBrowser.WaitForAsyncRequests();
+                ActiveBrowser.RefreshDomTree();
+            }
         }
 
         /// <summary>
@@ -160,10 +181,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void DoneSelecting()
         {
             HtmlButton doneButton = this.EM.Widgets.FeatherWidget.DoneButton
-                .AssertIsPresent("done button");
+                                        .AssertIsPresent("done button");
 
             doneButton.Click();
             ActiveBrowser.WaitForAsyncRequests();
+            ActiveBrowser.RefreshDomTree();
         }
 
         /// <summary>
@@ -179,7 +201,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void SetSearchText(string text)
         {
             HtmlInputText input = this.EM.Widgets.FeatherWidget.SearchInput
-                .AssertIsPresent("input");
+                                      .AssertIsPresent("input");
 
             input.MouseClick();
 
@@ -193,6 +215,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             var items = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in contentItems");
             return items.Count;
+        }
+
+        private Element GetContentSelectorByType(string type)
+        {
+            var contentContainer = this.EM.Widgets.FeatherWidget.ContentContainer.AssertIsPresent("Content container");
+            var contentSelector = contentContainer.Find.ByAttributes(string.Format("item-type={0}", type));
+            return contentSelector;
         }
     }
 }

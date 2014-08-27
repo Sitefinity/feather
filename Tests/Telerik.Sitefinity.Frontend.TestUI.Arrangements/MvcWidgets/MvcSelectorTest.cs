@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
                 ServerOperations.News().CreatePublishedNewsItem(newsTitle: NewsItemTitle + i, newsContent: NewsItemContent +i, author: NewsItemAuthor + i);                
             }
             
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 ServerOperations.ContentBlocks().CreateContentBlock(ContentBlockTitle + i, ContentBlockContent + i);
             }
