@@ -7,8 +7,8 @@
                 scope: {
                     itemType: '@',
                     itemProvider: '=',
-                    selectedItemId: '=',
-                    selectedItem: '&'
+                    selectedItemId: '=?',
+                    selectedItem: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
