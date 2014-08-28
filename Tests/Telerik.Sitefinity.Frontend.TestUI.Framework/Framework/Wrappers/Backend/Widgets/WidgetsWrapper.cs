@@ -231,10 +231,15 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             ActiveBrowser.RefreshDomTree();
         }
 
-        public int CountItems()
+        public void WaitForItemsToAppear(int expectedCount)
+        {
+            Manager.Current.Wait.For(() => CountItems(expectedCount));
+        }
+
+        public bool CountItems(int expected)
         {
             var items = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in contentItems");
-            return items.Count;
+            return expected == items.Count;
         }
 
         private Element GetContentSelectorByType(string type)
