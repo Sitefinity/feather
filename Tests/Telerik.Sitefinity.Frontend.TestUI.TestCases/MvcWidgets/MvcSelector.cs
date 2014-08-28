@@ -25,9 +25,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
-            Thread.Sleep(5000);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
-
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetTitle(WidgetTitle);           
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetSaveButton();
@@ -59,7 +58,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().VerifyContentInWidget(ContentBlockTitle);
-            Thread.Sleep(5000);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
 
             for (int i = 0; i < 2; i++)

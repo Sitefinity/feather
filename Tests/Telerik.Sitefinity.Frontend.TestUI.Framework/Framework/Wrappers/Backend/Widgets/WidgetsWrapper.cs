@@ -27,6 +27,26 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             widgetTitleText.AssertTextContentIsEqualTo(title, "widget title is not as expected");
         }
 
+
+        /// <summary>
+        /// When the first control is added to a form a submit button is automatically added to the page. 
+        /// This method waits for the submit button to be added.
+        /// </summary>
+        public void WaitForSaveButtonToAppear()
+        {
+            Manager.Current.Wait.For(WaitForSaveButton, Manager.Current.Settings.ClientReadyTimeout);
+            ActiveBrowser.RefreshDomTree();
+        }
+
+        private bool WaitForSaveButton()
+        {
+            Manager.Current.ActiveBrowser.RefreshDomTree();
+            var saveButton = ActiveBrowser.Find.ByExpression<HtmlButton>("tagname=button", "class=btn btn-primary ng-scope");
+            bool result = saveButton != null && saveButton.IsVisible();
+
+            return result;
+        }
+
         /// <summary>
         /// Verifies that the feather widget designer has the proper label text.
         /// </summary>
@@ -144,7 +164,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
                 var contentSelector = this.GetContentSelectorByType("Telerik.Sitefinity.News.Model.NewsItem").As<HtmlControl>()
                                           .AssertIsPresent("selector directive");
 
-                HtmlButton selectButton = contentSelector.Find.ByTagIndex<HtmlButton>("button", 0).AssertIsPresent("select button");
+                HtmlButton selectButton = contentSelector.Find.ById<HtmlButton>("openSelectorBtn").AssertIsPresent("select button");
 
                 selectButton.Click();
                 ActiveBrowser.WaitForAsyncRequests();
@@ -155,7 +175,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
                 var contentSelector = this.GetContentSelectorByType("Telerik.Sitefinity.GenericContent.Model.ContentItem").As<HtmlControl>()
                                           .AssertIsPresent("selector directive");
 
-                HtmlButton selectButton = contentSelector.Find.ByTagIndex<HtmlButton>("button", 0).AssertIsPresent("select button");
+                HtmlButton selectButton = contentSelector.Find.ById<HtmlButton>("openSelectorBtn").AssertIsPresent("select button");
 
                 selectButton.Click();
                 ActiveBrowser.WaitForAsyncRequests();
