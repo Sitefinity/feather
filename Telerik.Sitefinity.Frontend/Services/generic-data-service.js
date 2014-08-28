@@ -10,13 +10,12 @@
             var dataItemPromise;
 
             var getItems = function (itemType, itemProvider, skip, take, filter) {
-                var generatedFilter = 'STATUS = LIVE';
+                var generatedFilter = 'VISIBLE= true AND STATUS = LIVE';
 
                 if (filter) {
                     generatedFilter = generatedFilter + ' AND (Title.ToUpper().Contains("' + filter + '".ToUpper()))';
                 }
 
-                //&filter=STATUS+%3D+MASTER
                 dataItemPromise = DataItem.get(
                     {
                         items: 'data-items',
