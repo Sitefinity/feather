@@ -1,0 +1,22 @@
+@model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.PagerViewModel
+
+<ul class="pagination">
+    <li>@Html.ActionLink("«", String.Format(Model.RedirectUrlTemplate, 1))</li>
+    @for (int i = 1; i <= Model.TotalPagesCount; i++)
+    {
+        if(Model.CurrentPage == i)
+        {
+            <li class="active">
+                @Html.Raw(Html.ActionLink("[ReplaceText]", String.Format(Model.RedirectUrlTemplate, i)).ToString()
+                .Replace("[ReplaceText]", String.Format("{0} <span class=\"sr-only\">(current)</span>" , i)))
+            </li>
+        }
+        else
+        {
+            <li>
+                @Html.ActionLink(i.ToString(), String.Format(Model.RedirectUrlTemplate, i))
+            </li>
+        }
+    }
+    <li>@Html.ActionLink("»", String.Format(Model.RedirectUrlTemplate, Model.TotalPagesCount))</li>
+</ul>

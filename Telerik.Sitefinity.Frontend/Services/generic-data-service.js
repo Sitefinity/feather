@@ -1,22 +1,17 @@
 ﻿(function () {
     angular.module('services')
-        .factory('genericDataService', ['$resource', 'serverData', function ($resource, serverData) {
-            serverData.refresh();
-
+        .factory('genericDataService', ['$resource', function ($resource) {
             /* Private methods and variables */
             var getResource = function () {
-                var appRoot = serverData.get('applicationRoot');
-                if (appRoot.slice(-1) !== '/')
-                    appRoot = appRoot + '/';
+                var url = sitefinity.getRootedUrl("restapi/sitefinity/generic-data/:items");
 
-                return $resource(appRoot + "restapi/sitefinity/generic-data/:items");
+                return $resource(url);
             };
 
             var DataItem = getResource();
             var dataItemPromise;
 
             var getItems = function (itemType, itemProvider, skip, take, filter) {
-
                 var generatedFilter = 'STATUS = MASTER';
                 if (filter) {
                     generatedFilter = generatedFilter + ' AND (Title.ToUpper().Contains("' + filter + '".ToUpper()))';
@@ -37,9 +32,23 @@
                 return dataItemPromise;
             };
 
+            var getItem = function (itemId, itemType, itemProvider) {
+                dataItemPromise = DataItem.get(
+                    {
+                        items: 'data-items',
+                        ItemId: itemId,
+                        ItemType: itemType,
+                        ItemProvider: itemProvider
+                    })
+                    .$promise;
+
+                return dataItemPromise;
+            }
+
             return {
                 /* Returns the data items. */
-                getItems: getItems
+                getItems: getItems,
+                getItem: getItem
             };
         }]);
 })();

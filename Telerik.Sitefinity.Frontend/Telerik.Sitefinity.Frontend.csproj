@@ -175,7 +175,9 @@
     <Compile Include="InlineEditing\HtmlProcessor.cs" />
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
+    <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerContainerAttribute.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="FilesMonitoring\IFileMonitor.cs" />
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\IUrlMappingController.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />
@@ -214,6 +217,18 @@
     <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParser.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilder.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\CategoryParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\CustomActionParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\DefaultUrlParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\DetailActionParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\DynamicUrlParamActionInvoker.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\IRouteParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\IUrlParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\RouteParamResolverBase.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\TagParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\TaxonParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\UrlParamsMapperBase.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\UrlSegmentInfo.cs" />
     <Compile Include="Mvc\Models\DesignerModel.cs" />
     <Compile Include="Mvc\Models\DesignerViewConfigModel.cs" />
     <Compile Include="Mvc\Models\IDesignerModel.cs" />
@@ -225,6 +240,7 @@
     <Compile Include="FilesMonitoring\ResourceType.cs" />
     <Compile Include="Resources\ResourceHttpHandler.cs" />
     <Compile Include="Resources\ResourcesInitiliazer.cs" />
+    <Compile Include="Resources\ServerContextHandler.cs" />
     <Compile Include="Resources\UrlTransformations.cs" />
     <Compile Include="Security\AuthenticationEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -314,8 +330,10 @@
     <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.json" />
     <EmbeddedResource Include="Mvc\Styles\sitefinity-backend.scss" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js.map" />
+    <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\ServerContext.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Designers\Scripts\page-editor-services.js" />
@@ -358,6 +376,9 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\content-selector.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
@@ -369,7 +390,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

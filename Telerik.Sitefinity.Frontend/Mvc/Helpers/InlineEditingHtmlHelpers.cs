@@ -13,13 +13,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// HTML helper which adds the meta data required by InlineEditing.
         /// </summary>
         /// <param name="helper">The helper.</param>
-        /// <param name="model">The model.</param>
+        /// <param name="model">The object which contains the property.</param>
         /// <param name="propName">Name of the property.</param>
         /// <returns></returns>
         public static System.Web.Mvc.MvcHtmlString TextField(this HtmlHelper helper, object model, string propName)
         {
             var htmlProcessor = new HtmlProcessor();
             var htmlString = htmlProcessor.GetStringContent(model, propName);
+            return new System.Web.Mvc.MvcHtmlString(htmlString);
+        }
+
+        /// <summary>
+        /// HTML helper which adds the meta data required by InlineEditing.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="propName">Name of the property.</param>
+        /// <param name="propValue">The property value.</param>
+        /// <param name="fieldType">Type of the field.</param>
+        /// <returns>Html required for enabling inline editing.</returns>
+        public static System.Web.Mvc.MvcHtmlString TextField(this HtmlHelper helper, string propName, string propValue, string fieldType)
+        {
+            var htmlString = String.Format(HtmlProcessor.InlineEditingHtmlWrapper, propName, fieldType, propValue);
+            
             return new System.Web.Mvc.MvcHtmlString(htmlString);
         }
        

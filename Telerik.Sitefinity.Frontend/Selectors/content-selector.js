@@ -6,51 +6,16 @@
                 transclude: true,
                 scope: {
                     itemType: '@',
-                    itemProvider: '@',
-                    selectedItemId: '=',
-                    selectedItem: '='
+                    itemProvider: '=',
+                    selectedItemId: '=?',
+                    selectedItem: '=?'
                 },
-                template:
-'<div ng-attr-id="{{selectorId}}">' +
-    '<div id="selectedItemsPlaceholder">' +
-        '<alert type="danger" ng-show="showError">{{errorMessage}}</alert>' +
-        '<div ng-hide="showError">' +
-            '<span ng-bind="selectedItem.Title"></span>' +
-            '<button id="openSelectorBtn">Select</button>' +
-        '</div>' +
-    '</div>' +
-    '<div class="contentSelector" modal template-url="selector-template" open-button="{{openSelectorButtonId}}" window-class="sf-designer-dlg" existing-scope="true">' +
-        '<script type="text/ng-template" id="selector-template">' +
-            '<div class="modal-header">' +
-                '<h1 class="modal-title">Select content</h1>' +
-            '</div>' +
-            '<div class="modal-body">' +
-                '<div ng-show="isListEmpty" class="alert alert-info">NoItemsHaveBeedCreatedYet</div>' +
-                '<div ng-hide="isListEmpty">' +
-                    '<div class="input-group m-bottom-sm">' +
-                        '<span class="input-group-addon">' +
-                            '<i class="glyphicon glyphicon-search"></i>' +
-                        '</span>' +
-                        '<input type="text" ng-model="filter.search" class="form-control" placeholder="NarrowByTyping" />' +
-                    '</div>' +
-                    '<div class="list-group s-items-list-wrp">' +
-                        '<a ng-repeat="item in contentItems"' +
-                                "ng-class=\"{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }\" " +
-                                'ng-click="contentItemClicked($index, item)"> ' +
-                            '<span ng-bind="item.Title"></span>' +
-                        '</a>' +
-                    '</div>' +
-                    '<pagination ng-show="filter.paging.isVisible" items-per-page="filter.paging.itemsPerPage" total-items="filter.paging.totalItems" ng-model="filter.paging.currentPage"></pagination>' +
-                    '<div ng-hide="contentItems.length">NoItemsFound</div>' +
-                '</div>' +
-            '</div>' +
-            '<div class="modal-footer">' +
-                '<button type="button" ng-hide="isListEmpty" class="btn btn-primary" ng-click="selectContent()">DoneSelecting</button>' +
-                '<button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>' +
-            '</div>' +
-        '</script>'+
-    '</div>' +
-'</div>',
+                templateUrl: function (elem, attrs) {
+                    var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var url = attrs.templateUrl || 'Selectors/content-selector.html';
+                    return sitefinity.getEmbeddedResourceUrl(assembly, url);
+                },
+
                 link: function (scope, element, attrs, ctrl, translude) {
 
                     // ------------------------------------------------------------------------
@@ -58,7 +23,7 @@
                     // ------------------------------------------------------------------------
 
                     //invoked when the content items are loaded
-                    var onLoadedSuccess = function (data) {
+                    var onItemsLoadedSuccess = function (data) {
                         if (data && data.Items) {
                             scope.contentItems = data.Items;
                             scope.filter.paging.set_totalItems(data.TotalCount);
@@ -69,13 +34,22 @@
                                 if (id === scope.selectedItemId ||
                                     (scope.selectedItem && id === scope.selectedItem.Id)) {
                                     scope.selectedItemInTheDialog = data.Items[i];
-                                    scope.selectedItem = data.Items[i];
                                 }
                             }
                         }
 
                         scope.isListEmpty = scope.contentItems.length === 0 && !scope.filter.search;
                     };
+
+                    var onSelectedItemLoadedSuccess = function (data) {
+                        if (!scope.selectedItem) {
+                            scope.selectedItem = data.Items[0];
+                        }
+                        
+                        if (!scope.selectedItemId) {
+                            scope.selectedItemId = data.Items[0].Id;
+                        }                        
+                    }
 
                     var onError = function (error) {
                         var errorMessage = '';
@@ -95,8 +69,18 @@
                         var take = scope.filter.paging.itemsPerPage;
 
                         return genericDataService.getItems(scope.itemType, scope.itemProvider, skip, take, scope.filter.search)
-                            .then(onLoadedSuccess, onError);
+                            .then(onItemsLoadedSuccess, onError);
                     };
+
+                    var getSelectedItem = function (scope) {
+                        var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
+
+                        if (id) {
+                            genericDataService.getItem(id, scope.itemType, scope.itemProvider)
+                                .then(onSelectedItemLoadedSuccess)
+                                .finally(hideLoadingIndicator);
+                        }
+                    }
 
                     var reloadContentItems = function (newValue, oldValue) {
                         if (newValue !== oldValue) {
@@ -155,7 +139,7 @@
                             scope.selectedItem = scope.selectedItemInTheDialog;
                             scope.selectedItemId = scope.selectedItemInTheDialog.Id;
                         }
-                        
+
                         scope.$modalInstance.close();
                     };
 
@@ -170,18 +154,23 @@
                         } catch (e) { }
                     };
 
-                    scope.showLoadingIndicator = true;
-                    genericDataService.getItems(scope.itemType, scope.itemProvider, scope.filter.paging.get_itemsToSkip(),
+                    scope.open = function () {
+                        genericDataService.getItems(scope.itemType, scope.itemProvider, scope.filter.paging.get_itemsToSkip(),
                         scope.filter.paging.itemsPerPage, scope.filter.search)
-                        .then(onLoadedSuccess, onError)
+                        .then(onItemsLoadedSuccess, onError)
                         .then(function () {
                             scope.$watch('filter.search', reloadContentItems);
                             scope.$watch('filter.paging.currentPage', reloadContentItems);
                         })
                         .catch(onError)
                         .finally(hideLoadingIndicator);
+                    };
 
-                    translude(function (clone) {
+                    scope.showLoadingIndicator = true;
+
+                    getSelectedItem(scope);
+
+                    translude(scope, function (clone) {
                         var hasContent;
                         for (var i = 0; i < clone.length; i++) {
                             var currentHtml = clone[i] && clone[i].outerHTML;
@@ -193,7 +182,7 @@
                                 element.find('#selectedItemsPlaceholder').empty().append(clone);
                                 break;
                             }
-                        }                                               
+                        }
                     });
                 }
             };

@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web.Mvc;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels;
+
+namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
+{
+    /// <summary>
+    /// This class represents controller for pager widget.
+    /// </summary>
+    public class ContentPagerController : Controller
+    {
+        /// <summary>
+        /// Returns view with pager.
+        /// </summary>
+        /// <param name="currentPage">The current page.</param>
+        /// <param name="totalPagesCount">The total pages count.</param>
+        /// <param name="redirectUrlTemplate">The template of the URL used for redirecting.</param>
+        /// <returns></returns>
+        public PartialViewResult Index(int currentPage, int totalPagesCount, string redirectUrlTemplate)
+        {
+            var model = new PagerViewModel(currentPage, totalPagesCount, redirectUrlTemplate);
+
+            return PartialView("Pager", model);
+        }
+    }
+}
