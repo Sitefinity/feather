@@ -4,7 +4,7 @@ using Telerik.Sitefinity.Mvc;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
-    public static class SitefinityControllerFactroryExtensions
+    public static class SitefinityControllerFactoryExtensions
     {
         /// <summary>
         /// Determines whether the given type represents an MVC controller.
@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             if (type == null
                 || !type.IsPublic
-                || !type.Name.EndsWith(SitefinityControllerFactroryExtensions.ControllerSuffix, StringComparison.OrdinalIgnoreCase)
+                || !type.Name.EndsWith(SitefinityControllerFactoryExtensions.ControllerSuffix, StringComparison.OrdinalIgnoreCase)
                 || type.IsAbstract)
             {
                 return false;
@@ -38,8 +38,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             var controllerName = controllerType.Name;
 
-            if (controllerName.EndsWith(SitefinityControllerFactroryExtensions.ControllerSuffix, StringComparison.OrdinalIgnoreCase))
-                controllerName = controllerName.Substring(0, controllerName.Length - SitefinityControllerFactroryExtensions.ControllerSuffix.Length);
+            if (controllerName.EndsWith(SitefinityControllerFactoryExtensions.ControllerSuffix, StringComparison.OrdinalIgnoreCase))
+                controllerName = controllerName.Substring(0, controllerName.Length - SitefinityControllerFactoryExtensions.ControllerSuffix.Length);
 
             return controllerName;
         }

@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Test.Helpers
         {
             // Arrange
             var context = new ViewContext();
-            var contentPlaceHolderString = string.Format(this.placeHolderHtmlFormatString, "Body");
+            var contentPlaceHolderString = string.Format(System.Globalization.CultureInfo.InvariantCulture, this.placeHolderHtmlFormatString, "Body");
             var urlHelper = new HtmlHelper(context, new DummyViewDataContainer());
 
             // Act
@@ -45,7 +45,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Test.Helpers
 
             // Arrange
             var context = new ViewContext();
-            var contentPlaceHolderString = string.Format(this.placeHolderHtmlFormatString, contentPlaceHolderTagId);
+            var contentPlaceHolderString = string.Format(System.Globalization.CultureInfo.InvariantCulture, this.placeHolderHtmlFormatString, contentPlaceHolderTagId);
             var urlHelper = new HtmlHelper(context, new DummyViewDataContainer());
 
             // Act

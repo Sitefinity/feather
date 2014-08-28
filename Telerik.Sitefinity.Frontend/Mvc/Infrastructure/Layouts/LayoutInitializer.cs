@@ -16,7 +16,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         {
             ObjectFactory.Container.RegisterType<ILayoutResolver, LayoutResolver>(new ContainerControlledLifetimeManager());
 
-            VirtualPathManager.AddVirtualFileResolver<LayoutVirtualFileResolver>(string.Format("{0}{1}{2}", "~/", LayoutVirtualFileResolver.ResolverPath, "*"), typeof(LayoutVirtualFileResolver).FullName);
+            VirtualPathManager.AddVirtualFileResolver<LayoutVirtualFileResolver>(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}{1}{2}", "~/", LayoutVirtualFileResolver.ResolverPath, "*"), typeof(LayoutVirtualFileResolver).FullName);
         }
     }
 }

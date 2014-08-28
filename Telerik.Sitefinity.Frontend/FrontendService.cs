@@ -8,8 +8,6 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Services;
-using Telerik.Microsoft.Practices.Unity;
-using Telerik.Sitefinity.Mvc;
 
 namespace Telerik.Sitefinity.Frontend
 {
@@ -51,7 +49,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             if (e.CommandName == "Bootstrapped")
             {
-                var resourcesInitializer = new ResourcesInitiliazer();
+                var resourcesInitializer = new ResourcesInitializer();
                 resourcesInitializer.Initialize();
 
                 var fileMonitoringInitilizer = new FileMonitoringInitializer();

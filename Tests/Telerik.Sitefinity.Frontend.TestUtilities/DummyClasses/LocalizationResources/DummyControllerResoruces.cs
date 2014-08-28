@@ -5,8 +5,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.LocalizationRes
     /// <summary>
     /// This class is used to test localization for the controllers.
     /// </summary>
-    [ObjectInfo(typeof(DummyControllerResoruces), Title = "DummyControllerResoruces", Description = "DummyControllerResorucesDescription")]
-    public class DummyControllerResoruces : Resource
+    [ObjectInfo(typeof(DummyControllerResources), Title = "DummyControllerResoruces", Description = "DummyControllerResorucesDescription")]
+    public class DummyControllerResources : Resource
     {
          /// <summary>
         /// Resources for Comments
@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.LocalizationRes
         {
             get
             {
-                return this["DummyResource"];
+                return this["DummyResource", System.Globalization.CultureInfo.InvariantCulture];
             }
         }
     }

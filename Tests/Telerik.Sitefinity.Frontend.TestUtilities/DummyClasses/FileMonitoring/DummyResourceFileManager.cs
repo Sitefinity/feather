@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
         /// <summary>
         /// The dummy file infos
         /// </summary>
-        public List<DummyFileInfo> DummyFileInfos { get; set; }
+        public ICollection<DummyFileInfo> DummyFileInfos { get; set; }
 
         /// <inheritdoc />
         public void FileAdded(string fileName, string filePath, string packageName = "")

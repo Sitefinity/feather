@@ -232,7 +232,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Checks whether RegisterController method registers the DesignerController without registering any routes.")]
-        public void RegisterController_DesignerController_NotRegistersAnylRoutes()
+        public void RegisterController_DesignerController_NotRegistersAnyRoutes()
         {
             // Arrange
             var initializer = new DummyControllerContainerInitializer();
@@ -279,7 +279,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
                 initializer.RegisterControllerPublic(controller);
 
                 // Assert
-                var resourceRegistered = ObjectFactory.Container.IsRegistered(typeof(DummyControllerResoruces), Res.GetResourceClassId(typeof(DummyControllerResoruces)));
+                var resourceRegistered = ObjectFactory.Container.IsRegistered(typeof(DummyControllerResources), Res.GetResourceClassId(typeof(DummyControllerResources)));
                 Assert.IsTrue(resourceRegistered, "String resources were not registered for the controller.");
             }
 

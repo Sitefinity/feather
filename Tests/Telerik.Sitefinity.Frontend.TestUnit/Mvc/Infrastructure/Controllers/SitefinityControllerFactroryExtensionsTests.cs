@@ -10,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
     /// Ensures that SitefinityControllerFactroryExtensions class works correctly.
     /// </summary>
     [TestClass]
-    public class SitefinityControllerFactroryExtensionsTests
+    public class SitefinityControllerFactoryExtensionsTests
     {
         #region Public Methods and Operators
 
@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         public void GetControllerName_WithControllerSuffix_ReturnsNameWithoutSuffix()
         {
             // Act
-            var controllerName = SitefinityControllerFactroryExtensions.GetControllerName(null, typeof(DummyController));
+            var controllerName = SitefinityControllerFactoryExtensions.GetControllerName(null, typeof(DummyController));
 
             // Assert
             Assert.AreEqual("Dummy", controllerName, "Controller name is not retrieved correctly.");
@@ -38,7 +38,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         public void GetControllerName_WithoutControllerSuffix_ReturnsTypeName()
         {
             // Act
-            var controllerName = SitefinityControllerFactroryExtensions.GetControllerName(null, typeof(DummyControl));
+            var controllerName = SitefinityControllerFactoryExtensions.GetControllerName(null, typeof(DummyControl));
 
             // Assert
             Assert.AreEqual("DummyControl", controllerName, "The controller name is not retrieved correctly.");
@@ -54,7 +54,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         public void GetControllerName_WithoutType_ThrowsException()
         {
             // Act
-            var controllerName = SitefinityControllerFactroryExtensions.GetControllerName(null, null);
+            var controllerName = SitefinityControllerFactoryExtensions.GetControllerName(null, null);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         public void IsController_DummyControl_ReturnsFalse()
         {
             // Act
-            var result = SitefinityControllerFactroryExtensions.IsController(null, typeof(DummyControl));
+            var result = SitefinityControllerFactoryExtensions.IsController(null, typeof(DummyControl));
 
             // Assert
             Assert.IsFalse(result, "The method recognize simple Control as Controller.");
@@ -81,7 +81,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         public void IsController_DummyController_ReturnsTrue()
         {
             // Act
-            var result = SitefinityControllerFactroryExtensions.IsController(null, typeof(DummyController));
+            var result = SitefinityControllerFactoryExtensions.IsController(null, typeof(DummyController));
 
             // Assert
             Assert.IsTrue(result, "The method fail to recognize a controller.");

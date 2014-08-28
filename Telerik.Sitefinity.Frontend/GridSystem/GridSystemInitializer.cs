@@ -22,8 +22,10 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 var htmlLayoutsSection = this.GetOrCreateToolBoxSection(toolboxConfig);
 
                 var baseTemplatePath = string.Format(
+                                                    System.Globalization.CultureInfo.InvariantCulture,
                                                     GridSystemInitializer.GridFolderPathStringTemplate,
                                                     FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendService).Assembly));
+                
                 var layoutControls = this.CreateLayoutControlsData(baseTemplatePath);
 
                 foreach (var layoutControl in layoutControls)
@@ -79,6 +81,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                         new GridControlData() { Name = "Col4T1", Title = "3 + 3 + 3 + 3", LayoutTemplatePath = baseTemplatePath + "grid-3+3+3+3.html", CssClass = "sfL25_25_25_25" },
                         new GridControlData() { Name = "Col5T1", Title = "2 + 3 + 2 + 3 + 2", LayoutTemplatePath = baseTemplatePath + "grid-2+3+2+3+2.html", CssClass = "sfL20_20_20_20_20" }
             };
+
             return layoutControls;
         }
 
@@ -89,7 +92,11 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// <param name="data">The data.</param>
         protected virtual void AddLayoutControl(ConfigElementList<ToolboxItem> parent, GridControlData data)
         {
+            if (data == null)
+                return;
+
             var control = parent.FirstOrDefault<ToolboxItem>(t => t.Name == data.Name);
+
             if (control == null)
             {
                 control = new ToolboxItem(parent);

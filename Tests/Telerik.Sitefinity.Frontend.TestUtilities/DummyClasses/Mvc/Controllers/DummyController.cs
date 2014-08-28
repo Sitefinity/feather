@@ -11,7 +11,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers
     /// In order to be properly resolved the controller should be 
     /// in the <see cref="Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers"/> namespace.
     /// </remarks>
-    [Localization(typeof(DummyControllerResoruces))]
+    [Localization(typeof(DummyControllerResources))]
     public class DummyController : Controller
     {
         /// <summary>

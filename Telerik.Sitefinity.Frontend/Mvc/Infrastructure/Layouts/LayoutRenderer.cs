@@ -30,31 +30,33 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         public virtual Controller CreateController(RouteData routeData = null)
         {
             // create a disconnected controller instance
-            GenericController controller = new GenericController();
-            HttpContextBase context = null;
+            using (var controller = new GenericController())
+            {
+                HttpContextBase context = null;
 
-            // get context wrapper from HttpContext if available
-            if (SystemManager.CurrentHttpContext != null)
-                context = SystemManager.CurrentHttpContext;
-            else
-                throw new InvalidOperationException("Can't create ControllerContext if no active HttpContext instance is available.");
+                // get context wrapper from HttpContext if available
+                if (SystemManager.CurrentHttpContext != null)
+                    context = SystemManager.CurrentHttpContext;
+                else
+                    throw new InvalidOperationException("Can not create ControllerContext if no active HttpContext instance is available.");
 
-            if (routeData == null)
-                routeData = new RouteData();
+                if (routeData == null)
+                    routeData = new RouteData();
 
-            // add the controller routing if not existing
-            if (!routeData.Values.ContainsKey("controller") &&
-                !routeData.Values.ContainsKey("Controller"))
-                routeData.Values.Add(
-                                    "controller",
-                                    controller.GetType().Name.ToLower().Replace("controller", string.Empty));
+                // add the controller routing if not existing
+                if (!routeData.Values.ContainsKey("controller") &&
+                    !routeData.Values.ContainsKey("Controller"))
+                    routeData.Values.Add(
+                                        "controller",
+                                        controller.GetType().Name.ToLowerInvariant().Replace("controller", string.Empty));
 
-            controller.UpdateViewEnginesCollection(this.GetPathTransformations(controller));
+                controller.UpdateViewEnginesCollection(this.GetPathTransformations());
 
-            // here we create the context for the controller passing the just created controller the httpcontext and the route data that we built above
-            controller.ControllerContext = new ControllerContext(context, routeData, controller);
+                // here we create the context for the controller passing the just created controller the httpcontext and the route data that we built above
+                controller.ControllerContext = new ControllerContext(context, routeData, controller);
 
-            return controller;
+                return controller;
+            }
         }
 
         /// <summary>
@@ -63,16 +65,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <param name="context">The context.</param>
         /// <param name="viewPath">The view path.</param>
         /// <param name="model">The model.</param>
-        /// <param name="partial">if set to <c>true</c> the view should be partial.</param>
+        /// <param name="isPartial">if set to <c>true</c> the view should be partial.</param>
         /// <returns></returns>
         /// <exception cref="System.IO.FileNotFoundException">View cannot be found.</exception>
-        public virtual string RenderViewToString(ControllerContext context, string viewPath, object model = null, bool partial = false)
+        public virtual string RenderViewToString(ControllerContext context, string viewPath, object model = null, bool isPartial = false)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
+
+            if (viewPath == null)
+                throw new ArgumentNullException("viewPath");
+            
             string result = null;
             IView view = null;
 
             // Obtaining the view engine result
-            var viewEngineResult = this.GetViewEngineResult(context, viewPath, partial);
+            var viewEngineResult = this.GetViewEngineResult(context, viewPath, isPartial);
 
             if (viewEngineResult != null)
                 view = viewEngineResult.View;
@@ -82,7 +90,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 // assigning the model so it can be available to the view 
                 context.Controller.ViewData.Model = model;
 
-                using (var writer = new StringWriter())
+                using (var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture))
                 {
                     var viewConext = new ViewContext(context, view, context.Controller.ViewData, context.Controller.TempData, writer);
                     view.Render(viewConext, writer);
@@ -114,15 +122,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="viewPath">The view path.</param>
-        /// <param name="partial">if set to <c>true</c> method returns only partial views.</param>
+        /// <param name="isPartial">if set to <c>true</c> method returns only partial views.</param>
         /// <returns></returns>
         /// <exception cref="System.IO.FileNotFoundException">View cannot be found.</exception>
-        public virtual ViewEngineResult GetViewEngineResult(ControllerContext context, string viewPath, bool partial = false)
+        public virtual ViewEngineResult GetViewEngineResult(ControllerContext context, string viewPath, bool isPartial = false)
         {
             var controller = (Controller)context.Controller;
             ViewEngineResult viewEngineResult;
 
-            if (partial)
+            if (isPartial)
                 viewEngineResult = controller.ViewEngineCollection.FindPartialView(context, viewPath);
             else
                 viewEngineResult = controller.ViewEngineCollection.FindView(context, viewPath, null);
@@ -142,12 +150,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// </summary>
         /// <param name="templateName"></param>
         /// <param name="model">The model.</param>
-        /// <param name="partial">if set to <c>true</c> requested view is partial.</param>
+        /// <param name="isPartial">if set to <c>true</c> requested view is partial.</param>
         /// <returns></returns>
-        public virtual string GetLayoutTemplate(string templateName, object model = null, bool partial = false)
+        public virtual string GetLayoutTemplate(string templateName, object model = null, bool isPartial = false)
         {
             var genericController = this.CreateController();
-            var layoutHtmlString = this.RenderViewToString(genericController.ControllerContext, templateName, model, partial);
+            var layoutHtmlString = this.RenderViewToString(genericController.ControllerContext, templateName, model, isPartial);
 
             if (!layoutHtmlString.IsNullOrEmpty())
             {
@@ -184,9 +192,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <summary>
         /// Gets the path transformations.
         /// </summary>
-        /// <param name="controller">The controller.</param>
         /// <returns></returns>
-        private IList<Func<string, string>> GetPathTransformations(Controller controller)
+        private IList<Func<string, string>> GetPathTransformations()
         {
             var packagesManager = new PackageManager();
 

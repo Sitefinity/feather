@@ -78,6 +78,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <exception cref="System.NotImplementedException"></exception>
         public int GetHashCode(MonitoredDirectory obj)
         {
+            /// TODO: Implement this
             throw new NotImplementedException();
         }
 

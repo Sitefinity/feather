@@ -36,7 +36,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
                 var designer = this.designerController.Master(widgetName) as ViewResult;
 
                 // Assert
-                Assert.AreEqual(widgetName, designer.ViewBag.ControlName, string.Format("ViewBag.ControlName should be equal to {0}.", widgetName));
+                Assert.AreEqual(widgetName, designer.ViewBag.ControlName, string.Format(System.Globalization.CultureInfo.InvariantCulture, "ViewBag.ControlName should be equal to {0}.", widgetName));
             }
         }
 
@@ -82,7 +82,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
             var designerView = this.designerController.View(string.Empty, viewType) as PartialViewResult;
 
             // Assert
-            Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should be equal to {0}.", expectedDesignerViewName));
+            Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format(System.Globalization.CultureInfo.InvariantCulture, "ViewName should be equal to {0}.", expectedDesignerViewName));
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
             var designerView = this.designerController.View(widgetName, viewType) as PartialViewResult;
 
             // Assert
-            Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format("ViewName should be equal to {0}.", expectedDesignerViewName));
+            Assert.AreEqual(expectedDesignerViewName, designerView.ViewName, string.Format(System.Globalization.CultureInfo.InvariantCulture, "ViewName should be equal to {0}.", expectedDesignerViewName));
         }
 
         #endregion

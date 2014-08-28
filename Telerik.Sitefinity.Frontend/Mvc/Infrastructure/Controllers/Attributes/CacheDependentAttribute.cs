@@ -9,6 +9,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
     /// <summary>
     /// This class represents an action filter that makes sure if a ViewResult is executed the View file has its cache dependency added to the response.
     /// </summary>
+    [AttributeUsage(AttributeTargets.All)]
     public class CacheDependentAttribute : ActionFilterAttribute
     {
         /// <summary>
@@ -17,20 +18,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
         /// <param name="filterContext">The filter context.</param>
         public override void OnResultExecuted(ResultExecutedContext filterContext)
         {
-            base.OnResultExecuted(filterContext);
-
-            if (SystemManager.CurrentHttpContext != null && SystemManager.CurrentHttpContext.Response != null)
+            if (filterContext != null)
             {
-                var viewResult = filterContext.Result as ViewResultBase;
-                if (viewResult != null)
+                base.OnResultExecuted(filterContext);
+
+                if (SystemManager.CurrentHttpContext != null && SystemManager.CurrentHttpContext.Response != null)
                 {
-                    var builtView = viewResult.View as BuildManagerCompiledView;
-                    if (builtView != null)
+                    var viewResult = filterContext.Result as ViewResultBase;
+
+                    if (viewResult != null)
                     {
-                        var cacheDependency = this.GetCacheDependency(builtView.ViewPath);
-                        if (cacheDependency != null)
+                        var builtView = viewResult.View as BuildManagerCompiledView;
+                        if (builtView != null)
                         {
-                            SystemManager.CurrentHttpContext.Response.AddCacheDependency(cacheDependency);
+                            var cacheDependency = this.GetCacheDependency(builtView.ViewPath);
+                            if (cacheDependency != null)
+                            {
+                                SystemManager.CurrentHttpContext.Response.AddCacheDependency(cacheDependency);
+                            }
                         }
                     }
                 }

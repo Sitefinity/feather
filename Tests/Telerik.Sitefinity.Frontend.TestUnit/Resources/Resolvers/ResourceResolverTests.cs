@@ -109,7 +109,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Checks whether GetCacheDependency method will return the result of the resource resolver strategy's GetCacheDependnecy method.")]
-        public void GetCacheDependency_ReturnsStrategysGetCacheDependncyResult()
+        public void GetCacheDependency_ReturnsStrategiesGetCacheDependencyResult()
         {
             using (new ObjectFactoryContainerRegion())
             {

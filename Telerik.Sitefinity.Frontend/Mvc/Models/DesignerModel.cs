@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Web.Script.Serialization;
@@ -81,7 +82,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="filename">The filename.</param>
         protected virtual bool IsDesignerView(string filename)
         {
-            return filename.StartsWith(DesignerModel.DesignerViewPrefix);
+            return filename != null && filename.StartsWith(DesignerModel.DesignerViewPrefix, StringComparison.Ordinal);
         }
 
         /// <summary>
@@ -90,6 +91,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="filename">The filename.</param>
         protected virtual string ExtractViewName(string filename)
         {
+            if (filename == null)
+                throw new ArgumentNullException("filename");
+
             var parts = filename.Split('.');
 
             if (parts.Length > 2)
@@ -109,8 +113,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Populates the script references.
         /// </summary>
         /// <param name="widgetName">Name of the widget.</param>
-        /// <param name="viewConfigs">The view configs.</param>
-        protected virtual void PopulateScriptReferences(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
+        /// <param name="configModels">The view configs.</param>
+        protected virtual void PopulateScriptReferences(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> configModels)
         {
             var packagesManager = new PackageManager();
             var packageName = packagesManager.GetCurrentPackage();
@@ -135,7 +139,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 }
             }
 
-            var configuredScriptReferences = viewConfigs
+            var configuredScriptReferences = configModels
                 .Where(c => c.Value.Scripts != null)
                 .SelectMany(c => c.Value.Scripts);
 
@@ -151,7 +155,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns>File name of the client script file for a given view.</returns>
         protected virtual string GetViewScriptFileName(string view)
         {
-            return DesignerModel.ScriptPrefix + view.Replace('.', '-').ToLower() + ".js";
+            if (string.IsNullOrEmpty(view))
+                throw new ArgumentNullException("view");
+
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}{1}.js", DesignerModel.ScriptPrefix, view.Replace('.', '-').ToLowerInvariant());
         }
 
         /// <summary>
@@ -162,12 +169,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns>Config for the given view if such config exists.</returns>
         protected virtual DesignerViewConfigModel GetViewConfig(string view, IEnumerable<string> viewLocations)
         {
+            if (view == null)
+                throw new ArgumentNullException("view");
+
+            if (viewLocations == null)
+                throw new ArgumentNullException("viewLocations");
+
+            Contract.EndContractBlock();
+
             foreach (var viewLocation in viewLocations)
             {
                 var expectedConfigFileName = viewLocation + "/" + DesignerViewPrefix + view + ".json";
+
                 if (VirtualPathManager.FileExists(expectedConfigFileName))
                 {
                     var fileStream = VirtualPathManager.OpenFile(expectedConfigFileName);
+
                     using (var streamReader = new StreamReader(fileStream))
                     {
                         var text = streamReader.ReadToEnd();

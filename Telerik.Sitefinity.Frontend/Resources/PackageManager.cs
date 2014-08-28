@@ -115,7 +115,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (packageName.IsNullOrEmpty())
                 throw new ArgumentNullException("packageName");
 
-            var path = string.Format("~/{0}/{1}", PackageManager.PackagesFolder, packageName);
+            var path = string.Format(System.Globalization.CultureInfo.InvariantCulture, "~/{0}/{1}", PackageManager.PackagesFolder, packageName);
             return path;
         }
 
@@ -141,7 +141,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var currentPackage = this.GetCurrentPackage();
                 if (!currentPackage.IsNullOrEmpty())
                 {
-                    return UrlTransformations.AppendParam(url, PackageUrlParamterName, currentPackage);
+                    return UrlTransformations.AppendParam(url, PackageUrlParameterName, currentPackage);
                 }
             }
 
@@ -246,7 +246,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// </summary>
         public const string CurrentPackageKey = "CurrentResourcePackage";
 
-        public const string PackageUrlParamterName = "package";
+        public const string PackageUrlParameterName = "package";
 
         #endregion
     }

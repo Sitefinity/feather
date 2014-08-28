@@ -20,13 +20,14 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// <returns></returns>
         public string GetResourcePackageDestinationFilePath(string packageName, string layoutFileName)
         {
+            if (layoutFileName == null)
+                throw new ArgumentNullException("layoutFileName");
+
+            if (packageName == null)
+                throw new ArgumentNullException("packageName");
+
             var sfpath = System.Web.Hosting.HostingEnvironment.MapPath("~/");
             var filePath = Path.Combine(sfpath, "ResourcePackages", packageName, "MVC", "Views", "Layouts", layoutFileName);
-
-            if (filePath == null)
-            {
-                throw new ArgumentNullException("FilePath was not found!");
-            }
 
             return filePath;
         }

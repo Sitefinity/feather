@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
             htmlString = layoutTemplateHtmlProcessor.AddMasterPageDirectives(htmlString);
 
             // Assert
-            Assert.IsTrue(htmlString.StartsWith(MasterPageDirective), "Master page doesn't start with" + MasterPageDirective);
+            Assert.IsTrue(htmlString.StartsWith(MasterPageDirective, System.StringComparison.Ordinal), "Master page doesn't start with" + MasterPageDirective);
         }
 
         #endregion

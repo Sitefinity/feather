@@ -39,7 +39,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
                 RazorViewEngine controllerVe = controller.ViewEngineCollection.OfType<RazorViewEngine>().FirstOrDefault();
                 Assert.IsNotNull(controllerVe, "The newly created controller does not have the expected view engine.");
 
-                var viewLocationExists = controllerVe.ViewLocationFormats.Any(p => p.StartsWith("~/" + DummyEnhancedController.CustomControllerPath));
+                var viewLocationExists = controllerVe.ViewLocationFormats.Any(p => p.StartsWith("~/" + DummyEnhancedController.CustomControllerPath, System.StringComparison.Ordinal));
 
                 Assert.IsTrue(viewLocationExists, "The newly created controller does not have its custom path in the view locations.");
             }
@@ -55,7 +55,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Checks whether CreateController will return a new controller with updated view engines collection.")]
-        public void CreateController_DummyController_NewControllerViewEnginesHaveAdditinalSearchPaths()
+        public void CreateController_DummyController_NewControllerViewEnginesHaveAdditionalSearchPaths()
         {
             // Arrange
             var controllerFactory = new FrontendControllerFactory();
@@ -73,9 +73,9 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
                 var controllerVe = controller.ViewEngineCollection.OfType<RazorViewEngine>().FirstOrDefault();
                 Assert.IsNotNull(controllerVe, "The newly created controller does not have the expected view engine.");
 
-                var containerVp = string.Format("~/{0}", FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(DummyController).Assembly));
+                var containerVp = string.Format(System.Globalization.CultureInfo.InvariantCulture, "~/{0}", FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(DummyController).Assembly));
 
-                Assert.IsTrue(controllerVe.ViewLocationFormats.Any(v => v.StartsWith(containerVp)), "The newly created controller does not have its container path in the view locations.");
+                Assert.IsTrue(controllerVe.ViewLocationFormats.Any(v => v.StartsWith(containerVp, System.StringComparison.Ordinal)), "The newly created controller does not have its container path in the view locations.");
             }
             finally
             {

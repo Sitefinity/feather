@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether the GetTemplateFramework method returns Hybrid if the template doesn't implement IFrameworkSpecificPageTemplate")]
-        public void GetTemplateFramework_NoSpecificFremework_ReturnsHybrid()
+        public void GetTemplateFramework_NoSpecificFramework_ReturnsHybrid()
         {
             // Arrange
             var template = new DummyPageTemplate();
@@ -37,7 +37,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether the GetTemplateFramework method returns the correct framework if the template is IFrameworkSpecificPageTemplate")]
-        public void GetTemplateFramework_SpecificFremework_ReturnsCorrectFramework()
+        public void GetTemplateFramework_SpecificFramework_ReturnsCorrectFramework()
         {
             // Arrange
             var template = new DummyFrameworkSpecificPageTemplate(PageTemplateFramework.Mvc);

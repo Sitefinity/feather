@@ -92,7 +92,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
             // Assert
             var itemId = presentationDependency.GetType().GetField("itemId", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(presentationDependency) as string;
 
-            Assert.AreEqual(presentationId.ToString().ToLower(), itemId.ToLower(), "GetCacheDependency did not return dependency on the expected object.");
+            Assert.AreEqual(presentationId.ToString().ToLowerInvariant(), itemId.ToLowerInvariant(), "GetCacheDependency did not return dependency on the expected object.");
         }
 
         [TestMethod]

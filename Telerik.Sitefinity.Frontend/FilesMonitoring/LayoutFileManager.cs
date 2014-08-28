@@ -29,7 +29,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <value>
         /// The folder path structure.
         /// </value>
-        public virtual List<string> FolderPathStructure
+        public virtual ICollection<string> FolderPathStructure
         {
             get
             {
@@ -125,8 +125,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             if (!string.IsNullOrEmpty(packageName))
                 expectedLayoutFolderStructure = packageName + Path.DirectorySeparatorChar + expectedLayoutFolderStructure;
 
-            if (directory.FullName.EndsWith(expectedLayoutFolderStructure, StringComparison.InvariantCultureIgnoreCase)
-                && directory.FullName.StartsWith(HostingEnvironment.ApplicationPhysicalPath, StringComparison.InvariantCultureIgnoreCase))
+            if (directory.FullName.EndsWith(expectedLayoutFolderStructure, StringComparison.Ordinal) && directory.FullName.StartsWith(HostingEnvironment.ApplicationPhysicalPath, StringComparison.Ordinal))
                 isFileInValidFolder = true;
 
             return isFileInValidFolder;
@@ -150,7 +149,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
             var viewFileExtensions = this.GetViewExtensions();
 
-            if (viewFileExtensions.Contains(extension, StringComparer.InvariantCultureIgnoreCase))
+            if (viewFileExtensions.Contains(extension, StringComparer.Ordinal))
             {
                 string templateTitle = string.Empty;
 

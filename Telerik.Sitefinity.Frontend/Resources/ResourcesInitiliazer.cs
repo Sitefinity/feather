@@ -7,7 +7,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// <summary>
     /// This class contains logic for configuring the functionality related to the resolving of resources.
     /// </summary>
-    public class ResourcesInitiliazer
+    public class ResourcesInitializer
     {
         public void Initialize()
         {

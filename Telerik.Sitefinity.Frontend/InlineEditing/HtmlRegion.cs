@@ -24,8 +24,8 @@ namespace Telerik.Sitefinity.Frontend.InlineEditing
         /// </summary>
         public void Dispose()
         {
-            var closeHtmlTag = string.Format("</{0}>", this.htmlTagType);
-            this.writer.Write(closeHtmlTag);
+            var closeHtmlTag = string.Format(System.Globalization.CultureInfo.InvariantCulture, "</{0}>", this.htmlTagType);
+            this.writer.Write(closeHtmlTag, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         private readonly string htmlTagType;

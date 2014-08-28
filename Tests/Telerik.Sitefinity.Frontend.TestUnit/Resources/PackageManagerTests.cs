@@ -28,14 +28,14 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             string appendedUrlWithEmptyPackagename;
 
             // Act: append the package name
-            appendedUrlWithEmptyPackagename = UrlTransformations.AppendParam(urlWithNoParamters, PackageManager.PackageUrlParamterName, null);
-            appendedUrhWithParams = UrlTransformations.AppendParam(urlWithParamters, PackageManager.PackageUrlParamterName, packageName);
-            appendedUrWithNoParams = UrlTransformations.AppendParam(urlWithNoParamters, PackageManager.PackageUrlParamterName, packageName);
+            appendedUrlWithEmptyPackagename = UrlTransformations.AppendParam(urlWithNoParamters, PackageManager.PackageUrlParameterName, null);
+            appendedUrhWithParams = UrlTransformations.AppendParam(urlWithParamters, PackageManager.PackageUrlParameterName, packageName);
+            appendedUrWithNoParams = UrlTransformations.AppendParam(urlWithNoParamters, PackageManager.PackageUrlParameterName, packageName);
 
             // Assert: Verify the package name is properly appended
             Assert.AreEqual(urlWithNoParamters, appendedUrlWithEmptyPackagename, "The URL must not be changed due to empty package name passed as parameter");
-            Assert.AreEqual(string.Format("http://fakedomain.org/homePage?fakeParam=0&package={0}", packageName), appendedUrhWithParams, "The package name was not appended correctly as a second parameter");
-            Assert.AreEqual(string.Format("http://fakedomain.org/homePage?package={0}", packageName), appendedUrWithNoParams, "The package name was not appended correctly as a parameter");
+            Assert.AreEqual(string.Format(System.Globalization.CultureInfo.InvariantCulture, "http://fakedomain.org/homePage?fakeParam=0&package={0}", packageName), appendedUrhWithParams, "The package name was not appended correctly as a second parameter");
+            Assert.AreEqual(string.Format(System.Globalization.CultureInfo.InvariantCulture, "http://fakedomain.org/homePage?package={0}", packageName), appendedUrWithNoParams, "The package name was not appended correctly as a parameter");
         }
 
         [TestMethod]
@@ -137,11 +137,10 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
                 packageManager.GetPackageVirtualPath(null);
                 Assert.Fail("Expected exception was not thrown");
             }
-            catch
+            finally
             {
+                Assert.AreEqual(string.Format(System.Globalization.CultureInfo.InvariantCulture, "~/{0}/{1}", PackageManager.PackagesFolder, packageName), packageVirtualpath, "Package virtual path is not correct");
             }
-
-            Assert.AreEqual(string.Format("~/{0}/{1}", PackageManager.PackagesFolder, packageName), packageVirtualpath, "Package virtual path is not correct");
         }
 
         [TestMethod]

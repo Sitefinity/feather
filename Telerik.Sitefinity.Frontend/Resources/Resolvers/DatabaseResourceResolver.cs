@@ -59,13 +59,19 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <summary>
         /// Gets the control presentation that contains the requested resource from the database.
         /// </summary>
-        /// <param name="definition">The definition.</param>
+        /// <param name="virtualPathDefinition">The virtual path definition.</param>
         /// <param name="virtualPath">The virtual path.</param>
-        protected virtual ControlPresentation GetControlPresentation(PathDefinition definition, string virtualPath)
+        protected virtual ControlPresentation GetControlPresentation(PathDefinition virtualPathDefinition, string virtualPath)
         {
+            if (virtualPathDefinition == null)
+                throw new ArgumentNullException("virtualPathDefinition");
+
+            if (virtualPath == null)
+                throw new ArgumentNullException("virtualPath");
+
             var resourceName = VirtualPathUtility.ToAppRelative(virtualPath);
-            var areaName = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAppRelative(definition.VirtualPath));
-            var extension = VirtualPathUtility.GetExtension(virtualPath).ToLower();
+            var areaName = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAppRelative(virtualPathDefinition.VirtualPath));
+            var extension = VirtualPathUtility.GetExtension(virtualPath).ToLowerInvariant();
 
             var controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
                 .FirstOrDefault(cp => cp.AreaName == areaName && cp.NameForDevelopers == resourceName 

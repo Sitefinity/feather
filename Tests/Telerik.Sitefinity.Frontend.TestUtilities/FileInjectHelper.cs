@@ -32,16 +32,13 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities
 
         public static string GetDestinationFilePath(string filePath)
         {
+            if (filePath == null)
+                throw new ArgumentNullException("filePath");
+
             var sfpath = System.Web.Hosting.HostingEnvironment.MapPath("~/");
             var fullPath = Path.Combine(sfpath, filePath);
 
-            if (fullPath == null)
-            {
-                throw new ArgumentNullException("FilePath doesn't exist");
-            }
-
             return fullPath;
         }
-
     }
 }

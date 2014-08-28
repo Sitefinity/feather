@@ -109,7 +109,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
         private HttpContextBase CreateHttpContext()
         {
             var request = new HttpRequest(string.Empty, "http://tempuri.org", string.Empty);
-            var response = new HttpResponse(new StringWriter());
+            var response = new HttpResponse(new StringWriter(System.Globalization.CultureInfo.InvariantCulture));
             var httpContext = new HttpContext(request, response);
             var result = new HttpContextWrapper(httpContext);
 

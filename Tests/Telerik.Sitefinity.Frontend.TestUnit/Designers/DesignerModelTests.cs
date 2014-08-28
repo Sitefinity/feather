@@ -111,7 +111,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether PopulateScriptReferences method populates script collection correctly when Views collection is empty.")]
-        public void PopulateScriptReferences_EmptyViewsCollection_ConstructScriptRefencesCollection()
+        public void PopulateScriptReferences_EmptyViewsCollection_ConstructScriptReferencesCollection()
         {
             // Arrange
             var dummyModel = new DummyDesignerModel();
@@ -134,8 +134,9 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether PopulateScriptReferences method populates script collection correctly when Views collection is empty.")]
-        public void PopulateScriptReferences_ViewsCollection_ConstructScriptRefencesCollection()
+        public void PopulateScriptReferences_ViewsCollection_ConstructScriptReferencesCollection()
         {
+            // TODO: Reduce class coupling
             // Arrange
             string widgetName = "Dummy";
             var views = new List<string>();

@@ -29,7 +29,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (contentPath.IsNullOrEmpty())
                 throw new ArgumentNullException("contentPath");
 
-            if (contentPath.StartsWith("~") || contentPath.StartsWith("/") || contentPath.Contains("://"))
+            if (contentPath.StartsWith("~", StringComparison.Ordinal) || contentPath.StartsWith("/", StringComparison.Ordinal) || contentPath.Contains("://"))
                 return helper.Content(contentPath);
 
             if (helper.RequestContext.RouteData == null)
@@ -44,12 +44,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             // where we first check for the requested resource in the widget assembly and then fallback to the current controller assembly.
             object controllerName;
             if (helper.RequestContext.RouteData.Values.TryGetValue("widgetName", out controllerName))
-                contentResolvedPath = UrlHelpers.GetResourcePath((string)controllerName, contentPath, PackageManager.PackageUrlParamterName, packageName);
+                contentResolvedPath = UrlHelpers.GetResourcePath((string)controllerName, contentPath, PackageManager.PackageUrlParameterName, packageName);
 
             if (string.IsNullOrEmpty(contentResolvedPath))
             {
                 if (helper.RequestContext.RouteData.Values.TryGetValue("controller", out controllerName))
-                    contentResolvedPath = UrlHelpers.GetResourcePath((string)controllerName, contentPath, PackageManager.PackageUrlParamterName, packageName);
+                    contentResolvedPath = UrlHelpers.GetResourcePath((string)controllerName, contentPath, PackageManager.PackageUrlParameterName, packageName);
                 else
                     throw new InvalidOperationException("Could not resolve the given URL because RouteData does not contain \"controller\" key.");
             }
@@ -57,7 +57,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (string.IsNullOrEmpty(contentResolvedPath))
             {
                 var url = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(UrlHelpers).Assembly) + contentPath;
-                contentResolvedPath = UrlTransformations.AppendParam(url, PackageManager.PackageUrlParamterName, packageName);
+                contentResolvedPath = UrlTransformations.AppendParam(url, PackageManager.PackageUrlParameterName, packageName);
             }
 
             return helper.Content(contentResolvedPath);

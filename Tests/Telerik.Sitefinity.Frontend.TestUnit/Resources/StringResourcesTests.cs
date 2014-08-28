@@ -64,9 +64,9 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
                     
                     var resource = prop.GetValue(resourceClass, null) as string;
 
-                    Assert.IsFalse(string.IsNullOrEmpty(resource), string.Format("The resource string for the {0} property cannot be found,", prop.Name));
+                    Assert.IsFalse(string.IsNullOrEmpty(resource), string.Format(System.Globalization.CultureInfo.InvariantCulture, "The resource string for the {0} property cannot be found,", prop.Name));
                     Assert.AreEqual(prop.Name, attribute.Key, "The resource key does not match the property name,");
-                    Assert.AreEqual(resource, attribute.Value, string.Format("The resource string for the {0} property cannot be found,", prop.Name));
+                    Assert.AreEqual(resource, attribute.Value, string.Format(System.Globalization.CultureInfo.InvariantCulture, "The resource string for the {0} property cannot be found,", prop.Name));
                     Assert.IsFalse(string.IsNullOrEmpty(attribute.Description), "The description of the resource cannot be empty string.");
                 }
             }

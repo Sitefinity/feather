@@ -57,7 +57,7 @@ namespace Telerik.Sitefinity.Frontend.InlineEditing
             }
             else
             {
-                htmlString = string.Format(HtmlProcessor.InlineEditingHtmlWrapper, fieldInfoAttr.Name, fieldInfoAttr.Type, propValue);
+                htmlString = string.Format(System.Globalization.CultureInfo.InvariantCulture, HtmlProcessor.InlineEditingHtmlWrapper, fieldInfoAttr.Name, fieldInfoAttr.FieldType, propValue);
             }
 
             return htmlString;

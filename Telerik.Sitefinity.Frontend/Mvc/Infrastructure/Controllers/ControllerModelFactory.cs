@@ -22,6 +22,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <returns>The model instance.</returns>
         public static T GetModel<T>(Type controllerType, IDictionary<string, object> constructorParameters = null)
         {
+            if (controllerType == null)
+                throw new ArgumentNullException("controllerType");
+
             using (var kernel = new StandardKernel())
             {
                 var assemblies = ControllerModelFactory.GetTypeHierarchyAssemblies(controllerType);
