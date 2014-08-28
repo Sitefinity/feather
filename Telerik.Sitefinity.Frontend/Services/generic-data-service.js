@@ -13,7 +13,7 @@
 
             var getItems = function (itemType, itemProvider, skip, take, filter) {
 
-                var generatedFilter = 'STATUS = MASTER';
+                var generatedFilter = 'STATUS = LIVE';
                 if (filter) {
                     generatedFilter = generatedFilter + ' AND (Title.ToUpper().Contains("' + filter + '".ToUpper()))';
                 }
