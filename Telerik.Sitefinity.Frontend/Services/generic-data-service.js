@@ -3,16 +3,15 @@
         .factory('genericDataService', ['$resource', function ($resource) {
             /* Private methods and variables */
             var getResource = function () {
-                var url = sitefinity.getRootedUrl("restapi/sitefinity/generic-data/:items");
-
-                return $resource(url);
+                return $resource(sitefinity.getRootedUrl('restapi/sitefinity/generic-data/:items'));
             };
 
             var DataItem = getResource();
             var dataItemPromise;
 
             var getItems = function (itemType, itemProvider, skip, take, filter) {
-                var generatedFilter = 'STATUS = MASTER';
+                var generatedFilter = 'STATUS = LIVE';
+
                 if (filter) {
                     generatedFilter = generatedFilter + ' AND (Title.ToUpper().Contains("' + filter + '".ToUpper()))';
                 }
