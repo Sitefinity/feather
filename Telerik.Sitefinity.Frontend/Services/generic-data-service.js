@@ -43,7 +43,7 @@
                     .$promise;
 
                 return dataItemPromise;
-            }
+            };
 
             return {
                 /* Returns the data items. */

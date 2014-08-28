@@ -45,11 +45,11 @@
                         if (!scope.selectedItem) {
                             scope.selectedItem = data.Items[0];
                         }
-                        
+
                         if (!scope.selectedItemId) {
                             scope.selectedItemId = data.Items[0].Id;
-                        }                        
-                    }
+                        }
+                    };
 
                     var onError = function (error) {
                         var errorMessage = '';
@@ -80,7 +80,7 @@
                                 .then(onSelectedItemLoadedSuccess)
                                 .finally(hideLoadingIndicator);
                         }
-                    }
+                    };
 
                     var reloadContentItems = function (newValue, oldValue) {
                         if (newValue !== oldValue) {
