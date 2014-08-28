@@ -87,7 +87,7 @@ describe('genericDataService', function () {
 
     /* Tests */
     it('[GMateev] / should retrieve items without filter and paging.', function () {
-        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemType=Telerik.Sitefinity.News.Model.NewsItem&filter=STATUS+%3D+LIVE')
+        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemType=Telerik.Sitefinity.News.Model.NewsItem&filter=VISIBLE+%3D+true+AND+STATUS+%3D+LIVE')
         .respond(dataItems);
         var itemType = 'Telerik.Sitefinity.News.Model.NewsItem';
         
@@ -95,7 +95,7 @@ describe('genericDataService', function () {
     });
 
     it('[GMateev] / should retrieve items with paging.', function () {
-        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemType=Telerik.Sitefinity.News.Model.NewsItem&filter=STATUS+%3D+LIVE&skip=20&take=20')
+        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemType=Telerik.Sitefinity.News.Model.NewsItem&filter=VISIBLE+%3D+true+AND+STATUS+%3D+LIVE&skip=20&take=20')
         .respond(dataItems);
 
         var itemType = 'Telerik.Sitefinity.News.Model.NewsItem';
@@ -104,7 +104,7 @@ describe('genericDataService', function () {
     });
 
     it('[GMateev] / should retrieve items with provider.', function () {
-        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemProvider=default&ItemType=Telerik.Sitefinity.News.Model.NewsItem&filter=STATUS+%3D+LIVE')
+        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemProvider=default&ItemType=Telerik.Sitefinity.News.Model.NewsItem&filter=VISIBLE+%3D+true+AND+STATUS+%3D+LIVE')
         .respond(dataItems);
 
         var itemType = 'Telerik.Sitefinity.News.Model.NewsItem';
@@ -113,7 +113,7 @@ describe('genericDataService', function () {
     });
 
     it('[GMateev] / should retrieve items with filter.', function () {
-        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemType=Telerik.Sitefinity.News.Model.NewsItem&filter=STATUS+%3D+LIVE+AND+(Title.ToUpper().Contains(%22testfilter%22.ToUpper()))')
+        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemType=Telerik.Sitefinity.News.Model.NewsItem&filter=VISIBLE+%3D+true+AND+STATUS+%3D+LIVE+AND+(Title.ToUpper().Contains(%22testfilter%22.ToUpper()))')
         .respond(dataItems);
 
         var itemType = 'Telerik.Sitefinity.News.Model.NewsItem';
@@ -132,7 +132,7 @@ describe('genericDataService', function () {
     });
 
     it('[GMateev] / should return error.', function () {
-        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemType=notfound&filter=STATUS+%3D+LIVE')
+        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemType=notfound&filter=VISIBLE+%3D+true+AND+STATUS+%3D+LIVE')
         .respond(404, errorResponse);
 
         var itemType = 'notfound';

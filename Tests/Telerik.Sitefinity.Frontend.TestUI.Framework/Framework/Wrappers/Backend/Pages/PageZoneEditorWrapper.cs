@@ -35,6 +35,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             editLink.Click();
             ActiveBrowser.WaitUntilReady();
             ActiveBrowser.WaitForAsyncOperations();
+            ActiveBrowser.RefreshDomTree();
         }
 
         public void VerifyContentInWidget(string content)

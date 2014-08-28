@@ -25,29 +25,24 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
-            Thread.Sleep(5000);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
-
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetTitle(WidgetTitle);           
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetSaveButton();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetCancelButton();
 
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent();
-             var actualCount = BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CountItems();
-             Assert.AreEqual(3, actualCount);
+             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(3);
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText("Title1");
-             var newActualCount = BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CountItems();
-             Assert.AreEqual(1, newActualCount);
+             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(1);
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedNewsName1);
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(SelectedNewsName1);
 
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(false);
-             actualCount = BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CountItems();
-            Assert.AreEqual(4, actualCount);
-             newActualCount = BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CountItems();
-             Assert.AreEqual(4, newActualCount);
+             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(4);
+             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(4);
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(ContentBlockTitle);
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
              BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(ContentBlockTitle);
@@ -59,19 +54,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().VerifyContentInWidget(ContentBlockTitle);
-            Thread.Sleep(5000);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
 
             for (int i = 0; i < 2; i++)
             {
                 BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickAdvancedButton();
+                BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
                 BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSelectorButton();
 
             }       
           
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent();
-            actualCount = BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CountItems();
-            Assert.AreEqual(3, actualCount);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(3);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedNewsName2);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(SelectedNewsName2);

@@ -10,7 +10,7 @@
             var dataItemPromise;
 
             var getItems = function (itemType, itemProvider, skip, take, filter) {
-                var generatedFilter = 'VISIBLE= true AND STATUS = LIVE';
+                var generatedFilter = 'VISIBLE = true AND STATUS = LIVE';
 
                 if (filter) {
                     generatedFilter = generatedFilter + ' AND (Title.ToUpper().Contains("' + filter + '".ToUpper()))';
