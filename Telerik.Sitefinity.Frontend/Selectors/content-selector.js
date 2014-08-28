@@ -170,7 +170,7 @@
 
                     getSelectedItem(scope);
 
-                    translude(function (clone) {
+                    translude(scope, function (clone) {
                         var hasContent;
                         for (var i = 0; i < clone.length; i++) {
                             var currentHtml = clone[i] && clone[i].outerHTML;
