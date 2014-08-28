@@ -1,29 +1,30 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="PhantomJS 1.9.7 (Windows 8)" package="" timestamp="2014-08-27T16:30:09" id="0" hostname="mateev" tests="21" errors="0" failures="0" time="0.098">
+  <testsuite name="PhantomJS 1.9.7 (Windows 8)" package="" timestamp="2014-08-28T03:56:07" id="0" hostname="mateev" tests="22" errors="0" failures="0" time="0.095">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.7 Safari/534.34"/>
     </properties>
-    <testcase name="[EGaneva] / Ensure the properties are initially requested." time="0.015" classname="PhantomJS 1.9.7 (Windows 8).pageEditorServices tests_"/>
+    <testcase name="[EGaneva] / Ensure the properties are initially requested." time="0.014" classname="PhantomJS 1.9.7 (Windows 8).pageEditorServices tests_"/>
     <testcase name="[EGaneva] / Ensure put call is executed." time="0.002" classname="PhantomJS 1.9.7 (Windows 8).pageEditorServices tests_"/>
     <testcase name="[Boyko-Karadzhov] / Saving handler is called and dialog is closed." time="0.008" classname="PhantomJS 1.9.7 (Windows 8).designer tests_ DialogCtrl test_"/>
     <testcase name="[Boyko-Karadzhov] / Saving handler that throws error is called and dialog is not closed." time="0.006" classname="PhantomJS 1.9.7 (Windows 8).designer tests_ DialogCtrl test_"/>
-    <testcase name="[Boyko-Karadzhov] / Canceling handler is called and dialog is closed." time="0.002" classname="PhantomJS 1.9.7 (Windows 8).designer tests_ DialogCtrl test_"/>
-    <testcase name="[Boyko-Karadzhov] / Canceling handler that throws error is called and dialog is not closed." time="0.006" classname="PhantomJS 1.9.7 (Windows 8).designer tests_ DialogCtrl test_"/>
-    <testcase name="[Boyko-Karadzhov] / Can save and close after one failed attempt." time="0.004" classname="PhantomJS 1.9.7 (Windows 8).designer tests_ DialogCtrl test_"/>
-    <testcase name="[GMateev] / should open dialog on page load with given controller.]" time="0.007" classname="PhantomJS 1.9.7 (Windows 8).modal directive"/>
-    <testcase name="[GMateev] / should open dialog on page load with already existing scope.]" time="0.003" classname="PhantomJS 1.9.7 (Windows 8).modal directive"/>
+    <testcase name="[Boyko-Karadzhov] / Canceling handler is called and dialog is closed." time="0.003" classname="PhantomJS 1.9.7 (Windows 8).designer tests_ DialogCtrl test_"/>
+    <testcase name="[Boyko-Karadzhov] / Canceling handler that throws error is called and dialog is not closed." time="0.005" classname="PhantomJS 1.9.7 (Windows 8).designer tests_ DialogCtrl test_"/>
+    <testcase name="[Boyko-Karadzhov] / Can save and close after one failed attempt." time="0.003" classname="PhantomJS 1.9.7 (Windows 8).designer tests_ DialogCtrl test_"/>
+    <testcase name="[GMateev] / should open dialog on page load with given controller.]" time="0.006" classname="PhantomJS 1.9.7 (Windows 8).modal directive"/>
+    <testcase name="[GMateev] / should open dialog on page load with already existing scope.]" time="0.004" classname="PhantomJS 1.9.7 (Windows 8).modal directive"/>
     <testcase name="[GMateev] / should open dialog when button is clicked.]" time="0.004" classname="PhantomJS 1.9.7 (Windows 8).modal directive"/>
     <testcase name="[GMateev] / should open two nested dialogs.]" time="0.003" classname="PhantomJS 1.9.7 (Windows 8).modal directive"/>
-    <testcase name="[EGaneva] / The items are populated correctly from the angular service." time="0.003" classname="PhantomJS 1.9.7 (Windows 8).PropertyGridModule tests_ Controllers test_"/>
+    <testcase name="[EGaneva] / The items are populated correctly from the angular service." time="0.002" classname="PhantomJS 1.9.7 (Windows 8).PropertyGridModule tests_ Controllers test_"/>
     <testcase name="[EGaneva] / Should return all non-proxy properties when the first property is a proxy" time="0.006" classname="PhantomJS 1.9.7 (Windows 8).PropertyGridModule tests_ Filters tests_"/>
-    <testcase name="[EGaneva] / Should return all only the properties from the same level as requested property" time="0.003" classname="PhantomJS 1.9.7 (Windows 8).PropertyGridModule tests_ Filters tests_"/>
+    <testcase name="[EGaneva] / Should return all only the properties from the same level as requested property" time="0.002" classname="PhantomJS 1.9.7 (Windows 8).PropertyGridModule tests_ Filters tests_"/>
     <testcase name="[EGaneva] / Can refreshes the whole breadcrumb content." time="0.012" classname="PhantomJS 1.9.7 (Windows 8).BreadCrumb directive test Directives tests"/>
     <testcase name="[EGaneva] / Adds single element to the breadcrumb when proeprtyPath has been changed" time="0.005" classname="PhantomJS 1.9.7 (Windows 8).BreadCrumb directive test Directives tests"/>
     <testcase name="[GMateev] / should retrieve items without filter and paging." time="0.004" classname="PhantomJS 1.9.7 (Windows 8).genericDataService"/>
-    <testcase name="[GMateev] / should retrieve items with paging." time="0.001" classname="PhantomJS 1.9.7 (Windows 8).genericDataService"/>
-    <testcase name="[GMateev] / should retrieve items with provider." time="0.002" classname="PhantomJS 1.9.7 (Windows 8).genericDataService"/>
+    <testcase name="[GMateev] / should retrieve items with paging." time="0.002" classname="PhantomJS 1.9.7 (Windows 8).genericDataService"/>
+    <testcase name="[GMateev] / should retrieve items with provider." time="0.001" classname="PhantomJS 1.9.7 (Windows 8).genericDataService"/>
     <testcase name="[GMateev] / should retrieve items with filter." time="0.001" classname="PhantomJS 1.9.7 (Windows 8).genericDataService"/>
+    <testcase name="[GMateev] / should return single item." time="0.001" classname="PhantomJS 1.9.7 (Windows 8).genericDataService"/>
     <testcase name="[GMateev] / should return error." time="0.001" classname="PhantomJS 1.9.7 (Windows 8).genericDataService"/>
     <system-out><![CDATA[
 ]]></system-out>

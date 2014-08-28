@@ -3,7 +3,7 @@
         <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
         <div ng-hide="showError">
             <span ng-bind="selectedItem.Title"></span>
-            <button id="openSelectorBtn">Select</button>
+            <button id="openSelectorBtn" ng-click="open()">Select</button>
         </div>
     </div>
     <div class="contentSelector" modal template-url="selector-template" open-button="{{openSelectorButtonId}}" window-class="sf-designer-dlg" existing-scope="true">

@@ -12,7 +12,6 @@
             var dataItemPromise;
 
             var getItems = function (itemType, itemProvider, skip, take, filter) {
-
                 var generatedFilter = 'STATUS = MASTER';
                 if (filter) {
                     generatedFilter = generatedFilter + ' AND (Title.ToUpper().Contains("' + filter + '".ToUpper()))';
@@ -33,9 +32,23 @@
                 return dataItemPromise;
             };
 
+            var getItem = function (itemId, itemType, itemProvider) {
+                dataItemPromise = DataItem.get(
+                    {
+                        items: 'data-items',
+                        ItemId: itemId,
+                        ItemType: itemType,
+                        ItemProvider: itemProvider
+                    })
+                    .$promise;
+
+                return dataItemPromise;
+            }
+
             return {
                 /* Returns the data items. */
-                getItems: getItems
+                getItems: getItems,
+                getItem: getItem
             };
         }]);
 })();

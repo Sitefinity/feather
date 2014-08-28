@@ -57,6 +57,19 @@ describe('genericDataService', function () {
         expect(data).toEqualData(dataItems);
     };
 
+    var asserItem = function (params) {
+        var data;
+        genericDataService.getItem.apply(genericDataService, params).then(function (res) {
+            data = res;
+        });
+
+        expect(data).toBeUndefined();
+
+        $httpBackend.flush();
+
+        expect(data).toEqualData(dataItems);
+    };
+
     var asserError = function (params) {
         var data;
         genericDataService.getItems.apply(genericDataService, params).then(function (res) {
@@ -108,6 +121,16 @@ describe('genericDataService', function () {
         asserItems([itemType, null, null, null, 'testfilter']);
     });
 
+    it('[GMateev] / should return single item.', function () {
+        $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemId=4c003fb0-2a77-61ec-be54-ff00007864f4&ItemType=Telerik.Sitefinity.News.Model.NewsItem')
+        .respond(dataItems);
+
+        var id = '4c003fb0-2a77-61ec-be54-ff00007864f4';
+        var itemType = 'Telerik.Sitefinity.News.Model.NewsItem';
+
+        asserItem([id, itemType]);
+    });
+
     it('[GMateev] / should return error.', function () {
         $httpBackend.expectGET('http://mysite.com:9999/myapp/restapi/sitefinity/generic-data/data-items?ItemType=notfound&filter=STATUS+%3D+MASTER')
         .respond(404, errorResponse);
@@ -115,5 +138,5 @@ describe('genericDataService', function () {
         var itemType = 'notfound';
 
         asserError([itemType]);
-    });
+    });   
 });

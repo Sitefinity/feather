@@ -23,7 +23,7 @@
                     // ------------------------------------------------------------------------
 
                     //invoked when the content items are loaded
-                    var onLoadedSuccess = function (data) {
+                    var onItemsLoadedSuccess = function (data) {
                         if (data && data.Items) {
                             scope.contentItems = data.Items;
                             scope.filter.paging.set_totalItems(data.TotalCount);
@@ -34,13 +34,22 @@
                                 if (id === scope.selectedItemId ||
                                     (scope.selectedItem && id === scope.selectedItem.Id)) {
                                     scope.selectedItemInTheDialog = data.Items[i];
-                                    scope.selectedItem = data.Items[i];
                                 }
                             }
                         }
 
                         scope.isListEmpty = scope.contentItems.length === 0 && !scope.filter.search;
                     };
+
+                    var onSelectedItemLoadedSuccess = function (data) {
+                        if (!scope.selectedItem) {
+                            scope.selectedItem = data.Items[0];
+                        }
+                        
+                        if (!scope.selectedItemId) {
+                            scope.selectedItemId = data.Items[0].Id;
+                        }                        
+                    }
 
                     var onError = function (error) {
                         var errorMessage = '';
@@ -60,8 +69,18 @@
                         var take = scope.filter.paging.itemsPerPage;
 
                         return genericDataService.getItems(scope.itemType, scope.itemProvider, skip, take, scope.filter.search)
-                            .then(onLoadedSuccess, onError);
+                            .then(onItemsLoadedSuccess, onError);
                     };
+
+                    var getSelectedItem = function (scope) {
+                        var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
+
+                        if (id) {
+                            genericDataService.getItem(id, scope.itemType, scope.itemProvider)
+                                .then(onSelectedItemLoadedSuccess)
+                                .finally(hideLoadingIndicator);
+                        }
+                    }
 
                     var reloadContentItems = function (newValue, oldValue) {
                         if (newValue !== oldValue) {
@@ -135,17 +154,21 @@
                         } catch (e) { }
                     };
 
-                    scope.showLoadingIndicator = true;
-
-                    genericDataService.getItems(scope.itemType, scope.itemProvider, scope.filter.paging.get_itemsToSkip(),
+                    scope.open = function () {
+                        genericDataService.getItems(scope.itemType, scope.itemProvider, scope.filter.paging.get_itemsToSkip(),
                         scope.filter.paging.itemsPerPage, scope.filter.search)
-                        .then(onLoadedSuccess, onError)
+                        .then(onItemsLoadedSuccess, onError)
                         .then(function () {
                             scope.$watch('filter.search', reloadContentItems);
                             scope.$watch('filter.paging.currentPage', reloadContentItems);
                         })
                         .catch(onError)
                         .finally(hideLoadingIndicator);
+                    };
+
+                    scope.showLoadingIndicator = true;
+
+                    getSelectedItem(scope);
 
                     translude(function (clone) {
                         var hasContent;
