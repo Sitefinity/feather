@@ -8,7 +8,7 @@
 	<script type="text/ng-template" id="dialog-template">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel($event)">&times;</button>
-			<h1 class="modal-title">@Html.Raw(ViewBag.ControlName)</h1>
+			<h1 style="background: none; padding-bottom: 0; margin-bottom: 0;" class="modal-title">@Html.Raw(ViewBag.ControlName)</h1>
 		</div>
 		<div class="modal-body">
 			<div ng-show="feedback.showError" class="alert alert-danger">
