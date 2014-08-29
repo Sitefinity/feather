@@ -233,7 +233,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 
         public void WaitForItemsToAppear(int expectedCount)
         {
-            Manager.Current.Wait.For(() => CountItems(expectedCount), 50000);
+            Manager.Current.Wait.For(() => CountItems(expectedCount), 100000);
         }
 
         public bool CountItems(int expected)
