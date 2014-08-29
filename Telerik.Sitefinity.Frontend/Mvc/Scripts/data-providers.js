@@ -101,7 +101,7 @@
                     }
                     else {
                         scope.selectedProvider = providerService.getDefault(data.Items);
-                        ngModelCtrl.$setViewValue(scope.selectedProvider);
+                        ngModelCtrl.$setViewValue(scope.selectedProvider.Name);
                     }
 
                     scope.isProviderSelectorVisible = data && data.Items && data.Items.length >= 2;
