@@ -47,7 +47,11 @@ This repository contains the core infrastructure related to the [Feather project
 
 [Pass server data to widget designer views ] (https://github.com/Sitefinity/feather/wiki/Pass-server-data-to-widget-designer-views)
 
+[Customize properties displayed inside the property editor ] (https://github.com/Sitefinity/feather/wiki/Customize-properties-displayed-inside-the-property-editor)
+
 [Use a single content item selector] (https://github.com/Sitefinity/feather/wiki/Use-a-single-content-item-selector)
+
+[Add related data to News widget] (https://github.com/Sitefinity/feather/wiki/Add-related-data-to-News-widget)
 
 # License Information
 
