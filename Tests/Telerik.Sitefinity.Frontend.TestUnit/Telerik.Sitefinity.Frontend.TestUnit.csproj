@@ -221,4 +221,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
 </Project>
