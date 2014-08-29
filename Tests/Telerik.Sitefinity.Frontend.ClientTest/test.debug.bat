@@ -6,6 +6,7 @@ REM
 REM Requirements:
 REM - NodeJS (http://nodejs.org/)
 REM - Karma (npm install -g karma)
+REM - Karma CLI (npm install -g karma-cli)
 
 set BASE_DIR=%~dp0
 karma start "%BASE_DIR%\config\karma.conf.js" %* --browsers Chrome --singleRun false

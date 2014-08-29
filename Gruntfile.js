@@ -36,7 +36,8 @@ module.exports = function (grunt) {
 	  '!Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js',
 	  'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
 				options: {
-					specs: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/**/*.js',
+					specs: ['Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/**/*.js',
+							'!Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/Selectors/contentSelectorSpec.js'],
 					template: require('grunt-template-jasmine-istanbul'),
 					templateOptions: {
 						coverage: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/coverage/coverage.json',
