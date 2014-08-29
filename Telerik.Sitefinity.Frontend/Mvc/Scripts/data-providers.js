@@ -4,7 +4,6 @@
     dataProvidersModule.factory('providerService', ['$http', '$q', 'serverData',
         function ($http, $q, serverData) {
             var defaultProviderName = serverData.get('defaultProviderName'),
-                providerDataServiceUrl = serverData.get('providerDataServiceUrl'),
                 defaulltProvider;
 
             var getCookie = function (cname) {
@@ -20,7 +19,7 @@
 
             //returns an array of available providers
             var getAll = function (managerName) {
-                var getUrl = providerDataServiceUrl +
+                var getUrl = sitefinity.services.getProviderServiceUrl() +
                     'providers/?sortExpression=Title' +
                     '&dataSourceName=' + managerName +
                     '&siteId=' + getCookie('sf_site') +
