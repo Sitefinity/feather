@@ -74,17 +74,17 @@
             };
         }
     ]);
-    
+
     dataProvidersModule.directive('providerSelector', ['providerService', function (providerService) {
         return {
             restrict: 'E',
-            template: '<div class="dropdown s-bg-source-wrp" ng-show="isProviderSelectorVisible" is-open="isOpen">' +
+            template: '<div style="margin-top: 0" class="dropdown s-bg-source-wrp" ng-show="isProviderSelectorVisible" is-open="isOpen">' +
                           '<a class="btn btn-default dropdown-toggle" >' +
                             '{{selectedProvider.Title}} <span class="caret"></span>' +
                           '</a>' +
                           '<ul class="dropdown-menu" >' +
                               '<li>' +
-                                '<a href="">- {{providerLabel}} -</a>' +
+                                '<a href="" style="color: #ccc; background: #fff; cursor: default;">{{providerLabel}}</a>' +
                               '</li>' +
                               '<li ng-repeat="provider in providers">' +
                                 '<a href="" ng-click="selectProvider(provider);">{{provider.Title}}</a>' +
