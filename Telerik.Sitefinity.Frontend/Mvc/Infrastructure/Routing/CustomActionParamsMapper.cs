@@ -38,10 +38,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (urlParams == null)
                 return false;
 
-            var routeTemplate = routeTemplateResolver();
+            var routeTemplate = this.routeTemplateResolver();
 
             var metaParams = routeTemplate
-                .Split(new [] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                .Split(new []{'/'}, StringSplitOptions.RemoveEmptyEntries);
 
             var parameterMap = this.MapParams(this.actionMethod, metaParams, urlParams);
 
@@ -54,7 +54,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             return true;
         }
-
 
         private void PopulateRouteData(RouteValueDictionary routeDataValues, IList<UrlSegmentInfo> parameters)
         {

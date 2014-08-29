@@ -65,10 +65,4 @@ function InstallFeatherPackages($featherPackagesDirectory)
 	Get-ChildItem Bootstrap -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -recurse
 	Get-ChildItem Foundation -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -recurse
 	Get-ChildItem SemanticUI -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -recurse
-	
-	Write-Output "Restarting $appPollName application pool..."
-    Restart-WebAppPool $appPollName -ErrorAction Continue
-    GetRequest $defaultWebsiteUrl
-	
-	Write-Output "----- Feather packages successfully installed ------"
 }

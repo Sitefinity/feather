@@ -17,9 +17,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     public class DynamicUrlParamActionInvoker : Telerik.Sitefinity.Mvc.ControllerActionInvoker
     {
         /// <inheritdoc/>
-        protected override void InitializeRouteParameters(MvcProxyBase proxyControl, RequestContext originalContext)
+        protected override void InitializeRouteParameters(MvcProxyBase proxyControl)
         {
             RouteHelper.SetUrlParametersResolved(false);
+
+            var originalContext = proxyControl.Context.Request.RequestContext ?? proxyControl.Page.GetRequestContext();
 
             var urlController = proxyControl.Controller as IUrlMappingController;
             if (urlController != null)
@@ -36,7 +38,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             else
             {
-                base.InitializeRouteParameters(proxyControl, originalContext);
+                base.InitializeRouteParameters(proxyControl);
             }
         }
 

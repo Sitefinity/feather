@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ArtOfTest.WebAii.Controls.HtmlControls;
 using ArtOfTest.WebAii.Core;
 using ArtOfTest.WebAii.TestTemplates;
+using ArtOfTest.WebAii.ObjectModel;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
 {
@@ -72,6 +73,30 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         }
 
         /// <summary>
+        /// Gets the advanced button.
+        /// </summary>
+        /// <value>The advanced button.</value>
+        public HtmlAnchor AdvancedButton
+        {
+            get
+            {
+                return this.Get<HtmlAnchor>("ng-hide=isCurrentView('PropertyGrid')");
+            }
+        }
+
+        /// <summary>
+        /// Gets the selector button.
+        /// </summary>
+        /// <value>The selector button.</value>
+        public HtmlAnchor SelectorButton
+        {
+            get
+            {
+                return this.Get<HtmlAnchor>("ng-hide=isCurrentView('Selector')");
+            }
+        }
+
+        /// <summary>
         /// Gets the close button of the widget designer.
         /// </summary>
         /// <value>Close button.</value>
@@ -92,6 +117,46 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
             get
             {
                 return this.Get<HtmlInputText>("id=prop-DummyText");
+            }
+        }
+
+        /// <summary>
+        /// Gets the select button.
+        /// </summary>
+        /// <value>The select button.</value>
+        public HtmlButton SelectButton
+        {
+            get
+            {
+                return this.Get<HtmlButton>("id=openSelectorBtn");
+            }
+        }
+
+        /// <summary>
+        /// Gets the done button.
+        /// </summary>
+        /// <value>The done button.</value>
+        public HtmlButton DoneButton
+        {
+            get
+            {
+                return this.Get<HtmlButton>("ng-click=selectContent()");
+            }
+        }
+
+        public HtmlInputText SearchInput
+        {
+            get
+            {
+                return this.Get<HtmlInputText>("ng-model=filter.search");
+            }
+        }        
+
+        public HtmlDiv ContentContainer
+        {
+            get
+            {
+                return this.Find.ById<HtmlDiv>("viewsPlaceholder");
             }
         }
     }

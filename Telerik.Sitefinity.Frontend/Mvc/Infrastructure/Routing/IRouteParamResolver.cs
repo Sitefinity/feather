@@ -1,5 +1,4 @@
-﻿
-namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
+﻿namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
     /// <summary>
     /// Classes that implement this interface should provide responsibility chain logic for resolving a specific route parameter.

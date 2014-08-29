@@ -20,10 +20,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// Initializes a new instance of the <see cref="DetailActionParamsMapper{TContent}"/> class.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public DetailActionParamsMapper(Controller controller)
-            : this(controller, null)
+        public DetailActionParamsMapper(Controller controller) : this(controller, null)
         {
-
         }
 
         /// <summary>
@@ -43,7 +41,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (this.ActionMethod == null)
                 throw new ArgumentException("The controller {0} does not have action '{1}'.".Arrange(controller.GetType().Name, actionName));
 
-            this.Manager = this.ResolveManager();
+            try
+            {
+                this.Manager = this.ResolveManager();
+            }
+            catch (Exception) 
+            { 
+            }
         }
 
         /// <inheritdoc />
@@ -98,6 +102,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <returns></returns>
         protected TContent GetItemByUrl(string url, out string redirectUrl)
         {
+            if (this.Manager == null)
+            {
+                redirectUrl = null;
+                return default(TContent);
+            }
+
             if (this.Manager is IContentManager)
             {
                 return ((IContentManager)this.Manager).GetItemFromUrl(typeof(TContent), url, out redirectUrl) as TContent;
@@ -125,8 +135,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         protected IManager Manager { get; private set; }
+
         protected MethodInfo ActionMethod { get; private set; }
+
         private string actionName;
+
         private Func<string> providerNameResolver;
     }
 }

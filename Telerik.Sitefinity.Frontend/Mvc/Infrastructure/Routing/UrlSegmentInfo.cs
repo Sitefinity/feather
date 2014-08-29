@@ -13,7 +13,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <summary>
         /// Initializes a new instance of the <see cref="UrlSegmentInfo"/> class.
         /// </summary>
-        public UrlSegmentInfo() { }
+        public UrlSegmentInfo() 
+        { 
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UrlSegmentInfo"/> class.
@@ -33,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <value>
         /// The name of the parameter.
         /// </value>
-        public string ParameterName { set; get; }
+        public string ParameterName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resolver.
@@ -41,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <value>
         /// The name of the resolver.
         /// </value>
-        public string ResolverName { set; get; }
+        public string ResolverName { get; set; }
 
         /// <summary>
         /// Gets or sets the parameter value.
@@ -49,6 +51,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <value>
         /// The parameter value.
         /// </value>
-        public object ParameterValue { set; get; }
+        public object ParameterValue { get; set; }
     }
 }
