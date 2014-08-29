@@ -75,7 +75,7 @@
                     var getSelectedItem = function (scope) {
                         var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
 
-                        if (id) {
+                        if (id && id !== '00000000-0000-0000-0000-000000000000') {
                             genericDataService.getItem(id, scope.itemType, scope.itemProvider)
                                 .then(onSelectedItemLoadedSuccess)
                                 .finally(hideLoadingIndicator);

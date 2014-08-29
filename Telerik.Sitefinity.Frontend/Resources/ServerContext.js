@@ -8,7 +8,8 @@
 
     var services = {
         contentItemServiceUrl: applicationPath + 'Sitefinity/Services/Content/ContentItemService.svc/',
-        userServiceUrl: applicationPath + 'Sitefinity/Services/Security/Users.svc/'
+        userServiceUrl: applicationPath + 'Sitefinity/Services/Security/Users.svc/',
+        providerServiceUrl: applicationPath + 'Sitefinity/Services/DataSourceService/'
     };
 
     sitefinity.services = {
@@ -18,6 +19,10 @@
 
         getUserServiceUrl: function () {
             return services.userServiceUrl;
+        },
+
+        getProviderServiceUrl: function () {
+            return services.providerServiceUrl;
         }
     };
 
