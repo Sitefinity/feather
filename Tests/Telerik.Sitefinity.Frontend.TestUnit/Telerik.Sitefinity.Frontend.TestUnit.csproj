@@ -106,6 +106,9 @@
     <Reference Include="Telerik.Sitefinity.Model">
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Sitefinity.TestUtilities">
+      <HintPath>..\..\packages\Telerik.Sitefinity.TestUtilities.7.1.5208\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
