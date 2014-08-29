@@ -47,6 +47,8 @@ This repository contains the core infrastructure related to the [Feather project
 
 [Pass server data to widget designer views ] (https://github.com/Sitefinity/feather/wiki/Pass-server-data-to-widget-designer-views)
 
+[Use a single content item selector] (https://github.com/Sitefinity/feather/wiki/Use-a-single-content-item-selector)
+
 # License Information
 
 This project has been released under the Apache License, version 2.0, the text of which is included below. This license applies ONLY to the project-specific source of each repository and does not extend to Telerik Sitefinity CMS itself, or any other 3rd party libraries used in a repository. For licensing information about Telerik Sitefinity CMS, see the [License Agreements page](http://www.sitefinity.com/purchase/license-agreement) at [Sitefinity.com](http://www.sitefinity.com/).
