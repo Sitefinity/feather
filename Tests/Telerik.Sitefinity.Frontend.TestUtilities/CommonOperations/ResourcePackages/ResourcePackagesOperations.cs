@@ -23,8 +23,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// <returns>The file path if exists.</returns>
         public string GetResourcePackageDestinationFilePath(string packageName, string layoutFileName)
         {
-            var sfpath = System.Web.Hosting.HostingEnvironment.MapPath("~/");
-            var filePath = Path.Combine(sfpath, "ResourcePackages", packageName, "MVC", "Views", "Layouts", layoutFileName);
+            var filePath = Path.Combine(this.SfPath, "ResourcePackages", packageName, "MVC", "Views", "Layouts", layoutFileName);
 
             if (filePath == null)
             {
@@ -40,8 +39,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// <returns>The file path if exists.</returns>
         public string GetResourcePackagesDestination(string packageName)
         {
-            var sfpath = System.Web.Hosting.HostingEnvironment.MapPath("~/");
-            var packagePath = Path.Combine(sfpath, "ResourcePackages", packageName);
+            var packagePath = Path.Combine(this.SfPath, "ResourcePackages", packageName);
 
             if (packagePath == null)
             {
@@ -91,17 +89,26 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// <param name="newPackageName">The new name of the package.</param>
         public void RenamePackageFolder(string packageName, string newPackageName)
         {
-            var sfpath = System.Web.Hosting.HostingEnvironment.MapPath("~/");
-            var packagePath = Path.Combine(sfpath, "ResourcePackages", packageName);
+            var packagePath = this.GetResourcePackagesDestination(packageName);
 
-            if (packagePath == null)
-            {
-                throw new ArgumentNullException("FilePath was not found!");
-            }
-
-            var directoryPath = Path.Combine(sfpath, "ResourcePackages", newPackageName);
+            var directoryPath = Path.Combine(this.SfPath, "ResourcePackages", newPackageName);
 
             Directory.Move(packagePath, directoryPath);
+        }
+
+        /// <summary>
+        /// Renames layout file from specific resource package.
+        /// </summary>
+        /// <param name="packageName">The package name.</param>
+        /// <param name="layoutFileName">The layout file name.</param>
+        /// <param name="newLayoutFileName">The new name of the layout file.</param>
+        public void RenameLayoutFile(string packageName, string layoutFileName, string newLayoutFileName)
+        {
+            var layoutFilePath = this.GetResourcePackageDestinationFilePath(packageName, layoutFileName);
+
+            var newLayoutFilePath = Path.Combine(this.SfPath, "ResourcePackages", packageName, "MVC", "Views", "Layouts", newLayoutFileName);
+
+            File.Move(layoutFilePath, newLayoutFilePath);
         }
 
         /// <summary>
@@ -110,8 +117,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// <param name="packageResource">The package resource path.</param>
         public void AddNewResourcePackage(string packageResource)
         {
-            var sfpath = System.Web.Hosting.HostingEnvironment.MapPath("~/");
-            var path = Path.Combine(sfpath, "ResourcePackages");
+            var path = Path.Combine(this.SfPath, "ResourcePackages");
 
             var assembly = FeatherServerOperations.ResourcePackages().GetTestUtilitiesAssembly();
             Stream source = assembly.GetManifestResourceStream(packageResource);
@@ -130,6 +136,24 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         }
 
         /// <summary>
+        /// Waits for templates count to increase with some number.
+        /// </summary>
+        /// <param name="primaryCount">The primary templates count.</param>
+        /// <param name="increment">The increase number.</param>
+        public void WaitForTemplatesCountToIncrease(int primaryCount, int increment)
+        {
+            PageManager pageManager = PageManager.GetManager();
+
+            for (int i = 50; i > 0; --i)
+            {
+                if (pageManager.GetTemplates().Count() == primaryCount + increment)
+                    break;
+
+                Thread.Sleep(TimeSpan.FromMilliseconds(100));
+            }
+        }
+
+        /// <summary>
         /// Copies file stream to another file stream
         /// </summary>
         /// <param name="input">The input file.</param>
@@ -141,6 +165,14 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
             {
                 output.Write(buffer, 0, read);
+            }
+        }
+
+        private string SfPath
+        {
+            get
+            {
+                return System.Web.Hosting.HostingEnvironment.MapPath("~/");
             }
         }
     }
