@@ -106,7 +106,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             {
                 return ControlUtilities.GetTemplate(layout, null, null, null);
             }
-            else if (layout != null && layout.EndsWith(".ascx", StringComparison.OrdinalIgnoreCase))
+            else if (layout != null && layout.EndsWith(".ascx", StringComparison.Ordinal))
             {
                 Type assemblyInfo;
 

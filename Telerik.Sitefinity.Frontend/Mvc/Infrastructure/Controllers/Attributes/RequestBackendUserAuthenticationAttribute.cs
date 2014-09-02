@@ -6,7 +6,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
     /// <summary>
     /// Actions marked with this attribute will require backend user authentication in order to execute.
     /// </summary>
-    [AttributeUsage(AttributeTargets.All)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class RequestBackendUserAuthenticationAttribute : ActionFilterAttribute
     {
         /// <summary>

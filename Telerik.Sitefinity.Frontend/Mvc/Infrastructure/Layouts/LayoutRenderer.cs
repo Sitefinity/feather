@@ -30,33 +30,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         public virtual Controller CreateController(RouteData routeData = null)
         {
             // create a disconnected controller instance
-            using (var controller = new GenericController())
-            {
-                HttpContextBase context = null;
+            var controller = new GenericController();
+            HttpContextBase context = null;
 
-                // get context wrapper from HttpContext if available
-                if (SystemManager.CurrentHttpContext != null)
-                    context = SystemManager.CurrentHttpContext;
-                else
-                    throw new InvalidOperationException("Can not create ControllerContext if no active HttpContext instance is available.");
+            // get context wrapper from HttpContext if available
+            if (SystemManager.CurrentHttpContext != null)
+                context = SystemManager.CurrentHttpContext;
+            else
+                throw new InvalidOperationException("Can not create ControllerContext if no active HttpContext instance is available.");
 
-                if (routeData == null)
-                    routeData = new RouteData();
+            if (routeData == null)
+                routeData = new RouteData();
 
-                // add the controller routing if not existing
-                if (!routeData.Values.ContainsKey("controller") &&
-                    !routeData.Values.ContainsKey("Controller"))
-                    routeData.Values.Add(
-                                        "controller",
-                                        controller.GetType().Name.ToLowerInvariant().Replace("controller", string.Empty));
+            // add the controller routing if not existing
+            if (!routeData.Values.ContainsKey("controller") &&
+                !routeData.Values.ContainsKey("Controller"))
+                routeData.Values.Add(
+                                    "controller",
+                                    controller.GetType().Name.ToLowerInvariant().Replace("controller", string.Empty));
 
-                controller.UpdateViewEnginesCollection(this.GetPathTransformations());
+            controller.UpdateViewEnginesCollection(this.GetPathTransformations());
 
-                // here we create the context for the controller passing the just created controller the httpcontext and the route data that we built above
-                controller.ControllerContext = new ControllerContext(context, routeData, controller);
+            // here we create the context for the controller passing the just created controller the httpcontext and the route data that we built above
+            controller.ControllerContext = new ControllerContext(context, routeData, controller);
 
-                return controller;
-            }
+            return controller;
         }
 
         /// <summary>

@@ -34,7 +34,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
-            var assemblies = this.Assemblies;
+            var assemblies = this.RetrieveAssemblies();
 
             this.RegisterVirtualPaths(assemblies);
 
@@ -51,25 +51,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <summary>
         /// Gets the assemblies that are marked as controller containers with the <see cref="ControllerContainerAttribute"/> attribute.
         /// </summary>
-        protected virtual IEnumerable<Assembly> Assemblies
+        protected virtual IEnumerable<Assembly> RetrieveAssemblies()
         {
-            get
+            var assemblyFileNames = this.RetrieveAssembliesFileNames().ToArray();
+            var result = new List<Assembly>();
+
+            foreach (var assemblyFileName in assemblyFileNames)
             {
-                var assemblyFileNames = this.AssemblyFileNames.ToArray();
-                var result = new List<Assembly>();
-
-                foreach (var assemblyFileName in assemblyFileNames)
+                if (this.IsControllerContainer(assemblyFileName))
                 {
-                    if (this.IsControllerContainer(assemblyFileName))
-                    {
-                        var assembly = this.LoadAssembly(assemblyFileName);
-                        this.InitializeControllerContainer(assembly);
-                        result.Add(assembly);
-                    }
+                    var assembly = this.LoadAssembly(assemblyFileName);
+                    this.InitializeControllerContainer(assembly);
+                    result.Add(assembly);
                 }
-
-                return result;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -79,9 +76,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         protected virtual void InitializeControllerContainer(Assembly container)
         {
             if (container == null)
-            {
                 return;
-            }
 
             var containerAttribute = container.GetCustomAttributes(false).Single(attr => attr.GetType().AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName) as ControllerContainerAttribute;
 
@@ -170,16 +165,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// Gets the assembly file names that will be inspected for controllers.
+        /// Gets the assemblies file names that will be inspected for controllers.
         /// </summary>
-        /// <param name="assemblyPath">The assembly path.</param>
-        protected virtual IEnumerable<string> AssemblyFileNames
+        protected virtual IEnumerable<string> RetrieveAssembliesFileNames()
         {
-            get
-            {
-                var controllerAssemblyPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "bin");
-                return Directory.EnumerateFiles(controllerAssemblyPath, "*.dll", SearchOption.TopDirectoryOnly);
-            }
+            var controllerAssemblyPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "bin");
+            return Directory.EnumerateFiles(controllerAssemblyPath, "*.dll", SearchOption.TopDirectoryOnly);
         }
 
         /// <summary>

@@ -5,8 +5,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
     /// <summary>
     /// This attribute is used to mark assemblies that may contain <see cref="IController"/> types.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Assembly)]
-    public sealed class ControllerContainerAttribute : Attribute
+    [AttributeUsage(AttributeTargets.All)]
+    public class ControllerContainerAttribute : Attribute
     {
         public ControllerContainerAttribute()
             : this(null, null)

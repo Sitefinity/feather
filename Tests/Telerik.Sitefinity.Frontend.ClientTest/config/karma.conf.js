@@ -17,6 +17,7 @@ module.exports = function(config){
 	  '../../Telerik.Sitefinity.Frontend/Services/generic-data-service.js',
 	  '../../Telerik.Sitefinity.Frontend/Selectors/selectors.js',
 	  '../../Telerik.Sitefinity.Frontend/Selectors/content-selector.js',
+      '../../Telerik.Sitefinity.Frontend/Selectors/content-selector.html',
       'helpers/mocks/*.js',
       'unit/**'
     ],
@@ -31,7 +32,21 @@ module.exports = function(config){
     preprocessors : {
         '../../Telerik.Sitefinity.Frontend/Designers/Scripts/*.js': 'coverage',
         '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/*.js': 'coverage',
-        '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Designer/*.js': 'coverage'
+        '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Designer/*.js': 'coverage',
+        '../../Telerik.Sitefinity.Frontend/Selectors/content-selector.html': ['ng-html2js']
+    },
+
+    //Converts directive's external html templates into javascript strings and stores them in the Angular's $templateCache service.
+    ngHtml2JsPreprocessor: {
+        // setting this option will create only a single module that contains templates
+        // from all the files, so you can load them all with module('template')
+        moduleName: 'templates',
+
+        // Returns the id of the template in $templateCache. To get a template in a test use id like 'Selectors/content-selector.html'
+        cacheIdFromPath: function (filepath) {
+            // filepath is the path to the template on the disc 
+            return filepath.split('Telerik.Sitefinity.Frontend/')[1];
+        }
     },
 
     autoWatch: true,
@@ -49,7 +64,8 @@ module.exports = function(config){
             'karma-script-launcher',
             'karma-phantomjs-launcher',
             'karma-jasmine',
-            'karma-coverage'
+            'karma-coverage',
+            'karma-ng-html2js-preprocessor'
             ],
 			
     reporters: ['progress', 'junit', 'coverage'],

@@ -38,6 +38,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             ActiveBrowser.RefreshDomTree();
         }
 
+        /// <summary>
+        /// Verifies the content in MVC widget.
+        /// </summary>
+        /// <param name="content">The expected content.</param>
         public void VerifyContentInWidget(string content)
         {
             ActiveBrowser.Find.ByCustom<HtmlDiv>(d => d.InnerText.Equals(content)).AssertIsPresent("edit link");                                                                                                                                                           

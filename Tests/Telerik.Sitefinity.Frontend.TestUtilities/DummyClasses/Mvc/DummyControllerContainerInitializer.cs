@@ -74,7 +74,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         /// </returns>
         public IEnumerable<Assembly> GetAssembliesPublic()
         {
-            return this.Assemblies;
+            return this.RetrieveAssemblies();
         }
 
         /// <summary>
@@ -143,15 +143,12 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         #region Overrides
 
         /// <inheritdoc />
-        protected override IEnumerable<Assembly> Assemblies
+        protected override IEnumerable<Assembly> RetrieveAssemblies()
         {
-            get
-            {
-                if (this.GetAssembliesMock != null)
-                    return this.GetAssembliesMock();
-                else
-                    return base.Assemblies;
-            }
+            if (this.GetAssembliesMock != null)
+                return this.GetAssembliesMock();
+            else
+                return base.RetrieveAssemblies();
         }
 
         /// <inheritdoc />
@@ -207,15 +204,12 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        protected override IEnumerable<string> AssemblyFileNames
+        protected override IEnumerable<string> RetrieveAssembliesFileNames()
         {
-            get
-            {
-                if (this.GetAssemblyFileNamesMock != null)
-                    return this.GetAssemblyFileNamesMock();
+            if (this.GetAssemblyFileNamesMock != null)
+                return this.GetAssemblyFileNamesMock();
 
-                return base.AssemblyFileNames;
-            }
+            return base.RetrieveAssembliesFileNames();
         }
 
         /// <inheritdoc />

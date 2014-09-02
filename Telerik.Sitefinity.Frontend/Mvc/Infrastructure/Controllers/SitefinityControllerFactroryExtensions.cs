@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             if (type == null
                 || !type.IsPublic
-                || !type.Name.EndsWith(SitefinityControllerFactoryExtensions.ControllerSuffix, StringComparison.OrdinalIgnoreCase)
+                || !type.Name.EndsWith(SitefinityControllerFactoryExtensions.ControllerSuffix, StringComparison.Ordinal)
                 || type.IsAbstract)
             {
                 return false;
@@ -38,7 +38,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             var controllerName = controllerType.Name;
 
-            if (controllerName.EndsWith(SitefinityControllerFactoryExtensions.ControllerSuffix, StringComparison.OrdinalIgnoreCase))
+            if (controllerName.EndsWith(SitefinityControllerFactoryExtensions.ControllerSuffix, StringComparison.Ordinal))
                 controllerName = controllerName.Substring(0, controllerName.Length - SitefinityControllerFactoryExtensions.ControllerSuffix.Length);
 
             return controllerName;

@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
+using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Utilities.Zip;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 {
@@ -80,6 +83,51 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             }
 
             return uiTestsArrangementsAssembly;
+        }
+
+        /// <summary>
+        /// Renames the resource package folder.
+        /// </summary>
+        /// <param name="packageName">The name of the package.</param>
+        /// <param name="newPackageName">The new name of the package.</param>
+        public void RenamePackageFolder(string packageName, string newPackageName)
+        {
+            var sfpath = System.Web.Hosting.HostingEnvironment.MapPath("~/");
+            var packagePath = Path.Combine(sfpath, "ResourcePackages", packageName);
+
+            if (packagePath == null)
+            {
+                throw new ArgumentNullException("FilePath was not found!");
+            }
+
+            var directoryPath = Path.Combine(sfpath, "ResourcePackages", newPackageName);
+
+            Directory.Move(packagePath, directoryPath);
+        }
+
+        /// <summary>
+        /// Adds new resource package to file system.
+        /// </summary>
+        /// <param name="packageResource">The package resource path.</param>
+        public void AddNewResourcePackage(string packageResource)
+        {
+            var sfpath = System.Web.Hosting.HostingEnvironment.MapPath("~/");
+            var path = Path.Combine(sfpath, "ResourcePackages");
+
+            var assembly = FeatherServerOperations.ResourcePackages().GetTestUtilitiesAssembly();
+            Stream source = assembly.GetManifestResourceStream(packageResource);
+
+            byte[] data = new byte[source.Length];
+
+            source.Read(data, 0, (int)source.Length);
+
+            using (var stream = new MemoryStream(data))
+            {
+                using (ZipFile zipFile = ZipFile.Read(stream))
+                {
+                    zipFile.ExtractAll(path, true);
+                }
+            }
         }
 
         /// <summary>
