@@ -32,7 +32,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             var filePath = Path.Combine(this.SfPath, "ResourcePackages", packageName, "MVC", "Views", "Layouts", layoutFileName);
 
             if (filePath == null)
-                throw new ArgumentNullException("FilePath was not found!");
+                throw new ArgumentNullException(filePath);
 
             return filePath;
         }
