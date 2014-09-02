@@ -65,23 +65,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
             try
             {
-                var sfpath = System.Web.Hosting.HostingEnvironment.MapPath("~/");
-                var path = Path.Combine(sfpath, "ResourcePackages");
-
-                var assembly = FeatherServerOperations.ResourcePackages().GetTestUtilitiesAssembly();
-                Stream source = assembly.GetManifestResourceStream(PackageResource);
-
-                byte[] data = new byte[source.Length];
-
-                source.Read(data, 0, (int)source.Length);
-
-                using (var stream = new MemoryStream(data))
-                {
-                    using (ZipFile zipFile = ZipFile.Read(stream))
-                    {
-                        zipFile.ExtractAll(path, true);
-                    }
-                }
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(PackageResource);
 
                 for (int i = 50; i > 0; --i)
                 {
@@ -106,9 +90,69 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 foreach (var template in templates)
                 {
                     ServerOperations.Templates().DeletePageTemplate(template);
-        }
+                }
 
                 string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(TestPackageName);
+                Directory.Delete(path, true);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.Samples)]
+        [Author("Petya Rachina")]
+        public void ResourcePackage_RenamePackageWithLayoutFiles_VerifyGeneratedTemplates()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(PackageResource);
+
+                for (int i = 50; i > 0; --i)
+                {
+                    if (pageManager.GetTemplates().Count() == templatesCount + 3)
+                        break;
+
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                }
+
+                string[] templates = new string[] { TestLayout1, TestLayout2, TestLayout3 };
+
+                foreach (var template in templates)
+                {
+                    pageManager.GetTemplates().Where(t => t.Title == template).FirstOrDefault();
+                    Assert.IsNotNull(template, "Template was not found");
+                }
+
+                FeatherServerOperations.ResourcePackages().RenamePackageFolder(TestPackageName, NewTestPackageName);
+
+                for (int i = 50; i > 0; --i)
+                {
+                    if (pageManager.GetTemplates().Count() == templatesCount + 6)
+                        break;
+
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                }
+
+                string[] newTemplates = new string[] { NewTestLayout1, NewTestLayout2, NewTestLayout3 };
+
+                foreach (var template in templates)
+                {
+                    pageManager.GetTemplates().Where(t => t.Title == template).FirstOrDefault();
+                    Assert.IsNotNull(template, "Template was not found");
+                }
+            }
+            finally
+            {
+                string[] templates = new string[] { TestLayout1, TestLayout2, TestLayout3, NewTestLayout1, NewTestLayout2, NewTestLayout3 };
+
+                foreach (var template in templates)
+                {
+                    ServerOperations.Templates().DeletePageTemplate(template);
+                }
+
+                string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(NewTestPackageName);
                 Directory.Delete(path, true);
             }
         }
@@ -117,10 +161,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         private const string PackageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestPackage.zip";
         private const string PackageName = "Foundation";
         private const string TestPackageName = "TestPackage";
+        private const string NewTestPackageName = "NewTestPackage";
         private const string LayoutFileName = "TestLayout.cshtml";
         private const string TemplateTitle = "Foundation.TestLayout";
         private const string TestLayout1 = "TestPackage.Test Layout 1";
         private const string TestLayout2 = "TestPackage.Test Layout 2";
         private const string TestLayout3 = "TestPackage.Test Layout 3";
+        private const string NewTestLayout1 = "NewTestPackage.Test Layout 1";
+        private const string NewTestLayout2 = "NewTestPackage.Test Layout 2";
+        private const string NewTestLayout3 = "NewTestPackage.Test Layout 3";
     }
 }
