@@ -58,9 +58,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         public void Dispose()
         {
             foreach (var watcher in this.fileWatchers)
-            {
                 watcher.Value.Dispose();
-            }
 
             if (this.rootWatcher != null)
                 this.rootWatcher.Dispose();

@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         {
             var layout = this.Layout;
             bool isVirtualPath = layout.StartsWith("~/", StringComparison.Ordinal);
-            bool isHtmlTemplate = layout.EndsWith(".html", StringComparison.OrdinalIgnoreCase) || layout.EndsWith(".htm", StringComparison.OrdinalIgnoreCase);
+            bool isHtmlTemplate = layout.EndsWith(".html", StringComparison.OrdinalIgnoreCase) || layout.EndsWith(".htm", StringComparison.Ordinal);
             ITemplate template = this.GetTemplate(isVirtualPath, isHtmlTemplate, layout);
             return template;
         }
@@ -57,11 +57,11 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                         if (cssClass != null)
                         {
                             var classes = cssClass.Split(new char[] { ' ' });
-                            var chunkHasSfCols = classes.Contains("sf_cols", StringComparer.OrdinalIgnoreCase);
+                            var chunkHasSfCols = classes.Contains("sf_cols", StringComparer.Ordinal);
                             hasSfCols = hasSfCols || chunkHasSfCols;
                             if (chunkHasSfCols ||
-                                classes.Contains("sf_colsIn", StringComparer.OrdinalIgnoreCase) ||
-                                classes.Contains("sf_colsOut", StringComparer.OrdinalIgnoreCase))
+                                classes.Contains("sf_colsIn", StringComparer.Ordinal) ||
+                                classes.Contains("sf_colsOut", StringComparer.Ordinal))
                             {
                                 chunk.SetAttribute("runat", "server");
                                 modified = true;
@@ -138,7 +138,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         {
             if (chunk != null)
             {
-                var idx = Array.FindIndex(chunk.Attributes, 0, chunk.ParamsCount, i => i.Equals(attributeName, StringComparison.OrdinalIgnoreCase));
+                var idx = Array.FindIndex(chunk.Attributes, 0, chunk.ParamsCount, i => i.Equals(attributeName, StringComparison.Ordinal));
                 if (idx != -1)
                 {
                     return chunk.Values[idx];

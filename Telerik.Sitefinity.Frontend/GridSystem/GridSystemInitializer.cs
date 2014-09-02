@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
@@ -93,7 +94,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         protected virtual void AddLayoutControl(ConfigElementList<ToolboxItem> parent, GridControlData data)
         {
             if (data == null)
-                return;
+                throw new ArgumentNullException("data");
 
             var control = parent.FirstOrDefault<ToolboxItem>(t => t.Name == data.Name);
 

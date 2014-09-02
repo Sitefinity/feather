@@ -113,8 +113,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Populates the script references.
         /// </summary>
         /// <param name="widgetName">Name of the widget.</param>
-        /// <param name="configModels">The view configs.</param>
-        protected virtual void PopulateScriptReferences(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> configModels)
+        /// <param name="viewConfigs">The view configs.</param>
+        protected virtual void PopulateScriptReferences(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
         {
             var packagesManager = new PackageManager();
             var packageName = packagesManager.GetCurrentPackage();
@@ -139,7 +139,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 }
             }
 
-            var configuredScriptReferences = configModels
+            var configuredScriptReferences = viewConfigs
                 .Where(c => c.Value.Scripts != null)
                 .SelectMany(c => c.Value.Scripts);
 
@@ -174,8 +174,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             if (viewLocations == null)
                 throw new ArgumentNullException("viewLocations");
-
-            Contract.EndContractBlock();
 
             foreach (var viewLocation in viewLocations)
             {

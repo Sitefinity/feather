@@ -22,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.InlineEditing.Attributes
         /// <value>
         /// The type.
         /// </value>
-        public string FieldType { get; private set; }
+        public string FieldType { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FieldInfoAttribute"/> class.

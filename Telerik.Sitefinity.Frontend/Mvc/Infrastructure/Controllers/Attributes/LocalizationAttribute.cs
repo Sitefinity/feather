@@ -6,7 +6,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
     /// This attribute is used to specify how <see cref="IController"/> views are localized.
     /// </summary>
     /// <remarks>Apply on controllers.</remarks>
-    [AttributeUsage(AttributeTargets.All)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public class LocalizationAttribute : Attribute
     {
         /// <summary>

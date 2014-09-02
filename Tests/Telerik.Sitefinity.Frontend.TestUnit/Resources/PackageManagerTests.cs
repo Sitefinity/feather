@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Services;
@@ -137,7 +138,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
                 packageManager.GetPackageVirtualPath(null);
                 Assert.Fail("Expected exception was not thrown");
             }
-            finally
+            catch (ArgumentNullException)
             {
                 Assert.AreEqual(string.Format(System.Globalization.CultureInfo.InvariantCulture, "~/{0}/{1}", PackageManager.PackagesFolder, packageName), packageVirtualpath, "Package virtual path is not correct");
             }

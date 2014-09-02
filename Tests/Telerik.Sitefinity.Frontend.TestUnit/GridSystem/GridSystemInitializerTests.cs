@@ -28,7 +28,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.GridSystem
             // Arrange: Initialize the GridSystemInitializer, ToolboxesConfig and add a PageLayouts section, create a layouts section, create a dummy grid controls 
             var initializer = new DummyGridSystemInitializer();
             var fakeTemplatePath = "~/fakeTemplatePath/";
-            List<GridControlData> dummyData = (List<GridControlData>)initializer.PublicCreateLayoutControlsData(fakeTemplatePath);
+            var dummyData = initializer.PublicCreateLayoutControlsData(fakeTemplatePath);
             var toolboxesConfig = new DummyToolboxesConfig();
             var pageControlsMock = new Toolbox(toolboxesConfig.Toolboxes);
             pageControlsMock.Name = "PageLayouts";
