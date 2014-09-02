@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ArtOfTest.WebAii.Controls.HtmlControls;
 using ArtOfTest.WebAii.Core;
-using ArtOfTest.WebAii.TestTemplates;
 using ArtOfTest.WebAii.ObjectModel;
+using ArtOfTest.WebAii.TestTemplates;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
 {
@@ -144,14 +144,22 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
             }
         }
 
+        /// <summary>
+        /// Gets the search input.
+        /// </summary>
+        /// <value>The search input.</value>
         public HtmlInputText SearchInput
         {
             get
             {
                 return this.Get<HtmlInputText>("ng-model=filter.search");
             }
-        }        
+        }
 
+        /// <summary>
+        /// Gets the content container.
+        /// </summary>
+        /// <value>The content container.</value>
         public HtmlDiv ContentContainer
         {
             get
