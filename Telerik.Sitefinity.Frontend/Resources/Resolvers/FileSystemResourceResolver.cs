@@ -101,7 +101,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             var vp = VirtualPathUtility.ToAppRelative(virtualPath);
             var definitionVp = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAppRelative(definition.VirtualPath));
 
-            if (!vp.StartsWith(definitionVp))
+            if (!vp.StartsWith(definitionVp, StringComparison.Ordinal))
                 return null;
 
             var relativePath = vp.Substring(definitionVp.Length).Replace('/', '\\');

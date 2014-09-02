@@ -20,6 +20,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <JSLintSkip>\Mvc\Scripts\Angular\angular.min.js|\Mvc\Scripts\Angular\angular-route.min.js|\Mvc\Scripts\Angular\|\Mvc\Scripts\Bootstrap\|\Mvc\Scripts\Kendo\</JSLintSkip>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>..\FxCop\Feather.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -173,6 +176,7 @@
     <Compile Include="FilesMonitoring\FileChangeType.cs" />
     <Compile Include="FilesMonitoring\FileMonitoringInitializer.cs" />
     <Compile Include="FilesMonitoring\MonitoredDirectory.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GridSystem\GridSystemInitializer.cs" />
     <Compile Include="GridSystem\GridControlData.cs" />
     <Compile Include="InlineEditing\HtmlProcessor.cs" />
@@ -221,7 +225,9 @@
     <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParser.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilder.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\CategoryParamResolver.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\CustomActionParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\CustomActionParamsMapper.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Mvc\Infrastructure\Routing\DefaultUrlParamsMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\DetailActionParamsMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\DynamicUrlParamActionInvoker.cs" />
@@ -384,13 +390,16 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />
+  <Target Name="BeforeBuild">
+    <Copy SourceFiles="$(SolutionDir)FxCop\CustomDictionary.xml" DestinationFolder="$(CodeAnalysisPath)" OverwriteReadOnlyFiles="true" Retries="10" ContinueOnError="false" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
+
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />

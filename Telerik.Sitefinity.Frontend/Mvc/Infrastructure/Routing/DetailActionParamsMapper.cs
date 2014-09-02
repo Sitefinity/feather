@@ -24,10 +24,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// Initializes a new instance of the <see cref="DetailActionParamsMapper{TContent}"/> class.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public DetailActionParamsMapper(Controller controller)
-            : this(controller, null)
+        public DetailActionParamsMapper(Controller controller) : this(controller, null)
         {
-
         }
 
         /// <summary>
@@ -51,7 +49,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             {
                 this.Manager = this.ResolveManager();
             }
-            catch (Exception) { }
+            catch (Exception) 
+            { 
+            }
         }
 
         /// <inheritdoc />
@@ -174,7 +174,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             ContentLifecycleStatus status = ContentLifecycleStatus.Live;
             if (itemStatusParam != null)
             {
-                if (!Enum.TryParse<ContentLifecycleStatus>(itemStatusParam as String, out status))
+                if (!Enum.TryParse<ContentLifecycleStatus>(itemStatusParam as string, out status))
                     status = ContentLifecycleStatus.Live;
             }
 
@@ -194,8 +194,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         protected IManager Manager { get; private set; }
+
         protected MethodInfo ActionMethod { get; private set; }
+
         private string actionName;
+
         private Func<string> providerNameResolver;
     }
 }

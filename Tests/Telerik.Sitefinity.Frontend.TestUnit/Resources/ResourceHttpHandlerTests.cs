@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             string stylesContent = "my expected styles";
 
             var outputStream = new MemoryStream();
-            var response = new HttpResponse(new StringWriter());
+            var response = new HttpResponse(new StringWriter(System.Globalization.CultureInfo.InvariantCulture));
             var context = new HttpContext(new HttpRequest(null, "http://tempuri.org/test-style.css", null), response);
 
             var handler = new DummyResourceHttpHandler();

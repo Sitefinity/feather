@@ -12,7 +12,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
     public class DummyControllerContainerInitializer : ControllerContainerInitializer
     {
         /// <summary>
-        /// A function that will be called through <see cref="GetAssemblies"/> method.
+        /// A function that will be called through <see cref="Assemblies"/> method.
         /// </summary>
         public Func<IEnumerable<Assembly>> GetAssembliesMock { get; set; }
 
@@ -38,7 +38,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         public Action<Assembly> InitializeControllerContainerMock { get; set; }
 
         /// <summary>
-        /// A function that will be called through <see cref="GetAssemblyFileNames"/> method.
+        /// A function that will be called through <see cref="AssemblyFileNames"/> method.
         /// </summary>
         public Func<IEnumerable<string>> GetAssemblyFileNamesMock { get; set; }
 
@@ -67,14 +67,14 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         #region Public methods
 
         /// <summary>
-        /// Exposes <see cref="GetAssemblies"/> for test purposes.
+        /// Exposes <see cref="Assemblies"/> for test purposes.
         /// </summary>
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
         public IEnumerable<Assembly> GetAssembliesPublic()
         {
-            return this.GetAssemblies();
+            return this.RetrieveAssemblies();
         }
 
         /// <summary>
@@ -143,12 +143,12 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         #region Overrides
 
         /// <inheritdoc />
-        protected override IEnumerable<Assembly> GetAssemblies()
+        protected override IEnumerable<Assembly> RetrieveAssemblies()
         {
             if (this.GetAssembliesMock != null)
                 return this.GetAssembliesMock();
             else
-                return base.GetAssemblies();
+                return base.RetrieveAssemblies();
         }
 
         /// <inheritdoc />
@@ -204,12 +204,12 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        protected override IEnumerable<string> GetAssemblyFileNames()
+        protected override IEnumerable<string> RetrieveAssembliesFileNames()
         {
             if (this.GetAssemblyFileNamesMock != null)
                 return this.GetAssemblyFileNamesMock();
 
-            return base.GetAssemblyFileNames();
+            return base.RetrieveAssembliesFileNames();
         }
 
         /// <inheritdoc />

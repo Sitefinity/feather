@@ -19,7 +19,10 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.HttpContext
         public DummyHttpRequest(HttpContextBase httpContext, string appPath)
         {
             if (appPath == null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("appPath");
+
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
 
             this.applicationPath = appPath;
             this.requestContext = new RequestContext(httpContext, new RouteData());

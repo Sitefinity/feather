@@ -26,14 +26,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             virtualPath = this.virtualPathBuilder.RemoveParams(virtualPath);
             virtualPath = VirtualPathUtility.ToAppRelative(virtualPath);
 
-            var virtualPathBuilder = new LayoutVirtualPathBuilder();
-            string viewName = virtualPathBuilder.GetLayoutName(definition, virtualPath);
+            var layoutVirtualPathBuilder = new LayoutVirtualPathBuilder();
+            string viewName = layoutVirtualPathBuilder.GetLayoutName(definition, virtualPath);
             var layoutTemplateBuilder = new LayoutRenderer();
 
             if (string.IsNullOrEmpty(viewName))
                 return false;
 
-            if (virtualPath.StartsWith(string.Format("~/{0}", LayoutVirtualFileResolver.ResolverPath)))
+            if (virtualPath.StartsWith(string.Format(System.Globalization.CultureInfo.InvariantCulture, "~/{0}", LayoutVirtualFileResolver.ResolverPath), StringComparison.Ordinal))
                 return layoutTemplateBuilder.LayoutExists(viewName);
             else
                 return false;

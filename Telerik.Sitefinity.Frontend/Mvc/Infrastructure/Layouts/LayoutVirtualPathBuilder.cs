@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             var templateFileNameParser = new TemplateTitleParser();
             var fileName = templateFileNameParser.GetLayoutName(templateTitle);
 
-            var layoutVirtualPath = string.Format(LayoutVirtualPathBuilder.LayoutVirtualPathTemplate, LayoutVirtualPathBuilder.LayoutsPrefix, fileName, LayoutVirtualPathBuilder.LayoutSuffix);
+            var layoutVirtualPath = string.Format(System.Globalization.CultureInfo.InvariantCulture, LayoutVirtualPathBuilder.LayoutVirtualPathTemplate, LayoutVirtualPathBuilder.LayoutsPrefix, fileName, LayoutVirtualPathBuilder.LayoutSuffix);
 
             var packagesManager = new PackageManager();
             var currentPackage = packagesManager.GetCurrentPackage();
@@ -52,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             var pageTemplateNameLength = virtualPath.Length - definitionVp.Length - LayoutVirtualPathBuilder.LayoutSuffix.Length - 1;
             string pageTemplateName = virtualPath.Substring(definitionVp.Length, pageTemplateNameLength);
 
-            while (!string.IsNullOrEmpty(pageTemplateName) && pageTemplateName.EndsWith("."))
+            while (!string.IsNullOrEmpty(pageTemplateName) && pageTemplateName.EndsWith(".", StringComparison.Ordinal))
             {
                 pageTemplateName = pageTemplateName.Substring(0, pageTemplateName.Length - 1);
             }

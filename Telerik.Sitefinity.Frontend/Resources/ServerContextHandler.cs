@@ -61,8 +61,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns>The script as it is recorded in the file.</returns>
         protected virtual string GetRawScript()
         {
-            var jsPath = ServerContextHandler.ScriptPath.Arrange(FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(ServerContextHandler)));
-            var serverContextJs = HostingEnvironment.VirtualPathProvider.GetFile(jsPath);
+            var path = ServerContextHandler.ScriptPath.Arrange(FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(ServerContextHandler)));
+            var serverContextJs = HostingEnvironment.VirtualPathProvider.GetFile(path);
 
             using (var reader = new StreamReader(serverContextJs.Open()))
             {
@@ -79,8 +79,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return RouteHelper.ResolveUrl("~/", UrlResolveOptions.Rooted);
         }
 
-        private static object scriptLock = new Object();
+        private static object scriptLock = new object();
+
         private static string cachedScript;
+
         private const string ScriptPath = "~/{0}Resources/ServerContext.js";
     }
 }

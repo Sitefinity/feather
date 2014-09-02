@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines the integration test category names.
     /// </summary>
-    public class TestCategories
+    public static class TestCategories
     {
         /// <summary>
         /// Specifies the name of the category of tests related to Feather modules.

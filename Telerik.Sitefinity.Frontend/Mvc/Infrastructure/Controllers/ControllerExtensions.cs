@@ -28,14 +28,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <param name="pathTransformations">Transformations that have to be applied to each view engine search path.</param>
         public static void UpdateViewEnginesCollection(this Controller controller, IList<Func<string, string>> pathTransformations)
         {
+            if (pathTransformations == null)
+                throw new ArgumentNullException("pathTransformations");
+
             if (controller == null)
                 throw new ArgumentNullException("controller");
 
             var viewEngines = new ViewEngineCollection();
+
             foreach (var globalEngine in ViewEngines.Engines)
             {
                 var vppEngine = globalEngine as VirtualPathProviderViewEngine;
-                var newEngine = vppEngine != null ? ControllerExtensions.GetViewEngine(vppEngine, controller, pathTransformations) : globalEngine;
+                var newEngine = vppEngine != null ? ControllerExtensions.GetViewEngine(vppEngine, pathTransformations) : globalEngine;
                 viewEngines.Add(newEngine);
             }
 
@@ -111,9 +115,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// Gets a view engine that is a clone of the given <paramref name="viewEngine"/> and has enhanced search locations.
         /// </summary>
         /// <param name="viewEngine">The view engine.</param>
-        /// <param name="controller">The controller.</param>
         /// <param name="pathTransformations">Transformations that have to be applied to each view engine search path.</param>
-        private static IViewEngine GetViewEngine(VirtualPathProviderViewEngine viewEngine, Controller controller, IList<Func<string, string>> pathTransformations)
+        private static IViewEngine GetViewEngine(VirtualPathProviderViewEngine viewEngine,  IList<Func<string, string>> pathTransformations)
         {
             var newEngine = (VirtualPathProviderViewEngine)Activator.CreateInstance(viewEngine.GetType());
             newEngine.AreaViewLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.AreaViewLocationFormats, pathTransformations);
@@ -200,7 +203,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (files != null)
             {
                 return files
-                    .Where(f => viewExtensions.Any(e => f.EndsWith(e)))
+                    .Where(f => viewExtensions.Any(e => f.EndsWith(e, StringComparison.Ordinal)))
                     .Select(VirtualPathUtility.GetFileName)
                     .Select(System.IO.Path.GetFileNameWithoutExtension)
                     .Distinct();

@@ -1,5 +1,4 @@
-﻿
-namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
+﻿namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
     /// <summary>
     /// A base route param resolver that provides responsibility chain logic.

@@ -74,7 +74,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
             if (isController)
             {
                 string controllerName = controllerRegistry.GetControllerName(widgetType);
-                designerUrl = string.Format(DesignerResolver.DefaultActionUrlTemplate, controllerName);
+                designerUrl = string.Format(System.Globalization.CultureInfo.InvariantCulture, DesignerResolver.DefaultActionUrlTemplate, controllerName);
             }
 
             return designerUrl;

@@ -16,7 +16,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Helpers
         {
             get
             {
-                return this["DummyResource"];
+                return this["DummyResource", System.Globalization.CultureInfo.InvariantCulture];
             }
         }
     }

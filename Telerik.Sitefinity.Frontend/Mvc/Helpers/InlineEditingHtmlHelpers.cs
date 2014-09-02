@@ -33,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns>Html required for enabling inline editing.</returns>
         public static System.Web.Mvc.MvcHtmlString TextField(this HtmlHelper helper, string propName, string propValue, string fieldType)
         {
-            var htmlString = String.Format(HtmlProcessor.InlineEditingHtmlWrapper, propName, fieldType, propValue);
+            var htmlString = string.Format(HtmlProcessor.InlineEditingHtmlWrapper, propName, fieldType, propValue);
             
             return new System.Web.Mvc.MvcHtmlString(htmlString);
         }

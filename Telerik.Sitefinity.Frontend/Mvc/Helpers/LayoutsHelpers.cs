@@ -16,7 +16,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         public static MvcHtmlString SfPlaceHolder(this HtmlHelper helper, string containerName = "Body")
         {
-            var htmlString = string.Format("<div class='sfPublicWrapper' id='PublicWrapper' runat='server'><asp:contentplaceholder id='{0}' runat='server' /></div>", containerName);
+            var htmlString = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<div class='sfPublicWrapper' id='PublicWrapper' runat='server'><asp:contentplaceholder id='{0}' runat='server' /></div>", containerName);
 
             return new MvcHtmlString(htmlString);
         }

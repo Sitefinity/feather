@@ -26,7 +26,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.GridSystem
         }
 
         /// <inheritdoc />
-        public List<GridControlData> PublicCreateLayoutControlsData(string baseTemplatePath)
+        public ICollection<GridControlData> PublicCreateLayoutControlsData(string baseTemplatePath)
         {
             return this.CreateLayoutControlsData(baseTemplatePath);
         }

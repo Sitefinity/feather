@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
     /// <summary>
     /// Provides common server operations
     /// </summary>
-    public class FeatherServerOperations
+    public static class FeatherServerOperations
     {
         /// <summary>
         /// Entry point for Resource packages operations.

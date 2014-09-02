@@ -21,15 +21,15 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// Observes the resources locations, watch for changes
         /// and take certain actions depending on the change
         /// </summary>
-        /// <param name="monitoredDirectories">The monitored directories.</param>
-        public void Start(IList<MonitoredDirectory> monitoredDirectories)
+        /// <param name="directoriesInfo">The monitored directories.</param>
+        public void Start(IList<MonitoredDirectory> directoriesInfo)
         {
             if (this.rootWatcher == null)
             {
                 this.AddRootWatcher();
             }
 
-            foreach (var directory in monitoredDirectories)
+            foreach (var directory in directoriesInfo)
             {
                 var direcotryPath = this.MapPath(directory.Path);
 
@@ -52,6 +52,20 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             }
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            foreach (var watcher in this.fileWatchers)
+                watcher.Value.Dispose();
+
+            if (this.rootWatcher != null)
+                this.rootWatcher.Dispose();
+
+            GC.SuppressFinalize(this);
+        }
+
         #endregion
 
         #region Protected methods
@@ -66,7 +80,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         {
             var virtualFilePath = this.ConvertToVirtualPath(filePath);
 
-            var watchedDirInfo = this.WatchedFoldersAndPackages.FirstOrDefault(dirInfo => virtualFilePath.StartsWith(dirInfo.Path, StringComparison.InvariantCultureIgnoreCase));
+            var watchedDirInfo = this.WatchedFoldersAndPackages.FirstOrDefault(dirInfo => virtualFilePath.StartsWith(dirInfo.Path, StringComparison.Ordinal));
 
             if (watchedDirInfo == null)
                 return;
@@ -284,9 +298,9 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     var filePath = file.FullName;
                     this.FileChanged(filePath, FileChangeType.Created);
                 }
-                catch (Exception ex)
+                catch (IOException ex)
                 {
-                    Log.Write(string.Format("Exception occurred while processing the file named {0}, details: {1}", file.Name, ex));
+                    Log.Write(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Exception occurred while processing the file named {0}, details: {1}", file.Name, ex));
                 }
             }
         }
@@ -382,7 +396,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         {
             var virtualFilePath = this.ConvertToVirtualPath(directoryPath);
 
-            var queuedDirInfo = this.WatchedFoldersAndPackages.FirstOrDefault(dirInfo => dirInfo.Path.StartsWith(virtualFilePath, StringComparison.InvariantCultureIgnoreCase));
+            var queuedDirInfo = this.WatchedFoldersAndPackages.FirstOrDefault(dirInfo => dirInfo.Path.StartsWith(virtualFilePath, StringComparison.OrdinalIgnoreCase));
 
             if (queuedDirInfo == null)
                 return;           
@@ -405,7 +419,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         {
             var virtualFilePath = this.ConvertToVirtualPath(directoryPath);
 
-            var queuedDirInfo = this.QueuedFoldersAndPackages.FirstOrDefault(dirInfo => dirInfo.Path.StartsWith(virtualFilePath, StringComparison.InvariantCultureIgnoreCase));
+            var queuedDirInfo = this.QueuedFoldersAndPackages.FirstOrDefault(dirInfo => dirInfo.Path.StartsWith(virtualFilePath, StringComparison.OrdinalIgnoreCase));
 
             if (queuedDirInfo == null)
                 return;

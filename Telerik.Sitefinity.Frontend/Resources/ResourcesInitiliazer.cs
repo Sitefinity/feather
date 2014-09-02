@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// <summary>
     /// This class contains logic for configuring the functionality related to the resolving of resources.
     /// </summary>
-    public class ResourcesInitiliazer
+    public class ResourcesInitializer
     {
         public void Initialize()
         {
@@ -20,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                             new Route(
                                       "Telerik.Sitefinity.Frontend/ServerContext.js",
                                       new RouteHandler<ServerContextHandler>()),
-                                      typeof(ResourcesInitiliazer).Assembly.GetName().Name,
+                                      typeof(ResourcesInitializer).Assembly.GetName().Name,
                                       requireBasicAuthentication: false);
         }
     }

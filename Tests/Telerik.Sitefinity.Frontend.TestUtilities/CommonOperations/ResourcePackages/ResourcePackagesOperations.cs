@@ -23,12 +23,16 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// <returns>The file path if exists.</returns>
         public string GetResourcePackageDestinationFilePath(string packageName, string layoutFileName)
         {
+            if (layoutFileName == null)
+                throw new ArgumentNullException("layoutFileName");
+
+            if (packageName == null)
+                throw new ArgumentNullException("packageName");
+
             var filePath = Path.Combine(this.SfPath, "ResourcePackages", packageName, "MVC", "Views", "Layouts", layoutFileName);
 
             if (filePath == null)
-            {
                 throw new ArgumentNullException("FilePath was not found!");
-            }
 
             return filePath;
         }

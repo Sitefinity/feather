@@ -48,6 +48,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 throw new ArgumentNullException("assembly");
 
             var name = assembly.GetName().Name;
+
             var result = new PathDefinition
             {
                 IsWildcard = true,
@@ -82,7 +83,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public string AddParams(string virtualPath, string pathParams)
         {
             if (!pathParams.IsNullOrEmpty())
-                virtualPath += "#" + pathParams + Path.GetExtension(virtualPath);
+                virtualPath += string.Format(System.Globalization.CultureInfo.InvariantCulture, "#{0}{1}", pathParams, Path.GetExtension(virtualPath));
 
             return virtualPath;
         }

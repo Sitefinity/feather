@@ -17,7 +17,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether GetLayoutName method replaces invalid characters.")]
-        public void GetLayoutName_InvalidCharacters_ReplaceIvalidCharacters()
+        public void GetLayoutName_InvalidCharacters_ReplaceInvalidCharacters()
         {
             // Arrange
             var templateTitle = "Some<>*Test:?Title";

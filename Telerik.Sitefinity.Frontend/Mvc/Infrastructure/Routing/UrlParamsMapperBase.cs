@@ -23,14 +23,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             this.Controller = controller;
         }
 
-        /// <summary>
-        /// Gets the controller.
-        /// </summary>
-        /// <value>
-        /// The controller.
-        /// </value>
-        protected Controller Controller { get; private set; }
-
         /// <inheritdoc />
         public IUrlParamsMapper Next
         {
@@ -52,6 +44,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (!isMatch && this.Next != null)
                 this.Next.ResolveUrlParams(urlParams, requestContext);
         }
+
+        /// <summary>
+        /// Gets the controller.
+        /// </summary>
+        /// <value>
+        /// The controller.
+        /// </value>
+        protected Controller Controller { get; private set; }
 
         /// <summary>
         /// Creates parameter map in order to map the URL parameters to the provided URL template

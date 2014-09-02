@@ -11,7 +11,6 @@ using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Localization;
@@ -35,7 +34,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
-            var assemblies = this.GetAssemblies();
+            var assemblies = this.RetrieveAssemblies();
 
             this.RegisterVirtualPaths(assemblies);
 
@@ -52,9 +51,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <summary>
         /// Gets the assemblies that are marked as controller containers with the <see cref="ControllerContainerAttribute"/> attribute.
         /// </summary>
-        protected virtual IEnumerable<Assembly> GetAssemblies()
+        protected virtual IEnumerable<Assembly> RetrieveAssemblies()
         {
-            var assemblyFileNames = this.GetAssemblyFileNames().ToArray();
+            var assemblyFileNames = this.RetrieveAssembliesFileNames().ToArray();
             var result = new List<Assembly>();
 
             foreach (var assemblyFileName in assemblyFileNames)
@@ -76,6 +75,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <param name="container"></param>
         protected virtual void InitializeControllerContainer(Assembly container)
         {
+            if (container == null)
+                return;
+
             var containerAttribute = container.GetCustomAttributes(false).Single(attr => attr.GetType().AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName) as ControllerContainerAttribute;
 
             if (containerAttribute.InitializationType == null || containerAttribute.InitializationMethod.IsNullOrWhitespace())
@@ -129,6 +131,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             this.RemoveSitefinityViewEngine();
             this.ReplaceControllerFactory();
 
+            if (controllers != null)
+                return;
+
             foreach (var controller in controllers)
             {
                 this.RegisterController(controller);
@@ -151,7 +156,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             var controllerStore = new ControllerStore();
             var configManager = ConfigManager.GetManager();
-            using (new ElevatedConfigModeRegion())
+
+            using (var modeRegion = new ElevatedConfigModeRegion())
             {
                 this.RegisterStringResources(controller);
                 controllerStore.AddController(controller, configManager);
@@ -159,10 +165,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// Gets the assembly file names that will be inspected for controllers.
+        /// Gets the assemblies file names that will be inspected for controllers.
         /// </summary>
-        /// <param name="assemblyPath">The assembly path.</param>
-        protected virtual IEnumerable<string> GetAssemblyFileNames()
+        protected virtual IEnumerable<string> RetrieveAssembliesFileNames()
         {
             var controllerAssemblyPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "bin");
             return Directory.EnumerateFiles(controllerAssemblyPath, "*.dll", SearchOption.TopDirectoryOnly);
@@ -222,11 +227,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         protected virtual void InitializeCustomRouting()
         {
-            //Sf 7.2: 
-            ObjectFactory.Container.RegisterType<IControllerActionInvoker, DynamicUrlParamActionInvoker>(new ContainerControlledLifetimeManager());
-
-            ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
-            ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
+            // Sf 7.2:
+            // ObjectFactory.Container.RegisterType<IControllerActionInvoker, DynamicUrlParamActionInvoker>(new ContainerControlledLifetimeManager());
+               
+            // ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
+            // ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
         }
 
         #endregion

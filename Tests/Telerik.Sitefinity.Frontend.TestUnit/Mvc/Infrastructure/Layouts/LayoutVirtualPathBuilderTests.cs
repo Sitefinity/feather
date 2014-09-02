@@ -38,7 +38,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
         [TestMethod]
         [Owner("EGaneva")]
         [Description("Checks whether GetLayoutName returns correct layout file name and strips additional .")]
-        public void GetLayoutName_Virtualpath_ResolvesLayoutFileName()
+        public void GetLayoutName_VirtualPath_ResolvesLayoutFileName()
         {
             // Arrange
             var expectedLayoutName = "TestTitle";

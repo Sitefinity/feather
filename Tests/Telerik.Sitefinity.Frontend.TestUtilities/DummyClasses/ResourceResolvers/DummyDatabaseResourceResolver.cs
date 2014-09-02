@@ -21,10 +21,10 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
         /// <summary>
         /// Gets the control presentation that contains the requested resource from the database.
         /// </summary>
-        /// <param name="definition">The definition.</param>
+        /// <param name="virtualPathDefinition">The definition.</param>
         /// <param name="virtualPath">The virtual path.</param>
         /// <returns></returns>
-        protected override ControlPresentation GetControlPresentation(PathDefinition definition, string virtualPath)
+        protected override ControlPresentation GetControlPresentation(PathDefinition virtualPathDefinition, string virtualPath)
         {
             if (this.ControlPresentationResult.ContainsKey(virtualPath))
                 return this.ControlPresentationResult[virtualPath];

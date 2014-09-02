@@ -32,7 +32,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var controller = LocalizationHelpers.GetController(page);
             var resClass = LocalizationHelpers.FindResourceStringClassType(controller.GetType());
-            return Res.Get(resClass, key);
+            return Res.Get(resClass, key, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var controller = LocalizationHelpers.GetController(page);
             var resClass = LocalizationHelpers.FindResourceStringClassType(controller.GetType());
-            return Res.Get(resClass, key);
+            return Res.Get(resClass, key, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         /// <summary>

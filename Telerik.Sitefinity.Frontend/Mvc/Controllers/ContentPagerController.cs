@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         {
             var model = new PagerViewModel(currentPage, totalPagesCount, redirectUrlTemplate);
 
-            return PartialView("Pager", model);
+            return this.PartialView("Pager", model);
         }
     }
 }

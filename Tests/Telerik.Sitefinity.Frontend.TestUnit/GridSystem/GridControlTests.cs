@@ -26,7 +26,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.GridSystem
             var actualAttributeValue = string.Empty;
             var attributeName = "class";
 
-            var template = string.Format(@"<div {0}=""{1}"" runat=""server""></div>", attributeName, expectedAttributeValue);
+            var template = string.Format(System.Globalization.CultureInfo.InvariantCulture, @"<div {0}=""{1}"" runat=""server""></div>", attributeName, expectedAttributeValue);
 
             // Act: parse the HTML template and then get the value of the class attribute
             using (var parser = new HtmlParser(template))
@@ -48,7 +48,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.GridSystem
         /// </summary>
         [TestMethod]
         [Description("Checks whether a server div with class sf_colsOut will be returned unchanged.")]
-        public void PrecessLayoutString_ServerControlColsOut_ReturnsUnchangedTemplate()
+        public void ProcessLayoutString_ServerControlColsOut_ReturnsUnchangedTemplate()
         {
             // Arrange
             var layoutControl = new DummyGridControl();

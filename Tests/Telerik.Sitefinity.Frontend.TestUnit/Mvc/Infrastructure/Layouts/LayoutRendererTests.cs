@@ -101,7 +101,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
                         var htmlString = layoutTemplateBuilder.GetLayoutTemplate(string.Empty);
 
                         // Assert
-                        Assert.IsTrue(htmlString.StartsWith(MasterPageDirective), "The master page directive is not added correctly.");
+                        Assert.IsTrue(htmlString.StartsWith(MasterPageDirective, StringComparison.Ordinal), "The master page directive is not added correctly.");
                         Assert.IsTrue(htmlString.Contains(layoutTemplateBuilder.InnerHtmlStringWithForm), "The method doesn't return the expected html.");
                     });
         }

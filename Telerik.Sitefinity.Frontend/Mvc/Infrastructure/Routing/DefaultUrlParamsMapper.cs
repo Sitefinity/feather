@@ -14,10 +14,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// Initializes a new instance of the <see cref="DefaultUrlParamsMapper"/> class.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public DefaultUrlParamsMapper(Controller controller)
-            : base(controller)
+        public DefaultUrlParamsMapper(Controller controller) : base(controller)
         {
-
         }
 
         /// <inheritdoc />

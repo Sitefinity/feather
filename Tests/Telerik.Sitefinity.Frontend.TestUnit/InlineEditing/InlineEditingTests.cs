@@ -24,7 +24,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.InlineEditing
         public void CreateInlineEditingRegion_DummyContent_IsWrappedIntoInlineEditingRegion()
         {
             // Arrange: create dummy data which will be set to the related attributes inside the region div tag
-            TextWriter writer = new StringWriter();
+            TextWriter writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
             var providerName = "dummyProvider";
             var type = "dummyType";
             Guid id = Guid.NewGuid();
@@ -48,7 +48,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.InlineEditing
                 Assert.IsNotNull(chunk);
 
                 // checks if the HTML tag is of type div and if it has the required attributes
-                Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase));
+                Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.Ordinal));
                 Assert.IsTrue(chunk.HasAttribute(this.idAttribute), "The id of the item is not appended as attribute correctly.");
                 Assert.IsTrue(chunk.HasAttribute(this.providerAttribute), "The provider is not appended as attribute correctly.");
                 Assert.IsTrue(chunk.HasAttribute(this.typeAttribute), "The id type the item is not appended as attribute correctly.");
@@ -68,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.InlineEditing
         [TestMethod]
         [Owner("Bonchev")]
         [Description("Checks whether GetStringContent method of the HtmlProcessor class properly wraps a given HTML content into a InlineEditing region for a property of the model which is marked with FieldInfoAttribute.")]
-        public void GetStringContent_WithInlineEditingAttribute_TextElelementProperlyCreated()
+        public void GetStringContent_WithInlineEditingAttribute_TextElementProperlyCreated()
         {
             // Arrange
             var htmlProcessor = new HtmlProcessor();
@@ -87,7 +87,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.InlineEditing
                 Assert.IsNotNull(chunk);
 
                 // checks if the HTML tag is of type div and if it has the required attributes
-                Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase), "There is no wrapper div appended to the property representation.");
+                Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.Ordinal), "There is no wrapper div appended to the property representation.");
                 Assert.IsTrue(chunk.HasAttribute(this.fieldAttribute), "The field attribute is not appended correctly.");
                 Assert.IsTrue(chunk.HasAttribute(this.fieldTypeAttribute), "The field type attribute is not appended correctly.");
 
@@ -127,9 +127,9 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.InlineEditing
         public void HtmlRegion_CreateFakeHtmlContentInRegion_IsRegionProperlyClosed()
         {
             // Arrange: create text writer and dummy content 
-            TextWriter writer = new StringWriter();
+            TextWriter writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
 
-            string dummyHtmlContent = string.Format("<{0}>{1}", this.htmlWrapperTag, this.dummyContent);
+            string dummyHtmlContent = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<{0}>{1}", this.htmlWrapperTag, this.dummyContent);
 
             // Act: create the HTML region 
             using (new HtmlRegion(writer, this.htmlWrapperTag))
@@ -144,7 +144,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.InlineEditing
             {
                 var chunk = parser.ParseNext();
                 Assert.IsNotNull(chunk, "Chunk shouldn't be null.");
-                Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase), "The html tag is not div.");
+                Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.Ordinal), "The html tag is not div.");
                 this.AssertContentAndCloseTag(parser);
             }
         }
@@ -173,8 +173,8 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.InlineEditing
                 }
             }
 
-            Assert.IsTrue(content.StartsWith(this.dummyContent, StringComparison.InvariantCultureIgnoreCase), "The inner content is not preserved correctly.");
-            Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.InvariantCultureIgnoreCase), "The last tag is not div.");
+            Assert.IsTrue(content.StartsWith(this.dummyContent, StringComparison.Ordinal), "The inner content is not preserved correctly.");
+            Assert.IsTrue(chunk.TagName.Equals(this.htmlWrapperTag, StringComparison.Ordinal), "The last tag is not div.");
             Assert.IsTrue(chunk.Type == HtmlChunkType.CloseTag, "The last tag is not closing tag.");
         }
 

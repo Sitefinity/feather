@@ -26,15 +26,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// Processes the layout string adding the required attributes to the head tag
         /// and also adding the required form tag.
         /// </summary>
-        /// <param name="template">The template.</param>
+        /// <param name="targetTemplate">The template.</param>
         /// <returns></returns>
-        public virtual string ProcessLayoutString(string template)
+        public virtual string ProcessLayoutString(string targetTemplate)
         {
             var includeFormTag = this.IsFormTagRequired();
             StringBuilder outPut = new StringBuilder();
             HtmlChunk chunk = null;
 
-            using (HtmlParser parser = new HtmlParser(template))
+            using (HtmlParser parser = new HtmlParser(targetTemplate))
             {
                 parser.SetChunkHashMode(false);
                 parser.AutoExtractBetweenTagsOnly = false;
@@ -98,13 +98,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <summary>
         /// Adds the master page directives.
         /// </summary>
-        /// <param name="layoutHtmlString">The layout HTML string.</param>
+        /// <param name="layoutHtmlValue">The layout HTML string.</param>
         /// <returns></returns>
-        public virtual string AddMasterPageDirectives(string layoutHtmlString)
+        public virtual string AddMasterPageDirectives(string layoutHtmlValue)
         {
-            layoutHtmlString = string.Format("{0}{1}", MasterPageBuilder.MasterPageDirective, layoutHtmlString);
+            layoutHtmlValue = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}{1}", MasterPageBuilder.MasterPageDirective, layoutHtmlValue);
 
-            return layoutHtmlString;
+            return layoutHtmlValue;
         }
 
         #endregion 
@@ -219,7 +219,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (string.IsNullOrEmpty(pageData.Keywords))
                 return null;
 
-            return string.Format(MasterPageBuilder.KeywordsMetaTag, pageData.Keywords);
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, MasterPageBuilder.KeywordsMetaTag, pageData.Keywords);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (string.IsNullOrEmpty(pageData.Description))
                 return null;
 
-            return string.Format(MasterPageBuilder.PageDescriptionMetaTag, pageData.Description);
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, MasterPageBuilder.PageDescriptionMetaTag, pageData.Description);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             string appPath = System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
 
-            if (!appPath.EndsWith("/"))
+            if (!appPath.EndsWith("/", StringComparison.Ordinal))
                 appPath = string.Concat(appPath, "/");
 
             sb.Append(string.Concat("\t<script type=\"text/javascript\">var sf_appPath='", appPath, "';</script>"));
@@ -261,26 +261,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             sb.Append("\" type=\"text/javascript\"></script>");
 
             return sb.ToString();
-        }
-
-        /// <summary>
-        /// Appends the CSS resource tag.
-        /// </summary>
-        /// <param name="pageProxy">The page proxy.</param>
-        /// <param name="sb">The sb.</param>
-        /// <param name="resourceAssemblyInfo">The resource assembly information.</param>
-        /// <param name="resourceName">Name of the resource.</param>
-        private void AppendStylesheetResourceTag(PageProxy pageProxy, ref StringBuilder sb, string resourceAssemblyInfo, string resourceName)
-        {
-            sb.AppendLine();
-            sb.Append("\t<link rel=\"stylesheet\" href=\"");
-
-            if (resourceName.StartsWith("~/"))
-                sb.Append(VirtualPathUtility.ToAbsolute(resourceName));
-            else
-                sb.Append(pageProxy.ClientScript.GetWebResourceUrl(TypeResolutionService.ResolveType(resourceAssemblyInfo), resourceName));
-
-            sb.Append("\" type=\"text/css\" />");
         }
 
         /// <summary>

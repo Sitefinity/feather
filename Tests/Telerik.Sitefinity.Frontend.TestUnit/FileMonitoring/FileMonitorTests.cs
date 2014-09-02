@@ -37,7 +37,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             // Arrange
             var fileMonitor = new DummyFileMonitor();
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
-            var filePath = string.Format("{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
+            var filePath = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
 
             SystemManager.RunWithHttpContext(
                 this.context, 
@@ -66,7 +66,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             // Arrange
             var fileMonitor = new DummyFileMonitor();
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
-            var filePath = string.Format("{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
+            var filePath = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
 
             SystemManager.RunWithHttpContext(
                 this.context, 
@@ -93,9 +93,9 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             // Arrange
             var fileMonitor = new DummyFileMonitor();
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
-            var oldFilePath = string.Format("{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
+            var oldFilePath = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
 
-            var newFilePath = string.Format("{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\renamedTest.cshtml", fileMonitor.AppPhysicalPath);
+            var newFilePath = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\renamedTest.cshtml", fileMonitor.AppPhysicalPath);
 
             SystemManager.RunWithHttpContext(
                 this.context, 

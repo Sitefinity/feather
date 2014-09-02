@@ -260,5 +260,15 @@
       </Rules>
       <AnalyzerSettings />
     </Analyzer>
+    <Analyzer AnalyzerId="StyleCop.CSharp.MaintainabilityRules">
+      <Rules>
+        <Rule Name="CodeAnalysisSuppressionMustHaveJustification">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+      </Rules>
+      <AnalyzerSettings />
+    </Analyzer>
   </Analyzers>
 </StyleCopSettings>

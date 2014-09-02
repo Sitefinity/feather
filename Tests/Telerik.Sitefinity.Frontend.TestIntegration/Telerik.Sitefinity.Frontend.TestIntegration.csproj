@@ -24,6 +24,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>..\..\FxCop\Feather.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -126,6 +128,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcePackages\PackagesTests.cs" />
     <Compile Include="TestCategories.cs" />
@@ -144,8 +147,10 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
+      <Copy SourceFiles="$(SolutionDir)FxCop\CustomDictionary.xml" DestinationFolder="$(CodeAnalysisPath)" OverwriteReadOnlyFiles="true" Retries="10" ContinueOnError="false" />
   </Target>
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
 </Project>

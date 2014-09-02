@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         {
             for (int i = 0; i < 3; i++)
             {
-                ServerOperations.News().CreatePublishedNewsItem(newsTitle: NewsItemTitle + i, newsContent: NewsItemContent +i, author: NewsItemAuthor + i);                
+                ServerOperations.News().CreatePublishedNewsItem(newsTitle: NewsItemTitle + i, newsContent: NewsItemContent + i, author: NewsItemAuthor + i);                
             }
             
             for (int i = 0; i < 4; i++)

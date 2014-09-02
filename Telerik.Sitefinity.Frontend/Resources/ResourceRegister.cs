@@ -68,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public void RegisterResource(string resourceKey)
         {
             if (this.IsRegistered(resourceKey))
-                throw new ArgumentException(string.Format("{0} is already registered!", resourceKey));
+                throw new ArgumentException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} is already registered!", resourceKey));
 
             this.Register(resourceKey);
         }

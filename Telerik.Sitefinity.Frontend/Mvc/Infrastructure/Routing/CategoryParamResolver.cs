@@ -1,5 +1,4 @@
-﻿
-namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
+﻿namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
     /// <summary>
     /// Instances of this class resolve category by UrlName.
@@ -9,10 +8,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryParamResolver"/> class.
         /// </summary>
-        public CategoryParamResolver()
-            : base("Categories")
+        public CategoryParamResolver() : base("Categories")
         {
-
         }
     }
 }

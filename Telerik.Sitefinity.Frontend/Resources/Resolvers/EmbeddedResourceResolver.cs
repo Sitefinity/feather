@@ -76,10 +76,10 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                 var definitionVp = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAppRelative(definition.VirtualPath));
                 var vp = VirtualPathUtility.ToAppRelative(virtualPath);
 
-                if (!vp.StartsWith(definitionVp))
+                if (!vp.StartsWith(definitionVp, StringComparison.Ordinal))
                     return null;
 
-                var dir = !vp.EndsWith("/") ? VirtualPathUtility.GetDirectory(vp) : vp;
+                var dir = !vp.EndsWith("/", StringComparison.Ordinal) ? VirtualPathUtility.GetDirectory(vp) : vp;
                 vp = Regex.Replace(dir, @"[ \-]", "_") + Path.GetFileName(vp);
                 path = assemblyName + "." + vp.Substring(definitionVp.Length).Replace('/', '.');
             }
