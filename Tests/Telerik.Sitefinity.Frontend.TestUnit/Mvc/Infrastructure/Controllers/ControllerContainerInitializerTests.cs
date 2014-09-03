@@ -51,7 +51,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
 
             var assemblyFiles = new[] { "No Controllers", "No Controllers", "Controllers", "No Controllers", "Controllers" };
 
-            initializer.GetAssemblyFileNamesMock = () => assemblyFiles;
+            initializer.RetrieveAssembliesFileNamesMock = () => assemblyFiles;
             initializer.IsControllerContainerMock = asmFileName => asmFileName.Equals("Controllers");
 
             var triedToLoad = new List<string>(2);
@@ -136,7 +136,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
             var initializer = new DummyControllerContainerInitializer();
 
             IEnumerable<Assembly> assemblies = null;
-            initializer.GetAssembliesMock = () =>
+            initializer.RetrieveAssembliesMock = () =>
                 {
                     assemblies = new List<Assembly>();
                     return assemblies;
