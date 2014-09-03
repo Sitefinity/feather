@@ -125,7 +125,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             if (!string.IsNullOrEmpty(packageName))
                 expectedLayoutFolderStructure = packageName + Path.DirectorySeparatorChar + expectedLayoutFolderStructure;
 
-            if (directory.FullName.EndsWith(expectedLayoutFolderStructure, StringComparison.Ordinal) && directory.FullName.StartsWith(HostingEnvironment.ApplicationPhysicalPath, StringComparison.Ordinal))
+            if (directory.FullName.EndsWith(expectedLayoutFolderStructure, StringComparison.OrdinalIgnoreCase) && directory.FullName.StartsWith(HostingEnvironment.ApplicationPhysicalPath, StringComparison.OrdinalIgnoreCase))
                 isFileInValidFolder = true;
 
             return isFileInValidFolder;
