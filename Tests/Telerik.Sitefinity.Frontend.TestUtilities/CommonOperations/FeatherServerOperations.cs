@@ -18,5 +18,14 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         {
             return new ResourcePackagesOperations();
         }
+
+        /// <summary>
+        /// Entry point for Pages operations.
+        /// </summary>
+        /// <returnsResource>PagesOperations instance.</returns>
+        public static PagesOperations Pages()
+        {
+            return new PagesOperations();
+        }
     }
 }

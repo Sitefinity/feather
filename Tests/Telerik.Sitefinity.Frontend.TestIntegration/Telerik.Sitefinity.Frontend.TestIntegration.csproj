@@ -55,6 +55,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -130,6 +131,8 @@
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourcePackages\Constants.cs" />
+    <Compile Include="ResourcePackages\LayoutFilesTests.cs" />
     <Compile Include="ResourcePackages\PackagesTests.cs" />
     <Compile Include="TestCategories.cs" />
   </ItemGroup>

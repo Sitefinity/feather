@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyLoaderHelper.cs" />
+    <Compile Include="CommonOperations\Pages\PagesOperations.cs" />
     <Compile Include="CommonOperations\ResourcePackages\ResourcePackagesOperations.cs" />
     <Compile Include="ControllerFactoryRegion.cs" />
     <Compile Include="DummyClasses\Authentication\DummyAuthenticationEvaluator.cs" />
@@ -217,6 +218,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\TestLayout.cshtml" />
+    <EmbeddedResource Include="Data\TestPackageNoLayouts.zip" />
     <EmbeddedResource Include="Data\TestPackage.zip" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />

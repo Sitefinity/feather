@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,6 +11,7 @@ using MbUnit.Framework;
 using Microsoft.Http;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
@@ -25,59 +27,34 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Test]
         [Category(TestCategories.Packages)]
         [Author("Petya Rachina")]
-        public void FoundationResourcePackage_AddNewLayoutFile_VerifyGeneratedTemplate()
-        {
-            int templatesCount = this.PageManager.GetTemplates().Count();
-
-            try
-            {
-                string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(PackageName, LayoutFileName);
-                FeatherServerOperations.ResourcePackages().AddNewResource(FileResource, filePath);
-
-                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
-
-                var template = this.PageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
-                Assert.IsNotNull(template, "Template was not found");
-            }
-            finally
-            {
-                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
-
-                string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(PackageName, LayoutFileName);
-                File.Delete(filePath);
-            }
-        }
-
-        [Test]
-        [Category(TestCategories.Packages)]
-        [Author("Petya Rachina")]
+        [Description("Adds new package with layout files and verifies the generated page templates.")]
         public void ResourcePackage_AddNewPackageWithLayoutFiles_VerifyGeneratedTemplates()
         {
             int templatesCount = this.PageManager.GetTemplates().Count();
 
             try
             {
-                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(PackageResource);
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageResource);
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 3);
 
-                string[] templateTitles = new string[] { TestLayout1, TestLayout2, TestLayout3 };
+                string[] templateTitles = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3 };
 
                 foreach (var title in templateTitles)
                 {
                     var template = this.PageManager.GetTemplates().Where(t => t.Title == title).FirstOrDefault();
-                    Assert.IsNotNull(template, "Template was not found");
+                    Assert.IsNotNull(template, "Template was not found");                   
                 }               
             }
             finally
             {
-                string[] templates = new string[] { TestLayout1, TestLayout2, TestLayout3 };
+                string[] templates = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3 };
 
                 foreach (var template in templates)
-                {
-                    ServerOperations.Templates().DeletePageTemplate(template);
+                {                   
+                    ServerOperations.Templates().DeletePageTemplate(template);                 
                 }
 
-                string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(TestPackageName);
+                string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.TestPackageName);
                 Directory.Delete(path, true);
             }
         }
@@ -85,16 +62,39 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Test]
         [Category(TestCategories.Packages)]
         [Author("Petya Rachina")]
+        [Description("Adds new package without layout files and verifies there are no new generated page templates.")]
+        public void ResourcePackage_AddNewPackageWithNoLayoutFiles_VerifyNotGeneratedTemplates()
+        {
+            int templatesCount = this.PageManager.GetTemplates().Count();
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageNoLayoutsResource);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+
+                Assert.IsTrue(this.PageManager.GetTemplates().Count() == templatesCount);
+            }
+            finally
+            {
+                string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.PackageNoLayouts);
+                Directory.Delete(path, true);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.Packages)]
+        [Author("Petya Rachina")]
+        [Description("Adds new resource package with layout files, rename the package and verifies the newly generated page templates.")]
         public void ResourcePackage_RenamePackageWithLayoutFiles_VerifyGeneratedTemplates()
         {
             int templatesCount = this.PageManager.GetTemplates().Count();
 
             try
             {
-                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(PackageResource);
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageResource);
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 3);
 
-                string[] templateTitles = new string[] { TestLayout1, TestLayout2, TestLayout3 };
+                string[] templateTitles = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3 };
 
                 foreach (var title in templateTitles)
                 {
@@ -102,10 +102,10 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                     Assert.IsNotNull(template, "Template was not found");
                 }
 
-                FeatherServerOperations.ResourcePackages().RenamePackageFolder(TestPackageName, NewTestPackageName);
+                FeatherServerOperations.ResourcePackages().RenamePackageFolder(Constants.TestPackageName, Constants.NewTestPackageName);
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 6);
 
-                string[] newTemplateTitles = new string[] { NewTestLayout1, NewTestLayout2, NewTestLayout3 };
+                string[] newTemplateTitles = new string[] { Constants.NewTemplateTestLayout1, Constants.NewTemplateTestLayout2, Constants.NewTemplateTestLayout3 };
 
                 foreach (var title in newTemplateTitles)
                 {
@@ -115,74 +115,25 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
             finally
             {
-                string[] templates = new string[] { TestLayout1, TestLayout2, TestLayout3, NewTestLayout1, NewTestLayout2, NewTestLayout3 };
+                string[] templates = new string[] 
+                { 
+                    Constants.TemplateTestLayout1, 
+                    Constants.TemplateTestLayout2, 
+                    Constants.TemplateTestLayout3, 
+                    Constants.NewTemplateTestLayout1, 
+                    Constants.NewTemplateTestLayout2, 
+                    Constants.NewTemplateTestLayout3 
+                };
 
                 foreach (var template in templates)
                 {
                     ServerOperations.Templates().DeletePageTemplate(template);
                 }
 
-                string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(NewTestPackageName);
+                string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.NewTestPackageName);
                 Directory.Delete(path, true);
             }
-        }
-
-        [Test]
-        [Category(TestCategories.Packages)]
-        [Author("Petya Rachina")]
-        public void ResourcePackage_RenameLayoutFile_VerifyGeneratedTemplate()
-        {
-            int templatesCount = this.PageManager.GetTemplates().Count();
-
-            try
-            {
-                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(PackageResource);
-                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 3);
-
-                string[] templateTitles = new string[] { TestLayout1, TestLayout2, TestLayout3 };
-
-                foreach (var title in templateTitles)
-                {
-                    var template = this.PageManager.GetTemplates().Where(t => t.Title == title).FirstOrDefault();
-                    Assert.IsNotNull(template, "Template was not found");
-                }
-
-                FeatherServerOperations.ResourcePackages().RenameLayoutFile(TestPackageName, TestLayoutFileName, NewTestLayoutFileName);
-                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 4);
-
-                var renamedTemplate = this.PageManager.GetTemplates().Where(t => t.Title == NewTestLayout1Renamed).FirstOrDefault();
-                Assert.IsNotNull(renamedTemplate, "Template was not found");
-            }
-            finally
-            {
-                string[] templates = new string[] { TestLayout1, TestLayout2, TestLayout3, NewTestLayout1Renamed };
-
-                foreach (var template in templates)
-                {
-                    ServerOperations.Templates().DeletePageTemplate(template);
-                }
-
-                string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(TestPackageName);
-                Directory.Delete(path, true);
-            }
-        }
-
-        private const string FileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayout.cshtml";
-        private const string PackageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestPackage.zip";
-        private const string PackageName = "Foundation";
-        private const string TestPackageName = "TestPackage";
-        private const string NewTestPackageName = "NewTestPackage";
-        private const string LayoutFileName = "TestLayout.cshtml";
-        private const string TestLayoutFileName = "Test Layout 1.cshtml";
-        private const string NewTestLayoutFileName = "New Test Layout 1.cshtml";
-        private const string TemplateTitle = "Foundation.TestLayout";
-        private const string TestLayout1 = "TestPackage.Test Layout 1";
-        private const string TestLayout2 = "TestPackage.Test Layout 2";
-        private const string TestLayout3 = "TestPackage.Test Layout 3";
-        private const string NewTestLayout1 = "NewTestPackage.Test Layout 1";
-        private const string NewTestLayout2 = "NewTestPackage.Test Layout 2";
-        private const string NewTestLayout3 = "NewTestPackage.Test Layout 3";
-        private const string NewTestLayout1Renamed = "TestPackage.New Test Layout 1";
+        }      
 
         private PageManager pageManager;
 
@@ -197,6 +148,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
                 return this.pageManager;
             }
-        }
+        }       
     }
 }
