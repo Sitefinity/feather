@@ -29,6 +29,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         public const string PageUrl = "TestPageUrl";
         public const string LayoutTemplateText = "Test Layout";
         public const string TestLayout1TemplateText = "Test Layout 1";
+        public const string TestLayout1TemplateTextEdited = "New Text";
         public const string ServerErrorMessage = "Server Error";
     }
 }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using MbUnit.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Web;
@@ -151,6 +153,59 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutFiles)]
+        [Author("Petya Rachina")]
+        [Description("Adds a resource package with layout files, edits one of the layout files and verifies that the template and page are updated.")]
+        public void ResourcePackageLayoutFiles_EditLayoutFile_VerifyTemplateAndPageBasedOnTheLayoutFile()
+        {
+            int templatesCount = this.PageManager.GetTemplates().Count();
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageResource);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 3);
+
+                var template = this.PageManager.GetTemplates().Where(t => t.Title == Constants.TemplateTestLayout1).FirstOrDefault();
+
+                if (template == null)
+                    throw new ArgumentException("template not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, Constants.PageTitle, Constants.PageUrl);
+
+                var page = this.PageManager.GetPageNode(pageId);
+                var pageUrl = page.GetFullUrl();
+                pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
+
+                var pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
+                Assert.IsTrue(pageContent.Contains(Constants.TestLayout1TemplateText), "Layout template text was not found in the page content");
+
+                string layoutFile = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(Constants.TestPackageName, Constants.TestLayoutFileName);
+                FeatherServerOperations.ResourcePackages().EditLayoutFile(layoutFile, Constants.TestLayout1TemplateText, Constants.TestLayout1TemplateTextEdited);
+
+                this.PublishPage(page);
+                pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
+
+                Assert.IsFalse(pageContent.Contains(Constants.ServerErrorMessage), "Page throws a server error message");
+                Assert.IsFalse(pageContent.Contains(Constants.TestLayout1TemplateText), "Layout template text was found in the page content");
+                Assert.IsTrue(pageContent.Contains(Constants.TestLayout1TemplateTextEdited), "New layout text was not found in the page content");
+            }
+            finally
+            {
+                string[] templates = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3, Constants.TemplateTestLayout1Renamed };
+
+                ServerOperations.Pages().DeletePage(Constants.PageTitle);
+
+                foreach (var template in templates)
+                {
+                    ServerOperations.Templates().DeletePageTemplate(template);
+                }
+
+                string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.TestPackageName);
+                this.DeleteDirectory(path);
+            }
+        }
+
         private PageManager pageManager;
 
         private PageManager PageManager
@@ -172,6 +227,28 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             var master = this.PageManager.PagesLifecycle.GetMaster(pageData);
             this.PageManager.PagesLifecycle.Publish(master);
             this.PageManager.SaveChanges();
+        }
+
+        private void DeleteDirectory(string path)
+        {
+            try
+            {
+                Directory.Delete(path, true);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return;
+            }
+            catch (IOException)
+            {
+                Thread.Sleep(50);
+                Directory.Delete(path, true);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Thread.Sleep(50);
+                Directory.Delete(path, true);
+            }
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             var filePath = Path.Combine(this.SfPath, "ResourcePackages", packageName, "MVC", "Views", "Layouts", layoutFileName);
 
             if (filePath == null)
-                throw new ArgumentNullException(filePath);
+                throw new ArgumentException("filePath was not found");
 
             return filePath;
         }
@@ -72,18 +72,18 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         }
 
         /// <summary>
-        /// Gets test UI arrangements assebly.
+        /// Gets Test Utilities Assembly.
         /// </summary>
-        /// <returns>The UI tests arrangements assembly.</returns>
+        /// <returns>The Test Utilities Assembly.</returns>
         public Assembly GetTestUtilitiesAssembly()
         {
-            var uiTestsArrangementsAssembly = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name.Equals("Telerik.Sitefinity.Frontend.TestUtilities")).FirstOrDefault();
-            if (uiTestsArrangementsAssembly == null)
+            var testUtilitiesAssembly = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name.Equals("Telerik.Sitefinity.Frontend.TestUtilities")).FirstOrDefault();
+            if (testUtilitiesAssembly == null)
             {
                 throw new DllNotFoundException("Assembly wasn't found");
             }
 
-            return uiTestsArrangementsAssembly;
+            return testUtilitiesAssembly;
         }
 
         /// <summary>
@@ -155,6 +155,19 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 
                 Thread.Sleep(TimeSpan.FromMilliseconds(100));
             }
+        }
+
+        /// <summary>
+        /// Edit a layout file content
+        /// </summary>
+        /// <param name="layoutFile">The layout file path.</param>
+        /// <param name="textToReplace">The text you want to replace.</param>
+        /// <param name="newText">The new text you want to add.</param>
+        public void EditLayoutFile(string layoutFile, string textToReplace, string newText)
+        {
+            string text = File.ReadAllText(layoutFile);
+            text = text.Replace(textToReplace, newText);
+            File.WriteAllText(layoutFile, text);
         }
 
         /// <summary>
