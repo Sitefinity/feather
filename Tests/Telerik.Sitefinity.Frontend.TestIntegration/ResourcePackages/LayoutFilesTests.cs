@@ -139,7 +139,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
             finally
             {
-                string[] templates = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3, Constants.TemplateTestLayout1Renamed };
+                string[] templates = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3 };
 
                 ServerOperations.Pages().DeletePage(Constants.PageTitle);
 
@@ -192,7 +192,89 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
             finally
             {
-                string[] templates = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3, Constants.TemplateTestLayout1Renamed };
+                string[] templates = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3 };
+
+                ServerOperations.Pages().DeletePage(Constants.PageTitle);
+
+                foreach (var template in templates)
+                {
+                    ServerOperations.Templates().DeletePageTemplate(template);
+                }
+
+                string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.TestPackageName);
+                this.DeleteDirectory(path);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.LayoutFiles)]
+        [Author("Petya Rachina")]
+        [Description("Adds a resource package with layout files, deletes a page template based on the layout file and verifies the layout file still exists and no new template is generated.")]
+        public void ResourcePackageLayoutFiles_DeleteTemplateBasedOnLayoutFile_VerifyLayoutFileExistsAndNoTemplateGenerated()
+        {
+            int templatesCount = this.PageManager.GetTemplates().Count();
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageResource);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 3);
+
+                ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout1);
+
+                string layoutFile = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(Constants.TestPackageName, Constants.TestLayoutFileName);
+                Assert.IsNotNull(layoutFile, "The layout file was not found after the template was deleted.");
+
+                int newCount = this.PageManager.GetTemplates().Count();
+                Assert.AreEqual(templatesCount + 2, newCount);               
+            }
+            finally
+            {
+                ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout2);
+                ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout3);
+
+                string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.TestPackageName);
+                this.DeleteDirectory(path);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.LayoutFiles)]
+        [Author("Petya Rachina")]
+        [Description("Adds a resource package with layout files, renames a page template based on one of the layout file and verifies the template and page based on it.")]
+        public void ResourcePackageLayoutFiles_RenameTemplateBasedOnLayoutFile_VerifyTemplateAndPage()
+        {
+            int templatesCount = this.PageManager.GetTemplates().Count();
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageResource);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 3);
+
+                var template = this.PageManager.GetTemplates().Where(t => t.Title == Constants.TemplateTestLayout1).FirstOrDefault();
+
+                if (template == null)
+                    throw new ArgumentException("template not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, Constants.PageTitle, Constants.PageUrl);
+
+                var page = this.PageManager.GetPageNode(pageId);
+                var pageUrl = page.GetFullUrl();
+                pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
+
+                var pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
+                Assert.IsTrue(pageContent.Contains(Constants.TestLayout1TemplateText), "Layout template text was not found in the page content");
+
+                template.Title = Constants.TemplateRenamed;
+
+                this.PublishPage(page);
+                pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
+
+                Assert.IsFalse(pageContent.Contains(Constants.ServerErrorMessage), "Page throws a server error message");
+                Assert.IsFalse(pageContent.Contains(Constants.TestLayout1TemplateText), "Layout template text was found in the page content");
+            }
+            finally
+            {
+                string[] templates = new string[] { Constants.TemplateRenamed, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3 };
 
                 ServerOperations.Pages().DeletePage(Constants.PageTitle);
 

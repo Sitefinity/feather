@@ -19,6 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         public const string NewTestLayoutFileName = "New Test Layout 1.cshtml";
         public const string TemplateTitle = "Foundation.TestLayout";
         public const string TemplateTestLayout1 = "TestPackage.Test Layout 1";
+        public const string TemplateRenamed = "TemplateRenamed";
         public const string TemplateTestLayout2 = "TestPackage.Test Layout 2";
         public const string TemplateTestLayout3 = "TestPackage.Test Layout 3";
         public const string NewTemplateTestLayout1 = "NewTestPackage.Test Layout 1";
