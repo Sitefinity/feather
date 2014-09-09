@@ -79,6 +79,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         protected virtual void FileChanged(string filePath, FileChangeType changeType, string oldFilePath = "")
         {
             var virtualFilePath = this.ConvertToVirtualPath(filePath);
+            var oldFileVirtualPath = this.ConvertToVirtualPath(oldFilePath);
 
             var watchedDirInfo = this.WatchedFoldersAndPackages.FirstOrDefault(dirInfo => virtualFilePath.StartsWith(dirInfo.Path, StringComparison.Ordinal));
 
@@ -102,9 +103,9 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
             SystemManager.RunWithElevatedPrivilegeDelegate elevDelegate = this.GetFileChangedDelegate(new FileChangedDelegateArguments()
             {
-                FilePath = filePath,
+                FilePath = virtualFilePath,
                 ChangeType = changeType,
-                OldFilePath = oldFilePath, 
+                OldFilePath = oldFileVirtualPath, 
                 PackageName = packageName,
                 ResourceFolder = resourceFolder,
                 FileName = fileName
@@ -275,7 +276,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var appPhysicalPath = this.GetApplicationPhysicalPath();
 
             // converting the file path to a virtual file path
-            if (appPhysicalPath != null)
+            if (!appPhysicalPath.IsNullOrEmpty() && !path.IsNullOrEmpty())
                 path = path.Substring(appPhysicalPath.Length - 1);
 
             var virtualFilePath = path.Replace('\\', '/').Insert(0, "~");
@@ -461,8 +462,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                         case FileChangeType.Renamed:
                             {
-                                var oldVirtualFilePath = args.OldFilePath.Substring(this.GetApplicationPhysicalPath().Length - 1).Replace('\\', '/');
-                                var oldFileName = VirtualPathUtility.GetFileName(oldVirtualFilePath);
+                                var oldFileName = VirtualPathUtility.GetFileName(args.OldFilePath);
                                 resourceFilesManager.FileRenamed(args.FileName, oldFileName, args.FilePath, args.OldFilePath, args.PackageName);
                                 break;
                             }

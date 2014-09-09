@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
@@ -141,7 +142,9 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="fileData">The file data.</param>
         private void CreateTemplateAndFileData(string fileName, string filePath, string packageName, FileMonitorDataManager fileMonitorDataManager, FileData fileData)
         {
-            if (!this.IsFileInValidFolder(filePath, packageName))
+            var absolutePath = HostingEnvironment.MapPath(filePath);
+
+            if (!this.IsFileInValidFolder(absolutePath, packageName))
                 return;
 
             var extension = fileName.Split('.').LastOrDefault();
