@@ -137,7 +137,9 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         {
                             string resourceFolder = resourceDirectoryTree[resourceDirectoryTree.Length - 2];
                             IFileManager resourceFilesManager = this.GetResourceFileManager(resourceFolder);
-                            resourceFilesManager.FileDeleted(filePath);
+                            
+                            if(resourceFilesManager != null)
+                                resourceFilesManager.FileDeleted(filePath);
                         }
                     }
                 }
@@ -276,7 +278,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
             // converting the file path to a virtual file path
             if (appPhysicalPath != null)
-                path = path.Substring(appPhysicalPath.Length - 1);
+                path = path.Substring(appPhysicalPath.Length);
 
             var virtualFilePath = path.Replace('\\', '/').Insert(0, "~");
 
