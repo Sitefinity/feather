@@ -389,10 +389,9 @@
     <EmbeddedResource Include="Selectors\content-selector.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\content-selector-new.js" />
     <EmbeddedResource Include="Selectors\flat-selector.html" />
-    <EmbeddedResource Include="Selectors\flat-taxon-selector-new.js" />
-    <EmbeddedResource Include="Selectors\flat-taxon-selector.html" />
+    <EmbeddedResource Include="Selectors\taxon-selector.js" />
+    <EmbeddedResource Include="Selectors\taxon-selector.html" />
     <EmbeddedResource Include="Services\flat-taxon-service.js" />
   </ItemGroup>
   <ItemGroup>
