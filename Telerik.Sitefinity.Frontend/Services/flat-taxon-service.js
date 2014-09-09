@@ -3,7 +3,7 @@
         .factory('flatTaxonService', ['$resource', function ($resource) {
             /* Private methods and variables */
             var getResource = function (taxonomyId, taxonId) {
-                var url = 'Sitefinity/Services/Taxonomies/FlatTaxon.svc/';
+                var url = sitefinity.services.getFlatTaxonServiceUrl();
                 if (taxonomyId && taxonomyId !== "") {
                     url = url + taxonomyId + '/';
 
@@ -11,7 +11,7 @@
                         url = url + taxonId + '/';
                     }
                 }
-                return $resource(sitefinity.getRootedUrl(url));
+                return $resource(url);
             };
 
             var dataItemPromise;
@@ -24,6 +24,7 @@
                 dataItemPromise = getResource(taxonomyId).get(
                     {
                         provider: provider,
+                        sortExpression: 'Title ASC',
                         skip: skip,
                         take: take,
                         filter: generatedFilter

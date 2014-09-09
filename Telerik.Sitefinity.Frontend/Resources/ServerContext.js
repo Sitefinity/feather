@@ -9,7 +9,9 @@
     var services = {
         contentItemServiceUrl: applicationPath + 'Sitefinity/Services/Content/ContentItemService.svc/',
         userServiceUrl: applicationPath + 'Sitefinity/Services/Security/Users.svc/',
-        providerServiceUrl: applicationPath + 'Sitefinity/Services/DataSourceService/'
+        providerServiceUrl: applicationPath + 'Sitefinity/Services/DataSourceService/',
+        genericDataServiceUrl: applicationPath + 'restapi/sitefinity/generic-data/',
+        flatTaxonServiceUrl: applicationPath + 'Sitefinity/Services/Taxonomies/FlatTaxon.svc/'
     };
 
     sitefinity.services = {
@@ -23,6 +25,14 @@
 
         getProviderServiceUrl: function () {
             return services.providerServiceUrl;
+        },
+
+        getGenericDataServiceUrl: function () {
+            return services.genericDataServiceUrl;
+        },
+
+        getFlatTaxonServiceUrl: function () {
+            return services.flatTaxonServiceUrl;
         }
     };
 

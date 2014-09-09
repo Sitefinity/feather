@@ -177,7 +177,7 @@
                         };
 
                         scope.isItemSelected = function () {
-                            if (scope.selectedItemId && scope.selectedItemId != '00000000-0000-0000-0000-000000000000') {
+                            if (scope.selectedItemId && scope.selectedItemId !== '00000000-0000-0000-0000-000000000000') {
                                 return true;
                             }
                             else {
@@ -203,16 +203,6 @@
                                 }
                             }
                         });
-
-                        //var templateUrl = scope.getTemplate();
-                        //if (templateUrl) {
-                        //    $http.get(templateUrl, { cache: $templateCache })
-                        //        .then(function (response) {
-                        //            element.html(response.data);
-                        //            element.children().data('$ngControllerController', ctrl);
-                        //            $compile(element.contents())(scope);
-                        //        });
-                        //}
                     }
                 }
             };

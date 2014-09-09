@@ -3,7 +3,8 @@
         .factory('genericDataService', ['$resource', function ($resource) {
             /* Private methods and variables */
             var getResource = function () {
-                return $resource(sitefinity.getRootedUrl('restapi/sitefinity/generic-data/:items'));
+                var url = sitefinity.services.getGenericDataServiceUrl() + ':items';
+                return $resource(url);
             };
 
             var DataItem = getResource();
