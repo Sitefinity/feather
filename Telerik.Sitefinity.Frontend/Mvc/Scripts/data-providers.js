@@ -78,19 +78,7 @@
     dataProvidersModule.directive('providerSelector', ['providerService', function (providerService) {
         return {
             restrict: 'E',
-            template: '<div style="margin-top: 0" class="dropdown s-bg-source-wrp" ng-show="isProviderSelectorVisible" is-open="isOpen">' +
-                          '<a class="btn btn-default dropdown-toggle" >' +
-                            '{{selectedProvider.Title}} <span class="caret"></span>' +
-                          '</a>' +
-                          '<ul class="dropdown-menu" >' +
-                              '<li>' +
-                                '<a href="" style="color: #ccc; background: #fff; cursor: default;">{{providerLabel}}</a>' +
-                              '</li>' +
-                              '<li ng-repeat="provider in providers">' +
-                                '<a href="" ng-click="selectProvider(provider);">{{provider.Title}}</a>' +
-                              '</li>' +
-                          '</ul>' +
-                      '</div>',
+            templateUrl: sitefinity.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'Mvc/Scripts/Templates/provider-selector.html'),
             require: 'ngModel',
             replace: true,
             link: function (scope, tElement, tAttrs, ngModelCtrl) {

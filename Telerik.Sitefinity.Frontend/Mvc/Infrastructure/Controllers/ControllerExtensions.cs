@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -105,6 +106,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         public static IEnumerable<string> GetPartialViewLocations(this Controller controller)
         {
             return ControllerExtensions.GetControllerViewEngineLocations(controller, v => v.PartialViewLocationFormats);
+        }
+
+        /// <summary>
+        /// Gets the URL of the current page.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <returns>URL of the currents page without a trailing slash.</returns>
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "controller")]
+        [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
+        public static string GetCurrentPageUrl(this IController controller)
+        {
+            var currentSiteMap = (SiteMapBase)SitefinitySiteMap.GetCurrentProvider();
+            var currentNode = currentSiteMap.CurrentNode;
+            var url = string.Empty;
+
+            if (currentNode != null)
+            {
+                url = UrlPath.ResolveUrl(currentNode.Url, absolute: false, removeTrailingSlash: true);
+            }
+
+            return url;
         }
 
         #endregion
