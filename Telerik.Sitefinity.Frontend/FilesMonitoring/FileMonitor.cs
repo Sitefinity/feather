@@ -278,9 +278,9 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
             // converting the file path to a virtual file path
             if (appPhysicalPath != null)
-                path = path.Substring(appPhysicalPath.Length);
+                path = new Uri(path).Segments.Last();
 
-            var virtualFilePath = path.Replace('\\', '/').Insert(0, "~");
+            var virtualFilePath = path.Insert(0, "~/");
 
             return virtualFilePath;
         }
