@@ -38,6 +38,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             var fileMonitor = new DummyFileMonitor();
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
             var filePath = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
+            var expectedFilePath = "~/ResourcePackages/My package/Mvc/Views/Layouts/test.cshtml";
 
             SystemManager.RunWithHttpContext(
                 this.context, 
@@ -51,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             Assert.AreEqual(1, fileMonitor.ResourceFileManager.DummyFileInfos.Count(), "FileAdded method should be called.");
             Assert.AreEqual(FileChangeType.Created, fileMonitor.ResourceFileManager.DummyFileInfos.First().FileOperation, "FileAdded method is not called.");
             Assert.AreEqual("test.cshtml", fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFileName, "FileAdded is called with wrong file name.");
-            Assert.AreEqual(filePath, fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFilePath, "FileAdded is called with wrong file path.");
+            Assert.AreEqual(expectedFilePath, fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFilePath, "FileAdded is called with wrong file path.");
             Assert.AreEqual("My package", fileMonitor.ResourceFileManager.DummyFileInfos.First().PackageName, "FileAdded is called with wrong package name.");
         }
 
@@ -67,6 +68,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             var fileMonitor = new DummyFileMonitor();
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
             var filePath = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
+            var expectedFilePath = "~/ResourcePackages/My package/Mvc/Views/Layouts/test.cshtml";
 
             SystemManager.RunWithHttpContext(
                 this.context, 
@@ -79,7 +81,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             // Assert
             Assert.AreEqual(1, fileMonitor.ResourceFileManager.DummyFileInfos.Count(), "FileDeleted method should be called.");
             Assert.AreEqual(FileChangeType.Deleted, fileMonitor.ResourceFileManager.DummyFileInfos.First().FileOperation, "FileDeleted method should be called.");
-            Assert.AreEqual(filePath, fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFilePath, "FileDeleted is called with wrong file name.");
+            Assert.AreEqual(expectedFilePath, fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFilePath, "FileDeleted is called with wrong file name.");
         }
 
         /// <summary>
@@ -94,8 +96,10 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             var fileMonitor = new DummyFileMonitor();
             fileMonitor.WatchedFoldersAndPackages.Add(new MonitoredDirectory("~/ResourcePackages/My package/Mvc/Views/Layouts", true));
             var oldFilePath = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\test.cshtml", fileMonitor.AppPhysicalPath);
+            var expectedOldFilePath = "~/ResourcePackages/My package/Mvc/Views/Layouts/test.cshtml";
 
             var newFilePath = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}\\ResourcePackages\\My package\\Mvc\\Views\\Layouts\\renamedTest.cshtml", fileMonitor.AppPhysicalPath);
+            var expectedNewFilePath = "~/ResourcePackages/My package/Mvc/Views/Layouts/renamedTest.cshtml";
 
             SystemManager.RunWithHttpContext(
                 this.context, 
@@ -109,9 +113,9 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.FileMonitoring
             Assert.AreEqual(1, fileMonitor.ResourceFileManager.DummyFileInfos.Count(), "FileRenamed should be invoked.");
             Assert.AreEqual(FileChangeType.Renamed, fileMonitor.ResourceFileManager.DummyFileInfos.First().FileOperation, "FileRenamed should be invoked.");
             Assert.AreEqual("renamedTest.cshtml", fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFileName, "FileRenamed is called with wrong file name.");
-            Assert.AreEqual(newFilePath, fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFilePath, "FileRenamed is called with wrong file path.");
+            Assert.AreEqual(expectedNewFilePath, fileMonitor.ResourceFileManager.DummyFileInfos.First().NewFilePath, "FileRenamed is called with wrong file path.");
             Assert.AreEqual("test.cshtml", fileMonitor.ResourceFileManager.DummyFileInfos.First().OldFileName, "FileRenamed is called with wrong old file name.");
-            Assert.AreEqual(oldFilePath, fileMonitor.ResourceFileManager.DummyFileInfos.First().OldFilePath, "FileRenamed is called with wrong old file path.");
+            Assert.AreEqual(expectedOldFilePath, fileMonitor.ResourceFileManager.DummyFileInfos.First().OldFilePath, "FileRenamed is called with wrong old file path.");
             Assert.AreEqual("My package", fileMonitor.ResourceFileManager.DummyFileInfos.First().PackageName, "FileRenamed is called with wrong package name.");
         }
 

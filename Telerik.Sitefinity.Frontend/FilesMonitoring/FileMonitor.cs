@@ -461,7 +461,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                         case FileChangeType.Renamed:
                             {
-                                var oldFileName = VirtualPathUtility.GetFileName(args.OldFilePath);
+                                var fileNameStartIndex = args.OldFilePath.LastIndexOf("/", StringComparison.OrdinalIgnoreCase) + 1;
+                                var oldFileName = args.OldFilePath.Substring(fileNameStartIndex);
                                 resourceFilesManager.FileRenamed(args.FileName, oldFileName, args.FilePath, args.OldFilePath, args.PackageName);
                                 break;
                             }
