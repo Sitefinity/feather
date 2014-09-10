@@ -124,15 +124,14 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                 // finds all records containing file paths which no longer exists
                 var nonExistingFilesData = fileMonitorDataManager.GetFilesData().Select(fd => fd.FilePath).ToArray()
-                    .Where(f => !File.Exists(f));
+                    .Where(f => !File.Exists(HostingEnvironment.MapPath(f)));
 
                 if (nonExistingFilesData != null && nonExistingFilesData.Any())
                 {
                     // remove all records in the lists
                     foreach (var filePath in nonExistingFilesData)
                     {
-                        var virtualFilePath = this.ConvertToVirtualPath(filePath);
-                        var resourceDirectoryTree = VirtualPathUtility.GetDirectory(virtualFilePath).Split('/');
+                        var resourceDirectoryTree = VirtualPathUtility.GetDirectory(filePath).Split('/');
 
                         if (resourceDirectoryTree.Length >= 2)
                         {
