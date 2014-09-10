@@ -124,7 +124,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                 // finds all records containing file paths which no longer exists
                 var nonExistingFilesData = fileMonitorDataManager.GetFilesData().Select(fd => fd.FilePath).ToArray()
-                    .Where(f => !File.Exists(HostingEnvironment.MapPath(f)));
+                    .Where(f => !File.Exists(f));
 
                 if (nonExistingFilesData != null && nonExistingFilesData.Any())
                 {
