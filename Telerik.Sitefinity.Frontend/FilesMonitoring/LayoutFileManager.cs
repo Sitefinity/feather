@@ -142,7 +142,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="fileData">The file data.</param>
         private void CreateTemplateAndFileData(string fileName, string filePath, string packageName, FileMonitorDataManager fileMonitorDataManager, FileData fileData)
         {
-            var absolutePath = HostingEnvironment.MapPath(filePath);
+            var absolutePath = FrontendManager.VirtualPathBuilder.MapPath(filePath);
 
             if (!this.IsFileInValidFolder(absolutePath, packageName))
                 return;

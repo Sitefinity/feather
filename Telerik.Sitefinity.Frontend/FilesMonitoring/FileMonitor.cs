@@ -193,10 +193,10 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// Maps the virtual path to physical path.
         /// </summary>
         /// <param name="virtualPath">The virtual Path.</param>
-        /// <returns></returns>
+        /// <returns>The physical path on the server specified by virtualPath.</returns>
         protected virtual string MapPath(string virtualPath)
         {
-            return HostingEnvironment.MapPath(virtualPath);
+            return FrontendManager.VirtualPathBuilder.MapPath(virtualPath);
         }
 
         #endregion
