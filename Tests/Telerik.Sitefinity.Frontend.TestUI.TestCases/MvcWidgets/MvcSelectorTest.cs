@@ -14,15 +14,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
     /// This is test class for MVC widget designer test.
     /// </summary>
     [TestClass]
-    public class MvcSelector : FeatherTestCase
+    public class MvcSelectorTest_ : FeatherTestCase
     {
         /// <summary>
         /// UI test MVCWidgetDefaultFeatherDesigner.
         /// </summary>
         [TestMethod,
         Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Feather team"),
-        TestCategory(FeatherTestCategories.PagesAndContent),
-        Ignore]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcSelectorTest()
         {
             BAT.Macros().NavigateTo().Pages();
@@ -35,18 +34,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetCancelButton();
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent();
-            Assert.AreEqual(3, BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ItemsCount());
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(3);
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText("Title1");
 
-            Assert.AreEqual(1, BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ItemsCount());
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(1);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedNewsName1);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(SelectedNewsName1);
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(false);
 
-            Assert.AreEqual(4, BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ItemsCount());
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(4);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(ContentBlockTitle);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(ContentBlockTitle);
@@ -69,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent();
 
-            Assert.AreEqual(3, BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ItemsCount());
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(3);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedNewsName2);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(SelectedNewsName2);
