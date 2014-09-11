@@ -11,7 +11,8 @@
         userServiceUrl: applicationPath + 'Sitefinity/Services/Security/Users.svc/',
         providerServiceUrl: applicationPath + 'Sitefinity/Services/DataSourceService/',
         genericDataServiceUrl: applicationPath + 'restapi/sitefinity/generic-data/',
-        flatTaxonServiceUrl: applicationPath + 'Sitefinity/Services/Taxonomies/FlatTaxon.svc/'
+        flatTaxonServiceUrl: applicationPath + 'Sitefinity/Services/Taxonomies/FlatTaxon.svc/', 
+        taxonomyServiceUrl: applicationPath + 'Sitefinity/Services/Taxonomies/Taxonomy.svc/'
     };
 
     sitefinity.services = {
@@ -33,6 +34,10 @@
 
         getFlatTaxonServiceUrl: function () {
             return services.flatTaxonServiceUrl;
+        },
+
+        getTaxonomyServiceUrl: function () {
+            return services.taxonomyServiceUrl;
         }
     };
 
