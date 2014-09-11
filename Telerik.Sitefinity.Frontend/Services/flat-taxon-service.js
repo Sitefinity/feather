@@ -17,8 +17,9 @@
             var dataItemPromise;
 
             var getTaxons = function (taxonomyId, provider, skip, take, filter) {
+                var generatedFilter;
                 if (filter) {
-                    var generatedFilter = '(Title.ToUpper().Contains("' + filter + '".ToUpper()))';
+                    generatedFilter = '(Title.ToUpper().Contains("' + filter + '".ToUpper()))';
                 }
 
                 dataItemPromise = getResource(taxonomyId).get(
