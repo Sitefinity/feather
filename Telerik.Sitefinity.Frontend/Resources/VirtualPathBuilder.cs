@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Web.Hosting;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -86,6 +87,23 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 virtualPath += string.Format(System.Globalization.CultureInfo.InvariantCulture, "#{0}{1}", pathParams, Path.GetExtension(virtualPath));
 
             return virtualPath;
+        }
+
+        /// <summary>
+        /// Maps virtual path to physical path on the server.
+        /// </summary>
+        /// <param name="virtualPath">The virtual path.</param>
+        /// <returns>The physical path on the server specified by virtualPath.</returns>
+        public virtual string MapPath(string virtualPath)
+        {
+            if (!virtualPath.StartsWith("~/", StringComparison.Ordinal))
+                throw new ArgumentException("virtualPath has to be a virtual path starting \"~/\".");
+
+            var mappedPath = HostingEnvironment.MapPath("~/");
+            if (mappedPath != null)
+                mappedPath = Path.Combine(mappedPath, virtualPath.Substring(2).Replace('/', '\\'));
+
+            return mappedPath;
         }
 
         private const string FrontendAssemblyBasePath = "Frontend-Assembly/{0}/";
