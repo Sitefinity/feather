@@ -36,6 +36,7 @@
                         };
 
                         ctrl.templateUrl = 'Selectors/taxon-selector.html';
+                        ctrl.setPartialTemplate('taxon-selector-template');
                     }
                 }
             };

@@ -1,4 +1,4 @@
-﻿<script type="text/ng-template" id="selector-template">
+﻿<script type="text/ng-template" id="content-selector-template">
     <div class="modal-header">
         <h1 style="background: none; padding-bottom: 0; margin-bottom: 0" class="modal-title">Select content</h1>
     </div>
@@ -9,16 +9,15 @@
                 <span class="input-group-addon">
                     <i class="glyphicon glyphicon-search"></i>
                 </span>
-                <input type="text" ng-model="filter.search" class="form-control" placeholder="Narrow by typing" />
+                <input type="text" ng-model="filter.search" ng-change="reloadItems(filter.search)" class="form-control" placeholder="Narrow by typing" />
             </div>
-            <div class="list-group s-items-list-wrp">
+            <div class="list-group s-items-list-wrp endlessScroll">
                 <a ng-repeat="item in items"
                         ng-class="{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }"
                         ng-click="itemClicked($index, item)">
                     <span ng-bind="item.Title"></span>
                 </a>
             </div>
-            <pagination ng-show="filter.paging.isVisible" items-per-page="filter.paging.itemsPerPage" total-items="filter.paging.totalItems" ng-model="filter.paging.currentPage"></pagination>
             <div ng-hide="items.length">No items found</div>
         </div>
     </div>

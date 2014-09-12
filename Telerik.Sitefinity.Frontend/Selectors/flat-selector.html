@@ -3,14 +3,14 @@
         <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
         <div ng-hide="showError">
             <span class="label label-default" ng-bind="selectedItem.Title"></span>
-            <button class="btn btn-xs btn-default" id="openSelectorBtn" ng-click="open()">
+            <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
                 <span ng-hide="isItemSelected()">Select</span>
                 <span ng-show="isItemSelected()">Change</span>
             </button>
         </div>
     </div>
-    <div class="contentSelector" modal template-url="selector-template" open-button="{{openSelectorButtonId}}" window-class="sf-designer-dlg" existing-scope="true">
-        <div ng-include = "getTemplate()">
+    <div class="contentSelector" modal template-url="{{partialTemplate}}" open-button="{{openSelectorButtonId}}" window-class="sf-designer-dlg" existing-scope="true">
+        <div ng-include="getTemplate()">
 
         </div>
     </div>

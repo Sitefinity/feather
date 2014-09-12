@@ -25,6 +25,7 @@
                         };
 
                         ctrl.templateUrl = 'Selectors/content-selector.html';
+                        ctrl.setPartialTemplate('content-selector-template');
                     }
                 }
             };

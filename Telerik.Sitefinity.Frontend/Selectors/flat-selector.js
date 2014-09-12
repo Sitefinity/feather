@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('flatSelector', function () {
+        .directive('flatSelector', ['$timeout', function ($timeout) {
             return {
                 restrict: "E",
                 transclude: true,
@@ -25,6 +25,10 @@
                     this.updateSelectedItemId = function (selectedItemId) {
                         $scope.selectedItemId = selectedItemId;
                     };
+
+                    this.setPartialTemplate = function (template) {
+                        $scope.partialTemplate = template;
+                    };
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -40,17 +44,45 @@
                         //invoked when the items are loaded
                         var onItemsLoadedSuccess = function (data) {
                             if (data && data.Items) {
-                                scope.items = data.Items;
-                                scope.filter.paging.set_totalItems(data.TotalCount);
+                                //new filter
+                                if (isFilterApplied() && scope.filter.paging.totalItems === 0) {
+                                    scope.items = data.Items;
 
-                                //select current item if it exists
-                                for (var i = 0; i < data.Items.length; i++) {
-                                    var id = data.Items[i].Id;
-                                    if (id === scope.selectedItemId ||
-                                        (scope.selectedItem && id === scope.selectedItem.Id)) {
-                                        scope.selectedItemInTheDialog = data.Items[i];
+                                    for (var i = 0; i < data.Items.length; i++) {
+                                        var id = data.Items[i].Id;
+                                        if (isCurrentItemSelected(id)) {
+                                            scope.selectedItemInTheDialog = data.Items[i];
+                                        }
                                     }
                                 }
+                                //load more items for already applied filter (endless scroll)
+                                else if (isFilterApplied() && scope.filter.paging.totalItems !== 0) {
+                                    for (i = 0; i < data.Items.length; i++) {
+                                        id = data.Items[i].Id;
+
+                                        if (isCurrentItemSelected(id)) {
+                                            scope.selectedItemInTheDialog = data.Items[i];
+                                        }
+                                        scope.items.push(data.Items[i]);
+                                    }
+                                }
+                                else if (!isFilterApplied()) {
+                                    //add the selected item on the top
+                                    if (scope.items.length === 0 && scope.selectedItem) {
+                                        scope.items.push(scope.selectedItem);
+                                        scope.selectedItemInTheDialog = scope.items[0];
+                                    }
+
+                                    for (i = 0; i < data.Items.length; i++) {
+                                        id = data.Items[i].Id;
+
+                                        if (id !== scope.selectedItemId) {
+                                            scope.items.push(data.Items[i]);
+                                        }
+                                    }
+                                }
+
+                                scope.filter.paging.totalItems += data.Items.length;
                             }
 
                             scope.isListEmpty = scope.items.length === 0 && !scope.filter.search;
@@ -70,10 +102,10 @@
                         // ------------------------------------------------------------------------
 
                         var loadItems = function () {
-                            var skip = scope.filter.paging.get_itemsToSkip();
+                            var skip = scope.filter.paging.totalItems;
                             var take = scope.filter.paging.itemsPerPage;
-                        
-                            return ctrl.getItems(skip, take, scope.filter.search)
+                            var filter = scope.filter.search;
+                            return ctrl.getItems(skip, take, filter)
                                 .then(onItemsLoadedSuccess, onError);
                         };
 
@@ -87,20 +119,38 @@
                             }
                         };
 
-                        var reloadItems = function (newValue, oldValue) {
-                            if (newValue !== oldValue) {
-                                loadItems();
+                        var hideLoadingIndicator = function () {
+                            scope.ShowLoadingIndicator = false;
+                        };
+
+                        var resetItems = function () {
+                            scope.filter.paging.totalItems = 0;
+                            scope.items = [];
+                        };
+
+                        var isFilterApplied = function () {
+                            if (scope.filter.search && scope.filter.search !== '') {
+                                return true;
+                            }
+                            else {
+                                return false;
                             }
                         };
 
-                        var hideLoadingIndicator = function () {
-                            scope.ShowLoadingIndicator = false;
+                        var isCurrentItemSelected = function (id) {
+                            if (id === scope.selectedItemId || (scope.selectedItem && id === scope.selectedItem.Id)) {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
                         };
 
                         // ------------------------------------------------------------------------
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
 
+                        var timeoutPromise = false;
                         var selectorId;
                         if (attrs.id) {
                             selectorId = attrs.id;
@@ -112,7 +162,7 @@
                         }
 
                         // This id is used by the modal dialog to know which button will open him.
-                        scope.openSelectorButtonId = '#' + selectorId + ' #openSelectorBtn';
+                        scope.openSelectorButtonId = '#' + selectorId + ' .openSelectorBtn';
 
                         scope.showError = false;
                         scope.isListEmpty = false;
@@ -121,16 +171,7 @@
                             search: null,
                             paging: {
                                 totalItems: 0,
-                                currentPage: 1,
-                                itemsPerPage: 20,
-                                get_itemsToSkip: function () {
-                                    return (this.currentPage - 1) * this.itemsPerPage;
-                                },
-                                set_totalItems: function (itemsCount) {
-                                    this.totalItems = itemsCount;
-                                    this.isVisible = this.totalItems > this.itemsPerPage;
-                                },
-                                isVisible: false
+                                itemsPerPage: 20
                             }
                         };
 
@@ -144,6 +185,8 @@
                                 scope.selectedItem = scope.selectedItemInTheDialog;
                                 scope.selectedItemId = scope.selectedItemInTheDialog.Id;
                             }
+                            resetItems();
+                            scope.filter.search = null;
 
                             scope.$modalInstance.close();
                         };
@@ -155,16 +198,23 @@
 
                         scope.cancel = function () {
                             try {
+                                resetItems();
+                                scope.filter.search = null;
+
                                 scope.$modalInstance.close();
                             } catch (e) { }
                         };
 
                         scope.open = function () {
-                            ctrl.getItems(scope.filter.paging.get_itemsToSkip(), scope.filter.paging.itemsPerPage, scope.filter.search)
+                            ctrl.getItems(scope.filter.paging.totalItems, scope.filter.paging.itemsPerPage, scope.filter.search)
                             .then(onItemsLoadedSuccess, onError)
                             .then(function () {
-                                scope.$watch('filter.search', reloadItems);
-                                scope.$watch('filter.paging.currentPage', reloadItems);
+                                jQuery(".endlessScroll").scroll(function () {
+                                    var raw = jQuery(".endlessScroll")[0];
+                                    if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+                                        loadItems();
+                                    }
+                                });
                             })
                             .catch(onError)
                             .finally(hideLoadingIndicator);
@@ -174,6 +224,17 @@
                             var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
                             var url = ctrl.templateUrl;
                             return sitefinity.getEmbeddedResourceUrl(assembly, url);
+                        };
+
+                        scope.reloadItems = function (value) {
+                            if (timeoutPromise) {
+                                $timeout.cancel(timeoutPromise);
+                            }
+
+                            timeoutPromise = $timeout(function () {
+                                resetItems();
+                                loadItems();
+                            }, 500);
                         };
 
                         scope.isItemSelected = function () {
@@ -206,5 +267,5 @@
                     }
                 }
             };
-        });
+        }]);
 })(jQuery);
