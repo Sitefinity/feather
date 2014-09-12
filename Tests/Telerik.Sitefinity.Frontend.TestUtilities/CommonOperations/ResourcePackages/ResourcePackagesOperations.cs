@@ -171,6 +171,32 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         }
 
         /// <summary>
+        /// Deletes directory from the file system
+        /// </summary>
+        /// <param name="path">The directory path.</param>
+        public void DeleteDirectory(string path)
+        {
+            try
+            {
+                Directory.Delete(path, true);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return;
+            }
+            catch (IOException)
+            {
+                Thread.Sleep(50);
+                Directory.Delete(path, true);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Thread.Sleep(50);
+                Directory.Delete(path, true);
+            }
+        }
+
+        /// <summary>
         /// Copies file stream to another file stream
         /// </summary>
         /// <param name="input">The input file.</param>

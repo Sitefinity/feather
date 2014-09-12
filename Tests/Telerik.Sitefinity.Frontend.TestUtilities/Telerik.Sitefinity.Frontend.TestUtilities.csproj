@@ -220,6 +220,8 @@
     <EmbeddedResource Include="Data\TestLayout.cshtml" />
     <EmbeddedResource Include="Data\TestPackageNoLayouts.zip" />
     <EmbeddedResource Include="Data\TestPackage.zip" />
+    <EmbeddedResource Include="Data\Package1.zip" />
+    <EmbeddedResource Include="Data\Package2.zip" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>

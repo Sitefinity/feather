@@ -49,12 +49,70 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Telerik.OpenAccess, Version=2012.2.816.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.DataAccess.Core.2014.2.711.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2012.2.816.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.DataAccess.Core.2014.2.711.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.OpenAccess.40.Extensions">
+      <HintPath>..\..\packages\Telerik.DataAccess.Core.2014.2.711.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.OpenAccess.Runtime, Version=2012.2.816.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.DataAccess.Core.2014.2.711.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Model, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Personalization, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Resources">
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Resources.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Search, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Comments, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Documents, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Events, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Notifications, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Statistics, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Sitefinity.TestArrangementService.Core">
       <HintPath>..\..\packages\\Telerik.Sitefinity.TestArrangementService.Core.1.0.1\lib\net40\Telerik.Sitefinity.TestArrangementService.Core.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Telerik.Sitefinity.TestUtilities.7.1.5208\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Utilities, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +122,7 @@
     <Compile Include="Pages\DeletePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcePackages\AddNewLayoutFileToDefaultPackage.cs" />
+    <Compile Include="ResourcePackages\ApplyTwoDifferentTemplatesFromDifferentPackagesToPages.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\DesignerView.Selector.cshtml" />
@@ -95,5 +154,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-	<Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
+  <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
 </Project>
