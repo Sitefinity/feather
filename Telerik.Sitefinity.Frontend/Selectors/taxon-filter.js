@@ -8,18 +8,13 @@
                     selectedTaxonomies: '=',
                     provider: '=?'
                 },
-                controller: function ($scope) {
-                    this.taxonFilters = $scope.taxonFilters;
-                    this.selectedTaxonomies = $scope.selectedTaxonomies;
-                    this.provider = $scope.provider;
-                },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
                     var url = attrs.templateUrl || 'Selectors/taxon-filter.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
-                    post: function (scope, element, attrs, ctrl) {
+                    pre: function (scope, element, attrs, ctrl) {
 
                         scope.toggleTaxonomySelection = function (taxonomyName) {
                             if (!scope.selectedTaxonomies)
