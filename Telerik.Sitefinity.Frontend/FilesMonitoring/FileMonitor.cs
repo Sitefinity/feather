@@ -57,8 +57,16 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         public void Dispose()
         {
-            foreach (var watcher in this.fileWatchers)
-                watcher.Value.Dispose();
+            if (this.fileWatchers != null)
+            {
+                foreach (var watcher in this.fileWatchers)
+                {
+                    if (watcher.Value != null)
+                    {
+                        watcher.Value.Dispose();
+                    }
+                }
+            }
 
             if (this.rootWatcher != null)
                 this.rootWatcher.Dispose();
@@ -79,6 +87,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         protected virtual void FileChanged(string filePath, FileChangeType changeType, string oldFilePath = "")
         {
             var virtualFilePath = this.ConvertToVirtualPath(filePath);
+            var oldFileVirtualPath = this.ConvertToVirtualPath(oldFilePath);
 
             var watchedDirInfo = this.WatchedFoldersAndPackages.FirstOrDefault(dirInfo => virtualFilePath.StartsWith(dirInfo.Path, StringComparison.Ordinal));
 
@@ -102,9 +111,9 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
             SystemManager.RunWithElevatedPrivilegeDelegate elevDelegate = this.GetFileChangedDelegate(new FileChangedDelegateArguments()
             {
-                FilePath = filePath,
+                FilePath = virtualFilePath,
                 ChangeType = changeType,
-                OldFilePath = oldFilePath, 
+                OldFilePath = oldFileVirtualPath, 
                 PackageName = packageName,
                 ResourceFolder = resourceFolder,
                 FileName = fileName
@@ -130,8 +139,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     // remove all records in the lists
                     foreach (var filePath in nonExistingFilesData)
                     {
-                        var virtualFilePath = this.ConvertToVirtualPath(filePath);
-                        var resourceDirectoryTree = VirtualPathUtility.GetDirectory(virtualFilePath).Split('/');
+                        var resourceDirectoryTree = VirtualPathUtility.GetDirectory(filePath).Split('/');
 
                         if (resourceDirectoryTree.Length >= 2)
                         {
@@ -193,10 +201,10 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// Maps the virtual path to physical path.
         /// </summary>
         /// <param name="virtualPath">The virtual Path.</param>
-        /// <returns></returns>
+        /// <returns>The physical path on the server specified by virtualPath.</returns>
         protected virtual string MapPath(string virtualPath)
         {
-            return HostingEnvironment.MapPath(virtualPath);
+            return FrontendManager.VirtualPathBuilder.MapPath(virtualPath);
         }
 
         #endregion
@@ -275,7 +283,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var appPhysicalPath = this.GetApplicationPhysicalPath();
 
             // converting the file path to a virtual file path
-            if (appPhysicalPath != null)
+            if (!appPhysicalPath.IsNullOrEmpty() && !path.IsNullOrEmpty())
                 path = path.Substring(appPhysicalPath.Length - 1);
 
             var virtualFilePath = path.Replace('\\', '/').Insert(0, "~");
@@ -461,8 +469,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                         case FileChangeType.Renamed:
                             {
-                                var oldVirtualFilePath = args.OldFilePath.Substring(this.GetApplicationPhysicalPath().Length - 1).Replace('\\', '/');
-                                var oldFileName = VirtualPathUtility.GetFileName(oldVirtualFilePath);
+                                var fileNameStartIndex = args.OldFilePath.LastIndexOf("/", StringComparison.OrdinalIgnoreCase) + 1;
+                                var oldFileName = args.OldFilePath.Substring(fileNameStartIndex);
                                 resourceFilesManager.FileRenamed(args.FileName, oldFileName, args.FilePath, args.OldFilePath, args.PackageName);
                                 break;
                             }

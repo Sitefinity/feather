@@ -19,11 +19,11 @@
 
                         ctrl.getItems = function (skip, take, search) {
                             return flatTaxonService.getTaxons(taxonomyId, ctrl.provider, skip, take, search);
-                        }
+                        };
 
                         ctrl.getItem = function (id) {
                             return flatTaxonService.getTaxon(taxonomyId, id, ctrl.provider);
-                        }
+                        };
 
                         ctrl.onSelectedItemLoadedSuccess = function (data) {
                             if (!ctrl.selectedItem) {

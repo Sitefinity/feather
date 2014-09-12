@@ -4,13 +4,10 @@ describe('genericDataService', function () {
 
     //Mock sitefinity global variable
     beforeEach(function () {
-        spyOn(sitefinity, 'getRootedUrl').andCallFake(function (path) {
-            if (path.length > 0 && path.charAt(0) === '/') {
-                path = path.substring(1, path.length);
-            }
-
-            return 'http://mysite.com:9999/myapp/' + path;
-        });
+        sitefinity.services.getGenericDataServiceUrl = jasmine.createSpy('getGenericDataServiceUrl')
+            .andCallFake(function () {
+                return 'http://mysite.com:9999/myapp/' + 'restapi/sitefinity/generic-data/';
+            });
     });
 
     var $httpBackend;

@@ -46,7 +46,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             {
                 var packagesManager = new PackageManager();
                 var packageVirtualPath = packagesManager.GetPackageVirtualPath(parts[0]);
-                var packagePath = HostingEnvironment.MapPath(packageVirtualPath);
+                var packagePath = FrontendManager.VirtualPathBuilder.MapPath(packageVirtualPath);
                 if (Directory.Exists(packagePath))
                     templateTitle = string.Join(".", parts, 1, parts.Length - 1);
             }
