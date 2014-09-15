@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.Mvc;
-using System.Web.Routing;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy;
@@ -24,13 +20,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var originalContext = proxyControl.Context.Request.RequestContext ?? proxyControl.Page.GetRequestContext();
 
             var urlController = proxyControl.Controller as IUrlMappingController;
+            IUrlParamsMapper paramsMapper;
             if (urlController != null)
+            {
+                paramsMapper = urlController.UrlParamsMapper;
+            }
+            else
+            {
+                paramsMapper = this.GetDefaultParamsMapper(proxyControl.Controller);
+            }
+
+            if (paramsMapper != null)
             {
                 var requestContext = proxyControl.RequestContext;
                 var originalParams = MvcRequestContextBuilder.GetRouteParams(originalContext);
                 var controllerName = SitefinityViewEngine.GetControllerName(proxyControl.Controller);
                 requestContext.RouteData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] = controllerName;
-                urlController.UrlParamsMapper.ResolveUrlParams(originalParams, requestContext);
+
+                paramsMapper.ResolveUrlParams(originalParams, requestContext);
                 proxyControl.Controller.TempData.Add("IsInPureMode", proxyControl.IsInPureMode);
 
                 if (!proxyControl.ContentTypeName.IsNullOrEmpty())
@@ -40,6 +47,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             {
                 base.InitializeRouteParameters(proxyControl);
             }
+        }
+
+        /// <summary>
+        /// Gets the default parameters mapper.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <returns>The default parameters mapper for the controller.</returns>
+        protected virtual IUrlParamsMapper GetDefaultParamsMapper(ControllerBase controller)
+        {
+            var defaultParamsMapper = new DefaultUrlParamsMapper(controller);
+            IUrlParamsMapper result = defaultParamsMapper;
+
+            IUrlParamsMapper detailsMapper = DetailActionParamsMapper.GetInferredDetailActionParamsMapper(controller);
+            if (detailsMapper != null)
+            {
+                result = detailsMapper;
+
+                while (detailsMapper.Next != null)
+                    detailsMapper = detailsMapper.Next;
+
+                detailsMapper.SetNext(defaultParamsMapper);
+            }
+
+            return result;
         }
 
         /// <summary>

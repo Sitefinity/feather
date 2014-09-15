@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// Initializes a new instance of the <see cref="UrlParamsMapperBase"/> class.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public UrlParamsMapperBase(Controller controller)
+        public UrlParamsMapperBase(ControllerBase controller)
         {
             this.Controller = controller;
         }
@@ -51,7 +51,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <value>
         /// The controller.
         /// </value>
-        protected Controller Controller { get; private set; }
+        protected ControllerBase Controller { get; private set; }
 
         /// <summary>
         /// Creates parameter map in order to map the URL parameters to the provided URL template
