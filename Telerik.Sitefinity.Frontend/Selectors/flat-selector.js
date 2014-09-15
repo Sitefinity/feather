@@ -187,7 +187,12 @@
                         };
 
                         scope.itemClicked = function (index, item) {
-                            scope.selectedItemInTheDialog = item;
+                            if (scope.selectedItemInTheDialog && scope.selectedItemInTheDialog.Id === item.Id) {
+                                scope.selectedItemInTheDialog = null;
+                            }
+                            else {
+                                scope.selectedItemInTheDialog = item;
+                            }
                         };
 
                         scope.selectItem = function () {
@@ -196,6 +201,11 @@
                                 scope.selectedItem = scope.selectedItemInTheDialog;
                                 scope.selectedItemId = scope.selectedItemInTheDialog.Id;
                             }
+                            else {
+                                scope.selectedItem = null;
+                                scope.selectedItemId = null;
+                            }
+
                             resetItems();
                             scope.filter.search = null;
 
