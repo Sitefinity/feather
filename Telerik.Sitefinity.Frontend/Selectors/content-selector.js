@@ -2,7 +2,7 @@
     angular.module('selectors')
         .directive('contentSelector', ['genericDataService', function (genericDataService) {
             return {
-                require: "^flatSelector",
+                require: "^listSelector",
                 restrict: "A",
                 link: {
                     pre: function (scope, element, attrs, ctrl) {

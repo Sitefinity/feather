@@ -5,7 +5,7 @@
             var defaultTaxonomyId = "cb0f3a19-a211-48a7-88ec-77495c0f5374";
 
             return {
-                require: "^flatSelector",
+                require: "^listSelector",
                 restrict: "A",
                 link: {
                     pre: function (scope, element, attrs, ctrl) {

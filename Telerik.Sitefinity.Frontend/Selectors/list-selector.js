@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('flatSelector', ['$timeout', function ($timeout) {
+        .directive('listSelector', ['$timeout', function ($timeout) {
             return {
                 restrict: "E",
                 transclude: true,
@@ -8,7 +8,7 @@
                     selectedItemId: '=?',
                     selectedItem: '=?',
                     provider: '=?',
-                    taxonomyId: '=?', /* flat-selector */
+                    taxonomyId: '=?', /* taxon-selector */
                     itemType: '@?' /* content-selector */
                 },
                 controller: function ($scope) {
@@ -32,7 +32,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/flat-selector.html';
+                    var url = attrs.templateUrl || 'Selectors/list-selector.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
