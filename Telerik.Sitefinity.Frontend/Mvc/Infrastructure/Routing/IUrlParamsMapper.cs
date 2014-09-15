@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
@@ -6,7 +7,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// Classes that implement this interface should provide responsibility chain logic for mapping URL parameters to route data.
     /// </summary>
-    public interface IUrlParamsMapper
+    internal interface IUrlParamsMapper
     {
         /// <summary>
         /// Gets the next URL parameter mapper.
@@ -29,5 +30,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="urlParams">The URL parameters.</param>
         /// <param name="requestContext">The request context.</param>
         void ResolveUrlParams(string[] urlParams, RequestContext requestContext);
+    }
+
+    internal static class UrlParamsMapperExtensions
+    {
+        public static IUrlParamsMapper SetLast(this IUrlParamsMapper first, IUrlParamsMapper last)
+        {
+            if (first == null)
+                return last;
+
+            if (last == null)
+                return first;
+
+            var current = first;
+            while (current.Next != null)
+                current = current.Next;
+
+            current.SetNext(last);
+
+            return first;
+        }
     }
 }

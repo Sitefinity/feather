@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Telerik.Sitefinity.ContentLocations;
@@ -22,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// Instances of this class resolve specific content item by the URL.
     /// </summary>
-    public class DetailActionParamsMapper : UrlParamsMapperBase
+    internal class DetailActionParamsMapper : UrlParamsMapperBase
     {
         /// <summary>
         /// Gets an instance of <see cref="DetailActionParamsMapper"/> that is inferred by convention.
@@ -52,26 +53,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                         contentType = contentParam.ParameterType;
                     }
 
-                    var mappedManager = ManagerBase.GetMappedManager(contentType);
-                    if (mappedManager != null)
+                    if (contentType != null)
                     {
-                        var providerNames = mappedManager.Providers.Select(p => p.Name);
-                        if (contentType != null)
+                        var providerNames = DetailActionParamsMapper.GetProviderNames(controller, contentType);
+                        foreach (var provider in providerNames)
                         {
-                            IUrlParamsMapper last = null;
-                            foreach (var provider in providerNames)
-                            {
-                                var providerName = provider;
-                                var current = new DetailActionParamsMapper(controller, contentType, () => providerName);
-
-                                if (last != null)
-                                    last.SetNext(current);
-
-                                last = current;
-
-                                if (result == null)
-                                    result = last;
-                            }
+                            var providerName = provider;
+                            result = result.SetLast(new DetailActionParamsMapper(controller, contentType, () => providerName));
                         }
                     }
                 }
@@ -247,6 +235,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return dynamicContentType;
         }
 
+        private static IEnumerable<string> GetProviderNames(ControllerBase controller, Type contentType)
+        {
+            var providerNameProperty = controller.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "ProviderName" && p.PropertyType == typeof(string));
+
+            if (providerNameProperty != null)
+            {
+                return new string[1] { providerNameProperty.GetValue(controller, null).ToString() };
+            }
+            else
+            {
+                var mappedManager = ManagerBase.GetMappedManager(contentType);
+                if (mappedManager != null)
+                {
+                    return mappedManager.Providers.Select(p => p.Name);
+                }
+                else
+                {
+                    return new string[0];
+                }
+            }
+        }
+
         /// <summary>
         /// This method returns the requested item status based on content location url parameters.
         /// </summary>
@@ -298,7 +308,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// </summary>
     /// <typeparam name="TContent">The type of the content that should be resolved.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "It's the same class. This one is generic for convenience.")]
-    public class DetailActionParamsMapper<TContent> : DetailActionParamsMapper
+    internal class DetailActionParamsMapper<TContent> : DetailActionParamsMapper
         where TContent : class, IDataItem
     {
         /// <summary>

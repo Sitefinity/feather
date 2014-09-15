@@ -12,7 +12,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// A base URL params mapper that provides responsibility chain logic.
     /// </summary>
-    public abstract class UrlParamsMapperBase : IUrlParamsMapper
+    internal abstract class UrlParamsMapperBase : IUrlParamsMapper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UrlParamsMapperBase"/> class.

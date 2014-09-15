@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// Instances of this class call the default Sitefinity logic for mapping URL parameters to route data.
     /// </summary>
-    public class DefaultUrlParamsMapper : UrlParamsMapperBase
+    internal class DefaultUrlParamsMapper : UrlParamsMapperBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultUrlParamsMapper"/> class.

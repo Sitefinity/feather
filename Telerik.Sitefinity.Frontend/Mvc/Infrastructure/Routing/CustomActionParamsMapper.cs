@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
@@ -12,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// Instances of this class map URL parameters to Route Data following a provided route template and action name.
     /// </summary>
-    public class CustomActionParamsMapper : UrlParamsMapperBase
+    internal class CustomActionParamsMapper : UrlParamsMapperBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomActionParamsMapper"/> class.
@@ -21,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="routeTemplateResolver">This function should return the route template that the mapper will use.</param>
         /// <param name="actionName">Name of the action.</param>
         /// <exception cref="System.ArgumentNullException">routeTemplateResolver</exception>
-        public CustomActionParamsMapper(Controller controller, Func<string> routeTemplateResolver, string actionName = CustomActionParamsMapper.DefaultActionName)
+        public CustomActionParamsMapper(ControllerBase controller, Func<string> routeTemplateResolver, string actionName = CustomActionParamsMapper.DefaultActionName)
             : base(controller)
         {
             if (routeTemplateResolver == null)
