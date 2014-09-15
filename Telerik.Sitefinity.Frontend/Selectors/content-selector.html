@@ -12,13 +12,21 @@
                 <input type="text" ng-model="filter.search" ng-change="reloadItems(filter.search)" class="form-control" placeholder="Narrow by typing" />
             </div>
             <div class="list-group s-items-list-wrp endlessScroll">
-                <a ng-repeat="item in items"
-                        ng-class="{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }"
-                        ng-click="itemClicked($index, item)">
-                    <span ng-bind="item.Title"></span>
-                </a>
+                <ul>
+                    <li ng-repeat="item in items"
+                            ng-class="{'list-group-item':true, 'hover': item.Id==selectedItemInTheDialog.Id }"
+                            ng-click="itemClicked($index, item)">
+                        <span ng-bind="item.Title"></span>
+                        <a class="sfExternal" target="_blank" href="{{item.PreviewUrl}}">
+	                        <span>View</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div ng-hide="hideEndlessScrollLoadingIndicator" class="s-loading m-bottom-sm"></div>
+                    </li>
+                </ul>
             </div>
-            <div ng-hide="items.length">No items found</div>
+            <div ng-hide="items.length || showLoadingIndicator">No items found</div>
         </div>
     </div>
     <div class="modal-footer">

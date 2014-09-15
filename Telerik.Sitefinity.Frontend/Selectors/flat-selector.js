@@ -43,6 +43,10 @@
 
                         //invoked when the items are loaded
                         var onItemsLoadedSuccess = function (data) {
+                            if (data.Items.length < scope.filter.paging.itemsPerPage) {
+                                scope.hideEndlessScrollLoadingIndicator = true;
+                            }
+
                             if (data && data.Items) {
                                 //new filter
                                 if (isFilterApplied() && scope.filter.paging.totalItems === 0) {
@@ -102,11 +106,13 @@
                         // ------------------------------------------------------------------------
 
                         var loadItems = function () {
+                            showLoadingIndicator();
                             var skip = scope.filter.paging.totalItems;
                             var take = scope.filter.paging.itemsPerPage;
                             var filter = scope.filter.search;
                             return ctrl.getItems(skip, take, filter)
-                                .then(onItemsLoadedSuccess, onError);
+                                .then(onItemsLoadedSuccess, onError)
+                                .finally(hideLoadingIndicator);
                         };
 
                         var getSelectedItem = function (scope) {
@@ -119,12 +125,17 @@
                             }
                         };
 
+                        var showLoadingIndicator = function () {
+                            scope.showLoadingIndicator = true;
+                        };
+
                         var hideLoadingIndicator = function () {
-                            scope.ShowLoadingIndicator = false;
+                            scope.showLoadingIndicator = false;
                         };
 
                         var resetItems = function () {
                             scope.filter.paging.totalItems = 0;
+                            scope.hideEndlessScrollLoadingIndicator = false;
                             scope.items = [];
                         };
 
@@ -206,6 +217,7 @@
                         };
 
                         scope.open = function () {
+                            showLoadingIndicator();
                             ctrl.getItems(scope.filter.paging.totalItems, scope.filter.paging.itemsPerPage, scope.filter.search)
                             .then(onItemsLoadedSuccess, onError)
                             .then(function () {
@@ -247,6 +259,8 @@
                         };
 
                         scope.showLoadingIndicator = true;
+
+                        scope.hideEndlessScrollLoadingIndicator = false;
 
                         getSelectedItem(scope);
 
