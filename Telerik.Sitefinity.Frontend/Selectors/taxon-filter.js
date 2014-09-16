@@ -42,7 +42,7 @@
                             scope.allTaxonomies = data.Items;
                         };
 
-                        taxonomyService.getTaxonomies(scope.provider, null, null, null, 'FlatTaxonomy')
+                        taxonomyService.getTaxonomies(null, null, null, 'FlatTaxonomy')
                             .then(onGetTaxonomiesSuccess);
                     }
                 }

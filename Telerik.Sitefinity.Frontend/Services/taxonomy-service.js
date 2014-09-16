@@ -10,7 +10,7 @@
 
             var dataItemPromise;
 
-            var getTaxonomies = function (provider, skip, take, filter, taxonomyType) {
+            var getTaxonomies = function (skip, take, filter, taxonomyType) {
                 var generatedFilter;
 
                 if (filter) {
@@ -19,7 +19,6 @@
 
                 dataItemPromise = getResource().get(
                     {
-                        provider: provider,
                         sortExpression: 'Title ASC',
                         skip: skip,
                         take: take,

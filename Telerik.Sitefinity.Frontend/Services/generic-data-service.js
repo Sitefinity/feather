@@ -1,10 +1,21 @@
 ﻿(function () {
     angular.module('services')
-        .factory('genericDataService', ['$resource', function ($resource) {
+        .factory('genericDataService', ['$resource', 'widgetContext', function ($resource, widgetContext) {
             /* Private methods and variables */
             var getResource = function () {
                 var url = sitefinity.services.getGenericDataServiceUrl() + ':items';
-                return $resource(url);
+                if (widgetContext.culture) {
+                    var headerData = {
+                        'SF_UI_CULTURE': widgetContext.culture
+                    };
+                }
+
+                return $resource(url, {}, {
+                    get: {
+                        method: 'GET',
+                        headers: headerData
+                    }
+                });
             };
 
             var DataItem = getResource();

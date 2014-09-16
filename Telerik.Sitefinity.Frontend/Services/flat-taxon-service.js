@@ -1,6 +1,6 @@
 ﻿(function () {
     angular.module('services')
-        .factory('flatTaxonService', ['$resource', function ($resource) {
+        .factory('flatTaxonService', ['$resource', 'widgetContext', function ($resource, widgetContext) {
             /* Private methods and variables */
             var getResource = function (taxonomyId, taxonId) {
                 var url = sitefinity.services.getFlatTaxonServiceUrl();
@@ -11,12 +11,24 @@
                         url = url + taxonId + '/';
                     }
                 }
-                return $resource(url);
+
+                if (widgetContext.culture) {
+                    var headerData = {
+                        'SF_UI_CULTURE': widgetContext.culture
+                    };
+                }
+
+                return $resource(url, {}, {
+                    get: {
+                        method: 'GET',
+                        headers: headerData
+                    }
+                });
             };
 
             var dataItemPromise;
 
-            var getTaxons = function (taxonomyId, provider, skip, take, filter) {
+            var getTaxons = function (taxonomyId, skip, take, filter) {
                 var generatedFilter;
                 if (filter) {
                     generatedFilter = '(Title.ToUpper().Contains("' + filter + '".ToUpper()))';
@@ -24,7 +36,6 @@
 
                 dataItemPromise = getResource(taxonomyId).get(
                     {
-                        provider: provider,
                         sortExpression: 'Title ASC',
                         skip: skip,
                         take: take,
@@ -35,11 +46,8 @@
                 return dataItemPromise;
             };
 
-            var getTaxon = function (taxonomyId, taxonId, provider) {
-                dataItemPromise = getResource(taxonomyId, taxonId).get(
-                    {
-                        provider: provider
-                    })
+            var getTaxon = function (taxonomyId, taxonId) {
+                dataItemPromise = getResource(taxonomyId, taxonId).get()
                     .$promise;
 
                 return dataItemPromise;

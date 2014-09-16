@@ -7,19 +7,23 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search) {
-                            return genericDataService.getItems(ctrl.itemType, ctrl.provider, skip, take, search);
+                            var itemType = ctrl.getItemType();
+                            var provider = ctrl.getProvider();
+                            return genericDataService.getItems(itemType, provider, skip, take, search);
                         };
 
                         ctrl.getItem = function (id) {
-                            return genericDataService.getItem(id, ctrl.itemType, ctrl.provider);
+                            var itemType = ctrl.getItemType();
+                            var provider = ctrl.getProvider();
+                            return genericDataService.getItem(id, itemType, provider);
                         };
 
                         ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            if (!ctrl.selectedItem) {
+                            if (!ctrl.getSelectedItem()) {
                                 ctrl.updateSelectedItem(data.Items[0]);
                             }
 
-                            if (!ctrl.selectedItemId) {
+                            if (!ctrl.getDelectedItemId()) {
                                 ctrl.updateSelectedItemId(data.Items[0].Id);
                             }
                         };

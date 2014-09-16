@@ -7,16 +7,30 @@
                 scope: {
                     selectedItemId: '=?',
                     selectedItem: '=?',
-                    provider: '=?',
-                    taxonomyId: '=?', /* taxon-selector */
-                    itemType: '@?' /* content-selector */
+                    provider: '=?', /* content-selector */
+                    itemType: '@?', /* content-selector */
+                    taxonomyId: '=?' /* taxon-selector */
                 },
                 controller: function ($scope) {
-                    this.selectedItemId = $scope.selectedItemId;
-                    this.selectedItem = $scope.selectedItem;
-                    this.taxonomyId = $scope.taxonomyId;
-                    this.provider = $scope.provider;
-                    this.itemType = $scope.itemType;
+                    this.getSelelectedItemId = function () {
+                        return $scope.selectedItemId;
+                    };
+
+                    this.getSelectedItem = function () {
+                        return $scope.selectedItem;
+                    };
+
+                    this.getTaxonomyId = function () {
+                        return $scope.taxonomyId;
+                    };
+
+                    this.getProvider = function () {
+                        return $scope.provider;
+                    };
+
+                    this.getItemType = function () {
+                        return $scope.itemType;
+                    };
 
                     this.updateSelectedItem = function (selectedItem) {
                         $scope.selectedItem = selectedItem;
