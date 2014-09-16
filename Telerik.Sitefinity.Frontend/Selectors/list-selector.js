@@ -120,13 +120,11 @@
                         // ------------------------------------------------------------------------
 
                         var loadItems = function () {
-                            showLoadingIndicator();
                             var skip = scope.filter.paging.totalItems;
                             var take = scope.filter.paging.itemsPerPage;
                             var filter = scope.filter.search;
                             return ctrl.getItems(skip, take, filter)
-                                .then(onItemsLoadedSuccess, onError)
-                                .finally(hideLoadingIndicator);
+                                .then(onItemsLoadedSuccess, onError);
                         };
 
                         var getSelectedItem = function (scope) {
@@ -134,8 +132,7 @@
 
                             if (id && id !== '00000000-0000-0000-0000-000000000000') {
                                 ctrl.getItem(id)
-                                    .then(ctrl.onSelectedItemLoadedSuccess)
-                                    .finally(hideLoadingIndicator);
+                                    .then(ctrl.onSelectedItemLoadedSuccess);
                             }
                         };
 

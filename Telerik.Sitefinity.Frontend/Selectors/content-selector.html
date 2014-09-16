@@ -12,21 +12,18 @@
                 <input type="text" ng-model="filter.search" ng-change="reloadItems(filter.search)" class="form-control" placeholder="Narrow by typing" />
             </div>
             <div class="list-group s-items-list-wrp endlessScroll">
-                <ul>
-                    <li ng-repeat="item in items"
-                            ng-class="{'list-group-item':true, 'hover': item.Id==selectedItemInTheDialog.Id }"
-                            ng-click="itemClicked($index, item)">
-                        <span ng-bind="item.Title"></span>
-                        <a class="sfExternal" target="_blank" href="{{item.PreviewUrl}}">
-	                        <span>View</span>
-                        </a>
-                    </li>
-                    <li>
-                        <div ng-hide="hideEndlessScrollLoadingIndicator" class="s-loading m-bottom-sm"></div>
-                    </li>
-                </ul>
+                <a ng-repeat="item in items"
+                        ng-class="{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }"
+                        ng-click="itemClicked($index, item)"
+                        style="text-overflow: ellipsis; overflow: hidden;">
+                    <span ng-bind="item.Title"></span>
+                </a>
+                <div ng-hide="hideEndlessScrollLoadingIndicator || showLoadingIndicator" class="list-group-item text-center">
+                    <span class="s-loading" style="display: inline-block; width: 30px;"></span>
+                </div>
             </div>
             <div ng-hide="items.length || showLoadingIndicator">No items found</div>
+            <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
         </div>
     </div>
     <div class="modal-footer">
