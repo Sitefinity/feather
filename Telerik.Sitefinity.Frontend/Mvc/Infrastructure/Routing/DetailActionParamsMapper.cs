@@ -60,7 +60,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 throw new ArgumentException("The controller {0} does not have action '{1}'.".Arrange(controller.GetType().Name, actionName));
 
             this.ItemType = itemType;
-            this.Manager = this.ResolveManager();
         }
 
         /// <inheritdoc />
@@ -117,7 +116,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
         protected virtual IDataItem GetItemByUrl(string url, out string redirectUrl)
         {
-            if (this.Manager == null)
+            var manager = this.ResolveManager();
+            if (manager == null)
             {
                 redirectUrl = null;
                 return null;
@@ -130,27 +130,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 if (Guid.TryParse(itemIdFromQueryParam, out itemIdGuid))
                 {
                     redirectUrl = null;
-                    return this.Manager.GetItem(this.ItemType, itemIdGuid) as IDataItem;
+                    return manager.GetItem(this.ItemType, itemIdGuid) as IDataItem;
                 }
             }
 
             IDataItem item;
-            if (this.Manager is IContentManager)
+            var contentManager = manager as IContentManager;
+            if (contentManager != null)
             {
                 var isPublished = !this.IsPreviewRequested() ||
                     this.ResolveRequestedItemStatus() == ContentLifecycleStatus.Live;
-                item = ((IContentManager)this.Manager).GetItemFromUrl(this.ItemType, url, isPublished, out redirectUrl);
+                item = contentManager.GetItemFromUrl(this.ItemType, url, isPublished, out redirectUrl);
             }
             else
             {
-                item = ((IUrlProvider)this.Manager.Provider).GetItemFromUrl(this.ItemType, url, out redirectUrl);
+                item = ((IUrlProvider)manager.Provider).GetItemFromUrl(this.ItemType, url, out redirectUrl);
             }
 
             var lifecycleItem = item as ILifecycleDataItem;
-            if (lifecycleItem != null && this.Manager is ILifecycleManager)
+            var lifecycleManager = manager as ILifecycleManager;
+            if (lifecycleItem != null && lifecycleManager != null)
             {
                 object requestedItem;
-                if (ContentLocatableViewExtensions.TryGetItemWithRequestedStatus(lifecycleItem, (ILifecycleManager)this.Manager, out requestedItem))
+                if (ContentLocatableViewExtensions.TryGetItemWithRequestedStatus(lifecycleItem, lifecycleManager, out requestedItem))
                 {
                     item = requestedItem as IDataItem;
                 }
@@ -206,8 +208,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         protected Type ItemType { get; set; }
-
-        protected IManager Manager { get; private set; }
 
         protected ActionDescriptor ActionMethod { get; private set; }
 

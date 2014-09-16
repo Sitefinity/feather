@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.DynamicModules.Builder;
@@ -57,14 +58,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         protected virtual IUrlParamsMapper GetDefaultParamsMapper(ControllerBase controller)
         {
             IUrlParamsMapper result = null;
-
             result = result
                 .SetLast(this.GetInferredDetailActionParamsMapper(controller))
                 .SetLast(this.GetInferredTaxonFilterMapper(controller, "ListByTaxon"))
-                .SetLast(this.GetInferredPagingMapper(controller, "Index"))
-                .SetLast(new DefaultUrlParamsMapper(controller));
+                .SetLast(this.GetInferredPagingMapper(controller, "Index"));
+
+            // If no other mappers are added we skip the default one.
+            if (result != null)
+                result.SetLast(new DefaultUrlParamsMapper(controller));
 
             return result;
+        }
+
+        private IEnumerable<string> GetProviderNames(ControllerBase controller, Type contentType)
+        {
+            var providerNameProperty = controller.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "ProviderName" && p.PropertyType == typeof(string));
+
+            if (providerNameProperty != null)
+            {
+                return new string[1] { providerNameProperty.GetValue(controller, null) as string };
+            }
+            else
+            {
+                var mappedManager = ManagerBase.GetMappedManager(contentType);
+                if (mappedManager != null)
+                {
+                    return mappedManager.Providers.Select(p => p.Name);
+                }
+                else
+                {
+                    return new string[0];
+                }
+            }
         }
 
         private IUrlParamsMapper GetInferredDetailActionParamsMapper(ControllerBase controller)
@@ -81,8 +106,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     Type contentType;
                     if (typeof(DynamicContent) == contentParam.ParameterType)
                     {
-                        var moduleProvider = ModuleBuilderManager.GetManager().Provider;
-                        var dynamicContentType = this.GetDynamicContentType(controllerType, moduleProvider);
+                        var dynamicContentType = this.GetDynamicContentType(controllerType);
                         contentType = dynamicContentType != null ? TypeResolutionService.ResolveType(dynamicContentType.GetFullTypeName(), throwOnError: false) : null;
                     }
                     else
@@ -138,35 +162,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return new CustomActionParamsMapper(controller, () => "/{" + actionDescriptor.GetParameters()[0].ParameterName + "}", actionName);
         }
 
-        private DynamicModuleType GetDynamicContentType(Type controllerType, ModuleBuilderDataProvider moduleProvider)
+        private DynamicModuleType GetDynamicContentType(Type controllerType)
         {
+            var moduleProvider = ModuleBuilderManager.GetManager().Provider;
             var controllerName = FrontendManager.ControllerFactory.GetControllerName(controllerType);
             var dynamicContentType = moduleProvider.GetDynamicModules().Where(m => m.Status == DynamicModuleStatus.Active)
                 .Join(moduleProvider.GetDynamicModuleTypes().Where(t => t.TypeName == controllerName), m => m.Id, t => t.ParentModuleId, (m, t) => t)
                 .FirstOrDefault();
             return dynamicContentType;
-        }
-
-        private IEnumerable<string> GetProviderNames(ControllerBase controller, Type contentType)
-        {
-            var providerNameProperty = controller.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "ProviderName" && p.PropertyType == typeof(string));
-
-            if (providerNameProperty != null)
-            {
-                return new string[1] { providerNameProperty.GetValue(controller, null).ToString() };
-            }
-            else
-            {
-                var mappedManager = ManagerBase.GetMappedManager(contentType);
-                if (mappedManager != null)
-                {
-                    return mappedManager.Providers.Select(p => p.Name);
-                }
-                else
-                {
-                    return new string[0];
-                }
-            }
         }
 
         /// <summary>
