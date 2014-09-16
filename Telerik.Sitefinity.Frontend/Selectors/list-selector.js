@@ -244,7 +244,7 @@
                             .then(function () {
                                 jQuery(".endlessScroll").scroll(function () {
                                     var raw = jQuery(".endlessScroll")[0];
-                                    if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+                                    if (raw.scrollTop !== 0 && raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
                                         loadItems();
                                     }
                                 });
