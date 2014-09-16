@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
-using Telerik.Sitefinity.DynamicModules.Builder;
-using Telerik.Sitefinity.DynamicModules.Builder.Model;
-using Telerik.Sitefinity.DynamicModules.Model;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.GenericContent.Model;
 using Telerik.Sitefinity.Lifecycle;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.GenericContent;
 using Telerik.Sitefinity.Services;
-using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
@@ -25,49 +17,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// </summary>
     internal class DetailActionParamsMapper : UrlParamsMapperBase
     {
-        /// <summary>
-        /// Gets an instance of <see cref="DetailActionParamsMapper"/> that is inferred by convention.
-        /// </summary>
-        /// <param name="controller">The controller.</param>
-        /// <returns>The inferred instance of <see cref="DetailActionParamsMapper"/> or null if none is inferred.</returns>
-        public static IUrlParamsMapper GetInferredDetailActionParamsMapper(ControllerBase controller)
-        {
-            var controllerType = controller.GetType();
-            IUrlParamsMapper result = null;
-
-            var detailsAction = new ReflectedControllerDescriptor(controllerType).FindAction(controller.ControllerContext, DetailActionParamsMapper.DefaultActionName);
-            if (detailsAction != null)
-            {
-                var contentParam = detailsAction.GetParameters().FirstOrDefault();
-                if (contentParam != null && contentParam.ParameterType.ImplementsInterface(typeof(IDataItem)))
-                {
-                    Type contentType;
-                    if (typeof(DynamicContent) == contentParam.ParameterType)
-                    {
-                        var moduleProvider = ModuleBuilderManager.GetManager().Provider;
-                        var dynamicContentType = DetailActionParamsMapper.GetDynamicContentType(controllerType, moduleProvider);
-                        contentType = dynamicContentType != null ? TypeResolutionService.ResolveType(dynamicContentType.GetFullTypeName(), throwOnError: false) : null;
-                    }
-                    else
-                    {
-                        contentType = contentParam.ParameterType;
-                    }
-
-                    if (contentType != null)
-                    {
-                        var providerNames = DetailActionParamsMapper.GetProviderNames(controller, contentType);
-                        foreach (var provider in providerNames)
-                        {
-                            var providerName = provider;
-                            result = result.SetLast(new DetailActionParamsMapper(controller, contentType, () => providerName));
-                        }
-                    }
-                }
-            }
-
-            return result;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DetailActionParamsMapper"/> class.
         /// </summary>
@@ -224,37 +173,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 throw new InvalidOperationException("Items of the {0} type cannot be found by URL.".Arrange(this.ItemType.FullName));
 
             return manager;
-        }
-
-        private static DynamicModuleType GetDynamicContentType(Type controllerType, ModuleBuilderDataProvider moduleProvider)
-        {
-            var controllerName = FrontendManager.ControllerFactory.GetControllerName(controllerType);
-            var dynamicContentType = moduleProvider.GetDynamicModules().Where(m => m.Status == DynamicModuleStatus.Active)
-                .Join(moduleProvider.GetDynamicModuleTypes().Where(t => t.TypeName == controllerName), m => m.Id, t => t.ParentModuleId, (m, t) => t)
-                .FirstOrDefault();
-            return dynamicContentType;
-        }
-
-        private static IEnumerable<string> GetProviderNames(ControllerBase controller, Type contentType)
-        {
-            var providerNameProperty = controller.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "ProviderName" && p.PropertyType == typeof(string));
-
-            if (providerNameProperty != null)
-            {
-                return new string[1] { providerNameProperty.GetValue(controller, null).ToString() };
-            }
-            else
-            {
-                var mappedManager = ManagerBase.GetMappedManager(contentType);
-                if (mappedManager != null)
-                {
-                    return mappedManager.Providers.Select(p => p.Name);
-                }
-                else
-                {
-                    return new string[0];
-                }
-            }
         }
 
         /// <summary>
