@@ -26,13 +26,9 @@
                         };
 
                         ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            if (!ctrl.selectedItem) {
-                                ctrl.updateSelectedItem(data);
-                            }
+                                ctrl.updateSelectedItems(data);
 
-                            if (!ctrl.selectedItemId) {
-                                ctrl.updateSelectedItemId(data.Id);
-                            }
+                                ctrl.updateSelectedIds(data.Id);
                         };
 
                         ctrl.templateUrl = 'Selectors/taxon-selector.html';

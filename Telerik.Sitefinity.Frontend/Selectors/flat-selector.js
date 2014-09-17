@@ -5,8 +5,14 @@
                 restrict: "E",
                 transclude: true,
                 scope: {
+                    //For single selection
                     selectedItemId: '=?',
                     selectedItem: '=?',
+
+                    //For multiple selection
+                    selectedItems: '=?',
+                    selectedIds: '=?',
+
                     provider: '=?',
                     taxonomyId: '=?', /* flat-selector */
                     itemType: '@?' /* content-selector */
@@ -18,12 +24,30 @@
                     this.provider = $scope.provider;
                     this.itemType = $scope.itemType;
 
-                    this.updateSelectedItem = function (selectedItem) {
-                        $scope.selectedItem = selectedItem;
+                    this.updateSelectedItems = function (selectedItem) {
+                        if (!$scope.multiselect && !$scope.selectedItem) {
+                            $scope.selectedItem = selectedItem;
+                        }
+                        
+                        if (!$scope.selectedItems) {
+                            $scope.selectedItems = [];
+                        }
+                        if ($scope.selectedItems.length === 0) {
+                            $scope.selectedItems.push(selectedItem);
+                        }
                     };
 
-                    this.updateSelectedItemId = function (selectedItemId) {
-                        $scope.selectedItemId = selectedItemId;
+                    this.updateSelectedIds = function (selectedItemId) {
+                        if (!$scope.multiselect && !$scope.selectedItemId) {
+                            $scope.selectedItemId = selectedItemId;
+                        }
+
+                        if (!$scope.selectedIds) {
+                            $scope.selectedIds = [];
+                        }
+                        if ($scope.selectedIds.length === 0) {
+                            $scope.selectedIds.push(selectedItemId);
+                        }
                     };
                 },
                 templateUrl: function (elem, attrs) {
@@ -36,21 +60,20 @@
                         // ------------------------------------------------------------------------
                         // Event handlers
                         // ------------------------------------------------------------------------
-
+                        debugger;
                         //invoked when the items are loaded
                         var onItemsLoadedSuccess = function (data) {
                             if (data && data.Items) {
                                 scope.items = data.Items;
                                 scope.filter.paging.set_totalItems(data.TotalCount);
 
-                                //select current item if it exists
-                                for (var i = 0; i < data.Items.length; i++) {
-                                    var id = data.Items[i].Id;
-                                    if (id === scope.selectedItemId ||
-                                        (scope.selectedItem && id === scope.selectedItem.Id)) {
-                                        scope.selectedItemInTheDialog = data.Items[i];
-                                    }
-                                }
+                                var selectedIds = getSelectedIds();
+
+                                var selectedItems = data.Items.filter(function (item) {
+                                    return selectedIds.indexOf(item.Id) >= 0;
+                                });
+
+                                scope.selectedItemsInTheDialog = selectedItems;
                             }
 
                             scope.isListEmpty = scope.items.length === 0 && !scope.filter.search;
@@ -69,6 +92,29 @@
                         // helper methods
                         // ------------------------------------------------------------------------
 
+                        var getSelectedIds = function () {
+                            if (attrs.multiselect) {
+                                if (scope.selectedIds && scope.selectedIds.length > 0) {
+                                    return scope.selectedIds;
+                                }
+                                else if (scope.selectedItems && scope.selectedItems.length > 0) {
+                                    return scope.selectedItems.map(function (item) {
+                                        return item.id;
+                                    });
+                                }
+                            }
+                            else {
+                                var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
+                                if (id) {
+                                    var selected = [];
+                                    selected.push(id);
+                                    return selected;
+                                } 
+                            }
+
+                            return [];
+                        };
+
                         var loadItems = function () {
                             var skip = scope.filter.paging.get_itemsToSkip();
                             var take = scope.filter.paging.itemsPerPage;
@@ -77,14 +123,15 @@
                                 .then(onItemsLoadedSuccess, onError);
                         };
 
-                        var getSelectedItem = function (scope) {
-                            var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
-
-                            if (id && id !== '00000000-0000-0000-0000-000000000000') {
-                                ctrl.getItem(id)
-                                    .then(ctrl.onSelectedItemLoadedSuccess)
-                                    .finally(hideLoadingIndicator);
-                            }
+                        var getSelectedItems = function () {
+                            var ids = getSelectedIds();
+                            for (var i = 0; i < ids.length; i++) {
+                                if (ids[i] !== '00000000-0000-0000-0000-000000000000') {
+                                    ctrl.getItem(ids[i])
+                                        .then(ctrl.onSelectedItemLoadedSuccess)
+                                        .finally(hideLoadingIndicator);//TODO: call it only when the last item is retrieved
+                                }
+                            }                            
                         };
 
                         var reloadItems = function (newValue, oldValue) {
@@ -135,14 +182,25 @@
                         };
 
                         scope.itemClicked = function (index, item) {
-                            scope.selectedItemInTheDialog = item;
+                            if (attrs.multiselect) {
+                                scope.selectedItemsInTheDialog.push(item);
+                            }
+                            else {
+                                //Switch the items in single selection mode
+                                scope.selectedItemsInTheDialog.splice(0, 1, item);
+                            }
                         };
 
-                        scope.selectItem = function () {
-                            if (scope.selectedItemInTheDialog) {
+                        scope.doneSelecting = function () {
+                            if (scope.selectedItemsInTheDialog.length > 0) {
                                 //set the selected item and its id to the mapped isolated scope properties
-                                scope.selectedItem = scope.selectedItemInTheDialog;
-                                scope.selectedItemId = scope.selectedItemInTheDialog.Id;
+                                scope.selectedItem = scope.selectedItemsInTheDialog[0];
+                                scope.selectedItemId = scope.selectedItemsInTheDialog[0].Id;
+
+                                scope.selectedItems = scope.selectedItemsInTheDialog;
+                                scope.selectedIds = scope.selectedItems.map(function (item) {
+                                    return item.Id;
+                                });
                             }
 
                             scope.$modalInstance.close();
@@ -177,17 +235,26 @@
                         };
 
                         scope.isItemSelected = function () {
-                            if (scope.selectedItemId && scope.selectedItemId !== '00000000-0000-0000-0000-000000000000') {
-                                return true;
-                            }
-                            else {
-                                return false;
+                            var ids = getSelectedIds().filter(function (id) {
+                                return id !== '00000000-0000-0000-0000-000000000000';
+                            });
+
+                            return ids.length > 0;
+                        };
+
+                        scope.isItemSelectedInDialog = function (item) {
+                            for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
+                                if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
+                                    return true;
+                                }
                             }
                         };
 
+                        scope.multiselect = !!attrs.multiselect;
+
                         scope.showLoadingIndicator = true;
 
-                        getSelectedItem(scope);
+                        getSelectedItems();
 
                         transclude(scope, function (clone) {
                             var hasContent;

@@ -15,13 +15,9 @@
                         };
 
                         ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            if (!ctrl.selectedItem) {
-                                ctrl.updateSelectedItem(data.Items[0]);
-                            }
+                                ctrl.updateSelectedItems(data.Items[0]);
 
-                            if (!ctrl.selectedItemId) {
-                                ctrl.updateSelectedItemId(data.Items[0].Id);
-                            }
+                                ctrl.updateSelectedIds(data.Items[0].Id);
                         };
 
                         ctrl.templateUrl = 'Selectors/content-selector.html';
