@@ -59,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var resourceUrl = ResourceHelper.GetWebResourceUrl(scriptReference);
 
             if (string.IsNullOrEmpty(resourceUrl))
-                return string.Empty;
+                return MvcHtmlString.Empty;
 
             return ResourceHelper.RegisterResource(context, resourceKey, resourceUrl, throwException);
         }
