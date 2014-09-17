@@ -94,12 +94,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MvcWidgets\MvcSelector.cs" />
+    <Compile Include="MvcWidgets\MvcSelectorTest.cs" />
     <Compile Include="MvcWidgets\MvcWidgetDefaultDesigner.cs" />
     <Compile Include="Pages\DeletePageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FeatherTestCase.cs" />
     <Compile Include="FeatherTestCategories.cs" />
+    <Compile Include="ResourcePackages\ApplyTemplatesFromDifferentPackages.cs" />
     <Compile Include="ResourcePackages\NewLayoutFileDefaultPackage.cs" />
     <Compile Include="ResourcePackages\DefaultResourcePackages.cs" />
   </ItemGroup>

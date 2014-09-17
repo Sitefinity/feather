@@ -3,7 +3,7 @@
     /// <summary>
     /// A base route param resolver that provides responsibility chain logic.
     /// </summary>
-    public abstract class RouteParamResolverBase : IRouteParamResolver
+    internal abstract class RouteParamResolverBase : IRouteParamResolver
     {
         /// <inheritdoc />
         public IRouteParamResolver Next
