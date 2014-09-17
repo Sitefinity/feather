@@ -8,7 +8,6 @@
                     selectedItemId: '=?',
                     selectedItem: '=?',
                     provider: '=?', /* content-selector */
-                    itemType: '@?', /* content-selector */
                     taxonomyId: '=?' /* taxon-selector */
                 },
                 controller: function ($scope) {
@@ -26,10 +25,6 @@
 
                     this.getProvider = function () {
                         return $scope.provider;
-                    };
-
-                    this.getItemType = function () {
-                        return $scope.itemType;
                     };
 
                     this.updateSelectedItem = function (selectedItem) {
