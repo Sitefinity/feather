@@ -83,10 +83,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Frontend, Version=0.5.1000.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Telerik.Sitefinity.Frontend\bin\Debug\Telerik.Sitefinity.Frontend.dll</HintPath>
-    </Reference>
     <Reference Include="Telerik.Sitefinity.Model, Version=7.1.5208.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.1.5208.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
@@ -147,6 +143,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Telerik.Sitefinity.Frontend\Telerik.Sitefinity.Frontend.csproj">
+      <Project>{17ed04c3-0ab9-4055-9908-6c70720daf77}</Project>
+      <Name>Telerik.Sitefinity.Frontend</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Telerik.Sitefinity.Frontend.TestUtilities\Telerik.Sitefinity.Frontend.TestUtilities.csproj">
       <Project>{1c663ab5-aebc-41b5-a861-f635c37dab47}</Project>
       <Name>Telerik.Sitefinity.Frontend.TestUtilities</Name>
