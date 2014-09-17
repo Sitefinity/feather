@@ -166,6 +166,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyLoaderHelper.cs" />
+    <Compile Include="CommonOperations\ActionFilters\ActionExecutionRegister.cs" />
+    <Compile Include="CommonOperations\ActionFilters\ActionInfo.cs" />
+    <Compile Include="CommonOperations\ActionFilters\ExecutionRegistrationFilterAttribute.cs" />
     <Compile Include="CommonOperations\Pages\PagesOperations.cs" />
     <Compile Include="CommonOperations\ResourcePackages\ResourcePackagesOperations.cs" />
     <Compile Include="ControllerFactoryRegion.cs" />
@@ -181,6 +184,7 @@
     <Compile Include="DummyClasses\Mvc\Controllers\DummyControllerFactory.cs" />
     <Compile Include="DummyClasses\LocalizationResources\DummyControllerResoruces.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyCustomDesignerController.cs" />
+    <Compile Include="DummyClasses\Mvc\Controllers\DummyScriptController.cs" />
     <Compile Include="DummyClasses\Mvc\DummyBuildManagerCompiledView.cs" />
     <Compile Include="DummyClasses\Mvc\DummyViewResult.cs" />
     <Compile Include="DummyClasses\Mvc\Helpers\DummyLocalizationControllerResources.cs" />
