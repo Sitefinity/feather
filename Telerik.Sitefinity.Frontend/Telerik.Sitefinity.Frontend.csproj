@@ -183,6 +183,7 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
+    <Compile Include="Mvc\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
@@ -207,7 +208,6 @@
     <Compile Include="FilesMonitoring\IFileMonitor.cs" />
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
-    <Compile Include="Mvc\Infrastructure\Controllers\IUrlMappingController.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />
@@ -376,9 +376,7 @@
     <EmbeddedResource Include="Mvc\Styles\sitefinity-backend.min.css" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\content-selector.js" />
     <EmbeddedResource Include="Selectors\selectors.js" />
-    <EmbeddedResource Include="Services\generic-data-service.js" />
     <EmbeddedResource Include="Services\services.js" />
   </ItemGroup>
   <ItemGroup>
@@ -386,16 +384,13 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\content-selector.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Selectors\flat-selector.html" />
+    <EmbeddedResource Include="Selectors\list-selector.html" />
     <EmbeddedResource Include="Selectors\taxon-selector.js" />
     <EmbeddedResource Include="Selectors\taxon-selector.html" />
     <EmbeddedResource Include="Services\flat-taxon-service.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\flat-selector.js" />
+    <EmbeddedResource Include="Selectors\list-selector.js" />
     <EmbeddedResource Include="Mvc\Scripts\Templates\expander.html" />
   </ItemGroup>
   <ItemGroup>
@@ -409,6 +404,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Selectors\taxon-filter.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\news-selector.html" />
+    <EmbeddedResource Include="Selectors\news-selector.js" />
+    <EmbeddedResource Include="Services\news-item-service.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\style-dropdown.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />

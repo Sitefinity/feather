@@ -245,6 +245,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// <returns>True or false depending on the items count.</returns>
         public bool CountItems(int expected)
         {
+            ActiveBrowser.RefreshDomTree();
             var items = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in contentItems");
             return expected == items.Count;
         }

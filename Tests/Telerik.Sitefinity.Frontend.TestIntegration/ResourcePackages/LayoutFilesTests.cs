@@ -202,7 +202,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 }
 
                 string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.TestPackageName);
-                this.DeleteDirectory(path);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(path);
             }
         }
 
@@ -233,7 +233,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout3);
 
                 string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.TestPackageName);
-                this.DeleteDirectory(path);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(path);
             }
         }
 
@@ -284,7 +284,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 }
 
                 string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.TestPackageName);
-                this.DeleteDirectory(path);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(path);
             }
         }
 
@@ -309,28 +309,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             var master = this.PageManager.PagesLifecycle.GetMaster(pageData);
             this.PageManager.PagesLifecycle.Publish(master);
             this.PageManager.SaveChanges();
-        }
-
-        private void DeleteDirectory(string path)
-        {
-            try
-            {
-                Directory.Delete(path, true);
-            }
-            catch (DirectoryNotFoundException)
-            {
-                return;
-            }
-            catch (IOException)
-            {
-                Thread.Sleep(50);
-                Directory.Delete(path, true);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                Thread.Sleep(50);
-                Directory.Delete(path, true);
-            }
-        }
+        }      
     }
 }

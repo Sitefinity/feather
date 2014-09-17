@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// Instances of this class resolve taxon of a given taxonomy by URL.
     /// </summary>
-    public class TaxonParamResolver : RouteParamResolverBase
+    internal class TaxonParamResolver : RouteParamResolverBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TaxonParamResolver"/> class.

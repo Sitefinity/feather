@@ -3,7 +3,7 @@
     /// <summary>
     /// Instances of this class resolve tag by UrlName.
     /// </summary>
-    public class TagParamResolver : TaxonParamResolver
+    internal class TagParamResolver : TaxonParamResolver
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TagParamResolver"/> class.

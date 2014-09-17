@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Telerik.Sitefinity.ContentLocations;
@@ -16,14 +15,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// Instances of this class resolve specific content item by the URL.
     /// </summary>
-    public class DetailActionParamsMapper : UrlParamsMapperBase
+    internal class DetailActionParamsMapper : UrlParamsMapperBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DetailActionParamsMapper"/> class.
         /// </summary>
         /// <param name="controller">The controller.</param>
         /// <param name="itemType">Type of the item that is expected.</param>
-        public DetailActionParamsMapper(Controller controller, Type itemType)
+        public DetailActionParamsMapper(ControllerBase controller, Type itemType)
             : this(controller, itemType, null)
         {
         }
@@ -34,8 +33,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="controller">The controller.</param>
         /// <param name="itemType">Type of the item that is expected.</param>
         /// <param name="providerNameResolver">A function that returns provider name for the content. If null then default provider is used.</param>
-        public DetailActionParamsMapper(Controller controller, Type itemType, Func<string> providerNameResolver)
-            : this(controller, itemType, providerNameResolver, "Details")
+        public DetailActionParamsMapper(ControllerBase controller, Type itemType, Func<string> providerNameResolver)
+            : this(controller, itemType, providerNameResolver, DetailActionParamsMapper.DefaultActionName)
         {
         }
 
@@ -47,7 +46,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="providerNameResolver">A function that returns provider name for the content. If null then default provider is used.</param>
         /// <param name="actionName">Name of the action.</param>
         /// <exception cref="System.ArgumentException">When the given controller does not contain a method corresponding to the action name.</exception>
-        public DetailActionParamsMapper(Controller controller, Type itemType, Func<string> providerNameResolver, string actionName)
+        public DetailActionParamsMapper(ControllerBase controller, Type itemType, Func<string> providerNameResolver, string actionName)
             : base(controller)
         {
             if (itemType == null)
@@ -56,12 +55,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             this.actionName = actionName;
             this.providerNameResolver = providerNameResolver;
 
-            this.ActionMethod = this.Controller.GetType().GetMethod(actionName, BindingFlags.Public | BindingFlags.Instance);
+            this.ActionMethod = new ReflectedControllerDescriptor(controller.GetType()).FindAction(controller.ControllerContext, actionName);
             if (this.ActionMethod == null)
                 throw new ArgumentException("The controller {0} does not have action '{1}'.".Arrange(controller.GetType().Name, actionName));
 
             this.ItemType = itemType;
-            this.Manager = this.ResolveManager();
         }
 
         /// <inheritdoc />
@@ -98,12 +96,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var parameters = this.ActionMethod.GetParameters();
             if (parameters.Length > 0 && parameters[0].ParameterType.IsAssignableFrom(this.ItemType))
             {
-                requestContext.RouteData.Values[parameters[0].Name] = item;
+                requestContext.RouteData.Values[parameters[0].ParameterName] = item;
             }
 
             if (redirectUrl.IsNullOrEmpty() == false && parameters.Length > 1 && parameters[1].ParameterType == typeof(string))
             {
-                requestContext.RouteData.Values[parameters[1].Name] = redirectUrl;
+                requestContext.RouteData.Values[parameters[1].ParameterName] = redirectUrl;
             }
 
             RouteHelper.SetUrlParametersResolved();
@@ -118,7 +116,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
         protected virtual IDataItem GetItemByUrl(string url, out string redirectUrl)
         {
-            if (this.Manager == null)
+            var manager = this.ResolveManager();
+            if (manager == null)
             {
                 redirectUrl = null;
                 return null;
@@ -131,27 +130,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 if (Guid.TryParse(itemIdFromQueryParam, out itemIdGuid))
                 {
                     redirectUrl = null;
-                    return this.Manager.GetItem(this.ItemType, itemIdGuid) as IDataItem;
+                    return manager.GetItem(this.ItemType, itemIdGuid) as IDataItem;
                 }
             }
 
             IDataItem item;
-            if (this.Manager is IContentManager)
+            var contentManager = manager as IContentManager;
+            if (contentManager != null)
             {
                 var isPublished = !this.IsPreviewRequested() ||
                     this.ResolveRequestedItemStatus() == ContentLifecycleStatus.Live;
-                item = ((IContentManager)this.Manager).GetItemFromUrl(this.ItemType, url, isPublished, out redirectUrl);
+                item = contentManager.GetItemFromUrl(this.ItemType, url, isPublished, out redirectUrl);
             }
             else
             {
-                item = ((IUrlProvider)this.Manager.Provider).GetItemFromUrl(this.ItemType, url, out redirectUrl);
+                item = ((IUrlProvider)manager.Provider).GetItemFromUrl(this.ItemType, url, out redirectUrl);
             }
 
             var lifecycleItem = item as ILifecycleDataItem;
-            if (lifecycleItem != null && this.Manager is ILifecycleManager)
+            var lifecycleManager = manager as ILifecycleManager;
+            if (lifecycleItem != null && lifecycleManager != null)
             {
                 object requestedItem;
-                if (ContentLocatableViewExtensions.TryGetItemWithRequestedStatus(lifecycleItem, (ILifecycleManager)this.Manager, out requestedItem))
+                if (ContentLocatableViewExtensions.TryGetItemWithRequestedStatus(lifecycleItem, lifecycleManager, out requestedItem))
                 {
                     item = requestedItem as IDataItem;
                 }
@@ -208,13 +209,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
         protected Type ItemType { get; set; }
 
-        protected IManager Manager { get; private set; }
-
-        protected MethodInfo ActionMethod { get; private set; }
+        protected ActionDescriptor ActionMethod { get; private set; }
 
         private string actionName;
 
         private Func<string> providerNameResolver;
+
+        /// <summary>
+        /// The default details action name.
+        /// </summary>
+        public const string DefaultActionName = "Details";
     }
 
     /// <summary>
@@ -222,14 +226,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// </summary>
     /// <typeparam name="TContent">The type of the content that should be resolved.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "It's the same class. This one is generic for convenience.")]
-    public class DetailActionParamsMapper<TContent> : DetailActionParamsMapper
+    internal class DetailActionParamsMapper<TContent> : DetailActionParamsMapper
         where TContent : class, IDataItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DetailActionParamsMapper{TContent}"/> class.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public DetailActionParamsMapper(Controller controller) : base(controller, typeof(TContent))
+        public DetailActionParamsMapper(ControllerBase controller)
+            : base(controller, typeof(TContent))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DetailActionParamsMapper{TContent}"/> class.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="providerNameResolver">A function that returns provider name for the content. If null then default provider is used.</param>
+        /// <exception cref="System.ArgumentException">When the given controller does not contain a method corresponding to the action name.</exception>
+        public DetailActionParamsMapper(ControllerBase controller, Func<string> providerNameResolver)
+            : base(controller, typeof(TContent), providerNameResolver, DetailActionParamsMapper.DefaultActionName)
         {
         }
 
@@ -240,7 +256,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="providerNameResolver">A function that returns provider name for the content. If null then default provider is used.</param>
         /// <param name="actionName">Name of the action.</param>
         /// <exception cref="System.ArgumentException">When the given controller does not contain a method corresponding to the action name.</exception>
-        public DetailActionParamsMapper(Controller controller, Func<string> providerNameResolver, string actionName = "Details")
+        public DetailActionParamsMapper(ControllerBase controller, Func<string> providerNameResolver, string actionName)
             : base(controller, typeof(TContent), providerNameResolver, actionName)
         {
         }
