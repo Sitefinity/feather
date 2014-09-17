@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -54,7 +56,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             var resourceKey = scriptReference.ToString();
             var context = helper.ViewContext.HttpContext;
-            var resourceUrl = ResourceHelper.GetWebResourceUrl(scriptReference);    
+            var resourceUrl = ResourceHelper.GetWebResourceUrl(scriptReference);
+
+            if (string.IsNullOrEmpty(resourceUrl))
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Script reference for {0} is not found.", resourceKey));
 
             return ResourceHelper.RegisterResource(context, resourceKey, resourceUrl, throwException);
         }
@@ -89,7 +94,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var config = Config.Get<PagesConfig>().ScriptManager;
             var scriptConfig = config.ScriptReferences[scriptReference.ToString()];
-            string resourceUrl;
+            string resourceUrl = string.Empty;
 
             if (config.EnableCdn || (scriptConfig.EnableCdn.HasValue && scriptConfig.EnableCdn.Value))
             {
@@ -98,9 +103,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             else
             {
                 var page = HttpContext.Current.Handler as Page;
-                resourceUrl = page.ClientScript.GetWebResourceUrl(
-                    TypeResolutionService.ResolveType("Telerik.Sitefinity.Resources.Reference"),
-                    scriptConfig.Name);
+
+                if (page != null)
+                {
+                    resourceUrl = page.ClientScript.GetWebResourceUrl(
+                        TypeResolutionService.ResolveType("Telerik.Sitefinity.Resources.Reference"),
+                        scriptConfig.Name);
+                }
             }
 
             return resourceUrl;
