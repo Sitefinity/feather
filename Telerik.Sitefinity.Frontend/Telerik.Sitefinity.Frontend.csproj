@@ -183,6 +183,7 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
+    <Compile Include="Mvc\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
@@ -207,7 +208,6 @@
     <Compile Include="FilesMonitoring\IFileMonitor.cs" />
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
-    <Compile Include="Mvc\Infrastructure\Controllers\IUrlMappingController.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />

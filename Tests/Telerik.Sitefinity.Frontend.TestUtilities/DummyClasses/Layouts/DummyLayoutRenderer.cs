@@ -56,7 +56,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Layouts
         /// <typeparam name="T"></typeparam>
         /// <param name="routeData">The route data.</param>
         /// <returns></returns>
-        public Controller CreateController(RouteData routeData = null)
+        public new Controller CreateController(RouteData routeData = null)
         {
             Controller controller = new GenericController();
             var context = new HttpContextWrapper(new System.Web.HttpContext(

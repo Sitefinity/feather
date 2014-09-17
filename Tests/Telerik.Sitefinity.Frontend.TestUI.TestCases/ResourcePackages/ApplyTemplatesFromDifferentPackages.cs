@@ -29,8 +29,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
 
             BAT.Macros().NavigateTo().CustomPage("~/" + Page1Title, false);
             Assert.IsTrue(ActiveBrowser.ContainsText(Package1LayoutText), "Layout text is not correct");
+            ActiveBrowser.Refresh();
+            ActiveBrowser.WaitUntilReady();
+            Assert.IsTrue(ActiveBrowser.ContainsText(Package1LayoutText), "Layout text is not correct");
 
             BAT.Macros().NavigateTo().CustomPage("~/" + Page2Title, false);
+            Assert.IsTrue(ActiveBrowser.ContainsText(Package2LayoutText), "Layout text is not correct");
+            ActiveBrowser.Refresh();
+            ActiveBrowser.WaitUntilReady();
             Assert.IsTrue(ActiveBrowser.ContainsText(Package2LayoutText), "Layout text is not correct");
         }
 

@@ -8,13 +8,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// Instances of this class call the default Sitefinity logic for mapping URL parameters to route data.
     /// </summary>
-    public class DefaultUrlParamsMapper : UrlParamsMapperBase
+    internal class DefaultUrlParamsMapper : UrlParamsMapperBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultUrlParamsMapper"/> class.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public DefaultUrlParamsMapper(Controller controller) : base(controller)
+        public DefaultUrlParamsMapper(ControllerBase controller)
+            : base(controller)
         {
         }
 
@@ -23,7 +24,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         {           
             var controllerName = requestContext.RouteData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] as string;
             requestContext.RouteData.Values.Remove(DynamicUrlParamActionInvoker.ControllerNameKey);
-            MvcRequestContextBuilder.SetRouteParameters(urlParams, requestContext, this.Controller, controllerName);
+            MvcRequestContextBuilder.SetRouteParameters(urlParams, requestContext, this.Controller as Controller, controllerName);
 
             return true;
         }

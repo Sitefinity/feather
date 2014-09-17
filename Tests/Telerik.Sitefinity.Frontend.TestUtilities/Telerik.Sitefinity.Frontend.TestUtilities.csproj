@@ -185,6 +185,7 @@
     <Compile Include="DummyClasses\LocalizationResources\DummyControllerResoruces.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyCustomDesignerController.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyScriptController.cs" />
+    <Compile Include="DummyClasses\Mvc\Controllers\DummyMasterDetailController.cs" />
     <Compile Include="DummyClasses\Mvc\DummyBuildManagerCompiledView.cs" />
     <Compile Include="DummyClasses\Mvc\DummyViewResult.cs" />
     <Compile Include="DummyClasses\Mvc\Helpers\DummyLocalizationControllerResources.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="DummyClasses\Models\DummyWidgetModel.cs" />
     <Compile Include="DummyClasses\Mvc\DummyControllerContainerInitializer.cs" />
     <Compile Include="DummyClasses\ResourceResolvers\DummyResourceHttpHandler.cs" />
+    <Compile Include="DummyClasses\Routing\DynamicUrlParamActionInvokerMock.cs" />
     <Compile Include="FileInjectHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ObjectFactoryContainerRegion.cs" />
