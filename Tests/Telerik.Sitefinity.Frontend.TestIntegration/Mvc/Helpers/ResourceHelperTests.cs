@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using MbUnit.Framework;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+using Telerik.Sitefinity.Frontend.TestIntegration;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations.ActionFilters;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
@@ -22,6 +23,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
     /// This class contains tests methods for the <see cref="ResourceHelper" />
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable"), TestFixture]
+    [Category(TestCategories.MvcCore)]
     [Description("This is a class with tests related to resource helpers.")]
     public class ResourceHelperTests
     {

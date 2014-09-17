@@ -14,5 +14,10 @@
         /// Specifies the name of the category of tests related to layout files.
         /// </summary>
         public const string LayoutFiles = "LayoutFiles";
+
+        /// <summary>
+        /// Specifies the name of the category of tests related to core MVC functionality.
+        /// </summary>
+        public const string MvcCore = "MvcCore";
     }
 }
