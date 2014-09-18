@@ -29,6 +29,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers.At
             var context = new DummyHttpContext();
             var response = (DummyHttpResponse)context.Response;
             var filterContext = new ResultExecutedContext();
+            filterContext.HttpContext = context;
             var actionFilter = new DummyCacheDependentAttribute();
             var viewPath = "~/MyTestView.cshtml";
             var view = new DummyBuildManagerCompiledView(new ControllerContext(), viewPath);
@@ -36,7 +37,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers.At
             filterContext.Result = new DummyViewResult { View = view };
 
             // Act
-            SystemManager.RunWithHttpContext(context, () => actionFilter.OnResultExecuted(filterContext));
+            actionFilter.OnResultExecuted(filterContext);
 
             // Assert
             Assert.AreEqual(1, response.CacheDependencies.Count, "Unexpected number of cache dependencies were added.");
