@@ -56,13 +56,16 @@
                                 scope.hideEndlessScrollLoadingIndicator = true;
                             }
 
+                            var i;
+                            var id;
+
                             if (data && data.Items) {
                                 //new filter
                                 if (isFilterApplied() && scope.filter.paging.totalItems === 0) {
                                     scope.items = data.Items;
 
-                                    for (var i = 0; i < data.Items.length; i++) {
-                                        var id = data.Items[i].Id;
+                                    for (i = 0; i < data.Items.length; i++) {
+                                        id = data.Items[i].Id;
                                         if (isCurrentItemSelected(id)) {
                                             scope.selectedItemInTheDialog = data.Items[i];
                                         }
