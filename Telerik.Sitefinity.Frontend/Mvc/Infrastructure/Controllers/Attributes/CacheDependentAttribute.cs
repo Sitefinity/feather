@@ -22,7 +22,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
             {
                 base.OnResultExecuted(filterContext);
 
-                if (SystemManager.CurrentHttpContext != null && SystemManager.CurrentHttpContext.Response != null)
+                var context = filterContext.HttpContext;
+                if (context != null && context.Response != null)
                 {
                     var viewResult = filterContext.Result as ViewResultBase;
 
@@ -34,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
                             var cacheDependency = this.GetCacheDependency(builtView.ViewPath);
                             if (cacheDependency != null)
                             {
-                                SystemManager.CurrentHttpContext.Response.AddCacheDependency(cacheDependency);
+                                context.Response.AddCacheDependency(cacheDependency);
                             }
                         }
                     }
