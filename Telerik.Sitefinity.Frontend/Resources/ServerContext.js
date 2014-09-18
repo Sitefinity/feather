@@ -9,7 +9,10 @@
     var services = {
         contentItemServiceUrl: applicationPath + 'Sitefinity/Services/Content/ContentItemService.svc/',
         userServiceUrl: applicationPath + 'Sitefinity/Services/Security/Users.svc/',
-        providerServiceUrl: applicationPath + 'Sitefinity/Services/DataSourceService/'
+        providerServiceUrl: applicationPath + 'Sitefinity/Services/DataSourceService/',
+        flatTaxonServiceUrl: applicationPath + 'Sitefinity/Services/Taxonomies/FlatTaxon.svc/', 
+        taxonomyServiceUrl: applicationPath + 'Sitefinity/Services/Taxonomies/Taxonomy.svc/',
+        newsItemServiceUrl: applicationPath + 'Sitefinity/Services/Content/NewsItemService.svc/'
     };
 
     sitefinity.services = {
@@ -23,6 +26,18 @@
 
         getProviderServiceUrl: function () {
             return services.providerServiceUrl;
+        },
+
+        getFlatTaxonServiceUrl: function () {
+            return services.flatTaxonServiceUrl;
+        },
+
+        getTaxonomyServiceUrl: function () {
+            return services.taxonomyServiceUrl;
+        },
+
+        getNewsItemServiceUrl: function () {
+            return services.newsItemServiceUrl;
         }
     };
 

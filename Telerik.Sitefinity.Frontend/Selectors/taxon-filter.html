@@ -1,0 +1,14 @@
+﻿<div class="checkbox" ng-repeat="taxonomy in allTaxonomies">
+    <label for="{{taxonomy.Name}}">
+        <input id="{{taxonomy.Name}}" type="checkbox"
+            ng-click="toggleTaxonomySelection(taxonomy.Name)" value="{{taxonomy.Name}}"
+            ng-checked="selectedTaxonomies.indexOf(taxonomy.Name) > -1" />
+
+            {{taxonomy.Title}}...
+    </label>
+
+    <list-selector taxon-selector ng-show="selectedTaxonomies.indexOf(taxonomy.Name) > -1"
+                provider="provider"
+                taxonomy-id ="taxonomy.Id"
+                selected-item-id ="taxonFilters[taxonomy.Name][0]"></list-selector>
+</div>
