@@ -5,7 +5,7 @@
             var getResource = function (itemId) {
                 var url = sitefinity.services.getNewsItemServiceUrl();
                 if (itemId && itemId !== '00000000-0000-0000-0000-000000000000') {
-                    url = url + '/' + itemId + '/';
+                    url = url + itemId + '/';
                 }
 
                 var headerData;
