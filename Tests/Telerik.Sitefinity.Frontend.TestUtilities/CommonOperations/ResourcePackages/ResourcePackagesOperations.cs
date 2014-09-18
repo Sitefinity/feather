@@ -38,6 +38,39 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         }
 
         /// <summary>
+        /// Gets the file path of the mvc view file from the resource package.
+        /// </summary>
+        /// <param name="packageName">The name of the package.</param>
+        /// <param name="widgetName">The name of the Mvc widget.</param>
+        /// <param name="viewFileName">The name of the view.</param>
+        /// <returns></returns>
+        public string GetResourcePackageMvcViewDestinationFilePath(string packageName, string widgetName, string viewFileName)
+        {
+            if (viewFileName == null)
+                throw new ArgumentNullException("viewFileName");
+
+            if (packageName == null)
+                throw new ArgumentNullException("packageName");
+
+            if (widgetName == null)
+                throw new ArgumentNullException("widgetName");
+
+            var folderPath = Path.Combine(this.SfPath, "ResourcePackages", packageName, "MVC", "Views", widgetName);
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            var filePath = Path.Combine(this.SfPath, "ResourcePackages", packageName, "MVC", "Views", widgetName, viewFileName);
+
+            if (filePath == null)
+                throw new ArgumentException("filePath was not found");
+
+            return filePath;
+        }
+
+        /// <summary>
         /// Gets the file path of the Resource Packages folder
         /// </summary>
         /// <returns>The file path if exists.</returns>
