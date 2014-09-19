@@ -1,4 +1,4 @@
-﻿<div class="checkbox" ng-repeat="taxonomy in allTaxonomies">
+﻿<div class="checkbox" ng-repeat="taxonomy in taxonomyFields|filter:{TaxonomyType:0}">
     <label for="{{taxonomy.Name}}">
         <input id="{{taxonomy.Name}}" type="checkbox"
             ng-click="toggleTaxonomySelection(taxonomy.Name)" value="{{taxonomy.Name}}"
