@@ -183,8 +183,10 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
+    <Compile Include="Mvc\Helpers\CustomFieldsHelpers.cs" />
     <Compile Include="Mvc\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\CustomTaxonomyViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttribute.cs" />
