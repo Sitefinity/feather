@@ -14,10 +14,12 @@ module.exports = function(config){
 	  '../../Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
 	  '../../Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
       '../../Telerik.Sitefinity.Frontend/Services/services.js',
-	  '../../Telerik.Sitefinity.Frontend/Services/generic-data-service.js',
+	  '../../Telerik.Sitefinity.Frontend/Services/news-item-service.js',
 	  '../../Telerik.Sitefinity.Frontend/Selectors/selectors.js',
-	  '../../Telerik.Sitefinity.Frontend/Selectors/content-selector.js',
-      '../../Telerik.Sitefinity.Frontend/Selectors/content-selector.html',
+	  '../../Telerik.Sitefinity.Frontend/Selectors/list-selector.js',
+      '../../Telerik.Sitefinity.Frontend/Selectors/list-selector.html',
+      '../../Telerik.Sitefinity.Frontend/Selectors/news-selector.js',
+      '../../Telerik.Sitefinity.Frontend/Selectors/news-selector.html',
       'helpers/mocks/*.js',
       'unit/**'
     ],
@@ -33,7 +35,7 @@ module.exports = function(config){
         '../../Telerik.Sitefinity.Frontend/Designers/Scripts/*.js': 'coverage',
         '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/*.js': 'coverage',
         '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Designer/*.js': 'coverage',
-        '../../Telerik.Sitefinity.Frontend/Selectors/content-selector.html': ['ng-html2js']
+        '../../Telerik.Sitefinity.Frontend/Selectors/*.html': ['ng-html2js']
     },
 
     //Converts directive's external html templates into javascript strings and stores them in the Angular's $templateCache service.
