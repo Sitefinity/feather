@@ -218,6 +218,7 @@
     <Compile Include="DummyClasses\Routing\DynamicUrlParamActionInvokerMock.cs" />
     <Compile Include="FileInjectHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Mvc\Controllers\MvcTestController.cs" />
     <Compile Include="ObjectFactoryContainerRegion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommonOperations\FeatherServerOperations.cs" />
@@ -228,6 +229,8 @@
     <EmbeddedResource Include="Data\TestPackage.zip" />
     <EmbeddedResource Include="Data\Package1.zip" />
     <EmbeddedResource Include="Data\Package2.zip" />
+    <EmbeddedResource Include="Mvc\Views\MvcTest\Default.cshtml" />
+    <EmbeddedResource Include="Data\Default.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>

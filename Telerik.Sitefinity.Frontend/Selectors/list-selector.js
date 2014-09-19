@@ -11,7 +11,7 @@
                     taxonomyId: '=?' /* taxon-selector */
                 },
                 controller: function ($scope) {
-                    this.getSelelectedItemId = function () {
+                    this.getSelectedItemId = function () {
                         return $scope.selectedItemId;
                     };
 
