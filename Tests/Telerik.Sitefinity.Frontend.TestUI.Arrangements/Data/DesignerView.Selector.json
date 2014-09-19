@@ -3,8 +3,9 @@
   "scripts": [
 	"Mvc/Scripts/Angular/angular-resource.min.js",
 	"Services/services.js",
-	"Services/generic-data-service.js",
+	"Services/news-item-service.js",
 	"Selectors/selectors.js",
-	"Selectors/content-selector.js"
+	"Selectors/list-selector.js",
+	"Selectors/news-selector.js"
   ]
 }

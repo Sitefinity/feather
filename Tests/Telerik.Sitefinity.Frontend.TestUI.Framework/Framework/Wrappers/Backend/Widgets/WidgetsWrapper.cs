@@ -147,15 +147,17 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// <summary>
         /// Selects the content.
         /// </summary>
-        /// <param name="isNewsSelector">True or false depending on the selector.</param>
-        public void SelectContent(bool isNewsSelector = true)
+        /// <param name="isFirstSelector">True or false depending on the selector.</param>
+        public void SelectContent(bool isFirstSelector = true)
         {
-            if (isNewsSelector)
+            if (isFirstSelector)
             {
-                var contentSelector = this.GetContentSelectorByType("Telerik.Sitefinity.News.Model.NewsItem").As<HtmlControl>()
+                var contentSelector = this.GetContentSelectorByName("firstSelector").As<HtmlControl>()
                                           .AssertIsPresent("selector directive");
 
-                HtmlButton selectButton = contentSelector.Find.ById<HtmlButton>("openSelectorBtn").AssertIsPresent("select button");
+                HtmlButton selectButton = contentSelector.Find.ByAttributes("class=~openSelectorBtn")
+                    .As<HtmlButton>()
+                    .AssertIsPresent("select button");
 
                 selectButton.Click();
                 ActiveBrowser.WaitForAsyncRequests();
@@ -163,10 +165,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             }
             else
             {
-                var contentSelector = this.GetContentSelectorByType("Telerik.Sitefinity.GenericContent.Model.ContentItem").As<HtmlControl>()
+                var contentSelector = this.GetContentSelectorByName("secondSelector").As<HtmlControl>()
                                           .AssertIsPresent("selector directive");
 
-                HtmlButton selectButton = contentSelector.Find.ById<HtmlButton>("openSelectorBtn").AssertIsPresent("select button");
+                HtmlButton selectButton = contentSelector.Find.ByAttributes("class=~openSelectorBtn")
+                    .As<HtmlButton>()
+                    .AssertIsPresent("select button");
 
                 selectButton.Click();
                 ActiveBrowser.WaitForAsyncRequests();
@@ -246,7 +250,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public bool CountItems(int expected)
         {
             ActiveBrowser.RefreshDomTree();
-            var items = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in contentItems");
+            var items = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in items");
             return expected == items.Count;
         }
 
@@ -260,10 +264,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             return items.Count;
         }
 
-        private Element GetContentSelectorByType(string type)
+        private Element GetContentSelectorByName(string cssClass)
         {
             var contentContainer = this.EM.Widgets.FeatherWidget.ContentContainer.AssertIsPresent("Content container");
-            var contentSelector = contentContainer.Find.ByAttributes(string.Format("item-type={0}", type));
+            var contentSelector = contentContainer.Find.ByName(cssClass);
             return contentSelector;
         }
 
