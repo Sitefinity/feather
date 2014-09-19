@@ -61,8 +61,8 @@
     <Content Include="unit\Mvc\Scripts\breadcrumbSpec.js" />
     <Content Include="unit\Designers\Scripts\pageEditorServiceSpec.js" />
     <Content Include="unit\Mvc\Scripts\Designer\propertyGridSpec.js" />
-    <Content Include="unit\Selectors\contentSelectorSpec.js" />
-    <Content Include="unit\Services\genericDataServiceSpec.js" />
+    <Content Include="unit\Selectors\newsSelectorSpec.js" />
+    <Content Include="unit\Services\newsItemServiceSpec.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
