@@ -2,6 +2,7 @@
 
 (function () {
     var applicationPath = '{{applicationPath}}';
+    var currentPackage = '{{currentPackage}}';
 
     if (applicationPath.length === 0 || applicationPath.charAt(applicationPath.length - 1) !== '/')
         applicationPath = applicationPath + '/';
@@ -42,7 +43,8 @@
     };
 
     sitefinity.getEmbeddedResourceUrl = function (assemblyName, resourcePath) {
-        return applicationPath + 'Frontend-Assembly/' + encodeURIComponent(assemblyName) + '/' + resourcePath;
+        var url = sitefinity.appendPackageParameter(applicationPath + 'Frontend-Assembly/' + encodeURIComponent(assemblyName) + '/' + resourcePath);
+        return url;
     };
 
     sitefinity.getRootedUrl = function (path) {
@@ -51,5 +53,19 @@
         }
 
         return applicationPath + path;
+    };
+
+    sitefinity.appendPackageParameter = function (url) {
+        if (!url || !currentPackage)
+            return url;
+
+        var parameter = 'package=' + currentPackage;
+        if (url.indexOf('?' + parameter) == -1 && url.indexOf('&' + parameter) == -1) {
+            var separator = url.indexOf('?') == -1 ? '?' : '&';
+            return url + separator + parameter;
+        }
+        else {
+            return url;
+        }
     };
 })();
