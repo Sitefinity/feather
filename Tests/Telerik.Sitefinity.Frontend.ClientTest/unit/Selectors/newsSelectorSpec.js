@@ -3,10 +3,17 @@ describe("news selector", function () {
     var scope;
 
     //Will be returned from the service mock.
+    var dataItem = {
+        Id: '4c003fb0-2a77-61ec-be54-ff00007864f4',
+        Title: 'Dummy'
+    };
+
+    var itemContext = {
+        Item: dataItem
+    };
+
     var dataItems = {
-        Items: [{
-            Id: '4c003fb0-2a77-61ec-be54-ff00007864f4'
-        }],
+        Items: [dataItem],
         TotalCount: 1
     };
 
@@ -19,7 +26,7 @@ describe("news selector", function () {
             return serviceResult.promise;
         }),
         getItem: jasmine.createSpy('newsItemService.getItem').andCallFake(function () {
-            serviceResult.resolve(dataItems);
+            serviceResult.resolve(itemContext);
             return serviceResult.promise;
         }),
     };
@@ -43,6 +50,7 @@ describe("news selector", function () {
         //Build the scope with whom the directive will be compiled.
         scope = $rootScope.$new();
         scope.provider = 'OpenAccessDataProvider';
+        scope.selectedId = '4c003fb0-2a77-61ec-be54-ff00007864f4';
 
         serviceResult = $q.defer();
 
@@ -90,6 +98,14 @@ describe("news selector", function () {
 
         return mostRecent.args;
     }
+
+    var getNewsServiceGetItemArgs = function () {
+        var mostRecent = newsItemService.getItem.mostRecentCall;
+        expect(mostRecent).toBeDefined();
+        expect(mostRecent.args).toBeDefined();
+
+        return mostRecent.args;
+    }
     
     it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {
         var template = "<list-selector news-selector provider='provider'/>";
@@ -111,5 +127,19 @@ describe("news selector", function () {
 
         //Filter
         expect(args[3]).toBeFalsy();
+    });
+
+    it('[GMateev] / should retrieve selected news items from the service when the selector is loaded.', function () {
+        var template = "<list-selector news-selector provider='provider' selected-item-id='selectedId'/>";
+
+        compileDirective(template);
+
+        var args = getNewsServiceGetItemArgs();
+
+        //Item id
+        expect(args[0]).toBe('4c003fb0-2a77-61ec-be54-ff00007864f4');
+
+        //Provider
+        expect(args[1]).toBe('OpenAccessDataProvider');
     });
 });
