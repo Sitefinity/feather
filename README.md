@@ -51,6 +51,10 @@ This repository contains the core infrastructure related to the [Feather project
 
 [Use a single content item selector] (https://github.com/Sitefinity/feather/wiki/Use-a-single-content-item-selector)
 
+[How to use a news selector] (https://github.com/Sitefinity/feather/wiki/How-to-use-a-news-selector)
+
+[How to use a taxon selector] (https://github.com/Sitefinity/feather/wiki/How-to-use-a-taxon-selector)
+
 [Add related data to News widget] (https://github.com/Sitefinity/feather/wiki/Add-related-data-to-News-widget)
 
 # License Information
