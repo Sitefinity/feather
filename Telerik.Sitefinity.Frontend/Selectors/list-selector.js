@@ -38,6 +38,10 @@
                     this.setPartialTemplate = function (template) {
                         $scope.partialTemplate = template;
                     };
+
+                    this.setSelectorType = function (type) {
+                        $scope.selectorType = type;
+                    };
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -169,6 +173,14 @@
                         // ------------------------------------------------------------------------
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
+
+                        scope.$watch('provider', function (newProvider, oldProvider) {
+                            if (newProvider !== oldProvider) {
+                                if (scope.selectorType === 'NewsSelector') {
+                                    scope.selectedItem = null;
+                                }
+                            }
+                        });
 
                         var timeoutPromise = false;
                         var selectorId;
