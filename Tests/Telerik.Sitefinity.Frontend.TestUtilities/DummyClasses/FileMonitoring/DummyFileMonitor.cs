@@ -6,7 +6,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
     /// <summary>
     /// This class represents a dummy implementation of <see cref="Telerik.Sitefinity.Frontend.FilesMonitoring.FileMonitor"/> functionality to make it testable.
     /// </summary>
-    public class DummyFileMonitor : FileMonitor
+    internal class DummyFileMonitor : FileMonitor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyFileMonitor"/> class.

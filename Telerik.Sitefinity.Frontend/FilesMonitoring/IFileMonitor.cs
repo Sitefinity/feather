@@ -7,7 +7,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
     /// Classes that implement this interface must observe the resource locations, watch for changes 
     /// and take certain actions depending on the change.
     /// </summary>
-    public interface IFileMonitor : IDisposable
+    internal interface IFileMonitor : IDisposable
     {
         /// <summary>
         /// Starts this instance.

@@ -6,7 +6,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
     /// <summary>
     /// This class represents dummy implementation of <see cref="Telerik.Sitefinity.Frontend.FilesMonitoring.IFileManager" /> in order to test whether its methods are being invoked properly.
     /// </summary>
-    public class DummyResourceFileManager : IFileManager
+    internal class DummyResourceFileManager : IFileManager
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyResourceFileManager"/> class.

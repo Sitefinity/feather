@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the file operations that would trigger reactions during the file monitoring.
     /// </summary>
-    public enum FileChangeType
+    internal enum FileChangeType
     {
         Created,
         Deleted,

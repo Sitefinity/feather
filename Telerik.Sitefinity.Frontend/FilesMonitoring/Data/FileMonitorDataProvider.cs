@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
     /// Represents the data provider for the file monitoring functionality.
     /// </summary>
     [Telerik.Microsoft.Practices.Unity.InterceptionExtension.ApplyNoPolicies]
-    public abstract class FileMonitorDataProvider : DataProviderBase
+    internal abstract class FileMonitorDataProvider : DataProviderBase
     {
         #region Public methods
 
