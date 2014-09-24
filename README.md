@@ -13,61 +13,75 @@ This repository contains the core infrastructure related to the [Feather project
 
 # Documentation
 
-[Getting Started](https://github.com/Sitefinity/feather/wiki/Getting-Started)
+### Introduction
 
-[FAQ](https://github.com/Sitefinity/feather/wiki/FAQ)
+   * [Getting Started](https://github.com/Sitefinity/feather/wiki/Getting-Started)
 
-[Create a MVC List widget](https://github.com/Sitefinity/feather/wiki/Create-a-MVC-List-widget)
+   * [FAQ](https://github.com/Sitefinity/feather/wiki/FAQ)
 
-[Change MVC widget templates](https://github.com/Sitefinity/feather/wiki/Change-MVC-widget-templates)
+### Tutorials
 
-[Create a layout file](https://github.com/Sitefinity/feather/wiki/Create-a-layout-file)
+   * [Create a MVC List widget](https://github.com/Sitefinity/feather/wiki/Create-a-MVC-List-widget)
 
-[Feather resource packages](https://github.com/Sitefinity/feather/wiki/Feather-resource-packages)
+### Packages and layout files
 
-[Page templates based on layout files with Feather](https://github.com/Sitefinity/feather/wiki/Page-templates-based-on-layout-files-with-Feather)
+   * [Feather resource packages](https://github.com/Sitefinity/feather/wiki/Feather-resource-packages)
 
-[Refer to resources inside MVC views](https://github.com/Sitefinity/feather/wiki/Refer-to-resources-inside-MVC-views)
+   * [Create a layout file](https://github.com/Sitefinity/feather/wiki/Create-a-layout-file)
 
-[VirtualFile structure explained](https://github.com/Sitefinity/feather/wiki/VirtualFile-structure-explained)
+   * [Page templates based on layout files with Feather](https://github.com/Sitefinity/feather/wiki/Page-templates-based-on-layout-files-with-Feather)
 
-[Create a “Hello World” MVC widget in a separate assembly](https://github.com/Sitefinity/feather/wiki/Create-a-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-a-separate-assembly)
+   * [Add customizable grid controls based on simple HTML] (https://github.com/Sitefinity/feather/wiki/Add-customizable-grid-controls-based-on-simple-HTML)
 
-[Create a custom designer view](https://github.com/Sitefinity/feather/wiki/Create-a-custom-designer-view)
+### Widgets
 
-[Extend widget designer with additional client logic](https://github.com/Sitefinity/feather/wiki/Extend-widget-designer-with-additional-client-logic)
+   * [Create a “Hello World” MVC widget in a separate assembly](https://github.com/Sitefinity/feather/wiki/Create-a-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-a-separate-assembly)
 
-[Add custom commands for editing widget with Feather ](https://github.com/Sitefinity/feather/wiki/Add-custom-commands-for-editing-widget-with-Feather)
+   * [Change MVC widget templates](https://github.com/Sitefinity/feather/wiki/Change-MVC-widget-templates)
 
-[Use the old WebForms widget designer with Feather widgets](https://github.com/Sitefinity/feather/wiki/Use-the-old-WebForms-widget-designer-with-Feather-widgets)
+   * [Add related data to News widget] (https://github.com/Sitefinity/feather/wiki/Add-related-data-to-News-widget)
 
-[Use a custom widget designer window](https://github.com/Sitefinity/feather/wiki/Use-a-custom-widget-designer-window)
+   * [How to implement a Master Detail content controller] (https://github.com/Sitefinity/feather/wiki/How-to-implement-a-Master-Detail-content-controller)
 
-[Overriding the default widget designer buttons] (https://github.com/Sitefinity/feather/wiki/Overriding-the-default-widget-designer-buttons)
+   * [How to implement action that filters by category or tag] (https://github.com/Sitefinity/feather/wiki/How-to-implement-action-that-filters-by-category-or-tag)
 
-[Pass server data to widget designer views ] (https://github.com/Sitefinity/feather/wiki/Pass-server-data-to-widget-designer-views)
+   * [Helper methods for getting localized data] (https://github.com/Sitefinity/feather/wiki/Helper-methods-for-getting-localized-data)
 
-[Customize properties displayed inside the property editor ] (https://github.com/Sitefinity/feather/wiki/Customize-properties-displayed-inside-the-property-editor)
+   * [Helper methods for enabling the Inline Editing feature] (https://github.com/Sitefinity/feather/wiki/Helper-methods-for-enabling-the-Inline-Editing-feature)
 
-[Use a single content item selector] (https://github.com/Sitefinity/feather/wiki/Use-a-single-content-item-selector)
+### Widget designers
 
-[How to use a news selector] (https://github.com/Sitefinity/feather/wiki/How-to-use-a-news-selector)
+   * [Create a custom designer view](https://github.com/Sitefinity/feather/wiki/Create-a-custom-designer-view)
 
-[How to use a taxon selector] (https://github.com/Sitefinity/feather/wiki/How-to-use-a-taxon-selector)
+   * [Extend widget designer with additional client logic](https://github.com/Sitefinity/feather/wiki/Extend-widget-designer-with-additional-client-logic)
 
-[Add related data to News widget] (https://github.com/Sitefinity/feather/wiki/Add-related-data-to-News-widget)
+   * [Add custom commands for editing widget with Feather ](https://github.com/Sitefinity/feather/wiki/Add-custom-commands-for-editing-widget-with-Feather)
 
-[How to implement a Master Detail content controller] (https://github.com/Sitefinity/feather/wiki/How-to-implement-a-Master-Detail-content-controller)
+   * [Use the old WebForms widget designer with Feather widgets](https://github.com/Sitefinity/feather/wiki/Use-the-old-WebForms-widget-designer-with-Feather-widgets)
 
-[How to implement action that filters by category or tag] (https://github.com/Sitefinity/feather/wiki/How-to-implement-action-that-filters-by-category-or-tag)
+   * [Use a custom widget designer window](https://github.com/Sitefinity/feather/wiki/Use-a-custom-widget-designer-window)
 
-[Helper methods for getting localized data] (https://github.com/Sitefinity/feather/wiki/Helper-methods-for-getting-localized-data)
+   * [Overriding the default widget designer buttons] (https://github.com/Sitefinity/feather/wiki/Overriding-the-default-widget-designer-buttons)
 
-[Helper methods for enabling the Inline Editing feature] (https://github.com/Sitefinity/feather/wiki/Helper-methods-for-enabling-the-Inline-Editing-feature)
+   * [Pass server data to widget designer views ] (https://github.com/Sitefinity/feather/wiki/Pass-server-data-to-widget-designer-views)
 
-[Add customizable grid controls based on simple HTML] (https://github.com/Sitefinity/feather/wiki/Add-customizable-grid-controls-based-on-simple-HTML)
+   * [Adding predefined styles to widget] (https://github.com/Sitefinity/feather/wiki/Adding-predefined-styles-to-widget)
 
-[Adding predefined styles to widget] (https://github.com/Sitefinity/feather/wiki/Adding-predefined-styles-to-widget)
+   * [Customize properties displayed inside the property editor ] (https://github.com/Sitefinity/feather/wiki/Customize-properties-displayed-inside-the-property-editor)
+
+### Selectors
+
+   * [Use a single content item selector] (https://github.com/Sitefinity/feather/wiki/Use-a-single-content-item-selector)
+
+   * [Use a news selector] (https://github.com/Sitefinity/feather/wiki/Use-a-news-selector)
+
+   * [Use a taxon selector] (https://github.com/Sitefinity/feather/wiki/Use-a-taxon-selector)
+
+### Advanced
+
+   * [Refer to resources inside MVC views](https://github.com/Sitefinity/feather/wiki/Refer-to-resources-inside-MVC-views)
+
+   * [VirtualFile structure explained](https://github.com/Sitefinity/feather/wiki/VirtualFile-structure-explained)
 
 # License Information
 
