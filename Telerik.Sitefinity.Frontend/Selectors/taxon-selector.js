@@ -35,6 +35,8 @@
                             }
                         };
 
+                        ctrl.setSelectorType('TaxonSelector');
+
                         ctrl.templateUrl = 'Selectors/taxon-selector.html';
                         ctrl.setPartialTemplate('taxon-selector-template');
                     }
