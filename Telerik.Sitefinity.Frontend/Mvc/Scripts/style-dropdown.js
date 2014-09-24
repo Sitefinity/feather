@@ -5,13 +5,25 @@
 		        restrict: 'EA',
 		        scope: {
 		            selectedClass: '=',
-		            viewName: '@'
+		            viewName: '='
 		        },
 		        templateUrl: sitefinity.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'Mvc/Scripts/Templates/style-dropdown.html'),
 		        link: function (scope, element, attrs) {
 		            scope.cssClasses = [];
+		            var allCssClasses;
+
+		            scope.$watch(
+                        'viewName',
+                        function (newViewName, oldViewName) {
+                            if ((newViewName !== oldViewName) && allCssClasses) {
+                                scope.cssClasses = allCssClasses[newViewName];
+                            }
+                        },
+                        true
+                    );
+
 		            try {
-		                var allCssClasses = $injector.get('cssClasses');
+		                allCssClasses = $injector.get('cssClasses');
 
 		                if (scope.viewName && allCssClasses)
 		                    scope.cssClasses = allCssClasses[scope.viewName];
