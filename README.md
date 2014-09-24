@@ -19,22 +19,10 @@ This repository contains the core infrastructure related to the [Feather project
 
    * [FAQ](https://github.com/Sitefinity/feather/wiki/FAQ)
 
-### Tutorials
-
-   * [Create a MVC List widget](https://github.com/Sitefinity/feather/wiki/Create-a-MVC-List-widget)
-
-### Packages and layout files
-
-   * [Feather resource packages](https://github.com/Sitefinity/feather/wiki/Feather-resource-packages)
-
-   * [Create a layout file](https://github.com/Sitefinity/feather/wiki/Create-a-layout-file)
-
-   * [Page templates based on layout files with Feather](https://github.com/Sitefinity/feather/wiki/Page-templates-based-on-layout-files-with-Feather)
-
-   * [Add customizable grid controls based on simple HTML] (https://github.com/Sitefinity/feather/wiki/Add-customizable-grid-controls-based-on-simple-HTML)
-
 ### Widgets
 
+   * [Create a MVC List widget](https://github.com/Sitefinity/feather/wiki/Create-a-MVC-List-widget)
+  
    * [Create a “Hello World” MVC widget in a separate assembly](https://github.com/Sitefinity/feather/wiki/Create-a-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-a-separate-assembly)
 
    * [Change MVC widget templates](https://github.com/Sitefinity/feather/wiki/Change-MVC-widget-templates)
@@ -76,6 +64,17 @@ This repository contains the core infrastructure related to the [Feather project
    * [Use a news selector] (https://github.com/Sitefinity/feather/wiki/Use-a-news-selector)
 
    * [Use a taxon selector] (https://github.com/Sitefinity/feather/wiki/Use-a-taxon-selector)
+
+### Packages and layout files
+
+   * [Feather resource packages](https://github.com/Sitefinity/feather/wiki/Feather-resource-packages)
+
+   * [Create a layout file](https://github.com/Sitefinity/feather/wiki/Create-a-layout-file)
+
+   * [Page templates based on layout files with Feather](https://github.com/Sitefinity/feather/wiki/Page-templates-based-on-layout-files-with-Feather)
+
+   * [Add customizable grid controls based on simple HTML] (https://github.com/Sitefinity/feather/wiki/Add-customizable-grid-controls-based-on-simple-HTML)
+
 
 ### Advanced
 
