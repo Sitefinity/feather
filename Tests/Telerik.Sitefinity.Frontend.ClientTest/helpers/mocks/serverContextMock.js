@@ -32,4 +32,8 @@
 
         return applicationPath + path;
     };
+
+    sitefinity.appendPackageParameter = function (url) {
+        return url;
+    };
 })();

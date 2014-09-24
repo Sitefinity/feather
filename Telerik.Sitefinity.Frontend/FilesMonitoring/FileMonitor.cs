@@ -13,7 +13,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
     /// <summary>
     ///  This class manages the file monitoring and is responsible to fire events on changes in the observed file structure.
     /// </summary>
-    public class FileMonitor : IFileMonitor
+    internal class FileMonitor : IFileMonitor
     {
         #region IFileMonitor methods
 

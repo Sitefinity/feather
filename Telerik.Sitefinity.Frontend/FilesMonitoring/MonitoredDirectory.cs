@@ -6,7 +6,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
     /// <summary>
     /// This class represents DTO for working with monitored directories.
     /// </summary>
-    public class MonitoredDirectory : IEqualityComparer<MonitoredDirectory>
+    internal class MonitoredDirectory : IEqualityComparer<MonitoredDirectory>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MonitoredDirectory"/> class.

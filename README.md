@@ -57,6 +57,18 @@ This repository contains the core infrastructure related to the [Feather project
 
 [Add related data to News widget] (https://github.com/Sitefinity/feather/wiki/Add-related-data-to-News-widget)
 
+[How to implement a Master Detail content controller] (https://github.com/Sitefinity/feather/wiki/How-to-implement-a-Master-Detail-content-controller)
+
+[How to implement action that filters by category or tag] (https://github.com/Sitefinity/feather/wiki/How-to-implement-action-that-filters-by-category-or-tag)
+
+[Helper methods for getting localized data] (https://github.com/Sitefinity/feather/wiki/Helper-methods-for-getting-localized-data)
+
+[Helper methods for enabling the Inline Editing feature] (https://github.com/Sitefinity/feather/wiki/Helper-methods-for-enabling-the-Inline-Editing-feature)
+
+[Add customizable grid controls based on simple HTML] (https://github.com/Sitefinity/feather/wiki/Add-customizable-grid-controls-based-on-simple-HTML)
+
+[Adding predefined styles to widget] (https://github.com/Sitefinity/feather/wiki/Adding-predefined-styles-to-widget)
+
 # License Information
 
 This project has been released under the Apache License, version 2.0, the text of which is included below. This license applies ONLY to the project-specific source of each repository and does not extend to Telerik Sitefinity CMS itself, or any other 3rd party libraries used in a repository. For licensing information about Telerik Sitefinity CMS, see the [License Agreements page](http://www.sitefinity.com/purchase/license-agreement) at [Sitefinity.com](http://www.sitefinity.com/).

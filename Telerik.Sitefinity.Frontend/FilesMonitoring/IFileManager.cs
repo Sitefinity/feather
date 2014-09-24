@@ -3,7 +3,7 @@
     /// <summary>
     /// Classes that implement this interface should define the Sitefinity's behavior when a file is moved over the application folder structure.
     /// </summary>
-    public interface IFileManager
+    internal interface IFileManager
     {
         /// <summary>
         /// Reacts when a file is added to the folder.
