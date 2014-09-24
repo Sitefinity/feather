@@ -186,6 +186,7 @@
     <Compile Include="Mvc\Helpers\CustomFieldsHelpers.cs" />
     <Compile Include="Mvc\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
+    <Compile Include="Mvc\Helpers\SitefinityContext.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\CustomTaxonomyViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
