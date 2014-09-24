@@ -10,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
     /// <summary>
     /// Represents the data manager for the file monitoring functionality.
     /// </summary>
-    public class FileMonitorDataManager : ManagerBase<FileMonitorDataProvider>
+    internal class FileMonitorDataManager : ManagerBase<FileMonitorDataProvider>
     {
         #region Constructors
         /// <summary>

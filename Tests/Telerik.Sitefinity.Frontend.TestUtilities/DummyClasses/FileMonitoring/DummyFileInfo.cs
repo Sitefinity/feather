@@ -5,7 +5,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
     /// <summary>
     /// This class represents dummy DTO which contains file details.
     /// </summary>
-    public class DummyFileInfo
+    internal class DummyFileInfo
     {
         #region Constructor
 

@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
     /// <summary>
     /// This class contains logic for configuring the file monitoring functionality. 
     /// </summary>
-    public class FileMonitoringInitializer
+    internal class FileMonitoringInitializer
     {
         /// <summary>
         /// Initializes and configure file monitoring functionality.
