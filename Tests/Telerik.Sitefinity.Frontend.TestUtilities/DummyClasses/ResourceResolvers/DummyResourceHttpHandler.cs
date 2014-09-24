@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
     /// This class mocks the functionality of <see cref="Telerik.Sitefinity.Frontend.Resources.ResourceHttpHandler" /> for
     /// test purposes.
     /// </summary>
-    public class DummyResourceHttpHandler : ResourceHttpHandler
+    internal class DummyResourceHttpHandler : ResourceHttpHandler
     {
         #region Fields
 

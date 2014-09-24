@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// <summary>
     /// This class is an HttpHandler that is used for delivering files from a virtual path.
     /// </summary>
-    public class ResourceHttpHandler : IHttpHandler
+    internal class ResourceHttpHandler : IHttpHandler
     {
         #region IHttpHandler
 

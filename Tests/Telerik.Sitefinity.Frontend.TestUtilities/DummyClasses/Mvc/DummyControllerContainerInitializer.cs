@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
     /// <summary>
     /// This class represents dummy extension of  <see cref="Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.ControllerContainerInitializer"/> used for test purposes only.
     /// </summary>
-    public class DummyControllerContainerInitializer : ControllerContainerInitializer
+    internal class DummyControllerContainerInitializer : ControllerContainerInitializer
     {
         /// <summary>
         /// A function that will be called through <see cref="RetrieveAssembies"/> method.

@@ -7,7 +7,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// <summary>
     /// This class contains logic for registration and initialization of the layouts.
     /// </summary>
-    public class LayoutInitializer
+    internal class LayoutInitializer
     {
         /// <summary>
         /// Registers the types and resolvers related to the layouts functionality.
