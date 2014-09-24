@@ -57,7 +57,7 @@ This repository contains the core infrastructure related to the [Feather project
 
    * [Customize properties displayed inside the property editor ] (https://github.com/Sitefinity/feather/wiki/Customize-properties-displayed-inside-the-property-editor)
 
-### Selectors
+### Content selectors
 
    * [Use a single content item selector] (https://github.com/Sitefinity/feather/wiki/Use-a-single-content-item-selector)
 
