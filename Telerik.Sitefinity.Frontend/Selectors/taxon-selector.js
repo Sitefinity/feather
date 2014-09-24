@@ -30,7 +30,7 @@
                                 ctrl.updateSelectedItem(data);
                             }
 
-                            if (!ctrl.getSelelectedItemId()) {
+                            if (!ctrl.getSelectedItemId()) {
                                 ctrl.updateSelectedItemId(data.Id);
                             }
                         };
