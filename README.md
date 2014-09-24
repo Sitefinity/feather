@@ -1,7 +1,7 @@
 The Feather Project
 =======
 
-This repository contains the core infrastructure related to the [Feather project](http://projectfeather.sitefinity.com).
+This repository contains the core infrastructure related to [Project Feather](http://projectfeather.sitefinity.com).
 
 # Related Repositories
 
