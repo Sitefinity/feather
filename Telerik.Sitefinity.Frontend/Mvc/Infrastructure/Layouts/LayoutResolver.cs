@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// <summary>
     /// This class is responsible for the operations concerning the resolving of the layout pages.  
     /// </summary>
-    public class LayoutResolver : ILayoutResolver
+    internal class LayoutResolver : ILayoutResolver
     {
         /// <summary>
         /// Resolves the layout virtual path and ensures that file exist on the specified location.

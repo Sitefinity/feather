@@ -24,7 +24,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
     /// <summary>
     /// This class contains logic for locating and initializing controllers.
     /// </summary>
-    public class ControllerContainerInitializer
+    internal class ControllerContainerInitializer
     {
         #region Public members
 

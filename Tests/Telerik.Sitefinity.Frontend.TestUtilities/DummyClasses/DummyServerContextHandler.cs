@@ -6,7 +6,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses
     /// <summary>
     /// This class extends the functionality of <see cref="Telerik.Sitefinity.Frontend.Resources.ServerContextHandler"/> . Used for test purposes.
     /// </summary>
-    public class DummyServerContextHandler : ServerContextHandler
+    internal class DummyServerContextHandler : ServerContextHandler
     {
         /// <summary>
         /// Function to override the original GetRawScript method.

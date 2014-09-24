@@ -13,7 +13,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// <summary>
     /// This class is responsible for resolving virtual paths for the layout templates. 
     /// </summary>
-    public class LayoutVirtualPathBuilder
+    internal class LayoutVirtualPathBuilder
     {
         #region Public members
 

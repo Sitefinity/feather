@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend
     /// <summary>
     /// This class manages instances of classes that are that are used to integrate the web application with the MVC framework.
     /// </summary>
-    public static class FrontendManager
+    internal static class FrontendManager
     {
         /// <summary>
         /// Gets an instance of the virtual path builder.

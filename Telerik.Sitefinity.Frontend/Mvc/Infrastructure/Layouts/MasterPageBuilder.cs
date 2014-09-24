@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// <summary>
     /// This class is appends all additional data to the html of the layout template. This required header elements, scripts, stylesheets, form tags, etc.
     /// </summary>
-    public class MasterPageBuilder
+    internal class MasterPageBuilder
     {
         #region Public methods
 

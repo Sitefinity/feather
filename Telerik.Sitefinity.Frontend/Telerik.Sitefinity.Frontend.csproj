@@ -258,7 +258,6 @@
     <Compile Include="FrontendService.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\PageDataViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\ProfileViewModel.cs" />
-    <Compile Include="Mvc\Helpers\SitefinityContext.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\SiteViewModel.cs" />
     <Compile Include="Mvc\Helpers\SocialShareHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\FrontendControllerFactory.cs" />
@@ -436,7 +435,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

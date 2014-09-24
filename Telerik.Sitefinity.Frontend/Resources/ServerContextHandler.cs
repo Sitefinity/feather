@@ -10,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// <summary>
     /// Instances of this class represent an HTTP handler that returns JavaScript containing dependencies to the server.
     /// </summary>
-    public class ServerContextHandler : IHttpHandler
+    internal class ServerContextHandler : IHttpHandler
     {
         /// <summary>
         /// Gets a value indicating whether another request can use the <see cref="T:System.Web.IHttpHandler" /> instance.

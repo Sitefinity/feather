@@ -113,7 +113,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
                         new HttpResponse(null)));
 
             // Act: Get the package name from the request URL query string 
-            SystemManager.RunWithHttpContext(context, () => { packageName = packageManager.GetPackageFromUrl(); });
+            SystemManager.RunWithHttpContext(context, () => { packageName = packageManager.GetCurrentPackage(); });
 
             // Assert: Verify if the manager properly strips all invalid characters
             Assert.AreEqual("testPackageName", packageName, "The package name was not resolved correctly");

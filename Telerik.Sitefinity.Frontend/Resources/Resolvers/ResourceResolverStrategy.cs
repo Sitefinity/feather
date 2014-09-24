@@ -10,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// <summary>
     /// This class implements a strategy for handling resource resolving.
     /// </summary>
-    public class ResourceResolverStrategy : IResourceResolverStrategy
+    internal class ResourceResolverStrategy : IResourceResolverStrategy
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceResolverStrategy"/> class.

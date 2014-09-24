@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// <summary>
     /// This class builds the layout master page by using the Mvc view engines.
     /// </summary>
-    public class LayoutRenderer
+    internal class LayoutRenderer
     {
         #region Public methods
 

@@ -11,7 +11,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.GridSystem
     /// <summary>
     /// This class is used to fake the functionality of <see cref="Telerik.Sitefinity.Frontend.GridSystem.GridSystemInitializer"/> class to expose its protected methods for testing purposes.
     /// </summary>
-    public class DummyGridSystemInitializer : GridSystemInitializer
+    internal class DummyGridSystemInitializer : GridSystemInitializer
     {
         /// <inheritdoc />
         public ToolboxSection PublicCreateToolBoxSection(ToolboxesConfig toolboxConfig)
