@@ -7,7 +7,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
     /// This class represents a JSON configuration for designer views.
     /// </summary>
     [DataContract]
-    public class DesignerViewConfigModel
+    internal class DesignerViewConfigModel
     {
         /// <summary>
         /// Gets or sets the priority.

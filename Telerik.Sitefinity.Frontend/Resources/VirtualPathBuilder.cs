@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// <summary>
     /// This class contains methods that define the virtual paths of assemblies.
     /// </summary>
-    public class VirtualPathBuilder
+    internal class VirtualPathBuilder
     {
         /// <summary>
         /// Gets the virtual path of the assembly of a type.

@@ -11,7 +11,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
     /// <summary>
     /// This class fakes the <see cref="Telerik.Sitefinity.Frontend.Resources.Resolvers.ResourceResolverNode"/> for test purposes.
     /// </summary>
-    public class DummyResourceResolverNode : ResourceResolverNode
+    internal class DummyResourceResolverNode : ResourceResolverNode
     {
         /// <inheritdoc />
         protected override bool CurrentExists(PathDefinition definition, string virtualPath)

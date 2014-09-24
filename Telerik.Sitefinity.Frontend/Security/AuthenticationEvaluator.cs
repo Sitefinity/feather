@@ -5,7 +5,7 @@ namespace Telerik.Sitefinity.Frontend.Security
     /// <summary>
     /// This class provides logic for evaluating whether a user is authenticated.
     /// </summary>
-    public class AuthenticationEvaluator
+    internal class AuthenticationEvaluator
     {
         /// <summary>
         /// Makes sure that the current user is logged on and has rights to access the Sitefinity backend. If not, an exception will be thrown.

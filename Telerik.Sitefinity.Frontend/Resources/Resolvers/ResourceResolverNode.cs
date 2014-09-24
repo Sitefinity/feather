@@ -12,7 +12,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// <summary>
     /// This class implements a node in a resource resolver chain.
     /// </summary>
-    public abstract class ResourceResolverNode : IResourceResolverNode
+    internal abstract class ResourceResolverNode : IResourceResolverNode
     {
         #region IResourceResolverNode
 

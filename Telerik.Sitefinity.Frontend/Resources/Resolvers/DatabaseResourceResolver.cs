@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// <summary>
     /// This class implements a resource resolver node that gets resources from the database.
     /// </summary>
-    public class DatabaseResourceResolver : ResourceResolverNode
+    internal class DatabaseResourceResolver : ResourceResolverNode
     {
         /// <inheritdoc />
         protected override bool CurrentExists(PathDefinition definition, string virtualPath)

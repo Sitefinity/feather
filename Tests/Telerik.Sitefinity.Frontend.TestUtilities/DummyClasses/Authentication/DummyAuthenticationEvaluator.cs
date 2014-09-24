@@ -6,7 +6,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Authentication
     /// <summary>
     /// This class simulates the behavior of an <see cref="Telerik.Sitefinity.Frontend.Security.AuthenticationEvaluator"/> and is intended to be used for testing purposes only.
     /// </summary>
-    public class DummyAuthenticationEvaluator : AuthenticationEvaluator
+    internal class DummyAuthenticationEvaluator : AuthenticationEvaluator
     {
         /// <summary>
         /// Get Defines whether current user is backend user.

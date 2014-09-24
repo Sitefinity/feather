@@ -11,7 +11,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
     /// <summary>
     /// This class extends the functionality of <see cref="Telerik.Sitefinity.Frontend.Resources.Resolvers.DatabaseResourceResolver"/> . Used for test purposes.
     /// </summary>
-    public class DummyDatabaseResourceResolver : DatabaseResourceResolver
+    internal class DummyDatabaseResourceResolver : DatabaseResourceResolver
     {
         /// <summary>
         /// The control presentation result

@@ -12,7 +12,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// <summary>
     /// This class is responsible for locating and resolving of the Layouts.
     /// </summary>
-    public class LayoutVirtualFileResolver : IHashedVirtualFileResolver
+    internal class LayoutVirtualFileResolver : IHashedVirtualFileResolver
     {
         #region Public methods
 

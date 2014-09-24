@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
     /// <summary>
     /// This class contains logic for initializing the MVC designer.
     /// </summary>
-    public class DesignerInitializer
+    internal class DesignerInitializer
     {
         /// <summary>
         /// Initializes the MVC designer.

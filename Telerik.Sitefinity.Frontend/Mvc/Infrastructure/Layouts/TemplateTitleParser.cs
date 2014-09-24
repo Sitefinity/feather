@@ -11,7 +11,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// <summary>
     /// This class is responsible for resolving the actual file name of the layout used for template based on convention.
     /// </summary>
-    public class TemplateTitleParser
+    internal class TemplateTitleParser
     {
         #region Public methods
 

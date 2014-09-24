@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
     /// <summary>
     /// This class is used as a model for the designer controller.
     /// </summary>
-    public class DesignerModel : IDesignerModel
+    internal class DesignerModel : IDesignerModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DesignerModel"/> class.
