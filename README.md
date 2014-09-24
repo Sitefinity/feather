@@ -1,7 +1,7 @@
 The Feather Project
 =======
 
-This repository contains the core infrastructure related to the [Feather project](http://projectfeather.sitefinity.com). Note that the current implementation is not final, that it is a subject to changes as well as breaking API changes and should not be used in production.
+This repository contains the core infrastructure related to [Project Feather](http://projectfeather.sitefinity.com).
 
 # Related Repositories
 
@@ -57,7 +57,7 @@ This repository contains the core infrastructure related to the [Feather project
 
    * [Customize properties displayed inside the property editor ] (https://github.com/Sitefinity/feather/wiki/Customize-properties-displayed-inside-the-property-editor)
 
-### Selectors
+### Content selectors
 
    * [Use a single content item selector] (https://github.com/Sitefinity/feather/wiki/Use-a-single-content-item-selector)
 
