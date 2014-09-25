@@ -41,6 +41,9 @@ module.exports = function (grunt) {
 	  'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
 				options: {
 					specs: ['Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/**/*.js'],
+					junit: {
+						path: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/TestResults'
+						},
 					template: require('grunt-template-jasmine-istanbul'),
 					templateOptions: {
 						coverage: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/coverage/coverage.json',
@@ -48,6 +51,17 @@ module.exports = function (grunt) {
 							{type: 'html', options: {dir: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/coverage'}},
 							{type: 'cobertura', options: {dir: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/coverage/cobertura'}},
 							{type: 'text-summary'}
+						],
+						files:[
+						'Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js',
+					    'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
+					    'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
+					    'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
+					    'Telerik.Sitefinity.Frontend/Services/*.js',
+					    'Telerik.Sitefinity.Frontend/Selectors/*.js',
+					    '!Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/**',
+					    '!Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js',
+					    'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'
 						]
 					}
 				}
