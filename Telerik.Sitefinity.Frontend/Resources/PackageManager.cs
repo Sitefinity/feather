@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Web.Hosting;
+using System.Web.Routing;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
@@ -183,7 +184,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (context.Items.Contains("IsTemplate") &&
                 (bool)context.Items["IsTemplate"])
             {
-                var keys = context.Request.RequestContext.RouteData.Values["Params"] as string[];
+                var requestContext = context.Items[RouteHandler.RequestContextKey] as RequestContext ?? context.Request.RequestContext;
+                var keys = requestContext.RouteData.Values["Params"] as string[];
                 var templateId = keys != null && keys.Length > 0 ? keys[0] : null;
                 packageName = this.GetPackageFromTemplateId(templateId);
             }
