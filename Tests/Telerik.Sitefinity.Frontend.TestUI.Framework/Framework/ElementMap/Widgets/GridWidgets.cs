@@ -1,11 +1,11 @@
-﻿using ArtOfTest.WebAii.Controls.HtmlControls;
-using ArtOfTest.WebAii.Core;
-using ArtOfTest.WebAii.TestTemplates;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArtOfTest.WebAii.Controls.HtmlControls;
+using ArtOfTest.WebAii.Core;
+using ArtOfTest.WebAii.TestTemplates;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
 {
@@ -34,6 +34,5 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
                 return this.Get<HtmlSpan>("tagname=span", "InnerText=Bootstrap grid widgets");
             }
         }
-
     }
 }

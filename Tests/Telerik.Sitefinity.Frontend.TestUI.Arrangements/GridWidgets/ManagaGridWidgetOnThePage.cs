@@ -9,9 +9,9 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// AddGridWidgetOnThePage arragement.
+    /// ManageGridWidgetOnThePage arragement.
     /// </summary>
-    public class AddGridWidgetOnThePage : ITestArrangement
+    public class ManageGridWidgetOnThePage : ITestArrangement
     {
         /// <summary>
         /// Server side set up. 
