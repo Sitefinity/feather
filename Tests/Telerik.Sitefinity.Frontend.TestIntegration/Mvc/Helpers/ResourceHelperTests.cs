@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using MbUnit.Framework;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
-using Telerik.Sitefinity.Frontend.TestIntegration;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations.ActionFilters;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
@@ -76,7 +76,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         [Test]
         [Author("EGaneva")]
         [Description("Ensures that a JavaScript is registered only in ScriptManager for pure MVC pages.")]
-        [Ignore("Ignored due to infrastructural changes, until the test is fixed")]
         public void RegisterScript_PureMvcPage_AddedOnce()
         {
             string testName = "RegisterScript";
@@ -84,22 +83,38 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
             string urlName = testName + "PureMvcPage";
             string pageUrl = UrlPath.ResolveAbsoluteUrl("~/" + urlName);
 
-            var pageManger = PageManager.GetManager();
-            var template = pageManger.GetTemplates().Where(t => t.Title == "Foundation.default").FirstOrDefault();
+            var pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
 
-            Assert.IsNotNull(template, "Template was not found");
+            try
+            {
+                string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(ResourcePackages.Constants.PackageName, ResourcePackages.Constants.LayoutFileName);
+                FeatherServerOperations.ResourcePackages().AddNewResource(ResourcePackages.Constants.LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
 
-            this.AddDummyScriptControllerToPage(pageTitle, urlName, template, "Contentplaceholder1");
+                var template = pageManager.GetTemplates().Where(t => t.Title == ResourcePackages.Constants.TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
 
-            WebRequestHelper.GetPageWebContent(pageUrl);
+                this.AddDummyScriptControllerToPage(pageTitle, urlName, template, "TestPlaceHolder");
 
-            Assert.AreEqual(2, ActionExecutionRegister.ExecutedActionInfos.Count, "The actions are not executed correctly.");
+                WebRequestHelper.GetPageWebContent(pageUrl);
 
-            var result1 = ActionExecutionRegister.ExecutedActionInfos[0].Result as ContentResult;
-            Assert.IsTrue(Regex.IsMatch(result1.Content, "<script src=\".*\" type=\"text/javascript\"></script>"), "The script is not added.");
+                Assert.AreEqual(2, ActionExecutionRegister.ExecutedActionInfos.Count, "The actions are not executed correctly.");
 
-            var result2 = ActionExecutionRegister.ExecutedActionInfos[1].Result as ContentResult;
-            Assert.IsTrue(string.IsNullOrEmpty(result2.Content), "The script should not be added twice.");
+                var result1 = ActionExecutionRegister.ExecutedActionInfos[0].Result as ContentResult;
+                Assert.IsTrue(Regex.IsMatch(result1.Content, "<script src=\".*\" type=\"text/javascript\"></script>"), "The script is not added.");
+
+                var result2 = ActionExecutionRegister.ExecutedActionInfos[1].Result as ContentResult;
+                Assert.IsTrue(string.IsNullOrEmpty(result2.Content), "The script should not be added twice.");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(ResourcePackages.Constants.TemplateTitle);
+
+                string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(ResourcePackages.Constants.PackageName, ResourcePackages.Constants.LayoutFileName);
+                File.Delete(filePath);
+            }         
         }
 
         #endregion
