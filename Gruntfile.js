@@ -19,28 +19,34 @@ module.exports = function (grunt) {
 		
 		jasmine: {
 			unit:{
-				src: ['Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/jquery-1.8.3.min.js',
-	  'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js',
-	  'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-resource.js',
-      'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-route.js',
-      'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js',
-	  'Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js',
-	  'Telerik.Sitefinity.Frontend/MVC/Scripts/Bootstrap/js/*.js',
-	  'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
-	  'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
-	  'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
-      'Telerik.Sitefinity.Frontend/Services/services.js',
-	  'Telerik.Sitefinity.Frontend/Services/news-item-service.js',
-	  'Telerik.Sitefinity.Frontend/Services/flat-taxon-service.js',
-	  'Telerik.Sitefinity.Frontend/Selectors/selectors.js',
-	  'Telerik.Sitefinity.Frontend/Selectors/list-selector.js',
-	  'Telerik.Sitefinity.Frontend/Selectors/news-selector.js',
-	  'Telerik.Sitefinity.Frontend/Selectors/taxon-selector.js',
-      '!Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/**',
-	  '!Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js',
-	  'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
+				src: [
+				'Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js',
+				'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
+				'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
+				'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
+				'Telerik.Sitefinity.Frontend/Services/services.js',
+				'Telerik.Sitefinity.Frontend/Services/news-item-service.js',
+				'Telerik.Sitefinity.Frontend/Services/flat-taxon-service.js',
+				'Telerik.Sitefinity.Frontend/Selectors/selectors.js',
+				'Telerik.Sitefinity.Frontend/Selectors/list-selector.js',
+				'Telerik.Sitefinity.Frontend/Selectors/news-selector.js',
+				'Telerik.Sitefinity.Frontend/Selectors/taxon-selector.js',
+				'!Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js',
+				'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
 				options: {
+					vendor:[
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/jquery-1.8.3.min.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-resource.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-route.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js',
+					'Telerik.Sitefinity.Frontend/MVC/Scripts/Bootstrap/js/*.js',
+					'!Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/**'
+					],
 					specs: ['Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/**/*.js'],
+					junit: {
+						path: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/TestResults'
+						},
 					template: require('grunt-template-jasmine-istanbul'),
 					templateOptions: {
 						coverage: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/coverage/coverage.json',
