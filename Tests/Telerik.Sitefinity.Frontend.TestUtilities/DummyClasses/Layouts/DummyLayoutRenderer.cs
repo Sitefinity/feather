@@ -12,7 +12,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Layouts
     /// <summary>
     /// This class fakes the <see cref="Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts.LayoutRenderer"/> class members in fake context. Used for test purposes only.
     /// </summary>
-    public class DummyLayoutRenderer : LayoutRenderer
+    internal class DummyLayoutRenderer : LayoutRenderer
     {
         #region Properties
 

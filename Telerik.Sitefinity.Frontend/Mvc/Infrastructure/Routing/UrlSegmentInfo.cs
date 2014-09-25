@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// This class represents information about single segment from the URL template.
     /// </summary>
-    public class UrlSegmentInfo
+    internal class UrlSegmentInfo
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UrlSegmentInfo"/> class.

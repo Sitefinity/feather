@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
     /// <summary>
     /// This class represents dummy implementation of <see cref="Telerik.Sitefinity.Frontend.Resources.Resolvers.ResourceResolverStrategy" /> in order to test whether its methods are being invoked properly.
     /// </summary>
-    public class DummyResolverStrategy : ResourceResolverStrategy
+    internal class DummyResolverStrategy : ResourceResolverStrategy
     {
         /// <summary>
         /// A function that will be called through <see cref="Exists"/> method.

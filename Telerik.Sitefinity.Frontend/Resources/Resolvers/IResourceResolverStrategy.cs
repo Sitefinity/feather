@@ -6,7 +6,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// <summary>
     /// Classes of that implement this interface should implement a strategy for handling resource resolving.
     /// </summary>
-    public interface IResourceResolverStrategy : IVirtualFileResolver
+    internal interface IResourceResolverStrategy : IVirtualFileResolver
     {
         /// <summary>
         /// Gets the first resolver.

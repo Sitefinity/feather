@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
     /// <summary>
     /// This class contains logic for resolving the designer responsible for the property editing of a widget.
     /// </summary>
-    public class DesignerResolver : IDesignerResolver
+    internal class DesignerResolver : IDesignerResolver
     {
         #region Public members
 

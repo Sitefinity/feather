@@ -27,6 +27,8 @@
                             }
                         };
 
+                        ctrl.setSelectorType('NewsSelector');
+
                         ctrl.templateUrl = 'Selectors/news-selector.html';
                         ctrl.setPartialTemplate('news-selector-template');
                     }

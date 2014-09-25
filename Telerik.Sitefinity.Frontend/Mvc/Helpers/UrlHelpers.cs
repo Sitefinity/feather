@@ -29,14 +29,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (contentPath.IsNullOrEmpty())
                 throw new ArgumentNullException("contentPath");
 
+            var packagesManager = new PackageManager();
+            var packageName = packagesManager.GetCurrentPackage();
+
             if (contentPath.StartsWith("~", StringComparison.Ordinal) || contentPath.StartsWith("/", StringComparison.Ordinal) || contentPath.Contains("://"))
-                return helper.Content(contentPath);
+            {
+                var url = UrlTransformations.AppendParam(contentPath, PackageManager.PackageUrlParameterName, packageName);
+                return helper.Content(url);
+            }
 
             if (helper.RequestContext.RouteData == null)
                 throw new InvalidOperationException("Could not resolve the given URL because RouteData of the current context is null.");
-
-            var packagesManager = new PackageManager();
-            var packageName = packagesManager.GetCurrentPackage();
 
             var contentResolvedPath = string.Empty;
 

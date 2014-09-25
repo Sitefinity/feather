@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// <summary>
     /// This class implements a resource resolver node that gets embedded resources from a specified assembly.
     /// </summary>
-    public class EmbeddedResourceResolver : ResourceResolverNode
+    internal class EmbeddedResourceResolver : ResourceResolverNode
     {
         /// <inheritdoc />
         protected override CacheDependency GetCurrentCacheDependency(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)

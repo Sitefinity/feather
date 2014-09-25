@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Hosting;
@@ -9,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// <summary>
     /// Instances of this class represent an HTTP handler that returns JavaScript containing dependencies to the server.
     /// </summary>
-    public class ServerContextHandler : IHttpHandler
+    internal class ServerContextHandler : IHttpHandler
     {
         /// <summary>
         /// Gets a value indicating whether another request can use the <see cref="T:System.Web.IHttpHandler" /> instance.
@@ -41,18 +42,20 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns>The processed script.</returns>
         protected virtual string GetScript()
         {
-            if (ServerContextHandler.cachedScript == null)
+            var currentPackage = new PackageManager().GetCurrentPackage() ?? string.Empty;
+
+            if (!ServerContextHandler.cachedScript.ContainsKey(currentPackage))
             {
                 lock (ServerContextHandler.scriptLock)
                 {
-                    if (ServerContextHandler.cachedScript == null)
+                    if (!ServerContextHandler.cachedScript.ContainsKey(currentPackage))
                     {
-                        ServerContextHandler.cachedScript = this.GetRawScript().Replace("{{applicationPath}}", this.GetApplicationPath());
+                        ServerContextHandler.cachedScript[currentPackage] = this.GetRawScript().Replace("{{applicationPath}}", this.GetApplicationPath()).Replace("{{currentPackage}}", currentPackage);
                     }
                 }
             }
 
-            return ServerContextHandler.cachedScript;
+            return ServerContextHandler.cachedScript[currentPackage];
         }
 
         /// <summary>
@@ -81,7 +84,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
         private static object scriptLock = new object();
 
-        private static string cachedScript;
+        private static IDictionary<string, string> cachedScript = new Dictionary<string, string>();
 
         private const string ScriptPath = "~/{0}Resources/ServerContext.js";
     }

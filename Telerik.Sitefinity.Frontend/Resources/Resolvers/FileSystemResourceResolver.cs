@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// <summary>
     /// This class implements a resource resolver node that gets resources from the file system.
     /// </summary>
-    public class FileSystemResourceResolver : ResourceResolverNode
+    internal class FileSystemResourceResolver : ResourceResolverNode
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileSystemResourceResolver"/> class.

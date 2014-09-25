@@ -41,71 +41,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Gets the package from the page template or from the Current PageSiteNode.
-        /// </summary>
-        /// <returns></returns>
-        public string GetPackageFromPageInfo()
-        {
-            string packageName;
-            var context = SystemManager.CurrentHttpContext;
-
-            if (context.Items.Contains("IsTemplate") &&
-                (bool)context.Items["IsTemplate"])
-            {
-                var keys = context.Request.RequestContext.RouteData.Values["Params"] as string[];
-                var templateId = keys != null && keys.Length > 0 ? keys[0] : null;
-                packageName = this.GetPackageFromTemplateId(templateId);
-            }
-            else
-            {
-                var currentNode = SiteMapBase.GetActualCurrentNode();
-                packageName = currentNode != null ? this.GetPackageFromNodeId(currentNode.Id.ToString()) : null;
-            }
-
-            return packageName;
-        }
-
-        /// <summary>
-        /// Gets the package from context parameters collection.
-        /// </summary>
-        /// <returns></returns>
-        public string GetPackageFromContext()
-        {
-            string packageName = null;
-            if (SystemManager.CurrentHttpContext.Items.Contains(PackageManager.CurrentPackageKey))
-            {
-                packageName = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] as string;
-            }
-
-            return packageName;
-        }
-
-        /// <summary>
-        /// Gets the package from the URL query string.
-        /// </summary>
-        /// <returns></returns>
-        public string GetPackageFromUrl()
-        {
-            string packageName = SystemManager.CurrentHttpContext.Request.QueryString["package"];
-
-            return packageName;
-        }
-
-        /// <summary>
-        /// Gets file name from title by stripping the incorrect characters.
-        /// </summary>
-        /// <param name="title">The title.</param>
-        public string StripInvalidCharacters(string title)
-        {
-            var result = System.Text.RegularExpressions.Regex.Replace(
-                title,
-                FileNameStripingRegexPattern, 
-                FileNameInvalidCharactersSubstitute);
-
-            return result;
-        }
-
-        /// <summary>
         /// Gets the package virtual path.
         /// </summary>
         /// <param name="packageName">Name of the package.</param>
@@ -151,6 +86,20 @@ namespace Telerik.Sitefinity.Frontend.Resources
         #endregion
 
         #region Private methods
+
+        /// <summary>
+        /// Gets file name from title by stripping the incorrect characters.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        internal string StripInvalidCharacters(string title)
+        {
+            var result = System.Text.RegularExpressions.Regex.Replace(
+                title,
+                FileNameStripingRegexPattern,
+                FileNameInvalidCharactersSubstitute);
+
+            return result;
+        }
 
         /// <summary>
         /// Gets the package from node identifier.
@@ -220,6 +169,57 @@ namespace Telerik.Sitefinity.Frontend.Resources
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets the package from the page template or from the Current PageSiteNode.
+        /// </summary>
+        /// <returns></returns>
+        private string GetPackageFromPageInfo()
+        {
+            string packageName;
+            var context = SystemManager.CurrentHttpContext;
+
+            if (context.Items.Contains("IsTemplate") &&
+                (bool)context.Items["IsTemplate"])
+            {
+                var keys = context.Request.RequestContext.RouteData.Values["Params"] as string[];
+                var templateId = keys != null && keys.Length > 0 ? keys[0] : null;
+                packageName = this.GetPackageFromTemplateId(templateId);
+            }
+            else
+            {
+                var currentNode = SiteMapBase.GetActualCurrentNode();
+                packageName = currentNode != null ? this.GetPackageFromNodeId(currentNode.Id.ToString()) : null;
+            }
+
+            return packageName;
+        }
+
+        /// <summary>
+        /// Gets the package from context parameters collection.
+        /// </summary>
+        /// <returns></returns>
+        private string GetPackageFromContext()
+        {
+            string packageName = null;
+            if (SystemManager.CurrentHttpContext.Items.Contains(PackageManager.CurrentPackageKey))
+            {
+                packageName = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] as string;
+            }
+
+            return packageName;
+        }
+
+        /// <summary>
+        /// Gets the package from the URL query string.
+        /// </summary>
+        /// <returns></returns>
+        private string GetPackageFromUrl()
+        {
+            string packageName = SystemManager.CurrentHttpContext.Request.QueryString["package"];
+
+            return packageName;
         }
 
         #endregion

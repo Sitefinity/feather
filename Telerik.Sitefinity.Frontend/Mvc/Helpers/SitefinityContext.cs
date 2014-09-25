@@ -65,9 +65,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         public static bool IsBackend
         {
-            get 
-            { 
-                return ControlExtensions.IsBackend(); 
+            get
+            {
+                return ControlExtensions.IsBackend();
             }
         }
 
