@@ -11,21 +11,21 @@ using Telerik.Sitefinity.TestUI.Framework.Wrappers.Backend.PageEditor;
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
 {
     /// <summary>
-    /// This is test class for grid widget on page.
+    /// This is test class for grid widget on page template.
     /// </summary>
     [TestClass]
-    public class ManageGridWidgetOnThePage_ : FeatherTestCase
+    public class ManageGridWidgetOnThePageTemplate_ : FeatherTestCase
     {
         /// <summary>
-        /// UI test ManageGridWidgetOnThePage
+        /// UI test ManageGridWidgetOnThePageTemplate
         /// </summary>
         [TestMethod,
        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Feather team"),
        TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void ManageGridWidgetOnThePage()
+        public void ManageGridWidgetOnThePageTemplate()
         {
-            BAT.Macros().NavigateTo().Pages();
-            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
+            BAT.Macros().NavigateTo().Design().PageTemplates();
+            BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
             BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropLayoutWidget(LayoutCaption);
@@ -34,8 +34,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
             BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount2);
             this.DeleteGridElement();
             BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount1);
-            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
-            this.VerifyGridWidgetOnTheFrontend();
+            this.DeleteGridElement();
+            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount0);
+            BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().PublishTemplate();
         }
 
         /// <summary>
@@ -61,41 +62,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         }
 
         /// <summary>
-        /// Verify grid widget on the frontend
-        /// </summary>
-        public void VerifyGridWidgetOnTheFrontend()
-        {
-            string[] layouts = new string[] { LayouClass1, LayouClass2 };
-
-            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
-            ActiveBrowser.WaitUntilReady();
-
-            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyGridWidgetOnTheFrontend(layouts);
-        }
-
-        /// <summary>
         /// Performs Server Setup and prepare the system with needed data.
         /// </summary>
         protected override void ServerSetup()
         {
             BAT.Macros().User().EnsureAdminLoggedIn();
-            BAT.Arrange(this.TestName).ExecuteSetUp();
         }
 
-        /// <summary>
-        /// Performs clean up and clears all data created by the test.
-        /// </summary>
-        protected override void ServerCleanup()
-        {
-            BAT.Arrange(this.TestName).ExecuteTearDown();
-        }
-
-        private const string PageName = "GridPage";
-        private const string LayoutCaption = "3 + 9";
-        private const string LayouClass1 = "col-md-3";
-        private const string LayouClass2 = "col-md-9";
+        private const string PageTemplateName = "Bootstrap.default";
         private const string DuplicateOperation = "Duplicate";
         private const string DeleteOperation = "Delete";
+        private const string LayoutCaption = "3 + 9";
+        private const int GridCount0 = 0;
         private const int GridCount1 = 1;
         private const int GridCount2 = 2;
     }
