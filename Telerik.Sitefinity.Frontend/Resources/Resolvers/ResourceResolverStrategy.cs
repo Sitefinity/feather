@@ -10,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// <summary>
     /// This class implements a strategy for handling resource resolving.
     /// </summary>
-    public class ResourceResolverStrategy : IResourceResolverStrategy
+    internal class ResourceResolverStrategy : IResourceResolverStrategy
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceResolverStrategy"/> class.
@@ -87,7 +87,6 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             var packagesManager = new PackageManager();
 
             this.SetFirst(new FileSystemResourceResolver(() => packagesManager.GetCurrentPackageVirtualPath()))
-                .SetNext(new DatabaseResourceResolver())
                 .SetNext(new FileSystemResourceResolver())
                 .SetNext(new EmbeddedResourceResolver());
         }

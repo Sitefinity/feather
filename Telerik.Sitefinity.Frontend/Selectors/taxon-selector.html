@@ -22,7 +22,7 @@
                     <span class="s-loading" style="display: inline-block; width: 30px;"></span>
                 </div>
             </div>
-            <div ng-hide="items.length || showLoadingIndicator">No items found</div>
+            <div ng-hide="items.length || showLoadingIndicator || !hideEndlessScrollLoadingIndicator">No items found</div>
             <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
         </div>
     </div>

@@ -20,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
     /// <summary>
     /// This class manages the behavior when a layout file is moved over the application folder structure.
     /// </summary>
-    public class LayoutFileManager : IFileManager
+    internal class LayoutFileManager : IFileManager
     {
         #region Properties
 

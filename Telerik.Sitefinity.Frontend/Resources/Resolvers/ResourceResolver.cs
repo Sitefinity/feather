@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// <remarks>
     /// This class is registered as a virtual file resolver in Sitefinity's VirtualPathManager.
     /// </remarks>
-    public class ResourceResolver : IVirtualFileResolver
+    internal class ResourceResolver : IVirtualFileResolver
     {
         /// <summary>
         /// Determines whether a file with the specified virtual path exists.

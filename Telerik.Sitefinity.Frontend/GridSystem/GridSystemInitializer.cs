@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
     /// <summary>
     /// This class contains logic for registering and initializing the grid controls.
     /// </summary>
-    public class GridSystemInitializer
+    internal class GridSystemInitializer
     {
         /// <summary>
         /// Registers the grid controls.

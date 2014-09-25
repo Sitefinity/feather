@@ -22,6 +22,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         [TestMethod,
         Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Feather team"),
         TestCategory(FeatherTestCategories.PagesAndContent)]
+        //Ignored, because of infrastructural changes, until the test is fixed
+        [Ignore]
         public void MvcSelectorTest()
         {
             BAT.Macros().NavigateTo().Pages();

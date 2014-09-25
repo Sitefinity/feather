@@ -1,9 +1,10 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('taxonFilter', ['taxonomyService', function (taxonomyService) {
+        .directive('taxonFilter', function () {
             return {
                 restrict: 'EA',
                 scope: {
+                    taxonomyFields: '=',
                     taxonFilters: '=',
                     selectedTaxonomies: '=',
                     provider: '=?'
@@ -15,7 +16,6 @@
                 },
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-
                         scope.toggleTaxonomySelection = function (taxonomyName) {
                             if (!scope.selectedTaxonomies)
                                 scope.selectedTaxonomies = [];
@@ -37,15 +37,8 @@
                                     scope.taxonFilters[taxonomyName] = [];
                             }
                         };
-
-                        onGetTaxonomiesSuccess = function (data) {
-                            scope.allTaxonomies = data.Items;
-                        };
-
-                        taxonomyService.getTaxonomies(null, null, null, 'FlatTaxonomy')
-                            .then(onGetTaxonomiesSuccess);
                     }
                 }
             };
-        }]);
+        });
 })(jQuery);

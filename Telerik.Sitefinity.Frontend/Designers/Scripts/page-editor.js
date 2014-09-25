@@ -12,6 +12,59 @@ var sitefinity = sitefinity || {};
 		loaderTemplate = kendo.template(loaderMarkup),
 		dialog;
 
+    function isScriptTag(tag) {
+        return tag.tagName == 'SCRIPT' && (!tag.type || tag.type.toLowerCase() == 'text/javascript');
+    }
+
+    function extractScripts(markup) {
+        var div = document.createElement('div');
+        div.innerHTML = markup;
+        var scripts = div.getElementsByTagName('script');
+
+        var result = [];
+        for (var i = 0; i < scripts.length; i++) {
+            if (isScriptTag(scripts[i])) {
+                result.push(scripts[i]);
+            }
+        }
+
+        return result;
+    }
+
+    function stripScripts(markup) {
+        var div = document.createElement('div');
+        div.innerHTML = markup;
+        var scripts = div.getElementsByTagName('script');
+
+        var i = scripts.length;
+        while (i--) {
+            if (isScriptTag(scripts[i])) {
+                scripts[i].parentNode.removeChild(scripts[i]);
+            }
+        }
+
+        return div.innerHTML;
+    }
+
+    function loadScripts(container, scriptTags, loadHandler) {
+        var lab = $LAB.setOptions({
+            AlwaysPreserveOrder: true,
+            AllowDuplicates: true
+        });
+
+        for (var i = 0; i < scriptTags.length; i++) {
+            if (scriptTags[i].src) {
+                lab = lab.script(scriptTags[i].src);
+            }
+            else if (scriptTags[i].text) {
+                var text = scriptTags[i].text;
+                lab = lab.wait(function () { eval(text); }); // jshint ignore:line
+            }
+        }
+
+        lab.wait(loadHandler);
+    }
+
 	/**
 	 * Represents the Sitefinity page editor.
 	 */
@@ -44,20 +97,23 @@ var sitefinity = sitefinity || {};
 		 * @param {String} markup The HTML markup to be rendered within the dialog.
 		 */
 		renderDialog: function (markup) {
-		    var jQueryAjaxSettingsCache = $.ajaxSettings.cache;
-		    $.ajaxSettings.cache = true;
-
 			dialog = $('<div />');
 			$('body').append(dialog);
-			dialog.append(markup);
-			this.hideLoader();
-			$.ajaxSettings.cache = jQueryAjaxSettingsCache;
 
+			var scriptTags = extractScripts(markup);
+			markup = stripScripts(markup);
+
+			dialog.append(markup);
 			dialog.on('hidden.bs.modal', this.destroyDialog);
 
-			if (typeof ($telerik) != 'undefined') {
-			    $telerik.$(document).trigger('dialogRendered');
-			}
+			var that = this;
+			loadScripts(dialog[0], scriptTags, function () {
+			    that.hideLoader();
+
+			    if (typeof ($telerik) != 'undefined') {
+			        $telerik.$(document).trigger('dialogRendered');
+			    }
+			});
 		},
 
 		/**

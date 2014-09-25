@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// <summary>
     /// This class contains extension methods for the IPageTemplate.
     /// </summary>
-    public static class PageTemplateExtensions
+    internal static class PageTemplateExtensions
     {
         /// <summary>
         /// Gets the template framework.

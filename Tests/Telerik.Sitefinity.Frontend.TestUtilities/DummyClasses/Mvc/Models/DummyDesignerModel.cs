@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Models
     /// <summary>
     /// This class represents a dummy designer model.
     /// </summary>
-    public class DummyDesignerModel : DesignerModel
+    internal class DummyDesignerModel : DesignerModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyDesignerModel"/> class.

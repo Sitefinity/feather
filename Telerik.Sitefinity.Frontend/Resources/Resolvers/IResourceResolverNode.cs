@@ -7,7 +7,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// <summary>
     /// Classes that implement this interface should act as a node in a resource resolver chain.
     /// </summary>
-    public interface IResourceResolverNode : IVirtualFileResolver
+    internal interface IResourceResolverNode : IVirtualFileResolver
     {
         /// <summary>
         /// Gets the next resolver in the chain.

@@ -13,6 +13,7 @@
                 }
 
                 var headerData;
+
                 if (widgetContext.culture) {
                     headerData = {
                         'SF_UI_CULTURE': widgetContext.culture

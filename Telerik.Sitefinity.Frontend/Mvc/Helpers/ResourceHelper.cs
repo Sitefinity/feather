@@ -59,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var resourceUrl = ResourceHelper.GetWebResourceUrl(scriptReference);
 
             if (string.IsNullOrEmpty(resourceUrl))
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Script reference for {0} is not found.", resourceKey));
+                return MvcHtmlString.Empty;
 
             return ResourceHelper.RegisterResource(context, resourceKey, resourceUrl, throwException);
         }
