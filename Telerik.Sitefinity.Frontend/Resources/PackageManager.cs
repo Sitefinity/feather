@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Web;
 using System.Web.Hosting;
 using System.Web.Routing;
 using Telerik.Sitefinity.Modules.Pages;
@@ -181,13 +182,15 @@ namespace Telerik.Sitefinity.Frontend.Resources
             string packageName;
             var context = SystemManager.CurrentHttpContext;
 
-            if (context.Items.Contains("IsTemplate") &&
-                (bool)context.Items["IsTemplate"])
+            if (context.Items.Contains("IsTemplate") && (bool)context.Items["IsTemplate"])
             {
-                var requestContext = context.Items[RouteHandler.RequestContextKey] as RequestContext ?? context.Request.RequestContext;
-                var keys = requestContext.RouteData.Values["Params"] as string[];
-                var templateId = keys != null && keys.Length > 0 ? keys[0] : null;
+                var templateId = PackageManager.GetEditedContainerKey(context);
                 packageName = this.GetPackageFromTemplateId(templateId);
+            }
+            else if (context.Request.Path.Contains("/Sitefinity/SFNwslttrs"))
+            {
+                var pageNodeId = PackageManager.GetEditedContainerKey(context);
+                packageName = this.GetPackageFromNodeId(pageNodeId);
             }
             else
             {
@@ -196,6 +199,20 @@ namespace Telerik.Sitefinity.Frontend.Resources
             }
 
             return packageName;
+        }
+
+        /// <summary>
+        /// Gets the key of the edited container.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <remarks>That is page template Id when editing page template or message body Id when editing Email Campaigns issue.</remarks>
+        /// <returns>The key.</returns>
+        private static string GetEditedContainerKey(HttpContextBase context)
+        {
+            var requestContext = context.Items[RouteHandler.RequestContextKey] as RequestContext ?? context.Request.RequestContext;
+            var keys = requestContext.RouteData.Values["Params"] as string[];
+
+            return (keys != null && keys.Length > 0) ? keys[0] : null;
         }
 
         /// <summary>
