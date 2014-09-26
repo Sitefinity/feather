@@ -204,7 +204,7 @@ describe("news selector", function () {
         s.itemClicked(0, s.items[0]);
 
         //Close the dialog (Done button clicked)
-        s.selectItem();
+        s.doneSelecting();
 
         expect(s.selectedItem).toBeDefined();
         expect(s.selectedItem.Id).toEqual(dataItem.Id);
@@ -284,7 +284,8 @@ describe("news selector", function () {
         //The scope of the selector is isolated, but it's child of the scope used for compilation.
         var s = scope.$$childHead;
 
-        expect(s.selectedItemInTheDialog).toBeDefined();
-        expect(s.selectedItemInTheDialog.Id).toEqual(dataItem.Id);
+        expect(s.selectedItemsInTheDialog).toBeDefined();
+        expect(s.selectedItemsInTheDialog.length).toEqual(1);
+        expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
     });
 });
