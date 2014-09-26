@@ -38,12 +38,17 @@
                         if (!$scope.multiselect && !$scope.selectedItem) {
                             $scope.selectedItem = selectedItem;
                         }
-                        
+
                         if (!$scope.selectedItems) {
                             $scope.selectedItems = [];
                         }
-                        if ($scope.selectedItems.length === 0) {
-                            $scope.selectedItems.push(selectedItem);
+
+                        var selectedIds = $scope.selectedItems.map(function (item) {
+                            return item.Id;
+                        });
+
+                        if (selectedIds.indexOf(selectedItem.Id) < 0) {
+                                $scope.selectedItems.push(selectedItem);
                         }
                     };
 
@@ -55,7 +60,8 @@
                         if (!$scope.selectedIds) {
                             $scope.selectedIds = [];
                         }
-                        if ($scope.selectedIds.length === 0) {
+
+                        if ($scope.selectedIds.indexOf(selectedItemId) < 0) {
                             $scope.selectedIds.push(selectedItemId);
                         }
                     };
