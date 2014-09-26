@@ -245,17 +245,17 @@
 
                         scope.itemClicked = function (index, item) {
                             var alreadySelected;
-                            var index;
+                            var selectedItemindex;
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
                                     alreadySelected = true;
-                                    index = i;
+                                    selectedItemindex = i;
                                     break;
                                 }
                             }
 
                             if (alreadySelected) {
-                                scope.selectedItemsInTheDialog.splice(index, 1);
+                                scope.selectedItemsInTheDialog.splice(selectedItemindex, 1);
                             }
                             else {
                                 if (scope.multiselect) {
