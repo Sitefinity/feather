@@ -43,6 +43,10 @@ describe("news selector", function () {
             return serviceResult.promise;
         }),
         getItem: jasmine.createSpy('newsItemService.getItem').andCallFake(function (itemId, provider) {
+            if ($q) {
+                serviceResult = $q.defer();
+            }
+
             var result = {};
             if (itemId === dataItem.Id) {
                 result.Item = dataItem;
@@ -140,227 +144,322 @@ describe("news selector", function () {
         return mostRecent.args;
     }
     
-    it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {
-        var template = "<list-selector news-selector provider='provider'/>";
+    describe('in single selection mode', function () {
+        it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {
+            var template = "<list-selector news-selector provider='provider'/>";
 
-        compileDirective(template);
+            compileDirective(template);
 
-        $('.openSelectorBtn').click();
+            $('.openSelectorBtn').click();
 
-        var args = getNewsServiceGetItemsArgs();
+            var args = getNewsServiceGetItemsArgs();
 
-        //Provider
-        expect(args[0]).toBe('OpenAccessDataProvider');
+            //Provider
+            expect(args[0]).toBe('OpenAccessDataProvider');
 
-        //Skip
-        expect(args[1]).toBe(0);
+            //Skip
+            expect(args[1]).toBe(0);
 
-        //Take
-        expect(args[2]).toBe(20);
+            //Take
+            expect(args[2]).toBe(20);
 
-        //Filter
-        expect(args[3]).toBeFalsy();
+            //Filter
+            expect(args[3]).toBeFalsy();
+        });
+
+        it('[GMateev] / should retrieve selected news item from the service when the selector is loaded.', function () {
+            var template = "<list-selector news-selector provider='provider' selected-item-id='selectedId'/>";
+
+            scope.selectedId = dataItem.Id;
+
+            compileDirective(template);
+
+            var args = getNewsServiceGetItemArgs();
+
+            //Item id
+            expect(args[0]).toBe(dataItem.Id);
+
+            //Provider
+            expect(args[1]).toBe('OpenAccessDataProvider');
+        });
+
+        it('[GMateev] / should assign value to "selected-item" when "selected-item-id" is provided.', function () {
+            var template = "<list-selector news-selector selected-item='selectedItem' selected-item-id='selectedId'/>";
+
+            scope.selectedId = dataItem.Id;
+
+            compileDirective(template);
+
+            expect(scope.selectedId).toBeDefined();
+            expect(scope.selectedId).toEqual(dataItem.Id);
+
+            expect(scope.selectedItem).toBeDefined();
+            expect(scope.selectedItem.Id).toEqual(dataItem.Id);
+        });
+
+        it('[GMateev] / should assign value to "selected-item-id" when "selected-item" is provided.', function () {
+            var template = "<list-selector news-selector selected-item='selectedItem' selected-item-id='selectedId'/>";
+
+            scope.selectedItem = dataItem;
+
+            compileDirective(template);
+
+            expect(scope.selectedId).toBeDefined();
+            expect(scope.selectedId).toEqual(dataItem.Id);
+
+            expect(scope.selectedItem).toBeDefined();
+            expect(scope.selectedItem.Id).toEqual(dataItem.Id);
+        });
+
+        it('[GMateev] / should select news item when Done button is pressed.', function () {
+            var template = "<list-selector news-selector selected-item='selectedItem' selected-item-id='selectedId'/>";
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            //mock the call to the modal service.
+            s.$modalInstance = { close: function () { }};
+
+            expect(s.selectedItem).toBeFalsy();
+            expect(s.selectedItemId).toBeFalsy();
+
+            expect(s.items).toBeDefined();
+            expect(s.items[0].Id).toEqual(dataItem.Id);
+
+            //Select item in the selector
+            s.itemClicked(0, s.items[0]);
+
+            expect(s.selectedItem).toBeFalsy();
+            expect(s.selectedItemId).toBeFalsy();
+
+            //Close the dialog (Done button clicked)
+            s.doneSelecting();
+
+            expect(s.selectedItem).toBeDefined();
+            expect(s.selectedItem.Id).toEqual(dataItem.Id);
+
+            expect(s.selectedItemId).toBeDefined();
+            expect(s.selectedItemId).toEqual(dataItem.Id);
+        });
+
+        it('[GMateev] / should filter items when text is typed in the filter box.', function () {
+            var template = "<list-selector news-selector provider='provider'/>";
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.items).toBeDefined();
+            expect(s.items[0].Id).toEqual(dataItem.Id);
+            expect(s.items[0].Filter).toBeFalsy();
+
+            //Apply filter
+            s.filter.search = 'filter';
+            s.reloadItems(s.filter.search);
+
+            $timeout.flush();
+
+            var args = getNewsServiceGetItemsArgs();
+
+            //Provider
+            expect(args[0]).toBe('OpenAccessDataProvider');
+
+            //Skip
+            expect(args[1]).toBe(0);
+
+            //Take
+            expect(args[2]).toBe(20);
+
+            //Filter
+            expect(args[3]).toBe('filter');
+
+            expect(s.items).toBeDefined();
+            expect(s.items[0].Id).toEqual(dataItem2.Id);
+            expect(s.items[0].Filter).toBe(true);
+            expect(s.filter.search).toBe('filter');
+        });
+
+        it('[GMateev] / should move the selected item to be first in the list of all items.', function () {
+            var template = "<list-selector news-selector selected-item-id='selectedId'/>";
+
+            scope.selectedId = dataItem2.Id;
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(2);
+            expect(s.items[0].Id).toEqual(dataItem2.Id);
+            expect(s.items[1].Id).toEqual(dataItem.Id);
+        });
+
+        it('[GMateev] / should mark item as selected when the dialog is opened.', function () {
+            var template = "<list-selector news-selector selected-item-id='selectedId'/>";
+
+            scope.selectedId = dataItem.Id;
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.selectedItemsInTheDialog).toBeDefined();
+            expect(s.selectedItemsInTheDialog.length).toEqual(1);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
+        });
+
+        it('[GMateev] / should select only one item in the opened dialog.', function () {
+            var template = "<list-selector news-selector/>";
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            //Select item in the selector
+            s.itemClicked(0, s.items[0]);
+
+            expect(s.selectedItemsInTheDialog).toBeDefined();
+            expect(s.selectedItemsInTheDialog.length).toEqual(1);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
+
+            //Select second item in the selector
+            s.itemClicked(1, s.items[1]);
+
+            expect(s.selectedItemsInTheDialog).toBeDefined();
+            expect(s.selectedItemsInTheDialog.length).toEqual(1);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem2.Id);
+        });
+
+        it('[GMateev] / should deselect the item if it is clicked and it is already selected.', function () {
+            var template = "<list-selector news-selector selected-item-id='selectedId'/>";
+
+            scope.selectedId = dataItem.Id;
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.selectedItemsInTheDialog).toBeDefined();
+            expect(s.selectedItemsInTheDialog.length).toEqual(1);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
+
+            //Select item in the selector
+            s.itemClicked(0, s.items[0]);
+
+            expect(s.selectedItemsInTheDialog).toBeDefined();
+            expect(s.selectedItemsInTheDialog.length).toEqual(0);
+        });
     });
 
-    it('[GMateev] / should retrieve selected news item from the service when the selector is loaded.', function () {
-        var template = "<list-selector news-selector provider='provider' selected-item-id='selectedId'/>";
-
-        scope.selectedId = dataItem.Id;
-
-        compileDirective(template);
-
-        var args = getNewsServiceGetItemArgs();
-
-        //Item id
-        expect(args[0]).toBe(dataItem.Id);
-
-        //Provider
-        expect(args[1]).toBe('OpenAccessDataProvider');
-    });
-
-    it('[GMateev] / should assign value to "selected-item" when "selected-item-id" is provided.', function () {
-        var template = "<list-selector news-selector provider='provider' selected-item='selectedItem' selected-item-id='selectedId'/>";
-
-        scope.selectedId = dataItem.Id;
-
-        compileDirective(template);
-
-        expect(scope.selectedId).toBeDefined();
-        expect(scope.selectedId).toEqual(dataItem.Id);
-
-        expect(scope.selectedItem).toBeDefined();
-        expect(scope.selectedItem.Id).toEqual(dataItem.Id);
-    });
-
-    it('[GMateev] / should assign value to "selected-item-id" when "selected-item" is provided.', function () {
-        var template = "<list-selector news-selector provider='provider' selected-item='selectedItem' selected-item-id='selectedId'/>";
-
-        scope.selectedItem = dataItem;
-
-        compileDirective(template);
-
-        expect(scope.selectedId).toBeDefined();
-        expect(scope.selectedId).toEqual(dataItem.Id);
-
-        expect(scope.selectedItem).toBeDefined();
-        expect(scope.selectedItem.Id).toEqual(dataItem.Id);
-    });
-
-    it('[GMateev] / should select news item when Done button is pressed.', function () {
-        var template = "<list-selector news-selector provider='provider' selected-item='selectedItem' selected-item-id='selectedId'/>";
-
-        compileDirective(template);
-
-        $('.openSelectorBtn').click();
-
-        //The scope of the selector is isolated, but it's child of the scope used for compilation.
-        var s = scope.$$childHead;
-
-        //mock the call to the modal service.
-        s.$modalInstance = { close: function () { }};
-
-        expect(s.selectedItem).toBeFalsy();
-        expect(s.selectedItemId).toBeFalsy();
-
-        expect(s.items).toBeDefined();
-        expect(s.items[0].Id).toEqual(dataItem.Id);
-
-        //Select item in the selector
-        s.itemClicked(0, s.items[0]);
-
-        expect(s.selectedItem).toBeFalsy();
-        expect(s.selectedItemId).toBeFalsy();
-
-        //Close the dialog (Done button clicked)
-        s.doneSelecting();
-
-        expect(s.selectedItem).toBeDefined();
-        expect(s.selectedItem.Id).toEqual(dataItem.Id);
-
-        expect(s.selectedItemId).toBeDefined();
-        expect(s.selectedItemId).toEqual(dataItem.Id);
-    });
-
-    it('[GMateev] / should filter items when text is typed in the filter box.', function () {
-        var template = "<list-selector news-selector provider='provider'/>";
-
-        compileDirective(template);
-
-        $('.openSelectorBtn').click();
-
-        //The scope of the selector is isolated, but it's child of the scope used for compilation.
-        var s = scope.$$childHead;
-
-        expect(s.items).toBeDefined();
-        expect(s.items[0].Id).toEqual(dataItem.Id);
-        expect(s.items[0].Filter).toBeFalsy();
-
-        //Apply filter
-        s.filter.search = 'filter';
-        s.reloadItems(s.filter.search);
-
-        $timeout.flush();
-
-        var args = getNewsServiceGetItemsArgs();
-
-        //Provider
-        expect(args[0]).toBe('OpenAccessDataProvider');
-
-        //Skip
-        expect(args[1]).toBe(0);
-
-        //Take
-        expect(args[2]).toBe(20);
-
-        //Filter
-        expect(args[3]).toBe('filter');
-
-        expect(s.items).toBeDefined();
-        expect(s.items[0].Id).toEqual(dataItem2.Id);
-        expect(s.items[0].Filter).toBe(true);
-        expect(s.filter.search).toBe('filter');
-    });
-
-    it('[GMateev] / should move the selected item to be first in the list of all items.', function () {
-        var template = "<list-selector news-selector provider='provider' selected-item-id='selectedId'/>";
-
-        scope.selectedId = dataItem2.Id;
-
-        compileDirective(template);
-
-        $('.openSelectorBtn').click();
-
-        //The scope of the selector is isolated, but it's child of the scope used for compilation.
-        var s = scope.$$childHead;
-
-        expect(s.items).toBeDefined();
-        expect(s.items.length).toBe(2);
-        expect(s.items[0].Id).toEqual(dataItem2.Id);
-        expect(s.items[1].Id).toEqual(dataItem.Id);
-    });
-
-    it('[GMateev] / should mark item as selected when the dialog is opened.', function () {
-        var template = "<list-selector news-selector provider='provider' selected-item-id='selectedId'/>";
-
-        scope.selectedId = dataItem.Id;
-
-        compileDirective(template);
-
-        $('.openSelectorBtn').click();
-
-        //The scope of the selector is isolated, but it's child of the scope used for compilation.
-        var s = scope.$$childHead;
-
-        expect(s.selectedItemsInTheDialog).toBeDefined();
-        expect(s.selectedItemsInTheDialog.length).toEqual(1);
-        expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
-    });
-
-    it('[GMateev] / should select only one item in the opened dialog.', function () {
-        var template = "<list-selector news-selector provider='provider'/>";
-
-        compileDirective(template);
-
-        $('.openSelectorBtn').click();
-
-        //The scope of the selector is isolated, but it's child of the scope used for compilation.
-        var s = scope.$$childHead;
-
-        //Select item in the selector
-        s.itemClicked(0, s.items[0]);
-
-        expect(s.selectedItemsInTheDialog).toBeDefined();
-        expect(s.selectedItemsInTheDialog.length).toEqual(1);
-        expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
-
-        //Select second item in the selector
-        s.itemClicked(1, s.items[1]);
-
-        expect(s.selectedItemsInTheDialog).toBeDefined();
-        expect(s.selectedItemsInTheDialog.length).toEqual(1);
-        expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem2.Id);
-    });
-
-    it('[GMateev] / should deselect the item if it is clicked and it is already selected.', function () {
-        var template = "<list-selector news-selector provider='provider' selected-item-id='selectedId'/>";
-
-        scope.selectedId = dataItem.Id;
-
-        compileDirective(template);
-
-        $('.openSelectorBtn').click();
-
-        //The scope of the selector is isolated, but it's child of the scope used for compilation.
-        var s = scope.$$childHead;
-
-        expect(s.selectedItemsInTheDialog).toBeDefined();
-        expect(s.selectedItemsInTheDialog.length).toEqual(1);
-        expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
-
-        //Select item in the selector
-        s.itemClicked(0, s.items[0]);
-
-        expect(s.selectedItemsInTheDialog).toBeDefined();
-        expect(s.selectedItemsInTheDialog.length).toEqual(0);
+    describe('in multi selection mode', function () {
+        var items = [dataItem, dataItem2];
+        var ids = [dataItem.Id, dataItem2.Id];
+
+        beforeEach(function () {            
+            this.addMatchers({
+                // Used to compare arrays of primitive values
+                toEqualArrayOfValues: function (expected) {
+                    var valid = true;
+                    for (var i = 0; i < expected.length; i++) {
+                        if (expected[i] !== this.actual[i]) {
+                            valid = false;
+                            break;
+                        }
+                    }
+                    return valid;
+                },
+
+                // Used to compare arrays of data items with Id and Title
+                toEqualArrayOfDataItems: function (expected) {
+                    var valid = true;
+                    for (var i = 0; i < expected.length; i++) {
+                        if (expected[i].Id !== this.actual[i].Id ||
+                            expected[i].Title !== this.actual[i].Title) {
+                                valid = false;
+                                break;
+                        }
+                    }
+                    return valid;
+                }
+            });
+        });
+
+        it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {
+            var template = "<list-selector news-selector multiselect='true' provider='provider'/>";
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            var args = getNewsServiceGetItemsArgs();
+
+            //Provider
+            expect(args[0]).toBe('OpenAccessDataProvider');
+
+            //Skip
+            expect(args[1]).toBe(0);
+
+            //Take
+            expect(args[2]).toBe(20);
+
+            //Filter
+            expect(args[3]).toBeFalsy();
+        });
+
+        it('[GMateev] / should retrieve selected news items from the service when the selector is loaded.', function () {
+
+            throw new Error('Test not implemented.');
+        });
+
+        it('[GMateev] / should assign value to "selected-items" when "selected-ids" are provided.', function () {
+            var template = "<list-selector news-selector multiselect='true' selected-items='selectedItems' selected-ids='selectedIds'/>";
+
+            scope.selectedIds = ids;
+
+            compileDirective(template);
+
+            expect(scope.selectedIds).toBeDefined();
+            expect(scope.selectedIds.length).toBe(2);
+            expect(scope.selectedIds).toEqualArrayOfValues(ids);
+
+            expect(scope.selectedItems).toBeDefined();
+            expect(scope.selectedItems.length).toEqual(2);
+            expect(scope.selectedItems).toEqualArrayOfDataItems(items);
+        });
+
+        it('[GMateev] / should assign value to "selected-ids" when "selected-items" is provided.', function () {
+            var template = "<list-selector news-selector multiselect='true' selected-items='selectedItems' selected-ids='selectedIds'/>";
+
+            scope.selectedItems = items;
+
+            compileDirective(template);
+
+            expect(scope.selectedIds).toBeDefined();
+            expect(scope.selectedIds.length).toBe(2);
+            expect(scope.selectedIds).toEqualArrayOfValues(ids);
+
+            expect(scope.selectedItems).toBeDefined();
+            expect(scope.selectedItems.length).toEqual(2);
+            expect(scope.selectedItems).toEqualArrayOfDataItems(items);
+        });
     });
 });
