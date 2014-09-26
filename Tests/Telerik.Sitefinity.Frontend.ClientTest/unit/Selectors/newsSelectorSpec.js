@@ -14,13 +14,9 @@ describe("news selector", function () {
         Filter: true
     };
 
-    var itemContext = {
-        Item: dataItem
-    };
-
     var dataItems = {
-        Items: [dataItem],
-        TotalCount: 1
+        Items: [dataItem, dataItem2],
+        TotalCount: 2
     };
 
     var serviceResult;
@@ -40,20 +36,21 @@ describe("news selector", function () {
                     TotalCount: 1
                 });
             }
-            else if (provider === 'flag') {
-                serviceResult.resolve({
-                    Items: [dataItem2, dataItem],
-                    TotalCount: 2
-                });
-            }
             else {
                 serviceResult.resolve(dataItems);
             }
 
             return serviceResult.promise;
         }),
-        getItem: jasmine.createSpy('newsItemService.getItem').andCallFake(function () {
-            serviceResult.resolve(itemContext);
+        getItem: jasmine.createSpy('newsItemService.getItem').andCallFake(function (itemId, provider) {
+            var result = {};
+            if (itemId === dataItem.Id) {
+                result.Item = dataItem;
+            }
+            else {
+                result.Item = dataItem2;
+            }
+            serviceResult.resolve(result);
             return serviceResult.promise;
         })
     };
@@ -165,23 +162,51 @@ describe("news selector", function () {
         expect(args[3]).toBeFalsy();
     });
 
-    it('[GMateev] / should retrieve selected news items from the service when the selector is loaded.', function () {
+    it('[GMateev] / should retrieve selected news item from the service when the selector is loaded.', function () {
         var template = "<list-selector news-selector provider='provider' selected-item-id='selectedId'/>";
 
-        scope.selectedId = '4c003fb0-2a77-61ec-be54-ff00007864f4';
+        scope.selectedId = dataItem.Id;
 
         compileDirective(template);
 
         var args = getNewsServiceGetItemArgs();
 
         //Item id
-        expect(args[0]).toBe('4c003fb0-2a77-61ec-be54-ff00007864f4');
+        expect(args[0]).toBe(dataItem.Id);
 
         //Provider
         expect(args[1]).toBe('OpenAccessDataProvider');
     });
 
-    it('[GMateev] / should select news item.', function () {
+    it('[GMateev] / should assign value to "selected-item" when "selected-item-id" is provided.', function () {
+        var template = "<list-selector news-selector provider='provider' selected-item='selectedItem' selected-item-id='selectedId'/>";
+
+        scope.selectedId = dataItem.Id;
+
+        compileDirective(template);
+
+        expect(scope.selectedId).toBeDefined();
+        expect(scope.selectedId).toEqual(dataItem.Id);
+
+        expect(scope.selectedItem).toBeDefined();
+        expect(scope.selectedItem.Id).toEqual(dataItem.Id);
+    });
+
+    it('[GMateev] / should assign value to "selected-item-id" when "selected-item" is provided.', function () {
+        var template = "<list-selector news-selector provider='provider' selected-item='selectedItem' selected-item-id='selectedId'/>";
+
+        scope.selectedItem = dataItem;
+
+        compileDirective(template);
+
+        expect(scope.selectedId).toBeDefined();
+        expect(scope.selectedId).toEqual(dataItem.Id);
+
+        expect(scope.selectedItem).toBeDefined();
+        expect(scope.selectedItem.Id).toEqual(dataItem.Id);
+    });
+
+    it('[GMateev] / should select news item when Done button is pressed.', function () {
         var template = "<list-selector news-selector provider='provider' selected-item='selectedItem' selected-item-id='selectedId'/>";
 
         compileDirective(template);
@@ -203,6 +228,9 @@ describe("news selector", function () {
         //Select item in the selector
         s.itemClicked(0, s.items[0]);
 
+        expect(s.selectedItem).toBeFalsy();
+        expect(s.selectedItemId).toBeFalsy();
+
         //Close the dialog (Done button clicked)
         s.doneSelecting();
 
@@ -213,7 +241,7 @@ describe("news selector", function () {
         expect(s.selectedItemId).toEqual(dataItem.Id);
     });
 
-    it('[GMateev] / should filter items.', function () {
+    it('[GMateev] / should filter items when text is typed in the filter box.', function () {
         var template = "<list-selector news-selector provider='provider'/>";
 
         compileDirective(template);
@@ -253,11 +281,10 @@ describe("news selector", function () {
         expect(s.filter.search).toBe('filter');
     });
 
-    it('[GMateev] / should move the selected item to be first in the list.', function () {
+    it('[GMateev] / should move the selected item to be first in the list of all items.', function () {
         var template = "<list-selector news-selector provider='provider' selected-item-id='selectedId'/>";
 
-        scope.selectedId = dataItem.Id;
-        scope.provider = 'flag';
+        scope.selectedId = dataItem2.Id;
 
         compileDirective(template);
 
@@ -268,14 +295,14 @@ describe("news selector", function () {
 
         expect(s.items).toBeDefined();
         expect(s.items.length).toBe(2);
-        expect(s.items[0].Id).toEqual(dataItem.Id);
-        expect(s.items[1].Id).toEqual(dataItem2.Id);
+        expect(s.items[0].Id).toEqual(dataItem2.Id);
+        expect(s.items[1].Id).toEqual(dataItem.Id);
     });
 
-    it('[GMateev] / should mark item as selected in the dialog.', function () {
+    it('[GMateev] / should mark item as selected when the dialog is opened.', function () {
         var template = "<list-selector news-selector provider='provider' selected-item-id='selectedId'/>";
 
-        scope.selectedId = '4c003fb0-2a77-61ec-be54-ff00007864f4';
+        scope.selectedId = dataItem.Id;
 
         compileDirective(template);
 
@@ -287,5 +314,53 @@ describe("news selector", function () {
         expect(s.selectedItemsInTheDialog).toBeDefined();
         expect(s.selectedItemsInTheDialog.length).toEqual(1);
         expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
+    });
+
+    it('[GMateev] / should select only one item in the opened dialog.', function () {
+        var template = "<list-selector news-selector provider='provider'/>";
+
+        compileDirective(template);
+
+        $('.openSelectorBtn').click();
+
+        //The scope of the selector is isolated, but it's child of the scope used for compilation.
+        var s = scope.$$childHead;
+
+        //Select item in the selector
+        s.itemClicked(0, s.items[0]);
+
+        expect(s.selectedItemsInTheDialog).toBeDefined();
+        expect(s.selectedItemsInTheDialog.length).toEqual(1);
+        expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
+
+        //Select second item in the selector
+        s.itemClicked(1, s.items[1]);
+
+        expect(s.selectedItemsInTheDialog).toBeDefined();
+        expect(s.selectedItemsInTheDialog.length).toEqual(1);
+        expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem2.Id);
+    });
+
+    it('[GMateev] / should deselect the item if it is clicked and it is already selected.', function () {
+        var template = "<list-selector news-selector provider='provider' selected-item-id='selectedId'/>";
+
+        scope.selectedId = dataItem.Id;
+
+        compileDirective(template);
+
+        $('.openSelectorBtn').click();
+
+        //The scope of the selector is isolated, but it's child of the scope used for compilation.
+        var s = scope.$$childHead;
+
+        expect(s.selectedItemsInTheDialog).toBeDefined();
+        expect(s.selectedItemsInTheDialog.length).toEqual(1);
+        expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
+
+        //Select item in the selector
+        s.itemClicked(0, s.items[0]);
+
+        expect(s.selectedItemsInTheDialog).toBeDefined();
+        expect(s.selectedItemsInTheDialog.length).toEqual(0);
     });
 });
