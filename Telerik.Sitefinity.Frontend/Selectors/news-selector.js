@@ -8,7 +8,8 @@
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search) {
                             var provider = ctrl.getProvider();
-                            return newsItemService.getItems(provider, skip, take, search);
+                            var frontendLanguages = ctrl.getFrontendLanguages();
+                            return newsItemService.getItems(provider, skip, take, search, frontendLanguages);
                         };
 
                         ctrl.getItem = function (id) {

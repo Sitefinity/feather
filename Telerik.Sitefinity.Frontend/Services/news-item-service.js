@@ -26,14 +26,23 @@
 
             var dataItemPromise;
 
-            var getItems = function (provider, skip, take, filter) {
+            var getItems = function (provider, skip, take, filter, frontendLanguages) {
                 var generatedFilter = 'Visible==true AND Status==live';
                 if (widgetContext.culture) {
                     generatedFilter = generatedFilter + ' AND Culture==' + widgetContext.culture;
                 }
 
                 if (filter) {
-                    generatedFilter = generatedFilter + ' AND (Title.ToUpper().Contains("' + filter + '".ToUpper()))';
+                    searchFilter = '(Title.ToUpper().Contains("' + filter + '".ToUpper()))';
+                    if (frontendLanguages && frontendLanguages.length !== 0) {
+                        searchFilter = searchFilter + ' OR (';
+                        for (var i = 0; i < frontendLanguages.length; i++) {
+                            searchFilter = searchFilter + 'Title["' + frontendLanguages[i] + '"]=null AND ';
+                        }
+                        searchFilter = searchFilter + 'Title[""]!=null AND Title[""].Contains("' + filter + '"))';
+                        searchFilter = '(' + searchFilter + ')';
+                    }
+                    generatedFilter = generatedFilter + ' AND ' + searchFilter;
                 }
 
                 dataItemPromise = getResource().get(

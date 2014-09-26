@@ -7,7 +7,8 @@
                 scope: {
                     selectedItemId: '=?',
                     selectedItem: '=?',
-                    provider: '=?', /* content-selector */
+                    provider: '=?', /* news-selector */
+                    frontendLanguages: '=?', /* news-selector */
                     taxonomyId: '=?' /* taxon-selector */
                 },
                 controller: function ($scope) {
@@ -25,6 +26,10 @@
 
                     this.getProvider = function () {
                         return $scope.provider;
+                    };
+
+                    this.getFrontendLanguages = function () {
+                        return $scope.frontendLanguages;
                     };
 
                     this.updateSelectedItem = function (selectedItem) {
