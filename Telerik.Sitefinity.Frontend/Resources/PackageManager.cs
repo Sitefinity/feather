@@ -104,6 +104,20 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
+        /// Gets the key of the edited container.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <remarks>That is page template Id when editing page template or message body Id when editing Email Campaigns issue.</remarks>
+        /// <returns>The key.</returns>
+        private static string GetEditedContainerKey(HttpContextBase context)
+        {
+            var requestContext = context.Items[RouteHandler.RequestContextKey] as RequestContext ?? context.Request.RequestContext;
+            var keys = requestContext.RouteData.Values["Params"] as string[];
+
+            return (keys != null && keys.Length > 0) ? keys[0] : null;
+        }
+
+        /// <summary>
         /// Gets the package from node identifier.
         /// </summary>
         /// <param name="nodeId">The node identifier.</param>
@@ -199,20 +213,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
             }
 
             return packageName;
-        }
-
-        /// <summary>
-        /// Gets the key of the edited container.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <remarks>That is page template Id when editing page template or message body Id when editing Email Campaigns issue.</remarks>
-        /// <returns>The key.</returns>
-        private static string GetEditedContainerKey(HttpContextBase context)
-        {
-            var requestContext = context.Items[RouteHandler.RequestContextKey] as RequestContext ?? context.Request.RequestContext;
-            var keys = requestContext.RouteData.Values["Params"] as string[];
-
-            return (keys != null && keys.Length > 0) ? keys[0] : null;
         }
 
         /// <summary>
