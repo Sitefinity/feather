@@ -26,7 +26,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
             BAT.Arrange(this.TestName).ExecuteArrangement("AddNewLayoutFile");
 
             BAT.Macros().NavigateTo().Design().PageTemplates();
-            BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsPageTemplatePresentInGridView(TemplateTitle);
+            BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsItemPresentInGridView(TemplateTitle);
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(TemplateTitle);
 
             bool isTextPresent = BATFrontend.Wrappers().Backend().PageTemplates().PageTemplateEditor().IsTextPresentInTemplateMainContainer(LayoutText);
