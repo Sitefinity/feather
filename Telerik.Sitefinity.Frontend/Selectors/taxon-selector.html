@@ -13,9 +13,10 @@
             </div>
             <div class="list-group s-items-list-wrp endlessScroll">
                 <a ng-repeat="item in items"
-                        style="text-overflow: ellipsis; overflow: hidden;">
+                        style="text-overflow: ellipsis; overflow: hidden;"
                         ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
                         ng-click="itemClicked($index, item)">
+                    <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
                     <span ng-bind="item.Title"></span>
                 </a>
                 <div ng-hide="hideEndlessScrollLoadingIndicator || showLoadingIndicator" class="list-group-item text-center">
