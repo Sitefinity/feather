@@ -53,10 +53,11 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             var resourceName = this.GetResourceName(definition, path);
             if (resourceName != null)
             {
+                var regEx = new Regex(resourceName, RegexOptions.IgnoreCase);
                 var assembly = this.GetAssembly(definition);
                 return assembly.GetManifestResourceNames()
                     .Where(r => r.StartsWith(resourceName, StringComparison.OrdinalIgnoreCase))
-                    .Select(r => r.Replace(resourceName, path));
+                    .Select(r => regEx.Replace(r, path));
             }
 
             return null;
