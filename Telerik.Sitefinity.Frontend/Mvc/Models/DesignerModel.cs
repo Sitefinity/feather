@@ -40,7 +40,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             if (preselectedView.IsNullOrEmpty())
             {
-                this.views = this.views.Where(v => !viewConfigs.Any(vc => vc.Key == v) || viewConfigs.Single(vc => vc.Key == v).Value.Hidden == false).ToList();
+                this.views = this.views.Where(v => !viewConfigs.Any(vc => vc.Key == v) || viewConfigs.Single(vc => vc.Key == v).Value.Hidden == false);
                 viewConfigs = viewConfigs.Where(c => !c.Value.Hidden);
             }
 
