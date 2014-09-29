@@ -231,6 +231,7 @@
     <EmbeddedResource Include="Data\Package2.zip" />
     <EmbeddedResource Include="Mvc\Views\MvcTest\Default.cshtml" />
     <EmbeddedResource Include="Data\Default.cshtml" />
+    <EmbeddedResource Include="Data\DateTimeLayout.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>
