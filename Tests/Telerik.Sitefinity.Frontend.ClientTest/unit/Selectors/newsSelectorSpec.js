@@ -230,6 +230,7 @@ describe("news selector", function () {
 
             expect(s.items).toBeDefined();
             expect(s.items[0].Id).toEqual(dataItem.Id);
+            expect(s.items[1].Id).toEqual(dataItem2.Id);
 
             //Select item in the selector
             s.itemClicked(0, s.items[0]);
@@ -453,6 +454,45 @@ describe("news selector", function () {
             scope.selectedItems = items;
 
             compileDirective(template);
+
+            expect(scope.selectedIds).toBeDefined();
+            expect(scope.selectedIds.length).toBe(2);
+            expect(scope.selectedIds).toEqualArrayOfValues(ids);
+
+            expect(scope.selectedItems).toBeDefined();
+            expect(scope.selectedItems.length).toEqual(2);
+            expect(scope.selectedItems).toEqualArrayOfDataItems(items);
+        });
+
+        it('[GMateev] / should select news items when Done button is pressed.', function () {
+            var template = "<list-selector news-selector multiselect='true' selected-items='selectedItems' selected-ids='selectedIds'/>";
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            //mock the call to the modal service.
+            s.$modalInstance = { close: function () { } };
+
+            expect(s.selectedItems).toBeFalsy();
+            expect(s.selectedIds).toBeFalsy();
+
+            expect(s.items).toBeDefined();
+            expect(s.items[0].Id).toEqual(dataItem.Id);
+            expect(s.items[1].Id).toEqual(dataItem2.Id);
+
+            //Select item in the selector
+            s.itemClicked(0, s.items[0]);
+            s.itemClicked(1, s.items[1]);
+
+            expect(s.selectedItems).toBeFalsy();
+            expect(s.selectedIds).toBeFalsy();
+
+            //Close the dialog (Done button clicked)
+            s.doneSelecting();
 
             expect(scope.selectedIds).toBeDefined();
             expect(scope.selectedIds.length).toBe(2);
