@@ -120,6 +120,7 @@
     <Compile Include="MvcWidgets\DummyTextController.cs" />
     <Compile Include="MvcWidgets\MvcSelectorTest.cs" />
     <Compile Include="MvcWidgets\MvcWidgetDefaultFeatherDesigner.cs" />
+    <Compile Include="MvcWidgets\MvcWidgetEditViewFromPackageCacheInvalidation.cs" />
     <Compile Include="MvcWidgets\MvcWidgetUseViewFromLayoutFolderAndPackage.cs" />
     <Compile Include="Pages\DeletePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
