@@ -110,8 +110,9 @@ describe("news selector", function () {
         leftOver.empty();
         leftOver.remove();
 
-        //The selector mutates the selected item. This behaviour should be fixed.
-        dataItem.Title = { Value: 'Dummy'};
+        //The selector mutates the selected item when it is retrieved from the service.
+        dataItem.Title = { Value: 'Dummy' };
+        dataItem2.Title = { Value: 'Filtered' };
     });
 
     /* Helper methods */
