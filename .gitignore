@@ -121,10 +121,10 @@ Feather.jmconfig
 
 ReferenceAssemblies
 
-Telerik.Sitefinity.Frontend.Test/lib
+Tests/Telerik.Sitefinity.Frontend.ClientTest/lib
 
 .nuget/NuGet.exe
-Telerik.Sitefinity.Frontend.Test/test-results.xml
+Tests/Telerik.Sitefinity.Frontend.ClientTest/test-results.xml
 UpgradeLog*.htm
 
 .grunt

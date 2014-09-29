@@ -46,5 +46,20 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             ActiveBrowser.Find.ByCustom<HtmlDiv>(d => d.InnerText.Equals(content)).AssertIsPresent("edit link");                                                                                                                                                           
         }
+
+        /// <summary>
+        /// Drag and drop a layout widget element
+        /// </summary>
+        /// <param name="layoutCaption">the layout widget caption</param>
+        public void DragAndDropLayoutWidget(string layoutCaption)
+        {
+            var layout = ActiveBrowser.Find.ByContent<HtmlDiv>(layoutCaption);
+            Assert.IsNotNull(layout, "The layout was not found on the page");
+
+            var layoutAcceptor = ActiveBrowser.Find.ByExpression<HtmlDiv>("id=?RadDockZoneContentplaceholder1")
+                .AssertIsPresent<HtmlDiv>("RadDockZoneContentplaceholder1");
+
+            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().AddWidgetToDropZone(layout, layoutAcceptor);
+        }
     }
 }

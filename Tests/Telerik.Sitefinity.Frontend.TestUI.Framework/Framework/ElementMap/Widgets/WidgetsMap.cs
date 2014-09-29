@@ -33,6 +33,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
             }
         }
 
+        /// <summary>
+        /// Gets the grid widget designer.
+        /// </summary>
+        /// <value>The feather grid designer.</value> 
+        public GridWidgets GridWidgets
+        {
+            get
+            {
+                return new GridWidgets(this.find);
+            }
+        }
+
         private Find find;
     }
 }
