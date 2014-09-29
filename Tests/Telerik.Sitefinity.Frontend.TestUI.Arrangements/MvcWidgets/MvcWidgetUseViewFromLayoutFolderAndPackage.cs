@@ -8,7 +8,7 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
-    public class MvcWidgetUseViewFromPackage : ITestArrangement
+    public class MvcWidgetUseViewFromLayoutFolderAndPackage : ITestArrangement
     {
         [ServerSetUp]
         public void SetUp()
@@ -26,6 +26,21 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             FeatherServerOperations.ResourcePackages().AddNewResource(FileResource, filePath);
         }
 
+        [ServerArrangement]
+        public void AddNewViewToLayoutsFolder()
+        {
+            var folderPath = Path.Combine(this.SfPath, "Mvc", "Views", WidgetName);
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string filePath = Path.Combine(folderPath, ViewFileName);
+
+            FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+        }
+
         [ServerTearDown]
         public void TearDown()
         {
@@ -37,6 +52,17 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             DirectoryInfo di = fi.Directory;
           
             FeatherServerOperations.ResourcePackages().DeleteDirectory(di.FullName);
+
+            var folderPath = Path.Combine(this.SfPath, "Mvc", "Views", WidgetName);
+            FeatherServerOperations.ResourcePackages().DeleteDirectory(folderPath);
+        }
+
+        private string SfPath
+        {
+            get
+            {
+                return System.Web.Hosting.HostingEnvironment.MapPath("~/");
+            }
         }
 
         private const string PageName = "FeatherPage";
@@ -47,5 +73,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string ViewFileName = "Default.cshtml";
         private const string WidgetName = "MvcTest";
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Default.cshtml";
+        private const string LayoutFileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestView.Default.cshtml";
     }
 }
