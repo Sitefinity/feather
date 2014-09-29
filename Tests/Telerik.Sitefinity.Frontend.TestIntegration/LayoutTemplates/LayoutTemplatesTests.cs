@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using MbUnit.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
@@ -117,6 +118,54 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Adds new layout file to Mvc/Views/Layouts calculating the current DateTime, verify the page content is not updated on the frontend.")]
+        [Ignore("Ignoring this test because of an issue, related to layout templates. Remove the attribute when the issue is fixed.")]
+        public void LayoutTemplates_AddLayoutFileRenderingDateTime_VerifyTemplateNotPrecompiled()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            var folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            try
+            {
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string filePath = Path.Combine(folderPath, DateTimeLayoutFile);
+
+                FeatherServerOperations.ResourcePackages().AddNewResource(DateTimeLayoutResource, filePath);
+
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == DateTimeTemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
+
+                string pageContent = this.GetPageContent(pageId);
+             
+                Thread.Sleep(1000);
+
+                string newContent = this.GetPageContent(pageId);
+                ////Test this before and after the bug is fixed, because it always passes
+                Assert.AreEqual(pageContent, newContent, "Page content is updated, but it shouldn't");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(DateTimeTemplateTitle);
+
+                var filePath = Path.Combine(folderPath, DateTimeLayoutFile);
+                File.Delete(filePath);
+            }
+        }
+
         private string SfPath
         {
             get
@@ -134,9 +183,25 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             pageManager.SaveChanges();
         }
 
+        private string GetPageContent(Guid pageId)
+        {
+            PageManager pageManager = PageManager.GetManager();
+
+            var page = pageManager.GetPageNode(pageId);
+            var pageUrl = page.GetFullUrl();
+            pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
+
+            string pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
+
+            return pageContent;
+        }
+
         private const string LayoutFileName = "TestLayout.cshtml";
+        private const string DateTimeLayoutFile = "DateTimeLayout.cshtml";
         private const string TemplateTitle = "TestLayout";
+        private const string DateTimeTemplateTitle = "DateTimeLayout";
         private const string LayoutFileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayout.cshtml";
+        private const string DateTimeLayoutResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.DateTimeLayout.cshtml";
         private const string PageTitle = "FeatherPage";
         private const string PageUrl = "featherpage";
         private const string LayoutTemplateText = "Test Layout";
