@@ -26,8 +26,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <inheritdoc/>
         protected override void InitializeRouteParameters(MvcProxyBase proxyControl)
         {
-            RouteHelper.SetUrlParametersResolved(false);
-
             var originalContext = proxyControl.Context.Request.RequestContext ?? proxyControl.Page.GetRequestContext();
 
             var paramsMapper = this.GetDefaultParamsMapper(proxyControl.Controller);
