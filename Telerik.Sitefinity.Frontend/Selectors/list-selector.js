@@ -144,7 +144,7 @@
                                 }
                                 else if (scope.selectedItems && scope.selectedItems.length > 0) {
                                     return scope.selectedItems.map(function (item) {
-                                        return item.id;
+                                        return item.Id;
                                     });
                                 }
                             }
