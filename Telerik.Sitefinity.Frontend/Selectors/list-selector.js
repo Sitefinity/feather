@@ -8,7 +8,8 @@
                     selectedItemId: '=?',
                     selectedItem: '=?',
                     provider: '=?', /* content-selector */
-                    taxonomyId: '=?' /* taxon-selector */
+                    taxonomyId: '=?' /* taxon-selector */,
+                    itemSelected: '='
                 },
                 controller: function ($scope) {
                     this.getSelectedItemId = function () {
@@ -218,6 +219,11 @@
 
                         scope.selectItem = function () {
                             if (scope.selectedItemInTheDialog) {
+                                var itemSelectedArgs = {
+                                    "newSelectedItem": scope.selectedItemInTheDialog,
+                                    "oldSelectedItem" : jQuery.extend(true, {}, scope.selectedItem)
+                                }
+                                scope.itemSelected.call(scope.$parent, itemSelectedArgs);
                                 //set the selected item and its id to the mapped isolated scope properties
                                 scope.selectedItem = scope.selectedItemInTheDialog;
                                 scope.selectedItemId = scope.selectedItemInTheDialog.Id;
