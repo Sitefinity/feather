@@ -33,7 +33,7 @@
                             this.Condition = null;
                             this._itemPathSeparator = '_';
                         };
-                        scope.additionalFilters.prototype.addGroupQueryDateItem = function (name, join, parentGroup) {
+                        scope.additionalFilters.addGroupQueryDateItem = function (name, join, parentGroup) {
                             var queryItem = new queryDataItem();
                             queryItem.Name = name;
                             queryItem.IsGroup = true;
@@ -46,7 +46,7 @@
                             return queryItem;
                         };
 
-                        scope.additionalFilters.prototype.addChildQueryDateItem = function (name, join, parentGroup, ordinal, value, condition) {
+                        scope.additionalFilters.addChildQueryDateItem = function (name, join, parentGroup, ordinal, value, condition) {
                             var queryItem = new queryDataItem();
                             queryItem.Name = name;
                             queryItem.IsGroup = false;

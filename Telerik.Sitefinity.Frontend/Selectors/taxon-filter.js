@@ -58,7 +58,7 @@
                             }
 
                             if (!scope.additionalFilters.QueryItems || scope.additionalFilters.QueryItems.length == 0) {
-                                scope.additionalFilters = null;
+                                scope.additionalFilters = {};
                             }
                         };
 
