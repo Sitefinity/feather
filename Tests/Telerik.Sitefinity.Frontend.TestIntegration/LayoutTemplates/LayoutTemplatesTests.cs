@@ -202,6 +202,56 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Creates a page template and adds layout files to Mvc/Views/Layouts with special characters in the names, verifies the template is based on the correct layout.")]
+        public void LayoutTemplates_CreateTemplateAndAddLayoutFilesUsingSpecialCharacters_VerifyTemplateBasedOnCorrectLayout()
+        {
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            string layout1Resource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.LayoutFilesSpecialChars.My@TestTemplate.cshtml";
+            string layout2Resource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.LayoutFilesSpecialChars.My_TestTemplate.cshtml";
+            string layout1Name = "My@TestTemplate.cshtml";
+            string layout2Name = "My_TestTemplate.cshtml";
+            string templateTitle = "My@TestTemplate";
+            string layout1Text = "My@TestTemplate";
+            string layout2Text = "My_TestTemplate";
+
+            try
+            {
+                var templateId = ServerOperations.Templates().CreatePureMVCPageTemplate(templateTitle);
+                Guid pageId = ServerOperations.Pages().CreatePage(PageTitle, templateId);
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string file1Path = Path.Combine(folderPath, layout1Name);
+                FeatherServerOperations.ResourcePackages().AddNewResource(layout1Resource, file1Path);
+
+                string file2Path = Path.Combine(folderPath, layout2Name);
+                FeatherServerOperations.ResourcePackages().AddNewResource(layout2Resource, file2Path);
+
+                var nodeId = ServerOperations.Pages().GetPageNodeId(pageId);
+                var pageContent = this.GetPageContent(nodeId);
+                Assert.IsTrue(pageContent.Contains(layout1Text), "Layout1 text was not found");
+                Assert.IsFalse(pageContent.Contains(layout2Text), "Layout2 text is found, but it shouldn't be");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+
+                string file1Path = Path.Combine(folderPath, layout1Name);
+                File.Delete(file1Path);
+
+                string file2Path = Path.Combine(folderPath, layout2Name);
+                File.Delete(file2Path);
+            }
+        }
+
         private string SfPath
         {
             get
@@ -242,7 +292,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
         private const string PageUrl = "featherpage";
         private const string LayoutTemplateText = "Test Layout";
         private const string ServerErrorMessage = "Server Error";
-        public const string TestLayoutTemplateText = "Test Layout";
-        public const string TestLayoutTemplateTextEdited = "New Text";
+        private const string TestLayoutTemplateText = "Test Layout";
+        private const string TestLayoutTemplateTextEdited = "New Text";
     }
 }
