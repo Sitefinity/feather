@@ -17,6 +17,12 @@
                 link: {
                     post: function (scope, element, attrs, ctrl) {
 
+                        var taxonFilterCondition = function (taxonomyName) {
+                            this.FieldName = taxonomyName;
+                            this.FieldType = 'System.Guid';
+                            this.Operator = 'Contains';
+                        };
+
                         var findSiblingsCount = function (groupItem) {
                             var siblingItemsCount = scope.additionalFilters.QueryItems.filter(function (f) {
                                 return (f.ItemPath.indexOf(groupItem.ItemPath) == 0
@@ -121,7 +127,7 @@
                                         return f.Name === taxonomyName;
                                 }).length !== 1)
                                 {
-                                    scope.additionalFilters.addGroupQueryDateItem(taxonomyName, 'AND');
+                                    scope.additionalFilters.addGroupQueryDataItem(taxonomyName, 'AND');
                                 }
                             }
                         };

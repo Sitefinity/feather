@@ -428,6 +428,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Selectors\filter-selector.html" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\date-filter.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\date-filter.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\timespan-selector.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\timespan-selector.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />
   <Target Name="BeforeBuild">

@@ -16,12 +16,6 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
 
-                        taxonFilterCondition = function (taxonomyName) {
-                            this.FieldName = taxonomyName;
-                            this.FieldType = 'System.Guid';
-                            this.Operator = 'Contains';
-                        };
-
                         queryDataItem = function () {
                             // define variables
                             this.Name = null;
@@ -33,7 +27,7 @@
                             this.Condition = null;
                             this._itemPathSeparator = '_';
                         };
-                        scope.additionalFilters.addGroupQueryDateItem = function (name, join, parentGroup) {
+                        scope.additionalFilters.addGroupQueryDataItem = function (name, join, parentGroup) {
                             var queryItem = new queryDataItem();
                             queryItem.Name = name;
                             queryItem.IsGroup = true;
