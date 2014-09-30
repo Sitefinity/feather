@@ -9,31 +9,26 @@ using Telerik.Sitefinity.Frontend.TestUI.Framework;
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 {
     /// <summary>
-    /// This is test class for MVC widget applying view from package.
+    /// This is test class for MVC widget cache invalidation tests.
     /// </summary>
-    [TestClass]
-    public class MvcWidgetApplyNewView : FeatherTestCase
+    [TestClass]  
+    public class MvcWidgetEditViewCacheInvalidation : FeatherTestCase
     {
         /// <summary>
-        /// UI test MvcWidgetUseViewFromLayoutFolderAndPackage.
+        /// UI test MVCWidgetDefaultFeatherDesigner.
         /// </summary>
         [TestMethod,
         Owner("Feather team"),
         TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void MvcWidgetUseViewFromLayoutFolderAndPackage()
+        public void MvcWidgetEditViewFromPackageCacheInvalidation()
         {
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
-            Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewText), "Default view text is not correct.");
+            Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromPackageText), "Default view text is not correct.");
 
-            BAT.Arrange(this.TestName).ExecuteArrangement("AddNewViewToLayoutsFolder");
-
-            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
-            Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromLayoutsFolderText), "Default view text from Layouts folder is not correct.");
-
-            BAT.Arrange(this.TestName).ExecuteArrangement("AddNewViewToPackage");
+            BAT.Arrange(this.TestName).ExecuteArrangement("EditViewFromPackage");
 
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
-            Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromPackageText), "Default view text from package is not correct.");
+            Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromPackageEditedText), "Default view text after edit is not correct.");
         }
 
         /// <summary>
@@ -41,7 +36,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         protected override void ServerSetup()
         {
-            BAT.Macros().User().EnsureAdminLoggedIn();
             BAT.Arrange(this.TestName).ExecuteSetUp();
         }
 
@@ -54,8 +48,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         }
 
         private const string PageName = "FeatherPage";
-        private const string DefaultViewText = "This is a test default view.";
         private const string DefaultViewFromPackageText = "This is a view from package.";
-        private const string DefaultViewFromLayoutsFolderText = "This is a view from Layouts Folder.";
+        private const string DefaultViewFromPackageEditedText = "This is a view from package after edit.";
     }
 }

@@ -62,7 +62,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
                 Directory.CreateDirectory(folderPath);
             }
 
-            var filePath = Path.Combine(this.SfPath, "ResourcePackages", packageName, "MVC", "Views", widgetName, viewFileName);
+            var filePath = Path.Combine(folderPath, viewFileName);
 
             if (filePath == null)
                 throw new ArgumentException("filePath was not found");
