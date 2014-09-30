@@ -166,6 +166,42 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Creates a page template and adds new layout file to Mvc/Views/Layouts, verifies the template is based on the layout.")]
+        public void LayoutTemplates_CreateTemplateAndAddLayoutFile_VerifyTemplateBasedOnLayout()
+        {
+            var folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            try
+            {
+                var templateId = ServerOperations.Templates().CreatePureMVCPageTemplate(TemplateTitle);
+                Guid pageId = ServerOperations.Pages().CreatePage(PageTitle, templateId);
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string filePath = Path.Combine(folderPath, LayoutFileName);
+
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+
+                var nodeId = ServerOperations.Pages().GetPageNodeId(pageId);
+                var pageContent = this.GetPageContent(nodeId);
+                Assert.IsTrue(pageContent.Contains(TestLayoutTemplateText), "Layout text was not found on the page");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+
+                var filePath = Path.Combine(folderPath, LayoutFileName);
+                File.Delete(filePath);
+            }
+        }
+
         private string SfPath
         {
             get
