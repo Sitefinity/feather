@@ -105,6 +105,7 @@
     <Compile Include="FeatherTestCase.cs" />
     <Compile Include="FeatherTestCategories.cs" />
     <Compile Include="ResourcePackages\ApplyTemplatesFromDifferentPackages.cs" />
+    <Compile Include="ResourcePackages\EditLayoutFileCacheInvalidation.cs" />
     <Compile Include="ResourcePackages\NewLayoutFileDefaultPackage.cs" />
     <Compile Include="ResourcePackages\DefaultResourcePackages.cs" />
   </ItemGroup>
