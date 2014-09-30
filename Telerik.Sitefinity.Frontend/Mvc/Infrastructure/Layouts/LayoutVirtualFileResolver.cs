@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
+using System.Web.Hosting;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Resources;
 
@@ -12,7 +13,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// <summary>
     /// This class is responsible for locating and resolving of the Layouts.
     /// </summary>
-    internal class LayoutVirtualFileResolver : IHashedVirtualFileResolver
+    internal class LayoutVirtualFileResolver : IVirtualFileResolver
     {
         #region Public methods
 
@@ -72,22 +73,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// </returns>
         public CacheDependency GetCacheDependency(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            return null;
-        }
+            virtualPath = this.virtualPathBuilder.RemoveParams(virtualPath);
+            virtualPath = VirtualPathUtility.ToAppRelative(virtualPath);
 
-        /// <summary>
-        /// Returns a hash of the specified virtual paths.
-        /// </summary>
-        /// <param name="definition">The file resolver definition.</param>
-        /// <param name="virtualPath">The path to the primary virtual resource.</param>
-        /// <param name="virtualPathDependencies">An array of paths to other virtual resources required by the primary virtual resource.</param>
-        /// <returns>
-        /// A hash of the specified virtual paths.
-        /// </returns>
-        public string GetFileHash(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies)
-        {
-            return Guid.NewGuid().ToString();
-        } 
+            var layoutVirtualPathBuilder = new LayoutVirtualPathBuilder();
+            string viewName = layoutVirtualPathBuilder.GetLayoutName(definition, virtualPath);
+            var layoutTemplateBuilder = new LayoutRenderer();
+
+            if (string.IsNullOrEmpty(viewName))
+                return null;
+
+            var viewPath = layoutTemplateBuilder.LayoutViewPath(viewName);
+            return HostingEnvironment.VirtualPathProvider.GetCacheDependency(viewPath, virtualPathDependencies, utcStart);
+        }
 
         #endregion
 
