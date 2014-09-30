@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
     /// <summary>
     /// This class extends the <see cref="SitefinityControllerFactory"/> by adding additional virtual paths for controller view engines.
     /// </summary>
-    public class FrontendControllerFactory : SitefinityControllerFactory
+    public class FrontendControllerFactory : SitefinityControllerFactory, IDisposable
     {
         #region Constructors
 
@@ -29,7 +29,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         #endregion
 
-        #region Overridden members
+        #region Public members
 
         /// <summary>
         /// Creates the specified controller by using the specified request context.
@@ -56,6 +56,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             
             return baseController;
         }
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            this.ninjectKernel.Dispose();
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region Protected members
 
         /// <inheritdoc />
         protected override IController GetControllerInstance(System.Web.Routing.RequestContext requestContext, Type controllerType)
