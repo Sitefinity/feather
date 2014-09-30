@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Ninject;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Mvc;
@@ -16,6 +17,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
     /// </summary>
     public class FrontendControllerFactory : SitefinityControllerFactory
     {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FrontendControllerFactory"/> class.
+        /// </summary>
+        public FrontendControllerFactory()
+        {
+            this.ninjectKernel = new StandardKernel();
+        }
+
+        #endregion
+
         #region Overridden members
 
         /// <summary>
@@ -42,6 +55,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
             
             return baseController;
+        }
+
+        /// <inheritdoc />
+        protected override IController GetControllerInstance(System.Web.Routing.RequestContext requestContext, Type controllerType)
+        {
+            return (IController)this.ninjectKernel.Get(controllerType);
         }
 
         #endregion
@@ -125,6 +144,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var expectedTypeName = controller.Assembly.GetName().Name + ".Mvc.Controllers." + controller.Name;
             return string.Equals(expectedTypeName, controller.FullName, StringComparison.OrdinalIgnoreCase);
         }
+
+        #endregion
+
+        #region Fields
+
+        private IKernel ninjectKernel;
+
         #endregion
     }
 }

@@ -344,7 +344,9 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js.map" />
     <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="Resources\ServerContext.js" />
   </ItemGroup>
   <ItemGroup>
