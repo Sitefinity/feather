@@ -2,7 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
+
 using MbUnit.Framework;
+using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
@@ -101,7 +104,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
                 string layoutFile = Path.Combine(folderPath, LayoutFileName);
                 FeatherServerOperations.ResourcePackages().EditLayoutFile(layoutFile, TestLayoutTemplateText, TestLayoutTemplateTextEdited);
 
-                this.PublishPage(page);
+                Thread.Sleep(1000);
+
                 pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
 
                 Assert.IsFalse(pageContent.Contains(ServerErrorMessage), "Page throws a server error message");
@@ -122,8 +126,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
         [Category(TestCategories.LayoutTemplates)]
         [Author("Petya Rachina")]
         [Description("Adds new layout file to Mvc/Views/Layouts calculating the current DateTime, verify the page content is not updated on the frontend.")]
-        [Ignore("Ignoring this test because of an issue, related to layout templates. Remove the attribute when the issue is fixed.")]
-        public void LayoutTemplates_AddLayoutFileRenderingDateTime_VerifyTemplateNotPrecompiled()
+        public void LayoutTemplates_AddLayoutFileRenderingDateTime_VerifyTemplateNotRecompiled()
         {
             PageManager pageManager = PageManager.GetManager();
             int templatesCount = pageManager.GetTemplates().Count();
@@ -148,13 +151,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
 
-                string pageContent = this.GetPageContent(pageId);
-             
+                this.GetPageContent(pageId);
+                var recompCount = SystemMonitoring.GetRecompilationCount();
+
                 Thread.Sleep(1000);
 
-                string newContent = this.GetPageContent(pageId);
-                ////Test this before and after the bug is fixed, because it always passes
-                Assert.AreEqual(pageContent, newContent, "Page content is updated, but it shouldn't");
+                this.GetPageContent(pageId);
+
+                Assert.AreEqual(recompCount, SystemMonitoring.GetRecompilationCount(), "Unexpected recompilation happened.");
             }
             finally
             {
@@ -166,21 +170,144 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Creates a page template and adds new layout file to Mvc/Views/Layouts, verifies the template is based on the layout.")]
+        public void LayoutTemplates_CreateTemplateAndAddLayoutFile_VerifyTemplateBasedOnLayout()
+        {
+            var folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            try
+            {
+                var templateId = ServerOperations.Templates().CreatePureMVCPageTemplate(TemplateTitle);
+                Guid pageId = ServerOperations.Pages().CreatePage(PageTitle, templateId);
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string filePath = Path.Combine(folderPath, LayoutFileName);
+
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+
+                var nodeId = ServerOperations.Pages().GetPageNodeId(pageId);
+                var pageContent = this.GetPageContent(nodeId);
+                Assert.IsTrue(pageContent.Contains(TestLayoutTemplateText), "Layout text was not found on the page");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+
+                var filePath = Path.Combine(folderPath, LayoutFileName);
+                File.Delete(filePath);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Creates a page template and adds layout files to Mvc/Views/Layouts with special characters in the names, verifies the template is based on the correct layout.")]
+        public void LayoutTemplates_CreateTemplateAndAddLayoutFilesUsingSpecialCharacters_VerifyTemplateBasedOnCorrectLayout()
+        {
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            string layout1Resource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.LayoutFilesSpecialChars.My@TestTemplate.cshtml";
+            string layout2Resource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.LayoutFilesSpecialChars.My_TestTemplate.cshtml";
+            string layout1Name = "My@TestTemplate.cshtml";
+            string layout2Name = "My_TestTemplate.cshtml";
+            string templateTitle = "My@TestTemplate";
+            string layout1Text = "My@TestTemplate";
+            string layout2Text = "My_TestTemplate";
+
+            try
+            {
+                var templateId = ServerOperations.Templates().CreatePureMVCPageTemplate(templateTitle);
+                Guid pageId = ServerOperations.Pages().CreatePage(PageTitle, templateId);
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string file1Path = Path.Combine(folderPath, layout1Name);
+                FeatherServerOperations.ResourcePackages().AddNewResource(layout1Resource, file1Path);
+
+                string file2Path = Path.Combine(folderPath, layout2Name);
+                FeatherServerOperations.ResourcePackages().AddNewResource(layout2Resource, file2Path);
+
+                var nodeId = ServerOperations.Pages().GetPageNodeId(pageId);
+                var pageContent = this.GetPageContent(nodeId);
+                Assert.IsTrue(pageContent.Contains(layout1Text), "Layout1 text was not found");
+                Assert.IsFalse(pageContent.Contains(layout2Text), "Layout2 text is found, but it shouldn't be");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+
+                string file1Path = Path.Combine(folderPath, layout1Name);
+                File.Delete(file1Path);
+
+                string file2Path = Path.Combine(folderPath, layout2Name);
+                File.Delete(file2Path);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Renames layout file from Mvc/Views/Layouts, verifies new template is generated.")]
+        public void LayoutTemplates_RenameLayoutFile_VerifyNewGeneratedTemplate()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string layoutFileNewName = "TestLayoutRenamed.cshtml";
+            string newTemplateTitle = "TestLayoutRenamed";
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string newFilePath = Path.Combine(folderPath, layoutFileNewName);
+
+            try
+            {               
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+            
+                File.Move(filePath, newFilePath);
+
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 2);
+
+                var newTemplate = pageManager.GetTemplates().Where(t => t.Title == newTemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(newTemplate, "Template was not found");
+            }
+            finally
+            {
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                ServerOperations.Templates().DeletePageTemplate(newTemplateTitle);
+                File.Delete(filePath);
+                File.Delete(newFilePath);
+            }
+        }
+
         private string SfPath
         {
             get
             {
                 return System.Web.Hosting.HostingEnvironment.MapPath("~/");
             }
-        }
-
-        private void PublishPage(PageNode page)
-        {
-            PageManager pageManager = PageManager.GetManager();
-            var pageData = page.GetPageData();
-            var master = pageManager.PagesLifecycle.GetMaster(pageData);
-            pageManager.PagesLifecycle.Publish(master);
-            pageManager.SaveChanges();
         }
 
         private string GetPageContent(Guid pageId)
@@ -190,6 +317,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             var page = pageManager.GetPageNode(pageId);
             var pageUrl = page.GetFullUrl();
             pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
+            pageUrl = UrlTransformations.AppendParam(pageUrl, "t", Guid.NewGuid().ToString());
 
             string pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
 
@@ -206,7 +334,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
         private const string PageUrl = "featherpage";
         private const string LayoutTemplateText = "Test Layout";
         private const string ServerErrorMessage = "Server Error";
-        public const string TestLayoutTemplateText = "Test Layout";
-        public const string TestLayoutTemplateTextEdited = "New Text";
+        private const string TestLayoutTemplateText = "Test Layout";
+        private const string TestLayoutTemplateTextEdited = "New Text";
     }
 }
