@@ -2,14 +2,6 @@
     angular.module('selectors').requires.push('kendo.directives');
     angular.module('selectors')
         .directive('timespanSelector', ['$timeout', function ($timeout) {
-            var timeSpanItem = function () {
-                this.periodType = "anyTime";
-                this.fromDate = null;
-                this.toDate = null;
-                this.timeSpanMeasure = null;
-                this.timeSpanInterval = "days";
-                this.formattedText = "";
-            }
 
             return {
                 restrict: "E",
@@ -29,6 +21,9 @@
                         // helper methods
                         // ------------------------------------------------------------------------
                         formatTimeSpanItem = function (item) {
+                            if (!item)
+                                return;
+
                             if (item.periodType == "periodToNow")
                                 item.formattedText = "Last " + item.timeSpanMeasure + " " + item.timeSpanInterval;
                             else if (item.periodType == "customRange")
@@ -92,11 +87,8 @@
                         scope.open = function () {
                             scope.showError = false;
                             scope.errorMessage = "";
-
-                            if (!scope.selectedItem)
-                                scope.selectedItemInTheDialog = new timeSpanItem();
-                            else
-                                scope.selectedItemInTheDialog = jQuery.extend(true, {}, scope.selectedItem);
+                            formatTimeSpanItem(scope.selectedItem);
+                            scope.selectedItemInTheDialog = jQuery.extend(true, {}, scope.selectedItem);
                         };
                     }
                 }

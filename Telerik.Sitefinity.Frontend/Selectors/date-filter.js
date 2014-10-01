@@ -1,11 +1,23 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('dateFilter', function () {       
+        .directive('dateFilter', function () {
+
+            var timeSpanItem = function () {
+                this.periodType = "anyTime";
+                this.fromDate = null;
+                this.toDate = null;
+                this.timeSpanMeasure = null;
+                this.timeSpanInterval = "days";
+                this.formattedText = "";
+            }
 
             return {
                 restrict: 'EA',
                 scope: {
-                    additionalFilters: '='
+                    additionalFilters: '=',
+                    groupLogicalOperator: '@',
+                    itemLogicalOperator: '@',
+                    queryFieldName: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -15,39 +27,7 @@
                 link: {
                     post: function (scope, element, attrs, ctrl) {
 
-                        var findSiblingsCount = function (groupItem) {
-                            var siblingItemsCount = 0;
-
-                            if (groupItem) {
-                                siblingItemsCount = scope.additionalFilters.QueryItems.filter(function (f) {
-                                    return (f.ItemPath.indexOf(groupItem.ItemPath) == 0
-                                        && f.ItemPath.length > groupItem.ItemPath.length
-                                        && f.ItemPath.substring(groupItem.ItemPath.length).indexOf(f._itemPathSeparator) < 0);
-                                }).length;
-                            }
-
-                            return siblingItemsCount;
-                        };
-
-                        var findGroupItem = function (groupName) {
-                            var groupItem;
-
-                            if (scope.additionalFilters.QueryItems) {
-                                groupItem = scope.additionalFilters.QueryItems.filter(function (f) {
-                                    return (f.Name === groupName && f.IsGroup);
-                                })[0];
-                            }
-
-                            return groupItem;
-                        };
-
-                        var dateFilteringCondition = function(fieldName, operator){
-                            this.FiledName = fieldName;
-                            this.Operator = operator;
-                            this.FieldType = 'System.DateTime';
-                        };
-
-                        var constructDateFilterExpressionValue = function(timeSpanMeasure, timeSpanInterval){
+                        var constructDateFilterExpressionValue = function (timeSpanMeasure, timeSpanInterval) {
                             var value;
                             if (timeSpanInterval == 'days')
                                 value = 'DateTime.UtcNow.AddDays(-' + timeSpanMeasure + ')';
@@ -55,59 +35,88 @@
                                 value = 'DateTime.UtcNow.AddDays(-' + timeSpanMeasure * 7 + ')';
                             else if (timeSpanInterval == 'months')
                                 value = 'DateTime.UtcNow.AddMonths(-' + timeSpanMeasure + ')';
-                            else if(timeSpanInterval == 'years')
+                            else if (timeSpanInterval == 'years')
                                 value = 'DateTime.UtcNow.AddYears(-' + timeSpanMeasure + ')';
 
                             return value;
-                        }
+                        };
 
-                        var addGroup = function (groupName) {
-                            if (!scope.additionalFilters.QueryItems ||
-                                    scope.additionalFilters.QueryItems.filter(function (f) {
-                                        return f.Name === groupName;
-                            }).length !== 1) {
-                                scope.additionalFilters.addGroupQueryDataItem(groupName, 'AND');
+                        var translateDateFilterToTimeSpanItem = function (filterValue, timeSpanItem) {
+                            var measure = filterValue.match(/\(([^)]+)\)/)[1];
+                            timeSpanItem.timeSpanMeasure = measure;
+
+                            if (filterValue.indexOf('AddDays') > 0) {
+                                var weeksCount = Math.floor(measure / 7);
+                                var rem = measure % 7;
+                                if (rem == 0 && weeksCount != 0) {
+                                    timeSpanItem.timeSpanInterval = 'weeks';
+                                    timeSpanItem.timeSpanMeasure = weeksCount;
+                                }
+                                else {
+                                    timeSpanItem.timeSpanInterval = 'days';
+                                }
                             }
+                            else if (filterValue.indexOf('AddMonths') > 0) {
+                                timeSpanItem.timeSpanInterval = 'months';
+                            }
+                            else if (filterValue.indexOf('AddYears') > 0){
+                                timeSpanItem.timeSpanInterval = 'years';
+                            }
+                        };
+
+                        var translateQueryItems = function (collection) {
+                            var result = new timeSpanItem();
+
+                            if (!collection || collection.length == 0 || collection.length > 2)
+                                return result;
+                            
+                            for (var i = 0; i < collection.length; i++) {
+                                var item = collection[i];
+                                var operator = item.Condition.Operator;
+                                if (operator == '>') {
+                                    if (item.Value.indexOf('DateTime.UtcNow') = -1) {
+                                        result.fromDate = item.Value;
+                                    }
+                                    else {
+                                        translateDateFilterToTimeSpanItem(item.Value, result);
+                                    }
+                                }
+                                else if (operator == '<') {
+                                    result.toDate = item.Value;
+                                }
+                            }
+
+                            return result;
                         };
 
                         var addChildDateQueryItem = function (dateItem, groupName) {
-                            addGroup(groupName);
-                            var groupItem = findGroupItem(groupName);
-                            var siblingItemsCount = findSiblingsCount(groupItem);
+                            var groupItem = scope.additionalFilters.getItemByName(groupName);
+
+                            if(!groupItem)
+                                groupItem = scope.additionalFilters.addGroup(groupName, 'AND');
 
                             if (dateItem.periodType == 'periodToNow') {
-                                var condition = new dateFilteringCondition(groupName, '>');
                                 var queryValue = constructDateFilterExpressionValue(dateItem.timeSpanMeasure, dateItem.timeSpanInterval);
                                 var queryName = 'Dates.' + queryValue;
-                                scope.additionalFilters.addChildQueryDateItem(queryName, 'AND', groupItem, siblingItemsCount, queryValue, condition);
+                                scope.additionalFilters.addChildToGroup(groupItem, queryName, 'AND', groupName, 'Sistem.DateTime', '>', queryValue);
                             }
                             else if (dateItem.periodType == 'customRange') {
-                                var fromCondition = new dateFilteringCondition(groupName, '>');
                                 var fromQueryValue = dateItem.fromDate.toUTCString();
                                 var fromQueryName = 'Dates.' + queryValue;
-                                scope.additionalFilters.addChildQueryDateItem(fromQueryName, 'AND', groupItem, siblingItemsCount, fromQueryValue, fromCondition);
+                                scope.additionalFilters.addChildToGroup(groupItem, fromQueryName, 'AND', groupName, 'Sistem.DateTime', '>', fromQueryValue);
 
-                                var toCondition = new dateFilteringCondition(groupName, '<');
                                 var toQueryValue = dateItem.toDate.toUTCString();
                                 var toQueryName = 'Dates.' + queryValue;
-                                scope.additionalFilters.addChildQueryDateItem(toQueryName, 'AND', groupItem, siblingItemsCount + 1, toQueryValue, toCondition);
+                                scope.additionalFilters.addChildToGroup(groupItem, toQueryName, 'AND', groupName, 'Sistem.DateTime', '<', toQueryValue);
                             }
                         };
 
-                        var removeGroup = function (groupName) {
-                            var groupItem = scope.additionalFilters.QueryItems.filter(function (f) {
-                                return f.Name === groupName;
-                            })[0];
-
-                            if (groupItem) {
-                                scope.additionalFilters.QueryItems = scope.additionalFilters.QueryItems.filter(function (f) {
-                                    return f.ItemPath.indexOf(groupItem.ItemPath) !== 0;
-                                });
-                            }
-
-                            if (!scope.additionalFilters.QueryItems || scope.additionalFilters.QueryItems.length == 0) {
-                                scope.additionalFilters = {};
-                            }
+                        var constructFilterItem = function (selectedDateFilterKey) {
+                            var selectedDateQueryItems = scope.additionalFilters.QueryItems.filter(function (f) {
+                                return f.Condition && f.Condition.FieldName == selectedDateFilterKey
+                                    && f.Condition.FieldType == 'System.DateTime';
+                            })
+                            scope.selectedDateFilters[selectedDateFilterKey] = translateQueryItems(selectedDateQueryItems);
                         };
 
                         var populateSelectedDateFilters = function () {
@@ -119,17 +128,22 @@
                                 scope.additionalFilters.QueryItems.forEach(function (queryItem) {
                                     {
                                         if (queryItem.IsGroup)
-                                            scope.selectedDateFilters.push(queryItem.Name);
+                                            scope.selectedDateFilters[queryItem.Name] = constructFilterItem(queryItem.Name);
                                     }
                                 });
                             }
+
                         };
 
                         scope.itemSelected = function (itemSelectedArgs) {
                             var newSelectedDateItem = itemSelectedArgs.newSelectedItem;
                             var oldSelectedDateItem = itemSelectedArgs.oldSelectedItem;
                             
-                            removeGroup('PublicationDate');
+                            var groupToRemove = scope.additionalFilters.getItemByName('PublicationDate');
+
+                            if (groupToRemove)
+                                scope.additionalFilters.removeGroup(groupToRemove);
+
                             addChildDateQueryItem(newSelectedDateItem, 'PublicationDate');
                         };
                         
@@ -137,18 +151,17 @@
                             if (!scope.additionalFilters.QueryItems)
                                 scope.additionalFilters.QueryItems = [];
 
-                            var idx = scope.selectedDateFilters.indexOf(filterName);
-
                             // is currently selected
-                            if (idx > -1) {
-                                scope.selectedDateFilters.splice(idx, 1);
+                            if (filterName in scope.selectedDateFilters) {
+                                delete scope.selectedDateFilters[filterName];
 
-                                removeGroup(filterName);
+                                var groupToRemove = scope.additionalFilters.getItemByName(filterName);
+                                scope.additionalFilters.removeGroup(groupToRemove);
                             }
 
                             // is newly selected
                             else {
-                                scope.selectedDateFilters.push(filterName);
+                                scope.selectedDateFilters[filterName] = constructFilterItem(filterName);
                             }
                         };
 

@@ -11,6 +11,7 @@ using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
+using Telerik.Sitefinity.Mvc.Rendering;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web.Configuration;
 
@@ -79,15 +80,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         public static MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, bool throwException = false)
         {
             var context = helper.ViewContext.HttpContext;
-            var page = HttpContext.Current.Handler as Page;
+            var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
 
-            var resourceUrl = string.Empty;
-            if (page != null)
-            {
-                resourceUrl = page.ClientScript.GetWebResourceUrl(
+            var resourceUrl = page.ClientScript.GetWebResourceUrl(
                     TypeResolutionService.ResolveType(type),
                     embeddedScriptPath);
-            }
 
             return ResourceHelper.RegisterResource(context, resourceUrl, resourceUrl, throwException);
         }

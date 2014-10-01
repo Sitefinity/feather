@@ -2,11 +2,11 @@
     <label for="dateInput">
         <input id="dateInput" type="checkbox"
             ng-click="toggleDateSelection('PublicationDate')"
-            ng-checked="selectedDateFilters.indexOf('PublicationDate') > -1"  />
+            ng-checked="('PublicationDate' in selectedDateFilters)"  />
 
             Date...
     </label>
 
-    <timespan-selector item-selected ="itemSelected" selectedItem="selectedItem"
-        ng-show="selectedDateFilters.indexOf('PublicationDate') > -1"></timespan-selector>
+    <timespan-selector item-selected ="itemSelected" selected-item="selectedDateFilters['PublicationDate']"
+        ng-show="('PublicationDate' in selectedDateFilters)"></timespan-selector>
 </div>
