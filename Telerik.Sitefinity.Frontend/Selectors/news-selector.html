@@ -16,7 +16,7 @@
                         ng-class="{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }"
                         ng-click="itemClicked($index, item)"
                         style="text-overflow: ellipsis; overflow: hidden;">
-                    <span ng-bind="item.Title"></span>
+                    <span ng-bind="bindIdentifierField(item)"></span>
                 </a>
                 <div ng-hide="hideEndlessScrollLoadingIndicator || showLoadingIndicator" class="list-group-item text-center">
                     <span class="s-loading" style="display: inline-block; width: 30px;"></span>
