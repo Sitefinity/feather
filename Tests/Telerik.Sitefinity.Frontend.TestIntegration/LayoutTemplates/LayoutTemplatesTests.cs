@@ -310,15 +310,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
-        private void PublishPage(PageNode page)
-        {
-            PageManager pageManager = PageManager.GetManager();
-            var pageData = page.GetPageData();
-            var master = pageManager.PagesLifecycle.GetMaster(pageData);
-            pageManager.PagesLifecycle.Publish(master);
-            pageManager.SaveChanges();
-        }
-
         private string GetPageContent(Guid pageId)
         {
             PageManager pageManager = PageManager.GetManager();
