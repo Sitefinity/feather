@@ -2,7 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
+
 using MbUnit.Framework;
+using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
@@ -101,7 +104,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
                 string layoutFile = Path.Combine(folderPath, LayoutFileName);
                 FeatherServerOperations.ResourcePackages().EditLayoutFile(layoutFile, TestLayoutTemplateText, TestLayoutTemplateTextEdited);
 
-                this.PublishPage(page);
+                Thread.Sleep(1000);
+
                 pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
 
                 Assert.IsFalse(pageContent.Contains(ServerErrorMessage), "Page throws a server error message");
@@ -122,8 +126,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
         [Category(TestCategories.LayoutTemplates)]
         [Author("Petya Rachina")]
         [Description("Adds new layout file to Mvc/Views/Layouts calculating the current DateTime, verify the page content is not updated on the frontend.")]
-        [Ignore("Ignoring this test because of an issue, related to layout templates. Remove the attribute when the issue is fixed.")]
-        public void LayoutTemplates_AddLayoutFileRenderingDateTime_VerifyTemplateNotPrecompiled()
+        public void LayoutTemplates_AddLayoutFileRenderingDateTime_VerifyTemplateNotRecompiled()
         {
             PageManager pageManager = PageManager.GetManager();
             int templatesCount = pageManager.GetTemplates().Count();
@@ -148,13 +151,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
 
-                string pageContent = this.GetPageContent(pageId);
-             
+                this.GetPageContent(pageId);
+                var recompCount = SystemMonitoring.GetRecompilationCount();
+
                 Thread.Sleep(1000);
 
-                string newContent = this.GetPageContent(pageId);
-                ////Test this before and after the bug is fixed, because it always passes
-                Assert.AreEqual(pageContent, newContent, "Page content is updated, but it shouldn't");
+                this.GetPageContent(pageId);
+
+                Assert.AreEqual(recompCount, SystemMonitoring.GetRecompilationCount(), "Unexpected recompilation happened.");
             }
             finally
             {
@@ -190,6 +194,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             var page = pageManager.GetPageNode(pageId);
             var pageUrl = page.GetFullUrl();
             pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
+            pageUrl = UrlTransformations.AppendParam(pageUrl, "t", Guid.NewGuid().ToString());
 
             string pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
 

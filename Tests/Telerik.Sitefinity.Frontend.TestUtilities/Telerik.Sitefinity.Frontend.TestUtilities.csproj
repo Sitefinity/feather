@@ -222,6 +222,7 @@
     <Compile Include="ObjectFactoryContainerRegion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommonOperations\FeatherServerOperations.cs" />
+    <Compile Include="SystemMonitoring.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\TestLayout.cshtml" />

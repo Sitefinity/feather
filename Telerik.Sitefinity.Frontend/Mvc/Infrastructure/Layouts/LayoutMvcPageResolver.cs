@@ -41,10 +41,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 if (LayoutMvcPageResolver.IsLayoutPath(masterPagePath))
                 {
                     var layoutDependency = HostingEnvironment.VirtualPathProvider.GetCacheDependency(masterPagePath, virtualPathDependencies, utcStart);
-                    var aggregate = new AggregateCacheDependency();
-                    aggregate.Add(layoutDependency, baseDependencies);
-                    
-                    return aggregate;
+                    if (layoutDependency != null)
+                    {
+                        var aggregate = new AggregateCacheDependency();
+                        aggregate.Add(layoutDependency, baseDependencies);
+
+                        return aggregate;
+                    }
                 }
             }
 
