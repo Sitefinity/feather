@@ -252,6 +252,52 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Renames layout file from Mvc/Views/Layouts, verifies new template is generated.")]
+        public void LayoutTemplates_RenameLayoutFile_VerifyNewGeneratedTemplate()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string layoutFileNewName = "TestLayoutRenamed.cshtml";
+            string newTemplateTitle = "TestLayoutRenamed";
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string newFilePath = Path.Combine(folderPath, layoutFileNewName);
+
+            try
+            {               
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+            
+                File.Move(filePath, newFilePath);
+
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 2);
+
+                var newTemplate = pageManager.GetTemplates().Where(t => t.Title == newTemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(newTemplate, "Template was not found");
+            }
+            finally
+            {
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                ServerOperations.Templates().DeletePageTemplate(newTemplateTitle);
+                File.Delete(filePath);
+                File.Delete(newFilePath);
+            }
+        }
+
         private string SfPath
         {
             get
