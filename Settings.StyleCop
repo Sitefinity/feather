@@ -271,7 +271,7 @@
       </Rules>
       <AnalyzerSettings />
     </Analyzer>
-	    <Analyzer AnalyzerId="StyleCop.CSharp.SpacingRules">
+    <Analyzer AnalyzerId="StyleCop.CSharp.SpacingRules">
       <Rules>
         <Rule Name="TabsMustNotBeUsed">
           <RuleSettings>
@@ -280,6 +280,15 @@
         </Rule>
       </Rules>
       <AnalyzerSettings />
+    </Analyzer>
+    <Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
+      <AnalyzerSettings>
+        <CollectionProperty Name="Hungarian">
+          <Value>id</Value>
+          <Value>is</Value>
+          <Value>ui</Value>
+        </CollectionProperty>
+      </AnalyzerSettings>
     </Analyzer>
   </Analyzers>
 </StyleCopSettings>
