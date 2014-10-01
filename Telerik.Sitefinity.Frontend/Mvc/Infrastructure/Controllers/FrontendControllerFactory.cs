@@ -57,11 +57,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return baseController;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
-            this.ninjectKernel.Dispose();
+            this.Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <param name="cleanManagedResources">If <value>false</value> cleans up native resources, otherwise cleans up both managed and native resources.</param>
+        protected virtual void Dispose(bool cleanManagedResources)
+        {
+            if (cleanManagedResources)
+                this.ninjectKernel.Dispose();
         }
 
         #endregion
