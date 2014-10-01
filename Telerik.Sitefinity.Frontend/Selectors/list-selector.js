@@ -47,7 +47,7 @@
 
                     this.getItemType = function () {
                         return $scope.itemType;
-                    }
+                    };
 
                     this.updateSelectedItem = function (selectedItem) {
                         $scope.selectedItem = selectedItem;
