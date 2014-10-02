@@ -15,7 +15,9 @@
                 },
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        if(!scope.additionalFilters.QueryItems)
+                        if(scope.additionalFilters && scope.additionalFilters.QueryItems)
+                            scope.additionalFilters = new Telerik.Sitefinity.Web.UI.QueryData(scope.additionalFilters);
+                        else
                             scope.additionalFilters = new Telerik.Sitefinity.Web.UI.QueryData();
                     }
                 }

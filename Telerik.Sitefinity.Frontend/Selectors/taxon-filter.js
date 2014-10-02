@@ -26,10 +26,10 @@
                             var groupItem = scope.additionalFilters.getItemByName(groupName);
 
                             if (!groupItem) {
-                                groupItem = scope.additionalFilters.addGroup(groupName, 'AND');
+                                groupItem = scope.additionalFilters.addGroup(groupName, scope.groupLogicalOperator);
                             }
 
-                            scope.additionalFilters.addChildToGroup(groupItem, taxonItem.Name, 'OR', groupName, 'System.Guid', 'Contains', taxonItem.Id);
+                            scope.additionalFilters.addChildToGroup(groupItem, taxonItem.Name, scope.itemLogicalOperator, groupName, 'System.Guid', 'Contains', taxonItem.Id);
                         };
 
                         var constructFilterItem = function (selectedTaxonomyFilterKey) {
@@ -69,7 +69,9 @@
 
                             if (oldSelectedTaxonItem && oldSelectedTaxonItem.Id) {
                                 var groupToRemove = scope.additionalFilters.getItemByName(oldSelectedTaxonItem.TaxonomyName);
-                                scope.additionalFilters.removeGroup(groupToRemove);
+
+                                if (groupToRemove)
+                                    scope.additionalFilters.removeGroup(groupToRemove);
                             }
 
                             if (newSelectedTaxonItem && newSelectedTaxonItem.Id) {
@@ -83,7 +85,9 @@
                                 delete scope.selectedTaxonomies[taxonomyName];
 
                                 var groupToRemove = scope.additionalFilters.getItemByName(taxonomyName);
-                                scope.additionalFilters.removeGroup(groupToRemove);
+
+                                if (groupToRemove)
+                                    scope.additionalFilters.removeGroup(groupToRemove);
                             }
 
                             // is newly selected

@@ -1,12 +1,12 @@
 ﻿<div class="checkbox" >
     <label for="dateInput">
         <input id="dateInput" type="checkbox"
-            ng-click="toggleDateSelection('PublicationDate')"
-            ng-checked="selectedDateFilters.hasOwnProperty('PublicationDate')"  />
+            ng-click="toggleDateSelection(queryFieldName)"
+            ng-checked="selectedDateFilters.hasOwnProperty(queryFieldName)"  />
 
             Date...
     </label>
 
-    <timespan-selector item-selected ="itemSelected" selected-item="selectedDateFilters['PublicationDate']"
-        ng-show="selectedDateFilters.hasOwnProperty('PublicationDate')"></timespan-selector>
+    <timespan-selector item-selected ="itemSelected" selected-item="selectedDateFilters[queryFieldName]"
+        ng-show="selectedDateFilters.hasOwnProperty(queryFieldName)"></timespan-selector>
 </div>
