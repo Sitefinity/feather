@@ -26,7 +26,9 @@
                 },
                 link: {
                     post: function (scope, element, attrs, ctrl) {
-
+                        // ------------------------------------------------------------------------
+                        // helper methods
+                        // ------------------------------------------------------------------------
                         var constructDateFilterExpressionValue = function (timeSpanMeasure, timeSpanInterval) {
                             var value;
                             if (timeSpanInterval == 'days')
@@ -134,12 +136,14 @@
                                     }
                                 });
                             }
-
                         };
+
+                        // ------------------------------------------------------------------------
+                        // Scope variables and setup
+                        // ------------------------------------------------------------------------
 
                         scope.itemSelected = function (itemSelectedArgs) {
                             var newSelectedDateItem = itemSelectedArgs.newSelectedItem;
-                            var oldSelectedDateItem = itemSelectedArgs.oldSelectedItem;
                             
                             var groupToRemove = scope.additionalFilters.getItemByName('PublicationDate');
 
@@ -150,9 +154,6 @@
                         };
                         
                         scope.toggleDateSelection = function (filterName) {
-                            if (!scope.additionalFilters.QueryItems)
-                                scope.additionalFilters.QueryItems = [];
-
                             // is currently selected
                             if (filterName in scope.selectedDateFilters) {
                                 delete scope.selectedDateFilters[filterName];

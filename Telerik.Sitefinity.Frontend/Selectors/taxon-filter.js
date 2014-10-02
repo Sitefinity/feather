@@ -18,7 +18,9 @@
                 },
                 link: {
                     post: function (scope, element, attrs, ctrl) {
-
+                        // ------------------------------------------------------------------------
+                        // helper methods
+                        // ------------------------------------------------------------------------
                         var addChildTaxonQueryItem = function (taxonItem) {
                             var groupName = taxonItem.TaxonomyName;
                             var groupItem = scope.additionalFilters.getItemByName(groupName);
@@ -30,6 +32,18 @@
                             scope.additionalFilters.addChildToGroup(groupItem, taxonItem.Name, 'OR', groupName, 'System.Guid', 'Contains', taxonItem.Id);
                         };
 
+                        var constructFilterItem = function (selectedTaxonomyFilterKey) {
+                            var selectedTaxonQueryItems = scope.additionalFilters.QueryItems.filter(function (f) {
+                                return f.Condition && f.Condition.FieldName == selectedTaxonomyFilterKey
+                                    && f.Condition.FieldType == 'System.Guid';
+                            });
+
+                            if (selectedTaxonQueryItems.length > 0)
+                                scope.selectedTaxonomies[selectedTaxonomyFilterKey] = selectedTaxonQueryItems[0].Value;
+                            else
+                                scope.selectedTaxonomies[selectedTaxonomyFilterKey] = null;
+                        };
+
                         var populateSelectedTaxonomies = function () {
                             if (!scope.selectedTaxonomies) {
                                 scope.selectedTaxonomies = [];
@@ -39,33 +53,34 @@
                                 scope.additionalFilters.QueryItems.forEach(function (queryItem) {
                                     {
                                         if (queryItem.IsGroup)
-                                            scope.selectedTaxonomies.push(queryItem.Name);
+                                            constructFilterItem(queryItem.Name);
                                     }
                                 });
                             }
                         };
 
+                        // ------------------------------------------------------------------------
+                        // Scope variables and setup
+                        // ------------------------------------------------------------------------
+
                         scope.itemSelected = function (itemSelectedArgs) {
                             var newSelectedTaxonItem = itemSelectedArgs.newSelectedItem;
                             var oldSelectedTaxonItem = itemSelectedArgs.oldSelectedItem;
 
-                            if (oldSelectedTaxonItem) {
+                            if (oldSelectedTaxonItem && oldSelectedTaxonItem.Id) {
                                 var groupToRemove = scope.additionalFilters.getItemByName(oldSelectedTaxonItem.TaxonomyName);
                                 scope.additionalFilters.removeGroup(groupToRemove);
                             }
 
-                            if (newSelectedTaxonItem) {
+                            if (newSelectedTaxonItem && newSelectedTaxonItem.Id) {
                                 addChildTaxonQueryItem(newSelectedTaxonItem);
                             }
                         };
                         
                         scope.toggleTaxonomySelection = function (taxonomyName) {
-
-                            var idx = scope.selectedTaxonomies.indexOf(taxonomyName);
-
                             // is currently selected
-                            if (idx > -1) {
-                                scope.selectedTaxonomies.splice(idx, 1);
+                            if (taxonomyName in scope.selectedTaxonomies) {
+                                delete scope.selectedTaxonomies[taxonomyName];
 
                                 var groupToRemove = scope.additionalFilters.getItemByName(taxonomyName);
                                 scope.additionalFilters.removeGroup(groupToRemove);
@@ -73,7 +88,7 @@
 
                             // is newly selected
                             else {
-                                scope.selectedTaxonomies.push(taxonomyName);
+                                constructFilterItem(taxonomyName);
                             }
                         };
 
