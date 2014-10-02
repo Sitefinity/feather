@@ -2,11 +2,11 @@
     <label for="dateInput">
         <input id="dateInput" type="checkbox"
             ng-click="toggleDateSelection('PublicationDate')"
-            ng-checked="('PublicationDate' in selectedDateFilters)"  />
+            ng-checked="selectedDateFilters.hasOwnProperty('PublicationDate')"  />
 
             Date...
     </label>
 
     <timespan-selector item-selected ="itemSelected" selected-item="selectedDateFilters['PublicationDate']"
-        ng-show="('PublicationDate' in selectedDateFilters)"></timespan-selector>
+        ng-show="selectedDateFilters.hasOwnProperty('PublicationDate')"></timespan-selector>
 </div>

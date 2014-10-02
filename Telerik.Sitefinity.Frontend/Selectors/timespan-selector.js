@@ -34,10 +34,14 @@
 
                         validate = function (item) {
                             if (item.periodType == "customRange" && item.fromDate && item.toDate) {
-                                scope.errorMessage = "Invalid date range! The expiration date must be after the publication date."
-                                scope.showError = true;
+                                var isValid = item.fromDate < item.toDate;
 
-                                return item.fromDate < item.toDate;
+                                if (!isValid) {
+                                    scope.errorMessage = "Invalid date range! The expiration date must be after the publication date."
+                                    scope.showError = true;
+                                }
+
+                                return isValid;
                             }
 
                             return true;
@@ -87,9 +91,10 @@
                         scope.open = function () {
                             scope.showError = false;
                             scope.errorMessage = "";
-                            formatTimeSpanItem(scope.selectedItem);
                             scope.selectedItemInTheDialog = jQuery.extend(true, {}, scope.selectedItem);
                         };
+
+                        formatTimeSpanItem(scope.selectedItem);
                     }
                 }
             };
