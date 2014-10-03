@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Web;
 using System.Web.Hosting;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 {
@@ -27,12 +29,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             var templateFileNameParser = new TemplateTitleParser();
             var fileName = templateFileNameParser.GetLayoutName(templateTitle);
 
-            var layoutVirtualPath = string.Format(System.Globalization.CultureInfo.InvariantCulture, LayoutVirtualPathBuilder.LayoutVirtualPathTemplate, LayoutVirtualPathBuilder.LayoutsPrefix, fileName, LayoutVirtualPathBuilder.LayoutSuffix);
-
-            var packagesManager = new PackageManager();
-            var currentPackage = packagesManager.GetCurrentPackage();
-
-            layoutVirtualPath = (new VirtualPathBuilder()).AddParams(layoutVirtualPath, currentPackage);
+            var layoutVirtualPath = string.Format(CultureInfo.InvariantCulture, LayoutVirtualPathBuilder.LayoutVirtualPathTemplate, LayoutVirtualPathBuilder.LayoutsPrefix, fileName, LayoutVirtualPathBuilder.LayoutSuffix);
+            layoutVirtualPath = this.AddVariablesToPath(layoutVirtualPath);
 
             return layoutVirtualPath;
         }
@@ -58,6 +56,41 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             }
 
             return pageTemplateName;
+        }
+
+        #endregion
+
+        #region Protected and Private methods
+
+        /// <summary>
+        /// Adds variable parameters to the virtual path to allow caching of multiple versions based on parameters.
+        /// </summary>
+        /// <param name="layoutVirtualPath">The layout virtual path.</param>
+        /// <returns>The path with appended variables.</returns>
+        protected virtual string AddVariablesToPath(string layoutVirtualPath)
+        {
+            var varies = new List<string>();
+
+            var packagesManager = new PackageManager();
+            var currentPackage = packagesManager.GetCurrentPackage();
+            if (!currentPackage.IsNullOrEmpty())
+                varies.Add(currentPackage);
+
+            if (SystemManager.CurrentContext.AppSettings.Multilingual)
+                varies.Add(CultureInfo.CurrentUICulture.Name);
+
+            if (MasterPageBuilder.IsFormTagRequired())
+                varies.Add("form");
+            else
+                varies.Add("noform");
+
+            var pageData = MasterPageBuilder.GetRequestedPageData();
+            if (pageData != null)
+                varies.Add(pageData.Version.ToString(CultureInfo.InvariantCulture));
+
+            layoutVirtualPath = (new VirtualPathBuilder()).AddParams(layoutVirtualPath, string.Join("_", varies));
+
+            return layoutVirtualPath;
         }
 
         #endregion
