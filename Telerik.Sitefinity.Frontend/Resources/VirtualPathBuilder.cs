@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Reflection;
 using System.Web.Hosting;
@@ -83,7 +84,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns></returns>
         public string AddParams(string virtualPath, string pathParams)
         {
-            if (!pathParams.IsNullOrEmpty())
+            if (pathParams.Length > 0)
                 virtualPath += string.Format(System.Globalization.CultureInfo.InvariantCulture, "#{0}{1}", pathParams, Path.GetExtension(virtualPath));
 
             return virtualPath;

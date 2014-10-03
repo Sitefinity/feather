@@ -30,7 +30,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 return null;
 
             string templateTitle = hasTitle.GetTitle();
-            var virtualBuilder = new LayoutVirtualPathBuilder();
+            var virtualBuilder = this.CreateLayoutVirtualPathBuilder();
             var layoutVirtualPath = virtualBuilder.BuildPathFromTitle(templateTitle);
             var doesLayoutExist = VirtualPathManager.FileExists(layoutVirtualPath);
 
@@ -38,6 +38,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 layoutVirtualPath = null;
 
             return layoutVirtualPath;
-        }     
+        }
+
+        protected virtual LayoutVirtualPathBuilder CreateLayoutVirtualPathBuilder()
+        {
+            return new LayoutVirtualPathBuilder();
+        }
     }
 }
