@@ -218,13 +218,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             string layout2Resource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.LayoutFilesSpecialChars.My_TestTemplate.cshtml";
             string layout1Name = "My@TestTemplate.cshtml";
             string layout2Name = "My_TestTemplate.cshtml";
-            string templateTitle = "My@TestTemplate";
+            string template1Title = "My@TestTemplate";
+            string template2Title = "My_TestTemplate";
             string layout1Text = "My@TestTemplate";
             string layout2Text = "My_TestTemplate";
 
             try
             {
-                var templateId = ServerOperations.Templates().CreatePureMVCPageTemplate(templateTitle);
+                var templateId = ServerOperations.Templates().CreatePureMVCPageTemplate(template1Title);
                 Guid pageId = ServerOperations.Pages().CreatePage(PageTitle, templateId);
 
                 if (!Directory.Exists(folderPath))
@@ -246,7 +247,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             finally
             {
                 ServerOperations.Pages().DeleteAllPages();
-                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                ServerOperations.Templates().DeletePageTemplate(template1Title);
+                ServerOperations.Templates().DeletePageTemplate(template2Title);
 
                 string file1Path = Path.Combine(folderPath, layout1Name);
                 File.Delete(file1Path);
