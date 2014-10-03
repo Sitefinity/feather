@@ -18,6 +18,15 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public WidgetsWrapper WidgetsWrapper()
         {
             return new WidgetsWrapper();
-        }       
+        }
+
+        /// <summary>
+        /// Creates an instance of GridWidgetsWrapper.
+        /// </summary>
+        /// <returns>Returns a new instance of the GridWidgets.</returns>
+        public GridWidgets GridWidgets()
+        {
+            return new GridWidgets();
+        } 
     }
 }

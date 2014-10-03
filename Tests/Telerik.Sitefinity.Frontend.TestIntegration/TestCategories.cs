@@ -19,5 +19,10 @@
         /// Specifies the name of the category of tests related to core MVC functionality.
         /// </summary>
         public const string MvcCore = "MvcCore";
+
+        /// <summary>
+        /// Specifies the name of the category of tests related to layout templates.
+        /// </summary>
+        public const string LayoutTemplates = "LayoutTemplates";
     }
 }
