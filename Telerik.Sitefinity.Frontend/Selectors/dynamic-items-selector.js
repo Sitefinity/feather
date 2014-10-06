@@ -17,21 +17,7 @@
                         };
 
                         ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            ctrl.updateSelectedItems(data.Item);                            
-
-                            ctrl.updateSelectedIds(data.Item.Id);
-                        };
-
-                        ctrl.bindIdentifierField = function (item) {
-                            if (item) {
-                                var mainField = item[ctrl.identifierField];
-                                if (mainField) {
-                                    return mainField.Value;
-                                }
-                                else {
-                                    return item.Id;
-                                }
-                            }
+                            ctrl.updateSelection(data.Item);
                         };
 
                         ctrl.selectorType = 'DynamicItemsSelector';

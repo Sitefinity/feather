@@ -26,18 +26,29 @@
                     this.bindIdentifierField = function (item) {
                         if (item) {
                             var mainField = item[this.identifierField];
-                            if (mainField) {
+                            var valueProp = 'Value';
+
+                            if (!mainField) {
+                                return item.Id;
+                            }
+
+                            if (typeof mainField === 'string') {
                                 return mainField;
                             }
-                            else {
-                                return item.Id;
+                            else if (valueProp in mainField) {
+                                return mainField.Value;
                             }
                         }
                     };
 
                     this.$scope = $scope;
 
-                    this.updateSelectedItems = function (selectedItem) {
+                    this.updateSelection = function (selectedItem) {
+                        updateSelectedItems(selectedItem);
+                        updateSelectedIds(selectedItem.Id);
+                    }
+
+                    var updateSelectedItems = function (selectedItem) {
                         if (!$scope.multiselect && !$scope.selectedItem) {
                             $scope.selectedItem = selectedItem;
                         }
@@ -55,7 +66,7 @@
                         }
                     };
 
-                    this.updateSelectedIds = function (selectedItemId) {
+                    var updateSelectedIds = function (selectedItemId) {
                         if (!$scope.multiselect && !$scope.selectedItemId) {
                             $scope.selectedItemId = selectedItemId;
                         }

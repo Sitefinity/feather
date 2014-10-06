@@ -21,9 +21,7 @@
                         };
 
                         ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            ctrl.updateSelectedItems(data);
-
-                            ctrl.updateSelectedIds(data.Id);
+                            ctrl.updateSelection(data);
                         };
 
                         ctrl.selectorType = 'TaxonSelector';

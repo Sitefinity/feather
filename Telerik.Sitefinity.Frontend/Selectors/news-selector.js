@@ -17,10 +17,7 @@
                         };
 
                         ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            data.Item.Title = data.Item.Title.Value;
-                            ctrl.updateSelectedItems(data.Item);
-
-                            ctrl.updateSelectedIds(data.Item.Id);
+                            ctrl.updateSelection(data.Item);
                         };
 
                         ctrl.selectorType = 'NewsSelector';
