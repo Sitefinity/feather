@@ -186,17 +186,11 @@
                                 if (ids[i] !== emptyGuid) {
                                     ctrl.getItem(ids[i])
                                         .then(ctrl.onSelectedItemLoadedSuccess, onError)
-                                        .finally(hideLoadingIndicator);//TODO: call it only when the last item is retrieved
+                                        .finally(function () {
+                                            scope.showLoadingIndicator = false;
+                                        });//TODO: call it only when the last item is retrieved
                                 }
                             }                            
-                        };
-
-                        var showLoadingIndicator = function () {
-                            scope.showLoadingIndicator = true;
-                        };
-
-                        var hideLoadingIndicator = function () {
-                            scope.showLoadingIndicator = false;
                         };
 
                         var resetItems = function () {
@@ -318,7 +312,8 @@
                         scope.open = function () {
                             scope.$openModalDialog();
 
-                            showLoadingIndicator();
+                            scope.showLoadingIndicator = true;
+
                             ctrl.getItems(scope.filter.paging.totalItems, scope.filter.paging.itemsPerPage, scope.filter.search)
                             .then(onItemsLoadedSuccess, onError)
                             .then(function () {
@@ -330,7 +325,9 @@
                                 });
                             })
                             .catch(onError)
-                            .finally(hideLoadingIndicator);
+                            .finally(function () {
+                                scope.showLoadingIndicator = false;
+                            });
                         };
 
                         scope.getTemplate = function () {
