@@ -16,9 +16,10 @@
             </div>
             <div class="list-group s-items-list-wrp endlessScroll">
                 <a ng-repeat="item in items"
-                        ng-class="{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }"
+                        ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
                         ng-click="itemClicked($index, item)"
                         style="text-overflow: ellipsis; overflow: hidden;">
+                    <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
                     <span ng-bind="bindIdentifierField(item)"></span>
                 </a>
                 <div ng-hide="hideEndlessScrollLoadingIndicator || showLoadingIndicator" class="list-group-item text-center">
@@ -30,7 +31,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" ng-hide="isListEmpty || showError" class="btn btn-primary" ng-click="selectItem()">Done selecting</button>
+        <button type="button" ng-hide="isListEmpty || showError" class="btn btn-primary" ng-click="doneSelecting()">Done selecting</button>
         <button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>
     </div>
 </script>

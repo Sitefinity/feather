@@ -35,29 +35,11 @@
                         }
                     };
 
-                    this.getSelectedItemId = function () {
-                        return $scope.selectedItemId;
-                    };
-
-                    this.getSelectedItem = function () {
-                        return $scope.selectedItem;
-                    };
-
-                    this.getTaxonomyId = function () {
-                        return $scope.taxonomyId;
-                    };
-
-                    this.getProvider = function () {
-                        return $scope.provider;
-                    };
-
-                    this.getItemType = function () {
-                        return $scope.itemType;
-                    };
+                    this.$scope = $scope;
 
                     this.updateSelectedItems = function (selectedItem) {
                         if (!$scope.multiselect && !$scope.selectedItem) {
-                        $scope.selectedItem = selectedItem;
+                            $scope.selectedItem = selectedItem;
                         }
 
                         if (!$scope.selectedItems) {
@@ -69,13 +51,13 @@
                         });
 
                         if (selectedIds.indexOf(selectedItem.Id) < 0) {
-                                $scope.selectedItems.push(selectedItem);
+                            $scope.selectedItems.push(selectedItem);
                         }
                     };
 
                     this.updateSelectedIds = function (selectedItemId) {
                         if (!$scope.multiselect && !$scope.selectedItemId) {
-                        $scope.selectedItemId = selectedItemId;
+                            $scope.selectedItemId = selectedItemId;
                         }
 
                         if (!$scope.selectedIds) {
@@ -85,14 +67,6 @@
                         if ($scope.selectedIds.indexOf(selectedItemId) < 0) {
                             $scope.selectedIds.push(selectedItemId);
                         }
-                    };
-
-                    this.setPartialTemplate = function (template) {
-                        $scope.partialTemplate = template;
-                    };
-
-                    this.setSelectorType = function (type) {
-                        $scope.selectorType = type;
                     };
                 },
                 templateUrl: function (elem, attrs) {
@@ -240,7 +214,7 @@
 
                         scope.$watch('provider', function (newProvider, oldProvider) {
                             if (newProvider !== oldProvider) {
-                                if (scope.selectorType === 'NewsSelector') {
+                                if (ctrl.selectorType === 'NewsSelector') {
                                     scope.selectedItem = null;
                                 }
                             }

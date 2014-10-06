@@ -7,23 +7,19 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search) {
-                            var provider = ctrl.getProvider();
-                            return dataService.getItems(ctrl.getItemType(), provider, skip, take, search, ctrl.identifierField);
+                            var provider = ctrl.$scope.provider;
+                            return dataService.getItems(ctrl.$scope.itemType, provider, skip, take, search, ctrl.identifierField);
                         };
 
                         ctrl.getItem = function (id) {
-                            var provider = ctrl.getProvider();
-                            return dataService.getItem(id, ctrl.getItemType(), provider);
+                            var provider = ctrl.$scope.provider;
+                            return dataService.getItem(id, ctrl.$scope.itemType, provider);
                         };
 
                         ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            if (!ctrl.getSelectedItem()) {
-                                ctrl.updateSelectedItem(data.Item);
-                            }
+                            ctrl.updateSelectedItems(data.Item);                            
 
-                            if (!ctrl.getSelectedItemId()) {
-                                ctrl.updateSelectedItemId(data.Item.Id);
-                            }
+                            ctrl.updateSelectedIds(data.Item.Id);
                         };
 
                         ctrl.bindIdentifierField = function (item) {
@@ -38,10 +34,10 @@
                             }
                         };
 
-                        ctrl.setSelectorType('DynamicItemsSelector');
+                        ctrl.selectorType = 'DynamicItemsSelector';
 
                         ctrl.templateUrl = 'Selectors/dynamic-items-selector.html';
-                        ctrl.setPartialTemplate('dynamic-items-selector-template');
+                        ctrl.$scope.partialTemplate = 'dynamic-items-selector-template';
                     }
                 }
             };
