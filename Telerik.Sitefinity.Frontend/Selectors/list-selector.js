@@ -46,7 +46,7 @@
                     this.updateSelection = function (selectedItem) {
                         updateSelectedItems(selectedItem);
                         updateSelectedIds(selectedItem.Id);
-                    }
+                    };
 
                     var updateSelectedItems = function (selectedItem) {
                         if (!$scope.multiselect && !$scope.selectedItem) {
@@ -232,18 +232,6 @@
                         });
 
                         var timeoutPromise = false;
-                        var selectorId;
-                        if (attrs.id) {
-                            selectorId = attrs.id;
-                        }
-                        else {
-                            //selectorId will be set to the id of the wrapper div of the template. This way we avoid issues when there are several selectors on one page.
-                            selectorId = 'sf' + Math.floor((Math.random() * 1000) + 1);
-                            scope.selectorId = selectorId;
-                        }
-
-                        // This id is used by the modal dialog to know which button will open him.
-                        scope.openSelectorButtonId = '#' + selectorId + ' .openSelectorBtn';
 
                         scope.showError = false;
                         scope.isListEmpty = false;
@@ -328,6 +316,8 @@
                         };
 
                         scope.open = function () {
+                            scope.$openModalDialog();
+
                             showLoadingIndicator();
                             ctrl.getItems(scope.filter.paging.totalItems, scope.filter.paging.itemsPerPage, scope.filter.search)
                             .then(onItemsLoadedSuccess, onError)
