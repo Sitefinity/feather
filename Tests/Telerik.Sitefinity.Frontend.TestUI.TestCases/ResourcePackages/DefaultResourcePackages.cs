@@ -24,9 +24,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         {
             BAT.Macros().User().EnsureAdminLoggedIn();
             BAT.Macros().NavigateTo().Design().PageTemplates();
-            Assert.IsTrue(BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsPageTemplatePresentInGridView(BootstrapTemplate), "template was not found");
-            Assert.IsTrue(BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsPageTemplatePresentInGridView(SemanticTemplate), "template was not found");
-            Assert.IsTrue(BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsPageTemplatePresentInGridView(FoundationTemplate), "template was not found");
+            Assert.IsTrue(BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsItemPresentInGridView(BootstrapTemplate), "template was not found");
+            Assert.IsTrue(BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsItemPresentInGridView(SemanticTemplate), "template was not found");
+            Assert.IsTrue(BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsItemPresentInGridView(FoundationTemplate), "template was not found");
         }
 
         private const string BootstrapTemplate = "Bootstrap.default";

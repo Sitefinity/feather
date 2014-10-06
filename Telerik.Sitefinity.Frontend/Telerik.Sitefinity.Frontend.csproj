@@ -212,6 +212,7 @@
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutMvcPageResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutResolver.cs" />
@@ -343,7 +344,9 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js.map" />
     <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="Resources\ServerContext.js" />
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +424,13 @@
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.src.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\dynamic-items-selector.html" />
+    <EmbeddedResource Include="Selectors\dynamic-items-selector.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Services\data-service.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />

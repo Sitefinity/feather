@@ -30,7 +30,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <returns></returns>
         public virtual string ProcessLayoutString(string targetTemplate)
         {
-            var includeFormTag = this.IsFormTagRequired();
+            var includeFormTag = MasterPageBuilder.IsFormTagRequired();
             StringBuilder outPut = new StringBuilder();
             HtmlChunk chunk = null;
 
@@ -115,7 +115,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// Determines whether the form tag is required.
         /// </summary>
         /// <returns></returns>
-        protected virtual bool IsFormTagRequired()
+        internal static bool IsFormTagRequired()
         {
             bool insertFormTag = true;
             var isBackendRequest = true;
@@ -140,23 +140,45 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.InvalidOperationException">Invalid SiteMap node specified. Either the current group node doesn't have child nodes or the current user does not have rights to view any of the child nodes.</exception>
-        protected virtual PageData GetRequestedPageData()
+        internal static PageData GetRequestedPageData()
         {
-            var node = this.GetRequestedPageNode();
+            var node = MasterPageBuilder.GetRequestedPageNode();
 
-            if (node == null)
-                throw new InvalidOperationException("Invalid SiteMap node specified. Either the current group node doesn't have child nodes or the current user does not have rights to view any of the child nodes.");
+            if (node != null)
+            {
+                var siteMap = (SiteMapBase)node.Provider;
+                var pageManager = PageManager.GetManager(siteMap.PageProviderName);
+                var pageData = pageManager.GetPageData(node.PageId);
 
-            var siteMap = (SiteMapBase)node.Provider;
-            var pageManager = PageManager.GetManager(siteMap.PageProviderName);
-            var pageData = pageManager.GetPageData(node.PageId);
-
-            return pageData;
+                return pageData;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         #endregion
 
         #region Private methods
+
+        /// <summary>
+        /// Gets the requested page node.
+        /// </summary>
+        /// <param name="requestContext">The request context.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentException">This resolver hasn’t been invoked with the proper route handler.</exception>
+        private static PageSiteNode GetRequestedPageNode()
+        {
+            var httpContext = SystemManager.CurrentHttpContext;
+            var requestContext = httpContext.Request.RequestContext;
+            var node = requestContext.RouteData.DataTokens["SiteMapNode"] as PageSiteNode;
+
+            if (node != null)
+                return RouteHelper.GetFirstPageDataNode(node, true);
+            else
+                return null;
+        }
 
         /// <summary>
         /// Appends the content of the required header.
@@ -165,25 +187,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <exception cref="System.InvalidOperationException">Invalid SiteMap node specified. Either the current group node doesn't have child nodes or the current user does not have rights to view any of the child nodes.</exception>
         private void AppendRequiredHeaderContent(StringBuilder stringBuilder, bool setTitle = true)
         {
-            var pageData = this.GetRequestedPageData();
-            stringBuilder.Append(this.ResourceRegistrations());
-            var robotsTag = this.GetRobotsMetaTag(pageData);
+            var pageData = MasterPageBuilder.GetRequestedPageData();
 
-            if (!string.IsNullOrEmpty(robotsTag))
-                stringBuilder.Append("\r\n\t" + robotsTag);
+            if (pageData != null)
+            {
+                stringBuilder.Append(this.ResourceRegistrations());
+                var robotsTag = this.GetRobotsMetaTag(pageData);
 
-            if (setTitle)
-                stringBuilder.Append("\r\n\t<title>" + pageData.HtmlTitle.ToString() + "\r\n\t</title>");
+                if (!string.IsNullOrEmpty(robotsTag))
+                    stringBuilder.Append("\r\n\t" + robotsTag);
 
-            var descriptionTag = this.GetDescriptionTag(pageData);
+                if (setTitle)
+                    stringBuilder.Append("\r\n\t<title>" + pageData.HtmlTitle.ToString() + "\r\n\t</title>");
 
-            if (!string.IsNullOrEmpty(descriptionTag))
-                stringBuilder.Append("\r\n\t" + descriptionTag);
+                var descriptionTag = this.GetDescriptionTag(pageData);
 
-            var keywordsTag = this.GetKeywordsTag(pageData);
+                if (!string.IsNullOrEmpty(descriptionTag))
+                    stringBuilder.Append("\r\n\t" + descriptionTag);
 
-            if (!string.IsNullOrEmpty(keywordsTag))
-                stringBuilder.Append("\r\n\t" + keywordsTag);
+                var keywordsTag = this.GetKeywordsTag(pageData);
+
+                if (!string.IsNullOrEmpty(keywordsTag))
+                    stringBuilder.Append("\r\n\t" + keywordsTag);
+            }
         }
 
         /// <summary>
@@ -261,24 +287,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             sb.Append("\" type=\"text/javascript\"></script>");
 
             return sb.ToString();
-        }
-
-        /// <summary>
-        /// Gets the requested page node.
-        /// </summary>
-        /// <param name="requestContext">The request context.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentException">This resolver hasn’t been invoked with the proper route handler.</exception>
-        private PageSiteNode GetRequestedPageNode()
-        {
-            var httpContext = SystemManager.CurrentHttpContext;
-            var requestContext = httpContext.Request.RequestContext;
-            var node = (PageSiteNode)requestContext.RouteData.DataTokens["SiteMapNode"];
-
-            if (node == null)
-                throw new ArgumentException("This resolver hasn’t been invoked with the proper route handler.");
-
-            return RouteHelper.GetFirstPageDataNode(node, true);
         }
 
         #endregion

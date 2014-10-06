@@ -8,6 +8,7 @@ using Telerik.Sitefinity.Configuration.Data;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Configs;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Layouts;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.PageTemplates;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers;
 using Telerik.Sitefinity.Pages.Model;
@@ -92,7 +93,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
             var cleanVirtualPath = "~/SfLayouts/Some_Test_Title.master";
             string resolvedVirtualPath;
 
-            var resolver = new LayoutResolver();
+            var resolver = new DummyLayoutResolver();
 
             using (var objFactory = new ObjectFactoryContainerRegion())
             {

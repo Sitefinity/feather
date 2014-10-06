@@ -13,7 +13,8 @@
         providerServiceUrl: applicationPath + 'Sitefinity/Services/DataSourceService/',
         flatTaxonServiceUrl: applicationPath + 'Sitefinity/Services/Taxonomies/FlatTaxon.svc/', 
         taxonomyServiceUrl: applicationPath + 'Sitefinity/Services/Taxonomies/Taxonomy.svc/',
-        newsItemServiceUrl: applicationPath + 'Sitefinity/Services/Content/NewsItemService.svc/'
+        newsItemServiceUrl: applicationPath + 'Sitefinity/Services/Content/NewsItemService.svc/',
+        dataServiceUrl: applicationPath + 'Sitefinity/Services/DynamicModules/Data.svc/'
     };
 
     sitefinity.services = {
@@ -39,6 +40,10 @@
 
         getNewsItemServiceUrl: function () {
             return services.newsItemServiceUrl;
+        },
+
+        getDataServiceUrl: function () {
+            return services.dataServiceUrl;
         }
     };
 
