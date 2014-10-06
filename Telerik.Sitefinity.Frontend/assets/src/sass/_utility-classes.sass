@@ -1,0 +1,48 @@
+// Mixin for generating utility classes
+// for example u-mb1, u-mb2 ...
+// $class      - the name of the class you want to create
+// $property   - the css property you want to apply
+// $from       - start number
+// $to         - end number
+// $step       - the step you wanna use
+// usage: note that the class is starting with "." (dot)
+// @include create-util-class(".u-mt", "margin-top", 0, 5, 10);
+// will create 5 classes starting with u-mt. with step=10
+
+// @mixin create-util-class($class, $property, $from, $to, $step) {
+//   @for $each from $from through $to {
+//     .u-#{$class}#{$each} {
+//       #{$property}: ($each * $step) * 1px;
+//     }
+//   }
+// }
+
+// Example usage
+// @include create-util-class("mt", "margin-top", 0, 10, 5);
+// @include create-util-class("mb", "margin-bottom", 0, 10, 5);
+
+
+/* Margins and Paddings */
+.m-top-xs
+	margin-top: $xs-margin
+
+.m-top-sm
+	margin-top: $sm-margin
+
+.m-top-md
+	margin-top: $md-margin
+
+.m-top-lg
+	margin-top: $lg-margin
+
+.m-bottom-xs
+	margin-bottom: $xs-margin
+
+.m-bottom-sm
+	margin-bottom: $sm-margin
+
+.m-bottom-md
+	margin-bottom: $md-margin
+
+.m-bottom-lg
+	margin-bottom: $lg-margin;
