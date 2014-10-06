@@ -1,6 +1,7 @@
 ﻿using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Layouts;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
 {
@@ -25,7 +26,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
             var expectedVirtualPath = "~/SfLayouts/TestTitle.master";
 
             // Act
-            var layoutVirtualPathBuilder = new LayoutVirtualPathBuilder();
+            var layoutVirtualPathBuilder = new DummyLayoutVirtualPathBuilder();
             var resultVirtualPath = layoutVirtualPathBuilder.BuildPathFromTitle(templateTitle);
 
             // Assert

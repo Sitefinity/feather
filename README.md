@@ -65,8 +65,6 @@ This repository contains the core infrastructure related to [Project Feather](ht
 
    * [Use a taxon selector] (https://github.com/Sitefinity/feather/wiki/Use-a-taxon-selector)
 
-   * [Use a dynamic items selector] (https://github.com/Sitefinity/feather/wiki/Use-a-dynamic-items-selector)
-
 ### Packages and layout files
 
    * [Feather resource packages](https://github.com/Sitefinity/feather/wiki/Feather-resource-packages)
