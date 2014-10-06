@@ -143,6 +143,11 @@
                             scope.errorMessage = errorMessage;
                         };
 
+                        var clearSelection = function () {
+                            scope.selectedItem = null;
+                            scope.selectedItemId = null;
+                        };
+
                         // ------------------------------------------------------------------------
                         // helper methods
                         // ------------------------------------------------------------------------
@@ -166,7 +171,7 @@
 
                             if (id && id !== emptyGuid) {
                                 ctrl.getItem(id)
-                                    .then(ctrl.onSelectedItemLoadedSuccess, onError);
+                                    .then(ctrl.onSelectedItemLoadedSuccess, clearSelection);
                             }
                         };
 
