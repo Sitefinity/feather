@@ -494,6 +494,8 @@ describe("news selector", function () {
             //Close the dialog (Done button clicked)
             s.doneSelecting();
 
+            scope.$digest();
+
             expect(scope.selectedIds).toBeDefined();
             expect(scope.selectedIds.length).toBe(2);
             expect(scope.selectedIds).toEqualArrayOfValues(ids);

@@ -301,7 +301,16 @@
                                 scope.selectedItem = scope.selectedItemsInTheDialog[0];
                                 scope.selectedItemId = scope.selectedItemsInTheDialog[0].Id;
 
-                                scope.selectedItems = scope.selectedItemsInTheDialog;
+                                if (scope.selectedItems) {
+                                    //Clean the array and keep all references.
+                                    scope.selectedItems.length = 0;
+                                }
+                                else {
+                                    scope.selectedItems = [];
+                                }
+
+                                Array.prototype.push.apply(scope.selectedItems, scope.selectedItemsInTheDialog);
+
                                 scope.selectedIds = scope.selectedItems.map(function (item) {
                                     return item.Id;
                                 });
