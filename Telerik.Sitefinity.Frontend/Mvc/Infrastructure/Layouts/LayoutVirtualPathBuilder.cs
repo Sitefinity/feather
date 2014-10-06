@@ -86,7 +86,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             var pageData = MasterPageBuilder.GetRequestedPageData();
             if (pageData != null)
+            {
+                varies.Add(pageData.Id.ToString());
                 varies.Add(pageData.Version.ToString(CultureInfo.InvariantCulture));
+            }
 
             layoutVirtualPath = (new VirtualPathBuilder()).AddParams(layoutVirtualPath, string.Join("_", varies));
 
