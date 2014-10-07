@@ -238,6 +238,7 @@
     <EmbeddedResource Include="Data\TestView\Default.cshtml" />
     <EmbeddedResource Include="Data\LayoutFilesSpecialChars\My%40TestTemplate.cshtml" />
     <EmbeddedResource Include="Data\LayoutFilesSpecialChars\My_TestTemplate.cshtml" />
+    <EmbeddedResource Include="Data\LayoutFileReplace\TestLayout.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>

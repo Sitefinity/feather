@@ -304,6 +304,67 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Replace layout file in Mvc/Views/Layouts, verifies the template and the page that uses it.")]
+        public void LayoutTemplates_ReplaceLayoutFile_VerifyGeneratedTemplateAndCreatedPageContent()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string tempFolderPath = Path.Combine(this.SfPath, "MVC", "Views", "Temp");
+
+            if (!Directory.Exists(tempFolderPath))
+            {
+                Directory.CreateDirectory(tempFolderPath);
+            }
+
+            string newLayoutTemplateText = "Test Layout Replaced";
+            string layoutResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.LayoutFileReplace.TestLayout.cshtml";
+            string backFileName = "TestLayout.cshtml.bac";
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string tempFilePath = Path.Combine(tempFolderPath, LayoutFileName);           
+            string backFilePath = Path.Combine(folderPath, backFileName);
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
+
+                string pageContent = this.GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+
+                FeatherServerOperations.ResourcePackages().AddNewResource(layoutResource, tempFilePath);
+                File.Replace(tempFilePath, filePath, backFilePath);
+
+                pageContent = this.GetPageContent(pageId);
+
+                Assert.AreEqual(pageManager.GetTemplates().Count(), templatesCount + 1, "Unnecessary template was generated");
+                Assert.IsTrue(pageContent.Contains(newLayoutTemplateText), "New layout text was not found in the page content after replace");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                File.Delete(filePath);
+                File.Delete(backFilePath);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(tempFolderPath);
+            }
+        }
+
         private string SfPath
         {
             get
