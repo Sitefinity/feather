@@ -365,6 +365,58 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Rename template based on layout file in Mvc/Views/Layouts, verifies the template and the page that uses it.")]
+        public void LayoutTemplates_RenameTemplateBasedOnLayoutFile_VerifyTemplateAndPage()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string templateRenamed = "TemplateRenamed";
+            string serverErrorMessage = "Server Error";
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
+
+                string pageContent = this.GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+
+                template.Title = templateRenamed;
+                template.Name = templateRenamed;
+                pageManager.SaveChanges();
+
+                Thread.Sleep(1000);
+
+                pageContent = this.GetPageContent(pageId);
+
+                Assert.IsFalse(pageContent.Contains(serverErrorMessage), "Page throws a server error message");
+                Assert.IsFalse(pageContent.Contains(LayoutTemplateText), "Layout template text was found in the page content");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(templateRenamed);
+                File.Delete(filePath);
+            }
+        }
+
         private string SfPath
         {
             get
