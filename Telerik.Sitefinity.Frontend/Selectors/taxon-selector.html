@@ -3,18 +3,18 @@
         <h1 style="background: none; padding-bottom: 0; margin-bottom: 0" class="modal-title">Select tag</h1>
     </div>
     <div class="modal-body">
-        <div ng-show="isListEmpty" class="alert alert-info">No items have been created yet.</div>
+        <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
 
         <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
-        <div ng-hide="isListEmpty || showError">
+        <div ng-hide="noItemsExist || showError">
             <div class="input-group m-bottom-sm">
                 <span class="input-group-addon">
                     <i class="glyphicon glyphicon-search"></i>
                 </span>
-                <input type="text" ng-model="filter.search" ng-change="reloadItems(filter.search)" class="form-control" placeholder="Narrow by typing" />
+                <items-filter filter='filter'></items-filter>
             </div>
-            <div class="list-group s-items-list-wrp endlessScroll">
+            <div endless-scroll paging='paging' class="list-group s-items-list-wrp">
                 <a ng-repeat="item in items"
                         style="text-overflow: ellipsis; overflow: hidden;"
                         ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
@@ -22,16 +22,13 @@
                     <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
                     <span ng-bind="bindIdentifierField(item)"></span>
                 </a>
-                <div ng-hide="hideEndlessScrollLoadingIndicator || showLoadingIndicator" class="list-group-item text-center">
-                    <span class="s-loading" style="display: inline-block; width: 30px;"></span>
-                </div>
             </div>
-            <div ng-hide="items.length || showLoadingIndicator || !hideEndlessScrollLoadingIndicator">No items found</div>
+            <div ng-hide="items.length || showLoadingIndicator">No items found</div>
             <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" ng-hide="isListEmpty || showError" class="btn btn-primary" ng-click="doneSelecting()">Done selecting</button>
+        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary" ng-click="doneSelecting()">Done selecting</button>
         <button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>
     </div>
 </script>

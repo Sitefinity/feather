@@ -263,10 +263,8 @@ describe("news selector", function () {
             expect(s.items[0].Filter).toBeFalsy();
 
             //Apply filter
-            s.filter.search = 'filter';
-            s.reloadItems(s.filter.search);
-
-            $timeout.flush();
+            s.filter.searchString = 'filter';
+            s.filter.search(s.filter.searchString);
 
             var args = getNewsServiceGetItemsArgs();
 
@@ -285,7 +283,7 @@ describe("news selector", function () {
             expect(s.items).toBeDefined();
             expect(s.items[0].Id).toEqual(dataItem2.Id);
             expect(s.items[0].Filter).toBe(true);
-            expect(s.filter.search).toBe('filter');
+            expect(s.filter.searchString).toBe('filter');
         });
 
         it('[GMateev] / should move the selected item to be first in the list of all items.', function () {
