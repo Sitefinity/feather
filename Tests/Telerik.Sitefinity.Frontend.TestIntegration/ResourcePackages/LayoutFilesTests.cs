@@ -102,6 +102,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Category(TestCategories.LayoutFiles)]
         [Author("Petya Rachina")]
         [Description("Adds a resource package with layout files, delete one of the layout files and verify that the template is no longer based on it.")]
+        [Ignore("It will work if the page is republished but this is would not be a valid test. We need cache dependency in the page resolver to its master page.")]
         public void ResourcePackageLayoutFiles_DeleteLayoutFile_VerifyTemplateAndPageNotBasedToLayout()
         {
             int templatesCount = this.PageManager.GetTemplates().Count();
@@ -131,7 +132,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 template = this.PageManager.GetTemplates().Where(t => t.Title == Constants.TemplateTestLayout1).FirstOrDefault();
                 Assert.IsNotNull(template, "Template was not found after layout file was deleted.");
 
-                this.PublishPage(page);
                 pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
 
                 Assert.IsFalse(pageContent.Contains(Constants.ServerErrorMessage), "Page throws a server error message");
@@ -183,7 +183,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 string layoutFile = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(Constants.TestPackageName, Constants.TestLayoutFileName);
                 FeatherServerOperations.ResourcePackages().EditLayoutFile(layoutFile, Constants.TestLayout1TemplateText, Constants.TestLayout1TemplateTextEdited);
 
-                this.PublishPage(page);
+                Thread.Sleep(1000);
+
                 pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
 
                 Assert.IsFalse(pageContent.Contains(Constants.ServerErrorMessage), "Page throws a server error message");
@@ -265,8 +266,11 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 Assert.IsTrue(pageContent.Contains(Constants.TestLayout1TemplateText), "Layout template text was not found in the page content");
 
                 template.Title = Constants.TemplateRenamed;
+                template.Name = Constants.TemplateRenamed;
+                this.pageManager.SaveChanges();
 
-                this.PublishPage(page);
+                Thread.Sleep(1000);
+
                 pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
 
                 Assert.IsFalse(pageContent.Contains(Constants.ServerErrorMessage), "Page throws a server error message");
@@ -276,7 +280,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             {
                 string[] templates = new string[] { Constants.TemplateRenamed, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3 };
 
-                ServerOperations.Pages().DeletePage(Constants.PageTitle);
+                ServerOperations.Pages().DeleteAllPages();
 
                 foreach (var template in templates)
                 {
@@ -301,14 +305,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
                 return this.pageManager;
             }
-        }
-
-        private void PublishPage(PageNode page)
-        {
-            var pageData = page.GetPageData();
-            var master = this.PageManager.PagesLifecycle.GetMaster(pageData);
-            this.PageManager.PagesLifecycle.Publish(master);
-            this.PageManager.SaveChanges();
-        }      
+        }     
     }
 }

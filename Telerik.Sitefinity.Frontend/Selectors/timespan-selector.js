@@ -1,5 +1,4 @@
 ﻿(function ($) {
-    angular.module('selectors').requires.push('kendo.directives');
     angular.module('selectors')
         .directive('timespanSelector', ['$timeout', function ($timeout) {
 
@@ -26,8 +25,14 @@
 
                             if (item.periodType == "periodToNow")
                                 item.formattedText = "Last " + item.timeSpanMeasure + " " + item.timeSpanInterval;
-                            else if (item.periodType == "customRange")
-                                item.formattedText = item.fromDate.toLocaleString() + "-" + item.toDate.toLocaleString();
+                            else if (item.periodType == "customRange") {
+                                if (item.fromDate && item.toDate)
+                                    item.formattedText = item.fromDate.toLocaleString() + "-" + item.toDate.toLocaleString();
+                                else if (item.fromDate)
+                                    item.formattedText = "from: " + item.fromDate.toLocaleString();
+                                else if(item.toDate)
+                                    item.formattedText = "to: " + item.toDate.toLocaleString();
+                            }
                             else
                                 item.formattedText = "";
                         };

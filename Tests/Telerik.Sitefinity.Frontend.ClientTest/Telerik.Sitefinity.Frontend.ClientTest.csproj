@@ -62,6 +62,7 @@
     <Content Include="unit\Designers\Scripts\pageEditorServiceSpec.js" />
     <Content Include="unit\Mvc\Scripts\Designer\propertyGridSpec.js" />
     <Content Include="unit\Selectors\newsSelectorSpec.js" />
+    <Content Include="unit\Services\dataServiceSpec.js" />
     <Content Include="unit\Services\newsItemServiceSpec.js" />
   </ItemGroup>
   <ItemGroup>

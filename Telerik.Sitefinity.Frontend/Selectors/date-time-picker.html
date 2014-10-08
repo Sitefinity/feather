@@ -1,0 +1,12 @@
+﻿<p class="input-group">
+    <input id="fromInput" type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy" ng-model="ngModel" is-open="isOpen" close-text="Close" />
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event)">
+            <i class="glyphicon glyphicon-calendar"></i>
+        </button>
+    </span>
+    <a ng-show="!ngModel.getHours() && !showHours" ng-click="showHours=true">Add hour</a>
+    <select class="form-control" ng-model="hstep" ng-change="updateHours(hstep)" ng-options="opt for opt in hsteps" ng-show="ngModel.getHours()||showHours"></select>
+    <a ng-show="!ngModel.getMinutes() && !showMinutes" ng-click="showMinutes=true">Add minutes</a>
+    <select class="form-control" ng-model="mstep" ng-change="updateMinutes(mstep)" ng-options="opt for opt in msteps" ng-show="ngModel.getMinutes()||showMinutes"></select>
+</p>

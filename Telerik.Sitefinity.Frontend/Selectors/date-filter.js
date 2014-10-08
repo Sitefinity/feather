@@ -105,13 +105,16 @@
                                 scope.additionalFilters.addChildToGroup(groupItem, queryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '>', queryValue);
                             }
                             else if (dateItem.periodType == 'customRange') {
-                                var fromQueryValue = dateItem.fromDate.toUTCString();
-                                var fromQueryName = scope.queryFieldName + '.' + queryValue;
-                                scope.additionalFilters.addChildToGroup(groupItem, fromQueryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '>', fromQueryValue);
-
-                                var toQueryValue = dateItem.toDate.toUTCString();
-                                var toQueryName = scope.queryFieldName + '.' + queryValue;
-                                scope.additionalFilters.addChildToGroup(groupItem, toQueryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '<', toQueryValue);
+                                if (dateItem.fromDate) {
+                                    var fromQueryValue = dateItem.fromDate.toUTCString();
+                                    var fromQueryName = scope.queryFieldName + '.' + queryValue;
+                                    scope.additionalFilters.addChildToGroup(groupItem, fromQueryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '>', fromQueryValue);
+                                }
+                                if (dateItem.toDate) {
+                                    var toQueryValue = dateItem.toDate.toUTCString();
+                                    var toQueryName = scope.queryFieldName + '.' + queryValue;
+                                    scope.additionalFilters.addChildToGroup(groupItem, toQueryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '<', toQueryValue);
+                                }
                             }
                         };
 

@@ -212,6 +212,7 @@
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutMvcPageResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutResolver.cs" />
@@ -343,7 +344,9 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js.map" />
     <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="Resources\ServerContext.js" />
   </ItemGroup>
   <ItemGroup>
@@ -439,6 +442,17 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Selectors\timespan-selector.js" />
+    <EmbeddedResource Include="Selectors\dynamic-items-selector.html" />
+    <EmbeddedResource Include="Selectors\dynamic-items-selector.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Services\data-service.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\date-time-picker.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\date-time-picker.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />
@@ -454,7 +468,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

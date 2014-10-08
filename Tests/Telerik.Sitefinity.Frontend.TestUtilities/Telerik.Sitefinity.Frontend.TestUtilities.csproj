@@ -179,6 +179,8 @@
     <Compile Include="DummyClasses\DummyServerContextHandler.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="DummyClasses\Layouts\DummyLayoutResolver.cs" />
+    <Compile Include="DummyClasses\Layouts\DummyLayoutVirtualPathBuilder.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyCacheDependentAttribute.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyController.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyControllerFactory.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="ObjectFactoryContainerRegion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommonOperations\FeatherServerOperations.cs" />
+    <Compile Include="SystemMonitoring.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\TestLayout.cshtml" />
@@ -231,6 +234,10 @@
     <EmbeddedResource Include="Data\Package2.zip" />
     <EmbeddedResource Include="Mvc\Views\MvcTest\Default.cshtml" />
     <EmbeddedResource Include="Data\Default.cshtml" />
+    <EmbeddedResource Include="Data\DateTimeLayout.cshtml" />
+    <EmbeddedResource Include="Data\TestView\Default.cshtml" />
+    <EmbeddedResource Include="Data\LayoutFilesSpecialChars\My%40TestTemplate.cshtml" />
+    <EmbeddedResource Include="Data\LayoutFilesSpecialChars\My_TestTemplate.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>

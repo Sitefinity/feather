@@ -127,14 +127,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
             else
             {
-                var page = HttpContext.Current.Handler as Page;
+                var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
 
-                if (page != null)
-                {
-                    resourceUrl = page.ClientScript.GetWebResourceUrl(
-                        TypeResolutionService.ResolveType("Telerik.Sitefinity.Resources.Reference"),
-                        scriptConfig.Name);
-                }
+                resourceUrl = page.ClientScript.GetWebResourceUrl(
+                    TypeResolutionService.ResolveType("Telerik.Sitefinity.Resources.Reference"),
+                    scriptConfig.Name);
             }
 
             return resourceUrl;

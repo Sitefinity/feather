@@ -15,15 +15,20 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
     public class MvcWidgetApplyNewView : FeatherTestCase
     {
         /// <summary>
-        /// UI test MvcWidgetUseViewFromPackage.
+        /// UI test MvcWidgetUseViewFromLayoutFolderAndPackage.
         /// </summary>
         [TestMethod,
         Owner("Feather team"),
         TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void MvcWidgetUseViewFromPackage()
+        public void MvcWidgetUseViewFromLayoutFolderAndPackage()
         {
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewText), "Default view text is not correct.");
+
+            BAT.Arrange(this.TestName).ExecuteArrangement("AddNewViewToLayoutsFolder");
+
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
+            Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromLayoutsFolderText), "Default view text from Layouts folder is not correct.");
 
             BAT.Arrange(this.TestName).ExecuteArrangement("AddNewViewToPackage");
 
@@ -49,8 +54,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         }
 
         private const string PageName = "FeatherPage";
-        private const string WidgetCaption = "TestMvcWidget";
         private const string DefaultViewText = "This is a test default view.";
         private const string DefaultViewFromPackageText = "This is a view from package.";
+        private const string DefaultViewFromLayoutsFolderText = "This is a view from Layouts Folder.";
     }
 }

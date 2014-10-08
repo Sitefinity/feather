@@ -22,8 +22,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         public void ApplyTwoDifferentTemplatesFromDifferentPackagesToPages()
         {
             BAT.Macros().NavigateTo().Design().PageTemplates();
-            BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsPageTemplatePresentInGridView(Template1Title);
-            BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsPageTemplatePresentInGridView(Template2Title);
+            BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsItemPresentInGridView(Template1Title);
+            BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsItemPresentInGridView(Template2Title);
 
             BAT.Arrange(this.TestName).ExecuteArrangement("CreatePages");
 

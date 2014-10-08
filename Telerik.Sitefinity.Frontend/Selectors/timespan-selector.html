@@ -32,10 +32,12 @@
                 </div>
                 <div>
                     <label for="periodToNow">
-                        <input id="periodToNow" type="radio" value="periodToNow" ng-model="selectedItemInTheDialog.periodType" />
+                        <input id="periodToNow" type="radio" value="periodToNow" ng-model="selectedItemInTheDialog.periodType"/>
                         Last
-                        <input type="number" ng-model="selectedItemInTheDialog.timeSpanMeasure" />
-                        <select ng-model="selectedItemInTheDialog.timeSpanInterval">
+                        <input type="number" ng-model="selectedItemInTheDialog.timeSpanMeasure" 
+                                ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'" />
+                        <select ng-model="selectedItemInTheDialog.timeSpanInterval" 
+                                ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'">
                             <option value="days">day(s)</option>
                             <option value="weeks">weeks(s)</option>
                             <option value="months">month(s)</option>
@@ -48,12 +50,12 @@
                         <input id="customRange" type="radio" value="customRange" ng-model="selectedItemInTheDialog.periodType" />
                         Custom range...                    
                         <div>
-                            <label for="fromInput">From</label>
-                            <input id="fromInput" kendo-date-time-picker k-ng-model="selectedItemInTheDialog.fromDate" />
+                            <label >From</label>
+                            <date-time-picker ngModel="selectedItemInTheDialog.fromDate"/>
                         </div>
                         <div>
-                            <label for="toInput">To</label>
-                            <input id="toInput" kendo-date-time-picker k-ng-model="selectedItemInTheDialog.toDate" />
+                            <label>To</label>
+                            <date-time-picker ngModel="selectedItemInTheDialog.toDate"/>
                         </div>
                     </label>
                 </div>
