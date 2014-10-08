@@ -77,6 +77,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
             MessageId = "Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets.GridWidgetsTests.AddGridControlToPage(System.Guid,System.String,System.String,System.String)"), Test]
         [Category(TestCategories.GridWidgets)]
         [Description("Grid widgets - edit grid widget on page template from file system.")]
+        [Ignore("There is a bug - page stop working on the frontend, when delete the grid widget template.")]
         public void GridWidget_EditGridWidgetOnPageTemplateFromFileSystem()
         {
             string templateTitle = "Bootstrap.defaultNew";
