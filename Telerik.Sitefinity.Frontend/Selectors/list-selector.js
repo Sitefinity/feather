@@ -97,7 +97,7 @@
                                         }
                                     }
                                 }
-                                //load more items for already applied filter (endless scroll)
+                                    //load more items for already applied filter (endless scroll)
                                 else if (isFilterApplied() && scope.filter.paging.totalItems !== 0) {
                                     for (i = 0; i < data.Items.length; i++) {
                                         id = data.Items[i].Id;
@@ -125,7 +125,7 @@
                                         }
                                     }
                                 }
-
+                            
                                 scope.filter.paging.totalItems += data.Items.length;
                             }
 
@@ -134,7 +134,7 @@
 
                         var onError = function (error) {
                             var errorMessage = '';
-                            if (error && error.data && error.data.ResponseStatus)
+                            if (error && error.data && error.data.ResponseStatus) {
                                 errorMessage = error.data.ResponseStatus.Message;
                             }
                             else if (error && error.statusText) {
