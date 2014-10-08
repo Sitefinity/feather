@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Ninject;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Mvc;
@@ -14,9 +15,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
     /// <summary>
     /// This class extends the <see cref="SitefinityControllerFactory"/> by adding additional virtual paths for controller view engines.
     /// </summary>
-    public class FrontendControllerFactory : SitefinityControllerFactory
+    public class FrontendControllerFactory : SitefinityControllerFactory, IDisposable
     {
-        #region Overridden members
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FrontendControllerFactory"/> class.
+        /// </summary>
+        public FrontendControllerFactory()
+        {
+            this.ninjectKernel = new StandardKernel();
+        }
+
+        #endregion
+
+        #region Public members
 
         /// <summary>
         /// Creates the specified controller by using the specified request context.
@@ -42,6 +55,35 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
             
             return baseController;
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <param name="cleanManagedResources">If <value>false</value> cleans up native resources, otherwise cleans up both managed and native resources.</param>
+        protected virtual void Dispose(bool cleanManagedResources)
+        {
+            if (cleanManagedResources)
+                this.ninjectKernel.Dispose();
+        }
+
+        #endregion
+
+        #region Protected members
+
+        /// <inheritdoc />
+        protected override IController GetControllerInstance(System.Web.Routing.RequestContext requestContext, Type controllerType)
+        {
+            return (IController)this.ninjectKernel.Get(controllerType);
         }
 
         #endregion
@@ -125,6 +167,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var expectedTypeName = controller.Assembly.GetName().Name + ".Mvc.Controllers." + controller.Name;
             return string.Equals(expectedTypeName, controller.FullName, StringComparison.OrdinalIgnoreCase);
         }
+
+        #endregion
+
+        #region Fields
+
+        private IKernel ninjectKernel;
+
         #endregion
     }
 }

@@ -8,9 +8,27 @@
                     selectedItemId: '=?',
                     selectedItem: '=?',
                     provider: '=?', /* content-selector */
-                    taxonomyId: '=?' /* taxon-selector */
+                    taxonomyId: '=?', /* taxon-selector */
+                    itemType: '=?', /* dynamic-items-selector */
+                    identifierField: '=?'
                 },
                 controller: function ($scope) {
+                    this.defaultIdentifierField = 'Title';
+
+                    this.identifierField = $scope.identifierField || this.defaultIdentifierField;
+
+                    this.bindIdentifierField = function (item) {
+                        if (item) {
+                            var mainField = item[this.identifierField];
+                            if (mainField) {
+                                return mainField;
+                            }
+                            else {
+                                return item.Id;
+                            }
+                        }
+                    };
+
                     this.getSelectedItemId = function () {
                         return $scope.selectedItemId;
                     };
@@ -25,6 +43,10 @@
 
                     this.getProvider = function () {
                         return $scope.provider;
+                    };
+
+                    this.getItemType = function () {
+                        return $scope.itemType;
                     };
 
                     this.updateSelectedItem = function (selectedItem) {
@@ -114,14 +136,29 @@
                             var errorMessage = '';
                             if (error && error.data && error.data.ResponseStatus)
                                 errorMessage = error.data.ResponseStatus.Message;
+                            }
+                            else if (error && error.statusText) {
+                                errorMessage = error.statusText;
+                            }
 
                             scope.showError = true;
                             scope.errorMessage = errorMessage;
                         };
 
+                        var clearSelection = function () {
+                            scope.selectedItem = null;
+                            scope.selectedItemId = null;
+                        };
+
                         // ------------------------------------------------------------------------
                         // helper methods
                         // ------------------------------------------------------------------------
+
+                        var emptyGuid = '00000000-0000-0000-0000-000000000000';
+
+                        var selectedId = function () {
+                            return (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
+                        };
 
                         var loadItems = function () {
                             var skip = scope.filter.paging.totalItems;
@@ -131,12 +168,12 @@
                                 .then(onItemsLoadedSuccess, onError);
                         };
 
-                        var getSelectedItem = function (scope) {
-                            var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
+                        var getSelectedItem = function () {
+                            var id = selectedId();
 
-                            if (id && id !== '00000000-0000-0000-0000-000000000000') {
+                            if (id && id !== emptyGuid) {
                                 ctrl.getItem(id)
-                                    .then(ctrl.onSelectedItemLoadedSuccess);
+                                    .then(ctrl.onSelectedItemLoadedSuccess, clearSelection);
                             }
                         };
 
@@ -155,21 +192,11 @@
                         };
 
                         var isFilterApplied = function () {
-                            if (scope.filter.search && scope.filter.search !== '') {
-                                return true;
-                            }
-                            else {
-                                return false;
-                            }
+                            return scope.filter.search && scope.filter.search !== '';
                         };
 
                         var isCurrentItemSelected = function (id) {
-                            if (id === scope.selectedItemId || (scope.selectedItem && id === scope.selectedItem.Id)) {
-                                return true;
-                            }
-                            else {
-                                return false;
-                            }
+                            return id === selectedId();
                         };
 
                         // ------------------------------------------------------------------------
@@ -283,19 +310,19 @@
                         };
 
                         scope.isItemSelected = function () {
-                            if (scope.selectedItemId && scope.selectedItemId !== '00000000-0000-0000-0000-000000000000') {
-                                return true;
-                            }
-                            else {
-                                return false;
-                            }
+                            var id = selectedId();
+                            return id && id !== emptyGuid;
                         };
 
                         scope.showLoadingIndicator = true;
 
                         scope.hideEndlessScrollLoadingIndicator = false;
 
-                        getSelectedItem(scope);
+                        scope.bindIdentifierField = function (item) {
+                            return ctrl.bindIdentifierField(item);
+                        };
+
+                        getSelectedItem();
 
                         transclude(scope, function (clone) {
                             var hasContent;

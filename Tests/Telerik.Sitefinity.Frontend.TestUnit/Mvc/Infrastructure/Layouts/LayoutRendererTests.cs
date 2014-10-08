@@ -34,7 +34,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
 
             // Assert
             this.AssertControllerHasValidContext(dummyController);
-            Assert.AreEqual(dummyController.ControllerContext.RouteData.Values["controller"].ToString(), "generic", "The controller name is not added in the RouteData collection.");
+            Assert.AreEqual(dummyController.ControllerContext.RouteData.Values["controller"].ToString(), "Generic", ignoreCase: true, message: "The controller name is not added in the RouteData collection.");
         }
 
         /// <summary>

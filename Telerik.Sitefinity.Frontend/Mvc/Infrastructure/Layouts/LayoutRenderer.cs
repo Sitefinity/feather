@@ -45,9 +45,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             // add the controller routing if not existing
             if (!routeData.Values.ContainsKey("controller") &&
                 !routeData.Values.ContainsKey("Controller"))
-                routeData.Values.Add(
-                                    "controller",
-                                    controller.GetType().Name.ToLowerInvariant().Replace("controller", string.Empty));
+            {
+                routeData.Values.Add("controller", "Generic");
+            }
 
             controller.UpdateViewEnginesCollection(this.GetPathTransformations());
 
@@ -179,6 +179,32 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             if (result)
                 viewEngineResult.ViewEngine.ReleaseView(genericController.ControllerContext, viewEngineResult.View);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the file name of the layout.
+        /// </summary>
+        /// <param name="templateName">Name of the template.</param>
+        /// <returns>File name of the layout.</returns>
+        public string LayoutViewPath(string templateName)
+        {
+            string result = null;
+
+            var genericController = this.CreateController();
+            var viewEngineResult = this.GetViewEngineResult(genericController.ControllerContext, templateName, isPartial: false);
+
+            if (viewEngineResult != null && viewEngineResult.View != null)
+            {
+                var builtView = viewEngineResult.View as BuildManagerCompiledView;
+                if (builtView != null)
+                {
+                    result = builtView.ViewPath;
+                }
+
+                viewEngineResult.ViewEngine.ReleaseView(genericController.ControllerContext, viewEngineResult.View);
+            }
 
             return result;
         }
