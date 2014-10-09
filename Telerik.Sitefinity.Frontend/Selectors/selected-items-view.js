@@ -23,9 +23,7 @@
                             // the collection is not changed by the search
                             if (!scope.filter.searchString || scope.filter.searchString === "") {
                                 originalItems = [];
-                                for (var i = 0; i < scope.items.length; i++) {
-                                    originalItems.push(scope.items[i]);
-                                }
+                                Array.prototype.push.apply(originalItems, scope.items);
                             }
                         });
 
@@ -83,13 +81,13 @@
                             placeholder: 'Narrow by typing',
                             timeoutMs: 500,
                             search: function (keyword) {
-                                scope.items.splice(0, scope.items.length);
+                                scope.items.length = 0;
 
-                                for (var i = 0; i < originalItems.length; i++) {
-                                    if (!keyword) {
-                                        scope.items.push(originalItems[i]);
-                                    }
-                                    else {
+                                if (!keyword) {
+                                    Array.prototype.push.apply(scope.items, originalItems);
+                                }
+                                else {
+                                    for (var i = 0; i < originalItems.length; i++) {
                                         if (scope.bindIdentifierField(originalItems[i]).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
                                             scope.items.push(originalItems[i]);
                                         }

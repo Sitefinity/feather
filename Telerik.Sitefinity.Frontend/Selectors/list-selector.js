@@ -357,9 +357,7 @@
                         scope.collectSelectedItems = function () {
                             if (scope.multiselect) {
                                 scope.selectedItemsViewData.length = 0;
-                                for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
-                                    scope.selectedItemsViewData.push(scope.selectedItemsInTheDialog[i]);
-                                }
+                                Array.prototype.push.apply(scope.selectedItemsViewData, scope.selectedItemsInTheDialog);
                             }
                         };
 
