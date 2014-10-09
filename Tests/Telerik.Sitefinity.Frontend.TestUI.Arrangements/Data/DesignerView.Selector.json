@@ -4,8 +4,13 @@
 	"Mvc/Scripts/Angular/angular-resource.min.js",
 	"Services/services.js",
 	"Services/news-item-service.js",
+	"Services/flat-taxon-service.js",
+	"Services/taxonomy-service.js",
+	"Services/data-service.js",
 	"Selectors/selectors.js",
 	"Selectors/list-selector.js",
-	"Selectors/news-selector.js"
+	"Selectors/news-selector.js",
+	"Selectors/dynamic-items-selector.js",
+	"Selectors/taxon-selector.js"
   ]
 }

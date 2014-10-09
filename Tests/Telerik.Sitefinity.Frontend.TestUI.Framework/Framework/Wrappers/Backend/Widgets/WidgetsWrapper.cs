@@ -148,11 +148,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// Selects the content.
         /// </summary>
         /// <param name="isFirstSelector">True or false depending on the selector.</param>
-        public void SelectContent(bool isFirstSelector = true)
+        public void SelectContent(string selector)
         {
-            if (isFirstSelector)
-            {
-                var contentSelector = this.GetContentSelectorByName("firstSelector").As<HtmlControl>()
+            var contentSelector = this.GetContentSelectorByName(selector).As<HtmlControl>()
                                           .AssertIsPresent("selector directive");
 
                 HtmlButton selectButton = contentSelector.Find.ByAttributes("class=~openSelectorBtn")
@@ -161,21 +159,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 
                 selectButton.Click();
                 ActiveBrowser.WaitForAsyncRequests();
-                ActiveBrowser.RefreshDomTree();
-            }
-            else
-            {
-                var contentSelector = this.GetContentSelectorByName("secondSelector").As<HtmlControl>()
-                                          .AssertIsPresent("selector directive");
-
-                HtmlButton selectButton = contentSelector.Find.ByAttributes("class=~openSelectorBtn")
-                    .As<HtmlButton>()
-                    .AssertIsPresent("select button");
-
-                selectButton.Click();
-                ActiveBrowser.WaitForAsyncRequests();
-                ActiveBrowser.RefreshDomTree();
-            }
+                ActiveBrowser.RefreshDomTree();                    
         }
 
         /// <summary>
