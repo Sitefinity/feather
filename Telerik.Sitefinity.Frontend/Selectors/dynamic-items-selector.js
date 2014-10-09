@@ -11,13 +11,13 @@
                             return dataService.getItems(ctrl.$scope.itemType, provider, skip, take, search, ctrl.identifierField);
                         };
 
-                        ctrl.getItem = function (id) {
+                        ctrl.getSpecificItems = function (ids) {
                             var provider = ctrl.$scope.provider;
-                            return dataService.getItem(id, ctrl.$scope.itemType, provider);
+                            return dataService.getSpecificItems(ctrl.$scope.itemType, provider, ids);
                         };
 
-                        ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            ctrl.updateSelection(data.Item);
+                        ctrl.onSelectedItemsLoadedSuccess = function (data) {
+                            ctrl.updateSelection(data.Items);
                         };
 
                         ctrl.selectorType = 'DynamicItemsSelector';

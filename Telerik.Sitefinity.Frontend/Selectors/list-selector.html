@@ -1,7 +1,12 @@
 ﻿<div id="selectedItemsPlaceholder">
     <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
     <div ng-hide="showError">
-        <span class="label label-default" ng-bind="bindIdentifierField(selectedItem)"></span>
+        <div ng-repeat="item in selectedItems">
+            <span class="label label-default"                 
+                 ng-bind="bindIdentifierField(item)">
+            </span>
+        </div>
+
         <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
             <span ng-hide="isItemSelected()">Select</span>
             <span ng-show="isItemSelected()">Change</span>

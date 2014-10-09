@@ -43,41 +43,18 @@
 
                     this.$scope = $scope;
 
-                    this.updateSelection = function (selectedItem) {
-                        updateSelectedItems(selectedItem);
-                        updateSelectedIds(selectedItem.Id);
-                    };
-
-                    var updateSelectedItems = function (selectedItem) {
-                        if (!$scope.multiselect && !$scope.selectedItem) {
-                        $scope.selectedItem = selectedItem;
+                    this.updateSelection = function (selectedItems) {
+                        if (selectedItems.length === 0) {
+                            return;
                         }
 
-                        if (!$scope.selectedItems) {
-                            $scope.selectedItems = [];
-                        }
+                        $scope.selectedItem = selectedItems[0];
+                        $scope.selectedItemId = selectedItems[0].Id;
 
-                        var selectedIds = $scope.selectedItems.map(function (item) {
+                        $scope.selectedItems = selectedItems;
+                        $scope.selectedIds = selectedItems.map(function (item) {
                             return item.Id;
                         });
-
-                        if (selectedIds.indexOf(selectedItem.Id) < 0) {
-                                $scope.selectedItems.push(selectedItem);
-                        }
-                    };
-
-                    var updateSelectedIds = function (selectedItemId) {
-                        if (!$scope.multiselect && !$scope.selectedItemId) {
-                        $scope.selectedItemId = selectedItemId;
-                        }
-
-                        if (!$scope.selectedIds) {
-                            $scope.selectedIds = [];
-                        }
-
-                        if ($scope.selectedIds.indexOf(selectedItemId) < 0) {
-                            $scope.selectedIds.push(selectedItemId);
-                        }
                     };
                 },
                 templateUrl: function (elem, attrs) {
@@ -101,7 +78,7 @@
                         };
 
                         var onItemsFilteredSuccess = function (data) {
-                                    selectItemsInDialog(data.Items);
+                            selectItemsInDialog(data.Items);
 
                             scope.items = data.Items;
                         };
@@ -122,6 +99,8 @@
                         // ------------------------------------------------------------------------
                         // helper methods
                         // ------------------------------------------------------------------------
+
+                        var emptyGuid = '00000000-0000-0000-0000-000000000000';
 
                         var pushSelectedItemsToTheTop = function () {
                             if (scope.items.length === 0 && scope.selectedItems && scope.selectedItems.length > 0) {
@@ -168,19 +147,17 @@
                             return [];
                         };
 
-                        var emptyGuid = '00000000-0000-0000-0000-000000000000';
-
                         var getSelectedItems = function () {
-                            //var ids = getSelectedIds();
-                            //for (var i = 0; i < ids.length; i++) {
-                            //    if (ids[i] !== emptyGuid) {
-                            //        ctrl.getItem(ids[i])
-                            //            .then(ctrl.onSelectedItemLoadedSuccess, onError)
-                            //            .finally(function () {
-                            //                scope.showLoadingIndicator = false;
-                            //            });//TODO: call it only when the last item is retrieved
-                            //    }
-                            //}                            
+                            var ids = getSelectedIds();
+                            if (ids.length === 0) {
+                                return;
+                            }
+
+                            ctrl.getSpecificItems(ids)
+                                .then(ctrl.onSelectedItemsLoadedSuccess, onError)
+                                .finally(function () {
+                                    scope.showLoadingIndicator = false;
+                                });
                         };
 
                         var resetItems = function () {
@@ -241,8 +218,8 @@
                                     pushMoreFilteredItems(items);
                                 }
                                 else {
-                                            pushNotSelectedItems(items);
-                                }
+                                    pushNotSelectedItems(items);
+                                }                                
                             }
                         };
 
@@ -302,8 +279,8 @@
                         };
 
                         scope.cancel = function () {
-                                resetItems();
-                                scope.$modalInstance.close();
+                            resetItems();
+                            scope.$modalInstance.close();
                         };
 
                         scope.open = function () {
@@ -319,7 +296,7 @@
                             .catch(onError)
                             .finally(function () {
                                 scope.showLoadingIndicator = false;
-                                });
+                            });
                         };
 
                         scope.getTemplate = function () {
