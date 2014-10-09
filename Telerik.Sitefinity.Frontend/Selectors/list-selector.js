@@ -190,6 +190,7 @@
                         });
 
                         scope.showError = false;
+                        scope.selectedItemsViewData = [];
                         scope.items = [];
                         scope.filter = {
                             placeholder: 'Narrow by typing',
@@ -289,6 +290,9 @@
 
                             ctrl.getItems(scope.paging.skip, scope.paging.take)
                             .then(onFirstPageLoadedSuccess, onError)
+                            .then (function () {
+                                jQuery("#selectorTabs").kendoTabStrip();
+                            })
                             .catch(onError)
                             .finally(function () {
                                 scope.showLoadingIndicator = false;
@@ -325,6 +329,15 @@
 
                         scope.bindIdentifierField = function (item) {
                             return ctrl.bindIdentifierField(item);
+                        };
+
+                        scope.collectSelectedItems = function () {
+                            if (scope.multiselect) {
+                                scope.selectedItemsViewData.length = 0;
+                                for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
+                                    scope.selectedItemsViewData.push(scope.selectedItemsInTheDialog[i]);
+                                }
+                            }
                         };
 
                         getSelectedItems();

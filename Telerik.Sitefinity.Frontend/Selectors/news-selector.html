@@ -3,7 +3,13 @@
         <h1 style="background: none; padding-bottom: 0; margin-bottom: 0" class="modal-title">Select content</h1>
     </div>
     <div class="modal-body">
-        <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
+        <div id="selectorTabs">
+            <ul ng-show="multiselect">
+                <li class="k-state-active">All</li>
+                <li ng-click="collectSelectedItems()">Selected <span ng-show='selectedItemsInTheDialog.length !== 0'>{{selectedItemsInTheDialog.length}}</span></li>
+            </ul>
+            <div>
+                <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
 
         <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
@@ -25,6 +31,11 @@
             </div>
             <div ng-hide="items.length || showLoadingIndicator">No items found</div>
             <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
+        </div>
+    </div>
+            <div>
+                <selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' identifier-field='identifierField'></selected-items-view>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
