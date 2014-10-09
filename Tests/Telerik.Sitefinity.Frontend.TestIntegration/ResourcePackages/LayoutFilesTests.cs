@@ -157,7 +157,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Category(TestCategories.LayoutFiles)]
         [Author("Petya Rachina")]
         [Description("Adds a resource package with layout files, edits one of the layout files and verifies that the template and page are updated.")]
-        [Ignore("The test failed when delete the files.")]
         public void ResourcePackageLayoutFiles_EditLayoutFile_VerifyTemplateAndPageBasedOnTheLayoutFile()
         {
             int templatesCount = this.PageManager.GetTemplates().Count();
