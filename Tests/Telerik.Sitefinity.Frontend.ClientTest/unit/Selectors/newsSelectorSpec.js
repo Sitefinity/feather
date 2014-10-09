@@ -263,10 +263,8 @@ describe("news selector", function () {
             expect(s.items[0].Filter).toBeFalsy();
 
             //Apply filter
-            s.filter.search = 'filter';
-            s.reloadItems(s.filter.search);
-
-            $timeout.flush();
+            s.filter.searchString = 'filter';
+            s.filter.search(s.filter.searchString);
 
             var args = getNewsServiceGetItemsArgs();
 
@@ -285,7 +283,7 @@ describe("news selector", function () {
             expect(s.items).toBeDefined();
             expect(s.items[0].Id).toEqual(dataItem2.Id);
             expect(s.items[0].Filter).toBe(true);
-            expect(s.filter.search).toBe('filter');
+            expect(s.filter.searchString).toBe('filter');
         });
 
         it('[GMateev] / should move the selected item to be first in the list of all items.', function () {
@@ -494,6 +492,8 @@ describe("news selector", function () {
             //Close the dialog (Done button clicked)
             s.doneSelecting();
 
+            scope.$digest();
+
             expect(scope.selectedIds).toBeDefined();
             expect(scope.selectedIds.length).toBe(2);
             expect(scope.selectedIds).toEqualArrayOfValues(ids);
@@ -501,6 +501,72 @@ describe("news selector", function () {
             expect(scope.selectedItems).toBeDefined();
             expect(scope.selectedItems.length).toEqual(2);
             expect(scope.selectedItems).toEqualArrayOfDataItems(items);
+        });
+
+        it('[GMateev] / should mark items as selected when the dialog is opened.', function () {
+            var template = "<list-selector news-selector multiselect='true' selected-ids='selectedIds'/>";
+
+            scope.selectedIds = ids;
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.selectedItemsInTheDialog).toBeDefined();
+            expect(s.selectedItemsInTheDialog.length).toEqual(2);
+            expect(s.selectedItemsInTheDialog).toEqualArrayOfDataItems(items);
+        });
+
+        it('[GMateev] / should select many items in the opened dialog.', function () {
+            var template = "<list-selector news-selector multiselect='true'/>";
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            //Select item in the selector
+            s.itemClicked(0, s.items[0]);
+
+            expect(s.selectedItemsInTheDialog).toBeDefined();
+            expect(s.selectedItemsInTheDialog.length).toEqual(1);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
+
+            //Select second item in the selector
+            s.itemClicked(1, s.items[1]);
+
+            expect(s.selectedItemsInTheDialog).toBeDefined();
+            expect(s.selectedItemsInTheDialog.length).toEqual(2);
+            expect(s.selectedItemsInTheDialog[1].Id).toEqual(dataItem2.Id);
+        });
+
+        it('[GMateev] / should deselect an item if it is clicked and it is already selected.', function () {
+            var template = "<list-selector news-selector multiselect='true' selected-ids='selectedIds'/>";
+
+            scope.selectedIds = ids;
+
+            compileDirective(template);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.selectedItemsInTheDialog).toBeDefined();
+            expect(s.selectedItemsInTheDialog.length).toEqual(2);
+            expect(s.selectedItemsInTheDialog).toEqualArrayOfDataItems(items);
+
+            //Select item in the selector
+            s.itemClicked(0, s.items[0]);
+
+            expect(s.selectedItemsInTheDialog).toBeDefined();
+            expect(s.selectedItemsInTheDialog.length).toEqual(1);
+            expect(s.selectedItemsInTheDialog).toEqualArrayOfDataItems([dataItem2]);
         });
     });
 });

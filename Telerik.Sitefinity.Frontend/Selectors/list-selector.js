@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('listSelector', ['$timeout', function ($timeout) {
+        .directive('listSelector', function () {
             return {
                 restrict: "E",
                 transclude: true,
@@ -26,38 +26,31 @@
                     this.bindIdentifierField = function (item) {
                         if (item) {
                             var mainField = item[this.identifierField];
-                            if (mainField) {
+                            var valueProp = 'Value';
+
+                            if (!mainField) {
+                                return item.Id;
+                            }
+
+                            if (typeof mainField === 'string') {
                                 return mainField;
                             }
-                            else {
-                                return item.Id;
+                            else if (valueProp in mainField) {
+                                return mainField.Value;
                             }
                         }
                     };
 
-                    this.getSelectedItemId = function () {
-                        return $scope.selectedItemId;
+                    this.$scope = $scope;
+
+                    this.updateSelection = function (selectedItem) {
+                        updateSelectedItems(selectedItem);
+                        updateSelectedIds(selectedItem.Id);
                     };
 
-                    this.getSelectedItem = function () {
-                        return $scope.selectedItem;
-                    };
-
-                    this.getTaxonomyId = function () {
-                        return $scope.taxonomyId;
-                    };
-
-                    this.getProvider = function () {
-                        return $scope.provider;
-                    };
-
-                    this.getItemType = function () {
-                        return $scope.itemType;
-                    };
-
-                    this.updateSelectedItems = function (selectedItem) {
+                    var updateSelectedItems = function (selectedItem) {
                         if (!$scope.multiselect && !$scope.selectedItem) {
-                            $scope.selectedItem = selectedItem;
+                        $scope.selectedItem = selectedItem;
                         }
 
                         if (!$scope.selectedItems) {
@@ -69,11 +62,11 @@
                         });
 
                         if (selectedIds.indexOf(selectedItem.Id) < 0) {
-                            $scope.selectedItems.push(selectedItem);
+                                $scope.selectedItems.push(selectedItem);
                         }
                     };
 
-                    this.updateSelectedIds = function (selectedItemId) {
+                    var updateSelectedIds = function (selectedItemId) {
                         if (!$scope.multiselect && !$scope.selectedItemId) {
                         $scope.selectedItemId = selectedItemId;
                         }
@@ -85,14 +78,6 @@
                         if ($scope.selectedIds.indexOf(selectedItemId) < 0) {
                             $scope.selectedIds.push(selectedItemId);
                         }
-                    };
-
-                    this.setPartialTemplate = function (template) {
-                        $scope.partialTemplate = template;
-                    };
-
-                    this.setSelectorType = function (type) {
-                        $scope.selectorType = type;
                     };
                 },
                 templateUrl: function (elem, attrs) {
@@ -106,43 +91,19 @@
                         // Event handlers
                         // ------------------------------------------------------------------------
 
-                        //invoked when the items are loaded
-                        var onItemsLoadedSuccess = function (data) {
-                            if (data.Items.length < scope.filter.paging.itemsPerPage) {
-                                scope.hideEndlessScrollLoadingIndicator = true;
-                            }
+                        var onFirstPageLoadedSuccess = function (data) {
+                            scope.noItemsExist = !data.Items.length;
+                            scope.paging.skip += data.Items.length;
 
-                            if (data && data.Items) {
-                                //new filter
-                                if (isFilterApplied() && scope.filter.paging.totalItems === 0) {
+                            pushSelectedItemsToTheTop();
+
+                            pushNotSelectedItems(data.Items);
+                        };
+
+                        var onItemsFilteredSuccess = function (data) {
                                     selectItemsInDialog(data.Items);
 
-                                    scope.items = data.Items;
-                                }
-                                //load more items for already applied filter (endless scroll)
-                                else if (isFilterApplied() && scope.filter.paging.totalItems !== 0) {
-                                    selectItemsInDialog(data.Items);
-
-                                    Array.prototype.push.apply(scope.items, data.Items);
-                                }
-                                else if (!isFilterApplied()) {
-                                    //add the selected items on the top
-                                    if (scope.items.length === 0 && scope.selectedItems && scope.selectedItems.length > 0) {
-                                        Array.prototype.push.apply(scope.items, scope.selectedItems);
-                                        scope.selectedItemsInTheDialog = scope.selectedItems;
-                                    }
-
-                                    Array.prototype.push.apply(scope.items, data.Items.filter(function (item) {
-                                        if (!scope.selectedIds) return true;
-
-                                        return scope.selectedIds.indexOf(item.Id) < 0;
-                                    }));
-                                }
-
-                                scope.filter.paging.totalItems += data.Items.length;
-                            }
-
-                            scope.isListEmpty = scope.items.length === 0 && !scope.filter.search;
+                            scope.items = data.Items;
                         };
 
                         var onError = function (error) {
@@ -161,6 +122,28 @@
                         // ------------------------------------------------------------------------
                         // helper methods
                         // ------------------------------------------------------------------------
+
+                        var pushSelectedItemsToTheTop = function () {
+                            if (scope.items.length === 0 && scope.selectedItems && scope.selectedItems.length > 0) {
+                                Array.prototype.push.apply(scope.items, scope.selectedItems);
+                                Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.selectedItems);
+                            }
+                        };
+
+                        var pushNotSelectedItems = function (items) {
+                            var ids = getSelectedIds();
+
+                            Array.prototype.push.apply(scope.items,
+                                items.filter(function (item) {
+                                    return ids.indexOf(item.Id) < 0;
+                                }));
+                        };
+
+                        var pushMoreFilteredItems = function (items) {
+                            selectItemsInDialog(items);
+
+                            Array.prototype.push.apply(scope.items, data.Items);
+                        };
 
                         var getSelectedIds = function () {
                             if (attrs.multiselect) {
@@ -187,41 +170,24 @@
 
                         var emptyGuid = '00000000-0000-0000-0000-000000000000';
 
-                        var loadItems = function () {
-                            var skip = scope.filter.paging.totalItems;
-                            var take = scope.filter.paging.itemsPerPage;
-                            var filter = scope.filter.search;
-                            return ctrl.getItems(skip, take, filter)
-                                .then(onItemsLoadedSuccess, onError);
-                        };
-
                         var getSelectedItems = function () {
-                            var ids = getSelectedIds();
-                            for (var i = 0; i < ids.length; i++) {
-                                if (ids[i] !== emptyGuid) {
-                                    ctrl.getItem(ids[i])
-                                        .then(ctrl.onSelectedItemLoadedSuccess, onError)
-                                        .finally(hideLoadingIndicator);//TODO: call it only when the last item is retrieved
-                                }
-                            }                            
-                        };
-
-                        var showLoadingIndicator = function () {
-                            scope.showLoadingIndicator = true;
-                        };
-
-                        var hideLoadingIndicator = function () {
-                            scope.showLoadingIndicator = false;
+                            //var ids = getSelectedIds();
+                            //for (var i = 0; i < ids.length; i++) {
+                            //    if (ids[i] !== emptyGuid) {
+                            //        ctrl.getItem(ids[i])
+                            //            .then(ctrl.onSelectedItemLoadedSuccess, onError)
+                            //            .finally(function () {
+                            //                scope.showLoadingIndicator = false;
+                            //            });//TODO: call it only when the last item is retrieved
+                            //    }
+                            //}                            
                         };
 
                         var resetItems = function () {
-                            scope.filter.paging.totalItems = 0;
-                            scope.hideEndlessScrollLoadingIndicator = false;
+                            scope.paging.skip = 0;
+                            scope.filter.searchString = null;
                             scope.items = [];
-                        };
-
-                        var isFilterApplied = function () {
-                            return scope.filter.search && scope.filter.search !== '';
+                            scope.selectedItemsInTheDialog = [];
                         };
 
                         var selectItemsInDialog = function (items) {
@@ -240,35 +206,42 @@
 
                         scope.$watch('provider', function (newProvider, oldProvider) {
                             if (newProvider !== oldProvider) {
-                                if (scope.selectorType === 'NewsSelector') {
+                                if (ctrl.selectorType === 'NewsSelector') {
                                     scope.selectedItem = null;
                                 }
                             }
                         });
 
-                        var timeoutPromise = false;
-                        var selectorId;
-                        if (attrs.id) {
-                            selectorId = attrs.id;
+                        scope.showError = false;
+                        scope.items = [];
+                        scope.filter = {
+                            placeholder: 'Narrow by typing',
+                            timeoutMs: 500,
+                            search: function (keyword) {
+                                scope.showLoadingIndicator = true;
+                                var skip = 0;
+                                var take = scope.paging.take;
+                                return ctrl.getItems(skip, take, keyword)
+                                    .then(onItemsFilteredSuccess, onError)
+                                    .finally(function () {
+                                        scope.showLoadingIndicator = false;
+                                    });
+                            }
+                        };
+                        scope.paging = {
+                            skip: 0,
+                            take: 20,
+                            getPage: function () {
+                                return ctrl.getItems(this.skip, this.take, scope.filter.searchString);
+                            },
+
+                            pageLoaded: function (items) {
+                                if (scope.filter.searchString) {
+                                    pushMoreFilteredItems(items);
                         }
                         else {
-                            //selectorId will be set to the id of the wrapper div of the template. This way we avoid issues when there are several selectors on one page.
-                            selectorId = 'sf' + Math.floor((Math.random() * 1000) + 1);
-                            scope.selectorId = selectorId;
+                                    pushNotSelectedItems(items);
                         }
-
-                        // This id is used by the modal dialog to know which button will open him.
-                        scope.openSelectorButtonId = '#' + selectorId + ' .openSelectorBtn';
-
-                        scope.showError = false;
-                        scope.isListEmpty = false;
-                        scope.items = [];
-                        scope.selectedItemsViewData = [];
-                        scope.filter = {
-                            search: null,
-                            paging: {
-                                totalItems: 0,
-                                itemsPerPage: 20
                             }
                         };
 
@@ -302,7 +275,16 @@
                                 scope.selectedItem = scope.selectedItemsInTheDialog[0];
                                 scope.selectedItemId = scope.selectedItemsInTheDialog[0].Id;
 
-                                scope.selectedItems = scope.selectedItemsInTheDialog;
+                                if (scope.selectedItems) {
+                                    //Clean the array and keep all references.
+                                    scope.selectedItems.length = 0;
+                                }
+                                else {
+                                    scope.selectedItems = [];
+                                }
+
+                                Array.prototype.push.apply(scope.selectedItems, scope.selectedItemsInTheDialog);
+
                                 scope.selectedIds = scope.selectedItems.map(function (item) {
                                     return item.Id;
                                 });
@@ -315,57 +297,34 @@
                             }
 
                             resetItems();
-                            scope.filter.search = null;
-
                             scope.$modalInstance.close();
                         };
 
-                        scope.HideError = function () {
-                            scope.Feedback.showError = false;
-                            scope.Feedback.errorMessage = null;
-                        };
-
                         scope.cancel = function () {
-                            try {
                                 resetItems();
-                                scope.filter.search = null;
-
                                 scope.$modalInstance.close();
-                            } catch (e) { }
                         };
 
                         scope.open = function () {
-                            showLoadingIndicator();
-                            ctrl.getItems(scope.filter.paging.totalItems, scope.filter.paging.itemsPerPage, scope.filter.search)
-                            .then(onItemsLoadedSuccess, onError)
-                            .then(function () {
-                                jQuery(".endlessScroll").scroll(function () {
-                                    var raw = jQuery(".endlessScroll")[0];
-                                    if (raw.scrollTop !== 0 && raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
-                                        loadItems();
-                                    }
-                                });
+                            scope.$openModalDialog();
+
+                            scope.showLoadingIndicator = true;
+
+                            ctrl.getItems(scope.paging.skip, scope.paging.take)
+                            .then(onFirstPageLoadedSuccess, onError)
+                            .then (funtion () {
                                 jQuery("#selectorTabs").kendoTabStrip();
                             })
                             .catch(onError)
-                            .finally(hideLoadingIndicator);
+                            .finally(function () {
+                                scope.showLoadingIndicator = false;
+                                });
                         };
 
                         scope.getTemplate = function () {
                             var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
                             var url = ctrl.templateUrl;
                             return sitefinity.getEmbeddedResourceUrl(assembly, url);
-                        };
-
-                        scope.reloadItems = function (value) {
-                            if (timeoutPromise) {
-                                $timeout.cancel(timeoutPromise);
-                            }
-
-                            timeoutPromise = $timeout(function () {
-                                resetItems();
-                                loadItems();
-                            }, 500);
                         };
 
                         scope.isItemSelected = function () {
@@ -389,8 +348,6 @@
                         scope.selectedItemsInTheDialog = [];
 
                         scope.showLoadingIndicator = true;
-
-                        scope.hideEndlessScrollLoadingIndicator = false;
 
                         scope.bindIdentifierField = function (item) {
                             return ctrl.bindIdentifierField(item);
@@ -424,5 +381,5 @@
                     }
                 }
             };
-        }]);
+        });
 })(jQuery);
