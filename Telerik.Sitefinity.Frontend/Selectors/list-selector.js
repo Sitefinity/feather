@@ -213,6 +213,7 @@
                         });
 
                         scope.showError = false;
+                        scope.selectedItemsViewData = [];
                         scope.items = [];
                         scope.filter = {
                             placeholder: 'Narrow by typing',
@@ -238,10 +239,10 @@
                             pageLoaded: function (items) {
                                 if (scope.filter.searchString) {
                                     pushMoreFilteredItems(items);
-                        }
-                        else {
-                                    pushNotSelectedItems(items);
-                        }
+                                }
+                                else {
+                                            pushNotSelectedItems(items);
+                                }
                             }
                         };
 
@@ -312,7 +313,7 @@
 
                             ctrl.getItems(scope.paging.skip, scope.paging.take)
                             .then(onFirstPageLoadedSuccess, onError)
-                            .then (funtion () {
+                            .then (function () {
                                 jQuery("#selectorTabs").kendoTabStrip();
                             })
                             .catch(onError)

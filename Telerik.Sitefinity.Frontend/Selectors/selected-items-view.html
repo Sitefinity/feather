@@ -7,9 +7,9 @@
         <span class="input-group-addon">
             <i class="glyphicon glyphicon-search"></i>
         </span>
-        <input type="text" ng-model="searchValue" ng-change="searchItems(searchValue)" class="form-control" placeholder="Narrow by typing" />
+        <items-filter filter='filter'></items-filter>
     </div>
-    <div class="list-group s-items-list-wrp endlessScroll">
+    <div endless-scroll class="list-group s-items-list-wrp">
         <a ng-repeat="item in items"
                 style="text-overflow: ellipsis; overflow: hidden;"
                 ng-class="{'list-group-item':true}"
@@ -19,5 +19,4 @@
         </a>
     </div>
     <div ng-hide="items.length">No items found</div>
-    <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
 </div>

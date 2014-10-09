@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('selectedItemsView', ['$timeout', function ($timeout) {
+        .directive('selectedItemsView', function () {
             return {
                 restrict: "E",
                 scope: {
@@ -17,35 +17,17 @@
                     post: function (scope, element, attrs) {
                         var defaultIdentifierField = 'Title';
                         var identifierField = scope.identifierField || defaultIdentifierField;
-                        var timeoutPromise = false;
                         var originalItems = [];
-
-                        var search = function (value) {
-                            scope.items.splice(0, scope.items.length);
-                            
-                            for (var i = 0; i < originalItems.length; i++) {
-                                if (!value) {
-                                    scope.items.push(originalItems[i]);
-                                }
-                                else {
-                                    if (scope.bindIdentifierField(originalItems[i]).indexOf(value) !== -1) {
-                                        scope.items.push(originalItems[i]);
-                                    }
-                                }
-                            }
-                        };
 
                         scope.$watch('items.length', function () {
                             // the collection is not changed by the search
-                            if (!scope.searchValue || scope.searchValue === "") {
+                            if (!scope.filter.searchString || scope.filter.searchString === "") {
                                 originalItems = [];
                                 for (var i = 0; i < scope.items.length; i++) {
                                     originalItems.push(scope.items[i]);
                                 }
                             }
                         });
-
-                        scope.searchValue = '';
 
                         scope.isListEmpty = function () {
                             return originalItems.length === 0;
@@ -54,11 +36,17 @@
                         scope.bindIdentifierField = function (item) {
                             if (item) {
                                 var mainField = item[identifierField];
-                                if (mainField) {
+                                var valueProp = 'Value';
+
+                                if (!mainField) {
+                                    return item.Id;
+                                }
+
+                                if (typeof mainField === 'string') {
                                     return mainField;
                                 }
-                                else {
-                                    return item.Id;
+                                else if (valueProp in mainField) {
+                                    return mainField.Value;
                                 }
                             }
                         };
@@ -91,17 +79,26 @@
                             
                         };
 
-                        scope.searchItems = function (value) {
-                            if (timeoutPromise) {
-                                $timeout.cancel(timeoutPromise);
-                            }
+                        scope.filter = {
+                            placeholder: 'Narrow by typing',
+                            timeoutMs: 500,
+                            search: function (keyword) {
+                                scope.items.splice(0, scope.items.length);
 
-                            timeoutPromise = $timeout(function () {
-                                search(value);
-                            }, 500);
+                                for (var i = 0; i < originalItems.length; i++) {
+                                    if (!keyword) {
+                                        scope.items.push(originalItems[i]);
+                                    }
+                                    else {
+                                        if (scope.bindIdentifierField(originalItems[i]).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                            scope.items.push(originalItems[i]);
+                                        }
+                                    }
+                                }
+                            }
                         };
                     }
                 }
             };
-        }]);
+        });
 })(jQuery);
