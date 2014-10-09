@@ -566,6 +566,58 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Creates template with space in the name and verifies it is not based on layout file from Mvc/Views/Layouts")]
+        public void LayoutTemplates_CreateTemplateUsingTitleWithSpace_VerifyTemplateNotBasedOnLayoutFile()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string templateTitle = "   TestLayout";
+            string page2 = "page2";
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
+
+                string pageContent = this.GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+
+                Guid templateId = this.CreatePageTemplate(templateTitle);
+
+                var template2 = pageManager.GetTemplates().Where(t => t.Id == templateId).FirstOrDefault();
+                Assert.IsNotNull(template2, "Template was not found");
+
+                Guid page2Id = FeatherServerOperations.Pages().CreatePageWithTemplate(template2, page2, page2);
+
+                string page2Content = this.GetPageContent(page2Id);
+                Assert.IsFalse(page2Content.Contains(LayoutTemplateText), "Layout template text was found in the page content");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(templateTitle);
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                File.Delete(filePath);
+            }
+        }
+
         private string SfPath
         {
             get
@@ -588,12 +640,29 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             return pageContent;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         private PageTemplate CreatePageTemplate(string templateTitle, string parentTemplateTitle)
+        {
+            var pageManager = PageManager.GetManager();
+
+            var templateId = this.CreatePageTemplate(templateTitle);
+            var template = pageManager.GetTemplates().Where(t => t.Id == templateId).SingleOrDefault();
+
+            var parent = pageManager.GetTemplates().Where(t => t.Title == parentTemplateTitle).FirstOrDefault();
+
+            template.ParentTemplate = parent;
+
+            var master = pageManager.TemplatesLifecycle.Edit(template);
+            pageManager.TemplatesLifecycle.Publish(master);
+            pageManager.SaveChanges();
+
+            return template;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
+        private Guid CreatePageTemplate(string templateTitle)
         {
             Guid templateId = Guid.Empty;
             var fluent = App.WorkWith();
-            var parentTemplate = fluent.Page().PageManager.GetTemplates().Where(t => t.Title == parentTemplateTitle).FirstOrDefault();
             templateId = fluent.PageTemplate()
                                .CreateNew()
                                .Do(t =>
@@ -601,7 +670,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
                                    t.Title = templateTitle;
                                    t.Name = templateTitle.ToLower(CultureInfo.InvariantCulture);
                                    t.Description = templateTitle + " descr";
-                                   t.ParentTemplate = parentTemplate;
                                    t.ShowInNavigation = true;
                                    t.Framework = PageTemplateFramework.Mvc;
                                    t.Visible = true;
@@ -615,7 +683,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             pageManager.TemplatesLifecycle.Publish(master);
             pageManager.SaveChanges();
 
-            return template;
+            return template.Id;
         }
 
         private const string LayoutFileName = "TestLayout.cshtml";
