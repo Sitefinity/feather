@@ -618,6 +618,57 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Adds layout file to Mvc/Views/Layouts folder, creates new template based on convention and verifies the page that uses it")]
+        public void LayoutTemplates_AddLayoutFileAndCreateNewTemplate_VerifyPageContent()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                ////Deleting the template in order to create new one with the same name
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+
+                template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNull(template, "Template was not found");
+
+                ////Creating new template with the same title
+                Guid templateId = this.CreatePageTemplate(TemplateTitle);
+
+                template = pageManager.GetTemplates().Where(t => t.Id == templateId).FirstOrDefault();
+                Assert.IsNotNull(template, "New template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
+
+                string pageContent = this.GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                File.Delete(filePath);
+            }
+        }
+
         private string SfPath
         {
             get
