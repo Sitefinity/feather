@@ -1,0 +1,23 @@
+﻿<div ng-show="isListEmpty()" class="alert alert-info">No items have been selected yet.</div>
+
+<alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+
+<div ng-hide="isListEmpty() || showError">
+    <div class="input-group m-bottom-sm">
+        <span class="input-group-addon">
+            <i class="glyphicon glyphicon-search"></i>
+        </span>
+        <input type="text" ng-model="searchValue" ng-change="searchItems(searchValue)" class="form-control" placeholder="Narrow by typing" />
+    </div>
+    <div class="list-group s-items-list-wrp endlessScroll">
+        <a ng-repeat="item in items"
+                style="text-overflow: ellipsis; overflow: hidden;"
+                ng-class="{'list-group-item':true}"
+                ng-click="itemClicked(item)">
+            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)">
+            <span ng-bind="bindIdentifierField(item)"></span>
+        </a>
+    </div>
+    <div ng-hide="items.length">No items found</div>
+    <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
+</div>

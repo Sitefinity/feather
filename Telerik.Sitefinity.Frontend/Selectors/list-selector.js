@@ -57,7 +57,7 @@
 
                     this.updateSelectedItems = function (selectedItem) {
                         if (!$scope.multiselect && !$scope.selectedItem) {
-                        $scope.selectedItem = selectedItem;
+                            $scope.selectedItem = selectedItem;
                         }
 
                         if (!$scope.selectedItems) {
@@ -69,7 +69,7 @@
                         });
 
                         if (selectedIds.indexOf(selectedItem.Id) < 0) {
-                                $scope.selectedItems.push(selectedItem);
+                            $scope.selectedItems.push(selectedItem);
                         }
                     };
 
@@ -263,6 +263,7 @@
                         scope.showError = false;
                         scope.isListEmpty = false;
                         scope.items = [];
+                        scope.selectedItemsViewData = [];
                         scope.filter = {
                             search: null,
                             paging: {
@@ -344,6 +345,7 @@
                                         loadItems();
                                     }
                                 });
+                                jQuery("#selectorTabs").kendoTabStrip();
                             })
                             .catch(onError)
                             .finally(hideLoadingIndicator);
@@ -392,6 +394,15 @@
 
                         scope.bindIdentifierField = function (item) {
                             return ctrl.bindIdentifierField(item);
+                        };
+
+                        scope.collectSelectedItems = function () {
+                            if (scope.multiselect) {
+                                scope.selectedItemsViewData.length = 0;
+                                for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
+                                    scope.selectedItemsViewData.push(scope.selectedItemsInTheDialog[i]);
+                                }
+                            }
                         };
 
                         getSelectedItems();
