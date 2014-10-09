@@ -16,12 +16,12 @@
                             return flatTaxonService.getTaxons(taxonomyId, skip, take, search);
                         };
 
-                        ctrl.getItem = function (id) {
-                            return flatTaxonService.getTaxon(taxonomyId, id);
+                        ctrl.getSpecificItems = function (ids) {
+                            return flatTaxonService.getSpecificItems(taxonomyId, ids);
                         };
 
-                        ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            ctrl.updateSelection(data);
+                        ctrl.onSelectedItemsLoadedSuccess = function (data) {
+                            ctrl.updateSelection(data.Items);
                         };
 
                         ctrl.selectorType = 'TaxonSelector';

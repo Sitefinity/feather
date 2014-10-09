@@ -11,13 +11,13 @@
                             return newsItemService.getItems(provider, skip, take, search);
                         };
 
-                        ctrl.getItem = function (id) {
+                        ctrl.getSpecificItems = function (ids) {
                             var provider = ctrl.$scope.provider;
-                            return newsItemService.getItem(id, provider);
+                            return newsItemService.getSpecificItems(provider, ids);
                         };
 
-                        ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            ctrl.updateSelection(data.Item);
+                        ctrl.onSelectedItemsLoadedSuccess = function (data) {
+                            ctrl.updateSelection(data.Items);
                         };
 
                         ctrl.selectorType = 'NewsSelector';
