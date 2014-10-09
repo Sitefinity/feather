@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Web.UI;
 using MbUnit.Framework;
-using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
-using Telerik.Sitefinity.Mvc.Proxy;
-using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.TestIntegration.Data.Content;
 using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.TestIntegration.SDK;
@@ -171,6 +164,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
             }
         }
 
+        #region Helper methods
+
         private void AddGridControlToPage(Guid pageId, string controlPath, string placeHolder, string caption)
         {
             var control = new GridControl();
@@ -207,7 +202,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
 
             return pageContent;
         }
-       
+
+        #endregion
+
         #region Fields and constants
 
         private const string TemplateTitle = "Bootstrap.default";

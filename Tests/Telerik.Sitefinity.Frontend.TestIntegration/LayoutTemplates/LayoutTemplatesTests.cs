@@ -350,6 +350,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
                 FeatherServerOperations.ResourcePackages().AddNewResource(layoutResource, tempFilePath);
                 File.Replace(tempFilePath, filePath, backFilePath);
 
+                Thread.Sleep(1000);
+
                 pageContent = this.GetPageContent(pageId);
 
                 Assert.AreEqual(pageManager.GetTemplates().Count(), templatesCount + 1, "Unnecessary template was generated");
