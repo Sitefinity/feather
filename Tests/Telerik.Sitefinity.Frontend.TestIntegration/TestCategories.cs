@@ -24,5 +24,10 @@
         /// Specifies the name of the category of tests related to layout templates.
         /// </summary>
         public const string LayoutTemplates = "LayoutTemplates";
+
+        /// <summary>
+        /// Specifies the name of the category of tests related to grid widgets.
+        /// </summary>
+        public const string GridWidgets = "GridWidgets";
     }
 }

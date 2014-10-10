@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="GridWidgets\ManageGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
+    <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />
     <Compile Include="MvcWidgets\MvcSelectorTest.cs" />
     <Compile Include="MvcWidgets\MvcWidgetApplyNewView.cs" />
     <Compile Include="MvcWidgets\MvcWidgetDefaultDesigner.cs" />
