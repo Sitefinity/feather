@@ -75,8 +75,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         public void TearDown()
         {
             ServerOperations.Pages().DeleteAllPages();
-            ServerOperations.Taxonomies().DeleteTags();
             ServerOperations.News().DeleteAllNews();
+            ServerOperations.Taxonomies().ClearAllTags(TaxonomiesConstants.TagsTaxonomyId);
 
             var path = Path.Combine("MVC", "Views", "DummyText", DesignerViewFileName);
             string filePath = FileInjectHelper.GetDestinationFilePath(path);
