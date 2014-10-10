@@ -21,7 +21,6 @@ describe("news selector", function () {
 
     var serviceResult;
     var $q;
-    var $timeout;
 
     //Mock news item service. It returns promises.
     var newsItemService = {
@@ -40,6 +39,21 @@ describe("news selector", function () {
                 serviceResult.resolve(dataItems);
             }
 
+            return serviceResult.promise;
+        }),
+        getSpecificItems: jasmine.createSpy('newsItemService.getSpecificItems').andCallFake(function (ids, provider) {
+            if ($q) {
+                serviceResult = $q.defer();
+            }
+            var items = [dataItem, dataItem2].filter(function (item) {
+                return ids.indexOf(item.Id) >= 0;
+            });
+
+            serviceResult.resolve({
+                Items: items,
+                TotalCount: items.length
+            });
+            
             return serviceResult.promise;
         }),
         getItem: jasmine.createSpy('newsItemService.getItem').andCallFake(function (itemId, provider) {
@@ -104,6 +118,35 @@ describe("news selector", function () {
         });
     }));
 
+    beforeEach(function () {
+        this.addMatchers({
+            // Used to compare arrays of primitive values
+            toEqualArrayOfValues: function (expected) {
+                var valid = true;
+                for (var i = 0; i < expected.length; i++) {
+                    if (expected[i] !== this.actual[i]) {
+                        valid = false;
+                        break;
+                    }
+                }
+                return valid;
+            },
+
+            // Used to compare arrays of data items with Id and Title
+            toEqualArrayOfDataItems: function (expected) {
+                var valid = true;
+                for (var i = 0; i < expected.length; i++) {
+                    if (expected[i].Id !== this.actual[i].Id ||
+                        expected[i].Title !== this.actual[i].Title) {
+                        valid = false;
+                        break;
+                    }
+                }
+                return valid;
+            }
+        });
+    });
+
     afterEach(function () {
         //Tear down.
         var leftOver = $('.testDiv, .modal, .modal-backdrop');
@@ -127,7 +170,7 @@ describe("news selector", function () {
 
         // $digest is necessary to finalize the directive generation
         scope.$digest();
-    }
+    };
 
     var getNewsServiceGetItemsArgs = function () {
         var mostRecent = newsItemService.getItems.mostRecentCall;
@@ -135,7 +178,7 @@ describe("news selector", function () {
         expect(mostRecent.args).toBeDefined();
 
         return mostRecent.args;
-    }
+    };
 
     var getNewsServiceGetItemArgs = function () {
         var mostRecent = newsItemService.getItem.mostRecentCall;
@@ -143,8 +186,16 @@ describe("news selector", function () {
         expect(mostRecent.args).toBeDefined();
 
         return mostRecent.args;
-    }
+    };
     
+    var getNewsServiceGetSpecificItemsArgs = function () {
+        var mostRecent = newsItemService.getSpecificItems.mostRecentCall;
+        expect(mostRecent).toBeDefined();
+        expect(mostRecent.args).toBeDefined();
+
+        return mostRecent.args;
+    }
+
     describe('in single selection mode', function () {
         it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {
             var template = "<list-selector news-selector provider='provider'/>";
@@ -175,10 +226,10 @@ describe("news selector", function () {
 
             compileDirective(template);
 
-            var args = getNewsServiceGetItemArgs();
+            var args = getNewsServiceGetSpecificItemsArgs();
 
             //Item id
-            expect(args[0]).toBe(dataItem.Id);
+            expect(args[0]).toEqualArrayOfValues([dataItem.Id]);
 
             //Provider
             expect(args[1]).toBe('OpenAccessDataProvider');
@@ -263,8 +314,10 @@ describe("news selector", function () {
             expect(s.items[0].Filter).toBeFalsy();
 
             //Apply filter
-            s.filter.searchString = 'filter';
-            s.filter.search(s.filter.searchString);
+            s.$apply(function () {
+                s.filter.searchString = 'filter';
+                s.filter.search(s.filter.searchString);
+            });            
 
             var args = getNewsServiceGetItemsArgs();
 
@@ -374,35 +427,6 @@ describe("news selector", function () {
         var items = [dataItem, dataItem2];
         var ids = [dataItem.Id, dataItem2.Id];
 
-        beforeEach(function () {            
-            this.addMatchers({
-                // Used to compare arrays of primitive values
-                toEqualArrayOfValues: function (expected) {
-                    var valid = true;
-                    for (var i = 0; i < expected.length; i++) {
-                        if (expected[i] !== this.actual[i]) {
-                            valid = false;
-                            break;
-                        }
-                    }
-                    return valid;
-                },
-
-                // Used to compare arrays of data items with Id and Title
-                toEqualArrayOfDataItems: function (expected) {
-                    var valid = true;
-                    for (var i = 0; i < expected.length; i++) {
-                        if (expected[i].Id !== this.actual[i].Id ||
-                            expected[i].Title !== this.actual[i].Title) {
-                                valid = false;
-                                break;
-                        }
-                    }
-                    return valid;
-                }
-            });
-        });
-
         it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {
             var template = "<list-selector news-selector multiselect='true' provider='provider'/>";
 
@@ -426,8 +450,19 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should retrieve selected news items from the service when the selector is loaded.', function () {
+            var template = "<list-selector news-selector multiselect='true' provider='provider' selected-ids='selectedIds'/>";
 
-            throw new Error('Test not implemented.');
+            scope.selectedIds = ids;
+
+            compileDirective(template);
+
+            var args = getNewsServiceGetSpecificItemsArgs();
+
+            //Item id
+            expect(args[0]).toEqualArrayOfValues([dataItem.Id, dataItem2.Id]);
+
+            //Provider
+            expect(args[1]).toBe('OpenAccessDataProvider');
         });
 
         it('[GMateev] / should assign value to "selected-items" when "selected-ids" are provided.', function () {
