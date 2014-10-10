@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.TestIntegration.Helpers;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 {
@@ -66,6 +69,25 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 
             pageManager.PublishPageDraft(page, CultureInfo.CurrentUICulture);
             pageManager.SaveChanges();
+        }
+
+        /// <summary>
+        /// Gets the public page content.
+        /// </summary>
+        /// <param name="pageId">The id of the page.</param>
+        /// <returns>The page content.</returns>
+        public string GetPageContent(Guid pageId)
+        {
+            PageManager pageManager = PageManager.GetManager();
+
+            var page = pageManager.GetPageNode(pageId);
+            var pageUrl = page.GetFullUrl();
+            pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
+            pageUrl = UrlTransformations.AppendParam(pageUrl, "t", Guid.NewGuid().ToString());
+
+            string pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
+
+            return pageContent;
         }
     }
 }

@@ -151,12 +151,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
 
-                this.GetPageContent(pageId);
+                FeatherServerOperations.Pages().GetPageContent(pageId);
                 var recompCount = SystemMonitoring.GetRecompilationCount();
 
                 Thread.Sleep(1000);
 
-                this.GetPageContent(pageId);
+                FeatherServerOperations.Pages().GetPageContent(pageId);
 
                 Assert.AreEqual(recompCount, SystemMonitoring.GetRecompilationCount(), "Unexpected recompilation happened.");
             }
@@ -193,7 +193,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
                 FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
 
                 var nodeId = ServerOperations.Pages().GetPageNodeId(pageId);
-                var pageContent = this.GetPageContent(nodeId);
+                var pageContent = FeatherServerOperations.Pages().GetPageContent(nodeId);
                 Assert.IsTrue(pageContent.Contains(TestLayoutTemplateText), "Layout text was not found on the page");
             }
             finally
@@ -240,7 +240,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
                 FeatherServerOperations.ResourcePackages().AddNewResource(layout2Resource, file2Path);
 
                 var nodeId = ServerOperations.Pages().GetPageNodeId(pageId);
-                var pageContent = this.GetPageContent(nodeId);
+                var pageContent = FeatherServerOperations.Pages().GetPageContent(nodeId);
                 Assert.IsTrue(pageContent.Contains(layout1Text), "Layout1 text was not found");
                 Assert.IsFalse(pageContent.Contains(layout2Text), "Layout2 text is found, but it shouldn't be");
             }
@@ -344,7 +344,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
 
-                string pageContent = this.GetPageContent(pageId);
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
                 Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
 
                 FeatherServerOperations.ResourcePackages().AddNewResource(layoutResource, tempFilePath);
@@ -352,7 +352,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Thread.Sleep(1000);
 
-                pageContent = this.GetPageContent(pageId);
+                pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
 
                 Assert.AreEqual(pageManager.GetTemplates().Count(), templatesCount + 1, "Unnecessary template was generated");
                 Assert.IsTrue(pageContent.Contains(newLayoutTemplateText), "New layout text was not found in the page content after replace");
@@ -397,7 +397,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
 
-                string pageContent = this.GetPageContent(pageId);
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
                 Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
 
                 template.Title = templateRenamed;
@@ -406,7 +406,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Thread.Sleep(1000);
 
-                pageContent = this.GetPageContent(pageId);
+                pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
 
                 Assert.IsFalse(pageContent.Contains(serverErrorMessage), "Page throws a server error message");
                 Assert.IsFalse(pageContent.Contains(LayoutTemplateText), "Layout template text was found in the page content");
@@ -449,14 +449,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
 
-                string pageContent = this.GetPageContent(pageId);
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
                 Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
 
                 File.Delete(filePath);
 
                 Thread.Sleep(1000);
 
-                pageContent = this.GetPageContent(pageId);
+                pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
 
                 Assert.IsFalse(pageContent.Contains(serverErrorMessage), "Page throws a server error message");
                 Assert.IsFalse(pageContent.Contains(LayoutTemplateText), "Layout template text was found in the page content");
@@ -499,7 +499,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(newTemplate, PageTitle, PageUrl);
 
-                string pageContent = this.GetPageContent(pageId);
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
                 Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
             }
             finally
@@ -544,14 +544,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(newTemplate, PageTitle, PageUrl);
 
-                string pageContent = this.GetPageContent(pageId);
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
                 Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
 
                 FeatherServerOperations.ResourcePackages().EditLayoutFile(filePath, LayoutTemplateText, newContent);
 
                 Thread.Sleep(1000);
 
-                pageContent = this.GetPageContent(pageId);
+                pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
 
                 Assert.IsFalse(pageContent.Contains(serverErrorMessage), "Page throws a server error message");
                 Assert.IsFalse(pageContent.Contains(LayoutTemplateText), "Layout template text was found in the page content");
@@ -596,7 +596,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
 
-                string pageContent = this.GetPageContent(pageId);
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
                 Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
 
                 Guid templateId = this.CreatePageTemplate(templateTitle);
@@ -606,7 +606,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid page2Id = FeatherServerOperations.Pages().CreatePageWithTemplate(template2, page2, page2);
 
-                string page2Content = this.GetPageContent(page2Id);
+                string page2Content = FeatherServerOperations.Pages().GetPageContent(page2Id);
                 Assert.IsFalse(page2Content.Contains(LayoutTemplateText), "Layout template text was found in the page content");
             }
             finally
@@ -658,7 +658,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
 
-                string pageContent = this.GetPageContent(pageId);
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
                 Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
             }
             finally
@@ -675,20 +675,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             {
                 return System.Web.Hosting.HostingEnvironment.MapPath("~/");
             }
-        }
-
-        private string GetPageContent(Guid pageId)
-        {
-            PageManager pageManager = PageManager.GetManager();
-
-            var page = pageManager.GetPageNode(pageId);
-            var pageUrl = page.GetFullUrl();
-            pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
-            pageUrl = UrlTransformations.AppendParam(pageUrl, "t", Guid.NewGuid().ToString());
-
-            string pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
-
-            return pageContent;
         }
 
         private PageTemplate CreatePageTemplate(string templateTitle, string parentTemplateTitle)

@@ -94,7 +94,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 }
 
                 string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.TestPackageName);
-                Directory.Delete(path, true);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(path);
             }
         }
 
@@ -149,7 +149,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 }
 
                 string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Constants.TestPackageName);
-                Directory.Delete(path, true);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(path);
             }
         }
 
