@@ -34,7 +34,7 @@
                 return dataItemPromise;
             };
 
-            var getSpecificItems = function (itemType, provider, ids) {
+            var getSpecificItems = function (ids, itemType, provider) {
                 var filter = serviceHelper.filterBuilder()                    
                     .specificItemsFilter(ids)
                     .and()

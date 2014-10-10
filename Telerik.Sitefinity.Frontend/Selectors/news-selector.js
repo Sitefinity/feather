@@ -13,7 +13,7 @@
 
                         ctrl.getSpecificItems = function (ids) {
                             var provider = ctrl.$scope.provider;
-                            return newsItemService.getSpecificItems(provider, ids);
+                            return newsItemService.getSpecificItems(ids, provider);
                         };
 
                         ctrl.onSelectedItemsLoadedSuccess = function (data) {

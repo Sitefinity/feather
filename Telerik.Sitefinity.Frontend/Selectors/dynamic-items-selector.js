@@ -13,7 +13,7 @@
 
                         ctrl.getSpecificItems = function (ids) {
                             var provider = ctrl.$scope.provider;
-                            return dataService.getSpecificItems(ctrl.$scope.itemType, provider, ids);
+                            return dataService.getSpecificItems(ids, ctrl.$scope.itemType, provider);
                         };
 
                         ctrl.onSelectedItemsLoadedSuccess = function (data) {
