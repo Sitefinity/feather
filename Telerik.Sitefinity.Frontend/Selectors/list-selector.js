@@ -97,7 +97,7 @@
                                         }
                                     }
                                 }
-                                //load more items for already applied filter (endless scroll)
+                                    //load more items for already applied filter (endless scroll)
                                 else if (isFilterApplied() && scope.filter.paging.totalItems !== 0) {
                                     for (i = 0; i < data.Items.length; i++) {
                                         id = data.Items[i].Id;
@@ -115,15 +115,17 @@
                                         scope.selectedItemInTheDialog = scope.items[0];
                                     }
 
+                                    var selectedItemId = scope.selectedItem && scope.selectedItem.Id || scope.selectedItemId;
+
                                     for (i = 0; i < data.Items.length; i++) {
                                         id = data.Items[i].Id;
 
-                                        if (id !== scope.selectedItemId) {
+                                        if (id !== selectedItemId) {
                                             scope.items.push(data.Items[i]);
                                         }
                                     }
                                 }
-
+                            
                                 scope.filter.paging.totalItems += data.Items.length;
                             }
 
@@ -132,7 +134,7 @@
 
                         var onError = function (error) {
                             var errorMessage = '';
-                            if (error && error.data.ResponseStatus) {
+                            if (error && error.data && error.data.ResponseStatus) {
                                 errorMessage = error.data.ResponseStatus.Message;
                             }
                             else if (error && error.statusText) {

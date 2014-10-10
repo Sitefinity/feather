@@ -11,53 +11,27 @@ using Telerik.Sitefinity.TestUI.Framework.Wrappers.Backend.PageEditor;
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
 {
     /// <summary>
-    /// This is test class for grid widget on page.
+    /// This is test class for old and new grid widget on page.
     /// </summary>
     [TestClass]
-    public class ManageGridWidgetOnThePage_ : FeatherTestCase
+    public class OldLayoutWidgetAndNewGridWidgetOnTheSamePage_ : FeatherTestCase
     {
         /// <summary>
-        /// UI test ManageGridWidgetOnThePage
+        /// UI test OldLayoutWidgetAndNewGridWidgetOnTheSamePage
         /// </summary>
         [TestMethod,
        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Feather team"),
        TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void ManageGridWidgetOnThePage()
+        public void OldLayoutWidgetAndNewGridWidgetOnTheSamePage()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropLayoutWidget(OldLayoutCaption);
             BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropLayoutWidget(LayoutCaption);
-            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount1);
-            this.DuplicateGridElement();
-            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount2);
-            this.DeleteGridElement();
-            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount1);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
             this.VerifyGridWidgetOnTheFrontend();
-        }
-
-        /// <summary>
-        /// Duplicates a grid widget in the zone editor
-        /// </summary>
-        public void DuplicateGridElement()
-        {
-            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SelectExtraOptionForWidget(DuplicateOperation);
-            ActiveBrowser.WaitUntilReady();
-            ActiveBrowser.WaitForAsyncRequests();
-            ActiveBrowser.RefreshDomTree();
-        }
-
-        /// <summary>
-        /// Deletes a grid widget from the editor
-        /// </summary>
-        public void DeleteGridElement()
-        {
-            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SelectExtraOptionForWidget(DeleteOperation);
-            ActiveBrowser.WaitUntilReady();
-            ActiveBrowser.WaitForAsyncRequests();
-            ActiveBrowser.RefreshDomTree();
         }
 
         /// <summary>
@@ -65,12 +39,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// </summary>
         public void VerifyGridWidgetOnTheFrontend()
         {
-            string[] layouts = new string[] { LayouClass1, LayouClass2 };
+            string[] layoutsNew = new string[] {LayouClass3, LayouClass4 };
+            string[] layoutsOld = new string[] { LayouClass1, LayouClass2};
 
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
             ActiveBrowser.WaitUntilReady();
 
-            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyNewGridWidgetOnTheFrontend(layouts);
+            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyOldGridWidgetOnTheFrontend(layoutsOld);
+            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyNewGridWidgetOnTheFrontend(layoutsNew);
         }
 
         /// <summary>
@@ -91,12 +67,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         }
 
         private const string PageName = "GridPage";
+        private const string OldLayoutCaption = "25% + 75%";
         private const string LayoutCaption = "3 + 9";
-        private const string LayouClass1 = "col-md-3";
-        private const string LayouClass2 = "col-md-9";
-        private const string DuplicateOperation = "Duplicate";
-        private const string DeleteOperation = "Delete";
-        private const int GridCount1 = 1;
-        private const int GridCount2 = 2;
+        private const string LayouClass1 = "sf_colsOut sf_2cols_1_25";
+        private const string LayouClass2 = "sf_colsOut sf_2cols_2_75";
+        private const string LayouClass3 = "col-md-3";
+        private const string LayouClass4 = "col-md-9";
     }
 }

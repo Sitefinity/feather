@@ -14,9 +14,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Frontend
     public class GridWidgets : BaseWrapper
     {
         /// <summary>
-        /// Verify grid widget on the frontend
+        /// Verify new grid widget on the frontend
         /// </summary>
-        public void VerifyGridWidgetOnTheFrontend(string[] layouts)
+        public void VerifyNewGridWidgetOnTheFrontend(string[] layouts)
         {
             HtmlDiv frontendPageMainDiv = BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().GetPageContent();
 
@@ -25,6 +25,22 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Frontend
             for (int i = 0; i < layoutList.Count; i++)
             {
                 var isContained = layoutList[i].CssClass.Equals(layouts[i]);
+                Assert.IsTrue(isContained, "Layout was not found");
+            }
+        }
+
+        /// <summary>
+        /// Verify old grid widget on the frontend
+        /// </summary>
+        public void VerifyOldGridWidgetOnTheFrontend(string[] layoutsOld)
+        {
+            HtmlDiv frontendPageMainDiv = BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().GetPageContent();
+
+            List<HtmlDiv> layoutListOld = frontendPageMainDiv.Find.AllByExpression<HtmlDiv>("tagname=div", "class=^sf_colsOut").ToList<HtmlDiv>();
+
+            for (int i = 0; i < layoutListOld.Count; i++)
+            {
+                var isContained = layoutListOld[i].CssClass.Equals(layoutsOld[i]);
                 Assert.IsTrue(isContained, "Layout was not found");
             }
         }
