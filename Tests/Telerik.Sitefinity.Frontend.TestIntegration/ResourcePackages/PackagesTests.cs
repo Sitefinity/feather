@@ -2,9 +2,11 @@
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Threading;
+using System.Web;
 using MbUnit.Framework;
-using Microsoft.VisualBasic.FileIO; 
+using Microsoft.VisualBasic.FileIO;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
@@ -230,9 +232,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         private void UnlockFolder(string folderPath)
         {
-            string adminUserName = Environment.UserName;
+            var account = new SecurityIdentifier(WellKnownSidType.NetworkServiceSid, null).Translate(typeof(NTAccount)).Value;
             DirectorySecurity ds = Directory.GetAccessControl(folderPath);
-            FileSystemAccessRule fsa = new FileSystemAccessRule(adminUserName, FileSystemRights.FullControl, AccessControlType.Deny);
+            FileSystemAccessRule fsa = new FileSystemAccessRule(account, FileSystemRights.FullControl, AccessControlType.Deny);
 
             ds.RemoveAccessRule(fsa);
 
