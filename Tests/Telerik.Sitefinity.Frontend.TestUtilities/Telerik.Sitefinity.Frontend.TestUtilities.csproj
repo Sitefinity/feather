@@ -172,6 +172,7 @@
     <Compile Include="CommonOperations\ActionFilters\ActionExecutionRegister.cs" />
     <Compile Include="CommonOperations\ActionFilters\ActionInfo.cs" />
     <Compile Include="CommonOperations\ActionFilters\ExecutionRegistrationFilterAttribute.cs" />
+    <Compile Include="CommonOperations\Pages\ModuleBuilderOperations.cs" />
     <Compile Include="CommonOperations\Pages\PagesOperations.cs" />
     <Compile Include="CommonOperations\ResourcePackages\ResourcePackagesOperations.cs" />
     <Compile Include="ControllerFactoryRegion.cs" />
@@ -242,6 +243,7 @@
     <EmbeddedResource Include="Data\LayoutFilesSpecialChars\My%40TestTemplate.cshtml" />
     <EmbeddedResource Include="Data\LayoutFilesSpecialChars\My_TestTemplate.cshtml" />
     <EmbeddedResource Include="Data\LayoutFileReplace\TestLayout.cshtml" />
+    <EmbeddedResource Include="Data\DuplicateRelatedDataModule.zip" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>

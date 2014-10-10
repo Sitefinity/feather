@@ -1,3 +1,3 @@
-<p><content-selector selected-item="selectedItem" item-type="Telerik.Sitefinity.News.Model.NewsItem"></content-selector></p>
-<p><content-selector selected-item="selectedItem" item-type="Telerik.Sitefinity.GenericContent.Model.ContentItem"></content-selector></p>
-<span>The selected id is: {{selectedItem.Id}}</span>
+<p><list-selector news-selector selected-item="selectedNewsItem" selected-item-id="properties['SelectedIdNewsItem'].PropertyValue" name="firstSelector"></list-selector></p>
+<p><list-selector taxon-selector selected-item="selectedTaxonItem" selected-item-id="properties['SelectedIdTaxonItem'].PropertyValue" name="secondSelector"></list-selector></p>
+<p><list-selector dynamic-items-selector item-type="itemType" selected-item="selectedDynamicItem" selected-item-id="properties['SelectedIdDynamicItem'].PropertyValue" name="thirdSelector"></list-selector></p>

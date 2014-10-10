@@ -20,6 +20,24 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements.MvcWidgets
         public string DummyText { get; set; }
 
         /// <summary>
+        /// Gets or sets the selected id news item.
+        /// </summary>
+        /// <value>The selected id news item.</value>
+        public string SelectedIdNewsItem { get; set; }
+
+        /// <summary>
+        /// Gets or sets the selected id taxon item.
+        /// </summary>
+        /// <value>The selected id taxon item.</value>
+        public string SelectedIdTaxonItem { get; set; }
+
+        /// <summary>
+        /// Gets or sets the selected id dynamic item.
+        /// </summary>
+        /// <value>The selected id dynamic item.</value>
+        public string SelectedIdDynamicItem { get; set; }
+
+        /// <summary>
         /// Gets the dummy sample text
         /// </summary>
         /// <returns>The dummy text.</returns>
