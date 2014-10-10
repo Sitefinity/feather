@@ -338,6 +338,12 @@
                             }
                         };
 
+                        if (scope.selectedIds && scope.selectedIds.length !== 0) {
+                            scope.selectedIds = scope.selectedIds.filter(function (value) {
+                                return value && value !== "";
+                            });
+                        }
+
                         getSelectedItems();
 
                         transclude(scope, function (clone) {
