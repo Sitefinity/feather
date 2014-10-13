@@ -140,7 +140,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlButton>("ng-click=selectContent()");
+                return this.Get<HtmlButton>("ng-click=selectItem()");
             }
         }
 

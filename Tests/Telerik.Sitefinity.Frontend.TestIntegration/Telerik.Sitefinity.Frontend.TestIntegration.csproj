@@ -52,6 +52,7 @@
     <Reference Include="Microsoft.Http">
       <HintPath>..\..\packages\Microsoft.Http.1.0.0.0\lib\Microsoft.Http.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="GridWidgets\GridWidgetsTests.cs" />
     <Compile Include="LayoutTemplates\LayoutTemplatesTests.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelperTests.cs" />
     <Compile Include="Mvc\Routing\RoutingTests.cs" />

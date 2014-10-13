@@ -9,7 +9,7 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// MvcWidgetDefaultFeatherDesigner arragement.
+    /// MvcSelectorTest arragement.
     /// </summary>
     public class MvcSelectorTest : ITestArrangement
     {
@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             
             for (int i = 0; i < 4; i++)
             {
-                ServerOperations.ContentBlocks().CreateContentBlock(ContentBlockTitle + i, ContentBlockContent + i);
+                ServerOperations.Taxonomies().CreateTag(TagTitle + i);
             }
 
             Guid pageId = ServerOperations.Pages().CreatePage(PageName);
@@ -76,7 +76,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         {
             ServerOperations.Pages().DeleteAllPages();
             ServerOperations.News().DeleteAllNews();
-            ServerOperations.ContentBlocks().DeleteAllContentBlocks();
+            ServerOperations.Taxonomies().ClearAllTags(TaxonomiesConstants.TagsTaxonomyId);
 
             var path = Path.Combine("MVC", "Views", "DummyText", DesignerViewFileName);
             string filePath = FileInjectHelper.GetDestinationFilePath(path);
@@ -106,7 +106,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string NewsItemContent = "This is a news item.";
         private const string NewsItemAuthor = "NewsWriter";
 
-        private const string ContentBlockTitle = "Content Block Title";
-        private const string ContentBlockContent = "Content block content!";
+        private const string TagTitle = "Tag Title";
     }
 }
