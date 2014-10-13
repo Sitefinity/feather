@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('selectedItemsView', function () {
+        .directive('selectedItemsView', ['serverContext', function (serverContext) {
             return {
                 restrict: "E",
                 scope: {
@@ -11,7 +11,7 @@
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
                     var url = attrs.templateUrl || 'Selectors/selected-items-view.html';
-                    return sitefinity.getEmbeddedResourceUrl(assembly, url);
+                    return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
                     post: function (scope, element, attrs) {
@@ -98,5 +98,5 @@
                     }
                 }
             };
-        });
+        }]);
 })(jQuery);
