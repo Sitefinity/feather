@@ -198,6 +198,7 @@
                             placeholder: 'Narrow by typing',
                             timeoutMs: 500,
                             search: function (keyword) {
+                                angular.element($("[endless-scroll]"))[0].scrollTop = 0;
                                 scope.showLoadingIndicator = true;
                                 scope.paging.skip = 0;
                                 var skip = scope.paging.skip;
