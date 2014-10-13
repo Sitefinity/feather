@@ -78,8 +78,10 @@
                         };
 
                         var onItemsFilteredSuccess = function (data) {
-                            selectItemsInDialog(data.Items);
+                            scope.paging.skip += data.Items.length;
 
+                            selectItemsInDialog(data.Items);
+                            
                             scope.items = data.Items;
                         };
 
@@ -121,7 +123,7 @@
                         var pushMoreFilteredItems = function (items) {
                             selectItemsInDialog(items);
 
-                            Array.prototype.push.apply(scope.items, data.Items);
+                            Array.prototype.push.apply(scope.items, items);
                         };
 
                         var getSelectedIds = function () {
@@ -197,7 +199,8 @@
                             timeoutMs: 500,
                             search: function (keyword) {
                                 scope.showLoadingIndicator = true;
-                                var skip = 0;
+                                scope.paging.skip = 0;
+                                var skip = scope.paging.skip;
                                 var take = scope.paging.take;
                                 return ctrl.getItems(skip, take, keyword)
                                     .then(onItemsFilteredSuccess, onError)
