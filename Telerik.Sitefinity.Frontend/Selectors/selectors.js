@@ -1,5 +1,5 @@
 ﻿(function () {
-    var module = angular.module('selectors', ['services']);
+    var module = angular.module('selectors', ['services', 'kendo.directives']);
 
     module.directive('itemsFilter', ['$timeout', function ($timeout) {
         return {

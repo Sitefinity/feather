@@ -294,9 +294,6 @@
 
                             ctrl.getItems(scope.paging.skip, scope.paging.take)
                             .then(onFirstPageLoadedSuccess, onError)
-                            .then (function () {
-                                jQuery("#selectorTabs").kendoTabStrip();
-                            })
                             .catch(onError)
                             .finally(function () {
                                 scope.showLoadingIndicator = false;
