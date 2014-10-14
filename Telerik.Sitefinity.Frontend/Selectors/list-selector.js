@@ -44,12 +44,9 @@
                     this.$scope = $scope;
 
                     this.updateSelection = function (selectedItems) {
-                        if (selectedItems.length === 0) {
-                            return;
-                        }
-
-                        $scope.selectedItem = selectedItems[0];
-                        $scope.selectedItemId = selectedItems[0].Id;
+                        var firstItem = selectedItems[0];
+                        $scope.selectedItem = firstItem;
+                        $scope.selectedItemId = firstItem && firstItem.Id;
 
                         $scope.selectedItems = selectedItems;
                         $scope.selectedIds = selectedItems.map(function (item) {
@@ -83,7 +80,7 @@
                             scope.paging.skip += data.Items.length;
 
                             selectItemsInDialog(data.Items);
-                            
+
                             scope.items = data.Items;
                         };
 
@@ -145,7 +142,7 @@
                                     var selected = [];
                                     selected.push(id);
                                     return selected;
-                                } 
+                                }
                             }
 
                             return [];
@@ -178,7 +175,7 @@
                                 return selectedIds.indexOf(item.Id) >= 0;
                             });
 
-                            scope.selectedItemsInTheDialog = selectedItems;                        
+                            scope.selectedItemsInTheDialog = selectedItems;
                         };
 
                         // ------------------------------------------------------------------------
@@ -225,7 +222,7 @@
                                 }
                                 else {
                                     pushNotSelectedItems(items);
-                                }                                
+                                }
                             }
                         };
 
@@ -315,7 +312,7 @@
 
                             return ids.length > 0;
                         };
-                        
+
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
