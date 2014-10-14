@@ -3,10 +3,12 @@
         <h1 style="background: none; padding-bottom: 0; margin-bottom: 0" class="modal-title">Select content</h1>
     </div>
     <div class="modal-body">
-        <div id="selectorTabs">
+        <div kendo-tab-strip>
             <ul ng-show="multiselect">
-                <li class="k-state-active">All</li>
-                <li ng-click="collectSelectedItems()">Selected <span ng-show='selectedItemsInTheDialog.length !== 0'>{{selectedItemsInTheDialog.length}}</span></li>
+                <li ng-class="{true:'', false:'k-state-active'}[isItemSelected()]">All</li>
+                <li ng-class="{true:'k-state-active', false:''}[isItemSelected()]" ng-click="collectSelectedItems()">
+                    Selected <span ng-show='selectedItemsInTheDialog.length !== 0'>{{selectedItemsInTheDialog.length}}</span>
+                </li>
             </ul>
             <div>
                 <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>

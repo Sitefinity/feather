@@ -75,6 +75,8 @@
                             pushSelectedItemsToTheTop();
 
                             pushNotSelectedItems(data.Items);
+
+                            scope.collectSelectedItems();
                         };
 
                         var onItemsFilteredSuccess = function (data) {
@@ -313,7 +315,7 @@
 
                             return ids.length > 0;
                         };
-
+                        
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
