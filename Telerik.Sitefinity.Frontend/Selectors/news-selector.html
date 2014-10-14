@@ -5,8 +5,8 @@
     <div class="modal-body">
         <div kendo-tab-strip>
             <ul ng-show="multiselect">
-                <li ng-class="{true:'', false:'k-state-active'}[isItemSelected()]">All</li>
-                <li ng-class="{true:'k-state-active', false:''}[isItemSelected()]" ng-click="collectSelectedItems()">
+                <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]">All</li>
+                <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
                     Selected <span ng-show='selectedItemsInTheDialog.length !== 0'>{{selectedItemsInTheDialog.length}}</span>
                 </li>
             </ul>

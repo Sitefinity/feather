@@ -2,11 +2,11 @@
     angular.module('services')
         .factory('taxonomyService', ['$resource', 'serverContext', function ($resource, serverContext) {
             /* Private methods and variables */
-            var url = serverContext.getRootedUrl('Sitefinity/Services/Taxonomies/Taxonomy.svc/'),
+            var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Taxonomies/Taxonomy.svc/'),
                 dataItemPromise;
 
             var getResource = function () {
-                return $resource(url);
+                return $resource(serviceUrl);
             };
 
             var getTaxonomies = function (skip, take, filter, taxonomyType) {

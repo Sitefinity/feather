@@ -4,9 +4,10 @@
             /* Private methods and variables */
             var dataItemPromise,
                 contentType = 'Telerik.Sitefinity.GenericContent.Model.Content',
-                url = serverContext.getRootedUrl('Sitefinity/Services/Content/NewsItemService.svc/');
+                serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Content/NewsItemService.svc/');
 
             var getResource = function (itemId) {
+                var url = serviceUrl;
                 if (itemId && itemId !== serviceHelper.emptyGuid()) {
                     url = url + itemId + '/';
                 }

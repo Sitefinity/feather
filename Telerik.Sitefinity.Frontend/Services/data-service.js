@@ -2,10 +2,11 @@
     angular.module('services')
         .factory('dataService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
-            var url = serverContext.getRootedUrl('Sitefinity/Services/DynamicModules/Data.svc/'),
+            var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/DynamicModules/Data.svc/'),
                 dataItemPromise;
 
             var getResource = function (itemId) {
+                var url = serviceUrl;
                 if (itemId && itemId !== serviceHelper.emptyGuid()) {
                     url = url + itemId + '/';
                 }
