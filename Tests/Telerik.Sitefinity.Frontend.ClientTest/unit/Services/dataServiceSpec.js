@@ -15,20 +15,20 @@ describe('dataService', function () {
 
     beforeEach(module('services'));
 
+    var appPath = 'http://mysite.com:9999/myapp';
     var dataServiceBaseUrl = 'http://mysite.com:9999/myapp/Sitefinity/Services/DynamicModules/Data.svc';
     var dummyItemType = "Telerik.Sitefinity.DynamicTypes.Model.TestModule.SomeType";
 
-    //Mock sitefinity global variable
-    beforeEach(function () {
-        sitefinity.services.getDataServiceUrl = jasmine.createSpy('getDataServiceUrl')
-            .andCallFake(function () {
-                return dataServiceBaseUrl + '/';
-            });
-    });
-
     beforeEach(module(function ($provide) {
-        var widgetContext = { culture: null };
-        $provide.value('widgetContext', widgetContext);
+        var serverContext = {
+            getRootedUrl: function (path) {
+                return appPath + '/' + path;
+            },
+            getUICulture: function () {
+                return null;
+            }
+        };
+        $provide.value('serverContext', serverContext);
     }));
 
     var $httpBackend;

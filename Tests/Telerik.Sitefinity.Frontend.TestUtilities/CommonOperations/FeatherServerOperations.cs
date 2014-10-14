@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations.Pages;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 {
@@ -26,6 +27,15 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         public static PagesOperations Pages()
         {
             return new PagesOperations();
+        }
+
+        /// <summary>
+        /// Modules the builder.
+        /// </summary>
+        /// <returns></returns>
+        public static ModuleBuilderOperations ModuleBuilder()
+        {
+            return new ModuleBuilderOperations();
         }
     }
 }

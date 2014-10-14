@@ -1,20 +1,5 @@
 ﻿/* Tests for news-item-service.js */
 describe('newsItemService', function () {
-    beforeEach(module('services'));
-
-    //Mock sitefinity global variable
-    beforeEach(function () {
-        sitefinity.services.getNewsItemServiceUrl = jasmine.createSpy('getNewsItemServiceUrl')
-            .andCallFake(function () {
-                return 'http://mysite.com:9999/myapp/' + 'Sitefinity/Services/Content/NewsItemService.svc/';
-            });
-    });
-
-    beforeEach(module(function ($provide) {
-        var widgetContext = { culture: null };
-        $provide.value('widgetContext', widgetContext);
-    }));
-
     var $httpBackend;
     var dataService;
     var dataItems = {
@@ -27,6 +12,22 @@ describe('newsItemService', function () {
     var errorResponse = {
         Detail: 'Error'
     };
+
+    var appPath = 'http://mysite.com:9999/myapp';
+
+    beforeEach(module('services'));
+
+    beforeEach(module(function ($provide) {
+        var serverContext = {
+            getRootedUrl: function (path) {
+                return appPath + '/' + path;
+            },
+            getUICulture: function () {
+                return null;
+            }
+        };
+        $provide.value('serverContext', serverContext);
+    }));
 
     beforeEach(inject(function ($injector) {
         // Set up the mock http service responses

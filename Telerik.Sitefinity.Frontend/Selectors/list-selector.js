@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('listSelector', function () {
+        .directive('listSelector', ['serverContext', function (serverContext) {
             return {
                 restrict: "E",
                 transclude: true,
@@ -60,7 +60,7 @@
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
                     var url = attrs.templateUrl || 'Selectors/list-selector.html';
-                    return sitefinity.getEmbeddedResourceUrl(assembly, url);
+                    return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
                     post: function (scope, element, attrs, ctrl, transclude) {
@@ -305,7 +305,7 @@
                         scope.getTemplate = function () {
                             var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
                             var url = ctrl.templateUrl;
-                            return sitefinity.getEmbeddedResourceUrl(assembly, url);
+                            return serverContext.getEmbeddedResourceUrl(assembly, url);
                         };
 
                         scope.isItemSelected = function () {
@@ -366,5 +366,5 @@
                     }
                 }
             };
-        });
+        }]);
 })(jQuery);

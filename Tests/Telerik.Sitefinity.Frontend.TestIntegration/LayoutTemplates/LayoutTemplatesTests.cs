@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
-
 using MbUnit.Framework;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.TestUtilities;
@@ -151,12 +151,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
 
-                this.GetPageContent(pageId);
+                FeatherServerOperations.Pages().GetPageContent(pageId);
                 var recompCount = SystemMonitoring.GetRecompilationCount();
 
                 Thread.Sleep(1000);
 
-                this.GetPageContent(pageId);
+                FeatherServerOperations.Pages().GetPageContent(pageId);
 
                 Assert.AreEqual(recompCount, SystemMonitoring.GetRecompilationCount(), "Unexpected recompilation happened.");
             }
@@ -193,7 +193,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
                 FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
 
                 var nodeId = ServerOperations.Pages().GetPageNodeId(pageId);
-                var pageContent = this.GetPageContent(nodeId);
+                var pageContent = FeatherServerOperations.Pages().GetPageContent(nodeId);
                 Assert.IsTrue(pageContent.Contains(TestLayoutTemplateText), "Layout text was not found on the page");
             }
             finally
@@ -240,7 +240,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
                 FeatherServerOperations.ResourcePackages().AddNewResource(layout2Resource, file2Path);
 
                 var nodeId = ServerOperations.Pages().GetPageNodeId(pageId);
-                var pageContent = this.GetPageContent(nodeId);
+                var pageContent = FeatherServerOperations.Pages().GetPageContent(nodeId);
                 Assert.IsTrue(pageContent.Contains(layout1Text), "Layout1 text was not found");
                 Assert.IsFalse(pageContent.Contains(layout2Text), "Layout2 text is found, but it shouldn't be");
             }
@@ -304,26 +304,377 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Replace layout file in Mvc/Views/Layouts, verifies the template and the page that uses it.")]
+        public void LayoutTemplates_ReplaceLayoutFile_VerifyGeneratedTemplateAndCreatedPageContent()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string tempFolderPath = Path.Combine(this.SfPath, "MVC", "Views", "Temp");
+
+            if (!Directory.Exists(tempFolderPath))
+            {
+                Directory.CreateDirectory(tempFolderPath);
+            }
+
+            string newLayoutTemplateText = "Test Layout Replaced";
+            string layoutResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.LayoutFileReplace.TestLayout.cshtml";
+            string backFileName = "TestLayout.cshtml.bac";
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string tempFilePath = Path.Combine(tempFolderPath, LayoutFileName);           
+            string backFilePath = Path.Combine(folderPath, backFileName);
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
+
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+
+                FeatherServerOperations.ResourcePackages().AddNewResource(layoutResource, tempFilePath);
+                File.Replace(tempFilePath, filePath, backFilePath);
+
+                Thread.Sleep(1000);
+
+                pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+
+                Assert.AreEqual(pageManager.GetTemplates().Count(), templatesCount + 1, "Unnecessary template was generated");
+                Assert.IsTrue(pageContent.Contains(newLayoutTemplateText), "New layout text was not found in the page content after replace");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                File.Delete(filePath);
+                File.Delete(backFilePath);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(tempFolderPath);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Rename template based on layout file in Mvc/Views/Layouts, verifies the template and the page that uses it.")]
+        public void LayoutTemplates_RenameTemplateBasedOnLayoutFile_VerifyTemplateAndPage()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string templateRenamed = "TemplateRenamed";
+            string serverErrorMessage = "Server Error";
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
+
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+
+                template.Title = templateRenamed;
+                template.Name = templateRenamed;
+                pageManager.SaveChanges();
+
+                Thread.Sleep(1000);
+
+                pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+
+                Assert.IsFalse(pageContent.Contains(serverErrorMessage), "Page throws a server error message");
+                Assert.IsFalse(pageContent.Contains(LayoutTemplateText), "Layout template text was found in the page content");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(templateRenamed);
+                File.Delete(filePath);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Deletes layout file from Mvc/Views/Layouts, verifies the template and the page no longer use it.")]
+        [Ignore("It will work if the page is republished but this is would not be a valid test. We need cache dependency in the page resolver to its master page.")]
+        public void LayoutTemplates_DeleteLayoutFile_VerifyTemplateAndPageNotBasedToLayout()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string serverErrorMessage = "Server Error";
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
+
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+
+                File.Delete(filePath);
+
+                Thread.Sleep(1000);
+
+                pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+
+                Assert.IsFalse(pageContent.Contains(serverErrorMessage), "Page throws a server error message");
+                Assert.IsFalse(pageContent.Contains(LayoutTemplateText), "Layout template text was found in the page content");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Creates template based on parent template generated from layout file from Mvc/Views/Layouts, verifies the page content that uses it.")]
+        public void LayoutTemplates_CreateTemplateBasedOnGeneratedTemplate_VerifyPageContent()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string newTemplateTitle = "NewTemplate";
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                var newTemplate = FeatherServerOperations.Pages().CreatePureMvcTemplate(newTemplateTitle, TemplateTitle);
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(newTemplate, PageTitle, PageUrl);
+
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(newTemplateTitle);
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                File.Delete(filePath);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Creates template based on parent template generated from layout file from Mvc/Views/Layouts, edit the layout file and verifies the page content that uses the child template.")]
+        public void LayoutTemplates_EditLayoutFile_VerifyTemplateBasedOnParentTemplateAndPageContent()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string newTemplateTitle = "NewTemplate";
+            string newContent = "New Layout File Content";
+            string serverErrorMessage = "Server Error";
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                var newTemplate = FeatherServerOperations.Pages().CreatePureMvcTemplate(newTemplateTitle, TemplateTitle);              
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(newTemplate, PageTitle, PageUrl);
+
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+
+                FeatherServerOperations.ResourcePackages().EditLayoutFile(filePath, LayoutTemplateText, newContent);
+
+                Thread.Sleep(1000);
+
+                pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+
+                Assert.IsFalse(pageContent.Contains(serverErrorMessage), "Page throws a server error message");
+                Assert.IsFalse(pageContent.Contains(LayoutTemplateText), "Layout template text was found in the page content");
+                Assert.IsTrue(pageContent.Contains(newContent), "New layout text was not found in the page content");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(newTemplateTitle);
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                File.Delete(filePath);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Creates template with space in the name and verifies it is not based on layout file from Mvc/Views/Layouts")]
+        public void LayoutTemplates_CreateTemplateUsingTitleWithSpace_VerifyTemplateNotBasedOnLayoutFile()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+            string templateTitle = "   TestLayout";
+            string page2 = "page2";
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
+
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+
+                Guid templateId = FeatherServerOperations.Pages().CreatePureMvcTemplate(templateTitle);
+
+                var template2 = pageManager.GetTemplates().Where(t => t.Id == templateId).FirstOrDefault();
+                Assert.IsNotNull(template2, "Template was not found");
+
+                Guid page2Id = FeatherServerOperations.Pages().CreatePageWithTemplate(template2, page2, page2);
+
+                string page2Content = FeatherServerOperations.Pages().GetPageContent(page2Id);
+                Assert.IsFalse(page2Content.Contains(LayoutTemplateText), "Layout template text was found in the page content");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(templateTitle);
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                File.Delete(filePath);
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.LayoutTemplates)]
+        [Author("Petya Rachina")]
+        [Description("Adds layout file to Mvc/Views/Layouts folder, creates new template based on convention and verifies the page that uses it")]
+        public void LayoutTemplates_AddLayoutFileAndCreateNewTemplate_VerifyPageContent()
+        {
+            PageManager pageManager = PageManager.GetManager();
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            string folderPath = Path.Combine(this.SfPath, "MVC", "Views", "Layouts");
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string filePath = Path.Combine(folderPath, LayoutFileName);
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResource(LayoutFileResource, filePath);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                ////Deleting the template in order to create new one with the same name
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+
+                template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                Assert.IsNull(template, "Template was not found");
+
+                ////Creating new template with the same title
+                Guid templateId = FeatherServerOperations.Pages().CreatePureMvcTemplate(TemplateTitle);
+
+                template = pageManager.GetTemplates().Where(t => t.Id == templateId).FirstOrDefault();
+                Assert.IsNotNull(template, "New template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageTitle, PageUrl);
+
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(LayoutTemplateText), "Layout template text was not found in the page content");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
+                File.Delete(filePath);
+            }
+        }
+
         private string SfPath
         {
             get
             {
                 return System.Web.Hosting.HostingEnvironment.MapPath("~/");
             }
-        }
-
-        private string GetPageContent(Guid pageId)
-        {
-            PageManager pageManager = PageManager.GetManager();
-
-            var page = pageManager.GetPageNode(pageId);
-            var pageUrl = page.GetFullUrl();
-            pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
-            pageUrl = UrlTransformations.AppendParam(pageUrl, "t", Guid.NewGuid().ToString());
-
-            string pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
-
-            return pageContent;
         }
 
         private const string LayoutFileName = "TestLayout.cshtml";

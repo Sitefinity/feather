@@ -114,6 +114,24 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
         }
 
         /// <summary>
+        /// The GetUrl for MVC controller with empty DesignerUrlAttribute returns empty designer URL.
+        /// </summary>
+        [TestMethod]
+        [Owner("EGaneva")]
+        [Description("Checks whether GetUrl returns the old designer URL when MVC designer attribute is set with empty URL.")]
+        public void GetUrl_MvcEmptyDesignerUrl_ReturnsOldDesignerUrl()
+        {
+            // Arrange
+            var resolver = new DesignerResolver();
+
+            // Act
+            var url = resolver.GetUrl(typeof(DummyOldDesignerController));
+
+            // Assert
+            Assert.IsTrue(url.IsNullOrEmpty(), "The old designer URL is not retrieved properly.");
+        }
+
+        /// <summary>
         /// The get url_ without widget type_ throws exception.
         /// </summary>
         [TestMethod]
