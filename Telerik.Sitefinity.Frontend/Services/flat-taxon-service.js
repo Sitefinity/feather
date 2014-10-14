@@ -2,12 +2,12 @@
     angular.module('services')
         .factory('flatTaxonService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
-            var url = serverContext.getRootedUrl('Sitefinity/Services/Taxonomies/FlatTaxon.svc/'),
+            var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Taxonomies/FlatTaxon.svc/'),
                 dataItemPromise;
 
             var getResource = function (taxonomyId, taxonId) {
                 if (taxonomyId && taxonomyId !== "") {
-                    url = url + taxonomyId + '/';
+                    var url = serviceUrl + taxonomyId + '/';
 
                     if (taxonId && taxonId !== "") {
                         url = url + taxonId + '/';
