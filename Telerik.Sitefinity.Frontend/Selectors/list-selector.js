@@ -44,12 +44,9 @@
                     this.$scope = $scope;
 
                     this.updateSelection = function (selectedItems) {
-                        if (selectedItems.length === 0) {
-                            return;
-                        }
-
-                        $scope.selectedItem = selectedItems[0];
-                        $scope.selectedItemId = selectedItems[0].Id;
+                        var firstItem = selectedItems[0];
+                        $scope.selectedItem = firstItem;
+                        $scope.selectedItemId = firstItem && firstItem.Id;
 
                         $scope.selectedItems = selectedItems;
                         $scope.selectedIds = selectedItems.map(function (item) {
@@ -218,7 +215,7 @@
                                 }
                                 else {
                                     Array.prototype.push.apply(scope.items, items);
-                                }                             
+                                }                                
                             }
                         };
 

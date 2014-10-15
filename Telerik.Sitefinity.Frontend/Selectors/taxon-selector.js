@@ -10,7 +10,10 @@
                 restrict: "A",
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        var taxonomyId = (ctrl.$scope.taxonomyId && ctrl.$scope.taxonomyId !== emptyGuid) || defaultTaxonomyId;
+                        var taxonomyId = ctrl.$scope.taxonomyId;
+                        if (!taxonomyId || taxonomyId === emptyGuid) {
+                            taxonomyId = defaultTaxonomyId;
+                        }
 
                         ctrl.getItems = function (skip, take, search) {
                             return flatTaxonService.getTaxons(taxonomyId, skip, take, search);

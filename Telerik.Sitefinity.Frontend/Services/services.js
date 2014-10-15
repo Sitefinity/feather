@@ -1,6 +1,19 @@
 ﻿(function () {
     var module = angular.module('services', ['ngResource']);
 
+    module.config(['$httpProvider', function($httpProvider) {
+        if (!$httpProvider.defaults.headers.get) {
+            $httpProvider.defaults.headers.get = {};    
+        }
+
+        var getHeaders = $httpProvider.defaults.headers.get;
+
+        //disable IE ajax request caching
+        getHeaders['If-Modified-Since'] = '0';
+        getHeaders['Cache-Control'] = 'no-cache';
+        getHeaders['Pragma'] = 'no-cache';
+    }]);
+
     module.factory('serviceHelper', ['$resource', 'serverContext', function ($resource, serverContext) {
         /* Private methods and variables */
         var emptyGuid = '00000000-0000-0000-0000-000000000000';
