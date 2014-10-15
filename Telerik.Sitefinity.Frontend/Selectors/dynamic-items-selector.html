@@ -1,6 +1,6 @@
 ﻿<script type="text/ng-template" id="dynamic-items-selector-template">
     <div class="modal-header">
-        <h1 style="background: none; padding-bottom: 0; margin-bottom: 0" class="modal-title">Select content</h1>
+        <h3 class="modal-title">Select content</h3>
     </div>
     <div class="modal-body">
         <div ng-show="isListEmpty" class="alert alert-info">No items have been created yet.</div>
@@ -17,8 +17,7 @@
             <div class="list-group s-items-list-wrp endlessScroll">
                 <a ng-repeat="item in items"
                         ng-class="{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }"
-                        ng-click="itemClicked($index, item)"
-                        style="text-overflow: ellipsis; overflow: hidden;">
+                        ng-click="itemClicked($index, item)">
                     <span ng-bind="bindIdentifierField(item)"></span>
                 </a>
                 <div ng-hide="hideEndlessScrollLoadingIndicator || showLoadingIndicator" class="list-group-item text-center">

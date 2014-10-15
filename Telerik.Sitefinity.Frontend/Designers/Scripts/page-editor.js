@@ -5,10 +5,7 @@ var sitefinity = sitefinity || {};
 (function ($) {
 
     var loader,
-		loaderMarkup = '<div style="opacity:0.5; width:100%; z-index:3100; position:absolute;' +
-					   'top:0; height:100%; background: black center no-repeat ' +
-					   'url(#= appPath #Frontend-Assembly/Telerik.Sitefinity.Frontend/Mvc/Styles/Images/loading.gif);">' +
-					   '</div>',
+		loaderMarkup = '<div class="sf-loading" style="opacity:0.5; width:100%; z-index:3100; position:absolute; top:0; height:100%;></div>',
 		loaderTemplate = kendo.template(loaderMarkup),
 		dialog;
 

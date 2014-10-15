@@ -5,10 +5,12 @@
             ng-checked="selectedTaxonomies.indexOf(taxonomy.Name) > -1" />
 
             {{taxonomy.Title}}...
-    </label>
 
-    <list-selector taxon-selector ng-show="selectedTaxonomies.indexOf(taxonomy.Name) > -1"
+
+            <list-selector taxon-selector ng-show="selectedTaxonomies.indexOf(taxonomy.Name) > -1"
                 provider="provider"
                 taxonomy-id ="taxonomy.Id"
                 selected-item-id ="taxonFilters[taxonomy.Name][0]"></list-selector>
+    </label>
+
 </div>
