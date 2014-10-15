@@ -13,14 +13,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
     /// <summary>
     /// MvcSelectorTest arragement.
     /// </summary>
-    public class MvcDynamicSelectorTest : ITestArrangement
+    public class MvcSelectMoreThanOneDynamicItem : ITestArrangement
     {
         [ServerSetUp]
         public void SetUp()
         {
             FeatherServerOperations.ModuleBuilder().EnsureModuleIsImported(this.relatedDataDuplicateModule);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 20; i++)
             {
                 ServerOperations.DynamicTypes().CreateDynamicItem("Telerik.Sitefinity.DynamicTypes.Model.DuplicateRelatedDataModule.Duplicaterelateddata", "SomeUrlName", title: ItemTitle + i);
             }
