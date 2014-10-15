@@ -72,19 +72,29 @@
                             scope.noItemsExist = !data.Items.length;
                             scope.paging.skip += data.Items.length;
 
-                            pushSelectedItemsToTheTop();
+                            if (scope.multiselect) {
+                                Array.prototype.push.apply(scope.items, data.Items);
+                            }
+                            else {
+                                pushSelectedItemToTheTop();
+                                pushNotSelectedItems(data.Items);
+                            }
 
-                            pushNotSelectedItems(data.Items);
-
+                            Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.selectedItems);
                             scope.collectSelectedItems();
                         };
 
                         var onItemsFilteredSuccess = function (data) {
                             scope.paging.skip += data.Items.length;
 
-                            selectItemsInDialog(data.Items);
-                            
-                            scope.items = data.Items;
+                            if (!scope.multiselect && !scope.filter.searchString) {
+                                scope.items = [];
+                                pushSelectedItemToTheTop();
+                                pushNotSelectedItems(data.Items);
+                            }
+                            else {
+                                scope.items = data.Items;
+                            }
                         };
 
                         var onError = function (error) {
@@ -106,10 +116,9 @@
 
                         var emptyGuid = '00000000-0000-0000-0000-000000000000';
 
-                        var pushSelectedItemsToTheTop = function () {
+                        var pushSelectedItemToTheTop = function () {
                             if (scope.items.length === 0 && scope.selectedItems && scope.selectedItems.length > 0) {
-                                Array.prototype.push.apply(scope.items, scope.selectedItems);
-                                Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.selectedItems);
+                                scope.items.push(scope.selectedItems[0]);
                             }
                         };
 
@@ -120,12 +129,6 @@
                                 items.filter(function (item) {
                                     return ids.indexOf(item.Id) < 0;
                                 }));
-                        };
-
-                        var pushMoreFilteredItems = function (items) {
-                            selectItemsInDialog(items);
-
-                            Array.prototype.push.apply(scope.items, items);
                         };
 
                         var getSelectedIds = function () {
@@ -171,16 +174,6 @@
                             scope.selectedItemsInTheDialog = [];
                         };
 
-                        var selectItemsInDialog = function (items) {
-                            var selectedIds = getSelectedIds();
-
-                            var selectedItems = items.filter(function (item) {
-                                return selectedIds.indexOf(item.Id) >= 0;
-                            });
-
-                            scope.selectedItemsInTheDialog = selectedItems;                        
-                        };
-
                         // ------------------------------------------------------------------------
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
@@ -220,12 +213,12 @@
                             },
 
                             pageLoaded: function (items) {
-                                if (scope.filter.searchString) {
-                                    pushMoreFilteredItems(items);
+                                if (!scope.multiselect && !scope.filter.searchString) {
+                                    pushNotSelectedItems(items);
                                 }
                                 else {
-                                    pushNotSelectedItems(items);
-                                }                                
+                                    Array.prototype.push.apply(scope.items, items);
+                                }                             
                             }
                         };
 
