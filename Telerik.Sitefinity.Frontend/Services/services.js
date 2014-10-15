@@ -11,7 +11,7 @@
         //disable IE ajax request caching
         getHeaders['If-Modified-Since'] = '0';
         getHeaders['Cache-Control'] = 'no-cache';
-        getHeaders['Pragma'] = 'no-cache';
+        getHeaders.Pragma = 'no-cache';
     }]);
 
     module.factory('serviceHelper', ['$resource', 'serverContext', function ($resource, serverContext) {
