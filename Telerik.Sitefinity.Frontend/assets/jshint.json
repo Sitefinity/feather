@@ -1,0 +1,25 @@
+{
+  "bitwise": false,
+  "browser": true,
+  "camelcase": false,
+  "curly": true,
+  "eqeqeq": false,
+  "esnext": false,
+  "immed": true,
+  "jquery": true,
+  "latedef": "nofunc",
+  "newcap": true,
+  "noarg": true,
+  "node": true,
+  "quotmark": true,
+  "regexp": false,
+  "smarttabs": false,
+  "strict": true,
+  "trailing": true,
+  "undef": true,
+  "unused": true,
+  "debug": true,
+  "globals" : {
+    "Munchkin": true
+  }
+}
