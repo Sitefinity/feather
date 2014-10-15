@@ -1,11 +1,13 @@
 ﻿(function () {
     angular.module('services')
-        .factory('flatTaxonService', ['serviceHelper', function (serviceHelper) {
+        .factory('flatTaxonService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
+            var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Taxonomies/FlatTaxon.svc/'),
+                dataItemPromise;
+
             var getResource = function (taxonomyId, taxonId) {
-                var url = sitefinity.services.getFlatTaxonServiceUrl();
                 if (taxonomyId && taxonomyId !== "") {
-                    url = url + taxonomyId + '/';
+                    var url = serviceUrl + taxonomyId + '/';
 
                     if (taxonId && taxonId !== "") {
                         url = url + taxonId + '/';
@@ -14,8 +16,6 @@
 
                 return serviceHelper.getResource(url);
             };
-
-            var dataItemPromise;
 
             var getTaxons = function (taxonomyId, skip, take, search) {
                 var filter = serviceHelper.filterBuilder()

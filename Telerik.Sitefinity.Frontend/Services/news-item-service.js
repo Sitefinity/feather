@@ -1,12 +1,13 @@
 ﻿(function () {
     angular.module('services')
-        .factory('newsItemService', ['serviceHelper', function (serviceHelper) {
+        .factory('newsItemService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
             var dataItemPromise,
-                contentType = 'Telerik.Sitefinity.GenericContent.Model.Content';
+                contentType = 'Telerik.Sitefinity.GenericContent.Model.Content',
+                serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Content/NewsItemService.svc/');
 
             var getResource = function (itemId) {
-                var url = sitefinity.services.getNewsItemServiceUrl();
+                var url = serviceUrl;
                 if (itemId && itemId !== serviceHelper.emptyGuid()) {
                     url = url + itemId + '/';
                 }

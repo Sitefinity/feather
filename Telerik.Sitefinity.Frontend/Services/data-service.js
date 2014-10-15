@@ -1,17 +1,18 @@
 ﻿(function () {
     angular.module('services')
-        .factory('dataService', ['serviceHelper', function (serviceHelper) {
+        .factory('dataService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
+            var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/DynamicModules/Data.svc/'),
+                dataItemPromise;
+
             var getResource = function (itemId) {
-                var url = sitefinity.services.getDataServiceUrl();
+                var url = serviceUrl;
                 if (itemId && itemId !== serviceHelper.emptyGuid()) {
                     url = url + itemId + '/';
                 }
 
                 return serviceHelper.getResource(url);
             };
-
-            var dataItemPromise;
 
             var getItems = function (itemType, provider, skip, take, search, searchField) {
                 var filter = serviceHelper.filterBuilder()                    
