@@ -33,7 +33,9 @@
             transclude: true,
             template: '<div ng-transclude></div>' +
                       '<div ng-show="isLoadingData" class="list-group-item text-center">' +
-                        '<span class="s-loading" style="display: inline-block; width: 30px;"></span>' +
+                        '<div class="sf-loading" style="display: inline-block; width: 30px;">' +
+                            '<div></div><div></div><div></div>' +
+                        '</div>' +
                       '</div>',
             link: function (scope, element, attrs) {
                 scope.isLoadingData = false;

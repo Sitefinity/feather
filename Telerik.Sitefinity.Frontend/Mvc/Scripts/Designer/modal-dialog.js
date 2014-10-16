@@ -1,5 +1,4 @@
 ﻿/* global angular */
-
 (function () {
     var modalDialogModule = angular.module('modalDialog', ['ui.bootstrap']);
 
@@ -59,7 +58,8 @@
                 }
                 else {
                     $(backdropClass).remove();
-                }                
+                }
+
             });
         };
 

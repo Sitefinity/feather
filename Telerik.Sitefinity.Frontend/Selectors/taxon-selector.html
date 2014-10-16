@@ -1,13 +1,13 @@
 ﻿<script type="text/ng-template" id="taxon-selector-template">
     <div class="modal-header">
-        <h1 style="background: none; padding-bottom: 0; margin-bottom: 0" class="modal-title">Select tag</h1>
+        <h3 class="modal-title">Select tag</h3>
     </div>
     <div class="modal-body">
-        <div kendo-tab-strip>
+        <div kendo-tab-strip class="k-tabstrip--selection">
             <ul ng-show="multiselect">
                 <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]">All</li>
                 <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
-                    Selected <span ng-show='selectedItemsInTheDialog.length !== 0'>{{selectedItemsInTheDialog.length}}</span>
+                    Selected <span class="badge" ng-show='selectedItemsInTheDialog.length !== 0'>{{selectedItemsInTheDialog.length}}</span>
                 </li>
             </ul>
             <div>
