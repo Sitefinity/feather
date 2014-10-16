@@ -7446,6 +7446,11 @@ ul, ol, dl {
   top: 10px;
   left: 10px; }
 
+/* line 28, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-endless {
+  max-height: 500px;
+  overflow-y: auto; }
+
 /* line 3, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_navs */
 .modal-body .nav.nav-tabs {
   margin: -31px -20px 30px;

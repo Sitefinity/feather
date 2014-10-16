@@ -22,7 +22,7 @@
                         </span>
                         <items-filter filter='filter'></items-filter>
                     </div>
-                    <div endless-scroll paging='paging' class="list-group s-items-list-wrp">
+                    <div endless-scroll paging='paging' class="list-group list-group-endless">
                         <a ng-repeat="item in items"
                                 style="text-overflow: ellipsis; overflow: hidden;"
                                 ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
@@ -41,7 +41,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary" ng-click="doneSelecting()">Done selecting</button>
-        <button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>
+        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary pull-left" ng-click="doneSelecting()">Done selecting</button>
+        <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
     </div>
 </script>
+
