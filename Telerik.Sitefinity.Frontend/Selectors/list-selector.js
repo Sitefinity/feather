@@ -183,6 +183,8 @@
                             }
                         });
 
+                        scope.$watchCollection('selectedIds', getSelectedItems);
+
                         scope.showError = false;
                         scope.selectedItemsViewData = [];
                         scope.items = [];
