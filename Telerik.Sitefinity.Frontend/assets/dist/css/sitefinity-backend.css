@@ -5908,21 +5908,25 @@ button.close {
   height: 540px; }
 
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
-.k-tabstrip--selection {
+.k-tabstrip.k-tabstrip--selection {
   border: none;
   background: none; }
   /* line 5, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
-  .k-tabstrip--selection > .k-content {
+  .k-tabstrip.k-tabstrip--selection > .k-content {
     padding-top: 20px; }
     /* line 8, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
-    .k-tabstrip--selection > .k-content input[ng-show="multiselect"] {
+    .k-tabstrip.k-tabstrip--selection > .k-content input[ng-show="multiselect"] {
       pointer-events: none; }
   /* line 11, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
-  .k-tabstrip--selection .k-tabstrip-items {
+  .k-tabstrip.k-tabstrip--selection .k-tabstrip-items {
     margin: -31px -20px 30px;
     padding: 10px 15px 0;
     background: #f2f2f2;
     border-bottom: 1px solid #ddd; }
+  /* line 17, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
+  .k-tabstrip.k-tabstrip--selection .k-content.k-state-active {
+    padding: 0;
+    border: none; }
 
 /* Kendo skin */
 /* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_kendo-ui.bootstrap */
