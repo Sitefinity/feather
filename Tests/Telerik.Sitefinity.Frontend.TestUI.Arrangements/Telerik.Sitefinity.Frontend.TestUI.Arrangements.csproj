@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GridWidgets\ManagaGridWidgetOnThePage.cs" />
+    <Compile Include="MvcWidgets\MultipleSelectorVerifySelectedTabAndOrderingInAllTab.cs" />
     <Compile Include="MvcWidgets\MvcSelectMoreThanOneDynamicItem.cs" />
     <Compile Include="MvcWidgets\MvcDynamicSelectorTest.cs" />
     <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />

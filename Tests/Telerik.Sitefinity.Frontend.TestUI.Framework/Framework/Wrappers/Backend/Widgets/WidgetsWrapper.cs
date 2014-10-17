@@ -147,7 +147,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// <summary>
         /// Selects the content.
         /// </summary>
-        /// <param name="isFirstSelector">True or false depending on the selector.</param>
+        /// <param name="selector">Selector name.</param>
         public void SelectContent(string selector)
         {
             var contentSelector = this.GetContentSelectorByName(selector)
@@ -173,7 +173,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             foreach (var itemName in itemNames)
             {
                 var anchor = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlAnchor>(a => a.InnerText.Contains(itemName));
-                anchor.AssertIsPresent("item name not present");
+                anchor.AssertIsPresent(itemName + "not present");
 
                 anchor.Click();
             }
@@ -196,9 +196,22 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void OpenSelectedTab()
         {
             HtmlAnchor selectedTab = this.EM.Widgets.FeatherWidget.SelectedTab
-                                        .AssertIsPresent("selector button");
+                                        .AssertIsPresent("selected tab");
 
             selectedTab.Click();
+            ActiveBrowser.WaitForAsyncRequests();
+            ActiveBrowser.RefreshDomTree();
+        }
+
+        /// <summary>
+        /// Opens the all tab.
+        /// </summary>
+        public void OpenAllTab()
+        {
+            HtmlAnchor allTab = this.EM.Widgets.FeatherWidget.AllTab
+                                        .AssertIsPresent("all tab");
+
+            allTab.Click();
             ActiveBrowser.WaitForAsyncRequests();
             ActiveBrowser.RefreshDomTree();
         }
@@ -270,6 +283,16 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             int actual = items.Count;
             bool isCountCorrect = expected == actual;
             return isCountCorrect;
+        }
+
+        /// <summary>
+        /// Verifies if given tab is selected.
+        /// </summary>
+        /// <param name="tabName">Tab name.</param>
+        public void VerifySelectedTab(string tabName)
+        {
+            var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
+            activeDialog.AssertContainsText(tabName, "Active tab is not " + tabName);
         }
 
         private Element GetContentSelectorByName(string cssClass)

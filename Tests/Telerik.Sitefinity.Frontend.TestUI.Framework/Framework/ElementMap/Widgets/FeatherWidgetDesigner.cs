@@ -145,6 +145,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         }
 
         /// <summary>
+        /// Gets the all tab.
+        /// </summary>
+        /// <value>The all tab.</value>
+        public HtmlAnchor AllTab
+        {
+            get
+            {
+                return this.Get<HtmlAnchor>("class=k-link", "innertext=~All");
+            }
+        }
+
+        /// <summary>
         /// Gets the done button.
         /// </summary>
         /// <value>The done button.</value>
