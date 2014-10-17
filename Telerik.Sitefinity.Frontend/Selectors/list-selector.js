@@ -43,8 +43,6 @@
 
                     this.$scope = $scope;
 
-                    var orderedIds = $scope.getSelectedIds();
-
                     this.updateSelection = function (selectedItems) {
                         selectedItems.sort(compareFunction);
 
@@ -59,6 +57,8 @@
                     };
 
                     var compareFunction = function (item1, item2) {
+                        var orderedIds = $scope.getSelectedIds();
+
                         var index1 = orderedIds.indexOf(item1.Id);
                         var index2 = orderedIds.indexOf(item2.Id);
 
