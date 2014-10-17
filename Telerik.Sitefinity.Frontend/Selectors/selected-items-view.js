@@ -80,7 +80,7 @@
                             else {
                                 scope.selectedItems.push(item);
                             }
-                            
+
                         };
 
                         scope.filter = {
@@ -104,12 +104,12 @@
 
                         scope.sortableOptions = {
                             hint: function (element) {
-                                return $('<li style="display: block; background-color: #ffff99; width: 520px;">' +
+                                return $('<div class="list-group-item list-group-item-draggable list-group-item-hint">' +
                                             element.html() +
-                                        '</li>');
+                                        '</div>');
                             },
                             placeholder: function (element) {
-                                return $('<li style="height: 43px; width: 520px; background-color: #f2f2f2;"></li>');
+                                return $('<div class="list-group-item list-group-item-placeholder"></div>');
                             },
                             handler: ".handler"
                         };

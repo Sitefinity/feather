@@ -37,5 +37,14 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         {
             return new ModuleBuilderOperations();
         }
+
+        /// <summary>
+        /// Entry point for Grid widgets operations.
+        /// </summary>
+        /// <returnsResource>GridWidgetsOperations instance.</returns>
+        public static GridWidgetsOperations GridWidgets()
+        {
+            return new GridWidgetsOperations();
+        }
     }
 }

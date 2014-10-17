@@ -58,7 +58,7 @@
                 }
                 else {
                     $(backdropClass).remove();
-                }
+                }                
 
             });
         };
@@ -71,7 +71,7 @@
                 }
                 else {
                     scope.$openModalDialog = function () {
-                        open(scope, attrs);
+                            open(scope, attrs);
                     };
                 }
             }
