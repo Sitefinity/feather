@@ -9,18 +9,14 @@
         </span>
         <items-filter filter='filter'></items-filter>
     </div>
-    <div class="list-group s-items-list-wrp">
-        <ul kendo-sortable k-options="sortableOptions" k-on-change="sortItems(kendoEvent)">
-            <li ng-repeat="item in items">
-                <a style="text-overflow: ellipsis; overflow: hidden;"
-                        ng-class="{'list-group-item':true}"
-                        ng-click="itemClicked(item)">
-                    <span class="handler" style="width: 15px; height: 15px; background-color: red; display: inline-block;"></span>
-                    <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" style="width: 100px;">
-                    <span ng-bind="bindIdentifierField(item)"></span>
-                </a>
-            </li>
-        </ul>
+    <div class="list-group list-group-endless" kendo-sortable k-options="sortableOptions" k-on-change="sortItems(kendoEvent)">
+        <div class="list-group-item list-group-item-draggable"
+            ng-click="itemClicked(item)"
+            ng-repeat="item in items">
+            <span class="handler list-group-item-drag"></span>
+            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)">
+            <div ng-bind="bindIdentifierField(item)"></div>
+        </div>
     </div>
     <div ng-hide="items.length">No items found</div>
 </div>

@@ -2893,23 +2893,23 @@ textarea.input-lg, .form-horizontal .form-group-lg textarea.form-control, .input
 /* line 60, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons */
 .btn-primary {
   color: #fff;
-  background-color: #428bca;
-  border-color: #3580bd; }
+  background-color: #105cb6;
+  border-color: #0c4387; }
   /* line 15, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/buttons */
   .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #3073a9;
-    border-color: #28608e; }
+    background-color: #0c4587;
+    border-color: #07274f; }
   /* line 22, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/buttons */
   .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
     background-image: none; }
   /* line 32, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/buttons */
   .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled]:active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active {
-    background-color: #428bca;
-    border-color: #3580bd; }
+    background-color: #105cb6;
+    border-color: #0c4387; }
   /* line 38, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/buttons */
   .btn-primary .badge {
-    color: #428bca;
+    color: #105cb6;
     background-color: #fff; }
 
 /* line 64, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons */
@@ -7401,6 +7401,10 @@ ul, ol, dl {
     -webkit-transform: scaleY(1);
     background-color: #105ab5; } }
 
+/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_buttons */
+.btn {
+  min-width: 90px; }
+
 /* line 2, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
 .alert-warning, .alert-danger {
   margin: -21px -20px 24px;
@@ -7420,7 +7424,7 @@ ul, ol, dl {
   min-height: 400px; }
 
 /* line 2, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
-.list-group-item > span {
+.list-group-item > div {
   position: relative;
   z-index: 2;
   display: block;
@@ -7431,7 +7435,7 @@ ul, ol, dl {
   text-overflow: ellipsis;
   white-space: nowrap; }
   /* line 11, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
-  .list-group-item > span:before {
+  .list-group-item > div:before {
     content: "";
     position: absolute;
     background: #fff;
@@ -7439,7 +7443,7 @@ ul, ol, dl {
     width: 30px;
     height: 30px;
     opacity: 0; }
-/* line 21, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 20, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item > input {
   position: absolute;
   z-index: 1;
@@ -7447,6 +7451,40 @@ ul, ol, dl {
   left: 10px; }
 
 /* line 28, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item-draggable > input {
+  left: 25px; }
+/* line 31, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item-draggable > div {
+  padding-left: 45px; }
+
+/* line 34, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item-hint {
+  width: 550px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
+
+/* line 38, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item-placeholder {
+  background: #ffff99;
+  height: 20px; }
+
+/* line 42, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item-drag {
+  width: 10px;
+  height: 20px;
+  position: absolute;
+  left: 7px;
+  top: 10px;
+  cursor: move;
+  background-image: -webkit-repeating-radial-gradient(center center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 100%);
+  background-image: -moz-repeating-radial-gradient(center center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 100%);
+  background-image: -ms-repeating-radial-gradient(center center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 100%);
+  background-image: repeating-radial-gradient(center center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 100%);
+  -webkit-background-size: 3px 3px;
+  -moz-background-size: 3px 3px;
+  background-size: 3px 3px;
+  z-index: 3; }
+
+/* line 60, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-endless {
   max-height: 500px;
   overflow-y: auto; }
