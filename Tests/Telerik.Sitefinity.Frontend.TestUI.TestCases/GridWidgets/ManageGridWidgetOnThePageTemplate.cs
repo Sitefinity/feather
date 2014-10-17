@@ -34,8 +34,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
             BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount2);
             this.DeleteGridElement();
             BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount1);
-            this.DeleteGridElement();
-            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount0);
             BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().PublishTemplate();
         }
 
@@ -67,13 +65,21 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         protected override void ServerSetup()
         {
             BAT.Macros().User().EnsureAdminLoggedIn();
+            BAT.Arrange(this.TestName).ExecuteSetUp();
         }
 
-        private const string PageTemplateName = "Bootstrap.default";
+        /// <summary>
+        /// Performs clean up and clears all data created by the test.
+        /// </summary>
+        protected override void ServerCleanup()
+        {
+            BAT.Arrange(this.TestName).ExecuteTearDown();
+        }
+
+        private const string PageTemplateName = "Bootstrap.defaultNew";
         private const string DuplicateOperation = "Duplicate";
         private const string DeleteOperation = "Delete";
         private const string LayoutCaption = "3 + 9";
-        private const int GridCount0 = 0;
         private const int GridCount1 = 1;
         private const int GridCount2 = 2;
     }

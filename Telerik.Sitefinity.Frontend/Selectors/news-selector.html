@@ -1,5 +1,6 @@
 ﻿<script type="text/ng-template" id="news-selector-template">
     <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
         <h3 class="modal-title">Select news</h3>
     </div>
     <div class="modal-body">
@@ -13,29 +14,33 @@
             <div>
                 <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
 
-                <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
                 <div ng-hide="noItemsExist || showError">
-                    <div class="input-group m-bottom-sm">
-                        <span class="input-group-addon">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </span>
+            <div class="input-group m-bottom-sm">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                </span>
                         <items-filter filter='filter'></items-filter>
-                    </div>
+            </div>
                     <div endless-scroll paging='paging' class="list-group list-group-endless">
-                        <a ng-repeat="item in items"
+                <a ng-repeat="item in items"
                                 style="text-overflow: ellipsis; overflow: hidden;"
                                 ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
                                 ng-click="itemClicked($index, item)">
                             <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
-                            <span ng-bind="bindIdentifierField(item)"></span>
-                        </a>
+                    <span ng-bind="bindIdentifierField(item)"></span>
+                </a>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
-                    <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
+                    <div class="sf-loading" ng-show="showLoadingIndicator">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
 
                 </div>
-            </div>
+                </div>
             <div>
                 <selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' identifier-field='identifierField'></selected-items-view>
             </div>
@@ -43,6 +48,9 @@
     </div>
     <div class="modal-footer">
         <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary pull-left" ng-click="doneSelecting()">Done selecting</button>
-        <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
+        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
+
+        <button type="button" ng-show="noItemsExist" class="btn btn-primary pull-left" ng-click="cancel()">Close</button>
+
     </div>
 </script>

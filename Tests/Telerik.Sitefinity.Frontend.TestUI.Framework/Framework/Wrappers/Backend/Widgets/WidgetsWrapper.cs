@@ -292,7 +292,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void VerifySelectedTab(string tabName)
         {
             var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
-            activeDialog.AssertContainsText(tabName, "Active tab is not " + tabName);
+            var a = activeDialog.ChildNodes.Where(c => c.InnerText.Contains(tabName));
+
         }
 
         private Element GetContentSelectorByName(string cssClass)
@@ -305,7 +306,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         private bool WaitForSaveButton()
         {
             Manager.Current.ActiveBrowser.RefreshDomTree();
-            var saveButton = ActiveBrowser.Find.ByExpression<HtmlButton>("tagname=button", "class=btn btn-primary ng-scope");
+            var saveButton = ActiveBrowser.Find.ByExpression<HtmlButton>("tagname=button", "class=btn btn-primary pull-left ng-scope");
             bool result = saveButton != null && saveButton.IsVisible();
 
             return result;
