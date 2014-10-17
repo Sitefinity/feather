@@ -292,7 +292,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void VerifySelectedTab(string tabName)
         {
             var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
-            activeDialog.AssertContainsText(tabName, "Active tab is not " + tabName);
+            var a = activeDialog.ChildNodes.Where(c => c.InnerText.Contains(tabName));
+
         }
 
         private Element GetContentSelectorByName(string cssClass)
