@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="unit\Services\serverContextSpec.js" />
+    <EmbeddedResource Include="helpers\angular-kendo.js" />
+    <Content Include="helpers\kendo.web.min.js" />
     <Content Include="unit\Mvc\Scripts\Designer\modalDialogSpec.js" />
   </ItemGroup>
   <ItemGroup>

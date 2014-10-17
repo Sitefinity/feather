@@ -70,7 +70,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
             ActiveBrowser.WaitUntilReady();
 
-            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyGridWidgetOnTheFrontend(layouts);
+            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyNewGridWidgetOnTheFrontend(layouts);
         }
 
         /// <summary>

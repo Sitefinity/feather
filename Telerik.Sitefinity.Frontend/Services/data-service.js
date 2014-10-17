@@ -1,51 +1,25 @@
 ﻿(function () {
     angular.module('services')
-        .factory('dataService', ['$resource', 'widgetContext', function ($resource, widgetContext) {
+        .factory('dataService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
+            var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/DynamicModules/Data.svc/'),
+                dataItemPromise;
+
             var getResource = function (itemId) {
-                var url = sitefinity.services.getDataServiceUrl();
-                if (itemId && itemId !== '00000000-0000-0000-0000-000000000000') {
+                var url = serviceUrl;
+                if (itemId && itemId !== serviceHelper.emptyGuid()) {
                     url = url + itemId + '/';
                 }
 
-                var headerData;
-
-                if (widgetContext.culture) {
-                    headerData = {
-                        'SF_UI_CULTURE': widgetContext.culture
-                    };
-                }
-
-                return $resource(url, {}, {
-                    get: {
-                        method: 'GET',
-                        headers: headerData
-                    }
-                });
+                return serviceHelper.getResource(url);
             };
 
-            var dataItemPromise;
-
-            var getItems = function (itemType, provider, skip, take, filter, searchField) {
-                if (!searchField) {
-                    searchField = 'Title';
-                }
-
-                var generatedFilter = "";
-                var addConjunction;                
-
-                if (filter) {
-                    generatedFilter = '('+ searchField +'.ToUpper().Contains("' + filter + '".ToUpper()))';
-                    addConjunction = true;
-                }
-
-                if (widgetContext.culture) {
-                    if (addConjunction) {
-                        generatedFilter += ' AND ';
-                    }
-
-                    generatedFilter += 'Culture==' + widgetContext.culture;                    
-                }
+            var getItems = function (itemType, provider, skip, take, search, searchField) {
+                var filter = serviceHelper.filterBuilder()                    
+                    .searchFilter(search, searchField)
+                    .and()
+                    .cultureFilter()
+                    .getFilter();
 
                 dataItemPromise = getResource().get(
                     {
@@ -54,7 +28,28 @@
                         provider: provider,
                         skip: skip,
                         take: take,
-                        filter: generatedFilter
+                        filter: filter
+                    })
+                    .$promise;
+
+                return dataItemPromise;
+            };
+
+            var getSpecificItems = function (ids, itemType, provider) {
+                var filter = serviceHelper.filterBuilder()                    
+                    .specificItemsFilter(ids)
+                    .and()
+                    .cultureFilter()
+                    .getFilter();
+
+                dataItemPromise = getResource().get(
+                    {
+                        itemType: itemType,
+                        itemSurrogateType: itemType,
+                        provider: provider,
+                        skip: 0,
+                        take: 100,
+                        filter: filter
                     })
                     .$promise;
 
@@ -75,6 +70,7 @@
             return {
                 /* Returns the data items. */
                 getItems: getItems,
+                getSpecificItems: getSpecificItems,
                 getItem: getItem
             };
         }]);

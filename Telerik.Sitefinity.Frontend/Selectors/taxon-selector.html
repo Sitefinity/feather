@@ -1,35 +1,49 @@
 ﻿<script type="text/ng-template" id="taxon-selector-template">
     <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
         <h3 class="modal-title">Select tag</h3>
     </div>
     <div class="modal-body">
-        <div ng-show="isListEmpty" class="alert alert-info">No items have been created yet.</div>
+        <div kendo-tab-strip class="k-tabstrip--selection">
+            <ul ng-show="multiselect">
+                <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]">All</li>
+                <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
+                    Selected <span class="badge" ng-show='selectedItemsInTheDialog.length !== 0'>{{selectedItemsInTheDialog.length}}</span>
+                </li>
+            </ul>
+            <div>
+                <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
 
         <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
-        <div ng-hide="isListEmpty || showError">
+                <div ng-hide="noItemsExist || showError">
             <div class="input-group m-bottom-sm">
                 <span class="input-group-addon">
                     <i class="glyphicon glyphicon-search"></i>
                 </span>
-                <input type="text" ng-model="filter.search" ng-change="reloadItems(filter.search)" class="form-control" placeholder="Narrow by typing" />
+                        <items-filter filter='filter'></items-filter>
             </div>
-            <div class="list-group s-items-list-wrp endlessScroll">
+                    <div endless-scroll paging='paging' class="list-group list-group-endless">
                 <a ng-repeat="item in items"
-                        ng-class="{'list-group-item':true, 'active': item.Id==selectedItemInTheDialog.Id }"
-                        ng-click="itemClicked($index, item)">
-                    <span ng-bind="bindIdentifierField(item)"></span>
+                                style="text-overflow: ellipsis; overflow: hidden;"
+                                ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
+                                ng-click="itemClicked($index, item)">
+                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
+                    <div ng-bind="bindIdentifierField(item)"></div>
                 </a>
-                <div ng-hide="hideEndlessScrollLoadingIndicator || showLoadingIndicator" class="list-group-item text-center">
-                    <span class="s-loading" style="display: inline-block; width: 30px;"></span>
+                    </div>
+                    <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
+                    <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
                 </div>
+                </div>
+            <div>
+                <selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' identifier-field='identifierField'></selected-items-view>
             </div>
-            <div ng-hide="items.length || showLoadingIndicator || !hideEndlessScrollLoadingIndicator">No items found</div>
-            <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" ng-hide="isListEmpty || showError" class="btn btn-primary" ng-click="selectItem()">Done selecting</button>
-        <button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>
+        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary pull-left" ng-click="doneSelecting()">Done selecting</button>
+        <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
     </div>
 </script>
+

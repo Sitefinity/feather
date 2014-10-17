@@ -2893,23 +2893,23 @@ textarea.input-lg, .form-horizontal .form-group-lg textarea.form-control, .input
 /* line 60, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons */
 .btn-primary {
   color: #fff;
-  background-color: #428bca;
-  border-color: #3580bd; }
+  background-color: #105cb6;
+  border-color: #0c4387; }
   /* line 15, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/buttons */
   .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #3073a9;
-    border-color: #28608e; }
+    background-color: #0c4587;
+    border-color: #07274f; }
   /* line 22, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/buttons */
   .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
     background-image: none; }
   /* line 32, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/buttons */
   .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled]:active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active {
-    background-color: #428bca;
-    border-color: #3580bd; }
+    background-color: #105cb6;
+    border-color: #0c4387; }
   /* line 38, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/buttons */
   .btn-primary .badge {
-    color: #428bca;
+    color: #105cb6;
     background-color: #fff; }
 
 /* line 64, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons */
@@ -5907,6 +5907,27 @@ button.close {
 .editor-lg {
   height: 540px; }
 
+/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
+.k-tabstrip.k-tabstrip--selection {
+  border: none;
+  background: none; }
+  /* line 5, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
+  .k-tabstrip.k-tabstrip--selection > .k-content {
+    padding-top: 20px; }
+    /* line 8, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
+    .k-tabstrip.k-tabstrip--selection > .k-content input[ng-show="multiselect"] {
+      pointer-events: none; }
+  /* line 11, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
+  .k-tabstrip.k-tabstrip--selection .k-tabstrip-items {
+    margin: -31px -20px 30px;
+    padding: 10px 15px 0;
+    background: #f2f2f2;
+    border-bottom: 1px solid #ddd; }
+  /* line 17, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
+  .k-tabstrip.k-tabstrip--selection .k-content.k-state-active {
+    padding: 0;
+    border: none; }
+
 /* Kendo skin */
 /* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_kendo-ui.bootstrap */
 .k-in, .k-item, .k-window-action {
@@ -7380,18 +7401,19 @@ ul, ol, dl {
     -webkit-transform: scaleY(1);
     background-color: #105ab5; } }
 
+/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_buttons */
+.btn {
+  min-width: 90px; }
+
 /* line 2, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
 .alert-warning, .alert-danger {
   margin: -21px -20px 24px;
   font-size: 13px;
   padding: 10px 20px; }
 
-/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_badges */
-.badge {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; }
+/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_utilities */
+.full-width {
+  width: 100%; }
 
 /* line 3, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_modals */
 .modal-header, .modal-body, .modal-footer {
@@ -7401,13 +7423,71 @@ ul, ol, dl {
 .modal-body {
   min-height: 400px; }
 
-/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
-.list-group-item > span {
+/* line 2, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item > div {
+  position: relative;
+  z-index: 2;
   display: block;
+  padding-left: 30px;
+  margin-left: -10px;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
+  /* line 11, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  .list-group-item > div:before {
+    content: "";
+    position: absolute;
+    background: #fff;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    opacity: 0; }
+/* line 20, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item > input {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 10px; }
+
+/* line 28, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item-draggable > input {
+  left: 25px; }
+/* line 31, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item-draggable > div {
+  padding-left: 45px; }
+
+/* line 34, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item-hint {
+  width: 550px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
+
+/* line 38, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item-placeholder {
+  background: #ffff99;
+  height: 20px; }
+
+/* line 42, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-item-drag {
+  width: 10px;
+  height: 20px;
+  position: absolute;
+  left: 7px;
+  top: 10px;
+  cursor: move;
+  background-image: -webkit-repeating-radial-gradient(center center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 100%);
+  background-image: -moz-repeating-radial-gradient(center center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 100%);
+  background-image: -ms-repeating-radial-gradient(center center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 100%);
+  background-image: repeating-radial-gradient(center center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 100%);
+  -webkit-background-size: 3px 3px;
+  -moz-background-size: 3px 3px;
+  background-size: 3px 3px;
+  z-index: 3; }
+
+/* line 60, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-endless {
+  max-height: 500px;
+  overflow-y: auto; }
 
 /* line 3, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_navs */
 .modal-body .nav.nav-tabs {
@@ -7418,3 +7498,20 @@ ul, ol, dl {
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .form-group + .form-group {
   margin-top: 30px; }
+
+/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
+.label-taxon {
+  max-width: 33%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  background-color: #e4e4e4;
+  color: #000;
+  font-weight: 400;
+  vertical-align: top;
+  line-height: 1.7em; }
+  /* line 14, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
+  .label-taxon:last-child {
+    margin-right: 0; }

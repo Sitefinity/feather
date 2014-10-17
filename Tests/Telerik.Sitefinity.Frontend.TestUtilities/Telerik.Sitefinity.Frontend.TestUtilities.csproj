@@ -40,6 +40,9 @@
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Http">
+      <HintPath>..\..\packages\Microsoft.Http.1.0.0.0\lib\Microsoft.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -169,6 +172,8 @@
     <Compile Include="CommonOperations\ActionFilters\ActionExecutionRegister.cs" />
     <Compile Include="CommonOperations\ActionFilters\ActionInfo.cs" />
     <Compile Include="CommonOperations\ActionFilters\ExecutionRegistrationFilterAttribute.cs" />
+    <Compile Include="CommonOperations\Pages\GridWidgetsOperations.cs" />
+    <Compile Include="CommonOperations\Pages\ModuleBuilderOperations.cs" />
     <Compile Include="CommonOperations\Pages\PagesOperations.cs" />
     <Compile Include="CommonOperations\ResourcePackages\ResourcePackagesOperations.cs" />
     <Compile Include="ControllerFactoryRegion.cs" />
@@ -186,6 +191,7 @@
     <Compile Include="DummyClasses\Mvc\Controllers\DummyControllerFactory.cs" />
     <Compile Include="DummyClasses\LocalizationResources\DummyControllerResoruces.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyCustomDesignerController.cs" />
+    <Compile Include="DummyClasses\Mvc\Controllers\DummyOldDesignerController.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyScriptController.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyMasterDetailController.cs" />
     <Compile Include="DummyClasses\Mvc\DummyBuildManagerCompiledView.cs" />
@@ -238,6 +244,8 @@
     <EmbeddedResource Include="Data\TestView\Default.cshtml" />
     <EmbeddedResource Include="Data\LayoutFilesSpecialChars\My%40TestTemplate.cshtml" />
     <EmbeddedResource Include="Data\LayoutFilesSpecialChars\My_TestTemplate.cshtml" />
+    <EmbeddedResource Include="Data\LayoutFileReplace\TestLayout.cshtml" />
+    <EmbeddedResource Include="Data\DuplicateRelatedDataModule.zip" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>

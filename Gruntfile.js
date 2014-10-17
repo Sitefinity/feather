@@ -42,6 +42,8 @@ module.exports = function (grunt) {
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-resource.js',
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-route.js',
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/kendo.web.min.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-kendo.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/Bootstrap/js/*.js',
 					'!Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/**'
 					],

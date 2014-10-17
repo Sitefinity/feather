@@ -116,8 +116,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GridWidgets\AddGridWidgetToToolboxForPage.cs" />
+    <Compile Include="GridWidgets\AddGridWidgetToToolboxForPageTemplate.cs" />
     <Compile Include="GridWidgets\ManagaGridWidgetOnThePage.cs" />
+    <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
+    <Compile Include="MvcWidgets\MvcSelectMoreThanOneDynamicItem.cs" />
+    <Compile Include="MvcWidgets\MvcDynamicSelectorTest.cs" />
+    <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />
     <Compile Include="MvcWidgets\DummyTextController.cs" />
+    <Compile Include="MvcWidgets\MvcSelectMoreThanOneNewsItem.cs" />
+    <Compile Include="MvcWidgets\MvcSelectMoreThanOneTag.cs" />
     <Compile Include="MvcWidgets\MvcSelectorTest.cs" />
     <Compile Include="MvcWidgets\MvcWidgetDefaultFeatherDesigner.cs" />
     <Compile Include="MvcWidgets\MvcWidgetEditViewFromPackageCacheInvalidation.cs" />
@@ -147,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\designerview-selector.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\grid-grid.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

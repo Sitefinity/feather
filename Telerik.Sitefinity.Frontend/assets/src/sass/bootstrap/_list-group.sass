@@ -1,4 +1,64 @@
-.list-group-item > span
-  display: block
-  max-width: 100%
-  @include text-overflow()
+.list-group-item
+	> div
+		position: relative
+		z-index: 2
+		display: block
+		padding-left: 30px
+		margin-left: -10px
+		max-width: 100%
+		@include text-overflow()
+
+		&:before
+			content: ""
+			position: absolute
+			background: #fff
+			left: 0
+			width: 30px
+			height: 30px
+			opacity: 0
+
+	> input
+		position: absolute
+		z-index: 1
+		top: 10px
+		left: 10px
+
+
+// Draggable items
+.list-group-item-draggable
+	> input
+		left: 25px
+
+	> div
+		padding-left: 45px
+
+.list-group-item-hint
+	width: 550px
+	box-shadow: 0 0 6px rgba(0, 0, 0, .4)
+
+.list-group-item-placeholder
+	background: #ffff99
+	height: 20px
+
+.list-group-item-drag
+	width: 10px
+	height: 20px
+	position: absolute
+	left: 7px
+	top: 10px
+	cursor: move
+
+	background-image: -webkit-repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
+	background-image: -moz-repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
+	background-image: -ms-repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
+	background-image: repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
+	-webkit-background-size: 3px 3px
+	-moz-background-size: 3px 3px
+	background-size: 3px 3px
+	z-index: 3
+
+
+// Endless scroll
+.list-group-endless
+	max-height: 500px
+	overflow-y: auto

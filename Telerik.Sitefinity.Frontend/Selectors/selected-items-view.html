@@ -1,0 +1,22 @@
+﻿<div ng-show="isListEmpty()" class="alert alert-info">No items have been selected yet.</div>
+
+<alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+
+<div ng-hide="isListEmpty() || showError">
+    <div class="input-group m-bottom-sm">
+        <span class="input-group-addon">
+            <i class="glyphicon glyphicon-search"></i>
+        </span>
+        <items-filter filter='filter'></items-filter>
+    </div>
+    <div class="list-group list-group-endless" kendo-sortable k-options="sortableOptions" k-on-change="sortItems(kendoEvent)">
+        <div class="list-group-item list-group-item-draggable"
+            ng-click="itemClicked(item)"
+            ng-repeat="item in items">
+            <span class="handler list-group-item-drag"></span>
+            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)">
+            <div ng-bind="bindIdentifierField(item)"></div>
+        </div>
+    </div>
+    <div ng-hide="items.length">No items found</div>
+</div>

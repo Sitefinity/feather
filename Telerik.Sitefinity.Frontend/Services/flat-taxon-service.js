@@ -1,47 +1,50 @@
 ﻿(function () {
     angular.module('services')
-        .factory('flatTaxonService', ['$resource', 'widgetContext', function ($resource, widgetContext) {
+        .factory('flatTaxonService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
+            var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Taxonomies/FlatTaxon.svc/'),
+                dataItemPromise;
+
             var getResource = function (taxonomyId, taxonId) {
-                var url = sitefinity.services.getFlatTaxonServiceUrl();
                 if (taxonomyId && taxonomyId !== "") {
-                    url = url + taxonomyId + '/';
+                    var url = serviceUrl + taxonomyId + '/';
 
                     if (taxonId && taxonId !== "") {
                         url = url + taxonId + '/';
                     }
                 }
 
-                var headerData;
-
-                if (widgetContext.culture) {
-                    headerData = {
-                        'SF_UI_CULTURE': widgetContext.culture
-                    };
-                }
-
-                return $resource(url, {}, {
-                    get: {
-                        method: 'GET',
-                        headers: headerData
-                    }
-                });
+                return serviceHelper.getResource(url);
             };
 
-            var dataItemPromise;
-
-            var getTaxons = function (taxonomyId, skip, take, filter) {
-                var generatedFilter;
-                if (filter) {
-                    generatedFilter = '(Title.ToUpper().Contains("' + filter + '".ToUpper()))';
-                }
+            var getTaxons = function (taxonomyId, skip, take, search) {
+                var filter = serviceHelper.filterBuilder()
+                    .searchFilter(search)
+                    .getFilter();
 
                 dataItemPromise = getResource(taxonomyId).get(
                     {
                         sortExpression: 'Title ASC',
                         skip: skip,
                         take: take,
-                        filter: generatedFilter
+                        filter: filter
+                    })
+                    .$promise;
+
+                return dataItemPromise;
+            };
+
+            var getSpecificItems = function (taxonomyId, ids) {
+                var filter = serviceHelper.filterBuilder()
+                    .specificItemsFilter(ids)
+                    .getFilter();
+
+                dataItemPromise = getResource(taxonomyId).get(
+                    {
+                        sortExpression: 'Title ASC',
+                        skip: 0,
+                        take: 100,
+                        filter: filter
                     })
                     .$promise;
 
@@ -58,6 +61,7 @@
             return {
                 /* Returns the data items. */
                 getTaxons: getTaxons,
+                getSpecificItems: getSpecificItems,
                 getTaxon: getTaxon
             };
         }]);

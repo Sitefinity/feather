@@ -1,49 +1,37 @@
 ﻿(function () {
     angular.module('services')
-        .factory('newsItemService', ['$resource', 'widgetContext', function ($resource, widgetContext) {
+        .factory('newsItemService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
+            var dataItemPromise,
+                contentType = 'Telerik.Sitefinity.GenericContent.Model.Content',
+                serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Content/NewsItemService.svc/');
+
             var getResource = function (itemId) {
-                var url = sitefinity.services.getNewsItemServiceUrl();
-                if (itemId && itemId !== '00000000-0000-0000-0000-000000000000') {
+                var url = serviceUrl;
+                if (itemId && itemId !== serviceHelper.emptyGuid()) {
                     url = url + itemId + '/';
                 }
 
-                var headerData;
+                return serviceHelper.getResource(url);
+            };            
 
-                if (widgetContext.culture) {
-                    headerData = {
-                        'SF_UI_CULTURE': widgetContext.culture
-                    };
-                }
-
-                return $resource(url, {}, {
-                    get: {
-                        method: 'GET',
-                        headers: headerData
-                    }
-                });
-            };
-
-            var dataItemPromise;
-
-            var getItems = function (provider, skip, take, filter) {
-                var generatedFilter = 'Visible==true AND Status==live';
-                if (widgetContext.culture) {
-                    generatedFilter = generatedFilter + ' AND Culture==' + widgetContext.culture;
-                }
-
-                if (filter) {
-                    generatedFilter = generatedFilter + ' AND (Title.ToUpper().Contains("' + filter + '".ToUpper()))';
-                }
+            var getItems = function (provider, skip, take, search) {
+                var filter = serviceHelper.filterBuilder()
+                    .lifecycleFilter()
+                    .and()
+                    .cultureFilter()
+                    .and()
+                    .searchFilter(search)
+                    .getFilter();
 
                 dataItemPromise = getResource().get(
                     {
-                        itemType: 'Telerik.Sitefinity.GenericContent.Model.Content',
-                        itemSurrogateType: 'Telerik.Sitefinity.GenericContent.Model.Content',
+                        itemType: contentType,
+                        itemSurrogateType: contentType,
                         provider: provider,
                         skip: skip,
                         take: take,
-                        filter: generatedFilter
+                        filter: filter
                     })
                     .$promise;
 
@@ -61,9 +49,33 @@
                 return dataItemPromise;
             };
 
+            var getSpecificItems = function (ids, provider) {
+                var filter = serviceHelper.filterBuilder()
+                    .lifecycleFilter()
+                    .and()
+                    .cultureFilter()
+                    .and()
+                    .specificItemsFilter(ids)
+                    .getFilter();
+
+                dataItemPromise = getResource().get(
+                    {
+                        itemType: contentType,
+                        itemSurrogateType: contentType,
+                        provider: provider,
+                        skip: 0,
+                        take: 100,
+                        filter: filter
+                    })
+                    .$promise;
+
+                return dataItemPromise;
+            };
+
             return {
                 /* Returns the data items. */
                 getItems: getItems,
+                getSpecificItems: getSpecificItems,
                 getItem: getItem
             };
         }]);

@@ -56,7 +56,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlButton>("tagname=button", "class=btn btn-primary ng-scope");
+                return this.Get<HtmlButton>("tagname=button", "class=btn btn-primary pull-left ng-scope");
             }
         }
 
@@ -68,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlAnchor>("tagname=a", "class=btn btn-link ng-scope");
+                return this.Get<HtmlAnchor>("tagname=a", "class=btn btn-link pull-left ng-scope");
             }
         }
 
@@ -133,6 +133,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         }
 
         /// <summary>
+        /// Gets the selected tab.
+        /// </summary>
+        /// <value>The selected tab.</value>
+        public HtmlAnchor SelectedTab
+        {
+            get
+            {
+                return this.Get<HtmlAnchor>("class=k-link", "innertext=~Selected");
+            }
+        }
+
+        /// <summary>
         /// Gets the done button.
         /// </summary>
         /// <value>The done button.</value>
@@ -140,7 +152,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlButton>("ng-click=selectContent()");
+                return this.Get<HtmlButton>("ng-click=doneSelecting()");
             }
         }
 
@@ -152,7 +164,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlInputText>("ng-model=filter.search");
+                return this.Get<HtmlInputText>("ng-model=~filter.search");
             }
         }
 
@@ -165,6 +177,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
             get
             {
                 return this.Find.ById<HtmlDiv>("viewsPlaceholder");
+            }
+        }
+
+        public HtmlDiv ActiveTab
+        {
+            get
+            {
+                return this.Get<HtmlDiv>("class=k-content k-state-active");
             }
         }
     }
