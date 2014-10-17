@@ -43,7 +43,11 @@
 
                     this.$scope = $scope;
 
+                    var orderedIds = $scope.getSelectedIds();
+
                     this.updateSelection = function (selectedItems) {
+                        selectedItems.sort(compareFunction);
+
                         var firstItem = selectedItems[0];
                         $scope.selectedItem = firstItem;
                         $scope.selectedItemId = firstItem && firstItem.Id;
@@ -53,6 +57,19 @@
                             return item.Id;
                         });
                     };
+
+                    var compareFunction = function (item1, item2) {
+                        var index1 = orderedIds.indexOf(item1.Id);
+                        var index2 = orderedIds.indexOf(item2.Id);
+
+                        if (index1 < index2) {
+                            return -1;
+                        }
+                        if (index1 > index2) {
+                            return 1;
+                        }
+                        return 0;
+                    }
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -113,6 +130,8 @@
 
                         var emptyGuid = '00000000-0000-0000-0000-000000000000';
 
+                        var currentSelectedIds = scope.selectedIds;
+
                         var pushSelectedItemToTheTop = function () {
                             if (scope.items.length === 0 && scope.selectedItems && scope.selectedItems.length > 0) {
                                 scope.items.push(scope.selectedItems[0]);
@@ -120,39 +139,16 @@
                         };
 
                         var pushNotSelectedItems = function (items) {
-                            var ids = getSelectedIds();
+                            var ids = scope.getSelectedIds();
 
                             Array.prototype.push.apply(scope.items,
                                 items.filter(function (item) {
                                     return ids.indexOf(item.Id) < 0;
                                 }));
                         };
-
-                        var getSelectedIds = function () {
-                            if (attrs.multiselect) {
-                                if (scope.selectedIds && scope.selectedIds.length > 0) {
-                                    return scope.selectedIds;
-                                }
-                                else if (scope.selectedItems && scope.selectedItems.length > 0) {
-                                    return scope.selectedItems.map(function (item) {
-                                        return item.Id;
-                                    });
-                                }
-                            }
-                            else {
-                                var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
-                                if (id) {
-                                    var selected = [];
-                                    selected.push(id);
-                                    return selected;
-                                } 
-                            }
-
-                            return [];
-                        };
-
+                        
                         var getSelectedItems = function () {
-                            var ids = getSelectedIds();
+                            var ids = scope.getSelectedIds();
                             if (ids.length === 0) {
                                 return;
                             }
@@ -171,6 +167,16 @@
                             scope.selectedItemsInTheDialog = [];
                         };
 
+                        var areArrayEquals = function (arr1, arr2) {
+                            if (arr1 && arr2) {
+                                var clonedArr1 = [].concat(arr1);
+                                var clonedArr2 = [].concat(arr2);
+
+                                return clonedArr1.sort().toString() === clonedArr2.sort().toString();
+                            }
+                            return false;
+                        };
+
                         // ------------------------------------------------------------------------
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
@@ -183,7 +189,11 @@
                             }
                         });
 
-                        scope.$watchCollection('selectedIds', getSelectedItems);
+                        scope.$watchCollection('selectedIds', function (newIds, oldIds) {
+                            if (!areArrayEquals(newIds, currentSelectedIds)) {
+                                getSelectedItems();
+                            }
+                        });
 
                         scope.showError = false;
                         scope.selectedItemsViewData = [];
@@ -301,7 +311,7 @@
                         };
 
                         scope.isItemSelected = function () {
-                            var ids = getSelectedIds().filter(function (id) {
+                            var ids = scope.getSelectedIds().filter(function (id) {
                                 return id !== emptyGuid;
                             });
 
@@ -324,6 +334,29 @@
 
                         scope.bindIdentifierField = function (item) {
                             return ctrl.bindIdentifierField(item);
+                        };
+
+                        scope.getSelectedIds = function () {
+                            if (attrs.multiselect) {
+                                if (scope.selectedIds && scope.selectedIds.length > 0) {
+                                    return scope.selectedIds;
+                                }
+                                else if (scope.selectedItems && scope.selectedItems.length > 0) {
+                                    return scope.selectedItems.map(function (item) {
+                                        return item.Id;
+                                    });
+                                }
+                            }
+                            else {
+                                var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
+                                if (id) {
+                                    var selected = [];
+                                    selected.push(id);
+                                    return selected;
+                                }
+                            }
+
+                            return [];
                         };
 
                         scope.collectSelectedItems = function () {

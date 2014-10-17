@@ -57,6 +57,12 @@
                             }
                         };
 
+                        scope.sortItems = function (e) {
+                            var element = scope.selectedItems[e.oldIndex];
+                            scope.selectedItems.splice(e.oldIndex, 1);
+                            scope.selectedItems.splice(e.newIndex, 0, element);
+                        };
+
                         scope.itemClicked = function (item) {
                             var alreadySelected;
                             var selectedItemindex;
@@ -94,6 +100,18 @@
                                     }
                                 }
                             }
+                        };
+
+                        scope.sortableOptions = {
+                            hint: function (element) {
+                                return $('<li style="display: block; background-color: #ffff99; width: 520px;">' +
+                                            element.html() +
+                                        '</li>');
+                            },
+                            placeholder: function (element) {
+                                return $('<li style="height: 43px; width: 520px; background-color: #f2f2f2;"></li>');
+                            },
+                            handler: ".handler"
                         };
                     }
                 }
