@@ -13,28 +13,28 @@
             <div>
                 <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
 
-                <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
                 <div ng-hide="noItemsExist || showError">
-                    <div class="input-group m-bottom-sm">
-                        <span class="input-group-addon">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </span>
+            <div class="input-group m-bottom-sm">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                </span>
                         <items-filter filter='filter'></items-filter>
-                    </div>
+            </div>
                     <div endless-scroll paging='paging' class="list-group list-group-endless">
-                        <a ng-repeat="item in items"
+                <a ng-repeat="item in items"
                                 ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
                                 ng-click="itemClicked($index, item)"
                                 style="text-overflow: ellipsis; overflow: hidden;">
                             <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
-                            <span ng-bind="bindIdentifierField(item)"></span>
-                        </a>
+                    <span ng-bind="bindIdentifierField(item)"></span>
+                </a>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
                     <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
                 </div>
-            </div>
+                </div>
             <div>
                 <selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' identifier-field='identifierField'></selected-items-view>
             </div>

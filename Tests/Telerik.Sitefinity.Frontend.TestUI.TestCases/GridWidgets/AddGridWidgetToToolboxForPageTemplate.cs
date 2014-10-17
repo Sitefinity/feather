@@ -11,18 +11,18 @@ using Telerik.Sitefinity.TestUI.Framework.Wrappers.Backend.PageEditor;
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
 {
     /// <summary>
-    /// This is test class for grid widget on page template.
+    /// This is test class for grid widget on page and page template.
     /// </summary>
     [TestClass]
-    public class ManageGridWidgetOnThePageTemplate_ : FeatherTestCase
+    public class AddGridWidgetToToolboxForPageTemplate_ : FeatherTestCase
     {
         /// <summary>
-        /// UI test ManageGridWidgetOnThePageTemplate
+        /// UI test AddGridWidgetToToolboxForPageTemplate
         /// </summary>
         [TestMethod,
        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Feather team"),
        TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void ManageGridWidgetOnThePageTemplate()
+        public void AddGridWidgetToToolboxForPageTemplate()
         {
             BAT.Macros().NavigateTo().Design().PageTemplates();
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
@@ -30,33 +30,21 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
             BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropLayoutWidget(LayoutCaption);
             BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount1);
-            this.DuplicateGridElement();
-            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount2);
-            this.DeleteGridElement();
-            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount1);
             BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().PublishTemplate();
+            this.VerifyGridWidgetOnTheFrontend();
         }
 
         /// <summary>
-        /// Duplicates a grid widget in the zone editor
+        /// Verify grid widget on the frontend
         /// </summary>
-        public void DuplicateGridElement()
+        public void VerifyGridWidgetOnTheFrontend()
         {
-            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SelectExtraOptionForWidget(DuplicateOperation);
-            ActiveBrowser.WaitUntilReady();
-            ActiveBrowser.WaitForAsyncRequests();
-            ActiveBrowser.RefreshDomTree();
-        }
+            string[] layouts = new string[] { LayouClass1, LayouClass2 };
 
-        /// <summary>
-        /// Deletes a grid widget from the editor
-        /// </summary>
-        public void DeleteGridElement()
-        {
-            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SelectExtraOptionForWidget(DeleteOperation);
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
             ActiveBrowser.WaitUntilReady();
-            ActiveBrowser.WaitForAsyncRequests();
-            ActiveBrowser.RefreshDomTree();
+
+            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyNewGridWidgetOnTheFrontend(layouts);
         }
 
         /// <summary>
@@ -77,10 +65,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         }
 
         private const string PageTemplateName = "Bootstrap.defaultNew";
-        private const string DuplicateOperation = "Duplicate";
-        private const string DeleteOperation = "Delete";
-        private const string LayoutCaption = "3 + 9";
+        private const string PageName = "GridPage";
+        private const string LayoutCaption = "grid-grid";
+        private const string LayouClass1 = "col-md-3";
+        private const string LayouClass2 = "col-md-9";
         private const int GridCount1 = 1;
-        private const int GridCount2 = 2;
     }
 }

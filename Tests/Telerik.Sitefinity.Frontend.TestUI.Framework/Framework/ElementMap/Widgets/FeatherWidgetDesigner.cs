@@ -68,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlAnchor>("tagname=a", "class=btn btn-link ng-scope");
+                return this.Get<HtmlAnchor>("tagname=a", "class=btn btn-link pull-left ng-scope");
             }
         }
 
