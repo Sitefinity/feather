@@ -56,7 +56,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlButton>("tagname=button", "class=btn btn-primary ng-scope");
+                return this.Get<HtmlButton>("tagname=button", "class=btn btn-primary pull-left ng-scope");
             }
         }
 
