@@ -11,11 +11,11 @@
     </div>
     <div class="list-group list-group-endless" kendo-sortable k-options="sortableOptions" k-on-change="sortItems(kendoEvent)">
         <div class="list-group-item list-group-item-draggable"
-            ng-click="itemClicked(item)"
+            ng-click="itemClicked(item.item)"
             ng-repeat="item in items">
             <span class="handler list-group-item-drag"></span>
-            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)">
-            <div ng-bind="bindIdentifierField(item)"></div>
+            <input type="checkbox" ng-checked="item.isChecked">
+            <div ng-bind="bindIdentifierField(item.item)"></div>
         </div>
     </div>
     <div ng-hide="items.length">No items found</div>

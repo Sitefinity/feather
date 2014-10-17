@@ -49,38 +49,24 @@
                             }
                         };
 
-                        scope.isItemSelectedInDialog = function (item) {
-                            for (var i = 0; i < scope.selectedItems.length; i++) {
-                                if (scope.selectedItems[i].Id === item.Id) {
-                                    return true;
-                                }
-                            }
-                        };
-
                         scope.sortItems = function (e) {
                             var element = scope.selectedItems[e.oldIndex];
                             scope.selectedItems.splice(e.oldIndex, 1);
+                            originalItems.splice(e.oldIndex, 1);
                             scope.selectedItems.splice(e.newIndex, 0, element);
+                            originalItems.splice(e.newIndex, 0, element);
                         };
 
                         scope.itemClicked = function (item) {
-                            var alreadySelected;
-                            var selectedItemindex;
+                            var selectedItemIndex;
                             for (var i = 0; i < scope.selectedItems.length; i++) {
-                                if (scope.selectedItems[i].Id === item.Id) {
-                                    alreadySelected = true;
-                                    selectedItemindex = i;
+                                if (scope.selectedItems[i].item.Id === item.Id) {
+                                    selectedItemIndex = i;
                                     break;
                                 }
                             }
 
-                            if (alreadySelected) {
-                                scope.selectedItems.splice(selectedItemindex, 1);
-                            }
-                            else {
-                                scope.selectedItems.push(item);
-                            }
-
+                            scope.selectedItems[selectedItemIndex].isChecked = !scope.selectedItems[selectedItemIndex].isChecked;
                         };
 
                         scope.filter = {
@@ -94,7 +80,7 @@
                                 }
                                 else {
                                     for (var i = 0; i < originalItems.length; i++) {
-                                        if (scope.bindIdentifierField(originalItems[i]).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                        if (scope.bindIdentifierField(originalItems[i].item).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
                                             scope.items.push(originalItems[i]);
                                         }
                                     }
