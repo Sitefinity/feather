@@ -29,7 +29,7 @@
                                 ng-click="itemClicked($index, item)"
                                 style="text-overflow: ellipsis; overflow: hidden;">
                             <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
-                    <span ng-bind="bindIdentifierField(item)"></span>
+                    <div ng-bind="bindIdentifierField(item)"></div>
                 </a>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
