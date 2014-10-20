@@ -44,6 +44,8 @@
                     this.$scope = $scope;
 
                     this.updateSelection = function (selectedItems) {
+                        selectedItems.sort(compareFunction);
+
                         var firstItem = selectedItems[0];
                         $scope.selectedItem = firstItem;
                         $scope.selectedItemId = firstItem && firstItem.Id;
@@ -53,6 +55,21 @@
                             return item.Id;
                         });
                     };
+
+                    var compareFunction = function (item1, item2) {
+                        var orderedIds = $scope.getSelectedIds();
+
+                        var index1 = orderedIds.indexOf(item1.Id);
+                        var index2 = orderedIds.indexOf(item2.Id);
+
+                        if (index1 < index2) {
+                            return -1;
+                        }
+                        if (index1 > index2) {
+                            return 1;
+                        }
+                        return 0;
+                    }
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -71,13 +88,21 @@
 
                             if (scope.multiselect) {
                                 Array.prototype.push.apply(scope.items, data.Items);
-                                        }
+                            }
                             else {
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
-                                    }
+                            }
 
-                            Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.selectedItems);
+                            if (scope.selectedItems) {
+                                Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.selectedItems.map(function (item) {
+                                    return {
+                                        item: item,
+                                        isChecked: true
+                                    };
+                                }));
+                            }
+
                             scope.collectSelectedItems();
                         };
 
@@ -88,10 +113,10 @@
                                 scope.items = [];
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
-                                        }
+                            }
                             else {
                                 scope.items = data.Items;
-                                    }
+                            }
                         };
 
                         var onError = function (error) {
@@ -113,6 +138,8 @@
 
                         var emptyGuid = '00000000-0000-0000-0000-000000000000';
 
+                        var currentSelectedIds = scope.selectedIds;
+
                         var pushSelectedItemToTheTop = function () {
                             if (scope.items.length === 0 && scope.selectedItems && scope.selectedItems.length > 0) {
                                 scope.items.push(scope.selectedItems[0]);
@@ -120,7 +147,7 @@
                         };
 
                         var pushNotSelectedItems = function (items) {
-                            var ids = getSelectedIds();
+                            var ids = scope.getSelectedIds();
 
                             Array.prototype.push.apply(scope.items,
                                 items.filter(function (item) {
@@ -128,31 +155,8 @@
                                 }));
                         };
 
-                        var getSelectedIds = function () {
-                            if (attrs.multiselect) {
-                                if (scope.selectedIds && scope.selectedIds.length > 0) {
-                                    return scope.selectedIds;
-                            }
-                                else if (scope.selectedItems && scope.selectedItems.length > 0) {
-                                    return scope.selectedItems.map(function (item) {
-                                        return item.Id;
-                                    });
-                                }
-                            }
-                            else {
-                                var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
-                                if (id) {
-                                    var selected = [];
-                                    selected.push(id);
-                                    return selected;
-                            }
-                            }
-
-                            return [];
-                        };
-
                         var getSelectedItems = function () {
-                            var ids = getSelectedIds();
+                            var ids = scope.getSelectedIds();
                             if (ids.length === 0) {
                                 return;
                             }
@@ -171,6 +175,16 @@
                             scope.selectedItemsInTheDialog = [];
                         };
 
+                        var areArrayEquals = function (arr1, arr2) {
+                            if (arr1 && arr2) {
+                                var clonedArr1 = [].concat(arr1);
+                                var clonedArr2 = [].concat(arr2);
+
+                                return clonedArr1.sort().toString() === clonedArr2.sort().toString();
+                            }
+                            return false;
+                        };
+
                         // ------------------------------------------------------------------------
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
@@ -180,6 +194,12 @@
                                 if (ctrl.selectorType === 'NewsSelector') {
                                     scope.selectedItem = null;
                                 }
+                            }
+                        });
+
+                        scope.$watchCollection('selectedIds', function (newIds, oldIds) {
+                            if (!areArrayEquals(newIds, currentSelectedIds)) {
+                                getSelectedItems();
                             }
                         });
 
@@ -216,39 +236,41 @@
                                 }
                                 else {
                                     Array.prototype.push.apply(scope.items, items);
-                                }
+                                }                                
                             }
                         };
 
                         scope.itemClicked = function (index, item) {
                             var alreadySelected;
-                            var selectedItemindex;
+                            var selectedItemIndex;
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
-                                if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
+                                if (scope.selectedItemsInTheDialog[i].item.Id === item.Id) {
                                     alreadySelected = true;
-                                    selectedItemindex = i;
+                                    selectedItemIndex = i;
                                     break;
                                 }
                             }
 
                             if (alreadySelected) {
-                                scope.selectedItemsInTheDialog.splice(selectedItemindex, 1);
+                                scope.selectedItemsInTheDialog.splice(selectedItemIndex, 1);
                             }
                             else {
                                 if (scope.multiselect) {
-                                    scope.selectedItemsInTheDialog.push(item);
+                                    scope.selectedItemsInTheDialog.push({ item: item, isChecked: true });
                                 }
                                 else {
-                                    scope.selectedItemsInTheDialog.splice(0, 1, item);
+                                    scope.selectedItemsInTheDialog.splice(0, 1, { item: item, isChecked: true });
                                 }
                             }
                         };
 
                         scope.doneSelecting = function () {
+                            scope.removeUnselectedItems();
+
                             if (scope.selectedItemsInTheDialog.length > 0) {
                                 //set the selected item and its id to the mapped isolated scope properties
-                                scope.selectedItem = scope.selectedItemsInTheDialog[0];
-                                scope.selectedItemId = scope.selectedItemsInTheDialog[0].Id;
+                                scope.selectedItem = scope.selectedItemsInTheDialog[0].item;
+                                scope.selectedItemId = scope.selectedItemsInTheDialog[0].item.Id;
 
                                 if (scope.selectedItems) {
                                     //Clean the array and keep all references.
@@ -258,7 +280,9 @@
                                     scope.selectedItems = [];
                                 }
 
-                                Array.prototype.push.apply(scope.selectedItems, scope.selectedItemsInTheDialog);
+                                Array.prototype.push.apply(scope.selectedItems, scope.selectedItemsInTheDialog.map(function (item) {
+                                    return item.item;
+                                }));
 
                                 scope.selectedIds = scope.selectedItems.map(function (item) {
                                     return item.Id;
@@ -290,7 +314,7 @@
                             .catch(onError)
                             .finally(function () {
                                 scope.showLoadingIndicator = false;
-                                });
+                            });
                         };
 
                         scope.getTemplate = function () {
@@ -300,19 +324,25 @@
                         };
 
                         scope.isItemSelected = function () {
-                            var ids = getSelectedIds().filter(function (id) {
+                            var ids = scope.getSelectedIds().filter(function (id) {
                                 return id !== emptyGuid;
                             });
 
                             return ids.length > 0;
                         };
-
+                        
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
-                                if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
+                                if (scope.selectedItemsInTheDialog[i].item.Id === item.Id) {
                                     return true;
                                 }
                             }
+                        };
+
+                        scope.getSelectedItemsCount = function () {
+                            return scope.selectedItemsInTheDialog.filter(function (item) {
+                                return item.isChecked;
+                            }).length;
                         };
 
                         scope.multiselect = !!attrs.multiselect;
@@ -325,11 +355,40 @@
                             return ctrl.bindIdentifierField(item);
                         };
 
+                        scope.getSelectedIds = function () {
+                            if (attrs.multiselect) {
+                                if (scope.selectedIds && scope.selectedIds.length > 0) {
+                                    return scope.selectedIds;
+                                }
+                                else if (scope.selectedItems && scope.selectedItems.length > 0) {
+                                    return scope.selectedItems.map(function (item) {
+                                        return item.Id;
+                                    });
+                                }
+                            }
+                            else {
+                                var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
+                                if (id) {
+                                    var selected = [];
+                                    selected.push(id);
+                                    return selected;
+                                }
+                            }
+
+                            return [];
+                        };
+
                         scope.collectSelectedItems = function () {
                             if (scope.multiselect) {
                                 scope.selectedItemsViewData.length = 0;
                                 Array.prototype.push.apply(scope.selectedItemsViewData, scope.selectedItemsInTheDialog);
                             }
+                        };
+
+                        scope.removeUnselectedItems = function () {
+                            scope.selectedItemsInTheDialog = scope.selectedItemsInTheDialog.filter(function (item) {
+                                return item.isChecked;
+                            });
                         };
 
                         if (scope.selectedIds && scope.selectedIds.length !== 0) {

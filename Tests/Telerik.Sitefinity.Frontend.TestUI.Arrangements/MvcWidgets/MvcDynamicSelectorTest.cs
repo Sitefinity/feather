@@ -26,47 +26,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             }
         
             Guid pageId = ServerOperations.Pages().CreatePage(PageName);
-        
-            var assembly = FileInjectHelper.GetArrangementsAssembly();
 
-            ////  inject DesignerView.Selector.cshtml
-            Stream source = assembly.GetManifestResourceStream(FileResource);
-
-            var viewPath = Path.Combine("MVC", "Views", "DummyText", DesignerViewFileName);
-
-            string filePath = FileInjectHelper.GetDestinationFilePath(viewPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-            Stream destination = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-
-            FileInjectHelper.CopyStream(source, destination);
-            source.Close();
-            destination.Close();
-
-            ////  inject DesignerView.Selector.json
-            Stream sourceJson = assembly.GetManifestResourceStream(FileResourceJson);
-            var jsonPath = Path.Combine("MVC", "Views", "DummyText", JsonFileName);
-
-            string filePathJson = FileInjectHelper.GetDestinationFilePath(jsonPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(filePathJson));
-            Stream destinationJson = new FileStream(filePathJson, FileMode.Create, FileAccess.Write);
-
-            FileInjectHelper.CopyStream(sourceJson, destinationJson);
-            sourceJson.Close();
-            destinationJson.Close();
-
-            ////  inject designerview-selector.js
-            Stream sourceController = assembly.GetManifestResourceStream(ControllerFileResource);
-            var controllerPath = Path.Combine("MVC", "Scripts", "DummyText", ControllerFileName);
-
-            string controllerFilePath = FileInjectHelper.GetDestinationFilePath(controllerPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(controllerFilePath));
-            Stream destinationController = new FileStream(controllerFilePath, FileMode.Create, FileAccess.Write);
-
-            FileInjectHelper.CopyStream(sourceController, destinationController);
-            
-            sourceController.Close();
-            destinationController.Close();            
-
+            FeatherServerOperations.ResourcePackages().ImportDataForSelectorsTests(FileResource, DesignerViewFileName, FileResourceJson, JsonFileName, ControllerFileResource, ControllerFileName);
             ServerOperations.Widgets().AddMvcWidgetToPage(pageId, typeof(DummyTextController).FullName, WidgetCaption);
         }
 
@@ -77,17 +38,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             ServerOperations.DynamicTypes().DeleteAllDynamicItemsForAllModules();
             ServerOperations.ModuleBuilder().DeleteAllModules(string.Empty, "Module Installations");
 
-            var path = Path.Combine("MVC", "Views", "DummyText", DesignerViewFileName);
-            string filePath = FileInjectHelper.GetDestinationFilePath(path);
-            File.Delete(filePath);
-
-            var jsonPath = Path.Combine("MVC", "Views", "DummyText", JsonFileName);
-            string filePathJson = FileInjectHelper.GetDestinationFilePath(jsonPath);
-            File.Delete(filePathJson);
-
-            var controllerPath = Path.Combine("MVC", "Scripts", "DummyText", ControllerFileName);
-            string controllerFilePath = FileInjectHelper.GetDestinationFilePath(controllerPath);
-            File.Delete(controllerFilePath);
+            FeatherServerOperations.ResourcePackages().DeleteSelectorsData(DesignerViewFileName, JsonFileName, ControllerFileName);
         }
 
         private readonly Dictionary<string, string> relatedDataDuplicateModule = new Dictionary<string, string>()

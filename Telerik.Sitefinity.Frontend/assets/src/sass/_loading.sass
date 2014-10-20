@@ -1,0 +1,41 @@
+.sf-loading
+	height: 30px
+	width: 30px
+	text-align: center
+
+	> div
+		background-color: #9cc5f7
+		height: 100%
+		width: 6px
+		display: inline-block
+
+		-webkit-animation: stretchdelay 1.1s infinite ease-in-out
+		animation: stretchdelay 1.1s infinite ease-in-out
+
+	> :first-child
+		-webkit-animation-delay: -1.2s
+		animation-delay: -1.2s
+
+	> .last-child
+		-webkit-animation-delay: -1.0s
+		animation-delay: -1.0s
+
+
+@-webkit-keyframes stretchdelay
+	0%, 40%, 100%
+		-webkit-transform: scaleY(0.4)
+
+	20%
+		-webkit-transform: scaleY(1.0)
+		background-color: #105ab5
+
+
+@keyframes stretchdelay
+	0%, 40%, 100%
+		transform: scaleY(0.4)
+		-webkit-transform: scaleY(0.4)
+
+	20%
+		transform: scaleY(1.0)
+		-webkit-transform: scaleY(1.0)
+		background-color: #105ab5

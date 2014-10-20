@@ -1,13 +1,16 @@
 ﻿<script type="text/ng-template" id="taxon-selector-template">
     <div class="modal-header">
-        <h1 style="background: none; padding-bottom: 0; margin-bottom: 0" class="modal-title">Select tag</h1>
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h3 class="modal-title">Select tag</h3>
     </div>
     <div class="modal-body">
-        <div kendo-tab-strip>
+        <div kendo-tab-strip class="k-tabstrip--selection">
             <ul ng-show="multiselect">
-                <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]">All</li>
+                <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
+                    All
+                </li>
                 <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
-                    Selected <span ng-show='selectedItemsInTheDialog.length !== 0'>{{selectedItemsInTheDialog.length}}</span>
+                    Selected <span class="badge">{{getSelectedItemsCount()}}</span>
                 </li>
             </ul>
             <div>
@@ -22,16 +25,16 @@
                         </span>
                         <items-filter filter='filter'></items-filter>
                     </div>
-                    <div endless-scroll paging='paging' class="list-group s-items-list-wrp">
+                    <div endless-scroll paging='paging' class="list-group list-group-endless">
                         <a ng-repeat="item in items"
-                                style="text-overflow: ellipsis; overflow: hidden;"
-                                ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
-                                ng-click="itemClicked($index, item)">
-                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
-                            <span ng-bind="bindIdentifierField(item)"></span>
+                                        style="text-overflow: ellipsis; overflow: hidden;"
+                                        ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
+                                        ng-click="itemClicked($index, item)">
+                                    <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
+                            <div ng-bind="bindIdentifierField(item)"></div>
                         </a>
                     </div>
-                    <div ng-hide="items.length || showLoadingIndicator">No items found</div>
+                    <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
                     <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
                 </div>
             </div>
@@ -41,7 +44,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary" ng-click="doneSelecting()">Done selecting</button>
-        <button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>
+        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary pull-left" ng-click="doneSelecting()">Done selecting</button>
+        <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
     </div>
 </script>
+

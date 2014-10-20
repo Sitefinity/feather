@@ -164,6 +164,57 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
             }
         }
 
+        /// <summary>
+        /// Grid widgets - delete grid widget on page template from file system
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets.GridWidgetsTests.AddGridControlToPageTemplate(System.Guid,System.String,System.String,System.String)"), Test]
+        [Category(TestCategories.GridWidgets)]
+        [Description("Grid widgets - delete grid widget on page template from file system.")]
+        [Ignore("There is a bug - page stop working on the frontend, when delete the grid widget template.")]
+        public void GridWidget_DeleteGridWidgetOnPageTemplateFromFileSystem()
+        {
+            string templateTitle = "Bootstrap.defaultNew";
+            PageManager pageManager = PageManager.GetManager();
+
+            var gridVirtualPath = "~/ResourcePackages/Bootstrap/GridSystem/Templates/grid-9+3.html";
+            var gridTemplatePath = Path.Combine(this.SfPath, "ResourcePackages", "Bootstrap", "GridSystem", "Templates", "grid-9+3.html");
+            var newGridTemplatePath = Path.Combine(this.SfPath, "ResourcePackages", "Bootstrap", "GridSystem", "Templates", "grid-9+3-New.html");
+
+            File.Copy(gridTemplatePath, newGridTemplatePath);
+
+            int templatesCount = pageManager.GetTemplates().Count();
+
+            var layoutTemplatePath = Path.Combine(this.SfPath, "ResourcePackages", "Bootstrap", "MVC", "Views", "Layouts", "default.cshtml");
+            var newLayoutTemplatePath = Path.Combine(this.SfPath, "ResourcePackages", "Bootstrap", "MVC", "Views", "Layouts", "defaultNew.cshtml");
+
+            File.Copy(layoutTemplatePath, newLayoutTemplatePath);
+
+            FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+            var template = pageManager.GetTemplates().Where(t => t.Title == templateTitle).FirstOrDefault();
+            Assert.IsNotNull(template, "Template was not found");
+
+            try
+            {
+                this.AddGridControlToPageTemplate(template.Id, gridVirtualPath, PlaceHolder, Caption);
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageNamePrefix, UrlNamePrefix);
+
+                File.Delete(gridTemplatePath);
+
+                string pageContent = this.GetPageContent(pageId);
+
+                Assert.IsTrue(pageContent.Contains(Row3), "Grid row not found in the page content");
+                Assert.IsTrue(pageContent.Contains(Row9), "Grid row not found in the page content");
+            }
+            finally
+            {
+                File.Move(newGridTemplatePath, gridTemplatePath);
+                File.Delete(newLayoutTemplatePath);
+                Telerik.Sitefinity.TestUtilities.CommonOperations.ServerOperations.Pages().DeleteAllPages();
+                Telerik.Sitefinity.TestUtilities.CommonOperations.ServerOperations.Templates().DeletePageTemplate(template.Id);     
+            }
+        }
+
         #region Helper methods
 
         private void AddGridControlToPage(Guid pageId, string controlPath, string placeHolder, string caption)

@@ -11,6 +11,7 @@
 	"Selectors/list-selector.js",
 	"Selectors/news-selector.js",
 	"Selectors/dynamic-items-selector.js",
-	"Selectors/taxon-selector.js"
+	"Selectors/taxon-selector.js",
+	"Selectors/selected-items-view.js"
   ]
 }
