@@ -69,7 +69,7 @@
                             return 1;
                         }
                         return 0;
-                    }
+                    };
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
