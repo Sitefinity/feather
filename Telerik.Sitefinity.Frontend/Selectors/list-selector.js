@@ -71,11 +71,11 @@
 
                             if (scope.multiselect) {
                                 Array.prototype.push.apply(scope.items, data.Items);
-                            }
+                                        }
                             else {
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
-                            }
+                                    }
 
                             Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.selectedItems);
                             scope.collectSelectedItems();
@@ -88,10 +88,10 @@
                                 scope.items = [];
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
-                            }
+                                        }
                             else {
                                 scope.items = data.Items;
-                            }
+                                    }
                         };
 
                         var onError = function (error) {
@@ -132,7 +132,7 @@
                             if (attrs.multiselect) {
                                 if (scope.selectedIds && scope.selectedIds.length > 0) {
                                     return scope.selectedIds;
-                                }
+                            }
                                 else if (scope.selectedItems && scope.selectedItems.length > 0) {
                                     return scope.selectedItems.map(function (item) {
                                         return item.Id;
@@ -145,7 +145,7 @@
                                     var selected = [];
                                     selected.push(id);
                                     return selected;
-                                } 
+                            }
                             }
 
                             return [];
@@ -195,7 +195,8 @@
                                 scope.paging.skip = 0;
                                 var skip = scope.paging.skip;
                                 var take = scope.paging.take;
-                                return ctrl.getItems(skip, take, keyword)
+                                var languages = serverContext.getFrontendLanguages();
+                                return ctrl.getItems(skip, take, keyword, languages)
                                     .then(onItemsFilteredSuccess, onError)
                                     .finally(function () {
                                         scope.showLoadingIndicator = false;
@@ -215,7 +216,7 @@
                                 }
                                 else {
                                     Array.prototype.push.apply(scope.items, items);
-                                }                                
+                                }
                             }
                         };
 
@@ -289,7 +290,7 @@
                             .catch(onError)
                             .finally(function () {
                                 scope.showLoadingIndicator = false;
-                            });
+                                });
                         };
 
                         scope.getTemplate = function () {
@@ -305,7 +306,7 @@
 
                             return ids.length > 0;
                         };
-                        
+
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].Id === item.Id) {

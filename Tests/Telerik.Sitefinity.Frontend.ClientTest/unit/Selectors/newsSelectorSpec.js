@@ -87,6 +87,29 @@ describe("news selector", function () {
     beforeEach(module('templates'));
 
     beforeEach(module(function ($provide) {
+        var serverContext = {
+            getRootedUrl: function (path) {
+                return appPath + '/' + path;
+            },
+            getUICulture: function () {
+                return null;
+            },
+            getEmbeddedResourceUrl: function (assembly, url) {
+                if (url.indexOf('news') >= 0) {
+                    return newsSelectorTemplatePath;
+                }
+                if (url.indexOf('list') >= 0) {
+                    return listSelectorTemplatePath;
+                }
+            },
+            getFrontendLanguages: function () {
+                return ['en', 'de'];
+            }
+        };
+        $provide.value('serverContext', serverContext);
+    }));
+
+    beforeEach(module(function ($provide) {
         //Force angular to use the mock.
         $provide.value('newsItemService', newsItemService);
     }));
@@ -104,18 +127,6 @@ describe("news selector", function () {
         //Prevent failing of the template request.
         $httpBackend.whenGET(listSelectorTemplatePath);
         $httpBackend.whenGET(newsSelectorTemplatePath).respond({});
-    }));
-
-    beforeEach(inject(function ($templateCache) {
-        //This method is called by the templateUrl property of the directive's definition object and also when including the news selector view.
-        spyOn(sitefinity, 'getEmbeddedResourceUrl').andCallFake(function (assembly, url) {
-            if (url.indexOf('news') >= 0) {
-                return newsSelectorTemplatePath;
-            }
-            if (url.indexOf('list') >= 0) {
-                return listSelectorTemplatePath;
-            }
-        });
     }));
 
     beforeEach(function () {

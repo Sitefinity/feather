@@ -18,9 +18,9 @@
                 return serviceHelper.getResource(url);
             };
 
-            var getTaxons = function (taxonomyId, skip, take, search) {
+            var getTaxons = function (taxonomyId, skip, take, search, frontendLanguages) {
                 var filter = serviceHelper.filterBuilder()
-                    .searchFilter(search)
+                    .searchFilter(search, frontendLanguages)
                     .getFilter();
 
                 dataItemPromise = getResource(taxonomyId).get(

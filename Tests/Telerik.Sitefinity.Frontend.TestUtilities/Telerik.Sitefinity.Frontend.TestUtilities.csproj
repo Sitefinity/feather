@@ -178,6 +178,7 @@
     <Compile Include="ControllerFactoryRegion.cs" />
     <Compile Include="DummyClasses\Authentication\DummyAuthenticationEvaluator.cs" />
     <Compile Include="DummyClasses\Cache\DummyCacheDependency.cs" />
+    <Compile Include="DummyClasses\Cache\DummyCacheManager.cs" />
     <Compile Include="DummyClasses\Configs\DummyConfigProvider.cs" />
     <Compile Include="DummyClasses\Controls\DummyControl.cs" />
     <Compile Include="DummyClasses\DummyServerContextHandler.cs">

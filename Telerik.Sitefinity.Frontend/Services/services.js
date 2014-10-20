@@ -65,12 +65,23 @@
                     return this.trimOperator();
                 }
             },
-            searchFilter: function (search, searchField) {
+            searchFilter: function (search, frontendLanguages, searchField) {
                 if (!search) return this.trimOperator();
 
                 var field = searchField || 'Title';
 
-                this.filter += '(' + field + '.ToUpper().Contains("' + search + '".ToUpper()))';
+                var searchFilter = '(' + field + '.ToUpper().Contains("' + search + '".ToUpper()))';
+
+                if (frontendLanguages && frontendLanguages.length > 1) {
+                    searchFilter = searchFilter + ' OR (';
+                    for (var i = 0; i < frontendLanguages.length; i++) {
+                        searchFilter = searchFilter + field + '["' + frontendLanguages[i] + '"]=null AND ';
+                    }
+                    searchFilter = searchFilter + field + '[""]!=null AND ' + field + '[""].Contains("' + search + '"))';
+                    searchFilter = '(' + searchFilter + ')';
+                }
+
+                this.filter += searchFilter;
 
                 return this;
             },
@@ -130,6 +141,7 @@
             return {
                 getRootedUrl: customContext.getRootedUrl || sitefinity.getRootedUrl,
                 getEmbeddedResourceUrl: customContext.getEmbeddedResourceUrl || sitefinity.getEmbeddedResourceUrl,
+                getFrontendLanguages: customContext.getFrontendLanguages || sitefinity.getFrontendLanguages,
                 getUICulture: function () {
                     if ($injector.has('widgetContext')) {
                         return $injector.get('widgetContext').culture;

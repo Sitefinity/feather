@@ -16,7 +16,7 @@
 
             var getItems = function (itemType, provider, skip, take, search, searchField) {
                 var filter = serviceHelper.filterBuilder()                    
-                    .searchFilter(search, searchField)
+                    .searchFilter(search, null, searchField)
                     .and()
                     .cultureFilter()
                     .getFilter();

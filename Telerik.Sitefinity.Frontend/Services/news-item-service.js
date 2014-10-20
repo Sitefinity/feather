@@ -13,16 +13,16 @@
                 }
 
                 return serviceHelper.getResource(url);
-            };            
+            };
 
-            var getItems = function (provider, skip, take, search) {
+            var getItems = function (provider, skip, take, search, frontendLanguages) {
                 var filter = serviceHelper.filterBuilder()
                     .lifecycleFilter()
                     .and()
                     .cultureFilter()
                     .and()
-                    .searchFilter(search)
-                    .getFilter();
+                    .searchFilter(search, frontendLanguages)
+                    .getFilter();                
 
                 dataItemPromise = getResource().get(
                     {
