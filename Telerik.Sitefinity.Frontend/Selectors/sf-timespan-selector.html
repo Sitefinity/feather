@@ -2,7 +2,7 @@
     <div id="selectedItemsPlaceholder">
         <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
         <div ng-hide="showError">
-            <span class="label label-default" ng-bind="selectedItem.formattedText"></span>
+            <span class="label label-default" ng-bind="selectedItem.displayText"></span>
             <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
                 <span ng-hide="isItemSelected()">Select</span>
                 <span ng-show="isItemSelected()">Change</span>
@@ -34,7 +34,7 @@
                     <label for="periodToNow">
                         <input id="periodToNow" type="radio" value="periodToNow" ng-model="selectedItemInTheDialog.periodType"/>
                         Last
-                        <input type="number" ng-model="selectedItemInTheDialog.timeSpanMeasure" 
+                        <input type="number" ng-model="selectedItemInTheDialog.timeSpanValue" 
                                 ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'" />
                         <select ng-model="selectedItemInTheDialog.timeSpanInterval" 
                                 ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'">
@@ -48,14 +48,13 @@
                 <div>
                     <label for="customRange">
                         <input id="customRange" type="radio" value="customRange" ng-model="selectedItemInTheDialog.periodType" />
-                        Custom range...                    
-                        <div>
+                        Custom range...                   
+                        <div ng-show="selectedItemInTheDialog.periodType=='customRange'">
                             <label >From</label>
-                            <date-time-picker ng-model="selectedItemInTheDialog.fromDate"/>
-                        </div>
-                        <div>
+                            <sf-date-time-picker ng-model="selectedItemInTheDialog.fromDate"></sf-date-time-picker >
+                        
                             <label>To</label>
-                            <date-time-picker ng-model="selectedItemInTheDialog.toDate"/>
+                            <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate"></sf-date-time-picker >
                         </div>
                     </label>
                 </div>

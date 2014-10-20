@@ -1,16 +1,16 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('dateTimePicker', ['$timeout', function ($timeout) {
+        .directive('sfDateTimePicker', ['$timeout', function ($timeout) {
 
             return {
-                restrict: "E",
+                restrict: 'E',
                 transclude: true,
                 scope: {
                     ngModel: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/date-time-picker.html';
+                    var url = attrs.templateUrl || 'Selectors/sf-date-time-picker.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -44,7 +44,7 @@
                             scope.hsteps.push(h);
 
                         for (var m = 0; m < 60; m += 10)
-                            scope.msteps.push(m)
+                            scope.msteps.push(m);
                         
                         if (scope.ngModel) {
                             scope.hstep = scope.ngModel.getHours();

@@ -1,19 +1,19 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('taxonFilter', function () {       
+        .directive('sfTaxonFilter', function () {       
 
             return {
                 restrict: 'EA',
                 scope: {
                     taxonomyFields: '=',
-                    additionalFilters: '=',
+                    queryData: '=',
                     groupLogicalOperator: '@',
                     itemLogicalOperator: '@',
                     provider: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/taxon-filter.html';
+                    var url = attrs.templateUrl || 'Selectors/sf-taxon-filter.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -23,19 +23,19 @@
                         // ------------------------------------------------------------------------
                         var addChildTaxonQueryItem = function (taxonItem) {
                             var groupName = taxonItem.TaxonomyName;
-                            var groupItem = scope.additionalFilters.getItemByName(groupName);
+                            var groupItem = scope.queryData.getItemByName(groupName);
 
                             if (!groupItem) {
-                                groupItem = scope.additionalFilters.addGroup(groupName, scope.groupLogicalOperator);
+                                groupItem = scope.queryData.addGroup(groupName, scope.groupLogicalOperator);
                             }
 
-                            scope.additionalFilters.addChildToGroup(groupItem, taxonItem.Name, scope.itemLogicalOperator, groupName, 'System.Guid', 'Contains', taxonItem.Id);
+                            scope.queryData.addChildToGroup(groupItem, taxonItem.Name, scope.itemLogicalOperator, groupName, 'System.Guid', 'Contains', taxonItem.Id);
                         };
 
                         var constructFilterItem = function (selectedTaxonomyFilterKey) {
-                            var selectedTaxonQueryItems = scope.additionalFilters.QueryItems.filter(function (f) {
-                                return f.Condition && f.Condition.FieldName == selectedTaxonomyFilterKey
-                                    && f.Condition.FieldType == 'System.Guid';
+                            var selectedTaxonQueryItems = scope.queryData.QueryItems.filter(function (f) {
+                                return f.Condition && f.Condition.FieldName == selectedTaxonomyFilterKey &&
+                                    f.Condition.FieldType == 'System.Guid';
                             });
 
                             if (selectedTaxonQueryItems.length > 0)
@@ -49,8 +49,8 @@
                                 scope.selectedTaxonomies = [];
                             }
 
-                            if (scope.additionalFilters.QueryItems) {
-                                scope.additionalFilters.QueryItems.forEach(function (queryItem) {
+                            if (scope.queryData.QueryItems) {
+                                scope.queryData.QueryItems.forEach(function (queryItem) {
                                     {
                                         if (queryItem.IsGroup)
                                             constructFilterItem(queryItem.Name);
@@ -63,15 +63,15 @@
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
 
-                        scope.itemSelected = function (itemSelectedArgs) {
-                            var newSelectedTaxonItem = itemSelectedArgs.newSelectedItem;
-                            var oldSelectedTaxonItem = itemSelectedArgs.oldSelectedItem;
+                        scope.change = function (changeArgs) {
+                            var newSelectedTaxonItem = changeArgs.newSelectedItem;
+                            var oldSelectedTaxonItem = changeArgs.oldSelectedItem;
 
                             if (oldSelectedTaxonItem && oldSelectedTaxonItem.Id) {
-                                var groupToRemove = scope.additionalFilters.getItemByName(oldSelectedTaxonItem.TaxonomyName);
+                                var groupToRemove = scope.queryData.getItemByName(oldSelectedTaxonItem.TaxonomyName);
 
                                 if (groupToRemove)
-                                    scope.additionalFilters.removeGroup(groupToRemove);
+                                    scope.queryData.removeGroup(groupToRemove);
                             }
 
                             if (newSelectedTaxonItem && newSelectedTaxonItem.Id) {
@@ -84,10 +84,10 @@
                             if (taxonomyName in scope.selectedTaxonomies) {
                                 delete scope.selectedTaxonomies[taxonomyName];
 
-                                var groupToRemove = scope.additionalFilters.getItemByName(taxonomyName);
+                                var groupToRemove = scope.queryData.getItemByName(taxonomyName);
 
                                 if (groupToRemove)
-                                    scope.additionalFilters.removeGroup(groupToRemove);
+                                    scope.queryData.removeGroup(groupToRemove);
                             }
 
                             // is newly selected

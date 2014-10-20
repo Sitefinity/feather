@@ -1,24 +1,24 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('filterSelector', function () {
+        .directive('sfFilterSelector', function () {
             return {
                 restrict: 'EA',
                 scope: {
                     taxonomyFields: '=',
-                    additionalFilters: '=',
+                    queryData: '=',
                     provider: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/filter-selector.html';
+                    var url = attrs.templateUrl || 'Selectors/sf-filter-selector.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        if(scope.additionalFilters && scope.additionalFilters.QueryItems)
-                            scope.additionalFilters = new Telerik.Sitefinity.Web.UI.QueryData(scope.additionalFilters);
+                        if (scope.queryData && scope.queryData.QueryItems)
+                            scope.queryData = new Telerik.Sitefinity.Web.UI.QueryData(scope.queryData);
                         else
-                            scope.additionalFilters = new Telerik.Sitefinity.Web.UI.QueryData();
+                            scope.queryData = new Telerik.Sitefinity.Web.UI.QueryData();
                     }
                 }
             };

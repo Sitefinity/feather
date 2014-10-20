@@ -1,27 +1,27 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('dateFilter', function () {
+        .directive('sfDateFilter', function () {
 
             var timeSpanItem = function () {
-                this.periodType = "anyTime";
+                this.periodType = 'anyTime';
                 this.fromDate = null;
                 this.toDate = null;
-                this.timeSpanMeasure = null;
-                this.timeSpanInterval = "days";
-                this.formattedText = "";
-            }
+                this.timeSpanValue = null;
+                this.timeSpanInterval = 'days';
+                this.displayText = '';
+            };
 
             return {
                 restrict: 'EA',
                 scope: {
-                    additionalFilters: '=',
+                    queryData: '=',
                     groupLogicalOperator: '@',
                     itemLogicalOperator: '@',
                     queryFieldName: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/date-filter.html';
+                    var url = attrs.templateUrl || 'Selectors/sf-date-filter.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -29,30 +29,30 @@
                         // ------------------------------------------------------------------------
                         // helper methods
                         // ------------------------------------------------------------------------
-                        var constructDateFilterExpressionValue = function (timeSpanMeasure, timeSpanInterval) {
+                        var constructDateFilterExpressionValue = function (timeSpanValue, timeSpanInterval) {
                             var value;
                             if (timeSpanInterval == 'days')
-                                value = 'DateTime.UtcNow.AddDays(-' + timeSpanMeasure.toFixed(1) + ')';
+                                value = 'DateTime.UtcNow.AddDays(-' + timeSpanValue.toFixed(1) + ')';
                             else if (timeSpanInterval == 'weeks')
-                                value = 'DateTime.UtcNow.AddDays(-' + (timeSpanMeasure * 7).toFixed(1) + ')';
+                                value = 'DateTime.UtcNow.AddDays(-' + (timeSpanValue * 7).toFixed(1) + ')';
                             else if (timeSpanInterval == 'months')
-                                value = 'DateTime.UtcNow.AddMonths(-' + timeSpanMeasure + ')';
+                                value = 'DateTime.UtcNow.AddMonths(-' + timeSpanValue + ')';
                             else if (timeSpanInterval == 'years')
-                                value = 'DateTime.UtcNow.AddYears(-' + timeSpanMeasure + ')';
+                                value = 'DateTime.UtcNow.AddYears(-' + timeSpanValue + ')';
 
                             return value;
                         };
 
                         var translateDateFilterToTimeSpanItem = function (filterValue, timeSpanItem) {
                             var measure = filterValue.match(/\(([^)]+)\)/)[1];
-                            timeSpanItem.timeSpanMeasure = - parseInt(measure);
+                            timeSpanItem.timeSpanValue = -parseInt(measure);
 
                             if (filterValue.indexOf('AddDays') > 0) {
                                 var weeksCount = Math.floor(measure / 7);
                                 var rem = measure % 7;
-                                if (rem == 0 && weeksCount != 0) {
+                                if (rem === 0 && weeksCount !=- 0) {
                                     timeSpanItem.timeSpanInterval = 'weeks';
-                                    timeSpanItem.timeSpanMeasure = weeksCount;
+                                    timeSpanItem.timeSpanValue = weeksCount;
                                 }
                                 else {
                                     timeSpanItem.timeSpanInterval = 'days';
@@ -69,7 +69,7 @@
                         var translateQueryItems = function (collection) {
                             var result = new timeSpanItem();
 
-                            if (!collection || collection.length == 0 || collection.length > 2)
+                            if (!collection || collection.length === 0 || collection.length > 2)
                                 return result;
                             
                             for (var i = 0; i < collection.length; i++) {
@@ -94,35 +94,36 @@
                         };
 
                         var addChildDateQueryItem = function (dateItem, groupName) {
-                            var groupItem = scope.additionalFilters.getItemByName(groupName);
+                            var groupItem = scope.queryData.getItemByName(groupName);
 
                             if(!groupItem)
-                                groupItem = scope.additionalFilters.addGroup(groupName, scope.groupLogicalOperator);
+                                groupItem = scope.queryData.addGroup(groupName, scope.groupLogicalOperator);
 
                             if (dateItem.periodType == 'periodToNow') {
-                                var queryValue = constructDateFilterExpressionValue(dateItem.timeSpanMeasure, dateItem.timeSpanInterval);
+                                var queryValue = constructDateFilterExpressionValue(dateItem.timeSpanValue, dateItem.timeSpanInterval);
                                 var queryName = scope.queryFieldName+ '.' + queryValue;
-                                scope.additionalFilters.addChildToGroup(groupItem, queryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '>', queryValue);
+                                scope.queryData.addChildToGroup(groupItem, queryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '>', queryValue);
                             }
                             else if (dateItem.periodType == 'customRange') {
                                 if (dateItem.fromDate) {
                                     var fromQueryValue = dateItem.fromDate.toUTCString();
                                     var fromQueryName = scope.queryFieldName + '.' + queryValue;
-                                    scope.additionalFilters.addChildToGroup(groupItem, fromQueryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '>', fromQueryValue);
+                                    scope.queryData.addChildToGroup(groupItem, fromQueryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '>', fromQueryValue);
                                 }
                                 if (dateItem.toDate) {
                                     var toQueryValue = dateItem.toDate.toUTCString();
                                     var toQueryName = scope.queryFieldName + '.' + queryValue;
-                                    scope.additionalFilters.addChildToGroup(groupItem, toQueryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '<', toQueryValue);
+                                    scope.queryData.addChildToGroup(groupItem, toQueryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '<', toQueryValue);
                                 }
                             }
                         };
 
                         var constructFilterItem = function (selectedDateFilterKey) {
-                            var selectedDateQueryItems = scope.additionalFilters.QueryItems.filter(function (f) {
-                                return f.Condition && f.Condition.FieldName == selectedDateFilterKey
-                                    && f.Condition.FieldType == 'System.DateTime';
-                            })
+                            var selectedDateQueryItems = scope.queryData.QueryItems.filter(function (f) {
+                                return f.Condition &&
+                                    f.Condition.FieldName == selectedDateFilterKey &&
+                                    f.Condition.FieldType == 'System.DateTime';
+                            });
                             scope.selectedDateFilters[selectedDateFilterKey] = translateQueryItems(selectedDateQueryItems);
                         };
 
@@ -131,8 +132,8 @@
                                 scope.selectedDateFilters = [];
                             }
 
-                            if (scope.additionalFilters.QueryItems) {
-                                scope.additionalFilters.QueryItems.forEach(function (queryItem) {
+                            if (scope.queryData.QueryItems) {
+                                scope.queryData.QueryItems.forEach(function (queryItem) {
                                     {
                                         if (queryItem.IsGroup)
                                             constructFilterItem(queryItem.Name);
@@ -145,13 +146,13 @@
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
 
-                        scope.itemSelected = function (itemSelectedArgs) {
-                            var newSelectedDateItem = itemSelectedArgs.newSelectedItem;
+                        scope.change = function (changeArgs) {
+                            var newSelectedDateItem = changeArgs.newSelectedItem;
                             
-                            var groupToRemove = scope.additionalFilters.getItemByName(scope.queryFieldName);
+                            var groupToRemove = scope.queryData.getItemByName(scope.queryFieldName);
 
                             if (groupToRemove)
-                                scope.additionalFilters.removeGroup(groupToRemove);
+                                scope.queryData.removeGroup(groupToRemove);
 
                             addChildDateQueryItem(newSelectedDateItem, scope.queryFieldName);
                         };
@@ -161,10 +162,10 @@
                             if (filterName in scope.selectedDateFilters) {
                                 delete scope.selectedDateFilters[filterName];
 
-                                var groupToRemove = scope.additionalFilters.getItemByName(filterName);
+                                var groupToRemove = scope.queryData.getItemByName(filterName);
 
                                 if (groupToRemove)
-                                    scope.additionalFilters.removeGroup(groupToRemove);
+                                    scope.queryData.removeGroup(groupToRemove);
                             }
 
                             // is newly selected

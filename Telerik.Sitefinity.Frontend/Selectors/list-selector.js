@@ -2,7 +2,7 @@
     angular.module('selectors')
         .directive('listSelector', ['$timeout', function ($timeout) {
             return {
-                restrict: "E",
+                restrict: 'E',
                 transclude: true,
                 scope: {
                     selectedItemId: '=?',
@@ -248,8 +248,8 @@
                             if (scope.selectedItemInTheDialog) {
                                 var itemSelectedArgs = {
                                     "newSelectedItem": scope.selectedItemInTheDialog,
-                                    "oldSelectedItem" : jQuery.extend(true, {}, scope.selectedItem)
-                                }
+                                    "oldSelectedItem": jQuery.extend(true, {}, scope.selectedItem)
+                                };
                                 scope.itemSelected.call(scope.$parent, itemSelectedArgs);
                                 //set the selected item and its id to the mapped isolated scope properties
                                 scope.selectedItem = scope.selectedItemInTheDialog;

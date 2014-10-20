@@ -7,6 +7,6 @@
             Date...
     </label>
 
-    <timespan-selector item-selected ="itemSelected" selected-item="selectedDateFilters[queryFieldName]"
-        ng-show="selectedDateFilters.hasOwnProperty(queryFieldName)"></timespan-selector>
+    <sf-timespan-selector change ="change" selected-item="selectedDateFilters[queryFieldName]"
+        ng-show="selectedDateFilters.hasOwnProperty(queryFieldName)"></sf-timespan-selector>
 </div>

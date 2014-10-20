@@ -1,17 +1,17 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('timespanSelector', ['$timeout', function ($timeout) {
+        .directive('sfTimespanSelector', ['$timeout', function ($timeout) {
 
             return {
-                restrict: "E",
+                restrict: 'E',
                 transclude: true,
                 scope: {
                     selectedItem: '=?',                   
-                    itemSelected: '='
+                    change: '='
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/timespan-selector.html';
+                    var url = attrs.templateUrl || 'Selectors/sf-timespan-selector.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -23,26 +23,26 @@
                             if (!item)
                                 return;
 
-                            if (item.periodType == "periodToNow")
-                                item.formattedText = "Last " + item.timeSpanMeasure + " " + item.timeSpanInterval;
+                            if (item.periodType == 'periodToNow')
+                                item.displayText = 'Last ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
                             else if (item.periodType == "customRange") {
                                 if (item.fromDate && item.toDate)
-                                    item.formattedText = item.fromDate.toLocaleString() + "-" + item.toDate.toLocaleString();
+                                    item.displayText = item.fromDate.toLocaleString() + '-' + item.toDate.toLocaleString();
                                 else if (item.fromDate)
-                                    item.formattedText = "from: " + item.fromDate.toLocaleString();
+                                    item.displayText = 'from: ' + item.fromDate.toLocaleString();
                                 else if(item.toDate)
-                                    item.formattedText = "to: " + item.toDate.toLocaleString();
+                                    item.displayText = 'to: ' + item.toDate.toLocaleString();
                             }
                             else
-                                item.formattedText = "";
+                                item.displayText = '';
                         };
 
                         validate = function (item) {
-                            if (item.periodType == "customRange" && item.fromDate && item.toDate) {
+                            if (item.periodType == 'customRange' && item.fromDate && item.toDate) {
                                 var isValid = item.fromDate < item.toDate;
 
                                 if (!isValid) {
-                                    scope.errorMessage = "Invalid date range! The expiration date must be after the publication date."
+                                    scope.errorMessage = 'Invalid date range! The expiration date must be after the publication date.';
                                     scope.showError = true;
                                 }
 
@@ -75,11 +75,11 @@
                             if (validate(scope.selectedItemInTheDialog)) {
                                 formatTimeSpanItem(scope.selectedItemInTheDialog);
 
-                                var itemSelectedArgs = {
-                                    "newSelectedItem": scope.selectedItemInTheDialog,
-                                    "oldSelectedItem": jQuery.extend(true, {}, scope.selectedItem)
-                                }
-                                scope.itemSelected.call(scope.$parent, itemSelectedArgs);
+                                var changeArgs = {
+                                    'newSelectedItem': scope.selectedItemInTheDialog,
+                                    'oldSelectedItem': jQuery.extend(true, {}, scope.selectedItem)
+                                };
+                                scope.change.call(scope.$parent, changeArgs);
 
                                 scope.selectedItem = scope.selectedItemInTheDialog;
 
@@ -95,7 +95,7 @@
 
                         scope.open = function () {
                             scope.showError = false;
-                            scope.errorMessage = "";
+                            scope.errorMessage = '';
                             scope.selectedItemInTheDialog = jQuery.extend(true, {}, scope.selectedItem);
                         };
 
