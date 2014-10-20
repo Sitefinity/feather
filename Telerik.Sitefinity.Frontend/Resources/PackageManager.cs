@@ -73,7 +73,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <param name="url">The URL.</param>
         public string EnhanceUrl(string url)
         {
-            if (url != null)
+            if (!url.IsNullOrEmpty())
             {
                 var currentPackage = this.GetCurrentPackage();
                 if (!currentPackage.IsNullOrEmpty())

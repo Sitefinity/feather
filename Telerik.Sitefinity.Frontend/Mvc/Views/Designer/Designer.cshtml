@@ -8,42 +8,44 @@
 	<script type="text/ng-template" id="dialog-template">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel($event)">&times;</button>
-			<h1 style="background: none; padding-bottom: 0; margin-bottom: 0;" class="modal-title">@Html.Raw(ViewBag.ControlName)</h1>
+			<h3 class="modal-title">@Html.Raw(ViewBag.ControlName)</h3>
 		</div>
+
 		<div class="modal-body">
+			<div ng-show="feedback.showLoadingIndicator" class="sf-loading">
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+
 			<div ng-show="feedback.showError" class="alert alert-danger">
-				<a class="close" data-dismiss="alert" ng-click="hideError()">x</a>
+				<a class="close" data-dismiss="alert" ng-click="hideError()">&times;</a>
 				<strong>@Html.Resource("Error")</strong> <span ng-bind="feedback.errorMessage"></span>
 			</div>
 
-			<div ng-show="feedback.showLoadingIndicator" class="s-loading m-bottom-sm"></div>
-
 			<div id="viewsPlaceholder" ng-show="!feedback.showLoadingIndicator" ng-view></div>
+
 		</div>
 
-        <div class="modal-footer" ng-show="!feedback.showLoadingIndicator" placeholder="modal-footer"></div>
+		<div class="modal-footer" ng-show="!feedback.showLoadingIndicator" placeholder="modal-footer"></div>
 
 		<script type="text/ng-template" section="modal-footer">
-			<button class="btn btn-primary" ng-click="save(false)">@Html.Resource("Save")</button>
-			<button class="btn btn-default" ng-click="save(true)" ng-hide="hideSaveAllTranslations">@Html.Resource("SaveAllTranslations")</button>
-			<a class="btn btn-link" data-dismiss="modal" ng-click="cancel()">@Html.Resource("Cancel")</a>
+			<button class="btn btn-primary pull-left" ng-click="save(false)">@Html.Resource("Save")</button>
+			<button class="btn btn-default pull-left" ng-click="save(true)" ng-hide="hideSaveAllTranslations">@Html.Resource("SaveAllTranslations")</button>
+			<a class="btn btn-link pull-left" data-dismiss="modal" ng-click="cancel()">@Html.Resource("Cancel")</a>
 
 			@if (Model.Views.Count() > 1)
 			{
 				foreach (var view in Model.Views)
 				{
-					<a class="btn btn-default btn-xs pull-right m-top-xs" ng-hide="isCurrentView('@view')" href="#/@view">@Html.Resource(view, fallbackToKey: true)</a>
+					<a class="btn btn-default btn-xs m-top-xs" ng-hide="isCurrentView('@view')" href="#/@view">@Html.Resource(view, fallbackToKey: true)</a>
 				}
 			}
 		</script>
 	</script>
 </div>
 
-@* Latest compiled and minified CSS *@
-<link rel="stylesheet" href='@Url.WidgetContent("Mvc/Scripts/Bootstrap/css/bootstrap.min.css")'>
-@* Optional theme *@
-<link rel="stylesheet" href='@Url.WidgetContent("Mvc/Styles/sitefinity-theme.min.css")'>
-<link rel="stylesheet" href='@Url.WidgetContent("Mvc/Styles/sitefinity-backend.min.css")'>
+<link rel="stylesheet" href='@Url.WidgetContent("assets/dist/css/sitefinity-backend.min.css")'>
 
 @Html.Script(Url.WidgetContent("~/Telerik.Sitefinity.Frontend/ServerContext.js"))
 

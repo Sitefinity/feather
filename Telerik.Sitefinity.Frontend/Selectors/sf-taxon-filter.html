@@ -4,9 +4,9 @@
             ng-click="toggleTaxonomySelection(taxonomy.Name)" value="{{taxonomy.Name}}"
             ng-checked="selectedTaxonomies.hasOwnProperty(taxonomy.Name)" />
 
-            {{taxonomy.Title}}...
+            {{taxonomy.Title}}...			
     </label>
-
+	
     <list-selector taxon-selector ng-show="selectedTaxonomies.hasOwnProperty(taxonomy.Name)"
                 selected-item-id="selectedTaxonomies[taxonomy.Name]"
                 provider="provider"

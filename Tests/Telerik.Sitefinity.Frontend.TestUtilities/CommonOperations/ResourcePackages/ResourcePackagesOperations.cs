@@ -219,12 +219,12 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             }
             catch (IOException)
             {
-                Thread.Sleep(50);
+                Thread.Sleep(500);
                 Directory.Delete(path, true);
             }
             catch (UnauthorizedAccessException)
             {
-                Thread.Sleep(50);
+                Thread.Sleep(500);
                 Directory.Delete(path, true);
             }
         }
@@ -244,7 +244,10 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             }
         }
 
-        private string SfPath
+        /// <summary>
+        /// Returns current Sitefinity intstance path.
+        /// </summary>
+        public string SfPath
         {
             get
             {
