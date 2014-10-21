@@ -6,9 +6,9 @@
                 restrict: "A",
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        ctrl.getItems = function (skip, take, search) {
+                        ctrl.getItems = function (skip, take, search, frontendLanguages) {
                             var provider = ctrl.$scope.provider;
-                            return newsItemService.getItems(provider, skip, take, search);
+                            return newsItemService.getItems(provider, skip, take, search, frontendLanguages);
                         };
 
                         ctrl.getSpecificItems = function (ids) {

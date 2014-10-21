@@ -15,8 +15,8 @@
                             taxonomyId = defaultTaxonomyId;
                         }
 
-                        ctrl.getItems = function (skip, take, search) {
-                            return flatTaxonService.getTaxons(taxonomyId, skip, take, search);
+                        ctrl.getItems = function (skip, take, search, frontendLanguages) {
+                            return flatTaxonService.getTaxons(taxonomyId, skip, take, search, frontendLanguages);
                         };
 
                         ctrl.getSpecificItems = function (ids) {

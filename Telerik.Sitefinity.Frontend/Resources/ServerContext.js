@@ -3,6 +3,7 @@
 (function () {
     var applicationPath = '{{applicationPath}}';
     var currentPackage = '{{currentPackage}}';
+    var frontendLanguages = JSON.parse('{{frontendLanguages}}');
 
     if (applicationPath.length === 0 || applicationPath.charAt(applicationPath.length - 1) !== '/')
         applicationPath = applicationPath + '/';
@@ -72,5 +73,9 @@
         else {
             return url;
         }
+    };
+
+    sitefinity.getFrontendLanguages = function () {
+        return frontendLanguages;
     };
 })();

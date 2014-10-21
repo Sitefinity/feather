@@ -6,8 +6,9 @@
                 dataItemPromise;
 
             var getResource = function (taxonomyId, taxonId) {
+                var url;
                 if (taxonomyId && taxonomyId !== "") {
-                    var url = serviceUrl + taxonomyId + '/';
+                    url = serviceUrl + taxonomyId + '/';
 
                     if (taxonId && taxonId !== "") {
                         url = url + taxonId + '/';
@@ -17,9 +18,9 @@
                 return serviceHelper.getResource(url);
             };
 
-            var getTaxons = function (taxonomyId, skip, take, search) {
+            var getTaxons = function (taxonomyId, skip, take, search, frontendLanguages) {
                 var filter = serviceHelper.filterBuilder()
-                    .searchFilter(search)
+                    .searchFilter(search, frontendLanguages)
                     .getFilter();
 
                 dataItemPromise = getResource(taxonomyId).get(
