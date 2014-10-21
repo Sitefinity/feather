@@ -64,6 +64,8 @@ This repository contains the core infrastructure related to [Project Feather](ht
    * [Use a news selector] (https://github.com/Sitefinity/feather/wiki/Use-a-news-selector)
 
    * [Use a taxon selector] (https://github.com/Sitefinity/feather/wiki/Use-a-taxon-selector)
+   
+   * [Use a dynamic items selector] (https://github.com/Sitefinity/feather/wiki/Use-a-dynamic-items-selector) 
 
 ### Packages and layout files
 
@@ -81,6 +83,11 @@ This repository contains the core infrastructure related to [Project Feather](ht
    * [Refer to resources inside MVC views](https://github.com/Sitefinity/feather/wiki/Refer-to-resources-inside-MVC-views)
 
    * [VirtualFile structure explained](https://github.com/Sitefinity/feather/wiki/VirtualFile-structure-explained)
+
+### Putting it all together
+
+   * [DevMagazine site overview](https://github.com/Sitefinity/feather/wiki/DevMagazine-site-overview)
+   
 
 # License Information
 

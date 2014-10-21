@@ -219,14 +219,84 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             }
             catch (IOException)
             {
-                Thread.Sleep(50);
+                Thread.Sleep(500);
                 Directory.Delete(path, true);
             }
             catch (UnauthorizedAccessException)
             {
-                Thread.Sleep(50);
+                Thread.Sleep(500);
                 Directory.Delete(path, true);
             }
+        }
+
+        /// <summary>
+        /// Imports the data for selectors tests.
+        /// </summary>
+        /// <param name="fileResource">The file resource.</param>
+        /// <param name="designerViewFileName">Name of the designer view file.</param>
+        /// <param name="fileResourceJson">The file resource json.</param>
+        /// <param name="jsonFileName">Name of the json file.</param>
+        /// <param name="controllerFileResource">The controller file resource.</param>
+        /// <param name="controllerFileName">Name of the controller file.</param>
+        public void ImportDataForSelectorsTests(string fileResource, string designerViewFileName, string fileResourceJson, string jsonFileName, string controllerFileResource, string controllerFileName)
+        {
+            var assembly = FileInjectHelper.GetArrangementsAssembly();
+
+            ////  inject DesignerView.Selector.cshtml
+            Stream source = assembly.GetManifestResourceStream(fileResource);
+
+            var viewPath = Path.Combine("MVC", "Views", "DummyText", designerViewFileName);
+
+            string filePath = FileInjectHelper.GetDestinationFilePath(viewPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            Stream destination = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+
+            FileInjectHelper.CopyStream(source, destination);
+            source.Close();
+            destination.Close();
+
+            ////  inject DesignerView.Selector.json
+            Stream sourceJson = assembly.GetManifestResourceStream(fileResourceJson);
+            var jsonPath = Path.Combine("MVC", "Views", "DummyText", jsonFileName);
+
+            string filePathJson = FileInjectHelper.GetDestinationFilePath(jsonPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(filePathJson));
+            Stream destinationJson = new FileStream(filePathJson, FileMode.Create, FileAccess.Write);
+
+            FileInjectHelper.CopyStream(sourceJson, destinationJson);
+            sourceJson.Close();
+            destinationJson.Close();
+
+            ////  inject designerview-selector.js
+            Stream sourceController = assembly.GetManifestResourceStream(controllerFileResource);
+            var controllerPath = Path.Combine("MVC", "Scripts", "DummyText", controllerFileName);
+
+            string controllerFilePath = FileInjectHelper.GetDestinationFilePath(controllerPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(controllerFilePath));
+            Stream destinationController = new FileStream(controllerFilePath, FileMode.Create, FileAccess.Write);
+
+            FileInjectHelper.CopyStream(sourceController, destinationController);
+
+            sourceController.Close();
+            destinationController.Close();
+        }
+
+        /// <summary>
+        /// Deletes the selectors data.
+        /// </summary>
+        public void DeleteSelectorsData(string designerViewFileName, string jsonFileName, string controllerFileName)
+        {
+            var path = Path.Combine("MVC", "Views", "DummyText", designerViewFileName);
+            string filePath = FileInjectHelper.GetDestinationFilePath(path);
+            File.Delete(filePath);
+
+            var jsonPath = Path.Combine("MVC", "Views", "DummyText", jsonFileName);
+            string filePathJson = FileInjectHelper.GetDestinationFilePath(jsonPath);
+            File.Delete(filePathJson);
+
+            var controllerPath = Path.Combine("MVC", "Scripts", "DummyText", controllerFileName);
+            string controllerFilePath = FileInjectHelper.GetDestinationFilePath(controllerPath);
+            File.Delete(controllerFilePath);
         }
 
         /// <summary>
@@ -244,7 +314,10 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             }
         }
 
-        private string SfPath
+        /// <summary>
+        /// Returns current Sitefinity intstance path.
+        /// </summary>
+        public string SfPath
         {
             get
             {

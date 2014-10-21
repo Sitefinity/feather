@@ -1,6 +1,7 @@
 ﻿/* Tests for news selector */
 describe("news selector", function () {
-    var scope;
+    var scope,
+        ITEMS_COUNT = 10;
 
     //Will be returned from the service mock.
     var dataItem = {
@@ -19,8 +20,21 @@ describe("news selector", function () {
         TotalCount: 2
     };
 
+    var customDataItems = {
+        Items: [],
+        TotalCount: ITEMS_COUNT
+    };
+
+    for (var i = 0; i < ITEMS_COUNT; i++) {
+        customDataItems.Items[i] = {
+            Id: '4c003fb0-2a77-61ec-be54-ff00007864f' + i,
+            Title: { Value: 'Dummy' + i }
+        };
+    }
+
     var serviceResult;
     var $q;
+    var provide;
 
     //Mock news item service. It returns promises.
     var newsItemService = {
@@ -53,7 +67,7 @@ describe("news selector", function () {
                 Items: items,
                 TotalCount: items.length
             });
-            
+
             return serviceResult.promise;
         }),
         getItem: jasmine.createSpy('newsItemService.getItem').andCallFake(function (itemId, provider) {
@@ -73,6 +87,17 @@ describe("news selector", function () {
         })
     };
 
+    var newsItemServiceMockReturnMoreThan5Items = {
+        getSpecificItems: jasmine.createSpy('newsItemService.getSpecificItems').andCallFake(function (ids, provider) {
+            if ($q) {
+                serviceResult = $q.defer();
+            }
+            serviceResult.resolve(customDataItems);
+
+            return serviceResult.promise;
+        }),
+    };
+
     //This is the id of the cached templates in $templateCache. The external templates are cached by a karma/grunt preprocessor.
     var newsSelectorTemplatePath = 'Selectors/news-selector.html';
     var listSelectorTemplatePath = 'Selectors/list-selector.html';
@@ -80,15 +105,40 @@ describe("news selector", function () {
     //Load the module responsible for the modal dialog
     beforeEach(module('modalDialog'));
 
-    //Load themodule under test.
+    //Load the module under test.
     beforeEach(module('selectors'));
 
     //Load the module that contains the cached tempaltes.
     beforeEach(module('templates'));
 
     beforeEach(module(function ($provide) {
+        var serverContext = {
+            getRootedUrl: function (path) {
+                return appPath + '/' + path;
+            },
+            getUICulture: function () {
+                return null;
+            },
+            getEmbeddedResourceUrl: function (assembly, url) {
+                if (url.indexOf('news') >= 0) {
+                    return newsSelectorTemplatePath;
+                }
+                if (url.indexOf('list') >= 0) {
+                    return listSelectorTemplatePath;
+                }
+            },
+            getFrontendLanguages: function () {
+                return ['en', 'de'];
+            }
+        };
+        $provide.value('serverContext', serverContext);
+    }));
+
+    beforeEach(module(function ($provide) {
         //Force angular to use the mock.
         $provide.value('newsItemService', newsItemService);
+
+        provide = $provide;
     }));
 
     beforeEach(inject(function ($rootScope, $httpBackend, _$q_, $templateCache, _$timeout_) {
@@ -104,18 +154,6 @@ describe("news selector", function () {
         //Prevent failing of the template request.
         $httpBackend.whenGET(listSelectorTemplatePath);
         $httpBackend.whenGET(newsSelectorTemplatePath).respond({});
-    }));
-
-    beforeEach(inject(function ($templateCache) {
-        //This method is called by the templateUrl property of the directive's definition object and also when including the news selector view.
-        spyOn(sitefinity, 'getEmbeddedResourceUrl').andCallFake(function (assembly, url) {
-            if (url.indexOf('news') >= 0) {
-                return newsSelectorTemplatePath;
-            }
-            if (url.indexOf('list') >= 0) {
-                return listSelectorTemplatePath;
-            }
-        });
     }));
 
     beforeEach(function () {
@@ -156,6 +194,9 @@ describe("news selector", function () {
         //The selector mutates the selected item when it is retrieved from the service.
         dataItem.Title = { Value: 'Dummy' };
         dataItem2.Title = { Value: 'Filtered' };
+
+        //Sets default newsItemService mock.
+        provide.value('newsItemService', newsItemService);
     });
 
     /* Helper methods */
@@ -187,7 +228,7 @@ describe("news selector", function () {
 
         return mostRecent.args;
     };
-    
+
     var getNewsServiceGetSpecificItemsArgs = function () {
         var mostRecent = newsItemService.getSpecificItems.mostRecentCall;
         expect(mostRecent).toBeDefined();
@@ -274,7 +315,7 @@ describe("news selector", function () {
             var s = scope.$$childHead;
 
             //mock the call to the modal service.
-            s.$modalInstance = { close: function () { }};
+            s.$modalInstance = { close: function () { } };
 
             expect(s.selectedItem).toBeFalsy();
             expect(s.selectedItemId).toBeFalsy();
@@ -317,7 +358,7 @@ describe("news selector", function () {
             s.$apply(function () {
                 s.filter.searchString = 'filter';
                 s.filter.search(s.filter.searchString);
-            });            
+            });
 
             var args = getNewsServiceGetItemsArgs();
 
@@ -602,6 +643,43 @@ describe("news selector", function () {
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(1);
             expect(s.selectedItemsInTheDialog).toEqualArrayOfDataItems([dataItem2]);
+        });
+    });
+
+    describe('in multi selection mode and more than 5 items selected by default', function () {
+        it('[manev] / should show link indicating that there are 5 items more.', function () {
+
+            provide.value('newsItemService', newsItemServiceMockReturnMoreThan5Items);
+
+            var ids = customDataItems.Items.map(function (i) { return i.Id; });
+
+            var template = "<list-selector news-selector multiselect='true' selected-items='selectedItems' selected-ids='selectedIds'/>";
+
+            scope.selectedIds = ids;
+            compileDirective(template);
+
+            expect(scope.selectedItems).toBeDefined();
+            expect(scope.selectedItems.length).toBe(10);
+            expect(scope.selectedItems).toEqualArrayOfDataItems(customDataItems.Items);
+
+            var moreLink = $(".small");
+
+            expect(moreLink.length).toBe(1);
+            expect(moreLink.html()).toBe("and 5 more");
+            expect(moreLink.css("display")).not.toBe("none");
+        });
+
+        it('[manev] / should show link indicating that there are 5 items more.', function () {
+
+            var ids = [dataItem.Id, dataItem2.Id];
+
+            var template = "<list-selector news-selector multiselect='true' selected-items='selectedItems' selected-ids='selectedIds'/>";
+
+            scope.selectedIds = ids;
+            compileDirective(template);
+
+            var moreLink = $(".small");
+            expect(moreLink.css("display")).toBe("none");
         });
     });
 });

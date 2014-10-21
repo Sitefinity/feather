@@ -94,8 +94,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GridWidgets\AddGridWidgetToToolboxForPage.cs" />
+    <Compile Include="GridWidgets\AddGridWidgetToToolboxForPageTemplate.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
+    <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />
+    <Compile Include="MvcWidgets\MvcSelectMoreThanOneDynamicItem.cs" />
+    <Compile Include="MvcWidgets\MvcSelectMoreThanOneTag.cs" />
+    <Compile Include="MvcWidgets\MvcSelectMoreThanOneNewsItem.cs" />
+    <Compile Include="MvcWidgets\MvcDynamicSelectorTest.cs" />
     <Compile Include="MvcWidgets\MvcSelectorTest.cs" />
     <Compile Include="MvcWidgets\MvcWidgetApplyNewView.cs" />
     <Compile Include="MvcWidgets\MvcWidgetDefaultDesigner.cs" />

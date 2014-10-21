@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.TestIntegration.Helpers;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 {
@@ -66,6 +69,82 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 
             pageManager.PublishPageDraft(page, CultureInfo.CurrentUICulture);
             pageManager.SaveChanges();
+        }
+
+        /// <summary>
+        /// Gets the public page content.
+        /// </summary>
+        /// <param name="pageId">The id of the page.</param>
+        /// <returns>The page content.</returns>
+        public string GetPageContent(Guid pageId)
+        {
+            PageManager pageManager = PageManager.GetManager();
+
+            var page = pageManager.GetPageNode(pageId);
+            var pageUrl = page.GetFullUrl();
+            pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
+            pageUrl = UrlTransformations.AppendParam(pageUrl, "t", Guid.NewGuid().ToString());
+
+            string pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
+
+            return pageContent;
+        }
+
+        /// <summary>
+        /// Creates a pure MVC template.
+        /// </summary>
+        /// <param name="templateTitle">The template title.</param>
+        /// <returns>The template ID.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
+        public Guid CreatePureMvcTemplate(string templateTitle)
+        {
+            Guid templateId = Guid.Empty;
+            var fluent = App.WorkWith();
+            templateId = fluent.PageTemplate()
+                               .CreateNew()
+                               .Do(t =>
+                               {
+                                   t.Title = templateTitle;
+                                   t.Name = templateTitle.ToLower(CultureInfo.InvariantCulture);
+                                   t.Description = templateTitle + " descr";
+                                   t.ShowInNavigation = true;
+                                   t.Framework = PageTemplateFramework.Mvc;
+                                   t.Visible = true;
+                               })
+                               .SaveAndContinue()
+                               .Get()
+                               .Id;
+            var pageManager = PageManager.GetManager();
+            var template = pageManager.GetTemplates().Where(t => t.Id == templateId).SingleOrDefault();
+            var master = pageManager.TemplatesLifecycle.Edit(template);
+            pageManager.TemplatesLifecycle.Publish(master);
+            pageManager.SaveChanges();
+
+            return template.Id;
+        }
+
+        /// <summary>
+        /// Creates pure MVC template.
+        /// </summary>
+        /// <param name="templateTitle">The template title.</param>
+        /// <param name="parentTemplateTitle">The parent template title.</param>
+        /// <returns>The template.</returns>
+        public PageTemplate CreatePureMvcTemplate(string templateTitle, string parentTemplateTitle)
+        {
+            var pageManager = PageManager.GetManager();
+
+            var templateId = this.CreatePureMvcTemplate(templateTitle);
+            var template = pageManager.GetTemplates().Where(t => t.Id == templateId).SingleOrDefault();
+
+            var parent = pageManager.GetTemplates().Where(t => t.Title == parentTemplateTitle).FirstOrDefault();
+
+            template.ParentTemplate = parent;
+
+            var master = pageManager.TemplatesLifecycle.Edit(template);
+            pageManager.TemplatesLifecycle.Publish(master);
+            pageManager.SaveChanges();
+
+            return template;
         }
     }
 }

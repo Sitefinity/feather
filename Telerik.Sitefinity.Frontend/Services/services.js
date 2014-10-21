@@ -1,7 +1,20 @@
 ﻿(function () {
     var module = angular.module('services', ['ngResource']);
 
-    module.factory('serviceHelper', ['$resource', 'widgetContext', function ($resource, widgetContext) {
+    module.config(['$httpProvider', function($httpProvider) {
+        if (!$httpProvider.defaults.headers.get) {
+            $httpProvider.defaults.headers.get = {};    
+        }
+
+        var getHeaders = $httpProvider.defaults.headers.get;
+
+        //disable IE ajax request caching
+        getHeaders['If-Modified-Since'] = '0';
+        getHeaders['Cache-Control'] = 'no-cache';
+        getHeaders.Pragma = 'no-cache';
+    }]);
+
+    module.factory('serviceHelper', ['$resource', 'serverContext', function ($resource, serverContext) {
         /* Private methods and variables */
         var emptyGuid = '00000000-0000-0000-0000-000000000000';
 
@@ -16,9 +29,10 @@
         var getResource = function (url) {
             var headerData;
 
-            if (widgetContext.culture) {
+            var culture = serverContext.getUICulture();
+            if (culture) {
                 headerData = {
-                    'SF_UI_CULTURE': widgetContext.culture
+                    'SF_UI_CULTURE': culture
                 };
             }
 
@@ -42,20 +56,32 @@
                 return this;
             },
             cultureFilter: function () {
-                if (widgetContext.culture) {
-                    this.filter += 'Culture==' + widgetContext.culture;
+                var culture = serverContext.getUICulture();
+                if (culture) {
+                    this.filter += 'Culture==' + culture;
                     return this;
                 }
                 else {
                     return this.trimOperator();
                 }
             },
-            searchFilter: function (search, searchField) {
+            searchFilter: function (search, frontendLanguages, searchField) {
                 if (!search) return this.trimOperator();
 
                 var field = searchField || 'Title';
 
-                this.filter += '(' + field + '.ToUpper().Contains("' + search + '".ToUpper()))';
+                var searchFilter = '(' + field + '.ToUpper().Contains("' + search + '".ToUpper()))';
+
+                if (frontendLanguages && frontendLanguages.length > 1) {
+                    searchFilter = searchFilter + ' OR (';
+                    for (var i = 0; i < frontendLanguages.length; i++) {
+                        searchFilter = searchFilter + field + '["' + frontendLanguages[i] + '"]=null AND ';
+                    }
+                    searchFilter = searchFilter + field + '[""]!=null AND ' + field + '[""].Contains("' + search + '"))';
+                    searchFilter = '(' + searchFilter + ')';
+                }
+
+                this.filter += searchFilter;
 
                 return this;
             },
@@ -107,4 +133,32 @@
             getResource: getResource
         };
     }]);
+
+    module.provider('serverContext', function ServerContextProvider() {
+        var customContext = customContext || {};
+
+        var constructContext = function ($injector) {
+            return {
+                getRootedUrl: customContext.getRootedUrl || sitefinity.getRootedUrl,
+                getEmbeddedResourceUrl: customContext.getEmbeddedResourceUrl || sitefinity.getEmbeddedResourceUrl,
+                getFrontendLanguages: customContext.getFrontendLanguages || sitefinity.getFrontendLanguages,
+                getUICulture: function () {
+                    if ($injector.has('widgetContext')) {
+                        return $injector.get('widgetContext').culture;
+                    }
+
+                    return customContext && customContext.uiCulture;
+                }
+            };
+        };
+
+        /* The context should be object containing properties: 'appPath' and optionally 'currentPackage' and 'uiCulture'. */
+        this.setServerContext = function (context) {
+            customContext = context;            
+        };
+
+        this.$get = ['$injector', function ($injector) {
+            return constructContext($injector);
+        }];
+    });
 })();

@@ -1,8 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Hosting;
+using ServiceStack.Text;
+using Telerik.Microsoft.Practices.EnterpriseLibrary.Caching;
+using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.Multisite.Model;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -29,6 +35,9 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <param name="context">An <see cref="T:System.Web.HttpContext" /> object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests.</param>
         public void ProcessRequest(HttpContext context)
         {
+            // Set that this is the backend in order to resolve the current site correctly
+            context.Items[SystemManager.IsBackendRequestKey] = true;
+
             var script = this.GetScript();
 
             context.Response.Output.Write(script);
@@ -43,20 +52,36 @@ namespace Telerik.Sitefinity.Frontend.Resources
         protected virtual string GetScript()
         {
             var currentPackage = new PackageManager().GetCurrentPackage() ?? string.Empty;
+            var currentSiteId = this.GetCurrentSiteId();
 
-            if (!ServerContextHandler.cachedScript.ContainsKey(currentPackage))
+            var cacheKey = string.Format(CultureInfo.InvariantCulture, ServerContextHandler.ScriptCacheKeyPattern, currentPackage, currentSiteId);
+
+            var cache = this.GetCacheManager();
+            var script = cache[cacheKey] as string;
+
+            if (script == null)
             {
                 lock (ServerContextHandler.scriptLock)
                 {
-                    if (!ServerContextHandler.cachedScript.ContainsKey(currentPackage))
+                    if (script == null)
                     {
-                        ServerContextHandler.cachedScript[currentPackage] = this.GetRawScript().Replace("{{applicationPath}}", this.GetApplicationPath()).Replace("{{currentPackage}}", currentPackage);
+                        script = this.GetRawScript()
+                            .Replace("{{applicationPath}}", this.GetApplicationPath())
+                            .Replace("{{currentPackage}}", currentPackage)
+                            .Replace("{{frontendLanguages}}", this.GetFrontendLanguages());
+
+                        cache.Add(
+                            cacheKey,
+                            script,
+                            CacheItemPriority.Normal,
+                            null,
+                            this.GetCacheDependency(currentSiteId));
                     }
                 }
             }
-
-            return ServerContextHandler.cachedScript[currentPackage];
-        }
+            
+            return script;
+        }        
 
         /// <summary>
         /// Gets the script from a predefined file.
@@ -82,10 +107,52 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return RouteHelper.ResolveUrl("~/", UrlResolveOptions.Rooted);
         }
 
+        /// <summary>
+        /// Gets the frontend languages for the current site.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetFrontendLanguages()
+        {
+            var appSettings = SystemManager.CurrentContext.AppSettings;
+            var languages = appSettings.DefinedFrontendLanguages.Select(l => l.Name);
+
+            var serialziedLanguages = JsonSerializer.SerializeToString(languages);
+            
+            return serialziedLanguages;
+        }
+
+        /// <summary>
+        /// Gets the id of the current site.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Guid GetCurrentSiteId()
+        {
+            return SystemManager.CurrentContext.CurrentSite.Id;
+        }
+
+        /// <summary>
+        /// Gets the cache manager.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ICacheManager GetCacheManager()
+        {
+            return SystemManager.GetCacheManager(CacheManagerInstance.Global);
+        }
+
+        /// <summary>
+        /// Gets the cache dependancy that will invalidate the script's cache.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        protected virtual ICacheItemExpiration GetCacheDependency(Guid key)
+        {
+            return new DataItemCacheDependency(typeof(Site), key);
+        }
+
         private static object scriptLock = new object();
 
-        private static IDictionary<string, string> cachedScript = new Dictionary<string, string>();
-
         private const string ScriptPath = "~/{0}Resources/ServerContext.js";
+
+        private const string ScriptCacheKeyPattern = "FeatherServerContext-{0}-{1}";
     }
 }
