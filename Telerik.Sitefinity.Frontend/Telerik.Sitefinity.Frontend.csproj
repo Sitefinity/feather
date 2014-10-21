@@ -393,8 +393,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Selectors\list-selector.html" />
-    <EmbeddedResource Include="Selectors\sf-taxon-selector.js" />
-    <EmbeddedResource Include="Selectors\sf-taxon-selector.html" />
+    <EmbeddedResource Include="Selectors\taxon-selector.js" />
+    <EmbeddedResource Include="Selectors\taxon-selector.html" />
     <EmbeddedResource Include="Services\flat-taxon-service.js" />
   </ItemGroup>
   <ItemGroup>
@@ -476,7 +476,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

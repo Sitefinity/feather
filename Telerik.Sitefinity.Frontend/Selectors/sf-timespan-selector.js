@@ -75,11 +75,13 @@
                             if (validate(scope.selectedItemInTheDialog)) {
                                 formatTimeSpanItem(scope.selectedItemInTheDialog);
 
-                                var changeArgs = {
-                                    'newSelectedItem': scope.selectedItemInTheDialog,
-                                    'oldSelectedItem': jQuery.extend(true, {}, scope.selectedItem)
-                                };
-                                scope.change.call(scope.$parent, changeArgs);
+                                if (scope.change) {
+                                    var changeArgs = {
+                                        'newSelectedItem': scope.selectedItemInTheDialog,
+                                        'oldSelectedItem': jQuery.extend(true, {}, scope.selectedItem)
+                                    };
+                                    scope.change.call(scope.$parent, changeArgs);
+                                }
 
                                 scope.selectedItem = scope.selectedItemInTheDialog;
 

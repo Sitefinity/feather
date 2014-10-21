@@ -107,12 +107,12 @@
                             else if (dateItem.periodType == 'customRange') {
                                 if (dateItem.fromDate) {
                                     var fromQueryValue = dateItem.fromDate.toUTCString();
-                                    var fromQueryName = scope.queryFieldName + '.' + queryValue;
+                                    var fromQueryName = scope.queryFieldName + '.' + fromQueryValue;
                                     scope.queryData.addChildToGroup(groupItem, fromQueryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '>', fromQueryValue);
                                 }
                                 if (dateItem.toDate) {
                                     var toQueryValue = dateItem.toDate.toUTCString();
-                                    var toQueryName = scope.queryFieldName + '.' + queryValue;
+                                    var toQueryName = scope.queryFieldName + '.' + toQueryValue;
                                     scope.queryData.addChildToGroup(groupItem, toQueryName, scope.itemLogicalOperator, groupName, 'System.DateTime', '<', toQueryValue);
                                 }
                             }

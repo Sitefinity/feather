@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('selectors')
-        .directive('sfTaxonSelector', ['flatTaxonService', function (flatTaxonService) {
+        .directive('taxonSelector', ['flatTaxonService', function (flatTaxonService) {
             // Tags Id
             var defaultTaxonomyId = 'cb0f3a19-a211-48a7-88ec-77495c0f5374';
 
@@ -37,7 +37,7 @@
 
                         ctrl.setSelectorType('TaxonSelector');
 
-                        ctrl.templateUrl = 'Selectors/sf-taxon-selector.html';
+                        ctrl.templateUrl = 'Selectors/taxon-selector.html';
                         ctrl.setPartialTemplate('taxon-selector-template');
                     }
                 }
