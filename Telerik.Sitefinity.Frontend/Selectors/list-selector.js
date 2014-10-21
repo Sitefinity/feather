@@ -173,6 +173,7 @@
                             scope.filter.searchString = null;
                             scope.items = [];
                             scope.selectedItemsInTheDialog = [];
+                            scope.selectedItemsViewData = [];
                         };
 
                         var areArrayEquals = function (arr1, arr2) {
@@ -380,12 +381,13 @@
 
                         scope.collectSelectedItems = function () {
                             if (scope.multiselect) {
-                                scope.selectedItemsViewData.length = 0;
+                                scope.selectedItemsViewData = [];
                                 Array.prototype.push.apply(scope.selectedItemsViewData, scope.selectedItemsInTheDialog);
                             }
                         };
 
                         scope.removeUnselectedItems = function () {
+                            scope.selectedItemsViewData = [];
                             scope.selectedItemsInTheDialog = scope.selectedItemsInTheDialog.filter(function (item) {
                                 return item.isChecked;
                             });
