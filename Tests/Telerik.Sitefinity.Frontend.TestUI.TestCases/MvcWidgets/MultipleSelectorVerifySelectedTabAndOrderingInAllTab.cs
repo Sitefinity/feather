@@ -9,16 +9,16 @@ using Telerik.Sitefinity.Frontend.TestUI.Framework;
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 {
     /// <summary>
-    /// Verifies selected tab in multi selector, ordering in all tab of selected items.
+    /// Verifies selected tab in multiple selector and ordering in all tab of selected items.
     /// </summary>
     [TestClass]
     public class MultipleSelectorVerifySelectedTabAndOrderingInAllTab_ : FeatherTestCase
     {
         /// <summary>
-        /// Verifies selected tab in multi selector, ordering in all tab of selected items.
+        /// Verifies selected tab in multiple selector and ordering in all tab of selected items.
         /// </summary>
         [TestMethod,
-        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Feather team"),
+        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleSelectorVerifySelectedTabAndOrderingInAllTab()
         {
@@ -28,7 +28,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(TagItemsToAppear);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(TagItemsToAppearCount);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(selectedTagNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(selectedTagNames);
@@ -36,14 +36,16 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedTab("Selected");
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedTab(SelectedTabAfterSelection);
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenAllTab();
-            System.Threading.Thread.Sleep(10000);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemsInAllTab(TagPrefixName, selectedTagNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
         }
 
         /// <summary>
-        /// Performs Server Setup and prepare the system with needed data.
+        /// Creates a couple of tags and a page with dummy widget.
         /// </summary>
         protected override void ServerSetup()
         {
@@ -52,18 +54,20 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         }
 
         /// <summary>
-        /// Performs clean up and clears all data created by the test.
+        /// Deletes all tags and pages.
         /// </summary>
         protected override void ServerCleanup()
         {
-            //// BAT.Arrange(this.TestName).ExecuteTearDown();
+            BAT.Arrange(this.TestName).ExecuteTearDown();
         }
 
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "SelectorWidget";
 
+        private const string SelectedTabAfterSelection = "Selected";
         private const string TagSelectorName = "TagsMultipleSelector";
-        private const int TagItemsToAppear = 10;
+        private const string TagPrefixName = "Tag Title";
+        private const int TagItemsToAppearCount = 10;
 
         private readonly string[] selectedTagNames = { "Tag Title1", "Tag Title2", "Tag Title6" };
     }

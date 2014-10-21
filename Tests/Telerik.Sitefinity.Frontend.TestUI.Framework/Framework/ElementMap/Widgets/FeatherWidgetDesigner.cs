@@ -192,6 +192,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
             }
         }
 
+        /// <summary>
+        /// Gets the active tab.
+        /// </summary>
+        /// <value>The active tab.</value>
         public HtmlDiv ActiveTab
         {
             get

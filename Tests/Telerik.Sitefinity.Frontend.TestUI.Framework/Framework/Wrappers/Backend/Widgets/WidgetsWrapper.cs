@@ -292,8 +292,31 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void VerifySelectedTab(string tabName)
         {
             var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
-            var a = activeDialog.ChildNodes.Where(c => c.InnerText.Contains(tabName));
+            var selectedTab = activeDialog.ChildNodes.Where(c => c.InnerText.Contains(tabName));
+            Assert.IsNotNull(selectedTab);
+        }
 
+        /// <summary>
+        /// Verifies selected items in All tab.
+        /// </summary>
+        /// <param name="itemPrefixName">Selected item prefix name.</param>
+        /// <param name="itemNames">Selected item names.</param>
+        public void VerifySelectedItemsInAllTab(string itemPrefixName, params string[] selectedItemNames)
+        {
+            var archorList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in items");
+            int archorListCount = archorList.Count;
+
+            for (int i = 0; i < archorListCount; i++)
+            {
+                if (selectedItemNames.Contains(archorList[i].InnerText))
+                {
+                    var inputCheckbox = archorList[i].ChildNodes.Where(c => c.ContainsAttribute("checked")).SingleOrDefault();
+                    Assert.IsNotNull(inputCheckbox);
+
+                    var spanElement = archorList[i].ChildNodes.Where(c => c.InnerText.Contains(itemPrefixName + i)).SingleOrDefault();
+                    Assert.IsNotNull(spanElement);
+                }
+            }
         }
 
         private Element GetContentSelectorByName(string cssClass)
