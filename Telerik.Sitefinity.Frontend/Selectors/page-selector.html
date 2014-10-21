@@ -33,7 +33,11 @@
                                     <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
                             <div ng-bind="bindIdentifierField(item)"></div>
                         </a>-->
-                        <sf-items-tree sf-items="items" sf-item-selected="itemClicked" sf-get-children="getChildren"/>
+                        <sf-items-tree 
+                            sf-items="items"
+                            sf-item-selected="itemClicked(dataItem)"
+                            sf-get-children="getChildren(parentId)"
+                            sf-identifier-field-value="bindIdentifierField(dataItem)"></sf-items-tree>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
                     <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
