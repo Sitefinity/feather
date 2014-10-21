@@ -29,6 +29,7 @@
                         itemType: contentType,
                         itemSurrogateType: contentType,
                         provider: provider,
+                        sortExpression: 'DateCreated DESC',
                         skip: skip,
                         take: take,
                         filter: filter
