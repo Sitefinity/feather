@@ -241,6 +241,8 @@
                         };
 
                         scope.itemClicked = function (index, item) {
+                            if (typeof index === 'object' && !item) item = index;
+
                             var alreadySelected;
                             var selectedItemIndex;
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
@@ -354,6 +356,10 @@
                         scope.bindIdentifierField = function (item) {
                             return ctrl.bindIdentifierField(item);
                         };
+
+                        scope.getChildren = function (parentId) {
+                            return ctrl.getChildren(parentId, scope.filter.searchString);
+                        }
 
                         scope.getSelectedIds = function () {
                             if (attrs.multiselect) {

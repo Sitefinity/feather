@@ -6,7 +6,7 @@
                 scope: {
                     sfItems: '=',
                     sfItemSelected: '&',
-                    sfGetItems: '&'
+                    sfGetChildren: '&'
                 },
                 link: function (scope, element, attrs) {
                     scope.itemsDataSource = new kendo.data.HierarchicalDataSource({
@@ -24,7 +24,7 @@
                     scope.expand = function (e) {
                         var dataItem = e.sender.dataItem(e.node);
                         if (dataItem && dataItem.Id) {
-                            scope.sfGetItems(dataItem.id)
+                            scope.sfGetChildren(dataItem.id)
                                 .then(function (data) {
                                     dataItem.items = [];
                                     Array.prototype.push.apply(dataItem.items, data);

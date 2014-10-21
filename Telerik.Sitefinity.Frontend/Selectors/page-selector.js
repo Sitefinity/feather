@@ -6,7 +6,7 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        ctrl.getChildItems = function (parentId, search) {
+                        ctrl.getChildren = function (parentId, search) {
                             var siteId = ctrl.$scope.siteId;
                             var provider = ctrl.$scope.provider;
                             return pageService.getItems(parentId, siteId, provider, search);
