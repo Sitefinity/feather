@@ -6,7 +6,10 @@
                 restrict: 'E',
                 transclude: true,
                 scope: {
-                    ngModel: '=?'
+                    ngModel: '=?',
+                    showMeridian: '@?',
+                    hourStep: '@?',
+                    minueteStep: '@?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -15,6 +18,9 @@
                 },
                 link: {
                     pre: function (scope, element, attrs, ctrl, transclude) {
+
+                        var transformHours = function () {
+                        };
                        
                         scope.openDatePicker = function ($event) {
                             $event.preventDefault();
@@ -40,10 +46,27 @@
                         scope.hsteps = [];
                         scope.msteps = [];
 
-                        for (var h = 0; h < 24; h++)
-                            scope.hsteps.push(h);
+                        if (!scope.hourStep)
+                            scope.hourStep = 1;
 
-                        for (var m = 0; m < 60; m += 10)
+                        if (!scope.minueteStep)
+                            scope.minueteStep = 10;
+
+                        var h;
+                        if (scope.showMeridian) {
+                            for (h = 0; h < 24; h += scope.hourStep) {
+                                var hour = (h < 12) ? h : h - 12;
+                                var meridian = (h < 12) ? 'AM' : 'PM';
+                                scope.hsteps.push({ 'label': hour + ' ' + meridian, 'value': h });
+                            }
+                        }
+                        else{
+                            for (h = 0; h < 24; h += scope.hourStep) {
+                                scope.hsteps.push({ 'label': h, 'value': h });
+                            }
+                        }
+
+                        for (var m = 0; m < 60; m += scope.minueteStep)
                             scope.msteps.push(m);
                         
                         if (scope.ngModel) {
