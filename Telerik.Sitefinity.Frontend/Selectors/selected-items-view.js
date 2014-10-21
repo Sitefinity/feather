@@ -50,11 +50,13 @@
                         };
 
                         scope.sortItems = function (e) {
-                            var element = scope.selectedItems[e.oldIndex];
-                            scope.selectedItems.splice(e.oldIndex, 1);
-                            originalItems.splice(e.oldIndex, 1);
-                            scope.selectedItems.splice(e.newIndex, 0, element);
-                            originalItems.splice(e.newIndex, 0, element);
+                            var element = scope.selectedItems[e.newIndex];
+                            scope.selectedItems[e.newIndex] = scope.selectedItems[e.oldIndex];
+                            scope.selectedItems[e.oldIndex] = element;
+
+                            var originalElement = originalItems[e.newIndex];
+                            originalItems[e.newIndex] = originalItems[e.oldIndex];
+                            originalItems[e.oldIndex] = originalElement;
                         };
 
                         scope.itemClicked = function (item) {
