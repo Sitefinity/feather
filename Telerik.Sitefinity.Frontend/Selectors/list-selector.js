@@ -2,12 +2,13 @@
     angular.module('selectors')
         .directive('listSelector', ['$timeout', function ($timeout) {
             return {
-                restrict: "E",
+                restrict: 'E',
                 transclude: true,
                 scope: {
                     selectedItemId: '=?',
                     selectedItem: '=?',
                     provider: '=?', /* content-selector */
+                    change: '=',
                     taxonomyId: '=?', /* taxon-selector */
                     itemType: '=?', /* dynamic-items-selector */
                     identifierField: '=?'
@@ -247,6 +248,14 @@
 
                         scope.selectItem = function () {
                             if (scope.selectedItemInTheDialog) {
+                                if (scope.change) {
+                                    var changeArgs = {
+                                        "newSelectedItem": scope.selectedItemInTheDialog,
+                                        "oldSelectedItem": jQuery.extend(true, {}, scope.selectedItem)
+                                    };
+                                    scope.change.call(scope.$parent, changedArgs);
+                                }
+
                                 //set the selected item and its id to the mapped isolated scope properties
                                 scope.selectedItem = scope.selectedItemInTheDialog;
                                 scope.selectedItemId = scope.selectedItemInTheDialog.Id;
