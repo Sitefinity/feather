@@ -100,6 +100,8 @@
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
     <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />
     <Compile Include="MvcWidgets\MultipleSelectorVerifySelectedTabAndOrderingInAllTab.cs" />
+    <Compile Include="MvcWidgets\MvcReorderSelectedNewsItems.cs" />
+    <Compile Include="MvcWidgets\MvcSelectManyDynamicItems.cs" />
     <Compile Include="MvcWidgets\MvcSelectMoreThanOneDynamicItem.cs" />
     <Compile Include="MvcWidgets\MvcSelectMoreThanOneTag.cs" />
     <Compile Include="MvcWidgets\MvcSelectMoreThanOneNewsItem.cs" />

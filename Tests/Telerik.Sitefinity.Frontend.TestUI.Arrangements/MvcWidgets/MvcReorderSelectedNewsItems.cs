@@ -10,16 +10,16 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// MvcSelectMoreThanOneTag arragement.
+    /// MvcReorderSelectedNewsItems arragement.
     /// </summary>
-    public class MvcSelectMoreThanOneTag : ITestArrangement
+    public class MvcReorderSelectedNewsItems : ITestArrangement
     {
         [ServerSetUp]
         public void SetUp()
         {
             for (int i = 0; i < 20; i++)
             {
-                ServerOperations.Taxonomies().CreateTag(TagTitle + i);
+                ServerOperations.News().CreatePublishedNewsItem(newsTitle: NewsItemTitle + i, newsContent: NewsItemContent + i, author: NewsItemAuthor + i);
             }
 
             Guid pageId = ServerOperations.Pages().CreatePage(PageName);
@@ -33,7 +33,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         public void TearDown()
         {
             ServerOperations.Pages().DeleteAllPages();
-            ServerOperations.Taxonomies().ClearAllTags(TaxonomiesConstants.TagsTaxonomyId);
+            ServerOperations.News().DeleteAllNews();
+
             FeatherServerOperations.ResourcePackages().DeleteSelectorsData(DesignerViewFileName, JsonFileName, ControllerFileName);
         }
 
@@ -48,6 +49,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "SelectorWidget";
 
-        private const string TagTitle = "Tag Title";
+        private const string NewsItemTitle = "News Item Title";
+        private const string NewsItemContent = "This is a news item.";
+        private const string NewsItemAuthor = "NewsWriter";
     }
 }

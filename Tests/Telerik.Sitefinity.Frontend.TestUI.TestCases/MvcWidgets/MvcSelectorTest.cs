@@ -11,7 +11,7 @@ using Telerik.Sitefinity.Frontend.TestUI.Framework;
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 {
     /// <summary>
-    /// This is test class for MVC widget designer test.
+    /// This is test class for MvcSelectorTest.
     /// </summary>
     [TestClass]
     public class MvcSelectorTest_ : FeatherTestCase
@@ -20,8 +20,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// UI test MVCWidgetDefaultFeatherDesigner.
         /// </summary>
         [TestMethod,
-        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Feather team"),
-        TestCategory(FeatherTestCategories.PagesAndContent), Ignore]
+        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcSelectorTest()
         {
             BAT.Macros().NavigateTo().Pages();

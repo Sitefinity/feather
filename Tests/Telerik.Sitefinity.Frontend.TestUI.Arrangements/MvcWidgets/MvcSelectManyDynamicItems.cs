@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Telerik.Sitefinity.Frontend.TestUI.Arrangements.MvcWidgets;
 using Telerik.Sitefinity.Frontend.TestUtilities;
@@ -10,22 +11,23 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// MvcSelectMoreThanOneTag arragement.
+    /// MvcSelectManyDynamicItems arragement.
     /// </summary>
-    public class MvcSelectMoreThanOneTag : ITestArrangement
+    public class MvcSelectManyDynamicItems : ITestArrangement
     {
         [ServerSetUp]
         public void SetUp()
         {
-            for (int i = 0; i < 20; i++)
-            {
-                ServerOperations.Taxonomies().CreateTag(TagTitle + i);
-            }
+            FeatherServerOperations.ModuleBuilder().EnsureModuleIsImported(this.relatedDataDuplicateModule);
 
+            for (int i = 0; i < 50; i++)
+            {
+                ServerOperations.DynamicTypes().CreateDynamicItem("Telerik.Sitefinity.DynamicTypes.Model.DuplicateRelatedDataModule.Duplicaterelateddata", "SomeUrlName", title: ItemTitle + i);
+            }
+        
             Guid pageId = ServerOperations.Pages().CreatePage(PageName);
 
             FeatherServerOperations.ResourcePackages().ImportDataForSelectorsTests(FileResource, DesignerViewFileName, FileResourceJson, JsonFileName, ControllerFileResource, ControllerFileName);
-
             ServerOperations.Widgets().AddMvcWidgetToPage(pageId, typeof(DummyTextController).FullName, WidgetCaption);
         }
 
@@ -33,9 +35,16 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         public void TearDown()
         {
             ServerOperations.Pages().DeleteAllPages();
-            ServerOperations.Taxonomies().ClearAllTags(TaxonomiesConstants.TagsTaxonomyId);
+            ServerOperations.DynamicTypes().DeleteAllDynamicItemsForAllModules();
+            ServerOperations.ModuleBuilder().DeleteAllModules(string.Empty, "Module Installations");
+
             FeatherServerOperations.ResourcePackages().DeleteSelectorsData(DesignerViewFileName, JsonFileName, ControllerFileName);
         }
+
+        private readonly Dictionary<string, string> relatedDataDuplicateModule = new Dictionary<string, string>()
+        {
+             { "DuplicateRelatedDataModule", "Telerik.Sitefinity.Frontend.TestUtilities.Data.DuplicateRelatedDataModule.zip" }       
+        };
 
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Data.DesignerView.Selector.cshtml";
         private const string FileResourceJson = "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Data.DesignerView.Selector.json";
@@ -48,6 +57,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "SelectorWidget";
 
-        private const string TagTitle = "Tag Title";
+        private const string ItemTitle = "Item Title";
     }
 }

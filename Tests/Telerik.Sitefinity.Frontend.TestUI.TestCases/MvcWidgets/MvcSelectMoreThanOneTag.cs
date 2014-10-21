@@ -11,7 +11,7 @@ using Telerik.Sitefinity.Frontend.TestUI.Framework;
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 {
     /// <summary>
-    /// This is test class for MVC widget designer test.
+    /// This is test class for MvcSelectMoreThanOneTag.
     /// </summary>
     [TestClass]
     public class MvcSelectMoreThanOneTag_ : FeatherTestCase
@@ -20,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// UI test MVCWidgetDefaultFeatherDesigner.
         /// </summary>
         [TestMethod,
-        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Feather team"),
+        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcSelectMoreThanOneTag()
         {
@@ -40,9 +40,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedTagName15);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems + 1);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(5);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppearInSelectedTab(5);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(selectedTagNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(newSelectedTagNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
 
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
@@ -50,7 +50,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("TagsMultipleSelector");
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(5);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppearInSelectedTab(5);
         }
 
         /// <summary>
@@ -75,5 +75,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         private const string SelectedTagName15 = "Tag Title15";
 
         private readonly string[] selectedTagNames = { "Tag Title1", "Tag Title2", "Tag Title6", "Tag Title12" };
+        private readonly string[] newSelectedTagNames = { "Tag Title1", "Tag Title2", "Tag Title6", "Tag Title12", "Tag Title15" };
     }
 }
