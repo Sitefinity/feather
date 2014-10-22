@@ -34,7 +34,7 @@
                                     item.displayText = 'to: ' + item.toDate.toLocaleString();
                             }
                             else
-                                item.displayText = '';
+                                item.displayText = 'Any time';
                         };
 
                         validate = function (item) {
