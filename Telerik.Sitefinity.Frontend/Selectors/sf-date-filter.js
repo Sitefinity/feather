@@ -6,8 +6,8 @@
                 this.periodType = 'anyTime';
                 this.fromDate = null;
                 this.toDate = null;
-                this.timeSpanValue = null;
-                this.timeSpanInterval = 'days';
+                this.timeSpanValue = 1;
+                this.timeSpanInterval = 'weeks';
                 this.displayText = '';
             };
 
