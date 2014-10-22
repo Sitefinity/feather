@@ -34,7 +34,7 @@
                     <label for="periodToNow">
                         <input id="periodToNow" type="radio" value="periodToNow" ng-model="selectedItemInTheDialog.periodType"/>
                         Last
-                        <input type="number" ng-model="selectedItemInTheDialog.timeSpanValue" 
+                        <input type="number" min="1" ng-model="selectedItemInTheDialog.timeSpanValue" 
                                 ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'" />
                         <select ng-model="selectedItemInTheDialog.timeSpanInterval" 
                                 ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'">
@@ -58,6 +58,7 @@
                         </div>
                     </label>
                 </div>
+                <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
             </form>
         </div>
     </div>

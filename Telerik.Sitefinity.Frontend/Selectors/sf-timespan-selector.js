@@ -38,7 +38,13 @@
                         };
 
                         validate = function (item) {
-                            if (item.periodType == 'customRange' && item.fromDate && item.toDate) {
+                            if (item.periodType == 'periodToNow' && !item.timeSpanValue) {
+                                scope.errorMessage = 'Invalid period!';
+                                scope.showError = true;
+
+                                return false;
+                            }
+                            else if (item.periodType == 'customRange' && item.fromDate && item.toDate) {
                                 var isValid = item.fromDate < item.toDate;
 
                                 if (!isValid) {
@@ -48,9 +54,12 @@
 
                                 return isValid;
                             }
+                            else {
+                                scope.showError = false;
+                                scope.errorMessage = '';
 
-                            return true;
-
+                                return true;
+                            }
                         };
 
                         // ------------------------------------------------------------------------
@@ -91,6 +100,8 @@
 
                         scope.cancel = function () {
                             try {
+                                scope.showError = false;
+                                scope.errorMessage = '';
                                 scope.$modalInstance.close();
                             } catch (e) { }
                         };
