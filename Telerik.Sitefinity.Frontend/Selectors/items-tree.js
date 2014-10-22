@@ -20,32 +20,27 @@
                         // data: [{ text: 'asd', HasChildren: false }, { text: 'asd', HasChildren: true }],
                         schema: {
                             model: {
-                                //text: 'text',                                
-                                hasChildren: "HasChildren",
+                                id: 'Id',                                
+                                hasChildren: 'HasChildren'
                             }
                         },
-                        select: function (e) {
-                            alert(e);
+                        transport: {
+                            read: function (options) {
+                                var id = options.data.Id;
+
+                                if (id) {
+                                    scope.sfGetChildren({ parentId: id })
+                                        .then(function (data) {
+                                            options.success(data);
+                                        });
+                                }
+                            }
                         }
                     });
 
                     scope.$watchCollection('sfItems', function (newValue) {
                         scope.itemsDataSource.data(newValue);
                     });
-
-                    scope.expand = function (e) {
-                        var dataItem = e.sender.dataItem(e.node);
-                        if (dataItem && dataItem.Id) {
-                            scope.sfGetChildren({ parentId: dataItem.Id })
-                                .then(function (data) {
-                                    //dataItem.items = [];
-                                    //Array.prototype.push.apply(dataItem.items, data);
-                                    angular.forEach(data, function (item, _) {
-                                        dataItem.items.push(item);
-                                    });
-                                });
-                        }
-                    };
 
                     scope.select = function (e) {
                         var dataItem = e.sender.dataItem(e.node);
