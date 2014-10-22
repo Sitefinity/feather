@@ -9,10 +9,10 @@ using Telerik.Sitefinity.Frontend.TestUI.Framework;
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 {
     /// <summary>
-    /// Verifies selected tab in multiple selector and ordering in all tab of selected items.
+    /// Verifies multiple tags selector.
     /// </summary>
     [TestClass]
-    public class MultipleSelectorVerifySelectedTabAndOrderingInAllTab_ : FeatherTestCase
+    public class MultipleTagsSelector : FeatherTestCase
     {
         /// <summary>
         /// Verifies selected tab in multiple selector and ordering in all tab of selected items.
@@ -45,12 +45,37 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         }
 
         /// <summary>
+        /// Verifies items selection after switching to Advanced settings.
+        /// </summary>
+        [TestMethod,
+        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
+        TestCategory(FeatherTestCategories.PagesAndContent)]
+        public void MultipleSelectorVerifySelectionAfterSwitchingToAdvancedSettings()
+        {
+            BAT.Macros().NavigateTo().Pages();
+            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
+
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(TagItemsToAppearCount);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(selectedTagNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(selectedTagNames);
+
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickAdvancedButton();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSelectorButton();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(selectedTagNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
+        }
+
+        /// <summary>
         /// Creates a couple of tags and a page with dummy widget.
         /// </summary>
         protected override void ServerSetup()
         {
             BAT.Macros().User().EnsureAdminLoggedIn();
-            BAT.Arrange(this.TestName).ExecuteSetUp();
+            BAT.Arrange(ArrangementClassName).ExecuteSetUp();
         }
 
         /// <summary>
@@ -58,8 +83,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         protected override void ServerCleanup()
         {
-            BAT.Arrange(this.TestName).ExecuteTearDown();
+            BAT.Arrange(ArrangementClassName).ExecuteTearDown();
         }
+
+        private const string ArrangementClassName = "MultipleTagsSelector";
 
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "SelectorWidget";

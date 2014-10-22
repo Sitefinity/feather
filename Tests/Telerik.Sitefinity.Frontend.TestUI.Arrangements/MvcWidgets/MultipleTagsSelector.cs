@@ -13,7 +13,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
     /// <summary>
     /// Creates a couple of tags and a page with dummy widget. Deletes all tags and pages.
     /// </summary>
-    public class MultipleSelectorVerifySelectedTabAndOrderingInAllTab : ITestArrangement
+    public class MultipleTagsSelector : ITestArrangement
     {
         [ServerSetUp]
         public void SetUp()

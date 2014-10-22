@@ -11,10 +11,10 @@ using Telerik.Sitefinity.Frontend.TestUI.Framework;
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 {
     /// <summary>
-    /// This is test class for MvcSelectMoreThanOneDynamicItem.
+    /// This is test class for MvcSelectManyDynamicItems.
     /// </summary>
     [TestClass]
-    public class MvcSelectMoreThanOneDynamicItem_ : FeatherTestCase
+    public class MvcSelectManyDynamicItems_ : FeatherTestCase
     {
         /// <summary>
         /// UI test MVCWidgetDefaultFeatherDesigner.
@@ -22,7 +22,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         [TestMethod,
         Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
         TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void MvcSelectMoreThanOneDynamicItem()
+        public void MvcSelectManyDynamicItems()
+
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
@@ -30,27 +31,22 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("dynamicItemsMultipleSelector");
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(20);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(50);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(selectedNames);
             var countOfSelectedItems = selectedNames.Count();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText("Title15");
-
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(1);
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedItemName15);
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems + 1);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppearInSelectedTab(5);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppearInSelectedTab(14);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(newSelectedNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(selectedNamesInDesigner);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
 
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
 
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("dynamicItemsMultipleSelector");
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectMoreLink("and 9 more");
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppearInSelectedTab(5);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppearInSelectedTab(14);
         }
 
         /// <summary>
@@ -72,9 +68,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "SelectorWidget";
-        private const string SelectedItemName15 = "Item Title15";
 
-        private readonly string[] selectedNames = { "Item Title1", "Item Title2", "Item Title6", "Item Title16" };
-        private readonly string[] newSelectedNames = { "Item Title1", "Item Title2", "Item Title6", "Item Title16", "Item Title15" };
+        private readonly string[] selectedNames = { "Item Title1", "Item Title2", "Item Title6", "Item Title16", "Item Title11", "Item Title30",
+                                                       "Item Title21", "Item Title23", "Item Title24", "Item Title25", "Item Title49", "Item Title22", "Item Title31", "Item Title35" };
+        private readonly string[] selectedNamesInDesigner = { "Item Title1", "Item Title2", "Item Title6", "Item Title16", "Item Title11" };
     }
 }
