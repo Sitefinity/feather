@@ -128,9 +128,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         private const string TagPrefixName = "Tag Title";
         private const int TagItemsToAppearCount = 10;
 
-        private readonly string[] selectedTagNames = { "Tag Title1", "Tag Title2", "Tag Title6", "Tag Title9" };
-        private readonly string[] expectedOrderOfTagNames = { "Tag Title2", "Tag Title9", "Tag Title6", "Tag Title1" };
+        private readonly string[] selectedTagNames = { "Tag Title1", "Tag Title2", "Tag Title6", "Tag Title7", "Tag Title9" };
+        private readonly string[] expectedOrderOfTagNames = { "Tag Title2", "Tag Title1", "Tag Title7", "Tag Title6", "Tag Title9" };
 
-        private readonly Dictionary<int, int> reorderedIndexMapping = new Dictionary<int, int>() { {0, 4}, {1, 3} };
+        private readonly Dictionary<int, int> reorderedIndexMapping = new Dictionary<int, int>() { {0, 2}, {2, 4} };
     }
 }
