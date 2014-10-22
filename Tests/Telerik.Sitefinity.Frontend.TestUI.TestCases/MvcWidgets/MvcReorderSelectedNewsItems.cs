@@ -71,7 +71,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         private readonly string[] selectedNewsNames = { "News Item Title1", "News Item Title5", "News Item Title6", "News Item Title9" };
         private readonly string[] expectedOrderOfNames = { "News Item Title9", "News Item Title5", "News Item Title1", "News Item Title6" };
 
-        Dictionary<int, int> reorderedIndexMapping = new Dictionary<int, int>()
+        private readonly Dictionary<int, int> reorderedIndexMapping = new Dictionary<int, int>()
         {
             {3, 0},
             {1, 3}
