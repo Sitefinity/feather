@@ -253,7 +253,7 @@
                                         "newSelectedItem": scope.selectedItemInTheDialog,
                                         "oldSelectedItem": jQuery.extend(true, {}, scope.selectedItem)
                                     };
-                                    scope.change.call(scope.$parent, changedArgs);
+                                    scope.change.call(scope.$parent, changeArgs);
                                 }
 
                                 //set the selected item and its id to the mapped isolated scope properties
