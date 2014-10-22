@@ -97,7 +97,7 @@
                         var addChildDateQueryItem = function (dateItem, groupName) {
                             var groupItem = scope.queryData.getItemByName(groupName);
 
-                            if(!groupItem)
+                            if (!groupItem)
                                 groupItem = scope.queryData.addGroup(groupName, scope.groupLogicalOperator);
 
                             if (dateItem.periodType == 'periodToNow') {
@@ -155,7 +155,8 @@
                             if (groupToRemove)
                                 scope.queryData.removeGroup(groupToRemove);
 
-                            addChildDateQueryItem(newSelectedDateItem, scope.queryFieldName);
+                            if (newSelectedDateItem.periodType != "anyTime")
+                                addChildDateQueryItem(newSelectedDateItem, scope.queryFieldName);
                         };
                         
                         scope.toggleDateSelection = function (filterName) {
