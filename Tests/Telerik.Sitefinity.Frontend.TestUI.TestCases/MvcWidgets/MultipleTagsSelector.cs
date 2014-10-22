@@ -20,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         [TestMethod,
         Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
         TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void MultipleSelectorVerifySelectedTabAndOrderingInAllTab()
+        public void MultipleTagsSelectorVerifySelectedTabAndOrderingInAllTab()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
@@ -50,7 +50,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         [TestMethod,
         Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
         TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void MultipleSelectorVerifySelectionAfterSwitchingToAdvancedSettings()
+        public void MultipleTagsSelectorVerifySelectionAfterSwitchingToAdvancedSettings()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
@@ -67,6 +67,38 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSelectorButton();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(selectedTagNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
+        }
+
+        /// <summary>
+        /// Verifies selected items reordering from top to bottom for tag items.
+        /// </summary>
+        [TestMethod,
+        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
+        TestCategory(FeatherTestCategories.PagesAndContent)]
+        public void MultipleTagsSelectorVerifySelectedItemsReorderingFromTopToBottom()
+        {
+            BAT.Macros().NavigateTo().Pages();
+            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
+
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(TagItemsToAppearCount);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(selectedTagNames);
+            var countOfSelectedItems = selectedTagNames.Count();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);
+
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppearInSelectedTab(countOfSelectedItems);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ReorderSelectedItems(expectedOrderOfTagNames, selectedTagNames, reorderedIndexMapping);
+
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(expectedOrderOfTagNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
+
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(expectedOrderOfTagNames);
         }
 
         /// <summary>
@@ -96,6 +128,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         private const string TagPrefixName = "Tag Title";
         private const int TagItemsToAppearCount = 10;
 
-        private readonly string[] selectedTagNames = { "Tag Title1", "Tag Title2", "Tag Title6" };
+        private readonly string[] selectedTagNames = { "Tag Title1", "Tag Title2", "Tag Title6", "Tag Title9" };
+        private readonly string[] expectedOrderOfTagNames = { "Tag Title2", "Tag Title9", "Tag Title6", "Tag Title1" };
+
+        private readonly Dictionary<int, int> reorderedIndexMapping = new Dictionary<int, int>() { {0, 4}, {1, 3} };
     }
 }
