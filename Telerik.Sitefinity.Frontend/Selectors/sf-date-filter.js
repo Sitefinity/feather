@@ -44,13 +44,14 @@
                         };
 
                         var translateDateFilterToTimeSpanItem = function (filterValue, timeSpanItem) {
-                            var measure = filterValue.match(/\(([^)]+)\)/)[1];
-                            timeSpanItem.timeSpanValue = -parseInt(measure);
+                            var spanValue = filterValue.match(/\(([^)]+)\)/)[1];
+                            spanValue = -parseInt(spanValue);
+                            timeSpanItem.timeSpanValue = spanValue;
 
                             if (filterValue.indexOf('AddDays') > 0) {
-                                var weeksCount = Math.floor(measure / 7);
-                                var rem = measure % 7;
-                                if (rem === 0 && weeksCount !=- 0) {
+                                var weeksCount = Math.floor(spanValue / 7);
+                                var rem = spanValue % 7;
+                                if (rem === 0 && weeksCount !== 0) {
                                     timeSpanItem.timeSpanInterval = 'weeks';
                                     timeSpanItem.timeSpanValue = weeksCount;
                                 }
