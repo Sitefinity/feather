@@ -30,7 +30,7 @@
                     provider: provider,
                     filter: filter
                 }).$promise;
-            }
+            };
 
             return {
                 getItems: getItems,
