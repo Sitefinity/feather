@@ -2,8 +2,8 @@
     angular.module('selectors')
         .directive('dynamicItemsSelector', ['dataService', function (dataService) {
             return {
-                require: "^listSelector",
-                restrict: "A",
+                require: '^listSelector',
+                restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search) {
