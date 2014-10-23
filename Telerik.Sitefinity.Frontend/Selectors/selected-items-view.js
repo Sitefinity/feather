@@ -97,7 +97,8 @@
                             placeholder: function (element) {
                                 return $('<div class="list-group-item list-group-item-placeholder"></div>');
                             },
-                            handler: ".handler"
+                            handler: ".handler",
+                            axis: "y"
                         };
                     }
                 }

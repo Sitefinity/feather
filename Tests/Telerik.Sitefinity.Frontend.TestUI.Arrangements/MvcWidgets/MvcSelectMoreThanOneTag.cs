@@ -10,7 +10,7 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// MvcSelectorTest arragement.
+    /// MvcSelectMoreThanOneTag arragement.
     /// </summary>
     public class MvcSelectMoreThanOneTag : ITestArrangement
     {

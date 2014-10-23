@@ -11,7 +11,7 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// MvcSelectorTest arragement.
+    /// MvcSelectMoreThanOneDynamicItem arragement.
     /// </summary>
     public class MvcSelectMoreThanOneDynamicItem : ITestArrangement
     {

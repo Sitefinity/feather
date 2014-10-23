@@ -120,6 +120,9 @@
     <Compile Include="GridWidgets\AddGridWidgetToToolboxForPageTemplate.cs" />
     <Compile Include="GridWidgets\ManagaGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
+    <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
+    <Compile Include="MvcWidgets\MvcReorderSelectedNewsItems.cs" />
+    <Compile Include="MvcWidgets\MvcSelectManyDynamicItems.cs" />
     <Compile Include="MvcWidgets\MvcSelectMoreThanOneDynamicItem.cs" />
     <Compile Include="MvcWidgets\MvcDynamicSelectorTest.cs" />
     <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />

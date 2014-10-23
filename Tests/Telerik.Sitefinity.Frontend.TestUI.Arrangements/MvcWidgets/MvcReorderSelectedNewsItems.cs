@@ -10,9 +10,9 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// MvcSelectMoreThanOneNewsItem arragement.
+    /// MvcReorderSelectedNewsItems arragement.
     /// </summary>
-    public class MvcSelectMoreThanOneNewsItem : ITestArrangement
+    public class MvcReorderSelectedNewsItems : ITestArrangement
     {
         [ServerSetUp]
         public void SetUp()
@@ -24,7 +24,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 
             Guid pageId = ServerOperations.Pages().CreatePage(PageName);
 
-            FeatherServerOperations.ResourcePackages().ImportDataForSelectorsTests(FileResource, DesignerViewFileName, FileResourceJson, JsonFileName, ControllerFileResource, ControllerFileName); 
+            FeatherServerOperations.ResourcePackages().ImportDataForSelectorsTests(FileResource, DesignerViewFileName, FileResourceJson, JsonFileName, ControllerFileResource, ControllerFileName);
 
             ServerOperations.Widgets().AddMvcWidgetToPage(pageId, typeof(DummyTextController).FullName, WidgetCaption);
         }
