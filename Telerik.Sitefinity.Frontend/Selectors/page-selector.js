@@ -26,8 +26,8 @@
                         };
 
                         ctrl.getSpecificItems = function (ids) {
-                            //var provider = ctrl.$scope.provider;
-                            //return pageService.getSpecificItems(ids, provider);
+                            var provider = ctrl.$scope.provider;
+                            return pageService.getSpecificItems(ids, provider);
                         };
 
                         ctrl.onSelectedItemsLoadedSuccess = function (data) {
