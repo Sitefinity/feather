@@ -16,7 +16,7 @@
                     siteId: siteId,
                     filter: search
                 }).$promise;
-            }
+            };
 
             return {
                 getItems: getItems

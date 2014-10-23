@@ -359,7 +359,7 @@
 
                         scope.getChildren = function (parentId) {
                             return ctrl.getChildren(parentId, scope.filter.searchString);
-                        }
+                        };
 
                         scope.getSelectedIds = function () {
                             if (attrs.multiselect) {
