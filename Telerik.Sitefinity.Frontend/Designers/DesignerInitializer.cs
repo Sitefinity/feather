@@ -48,19 +48,19 @@ namespace Telerik.Sitefinity.Frontend.Designers
             {
                 var scriptRootPath = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly);
 
-                var references = PageManager.GetScriptReferences(ScriptRef.KendoWeb);
-                foreach (var scriptRef in references)
-                {
-                    @event.Scripts.Add(scriptRef);
-                }
+                ////var references = PageManager.GetScriptReferences(ScriptRef.KendoWeb);
+                ////foreach (var scriptRef in references)
+                ////{
+                ////    @event.Scripts.Add(scriptRef);
+                ////}
 
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Angular/angular.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Angular/angular-route.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls-0.11.0.min.js"));
-
+                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/kendo.all.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor-services.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor.js"));
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/angular-kendo.js"));
+                ////@event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/angular-kendo.js"));
 
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/LABjs/LAB.min.js"));
 

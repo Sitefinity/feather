@@ -142,6 +142,8 @@
                 getRootedUrl: customContext.getRootedUrl || sitefinity.getRootedUrl,
                 getEmbeddedResourceUrl: customContext.getEmbeddedResourceUrl || sitefinity.getEmbeddedResourceUrl,
                 getFrontendLanguages: customContext.getFrontendLanguages || sitefinity.getFrontendLanguages,
+                getCurrentFrontendRootNodeId: customContext.getCurrentFrontendRootNodeId || sitefinity.getCurrentFrontendRootNodeId,
+                setCurrentFrontendRootNodeId: customContext.setCurrentFrontendRootNodeId || sitefinity.setCurrentFrontendRootNodeId,
                 getUICulture: function () {
                     if ($injector.has('widgetContext')) {
                         return $injector.get('widgetContext').culture;

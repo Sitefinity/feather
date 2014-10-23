@@ -1,12 +1,12 @@
 ﻿(function () {
     angular.module('selectors')
-        .directive('sfPageSelector', ['sfPageService', function (pageService) {
+        .directive('sfPageSelector', ['sfPageService', "serverContext", function (pageService, serverContext) {
             return {
                 require: '^listSelector',
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        var rootPage = 'f669d9a7-009d-4d83-ddaa-000000000002';
+                        var rootPage = serverContext.getCurrentFrontendRootNodeId();
 
                         var getItems = function (parentId, search) {
                             var siteId = ctrl.$scope.siteId;
