@@ -2,5 +2,5 @@
          k-data-source="itemsDataSource"
          k-template="itemTemplate"
          k-on-select="select(kendoEvent)"
-         k-on-expand="expand(kendoEvent)" 
-         k-checkboxes="true"/>
+         k-checkboxes="sfMultiselect ? checkboxes : false"
+         k-load-on-demand="true"/>

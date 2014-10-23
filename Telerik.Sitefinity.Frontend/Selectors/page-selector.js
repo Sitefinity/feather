@@ -12,11 +12,11 @@
                             var siteId = ctrl.$scope.siteId;
                             var provider = ctrl.$scope.provider;
                             return pageService.getItems(parentId, siteId, provider, search);
-                        }
+                        };
 
                         ctrl.getItems = function (skip, take, search) {
                             return getItems(rootPage, search);
-                        }
+                        };
 
                         ctrl.getChildren = function (parentId, search) {                            
                             return getItems(parentId, search)

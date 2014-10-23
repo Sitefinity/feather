@@ -4,7 +4,9 @@
             return {
                 restrict: 'E',
                 scope: {
+                    sfMultiselect: '=',
                     sfItems: '=',
+                    sfSelectItem: '&',
                     sfItemSelected: '&',
                     sfGetChildren: '&',
                     sfIdentifierFieldValue: '&'
@@ -16,16 +18,23 @@
                 },
                 link: function (scope, element, attrs) {
                     scope.itemsDataSource = new kendo.data.HierarchicalDataSource({
-                        //data: scope.sfItems,
-                        // data: [{ text: 'asd', HasChildren: false }, { text: 'asd', HasChildren: true }],
                         schema: {
                             model: {
-                                //text: 'text',                                
-                                hasChildren: "HasChildren",
+                                id: 'Id',
+                                hasChildren: 'HasChildren'
                             }
                         },
-                        select: function (e) {
-                            alert(e);
+                        transport: {
+                            read: function (options) {
+                                var id = options.data.Id;
+
+                                if (id) {
+                                    scope.sfGetChildren({ parentId: id })
+                                        .then(function (data) {
+                                            options.success(data);
+                                        });
+                                }
+                            }
                         }
                     });
 
@@ -33,29 +42,17 @@
                         scope.itemsDataSource.data(newValue);
                     });
 
-                    scope.expand = function (e) {
-                        var dataItem = e.sender.dataItem(e.node);
-                        if (dataItem && dataItem.Id) {
-                            scope.sfGetChildren({ parentId: dataItem.Id })
-                                .then(function (data) {
-                                    //dataItem.items = [];
-                                    //Array.prototype.push.apply(dataItem.items, data);
-                                    angular.forEach(data, function (item, _) {
-                                        dataItem.items.push(item);
-                                    });
-                                });
-                        }
-                    };
-
                     scope.select = function (e) {
                         var dataItem = e.sender.dataItem(e.node);
-                        scope.sfItemSelected({ dataItem: dataItem });
+                        scope.sfSelectItem({ dataItem: dataItem });
                     };
 
-                    scope.itemTemplate = "<a ng-class=\"{'list-group-item':true }\" style='text-overflow: ellipsis; overflow: hidden;'>{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</a>";
-                    //scope.itemTemplate = "<span style='cursor:hand'>{{ dataItem.Title.Value }}</span>";
-                    //scope.itemTemplate = "<span style='cursor:hand'>{{dataItem.title}}</span>";
+                    scope.checkboxes = {
+                        template: '<input type="checkbox" ng-click="sfSelectItem({ dataItem: dataItem })" ng-checked="sfItemSelected({dataItem: dataItem})">'
+                    };
+
+                    scope.itemTemplate = "<a ng-class=\"{'list-group-item':true, 'active': sfItemSelected({dataItem: dataItem}) }\" style='text-overflow: ellipsis; overflow: hidden;'>{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</a>";
                 }
-            }
+            };
         }]);
 })();
