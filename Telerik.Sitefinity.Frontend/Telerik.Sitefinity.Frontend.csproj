@@ -457,6 +457,12 @@
     <EmbeddedResource Include="Services\data-service.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Selectors\selected-items-view.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\selected-items-view.html" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Selectors\sf-date-time-picker.html" />
   </ItemGroup>
   <ItemGroup>

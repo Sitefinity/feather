@@ -2,43 +2,35 @@
     angular.module('selectors')
         .directive('taxonSelector', ['flatTaxonService', function (flatTaxonService) {
             // Tags Id
-            var defaultTaxonomyId = 'cb0f3a19-a211-48a7-88ec-77495c0f5374';
+            var defaultTaxonomyId = "cb0f3a19-a211-48a7-88ec-77495c0f5374";
+            var emptyGuid = "00000000-0000-0000-0000-000000000000";
 
             return {
                 require: '^listSelector',
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        var taxonomyId;
-                        if (ctrl.getTaxonomyId() && ctrl.getTaxonomyId() !== '00000000-0000-0000-0000-000000000000') {
-                            taxonomyId = ctrl.getTaxonomyId();
-                        }
-                        else {
+                        var taxonomyId = ctrl.$scope.taxonomyId;
+                        if (!taxonomyId || taxonomyId === emptyGuid) {
                             taxonomyId = defaultTaxonomyId;
                         }
 
-                        ctrl.getItems = function (skip, take, search) {
-                            return flatTaxonService.getTaxons(taxonomyId, skip, take, search);
+                        ctrl.getItems = function (skip, take, search, frontendLanguages) {
+                            return flatTaxonService.getTaxons(taxonomyId, skip, take, search, frontendLanguages);
                         };
 
-                        ctrl.getItem = function (id) {
-                            return flatTaxonService.getTaxon(taxonomyId, id);
+                        ctrl.getSpecificItems = function (ids) {
+                            return flatTaxonService.getSpecificItems(taxonomyId, ids);
                         };
 
-                        ctrl.onSelectedItemLoadedSuccess = function (data) {
-                            if (!ctrl.getSelectedItem()) {
-                                ctrl.updateSelectedItem(data);
-                            }
-
-                            if (!ctrl.getSelectedItemId()) {
-                                ctrl.updateSelectedItemId(data.Id);
-                            }
+                        ctrl.onSelectedItemsLoadedSuccess = function (data) {
+                            ctrl.updateSelection(data.Items);
                         };
 
-                        ctrl.setSelectorType('TaxonSelector');
-
+                        ctrl.selectorType = 'TaxonSelector';
                         ctrl.templateUrl = 'Selectors/taxon-selector.html';
-                        ctrl.setPartialTemplate('taxon-selector-template');
+
+                        ctrl.$scope.partialTemplate = 'taxon-selector-template';
                     }
                 }
             };
