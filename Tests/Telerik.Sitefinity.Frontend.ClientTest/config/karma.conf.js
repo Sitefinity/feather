@@ -8,6 +8,8 @@ module.exports = function(config){
       'helpers/angular-route.js',
       'helpers/angular-resource.js',
       'helpers/angular-mocks.js',
+      'helpers/kendo.web.min.js',
+      'helpers/angular-kendo.js',
       '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls-0.11.0.min.js',
      
       '../../Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',

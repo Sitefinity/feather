@@ -18,12 +18,38 @@
             $scope.properties["DummyText"].PropertyValue = newValue;
         });
 
+        $scope.$watch('properties.SelectedIdsNewsItems.PropertyValue', function (newValue, oldValue) {
+            $scope.SelectedIdsNewsItems = newValue ? newValue.split(',') : null;
+        });
+
+        $scope.$watch('SelectedIdsNewsItems', function (newValue, oldValue) {
+            $scope.properties.SelectedIdsNewsItems.PropertyValue = newValue ? newValue.join(',') : null;
+        });
+
+        $scope.$watch('properties.SelectedIdsTags.PropertyValue', function (newValue, oldValue) {
+            $scope.SelectedIdsTags = newValue ? newValue.split(',') : null;
+        });
+
+        $scope.$watch('SelectedIdsTags', function (newValue, oldValue) {
+            $scope.properties.SelectedIdsTags.PropertyValue = newValue ? newValue.join(',') : null;
+        });
+
+        $scope.$watch('properties.SelectedIdsDynamicItems.PropertyValue', function (newValue, oldValue) {
+            $scope.SelectedIdsDynamicItems = newValue ? newValue.split(',') : null;
+        });
+
+        $scope.$watch('SelectedIdsDynamicItems', function (newValue, oldValue) {
+            $scope.properties.SelectedIdsDynamicItems.PropertyValue = newValue ? newValue.join(',') : null;
+        });
+
         $scope.itemType = "Telerik.Sitefinity.DynamicTypes.Model.DuplicateRelatedDataModule.Duplicaterelateddata";
 
         propertyService.get()
             .then(function (data) {
                 if (data) {
                     $scope.properties = propertyService.toAssociativeArray(data.Items);
+                    $scope.selectedItem = $scope.properties.SelectedNews.PropertyValue;
+                    $scope.testDynamicModules = $scope.properties.TestDynamicModules.PropertyValue;              
                 }
             },
             function (data) {

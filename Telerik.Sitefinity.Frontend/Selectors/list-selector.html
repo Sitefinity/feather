@@ -1,17 +1,34 @@
-﻿<div ng-attr-id="{{selectorId}}">
-    <div id="selectedItemsPlaceholder">
-        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
-        <div ng-hide="showError">
-            <span class="label label-default" ng-bind="bindIdentifierField(selectedItem)"></span>
-            <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
-                <span ng-hide="isItemSelected()">Select</span>
-                <span ng-show="isItemSelected()">Change</span>
-            </button>
-        </div>
-    </div>
-    <div class="contentSelector" modal template-url="{{partialTemplate}}" open-button="{{openSelectorButtonId}}" window-class="sf-designer-dlg" existing-scope="true">
-        <div ng-include="getTemplate()">
+﻿<div id="selectedItemsPlaceholder">
+    <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
+    <div ng-hide="showError">
+        <div ng-repeat="item in selectedItems | limitTo:5" class="label label-taxon">
+            <span data-index="{{$index}}"
+                 ng-bind="bindIdentifierField(item)">
+            </span>
         </div>
+
+<!--
+        # This is the markup for selected news
+
+        <div class="list-group">
+            <div ng-repeat="item in selectedItems | limitTo:5" class="list-group-item">
+                <div data-index="{{$index}}"
+                     ng-bind="bindIdentifierField(item)">
+                </div>
+            </div>
+        </div> -->
+
+        <a class="small" ng-click="open()" ng-show="selectedItems.length > 5">and {{selectedItems.length - 5}} more</a>
+
+        <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
+            <span ng-hide="isItemSelected()">Select</span>
+            <span ng-show="isItemSelected()">Change</span>
+        </button>
+    </div>
+</div>
+<div class="contentSelector" modal template-url="{{partialTemplate}}" window-class="sf-designer-dlg selector-dlg" existing-scope="true">
+    <div ng-include="getTemplate()">
+
     </div>
 </div>
