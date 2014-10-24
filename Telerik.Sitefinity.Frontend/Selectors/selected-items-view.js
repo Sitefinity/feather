@@ -6,7 +6,8 @@
                 scope: {
                     items: '=?',
                     selectedItems: '=?',
-                    identifierField: '=?'
+                    identifierField: '=?',
+                    searchIdentifierField: '=?',
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -32,8 +33,13 @@
                         };
 
                         scope.bindIdentifierField = function (item) {
+                            return bindSearchIdentifierField(item, identifierField);
+                        };
+
+                        var bindSearchIdentifierField = function (item, filterIdentifierField) {
                             if (item) {
-                                var mainField = item[identifierField];
+                                var mainField = item[filterIdentifierField];
+
                                 var valueProp = 'Value';
 
                                 if (!mainField) {
@@ -47,7 +53,7 @@
                                     return mainField.Value;
                                 }
                             }
-                        };
+                        }
 
                         scope.sortItems = function (e) {
                             var element = scope.selectedItems[e.oldIndex];
@@ -80,7 +86,12 @@
                                 }
                                 else {
                                     for (var i = 0; i < originalItems.length; i++) {
-                                        if (scope.bindIdentifierField(originalItems[i].item).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                        if (scope.searchIdentifierField) {
+                                            if (bindSearchIdentifierField(originalItems[i].item, scope.searchIdentifierField).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                                scope.items.push(originalItems[i]);
+                                            }
+                                        }
+                                        else if (scope.bindIdentifierField(originalItems[i].item).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
                                             scope.items.push(originalItems[i]);
                                         }
                                     }

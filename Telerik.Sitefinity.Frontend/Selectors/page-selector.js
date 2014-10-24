@@ -49,6 +49,8 @@
                         ctrl.$scope.hierarchical = true;
 
                         ctrl.$scope.identifierField = "TitlesPath";
+
+                        ctrl.$scope.searchIdentifierField = "Title";
                     }
                 }
             };
