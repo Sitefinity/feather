@@ -102,6 +102,43 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         }
 
         /// <summary>
+        /// Verifies search in Selected tab.
+        /// </summary>
+        [TestMethod,
+        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
+        TestCategory(FeatherTestCategories.PagesAndContent)]
+        public void MultipleTagsSelectorVerifySearchInSelectedTab()
+        {
+            BAT.Macros().NavigateTo().Pages();
+            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
+
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(TagItemsToAppearCount);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(selectedTagNames);
+            var countOfSelectedItems = selectedTagNames.Count();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);
+
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppearInSelectedTab(countOfSelectedItems);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyReorderingIconVisibility(SelectedTagItemsCount, false);
+
+            //// filter selected results and verify correct span css class is applied
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText(SearchText);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppearInSelectedTab(1);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyReorderingIconVisibility(FilteredTagItemsCount, true);
+
+            //// clear search and verify that correct span css class is applied
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText("");
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyReorderingIconVisibility(SelectedTagItemsCount, false);
+
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(selectedTagNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
+        }
+
+        /// <summary>
         /// Creates a couple of tags and a page with dummy widget.
         /// </summary>
         protected override void ServerSetup()
@@ -126,7 +163,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         private const string SelectedTabAfterSelection = "Selected";
         private const string TagSelectorName = "TagsMultipleSelector";
         private const string TagPrefixName = "Tag Title";
+        private const string SearchText = "Title2";
         private const int TagItemsToAppearCount = 10;
+        private const int SelectedTagItemsCount = 5;
+        private const int FilteredTagItemsCount = 1;
 
         private readonly string[] selectedTagNames = { "Tag Title1", "Tag Title2", "Tag Title6", "Tag Title7", "Tag Title9" };
         private readonly string[] expectedOrderOfTagNames = { "Tag Title2", "Tag Title1", "Tag Title7", "Tag Title6", "Tag Title9" };

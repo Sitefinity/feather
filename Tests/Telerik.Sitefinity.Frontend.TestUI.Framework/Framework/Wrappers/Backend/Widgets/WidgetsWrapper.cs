@@ -249,14 +249,30 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// <param name="text">The text to be searched for.</param>
         public void SetSearchText(string text)
         {
-            HtmlInputText input = this.EM.Widgets.FeatherWidget.SearchInput
-                                      .AssertIsPresent("input");
+            var inputList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlInputText>("ng-model=filter.searchString");
 
-            input.ScrollToVisible();
-            input.Focus();
-            input.MouseClick();
-
-            Manager.Current.Desktop.KeyBoard.TypeText(text);
+            foreach(var inputElement in inputList)
+            {
+                if (inputElement.IsVisible())
+                {
+                    inputElement.Focus();
+                    inputElement.MouseClick();
+                    if (text != "")
+                    {
+                        inputElement.Text = string.Empty;
+                        Manager.Current.Desktop.KeyBoard.TypeText(text);
+                    }
+                    else
+                    {
+                        //// select all and delete current text typing
+                        Manager.Current.Desktop.KeyBoard.KeyDown(System.Windows.Forms.Keys.Control);
+                        Manager.Current.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.A);
+                        Manager.Current.Desktop.KeyBoard.KeyUp(System.Windows.Forms.Keys.Control);
+                        Manager.Current.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Back);
+                    }
+                    break;
+                }
+            }
 
             ActiveBrowser.WaitForAsyncRequests();
             ActiveBrowser.RefreshDomTree();
@@ -386,8 +402,31 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void SelectMoreLink(string name)
         {
             var link = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlAnchor>(a => a.InnerText.Contains(name));
-            link.AssertIsPresent("item name not present");
+            link.AssertIsPresent("more link is not present");
             link.Click();
+        }
+
+        /// <summary>
+        /// Verifies search result span element.
+        /// </summary>
+        /// <param name="expectedSpanCount">expected count of span elements</param>
+        /// <param name="isHiddenSpan">should span decorations be hidden</param>
+        public void VerifyReorderingIconVisibility(int expectedSpanCount, bool isHiddenSpan)
+        {
+            ActiveBrowser.RefreshDomTree();
+
+            ICollection<HtmlSpan> spanList = null;
+            if (isHiddenSpan)
+            {
+                spanList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlSpan>("class=handler list-group-item-drag ng-hide");
+            }
+            else
+            {
+                spanList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlSpan>("class=handler list-group-item-drag");
+            }
+            int actualSpanCount = spanList.Count;
+
+            Assert.AreEqual(expectedSpanCount, actualSpanCount, "Expected and actual count of span elements are not equal.");
         }
 
         private Element GetContentSelectorByName(string cssClass)
