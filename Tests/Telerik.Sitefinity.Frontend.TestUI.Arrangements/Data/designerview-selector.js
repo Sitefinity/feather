@@ -1,7 +1,7 @@
 ﻿(function ($) {
     var designerModule = angular.module('designer');
 
-    angular.module('designer').requires.push('selectors');
+    angular.module('designer').requires.push('sfSelectors');
 
     //This is basic controller for the "ManageItems" designer view.
     designerModule.controller('SelectorCtrl', ['$scope', 'propertyService', function ($scope, propertyService) {

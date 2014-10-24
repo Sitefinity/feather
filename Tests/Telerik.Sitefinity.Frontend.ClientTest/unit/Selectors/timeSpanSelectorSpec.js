@@ -22,7 +22,7 @@ describe("timeSpan selector", function () {
     beforeEach(module('modalDialog'));
 
     //Load themodule under test.
-    beforeEach(module('selectors'));
+    beforeEach(module('sfSelectors'));
 
     //Load the module that contains the cached tempaltes.
     beforeEach(module('templates'));

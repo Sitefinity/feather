@@ -7,11 +7,11 @@
 	"Services/flat-taxon-service.js",
 	"Services/taxonomy-service.js",
 	"Services/data-service.js",
-	"Selectors/selectors.js",
-	"Selectors/list-selector.js",
-	"Selectors/news-selector.js",
-	"Selectors/dynamic-items-selector.js",
-	"Selectors/taxon-selector.js",
-	"Selectors/selected-items-view.js"
+	"Selectors/sf-selectors.js",
+	"Selectors/sf-list-selector.js",
+	"Selectors/sf-news-selector.js",
+	"Selectors/sf-dynamic-items-selector.js",
+	"Selectors/sf-taxon-selector.js",
+	"Selectors/sf-selected-items-view.js"
   ]
 }

@@ -7,9 +7,9 @@
             {{taxonomy.Title}}...			
     </label>
 	
-    <list-selector taxon-selector ng-show="selectedTaxonomies.hasOwnProperty(taxonomy.Name)"
+    <sf-list-selector sf-taxon-selector ng-show="selectedTaxonomies.hasOwnProperty(taxonomy.Name)"
                 selected-item-id="selectedTaxonomies[taxonomy.Name]"
                 provider="provider"
                 taxonomy-id ="taxonomy.Id"
-                change ="change"></list-selector>
+                change ="change"></sf-list-selector>
 </div>
