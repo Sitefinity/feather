@@ -53,7 +53,7 @@
                                     return mainField.Value;
                                 }
                             }
-                        }
+                        };
 
                         scope.sortItems = function (e) {
                             var element = scope.selectedItems[e.oldIndex];
