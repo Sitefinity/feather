@@ -11,6 +11,14 @@
             link: function (scope, element, attrs) {
                 var timeoutPromise = false;
 
+                var setFilterIsEmpty = function () {
+                    if (scope.filter) {
+                        scope.filter.isEmpty = !scope.filter.searchString;
+                    }
+                };
+                
+                setFilterIsEmpty();
+
                 scope.applyFilter = function (value) {
                     if (timeoutPromise) {
                         $timeout.cancel(timeoutPromise);
@@ -18,6 +26,8 @@
 
                     timeoutPromise = $timeout(function () {
                         scope.filter.search(scope.filter.searchString);
+
+                        setFilterIsEmpty();
                     }, scope.filter.timeoutMs);
                 };
             }

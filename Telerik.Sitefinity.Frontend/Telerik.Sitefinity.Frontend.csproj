@@ -426,6 +426,7 @@
     <EmbeddedResource Include="Selectors\page-selector.js" />
     <EmbeddedResource Include="Selectors\page-selector.html" />
     <EmbeddedResource Include="Selectors\items-tree.html" />
+    <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
     <Content Include="Services\page-service.js" />
     <EmbeddedResource Include="Selectors\items-tree.js" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
@@ -465,7 +466,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

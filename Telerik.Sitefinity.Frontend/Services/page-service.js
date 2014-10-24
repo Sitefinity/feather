@@ -14,17 +14,28 @@
             };
 
             var getItems = function (parentId, siteId, provider, search) {
-                return getResource('hierarchy/' + parentId).get({
-                    provider: provider,
-                    siteId: siteId,
-                    filter: search
-                }).$promise;
+                if (search) {
+                    var filter = serviceHelper.filterBuilder()
+                                              .searchFilter(search)
+                                              .getFilter();
+                    return getResource().get({
+                                            provider: provider,
+                                            filter: filter
+                                        }).$promise;
+                }
+                else {
+                    return getResource('hierarchy/' + parentId).get({
+                        provider: provider,
+                        siteId: siteId,
+                        filter: search
+                    }).$promise;
+                }
             };
 
             var getSpecificItems = function (ids, provider) {
                 var filter = serviceHelper.filterBuilder()
-                    .specificItemsFilter(ids)
-                    .getFilter();
+                                          .specificItemsFilter(ids)
+                                          .getFilter();
 
                 return getResource().get({
                     provider: provider,

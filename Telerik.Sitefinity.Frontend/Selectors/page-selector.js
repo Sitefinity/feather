@@ -6,6 +6,7 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
+
                         var rootPage = serverContext.getCurrentFrontendRootNodeId();
 
                         var getItems = function (parentId, search) {
@@ -37,6 +38,7 @@
                         ctrl.selectorType = 'PageSelector';
                         ctrl.templateUrl = 'Selectors/page-selector.html';
                         ctrl.$scope.partialTemplate = 'page-selector-template';
+                        ctrl.$scope.identifierField = "TitlesPath";
                     }
                 }
             };
