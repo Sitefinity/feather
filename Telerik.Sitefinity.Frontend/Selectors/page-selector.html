@@ -25,14 +25,7 @@
                         </span>
                         <items-filter filter='filter'></items-filter>
                     </div>
-                    <div endless-scroll paging='paging' class="list-group list-group-endless">
-                        <!--<a ng-repeat="item in items"
-                                        ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
-                                        ng-click="itemClicked($index, item)"
-                                        style="text-overflow: ellipsis; overflow: hidden;">
-                                    <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
-                            <div ng-bind="bindIdentifierField(item)"></div>
-                        </a>-->
+                    <div class="list-group list-group-endless">
                         <sf-items-tree
                             ng-show="filter.isEmpty"
                             sf-multiselect="multiselect"

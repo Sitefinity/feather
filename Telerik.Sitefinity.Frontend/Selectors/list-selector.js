@@ -211,7 +211,10 @@
                             placeholder: 'Narrow by typing',
                             timeoutMs: 500,
                             search: function (keyword) {
-                                angular.element($("[endless-scroll]"))[0].scrollTop = 0;
+                                var endlessScroll = angular.element($("[endless-scroll]"))[0];
+                                if (endlessScroll) {
+                                    endlessScroll.scrollTop = 0;
+                                }
                                 scope.showLoadingIndicator = true;
                                 scope.paging.skip = 0;
                                 var skip = scope.paging.skip;
@@ -237,7 +240,7 @@
                                 }
                                 else {
                                     Array.prototype.push.apply(scope.items, items);
-                                }                                
+                                }
                             }
                         };
 
@@ -320,9 +323,15 @@
                             });
                         };
 
-                        scope.getTemplate = function () {
+                        scope.getDialogTemplate = function () {
                             var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                            var url = ctrl.templateUrl;
+                            var url = attrs.sfDialogTemplate || ctrl.dialogTemplateUrl;
+                            return serverContext.getEmbeddedResourceUrl(assembly, url);
+                        };
+
+                        scope.getClosedDialogTemplate = function () {
+                            var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
+                            var url = attrs.sfClosedDialogTemplate || ctrl.closedDialogTemplateUrl;
                             return serverContext.getEmbeddedResourceUrl(assembly, url);
                         };
 
@@ -333,7 +342,7 @@
 
                             return ids.length > 0;
                         };
-                        
+
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].item.Id === item.Id) {

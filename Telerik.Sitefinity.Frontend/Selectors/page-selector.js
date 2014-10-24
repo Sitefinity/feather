@@ -36,8 +36,18 @@
                         };
 
                         ctrl.selectorType = 'PageSelector';
-                        ctrl.templateUrl = 'Selectors/page-selector.html';
-                        ctrl.$scope.partialTemplate = 'page-selector-template';
+
+                        ctrl.dialogTemplateUrl = 'Selectors/page-selector.html';
+                        ctrl.$scope.dialogTemplateId = 'page-selector-template';
+
+                        var closedDialogTemplate = attrs.multiselect ?
+                            'Selectors/list-group-selection.html' :
+                            'Selectors/bubbles-selection.html';
+
+                        ctrl.closedDialogTemplateUrl = closedDialogTemplate;                       
+
+                        ctrl.$scope.hierarchical = true;
+
                         ctrl.$scope.identifierField = "TitlesPath";
                     }
                 }
