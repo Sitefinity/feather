@@ -28,9 +28,9 @@
                         };
 
                         ctrl.selectorType = 'TaxonSelector';
-                        ctrl.templateUrl = 'Selectors/taxon-selector.html';
-
-                        ctrl.$scope.partialTemplate = 'taxon-selector-template';
+                        ctrl.dialogTemplateUrl = 'Selectors/taxon-selector.html';
+                        ctrl.closedDialogTemplateUrl = 'Selectors/bubbles-selection.html';
+                        ctrl.$scope.dialogTemplateId = 'taxon-selector-template';
                     }
                 }
             };

@@ -320,9 +320,15 @@
                             });
                         };
 
-                        scope.getTemplate = function () {
+                        scope.getDialogTemplate = function () {
                             var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                            var url = ctrl.templateUrl;
+                            var url = attrs.sfDialogTemplate || ctrl.dialogTemplateUrl;
+                            return serverContext.getEmbeddedResourceUrl(assembly, url);
+                        };
+
+                        scope.getClosedDialogTemplate = function () {
+                            var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
+                            var url = attrs.sfClosedDialogTemplate || ctrl.closedDialogTemplateUrl;
                             return serverContext.getEmbeddedResourceUrl(assembly, url);
                         };
 
