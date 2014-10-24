@@ -194,7 +194,8 @@
                         scope.$watch('provider', function (newProvider, oldProvider) {
                             if (newProvider !== oldProvider) {
                                 if (ctrl.selectorType === 'NewsSelector') {
-                                    scope.selectedItem = null;
+                                    scope.selectedItems = null;
+                                    scope.selectedIds = null;
                                 }
                             }
                         });
