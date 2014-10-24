@@ -8,6 +8,7 @@ using System.Web;
 using MbUnit.Framework;
 using Microsoft.VisualBasic.FileIO;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
+using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
@@ -227,6 +228,51 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                     File.Delete(filePath);
                     File.Delete(file2Path);
                 }
+            }
+        }
+
+        [Test]
+        [Category(TestCategories.Packages)]
+        [Author("Petya Rachina")]
+        [Description("Adds new package with sample view for Mvc widget, creates new template based on the package and verifies the view is applied.")]
+        public void ResourcePackage_CreateTemplateBasedOnlyOnThePackage_VerifyViewFromThePackage()
+        {
+            string pageName = "FeatherPage";
+            string widgetCaption = "TestMvcWidget";
+            string placeHolderId = "Body";
+            string packageName = "Bootstrap";
+            string viewFileName = "Default.cshtml";
+            string widgetName = "MvcTest";
+            string fileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Default.cshtml";
+            string templateTitle = "Bootstrap.MyTestTemplate";
+            string text = "This is a view from package.";
+
+            try
+            {
+                string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageMvcViewDestinationFilePath(packageName, widgetName, viewFileName);
+                FeatherServerOperations.ResourcePackages().AddNewResource(fileResource, filePath);
+
+                Guid templateId = FeatherServerOperations.Pages().CreatePureMvcTemplate(templateTitle);
+
+                Guid pageId = ServerOperations.Pages().CreatePage(pageName, templateId);
+                pageId = ServerOperations.Pages().GetPageNodeId(pageId);
+
+                FeatherServerOperations.Pages().AddMvcWidgetToPage(pageId, typeof(MvcTestController).FullName, widgetCaption, placeHolderId);
+
+                var content = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsTrue(content.Contains(text), "Template is not based on the package");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(templateTitle);
+
+                string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageMvcViewDestinationFilePath(packageName, widgetName, viewFileName);
+
+                FileInfo fi = new FileInfo(filePath);
+                DirectoryInfo di = fi.Directory;
+
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(di.FullName);
             }
         }
 
