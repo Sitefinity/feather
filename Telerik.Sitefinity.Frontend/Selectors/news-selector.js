@@ -21,9 +21,15 @@
                         };
 
                         ctrl.selectorType = 'NewsSelector';
+
                         ctrl.dialogTemplateUrl = 'Selectors/news-selector.html';
-                        ctrl.closedDialogTemplateUrl = 'Selectors/list-group-selection.html';
                         ctrl.$scope.dialogTemplateId = 'news-selector-template';
+
+                        var closedDialogTemplate = attrs.multiselect ?
+                            'Selectors/list-group-selection.html' :
+                            'Selectors/bubbles-selection.html';
+
+                        ctrl.closedDialogTemplateUrl = closedDialogTemplate;                        
                     }
                 }
             };

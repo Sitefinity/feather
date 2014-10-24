@@ -35,14 +35,15 @@
                         };
 
                         ctrl.selectorType = 'PageSelector';
+
                         ctrl.dialogTemplateUrl = 'Selectors/page-selector.html';
+                        ctrl.$scope.dialogTemplateId = 'page-selector-template';
 
                         var closedDialogTemplate = attrs.multiselect ?
                             'Selectors/list-group-selection.html' :
                             'Selectors/bubbles-selection.html';
 
-                        ctrl.closedDialogTemplateUrl = closedDialogTemplate;
-                        ctrl.$scope.dialogTemplateId = 'page-selector-template';
+                        ctrl.closedDialogTemplateUrl = closedDialogTemplate;                       
 
                         ctrl.$scope.hierarchical = true;
                     }
