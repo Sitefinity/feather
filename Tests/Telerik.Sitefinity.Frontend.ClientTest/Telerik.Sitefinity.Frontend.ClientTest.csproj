@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="unit\Selectors\newsSelectorSpec.js" />
     <Content Include="unit\Services\serverContextSpec.js" />
     <EmbeddedResource Include="helpers\angular-kendo.js" />
     <Content Include="helpers\kendo.web.min.js" />
@@ -64,7 +65,7 @@
     <Content Include="unit\Mvc\Scripts\breadcrumbSpec.js" />
     <Content Include="unit\Designers\Scripts\pageEditorServiceSpec.js" />
     <Content Include="unit\Mvc\Scripts\Designer\propertyGridSpec.js" />
-    <Content Include="unit\Selectors\newsSelectorSpec.js" />
+    <Content Include="unit\Selectors\timeSpanSelectorSpec.js" />
     <Content Include="unit\Services\dataServiceSpec.js" />
     <Content Include="unit\Services\newsItemServiceSpec.js" />
   </ItemGroup>

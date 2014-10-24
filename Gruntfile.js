@@ -33,6 +33,7 @@ module.exports = function (grunt) {
 				'Telerik.Sitefinity.Frontend/Selectors/news-selector.js',
 				'Telerik.Sitefinity.Frontend/Selectors/dynamic-items-selector.js',
 				'Telerik.Sitefinity.Frontend/Selectors/taxon-selector.js',
+				'Telerik.Sitefinity.Frontend/Selectors/sf-timespan-selector.js',
 				'!Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js',
 				'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
 				options: {

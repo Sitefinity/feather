@@ -2,7 +2,7 @@
     angular.module('selectors')
         .directive('listSelector', ['serverContext', function (serverContext) {
             return {
-                restrict: "E",
+                restrict: 'E',
                 transclude: true,
                 scope: {
                     //For single selection
@@ -14,6 +14,7 @@
                     selectedIds: '=?',
 
                     provider: '=?',
+                    change: '=',
                     taxonomyId: '=?', /* taxon-selector */
                     itemType: '=?', /* dynamic-items-selector */
                     identifierField: '=?'
@@ -88,11 +89,11 @@
 
                             if (scope.multiselect) {
                                 Array.prototype.push.apply(scope.items, data.Items);
-                            }
+                                        }
                             else {
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
-                            }
+                                    }
 
                             if (scope.selectedItems) {
                                 Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.selectedItems.map(function (item) {
@@ -101,7 +102,7 @@
                                         isChecked: true
                                     };
                                 }));
-                            }
+                                        }
 
                             scope.collectSelectedItems();
                         };
@@ -113,10 +114,10 @@
                                 scope.items = [];
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
-                            }
+                                        }
                             else {
                                 scope.items = data.Items;
-                            }
+                                    }
                         };
 
                         var onError = function (error) {
@@ -164,7 +165,7 @@
                             ctrl.getSpecificItems(ids)
                                 .then(ctrl.onSelectedItemsLoadedSuccess, onError)
                                 .finally(function () {
-                                    scope.showLoadingIndicator = false;
+                            scope.showLoadingIndicator = false;
                                 });
                         };
 
@@ -201,7 +202,7 @@
                         scope.$watchCollection('selectedIds', function (newIds, oldIds) {
                             if (!areArrayEquals(newIds, currentSelectedIds)) {
                                 getSelectedItems();
-                            }
+                        }
                         });
 
                         scope.showError = false;
@@ -263,8 +264,8 @@
                             else {
                                 if (scope.multiselect) {
                                     scope.selectedItemsInTheDialog.push({ item: item, isChecked: true });
-                                }
-                                else {
+                            }
+                            else {
                                     scope.selectedItemsInTheDialog.splice(0, 1, { item: item, isChecked: true });
                                 }
                             }
@@ -274,6 +275,14 @@
                             scope.removeUnselectedItems();
 
                             if (scope.selectedItemsInTheDialog.length > 0) {
+                                if (scope.change) {
+                                    var changeArgs = {
+                                        "newSelectedItem": scope.selectedItemInTheDialog,
+                                        "oldSelectedItem": jQuery.extend(true, {}, scope.selectedItem)
+                                    };
+                                    scope.change.call(scope.$parent, changeArgs);
+                                }
+
                                 //set the selected item and its id to the mapped isolated scope properties
                                 scope.selectedItem = scope.selectedItemsInTheDialog[0].item;
                                 scope.selectedItemId = scope.selectedItemsInTheDialog[0].item.Id;
@@ -306,8 +315,8 @@
                         };
 
                         scope.cancel = function () {
-                            resetItems();
-                            scope.$modalInstance.close();
+                                resetItems();
+                                scope.$modalInstance.close();
                         };
 
                         scope.open = function () {
@@ -320,7 +329,7 @@
                             .catch(onError)
                             .finally(function () {
                                 scope.showLoadingIndicator = false;
-                            });
+                                });
                         };
 
                         scope.getDialogTemplate = function () {
