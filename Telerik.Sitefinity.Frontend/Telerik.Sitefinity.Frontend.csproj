@@ -427,6 +427,8 @@
     <EmbeddedResource Include="Selectors\page-selector.html" />
     <EmbeddedResource Include="Selectors\items-tree.html" />
     <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
+    <EmbeddedResource Include="Selectors\bubbles-selection.html" />
+    <EmbeddedResource Include="Selectors\list-group-selection.html" />
     <Content Include="Services\page-service.js" />
     <EmbeddedResource Include="Selectors\items-tree.js" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
