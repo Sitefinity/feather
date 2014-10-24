@@ -56,6 +56,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements.MvcWidgets
         public string SelectedIdsDynamicItems { get; set; }
 
         /// <summary>
+        /// Gets or sets the ids.
+        /// </summary>
+        /// <value>The ids.</value>
+        public string Ids { get; set; }
+
+        /// <summary>
         /// Gets the test dynamic modules.
         /// </summary>
         /// <value>The test dynamic modules.</value>
