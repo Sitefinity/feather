@@ -6,8 +6,8 @@
             var emptyGuid = "00000000-0000-0000-0000-000000000000";
 
             return {
-                require: "^listSelector",
-                restrict: "A",
+                require: '^listSelector',
+                restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         var taxonomyId = ctrl.$scope.taxonomyId;

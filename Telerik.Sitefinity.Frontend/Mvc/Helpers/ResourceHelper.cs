@@ -66,6 +66,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <remarks>
+        /// Use this helper to resolve embedded resource path.
+        /// </remarks>
+        /// <param name="helper">The helper.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="embeddedScriptPath">The embedded script path.</param>
+        /// <param name="throwException">if set to <c>true</c> throws exception.</param>
+        /// <returns>MvcHtmlString</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        public static MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, bool throwException = false)
+        {
+            var context = helper.ViewContext.HttpContext;
+            var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
+
+            var resourceUrl = page.ClientScript.GetWebResourceUrl(
+                    TypeResolutionService.ResolveType(type),
+                    embeddedScriptPath);
+
+            return ResourceHelper.RegisterResource(context, resourceUrl, resourceUrl, throwException);
+        }
+
+        /// <summary>
         /// Tries the configure script manager.
         /// </summary>
         /// <param name="scriptReference">The script reference.</param>
