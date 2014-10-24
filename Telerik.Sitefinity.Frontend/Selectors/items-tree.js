@@ -42,16 +42,11 @@
                         scope.itemsDataSource.data(newValue);
                     });
 
-                    scope.select = function (e) {
-                        var dataItem = e.sender.dataItem(e.node);
-                        scope.sfSelectItem({ dataItem: dataItem });
-                    };
-
                     scope.checkboxes = {
                         template: '<input type="checkbox" ng-click="sfSelectItem({ dataItem: dataItem })" ng-checked="sfItemSelected({dataItem: dataItem})">'
                     };
 
-                    scope.itemTemplate = "<a ng-class=\"{'list-group-item':true, 'active': sfItemSelected({dataItem: dataItem}) }\" style='text-overflow: ellipsis; overflow: hidden;'>{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</a>";
+                    scope.itemTemplate = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'list-group-item':true, 'active': sfItemSelected({dataItem: dataItem}) }\" style='text-overflow: ellipsis; overflow: hidden;'>{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</a>";
                 }
             };
         }]);
