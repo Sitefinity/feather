@@ -101,6 +101,8 @@ describe("news selector", function () {
     //This is the id of the cached templates in $templateCache. The external templates are cached by a karma/grunt preprocessor.
     var newsSelectorTemplatePath = 'Selectors/news-selector.html';
     var listSelectorTemplatePath = 'Selectors/list-selector.html';
+    var bubblesSelectionTemplatePath = 'Selectors/bubbles-selection.html';
+    var listGroupSelectionTemplatePath = 'Selectors/list-group-selection.html';
 
     //Load the module responsible for the modal dialog
     beforeEach(module('modalDialog'));
@@ -120,12 +122,7 @@ describe("news selector", function () {
                 return null;
             },
             getEmbeddedResourceUrl: function (assembly, url) {
-                if (url.indexOf('news') >= 0) {
-                    return newsSelectorTemplatePath;
-                }
-                if (url.indexOf('list') >= 0) {
-                    return listSelectorTemplatePath;
-                }
+                return url;
             },
             getFrontendLanguages: function () {
                 return ['en', 'de'];
@@ -154,6 +151,8 @@ describe("news selector", function () {
         //Prevent failing of the template request.
         $httpBackend.whenGET(listSelectorTemplatePath);
         $httpBackend.whenGET(newsSelectorTemplatePath).respond({});
+        $httpBackend.whenGET(bubblesSelectionTemplatePath).respond({});
+        $httpBackend.whenGET(listGroupSelectionTemplatePath).respond({});
     }));
 
     beforeEach(function () {
