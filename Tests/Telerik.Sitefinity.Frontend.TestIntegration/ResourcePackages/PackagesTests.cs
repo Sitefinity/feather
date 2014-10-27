@@ -348,6 +348,65 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
         }
 
+        [Test]
+        [Category(TestCategories.Packages)]
+        [Author("Petya Rachina")]
+        [Description("Adds new package without layout file, creates a template and page, removes the package and verifies the page content")]
+        [Ignore("The page returns a Server error after removing the package.")]
+        public void ResourcePackage_DeleteResourcePackage_VerifyTemplateAndPageNotBasedOnLayout()
+        {
+            string pageName = "FeatherPage" + Guid.NewGuid().ToString();
+            string packageName = "Package1";
+            string packageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Package1.zip";
+            string templateTitle = "Package1.test-layout";
+            string layoutText = "Package1 - test layout";
+            string serverErrorMsg = "Server Error";
+
+            PageManager pm = PageManager.GetManager();
+            Guid pageId = ServerOperations.Pages().CreatePage(pageName);
+
+            int templatesCount = pm.GetTemplates().Count();
+
+            FeatherServerOperations.ResourcePackages().AddNewResourcePackage(packageResource);
+            FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+            var template = pm.GetTemplates().Where(t => t.Title == templateTitle).FirstOrDefault();
+            Assert.IsNotNull(template, "Template was not found");
+
+            string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(packageName);
+
+            try
+            {                
+                ServerOperations.Templates().SetTemplateToPage(pageId, template.Id);
+
+                var content = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsTrue(content.Contains(layoutText), "Template is not based on the layout file");
+
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(path);
+
+                if (Directory.Exists(path))
+                {
+                    throw new ArgumentException("Directory was not deleted");
+                }
+
+                Thread.Sleep(1000);
+
+                content = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsFalse(content.Contains(serverErrorMsg), "Server Error was found on the page.");
+                Assert.IsFalse(content.Contains(layoutText), "Template is still based on the layout file after package is deleted");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(templateTitle);
+
+                if (Directory.Exists(path))
+                {
+                    FeatherServerOperations.ResourcePackages().DeleteDirectory(path);
+                }
+            }
+        }
+
         private void UnlockFolder(string folderPath)
         {
             var account = new SecurityIdentifier(WellKnownSidType.NetworkServiceSid, null).Translate(typeof(NTAccount)).Value;
