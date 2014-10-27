@@ -1,8 +1,8 @@
 ﻿(function ($) {
-    angular.module('selectors')
-        .directive('listSelector', ['serverContext', function (serverContext) {
+    angular.module('sfSelectors')
+        .directive('sfListSelector', ['serverContext', function (serverContext) {
             return {
-                restrict: "E",
+                restrict: 'E',
                 transclude: true,
                 scope: {
                     //For single selection
@@ -14,8 +14,9 @@
                     selectedIds: '=?',
 
                     provider: '=?',
-                    taxonomyId: '=?', /* taxon-selector */
-                    itemType: '=?', /* dynamic-items-selector */
+                    change: '=',
+                    taxonomyId: '=?', /* sf-taxon-selector */
+                    itemType: '=?', /* sf-dynamic-items-selector */
                     identifierField: '=?'
                 },
                 controller: function ($scope) {
@@ -73,7 +74,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/list-selector.html';
+                    var url = attrs.templateUrl || 'Selectors/sf-list-selector.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -193,7 +194,8 @@
                         scope.$watch('provider', function (newProvider, oldProvider) {
                             if (newProvider !== oldProvider) {
                                 if (ctrl.selectorType === 'NewsSelector') {
-                                    scope.selectedItem = null;
+                                    scope.selectedItems = null;
+                                    scope.selectedIds = null;
                                 }
                             }
                         });
@@ -240,7 +242,7 @@
                                 }
                                 else {
                                     Array.prototype.push.apply(scope.items, items);
-                                }
+                                }                                
                             }
                         };
 
@@ -274,6 +276,14 @@
                             scope.removeUnselectedItems();
 
                             if (scope.selectedItemsInTheDialog.length > 0) {
+                                if (scope.change) {
+                                    var changeArgs = {
+                                        "newSelectedItem": scope.selectedItemInTheDialog,
+                                        "oldSelectedItem": jQuery.extend(true, {}, scope.selectedItem)
+                                    };
+                                    scope.change.call(scope.$parent, changeArgs);
+                                }
+
                                 //set the selected item and its id to the mapped isolated scope properties
                                 scope.selectedItem = scope.selectedItemsInTheDialog[0].item;
                                 scope.selectedItemId = scope.selectedItemsInTheDialog[0].item.Id;
@@ -342,7 +352,7 @@
 
                             return ids.length > 0;
                         };
-
+                        
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].item.Id === item.Id) {

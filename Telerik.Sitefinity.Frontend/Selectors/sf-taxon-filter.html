@@ -2,15 +2,14 @@
     <label for="{{taxonomy.Name}}" class="full-width">
         <input id="{{taxonomy.Name}}" type="checkbox"
             ng-click="toggleTaxonomySelection(taxonomy.Name)" value="{{taxonomy.Name}}"
-            ng-checked="selectedTaxonomies.indexOf(taxonomy.Name) > -1" />
+            ng-checked="selectedTaxonomies.hasOwnProperty(taxonomy.Name)" />
 
-            {{taxonomy.Title}}...
-
-
-            <list-selector taxon-selector ng-show="selectedTaxonomies.indexOf(taxonomy.Name) > -1"
+            {{taxonomy.Title}}...			
+    </label>
+	
+    <sf-list-selector class="label-content" sf-taxon-selector ng-show="selectedTaxonomies.hasOwnProperty(taxonomy.Name)"
+                selected-item-id="selectedTaxonomies[taxonomy.Name]"
                 provider="provider"
                 taxonomy-id ="taxonomy.Id"
-                selected-item-id ="taxonFilters[taxonomy.Name][0]"></list-selector>
-    </label>
-
+                change ="change"></sf-list-selector>
 </div>

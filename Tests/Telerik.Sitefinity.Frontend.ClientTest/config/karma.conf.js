@@ -18,15 +18,15 @@ module.exports = function(config){
       '../../Telerik.Sitefinity.Frontend/Services/services.js',
 	  '../../Telerik.Sitefinity.Frontend/Services/news-item-service.js',
       '../../Telerik.Sitefinity.Frontend/Services/data-service.js',
-	  '../../Telerik.Sitefinity.Frontend/Selectors/selectors.js',
+	  '../../Telerik.Sitefinity.Frontend/Selectors/sf-selectors.js',
       '../../Telerik.Sitefinity.Frontend/Selectors/bubbles-selection.html',
       '../../Telerik.Sitefinity.Frontend/Selectors/list-group-selection.html',
-	  '../../Telerik.Sitefinity.Frontend/Selectors/list-selector.js',
-      '../../Telerik.Sitefinity.Frontend/Selectors/list-selector.html',
-      '../../Telerik.Sitefinity.Frontend/Selectors/dynamic-items-selector.js',
-      '../../Telerik.Sitefinity.Frontend/Selectors/dynamic-items-selector.html',
-      '../../Telerik.Sitefinity.Frontend/Selectors/news-selector.js',
-      '../../Telerik.Sitefinity.Frontend/Selectors/news-selector.html',
+	  '../../Telerik.Sitefinity.Frontend/Selectors/sf-list-selector.js',
+      '../../Telerik.Sitefinity.Frontend/Selectors/sf-list-selector.html',
+      '../../Telerik.Sitefinity.Frontend/Selectors/sf-dynamic-items-selector.js',
+      '../../Telerik.Sitefinity.Frontend/Selectors/sf-dynamic-items-selector.html',
+      '../../Telerik.Sitefinity.Frontend/Selectors/sf-news-selector.js',
+      '../../Telerik.Sitefinity.Frontend/Selectors/sf-news-selector.html',
       'helpers/mocks/*.js',
       'unit/**'
     ],
@@ -51,7 +51,7 @@ module.exports = function(config){
         // from all the files, so you can load them all with module('template')
         moduleName: 'templates',
 
-        // Returns the id of the template in $templateCache. To get a template in a test use id like 'Selectors/content-selector.html'
+        // Returns the id of the template in $templateCache. To get a template in a test use id like 'Selectors/list-selector.html'
         cacheIdFromPath: function (filepath) {
             // filepath is the path to the template on the disc 
             return filepath.split('Telerik.Sitefinity.Frontend/')[1];

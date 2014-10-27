@@ -1,13 +1,13 @@
 ﻿(function ($) {
-    angular.module('selectors')
-        .directive('taxonSelector', ['flatTaxonService', function (flatTaxonService) {
+    angular.module('sfSelectors')
+        .directive('sfTaxonSelector', ['flatTaxonService', function (flatTaxonService) {
             // Tags Id
             var defaultTaxonomyId = "cb0f3a19-a211-48a7-88ec-77495c0f5374";
             var emptyGuid = "00000000-0000-0000-0000-000000000000";
 
             return {
-                require: "^listSelector",
-                restrict: "A",
+                require: '^sfListSelector',
+                restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         var taxonomyId = ctrl.$scope.taxonomyId;
@@ -28,9 +28,9 @@
                         };
 
                         ctrl.selectorType = 'TaxonSelector';
-                        ctrl.dialogTemplateUrl = 'Selectors/taxon-selector.html';
+                        ctrl.dialogTemplateUrl = 'Selectors/sf-taxon-selector.html';
                         ctrl.closedDialogTemplateUrl = 'Selectors/bubbles-selection.html';
-                        ctrl.$scope.dialogTemplateId = 'taxon-selector-template';
+                        ctrl.$scope.dialogTemplateId = 'sf-taxon-selector-template';
                     }
                 }
             };

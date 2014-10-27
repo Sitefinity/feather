@@ -1,6 +1,6 @@
 ﻿(function ($) {
-    angular.module('selectors')
-        .directive('selectedItemsView', ['serverContext', function (serverContext) {
+    angular.module('sfSelectors')
+        .directive('sfSelectedItemsView', ['serverContext', function (serverContext) {
             return {
                 restrict: "E",
                 scope: {
@@ -11,7 +11,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/selected-items-view.html';
+                    var url = attrs.templateUrl || 'Selectors/sf-selected-items-view.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {

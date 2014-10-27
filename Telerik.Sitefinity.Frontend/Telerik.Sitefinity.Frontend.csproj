@@ -26,7 +26,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>D:\SitefinityProjects\Feather72Official\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -384,7 +384,7 @@
     <EmbeddedResource Include="Mvc\Scripts\server-data.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\selectors.js" />
+    <EmbeddedResource Include="Selectors\sf-selectors.js" />
     <EmbeddedResource Include="Services\services.js" />
   </ItemGroup>
   <ItemGroup>
@@ -392,13 +392,13 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\list-selector.html" />
-    <EmbeddedResource Include="Selectors\taxon-selector.js" />
-    <EmbeddedResource Include="Selectors\taxon-selector.html" />
+    <EmbeddedResource Include="Selectors\sf-list-selector.html" />
+    <EmbeddedResource Include="Selectors\sf-taxon-selector.js" />
+    <EmbeddedResource Include="Selectors\sf-taxon-selector.html" />
     <EmbeddedResource Include="Services\flat-taxon-service.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\list-selector.js" />
+    <EmbeddedResource Include="Selectors\sf-list-selector.js" />
     <EmbeddedResource Include="Mvc\Scripts\Templates\expander.html" />
   </ItemGroup>
   <ItemGroup>
@@ -408,14 +408,14 @@
     <EmbeddedResource Include="Services\taxonomy-service.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\taxon-filter.js" />
+    <EmbeddedResource Include="Selectors\sf-taxon-filter.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\taxon-filter.html" />
+    <EmbeddedResource Include="Selectors\sf-taxon-filter.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\news-selector.html" />
-    <EmbeddedResource Include="Selectors\news-selector.js" />
+    <EmbeddedResource Include="Selectors\sf-news-selector.html" />
+    <EmbeddedResource Include="Selectors\sf-news-selector.js" />
     <EmbeddedResource Include="Services\news-item-service.js" />
   </ItemGroup>
   <ItemGroup>
@@ -442,17 +442,39 @@
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.src.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\dynamic-items-selector.html" />
-    <EmbeddedResource Include="Selectors\dynamic-items-selector.js" />
+    <EmbeddedResource Include="Selectors\sf-filter-selector.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\sf-filter-selector.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\sf-date-filter.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\sf-date-filter.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\sf-timespan-selector.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\sf-timespan-selector.js" />
+    <EmbeddedResource Include="Selectors\sf-dynamic-items-selector.html" />
+    <EmbeddedResource Include="Selectors\sf-dynamic-items-selector.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Services\data-service.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\selected-items-view.js" />
+    <EmbeddedResource Include="Selectors\sf-selected-items-view.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\selected-items-view.html" />
+    <EmbeddedResource Include="Selectors\sf-selected-items-view.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\sf-date-time-picker.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Selectors\sf-date-time-picker.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />

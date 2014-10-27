@@ -1,9 +1,9 @@
 ﻿(function ($) {
-    angular.module('selectors')
-        .directive('newsSelector', ['newsItemService', function (newsItemService) {
+    angular.module('sfSelectors')
+        .directive('sfNewsSelector', ['newsItemService', function (newsItemService) {
             return {
-                require: "^listSelector",
-                restrict: "A",
+                require: '^sfListSelector',
+                restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search, frontendLanguages) {
@@ -22,8 +22,8 @@
 
                         ctrl.selectorType = 'NewsSelector';
 
-                        ctrl.dialogTemplateUrl = 'Selectors/news-selector.html';
-                        ctrl.$scope.dialogTemplateId = 'news-selector-template';
+                        ctrl.dialogTemplateUrl = 'Selectors/sf-news-selector.html';
+                        ctrl.$scope.dialogTemplateId = 'sf-news-selector-template';
 
                         var closedDialogTemplate = attrs.multiselect ?
                             'Selectors/list-group-selection.html' :

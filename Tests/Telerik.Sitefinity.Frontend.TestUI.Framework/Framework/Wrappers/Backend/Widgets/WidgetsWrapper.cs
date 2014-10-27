@@ -172,7 +172,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             foreach (var itemName in itemNames)
             {
-                var anchor = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlAnchor>(a => a.InnerText.Contains(itemName));
+                var anchor = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlAnchor>(a => a.InnerText.Equals(itemName));
                 anchor.AssertIsPresent(itemName + "not present");
 
                 anchor.Click();
@@ -196,7 +196,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             HtmlAnchor selectedTab = this.EM.Widgets.FeatherWidget.SelectedTab
 
-                                        .AssertIsPresent("selected tab");
+                                         .AssertIsPresent("selected tab");
             selectedTab.Click();
             ActiveBrowser.WaitForAsyncRequests();
             ActiveBrowser.RefreshDomTree();
@@ -208,7 +208,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void OpenAllTab()
         {
             HtmlAnchor allTab = this.EM.Widgets.FeatherWidget.AllTab
-                                        .AssertIsPresent("all tab");
+                                    .AssertIsPresent("all tab");
 
             allTab.Click();
             ActiveBrowser.WaitForAsyncRequests();
@@ -232,14 +232,36 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// Verifies the selected item.
         /// </summary>
         /// <param name="itemName">Name of the item.</param>
-        public void VerifySelectedItem(params string[] itemNames)
+        public void VerifySelectedItemInMultipleSelectors(string[] itemNames, bool isNewsItem = false)
         {
-            var divList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlDiv>("ng-repeat=item in selectedItems | limitTo:5");
-            int divListCount = divList.Count;
-
-            for (int i = 0; i < divListCount; i++)
+            if (isNewsItem)
             {
-                Assert.AreEqual(divList[i].InnerText, itemNames[i]);
+                var divList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlDiv>("ng-bind=hierarchical ? item.Path : bindIdentifierField(item)");
+                int divListCount = divList.Count;
+
+                for (int i = 0; i < divListCount; i++)
+                {
+                    Assert.AreEqual(divList[i].InnerText, itemNames[i]);
+                }
+            }
+            else
+            {
+                var divList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlDiv>("ng-repeat=item in selectedItems | limitTo:5");
+                int divListCount = divList.Count;
+
+                for (int i = 0; i < divListCount; i++)
+                {
+                    Assert.AreEqual(divList[i].InnerText, itemNames[i]);
+                }
+            }
+            
+        }
+ 
+        public void VerifySelectedItemInFlatSelectors(params string[] itemNames)
+        {
+            foreach (var item in itemNames)
+            {
+                ActiveBrowser.Find.ByExpression<HtmlDiv>("InnerText=" + item).AssertIsPresent(item + "not present");
             }
         }
 
@@ -249,14 +271,30 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// <param name="text">The text to be searched for.</param>
         public void SetSearchText(string text)
         {
-            HtmlInputText input = this.EM.Widgets.FeatherWidget.SearchInput
-                                      .AssertIsPresent("input");
+            var inputList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlInputText>("ng-model=filter.searchString");
 
-            input.ScrollToVisible();
-            input.Focus();
-            input.MouseClick();
-
-            Manager.Current.Desktop.KeyBoard.TypeText(text);
+            foreach (var inputElement in inputList)
+            {
+                if (inputElement.IsVisible())
+                {
+                    inputElement.Focus();
+                    inputElement.MouseClick();
+                    if (text != "")
+                    {
+                        inputElement.Text = string.Empty;
+                        Manager.Current.Desktop.KeyBoard.TypeText(text);
+                    }
+                    else
+                    {
+                        //// select all and delete current text typing
+                        Manager.Current.Desktop.KeyBoard.KeyDown(System.Windows.Forms.Keys.Control);
+                        Manager.Current.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.A);
+                        Manager.Current.Desktop.KeyBoard.KeyUp(System.Windows.Forms.Keys.Control);
+                        Manager.Current.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Back);
+                    }
+                    break;
+                }
+            }
 
             ActiveBrowser.WaitForAsyncRequests();
             ActiveBrowser.RefreshDomTree();
@@ -293,21 +331,28 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             if (!isSelectedTab)
             {
                 HtmlDiv scroller = ActiveBrowser.Find
-                                                .ByExpression<HtmlDiv>("class=list-group list-group-endless ng-isolate-scope")
-                                                .AssertIsPresent("Scroller");
-                scroller.MouseClick(MouseClickType.LeftDoubleClick);
-                Manager.Current.Desktop.Mouse.TurnWheel(4000, MouseWheelTurnDirection.Backward);
+                                                .ByExpression<HtmlDiv>("class=list-group list-group-endless ng-isolate-scope");
                 var items = activeDialog.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in items");
+                if (items.Count() > 12)
+                {
+                    scroller.MouseClick(MouseClickType.LeftDoubleClick);
+                    Manager.Current.Desktop.Mouse.TurnWheel(4000, MouseWheelTurnDirection.Backward);                 
+                }
+                items = activeDialog.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in items");
                 actual = items.Count;
+                
             }
             else
             {
                 HtmlDiv scroller = ActiveBrowser.Find
-                                                .ByExpression<HtmlDiv>("class=list-group list-group-endless")
-                                                .AssertIsPresent("Scroller");
-                scroller.MouseClick(MouseClickType.LeftDoubleClick);
-                Manager.Current.Desktop.Mouse.TurnWheel(4000, MouseWheelTurnDirection.Backward);
+                                                .ByExpression<HtmlDiv>("class=list-group list-group-endless");
                 var items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-repeat=item in items");
+                if (items.Count() > 12)
+                {
+                    scroller.MouseClick(MouseClickType.LeftDoubleClick);
+                    Manager.Current.Desktop.Mouse.TurnWheel(4000, MouseWheelTurnDirection.Backward);                  
+                }
+                items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-repeat=item in items");
                 actual = items.Count;
             }
            
@@ -386,8 +431,31 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void SelectMoreLink(string name)
         {
             var link = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlAnchor>(a => a.InnerText.Contains(name));
-            link.AssertIsPresent("item name not present");
+            link.AssertIsPresent("more link is not present");
             link.Click();
+        }
+
+        /// <summary>
+        /// Verifies search result span element.
+        /// </summary>
+        /// <param name="expectedSpanCount">expected count of span elements</param>
+        /// <param name="isHiddenSpan">should span decorations be hidden</param>
+        public void VerifyReorderingIconVisibility(int expectedSpanCount, bool isHiddenSpan)
+        {
+            ActiveBrowser.RefreshDomTree();
+
+            ICollection<HtmlSpan> spanList = null;
+            if (isHiddenSpan)
+            {
+                spanList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlSpan>("class=handler list-group-item-drag ng-hide");
+            }
+            else
+            {
+                spanList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlSpan>("class=handler list-group-item-drag");
+            }
+            int actualSpanCount = spanList.Count;
+
+            Assert.AreEqual(expectedSpanCount, actualSpanCount, "Expected and actual count of span elements are not equal.");
         }
 
         private Element GetContentSelectorByName(string cssClass)
