@@ -33,9 +33,9 @@
                                     item.displayText = "From " + _getFormatedDate(item.fromDate);
                                 else if (item.toDate)
                                     item.displayText = "To " + _getFormatedDate(item.toDate);
-                                else
-                                    item.displayText = 'Any time';
                             }
+                            else
+                                item.displayText = 'Any time';
                         };
 
                         _getFormatedDate = function (date) {
