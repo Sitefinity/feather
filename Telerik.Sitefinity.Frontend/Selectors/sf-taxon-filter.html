@@ -1,5 +1,5 @@
 ﻿<div class="checkbox" ng-repeat="taxonomy in taxonomyFields|filter:{TaxonomyType:0}">
-    <label for="{{taxonomy.Name}}">
+    <label for="{{taxonomy.Name}}" class="full-width">
         <input id="{{taxonomy.Name}}" type="checkbox"
             ng-click="toggleTaxonomySelection(taxonomy.Name)" value="{{taxonomy.Name}}"
             ng-checked="selectedTaxonomies.hasOwnProperty(taxonomy.Name)" />
@@ -7,9 +7,9 @@
             {{taxonomy.Title}}...			
     </label>
 	
-    <list-selector taxon-selector ng-show="selectedTaxonomies.hasOwnProperty(taxonomy.Name)"
+    <sf-list-selector class="label-content" sf-taxon-selector ng-show="selectedTaxonomies.hasOwnProperty(taxonomy.Name)"
                 selected-item-id="selectedTaxonomies[taxonomy.Name]"
                 provider="provider"
                 taxonomy-id ="taxonomy.Id"
-                change ="change"></list-selector>
+                change ="change"></sf-list-selector>
 </div>

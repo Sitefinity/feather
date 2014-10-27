@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    angular.module('selectors')
+    angular.module('sfSelectors')
         .directive('sfTimespanSelector', ['$timeout', function ($timeout) {
 
             return {

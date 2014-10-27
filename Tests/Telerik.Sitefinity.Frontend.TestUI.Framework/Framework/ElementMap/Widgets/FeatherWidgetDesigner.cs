@@ -133,6 +133,30 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         }
 
         /// <summary>
+        /// Gets the selected tab.
+        /// </summary>
+        /// <value>The selected tab.</value>
+        public HtmlAnchor SelectedTab
+        {
+            get
+            {
+                return this.Get<HtmlAnchor>("class=k-link", "innertext=~Selected");
+            }
+        }
+
+        /// <summary>
+        /// Gets the all tab.
+        /// </summary>
+        /// <value>The all tab.</value>
+        public HtmlAnchor AllTab
+        {
+            get
+            {
+                return this.Get<HtmlAnchor>("class=k-link", "innertext=~All");
+            }
+        }
+
+        /// <summary>
         /// Gets the done button.
         /// </summary>
         /// <value>The done button.</value>
@@ -140,7 +164,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlButton>("ng-click=selectItem()");
+                return this.Get<HtmlButton>("ng-click=doneSelecting()");
             }
         }
 
@@ -152,7 +176,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlInputText>("ng-model=filter.search");
+                return this.Get<HtmlInputText>("ng-model=~filter.search");
             }
         }
 
@@ -165,6 +189,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
             get
             {
                 return this.Find.ById<HtmlDiv>("viewsPlaceholder");
+            }
+        }
+
+        /// <summary>
+        /// Gets the active tab.
+        /// </summary>
+        /// <value>The active tab.</value>
+        public HtmlDiv ActiveTab
+        {
+            get
+            {
+                return this.Get<HtmlDiv>("class=k-content k-state-active");
             }
         }
     }

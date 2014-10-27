@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    angular.module('selectors')
+    angular.module('sfSelectors')
         .directive('sfDateFilter', function () {
 
             var timeSpanItem = function () {
