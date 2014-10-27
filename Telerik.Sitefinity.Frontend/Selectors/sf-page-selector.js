@@ -1,8 +1,8 @@
 ﻿(function () {
-    angular.module('selectors')
+    angular.module('sfSelectors')
         .directive('sfPageSelector', ['sfPageService', "serverContext", function (pageService, serverContext) {
             return {
-                require: '^listSelector',
+                require: '^sfListSelector',
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
@@ -37,8 +37,8 @@
 
                         ctrl.selectorType = 'PageSelector';
 
-                        ctrl.dialogTemplateUrl = 'Selectors/page-selector.html';
-                        ctrl.$scope.dialogTemplateId = 'page-selector-template';
+                        ctrl.dialogTemplateUrl = 'Selectors/sf-page-selector.html';
+                        ctrl.$scope.dialogTemplateId = 'sf-page-selector-template';
 
                         var closedDialogTemplate = attrs.multiselect ?
                             'Selectors/list-group-selection.html' :
