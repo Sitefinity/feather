@@ -19,6 +19,8 @@ module.exports = function(config){
 	  '../../Telerik.Sitefinity.Frontend/Services/news-item-service.js',
       '../../Telerik.Sitefinity.Frontend/Services/data-service.js',
 	  '../../Telerik.Sitefinity.Frontend/Selectors/sf-selectors.js',
+      '../../Telerik.Sitefinity.Frontend/Selectors/bubbles-selection.html',
+      '../../Telerik.Sitefinity.Frontend/Selectors/list-group-selection.html',
 	  '../../Telerik.Sitefinity.Frontend/Selectors/sf-list-selector.js',
 	  '../../Telerik.Sitefinity.Frontend/Selectors/sf-timespan-selector.js',
 	  '../../Telerik.Sitefinity.Frontend/Selectors/sf-timespan-selector.html',

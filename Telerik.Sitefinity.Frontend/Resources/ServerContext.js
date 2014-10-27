@@ -4,6 +4,7 @@
     var applicationPath = '{{applicationPath}}';
     var currentPackage = '{{currentPackage}}';
     var frontendLanguages = JSON.parse('{{frontendLanguages}}');
+    var currentFrontendRootNodeId = '{{currentFrontendRootNodeId}}';
 
     if (applicationPath.length === 0 || applicationPath.charAt(applicationPath.length - 1) !== '/')
         applicationPath = applicationPath + '/';
@@ -77,5 +78,13 @@
 
     sitefinity.getFrontendLanguages = function () {
         return frontendLanguages;
+    };
+
+    sitefinity.getCurrentFrontendRootNodeId = function () {
+        return currentFrontendRootNodeId;
+    };
+
+    sitefinity.setCurrentFrontendRootNodeId = function (value) {
+        currentFrontendRootNodeId = value;
     };
 })();

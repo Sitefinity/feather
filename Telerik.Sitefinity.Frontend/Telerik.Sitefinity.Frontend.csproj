@@ -423,6 +423,14 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Selectors\sf-page-selector.js" />
+    <EmbeddedResource Include="Selectors\sf-page-selector.html" />
+    <EmbeddedResource Include="Selectors\sf-items-tree.html" />
+    <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
+    <EmbeddedResource Include="Selectors\bubbles-selection.html" />
+    <EmbeddedResource Include="Selectors\list-group-selection.html" />
+    <EmbeddedResource Include="Services\page-service.js" />
+    <EmbeddedResource Include="Selectors\sf-items-tree.js" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.svg" />
