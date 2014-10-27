@@ -247,6 +247,7 @@
     <EmbeddedResource Include="Data\LayoutFilesSpecialChars\My_TestTemplate.cshtml" />
     <EmbeddedResource Include="Data\LayoutFileReplace\TestLayout.cshtml" />
     <EmbeddedResource Include="Data\DuplicateRelatedDataModule.zip" />
+    <EmbeddedResource Include="Data\ReplaceTest\Package1.zip" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>
