@@ -25,6 +25,8 @@ module.exports = function(config){
       '../../Telerik.Sitefinity.Frontend/Selectors/sf-dynamic-items-selector.html',
       '../../Telerik.Sitefinity.Frontend/Selectors/sf-news-selector.js',
       '../../Telerik.Sitefinity.Frontend/Selectors/sf-news-selector.html',
+      '../../Telerik.Sitefinity.Frontend/Selectors/sf-timespan-selector.js',
+      '../../Telerik.Sitefinity.Frontend/Selectors/sf-timespan-selector.html',
       'helpers/mocks/*.js',
       'unit/**'
     ],
