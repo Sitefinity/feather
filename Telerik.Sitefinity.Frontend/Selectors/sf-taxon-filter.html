@@ -7,7 +7,7 @@
             {{taxonomy.Title}}...			
     </label>
 	
-    <sf-list-selector sf-taxon-selector ng-show="selectedTaxonomies.hasOwnProperty(taxonomy.Name)"
+    <sf-list-selector class="label-content" sf-taxon-selector ng-show="selectedTaxonomies.hasOwnProperty(taxonomy.Name)"
                 selected-item-id="selectedTaxonomies[taxonomy.Name]"
                 provider="provider"
                 taxonomy-id ="taxonomy.Id"

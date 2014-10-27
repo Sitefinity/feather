@@ -110,7 +110,6 @@
     <Compile Include="MvcWidgets\MvcWidgetApplyNewView.cs" />
     <Compile Include="MvcWidgets\MvcWidgetDefaultDesigner.cs" />
     <Compile Include="MvcWidgets\MvcWidgetEditViewCacheInvalidation.cs" />
-    <Compile Include="Pages\DeletePageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FeatherTestCase.cs" />
     <Compile Include="FeatherTestCategories.cs" />
