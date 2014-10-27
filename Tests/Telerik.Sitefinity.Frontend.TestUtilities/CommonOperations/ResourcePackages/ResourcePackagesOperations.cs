@@ -154,7 +154,17 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// <param name="packageResource">The package resource path.</param>
         public void AddNewResourcePackage(string packageResource)
         {
-            var path = Path.Combine(this.SfPath, "ResourcePackages");
+            this.AddNewResourcePackage(packageResource, "ResourcePackages");
+        }
+
+        /// <summary>
+        /// Adds new resource package to file system.
+        /// </summary>
+        /// <param name="packageResource">The package resource path.</param>
+        /// <param name="targetFolder">The target folder.</param>
+        public void AddNewResourcePackage(string packageResource, string targetFolder)
+        {
+            var path = Path.Combine(this.SfPath, targetFolder);
 
             var assembly = FeatherServerOperations.ResourcePackages().GetTestUtilitiesAssembly();
             Stream source = assembly.GetManifestResourceStream(packageResource);
