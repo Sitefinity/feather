@@ -272,9 +272,13 @@
 
                             if (scope.selectedItemsInTheDialog.length > 0) {
                                 if (scope.change) {
+                                    var oldSelectedItems = [];
+                                    Array.prototype.push.apply(oldSelectedItems, scope.selectedItems);
                                     var changeArgs = {
-                                        "newSelectedItem": scope.selectedItemInTheDialog,
-                                        "oldSelectedItem": jQuery.extend(true, {}, scope.selectedItem)
+                                        "newSelectedItems": scope.selectedItemsInTheDialog.map(function (item) {
+                                            return item.item;
+                                        }),
+                                        "oldSelectedItems": oldSelectedItems
                                     };
                                     scope.change.call(scope.$parent, changeArgs);
                                 }
