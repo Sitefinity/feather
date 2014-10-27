@@ -35,8 +35,6 @@
                                     item.displayText = "To " + _getFormatedDate(item.toDate);
                                 else
                                     item.displayText = 'Any time';
-
-
                             }
                         };
 
@@ -44,12 +42,16 @@
                             if (!date)
                                 return;
 
-                            var formatRule = "dd MMM, yyyy";
+                            var options = { day: "numeric", month: "short", year: "numeric", hour12: false };
+                        
+                            if (date.getHours() !== 0) {
+                                options.hour = "numeric";
+                                options.minute = "numeric";
+                            }
 
-                            if (date.getHours() !== 0)
-                                formatRule += " HH:mm";
+                            var result = date.toLocaleString("en-GB", options);
 
-                            return date.format(formatRule);
+                            return result;
                         };
 
                         validate = function (item) {

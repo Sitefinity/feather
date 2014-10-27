@@ -407,6 +407,96 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
         }
 
+        [Test]
+        [Category(TestCategories.Packages)]
+        [Author("Petya Rachina")]
+        [Description("Adds new package without layout file, replaces it with the same package with different layouts and verifies new templates are generated")]
+        public void ResourcePackage_ReplaceExistingPackage_VerifyNewTemplatesGenerated()
+        {
+            string packageName = "Package1";
+            string packageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Package1.zip";
+            string templateTitle = "Package1.test-layout";
+            string newPackageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.ReplaceTest.Package1.zip";
+            string newTemplateTitle = "Package1.replace-test";
+            string tempFolder = "Temp";
+            string packagesFolder = "ResourcePackages";
+            string sitefinityPath = FeatherServerOperations.ResourcePackages().SfPath;
+
+            PageManager pm = PageManager.GetManager();
+
+            int templatesCount = pm.GetTemplates().Count();
+
+            FeatherServerOperations.ResourcePackages().AddNewResourcePackage(packageResource);
+            FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+            var template = pm.GetTemplates().Where(t => t.Title == templateTitle).FirstOrDefault();
+            Assert.IsNotNull(template, "Template was not found");
+
+            var packagePath = Path.Combine(sitefinityPath, packagesFolder, packageName);
+
+            string tempFolderPath = Path.Combine(sitefinityPath, tempFolder);
+
+            if (!Directory.Exists(tempFolderPath))
+            {
+                Directory.CreateDirectory(tempFolderPath);
+            }
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(newPackageResource, tempFolder);
+
+                var tempPath = Path.Combine(sitefinityPath, tempFolder, packageName);
+
+                DirectoryInfo originalPackage = new DirectoryInfo(packagePath);
+                DirectoryInfo newPackage = new DirectoryInfo(tempPath);
+
+                MergeFolders(newPackage, originalPackage);
+
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 2);
+                Assert.IsTrue(pm.GetTemplates().Count().Equals(templatesCount + 2), "templates count is not correct");
+
+                var newTemplate = pm.GetTemplates().Where(t => t.Title == newTemplateTitle).FirstOrDefault();
+                Assert.IsNotNull(newTemplate, "New template was not found");
+            }
+            finally
+            {
+                ServerOperations.Templates().DeletePageTemplate(templateTitle);
+                ServerOperations.Templates().DeletePageTemplate(newTemplateTitle);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(tempFolderPath);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(packagePath);
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String,System.Object,System.Object)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower")]
+        private static void MergeFolders(DirectoryInfo source, DirectoryInfo target)
+        {
+            if (source.FullName.ToLower() == target.FullName.ToLower())
+            {
+                return;
+            }
+
+            // Check if the target directory exists, if not, create it.
+            if (Directory.Exists(target.FullName) == false)
+            {
+                Directory.CreateDirectory(target.FullName);
+            }
+
+            // Copy each file into it's new directory.
+            foreach (FileInfo fi in source.GetFiles())
+            {
+                Console.WriteLine(@"Copying {0}\{1}", target.FullName, fi.Name);
+                fi.CopyTo(Path.Combine(target.ToString(), fi.Name), true);
+            }
+
+            // Copy each subdirectory using recursion.
+            foreach (DirectoryInfo dirSourceSubDir in source.GetDirectories())
+            {
+                DirectoryInfo nextTargetSubDir =
+                    target.CreateSubdirectory(dirSourceSubDir.Name);
+                MergeFolders(dirSourceSubDir, nextTargetSubDir);
+            }
+        }
+
         private void UnlockFolder(string folderPath)
         {
             var account = new SecurityIdentifier(WellKnownSidType.NetworkServiceSid, null).Translate(typeof(NTAccount)).Value;
@@ -431,6 +521,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
                 return this.pageManager;
             }
-        }       
+        }
     }
 }

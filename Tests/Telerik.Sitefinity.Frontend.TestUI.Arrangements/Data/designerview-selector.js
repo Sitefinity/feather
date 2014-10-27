@@ -44,6 +44,17 @@
 
         $scope.itemType = "Telerik.Sitefinity.DynamicTypes.Model.DuplicateRelatedDataModule.Duplicaterelateddata";
 
+        $scope.$watch('properties.Ids.PropertyValue', function (newValue, oldValue) {
+            if (newValue) {
+                $scope.ids = newValue.split(',');
+            }
+        });
+        $scope.$watch('ids', function (newValue, oldValue) {
+            if (newValue) {
+                $scope.properties.Ids.PropertyValue = newValue.join(',');
+            }
+        });
+
         propertyService.get()
             .then(function (data) {
                 if (data) {

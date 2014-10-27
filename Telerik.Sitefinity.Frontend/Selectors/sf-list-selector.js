@@ -89,11 +89,11 @@
 
                             if (scope.multiselect) {
                                 Array.prototype.push.apply(scope.items, data.Items);
-                                        }
+                            }
                             else {
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
-                                    }
+                            }
 
                             if (scope.selectedItems) {
                                 Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.selectedItems.map(function (item) {
@@ -102,7 +102,7 @@
                                         isChecked: true
                                     };
                                 }));
-                                        }
+                            }
 
                             scope.collectSelectedItems();
                         };
@@ -114,10 +114,10 @@
                                 scope.items = [];
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
-                                        }
+                            }
                             else {
                                 scope.items = data.Items;
-                                    }
+                            }
                         };
 
                         var onError = function (error) {
@@ -165,7 +165,7 @@
                             ctrl.getSpecificItems(ids)
                                 .then(ctrl.onSelectedItemsLoadedSuccess, onError)
                                 .finally(function () {
-                            scope.showLoadingIndicator = false;
+                                    scope.showLoadingIndicator = false;
                                 });
                         };
 
@@ -203,7 +203,7 @@
                         scope.$watchCollection('selectedIds', function (newIds, oldIds) {
                             if (!areArrayEquals(newIds, currentSelectedIds)) {
                                 getSelectedItems();
-                        }
+                            }
                         });
 
                         scope.showError = false;
@@ -213,7 +213,10 @@
                             placeholder: 'Narrow by typing',
                             timeoutMs: 500,
                             search: function (keyword) {
-                                angular.element($("[sf-endless-scroll]"))[0].scrollTop = 0;
+                                var endlessScroll = angular.element($("[endless-scroll]"))[0];
+                                if (endlessScroll) {
+                                    endlessScroll.scrollTop = 0;
+                                }
                                 scope.showLoadingIndicator = true;
                                 scope.paging.skip = 0;
                                 var skip = scope.paging.skip;
@@ -239,11 +242,13 @@
                                 }
                                 else {
                                     Array.prototype.push.apply(scope.items, items);
-                                }
+                                }                                
                             }
                         };
 
                         scope.itemClicked = function (index, item) {
+                            if (typeof index === 'object' && !item) item = index;
+
                             var alreadySelected;
                             var selectedItemIndex;
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
@@ -260,8 +265,8 @@
                             else {
                                 if (scope.multiselect) {
                                     scope.selectedItemsInTheDialog.push({ item: item, isChecked: true });
-                            }
-                            else {
+                                }
+                                else {
                                     scope.selectedItemsInTheDialog.splice(0, 1, { item: item, isChecked: true });
                                 }
                             }
@@ -315,8 +320,8 @@
                         };
 
                         scope.cancel = function () {
-                                resetItems();
-                                scope.$modalInstance.close();
+                            resetItems();
+                            scope.$modalInstance.close();
                         };
 
                         scope.open = function () {
@@ -329,12 +334,18 @@
                             .catch(onError)
                             .finally(function () {
                                 scope.showLoadingIndicator = false;
-                                });
+                            });
                         };
 
-                        scope.getTemplate = function () {
+                        scope.getDialogTemplate = function () {
                             var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                            var url = ctrl.templateUrl;
+                            var url = attrs.sfDialogTemplate || ctrl.dialogTemplateUrl;
+                            return serverContext.getEmbeddedResourceUrl(assembly, url);
+                        };
+
+                        scope.getClosedDialogTemplate = function () {
+                            var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
+                            var url = attrs.sfClosedDialogTemplate || ctrl.closedDialogTemplateUrl;
                             return serverContext.getEmbeddedResourceUrl(assembly, url);
                         };
 
@@ -345,7 +356,7 @@
 
                             return ids.length > 0;
                         };
-
+                        
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].item.Id === item.Id) {
@@ -368,6 +379,10 @@
 
                         scope.bindIdentifierField = function (item) {
                             return ctrl.bindIdentifierField(item);
+                        };
+
+                        scope.getChildren = function (parentId) {
+                            return ctrl.getChildren(parentId, scope.filter.searchString);
                         };
 
                         scope.getSelectedIds = function () {
