@@ -64,18 +64,22 @@
                         // ------------------------------------------------------------------------
 
                         scope.change = function (changeArgs) {
-                            var newSelectedTaxonItem = changeArgs.newSelectedItem;
-                            var oldSelectedTaxonItem = changeArgs.oldSelectedItem;
+                            var newSelectedTaxonItems = changeArgs.newSelectedItems;
+                            var oldSelectedTaxonItems = changeArgs.oldSelectedItems;
 
-                            if (oldSelectedTaxonItem && oldSelectedTaxonItem.Id) {
-                                var groupToRemove = scope.queryData.getItemByName(oldSelectedTaxonItem.TaxonomyName);
+                            if (oldSelectedTaxonItems && oldSelectedTaxonItems.length > 0) {
+                                oldSelectedTaxonItems.forEach(function (item) {
+                                    var groupToRemove = scope.queryData.getItemByName(item.TaxonomyName);
 
-                                if (groupToRemove)
-                                    scope.queryData.removeGroup(groupToRemove);
+                                    if (groupToRemove)
+                                        scope.queryData.removeGroup(groupToRemove);
+                                });
                             }
 
-                            if (newSelectedTaxonItem && newSelectedTaxonItem.Id) {
-                                addChildTaxonQueryItem(newSelectedTaxonItem);
+                            if (newSelectedTaxonItems && newSelectedTaxonItems.length > 0) {
+                                newSelectedTaxonItems.forEach(function (item) {
+                                    addChildTaxonQueryItem(item);
+                                });
                             }
                         };
                         
