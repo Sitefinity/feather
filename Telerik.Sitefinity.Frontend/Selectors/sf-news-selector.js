@@ -1,8 +1,8 @@
 ﻿(function ($) {
-    angular.module('selectors')
-        .directive('newsSelector', ['newsItemService', function (newsItemService) {
+    angular.module('sfSelectors')
+        .directive('sfNewsSelector', ['newsItemService', function (newsItemService) {
             return {
-                require: '^listSelector',
+                require: '^sfListSelector',
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
@@ -21,8 +21,8 @@
                         };
 
                         ctrl.selectorType = 'NewsSelector';
-                        ctrl.templateUrl = 'Selectors/news-selector.html';
-                        ctrl.$scope.partialTemplate = 'news-selector-template';
+                        ctrl.templateUrl = 'Selectors/sf-news-selector.html';
+                        ctrl.$scope.partialTemplate = 'sf-news-selector-template';
                     }
                 }
             };

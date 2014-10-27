@@ -1,6 +1,6 @@
 ﻿(function ($) {
-    angular.module('selectors')
-        .directive('listSelector', ['serverContext', function (serverContext) {
+    angular.module('sfSelectors')
+        .directive('sfListSelector', ['serverContext', function (serverContext) {
             return {
                 restrict: 'E',
                 transclude: true,
@@ -15,8 +15,8 @@
 
                     provider: '=?',
                     change: '=',
-                    taxonomyId: '=?', /* taxon-selector */
-                    itemType: '=?', /* dynamic-items-selector */
+                    taxonomyId: '=?', /* sf-taxon-selector */
+                    itemType: '=?', /* sf-dynamic-items-selector */
                     identifierField: '=?'
                 },
                 controller: function ($scope) {
@@ -74,7 +74,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/list-selector.html';
+                    var url = attrs.templateUrl || 'Selectors/sf-list-selector.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -213,7 +213,7 @@
                             placeholder: 'Narrow by typing',
                             timeoutMs: 500,
                             search: function (keyword) {
-                                angular.element($("[endless-scroll]"))[0].scrollTop = 0;
+                                angular.element($("[sf-endless-scroll]"))[0].scrollTop = 0;
                                 scope.showLoadingIndicator = true;
                                 scope.paging.skip = 0;
                                 var skip = scope.paging.skip;

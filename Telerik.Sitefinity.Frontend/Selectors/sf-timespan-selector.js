@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    angular.module('selectors')
+    angular.module('sfSelectors')
         .directive('sfTimespanSelector', ['$timeout', function ($timeout) {
 
             return {
@@ -26,15 +26,30 @@
                             if (item.periodType == 'periodToNow')
                                 item.displayText = 'Last ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
                             else if (item.periodType == "customRange") {
+
                                 if (item.fromDate && item.toDate)
-                                    item.displayText = item.fromDate.toLocaleString() + '-' + item.toDate.toLocaleString();
+                                    item.displayText = "From " + _getFormatedDate(item.fromDate) + " to " + _getFormatedDate(item.toDate);
                                 else if (item.fromDate)
-                                    item.displayText = 'from: ' + item.fromDate.toLocaleString();
-                                else if(item.toDate)
-                                    item.displayText = 'to: ' + item.toDate.toLocaleString();
+                                    item.displayText = "From " + _getFormatedDate(item.fromDate);
+                                else if (item.toDate)
+                                    item.displayText = "To " + _getFormatedDate(item.toDate);
+                                else
+                                    item.displayText = 'Any time';
+
+
                             }
-                            else
-                                item.displayText = 'Any time';
+                        };
+
+                        _getFormatedDate = function (date) {
+                            if (!date)
+                                return;
+
+                            var formatRule = "dd MMM, yyyy";
+
+                            if (date.getHours() !== 0)
+                                formatRule += " HH:mm";
+
+                            return date.format(formatRule);
                         };
 
                         validate = function (item) {
