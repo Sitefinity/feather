@@ -20,6 +20,8 @@ module.exports = function(config){
       '../../Telerik.Sitefinity.Frontend/Services/data-service.js',
 	  '../../Telerik.Sitefinity.Frontend/Selectors/sf-selectors.js',
 	  '../../Telerik.Sitefinity.Frontend/Selectors/sf-list-selector.js',
+	  '../../Telerik.Sitefinity.Frontend/Selectors/sf-timespan-selector.js',
+	  '../../Telerik.Sitefinity.Frontend/Selectors/sf-timespan-selector.html',
       '../../Telerik.Sitefinity.Frontend/Selectors/sf-list-selector.html',
       '../../Telerik.Sitefinity.Frontend/Selectors/sf-dynamic-items-selector.js',
       '../../Telerik.Sitefinity.Frontend/Selectors/sf-dynamic-items-selector.html',

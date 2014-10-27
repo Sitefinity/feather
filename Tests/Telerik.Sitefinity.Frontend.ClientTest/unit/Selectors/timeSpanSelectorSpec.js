@@ -87,7 +87,7 @@ describe("timeSpan selector", function () {
 
         compileDirective(template);
 
-        expect(scope.selectedItem.displayText).toBe("From 12 Dec, 2012 to 14 Dec, 2012");
+        expect(scope.selectedItem.displayText).toBe("From 12 Dec 2012 to 14 Dec 2012");
     });
 
     it('[EGaneva] / custom range is validated correctly.', function () {
