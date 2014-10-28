@@ -14,14 +14,14 @@
     </div>
 
     <div class="col-xs-3">
-        <a class="btn btn-link btn-sm" ng-show="!ngModel.getHours() && !showHours" ng-click="showHours=true">Add hour</a>
+        <a class="btn btn-link btn-sm" ng-show="!ngModel.getHours() && !showHours" ng-click="addHoursClick()">Add hour</a>
 
         <select class="form-control input-sm" ng-model="hstep" ng-change="updateHours(hstep)" ng-options="opt.value as opt.label for opt in hsteps" ng-show="ngModel.getHours() || showHours"></select>
     </div>
 
     <div class="col-xs-3">
-        <a class="btn btn-link btn-sm" ng-show="!ngModel.getMinutes() && showMinutes" ng-click="showMinutes=true">Add minutes</a>
+        <a class="btn btn-link btn-sm" ng-show="!ngModel.getMinutes() && showMinutes"  ng-click="addMinutesClick()">Add minutes</a>
 
-        <select class="form-control input-sm" ng-model="mstep" ng-change="updateMinutes(mstep)" ng-options="opt for opt in msteps" ng-show="ngModel.getMinutes() || showMinutes"></select>
+        <select class="form-control input-sm" ng-model="mstep" ng-change="updateMinutes(mstep)" ng-options="opt.value as opt.label for opt in msteps" ng-show="ngModel.getMinutes() || showMinutes"></select>
     </div>
 </div>
