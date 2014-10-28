@@ -98,6 +98,8 @@
                                 scope.selectedItem = scope.selectedItemInTheDialog;
 
                                 scope.$modalInstance.close();
+
+                                scope.isItemSelected = true;
                             }
                         };
 
