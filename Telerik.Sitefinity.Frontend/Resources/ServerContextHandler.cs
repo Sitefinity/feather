@@ -6,7 +6,9 @@ using System.Web;
 using System.Web.Hosting;
 using ServiceStack.Text;
 using Telerik.Microsoft.Practices.EnterpriseLibrary.Caching;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.Multisite;
 using Telerik.Sitefinity.Multisite.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
@@ -23,7 +25,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// </summary>
         public bool IsReusable
         {
-            get 
+            get
             {
                 return true;
             }
@@ -68,7 +70,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
                         script = this.GetRawScript()
                             .Replace("{{applicationPath}}", this.GetApplicationPath())
                             .Replace("{{currentPackage}}", currentPackage)
-                            .Replace("{{frontendLanguages}}", this.GetFrontendLanguages());
+                            .Replace("{{frontendLanguages}}", this.GetFrontendLanguages())
+                            .Replace("{{currentFrontendRootNodeId}}", this.CurrentFrontendRootNodeId.ToString());
 
                         cache.Add(
                             cacheKey,
@@ -79,9 +82,9 @@ namespace Telerik.Sitefinity.Frontend.Resources
                     }
                 }
             }
-            
+
             return script;
-        }        
+        }
 
         /// <summary>
         /// Gets the script from a predefined file.
@@ -117,7 +120,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var languages = appSettings.DefinedFrontendLanguages.Select(l => l.Name);
 
             var serialziedLanguages = JsonSerializer.SerializeToString(languages);
-            
+
             return serialziedLanguages;
         }
 
@@ -128,6 +131,18 @@ namespace Telerik.Sitefinity.Frontend.Resources
         protected virtual Guid GetCurrentSiteId()
         {
             return SystemManager.CurrentContext.CurrentSite.Id;
+        }
+
+        /// <summary>
+        /// Gets the current front-end root node id.
+        /// </summary>
+        /// <value>The current front-end root node id.</value>
+        protected virtual Guid CurrentFrontendRootNodeId
+        {
+            get
+            {
+                return SiteInitializer.CurrentFrontendRootNodeId;
+            }
         }
 
         /// <summary>

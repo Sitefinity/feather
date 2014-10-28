@@ -6,12 +6,15 @@
 	"Services/news-item-service.js",
 	"Services/flat-taxon-service.js",
 	"Services/taxonomy-service.js",
-	"Services/data-service.js",
+	"Services/data-service.js",	
+	"Services/page-service.js",
 	"Selectors/sf-selectors.js",
 	"Selectors/sf-list-selector.js",
 	"Selectors/sf-news-selector.js",
 	"Selectors/sf-dynamic-items-selector.js",
 	"Selectors/sf-taxon-selector.js",
-	"Selectors/sf-selected-items-view.js"
+	"Selectors/sf-selected-items-view.js",	
+	"Selectors/page-selector.js", 
+    "Selectors/items-tree.js" 
   ]
 }

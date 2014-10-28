@@ -21,8 +21,15 @@
                         };
 
                         ctrl.selectorType = 'NewsSelector';
-                        ctrl.templateUrl = 'Selectors/sf-news-selector.html';
-                        ctrl.$scope.partialTemplate = 'sf-news-selector-template';
+
+                        ctrl.dialogTemplateUrl = 'Selectors/sf-news-selector.html';
+                        ctrl.$scope.dialogTemplateId = 'sf-news-selector-template';
+
+                        var closedDialogTemplate = attrs.multiselect ?
+                            'Selectors/list-group-selection.html' :
+                            'Selectors/bubbles-selection.html';
+
+                        ctrl.closedDialogTemplateUrl = closedDialogTemplate;                        
                     }
                 }
             };

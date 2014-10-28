@@ -33,23 +33,25 @@
                                     item.displayText = "From " + _getFormatedDate(item.fromDate);
                                 else if (item.toDate)
                                     item.displayText = "To " + _getFormatedDate(item.toDate);
-                                else
-                                    item.displayText = 'Any time';
-
-
                             }
+                            else
+                                item.displayText = 'Any time';
                         };
 
                         _getFormatedDate = function (date) {
                             if (!date)
                                 return;
 
-                            var formatRule = "dd MMM, yyyy";
+                            var options = { day: "numeric", month: "short", year: "numeric", hour12: false };
+                        
+                            if (date.getHours() !== 0) {
+                                options.hour = "numeric";
+                                options.minute = "numeric";
+                            }
 
-                            if (date.getHours() !== 0)
-                                formatRule += " HH:mm";
+                            var result = date.toLocaleString("en-GB", options);
 
-                            return date.format(formatRule);
+                            return result;
                         };
 
                         validate = function (item) {
@@ -79,21 +81,7 @@
 
                         // ------------------------------------------------------------------------
                         // Scope variables and setup
-                        // ------------------------------------------------------------------------
-
-                        var timeoutPromise = false;
-                        var selectorId;
-                        if (attrs.id) {
-                            selectorId = attrs.id;
-                        }
-                        else {
-                            //selectorId will be set to the id of the wrapper div of the template. This way we avoid issues when there are several selectors on one page.
-                            selectorId = 'sf' + Math.floor((Math.random() * 1000) + 1);
-                            scope.selectorId = selectorId;
-                        }
-
-                        // This id is used by the modal dialog to know which button will open him.
-                        scope.openSelectorButtonId = '#' + selectorId + ' .openSelectorBtn';
+                        // ------------------------------------------------------------------------                      
 
                         scope.selectItem = function () {
                             if (validate(scope.selectedItemInTheDialog)) {
@@ -122,6 +110,8 @@
                         };
 
                         scope.open = function () {
+                            scope.$openModalDialog();
+
                             scope.showError = false;
                             scope.errorMessage = '';
                             scope.selectedItemInTheDialog = jQuery.extend(true, {}, scope.selectedItem);

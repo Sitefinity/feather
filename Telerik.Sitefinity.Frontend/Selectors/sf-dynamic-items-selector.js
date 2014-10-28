@@ -22,8 +22,14 @@
 
                         ctrl.selectorType = 'DynamicItemsSelector';
 
-                        ctrl.templateUrl = 'Selectors/sf-dynamic-items-selector.html';
-                        ctrl.$scope.partialTemplate = 'sf-dynamic-items-selector-template';
+                        ctrl.dialogTemplateUrl = 'Selectors/sf-dynamic-items-selector.html';
+                        ctrl.$scope.dialogTemplateId = 'sf-dynamic-items-selector-template';
+
+                        var closedDialogTemplate = attrs.multiselect ?
+                            'Selectors/list-group-selection.html' :
+                            'Selectors/bubbles-selection.html';
+
+                        ctrl.closedDialogTemplateUrl = closedDialogTemplate;
                     }
                 }
             };
