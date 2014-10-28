@@ -200,8 +200,8 @@
                             }
                         });
 
-                        scope.$watchCollection('selectedIds', function (newIds, oldIds) {
-                            if (!areArrayEquals(newIds, currentSelectedIds)) {
+                        scope.$watchCollection('selectedIds', function (newIds, oldIds) { 
+                            if (newIds && newIds.length > 0 && !areArrayEquals(newIds, currentSelectedIds)) {
                                 getSelectedItems();
                             }
                         });
