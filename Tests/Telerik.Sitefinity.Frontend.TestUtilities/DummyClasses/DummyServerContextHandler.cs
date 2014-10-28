@@ -54,6 +54,15 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses
         }
 
         /// <inheritdoc />
+        protected override Guid CurrentFrontendRootNodeId
+        {
+            get
+            {
+                return Guid.Empty;
+            }
+        }
+
+        /// <inheritdoc />
         protected override string GetRawScript()
         {
             if (this.GetRawScriptOverride == null)

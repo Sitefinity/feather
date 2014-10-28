@@ -292,6 +292,71 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutFiles)]
+        [Author("Petya Rachina")]
+        [Description("Adds a resource package with layout files, replaces a layout file from the package and verifies the template and page based on it.")]
+        public void ResourcePackageLayoutFiles_ReplaceLayoutFile_VerifyTemplateAndPage()
+        {
+            string resourceForReplace = "Telerik.Sitefinity.Frontend.TestUtilities.Data.LayoutFileReplace.Package1.zip";
+            string packageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Package1.zip";
+            string packageName = "Package1";
+            string layoutFile = "test-layout.cshtml";
+            string backFileName = "test-layout.cshtml.bac";
+            string sitefinityPath = FeatherServerOperations.ResourcePackages().SfPath;
+            string tempFolder = "Temp";
+            string templateTitle = "Package1.test-layout";
+            string layoutTemplateText = "Package1 - test layout";
+            string layoutTemplateTextReplaced = "Package1 - test layout REPLACED";
+            string page = "featherpage";
+
+            PageManager pm = PageManager.GetManager();
+            int templatesCount = pm.GetTemplates().Count();
+
+            string tempFolderPath = Path.Combine(sitefinityPath, tempFolder);
+
+            if (!Directory.Exists(tempFolderPath))
+            {
+                Directory.CreateDirectory(tempFolderPath);
+            }
+
+            string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(packageName, layoutFile);
+            string packagePath = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(packageName);
+            string tempFilePath = Path.Combine(tempFolderPath, packageName, "Mvc", "Views", "Layouts", layoutFile);
+            string backFilePath = Path.Combine(packagePath, backFileName);
+
+            try
+            {
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(resourceForReplace, tempFolderPath);
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(packageResource);
+                FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+
+                var template = pm.GetTemplates().Where(t => t.Title == templateTitle).FirstOrDefault();
+                Assert.IsNotNull(template, "Template was not found");
+
+                Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, page, page);
+
+                string pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+                Assert.IsTrue(pageContent.Contains(layoutTemplateText), "Layout template text was not found in the page content");
+                
+                File.Replace(tempFilePath, filePath, backFilePath);
+
+                Thread.Sleep(1000);
+
+                pageContent = FeatherServerOperations.Pages().GetPageContent(pageId);
+
+                Assert.AreEqual(pm.GetTemplates().Count(), templatesCount + 1, "Unnecessary template was generated");
+                Assert.IsTrue(pageContent.Contains(layoutTemplateTextReplaced), "New layout text was not found in the page content after replace");
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(templateTitle);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(packagePath);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(tempFolderPath);
+            }
+        }
+
         private PageManager pageManager;
 
         private PageManager PageManager
