@@ -136,8 +136,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// </summary>
         public void ClickSelectorButton()
         {
-            HtmlAnchor saveButton = this.EM.Widgets.FeatherWidget.SelectorButton
-                                        .AssertIsPresent("selector button");
+            HtmlAnchor saveButton = this.EM.Widgets.FeatherWidget.SelectorButton;
+
+            saveButton.Wait.ForVisible();
 
             saveButton.Click();
             ActiveBrowser.WaitForAsyncRequests();
