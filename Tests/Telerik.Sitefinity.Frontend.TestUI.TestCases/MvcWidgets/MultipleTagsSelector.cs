@@ -49,8 +49,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
-        TestCategory(FeatherTestCategories.PagesAndContent),
-        Ignore]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleTagsSelectorVerifySelectionAfterSwitchingToAdvancedSettings()
         {
             BAT.Macros().NavigateTo().Pages();
