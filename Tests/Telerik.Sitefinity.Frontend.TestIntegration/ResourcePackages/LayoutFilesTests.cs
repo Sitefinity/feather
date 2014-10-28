@@ -357,6 +357,43 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
         }
 
+        [Test]
+        [Category(TestCategories.LayoutFiles)]
+        [Author("Petya Rachina")]
+        [Description("Adds a resource package, creates a template in Sitefinity and then adds new layout file in the package; verifies the public page before and after")]
+        public void ResourcePackageLayoutFiles_CreateTemplateAndAddLayoutFile_VerifyPublicPage()
+        {
+            string packageName = "TestPackageNoLayouts";
+            string packageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestPackageNoLayouts.zip";
+            string layoutName = "TestLayout.cshtml";
+            string layoutResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayout.cshtml";
+            string templateTitle = "TestPackageNoLayouts.TestLayout";
+            string pageTitle = "FeatherTestPage";
+            string testLayoutTemplateText = "Test Layout";
+           
+            string packagePath = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(packageName);
+            FeatherServerOperations.ResourcePackages().AddNewResourcePackage(packageResource);
+
+            try
+            {
+                var templateId = ServerOperations.Templates().CreatePureMVCPageTemplate(templateTitle);
+                Guid pageId = ServerOperations.Pages().CreatePage(pageTitle, templateId);
+
+                var filePath = Path.Combine(packagePath, "MVC", "Views", "Layouts", layoutName);
+                FeatherServerOperations.ResourcePackages().AddNewResource(layoutResource, filePath);
+
+                var nodeId = ServerOperations.Pages().GetPageNodeId(pageId);
+                var pageContent = FeatherServerOperations.Pages().GetPageContent(nodeId);
+                Assert.IsTrue(pageContent.Contains(testLayoutTemplateText), "Layout text was not found on the page");              
+            }
+            finally
+            {
+                ServerOperations.Pages().DeleteAllPages();
+                ServerOperations.Templates().DeletePageTemplate(templateTitle);
+                FeatherServerOperations.ResourcePackages().DeleteDirectory(packagePath);
+            }
+        }
+
         private PageManager pageManager;
 
         private PageManager PageManager
