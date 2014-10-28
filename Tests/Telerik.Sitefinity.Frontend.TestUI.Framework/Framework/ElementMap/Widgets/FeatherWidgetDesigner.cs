@@ -200,7 +200,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlDiv>("class=k-content k-state-active");
+                return this.Get<HtmlDiv>("class=~k-content k-state-active");
             }
         }
     }
