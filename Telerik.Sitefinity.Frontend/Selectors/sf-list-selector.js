@@ -15,6 +15,7 @@
 
                     provider: '=?',
                     change: '=',
+                    sortable: '=?',
                     taxonomyId: '=?', /* sf-taxon-selector */
                     itemType: '=?', /* sf-dynamic-items-selector */
                     identifierField: '=?'
