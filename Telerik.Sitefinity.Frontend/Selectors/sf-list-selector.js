@@ -314,8 +314,8 @@
                             else {
                                 scope.selectedItem = null;
                                 scope.selectedItemId = null;
-                                scope.selectedItems = null;
-                                scope.selectedIds = null;
+                                scope.selectedItems = [];
+                                scope.selectedIds = [];
                             }
 
                             resetItems();
