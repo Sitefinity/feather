@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using Telerik.Sitefinity.Modules.Pages;
@@ -307,6 +309,21 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             var controllerPath = Path.Combine("MVC", "Scripts", "DummyText", controllerFileName);
             string controllerFilePath = FileInjectHelper.GetDestinationFilePath(controllerPath);
             File.Delete(controllerFilePath);
+        }
+
+        /// <summary>
+        /// Unlocks a folder on the file system.
+        /// </summary>
+        /// <param name="folderPath">The path to the folder.</param>
+        public void UnlockFolder(string folderPath)
+        {
+            var account = new SecurityIdentifier(WellKnownSidType.NetworkServiceSid, null).Translate(typeof(NTAccount)).Value;
+            DirectorySecurity ds = Directory.GetAccessControl(folderPath);
+            FileSystemAccessRule fsa = new FileSystemAccessRule(account, FileSystemRights.FullControl, AccessControlType.Deny);
+
+            ds.RemoveAccessRule(fsa);
+
+            Directory.SetAccessControl(folderPath, ds);
         }
 
         /// <summary>

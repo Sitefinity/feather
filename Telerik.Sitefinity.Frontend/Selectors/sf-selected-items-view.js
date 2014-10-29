@@ -8,6 +8,7 @@
                     selectedItems: '=?',
                     identifierField: '=?',
                     searchIdentifierField: '=?',
+                    sortable: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -101,7 +102,7 @@
 
                         scope.sortableOptions = {
                             hint: function (element) {
-                                return $('<div class="list-group-item list-group-item-draggable list-group-item-hint">' +
+                                return $('<div class="list-group-item list-group-item-multiselect list-group-item-draggable list-group-item-hint">' +
                                             element.html() +
                                         '</div>');
                             },

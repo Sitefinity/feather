@@ -38,15 +38,18 @@
                             sf-get-children="getChildren(parentId)"
                             sf-identifier-field-value="bindIdentifierField(dataItem)"></sf-items-tree>
 
-                        <a ng-repeat="item in items"
+                        <div ng-repeat="item in items"
                                 ng-hide="filter.isEmpty"
                                 style="text-overflow: ellipsis; overflow: hidden;"
-                                ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
+                                ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
                                 ng-click="itemClicked($index, item)">
-                                    <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
-                                    <div ng-bind="bindIdentifierField(item)" />
-                                    {{item.ParentTitlesPath}}
-                        </a>
+
+                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
+
+                            <div ng-bind="bindIdentifierField(item)" />
+
+                            {{item.ParentTitlesPath}}
+                        </div>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
                     <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>

@@ -15,6 +15,7 @@
 
                     provider: '=?',
                     change: '=',
+                    sortable: '=?',
                     taxonomyId: '=?', /* sf-taxon-selector */
                     itemType: '=?', /* sf-dynamic-items-selector */
                     identifierField: '=?'
@@ -202,8 +203,8 @@
                             }
                         });
 
-                        scope.$watchCollection('selectedIds', function (newIds, oldIds) {
-                            if (!areArrayEquals(newIds, currentSelectedIds)) {
+                        scope.$watchCollection('selectedIds', function (newIds, oldIds) { 
+                            if (newIds && newIds.length > 0 && !areArrayEquals(newIds, currentSelectedIds)) {
                                 getSelectedItems();
                             }
                         });
