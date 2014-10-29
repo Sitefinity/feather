@@ -181,7 +181,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 ////Rename ResourcePackages folder
                 if (Directory.Exists(folderPath))
                 {
-                    this.UnlockFolder(folderPath);
+                    FeatherServerOperations.ResourcePackages().UnlockFolder(folderPath);
                     FileSystem.RenameDirectory(folderPath, newFolderName);
                 }
 
@@ -202,7 +202,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
                 if (Directory.Exists(newFolderPath))
                 {
-                    this.UnlockFolder(newFolderPath);
+                    FeatherServerOperations.ResourcePackages().UnlockFolder(newFolderPath);
                     FileSystem.RenameDirectory(newFolderPath, folderName);
 
                     try
@@ -495,17 +495,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                     target.CreateSubdirectory(dirSourceSubDir.Name);
                 MergeFolders(dirSourceSubDir, nextTargetSubDir);
             }
-        }
-
-        private void UnlockFolder(string folderPath)
-        {
-            var account = new SecurityIdentifier(WellKnownSidType.NetworkServiceSid, null).Translate(typeof(NTAccount)).Value;
-            DirectorySecurity ds = Directory.GetAccessControl(folderPath);
-            FileSystemAccessRule fsa = new FileSystemAccessRule(account, FileSystemRights.FullControl, AccessControlType.Deny);
-
-            ds.RemoveAccessRule(fsa);
-
-            Directory.SetAccessControl(folderPath, ds);
         }
 
         private PageManager pageManager;

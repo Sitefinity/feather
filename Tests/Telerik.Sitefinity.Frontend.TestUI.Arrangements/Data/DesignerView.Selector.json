@@ -14,7 +14,7 @@
 	"Selectors/sf-dynamic-items-selector.js",
 	"Selectors/sf-taxon-selector.js",
 	"Selectors/sf-selected-items-view.js",	
-	"Selectors/page-selector.js", 
-    "Selectors/items-tree.js" 
+	"Selectors/sf-page-selector.js", 
+    "Selectors/sf-items-tree.js" 
   ]
 }

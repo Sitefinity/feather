@@ -8,6 +8,7 @@
                     selectedItems: '=?',
                     identifierField: '=?',
                     searchIdentifierField: '=?',
+                    sortable: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';

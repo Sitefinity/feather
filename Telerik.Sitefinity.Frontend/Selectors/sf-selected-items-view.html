@@ -13,7 +13,7 @@
         <div class="list-group-item list-group-item-draggable"
             ng-click="itemClicked(item.item)"
             ng-repeat="item in items">
-            <span class="handler list-group-item-drag" ng-hide="filter.searchString"></span>
+            <span class="handler list-group-item-drag" ng-hide="filter.searchString || !sortable"></span>
             <input type="checkbox" ng-checked="item.isChecked">
             <div ng-bind="bindIdentifierField(item.item)"></div>
         </div>

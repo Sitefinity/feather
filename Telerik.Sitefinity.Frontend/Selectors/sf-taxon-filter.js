@@ -38,10 +38,15 @@
                                     f.Condition.FieldType == 'System.Guid';
                             });
 
-                            if (selectedTaxonQueryItems.length > 0)
-                                scope.selectedTaxonomies[selectedTaxonomyFilterKey] = selectedTaxonQueryItems[0].Value;
-                            else
-                                scope.selectedTaxonomies[selectedTaxonomyFilterKey] = null;
+                            if (selectedTaxonQueryItems.length > 0) {
+                                scope.selectedTaxonomies[selectedTaxonomyFilterKey] = [];
+                                Array.prototype.push.apply(scope.selectedTaxonomies[selectedTaxonomyFilterKey], selectedTaxonQueryItems.map(function (item) {
+                                    return item.Value;
+                                }));
+                            }
+                            else {
+                                scope.selectedTaxonomies[selectedTaxonomyFilterKey] = [];
+                            }
                         };
 
                         var populateSelectedTaxonomies = function () {
