@@ -43,9 +43,16 @@
                 }).$promise;
             };
 
+            var getPredecessors = function (itemId, provider) {
+                return getResource('predecessor/' + itemId).get({
+                    provider: provider
+                }).$promise;
+            };
+
             return {
                 getItems: getItems,
-                getSpecificItems: getSpecificItems
+                getSpecificItems: getSpecificItems,
+                getPredecessors: getPredecessors
             };
         }]);
 })();

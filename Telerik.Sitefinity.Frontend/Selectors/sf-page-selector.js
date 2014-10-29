@@ -6,7 +6,6 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-
                         var rootPage = serverContext.getCurrentFrontendRootNodeId();
 
                         var getItems = function (parentId, search) {
@@ -24,6 +23,11 @@
                                 .then(function (data) {
                                     return data.Items;
                                 });
+                        };
+
+                        ctrl.getPredecessors = function (itemId) {
+                            var provider = ctrl.$scope.provider;
+                            return pageService.getPredecessors(itemId, provider);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
@@ -47,6 +51,8 @@
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;                       
 
                         ctrl.$scope.hierarchical = true;
+
+                        ctrl.$scope.expandSelection = true;
 
                         ctrl.$scope.identifierField = "TitlesPath";
 

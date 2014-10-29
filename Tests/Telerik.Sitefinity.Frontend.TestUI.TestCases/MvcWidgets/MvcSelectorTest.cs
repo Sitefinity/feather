@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
-        TestCategory(FeatherTestCategories.PagesAndContent)]
+        TestCategory(FeatherTestCategories.Selectors)]
         public void MvcSelectorTest()
         {
             BAT.Macros().NavigateTo().Pages();
