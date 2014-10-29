@@ -105,6 +105,8 @@
                             }
 
                             scope.collectSelectedItems();
+
+                            return scope.items;
                         };
 
                         var onItemsFilteredSuccess = function (data) {
@@ -329,10 +331,10 @@
 
                             scope.showLoadingIndicator = true;
 
-                            ctrl.getItems(scope.paging.skip, scope.paging.take)
-                            .then(onFirstPageLoadedSuccess, onError)
-                            .catch(onError)
-                            .finally(function () {
+                            scope.itemsPromise = ctrl.getItems(scope.paging.skip, scope.paging.take)
+                            .then(onFirstPageLoadedSuccess, onError);
+                            
+                            scope.itemsPromise.finally(function () {
                                 scope.showLoadingIndicator = false;
                             });
                         };
@@ -383,6 +385,10 @@
 
                         scope.getChildren = function (parentId) {
                             return ctrl.getChildren(parentId, scope.filter.searchString);
+                        };
+
+                        scope.getPredecessors = function (itemId) {
+                            return ctrl.getPredecessors(itemId);
                         };
 
                         scope.getSelectedIds = function () {

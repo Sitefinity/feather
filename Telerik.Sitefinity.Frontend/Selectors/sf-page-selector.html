@@ -29,7 +29,10 @@
                         <sf-items-tree
                             ng-show="filter.isEmpty"
                             sf-multiselect="multiselect"
-                            sf-items="items"
+                            sf-expand-selection="expandSelection"
+                            sf-items-promise="itemsPromise"
+                            sf-selected-ids="selectedIds"
+                            sf-get-predecessors="getPredecessors(itemId)"
                             sf-select-item="itemClicked(dataItem)"
                             sf-item-selected="isItemSelectedInDialog(dataItem)"
                             sf-get-children="getChildren(parentId)"
