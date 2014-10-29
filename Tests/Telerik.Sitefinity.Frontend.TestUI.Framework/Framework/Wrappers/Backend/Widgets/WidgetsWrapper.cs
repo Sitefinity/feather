@@ -172,10 +172,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             foreach (var itemName in itemNames)
             {
-                var anchor = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlAnchor>(a => a.InnerText.Equals(itemName));
-                anchor.AssertIsPresent(itemName + "not present");
+                var div = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlDiv>(a => a.InnerText.Equals(itemName));
+                div.AssertIsPresent(itemName + "not present");
 
-                anchor.Click();
+                div.Click();
             }
         }
 
