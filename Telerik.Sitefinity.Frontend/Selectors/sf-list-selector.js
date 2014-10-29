@@ -397,7 +397,11 @@
                         };
 
                         scope.itemDisabled = function (item) {
-                            return ctrl.itemDisabled(item);
+                            if (ctrl.itemDisabled) {
+                                return ctrl.itemDisabled(item);
+                            }
+
+                            return false;
                         };
 
                         scope.getSelectedIds = function () {
