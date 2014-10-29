@@ -252,6 +252,10 @@
                         scope.itemClicked = function (index, item) {
                             if (typeof index === 'object' && !item) item = index;
 
+                            if (scope.itemDisabled(item)) {
+                                return;
+                            }
+
                             var alreadySelected;
                             var selectedItemIndex;
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
@@ -390,6 +394,14 @@
 
                         scope.getPredecessors = function (itemId) {
                             return ctrl.getPredecessors(itemId);
+                        };
+
+                        scope.itemDisabled = function (item) {
+                            if (ctrl.itemDisabled) {
+                                return ctrl.itemDisabled(item);
+                            }
+
+                            return false;
                         };
 
                         scope.getSelectedIds = function () {

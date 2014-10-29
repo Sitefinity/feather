@@ -91,6 +91,7 @@
                 sfSelectedIds: '=',
                 sfSelectItem: '&',
                 sfItemSelected: '&',
+                sfItemDisabled: '&?',
                 sfGetChildren: '&',
                 sfGetPredecessors: '&',
                 sfIdentifierFieldValue: '&'
@@ -173,10 +174,12 @@
                 });
 
                 scope.checkboxes = {
-                    template: '<input type="checkbox" ng-click="sfSelectItem({ dataItem: dataItem })" ng-checked="sfItemSelected({dataItem: dataItem})">'
+                    template: '<input type="checkbox" ng-click="sfSelectItem({ dataItem: dataItem })" ng-checked="sfItemSelected({dataItem: dataItem})" ng-hide="sfItemDisabled({dataItem: dataItem})">'
                 };
 
-                scope.itemTemplate = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'list-group-item':true, 'active': sfItemSelected({dataItem: dataItem}) }\" style='text-overflow: ellipsis; overflow: hidden;'>{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</a>";
+                scope.itemTemplate = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'list-group-item':true, 'active': sfItemSelected({dataItem: dataItem}), 'disabled': sfItemDisabled({dataItem: dataItem})}\" style='text-overflow: ellipsis; overflow: hidden;'>" +
+                        "{{ sfIdentifierFieldValue({dataItem: dataItem}) }} <span ng-show='sfItemDisabled({dataItem: dataItem})'>(not translated)</span>" +
+                    "</a>";
             }
         };
     }]);
