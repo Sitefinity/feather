@@ -2,9 +2,7 @@
     <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
     <div ng-hide="showError">
-        <div ng-include="getClosedDialogTemplate()">
-
-        </div>
+        <div ng-include="getClosedDialogTemplate()"></div>
 
         <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
             <span ng-hide="isItemSelected()">Select</span>
