@@ -16,10 +16,6 @@
                             return dataService.getSpecificItems(ids, ctrl.$scope.itemType, provider);
                         };
 
-                        ctrl.onSelectedItemsLoadedSuccess = function (data) {
-                            ctrl.updateSelection(data.Items);
-                        };
-
                         ctrl.selectorType = 'DynamicItemsSelector';
 
                         ctrl.dialogTemplateUrl = 'Selectors/sf-dynamic-items-selector.html';
