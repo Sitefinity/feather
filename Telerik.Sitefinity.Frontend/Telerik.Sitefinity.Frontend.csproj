@@ -196,7 +196,6 @@
     <Compile Include="InlineEditing\Attributes\FieldInfoAttribute.cs" />
     <Compile Include="Designers\DesignerInitializer.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\RequestBackendUserAuthenticationAttribute.cs" />
-    <Compile Include="Mvc\Controllers\ContentControllerBase.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerExtensions.cs" />
     <Compile Include="GridSystem\GridControl.cs" />
     <Compile Include="FilesMonitoring\Data\FileData.cs" />

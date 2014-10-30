@@ -281,7 +281,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="taxonFilter">The taxon that should be contained in the items.</param>
         /// <param name="taxonField">The taxon field.</param>
         /// <param name="page">The page.</param>
-        public abstract void PopulateItems(ITaxon taxonFilter, string taxonField, int? page);
+        public virtual void PopulateItems(ITaxon taxonFilter, string taxonField, int? page)
+        {
+            var query = this.GetItemsQuery();
+
+            if (taxonFilter != null && !taxonField.IsNullOrEmpty())
+                query = query.OfType<IDynamicFieldsContainer>().Where(n => n.GetValue<IList<Guid>>(taxonField).Contains(taxonFilter.Id)).OfType<IDataItem>();
+
+            this.ApplyListSettings(page, query);
+        }
 
         /// <summary>
         /// Gets a collection of <see cref="CacheDependencyNotifiedObject"/>.
@@ -318,6 +326,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         #endregion
 
         #region Protected methods
+
+        /// <summary>
+        /// Gets an active query for all items.
+        /// </summary>
+        /// <returns>The query.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        protected abstract IQueryable<IDataItem> GetItemsQuery();
 
         /// <summary>
         /// Applies the list settings.
