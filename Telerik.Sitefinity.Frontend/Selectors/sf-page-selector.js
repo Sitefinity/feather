@@ -35,10 +35,6 @@
                             return pageService.getSpecificItems(ids, provider);
                         };
 
-                        ctrl.onSelectedItemsLoadedSuccess = function (data) {
-                            ctrl.updateSelection(data.Items);
-                        };
-
                         ctrl.itemDisabled = function (item) {
                             var uiCulture = serverContext.getUICulture();
                             return item.AvailableLanguages.indexOf(uiCulture) < 0;
