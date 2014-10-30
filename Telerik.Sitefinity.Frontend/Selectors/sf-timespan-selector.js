@@ -98,9 +98,16 @@
                                 scope.selectedItem = scope.selectedItemInTheDialog;
 
                                 scope.$modalInstance.close();
-
-                                scope.isItemSelected = true;
                             }
+                        };
+
+                        scope.isItemSelected = function () {
+
+                            if (scope.selectedItem) {
+                                return scope.selectedItem.displayText !== "";
+                            }
+
+                            return false;
                         };
 
                         scope.cancel = function () {
