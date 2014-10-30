@@ -173,10 +173,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             foreach (var itemName in itemNames)
             {
-                var div = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlDiv>(a => a.InnerText.Equals(itemName));
-                div.AssertIsPresent(itemName + "not present");
-
-                div.Click();
+                var itemDiv = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlDiv>(a => a.InnerText.Equals(itemName));
+                itemDiv.Click();
             }
         }
 
@@ -311,55 +309,31 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
-        /// Waits for items to appear in selected tab.
-        /// </summary>
-        /// <param name="expectedCount">The expected count.</param>
-        public void WaitForItemsToAppearInSelectedTab(int expectedCount)
-        {
-            Manager.Current.Wait.For(() => this.CountItems(expectedCount, true), 50000);
-        }
-
-        /// <summary>
         /// Verifies if the items count is as expected.
         /// </summary>
         /// <param name="expected">The expected items count.</param>
         /// <returns>True or false depending on the items count.</returns>
-        public bool CountItems(int expected, bool isSelectedTab = false)
+        public bool CountItems(int expected)
         {
             ActiveBrowser.RefreshDomTree();         
             var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
-            int actual = 0;
-            if (!isSelectedTab)
-            {
-                HtmlDiv scroller = ActiveBrowser.Find
-                                                .ByExpression<HtmlDiv>("class=list-group list-group-endless ng-isolate-scope");
-                var items = activeDialog.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in items");
+
+            var items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-bind=~bindIdentifierField(item");
+
+            //// if items count is more than 12 elements, then you need to scroll
                 if (items.Count() > 12)
                 {
-                    scroller.MouseClick(MouseClickType.LeftDoubleClick);
-                    Manager.Current.Desktop.Mouse.TurnWheel(4000, MouseWheelTurnDirection.Backward);                 
-                }
-                items = activeDialog.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in items");
-                actual = items.Count;
+                HtmlDiv scroller = ActiveBrowser.Find.ByExpression<HtmlDiv>("class=~list-group list-group-endless");
                 
-            }
-            else
-            {
-                HtmlDiv scroller = ActiveBrowser.Find
-                                                .ByExpression<HtmlDiv>("class=list-group list-group-endless");
-                var items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-repeat=item in items");
-                if (items.Count() > 12)
-                {
                     scroller.MouseClick(MouseClickType.LeftDoubleClick);
                     Manager.Current.Desktop.Mouse.TurnWheel(4000, MouseWheelTurnDirection.Backward);                  
-                }
-                items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-repeat=item in items");
-                actual = items.Count;
+                items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-bind=~bindIdentifierField(item");
             }
            
-            bool isCountCorrect = expected == actual;
+            bool isCountCorrect = (expected == items.Count);
             return isCountCorrect;
         }
+
 
         /// <summary>
         /// Verifies if given tab is selected.
