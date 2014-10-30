@@ -420,7 +420,9 @@
                         scope.getSelectedIds = function () {
                             if (attrs.multiselect) {
                                 if (scope.selectedIds && scope.selectedIds.length > 0) {
-                                    return scope.selectedIds;
+                                    return scope.selectedIds.filter(function (id) {
+                                        return id;
+                                    });
                                 }
                                 else if (scope.selectedItems && scope.selectedItems.length > 0) {
                                     return scope.selectedItems.map(function (item) {
