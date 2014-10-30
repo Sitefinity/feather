@@ -18,8 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         /// </summary>
         [TestMethod,
         Owner("Feather team"),
-        TestCategory(FeatherTestCategories.PagesAndContent),
-        Ignore]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void EditLayoutFileFromPackageCacheInvalidation()
         {
             BAT.Macros().NavigateTo().CustomPage("~/" + PageTitle.ToLower(), false);

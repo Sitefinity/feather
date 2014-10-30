@@ -3,7 +3,7 @@
         <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
         <div ng-hide="showError">
-            <span class="label label-taxon" ng-bind="selectedItem.displayText"></span>
+            <span class="label label-taxon label-full" ng-bind="selectedItem.displayText"></span>
             <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
                 <span ng-hide="isItemSelected()">Select</span>
                 <span ng-show="isItemSelected()">Change</span>

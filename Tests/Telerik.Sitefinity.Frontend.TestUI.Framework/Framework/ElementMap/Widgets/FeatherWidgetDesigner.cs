@@ -92,7 +92,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlAnchor>("ng-hide=isCurrentView('Selector')");
+                return this.Find.ByExpression<HtmlAnchor>("tagname=a","InnerText=Selector");
             }
         }
 

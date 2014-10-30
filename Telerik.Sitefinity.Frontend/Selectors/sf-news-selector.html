@@ -26,13 +26,14 @@
                         <sf-items-filter filter='filter'></sf-items-filter>
                     </div>
                     <div sf-endless-scroll paging='paging' class="list-group list-group-endless">
-                        <a ng-repeat="item in items"
-                                        style="text-overflow: ellipsis; overflow: hidden;"
-                                        ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
-                                        ng-click="itemClicked($index, item)">
-                                    <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
+                        <div ng-repeat="item in items"
+                             ng-class="{'list-group-item': true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect' : multiselect }"
+                             ng-click="itemClicked($index, item)">
+
+                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
+
                             <div ng-bind="bindIdentifierField(item)"></div>
-                        </a>
+                        </div>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
                     <div class="sf-loading" ng-show="showLoadingIndicator">
@@ -44,7 +45,8 @@
                 </div>
             </div>
             <div>
-                <sf-selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' identifier-field='identifierField'></sf-selected-items-view>
+                <sf-selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' identifier-field='identifierField' sortable='{{sortable}}'>
+                </sf-selected-items-view>
             </div>
         </div>
     </div>
