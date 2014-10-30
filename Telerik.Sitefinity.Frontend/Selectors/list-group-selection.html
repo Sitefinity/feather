@@ -1,7 +1,7 @@
 ﻿<div class="list-group m-bottom-sm" ng-show="selectedItems.length > 0">
     <div ng-repeat="item in selectedItems | limitTo:5"
          data-index="{{$index}}"
-         ng-bind="hierarchical ? item.Path : bindIdentifierField(item)"
+         ng-bind="hierarchical ? item.TitlesPath : bindIdentifierField(item)"
          class="list-group-item">
     </div>
 
