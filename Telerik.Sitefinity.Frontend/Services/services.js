@@ -90,16 +90,16 @@
 
                 if (ids.length === 0) return this.trimOperator();
 
-                itemsFilterArray.push('Id=(' + ids[0] + ')');
+                itemsFilterArray.push('Id=' + ids[0]);
 
                 if (ids.length > 1) {
                     for (var i = 1; i < ids.length; i++) {
                         if (ids[i] === emptyGuid) continue;
-                        itemsFilterArray.push(' OR Id=(' + ids[i] + ')');
+                        itemsFilterArray.push(' OR Id=' + ids[i]);
                     }
                 }
 
-                this.filter += itemsFilterArray.join('');
+                this.filter += '(' + itemsFilterArray.join('') + ')';
 
                 return this;
             },
