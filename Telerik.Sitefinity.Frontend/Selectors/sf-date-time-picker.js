@@ -18,10 +18,64 @@
                 },
                 link: {
                     pre: function (scope, element, attrs, ctrl, transclude) {
+                        // ------------------------------------------------------------------------
+                        // helper methods
+                        // ------------------------------------------------------------------------
 
-                        var transformHours = function () {
+                        var populateHoursArray = function () {
+                            scope.hsteps = [];
+                            scope.hsteps.push({ 'label': '- Hour -', 'value': 'none' });
+
+                            if (!scope.hourStep)
+                                scope.hourStep = 1;
+
+                            var h;
+                            if (scope.showMeridian) {
+                                for (h = 0; h < 24; h += scope.hourStep) {
+                                    var hour = (h < 12) ? h : h - 12;
+                                    var meridian = (h < 12) ? 'AM' : 'PM';
+
+                                    // display 0 hour as 12AM / 12PM
+                                    hour = (hour !== 0) ? hour : 12;
+
+                                    scope.hsteps.push({ 'label': hour + ' ' + meridian, 'value': h });
+                                }
+                            }
+                            else {
+                                for (h = 0; h < 24; h += scope.hourStep) {
+                                    scope.hsteps.push({ 'label': h, 'value': h });
+                                }
+                            }
                         };
-                       
+
+                        var populateMinutesArray = function () {
+                            scope.msteps = [];
+                            scope.msteps.push({ 'label': '- Minute -', 'value': 'none' });
+
+                            if (!scope.minueteStep)
+                                scope.minueteStep = 10;
+
+                            for (var m = 0; m < 60; m += scope.minueteStep) {
+                                scope.msteps.push({ 'label': m, 'value': m });
+                            }
+                        };
+
+                        var setHours = function (value, showMinutesField) {
+                            scope.ngModel.setHours(value);
+                            scope.hstep = value;
+                            scope.showMinutesField = showMinutesField;
+                        };
+
+                        var setMinutes = function (value, showMinutesDropdown) {
+                            scope.ngModel.setMinutes(value);
+                            scope.mstep = value;
+                            scope.showMinutesDropdown = showMinutesDropdown;
+                        };
+
+                        // ------------------------------------------------------------------------
+                        // Scope variables and setup
+                        // ------------------------------------------------------------------------
+
                         scope.openDatePicker = function ($event) {
                             $event.preventDefault();
                             $event.stopPropagation();
@@ -30,81 +84,42 @@
                         };
 
                         scope.updateHours = function (hstep) {
-                            if (hstep == 'none') {
-                                scope.ngModel.setHours(0);
-                                scope.showHours = false;
-                                scope.showMinutes = false;
-                            } else {
-                                if (!scope.ngModel)
-                                    scope.ngModel = new Date();
+                            if (!scope.ngModel)
+                                scope.ngModel = new Date();
 
-                                scope.ngModel.setHours(hstep);
-                                scope.addMinutesClick();
+                            if (hstep == 'none') {
+                                setHours(0, false);
+                                setMinutes(0, false);
+                            }
+                            else {
+                                setHours(hstep, true);
                             }
                         };
 
                         scope.updateMinutes = function (mstep) {
-                            if (mstep == 'none') {
-                                scope.ngModel.setMinutes(0);
-                                scope.showMinutes = false;
-                            } else {
-                                if (!scope.ngModel)
-                                    scope.ngModel = new Date();
+                            if (!scope.ngModel)
+                                scope.ngModel = new Date();
 
-                                scope.ngModel.setMinutes(mstep);
-                            }
+                            if (mstep == 'none')
+                                setMinutes(0, false);
+                            else
+                                setMinutes(mstep, true);
                         };
-
-                        scope.hsteps = [];
-                        scope.msteps = [];
                         
-                        if (!scope.hourStep)
-                            scope.hourStep = 1;
+                        populateHoursArray();
+                        populateMinutesArray();
+                        scope.showMinutesDropdown = false;
+                        scope.showMinutesField = false;
 
-                        if (!scope.minueteStep)
-                            scope.minueteStep = 10;
-
-                        var h;
-                        if (scope.showMeridian) {
-                            scope.hsteps.push({ 'label': '- Hour -', 'value': 'none' });
-
-                            for (h = 0; h < 24; h += scope.hourStep) {
-                                var hour = (h < 12) ? h : h - 12;
-
-                                // display 0 hour as 12AM / 12PM
-                                hour = (hour !== 0) ? hour : 12;
-
-                                var meridian = (h < 12) ? 'AM' : 'PM';
-
-                                scope.hsteps.push({ 'label': hour + ' ' + meridian, 'value': h });
-                            }
-                        }
-                        else{
-                            for (h = 0; h < 24; h += scope.hourStep) {
-                                scope.hsteps.push({ 'label': h, 'value': h });
-                            }
-                        }
-
-                        scope.msteps.push({ 'label': '- Minute -', 'value': 'none' });
-
-                        scope.addHoursClick = function () {
-                            scope.showHours = true;
-                            scope.hstep = 0;
-                        };
-
-
-                        scope.addMinutesClick = function () {
-                            scope.showMinutes = true;
-                            scope.mstep = 0;
-                        };
-
-                        for (var m = 0; m < 60; m += scope.minueteStep) {
-                            scope.msteps.push({ 'label': m, 'value': m });
-                        }
-                        
                         if (scope.ngModel) {
                             scope.hstep = scope.ngModel.getHours();
                             scope.mstep = scope.ngModel.getMinutes();
+
+                            if (scope.hstep !== 0 || scope.mstep !== 0)
+                                scope.showMinutesField = true;
+
+                            if (scope.mstep !== 0)
+                                scope.showMinutesDropdown = true;
                         }
                     }
                 }

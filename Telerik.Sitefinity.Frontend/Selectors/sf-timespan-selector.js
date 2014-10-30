@@ -44,7 +44,7 @@
 
                             var options = { day: "numeric", month: "short", year: "numeric", hour12: false };
                         
-                            if (date.getHours() !== 0) {
+                            if (date.getHours() !== 0 || date.getMinutes() !== 0) {
                                 options.hour = "numeric";
                                 options.minute = "numeric";
                             }
