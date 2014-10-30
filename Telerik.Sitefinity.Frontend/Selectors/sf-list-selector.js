@@ -282,19 +282,19 @@
                         scope.doneSelecting = function () {
                             scope.removeUnselectedItems();
 
-                            if (scope.selectedItemsInTheDialog.length > 0) {
-                                if (scope.change) {
-                                    var oldSelectedItems = [];
-                                    Array.prototype.push.apply(oldSelectedItems, scope.selectedItems);
-                                    var changeArgs = {
-                                        "newSelectedItems": scope.selectedItemsInTheDialog.map(function (item) {
-                                            return item.item;
-                                        }),
-                                        "oldSelectedItems": oldSelectedItems
-                                    };
-                                    scope.change.call(scope.$parent, changeArgs);
-                                }
+                            if (scope.change) {
+                                var oldSelectedItems = [];
+                                Array.prototype.push.apply(oldSelectedItems, scope.selectedItems);
+                                var changeArgs = {
+                                    "newSelectedItems": scope.selectedItemsInTheDialog.map(function (item) {
+                                        return item.item;
+                                    }),
+                                    "oldSelectedItems": oldSelectedItems
+                                };
+                                scope.change.call(scope.$parent, changeArgs);
+                            }
 
+                            if (scope.selectedItemsInTheDialog.length > 0) {
                                 //set the selected item and its id to the mapped isolated scope properties
                                 scope.selectedItem = scope.selectedItemsInTheDialog[0].item;
                                 scope.selectedItemId = scope.selectedItemsInTheDialog[0].item.Id;
@@ -318,8 +318,8 @@
                             else {
                                 scope.selectedItem = null;
                                 scope.selectedItemId = null;
-                                scope.selectedItems = null;
-                                scope.selectedIds = null;
+                                scope.selectedItems = [];
+                                scope.selectedIds = [];
                             }
 
                             resetItems();
