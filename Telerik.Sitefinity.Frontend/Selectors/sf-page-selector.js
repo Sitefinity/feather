@@ -37,7 +37,12 @@
 
                         ctrl.itemDisabled = function (item) {
                             var uiCulture = serverContext.getUICulture();
-                            return item.AvailableLanguages.indexOf(uiCulture) < 0;
+
+                            if (uiCulture && item.AvailableLanguages && item.AvailableLanguages.length > 0) {
+                                return item.AvailableLanguages.indexOf(uiCulture) < 0;
+                            }
+
+                            return false;
                         };
 
                         ctrl.selectorType = 'PageSelector';
