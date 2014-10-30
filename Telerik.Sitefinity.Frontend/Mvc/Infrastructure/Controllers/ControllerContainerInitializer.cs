@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -16,6 +17,7 @@ using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Mvc;
+using Telerik.Sitefinity.Mvc.Proxy;
 using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Services;
 
@@ -63,6 +65,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 {
                     var assembly = this.LoadAssembly(assemblyFileName);
                     this.InitializeControllerContainer(assembly);
+
+                    this.RegisterWidgetTemplates(assembly);
+
                     result.Add(assembly);
                 }
             }
@@ -258,6 +263,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                                                   new RouteHandler<ResourceHttpHandler>()),
                                                   assemblyName.Name, 
                                                   requireBasicAuthentication: false);
+        }
+
+        private void RegisterWidgetTemplates(Assembly assembly)
+        {
+            var widgetAreaName = assembly.GetName();
+
+            // Exclude feather's Controllers from the widgets
+            var controllerTypes = assembly.GetTypes()
+                .Where(x => x.IsSubclassOf(typeof(Controller)) && !x.FullName.StartsWith("Telerik.Sitefinity.Frontend", StringComparison.Ordinal)).ToList();
+
+            foreach (Type controllerType in controllerTypes)
+            {
+                var widgetName = controllerType.Name.Replace("Controller", string.Empty);
+
+                Modules.ControlTemplates.ControlTemplates.RegisterTemplatableControl(typeof(MvcProxyBase), typeof(MvcProxyBase), string.Empty, string.Format(CultureInfo.InvariantCulture, "MVC {0}", widgetAreaName), string.Format(CultureInfo.InvariantCulture, "MVC - {0}Widget", widgetName));
+            }
         }
 
         private void RemoveSitefinityViewEngine()
