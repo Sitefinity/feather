@@ -54,6 +54,11 @@
                             return result;
                         };
 
+                        clearErrors = function () {
+                            scope.showError = false;
+                            scope.errorMessage = '';
+                        };
+
                         validate = function (item) {
                             if (item.periodType == 'periodToNow' && !item.timeSpanValue) {
                                 scope.errorMessage = 'Invalid period!';
@@ -68,12 +73,14 @@
                                     scope.errorMessage = 'Invalid date range! The expiration date must be after the publication date.';
                                     scope.showError = true;
                                 }
+                                else {
+                                    clearErrors();
+                                }
 
                                 return isValid;
                             }
                             else {
-                                scope.showError = false;
-                                scope.errorMessage = '';
+                                clearErrors();
 
                                 return true;
                             }
