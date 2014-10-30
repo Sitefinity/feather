@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
+
 using Telerik.Sitefinity.Data;
-using Telerik.Sitefinity.DynamicModules.Builder;
-using Telerik.Sitefinity.DynamicModules.Builder.Model;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Model;
@@ -27,20 +25,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         protected override void InitializeRouteParameters(MvcProxyBase proxyControl)
         {
             var originalContext = proxyControl.Context.Request.RequestContext ?? proxyControl.Page.GetRequestContext();
-            var requestContext = proxyControl.RequestContext;
 
-            string controllerName;
-            if (proxyControl.ControllerName.IsNullOrEmpty())
-                controllerName = SitefinityViewEngine.GetControllerName(proxyControl.Controller);
-            else
-                controllerName = proxyControl.ControllerName;
-
-            requestContext.RouteData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] = controllerName;
+            this.SetControllerRouteParam(proxyControl);
 
             var paramsMapper = this.GetDefaultParamsMapper(proxyControl.Controller);
             if (paramsMapper != null)
             {
                 var originalParams = MvcRequestContextBuilder.GetRouteParams(originalContext);
+                var requestContext = proxyControl.RequestContext;
 
                 paramsMapper.ResolveUrlParams(originalParams, requestContext);
                 proxyControl.Controller.TempData.Add("IsInPureMode", proxyControl.IsInPureMode);
@@ -110,7 +102,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     Type contentType;
                     if (typeof(DynamicContent) == contentParam.ParameterType)
                     {
-                        var dynamicContentType = this.GetDynamicContentType(controller);
+                        var dynamicContentType = controller.GetDynamicContentType();
                         contentType = dynamicContentType != null ? TypeResolutionService.ResolveType(dynamicContentType.GetFullTypeName(), throwOnError: false) : null;
                     }
                     else
@@ -166,14 +158,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return new CustomActionParamsMapper(controller, () => "/{" + actionDescriptor.GetParameters()[0].ParameterName + "}", actionName);
         }
 
-        private DynamicModuleType GetDynamicContentType(ControllerBase controller)
+        private void SetControllerRouteParam(MvcProxyBase proxyControl)
         {
-            var controllerName = controller.ControllerContext.RouteData.Values["controller"];
-            var moduleProvider = ModuleBuilderManager.GetManager().Provider;
-            var dynamicContentType = moduleProvider.GetDynamicModules().Where(m => m.Status == DynamicModuleStatus.Active)
-                .Join(moduleProvider.GetDynamicModuleTypes().Where(t => t.TypeName == controllerName), m => m.Id, t => t.ParentModuleId, (m, t) => t)
-                .FirstOrDefault();
-            return dynamicContentType;
+            var requestContext = proxyControl.RequestContext;
+
+            string controllerName;
+            var widgetProxy = proxyControl as MvcWidgetProxy;
+            if (widgetProxy != null && !string.IsNullOrEmpty(widgetProxy.WidgetName))
+            {
+                controllerName = widgetProxy.WidgetName;
+            }
+            else
+            {
+                controllerName = SitefinityViewEngine.GetControllerName(proxyControl.Controller);
+            }
+
+            requestContext.RouteData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] = controllerName;
         }
 
         /// <summary>

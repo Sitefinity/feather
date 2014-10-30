@@ -196,6 +196,7 @@
     <Compile Include="InlineEditing\Attributes\FieldInfoAttribute.cs" />
     <Compile Include="Designers\DesignerInitializer.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\RequestBackendUserAuthenticationAttribute.cs" />
+    <Compile Include="Mvc\Controllers\ContentControllerBase.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerExtensions.cs" />
     <Compile Include="GridSystem\GridControl.cs" />
     <Compile Include="FilesMonitoring\Data\FileData.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="FilesMonitoring\IFileMonitor.cs" />
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\MvcWidgetProxy.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutMvcPageResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
@@ -242,6 +244,7 @@
     <Compile Include="Mvc\Infrastructure\Routing\TaxonParamResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlParamsMapperBase.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlSegmentInfo.cs" />
+    <Compile Include="Mvc\Models\ContentModelBase.cs" />
     <Compile Include="Mvc\Models\DesignerModel.cs" />
     <Compile Include="Mvc\Models\DesignerViewConfigModel.cs" />
     <Compile Include="Mvc\Models\IDesignerModel.cs" />
@@ -478,7 +481,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

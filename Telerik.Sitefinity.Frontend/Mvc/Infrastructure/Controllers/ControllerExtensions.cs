@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.DynamicModules.Builder;
+using Telerik.Sitefinity.DynamicModules.Builder.Model;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
@@ -127,6 +129,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
 
             return url;
+        }
+
+        /// <summary>
+        /// Gets the type of the dynamic content that is inferred for the given controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <returns>The dynamic module type.</returns>
+        public static DynamicModuleType GetDynamicContentType(this ControllerBase controller)
+        {
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+
+            if (controller.ControllerContext == null || controller.ControllerContext.RouteData == null)
+                return null;
+
+            var controllerName = controller.ControllerContext.RouteData.Values["controller"];
+            var moduleProvider = ModuleBuilderManager.GetManager().Provider;
+            var dynamicContentType = moduleProvider.GetDynamicModules()
+                .Where(m => m.Status == DynamicModuleStatus.Active)
+                .Join(moduleProvider.GetDynamicModuleTypes().Where(t => t.TypeName == controllerName), m => m.Id, t => t.ParentModuleId, (m, t) => t)
+                .FirstOrDefault();
+
+            return dynamicContentType;
         }
 
         #endregion
