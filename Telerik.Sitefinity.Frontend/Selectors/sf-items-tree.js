@@ -3,22 +3,46 @@
 
     module.factory('sfTreeHelper', function () {
         var constructPredecessorsTree = function (predecessors, selectedItemId) {
-            // The predecessors collection contains all children of if the items that are in the path to the selected one.
-            // We construct the tree from the bottom to the top.
-            predecessors.reverse();
+            // The predecessors collection contains all children of if the items that are in the path to the selected one.            
 
             var parentsIds = [],
-                currentParentId = predecessors[0].ParentId,
-                currentLevel = [],
+                lastIndex = predecessors.length - 1,
+                currentParentId = predecessors[lastIndex].ParentId,
                 previousParentId,
+                currentLevel = [],                
                 previousLevel,
                 previousLevelParent,
                 isFirstLevel = true,
                 selectedItem;
 
-            for (var i = 0; i < predecessors.length; i++) {
-                var currentItem = predecessors[i];
+            // We construct the tree from the bottom to the top.
+            for (var i = lastIndex; i >= 0 ; i--) {
+                var currentItem = predecessors[i];                
+                
+                if (currentItem.ParentId !== currentParentId) {
+                    // We are in a upper level in the hierarchy.
 
+                    if (previousLevelParent) {
+                        // We push the parent of the previous level here so it can appear first in the list of items.
+                        currentLevel.push(previousLevelParent);
+                    }
+
+                    if (selectedItem && isFirstLevel) {
+                        // The selected item should be first in the list of items.
+                        currentLevel.push(selectedItem);
+                    }
+
+                    // Continue with the next level.
+                    previousParentId = currentParentId;
+                    currentParentId = currentItem.ParentId;
+
+                    previousLevel = currentLevel.reverse();
+                    currentLevel = [];
+
+                    isFirstLevel = false;
+                }
+
+                // The selected item can only be in the bottom level.
                 if (currentItem.Id === previousParentId) {
                     // This item is parent of the previous level of items.
                     // Append the previous level as its children.
@@ -26,47 +50,22 @@
                     currentItem.items = previousLevel;
                     previousLevelParent = currentItem;
                 }
-                else {
-                    if (currentItem.ParentId !== currentParentId) {
-                        // We are in a upper level in the hierarchy.
-
-                        if (previousLevelParent) {
-                            // We push the parent of the previous level here so it can appear first in the list of items.
-                            currentLevel.push(previousLevelParent);
-                        }
-
-                        if (selectedItem && isFirstLevel) {
-                            // The selected item should be first in the list of items.
-                            currentLevel.push(selectedItem);
-                        }
-
-                        // Continue with the next level.
-                        previousParentId = currentParentId;
-                        currentParentId = currentItem.ParentId;
-
-                        previousLevel = currentLevel.reverse();
-                        currentLevel = [];
-
-                        isFirstLevel = false;
-                    }
-
-                    if (currentItem.Id === selectedItemId) {
-                        selectedItem = currentItem;
-                    }
-                    else {
-                        currentLevel.push(currentItem);
-                    }
+                else if (currentItem.Id === selectedItemId) {
+                    selectedItem = currentItem;
                 }
-            }
-
-            if (previousLevelParent) {
-                // If we have parent of a previous level this means that we are on root level and we have to add the item to it.
-                currentLevel.push(previousLevelParent);
+                else {
+                    currentLevel.push(currentItem);
+                }                
             }
 
             if (selectedItem && isFirstLevel) {
                 // The selected item is on the root level.
                 currentLevel.push(selectedItem);
+            }
+
+            if (previousLevelParent) {
+                // If we have parent of a previous level this means that we are on root level and we have to add the item to it.
+                currentLevel.push(previousLevelParent);
             }
 
             // The last level is the root level.
