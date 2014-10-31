@@ -16,10 +16,6 @@
                             return newsItemService.getSpecificItems(ids, provider);
                         };
 
-                        ctrl.onSelectedItemsLoadedSuccess = function (data) {
-                            ctrl.updateSelection(data.Items);
-                        };
-
                         ctrl.selectorType = 'NewsSelector';
 
                         ctrl.dialogTemplateUrl = 'Selectors/sf-news-selector.html';

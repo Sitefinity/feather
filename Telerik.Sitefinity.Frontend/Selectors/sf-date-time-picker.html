@@ -14,14 +14,14 @@
     </div>
 
     <div class="col-xs-3">
-        <a class="btn btn-link btn-sm" ng-show="!ngModel.getHours() && !showHours" ng-click="addHoursClick()">Add hour</a>
+        <a class="btn btn-link btn-sm" ng-show="!showMinutesField" ng-click="updateHours(0)">Add hour</a>
 
-        <select class="form-control input-sm" ng-model="hstep" ng-change="updateHours(hstep)" ng-options="opt.value as opt.label for opt in hsteps" ng-show="ngModel.getHours() || showHours"></select>
+        <select class="form-control input-sm" ng-model="hstep" ng-change="updateHours(hstep)" ng-options="opt.value as opt.label for opt in hsteps" ng-show="showMinutesField"></select>
     </div>
 
     <div class="col-xs-3">
-        <a class="btn btn-link btn-sm" ng-show="!ngModel.getMinutes() && showMinutes"  ng-click="addMinutesClick()">Add minutes</a>
+        <a class="btn btn-link btn-sm" ng-show="!showMinutesDropdown && showMinutesField"  ng-click="updateMinutes(0)">Add minutes</a>
 
-        <select class="form-control input-sm" ng-model="mstep" ng-change="updateMinutes(mstep)" ng-options="opt.value as opt.label for opt in msteps" ng-show="ngModel.getMinutes() || showMinutes"></select>
+        <select class="form-control input-sm" ng-model="mstep" ng-change="updateMinutes(mstep)" ng-options="opt.value as opt.label for opt in msteps" ng-show="showMinutesDropdown && showMinutesField"></select>
     </div>
 </div>

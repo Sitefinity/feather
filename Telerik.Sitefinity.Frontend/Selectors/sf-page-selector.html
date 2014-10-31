@@ -29,9 +29,13 @@
                         <sf-items-tree
                             ng-show="filter.isEmpty"
                             sf-multiselect="multiselect"
-                            sf-items="items"
+                            sf-expand-selection="expandSelection"
+                            sf-items-promise="itemsPromise"
+                            sf-selected-ids="selectedIds"
+                            sf-get-predecessors="getPredecessors(itemId)"
                             sf-select-item="itemClicked(dataItem)"
                             sf-item-selected="isItemSelectedInDialog(dataItem)"
+                            sf-item-disabled="itemDisabled(dataItem)"
                             sf-get-children="getChildren(parentId)"
                             sf-identifier-field-value="bindIdentifierField(dataItem)"
                             class="k-treeview--selection"></sf-items-tree>
@@ -53,7 +57,9 @@
                 </div>
             </div>
             <div>
-                <sf-selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' search-identifier-field='searchIdentifierField' identifier-field='identifierField'></selected-items-view>
+                <sf-selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' search-identifier-field='searchIdentifierField' 
+                    identifier-field='identifierField' sortable='{{sortable}}'>
+                </selected-items-view>
             </div>
         </div>
     </div>

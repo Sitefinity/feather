@@ -44,7 +44,7 @@
 
                             var options = { day: "numeric", month: "short", year: "numeric", hour12: false };
                         
-                            if (date.getHours() !== 0) {
+                            if (date.getHours() !== 0 || date.getMinutes() !== 0) {
                                 options.hour = "numeric";
                                 options.minute = "numeric";
                             }
@@ -52,6 +52,11 @@
                             var result = date.toLocaleString("en-GB", options);
 
                             return result;
+                        };
+
+                        clearErrors = function () {
+                            scope.showError = false;
+                            scope.errorMessage = '';
                         };
 
                         validate = function (item) {
@@ -68,12 +73,14 @@
                                     scope.errorMessage = 'Invalid date range! The expiration date must be after the publication date.';
                                     scope.showError = true;
                                 }
+                                else {
+                                    clearErrors();
+                                }
 
                                 return isValid;
                             }
                             else {
-                                scope.showError = false;
-                                scope.errorMessage = '';
+                                clearErrors();
 
                                 return true;
                             }
@@ -98,9 +105,16 @@
                                 scope.selectedItem = scope.selectedItemInTheDialog;
 
                                 scope.$modalInstance.close();
-
-                                scope.isItemSelected = true;
                             }
+                        };
+
+                        scope.isItemSelected = function () {
+
+                            if (scope.selectedItem) {
+                                return scope.selectedItem.displayText !== "";
+                            }
+
+                            return false;
                         };
 
                         scope.cancel = function () {
