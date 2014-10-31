@@ -30,13 +30,22 @@ $tree-item-interval: 30px
 			color: #000
 			text-decoration: none
 			overflow: hidden
-			text-overflow: ellipsis
 			margin-bottom: -1px
+			&.disabled
+				span
+					&:first-child
+						max-width: 300px
+				em
+					vertical-align: top
 
+			span
+				display: inline-block
+				overflow: hidden
+				text-overflow: ellipsis
+				max-width:100%
 
 		.active
 			background-color: #428bca
-			border-color: #428bca
 			color: #fff
 
 		.k-checkbox

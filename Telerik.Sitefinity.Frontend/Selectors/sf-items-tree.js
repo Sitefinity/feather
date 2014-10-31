@@ -132,7 +132,7 @@
                             }
                         }
                     }
-                };                
+                };
 
                 /* Scope properties */
                 scope.itemsDataSource = new kendo.data.HierarchicalDataSource({
@@ -177,8 +177,8 @@
                     template: '<input type="checkbox" ng-click="sfSelectItem({ dataItem: dataItem })" ng-checked="sfItemSelected({dataItem: dataItem})" ng-hide="sfItemDisabled({dataItem: dataItem})">'
                 };
 
-                scope.itemTemplate = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'active': sfItemSelected({dataItem: dataItem}), 'disabled': sfItemDisabled({dataItem: dataItem})}\" >" +
-                        "{{ sfIdentifierFieldValue({dataItem: dataItem}) }} <span ng-show='sfItemDisabled({dataItem: dataItem})'>(not translated)</span>" +
+                scope.itemTemplate = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}\" >" +
+                        "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\">{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class=\" m-left-md \">(not translated)</em>" +
                     "</a>";
             }
         };
