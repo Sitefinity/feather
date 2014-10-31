@@ -37,11 +37,11 @@
                             sf-item-selected="isItemSelectedInDialog(dataItem)"
                             sf-item-disabled="itemDisabled(dataItem)"
                             sf-get-children="getChildren(parentId)"
-                            sf-identifier-field-value="bindIdentifierField(dataItem)"></sf-items-tree>
+                            sf-identifier-field-value="bindIdentifierField(dataItem)"
+                            class="k-treeview--selection"></sf-items-tree>
 
                         <div ng-repeat="item in items"
                                 ng-hide="filter.isEmpty"
-                                style="text-overflow: ellipsis; overflow: hidden;"
                                 ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
                                 ng-click="itemClicked($index, item)">
 
@@ -49,7 +49,7 @@
 
                             <div ng-bind="bindIdentifierField(item)" />
 
-                            {{item.ParentTitlesPath}}
+                           <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">{{item.ParentTitlesPath}}</div>
                         </div>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
