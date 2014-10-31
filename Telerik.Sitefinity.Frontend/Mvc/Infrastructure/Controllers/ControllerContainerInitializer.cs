@@ -277,7 +277,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 var widgetName = controllerType.Name.Replace("Controller", string.Empty);
 
-                Modules.ControlTemplates.ControlTemplates.RegisterTemplatableControl(typeof(MvcProxyBase), typeof(MvcProxyBase), string.Empty, string.Format(CultureInfo.InvariantCulture, "MVC {0}", widgetAreaName), string.Format(CultureInfo.InvariantCulture, "MVC - {0}Widget", widgetName));
+                Modules.ControlTemplates.ControlTemplates.RegisterTemplatableControl(controllerType, controllerType, string.Empty, string.Format(CultureInfo.InvariantCulture, "MVC {0}", widgetAreaName), string.Format(CultureInfo.InvariantCulture, "MVC - {0}Widget", widgetName));
             }
         }
 
