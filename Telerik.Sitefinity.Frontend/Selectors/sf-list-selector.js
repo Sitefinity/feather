@@ -16,7 +16,6 @@
                     provider: '=?',
                     change: '=',
                     sortable: '=?',
-                    taxonomyId: '=?', /* sf-taxon-selector */
                     itemType: '=?', /* sf-dynamic-items-selector */
                     identifierField: '=?'
                 },
@@ -44,6 +43,10 @@
                     };
 
                     this.$scope = $scope;
+
+                    this.onSelectedItemsLoadedSuccess = function (data) {
+                        this.updateSelection(data.Items);
+                    };
 
                     this.updateSelection = function (selectedItems) {
                         selectedItems.sort(compareFunction);
@@ -156,7 +159,8 @@
 
                             return ctrl.getSpecificItems(ids)
                                 .then(function (data) {
-                                    ctrl.updateSelection(data.Items);
+                                    ////ctrl.updateSelection(data.Items);
+                                    ctrl.onSelectedItemsLoadedSuccess(data);
                                 }, onError)
                                 .finally(function () {
                                     scope.showLoadingIndicator = false;
