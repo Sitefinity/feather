@@ -14,7 +14,10 @@ using Telerik.Sitefinity.Web.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
-    public abstract class ContentModelBase : ICacheDependable, IContentLocatableView
+    /// <summary>
+    /// A base class of models that contain logic for querying content.
+    /// </summary>
+    public abstract class ContentModelBase : IContentLocatableView
     {
         #region Properties
 
@@ -24,35 +27,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public virtual Type ContentType { get; set; }
 
         /// <summary>
-        /// Gets an enumerable of the items.
-        /// </summary>
-        /// <value>
-        /// The items.
-        /// </value>
-        public virtual IEnumerable<dynamic> Items
-        {
-            get
-            {
-                return this.items;
-            }
-
-            private set
-            {
-                this.items = value;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the CSS class that will be applied on the wrapping element of the widget when it is in List view.
         /// </summary>
         /// <value>
         /// The CSS class.
         /// </value>
-        public virtual string ListCssClass
-        {
-            get;
-            set;
-        }
+        public virtual string ListCssClass { get; set; }
 
         /// <summary>
         /// Gets or sets the CSS class that will be applied on the wrapper div of the widget when it is in Details view.
@@ -60,35 +40,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         /// The CSS class.
         /// </value>
-        public virtual string DetailCssClass
-        {
-            get;
-            set;
-        }
+        public virtual string DetailCssClass { get; set; }
 
         /// <summary>
-        /// Gets the Id of the item that should be displayed when filtering by preselected items.
+        /// Gets a comma separated list of Ids of the items that should be displayed when filtering by preselected items.
         /// </summary>
         /// <value>
         /// The selected items.
         /// </value>
-        public virtual Guid SelectedItemId
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the detail item.
-        /// </summary>
-        /// <value>
-        /// The detail news.
-        /// </value>
-        public virtual dynamic DetailItem
-        {
-            get;
-            set;
-        }
+        public virtual string SelectedItemIds { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable social sharing.
@@ -96,31 +56,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         ///   <c>true</c> if should enable social sharing; otherwise, <c>false</c>.
         /// </value>
-        public virtual bool EnableSocialSharing
-        {
-            get;
-            set;
-        }
+        public virtual bool EnableSocialSharing { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the provider.
         /// </summary>
         /// <value>The name of the provider.</value>
-        public virtual string ProviderName
-        {
-            get;
-            set;
-        }
+        public virtual string ProviderName { get; set; }
 
         /// <summary>
         /// Gets or sets which items to be displayed in the list view.
         /// </summary>
         /// <value>The page display mode.</value>
-        public virtual SelectionMode SelectionMode
-        {
-            get;
-            set;
-        }
+        public virtual SelectionMode SelectionMode { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to divide items in the list.
@@ -128,35 +76,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         /// The display mode.
         /// </value>
-        public virtual ListDisplayMode DisplayMode
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the total pages count.
-        /// </summary>
-        /// <value>
-        /// The total pages count.
-        /// </value>
-        public virtual int? TotalPagesCount
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the current page.
-        /// </summary>
-        /// <value>
-        /// The current page.
-        /// </value>
-        public virtual int CurrentPage
-        {
-            get;
-            set;
-        }
+        public virtual ListDisplayMode DisplayMode { get; set; }
 
         /// <summary>
         /// Gets or sets the items count per page.
@@ -202,23 +122,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         /// The filter expression.
         /// </value>
-        public virtual string FilterExpression
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the query data used for filtering of the news items.
-        /// </summary>
-        /// <value>
-        /// The additional filters.
-        /// </value>
-        public virtual QueryData AdditionalFilters
-        {
-            get;
-            set;
-        }
+        public virtual string FilterExpression { get; set; }
 
         /// <summary>
         /// Gets or sets the serialized additional filters.
@@ -226,25 +130,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         /// The serialized additional filters.
         /// </value>
-        public virtual string SerializedAdditionalFilters
-        {
-            get
-            {
-                return this.serializedAdditionalFilters;
-            }
-
-            set
-            {
-                if (this.serializedAdditionalFilters != value)
-                {
-                    this.serializedAdditionalFilters = value;
-                    if (!this.serializedAdditionalFilters.IsNullOrEmpty())
-                    {
-                        this.AdditionalFilters = JsonSerializer.DeserializeFromString<QueryData>(this.serializedAdditionalFilters);
-                    }
-                }
-            }
-        }
+        public virtual string SerializedAdditionalFilters { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the canonical URL tag should be added to the page when the canonical meta tag should be added to the page.
@@ -275,20 +161,58 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return new[] { location };
         }
 
-        /// <summary>
-        /// Populates the items.
-        /// </summary>
-        /// <param name="taxonFilter">The taxon that should be contained in the items.</param>
-        /// <param name="taxonField">The taxon field.</param>
-        /// <param name="page">The page.</param>
-        public virtual void PopulateItems(ITaxon taxonFilter, string taxonField, int? page)
+        public virtual ContentListViewModel CreateListViewModel()
         {
+            return this.CreateListViewModel(1);
+        }
+
+        public virtual ContentListViewModel CreateListViewModel(int page)
+        {
+            return this.CreateListViewModel(null, page);
+        }
+
+        public virtual ContentListViewModel CreateListViewModel(ITaxon taxonFilter)
+        {
+            return this.CreateListViewModel(taxonFilter, 1);
+        }
+
+        public virtual ContentListViewModel CreateListViewModel(ITaxon taxonFilter, int page)
+        {
+            if (page < 1)
+                throw new ArgumentException("'page' argument has to be at least 1.", "page");
+
             var query = this.GetItemsQuery();
-
-            if (taxonFilter != null && !taxonField.IsNullOrEmpty())
+            if (taxonFilter != null)
+            {
+                var taxonField = this.ExpectedTaxonFieldName(taxonFilter);
                 query = query.OfType<IDynamicFieldsContainer>().Where(n => n.GetValue<IList<Guid>>(taxonField).Contains(taxonFilter.Id)).OfType<IDataItem>();
+            }
 
-            this.ApplyListSettings(page, query);
+            var viewModel = new ContentListViewModel();
+            viewModel.CurrentPage = page;
+
+            int? totalPages;
+            viewModel.Items = this.ApplyListSettings(page, query, out totalPages);
+            viewModel.TotalPagesCount = totalPages;
+            viewModel.ProviderName = this.ProviderName;
+            viewModel.ContentType = this.ContentType;
+            viewModel.CssClass = this.ListCssClass;
+            viewModel.ShowPager = this.DisplayMode == ListDisplayMode.Paging && totalPages.HasValue && totalPages > 1;
+
+            return viewModel;
+        }
+
+        public virtual ContentDetailsViewModel CreateDetailsViewModel(IDataItem item)
+        {
+            var viewModel = new ContentDetailsViewModel();
+
+            viewModel.CssClass = this.DetailCssClass;
+            viewModel.Item = item;
+            viewModel.ContentType = this.ContentType;
+            viewModel.ProviderName = this.ProviderName;
+            viewModel.EnableSocialSharing = this.EnableSocialSharing;
+
+            return viewModel;
         }
 
         /// <summary>
@@ -297,22 +221,45 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         ///     notification.
         ///     When notified, all cached objects with dependency on the provided keys will expire.
         /// </summary>
+        /// <param name="viewModel">View model that will be used for displaying the data.</param>
         /// <returns>
         /// The <see cref="IList"/>.
         /// </returns>
-        public virtual IList<CacheDependencyKey> GetKeysOfDependentObjects()
+        public virtual IList<CacheDependencyKey> GetKeysOfDependentObjects(ContentListViewModel viewModel)
         {
             if (this.ContentType != null)
             {
                 var contentResolvedType = this.ContentType;
                 var result = new List<CacheDependencyKey>(1);
-                if (this.DetailItem != null && this.DetailItem.Id != Guid.Empty)
+                result.Add(new CacheDependencyKey { Key = null, Type = contentResolvedType });
+
+                return result;
+            }
+            else
+            {
+                return new List<CacheDependencyKey>(0);
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="CacheDependencyNotifiedObject"/>.
+        ///     The <see cref="CacheDependencyNotifiedObject"/> represents a key for which cached items could be subscribed for
+        ///     notification.
+        ///     When notified, all cached objects with dependency on the provided keys will expire.
+        /// </summary>
+        /// <param name="viewModel">View model that will be used for displaying the data.</param>
+        /// <returns>
+        /// The <see cref="IList"/>.
+        /// </returns>
+        public virtual IList<CacheDependencyKey> GetKeysOfDependentObjects(ContentDetailsViewModel viewModel)
+        {
+            if (this.ContentType != null)
+            {
+                var contentResolvedType = this.ContentType;
+                var result = new List<CacheDependencyKey>(1);
+                if (viewModel.Item != null && viewModel.Item.Id != Guid.Empty)
                 {
-                    result.Add(new CacheDependencyKey { Key = this.DetailItem.Id.ToString(), Type = contentResolvedType });
-                }
-                else
-                {
-                    result.Add(new CacheDependencyKey { Key = null, Type = contentResolvedType });
+                    result.Add(new CacheDependencyKey { Key = viewModel.Item.Id.ToString(), Type = contentResolvedType });
                 }
 
                 return result;
@@ -339,13 +286,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="query">The items query.</param>
-        protected virtual void ApplyListSettings(int? page, IQueryable<IDataItem> query)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "2#")]
+        protected virtual IEnumerable<dynamic> ApplyListSettings(int page, IQueryable<IDataItem> query, out int? totalPages)
         {
-            if (page == null || page < 1)
-                page = 1;
+            if (page < 1)
+                throw new ArgumentException("'page' argument has to be at least 1.", "page");
 
-            int? itemsToSkip = (page.Value - 1) * this.ItemsPerPage;
-            itemsToSkip = this.DisplayMode == ListDisplayMode.Paging ? ((page.Value - 1) * this.ItemsPerPage) : null;
+            int? itemsToSkip = (page - 1) * this.ItemsPerPage;
+            itemsToSkip = this.DisplayMode == ListDisplayMode.Paging ? ((page - 1) * this.ItemsPerPage) : null;
             int? totalCount = 0;
             int? take = this.DisplayMode == ListDisplayMode.All ? null : this.ItemsPerPage;
 
@@ -353,7 +301,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             compiledFilterExpression = this.AddLiveFilterExpression(compiledFilterExpression);
             compiledFilterExpression = this.AdaptMultilingualFilterExpression(compiledFilterExpression);
 
-            this.Items = DataProviderBase.SetExpressions(
+            var result = DataProviderBase.SetExpressions(
                 query,
                 compiledFilterExpression,
                 this.SortExpression,
@@ -361,14 +309,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 take,
                 ref totalCount).ToArray<dynamic>();
 
-            this.TotalPagesCount = (int)Math.Ceiling((double)(totalCount.Value / (double)this.ItemsPerPage.Value));
-            this.TotalPagesCount = this.DisplayMode == ListDisplayMode.Paging ? this.TotalPagesCount : null;
-            this.CurrentPage = page.Value;
+            totalPages = (int)Math.Ceiling(totalCount.Value / (double)this.ItemsPerPage.Value);
+            totalPages = this.DisplayMode == ListDisplayMode.Paging ? totalPages : null;
+
+            return result;
         }
 
         #endregion
 
         #region Private methods
+
+        private string ExpectedTaxonFieldName(ITaxon taxon)
+        {
+            if (taxon.Taxonomy.Name == "Categories")
+                return taxon.Taxonomy.TaxonName;
+
+            return taxon.Taxonomy.Name;
+        }
 
         /// <summary>
         /// Compiles a filter expression based on the widget settings.
@@ -380,9 +337,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             if (this.SelectionMode == SelectionMode.FilteredItems)
             {
-                if (this.AdditionalFilters != null)
+                if (!this.SerializedAdditionalFilters.IsNullOrEmpty())
                 {
-                    var queryExpression = Telerik.Sitefinity.Data.QueryBuilder.LinqTranslator.ToDynamicLinq(this.AdditionalFilters);
+                    var additionalFilters = JsonSerializer.DeserializeFromString<QueryData>(this.SerializedAdditionalFilters);
+                    var queryExpression = Telerik.Sitefinity.Data.QueryBuilder.LinqTranslator.ToDynamicLinq(additionalFilters);
                     elements.Add(queryExpression);
                 }
             }
@@ -440,9 +398,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private string GetSelectedItemsFilterExpression()
         {
-            var selectedItemIds = new List<Guid>() { this.SelectedItemId };
+            var selectedItemIds = this.SelectedItemIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var selectedItemsFilterExpression = string.Join(" OR ", selectedItemIds.Select(id => "Id = " + id));
+            var selectedItemsFilterExpression = string.Join(" OR ", selectedItemIds.Select(id => "Id = " + id.Trim()));
             return selectedItemsFilterExpression;
         }
 
@@ -450,10 +408,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         #region Privte fields and constants
 
-        private IEnumerable<dynamic> items;
         private int? itemsPerPage = 20;
         private string sortExpression = "PublicationDate DESC";
-        private string serializedAdditionalFilters;
 
         #endregion
     }

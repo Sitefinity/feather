@@ -243,6 +243,8 @@
     <Compile Include="Mvc\Infrastructure\Routing\TaxonParamResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlParamsMapperBase.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlSegmentInfo.cs" />
+    <Compile Include="Mvc\Models\ContentDetailsViewModel.cs" />
+    <Compile Include="Mvc\Models\ContentListViewModel.cs" />
     <Compile Include="Mvc\Models\ContentModelBase.cs" />
     <Compile Include="Mvc\Models\DesignerModel.cs" />
     <Compile Include="Mvc\Models\DesignerViewConfigModel.cs" />
