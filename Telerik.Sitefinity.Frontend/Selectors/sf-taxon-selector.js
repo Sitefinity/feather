@@ -23,10 +23,6 @@
                             return flatTaxonService.getSpecificItems(taxonomyId, ids);
                         };
 
-                        ctrl.onSelectedItemsLoadedSuccess = function (data) {
-                            ctrl.updateSelection(data.Items);
-                        };
-
                         ctrl.selectorType = 'TaxonSelector';
                         ctrl.dialogTemplateUrl = 'Selectors/sf-taxon-selector.html';
                         ctrl.closedDialogTemplateUrl = 'Selectors/bubbles-selection.html';

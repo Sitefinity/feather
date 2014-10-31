@@ -6,7 +6,6 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-
                         var rootPage = serverContext.getCurrentFrontendRootNodeId();
 
                         var getItems = function (parentId, search) {
@@ -26,13 +25,24 @@
                                 });
                         };
 
+                        ctrl.getPredecessors = function (itemId) {
+                            var provider = ctrl.$scope.provider;
+                            return pageService.getPredecessors(itemId, provider);
+                        };
+
                         ctrl.getSpecificItems = function (ids) {
                             var provider = ctrl.$scope.provider;
                             return pageService.getSpecificItems(ids, provider);
                         };
 
-                        ctrl.onSelectedItemsLoadedSuccess = function (data) {
-                            ctrl.updateSelection(data.Items);
+                        ctrl.itemDisabled = function (item) {
+                            var uiCulture = serverContext.getUICulture();
+
+                            if (uiCulture && item.AvailableLanguages && item.AvailableLanguages.length > 0) {
+                                return item.AvailableLanguages.indexOf(uiCulture) < 0;
+                            }
+
+                            return false;
                         };
 
                         ctrl.selectorType = 'PageSelector';
@@ -47,6 +57,8 @@
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;                       
 
                         ctrl.$scope.hierarchical = true;
+
+                        ctrl.$scope.expandSelection = true;
 
                         ctrl.$scope.identifierField = "TitlesPath";
 

@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfListSelector', ['serverContext', function (serverContext) {
+        .directive('sfListSelector', ['serverContext', '$q', function (serverContext, $q) {
             return {
                 restrict: 'E',
                 transclude: true,
@@ -96,16 +96,7 @@
                                 pushNotSelectedItems(data.Items);
                             }
 
-                            if (scope.selectedItems) {
-                                Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.selectedItems.map(function (item) {
-                                    return {
-                                        item: item,
-                                        isChecked: true
-                                    };
-                                }));
-                            }
-
-                            scope.collectSelectedItems();
+                            return scope.items;
                         };
 
                         var onItemsFilteredSuccess = function (data) {
@@ -157,17 +148,39 @@
                                 }));
                         };
 
-                        var getSelectedItems = function () {
+                        var fetchSelectedItems = function () {
                             var ids = scope.getSelectedIds();
                             if (ids.length === 0) {
                                 return;
                             }
 
-                            ctrl.getSpecificItems(ids)
-                                .then(ctrl.onSelectedItemsLoadedSuccess, onError)
+                            return ctrl.getSpecificItems(ids)
+                                .then(function (data) {
+                                    ctrl.updateSelection(data.Items);
+                                }, onError)
                                 .finally(function () {
                                     scope.showLoadingIndicator = false;
                                 });
+                        };
+
+                        var ensureSelectionIsUpToDate = function () {
+                            $q.when(fetchSelectedItems()).then(function () {
+                                updateSelectionInTheDialog();
+
+                                scope.collectSelectedItems();
+                            });
+                        };
+
+                        var updateSelectionInTheDialog = function () {
+                            if (scope.selectedItems) {
+                                Array.prototype.push.apply(scope.selectedItemsInTheDialog,
+                                    scope.selectedItems.map(function (item) {
+                                        return {
+                                            item: item,
+                                            isChecked: true
+                                        };
+                                    }));
+                            }
                         };
 
                         var resetItems = function () {
@@ -203,7 +216,7 @@
 
                         scope.$watchCollection('selectedIds', function (newIds, oldIds) { 
                             if (newIds && newIds.length > 0 && !areArrayEquals(newIds, currentSelectedIds)) {
-                                getSelectedItems();
+                                fetchSelectedItems();
                             }
                         });
 
@@ -250,6 +263,10 @@
                         scope.itemClicked = function (index, item) {
                             if (typeof index === 'object' && !item) item = index;
 
+                            if (scope.itemDisabled(item)) {
+                                return;
+                            }
+
                             var alreadySelected;
                             var selectedItemIndex;
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
@@ -276,19 +293,19 @@
                         scope.doneSelecting = function () {
                             scope.removeUnselectedItems();
 
-                            if (scope.selectedItemsInTheDialog.length > 0) {
-                                if (scope.change) {
-                                    var oldSelectedItems = [];
-                                    Array.prototype.push.apply(oldSelectedItems, scope.selectedItems);
-                                    var changeArgs = {
-                                        "newSelectedItems": scope.selectedItemsInTheDialog.map(function (item) {
-                                            return item.item;
-                                        }),
-                                        "oldSelectedItems": oldSelectedItems
-                                    };
-                                    scope.change.call(scope.$parent, changeArgs);
-                                }
+                            if (scope.change) {
+                                var oldSelectedItems = [];
+                                Array.prototype.push.apply(oldSelectedItems, scope.selectedItems);
+                                var changeArgs = {
+                                    "newSelectedItems": scope.selectedItemsInTheDialog.map(function (item) {
+                                        return item.item;
+                                    }),
+                                    "oldSelectedItems": oldSelectedItems
+                                };
+                                scope.change.call(scope.$parent, changeArgs);
+                            }
 
+                            if (scope.selectedItemsInTheDialog.length > 0) {
                                 //set the selected item and its id to the mapped isolated scope properties
                                 scope.selectedItem = scope.selectedItemsInTheDialog[0].item;
                                 scope.selectedItemId = scope.selectedItemsInTheDialog[0].item.Id;
@@ -312,8 +329,8 @@
                             else {
                                 scope.selectedItem = null;
                                 scope.selectedItemId = null;
-                                scope.selectedItems = null;
-                                scope.selectedIds = null;
+                                scope.selectedItems = [];
+                                scope.selectedIds = [];
                             }
 
                             resetItems();
@@ -330,12 +347,14 @@
 
                             scope.showLoadingIndicator = true;
 
-                            ctrl.getItems(scope.paging.skip, scope.paging.take)
-                            .then(onFirstPageLoadedSuccess, onError)
-                            .catch(onError)
-                            .finally(function () {
+                            scope.itemsPromise = ctrl.getItems(scope.paging.skip, scope.paging.take)
+                            .then(onFirstPageLoadedSuccess, onError);
+                            
+                            scope.itemsPromise.finally(function () {
                                 scope.showLoadingIndicator = false;
                             });
+
+                            ensureSelectionIsUpToDate();
                         };
 
                         scope.getDialogTemplate = function () {
@@ -386,10 +405,24 @@
                             return ctrl.getChildren(parentId, scope.filter.searchString);
                         };
 
+                        scope.getPredecessors = function (itemId) {
+                            return ctrl.getPredecessors(itemId);
+                        };
+
+                        scope.itemDisabled = function (item) {
+                            if (ctrl.itemDisabled) {
+                                return ctrl.itemDisabled(item);
+                            }
+
+                            return false;
+                        };
+
                         scope.getSelectedIds = function () {
                             if (attrs.multiselect) {
                                 if (scope.selectedIds && scope.selectedIds.length > 0) {
-                                    return scope.selectedIds;
+                                    return scope.selectedIds.filter(function (id) {
+                                        return id;
+                                    });
                                 }
                                 else if (scope.selectedItems && scope.selectedItems.length > 0) {
                                     return scope.selectedItems.map(function (item) {
@@ -429,7 +462,7 @@
                             });
                         }
 
-                        getSelectedItems();
+                        fetchSelectedItems();
 
                         transclude(scope, function (clone) {
                             var hasContent;
