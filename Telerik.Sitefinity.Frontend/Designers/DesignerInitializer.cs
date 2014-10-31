@@ -52,16 +52,17 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Angular/angular-route.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls-0.11.0.min.js"));
            
-                var references = PageManager.GetScriptReferences(ScriptRef.KendoAll);
-                foreach (var scriptRef in references)
-                {
-                    @event.Scripts.Add(scriptRef);
-                }
+                ////var references = PageManager.GetScriptReferences(ScriptRef.KendoAll);
+                ////foreach (var scriptRef in references)
+                ////{
+                ////    @event.Scripts.Add(scriptRef);
+                ////}
      
+                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/kendo.all.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor-services.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor.js"));
                 ////@event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/angular-kendo.js"));
-
+                
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/LABjs/LAB.min.js"));
 
                 var currentPackage = new PackageManager().GetCurrentPackage();
