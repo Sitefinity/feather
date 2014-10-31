@@ -179,6 +179,7 @@
     <Compile Include="ControllerFactoryRegion.cs" />
     <Compile Include="DummyClasses\Authentication\DummyAuthenticationEvaluator.cs" />
     <Compile Include="DummyClasses\Cache\DummyCacheDependency.cs" />
+    <Compile Include="DummyClasses\Cache\DummyCacheManager.cs" />
     <Compile Include="DummyClasses\Configs\DummyConfigProvider.cs" />
     <Compile Include="DummyClasses\Controls\DummyControl.cs" />
     <Compile Include="DummyClasses\DummyServerContextHandler.cs">
@@ -246,6 +247,8 @@
     <EmbeddedResource Include="Data\LayoutFilesSpecialChars\My_TestTemplate.cshtml" />
     <EmbeddedResource Include="Data\LayoutFileReplace\TestLayout.cshtml" />
     <EmbeddedResource Include="Data\DuplicateRelatedDataModule.zip" />
+    <EmbeddedResource Include="Data\ReplaceTest\Package1.zip" />
+    <EmbeddedResource Include="Data\LayoutFileReplace\Package1.zip" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
   </ItemGroup>

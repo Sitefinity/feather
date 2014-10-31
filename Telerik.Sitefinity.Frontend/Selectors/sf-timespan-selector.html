@@ -1,70 +1,76 @@
-﻿<div ng-attr-id="{{selectorId}}">
+﻿<div>
     <div id="selectedItemsPlaceholder">
         <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+
         <div ng-hide="showError">
-            <span class="label label-default" ng-bind="selectedItem.displayText"></span>
+            <span class="label label-taxon label-full" ng-bind="selectedItem.displayText"></span>
             <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
                 <span ng-hide="isItemSelected()">Select</span>
                 <span ng-show="isItemSelected()">Change</span>
             </button>
         </div>
     </div>
-    <div class="contentSelector" template-url ="timespan-selector-content" modal open-button="{{openSelectorButtonId}}" window-class="sf-designer-dlg" existing-scope="true">
-        
+    <div class="contentSelector" template-url ="timespan-selector-content" modal window-class="sf-designer-dlg sf-timespan-selector-dlg" existing-scope="true">
+
     </div>
 </div>
 
 <script type="text/ng-template" id="timespan-selector-content">
     <div class="modal-header">
-        <h1 style="background: none; padding-bottom: 0; margin-bottom: 0" class="modal-title">Select dates</h1>
+        <h3 class="modal-title">Select dates</h3>
     </div>
     <div class="modal-body">
-        <div>
-            <div class="input-group m-bottom-sm">
-                Display items published in...
+
+
+        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+
+        <h4>Display items published in...</h4>
+        <form name="periodSelection">
+            <div class="radio">
+                <label for="anyTime">
+                    <input id="anyTime" type="radio" value="anyTime" ng-model="selectedItemInTheDialog.periodType" />
+                    Any time
+                </label>
             </div>
-            <form name="periodSelection">
-                <div>
-                    <label for="anyTime">
-                        <input id="anyTime" type="radio" value="anyTime" ng-model="selectedItemInTheDialog.periodType" />
-                        Any time
-                    </label>
+            <div class="radio form-inline">
+                <label for="periodToNow">
+                    <input id="periodToNow" type="radio" value="periodToNow" ng-model="selectedItemInTheDialog.periodType"/>
+                    Last
+                </label>
+
+                <input type="number" min="1" ng-model="selectedItemInTheDialog.timeSpanValue"
+                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'"
+                        style="width: 70px" class="form-control input-sm" />
+
+                <select ng-model="selectedItemInTheDialog.timeSpanInterval"
+                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'"
+                        class="form-control input-sm">
+                    <option value="days">day(s)</option>
+                    <option value="weeks">week(s)</option>
+                    <option value="months">month(s)</option>
+                    <option value="years">year(s)</option>
+                </select>
+            </div>
+            <div class="radio">
+                <label for="customRange">
+                    <input id="customRange" type="radio" value="customRange" ng-model="selectedItemInTheDialog.periodType" />
+                    Custom range...
+                </label>
+
+                <div class="label-content" ng-show="selectedItemInTheDialog.periodType=='customRange'">
+                    <strong>From</strong>
+                    <sf-date-time-picker ng-model="selectedItemInTheDialog.fromDate" show-meridian="true"></sf-date-time-picker >
+
+                    <strong>To</strong>
+                    <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate" show-meridian="true"></sf-date-time-picker >
                 </div>
-                <div>
-                    <label for="periodToNow">
-                        <input id="periodToNow" type="radio" value="periodToNow" ng-model="selectedItemInTheDialog.periodType"/>
-                        Last
-                        <input type="number" min="1" ng-model="selectedItemInTheDialog.timeSpanValue" 
-                                ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'" />
-                        <select ng-model="selectedItemInTheDialog.timeSpanInterval" 
-                                ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'">
-                            <option value="days">day(s)</option>
-                            <option value="weeks">week(s)</option>
-                            <option value="months">month(s)</option>
-                            <option value="years">year(s)</option>
-                        </select>
-                    </label>
-                </div>
-                <div>
-                    <label for="customRange">
-                        <input id="customRange" type="radio" value="customRange" ng-model="selectedItemInTheDialog.periodType" />
-                        Custom range...                   
-                        <div ng-show="selectedItemInTheDialog.periodType=='customRange'">
-                            <label >From</label>
-                            <sf-date-time-picker ng-model="selectedItemInTheDialog.fromDate" show-meridian="true"></sf-date-time-picker >
-                        
-                            <label>To</label>
-                            <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate" show-meridian="true"></sf-date-time-picker >
-                        </div>
-                    </label>
-                </div>
-                <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
-            </form>
-        </div>
+
+            </div>
+        </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" ng-click="selectItem()">Done selecting</button>
-        <button type="button" class="btn btn-link" ng-click="cancel()">Cancel</button>
+        <button type="button" class="btn btn-primary pull-left" ng-click="selectItem()">Done selecting</button>
+        <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
     </div>
 </script>
 

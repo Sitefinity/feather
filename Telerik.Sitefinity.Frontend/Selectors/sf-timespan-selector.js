@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    angular.module('selectors')
+    angular.module('sfSelectors')
         .directive('sfTimespanSelector', ['$timeout', function ($timeout) {
 
             return {
@@ -26,15 +26,37 @@
                             if (item.periodType == 'periodToNow')
                                 item.displayText = 'Last ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
                             else if (item.periodType == "customRange") {
+
                                 if (item.fromDate && item.toDate)
-                                    item.displayText = item.fromDate.toLocaleString() + '-' + item.toDate.toLocaleString();
+                                    item.displayText = "From " + _getFormatedDate(item.fromDate) + " to " + _getFormatedDate(item.toDate);
                                 else if (item.fromDate)
-                                    item.displayText = 'from: ' + item.fromDate.toLocaleString();
-                                else if(item.toDate)
-                                    item.displayText = 'to: ' + item.toDate.toLocaleString();
+                                    item.displayText = "From " + _getFormatedDate(item.fromDate);
+                                else if (item.toDate)
+                                    item.displayText = "To " + _getFormatedDate(item.toDate);
                             }
                             else
                                 item.displayText = 'Any time';
+                        };
+
+                        _getFormatedDate = function (date) {
+                            if (!date)
+                                return;
+
+                            var options = { day: "numeric", month: "short", year: "numeric", hour12: false };
+                        
+                            if (date.getHours() !== 0 || date.getMinutes() !== 0) {
+                                options.hour = "numeric";
+                                options.minute = "numeric";
+                            }
+
+                            var result = date.toLocaleString("en-GB", options);
+
+                            return result;
+                        };
+
+                        clearErrors = function () {
+                            scope.showError = false;
+                            scope.errorMessage = '';
                         };
 
                         validate = function (item) {
@@ -51,12 +73,14 @@
                                     scope.errorMessage = 'Invalid date range! The expiration date must be after the publication date.';
                                     scope.showError = true;
                                 }
+                                else {
+                                    clearErrors();
+                                }
 
                                 return isValid;
                             }
                             else {
-                                scope.showError = false;
-                                scope.errorMessage = '';
+                                clearErrors();
 
                                 return true;
                             }
@@ -64,21 +88,7 @@
 
                         // ------------------------------------------------------------------------
                         // Scope variables and setup
-                        // ------------------------------------------------------------------------
-
-                        var timeoutPromise = false;
-                        var selectorId;
-                        if (attrs.id) {
-                            selectorId = attrs.id;
-                        }
-                        else {
-                            //selectorId will be set to the id of the wrapper div of the template. This way we avoid issues when there are several selectors on one page.
-                            selectorId = 'sf' + Math.floor((Math.random() * 1000) + 1);
-                            scope.selectorId = selectorId;
-                        }
-
-                        // This id is used by the modal dialog to know which button will open him.
-                        scope.openSelectorButtonId = '#' + selectorId + ' .openSelectorBtn';
+                        // ------------------------------------------------------------------------                      
 
                         scope.selectItem = function () {
                             if (validate(scope.selectedItemInTheDialog)) {
@@ -98,6 +108,15 @@
                             }
                         };
 
+                        scope.isItemSelected = function () {
+
+                            if (scope.selectedItem) {
+                                return scope.selectedItem.displayText !== "";
+                            }
+
+                            return false;
+                        };
+
                         scope.cancel = function () {
                             try {
                                 scope.showError = false;
@@ -107,6 +126,8 @@
                         };
 
                         scope.open = function () {
+                            scope.$openModalDialog();
+
                             scope.showError = false;
                             scope.errorMessage = '';
                             scope.selectedItemInTheDialog = jQuery.extend(true, {}, scope.selectedItem);

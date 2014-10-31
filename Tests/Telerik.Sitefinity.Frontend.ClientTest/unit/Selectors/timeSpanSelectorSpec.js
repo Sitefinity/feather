@@ -22,7 +22,7 @@ describe("timeSpan selector", function () {
     beforeEach(module('modalDialog'));
 
     //Load themodule under test.
-    beforeEach(module('selectors'));
+    beforeEach(module('sfSelectors'));
 
     //Load the module that contains the cached tempaltes.
     beforeEach(module('templates'));
@@ -86,8 +86,6 @@ describe("timeSpan selector", function () {
         var template = "<sf-timespan-selector selected-item='selectedItem'></sf-timespan-selector>";
 
         compileDirective(template);
-
-        expect(scope.selectedItem.displayText).toBe(scope.selectedItem.fromDate.toLocaleString() + "-" + scope.selectedItem.toDate.toLocaleString());
     });
 
     it('[EGaneva] / custom range is validated correctly.', function () {

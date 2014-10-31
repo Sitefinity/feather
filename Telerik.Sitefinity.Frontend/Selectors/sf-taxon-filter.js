@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    angular.module('selectors')
+    angular.module('sfSelectors')
         .directive('sfTaxonFilter', function () {       
 
             return {
@@ -38,10 +38,15 @@
                                     f.Condition.FieldType == 'System.Guid';
                             });
 
-                            if (selectedTaxonQueryItems.length > 0)
-                                scope.selectedTaxonomies[selectedTaxonomyFilterKey] = selectedTaxonQueryItems[0].Value;
-                            else
-                                scope.selectedTaxonomies[selectedTaxonomyFilterKey] = null;
+                            if (selectedTaxonQueryItems.length > 0) {
+                                scope.selectedTaxonomies[selectedTaxonomyFilterKey] = [];
+                                Array.prototype.push.apply(scope.selectedTaxonomies[selectedTaxonomyFilterKey], selectedTaxonQueryItems.map(function (item) {
+                                    return item.Value;
+                                }));
+                            }
+                            else {
+                                scope.selectedTaxonomies[selectedTaxonomyFilterKey] = [];
+                            }
                         };
 
                         var populateSelectedTaxonomies = function () {
@@ -64,18 +69,22 @@
                         // ------------------------------------------------------------------------
 
                         scope.change = function (changeArgs) {
-                            var newSelectedTaxonItem = changeArgs.newSelectedItem;
-                            var oldSelectedTaxonItem = changeArgs.oldSelectedItem;
+                            var newSelectedTaxonItems = changeArgs.newSelectedItems;
+                            var oldSelectedTaxonItems = changeArgs.oldSelectedItems;
 
-                            if (oldSelectedTaxonItem && oldSelectedTaxonItem.Id) {
-                                var groupToRemove = scope.queryData.getItemByName(oldSelectedTaxonItem.TaxonomyName);
+                            if (oldSelectedTaxonItems && oldSelectedTaxonItems.length > 0) {
+                                oldSelectedTaxonItems.forEach(function (item) {
+                                    var groupToRemove = scope.queryData.getItemByName(item.TaxonomyName);
 
-                                if (groupToRemove)
-                                    scope.queryData.removeGroup(groupToRemove);
+                                    if (groupToRemove)
+                                        scope.queryData.removeGroup(groupToRemove);
+                                });
                             }
 
-                            if (newSelectedTaxonItem && newSelectedTaxonItem.Id) {
-                                addChildTaxonQueryItem(newSelectedTaxonItem);
+                            if (newSelectedTaxonItems && newSelectedTaxonItems.length > 0) {
+                                newSelectedTaxonItems.forEach(function (item) {
+                                    addChildTaxonQueryItem(item);
+                                });
                             }
                         };
                         

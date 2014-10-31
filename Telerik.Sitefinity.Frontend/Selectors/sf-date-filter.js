@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    angular.module('selectors')
+    angular.module('sfSelectors')
         .directive('sfDateFilter', function () {
 
             var timeSpanItem = function () {
@@ -25,7 +25,7 @@
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
-                    post: function (scope, element, attrs, ctrl) {
+                    pre: function (scope, element, attrs, ctrl) {
                         // ------------------------------------------------------------------------
                         // helper methods
                         // ------------------------------------------------------------------------

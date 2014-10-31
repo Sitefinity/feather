@@ -1,4 +1,5 @@
 ﻿using System;
+using Telerik.Microsoft.Practices.EnterpriseLibrary.Caching;
 using Telerik.Sitefinity.Frontend.Resources;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses
@@ -19,6 +20,26 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses
         public Func<string> GetApplicationPathOverride;
 
         /// <summary>
+        /// Function to override the original GetCurrentSiteId.
+        /// </summary>
+        public Func<Guid> GetCurrentSiteIdOverride;
+
+        /// <summary>
+        /// Function to override the original GetChacheManager.
+        /// </summary>
+        public Func<ICacheManager> GetCacheManagerOverride;
+
+        /// <summary>
+        /// Function to override the original GetFrontendLanguges.
+        /// </summary>
+        public Func<string> GetFrontendLanguagesOverride;
+
+        /// <summary>
+        /// Function to override the original GetCacheDependency.
+        /// </summary>
+        public Func<Guid, ICacheItemExpiration> GetCacheDependencyOverride;
+
+        /// <summary>
         /// Gets the processed script.
         /// </summary>
         /// <returns>
@@ -30,6 +51,15 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses
         public string PublicGetScript()
         {
             return base.GetScript();
+        }
+
+        /// <inheritdoc />
+        protected override Guid CurrentFrontendRootNodeId
+        {
+            get
+            {
+                return Guid.Empty;
+            }
         }
 
         /// <inheritdoc />
@@ -55,6 +85,58 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses
             else
             {
                 return this.GetApplicationPathOverride();
+            }
+        }
+
+        /// <inheritdoc />
+        protected override Guid GetCurrentSiteId()
+        {
+            if (this.GetCurrentSiteIdOverride == null)
+            {
+                return base.GetCurrentSiteId();
+            }
+            else
+            {
+                return this.GetCurrentSiteIdOverride();
+            }
+        }
+
+        /// <inheritdoc />
+        protected override ICacheManager GetCacheManager()
+        {
+            if (this.GetCacheManagerOverride == null)
+            {
+                return base.GetCacheManager();
+            }
+            else
+            {
+                return this.GetCacheManagerOverride();
+            }
+        }
+
+        /// <inheritdoc />
+        protected override string GetFrontendLanguages()
+        {
+            if (this.GetFrontendLanguagesOverride == null)
+            {
+                return base.GetFrontendLanguages();
+            }
+            else
+            {
+                return this.GetFrontendLanguagesOverride();
+            }
+        }
+
+        /// <inheritdoc />
+        protected override ICacheItemExpiration GetCacheDependency(Guid key)
+        {
+            if (this.GetFrontendLanguagesOverride == null)
+            {
+                return base.GetCacheDependency(key);
+            }
+            else
+            {
+                return this.GetCacheDependencyOverride(key);
             }
         }
     }
