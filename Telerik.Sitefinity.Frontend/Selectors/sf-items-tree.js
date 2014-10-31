@@ -177,7 +177,7 @@
                     template: '<input type="checkbox" ng-click="sfSelectItem({ dataItem: dataItem })" ng-checked="sfItemSelected({dataItem: dataItem})" ng-hide="sfItemDisabled({dataItem: dataItem})">'
                 };
 
-                scope.itemTemplate = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'list-group-item':true, 'active': sfItemSelected({dataItem: dataItem}), 'disabled': sfItemDisabled({dataItem: dataItem})}\" style='text-overflow: ellipsis; overflow: hidden;'>" +
+                scope.itemTemplate = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'active': sfItemSelected({dataItem: dataItem}), 'disabled': sfItemDisabled({dataItem: dataItem})}\" >" +
                         "{{ sfIdentifierFieldValue({dataItem: dataItem}) }} <span ng-show='sfItemDisabled({dataItem: dataItem})'>(not translated)</span>" +
                     "</a>";
             }
