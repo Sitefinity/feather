@@ -61,6 +61,9 @@
                         });
                     };
 
+                    this.onItemSelected = function (item) {
+                    };
+
                     var compareFunction = function (item1, item2) {
                         var orderedIds = $scope.getSelectedIds();
 
@@ -218,7 +221,7 @@
                             }
                         });
 
-                        scope.$watchCollection('selectedIds', function (newIds, oldIds) { 
+                        scope.$watchCollection('selectedIds', function (newIds, oldIds) {
                             if (newIds && newIds.length > 0 && !areArrayEquals(newIds, currentSelectedIds)) {
                                 fetchSelectedItems();
                             }
@@ -260,12 +263,16 @@
                                 }
                                 else {
                                     Array.prototype.push.apply(scope.items, items);
-                                }                                
+                                }
                             }
                         };
 
                         scope.itemClicked = function (index, item) {
                             if (typeof index === 'object' && !item) item = index;
+
+                            if (ctrl.onItemSelected) {
+                                ctrl.onItemSelected(item);
+                            }
 
                             if (scope.itemDisabled(item)) {
                                 return;
@@ -353,7 +360,7 @@
 
                             scope.itemsPromise = ctrl.getItems(scope.paging.skip, scope.paging.take)
                             .then(onFirstPageLoadedSuccess, onError);
-                            
+
                             scope.itemsPromise.finally(function () {
                                 scope.showLoadingIndicator = false;
                             });
@@ -380,7 +387,7 @@
 
                             return ids.length > 0;
                         };
-                        
+
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].item.Id === item.Id) {
