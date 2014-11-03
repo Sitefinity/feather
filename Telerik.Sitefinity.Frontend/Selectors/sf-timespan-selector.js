@@ -28,14 +28,14 @@
 
                             if (item.periodType == 'periodToNow')
                                 item.displayText = 'Last ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
-                            else if (item.periodType == "customRange") {
+                            else if (item.periodType == 'customRange') {
 
                                 if (item.fromDate && item.toDate)
-                                    item.displayText = "From " + _getFormatedDate(item.fromDate) + " to " + _getFormatedDate(item.toDate);
+                                    item.displayText = 'From ' + _getFormatedDate(item.fromDate) + ' to ' + _getFormatedDate(item.toDate);
                                 else if (item.fromDate)
-                                    item.displayText = "From " + _getFormatedDate(item.fromDate);
+                                    item.displayText = 'From ' + _getFormatedDate(item.fromDate);
                                 else if (item.toDate)
-                                    item.displayText = "To " + _getFormatedDate(item.toDate);
+                                    item.displayText = 'To ' + _getFormatedDate(item.toDate);
                             }
                             else
                                 item.displayText = 'Any time';
