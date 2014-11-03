@@ -5955,7 +5955,7 @@ button.close {
     color: #000;
     text-decoration: none;
     overflow: hidden;
-    margin-bottom: -1px; }
+    margin-top: -1px; }
     /* line 36, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
     .k-treeview--selection.k-treeview .k-item a.disabled span:first-child {
       max-width: 300px; }
@@ -6032,10 +6032,10 @@ button.close {
     left: 109.98px; }
   /* line 128, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-in a {
-    padding-left: 5.166; }
+    padding-left: 154.98px; }
   /* line 131, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox {
-    left: 5.233; }
+    left: 156.99px; }
   /* line 134, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox + .k-in a {
     padding-left: 180px; }
@@ -6044,7 +6044,7 @@ button.close {
     left: 135px; }
   /* line 144, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-in a {
-    padding-left: 90px; }
+    padding-left: 180px; }
   /* line 147, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox {
     left: 181.98px; }
@@ -6102,10 +6102,6 @@ button.close {
 .k-treeview--selection.k-treeview > ul > .k-first > div .k-in a {
   border-radius: 4px 4px 0 0;
   margin-top: 0; }
-/* line 224, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
-.k-treeview--selection.k-treeview > ul > .k-last > div .k-in a {
-  border-radius: 0 0 4px 4px;
-  margin-bottom: 0; }
 
 /* Kendo skin */
 /* line 4, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_kendo-ui.bootstrap */
