@@ -267,8 +267,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         private void RegisterWidgetTemplates(Assembly assembly)
         {
-            var widgetAreaName = assembly.GetName();
-
             // Exclude feather's Controllers from the widgets
             var controllerTypes = assembly.GetTypes()
                 .Where(x => x.IsSubclassOf(typeof(Controller)) && !x.FullName.StartsWith("Telerik.Sitefinity.Frontend", StringComparison.Ordinal)).ToList();
@@ -276,8 +274,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (Type controllerType in controllerTypes)
             {
                 var widgetName = controllerType.Name.Replace("Controller", string.Empty);
+                var mvcWidgetName = string.Format(CultureInfo.InvariantCulture, "MVC {0}", widgetName);
 
-                Modules.ControlTemplates.ControlTemplates.RegisterTemplatableControl(controllerType, controllerType, string.Empty, string.Format(CultureInfo.InvariantCulture, "MVC {0}", widgetAreaName), string.Format(CultureInfo.InvariantCulture, "MVC - {0}Widget", widgetName));
+                Modules.ControlTemplates.ControlTemplates.RegisterTemplatableControl(controllerType, controllerType, string.Empty, mvcWidgetName, mvcWidgetName);
             }
         }
 

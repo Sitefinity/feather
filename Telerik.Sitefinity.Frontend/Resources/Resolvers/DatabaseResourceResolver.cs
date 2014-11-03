@@ -70,12 +70,10 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                 throw new ArgumentNullException("virtualPath");
 
             var resourceName = VirtualPathUtility.ToAppRelative(virtualPath);
-            var areaName = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAppRelative(virtualPathDefinition.VirtualPath));
-            var extension = VirtualPathUtility.GetExtension(virtualPath).ToLowerInvariant();
 
+            // var areaName = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAppRelative(virtualPathDefinition.VirtualPath));
             var controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
-                .FirstOrDefault(cp => cp.AreaName == areaName && cp.NameForDevelopers == resourceName 
-                    && cp.DataType == extension);
+                .FirstOrDefault(cp => cp.NameForDevelopers == resourceName && cp.AreaName.StartsWith("MVC"));
 
             return controlPresentation;
         }
