@@ -1,6 +1,9 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfTimespanSelector', ['$timeout', function ($timeout) {
+        .directive('sfTimespanSelector', ['$timeout', '$filter', function ($timeout, $filter) {
+
+            this.filter = $filter;
+            var self = this;
 
             return {
                 restrict: 'E',
@@ -42,14 +45,13 @@
                             if (!date)
                                 return;
 
-                            var options = { day: "numeric", month: "short", year: "numeric", hour12: false };
+                            var format = 'd MMM, y';
                         
                             if (date.getHours() !== 0 || date.getMinutes() !== 0) {
-                                options.hour = "numeric";
-                                options.minute = "numeric";
+                                format = 'd MMM, y H:mm';
                             }
 
-                            var result = date.toLocaleString("en-GB", options);
+                            var result = self.filter('date')(date, format);
 
                             return result;
                         };
