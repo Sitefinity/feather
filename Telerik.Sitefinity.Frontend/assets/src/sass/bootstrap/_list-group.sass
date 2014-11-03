@@ -1,9 +1,15 @@
 .list-group-item
+    color: #000
     max-width: 100%
     @include text-overflow()
 
     > div
         cursor: default
+    &.active
+        border-color: #ddd
+        &:hover,
+        &:focus
+            border-color: #ddd
 
 .list-group-item-multiselect
     > div

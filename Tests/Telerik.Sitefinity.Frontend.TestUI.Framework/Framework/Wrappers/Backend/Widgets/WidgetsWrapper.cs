@@ -173,11 +173,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             foreach (var itemName in itemNames)
             {
-                var anchor = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlAnchor>(a => a.InnerText.Equals(itemName));
-                anchor.AssertIsPresent(itemName + "not present");
+                var itemDiv = this.EM.Widgets.FeatherWidget.Find.ByCustom<HtmlDiv>(a => a.InnerText.Equals(itemName));
 
-                anchor.Click();
+                itemDiv.ScrollToVisible();
+                itemDiv.MouseClick();
             }
+            ActiveBrowser.RefreshDomTree();
         }
 
         /// <summary>
@@ -196,7 +197,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void OpenSelectedTab()
         {
             HtmlAnchor selectedTab = this.EM.Widgets.FeatherWidget.SelectedTab
-
                                          .AssertIsPresent("selected tab");
             selectedTab.Click();
             ActiveBrowser.WaitForAsyncRequests();
@@ -255,14 +255,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
                     Assert.AreEqual(divList[i].InnerText, itemNames[i]);
                 }
             }
-            
         }
  
         public void VerifySelectedItemInFlatSelectors(params string[] itemNames)
         {
             foreach (var item in itemNames)
             {
-                ActiveBrowser.Find.ByExpression<HtmlDiv>("InnerText=" + item).AssertIsPresent(item + "not present");
+                ActiveBrowser.Find.ByExpression<HtmlDiv>("InnerText=" + item).AssertIsPresent(item + " not present");
             }
         }
 
@@ -272,31 +271,25 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// <param name="text">The text to be searched for.</param>
         public void SetSearchText(string text)
         {
-            var inputList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlInputText>("ng-model=filter.searchString");
+            var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
+            var searchInputTextBox = activeDialog.Find.ByExpression<HtmlInputText>("ng-model=filter.searchString");
 
-            foreach (var inputElement in inputList)
+            searchInputTextBox.Focus();
+            searchInputTextBox.MouseClick();
+            if (text != "")
             {
-                if (inputElement.IsVisible())
-                {
-                    inputElement.Focus();
-                    inputElement.MouseClick();
-                    if (text != "")
-                    {
-                        inputElement.Text = string.Empty;
-                        Manager.Current.Desktop.KeyBoard.TypeText(text);
-                    }
-                    else
-                    {
-                        //// select all and delete current text typing
-                        Manager.Current.Desktop.KeyBoard.KeyDown(System.Windows.Forms.Keys.Control);
-                        Manager.Current.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.A);
-                        Manager.Current.Desktop.KeyBoard.KeyUp(System.Windows.Forms.Keys.Control);
-                        Manager.Current.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Back);
-                    }
-                    break;
-                }
+                searchInputTextBox.Text = string.Empty;
+                Manager.Current.Desktop.KeyBoard.TypeText(text);
             }
-
+            else
+            {
+                //// select all and delete current text typing
+                Manager.Current.Desktop.KeyBoard.KeyDown(System.Windows.Forms.Keys.Control);
+                Manager.Current.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.A);
+                Manager.Current.Desktop.KeyBoard.KeyUp(System.Windows.Forms.Keys.Control);
+                Manager.Current.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Back);
+            }
+            
             ActiveBrowser.WaitForAsyncRequests();
             ActiveBrowser.RefreshDomTree();
         }
@@ -311,53 +304,28 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
-        /// Waits for items to appear in selected tab.
-        /// </summary>
-        /// <param name="expectedCount">The expected count.</param>
-        public void WaitForItemsToAppearInSelectedTab(int expectedCount)
-        {
-            Manager.Current.Wait.For(() => this.CountItems(expectedCount, true), 50000);
-        }
-
-        /// <summary>
         /// Verifies if the items count is as expected.
         /// </summary>
         /// <param name="expected">The expected items count.</param>
         /// <returns>True or false depending on the items count.</returns>
-        public bool CountItems(int expected, bool isSelectedTab = false)
+        public bool CountItems(int expected)
         {
             ActiveBrowser.RefreshDomTree();         
             var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
-            int actual = 0;
-            if (!isSelectedTab)
+
+            var items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-bind=~bindIdentifierField(item");
+
+            //// if items count is more than 12 elements, then you need to scroll
+            if (items.Count() > 12)
             {
-                HtmlDiv scroller = ActiveBrowser.Find
-                                                .ByExpression<HtmlDiv>("class=list-group list-group-endless ng-isolate-scope");
-                var items = activeDialog.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in items");
-                if (items.Count() > 12)
-                {
-                    scroller.MouseClick(MouseClickType.LeftDoubleClick);
-                    Manager.Current.Desktop.Mouse.TurnWheel(4000, MouseWheelTurnDirection.Backward);                 
-                }
-                items = activeDialog.Find.AllByExpression<HtmlAnchor>("ng-repeat=item in items");
-                actual = items.Count;
+                HtmlDiv scroller = ActiveBrowser.Find.ByExpression<HtmlDiv>("class=~list-group list-group-endless");
                 
-            }
-            else
-            {
-                HtmlDiv scroller = ActiveBrowser.Find
-                                                .ByExpression<HtmlDiv>("class=list-group list-group-endless");
-                var items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-repeat=item in items");
-                if (items.Count() > 12)
-                {
-                    scroller.MouseClick(MouseClickType.LeftDoubleClick);
-                    Manager.Current.Desktop.Mouse.TurnWheel(4000, MouseWheelTurnDirection.Backward);                  
-                }
-                items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-repeat=item in items");
-                actual = items.Count;
+                scroller.MouseClick(MouseClickType.LeftDoubleClick);
+                Manager.Current.Desktop.Mouse.TurnWheel(4000, MouseWheelTurnDirection.Backward);                  
+                items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-bind=~bindIdentifierField(item");
             }
            
-            bool isCountCorrect = expected == actual;
+            bool isCountCorrect = (expected == items.Count);
             return isCountCorrect;
         }
 
@@ -402,12 +370,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// <param name="selectedItemNames">The selected item names.</param>
         public void ReorderSelectedItems(string[] expectedOrder, string[] selectedItemNames, Dictionary<int, int> reorderedIndexMapping)
         {
-            var divList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlDiv>("ng-repeat=item in items");
-            int divListCount = divList.Count;
-
-            for (int i = 0; i < divListCount; i++)
+            var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
+            var divList = activeDialog.Find.AllByExpression<HtmlDiv>("ng-repeat=item in items");
+         
+            for (int i = 0; i < divList.Count; i++)
             {
-                Assert.AreEqual(divList[i].InnerText, selectedItemNames[i]);
+                Assert.AreEqual(selectedItemNames[i], divList[i].InnerText, selectedItemNames[i] + "is not positioned correctly in Selected tab");
             }
 
             var spanList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlSpan>("class=handler list-group-item-drag");
@@ -416,12 +384,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             {
                 spanList[reorderingPair.Key].DragTo(spanList[reorderingPair.Value]);
             }
-          
-            ActiveBrowser.RefreshDomTree();
-            divList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlDiv>("ng-repeat=item in items");
-            for (int i = 0; i < divListCount; i++)
+
+            activeDialog.Refresh();
+            var reorderedDivList = activeDialog.Find.AllByExpression<HtmlDiv>("ng-repeat=item in items");
+         
+            for (int i = 0; i < reorderedDivList.Count; i++)
             {
-                Assert.AreEqual(expectedOrder[i], divList[i].InnerText); 
+                Assert.AreEqual(expectedOrder[i], reorderedDivList[i].InnerText, expectedOrder[i] + " is not reordered correctly"); 
             }
         }
 

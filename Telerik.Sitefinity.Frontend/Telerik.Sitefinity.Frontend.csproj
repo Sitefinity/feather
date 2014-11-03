@@ -185,6 +185,7 @@
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
     <Compile Include="Mvc\Helpers\CustomFieldsHelpers.cs" />
     <Compile Include="Mvc\Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Mvc\Helpers\HyperLinkHelpers.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
     <Compile Include="Mvc\Helpers\SitefinityContext.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\CustomTaxonomyViewModel.cs" />
@@ -342,6 +343,19 @@
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff" />
     <None Include="assets\jshint.json" />
     <None Include="assets\package.json" />
+    <None Include="assets\src\sass\bootstrap\_alerts.sass" />
+    <None Include="assets\src\sass\bootstrap\_badges.sass" />
+    <None Include="assets\src\sass\bootstrap\_buttons.sass" />
+    <None Include="assets\src\sass\bootstrap\_datepicker.sass" />
+    <None Include="assets\src\sass\bootstrap\_forms.sass" />
+    <None Include="assets\src\sass\bootstrap\_labels.sass" />
+    <None Include="assets\src\sass\bootstrap\_list-group.sass" />
+    <None Include="assets\src\sass\bootstrap\_modals.sass" />
+    <None Include="assets\src\sass\bootstrap\_navs.sass" />
+    <None Include="assets\src\sass\bootstrap\_utilities.sass" />
+    <None Include="assets\src\sass\kendo\_editor.sass" />
+    <None Include="assets\src\sass\kendo\_kendo-ui.bootstrap.scss" />
+    <None Include="assets\src\sass\kendo\_tabstrip.sass" />
     <None Include="assets\src\sass\modules\_Btn.sass" />
     <None Include="assets\src\sass\modules\_BtnGroup.sass" />
     <None Include="assets\src\sass\modules\_Modal.sass" />
@@ -423,10 +437,10 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
     <EmbeddedResource Include="Selectors\sf-page-selector.js" />
     <EmbeddedResource Include="Selectors\sf-page-selector.html" />
     <EmbeddedResource Include="Selectors\sf-items-tree.html" />
-    <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
     <EmbeddedResource Include="Selectors\bubbles-selection.html" />
     <EmbeddedResource Include="Selectors\list-group-selection.html" />
     <EmbeddedResource Include="Services\page-service.js" />
