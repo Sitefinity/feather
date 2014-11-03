@@ -14,7 +14,7 @@
                     url = url + taxonomyId + '/';
                 }
                 if (queryParams) {
-                    url = url + '/?' + queryParams;
+                    url = url + '?' + queryParams;
                 }
                 return serviceHelper.getResource(url);
             };

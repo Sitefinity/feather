@@ -67,7 +67,22 @@
                             ctrl.updateSelection(items);
                         };
 
-                        ctrl.selectorType = 'TaxonSelector';
+                        ctrl.onItemSelected = function (item) {
+                            var parentsChain = [item];
+                            
+                            var parent = item.parentNode();
+
+                            while (parent) {
+                                parentsChain.push(parent);
+
+                                parent = parent.parentNode();
+                            }
+                            parentsChain.reverse();
+
+                            _applyBreadcrumbPath({ Items: parentsChain });
+                        };
+
+                        ctrl.selectorType = 'HierarchicalTaxonSelector';
                         ctrl.dialogTemplateUrl = 'Selectors/Taxons/sf-hierarchical-taxon-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-hierarchical-taxon-selector';
                         ctrl.closedDialogTemplateUrl = attrs.multiselect ? 'Selectors/list-group-selection.html' : 'Selectors/bubbles-selection.html';
