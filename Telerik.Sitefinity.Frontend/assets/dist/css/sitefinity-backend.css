@@ -7562,10 +7562,6 @@ html .km-pane-wrapper .km-widget, .k-ie .km-pane-wrapper .k-widget, .k-ie .km-pa
 .u-dib {
   display: inline-block; }
 
-/* line 26, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_utility-classes */
-.u-fsi {
-  font-style: italic; }
-
 /* line 2, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_global */
 a, [ng-click="toggle()"] {
   cursor: pointer; }
@@ -7706,21 +7702,22 @@ ul, ol, dl {
 
 /* line 1, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item {
+  color: #000;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
-  /* line 5, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 6, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-item > div {
     cursor: default; }
-  /* line 7, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 8, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-item.active {
     border-color: #ddd; }
-    /* line 10, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+    /* line 11, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
     .list-group-item.active:hover, .list-group-item.active:focus {
       border-color: #ddd; }
 
-/* line 14, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 15, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-multiselect > div {
   position: relative;
   z-index: 2;
@@ -7731,7 +7728,7 @@ ul, ol, dl {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
-  /* line 23, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 24, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-item-multiselect > div:before {
     content: "";
     position: absolute;
@@ -7740,30 +7737,30 @@ ul, ol, dl {
     width: 30px;
     height: 30px;
     opacity: 0; }
-/* line 32, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 33, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-multiselect > input {
   position: absolute;
   z-index: 1;
   top: 10px;
   left: 10px; }
 
-/* line 38, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 39, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-draggable {
   margin-bottom: 0;
   border-top: none; }
-  /* line 42, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 43, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-item-draggable > input {
     left: 25px; }
-  /* line 45, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 46, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-item-draggable > div {
     padding-left: 45px; }
 
-/* line 48, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 49, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-hint {
   width: 550px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
 
-/* line 52, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 53, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-placeholder {
   background: #ffff99;
   height: 20px;
@@ -7771,7 +7768,7 @@ ul, ol, dl {
   margin-bottom: 0;
   border-top: none; }
 
-/* line 59, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 60, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-drag {
   width: 10px;
   height: 20px;
@@ -7788,7 +7785,7 @@ ul, ol, dl {
   background-size: 3px 3px;
   z-index: 3; }
 
-/* line 77, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 78, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-endless {
   max-height: 500px;
   overflow-y: auto;
