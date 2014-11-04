@@ -6,6 +6,7 @@ using System.Linq;
 using ServiceStack.Text;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.Data.Linq.Dynamic;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules;
 using Telerik.Sitefinity.Services;
@@ -161,31 +162,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return new[] { location };
         }
 
-        public virtual ContentListViewModel CreateListViewModel()
-        {
-            return this.CreateListViewModel(1);
-        }
-
-        public virtual ContentListViewModel CreateListViewModel(int page)
-        {
-            return this.CreateListViewModel(null, page);
-        }
-
-        public virtual ContentListViewModel CreateListViewModel(ITaxon taxonFilter)
-        {
-            return this.CreateListViewModel(taxonFilter, 1);
-        }
-
+        /// <summary>
+        /// Creates a view model for use in list views.
+        /// </summary>
+        /// <param name="taxonFilter">The taxon filter.</param>
+        /// <param name="page">The page.</param>
+        /// <returns>A view model for use in list views.</returns>
+        /// <exception cref="System.ArgumentException">'page' argument has to be at least 1.;page</exception>
         public virtual ContentListViewModel CreateListViewModel(ITaxon taxonFilter, int page)
         {
             if (page < 1)
                 throw new ArgumentException("'page' argument has to be at least 1.", "page");
 
             var query = this.GetItemsQuery();
+            if (query == null)
+                return new ContentListViewModel();
+
             if (taxonFilter != null)
             {
                 var taxonField = this.ExpectedTaxonFieldName(taxonFilter);
-                query = query.OfType<IDynamicFieldsContainer>().Where(n => n.GetValue<IList<Guid>>(taxonField).Contains(taxonFilter.Id)).OfType<IDataItem>();
+                var filter = string.Format(CultureInfo.InvariantCulture, "{0}.Contains({{{1}}})", taxonField, taxonFilter.Id);
+                query = query.Where(filter);
             }
 
             var viewModel = new ContentListViewModel();
@@ -202,6 +199,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return viewModel;
         }
 
+        /// <summary>
+        /// Creates the details view model.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>A view model for use in detail views.</returns>
         public virtual ContentDetailsViewModel CreateDetailsViewModel(IDataItem item)
         {
             var viewModel = new ContentDetailsViewModel();
