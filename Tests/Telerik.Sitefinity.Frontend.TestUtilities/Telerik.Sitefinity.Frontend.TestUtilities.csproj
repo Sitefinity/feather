@@ -157,6 +157,9 @@
     <Reference Include="Telerik.Sitefinity.Utilities">
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Sitefinity.ContentModules">
+      <HintPath>..\..\packages\Telerik.Sitefinity.Content.7.2.5300.0\lib\net40\Telerik.Sitefinity.ContentModules.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Web.Design">
       <HintPath>..\..\packages\Telerik.Web.UI.2014.2.724.40\lib\net40\Telerik.Web.Design.dll</HintPath>
     </Reference>
@@ -201,6 +204,7 @@
     <Compile Include="DummyClasses\Mvc\Helpers\DummyLocalizedController.cs" />
     <Compile Include="DummyClasses\Mvc\Helpers\DummyViewDataContainer.cs" />
     <Compile Include="DummyClasses\Mvc\Models\DummyDesignerModel.cs" />
+    <Compile Include="DummyClasses\Mvc\Models\NewsContentModel.cs" />
     <Compile Include="DummyClasses\ResourceResolvers\DummyDatabaseResourceResolver.cs" />
     <Compile Include="DummyClasses\FileMonitoring\DummyFileInfo.cs" />
     <Compile Include="DummyClasses\FileMonitoring\DummyFileMonitor.cs" />
@@ -250,7 +254,9 @@
     <EmbeddedResource Include="Data\ReplaceTest\Package1.zip" />
     <EmbeddedResource Include="Data\LayoutFileReplace\Package1.zip" />
     <None Include="OpenAccessNuGet.targets" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Telerik.Sitefinity.Frontend\Telerik.Sitefinity.Frontend.csproj">

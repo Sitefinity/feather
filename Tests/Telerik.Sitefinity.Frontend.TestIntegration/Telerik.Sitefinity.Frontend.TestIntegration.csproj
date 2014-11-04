@@ -140,6 +140,7 @@
     <Compile Include="GridWidgets\GridWidgetsTests.cs" />
     <Compile Include="LayoutTemplates\LayoutTemplatesTests.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelperTests.cs" />
+    <Compile Include="Mvc\Models\ContentModelBaseTests.cs" />
     <Compile Include="Mvc\Routing\RoutingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcePackages\Constants.cs" />
@@ -148,7 +149,9 @@
     <Compile Include="TestCategories.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Telerik.Sitefinity.Frontend\Telerik.Sitefinity.Frontend.csproj">
