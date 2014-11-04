@@ -212,6 +212,7 @@
     <Compile Include="FilesMonitoring\IFileMonitor.cs" />
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\MvcWidgetProxy.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutMvcPageResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
@@ -243,9 +244,14 @@
     <Compile Include="Mvc\Infrastructure\Routing\TaxonParamResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlParamsMapperBase.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlSegmentInfo.cs" />
+    <Compile Include="Mvc\Models\ContentDetailsViewModel.cs" />
+    <Compile Include="Mvc\Models\ContentListViewModel.cs" />
+    <Compile Include="Mvc\Models\ContentModelBase.cs" />
     <Compile Include="Mvc\Models\DesignerModel.cs" />
     <Compile Include="Mvc\Models\DesignerViewConfigModel.cs" />
     <Compile Include="Mvc\Models\IDesignerModel.cs" />
+    <Compile Include="Mvc\Models\ListDisplayMode.cs" />
+    <Compile Include="Mvc\Models\SelectionMode.cs" />
     <Compile Include="Mvc\StringResources\DesignerResources.cs" />
     <Compile Include="Resources\ResourceRegister.cs" />
     <Compile Include="Resources\PackageManager.cs" />
