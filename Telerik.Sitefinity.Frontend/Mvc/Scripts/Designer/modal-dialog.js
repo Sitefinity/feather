@@ -58,7 +58,7 @@
                 }
                 else {
                     $(backdropClass).remove();
-                }                
+                }
 
             });
         };
