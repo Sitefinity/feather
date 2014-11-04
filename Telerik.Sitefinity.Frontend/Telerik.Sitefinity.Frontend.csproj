@@ -123,43 +123,43 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Model">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Resources">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Resources.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.Resources.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Search">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Documents">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Events">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Statistics">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
-      <HintPath>..\packages\Telerik.Sitefinity.TestUtilities.7.2.5300.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.TestUtilities.7.2.5326.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5326.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.Design">
       <HintPath>..\packages\Telerik.Web.UI.2014.2.724.40\lib\net40\Telerik.Web.Design.dll</HintPath>
