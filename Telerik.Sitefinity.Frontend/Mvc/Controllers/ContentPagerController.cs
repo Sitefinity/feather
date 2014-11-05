@@ -10,6 +10,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
     /// <summary>
     /// This class represents controller for pager widget.
     /// </summary>
+    [ControllerMetadataAttribute(IsTemplatableControl = false)]
     public class ContentPagerController : Controller
     {
         /// <summary>
