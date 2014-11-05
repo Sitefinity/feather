@@ -242,10 +242,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #region Private members
 
         /// <summary>
-        /// Determines whether for this controller is allowed template registration
+        /// Determines whether the specified controller is allowed template registration
         /// </summary>
         /// <param name="controllerType">Type of the controller.</param>
-        /// <returns>bool result</returns>
+        /// <returns>
+        ///   <c>true</c> if specified controller is allowed template registration; otherwise, <c>false</c>.
+        /// </returns>
         private bool IsTemplatableControl(Type controllerType)
         {
             ControllerMetadataAttribute attr;
@@ -288,7 +290,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// Registers templateable controls for regular widgets for usage in Sitefinity backend
+        /// Registers MVC widgets as templatable controls
         /// </summary>
         /// <param name="controllerTypes">The controller types.</param>
         private void RegisterTemplateableControls(IEnumerable<Type> controllerTypes)

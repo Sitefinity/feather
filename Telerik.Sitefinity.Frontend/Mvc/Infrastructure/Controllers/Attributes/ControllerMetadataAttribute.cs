@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Telerik.Sitefinity.Frontend.Mvc
+namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
 {
     /// <summary>
-    /// Generic controller metadata attribute
+    /// Controller attribute for determining wheater the controller is templatable control
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1813:AvoidUnsealedAttributes"), AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class ControllerMetadataAttribute : Attribute
@@ -20,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the controller supports templateble control
+        /// Gets or sets a value indicating whether the controller is templatable control
         /// </summary>
         public bool IsTemplatableControl { get; set; }
     }
