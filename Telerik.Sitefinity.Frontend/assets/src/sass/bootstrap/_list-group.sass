@@ -1,9 +1,12 @@
 .list-group-item
+    color: #000
     max-width: 100%
     @include text-overflow()
 
     > div
         cursor: default
+        overflow: hidden
+        text-overflow: ellipsis
     &.active
         border-color: #ddd
         &:hover,

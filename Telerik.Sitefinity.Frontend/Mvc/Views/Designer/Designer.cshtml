@@ -12,11 +12,7 @@
 		</div>
 
 		<div class="modal-body">
-			<div ng-show="feedback.showLoadingIndicator" class="sf-loading">
-				<div></div>
-				<div></div>
-				<div></div>
-			</div>
+			<sf-loading ng-show="feedback.showLoadingIndicator"></sf-loading>
 
 			<div ng-show="feedback.showError" class="alert alert-danger">
 				<a class="close" data-dismiss="alert" ng-click="hideError()">&times;</a>
