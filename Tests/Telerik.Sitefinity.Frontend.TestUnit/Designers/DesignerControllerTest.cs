@@ -34,7 +34,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
                 ObjectFactory.Container.RegisterType<IResourceResolverStrategy, ResourceResolverStrategy>();
 
                 // Act
-                var designer = this.designerController.Master(widgetName, Guid.Empty.ToString()) as ViewResult;
+                var designer = this.designerController.Master(widgetName) as ViewResult;
 
                 // Assert
                 Assert.AreEqual(widgetName, designer.ViewBag.ControlName, string.Format(System.Globalization.CultureInfo.InvariantCulture, "ViewBag.ControlName should be equal to {0}.", widgetName));

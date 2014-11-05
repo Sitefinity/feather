@@ -121,7 +121,13 @@ var sitefinity = sitefinity || {};
 			this.showLoader(args.AppPath);
 			this.widgetContext = args;
 
-			var url = this.widgetContext.url + '/' + this.widgetContext.Id;
+			var separator;
+			if (this.widgetContext.url.indexOf('?') > -1)
+			    separator = '&';
+			else
+			    separator = '?';
+
+			var url = this.widgetContext.url + separator + 'controlId=' + this.widgetContext.Id;
 			$.get(url)
 				.done($.proxy(this.renderDialog, this))
 				.fail(function (data) {

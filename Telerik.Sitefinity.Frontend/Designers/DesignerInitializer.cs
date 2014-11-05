@@ -24,7 +24,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
         {
             if (RouteTable.Routes["MvcDesigner"] == null)
             {
-                RouteTable.Routes.MapRoute("MvcDesigner", "Telerik.Sitefinity.Frontend/{controller}/Master/{widgetName}/{controlId}", new { controller = "DesignerController", action = "Master" });
+                RouteTable.Routes.MapRoute("MvcDesigner", "Telerik.Sitefinity.Frontend/{controller}/Master/{widgetName}", new { controller = "DesignerController", action = "Master" });
             }
 
             if (RouteTable.Routes["MvcDesignerView"] == null)
