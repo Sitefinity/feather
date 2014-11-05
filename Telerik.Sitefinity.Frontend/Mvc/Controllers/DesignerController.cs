@@ -21,11 +21,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// The default designer is located under <see cref="Telerik.Sitefinity.Frontend.Mvc.Views.Designer.Designer.cshtml"/>.
         /// </summary>
         /// <param name="widgetName">The name of the widget.</param>
-        public virtual ActionResult Master(string widgetName)
+        public virtual ActionResult Master(string widgetName, string controlId)
         {
             this.ViewBag.ControlName = widgetName;
 
-            var model = this.GetModel(widgetName);
+            var model = this.GetModel(widgetName, Guid.Parse(controlId));
             return this.View(DesignerController.DefaultView, model);
         }
 
@@ -48,13 +48,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <summary>
         /// Gets the model of the designer.
         /// </summary>
-        private IDesignerModel GetModel(string widgetName)
+        private IDesignerModel GetModel(string widgetName, Guid controlId)
         {
             var constructorParameters = new Dictionary<string, object> 
                         {
                            { "views", this.GetPartialViews() },
                            { "viewLocations", this.GetPartialViewLocations() },
                            { "widgetName", widgetName },
+                           { "controlId", controlId },
                            { "preselectedView", this.Request != null ? this.Request["view"] : null }
                         };
 
