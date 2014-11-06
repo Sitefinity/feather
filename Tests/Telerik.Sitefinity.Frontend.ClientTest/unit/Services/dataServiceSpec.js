@@ -62,7 +62,7 @@ describe('dataService', function () {
     /* Helper methods */
     var asserItems = function (params) {
         var data;
-        dataService.getItems.apply(dataService, params).then(function (res) {
+        dataService.getLiveItems.apply(dataService, params).then(function (res) {
             data = res;
         });
 
@@ -126,7 +126,7 @@ describe('dataService', function () {
             providerParam = "provider=" + provider + "&";
         }
 
-        var servicePathPattern = '?{0}itemSurrogateType={1}&itemType={1}&{2}skip={3}&take={4}';
+        var servicePathPattern = '/live?{0}itemSurrogateType={1}&itemType={1}&{2}skip={3}&take={4}';
         var url = dataServiceBaseUrl + servicePathPattern.format(filterParam, itemType, providerParam, skip, take);
 
         $httpBackend.expectGET(url).respond(dataItems);

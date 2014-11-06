@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
@@ -80,7 +81,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 
             var controlId = Guid.Parse(controlIdParam);
             var manager = PageManager.GetManager();
-            return manager.LoadControl(manager.GetControl<ObjectData>(controlId));
+            var viewModel = manager.LoadControl(manager.GetControl<ObjectData>(controlId));
+
+            var widgetProxy = viewModel as MvcWidgetProxy;
+            if (widgetProxy != null)
+            {
+                if (widgetProxy.Controller.RouteData == null)
+                    widgetProxy.Controller.ControllerContext = new ControllerContext(new RequestContext(this.HttpContext, new RouteData()), widgetProxy.Controller);
+
+                widgetProxy.Controller.RouteData.Values["controller"] = widgetProxy.WidgetName;
+            }
+
+            return viewModel;
         }
 
         private const string DefaultView = "Designer";
