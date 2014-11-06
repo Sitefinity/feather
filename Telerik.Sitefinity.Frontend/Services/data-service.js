@@ -14,14 +14,14 @@
                 return serviceHelper.getResource(url);
             };
 
-            var getItems = function (itemType, provider, skip, take, search, searchField) {
-                var filter = serviceHelper.filterBuilder()                    
+            var getLiveItems = function (itemType, provider, skip, take, search, searchField) {
+                var filter = serviceHelper.filterBuilder()
                     .searchFilter(search, null, searchField)
                     .and()
                     .cultureFilter()
                     .getFilter();
 
-                dataItemPromise = getResource().get(
+                dataItemPromise = getResource('live').get(
                     {
                         itemType: itemType,
                         itemSurrogateType: itemType,
@@ -35,14 +35,14 @@
                 return dataItemPromise;
             };
 
-            var getSpecificItems = function (ids, itemType, provider) {
-                var filter = serviceHelper.filterBuilder()                    
+            var getSpecificLiveItems = function (ids, itemType, provider) {
+                var filter = serviceHelper.filterBuilder()
                     .specificItemsFilter(ids)
                     .and()
                     .cultureFilter()
                     .getFilter();
 
-                dataItemPromise = getResource().get(
+                dataItemPromise = getResource('live').get(
                     {
                         itemType: itemType,
                         itemSurrogateType: itemType,
@@ -69,8 +69,8 @@
 
             return {
                 /* Returns the data items. */
-                getItems: getItems,
-                getSpecificItems: getSpecificItems,
+                getLiveItems: getLiveItems,
+                getSpecificLiveItems: getSpecificLiveItems,
                 getItem: getItem
             };
         }]);

@@ -8,12 +8,12 @@
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search) {
                             var provider = ctrl.$scope.provider;
-                            return dataService.getItems(ctrl.$scope.itemType, provider, skip, take, search, ctrl.identifierField);
+                            return dataService.getLiveItems(ctrl.$scope.itemType, provider, skip, take, search, ctrl.identifierField);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
                             var provider = ctrl.$scope.provider;
-                            return dataService.getSpecificItems(ids, ctrl.$scope.itemType, provider);
+                            return dataService.getSpecificLiveItems(ids, ctrl.$scope.itemType, provider);
                         };
 
                         ctrl.selectorType = 'DynamicItemsSelector';
