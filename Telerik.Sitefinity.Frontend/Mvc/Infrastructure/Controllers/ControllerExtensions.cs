@@ -219,7 +219,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         private static IEnumerable<string> GetControllerViewEngineLocations(Controller controller, Func<VirtualPathProviderViewEngine, string[]> locationExtractor)
         {
-            var controllerName = FrontendManager.ControllerFactory.ResolveControllerName(controller.GetType());
+            var controllerName = FrontendManager.ControllerFactory.GetControllerName(controller.GetType());
 
             return controller.ViewEngineCollection.OfType<VirtualPathProviderViewEngine>()
                 .SelectMany(v => locationExtractor(v))
