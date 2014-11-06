@@ -444,6 +444,8 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
+    <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
     <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
     <EmbeddedResource Include="Selectors\sf-page-selector.js" />
     <EmbeddedResource Include="Selectors\sf-page-selector.html" />

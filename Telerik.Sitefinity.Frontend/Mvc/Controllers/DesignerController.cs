@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Mvc.StringResources;
+using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Pages.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 {
@@ -24,9 +27,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <param name="widgetName">The name of the widget.</param>
         public virtual ActionResult Master(string widgetName)
         {
-            this.ViewBag.ControlName = widgetName;
+            var controlId = this.Request != null ? this.Request["controlId"] ?? Guid.Empty.ToString() : Guid.Empty.ToString();
 
-            var model = this.GetModel(widgetName);
+            this.ViewBag.ControlName = widgetName;
+            this.ViewBag.ControlId = controlId;
+
+            var model = this.GetModel(widgetName, Guid.Parse(controlId));
             return this.View(DesignerController.DefaultView, model);
         }
 
@@ -43,23 +49,39 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         {
             var viewName = DesignerController.DesignerViewTemplate.Arrange(viewType);
 
-            return this.PartialView(viewName);
+            var model = this.GetViewModel();
+            return this.PartialView(viewName, model);
         }
 
         /// <summary>
         /// Gets the model of the designer.
         /// </summary>
-        private IDesignerModel GetModel(string widgetName)
+        private IDesignerModel GetModel(string widgetName, Guid controlId)
         {
             var constructorParameters = new Dictionary<string, object> 
                         {
                            { "views", this.GetPartialViews() },
                            { "viewLocations", this.GetPartialViewLocations() },
                            { "widgetName", widgetName },
+                           { "controlId", controlId },
                            { "preselectedView", this.Request != null ? this.Request["view"] : null }
                         };
 
             return ControllerModelFactory.GetModel<IDesignerModel>(typeof(DesignerController), constructorParameters);
+        }
+
+        private Control GetViewModel()
+        {
+            if (this.Request == null)
+                return null;
+
+            var controlIdParam = this.Request["controlId"];
+            if (controlIdParam == null)
+                return null;
+
+            var controlId = Guid.Parse(controlIdParam);
+            var manager = PageManager.GetManager();
+            return manager.LoadControl(manager.GetControl<ObjectData>(controlId));
         }
 
         private const string DefaultView = "Designer";

@@ -24,13 +24,14 @@ $tree-item-interval: 30px
         a
             display: block
             background-color: #fff
-            border: 1px solid #ddd
+            border-top: 1px solid #ddd
+            border-bottom: 1px solid #ddd
             padding: 10px 0 10px 0
             padding-left: $tree-item-interval //30px
             color: #000
             text-decoration: none
             overflow: hidden
-            margin-bottom: -1px
+            margin-top: -1px
             &.disabled
                 span
                     &:first-child
@@ -126,10 +127,10 @@ $tree-item-interval: 30px
                                             .k-item
                                                 >div
                                                     .k-in a
-                                                        padding-left: 5.166 //155px
+                                                        padding-left: 5.166*$tree-item-interval //155px
 
                                                     .k-checkbox
-                                                        left: 5.233 //157px
+                                                        left: 5.233*$tree-item-interval //157px
 
                                                     .k-checkbox+.k-in a
                                                         padding-left: 6*$tree-item-interval//180px
@@ -142,7 +143,7 @@ $tree-item-interval: 30px
                                                     .k-item
                                                         >div
                                                             .k-in a
-                                                                padding-left: 3*$tree-item-interval //180px
+                                                                padding-left: 6*$tree-item-interval //180px
 
                                                             .k-checkbox
                                                                 left: 6.066*$tree-item-interval //182px
@@ -211,16 +212,5 @@ $tree-item-interval: 30px
         vertical-align: top
 
     >ul
-        >.k-first
-            >div
-                .k-in
-                    a
-                        border-radius: 4px 4px 0 0
-                        margin-top:0
-
-        >.k-last
-            >div
-                .k-in
-                    a
-                        border-radius:  0 0 4px 4px
-                        margin-bottom:0
+        border: 1px solid #ddd
+        border-radius: 4px

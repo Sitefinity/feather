@@ -3,7 +3,7 @@
   @each $item in $names
     $i: index($names, $item)
 
-    .row.gutter-#{$item}
+    .row-#{$item}
       margin-right: -(nth($sizes, $i) * 1px)
       margin-left: -(nth($sizes, $i) * 1px)
 

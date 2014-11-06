@@ -36,12 +36,7 @@
                         </div>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
-                    <div class="sf-loading" ng-show="showLoadingIndicator">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-
+                    <sf-loading ng-show="showLoadingIndicator"></sf-loading>
                 </div>
             </div>
             <div>

@@ -42,6 +42,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             else
             {
+                proxyControl.RequestContext.RouteData.Values.Remove(DynamicUrlParamActionInvoker.ControllerNameKey);
                 base.InitializeRouteParameters(proxyControl);
             }
         }

@@ -5,7 +5,7 @@ var sitefinity = sitefinity || {};
 (function ($) {
 
     var loader,
-		loaderMarkup = '<div class="sf-loading" style="opacity:0.5; width:100%; z-index:3100; position:absolute; top:0; height:100%;></div>',
+		loaderMarkup = '<div class="sf-loading" style="opacity:0.5; width:100%; z-index:3100; position:absolute; top:0; height:100%;"></div>',
 		loaderTemplate = kendo.template(loaderMarkup),
 		dialog;
 
@@ -121,7 +121,14 @@ var sitefinity = sitefinity || {};
 			this.showLoader(args.AppPath);
 			this.widgetContext = args;
 
-			$.get(this.widgetContext.url)
+			var separator;
+			if (this.widgetContext.url.indexOf('?') > -1)
+			    separator = '&';
+			else
+			    separator = '?';
+
+			var url = this.widgetContext.url + separator + 'controlId=' + this.widgetContext.Id;
+			$.get(url)
 				.done($.proxy(this.renderDialog, this))
 				.fail(function (data) {
 					alert('There is a problem with loading the widget designer: ' + data);

@@ -16,7 +16,7 @@
                         scope.filter.isEmpty = !scope.filter.searchString;
                     }
                 };
-                
+
                 setFilterIsEmpty();
 
                 scope.applyFilter = function (value) {

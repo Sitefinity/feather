@@ -44,12 +44,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public virtual string DetailCssClass { get; set; }
 
         /// <summary>
-        /// Gets a comma separated list of Ids of the items that should be displayed when filtering by preselected items.
+        /// Gets the list of items to be displayed inside the widget when option "Selected items" is enabled.
         /// </summary>
         /// <value>
-        /// The selected items.
+        /// The selected item ids.
         /// </value>
-        public virtual string SelectedItemIds { get; set; }
+        public virtual string SerializedSelectedItemsIds { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable social sharing.
@@ -400,10 +400,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private string GetSelectedItemsFilterExpression()
         {
-            var selectedItemIds = this.SelectedItemIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (!this.SerializedSelectedItemsIds.IsNullOrEmpty())
+            {
+                var selectedItemIds = JsonSerializer.DeserializeFromString<IList<string>>(this.SerializedSelectedItemsIds);
 
-            var selectedItemsFilterExpression = string.Join(" OR ", selectedItemIds.Select(id => "Id = " + id.Trim()));
-            return selectedItemsFilterExpression;
+                var selectedItemsFilterExpression = string.Join(" OR ", selectedItemIds.Select(id => "Id = " + id.Trim()));
+                return selectedItemsFilterExpression;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         #endregion
