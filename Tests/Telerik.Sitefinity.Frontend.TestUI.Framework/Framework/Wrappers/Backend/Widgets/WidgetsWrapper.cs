@@ -138,7 +138,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             HtmlAnchor saveButton = this.EM.Widgets.FeatherWidget.SelectorButton;
 
-            saveButton.Wait.ForVisible();
+            saveButton.Wait.ForExists();
 
             saveButton.Click();
             ActiveBrowser.WaitForAsyncRequests();
