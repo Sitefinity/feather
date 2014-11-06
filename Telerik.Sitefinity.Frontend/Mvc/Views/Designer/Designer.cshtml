@@ -3,7 +3,7 @@
 @using Telerik.Sitefinity.Frontend.Mvc.Helpers
 
 <div class="designer" modal dialog-controller="DialogCtrl" template-url="dialog-template" auto-open="true" window-class="sf-designer-dlg">
-	<server-data default-view='@Model.DefaultView' widget-name='@ViewBag.ControlName'></server-data>
+	<server-data default-view='@Model.DefaultView' widget-name='@ViewBag.ControlName' control-id='@ViewBag.ControlId'></server-data>
 
 	<script type="text/ng-template" id="dialog-template">
 		<div class="modal-header">

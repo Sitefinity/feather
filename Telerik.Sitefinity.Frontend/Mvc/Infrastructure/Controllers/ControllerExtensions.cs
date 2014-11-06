@@ -144,7 +144,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controller.ControllerContext == null || controller.ControllerContext.RouteData == null)
                 return null;
 
-            var controllerName = controller.ControllerContext.RouteData.Values["controller"];
+            var controllerName = controller.ControllerContext.RouteData.Values["controller"] as string;
+            return controller.GetDynamicContentType(controllerName);
+        }
+
+        /// <summary>
+        /// Gets the type of the dynamic content that is inferred for the given controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="controllerName">Name of the controller.</param>
+        /// <returns>
+        /// The dynamic module type.
+        /// </returns>
+        public static DynamicModuleType GetDynamicContentType(this ControllerBase controller, string controllerName)
+        {
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+
+            if (controllerName == null)
+                throw new ArgumentNullException("controllerName");
+
             var moduleProvider = ModuleBuilderManager.GetManager().Provider;
             var dynamicContentType = moduleProvider.GetDynamicModules()
                 .Where(m => m.Status == DynamicModuleStatus.Active)
@@ -200,10 +219,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         private static IEnumerable<string> GetControllerViewEngineLocations(Controller controller, Func<VirtualPathProviderViewEngine, string[]> locationExtractor)
         {
+            var controllerName = FrontendManager.ControllerFactory.ResolveControllerName(controller.GetType());
+
             return controller.ViewEngineCollection.OfType<VirtualPathProviderViewEngine>()
                 .SelectMany(v => locationExtractor(v))
                 .Distinct()
-                .Select(v => v.Replace("{1}", FrontendManager.ControllerFactory.GetControllerName(controller.GetType())))
+                .Select(v => v.Replace("{1}", controllerName))
                 .Select(VirtualPathUtility.GetDirectory)
                 .Distinct();
         }
