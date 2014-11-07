@@ -318,11 +318,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             //// if items count is more than 12 elements, then you need to scroll
             if (items.Count() > 12)
             {
-                HtmlDiv scroller = ActiveBrowser.Find.ByExpression<HtmlDiv>("class=~list-group list-group-endless");
-                
-                scroller.MouseClick(MouseClickType.LeftDoubleClick);
-                Manager.Current.Desktop.Mouse.TurnWheel(4000, MouseWheelTurnDirection.Backward);                  
-                items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-bind=~bindIdentifierField(item");
+                int itemsCount = items.Count;
+
+                items[itemsCount - 1].Wait.ForVisible();
+                items[itemsCount - 1].ScrollToVisible();
             }
            
             bool isCountCorrect = (expected == items.Count);
