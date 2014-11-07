@@ -313,14 +313,15 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             ActiveBrowser.RefreshDomTree();         
             var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
 
-            var items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-bind=~bindIdentifierField(item");
+            var items = activeDialog.Find.AllByExpression<HtmlDiv>("class=ng-binding", "ng-bind=~bindIdentifierField(item");
+            int count = items.Count;
 
             //// if items count is more than 12 elements, then you need to scroll
-            if (items.Count() > 12)
+            if (count > 12)
             {
-                items[items.Count() - 1].Wait.ForExists();
-                items[items.Count() - 1].Wait.ForVisible();
-                items[items.Count() - 1].ScrollToVisible();
+                items[count - 1].Wait.ForExists();
+                items[count - 1].Wait.ForVisible();
+                items[count - 1].ScrollToVisible();
             }
            
             bool isCountCorrect = (expected == items.Count);
