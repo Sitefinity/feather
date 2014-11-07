@@ -318,10 +318,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             //// if items count is more than 12 elements, then you need to scroll
             if (items.Count() > 12)
             {
-                int itemsCount = items.Count;
-
-                items[itemsCount - 1].Wait.ForVisible();
-                items[itemsCount - 1].ScrollToVisible();
+                items[items.Count() - 1].Wait.ForExists();
+                items[items.Count() - 1].Wait.ForVisible();
+                items[items.Count() - 1].ScrollToVisible();
             }
            
             bool isCountCorrect = (expected == items.Count);
