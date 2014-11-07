@@ -176,7 +176,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             var query = this.GetItemsQuery();
             if (query == null)
-                return new ContentListViewModel();
+                return this.CreateListViewModelInstance();
 
             if (taxonFilter != null)
             {
@@ -185,7 +185,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 query = query.Where(filter);
             }
 
-            var viewModel = new ContentListViewModel();
+            var viewModel = this.CreateListViewModelInstance();
             viewModel.CurrentPage = page;
 
             int? totalPages;
@@ -206,7 +206,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns>A view model for use in detail views.</returns>
         public virtual ContentDetailsViewModel CreateDetailsViewModel(IDataItem item)
         {
-            var viewModel = new ContentDetailsViewModel();
+            var viewModel = this.CreateDetailsViewModelInstance();
 
             viewModel.CssClass = this.DetailCssClass;
             viewModel.Item = item;
@@ -315,6 +315,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             totalPages = this.DisplayMode == ListDisplayMode.Paging ? totalPages : null;
 
             return result;
+        }
+
+        /// <summary>
+        /// Creates a blank instance of a list view model.
+        /// </summary>
+        /// <returns>The list view model.</returns>
+        protected virtual ContentListViewModel CreateListViewModelInstance()
+        {
+            return new ContentListViewModel();
+        }
+
+        /// <summary>
+        /// Creates a blank instance of a details view model.
+        /// </summary>
+        /// <returns>The details view model.</returns>
+        protected virtual ContentDetailsViewModel CreateDetailsViewModelInstance()
+        {
+            return new ContentDetailsViewModel();
         }
 
         #endregion
