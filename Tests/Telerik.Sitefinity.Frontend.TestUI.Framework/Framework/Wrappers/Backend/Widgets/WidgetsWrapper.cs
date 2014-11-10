@@ -304,6 +304,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
+        /// Waits for items to appear.
+        /// </summary>
+        public void WaitForItemsToAppear()
+        {
+            Manager.Current.Wait.For(() => this.ContainsItems(), 50000);
+        }
+
+        /// <summary>
         /// Verifies if the items count is as expected.
         /// </summary>
         /// <param name="expected">The expected items count.</param>
@@ -326,6 +334,26 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
            
             bool isCountCorrect = (expected == items.Count);
             return isCountCorrect;
+        }
+
+        /// <summary>
+        /// Verifies the collection contains any items
+        /// </summary>
+        /// <returns>True or False depending on the items count.</returns>
+        public bool ContainsItems()
+        {
+            ActiveBrowser.RefreshDomTree();
+            var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
+
+            var items = activeDialog.Find.AllByExpression<HtmlDiv>("class=ng-binding", "ng-bind=~bindIdentifierField(item");
+            int count = items.Count;
+
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+                return false;
         }
 
         /// <summary>
