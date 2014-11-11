@@ -3040,7 +3040,7 @@ textarea.input-lg, .form-horizontal .form-group-lg textarea.form-control, .input
 
 /* line 132, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons */
 .btn-xs, .btn-group-xs > .btn {
-  padding: 1px 5px;
+  padding: 3px 6px;
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px; }
@@ -7794,7 +7794,7 @@ ul, ol, dl {
 
 /* line 2, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_navs */
 .nav-tabs-wrapper .nav.nav-tabs {
-  margin: -31px -20px 30px;
+  margin: -20px -20px 30px;
   padding: 10px 15px 0;
   background: #f2f2f2; }
 
@@ -7818,16 +7818,17 @@ tab {
   color: #000;
   font-weight: 400;
   vertical-align: top;
-  line-height: 1.7em; }
-  /* line 14, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
+  line-height: 1.7em;
+  font-size: 86%; }
+  /* line 15, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
   .label-taxon:last-child {
     margin-right: 0; }
 
-/* line 17, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
+/* line 18, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
 .label-full {
   max-width: 100%; }
 
-/* line 20, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
+/* line 21, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
 .label-content {
   display: block;
   margin-left: 20px;
