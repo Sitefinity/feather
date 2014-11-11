@@ -57,7 +57,7 @@
                     .$promise;
 
                 return dataItemPromise;
-            }
+            };
 
             var getSpecificItems = function (taxonomyId, ids) {
                 var filter = serviceHelper.filterBuilder()
