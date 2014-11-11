@@ -1,8 +1,11 @@
 ﻿using System.Web.Routing;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
+using Telerik.Sitefinity.Modules.ControlTemplates.Web.UI;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {
@@ -22,6 +25,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
                                       new RouteHandler<ServerContextHandler>()),
                                       typeof(ResourcesInitializer).Assembly.GetName().Name,
                                       requireBasicAuthentication: false);
+
+            ObjectFactory.Container.RegisterType<DialogBase, MvcControlTemplateEditor>(typeof(ControlTemplateEditor).Name);
         }
     }
 }
