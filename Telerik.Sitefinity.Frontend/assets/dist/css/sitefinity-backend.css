@@ -7614,47 +7614,47 @@ ul, ol, dl {
     background-color: #105ab5; } }
 
 /* line 5, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
-.row.gutter-none {
+.row-none {
   margin-right: -0px;
   margin-left: -0px; }
   /* line 9, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
-  .row.gutter-none [class*="col-"] {
+  .row-none [class*="col-"] {
     padding-right: 0px;
     padding-left: 0px; }
 
 /* line 5, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
-.row.gutter-xs {
+.row-xs {
   margin-right: -5px;
   margin-left: -5px; }
   /* line 9, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
-  .row.gutter-xs [class*="col-"] {
+  .row-xs [class*="col-"] {
     padding-right: 5px;
     padding-left: 5px; }
 
 /* line 5, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
-.row.gutter-sm {
+.row-sm {
   margin-right: -10px;
   margin-left: -10px; }
   /* line 9, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
-  .row.gutter-sm [class*="col-"] {
+  .row-sm [class*="col-"] {
     padding-right: 10px;
     padding-left: 10px; }
 
 /* line 5, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
-.row.gutter-md {
+.row-md {
   margin-right: -15px;
   margin-left: -15px; }
   /* line 9, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
-  .row.gutter-md [class*="col-"] {
+  .row-md [class*="col-"] {
     padding-right: 15px;
     padding-left: 15px; }
 
 /* line 5, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
-.row.gutter-lg {
+.row-lg {
   margin-right: -25px;
   margin-left: -25px; }
   /* line 9, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
-  .row.gutter-lg [class*="col-"] {
+  .row-lg [class*="col-"] {
     padding-right: 25px;
     padding-left: 25px; }
 
