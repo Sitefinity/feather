@@ -1,0 +1,17 @@
+﻿@model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields.RelatedDataFieldViewModel
+
+@using Telerik.Sitefinity.Model;
+
+<div class="sfMultiRelatedItmsWrp">
+    <h2 class="sfrelatedItmTitle">@Model.FieldTitle</h2>
+    <ul class="sfrelatedList sflist">
+    @foreach (var relatedItem in Model.RelatedItemCollection)
+    {
+        <li class="sfrelatedListItem sflistitem">
+            <video controls>
+                <source  src='@relatedItem.MediaUrl'>
+            </video>
+        </li>   
+    }
+    </ul>
+</div>

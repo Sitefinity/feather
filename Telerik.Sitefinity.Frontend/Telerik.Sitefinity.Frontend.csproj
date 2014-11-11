@@ -192,6 +192,7 @@
     <Compile Include="Mvc\Helpers\SitefinityHelper.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\CustomTaxonomyViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\Fields\ClassificationFieldViewModel.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\Fields\RelatedDataFieldViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttribute.cs" />
@@ -374,6 +375,10 @@
     <EmbeddedResource Include="Mvc\Views\Shared\FlatTaxonomyField.cshtml" />
     <EmbeddedResource Include="Mvc\Views\Shared\HierarchicalTaxonomyField.cshtml" />
     <EmbeddedResource Include="Mvc\Views\Shared\LongTextAreaField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedDataInlineListField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedImageInlineListField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedVideoInlineListField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedDocumentInlineListField.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
