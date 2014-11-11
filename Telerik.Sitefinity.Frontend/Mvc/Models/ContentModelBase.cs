@@ -176,7 +176,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             var query = this.GetItemsQuery();
             if (query == null)
-                return new ContentListViewModel();
+                return this.CreateListViewModelInstance();
 
             if (taxonFilter != null)
             {
@@ -185,7 +185,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 query = query.Where(filter);
             }
 
-            var viewModel = new ContentListViewModel();
+            var viewModel = this.CreateListViewModelInstance();
             viewModel.CurrentPage = page;
 
             int? totalPages;
@@ -206,7 +206,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns>A view model for use in detail views.</returns>
         public virtual ContentDetailsViewModel CreateDetailsViewModel(IDataItem item)
         {
-            var viewModel = new ContentDetailsViewModel();
+            var viewModel = this.CreateDetailsViewModelInstance();
 
             viewModel.CssClass = this.DetailCssClass;
             viewModel.Item = item;
@@ -317,23 +317,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return result;
         }
 
-        #endregion
-
-        #region Private methods
-
-        private string ExpectedTaxonFieldName(ITaxon taxon)
+        /// <summary>
+        /// Creates a blank instance of a list view model.
+        /// </summary>
+        /// <returns>The list view model.</returns>
+        protected virtual ContentListViewModel CreateListViewModelInstance()
         {
-            if (taxon.Taxonomy.Name == "Categories")
-                return taxon.Taxonomy.TaxonName;
+            return new ContentListViewModel();
+        }
 
-            return taxon.Taxonomy.Name;
+        /// <summary>
+        /// Creates a blank instance of a details view model.
+        /// </summary>
+        /// <returns>The details view model.</returns>
+        protected virtual ContentDetailsViewModel CreateDetailsViewModelInstance()
+        {
+            return new ContentDetailsViewModel();
         }
 
         /// <summary>
         /// Compiles a filter expression based on the widget settings.
         /// </summary>
         /// <returns>Filter expression that will be applied on the query.</returns>
-        private string CompileFilterExpression()
+        protected virtual string CompileFilterExpression()
         {
             var elements = new List<string>();
 
@@ -361,6 +367,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             return string.Join(" AND ", elements.Select(el => "(" + el + ")"));
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private string ExpectedTaxonFieldName(ITaxon taxon)
+        {
+            if (taxon.Taxonomy.Name == "Categories")
+                return taxon.Taxonomy.TaxonName;
+
+            return taxon.Taxonomy.Name;
         }
 
         private string AddLiveFilterExpression(string filterExpression)

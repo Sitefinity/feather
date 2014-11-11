@@ -186,11 +186,14 @@
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerMetadataAttribute.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
     <Compile Include="Mvc\Helpers\CustomFieldsHelpers.cs" />
+    <Compile Include="Mvc\Helpers\FieldHelpers.cs" />
     <Compile Include="Mvc\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Helpers\HyperLinkHelpers.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
     <Compile Include="Mvc\Helpers\SitefinityContext.cs" />
+    <Compile Include="Mvc\Helpers\SitefinityHelper.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\CustomTaxonomyViewModel.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\Fields\ClassificationFieldViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttribute.cs" />
@@ -295,7 +298,6 @@
     <Folder Include="assets\dist\js\" />
     <Folder Include="assets\src\img\" />
     <Folder Include="assets\src\js\" />
-    <Folder Include="Mvc\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\data-providers.js" />
@@ -371,6 +373,9 @@
     <None Include="assets\src\sass\sitefinity-backend.sass" />
     <None Include="assets\src\sass\_utility-classes.sass" />
     <None Include="assets\src\sass\_variables.sass" />
+    <EmbeddedResource Include="Mvc\Views\Shared\FlatTaxonomyField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\HierarchicalTaxonomyField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\LongTextAreaField.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -447,6 +452,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
     <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
+    <EmbeddedResource Include="Selectors\Taxons\sf-hierarchical-taxon-selector.html" />
+    <EmbeddedResource Include="Selectors\Taxons\sf-hierarchical-taxon-selector.js" />
+    <EmbeddedResource Include="Services\hierarchical-taxon-service.js" />
     <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
     <EmbeddedResource Include="Selectors\sf-page-selector.js" />
     <EmbeddedResource Include="Selectors\sf-page-selector.html" />
@@ -515,7 +523,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

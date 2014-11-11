@@ -16,7 +16,6 @@
                     provider: '=?',
                     change: '=',
                     sortable: '=?',
-                    taxonomyId: '=?', /* sf-taxon-selector */
                     itemType: '=?', /* sf-dynamic-items-selector */
                     identifierField: '=?'
                 },
@@ -45,6 +44,10 @@
 
                     this.$scope = $scope;
 
+                    this.onSelectedItemsLoadedSuccess = function (data) {
+                        this.updateSelection(data.Items);
+                    };
+
                     this.updateSelection = function (selectedItems) {
                         selectedItems.sort(compareFunction);
 
@@ -56,6 +59,9 @@
                         $scope.selectedIds = selectedItems.map(function (item) {
                             return item.Id;
                         });
+                    };
+
+                    this.onItemSelected = function (item) {
                     };
 
                     var compareFunction = function (item1, item2) {
@@ -156,7 +162,8 @@
 
                             return ctrl.getSpecificItems(ids)
                                 .then(function (data) {
-                                    ctrl.updateSelection(data.Items);
+                                    ////ctrl.updateSelection(data.Items);
+                                    ctrl.onSelectedItemsLoadedSuccess(data);
                                 }, onError)
                                 .finally(function () {
                                     scope.showLoadingIndicator = false;
@@ -214,7 +221,7 @@
                             }
                         });
 
-                        scope.$watchCollection('selectedIds', function (newIds, oldIds) { 
+                        scope.$watchCollection('selectedIds', function (newIds, oldIds) {
                             if (newIds && newIds.length > 0 && !areArrayEquals(newIds, currentSelectedIds)) {
                                 fetchSelectedItems();
                             }
@@ -256,12 +263,16 @@
                                 }
                                 else {
                                     Array.prototype.push.apply(scope.items, items);
-                                }                                
+                                }
                             }
                         };
 
                         scope.itemClicked = function (index, item) {
                             if (typeof index === 'object' && !item) item = index;
+
+                            if (ctrl.onItemSelected) {
+                                ctrl.onItemSelected(item);
+                            }
 
                             if (scope.itemDisabled(item)) {
                                 return;
@@ -349,7 +360,7 @@
 
                             scope.itemsPromise = ctrl.getItems(scope.paging.skip, scope.paging.take)
                             .then(onFirstPageLoadedSuccess, onError);
-                            
+
                             scope.itemsPromise.finally(function () {
                                 scope.showLoadingIndicator = false;
                             });
@@ -376,7 +387,7 @@
 
                             return ids.length > 0;
                         };
-                        
+
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].item.Id === item.Id) {

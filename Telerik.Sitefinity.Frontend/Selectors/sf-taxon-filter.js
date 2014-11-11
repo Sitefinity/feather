@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfTaxonFilter', function () {       
+        .directive('sfTaxonFilter', function () {
 
             return {
                 restrict: 'EA',
@@ -21,8 +21,19 @@
                         // ------------------------------------------------------------------------
                         // helper methods
                         // ------------------------------------------------------------------------
+
+                        var getTaxonomyName = function (taxonItem) {
+                            if (taxonItem.TaxonomyId === sitefinity.getCategoriesTaxonomyId()) {
+
+                                ////NOTE: We should return 'Category' instead of 'Categories' when taxon is of category type. 
+                                ////This will result in correct query filtering for a category taxons -> Handling old bug in Sitefinity.
+                                return "Category";
+                            }
+                            return taxonItem.TaxonomyName;
+                        };
+
                         var addChildTaxonQueryItem = function (taxonItem) {
-                            var groupName = taxonItem.TaxonomyName;
+                            var groupName = getTaxonomyName(taxonItem);
                             var groupItem = scope.queryData.getItemByName(groupName);
 
                             if (!groupItem) {
@@ -74,7 +85,7 @@
 
                             if (oldSelectedTaxonItems && oldSelectedTaxonItems.length > 0) {
                                 oldSelectedTaxonItems.forEach(function (item) {
-                                    var groupToRemove = scope.queryData.getItemByName(item.TaxonomyName);
+                                    var groupToRemove = scope.queryData.getItemByName(getTaxonomyName(item));
 
                                     if (groupToRemove)
                                         scope.queryData.removeGroup(groupToRemove);
@@ -87,7 +98,7 @@
                                 });
                             }
                         };
-                        
+
                         scope.toggleTaxonomySelection = function (taxonomyName) {
                             // is currently selected
                             if (taxonomyName in scope.selectedTaxonomies) {
@@ -99,7 +110,7 @@
                                     scope.queryData.removeGroup(groupToRemove);
                             }
 
-                            // is newly selected
+                                // is newly selected
                             else {
                                 constructFilterItem(taxonomyName);
                             }
