@@ -17,7 +17,7 @@ Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEd
             jQuery(this._otherPropertiesContainer).parent().show();
             this._dataBindPropertiesItemsList(this._commonPropertiesItemsList);
         } else {
-            // hide right other properties container for MVC widgets
+            // hide "other properties" container (right section) for MVC widgets
             jQuery(this._otherPropertiesContainer).parent().hide();
         }
 
