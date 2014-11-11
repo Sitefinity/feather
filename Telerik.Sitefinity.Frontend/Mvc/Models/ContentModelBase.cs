@@ -335,23 +335,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return new ContentDetailsViewModel();
         }
 
-        #endregion
-
-        #region Private methods
-
-        private string ExpectedTaxonFieldName(ITaxon taxon)
-        {
-            if (taxon.Taxonomy.Name == "Categories")
-                return taxon.Taxonomy.TaxonName;
-
-            return taxon.Taxonomy.Name;
-        }
-
         /// <summary>
         /// Compiles a filter expression based on the widget settings.
         /// </summary>
         /// <returns>Filter expression that will be applied on the query.</returns>
-        private string CompileFilterExpression()
+        protected virtual string CompileFilterExpression()
         {
             var elements = new List<string>();
 
@@ -379,6 +367,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             return string.Join(" AND ", elements.Select(el => "(" + el + ")"));
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private string ExpectedTaxonFieldName(ITaxon taxon)
+        {
+            if (taxon.Taxonomy.Name == "Categories")
+                return taxon.Taxonomy.TaxonName;
+
+            return taxon.Taxonomy.Name;
         }
 
         private string AddLiveFilterExpression(string filterExpression)
