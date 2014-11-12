@@ -189,11 +189,13 @@
     <Compile Include="Mvc\Helpers\FieldHelpers.cs" />
     <Compile Include="Mvc\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Helpers\HyperLinkHelpers.cs" />
+    <Compile Include="Mvc\Helpers\RelatedDataHelpers.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
     <Compile Include="Mvc\Helpers\SitefinityContext.cs" />
     <Compile Include="Mvc\Helpers\SitefinityHelper.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\CustomTaxonomyViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\Fields\ClassificationFieldViewModel.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\Fields\RelatedDataFieldViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttribute.cs" />
@@ -376,6 +378,16 @@
     <EmbeddedResource Include="Mvc\Views\Shared\FlatTaxonomyField.cshtml" />
     <EmbeddedResource Include="Mvc\Views\Shared\HierarchicalTaxonomyField.cshtml" />
     <EmbeddedResource Include="Mvc\Views\Shared\LongTextAreaField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedDataInlineListField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedImageInlineListField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedVideoInlineListField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedDocumentInlineListField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedPageInlineListField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedDataInlineSingleField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedDocumentInlineSingleField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedImageInlineSingleField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedPageInlineSingleField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\RelatedVideoInlineSingleField.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

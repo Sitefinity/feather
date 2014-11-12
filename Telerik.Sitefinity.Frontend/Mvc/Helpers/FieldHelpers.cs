@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields;
+using Telerik.Sitefinity.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -22,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             helper.ViewBag.CssClass = cssClass;
 
-            return ASP.PartialExtensions.Partial(helper, "LongTextAreaField", text);
+            return ASP.PartialExtensions.Partial(helper, FieldHelpers.TextAreaFieldViewName, text);
         }
 
         /// <summary>
@@ -43,11 +44,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var model = new ClassificationFieldViewModel((IList<Guid>)classificationFieldValue, classificationId, fieldTitle, fieldName);
 
             if (model.GetTaxonomyType() == Telerik.Sitefinity.Taxonomies.Model.TaxonomyType.Flat)
-                return ASP.PartialExtensions.Partial(helper, "FlatTaxonomyField", model);
+                return ASP.PartialExtensions.Partial(helper, FieldHelpers.FlatTaxonomyFieldViewName, model);
             else if (model.GetTaxonomyType() == Telerik.Sitefinity.Taxonomies.Model.TaxonomyType.Hierarchical)
-                return ASP.PartialExtensions.Partial(helper, "HierarchicalTaxonomyField", model);
+                return ASP.PartialExtensions.Partial(helper, FieldHelpers.HierarchicalTaxonomyFieldViewName, model);
 
             return null;
         }
+
+        private const string TextAreaFieldViewName = "LongTextAreaField";
+        private const string FlatTaxonomyFieldViewName = "FlatTaxonomyField";
+        private const string HierarchicalTaxonomyFieldViewName = "HierarchicalTaxonomyField";
     }
 }
