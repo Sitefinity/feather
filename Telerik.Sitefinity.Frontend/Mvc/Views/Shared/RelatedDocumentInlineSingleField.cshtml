@@ -1,0 +1,13 @@
+﻿@model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields.RelatedDataFieldViewModel
+
+@using Telerik.Sitefinity.Model;
+@using Telerik.Sitefinity.Libraries.Model;
+
+<div class="sfSnglRelatedItmWrp">
+    <h2 class="sfrelatedItmTitle">@Model.FieldTitle</h2>
+    <div class="sfrelatedItmWrp">
+        <a href='@(((MediaContent)Model.SingleRelatedItem).MediaUrl)'>
+            @(((IDynamicFieldsContainer)Model.SingleRelatedItem).GetValue(Model.IdentifierField))
+        </a>
+    </div>
+</div>

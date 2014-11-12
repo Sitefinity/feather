@@ -1,15 +1,16 @@
 ﻿@model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields.RelatedDataFieldViewModel
 
 @using Telerik.Sitefinity.Model;
+@using Telerik.Sitefinity.Libraries.Model;
 
 <div class="sfMultiRelatedItmsWrp">
     <h2 class="sfrelatedItmTitle">@Model.FieldTitle</h2>
     <ul class="sfrelatedList sflist">
-    @foreach (var relatedItem in Model.RelatedItemCollection)
+    @foreach (IDynamicFieldsContainer relatedItem in Model.RelatedItemCollection)
     {
         <li class="sfrelatedListItem sflistitem">
-            <a href='@relatedItem.MediaUrl'>
-                <img src='@relatedItem.ThumbnailUrl' alt='@relatedItem.AlternativeText' title='@Model.IdentifierField' />
+            <a href='@(((MediaContent)relatedItem).MediaUrl)'>
+                <img src='@(((MediaContent)relatedItem).ThumbnailUrl)' alt='@(((Image)relatedItem).AlternativeText)' title='@relatedItem.GetValue(Model.IdentifierField)' />
             </a>
         </li>   
     }

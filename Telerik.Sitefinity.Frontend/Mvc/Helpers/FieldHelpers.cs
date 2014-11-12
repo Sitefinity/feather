@@ -51,24 +51,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return null;
         }
 
-        /// <summary>
-        /// Renders related data inline list field.
-        /// </summary>
-        /// <param name="helper">The helper.</param>
-        /// <param name="relatedDataItems">The related data items.</param>
-        /// <param name="identifierField">The identifier field.</param>
-        /// <param name="frontendWidgetLabel">The frontend widget label.</param>
-        /// <param name="cssClass">The CSS class.</param>
-        /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedDataInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel, string cssClass = "")
-        {
-            helper.ViewBag.CssClass = cssClass;
-            var model = new RelatedDataFieldViewModel(relatedDataItems, frontendWidgetLabel, identifierField);
-
-            return ASP.PartialExtensions.Partial(helper, "RelatedDataInlineListField", model);
-        }
-
         private const string TextAreaFieldViewName = "LongTextAreaField";
         private const string FlatTaxonomyFieldViewName = "FlatTaxonomyField";
         private const string HierarchicalTaxonomyFieldViewName = "HierarchicalTaxonomyField";

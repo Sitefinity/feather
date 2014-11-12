@@ -25,12 +25,33 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="RelatedDataFieldViewModel"/> class.
+        /// </summary>
+        /// <param name="singleRelatedItem">The single related item.</param>
+        /// <param name="fieldTitle">The field title.</param>
+        /// <param name="identifierField">The identifier field.</param>
+        public RelatedDataFieldViewModel(IDataItem singleRelatedItem, string fieldTitle, string identifierField)
+        {
+            this.SingleRelatedItem = singleRelatedItem;
+            this.FieldTitle = fieldTitle;
+            this.IdentifierField = identifierField;
+        }
+
+        /// <summary>
         /// Gets the related item collection.
         /// </summary>
         /// <value>
         /// The related item collection.
         /// </value>
         public IList<IDataItem> RelatedItemCollection { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the single related item.
+        /// </summary>
+        /// <value>
+        /// The single related item.
+        /// </value>
+        public IDataItem SingleRelatedItem { get; set; }
 
         /// <summary>
         /// Gets or sets the field title.
