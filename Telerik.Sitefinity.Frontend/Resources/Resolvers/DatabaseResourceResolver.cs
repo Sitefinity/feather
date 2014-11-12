@@ -69,13 +69,20 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             if (virtualPath == null)
                 throw new ArgumentNullException("virtualPath");
 
-            var resourceName = VirtualPathUtility.ToAppRelative(virtualPath);
-            var areaName = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAppRelative(virtualPathDefinition.VirtualPath));
-            var extension = VirtualPathUtility.GetExtension(virtualPath).ToLowerInvariant();
+            var extension = Path.GetExtension(virtualPath);
+            ControlPresentation controlPresentation = null;
 
-            var controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
-                .FirstOrDefault(cp => cp.AreaName == areaName && cp.NameForDevelopers == resourceName 
-                    && cp.DataType == extension);
+            /// TODO: Fix - currently allowed only for razor views
+            if (extension == ".cshtml")
+            {
+                var name = Path.GetFileNameWithoutExtension(virtualPath);
+
+                var splittedVirtualPath = virtualPath.Split('/');
+                var areaName = splittedVirtualPath[splittedVirtualPath.Length - 2];
+
+                controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
+                                        .FirstOrDefault(cp => cp.Name == name && cp.AreaName == areaName);
+            }
 
             return controlPresentation;
         }

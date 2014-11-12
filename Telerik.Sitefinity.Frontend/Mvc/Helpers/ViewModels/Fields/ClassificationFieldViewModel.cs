@@ -97,7 +97,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields
         /// Gets the taxon names.
         /// </summary>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1001:AvoidToListOnIQueryable"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public IList<string> GetTaxonNames()
         {
             TaxonomyManager manager = TaxonomyManager.GetManager();

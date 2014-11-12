@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Web.Hosting;
@@ -56,8 +57,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 IsWildcard = true,
                 ResolverName = name,
                 ResourceLocation = assembly.CodeBase,
-                VirtualPath =
-                    "~/" + VirtualPathBuilder.FrontendAssemblyBasePath.Arrange(name),
+                VirtualPath = string.Format(CultureInfo.InvariantCulture, "~/{0}", VirtualPathBuilder.FrontendAssemblyBasePath.Arrange(name))
             };
 
             result.Items.Add("Assembly", assembly);
@@ -85,7 +85,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public string AddParams(string virtualPath, string pathParams)
         {
             if (!pathParams.IsNullOrEmpty())
-                virtualPath += string.Format(System.Globalization.CultureInfo.InvariantCulture, "#{0}{1}", pathParams, Path.GetExtension(virtualPath));
+                virtualPath += string.Format(CultureInfo.InvariantCulture, "#{0}{1}", pathParams, Path.GetExtension(virtualPath));
 
             return virtualPath;
         }

@@ -182,6 +182,8 @@
     <Compile Include="InlineEditing\HtmlProcessor.cs" />
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
+    <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerMetadataAttribute.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
     <Compile Include="Mvc\Helpers\CustomFieldsHelpers.cs" />
     <Compile Include="Mvc\Helpers\FieldHelpers.cs" />
@@ -477,6 +479,7 @@
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="assets\gruntfile.js" />
+    <EmbeddedResource Include="Modules\ControlTemplates\Web\Scripts\MvcControlTemplateEditor.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
