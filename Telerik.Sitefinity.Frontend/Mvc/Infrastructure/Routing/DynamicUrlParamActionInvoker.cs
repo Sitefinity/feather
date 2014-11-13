@@ -156,7 +156,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (actionDescriptor == null || actionDescriptor.GetParameters().Length == 0 || actionDescriptor.GetParameters()[0].ParameterType != typeof(int?))
                 return null;
 
-            return new CustomActionParamsMapper(controller, () => "/{" + actionDescriptor.GetParameters()[0].ParameterName + "}", actionName);
+            return new CustomActionParamsMapper(controller, () => "/{" + actionDescriptor.GetParameters()[0].ParameterName + ":int}", actionName);
         }
 
         private void SetControllerRouteParam(MvcProxyBase proxyControl)

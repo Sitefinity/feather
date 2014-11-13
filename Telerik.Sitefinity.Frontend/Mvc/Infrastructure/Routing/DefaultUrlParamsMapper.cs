@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Mvc;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
@@ -21,10 +22,33 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
         /// <inheritdoc />
         protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
-        {           
+        {
+            var selfRouting = this.Controller as ISelfRoutingController;
+            if (urlParams != null && selfRouting != null && selfRouting.TryMapRouteParameters(urlParams, requestContext))
+            {
+                return true;
+            }
+
             var controllerName = requestContext.RouteData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] as string;
-            requestContext.RouteData.Values.Remove(DynamicUrlParamActionInvoker.ControllerNameKey);
-            MvcRequestContextBuilder.SetRouteParameters(urlParams, requestContext, this.Controller as Controller, controllerName);
+            string actionName = null;
+            if (requestContext.RouteData.Values.ContainsKey("action"))
+            {
+                actionName = requestContext.RouteData.Values["action"] as string;
+                requestContext.RouteData.Values.Remove("action");
+            }
+
+            try
+            {
+                requestContext.RouteData.Values.Remove(DynamicUrlParamActionInvoker.ControllerNameKey);
+                MvcRequestContextBuilder.SetRouteParameters(urlParams, requestContext, this.Controller as Controller, controllerName);
+            }
+            finally
+            {
+                if (actionName != null)
+                {
+                    requestContext.RouteData.Values["action"] = actionName;
+                }
+            }
 
             return true;
         }
