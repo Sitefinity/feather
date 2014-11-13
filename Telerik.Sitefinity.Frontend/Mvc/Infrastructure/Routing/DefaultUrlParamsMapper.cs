@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
-using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Mvc;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
@@ -26,6 +26,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var selfRouting = this.Controller as ISelfRoutingController;
             if (urlParams != null && selfRouting != null && selfRouting.TryMapRouteParameters(urlParams, requestContext))
             {
+                RouteHelper.SetUrlParametersResolved(true);
                 return true;
             }
 
