@@ -76,11 +76,11 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             if (extension == ".cshtml")
             {
                 var name = Path.GetFileNameWithoutExtension(virtualPath);
-
                 var splittedVirtualPath = virtualPath.Split('/');
                 var areaName = splittedVirtualPath[splittedVirtualPath.Length - 2];
 
                 controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
+                                        .Where(cp => cp.ControlType.Contains("Mvc.Controllers"))
                                         .FirstOrDefault(cp => cp.Name == name && cp.AreaName == areaName);
             }
 
