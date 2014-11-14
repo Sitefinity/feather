@@ -25,6 +25,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MediaFieldViewModel"/> class.
+        /// </summary>
+        /// <param name="mediaItems">The media items.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="fieldTitle">The field title.</param>
+        public MediaFieldViewModel(IEnumerable<ContentLink> mediaItems, string fieldName, string fieldTitle)
+        {
+            this.FieldTitle = fieldTitle;
+            this.FieldName = fieldName;
+            this.MediaItems = mediaItems;
+        }
+
+        /// <summary>
         /// Gets or sets the name of the field.
         /// </summary>
         /// <value>
@@ -47,5 +60,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields
         /// The media item.
         /// </value>
         public ContentLink MediaItem { get; set; }
+
+        /// <summary>
+        /// Gets the media items.
+        /// </summary>
+        /// <value>
+        /// The media items.
+        /// </value>
+        public IEnumerable<ContentLink> MediaItems { get; private set; }
     }
 }

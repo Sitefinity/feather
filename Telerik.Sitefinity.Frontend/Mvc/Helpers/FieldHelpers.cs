@@ -104,13 +104,40 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.MultiChoiceFieldViewName, model);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fieldName"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fieldTitle"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fieldValue"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         public static System.Web.Mvc.MvcHtmlString ImageField(this HtmlHelper helper, ContentLink fieldValue, string fieldName, string fieldTitle, string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new MediaFieldViewModel(fieldValue, fieldName, fieldTitle);
 
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.ImageFieldViewName, model);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        public static System.Web.Mvc.MvcHtmlString ImageField(this HtmlHelper helper, IEnumerable<ContentLink> fieldValue, string fieldName, string fieldTitle, string cssClass = "")
+        {
+            helper.ViewBag.CssClass = cssClass;
+            var model = new MediaFieldViewModel(fieldValue, fieldName, fieldTitle);
+
+            return ASP.PartialExtensions.Partial(helper, FieldHelpers.MultiImageFieldViewName, model);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        public static System.Web.Mvc.MvcHtmlString DocumentField(this HtmlHelper helper, IEnumerable<ContentLink> fieldValue, string fieldName, string fieldTitle, string cssClass = "")
+        {
+            helper.ViewBag.CssClass = cssClass;
+            var model = new MediaFieldViewModel(fieldValue, fieldName, fieldTitle);
+
+            return ASP.PartialExtensions.Partial(helper, FieldHelpers.MultiDocuementFieldViewName, model);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        public static System.Web.Mvc.MvcHtmlString VideoField(this HtmlHelper helper, IEnumerable<ContentLink> fieldValue, string fieldName, string fieldTitle, string cssClass = "")
+        {
+            helper.ViewBag.CssClass = cssClass;
+            var model = new MediaFieldViewModel(fieldValue, fieldName, fieldTitle);
+
+            return ASP.PartialExtensions.Partial(helper, FieldHelpers.MultiVideoFieldViewName, model);
         }
 
         /// <summary>
@@ -150,5 +177,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         private const string FlatTaxonomyFieldViewName = "FlatTaxonomyField";
         private const string HierarchicalTaxonomyFieldViewName = "HierarchicalTaxonomyField";
         private const string ImageFieldViewName = "ImageField";
+        private const string MultiImageFieldViewName = "MultiImageField";
+        private const string MultiVideoFieldViewName = "MultiVideoField";
+        private const string MultiDocuementFieldViewName = "MultiDocuementField";
     }
 }
