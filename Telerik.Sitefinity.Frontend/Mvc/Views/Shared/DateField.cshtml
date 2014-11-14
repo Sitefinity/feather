@@ -1,0 +1,11 @@
+﻿@model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields.DateFieldViewModel
+
+
+<div class="@ViewBag.CssClass" data-sf-field="@Model.FieldName" data-sf-ftype="DateTime">
+    <div class="sfitemFieldLbl">
+        @Model.FieldTitle:
+    </div>
+    <div class="sfitemDate">
+        @Model.Date.ToString(Model.DateFormat)
+    </div>    
+</div>
