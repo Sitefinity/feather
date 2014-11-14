@@ -164,6 +164,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controllerName == null)
                 throw new ArgumentNullException("controllerName");
 
+            return ControllerExtensions.GetDynamicContentType(controllerName);
+        }
+
+        /// <summary>
+        /// Gets the type of the dynamic content that is inferred for the given controller name.
+        /// </summary>
+        /// <param name="controllerName">Name of the controller.</param>
+        /// <returns>
+        /// The dynamic module type.
+        /// </returns>
+        public static DynamicModuleType GetDynamicContentType(string controllerName)
+        {
+            if (controllerName == null)
+                throw new ArgumentNullException("controllerName");
+
             var moduleProvider = ModuleBuilderManager.GetManager().Provider;
             var dynamicContentType = moduleProvider.GetDynamicModules()
                 .Where(m => m.Status == DynamicModuleStatus.Active)
