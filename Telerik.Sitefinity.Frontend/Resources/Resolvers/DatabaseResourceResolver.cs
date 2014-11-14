@@ -61,6 +61,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// </summary>
         /// <param name="virtualPathDefinition">The virtual path definition.</param>
         /// <param name="virtualPath">The virtual path.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         protected virtual ControlPresentation GetControlPresentation(PathDefinition virtualPathDefinition, string virtualPath)
         {
             if (virtualPathDefinition == null)
@@ -81,7 +82,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
                 controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
                                         .Where(cp => cp.ControlType.Contains("Mvc.Controllers"))
-                                        .FirstOrDefault(cp => cp.Name == name && cp.AreaName == areaName);
+                                        .FirstOrDefault(cp => cp.Name == name && cp.AreaName.Contains(areaName));
             }
 
             return controlPresentation;
