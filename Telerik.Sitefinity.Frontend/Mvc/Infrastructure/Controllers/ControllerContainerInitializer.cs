@@ -139,6 +139,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             this.RemoveSitefinityViewEngine();
             this.ReplaceControllerFactory();
 
+            ObjectFactory.Container.RegisterType<Telerik.Sitefinity.Web.UI.IControlBehaviorResolver, FrontendControlBehaviorResolver>(new ContainerControlledLifetimeManager());
+
             foreach (var controller in controllers)
             {
                 this.RegisterController(controller);
@@ -233,6 +235,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         protected virtual void InitializeCustomRouting()
         {
             ObjectFactory.Container.RegisterType<IControllerActionInvoker, DynamicUrlParamActionInvoker>(new ContainerControlledLifetimeManager());
+            ObjectFactory.Container.RegisterType<IRouteParamResolver, IntParamResolver>("int");
             ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
             ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
         }

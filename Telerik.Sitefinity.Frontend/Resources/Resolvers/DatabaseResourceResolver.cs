@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Caching;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Web;
@@ -47,13 +48,39 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                 return new MemoryStream(bytes);
             }
 
-                throw new ArgumentException("Could not find resource at " + virtualPath + " in the database.");
+            throw new ArgumentException("Could not find resource at " + virtualPath + " in the database.");
         }
 
         /// <inheritdoc />
         protected override IEnumerable<string> GetCurrentFiles(PathDefinition definition, string path)
         {
-            return null;
+            if (definition == null)
+                throw new ArgumentNullException("definition");
+
+            if (path == null)
+                throw new ArgumentNullException("path");
+
+            //// Works only for dynamic content views!
+
+            var controllerName = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+            if (controllerName == null)
+                return null;
+
+            var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
+            if (dynamicType == null)
+                return null;
+
+            var dynamicTypeName = dynamicType.GetFullTypeName();
+
+            var controllers = this.GetRelevantControllers(definition);
+            if (controllers == null)
+                return null;
+
+            var templates = PageManager.GetManager().GetPresentationItems<ControlPresentation>().Where(t => controllers.Contains(t.ControlType) && t.Condition == dynamicTypeName);
+
+            var templatePaths = templates.Select(t => string.Format("{0}{1}.cshtml", path, t.Name));
+
+            return templatePaths;
         }
 
         /// <summary>
@@ -61,6 +88,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// </summary>
         /// <param name="virtualPathDefinition">The virtual path definition.</param>
         /// <param name="virtualPath">The virtual path.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         protected virtual ControlPresentation GetControlPresentation(PathDefinition virtualPathDefinition, string virtualPath)
         {
             if (virtualPathDefinition == null)
@@ -76,15 +104,28 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             if (extension == ".cshtml")
             {
                 var name = Path.GetFileNameWithoutExtension(virtualPath);
-
                 var splittedVirtualPath = virtualPath.Split('/');
                 var areaName = splittedVirtualPath[splittedVirtualPath.Length - 2];
 
+                var controllers = this.GetRelevantControllers(virtualPathDefinition);
+                if (controllers == null)
+                    return null;
+
                 controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
-                                        .FirstOrDefault(cp => cp.Name == name && cp.AreaName == areaName);
+                                        .Where(cp => controllers.Contains(cp.ControlType))
+                                        .FirstOrDefault(cp => cp.Name == name && cp.AreaName.Contains(areaName));
             }
 
             return controlPresentation;
+        }
+
+        private IEnumerable<string> GetRelevantControllers(PathDefinition definition)
+        {
+            var assembly = this.GetAssembly(definition);
+            if (assembly == null)
+                return null;
+
+            return assembly.GetExportedTypes().Where(FrontendManager.ControllerFactory.IsController).Select(c => c.FullName);
         }
     }
 }

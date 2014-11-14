@@ -186,15 +186,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             var viewModel = this.CreateListViewModelInstance();
-            viewModel.CurrentPage = page;
-
-            int? totalPages;
-            viewModel.Items = this.ApplyListSettings(page, query, out totalPages);
-            viewModel.TotalPagesCount = totalPages;
-            viewModel.ProviderName = this.ProviderName;
-            viewModel.ContentType = this.ContentType;
-            viewModel.CssClass = this.ListCssClass;
-            viewModel.ShowPager = this.DisplayMode == ListDisplayMode.Paging && totalPages.HasValue && totalPages > 1;
+            this.PopulateListViewModel(page, query, viewModel);
 
             return viewModel;
         }
@@ -367,6 +359,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             return string.Join(" AND ", elements.Select(el => "(" + el + ")"));
+        }
+
+        /// <summary>
+        /// Populates the list ViewModel.
+        /// </summary>
+        /// <param name="page">The current page.</param>
+        /// <param name="query">The query.</param>
+        /// <param name="viewModel">The view model.</param>
+        protected virtual void PopulateListViewModel(int page, IQueryable<IDataItem> query, ContentListViewModel viewModel)
+        {
+            viewModel.CurrentPage = page;
+
+            int? totalPages;
+            viewModel.Items = this.ApplyListSettings(page, query, out totalPages);
+            viewModel.TotalPagesCount = totalPages;
+            viewModel.ProviderName = this.ProviderName;
+            viewModel.ContentType = this.ContentType;
+            viewModel.CssClass = this.ListCssClass;
+            viewModel.ShowPager = this.DisplayMode == ListDisplayMode.Paging && totalPages.HasValue && totalPages > 1;
         }
 
         #endregion
