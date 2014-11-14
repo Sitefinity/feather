@@ -70,13 +70,11 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             if (dynamicType == null)
                 return null;
 
-            var dynamicTypeName = dynamicType.GetFullTypeName();
-
             var controllers = this.GetRelevantControllers(definition);
             if (controllers == null)
                 return null;
 
-            var templates = PageManager.GetManager().GetPresentationItems<ControlPresentation>().Where(t => controllers.Contains(t.ControlType) && t.Condition == dynamicTypeName);
+            var templates = PageManager.GetManager().GetPresentationItems<ControlPresentation>().Where(t => controllers.Contains(t.ControlType) && t.AreaName.Contains(dynamicType.DisplayName));
 
             var templatePaths = templates.Select(t => string.Format("{0}{1}.cshtml", path, t.Name));
 
@@ -88,7 +86,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// </summary>
         /// <param name="virtualPathDefinition">The virtual path definition.</param>
         /// <param name="virtualPath">The virtual path.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         protected virtual ControlPresentation GetControlPresentation(PathDefinition virtualPathDefinition, string virtualPath)
         {
             if (virtualPathDefinition == null)
@@ -104,16 +102,33 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             if (extension == ".cshtml")
             {
                 var name = Path.GetFileNameWithoutExtension(virtualPath);
-                var splittedVirtualPath = virtualPath.Split('/');
-                var areaName = splittedVirtualPath[splittedVirtualPath.Length - 2];
+                /* var splittedVirtualPath = virtualPath.Split('/'); */
+                /* var areaName = splittedVirtualPath[splittedVirtualPath.Length - 2]; */
 
                 var controllers = this.GetRelevantControllers(virtualPathDefinition);
                 if (controllers == null)
                     return null;
 
+                var pathNames = virtualPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (pathNames == null)
+                    return null;
+
+                var controllerName = string.Empty;
+
+                if (pathNames.Length > 0)
+                    controllerName = pathNames[pathNames.Length - 2];
+
+                var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
+
+                if (dynamicType == null)
+                    return null;
+
+                var areaName = string.Format("{0} - {1}", dynamicType.GetModuleName(), dynamicType.DisplayName);
+
                 controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
                                         .Where(cp => controllers.Contains(cp.ControlType))
-                                        .FirstOrDefault(cp => cp.Name == name && cp.AreaName.Contains(areaName));
+                                        .FirstOrDefault(cp => cp.Name == name && cp.AreaName == areaName);
             }
 
             return controlPresentation;
