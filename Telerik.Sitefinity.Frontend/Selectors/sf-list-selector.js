@@ -1,6 +1,6 @@
 ﻿(function ($) {
-    angular.module('selectors')
-        .directive('listSelector', ['serverContext', function (serverContext) {
+    angular.module('sfSelectors')
+        .directive('sfListSelector', ['serverContext', function (serverContext) {
             return {
                 restrict: 'E',
                 transclude: true,
@@ -15,8 +15,8 @@
 
                     provider: '=?',
                     change: '=',
-                    taxonomyId: '=?', /* taxon-selector */
-                    itemType: '=?', /* dynamic-items-selector */
+                    taxonomyId: '=?', /* sf-taxon-selector */
+                    itemType: '=?', /* sf-dynamic-items-selector */
                     identifierField: '=?'
                 },
                 controller: function ($scope) {
@@ -74,7 +74,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/list-selector.html';
+                    var url = attrs.templateUrl || 'Selectors/sf-list-selector.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -89,11 +89,11 @@
 
                             if (scope.multiselect) {
                                 Array.prototype.push.apply(scope.items, data.Items);
-                                        }
+                            }
                             else {
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
-                                    }
+                            }
 
                             if (scope.selectedItems) {
                                 Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.selectedItems.map(function (item) {
@@ -102,7 +102,7 @@
                                         isChecked: true
                                     };
                                 }));
-                                        }
+                            }
 
                             scope.collectSelectedItems();
                         };
@@ -114,10 +114,10 @@
                                 scope.items = [];
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
-                                        }
+                            }
                             else {
                                 scope.items = data.Items;
-                                    }
+                            }
                         };
 
                         var onError = function (error) {
@@ -165,7 +165,7 @@
                             ctrl.getSpecificItems(ids)
                                 .then(ctrl.onSelectedItemsLoadedSuccess, onError)
                                 .finally(function () {
-                            scope.showLoadingIndicator = false;
+                                    scope.showLoadingIndicator = false;
                                 });
                         };
 
@@ -194,7 +194,8 @@
                         scope.$watch('provider', function (newProvider, oldProvider) {
                             if (newProvider !== oldProvider) {
                                 if (ctrl.selectorType === 'NewsSelector') {
-                                    scope.selectedItem = null;
+                                    scope.selectedItems = null;
+                                    scope.selectedIds = null;
                                 }
                             }
                         });
@@ -202,7 +203,7 @@
                         scope.$watchCollection('selectedIds', function (newIds, oldIds) {
                             if (!areArrayEquals(newIds, currentSelectedIds)) {
                                 getSelectedItems();
-                        }
+                            }
                         });
 
                         scope.showError = false;
@@ -241,7 +242,7 @@
                                 }
                                 else {
                                     Array.prototype.push.apply(scope.items, items);
-                                }
+                                }                                
                             }
                         };
 
@@ -264,8 +265,8 @@
                             else {
                                 if (scope.multiselect) {
                                     scope.selectedItemsInTheDialog.push({ item: item, isChecked: true });
-                            }
-                            else {
+                                }
+                                else {
                                     scope.selectedItemsInTheDialog.splice(0, 1, { item: item, isChecked: true });
                                 }
                             }
@@ -315,8 +316,8 @@
                         };
 
                         scope.cancel = function () {
-                                resetItems();
-                                scope.$modalInstance.close();
+                            resetItems();
+                            scope.$modalInstance.close();
                         };
 
                         scope.open = function () {
@@ -329,7 +330,7 @@
                             .catch(onError)
                             .finally(function () {
                                 scope.showLoadingIndicator = false;
-                                });
+                            });
                         };
 
                         scope.getDialogTemplate = function () {
@@ -351,7 +352,7 @@
 
                             return ids.length > 0;
                         };
-
+                        
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].item.Id === item.Id) {

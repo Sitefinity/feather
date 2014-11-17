@@ -22,7 +22,7 @@ describe("timeSpan selector", function () {
     beforeEach(module('modalDialog'));
 
     //Load themodule under test.
-    beforeEach(module('selectors'));
+    beforeEach(module('sfSelectors'));
 
     //Load the module that contains the cached tempaltes.
     beforeEach(module('templates'));
@@ -87,7 +87,7 @@ describe("timeSpan selector", function () {
 
         compileDirective(template);
 
-        expect(scope.selectedItem.displayText).toBe(scope.selectedItem.fromDate.toLocaleString() + "-" + scope.selectedItem.toDate.toLocaleString());
+        expect(scope.selectedItem.displayText).toBe("From 12 Dec, 2012 to 14 Dec, 2012");
     });
 
     it('[EGaneva] / custom range is validated correctly.', function () {

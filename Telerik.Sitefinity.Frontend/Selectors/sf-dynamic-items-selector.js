@@ -1,8 +1,8 @@
 ﻿(function ($) {
-    angular.module('selectors')
-        .directive('dynamicItemsSelector', ['dataService', function (dataService) {
+    angular.module('sfSelectors')
+        .directive('sfDynamicItemsSelector', ['dataService', function (dataService) {
             return {
-                require: '^listSelector',
+                require: '^sfListSelector',
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
@@ -22,8 +22,8 @@
 
                         ctrl.selectorType = 'DynamicItemsSelector';
 
-                        ctrl.dialogTemplateUrl = 'Selectors/dynamic-items-selector.html';
-                        ctrl.$scope.dialogTemplateId = 'dynamic-items-selector-template';
+                        ctrl.dialogTemplateUrl = 'Selectors/sf-dynamic-items-selector.html';
+                        ctrl.$scope.dialogTemplateId = 'sf-dynamic-items-selector-template';
 
                         var closedDialogTemplate = attrs.multiselect ?
                             'Selectors/list-group-selection.html' :

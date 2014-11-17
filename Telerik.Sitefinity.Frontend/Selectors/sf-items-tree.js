@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('selectors')
+    angular.module('sfSelectors')
         .directive('sfItemsTree', ['serverContext', function (serverContext) {
             return {
                 restrict: 'E',
@@ -13,7 +13,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'Selectors/items-tree.html';
+                    var url = attrs.sfTemplateUrl || 'Selectors/sf-items-tree.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs) {

@@ -1,4 +1,4 @@
-﻿<script type="text/ng-template" id="dynamic-items-selector-template">
+﻿<script type="text/ng-template" id="sf-page-selector-template">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancel()">&times;</button>
         <h3 class="modal-title">Select content</h3>
@@ -10,7 +10,6 @@
                     All
                 </li>
                 <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
-
                     Selected <span class="badge">{{getSelectedItemsCount()}}</span>
                 </li>
             </ul>
@@ -24,15 +23,26 @@
                         <span class="input-group-addon">
                             <i class="glyphicon glyphicon-search"></i>
                         </span>
-                        <items-filter filter='filter'></items-filter>
+                        <sf-items-filter filter='filter'></sf-items-filter>
                     </div>
-                    <div endless-scroll paging='paging' class="list-group list-group-endless">
+                    <div class="list-group list-group-endless">
+                        <sf-items-tree
+                            ng-show="filter.isEmpty"
+                            sf-multiselect="multiselect"
+                            sf-items="items"
+                            sf-select-item="itemClicked(dataItem)"
+                            sf-item-selected="isItemSelectedInDialog(dataItem)"
+                            sf-get-children="getChildren(parentId)"
+                            sf-identifier-field-value="bindIdentifierField(dataItem)"></sf-items-tree>
+
                         <a ng-repeat="item in items"
-                                        ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
-                                        ng-click="itemClicked($index, item)"
-                                        style="text-overflow: ellipsis; overflow: hidden;">
+                                ng-hide="filter.isEmpty"
+                                style="text-overflow: ellipsis; overflow: hidden;"
+                                ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item) }"
+                                ng-click="itemClicked($index, item)">
                                     <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
-                            <div ng-bind="bindIdentifierField(item)"></div>
+                                    <div ng-bind="bindIdentifierField(item)" />
+                                    {{item.ParentTitlesPath}}
                         </a>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
@@ -40,7 +50,7 @@
                 </div>
             </div>
             <div>
-                <selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' identifier-field='identifierField'></selected-items-view>
+                <selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' search-identifier-field='searchIdentifierField' identifier-field='identifierField'></selected-items-view>
             </div>
         </div>
     </div>

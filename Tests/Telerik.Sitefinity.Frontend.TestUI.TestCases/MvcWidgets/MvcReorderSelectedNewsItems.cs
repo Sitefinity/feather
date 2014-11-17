@@ -40,12 +40,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ReorderSelectedItems(expectedOrderOfNames, selectedNewsNames, reorderedIndexMapping);
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(expectedOrderOfNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(expectedOrderOfNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
 
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("newsItemsMultipleSelector");
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(expectedOrderOfNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(expectedOrderOfNames);
         }
 
         /// <summary>

@@ -7401,15 +7401,32 @@ ul, ol, dl {
     -webkit-transform: scaleY(1);
     background-color: #105ab5; } }
 
+/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_datepicker */
+[datepicker-popup] + ul {
+  padding: 10px; }
+  /* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_datepicker */
+  [datepicker-popup] + ul .btn-default {
+    border: none; }
+  /* line 8, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_datepicker */
+  [datepicker-popup] + ul table, [datepicker-popup] + ul .btn {
+    outline: none !important; }
+  /* line 11, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_datepicker */
+  [datepicker-popup] + ul .btn.active {
+    background-color: #105cb6; }
+    /* line 14, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_datepicker */
+    [datepicker-popup] + ul .btn.active > span {
+      color: #fff; }
+
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_buttons */
-.btn {
+.btn-primary {
   min-width: 90px; }
 
 /* line 2, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
 .alert-warning, .alert-danger {
   margin: -21px -20px 24px;
   font-size: 13px;
-  padding: 10px 20px; }
+  padding: 10px 20px;
+  border-radius: 0; }
 
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_utilities */
 .full-width {
@@ -7455,11 +7472,11 @@ ul, ol, dl {
   margin-bottom: 0;
   border-top: none; }
   /* line 30, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
-.list-group-item-draggable > input {
-  left: 25px; }
+  .list-group-item-draggable > input {
+    left: 25px; }
   /* line 33, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
-.list-group-item-draggable > div {
-  padding-left: 45px; }
+  .list-group-item-draggable > div {
+    padding-left: 45px; }
 
 /* line 36, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-hint {
@@ -7525,6 +7542,12 @@ ul, ol, dl {
   /* line 14, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
   .label-taxon:last-child {
     margin-right: 0; }
+
+/* line 17, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
+.label-content {
+  display: block;
+  margin-left: 20px;
+  margin-top: 5px; }
 
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_badges */
 .badge {

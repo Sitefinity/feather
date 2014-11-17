@@ -7,7 +7,7 @@
         <span class="input-group-addon">
             <i class="glyphicon glyphicon-search"></i>
         </span>
-        <items-filter filter='filter'></items-filter>
+        <sf-items-filter filter='filter'></sf-items-filter>
     </div>
     <div class="list-group list-group-endless" kendo-sortable k-options="sortableOptions" k-on-change="sortItems(kendoEvent)">
         <div class="list-group-item list-group-item-draggable"
@@ -16,8 +16,7 @@
             <span class="handler list-group-item-drag" ng-hide="filter.searchString"></span>
             <input type="checkbox" ng-checked="item.isChecked">
             <div ng-bind="bindIdentifierField(item.item)"></div>
-            <!--{{item.item.TitlesPath}}-->
         </div>
     </div>
-    <div ng-hide="items.length">No items found</div>
+    <div ng-hide="items.length"><i>No items found</i></div>
 </div>

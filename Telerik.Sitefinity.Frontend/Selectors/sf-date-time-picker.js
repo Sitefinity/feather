@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    angular.module('selectors')
+    angular.module('sfSelectors')
         .directive('sfDateTimePicker', ['$timeout', function ($timeout) {
 
             return {
@@ -34,6 +34,8 @@
                                 scope.ngModel = new Date();
 
                             scope.ngModel.setHours(hstep);
+
+                            scope.showMinutes = true;
                         };
 
                         scope.updateMinutes = function (mstep) {
@@ -45,7 +47,7 @@
 
                         scope.hsteps = [];
                         scope.msteps = [];
-
+                        
                         if (!scope.hourStep)
                             scope.hourStep = 1;
 

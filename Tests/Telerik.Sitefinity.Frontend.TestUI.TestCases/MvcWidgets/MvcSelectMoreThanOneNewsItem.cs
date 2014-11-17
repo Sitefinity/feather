@@ -43,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppearInSelectedTab(5);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
 
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItem(newSelectedNewsNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(newSelectedNewsNames, true);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
 
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
