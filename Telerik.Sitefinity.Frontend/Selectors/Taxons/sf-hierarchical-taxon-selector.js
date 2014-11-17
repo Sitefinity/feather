@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'hierarchicalTaxonService', '$q', function (serviceHelper, hierarchicalTaxonService, $q) {
+        .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'hierarchicalTaxonService', '$q', function (serviceHelper, hierarchicalTaxonService) {
             var titlesPathPropertyName = "TitlesPath";
             var pathPropertyName = "Path";
 
@@ -54,22 +54,25 @@
                         };
 
                         ctrl.getSpecificItems = function (ids) {
-                            return $q.all(hierarchicalTaxonService.getSpecificItems(taxonomyId, ids));
+                            return hierarchicalTaxonService.getSpecificItems(taxonomyId, ids);
                         };
 
                         ctrl.onSelectedItemsLoadedSuccess = function (data) {
                             var items = [];
 
-                            angular.forEach(data, function (f) {
-                                items.push(_applyBreadcrumbPath(f));
+                            angular.forEach(data.Items, function (result) {
+                                items.push(_applyBreadcrumbPath({ Items: result }));
                             });
 
                             ctrl.updateSelection(items);
                         };
 
                         ctrl.onItemSelected = function (item) {
+                            if (!item.parentNode) {
+                                return;
+                            }
                             var parentsChain = [item];
-                            
+
                             var parent = item.parentNode();
 
                             while (parent) {

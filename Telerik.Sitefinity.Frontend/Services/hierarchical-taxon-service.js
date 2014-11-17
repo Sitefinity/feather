@@ -63,24 +63,15 @@
                 var filter = serviceHelper.filterBuilder()
                                           .getFilter();
 
-                var promises = [];
-
-                angular.forEach(ids, function (id) {
-                    promises.push(getResource(id, 'onlyPath=true', 'predecessor').get(
-                    {
-                        sortExpression: 'Title ASC',
-                        skip: 0,
-                        take: 100,
-                        filter: filter
-                    })
-                    .$promise);
-                });
-
-                return promises;
+                return getResource(null, null, 'batchpath')
+                                    .put(ids)
+                                    .$promise
             };
 
             var getTaxon = function (taxonomyId, taxonId) {
-                dataItemPromise = getResource(taxonomyId, taxonId).get().$promise;
+                dataItemPromise = getResource(taxonomyId, taxonId)
+                                            .get()
+                                            .$promise;
 
                 return dataItemPromise;
             };
