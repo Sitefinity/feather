@@ -52,6 +52,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         }
 
         /// <inheritdoc />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1001:AvoidToListOnIQueryable"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)")]
         protected override IEnumerable<string> GetCurrentFiles(PathDefinition definition, string path)
         {
             if (definition == null)
@@ -60,21 +61,30 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             if (path == null)
                 throw new ArgumentNullException("path");
 
-            //// Works only for dynamic content views!
-
             var controllerName = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+            
             if (controllerName == null)
                 return null;
 
-            var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
-            if (dynamicType == null)
-                return null;
-
             var controllers = this.GetRelevantControllers(definition);
+
             if (controllers == null)
                 return null;
 
-            var templates = PageManager.GetManager().GetPresentationItems<ControlPresentation>().Where(t => controllers.Contains(t.ControlType) && t.AreaName.Contains(dynamicType.DisplayName));
+            var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
+
+            // case for dynamic type
+            if (dynamicType != null)
+            {
+                var dynamicAreaName = string.Format("{0} - {1}", dynamicType.GetModuleName(), dynamicType.DisplayName);
+                var dynamicTemplates = PageManager.GetManager().GetPresentationItems<ControlPresentation>().Where(t => controllers.Contains(t.ControlType) && t.AreaName == dynamicAreaName).ToList();
+
+                var dynamicTemplatesPath = dynamicTemplates.Select(t => string.Format("{0}{1}.cshtml", path, t.Name));
+
+                return dynamicTemplatesPath;
+            }
+
+            var templates = PageManager.GetManager().GetPresentationItems<ControlPresentation>().Where(t => controllers.Contains(t.ControlType) && t.AreaName == definition.ResolverName);
 
             var templatePaths = templates.Select(t => string.Format("{0}{1}.cshtml", path, t.Name));
 
@@ -102,10 +112,9 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             if (extension == ".cshtml")
             {
                 var name = Path.GetFileNameWithoutExtension(virtualPath);
-                /* var splittedVirtualPath = virtualPath.Split('/'); */
-                /* var areaName = splittedVirtualPath[splittedVirtualPath.Length - 2]; */
 
                 var controllers = this.GetRelevantControllers(virtualPathDefinition);
+
                 if (controllers == null)
                     return null;
 
@@ -121,14 +130,23 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
                 var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
 
-                if (dynamicType == null)
-                    return null;
+                // case for dynamic types
+                if (dynamicType != null)
+                {
+                    var dynamicAreaName = string.Format("{0} - {1}", dynamicType.GetModuleName(), dynamicType.DisplayName);
 
-                var areaName = string.Format("{0} - {1}", dynamicType.GetModuleName(), dynamicType.DisplayName);
+                    controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
+                                            .Where(cp => controllers.Contains(cp.ControlType))
+                                            .FirstOrDefault(cp => cp.Name == name && cp.AreaName == dynamicAreaName);
+
+                    return controlPresentation;
+                }
+
+                var areaName = virtualPathDefinition.ResolverName;
 
                 controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
-                                        .Where(cp => controllers.Contains(cp.ControlType))
-                                        .FirstOrDefault(cp => cp.Name == name && cp.AreaName == areaName);
+                                            .Where(t => controllers.Contains(t.ControlType))
+                                            .FirstOrDefault(cp => cp.Name == name && cp.AreaName == areaName);
             }
 
             return controlPresentation;

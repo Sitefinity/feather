@@ -289,11 +289,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             if (files != null)
             {
-                return files
+                var returnResult = files
                     .Where(f => viewExtensions.Any(e => f.EndsWith(e, StringComparison.Ordinal)))
                     .Select(VirtualPathUtility.GetFileName)
                     .Select(System.IO.Path.GetFileNameWithoutExtension)
                     .Distinct();
+
+                return returnResult;
             }
 
             return new string[] { };
