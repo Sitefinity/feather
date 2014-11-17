@@ -37,8 +37,6 @@
                 dataItemPromise = getResource(taxonomyId, hierarchyMode).get(
                     {
                         sortExpression: 'Title ASC',
-                        skip: skip,
-                        take: take,
                         filter: filter
                     })
                     .$promise;
