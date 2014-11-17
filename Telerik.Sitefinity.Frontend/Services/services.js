@@ -40,6 +40,10 @@
                 get: {
                     method: 'GET',
                     headers: headerData
+                },
+                put: {
+                    method: 'PUT',
+                    headers: headerData
                 }
             });
         };
