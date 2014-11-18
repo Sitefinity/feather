@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedDataInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString RelatedDataInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new RelatedDataFieldViewModel(relatedDataItems, frontendWidgetLabel, identifierField);
@@ -41,7 +41,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedDataInlineSingleField(this HtmlHelper helper, IDataItem relatedDataItem, string identifierField, string frontendWidgetLabel, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString RelatedDataInlineSingleField(this HtmlHelper helper, IDataItem relatedDataItem, string identifierField, string frontendWidgetLabel = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new RelatedDataFieldViewModel(relatedDataItem, frontendWidgetLabel, identifierField);
@@ -59,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedImageInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString RelatedImageInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new RelatedDataFieldViewModel(relatedDataItems, frontendWidgetLabel, identifierField);
@@ -77,7 +77,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedImageInlineSingleField(this HtmlHelper helper, IDataItem relatedDataItem, string identifierField, string frontendWidgetLabel, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString RelatedImageInlineSingleField(this HtmlHelper helper, IDataItem relatedDataItem, string identifierField, string frontendWidgetLabel = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new RelatedDataFieldViewModel(relatedDataItem, frontendWidgetLabel, identifierField);
@@ -95,7 +95,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedVideoInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString RelatedVideoInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new RelatedDataFieldViewModel(relatedDataItems, frontendWidgetLabel, identifierField);
@@ -113,7 +113,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedVideoInlineSingleField(this HtmlHelper helper, IDataItem relatedDataItem, string identifierField, string frontendWidgetLabel, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString RelatedVideoInlineSingleField(this HtmlHelper helper, IDataItem relatedDataItem, string identifierField, string frontendWidgetLabel = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new RelatedDataFieldViewModel(relatedDataItem, frontendWidgetLabel, identifierField);
@@ -131,7 +131,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedDocumentInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString RelatedDocumentInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new RelatedDataFieldViewModel(relatedDataItems, frontendWidgetLabel, identifierField);
@@ -149,7 +149,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedDocumentInlineSingleField(this HtmlHelper helper, IDataItem relatedDataItem, string identifierField, string frontendWidgetLabel, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString RelatedDocumentInlineSingleField(this HtmlHelper helper, IDataItem relatedDataItem, string identifierField, string frontendWidgetLabel = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new RelatedDataFieldViewModel(relatedDataItem, frontendWidgetLabel, identifierField);
@@ -167,7 +167,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedPageInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString RelatedPageInlineListField(this HtmlHelper helper, IList<IDataItem> relatedDataItems, string identifierField, string frontendWidgetLabel = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new RelatedDataFieldViewModel(relatedDataItems, frontendWidgetLabel, identifierField);
@@ -185,7 +185,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString RelatedPageInlineSingleField(this HtmlHelper helper, IDataItem relatedDataItem, string identifierField, string frontendWidgetLabel, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString RelatedPageInlineSingleField(this HtmlHelper helper, IDataItem relatedDataItem, string identifierField, string frontendWidgetLabel = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new RelatedDataFieldViewModel(relatedDataItem, frontendWidgetLabel, identifierField);

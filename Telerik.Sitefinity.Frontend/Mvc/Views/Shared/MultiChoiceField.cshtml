@@ -2,9 +2,13 @@
 
 
 <div class="@ViewBag.CssClass">
-    <div class="sfTxtLbl">
-        @Model.FieldTitle:
-    </div>
+    @if (!Model.FieldTitle.IsNullOrEmpty())
+    {
+        <div class="sfTxtLbl">
+            @Model.FieldTitle:
+        </div>
+    }
+    
     <div class="sfChoiceContent" data-sf-field="@Model.FieldName" data-sf-ftype="ChoicesDropDown">
         @Model.ChoiceValueText
     </div>    

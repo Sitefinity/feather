@@ -2,9 +2,13 @@
 
 
 <div class="@ViewBag.CssClass">
+    @if (!Model.FieldTitle.IsNullOrEmpty())
+    {
     <div class="sfitemFieldLbl">
         @Model.FieldTitle:
     </div>
+    }
+    
     <div class="sfitemNumber">
         @Model.FieldValue
     </div>   
