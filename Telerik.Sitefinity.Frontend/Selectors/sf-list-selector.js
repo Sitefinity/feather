@@ -61,6 +61,9 @@
                         });
                     };
 
+                    this.onFilterItemSucceeded = function (items) {
+                    }
+
                     this.onItemSelected = function (item) {
                     };
 
@@ -101,7 +104,6 @@
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
                             }
-
                             return scope.items;
                         };
 
@@ -115,6 +117,10 @@
                             }
                             else {
                                 scope.items = data.Items;
+                            }
+
+                            if (ctrl.onFilterItemSucceeded) {
+                                ctrl.onFilterItemSucceeded(scope.items);
                             }
                         };
 

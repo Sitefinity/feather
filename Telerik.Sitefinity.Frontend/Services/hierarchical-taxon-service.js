@@ -28,13 +28,13 @@
             };
 
             var getTaxons = function (taxonomyId, skip, take, search, frontendLanguages) {
-                var hierarchyMode;
+                var mode = 'mode=TitlePath';
                 if (!search) {
-                    hierarchyMode = 'hierarchyMode=true';
+                    mode += '&hierarchyMode=true';
                 }
                 var filter = getFilter(search, frontendLanguages);
 
-                dataItemPromise = getResource(taxonomyId, hierarchyMode).get(
+                dataItemPromise = getResource(taxonomyId, mode).get(
                     {
                         sortExpression: 'Title ASC',
                         filter: filter
@@ -47,7 +47,7 @@
             var getChildTaxons = function (parentId, search) {
                 var filter = getFilter(search);
 
-                dataItemPromise = getResource(parentId, 'hierarchyMode=true', 'subtaxa').get(
+                dataItemPromise = getResource(parentId, 'hierarchyMode=true&mode=TitlePath', 'subtaxa').get(
                     {
                         sortExpression: 'Title ASC',
                         filter: filter

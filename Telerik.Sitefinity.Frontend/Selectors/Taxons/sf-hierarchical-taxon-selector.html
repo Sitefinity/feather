@@ -47,9 +47,11 @@
 
                             <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect" ng-hide="itemDisabled(item)">
 
-                            <div ng-bind="bindIdentifierField(item)" />
+                            <div>
+                                <div ng-bind="bindIdentifierField(item)" />
 
-                            {{item.ParentTitlesPath}}
+                                <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">{{item.RootPath}}</div>
+                            </div>
                         </div>
 
                     </div>
