@@ -40,7 +40,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Modifies the ControlPresentation (adds 'MVC') when creating a widget template for MVC Widget
+        /// Modifies newly created <see cref="ControlPresentation"/> by adding suffix, when creating a widget template for MVC Widget.
         /// </summary>
         /// <param name="eventArgs">The event args.</param>
         public void HandleIDataEvent(IDataEvent eventArgs)
@@ -53,19 +53,17 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var itemId = eventArgs.ItemId;
                 var providerName = eventArgs.ProviderName;
                 var manager = PageManager.GetManager(providerName);
+                var controlPresentationItem = manager.GetPresentationItem<ControlPresentation>(itemId);
+                var controlType = TypeResolutionService.ResolveType(controlPresentationItem.ControlType, throwOnError: false);
 
-                var cpitem = manager.GetPresentationItem<ControlPresentation>(itemId);
+                if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !controlPresentationItem.FriendlyControlName.Contains(MvcFriendlyControlNameTemplate))
+                    controlPresentationItem.FriendlyControlName = string.Format(System.Globalization.CultureInfo.InvariantCulture, ResourcesInitializer.MvcFriendlyControlNameTemplate, controlPresentationItem.FriendlyControlName, MvcFriendlyControlNameTemplate);
 
-                var controlType = TypeResolutionService.ResolveType(cpitem.ControlType, throwOnError: false);
-
-                if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !cpitem.FriendlyControlName.Contains(MvcSuffix))
-                {
-                    cpitem.FriendlyControlName = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} {1}", cpitem.FriendlyControlName, MvcSuffix);
-                    manager.SaveChanges();
-                }
+                manager.SaveChanges();
             }
         }
 
-        internal static readonly string MvcSuffix = "(MVC)";
+        /// <summary>Template for <see cref="ControlPresentation"/>'s FriendlyControlName field. Used by MVC widgets.</summary>
+        internal static readonly string MvcFriendlyControlNameTemplate = "{0} (MVC)";
     }
 }

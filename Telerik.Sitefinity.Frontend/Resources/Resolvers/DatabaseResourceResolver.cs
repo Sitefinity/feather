@@ -78,9 +78,9 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
             // case for dynamic type
             if (dynamicType != null)
-                areaName = this.GetDynamicAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
+                areaName = this.GetDynamicTypeAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
 
-            return this.GetTemplatePaths(path, controllers, areaName);
+            return this.GetViewPaths(path, controllers, areaName);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             var extension = Path.GetExtension(virtualPath);
 
             /// TODO: Fix - currently allowed only for razor views
-            if (extension == ".cshtml")
+            if (extension == DatabaseResourceResolver.RazorFileNameExtension)
             {
                 var name = Path.GetFileNameWithoutExtension(virtualPath);
 
@@ -125,7 +125,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
                 // case for dynamic types
                 if (dynamicType != null)
-                    areaName = this.GetDynamicAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
+                    areaName = this.GetDynamicTypeAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
 
                 return this.GetControlPresentationItem(controllers, name, areaName);
             }
@@ -134,33 +134,34 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         }
 
         /// <summary>
-        /// Gets the template paths available for current widget.
+        /// Gets the view paths available for current widget.
         /// </summary>
         /// <param name="path">The path.</param>
         /// <param name="controllers">The controllers.</param>
         /// <param name="areaName">Name of the area.</param>
-        /// <returns>currently available controll paths</returns>
-        private IEnumerable<string> GetTemplatePaths(string path, IEnumerable<string> controllers, string areaName)
+        /// <returns>available view paths</returns>
+        private IEnumerable<string> GetViewPaths(string path, IEnumerable<string> controllers, string areaName)
         {
-            var dynamicTemplates = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
+            var views = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
                                             .Where(t => controllers.Contains(t.ControlType) && t.AreaName == areaName)
                                             .ToArray();
 
-            if (dynamicTemplates == null)
+            if (views == null)
                 return null;
 
-            var dynamicTemplatesPaths = dynamicTemplates.Select(t => string.Format(CultureInfo.InvariantCulture, "{0}{1}.cshtml", path, t.Name));
+            var viewPaths = views.Select(t => string.Format(CultureInfo.InvariantCulture, DatabaseResourceResolver.ViewPathTemplate, path, t.Name));
 
-            return dynamicTemplatesPaths;
+            return viewPaths;
         }
 
         /// <summary>
-        /// Gets the widget
+        /// Gets <see cref="ControlPresentation"/> for specific name and area name,
+        /// containg the cpecified <see cref="Controller"/> full names.
         /// </summary>
         /// <param name="controllers">The controllers.</param>
         /// <param name="name">The name.</param>
         /// <param name="areaName">Name of the area.</param>
-        /// <returns>ControlPresentationItem</returns>
+        /// <returns><see cref="ControlPresentation"/> item.</returns>
         private ControlPresentation GetControlPresentationItem(IEnumerable<string> controllers, string name, string areaName)
         {
             var returnResult = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
@@ -171,21 +172,21 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         }
 
         /// <summary>
-        /// Gets the name of the dynamic area.
+        /// Gets the area name for dynamic content MVC widget.
         /// </summary>
         /// <param name="dynamicModuleName">Name of the dynamic module.</param>
         /// <param name="dynamicModuleType">Type of the dynamic module.</param>
-        /// <returns>Area name</returns>
-        private string GetDynamicAreaName(string dynamicModuleName, string dynamicModuleType)
+        /// <returns>Area name.</returns>
+        private string GetDynamicTypeAreaName(string dynamicModuleName, string dynamicModuleType)
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0} - {1}", dynamicModuleName, dynamicModuleType);
+            return string.Format(CultureInfo.InvariantCulture, DatabaseResourceResolver.DynamicTypeAreaNameTemplate, dynamicModuleName, dynamicModuleType);
         }
 
         /// <summary>
-        /// Gets controllers full names in the assembly for this this PathDefinition
+        /// Gets the full names of <see cref="Controller"/>, located in the assembly that is specified in the <see cref="PathDefinition"/>.
         /// </summary>
         /// <param name="definition">The path definition.</param>
-        /// <returns>Controllers full names</returns>
+        /// <returns>The full names of <see cref="Controller"/>.</returns>
         private IEnumerable<string> GetControllersFullNames(PathDefinition definition)
         {
             var assembly = this.GetAssembly(definition);
@@ -194,5 +195,14 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
             return assembly.GetExportedTypes().Where(FrontendManager.ControllerFactory.IsController).Select(c => c.FullName);
         }
+
+        /// <summary>Template for area name used by dynamic content MVC widget</summary>
+        internal static readonly string DynamicTypeAreaNameTemplate = "{0} - {1}";
+
+        /// <summary>Template for view path, consisting of path and file name</summary>
+        internal static readonly string ViewPathTemplate = "{0}{1}.cshtml";
+
+        /// <summary>Filename extension used by Razor views</summary>
+        internal static readonly string RazorFileNameExtension = ".cshtml";
     }
 }

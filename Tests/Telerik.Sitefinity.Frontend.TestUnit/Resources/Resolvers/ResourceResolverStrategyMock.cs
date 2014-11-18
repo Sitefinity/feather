@@ -7,8 +7,8 @@ using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
 {
     /// <summary>
-    /// This class represents a mocked version of ResourceResolverStrategy class, that is meant to
-    /// be used without the requirement of running in Sitefinity context
+    /// This class represents a mocked version of ResourceResolverStrategy class meant to
+    /// be used for testing purposes when there is no running instance of Siteifnity.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class ResourceResolverStrategyMock : ResourceResolverStrategy
@@ -16,13 +16,13 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceResolverStrategyMock" /> class.
         /// </summary>
-        public ResourceResolverStrategyMock() : base()
+        public ResourceResolverStrategyMock() 
+            : base()
         {
         }
 
         /// <summary>
-        /// Initializes the chain with the default nodes. Then skipps the DatabaseResourceResolver node,
-        /// because DatabaseResourceResolver requires a connection to Sitefinity Database
+        /// Removes the <see cref="DatabaseResourceResolver"/> node from the chain, because it requires a running instance of Sitefinity.
         /// </summary>
         protected override void InitializeChain()
         {
