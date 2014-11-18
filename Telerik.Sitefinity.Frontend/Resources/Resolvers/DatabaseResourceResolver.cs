@@ -9,6 +9,7 @@ using System.Web.Caching;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Web;
 
@@ -66,24 +67,20 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             
             if (controllerName == null)
                 return null;
-
-            var controllers = this.GetRelevantControllers(definition);
-
+            
+            var controllers = this.GetControllersFullNames(definition);
+            
             if (controllers == null)
                 return null;
 
             var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
+            var areaName = definition.ResolverName;
 
             // case for dynamic type
             if (dynamicType != null)
-            {
-                var dynamicAreaName = this.GetDynamicAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
-                return this.GetTemplatePaths(path, controllers, dynamicAreaName);
-            }
+                areaName = this.GetDynamicAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
 
-            var templatePaths = this.GetTemplatePaths(path, controllers, definition.ResolverName);
-
-            return templatePaths;
+            return this.GetTemplatePaths(path, controllers, areaName);
         }
 
         /// <summary>
@@ -107,7 +104,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             {
                 var name = Path.GetFileNameWithoutExtension(virtualPath);
 
-                var controllers = this.GetRelevantControllers(virtualPathDefinition);
+                var controllers = this.GetControllersFullNames(virtualPathDefinition);
 
                 if (controllers == null)
                     return null;
@@ -124,14 +121,13 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
                 var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
 
+                var areaName = virtualPathDefinition.ResolverName;
+
                 // case for dynamic types
                 if (dynamicType != null)
-                {
-                    var dynamicAreaName = this.GetDynamicAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
-                    return this.GetControlPresentationItem(controllers, name, dynamicAreaName);
-                }
+                    areaName = this.GetDynamicAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
 
-                return this.GetControlPresentationItem(controllers, name, virtualPathDefinition.ResolverName);
+                return this.GetControlPresentationItem(controllers, name, areaName);
             }
 
             return null;
@@ -182,10 +178,15 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <returns>Area name</returns>
         private string GetDynamicAreaName(string dynamicModuleName, string dynamicModuleType)
         {
-            return string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} - {1}", dynamicModuleName, dynamicModuleType);
+            return string.Format(CultureInfo.InvariantCulture, "{0} - {1}", dynamicModuleName, dynamicModuleType);
         }
 
-        private IEnumerable<string> GetRelevantControllers(PathDefinition definition)
+        /// <summary>
+        /// Gets controllers full names in the assembly for this this PathDefinition
+        /// </summary>
+        /// <param name="definition">The path definition.</param>
+        /// <returns>Controllers full names</returns>
+        private IEnumerable<string> GetControllersFullNames(PathDefinition definition)
         {
             var assembly = this.GetAssembly(definition);
             if (assembly == null)

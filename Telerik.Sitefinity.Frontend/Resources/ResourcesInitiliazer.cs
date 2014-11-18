@@ -58,12 +58,14 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
                 var controlType = TypeResolutionService.ResolveType(cpitem.ControlType, throwOnError: false);
 
-                if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !cpitem.FriendlyControlName.Contains("(MVC)"))
+                if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !cpitem.FriendlyControlName.Contains(MvcSuffix))
                 {
-                    cpitem.FriendlyControlName = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} (MVC)", cpitem.FriendlyControlName);
+                    cpitem.FriendlyControlName = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} {1}", cpitem.FriendlyControlName, MvcSuffix);
                     manager.SaveChanges();
                 }
             }
         }
+
+        internal static readonly string MvcSuffix = "(MVC)";
     }
 }
