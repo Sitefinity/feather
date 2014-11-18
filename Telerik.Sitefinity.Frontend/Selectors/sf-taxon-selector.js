@@ -10,7 +10,7 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        var taxonomyId = ctrl.$scope.taxonomyId;
+                        var taxonomyId = attrs.taxonomyId;
                         if (!taxonomyId || taxonomyId === emptyGuid) {
                             taxonomyId = defaultTaxonomyId;
                         }
