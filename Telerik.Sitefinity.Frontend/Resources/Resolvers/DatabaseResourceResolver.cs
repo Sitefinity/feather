@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -76,17 +77,11 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             // case for dynamic type
             if (dynamicType != null)
             {
-                var dynamicAreaName = string.Format("{0} - {1}", dynamicType.GetModuleName(), dynamicType.DisplayName);
-                var dynamicTemplates = PageManager.GetManager().GetPresentationItems<ControlPresentation>().Where(t => controllers.Contains(t.ControlType) && t.AreaName == dynamicAreaName).ToList();
-
-                var dynamicTemplatesPath = dynamicTemplates.Select(t => string.Format("{0}{1}.cshtml", path, t.Name));
-
-                return dynamicTemplatesPath;
+                var dynamicAreaName = this.GetDynamicAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
+                return this.GetTemplatePaths(path, controllers, dynamicAreaName);
             }
 
-            var templates = PageManager.GetManager().GetPresentationItems<ControlPresentation>().Where(t => controllers.Contains(t.ControlType) && t.AreaName == definition.ResolverName);
-
-            var templatePaths = templates.Select(t => string.Format("{0}{1}.cshtml", path, t.Name));
+            var templatePaths = this.GetTemplatePaths(path, controllers, definition.ResolverName);
 
             return templatePaths;
         }
@@ -106,7 +101,6 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                 throw new ArgumentNullException("virtualPath");
 
             var extension = Path.GetExtension(virtualPath);
-            ControlPresentation controlPresentation = null;
 
             /// TODO: Fix - currently allowed only for razor views
             if (extension == ".cshtml")
@@ -133,23 +127,62 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                 // case for dynamic types
                 if (dynamicType != null)
                 {
-                    var dynamicAreaName = string.Format("{0} - {1}", dynamicType.GetModuleName(), dynamicType.DisplayName);
-
-                    controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
-                                            .Where(cp => controllers.Contains(cp.ControlType))
-                                            .FirstOrDefault(cp => cp.Name == name && cp.AreaName == dynamicAreaName);
-
-                    return controlPresentation;
+                    var dynamicAreaName = this.GetDynamicAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
+                    return this.GetControlPresentationItem(controllers, name, dynamicAreaName);
                 }
 
-                var areaName = virtualPathDefinition.ResolverName;
-
-                controlPresentation = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
-                                            .Where(t => controllers.Contains(t.ControlType))
-                                            .FirstOrDefault(cp => cp.Name == name && cp.AreaName == areaName);
+                return this.GetControlPresentationItem(controllers, name, virtualPathDefinition.ResolverName);
             }
 
-            return controlPresentation;
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the template paths available for current widget.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="controllers">The controllers.</param>
+        /// <param name="areaName">Name of the area.</param>
+        /// <returns>currently available controll paths</returns>
+        private IEnumerable<string> GetTemplatePaths(string path, IEnumerable<string> controllers, string areaName)
+        {
+            var dynamicTemplates = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
+                                            .Where(t => controllers.Contains(t.ControlType) && t.AreaName == areaName)
+                                            .ToArray();
+
+            if (dynamicTemplates == null)
+                return null;
+
+            var dynamicTemplatesPaths = dynamicTemplates.Select(t => string.Format(CultureInfo.InvariantCulture, "{0}{1}.cshtml", path, t.Name));
+
+            return dynamicTemplatesPaths;
+        }
+
+        /// <summary>
+        /// Gets the widget
+        /// </summary>
+        /// <param name="controllers">The controllers.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="areaName">Name of the area.</param>
+        /// <returns>ControlPresentationItem</returns>
+        private ControlPresentation GetControlPresentationItem(IEnumerable<string> controllers, string name, string areaName)
+        {
+            var returnResult = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
+                                            .Where(t => controllers.Contains(t.ControlType))
+                                            .FirstOrDefault(cp => cp.Name == name && cp.AreaName == areaName);
+
+            return returnResult;
+        }
+
+        /// <summary>
+        /// Gets the name of the dynamic area.
+        /// </summary>
+        /// <param name="dynamicModuleName">Name of the dynamic module.</param>
+        /// <param name="dynamicModuleType">Type of the dynamic module.</param>
+        /// <returns>Area name</returns>
+        private string GetDynamicAreaName(string dynamicModuleName, string dynamicModuleType)
+        {
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} - {1}", dynamicModuleName, dynamicModuleType);
         }
 
         private IEnumerable<string> GetRelevantControllers(PathDefinition definition)
