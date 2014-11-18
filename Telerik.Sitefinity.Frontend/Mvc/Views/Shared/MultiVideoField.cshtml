@@ -3,7 +3,10 @@
 @using Telerik.Sitefinity.Frontend.Mvc.Helpers; 
 
 <div>
-    <h2>@Model.FieldTitle</h2>
+    @if (!Model.FieldTitle.IsNullOrEmpty())
+    {
+        <h2>@Model.FieldTitle</h2>
+    }
     <ul>
         @foreach(var contentLink in Model.MediaItems)
         {

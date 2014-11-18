@@ -251,6 +251,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (this.ItemsPerPage != 0)
                 viewModel.TotalPagesCount = totalCount / this.ItemsPerPage;
 
+            viewModel.CurrentPage = page;
             viewModel.ProviderName = this.ProviderName;
             viewModel.ContentType = this.ContentType;
             viewModel.CssClass = this.ListCssClass;
