@@ -1,4 +1,5 @@
-﻿using System.Web.Routing;
+﻿using System.Web.Mvc;
+using System.Web.Routing;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
@@ -7,8 +8,11 @@ using Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Modules.ControlTemplates.Web.UI;
 using Telerik.Sitefinity.Modules.Libraries.Web.Events;
+using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -44,16 +48,17 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var action = eventArgs.Action;
             var contentType = eventArgs.ItemType;
 
-            if (action == "New" && contentType.BaseType.Name == "PresentationData")
+            if (action == DataEventAction.Created && contentType.BaseType == typeof(PresentationData))
             {
                 var itemId = eventArgs.ItemId;
                 var providerName = eventArgs.ProviderName;
-                var manager = ManagerBase.GetMappedManager(contentType, providerName);
-                var item = manager.GetItemOrDefault(contentType, itemId);
+                var manager = PageManager.GetManager(providerName);
 
-                var cpitem = (ControlPresentation)item;
+                var cpitem = manager.GetPresentationItem<ControlPresentation>(itemId);
 
-                if (cpitem.ControlType.Contains("Mvc.Controllers") && !cpitem.FriendlyControlName.Contains("(MVC)"))
+                var controlType = TypeResolutionService.ResolveType(cpitem.ControlType, throwOnError: false);
+
+                if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !cpitem.FriendlyControlName.Contains("(MVC)"))
                 {
                     cpitem.FriendlyControlName = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} (MVC)", cpitem.FriendlyControlName);
                     manager.SaveChanges();
