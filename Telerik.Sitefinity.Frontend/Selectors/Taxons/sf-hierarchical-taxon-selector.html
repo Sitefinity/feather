@@ -25,41 +25,42 @@
                         </span>
                         <sf-items-filter filter='filter'></sf-items-filter>
                     </div>
-                         <sf-items-tree
-                            ng-show="filter.isEmpty"
-                            sf-multiselect="multiselect"
-                            sf-expand-selection="expandSelection"
-                            sf-items-promise="itemsPromise"
-                            sf-items="items"
-                            sf-get-predecessors="getPredecessors(itemId)"
-                            sf-select-item="itemClicked(dataItem)"
-                            sf-item-selected="isItemSelectedInDialog(dataItem)"
-                            sf-get-children="getChildren(parentId)"
-                            sf-identifier-field-value="bindIdentifierField(dataItem)"></sf-items-tree>
 
                     <div sf-endless-scroll paging='paging' class="list-group list-group-endless">
-                        <div ng-repeat="item in items"
-                                ng-hide="filter.isEmpty"
-                                style="text-overflow: ellipsis; overflow: hidden;"
-                                ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
-                                ng-click="itemClicked($index, item)">
+                        <sf-items-tree ng-show="filter.isEmpty"
+                                       sf-multiselect="multiselect"
+                                       sf-expand-selection="expandSelection"
+                                       sf-items-promise="itemsPromise"
+                                       sf-items="items"
+                                       sf-get-predecessors="getPredecessors(itemId)"
+                                       sf-select-item="itemClicked(dataItem)"
+                                       sf-item-selected="isItemSelectedInDialog(dataItem)"
+                                       sf-item-disabled="itemDisabled(dataItem)"
+                                       sf-get-children="getChildren(parentId)"
+                                       sf-identifier-field-value="bindIdentifierField(dataItem)"
+                                       class="k-treeview--selection"></sf-items-tree>
 
-                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
+                        <div ng-repeat="item in items"
+                             ng-hide="filter.isEmpty"
+                             ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
+                             ng-click="itemClicked($index, item)">
+
+                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect" ng-hide="itemDisabled(item)">
 
                             <div ng-bind="bindIdentifierField(item)" />
 
                             {{item.ParentTitlesPath}}
                         </div>
-                   
+
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
                     <div class="s-loading" ng-show="showLoadingIndicator" style="display: inline-block; width: 30px;"></div>
                 </div>
             </div>
             <div>
-                <sf-selected-items-view items='selectedItemsViewData' 
-                                        selected-items='selectedItemsInTheDialog' 
-                                        search-identifier-field='searchIdentifierField' 
+                <sf-selected-items-view items='selectedItemsViewData'
+                                        selected-items='selectedItemsInTheDialog'
+                                        search-identifier-field='searchIdentifierField'
                                         identifier-field='identifierField'></sf-selected-items-view>
             </div>
         </div>

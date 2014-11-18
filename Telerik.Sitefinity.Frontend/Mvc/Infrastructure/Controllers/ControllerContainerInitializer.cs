@@ -303,7 +303,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (Type controllerType in controllerTypes)
             {
                 var widgetName = controllerType.Name.Replace("Controller", string.Empty);
-                var mvcWidgetName = string.Format(CultureInfo.InvariantCulture, "MVC {0}", widgetName);
+                var mvcWidgetName = string.Format(CultureInfo.InvariantCulture, "{0} (MVC)", widgetName);
 
                 Telerik.Sitefinity.Modules.ControlTemplates.ControlTemplates.RegisterTemplatableControl(controllerType, controllerType, string.Empty, widgetName, mvcWidgetName);
             }
