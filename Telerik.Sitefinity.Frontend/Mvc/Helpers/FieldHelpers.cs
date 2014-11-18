@@ -128,7 +128,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             helper.ViewBag.CssClass = cssClass;
             var model = new MediaFieldViewModel(fieldValue, fieldName, fieldTitle);
 
-            return ASP.PartialExtensions.Partial(helper, FieldHelpers.MultiDocuementFieldViewName, model);
+            return ASP.PartialExtensions.Partial(helper, FieldHelpers.MultiDocumentFieldViewName, model);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
@@ -179,6 +179,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         private const string ImageFieldViewName = "ImageField";
         private const string MultiImageFieldViewName = "MultiImageField";
         private const string MultiVideoFieldViewName = "MultiVideoField";
-        private const string MultiDocuementFieldViewName = "MultiDocuementField";
+        private const string MultiDocumentFieldViewName = "MultiDocumentField";
     }
 }
