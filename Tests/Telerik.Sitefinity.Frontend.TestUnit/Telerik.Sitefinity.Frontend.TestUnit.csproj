@@ -156,6 +156,7 @@
     <Compile Include="Mvc\Infrastructure\Routing\DynamicUrlParamActionInvokerTests.cs" />
     <Compile Include="Resources\PackageManagerTests.cs" />
     <Compile Include="Resources\Resolvers\ResourceResolverNodeTests.cs" />
+    <Compile Include="Resources\Resolvers\ResourceResolverStrategyMock.cs" />
     <Compile Include="Resources\Resolvers\ResourceResolverStrategyTests.cs" />
     <Compile Include="Resources\ResourceHttpHandlerTests.cs" />
     <Compile Include="Resources\Resolvers\DatabaseResourceResolverTests.cs" />
