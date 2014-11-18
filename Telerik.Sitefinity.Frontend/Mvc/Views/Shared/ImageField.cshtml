@@ -3,7 +3,11 @@
 @using Telerik.Sitefinity.Frontend.Mvc.Helpers; 
 
 <div>
-    <h2>@Model.FieldTitle</h2>
+    @if (!Model.FieldTitle.IsNullOrEmpty())
+    {
+        <h2>@Model.FieldTitle</h2>
+    }
+    
     <div>
          <img src='@Model.MediaItem.GetImage().MediaUrl' alt='@Model.MediaItem.GetImage().AlternativeText' title='@Model.MediaItem.GetImage().Title' />
     </div>

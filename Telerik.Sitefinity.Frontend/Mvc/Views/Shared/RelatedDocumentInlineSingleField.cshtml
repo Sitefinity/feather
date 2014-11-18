@@ -4,7 +4,11 @@
 @using Telerik.Sitefinity.Libraries.Model;
 
 <div class="sfSnglRelatedItmWrp">
-    <h2 class="sfrelatedItmTitle">@Model.FieldTitle</h2>
+    @if (!Model.FieldTitle.IsNullOrEmpty())
+    {
+        <h2 class="sfrelatedItmTitle">@Model.FieldTitle:</h2>
+    }
+
     <div class="sfrelatedItmWrp">
         <a href='@(((MediaContent)Model.SingleRelatedItem).MediaUrl)'>
             @(((IDynamicFieldsContainer)Model.SingleRelatedItem).GetValue(Model.IdentifierField))
