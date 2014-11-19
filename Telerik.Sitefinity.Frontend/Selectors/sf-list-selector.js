@@ -240,6 +240,7 @@
                             placeholder: 'Narrow by typing',
                             timeoutMs: 500,
                             search: function (keyword) {
+                                scope.paging.areAllItemsLoaded = false;
                                 var endlessScroll = angular.element($("[endless-scroll]"))[0];
                                 if (endlessScroll) {
                                     endlessScroll.scrollTop = 0;
@@ -259,6 +260,7 @@
                         scope.paging = {
                             skip: 0,
                             take: 20,
+                            areAllItemsLoaded: false,
                             getPage: function () {
                                 return ctrl.getItems(this.skip, this.take, scope.filter.searchString);
                             },
