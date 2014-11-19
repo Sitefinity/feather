@@ -51,10 +51,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString DateField(this HtmlHelper helper, DateTime date, string dateFormat, string fieldName, string fieldTitle = "", string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString DateField(this HtmlHelper helper, DateTime? date, string dateFormat, string fieldName, string fieldTitle = "", string cssClass = "")
         {
+            if (date == null)
+                return System.Web.Mvc.MvcHtmlString.Empty;
+
             helper.ViewBag.CssClass = cssClass;
-            var model = new DateFieldViewModel(date, dateFormat, fieldName, fieldTitle);
+            var model = new DateFieldViewModel(date.Value, dateFormat, fieldName, fieldTitle);
 
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.DateFieldViewName, model);
         }
