@@ -41,10 +41,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString ShortTextField(this HtmlHelper helper, string text, string fieldName, string fieldTitle = "", string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString ShortTextField(this HtmlHelper helper, object fieldValue, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
-            var model = new TextFieldViewModel(text, fieldName, fieldTitle);
+            var fieldTextValue = fieldValue == null ? string.Empty : fieldValue.ToString();
+            var model = new TextFieldViewModel(fieldTextValue, fieldName, fieldTitle);
 
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.ShortTextFieldViewName, model);
         }
