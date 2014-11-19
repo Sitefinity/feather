@@ -1,0 +1,16 @@
+﻿@model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields.RelatedDataFieldViewModel
+
+@using Telerik.Sitefinity.Model;
+
+<div class="sfSnglRelatedItmWrp">
+    @if (!Model.FieldTitle.IsNullOrEmpty())
+    {
+        <h2 class="sfrelatedItmTitle">@Model.FieldTitle:</h2>
+    }
+
+    <div class="sfrelatedItmWrp">
+         <a href='@Telerik.Sitefinity.RelatedData.RelatedDataExtensions.GetDefaultUrl(Model.SingleRelatedItem)'>
+             @(((IDynamicFieldsContainer)Model.SingleRelatedItem).GetValue(Model.IdentifierField))
+         </a>
+    </div>
+</div>

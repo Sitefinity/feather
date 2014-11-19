@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+
 using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
@@ -159,7 +161,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
                     var fileResolverPrefix = "~/Frontend-Assembly";
                     VirtualPathManager.AddVirtualFileResolver<DummyVirtualFileResolver>(fileResolverPrefix + "*", "DummyVirtualFileResolver");
 
-                    var dummyModel = new DummyDesignerModel(views, new List<string>(), widgetName, "someViewName");
+                    var dummyModel = new DummyDesignerModel(views, new List<string>(), widgetName, Guid.Empty, "someViewName");
 
                     try
                     {

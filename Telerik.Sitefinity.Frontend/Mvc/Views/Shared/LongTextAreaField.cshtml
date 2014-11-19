@@ -1,0 +1,12 @@
+﻿@model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields.TextFieldViewModel
+
+<div class="@ViewBag.CssClass">
+    @if (!Model.FieldTitle.IsNullOrEmpty())
+    {
+        <div>@Model.FieldTitle</div>
+    }
+
+    <div data-sf-field="@Model.FieldName" data-sf-ftype="LongText">
+        @Model.FieldValue
+    </div>
+</div>

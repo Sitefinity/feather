@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 {
     /// <summary>
     /// This class represents controller for pager widget.
     /// </summary>
+    [ControllerMetadataAttribute(IsTemplatableControl = false)]
     public class ContentPagerController : Controller
     {
         /// <summary>

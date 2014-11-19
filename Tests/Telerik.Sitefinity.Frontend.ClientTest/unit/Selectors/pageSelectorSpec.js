@@ -180,8 +180,6 @@ describe("page selector", function () {
 
             $('.openSelectorBtn').click();
 
-            debugger;
-
             var pageSelecotrScope = scope.$$childHead;
             expect(pageSelecotrScope).toBeDefined();
             expect(pageSelecotrScope.identifierField).toBe("TitlesPath");
