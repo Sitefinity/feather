@@ -62,7 +62,7 @@
                     };
 
                     this.onFilterItemSucceeded = function (items) {
-                    }
+                    };
 
                     this.onItemSelected = function (item) {
                     };
