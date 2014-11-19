@@ -648,7 +648,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
                 ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
 
                 template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
-                Assert.IsNull(template, "Template was not found");
+                Assert.IsNull(template, "Template was found");
 
                 ////Creating new template with the same title
                 Guid templateId = FeatherServerOperations.Pages().CreatePureMvcTemplate(TemplateTitle);

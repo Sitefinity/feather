@@ -198,7 +198,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
                 if (pageManager.GetTemplates().Count() == primaryCount + increment)
                     break;
 
-                Thread.Sleep(TimeSpan.FromMilliseconds(100));
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
         }
 
