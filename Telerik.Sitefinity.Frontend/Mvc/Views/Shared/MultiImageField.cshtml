@@ -11,7 +11,7 @@
         @foreach(var contentLink in Model.MediaItems)
         {
             <li>
-                <img src='@contentLink.GetImage().MediaUrl' alt='@contentLink.GetImage().AlternativeText' title='@contentLink.GetImage().Title' />
+                <img src='@contentLink.GetImage().ThumbnailUrl' alt='@contentLink.GetImage().AlternativeText' title='@contentLink.GetImage().Title' />
             </li>
         }
     </ul>
