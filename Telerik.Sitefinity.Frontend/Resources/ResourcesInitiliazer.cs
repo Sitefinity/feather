@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Globalization;
+using System.Web.Mvc;
 using System.Web.Routing;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
@@ -22,6 +23,15 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// </summary>
     internal class ResourcesInitializer
     {
+        /// <summary>
+        /// Initialize static resources for <see cref="ResourcesInitializer"/> class.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline")]
+        static ResourcesInitializer()
+        {
+            ResourcesInitializer.MvcFriendlyControlNameTemplate = string.Concat("{0} ", ResourcesInitializer.MvcSuffix);
+        }
+
         public void Initialize()
         {
             ObjectFactory.Container.RegisterType<IResourceResolverStrategy, ResourceResolverStrategy>(new ContainerControlledLifetimeManager());
@@ -56,14 +66,17 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var controlPresentationItem = manager.GetPresentationItem<ControlPresentation>(itemId);
                 var controlType = TypeResolutionService.ResolveType(controlPresentationItem.ControlType, throwOnError: false);
 
-                if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !controlPresentationItem.FriendlyControlName.Contains(MvcFriendlyControlNameTemplate))
-                    controlPresentationItem.FriendlyControlName = string.Format(System.Globalization.CultureInfo.InvariantCulture, ResourcesInitializer.MvcFriendlyControlNameTemplate, controlPresentationItem.FriendlyControlName, MvcFriendlyControlNameTemplate);
+                if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !controlPresentationItem.FriendlyControlName.Contains(MvcSuffix))
+                    controlPresentationItem.FriendlyControlName = string.Format(CultureInfo.InvariantCulture, ResourcesInitializer.MvcFriendlyControlNameTemplate, controlPresentationItem.FriendlyControlName, MvcFriendlyControlNameTemplate);
 
                 manager.SaveChanges();
             }
         }
 
         /// <summary>Template for <see cref="ControlPresentation"/>'s FriendlyControlName field. Used by MVC widgets.</summary>
-        internal static readonly string MvcFriendlyControlNameTemplate = "{0} (MVC)";
+        internal static readonly string MvcFriendlyControlNameTemplate;
+        
+        /// <summary>Suffix for MVC widgets friendly control name</summary>
+        internal static readonly string MvcSuffix = "(MVC)";
     }
 }
