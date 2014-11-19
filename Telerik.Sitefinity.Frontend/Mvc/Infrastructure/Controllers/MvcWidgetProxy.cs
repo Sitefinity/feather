@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.Web.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
+    /// <summary>
+    /// Web forms control that is used as a proxy for MVC controllers and has information about the specific widget it is used for.
+    /// </summary>
     public class MvcWidgetProxy : MvcControllerProxy
     {
         /// <summary>
@@ -24,7 +25,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             set
             {
                 this.widgetName = value;
-                this.Controller.ViewBag.WidgetName = this.widgetName;
+                if (this.Controller != null && this.Controller.ViewBag != null)
+                    this.Controller.ViewBag.WidgetName = this.widgetName;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the instance of <see cref="SitefinityController"/> that
+        /// is being proxied.
+        /// </summary>
+        public override Controller Controller
+        {
+            get
+            {
+                var controller = base.Controller;
+                if (controller != null && controller.ViewBag != null && !this.WidgetName.IsNullOrEmpty())
+                    controller.ViewBag.WidgetName = this.WidgetName;
+
+                return controller;
             }
         }
 
