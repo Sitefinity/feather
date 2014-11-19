@@ -418,7 +418,7 @@
                         };
 
                         scope.getSelectedIds = function () {
-                            if (attrs.multiselect) {
+                            if (scope.multiselect) {
                                 if (scope.selectedIds && scope.selectedIds.length > 0) {
                                     return scope.selectedIds.filter(function (id) {
                                         return id;
