@@ -109,6 +109,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         public static System.Web.Mvc.MvcHtmlString ImageField(this HtmlHelper helper, ContentLink fieldValue, string fieldName, string fieldTitle = "", string cssClass = "")
         {
+            if (fieldValue == null)
+                return System.Web.Mvc.MvcHtmlString.Empty;
+
             helper.ViewBag.CssClass = cssClass;
             var model = new MediaFieldViewModel(fieldValue, fieldName, fieldTitle);
 
