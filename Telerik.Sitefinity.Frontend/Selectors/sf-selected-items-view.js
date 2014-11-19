@@ -19,18 +19,23 @@
                     post: function (scope, element, attrs) {
                         var defaultIdentifierField = 'Title';
                         var identifierField = scope.identifierField || defaultIdentifierField;
-                        var originalItems = [];
 
-                        scope.$watch('items.length', function () {
-                            // the collection is not changed by the search
-                            if (!scope.filter.searchString || scope.filter.searchString === "") {
-                                originalItems = [];
-                                Array.prototype.push.apply(originalItems, scope.items);
+                        // The view is binded to this collection
+                        scope.currentItems = [];
+
+                        scope.$watch('items.length', function (newValue, oldValue) {
+                            if (newValue !== 0) {
+                                scope.currentItems = [];
+                                Array.prototype.push.apply(scope.currentItems, scope.items);
+
+                                if (scope.filter.searchString && scope.filter.searchString !== "") {
+                                    scope.filter.search(scope.filter.searchString);
+                                }
                             }
                         });
 
                         scope.isListEmpty = function () {
-                            return originalItems.length === 0;
+                            return scope.items.length === 0;
                         };
 
                         scope.bindIdentifierField = function (item) {
@@ -59,9 +64,9 @@
                         scope.sortItems = function (e) {
                             var element = scope.selectedItems[e.oldIndex];
                             scope.selectedItems.splice(e.oldIndex, 1);
-                            originalItems.splice(e.oldIndex, 1);
+                            scope.items.splice(e.oldIndex, 1);
                             scope.selectedItems.splice(e.newIndex, 0, element);
-                            originalItems.splice(e.newIndex, 0, element);
+                            scope.items.splice(e.newIndex, 0, element);
                         };
 
                         scope.itemClicked = function (item) {
@@ -80,20 +85,20 @@
                             placeholder: 'Narrow by typing',
                             timeoutMs: 500,
                             search: function (keyword) {
-                                scope.items.length = 0;
+                                scope.currentItems.length = 0;
 
                                 if (!keyword) {
-                                    Array.prototype.push.apply(scope.items, originalItems);
+                                    Array.prototype.push.apply(scope.currentItems, scope.items);
                                 }
                                 else {
-                                    for (var i = 0; i < originalItems.length; i++) {
+                                    for (var i = 0; i < scope.items.length; i++) {
                                         if (scope.searchIdentifierField) {
-                                            if (bindSearchIdentifierField(originalItems[i].item, scope.searchIdentifierField).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
-                                                scope.items.push(originalItems[i]);
+                                            if (bindSearchIdentifierField(scope.items[i].item, scope.searchIdentifierField).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                                scope.currentItems.push(scope.items[i]);
                                             }
                                         }
-                                        else if (scope.bindIdentifierField(originalItems[i].item).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
-                                            scope.items.push(originalItems[i]);
+                                        else if (scope.bindIdentifierField(scope.items[i].item).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                            scope.currentItems.push(scope.items[i]);
                                         }
                                     }
                                 }
