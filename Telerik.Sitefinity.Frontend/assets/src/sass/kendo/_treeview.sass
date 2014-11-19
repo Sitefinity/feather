@@ -1,6 +1,7 @@
 $tree-item-interval: 30px
 
 .k-treeview--selection.k-treeview
+
     .k-in
         padding: 0
         margin:0
@@ -25,13 +26,11 @@ $tree-item-interval: 30px
             display: block
             background-color: #fff
             border-top: 1px solid #ddd
-            border-bottom: 1px solid #ddd
             padding: 10px 0 10px 0
             padding-left: $tree-item-interval //30px
             color: #000
             text-decoration: none
             overflow: hidden
-            margin-top: -1px
             &.disabled
                 span
                     &:first-child
@@ -212,5 +211,15 @@ $tree-item-interval: 30px
         vertical-align: top
 
     >ul
+        overflow: hidden
         border: 1px solid #ddd
         border-radius: 4px
+        border-top: 0
+
+        >.k-item.k-first
+            >div
+                >.k-in
+                    >a
+                        border-top:0
+
+

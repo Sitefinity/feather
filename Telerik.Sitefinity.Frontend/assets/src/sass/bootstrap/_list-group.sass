@@ -13,6 +13,15 @@
         &:focus
             border-color: #ddd
 
+.list-group-sm
+    .list-group-item
+        padding: 7px 15px
+        font-size: 12px
+
+        &:last-of-type
+            @include border-bottom-radius($list-group-border-radius)
+
+
 .list-group-item-multiselect
     > div
         position: relative

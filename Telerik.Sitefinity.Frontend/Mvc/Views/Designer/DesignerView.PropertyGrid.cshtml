@@ -1,6 +1,6 @@
 <ul ng-model="propertyPath" breadcrumb></ul>
 
-<div class="list-group-endless properties-grid">
+<div class= "properties-grid">
     <div data-ng-repeat="item in items | propertyHierarchy:propertyName:propertyPath |orderBy:'PropertyName'" class="form-group">
         <div ng-hide="item.NeedsEditor">
             <label for="prop-{{item.PropertyName}}" ng-bind="item.PropertyName"></label>
