@@ -24,15 +24,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// </summary>
     internal class ResourcesInitializer
     {
-        /// <summary>
-        /// Initialize static resources for <see cref="ResourcesInitializer"/> class.
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline")]
-        static ResourcesInitializer()
-        {
-            ResourcesInitializer.MvcFriendlyControlNameTemplate = string.Concat("{0} ", MvcConstants.MvcSuffix);
-        }
-
         public void Initialize()
         {
             ObjectFactory.Container.RegisterType<IResourceResolverStrategy, ResourceResolverStrategy>(new ContainerControlledLifetimeManager());
@@ -68,13 +59,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var controlType = TypeResolutionService.ResolveType(controlPresentationItem.ControlType, throwOnError: false);
 
                 if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !controlPresentationItem.FriendlyControlName.Contains(MvcConstants.MvcSuffix))
-                    controlPresentationItem.FriendlyControlName = string.Format(CultureInfo.InvariantCulture, ResourcesInitializer.MvcFriendlyControlNameTemplate, controlPresentationItem.FriendlyControlName, MvcFriendlyControlNameTemplate);
+                    controlPresentationItem.FriendlyControlName = string.Format(CultureInfo.InvariantCulture, MvcConstants.MvcFieldControlNameTemplate, controlPresentationItem.FriendlyControlName);
 
                 manager.SaveChanges();
             }
         }
-
-        /// <summary>Template for <see cref="ControlPresentation"/>'s FriendlyControlName field. Used by MVC widgets.</summary>
-        internal static readonly string MvcFriendlyControlNameTemplate;
     }
 }
