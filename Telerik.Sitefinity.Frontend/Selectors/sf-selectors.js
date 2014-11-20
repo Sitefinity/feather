@@ -53,7 +53,7 @@
                 element.off('scroll');
                 element.on('scroll', function () {
                     var raw = jQuery(this)[0];
-                    if (scrolledToBottom(raw) && !scope.isLoadingData) {
+                    if (scrolledToBottom(raw) && !scope.isLoadingData && !scope.paging.areAllItemsLoaded) {
                         loadItems();
                     }
                 });
@@ -62,6 +62,10 @@
                     scope.isLoadingData = true;
                     scope.paging.getPage(scope.paging.skip, scope.paging.take)
                         .then(function (data) {
+                            if (data.Items.length < scope.paging.take) {
+                                scope.paging.areAllItemsLoaded = true;
+                            }
+
                             scope.paging.skip += data.Items.length;
                             scope.paging.pageLoaded(data.Items);
                         }).finally(function () {
