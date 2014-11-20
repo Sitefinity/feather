@@ -184,9 +184,11 @@
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
     <Compile Include="Mvc\Helpers\ContentLinkHelpers.cs" />
+    <Compile Include="Mvc\Helpers\FieldExtensions.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\Fields\ChoiceFieldViewModel.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Mvc\Helpers\ViewModels\Fields\AddressFieldViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\Fields\DateFieldViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\Fields\MediaFieldViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\Fields\TextFieldViewModel.cs" />
@@ -409,6 +411,7 @@
     <EmbeddedResource Include="Mvc\Views\Shared\MultiImageField.cshtml" />
     <EmbeddedResource Include="Mvc\Views\Shared\MultiVideoField.cshtml" />
     <EmbeddedResource Include="Mvc\Views\Shared\MultiDocumentField.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\Shared\AddressField.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -556,7 +559,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

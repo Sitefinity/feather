@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields;
+using Telerik.Sitefinity.GeoLocations.Model;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Model.ContentLinks;
 
@@ -149,6 +150,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.MultiVideoFieldViewName, model);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        public static System.Web.Mvc.MvcHtmlString AddressField(this HtmlHelper helper, Address fieldValue, string fieldName, string addressFormat, string fieldTitle = "", string cssClass = "")
+        {
+            helper.ViewBag.CssClass = cssClass;
+            var model = new AddressFieldViewModel(fieldValue, addressFormat, fieldName, fieldTitle);
+
+            return ASP.PartialExtensions.Partial(helper, FieldHelpers.AddressFieldViewName, model);
+        }
+
         /// <summary>
         /// Renders taxonomy field.
         /// </summary>
@@ -189,5 +199,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         private const string MultiImageFieldViewName = "MultiImageField";
         private const string MultiVideoFieldViewName = "MultiVideoField";
         private const string MultiDocumentFieldViewName = "MultiDocumentField";
+        private const string AddressFieldViewName = "AddressField";
     }
 }
