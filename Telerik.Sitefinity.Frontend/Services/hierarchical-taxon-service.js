@@ -63,7 +63,7 @@
 
                 return getResource(null, null, 'batchpath')
                                     .put(ids)
-                                    .$promise
+                                    .$promise;
             };
 
             var getTaxon = function (taxonomyId, taxonId) {

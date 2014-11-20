@@ -53,7 +53,9 @@
                                 <div ng-show="itemDisabled(item)">(not translated)</div>
                             </div>
 
-                           <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">{{item.ParentTitlesPath}}</div>
+                            <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
+                                <span sf-shrinked-breadcrumb="{{item.ParentTitlesPath}}" sf-max-length="60"></span>
+                            </div>
                         </div>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
