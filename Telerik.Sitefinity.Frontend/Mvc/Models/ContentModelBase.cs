@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,8 +8,11 @@ using ServiceStack.Text;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Data.Linq.Dynamic;
+using Telerik.Sitefinity.GenericContent.Model;
+using Telerik.Sitefinity.Lifecycle;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules;
+using Telerik.Sitefinity.RelatedData;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web.Model;
@@ -140,6 +144,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>The disable canonical URLs.</value>
         public virtual bool? DisableCanonicalUrlMetaTag { get; set; }
 
+        /// <summary>
+        /// Gets or sets the type of the parent item.
+        /// </summary>
+        /// <value>
+        /// The type of the parent item.
+        /// </value>
+        public virtual string RelatedItemType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the parent item provider.
+        /// </summary>
+        /// <value>
+        /// The name of the parent item provider.
+        /// </value>
+        public virtual string RelatedItemProviderName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the field.
+        /// </summary>
+        /// <value>
+        /// The name of the field.
+        /// </value>
+        public virtual string RelatedFieldName { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the relation type of the items that will be display - children or parent.
+        /// </summary>
+        /// <value>
+        /// The relation type of the items that will be display - children or parent.
+        /// </value>
+        public virtual RelationDirection RelationTypeToDisplay { get; set; }
+
         #endregion
 
         #region Public methods
@@ -151,7 +187,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         {
             var location = new ContentLocationInfo();
             location.ContentType = this.ContentType;
-            location.ProviderName = ManagerBase.GetMappedManager(this.ContentType, this.ProviderName).Provider.Name;
+            location.ProviderName = this.GetManager().Provider.Name;
 
             var filterExpression = this.CompileFilterExpression();
             if (!string.IsNullOrEmpty(filterExpression))
@@ -187,6 +223,40 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             var viewModel = this.CreateListViewModelInstance();
             this.PopulateListViewModel(page, query, viewModel);
+
+            return viewModel;
+        }
+
+        /// <summary>
+        /// Creates a view model for use in list views filtered by related item.
+        /// </summary>
+        /// <param name="relatedItem">Item that is related to the resulting items</param>
+        /// <param name="page">The page.</param>
+        /// <returns>A view model for use in list views.</returns>
+        /// <exception cref="System.ArgumentException">'page' argument has to be at least 1.;page</exception>
+        public virtual ContentListViewModel CreateListViewModelByRelatedItem(IDataItem relatedItem, int page)
+        {
+            if (page < 1)
+                throw new ArgumentException("'page' argument has to be at least 1.", "page");
+
+            if (relatedItem == null)
+                throw new ArgumentNullException("relatedItem");
+
+            int? totalCount = 0;
+            var query = this.GetRelatedItems(relatedItem, 1, ref totalCount);
+
+            var viewModel = this.CreateListViewModelInstance();
+
+            viewModel.Items = query;
+
+            if (this.ItemsPerPage != 0)
+                viewModel.TotalPagesCount = totalCount / this.ItemsPerPage;
+
+            viewModel.CurrentPage = page;
+            viewModel.ProviderName = this.ProviderName;
+            viewModel.ContentType = this.ContentType;
+            viewModel.CssClass = this.ListCssClass;
+            viewModel.ShowPager = this.DisplayMode == ListDisplayMode.Paging && viewModel.TotalPagesCount.HasValue && viewModel.TotalPagesCount > 1;
 
             return viewModel;
         }
@@ -380,6 +450,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             viewModel.ShowPager = this.DisplayMode == ListDisplayMode.Paging && totalPages.HasValue && totalPages > 1;
         }
 
+        /// <summary>
+        /// Gets a manager instance for the model.
+        /// </summary>
+        /// <returns>The manager.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "ContentType")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        protected virtual IManager GetManager()
+        {
+            if (this.ContentType == null)
+                throw new InvalidOperationException("Cannot resolve manager because ContentType is not set.");
+
+            return ManagerBase.GetMappedManager(this.ContentType, this.ProviderName);
+        }
+
         #endregion
 
         #region Private methods
@@ -432,14 +516,36 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (!this.SerializedSelectedItemsIds.IsNullOrEmpty())
             {
                 var selectedItemIds = JsonSerializer.DeserializeFromString<IList<string>>(this.SerializedSelectedItemsIds);
+                var selectedItemGuids = selectedItemIds.Select(id => new Guid(id));
 
-                var selectedItemsFilterExpression = string.Join(" OR ", selectedItemIds.Select(id => "Id = " + id.Trim()));
+                var masterIds = this.GetItemsQuery().OfType<ILifecycleDataItemGeneric>().Where(c => selectedItemGuids.Contains(c.Id) && c.OriginalContentId != Guid.Empty).Select(n => n.OriginalContentId.ToString("D"));
+
+                var selectedItemConditions = selectedItemIds.Select(id => "Id = " + id.Trim()).ToList();
+                selectedItemConditions.AddRange(masterIds.Select(id => "OriginalContentId = " + id.Trim()));
+
+                var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
                 return selectedItemsFilterExpression;
             }
             else
             {
                 return null;
             }
+        }
+
+        private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
+        {
+            var manager = this.GetManager();
+            var relatedDataSource = manager.Provider as IRelatedDataSource;
+
+            if (relatedDataSource == null)
+                return Enumerable.Empty<IDataItem>().AsQueryable();
+
+            //// Тhe filter is adapted to the implementation of ILifecycleDataItemGeneric, so the culture is taken in advance when filtering published items.
+            var filterExpression = ContentHelper.AdaptMultilingualFilterExpression(this.FilterExpression);
+            int? skip = (page - 1) * this.ItemsPerPage;
+
+            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay).OfType<IDataItem>();
+            return relatedItems;
         }
 
         #endregion

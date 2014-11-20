@@ -1,14 +1,20 @@
-﻿using System.Web.Routing;
+﻿using System.Globalization;
+using System.Web.Mvc;
+using System.Web.Routing;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Data.Events;
 using Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Modules.ControlTemplates.Web.UI;
 using Telerik.Sitefinity.Modules.Libraries.Web.Events;
+using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -36,7 +42,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Modifies the ControlPresentation (adds 'MVC') when creating a widget template for MVC Widget
+        /// Modifies newly created <see cref="ControlPresentation"/> by adding suffix, when creating a widget template for MVC Widget.
         /// </summary>
         /// <param name="eventArgs">The event args.</param>
         public void HandleIDataEvent(IDataEvent eventArgs)
@@ -44,20 +50,18 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var action = eventArgs.Action;
             var contentType = eventArgs.ItemType;
 
-            if (action == "New" && contentType.BaseType.Name == "PresentationData")
+            if (action == DataEventAction.Created && contentType.BaseType == typeof(PresentationData))
             {
                 var itemId = eventArgs.ItemId;
                 var providerName = eventArgs.ProviderName;
-                var manager = ManagerBase.GetMappedManager(contentType, providerName);
-                var item = manager.GetItemOrDefault(contentType, itemId);
+                var manager = PageManager.GetManager(providerName);
+                var controlPresentationItem = manager.GetPresentationItem<ControlPresentation>(itemId);
+                var controlType = TypeResolutionService.ResolveType(controlPresentationItem.ControlType, throwOnError: false);
 
-                var cpitem = (ControlPresentation)item;
+                if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !controlPresentationItem.FriendlyControlName.Contains(MvcConstants.MvcSuffix))
+                    controlPresentationItem.FriendlyControlName = string.Format(CultureInfo.InvariantCulture, MvcConstants.MvcFieldControlNameTemplate, controlPresentationItem.FriendlyControlName);
 
-                if (cpitem.ControlType.Contains("Mvc.Controllers") && !cpitem.FriendlyControlName.Contains("(MVC)"))
-                {
-                    cpitem.FriendlyControlName = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} (MVC)", cpitem.FriendlyControlName);
-                    manager.SaveChanges();
-                }
+                manager.SaveChanges();
             }
         }
     }

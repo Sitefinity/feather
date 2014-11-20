@@ -19,6 +19,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         public static Image GetImage(this ContentLink contentLink)
         {
+            if (contentLink == null)
+                return null;
+
             var imagesManager = Telerik.Sitefinity.Modules.Libraries.LibrariesManager.GetManager(contentLink.ChildItemProviderName);
             var image = imagesManager.GetImages().FirstOrDefault(i => i.Id == contentLink.ChildItemId);
 
@@ -32,6 +35,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         public static Video GetVideo(this ContentLink contentLink)
         {
+            if (contentLink == null)
+                return null;
+
             var videoManager = Telerik.Sitefinity.Modules.Libraries.LibrariesManager.GetManager(contentLink.ChildItemProviderName);
             var video = videoManager.GetVideos().FirstOrDefault(i => i.Id == contentLink.ChildItemId);
 
@@ -45,6 +51,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         public static Document GetDocument(this ContentLink contentLink)
         {
+            if (contentLink == null)
+                return null;
+
             var documentManager = Telerik.Sitefinity.Modules.Libraries.LibrariesManager.GetManager(contentLink.ChildItemProviderName);
             var document = documentManager.GetDocuments().FirstOrDefault(i => i.Id == contentLink.ChildItemId);
 

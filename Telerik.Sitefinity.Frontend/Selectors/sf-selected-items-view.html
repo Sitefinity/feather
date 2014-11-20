@@ -12,14 +12,14 @@
     <div class="list-group list-group-endless" kendo-sortable k-options="sortableOptions" k-on-change="sortItems(kendoEvent)">
         <div class="list-group-item list-group-item-multiselect list-group-item-draggable"
             ng-click="itemClicked(item.item)"
-            ng-repeat="item in items">
+            ng-repeat="item in currentItems">
 
-            <span class="handler list-group-item-drag" ng-hide="filter.searchString || !sortable"></span>
+            <span class="handler list-group-item-drag" ng-hide="!!filter.searchString || !sortable"></span>
 
             <input type="checkbox" ng-checked="item.isChecked">
 
             <div><span sf-shrinked-breadcrumb="{{bindIdentifierField(item.item)}}" sf-max-length="60"></span></div>
         </div>
     </div>
-    <div ng-hide="items.length"><i>No items found</i></div>
+    <div ng-hide="currentItems.length"><i>No items found</i></div>
 </div>

@@ -1,13 +1,13 @@
-﻿/* global $telerik, document, kendo */
+/* global $telerik, document, kendo */
 
 var sitefinity = sitefinity || {};
 
 (function ($) {
 
     var loader,
-		loaderMarkup = '<div class="sf-loading" style="opacity:0.5; width:100%; z-index:3100; position:absolute; top:0; height:100%;"></div>',
-		loaderTemplate = kendo.template(loaderMarkup),
-		dialog;
+        loaderMarkup = '<div class="sf-loading-wrapper"><div class="sf-loading"><span></span></div></div>',
+        loaderTemplate = kendo.template(loaderMarkup),
+        dialog;
 
     function isScriptTag(tag) {
         return tag.tagName == 'SCRIPT' && (!tag.type || tag.type.toLowerCase() == 'text/javascript');
@@ -62,11 +62,10 @@ var sitefinity = sitefinity || {};
         lab.wait(loadHandler);
     }
 
-	/**
-	 * Represents the Sitefinity page editor.
-	 */
+  /**
+   * Represents the Sitefinity page editor.
+   */
     sitefinity.pageEditor = {
-
 		/**
 		 * Shows the loading animation in the page editor.
 		 *

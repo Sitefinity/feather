@@ -3,8 +3,13 @@
 @using Telerik.Sitefinity.Model;
 
 <div class="sfMultiRelatedItmsWrp">
-    <h2 class="sfrelatedItmTitle">@Model.FieldTitle</h2>
+    @if (!Model.FieldTitle.IsNullOrEmpty())
+    {
+        <h2 class="sfrelatedItmTitle">@Model.FieldTitle:</h2>
+    }
+
     <ul class="sfrelatedList sflist">
+
     @foreach (IDynamicFieldsContainer relatedItem in Model.RelatedItemCollection)
     {
         <li class="sfrelatedListItem sflistitem">

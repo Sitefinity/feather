@@ -29,7 +29,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetTitle(WidgetTitle);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetTitle(WidgetCaption);
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetSaveButton();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetCancelButton();
@@ -83,7 +83,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         }
 
         private const string PageName = "FeatherPage";
-        private const string WidgetTitle = "DummyText";
         private const string WidgetCaption = "SelectorWidget";
         private const string SelectedName1 = "Item Title1";
         private const string SelectedName2 = "Item Title2"; 

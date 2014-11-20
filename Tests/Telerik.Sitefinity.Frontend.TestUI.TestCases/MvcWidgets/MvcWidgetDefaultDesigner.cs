@@ -24,10 +24,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
-            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetName);
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetTitle(WidgetName);
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetInputFieldLabelText(WidgetName);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetInputFieldLabelText(InputFieldLabel);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyDummyWidgetInputTextField();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetSaveButton();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetCancelButton();
@@ -64,8 +64,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         }
 
         private const string PageName = "FeatherPage";
-        private const string WidgetName = "DummyText";
-        private const string WidgetCaption = "DummyWidget";
+        private const string WidgetName = "DummyWidget";
+        private const string InputFieldLabel = "DummyText";
         private const string DummyText = "Dummy Text";
     }
 }

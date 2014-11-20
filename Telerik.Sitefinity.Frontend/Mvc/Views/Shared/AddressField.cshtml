@@ -1,0 +1,18 @@
+﻿@model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields.AddressFieldViewModel
+
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+
+<div class="@ViewBag.CssClass">
+    @if (!Model.FieldTitle.IsNullOrEmpty())
+    {
+    <div class="sfitemFieldLbl">
+        @Model.FieldTitle:
+    </div>
+    }
+
+    <div>
+        <div class="sfitemAddressTxt">
+            @Model.Address.GetFormattedAddress(Model.AddressFormat)
+        </div>
+    </div>
+</div>

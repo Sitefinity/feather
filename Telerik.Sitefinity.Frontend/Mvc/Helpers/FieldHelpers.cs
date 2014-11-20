@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields;
+using Telerik.Sitefinity.GeoLocations.Model;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Model.ContentLinks;
 
@@ -22,63 +24,68 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString LongTextAreaField(this HtmlHelper helper, string text, string fieldName, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString LongTextAreaField(this HtmlHelper helper, string text, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
-            var model = new TextFieldViewModel(text, fieldName);
+            var model = new TextFieldViewModel(text, fieldName, fieldTitle);
 
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.TextAreaFieldViewName, model);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString LongRichTextField(this HtmlHelper helper, string text, string fieldName, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString LongRichTextField(this HtmlHelper helper, string text, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
-            var model = new TextFieldViewModel(text, fieldName);
+            var model = new TextFieldViewModel(text, fieldName, fieldTitle);
 
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.RichTextFieldViewName, model);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString ShortTextField(this HtmlHelper helper, string text, string fieldName, string fieldTitle, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString ShortTextField(this HtmlHelper helper, object fieldValue, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
-            var model = new TextFieldViewModel(text, fieldName, fieldTitle);
+            var fieldTextValue = fieldValue == null ? string.Empty : fieldValue.ToString();
+            var model = new TextFieldViewModel(fieldTextValue, fieldName, fieldTitle);
 
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.ShortTextFieldViewName, model);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString DateField(this HtmlHelper helper, DateTime date, string dateFormat, string fieldName, string fieldTitle, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString DateField(this HtmlHelper helper, DateTime? date, string dateFormat, string fieldName, string fieldTitle = "", string cssClass = "")
         {
+            if (date == null)
+                return System.Web.Mvc.MvcHtmlString.Empty;
+
             helper.ViewBag.CssClass = cssClass;
-            var model = new DateFieldViewModel(date, dateFormat, fieldName, fieldTitle);
+            var model = new DateFieldViewModel(date.Value, dateFormat, fieldName, fieldTitle);
 
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.DateFieldViewName, model);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString NumberField(this HtmlHelper helper, string text, string unit, string fieldName, string fieldTitle, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString NumberField(this HtmlHelper helper, decimal? number, string unit, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
-            var model = new TextFieldViewModel(text, fieldName, fieldTitle);
+            var numberText = number.Equals(null) ? string.Empty : number.Value.ToString(CultureInfo.InvariantCulture);
+            var model = new TextFieldViewModel(numberText, fieldName, fieldTitle);
             model.Unit = unit;
 
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.NumberFieldViewName, model);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString PriceField(this HtmlHelper helper, string text, string fieldName, string format, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString PriceField(this HtmlHelper helper, string text, string fieldName, string format, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
-            var model = new TextFieldViewModel(text, fieldName);
+            var model = new TextFieldViewModel(text, fieldName, fieldTitle);
             model.Format = format;
 
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.PriceFieldViewName, model);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString YesNoField(this HtmlHelper helper, bool fieldValue, string fieldName, string fieldTitle, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString YesNoField(this HtmlHelper helper, bool fieldValue, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new ChoiceFieldViewModel(fieldValue, fieldName, fieldTitle);
@@ -87,7 +94,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString ChoiceField(this HtmlHelper helper, string fieldValue, string fieldName, string fieldTitle, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString ChoiceField(this HtmlHelper helper, string fieldValue, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new ChoiceFieldViewModel(fieldValue, fieldName, fieldTitle);
@@ -96,7 +103,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString ChoiceField(this HtmlHelper helper, IEnumerable fieldValues, string fieldName, string fieldTitle, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString ChoiceField(this HtmlHelper helper, IEnumerable fieldValues, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new ChoiceFieldViewModel(fieldValues, fieldName, fieldTitle);
@@ -105,8 +112,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString ImageField(this HtmlHelper helper, ContentLink fieldValue, string fieldName, string fieldTitle, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString ImageField(this HtmlHelper helper, ContentLink fieldValue, string fieldName, string fieldTitle = "", string cssClass = "")
         {
+            if (fieldValue == null)
+                return System.Web.Mvc.MvcHtmlString.Empty;
+
             helper.ViewBag.CssClass = cssClass;
             var model = new MediaFieldViewModel(fieldValue, fieldName, fieldTitle);
 
@@ -114,7 +124,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString ImageField(this HtmlHelper helper, IEnumerable<ContentLink> fieldValue, string fieldName, string fieldTitle, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString ImageField(this HtmlHelper helper, IEnumerable<ContentLink> fieldValue, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new MediaFieldViewModel(fieldValue, fieldName, fieldTitle);
@@ -123,7 +133,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString DocumentField(this HtmlHelper helper, IEnumerable<ContentLink> fieldValue, string fieldName, string fieldTitle, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString DocumentField(this HtmlHelper helper, IEnumerable<ContentLink> fieldValue, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new MediaFieldViewModel(fieldValue, fieldName, fieldTitle);
@@ -132,12 +142,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString VideoField(this HtmlHelper helper, IEnumerable<ContentLink> fieldValue, string fieldName, string fieldTitle, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString VideoField(this HtmlHelper helper, IEnumerable<ContentLink> fieldValue, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
             var model = new MediaFieldViewModel(fieldValue, fieldName, fieldTitle);
 
             return ASP.PartialExtensions.Partial(helper, FieldHelpers.MultiVideoFieldViewName, model);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        public static System.Web.Mvc.MvcHtmlString AddressField(this HtmlHelper helper, Address fieldValue, string fieldName, string addressFormat, string fieldTitle = "", string cssClass = "")
+        {
+            helper.ViewBag.CssClass = cssClass;
+            var model = new AddressFieldViewModel(fieldValue, addressFormat, fieldName, fieldTitle);
+
+            return ASP.PartialExtensions.Partial(helper, FieldHelpers.AddressFieldViewName, model);
         }
 
         /// <summary>
@@ -151,7 +170,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="cssClass">The CSS class.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString TaxonomyField(this HtmlHelper helper, object classificationFieldValue, Guid classificationId, string fieldTitle, string fieldName, string cssClass = "")
+        public static System.Web.Mvc.MvcHtmlString TaxonomyField(this HtmlHelper helper, object classificationFieldValue, Guid classificationId, string fieldName, string fieldTitle = "", string cssClass = "")
         {
             helper.ViewBag.CssClass = cssClass;
 
@@ -180,5 +199,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         private const string MultiImageFieldViewName = "MultiImageField";
         private const string MultiVideoFieldViewName = "MultiVideoField";
         private const string MultiDocumentFieldViewName = "MultiDocumentField";
+        private const string AddressFieldViewName = "AddressField";
     }
 }

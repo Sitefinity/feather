@@ -61,6 +61,9 @@
                         });
                     };
 
+                    this.onFilterItemSucceeded = function (items) {
+                    };
+
                     this.onItemSelected = function (item) {
                     };
 
@@ -101,7 +104,6 @@
                                 pushSelectedItemToTheTop();
                                 pushNotSelectedItems(data.Items);
                             }
-
                             return scope.items;
                         };
 
@@ -115,6 +117,10 @@
                             }
                             else {
                                 scope.items = data.Items;
+                            }
+
+                            if (ctrl.onFilterItemSucceeded) {
+                                ctrl.onFilterItemSucceeded(scope.items);
                             }
                         };
 
@@ -234,6 +240,7 @@
                             placeholder: 'Narrow by typing',
                             timeoutMs: 500,
                             search: function (keyword) {
+                                scope.paging.areAllItemsLoaded = false;
                                 var endlessScroll = angular.element($("[endless-scroll]"))[0];
                                 if (endlessScroll) {
                                     endlessScroll.scrollTop = 0;
@@ -253,6 +260,7 @@
                         scope.paging = {
                             skip: 0,
                             take: 20,
+                            areAllItemsLoaded: false,
                             getPage: function () {
                                 return ctrl.getItems(this.skip, this.take, scope.filter.searchString);
                             },
@@ -429,7 +437,7 @@
                         };
 
                         scope.getSelectedIds = function () {
-                            if (attrs.multiselect) {
+                            if (scope.multiselect) {
                                 if (scope.selectedIds && scope.selectedIds.length > 0) {
                                     return scope.selectedIds.filter(function (id) {
                                         return id;

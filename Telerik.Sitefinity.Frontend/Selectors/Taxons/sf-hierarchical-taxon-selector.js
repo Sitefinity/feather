@@ -1,9 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'hierarchicalTaxonService', '$q', function (serviceHelper, hierarchicalTaxonService) {
-            var titlesPathPropertyName = "TitlesPath";
-            var pathPropertyName = "Path";
-
+        .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'hierarchicalTaxonService', function (serviceHelper, hierarchicalTaxonService) {
             var _applyBreadcrumbPath = function (result) {
                 var taxa = result.Items;
                 var taxonToAdd = null;
@@ -22,8 +19,9 @@
                     if (taxonId !== taxonToAdd.Id) {
                         throw 'unexpected end of the taxon path.';
                     }
-                    taxonToAdd[titlesPathPropertyName] = taxonPathTitle;
-                    taxonToAdd[pathPropertyName] = taxonPathTitle;
+                    taxonToAdd.TitlesPath = taxonToAdd.TitlesPath || taxonPathTitle;
+
+                    taxonToAdd.Breadcrumb = taxonToAdd.TitlesPath;
                 }
                 else {
                     throw "Getting the taxon path returned an empty collection.";
@@ -68,22 +66,14 @@
                         };
 
                         ctrl.onItemSelected = function (item) {
-                            if (!item.parentNode) {
-                                return;
-                            }
-                            var parentsChain = [item];
-
-                            var parent = item.parentNode();
-
-                            while (parent) {
-                                parentsChain.push(parent);
-
-                                parent = parent.parentNode();
-                            }
-                            parentsChain.reverse();
-
-                            _applyBreadcrumbPath({ Items: parentsChain });
+                            item.Breadcrumb = item.TitlesPath ? item.TitlesPath + " > " + item.Title : item.Title;
                         };
+
+                        ctrl.onFilterItemSucceeded = function (items) {
+                            angular.forEach(items, function (item) {
+                                item.RootPath = item.TitlesPath ? "Under " + item.TitlesPath : 'On Top Level';
+                            });
+                        }
 
                         ctrl.selectorType = 'HierarchicalTaxonSelector';
                         ctrl.dialogTemplateUrl = 'Selectors/Taxons/sf-hierarchical-taxon-selector.html';
@@ -91,7 +81,7 @@
                         ctrl.closedDialogTemplateUrl = attrs.multiselect ? 'Selectors/list-group-selection.html' : 'Selectors/bubbles-selection.html';
 
                         ctrl.$scope.hierarchical = true;
-                        ctrl.$scope.identifierField = titlesPathPropertyName;
+                        ctrl.$scope.identifierField = "Breadcrumb";
                         ctrl.$scope.searchIdentifierField = "Title";
                     }
                 }
