@@ -1,9 +1,9 @@
 ﻿(function () {
     var module = angular.module('services', ['ngResource']);
 
-    module.config(['$httpProvider', function($httpProvider) {
+    module.config(['$httpProvider', function ($httpProvider) {
         if (!$httpProvider.defaults.headers.get) {
-            $httpProvider.defaults.headers.get = {};    
+            $httpProvider.defaults.headers.get = {};
         }
 
         var getHeaders = $httpProvider.defaults.headers.get;
@@ -26,8 +26,10 @@
             return str.substr(0, str.length - suffix.length);
         }
 
-        var getResource = function (url) {
+        var getResource = function (url, options) {
             var headerData;
+
+            var resourceOption = options || { stripTrailingSlashes: false };
 
             var culture = serverContext.getUICulture();
             if (culture) {
@@ -45,7 +47,7 @@
                     method: 'PUT',
                     headers: headerData
                 }
-            });
+            }, resourceOption);
         };
 
         function FilterBuilder(baseFilter) {
@@ -111,7 +113,7 @@
                 if (this.filter) {
                     this.filter += this.andOperator;
                 }
-                
+
                 return this;
             },
             trimOperator: function () {
@@ -160,7 +162,7 @@
 
         /* The context should be object containing properties: 'appPath' and optionally 'currentPackage' and 'uiCulture'. */
         this.setServerContext = function (context) {
-            customContext = context;            
+            customContext = context;
         };
 
         this.$get = ['$injector', function ($injector) {
