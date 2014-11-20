@@ -6,6 +6,7 @@ using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Data.Events;
 using Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Modules.ControlTemplates.Web.UI;
 using Telerik.Sitefinity.Modules.Libraries.Web.Events;
@@ -29,7 +30,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline")]
         static ResourcesInitializer()
         {
-            ResourcesInitializer.MvcFriendlyControlNameTemplate = string.Concat("{0} ", ResourcesInitializer.MvcSuffix);
+            ResourcesInitializer.MvcFriendlyControlNameTemplate = string.Concat("{0} ", MvcConstants.MvcSuffix);
         }
 
         public void Initialize()
@@ -66,7 +67,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var controlPresentationItem = manager.GetPresentationItem<ControlPresentation>(itemId);
                 var controlType = TypeResolutionService.ResolveType(controlPresentationItem.ControlType, throwOnError: false);
 
-                if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !controlPresentationItem.FriendlyControlName.Contains(MvcSuffix))
+                if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !controlPresentationItem.FriendlyControlName.Contains(MvcConstants.MvcSuffix))
                     controlPresentationItem.FriendlyControlName = string.Format(CultureInfo.InvariantCulture, ResourcesInitializer.MvcFriendlyControlNameTemplate, controlPresentationItem.FriendlyControlName, MvcFriendlyControlNameTemplate);
 
                 manager.SaveChanges();
@@ -75,8 +76,5 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
         /// <summary>Template for <see cref="ControlPresentation"/>'s FriendlyControlName field. Used by MVC widgets.</summary>
         internal static readonly string MvcFriendlyControlNameTemplate;
-        
-        /// <summary>Suffix for MVC widgets friendly control name</summary>
-        internal static readonly string MvcSuffix = "(MVC)";
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Caching;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc.Store;
@@ -100,7 +101,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             var extension = Path.GetExtension(virtualPath);
 
             /// TODO: Fix - currently allowed only for razor views
-            if (extension == DatabaseResourceResolver.RazorFileNameExtension)
+            if (extension == MvcConstants.RazorFileNameExtension)
             {
                 var name = Path.GetFileNameWithoutExtension(virtualPath);
 
@@ -201,8 +202,5 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
         /// <summary>Template for view path, consisting of path and file name</summary>
         internal static readonly string ViewPathTemplate = "{0}{1}.cshtml";
-
-        /// <summary>Filename extension used by Razor views</summary>
-        internal static readonly string RazorFileNameExtension = ".cshtml";
     }
 }
