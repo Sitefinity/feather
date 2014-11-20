@@ -9,6 +9,7 @@ using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Data.Linq.Dynamic;
 using Telerik.Sitefinity.GenericContent.Model;
+using Telerik.Sitefinity.Lifecycle;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules;
 using Telerik.Sitefinity.RelatedData;
@@ -515,8 +516,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (!this.SerializedSelectedItemsIds.IsNullOrEmpty())
             {
                 var selectedItemIds = JsonSerializer.DeserializeFromString<IList<string>>(this.SerializedSelectedItemsIds);
+                var selectedItemGuids = selectedItemIds.Select(id => new Guid(id));
 
-                var selectedItemsFilterExpression = string.Join(" OR ", selectedItemIds.Select(id => "Id = " + id.Trim()));
+                var masterIds = this.GetItemsQuery().OfType<ILifecycleDataItemGeneric>().Where(c => selectedItemGuids.Contains(c.Id) && c.OriginalContentId != Guid.Empty).Select(n => n.OriginalContentId.ToString("D"));
+
+                var selectedItemConditions = selectedItemIds.Select(id => "Id = " + id.Trim()).ToList();
+                selectedItemConditions.AddRange(masterIds.Select(id => "OriginalContentId = " + id.Trim()));
+
+                var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
                 return selectedItemsFilterExpression;
             }
             else
