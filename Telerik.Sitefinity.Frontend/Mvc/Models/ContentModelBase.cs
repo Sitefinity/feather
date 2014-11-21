@@ -410,8 +410,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 if (!this.SerializedAdditionalFilters.IsNullOrEmpty())
                 {
                     var additionalFilters = JsonSerializer.DeserializeFromString<QueryData>(this.SerializedAdditionalFilters);
-                    var queryExpression = Telerik.Sitefinity.Data.QueryBuilder.LinqTranslator.ToDynamicLinq(additionalFilters);
-                    elements.Add(queryExpression);
+                    if (additionalFilters.QueryItems != null && additionalFilters.QueryItems.Length > 0)
+                    {
+                        var queryExpression = Telerik.Sitefinity.Data.QueryBuilder.LinqTranslator.ToDynamicLinq(additionalFilters);
+                        elements.Add(queryExpression);
+                    }
                 }
             }
             else if (this.SelectionMode == SelectionMode.SelectedItems)
