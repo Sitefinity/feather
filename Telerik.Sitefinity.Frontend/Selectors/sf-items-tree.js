@@ -80,7 +80,7 @@
         };
     });
 
-    module.directive('sfItemsTree', ['serverContext', 'sfTreeHelper', function (serverContext, sfTreeHelper) {
+    module.directive('sfItemsTree', ['serverContext', 'sfTreeHelper', '$q', function (serverContext, sfTreeHelper, $q) {
         return {
             restrict: 'E',
             scope: {
@@ -102,17 +102,14 @@
             },
             link: function (scope, element, attrs) {
                 /* Helper methods */
-                var availableItemsTree;
+                var predecessorsTree;
+                var predecessorsTreePromise = $q.defer();
 
-                var expandToSelectedItem = function (selectedIds) {
+                var constructPredecessorsTree = function (selectedIds) {
                     var selectedId = selectedIds[0];
-                    scope.sfGetPredecessors({ itemId: selectedId })
+                    return scope.sfGetPredecessors({ itemId: selectedId })
                         .then(function (predecessors) {
-                            var constructedTree = sfTreeHelper.constructPredecessorsTree(predecessors.Items, selectedId);
-                            availableItemsTree = constructedTree.items;
-                            scope.itemsDataSource.data(availableItemsTree);
-
-                            scope.treeView.expandPath(constructedTree.parentsIds);
+                            return sfTreeHelper.constructPredecessorsTree(predecessors.Items, selectedId);                                                        
                         });
                 };
 
@@ -133,6 +130,13 @@
                     }
                 };
 
+                var shouldExpandTree = function (scope) {
+                    return scope.sfSelectedIds &&
+                        scope.sfSelectedIds.length > 0 &&
+                        !scope.sfMultiselect &&
+                        scope.sfExpandSelection
+                };
+
                 /* Scope properties */
                 scope.itemsDataSource = new kendo.data.HierarchicalDataSource({
                     schema: {
@@ -144,7 +148,7 @@
                     transport: {
                         read: function (options) {
                             var id = options.data.Id;
-                            var availableItems = getFromAvailableItems(availableItemsTree, id);
+                            var availableItems = getFromAvailableItems(predecessorsTree && predecessorsTree.items, id);
                             if (availableItems) {
                                 options.success(availableItems);
                             }
@@ -159,16 +163,31 @@
                 });
 
                 scope.sfItemsPromise.then(function (newValue) {
-                    if (scope.sfSelectedIds &&
-                        scope.sfSelectedIds.length > 0 &&
-                        !scope.sfMultiselect &&
-                            scope.sfExpandSelection) {
+                    if (shouldExpandTree(scope)) {
                             // We have to expand only in single selection mode and when there is selected item.
                             // The user of the directive can also disable this behaviour.
-                            expandToSelectedItem(scope.sfSelectedIds);
+                            constructPredecessorsTree(scope.sfSelectedIds)
+                                .then(function  (constructedTree) {
+                                    predecessorsTree = constructedTree;
+
+                                    scope.itemsDataSource.data(predecessorsTree.items);
+
+                                    predecessorsTreePromise.resolve();
+                                });
                     }
                     else {
                         scope.itemsDataSource.data(newValue);
+                    }
+                });
+
+                scope.$on("kendoWidgetCreated", function(event, widget){
+                    // the event is emitted for every widget
+                    // if we have multiple widgets, we need to check that the event
+                    // is for the one we're interested in.
+                    if (widget === scope.treeView && shouldExpandTree(scope)) {
+                        predecessorsTreePromise.promise.then(function () {                           
+                            scope.treeView.expandPath(predecessorsTree.parentsIds); 
+                        });
                     }
                 });
 
