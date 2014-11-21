@@ -1,5 +1,5 @@
-﻿/* Tests for news-item-service.js */
-describe('newsItemService', function () {
+﻿/* Tests for sf-news-item-service.js */
+describe('sfNewsItemService', function () {
     var $httpBackend;
     var dataService;
     var dataItems = {
@@ -15,7 +15,7 @@ describe('newsItemService', function () {
 
     var appPath = 'http://mysite.com:9999/myapp';
 
-    beforeEach(module('services'));
+    beforeEach(module('sfServices'));
 
     beforeEach(module(function ($provide) {
         var serverContext = {
@@ -32,7 +32,7 @@ describe('newsItemService', function () {
     beforeEach(inject(function ($injector) {
         // Set up the mock http service responses
         $httpBackend = $injector.get('$httpBackend');
-        dataService = $injector.get('newsItemService');
+        dataService = $injector.get('sfNewsItemService');
     }));    
 
     beforeEach(function () {

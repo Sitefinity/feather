@@ -175,10 +175,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             helper.ViewBag.CssClass = cssClass;
 
             var model = new ClassificationFieldViewModel((IList<Guid>)classificationFieldValue, classificationId, fieldTitle, fieldName);
+            var taxonomyType = FieldExtensions.GetTaxonomyType(classificationId);
 
-            if (model.GetTaxonomyType() == Telerik.Sitefinity.Taxonomies.Model.TaxonomyType.Flat)
+            if (taxonomyType == Telerik.Sitefinity.Taxonomies.Model.TaxonomyType.Flat)
                 return ASP.PartialExtensions.Partial(helper, FieldHelpers.FlatTaxonomyFieldViewName, model);
-            else if (model.GetTaxonomyType() == Telerik.Sitefinity.Taxonomies.Model.TaxonomyType.Hierarchical)
+            else if (taxonomyType == Telerik.Sitefinity.Taxonomies.Model.TaxonomyType.Hierarchical)
                 return ASP.PartialExtensions.Partial(helper, FieldHelpers.HierarchicalTaxonomyFieldViewName, model);
 
             return null;

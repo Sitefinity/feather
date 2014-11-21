@@ -16,7 +16,7 @@ describe("timeSpan selector", function () {
     };
 
     //This is the id of the cached templates in $templateCache. The external templates are cached by a karma/grunt preprocessor.
-    var timespanSelectorTemplatePath = 'Selectors/sf-timespan-selector.html';
+    var timespanSelectorTemplatePath = 'client-components/selectors/date-time/sf-timespan-selector.html';
 
     //Load the module responsible for the modal dialog
     beforeEach(module('modalDialog'));

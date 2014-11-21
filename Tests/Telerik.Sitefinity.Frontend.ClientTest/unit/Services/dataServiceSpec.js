@@ -1,5 +1,5 @@
-﻿/* Tests for data-service.js */
-describe('dataService', function () {
+﻿/* Tests for sf-data-service.js */
+describe('sfDataService', function () {
     if (!String.prototype.format) {
         String.prototype.format = function () {
             var newStr = this;
@@ -13,7 +13,7 @@ describe('dataService', function () {
         }
     };    
 
-    beforeEach(module('services'));
+    beforeEach(module('sfServices'));
 
     var appPath = 'http://mysite.com:9999/myapp';
     var dataServiceBaseUrl = 'http://mysite.com:9999/myapp/Sitefinity/Services/DynamicModules/Data.svc';
@@ -47,7 +47,7 @@ describe('dataService', function () {
     beforeEach(inject(function ($injector) {
         // Set up the mock http service responses
         $httpBackend = $injector.get('$httpBackend');
-        dataService = $injector.get('dataService');
+        dataService = $injector.get('sfDataService');
     }));    
 
     beforeEach(function () {

@@ -16,25 +16,25 @@ module.exports = function (config) {
                   '../../Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 	              '../../Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
 	              '../../Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
-                  '../../Telerik.Sitefinity.Frontend/Services/services.js',
-	              '../../Telerik.Sitefinity.Frontend/Services/news-item-service.js',
-                  '../../Telerik.Sitefinity.Frontend/Services/data-service.js',
-                  '../../Telerik.Sitefinity.Frontend/Services/page-service.js',
-	              '../../Telerik.Sitefinity.Frontend/Selectors/sf-selectors.js',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/bubbles-selection.html',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/list-group-selection.html',
-	              '../../Telerik.Sitefinity.Frontend/Selectors/sf-list-selector.js',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/sf-list-selector.html',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/sf-dynamic-items-selector.js',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/sf-dynamic-items-selector.html',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/sf-news-selector.js',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/sf-news-selector.html',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/sf-timespan-selector.js',
-	              '../../Telerik.Sitefinity.Frontend/Selectors/sf-timespan-selector.html',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/sf-items-tree.js',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/sf-items-tree.html',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/sf-page-selector.js',
-                  '../../Telerik.Sitefinity.Frontend/Selectors/sf-page-selector.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-services.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selectors.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-bubbles-selection.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-group-selection.html',
+	              '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/dynamic-modules/sf-data-service.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/dynamic-modules/sf-dynamic-items-selector.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/dynamic-modules/sf-dynamic-items-selector.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/news/sf-news-item-service.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/news/sf-news-selector.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/news/sf-news-selector.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/date-time/sf-timespan-selector.js',
+	              '../../Telerik.Sitefinity.Frontend/client-components/selectors/date-time/sf-timespan-selector.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/pages/sf-page-service.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/pages/sf-page-selector.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/pages/sf-page-selector.html',
                   'helpers/mocks/*.js',
                   'unit/**'
         ],
@@ -50,7 +50,7 @@ module.exports = function (config) {
             '../../Telerik.Sitefinity.Frontend/Designers/Scripts/*.js': 'coverage',
             '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/*.js': 'coverage',
             '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Designer/*.js': 'coverage',
-            '../../Telerik.Sitefinity.Frontend/Selectors/*.html': ['ng-html2js']
+            '../../Telerik.Sitefinity.Frontend/client-components/selectors/**/*.html': ['ng-html2js']
         },
 
         //Converts directive's external html templates into javascript strings and stores them in the Angular's $templateCache service.
@@ -59,7 +59,7 @@ module.exports = function (config) {
             // from all the files, so you can load them all with module('template')
             moduleName: 'templates',
 
-            // Returns the id of the template in $templateCache. To get a template in a test use id like 'Selectors/list-selector.html'
+            // Returns the id of the template in $templateCache. To get a template in a test use id like 'client-components/selectors/common/sf-list-selector.html'
             cacheIdFromPath: function (filepath) {
                 // filepath is the path to the template on the disc 
                 return filepath.split('Telerik.Sitefinity.Frontend/')[1];
