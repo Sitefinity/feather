@@ -1,6 +1,8 @@
 ﻿@model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields.ClassificationFieldViewModel
 
-<div class="sfitemHierarchicalTaxon sfitemTaxonWrp @ViewBag.CssClass" data-sf-field='@Model.FieldName' data-sf-ftype='@Model.GetTaxonomyType()'>
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+
+<div class="sfitemHierarchicalTaxon sfitemTaxonWrp @ViewBag.CssClass" data-sf-field='@Model.FieldName' data-sf-ftype='FlatTaxon'>
     @if (!Model.FieldTitle.IsNullOrEmpty())
     {
     <div class="sfitemFieldLbl">
@@ -9,7 +11,7 @@
     }
 
     <ul class="sfCategoriesList">
-    @foreach (string taxonName in Model.GetTaxonNames())
+    @foreach (string taxonName in Model.TaxonIds.GetTaxonNames(Model.ClassificationId))
     {
         <li>
             <span>@taxonName</span>
