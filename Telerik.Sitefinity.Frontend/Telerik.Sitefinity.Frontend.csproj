@@ -247,6 +247,7 @@
     <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParser.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilder.cs" />
+    <Compile Include="Mvc\Infrastructure\MvcConstants.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\CategoryParamResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\IntParamResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\CustomActionParamsMapper.cs">
