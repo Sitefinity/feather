@@ -1,4 +1,4 @@
-﻿ <div ng-repeat="item in selectedItems | limitTo:5" class="label label-taxon">
+﻿ <div ng-repeat="item in selectedItems | limitTo:5" class="label label-taxon label-full">
     <span data-index="{{$index}}"
           sf-shrinked-breadcrumb="{{hierarchical ? item.TitlesPath : bindIdentifierField(item)}}" sf-max-length="45">
     </span>
