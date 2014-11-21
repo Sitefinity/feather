@@ -1,6 +1,6 @@
 ﻿(function () {
-    angular.module('services')
-        .factory('flatTaxonService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
+    angular.module('sfServices')
+        .factory('sfFlatTaxonService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
             var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Taxonomies/FlatTaxon.svc/'),
                 dataItemPromise;

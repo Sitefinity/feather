@@ -13,7 +13,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/sf-date-time-picker.html';
+                    var url = attrs.templateUrl || 'client-components/selectors/date-time/sf-date-time-picker.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {

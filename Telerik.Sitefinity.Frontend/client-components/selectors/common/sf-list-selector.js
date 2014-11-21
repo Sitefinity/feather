@@ -84,7 +84,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/sf-list-selector.html';
+                    var url = attrs.templateUrl || 'client-components/selectors/common/sf-list-selector.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {

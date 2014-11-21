@@ -1,6 +1,6 @@
 ﻿<div class="list-group list-group-sm m-bottom-sm" ng-show="selectedItems.length > 0">
     <div ng-repeat="item in selectedItems | limitTo:5"
-         data-index="{{$index}}"         
+         data-index="{{$index}}"
          class="list-group-item">
          <span sf-shrinked-breadcrumb="{{hierarchical ? item.TitlesPath : bindIdentifierField(item)}}" sf-max-length="70"></span>
     </div>

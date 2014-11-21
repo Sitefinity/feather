@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfNewsSelector', ['newsItemService', function (newsItemService) {
+        .directive('sfNewsSelector', ['sfNewsItemService', function (newsItemService) {
             return {
                 require: '^sfListSelector',
                 restrict: 'A',
@@ -18,12 +18,12 @@
 
                         ctrl.selectorType = 'NewsSelector';
 
-                        ctrl.dialogTemplateUrl = 'Selectors/sf-news-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/news/sf-news-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-news-selector-template';
 
                         var closedDialogTemplate = attrs.multiselect ?
-                            'Selectors/list-group-selection.html' :
-                            'Selectors/bubbles-selection.html';
+                            'client-components/selectors/common/sf-list-group-selection.html' :
+                            'client-components/selectors/common/sf-bubbles-selection.html';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;                        
                     }

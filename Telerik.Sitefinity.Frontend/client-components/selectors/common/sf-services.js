@@ -1,9 +1,9 @@
 ﻿(function () {
-    var module = angular.module('services', ['ngResource']);
+    var module = angular.module('sfServices', ['ngResource', 'serverDataModule']);
 
     module.config(['$httpProvider', function ($httpProvider) {
         if (!$httpProvider.defaults.headers.get) {
-            $httpProvider.defaults.headers.get = {};
+            $httpProvider.defaults.headers.get = {};    
         }
 
         var getHeaders = $httpProvider.defaults.headers.get;
@@ -113,7 +113,7 @@
                 if (this.filter) {
                     this.filter += this.andOperator;
                 }
-
+                
                 return this;
             },
             trimOperator: function () {
@@ -162,7 +162,7 @@
 
         /* The context should be object containing properties: 'appPath' and optionally 'currentPackage' and 'uiCulture'. */
         this.setServerContext = function (context) {
-            customContext = context;
+            customContext = context;            
         };
 
         this.$get = ['$injector', function ($injector) {

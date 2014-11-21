@@ -1,7 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
         .directive('sfTaxonFilter', function () {
-
             return {
                 restrict: 'EA',
                 scope: {
@@ -13,7 +12,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/sf-taxon-filter.html';
+                    var url = attrs.templateUrl || 'client-components/selectors/taxonomies/sf-taxon-filter.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -99,19 +98,34 @@
                             }
                         };
 
+                        scope.groupItemsMap = [];
+
                         scope.toggleTaxonomySelection = function (taxonomyName) {
                             // is currently selected
                             if (taxonomyName in scope.selectedTaxonomies) {
+
                                 delete scope.selectedTaxonomies[taxonomyName];
 
                                 var groupToRemove = scope.queryData.getItemByName(taxonomyName);
 
-                                if (groupToRemove)
-                                    scope.queryData.removeGroup(groupToRemove);
-                            }
+                                if (groupToRemove) {
+                                    scope.groupItemsMap[taxonomyName] = scope.queryData.getDirectChildren(groupToRemove);
 
-                                // is newly selected
+                                    scope.queryData.removeGroup(groupToRemove);
+                                }
+                            }
                             else {
+                                // is newly selected
+                                if (scope.groupItemsMap && scope.groupItemsMap[taxonomyName]) {
+                                    var items = scope.groupItemsMap[taxonomyName];
+                                    items.forEach(function (i) {
+                                        addChildTaxonQueryItem({
+                                            TaxonomyName: taxonomyName,
+                                            Name: i.Name,
+                                            Id: i.Value
+                                        });
+                                    });
+                                }
                                 constructFilterItem(taxonomyName);
                             }
                         };

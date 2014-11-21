@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfDynamicItemsSelector', ['dataService', function (dataService) {
+        .directive('sfDynamicItemsSelector', ['sfDataService', function (dataService) {
             return {
                 require: '^sfListSelector',
                 restrict: 'A',
@@ -26,12 +26,12 @@
 
                         ctrl.selectorType = 'DynamicItemsSelector';
 
-                        ctrl.dialogTemplateUrl = 'Selectors/sf-dynamic-items-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/dynamic-modules/sf-dynamic-items-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-dynamic-items-selector-template';
 
                         var closedDialogTemplate = attrs.multiselect ?
-                            'Selectors/list-group-selection.html' :
-                            'Selectors/bubbles-selection.html';
+                            'client-components/selectors/common/sf-list-group-selection.html' :
+                            'client-components/selectors/common/sf-bubbles-selection.html';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
                     }

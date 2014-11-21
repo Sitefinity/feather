@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('services')
+    angular.module('sfServices')
         .factory('sfPageService', ['serverContext', 'serviceHelper', function (serverContext, serviceHelper) {
             /* Private methods and variables */
             var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Pages/PagesService.svc/');

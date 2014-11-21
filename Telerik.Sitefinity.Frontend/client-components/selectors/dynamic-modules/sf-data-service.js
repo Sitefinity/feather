@@ -1,6 +1,6 @@
 ﻿(function () {
-    angular.module('services')
-        .factory('dataService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
+    angular.module('sfServices')
+        .factory('sfDataService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
             var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/DynamicModules/Data.svc/'),
                 dataItemPromise;

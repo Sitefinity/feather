@@ -25,7 +25,7 @@
     describe('default context - sitefinity', function () {
         var serverContext;
 
-        beforeEach(module('services'));
+        beforeEach(module('sfServices'));
 
         //Mock sitefinity global variable
         beforeEach(function () {
@@ -86,7 +86,7 @@
         },
             serverContext;
 
-        beforeEach(module('services', function (serverContextProvider) {
+        beforeEach(module('sfServices', function (serverContextProvider) {
             serverContextProvider.setServerContext(context);
         }));
 
