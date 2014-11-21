@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Mvc;
 using Telerik.Sitefinity.GeoLocations.Model;
 using Telerik.Sitefinity.Locations.Configuration;
 
@@ -70,6 +71,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return result;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "helper"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Api")]
+        public static string GetApiKey(this HtmlHelper helper)
+        {
+            var apiKey = Telerik.Sitefinity.Configuration.Config.Get<Telerik.Sitefinity.Services.SystemConfig>().GeoLocationSettings.GoogleMapApiV3Key;
+
+            return apiKey;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "helper"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Api")]
+        public static bool IsApiKeyValid(this HtmlHelper helper)
+        {
+            var apiKey = Telerik.Sitefinity.Configuration.Config.Get<Telerik.Sitefinity.Services.SystemConfig>().GeoLocationSettings.GoogleMapApiV3Key;
+            var isValid = !apiKey.IsNullOrEmpty();
+
+            return isValid;
         }
     }
 }
