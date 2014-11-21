@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.InlineEditing;
 
@@ -59,6 +60,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 providerName, 
                 type, 
                 id);
+        }
+
+        /// <summary>
+        /// Renders InlineEditing attributes required for the Inline editing feature.
+        /// </summary>
+        /// <param name="providerName">Name of the provider.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="id">The identifier.</param>
+        /// <returns>The inline editing attributes.</returns>
+        public static IHtmlString InlineEditingAttributes(this HtmlHelper htmlHelper, string providerName, string type, Guid id)
+        {
+            if (type == null)
+                throw new ArgumentNullException("type");
+
+            var providerNameEncoded = providerName != null ? htmlHelper.Encode(providerName) : providerName;
+            var typeEncoded = htmlHelper.Encode(type);
+
+            if (id == Guid.Empty)
+                return htmlHelper.Raw("data-sf-provider='{0}' data-sf-type='{1}'".Arrange(providerNameEncoded, typeEncoded));
+            else
+                return htmlHelper.Raw("data-sf-provider='{0}' data-sf-type='{1}' data-sf-id='{2}'".Arrange(providerNameEncoded, typeEncoded, id.ToString("D")));
         }
     }
 }
