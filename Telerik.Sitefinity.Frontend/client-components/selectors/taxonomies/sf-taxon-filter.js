@@ -13,7 +13,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'Selectors/sf-taxon-filter.html';
+                    var url = attrs.templateUrl || 'client-components/selectors/taxonomies/sf-taxon-filter.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {

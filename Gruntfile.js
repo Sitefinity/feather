@@ -12,8 +12,7 @@ module.exports = function (grunt) {
 					'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
-					'Telerik.Sitefinity.Frontend/Selectors/*.js',
-					'Telerik.Sitefinity.Frontend/Services/*.js'
+					'Telerik.Sitefinity.Frontend/client=components/selectors/**/*.js'
 			]
 		},
 		
@@ -24,18 +23,19 @@ module.exports = function (grunt) {
 				'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 				'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
 				'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
-				'Telerik.Sitefinity.Frontend/Services/services.js',
-				'Telerik.Sitefinity.Frontend/Services/news-item-service.js',
-				'Telerik.Sitefinity.Frontend/Services/data-service.js',
-				'Telerik.Sitefinity.Frontend/Services/flat-taxon-service.js',
-				'Telerik.Sitefinity.Frontend/Selectors/sf-selectors.js',
-				'Telerik.Sitefinity.Frontend/Selectors/sf-list-selector.js',
-				'Telerik.Sitefinity.Frontend/Selectors/sf-news-selector.js',
-				'Telerik.Sitefinity.Frontend/Selectors/sf-dynamic-items-selector.js',
-				'Telerik.Sitefinity.Frontend/Selectors/sf-taxon-selector.js',
-				'Telerik.Sitefinity.Frontend/Selectors/sf-timespan-selector.js',
-				'Telerik.Sitefinity.Frontend/Selectors/sf-items-tree.js',
-				'Telerik.Sitefinity.Frontend/Selectors/sf-page-selector.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-services.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selectors.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/news/sf-news-item-service.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/news/sf-news-selector.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/dynamic-modules/sf-data-service.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/dynamic-modules/sf-dynamic-items-selector.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/taxonomies/sf-flat-taxon-service.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/taxonomies/sf-taxon-selector.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/date-time/sf-timespan-selector.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/pages/sf-page-service.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/pages/sf-page-selector.js',
 				'!Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js',
 				'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
 				options: {
@@ -75,7 +75,7 @@ module.exports = function (grunt) {
 			  base: 'Telerik.Sitefinity.Frontend'
 			},
 			main: {
-			  src: ['Telerik.Sitefinity.Frontend/Selectors/*.html'],
+			  src: ['Telerik.Sitefinity.Frontend/client-components/selectors/**/*.html'],
 			  dest: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js'
 			},
 		},

@@ -1,6 +1,6 @@
 ﻿(function () {
-    angular.module('services')
-        .factory('hierarchicalTaxonService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
+    angular.module('sfServices')
+        .factory('sfHierarchicalTaxonService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
             var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Taxonomies/HierarchicalTaxon.svc/'),
                 dataItemPromise;

@@ -47,12 +47,12 @@
 
                         ctrl.selectorType = 'PageSelector';
 
-                        ctrl.dialogTemplateUrl = 'Selectors/sf-page-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-page-selector-template';
 
                         var closedDialogTemplate = attrs.multiselect ?
-                            'Selectors/list-group-selection.html' :
-                            'Selectors/bubbles-selection.html';
+                            'client-components/selectors/common/sf-list-group-selection.html' :
+                            'client-components/selectors/common/sf-bubbles-selection.html';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;                       
 

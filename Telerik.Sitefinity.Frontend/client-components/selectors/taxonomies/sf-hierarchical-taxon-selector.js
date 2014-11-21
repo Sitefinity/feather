@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'hierarchicalTaxonService', function (serviceHelper, hierarchicalTaxonService) {
+        .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'sfHierarchicalTaxonService', function (serviceHelper, hierarchicalTaxonService) {
             var _applyBreadcrumbPath = function (result) {
                 var taxa = result.Items;
                 var taxonToAdd = null;
@@ -73,12 +73,13 @@
                                 angular.forEach(items, function (item) {
                                     item.RootPath = item.TitlesPath ? "Under " + item.TitlesPath : 'On Top Level';
                                 });
-                            }
+                            };
 
                             ctrl.selectorType = 'HierarchicalTaxonSelector';
-                            ctrl.dialogTemplateUrl = 'Selectors/Taxons/sf-hierarchical-taxon-selector.html';
+                            ctrl.dialogTemplateUrl = 'client-components/selectors/taxonomies/sf-hierarchical-taxon-selector.html';
                             ctrl.$scope.dialogTemplateId = 'sf-hierarchical-taxon-selector';
-                            ctrl.closedDialogTemplateUrl = attrs.multiselect ? 'Selectors/list-group-selection.html' : 'Selectors/bubbles-selection.html';
+                            ctrl.closedDialogTemplateUrl = attrs.multiselect ? 'client-components/selectors/common/sf-list-group-selection.html' :
+                                'client-components/selectors/common/sf-bubbles-selection.html';
 
                             ctrl.$scope.hierarchical = true;
                             ctrl.$scope.identifierField = "Breadcrumb";

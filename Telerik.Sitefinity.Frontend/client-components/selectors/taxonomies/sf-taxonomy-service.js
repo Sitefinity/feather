@@ -1,6 +1,6 @@
 ﻿(function () {
-    angular.module('services')
-        .factory('taxonomyService', ['$resource', 'serverContext', function ($resource, serverContext) {
+    angular.module('sfServices')
+        .factory('sfTaxonomyService', ['$resource', 'serverContext', function ($resource, serverContext) {
             /* Private methods and variables */
             var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Taxonomies/Taxonomy.svc/'),
                 dataItemPromise;

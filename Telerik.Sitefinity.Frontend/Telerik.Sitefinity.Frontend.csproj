@@ -313,7 +313,6 @@
     <Folder Include="assets\src\js\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Scripts\data-providers.js" />
     <EmbeddedResource Include="Mvc\Scripts\Designer\designer.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js" />
@@ -447,39 +446,39 @@
     <EmbeddedResource Include="Mvc\Scripts\server-data.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-selectors.js" />
-    <EmbeddedResource Include="Services\services.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-selectors.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-services.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-list-selector.html" />
-    <EmbeddedResource Include="Selectors\sf-taxon-selector.js" />
-    <EmbeddedResource Include="Selectors\sf-taxon-selector.html" />
-    <EmbeddedResource Include="Services\flat-taxon-service.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-flat-taxon-service.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-list-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.js" />
     <EmbeddedResource Include="Mvc\Scripts\Templates\expander.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Scripts\Templates\provider-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Services\taxonomy-service.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxonomy-service.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-taxon-filter.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-filter.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-taxon-filter.html" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-filter.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-news-selector.html" />
-    <EmbeddedResource Include="Selectors\sf-news-selector.js" />
-    <EmbeddedResource Include="Services\news-item-service.js" />
+    <EmbeddedResource Include="client-components\selectors\news\sf-news-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\news\sf-news-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\news\sf-news-item-service.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\style-dropdown.js" />
@@ -488,22 +487,24 @@
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
     <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
-    <EmbeddedResource Include="Selectors\Taxons\sf-hierarchical-taxon-selector.html" />
-    <EmbeddedResource Include="Selectors\Taxons\sf-hierarchical-taxon-selector.js" />
-    <EmbeddedResource Include="Services\hierarchical-taxon-service.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-service.js" />
     <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
-    <EmbeddedResource Include="Selectors\sf-page-selector.js" />
-    <EmbeddedResource Include="Selectors\sf-page-selector.html" />
-    <EmbeddedResource Include="Selectors\sf-items-tree.html" />
-    <EmbeddedResource Include="Selectors\bubbles-selection.html" />
-    <EmbeddedResource Include="Selectors\list-group-selection.html" />
-    <EmbeddedResource Include="Services\page-service.js" />
-    <EmbeddedResource Include="Selectors\sf-items-tree.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-items-tree.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-bubbles-selection.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-group-selection.html" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-service.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-items-tree.js" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="assets\gruntfile.js" />
     <EmbeddedResource Include="Modules\ControlTemplates\Web\Scripts\MvcControlTemplateEditor.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-provider-service.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
@@ -511,39 +512,39 @@
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.src.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-filter-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-filter-selector.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-filter-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-filter-selector.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-date-filter.html" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-filter.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-date-filter.js" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-filter.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-timespan-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-timespan-selector.js" />
-    <EmbeddedResource Include="Selectors\sf-dynamic-items-selector.html" />
-    <EmbeddedResource Include="Selectors\sf-dynamic-items-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-dynamic-items-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-dynamic-items-selector.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Services\data-service.js" />
+    <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-data-service.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-selected-items-view.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-selected-items-view.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-date-time-picker.html" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\sf-date-time-picker.js" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />
@@ -559,7 +560,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

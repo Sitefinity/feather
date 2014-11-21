@@ -60,9 +60,9 @@ describe("page selector", function () {
     };
 
     //This is the id of the cached templates in $templateCache. The external templates are cached by a karma/grunt preprocessor.
-    var pageSelectorTemplatePath = 'Selectors/sf-page-selector.html';
-    var listSelectorTemplatePath = 'Selectors/sf-list-selector.html';
-    var treeSelectorTemplatePath = 'Selectors/sf-items-tree.html';
+    var pageSelectorTemplatePath = 'client-components/selectors/pages/sf-page-selector.html';
+    var listSelectorTemplatePath = 'client-components/selectors/common/sf-list-selector.html';
+    var treeSelectorTemplatePath = 'client-components/selectors/common/sf-items-tree.html';
 
     //Load the module responsible for the modal dialog
     beforeEach(module('modalDialog'));

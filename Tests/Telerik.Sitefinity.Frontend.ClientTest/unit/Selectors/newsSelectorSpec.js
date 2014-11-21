@@ -38,7 +38,7 @@ describe("news selector", function () {
 
     //Mock news item service. It returns promises.
     var newsItemService = {
-        getItems: jasmine.createSpy('newsItemService.getItems').andCallFake(function (provider, skip, take, filter) {
+        getItems: jasmine.createSpy('sfNewsItemService.getItems').andCallFake(function (provider, skip, take, filter) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -55,7 +55,7 @@ describe("news selector", function () {
 
             return serviceResult.promise;
         }),
-        getSpecificItems: jasmine.createSpy('newsItemService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfNewsItemService.getSpecificItems').andCallFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -70,7 +70,7 @@ describe("news selector", function () {
 
             return serviceResult.promise;
         }),
-        getItem: jasmine.createSpy('newsItemService.getItem').andCallFake(function (itemId, provider) {
+        getItem: jasmine.createSpy('sfNewsItemService.getItem').andCallFake(function (itemId, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -88,7 +88,7 @@ describe("news selector", function () {
     };
 
     var newsItemServiceMockReturnMoreThan5Items = {
-        getSpecificItems: jasmine.createSpy('newsItemService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfNewsItemService.getSpecificItems').andCallFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -99,10 +99,10 @@ describe("news selector", function () {
     };
 
     //This is the id of the cached templates in $templateCache. The external templates are cached by a karma/grunt preprocessor.
-    var newsSelectorTemplatePath = 'Selectors/sf-news-selector.html';
-    var listSelectorTemplatePath = 'Selectors/sf-list-selector.html';
-    var bubblesSelectionTemplatePath = 'Selectors/bubbles-selection.html';
-    var listGroupSelectionTemplatePath = 'Selectors/list-group-selection.html';
+    var newsSelectorTemplatePath = 'client-components/selectors/news/sf-news-selector.html';
+    var listSelectorTemplatePath = 'client-components/selectors/common/sf-list-selector.html';
+    var bubblesSelectionTemplatePath = 'client-components/selectors/common/sf-bubbles-selection.html';
+    var listGroupSelectionTemplatePath = 'client-components/selectors/common/sf-list-group-selection.html';
 
     //Load the module responsible for the modal dialog
     beforeEach(module('modalDialog'));
@@ -133,7 +133,7 @@ describe("news selector", function () {
 
     beforeEach(module(function ($provide) {
         //Force angular to use the mock.
-        $provide.value('newsItemService', newsItemService);
+        $provide.value('sfNewsItemService', newsItemService);
 
         provide = $provide;
     }));
@@ -196,7 +196,7 @@ describe("news selector", function () {
         dataItem2.Title = { Value: 'Filtered' };
 
         //Sets default newsItemService mock.
-        provide.value('newsItemService', newsItemService);
+        provide.value('sfNewsItemService', newsItemService);
     });
 
     /* Helper methods */
@@ -649,7 +649,7 @@ describe("news selector", function () {
     describe('in multi selection mode and more than 5 items selected by default', function () {
         it('[manev] / should show link indicating that there are 5 items more.', function () {
 
-            provide.value('newsItemService', newsItemServiceMockReturnMoreThan5Items);
+            provide.value('sfNewsItemService', newsItemServiceMockReturnMoreThan5Items);
 
             var ids = customDataItems.Items.map(function (i) { return i.Id; });
 

@@ -1,6 +1,6 @@
 ﻿(function () {
-    angular.module('services')
-        .factory('newsItemService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
+    angular.module('sfServices')
+        .factory('sfNewsItemService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
             var dataItemPromise,
                 contentType = 'Telerik.Sitefinity.GenericContent.Model.Content',
