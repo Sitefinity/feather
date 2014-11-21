@@ -45,15 +45,15 @@
         var mapWrappers = jQuery('.addressMapWrp');
         var i, addressValue, mapContainer, latlng;
         for (i = 0 ; i < mapWrappers.length; i++) {
-            addressValue = $.parseJSON(jQuery(mapWrappers[i]).find('.addressValueInput').attr('value'))
+            addressValue = $.parseJSON(jQuery(mapWrappers[i]).find('.addressValueInput').attr('value'));
             mapContainer = jQuery(mapWrappers[i]).find('.mapContainer');
-            
+
             if (mapContainer.gmap('get', 'map') != 'object') {
                 latlng = new google.maps.LatLng(addressValue.Latitude, addressValue.Longitude);
                 _initializeMap(mapContainer, latlng, addressValue.MapZoomLevel);
             }
         }
-    }
+    };
 
     var _refreshMap = function (mapContainer) {
         mapContainer.gmap('refresh');
