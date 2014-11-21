@@ -56,7 +56,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields
         /// <param name="fieldTitle">The field title.</param>
         public ChoiceFieldViewModel(IEnumerable multipleChoiceValues, string fieldName, string fieldTitle)
         {
-            this.ChoiceValueText = this.GetMultipleChoiceValueString(multipleChoiceValues);
+            this.MultiChoiceValues = multipleChoiceValues;
             this.FieldName = fieldName;
             this.FieldTitle = fieldTitle;
         }
@@ -93,20 +93,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields
         /// </value>
         public string ChoiceValueText { get; set; }
 
-        private string GetMultipleChoiceValueString(IEnumerable multiChoiceValues)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (object val in multiChoiceValues)
-            {
-                sb.Append(val.ToString());
-                sb.Append(", ");
-            }
-
-            if (sb.Length > 1)
-                sb.Remove(sb.Length - 2, 2);
-
-            return sb.ToString();
-        }
+        /// <summary>
+        /// Gets or sets the multi choice values.
+        /// </summary>
+        /// <value>
+        /// The multi choice values.
+        /// </value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Multi")]
+        public IEnumerable MultiChoiceValues { get; set; }
     }
 }

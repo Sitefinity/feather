@@ -7,10 +7,10 @@
                 var taxonPathTitle = '';
                 var taxaLength = taxa.length;
                 if (taxaLength > 0) {
-                    var taxonId = taxa[taxaLength -1].Id;
+                    var taxonId = taxa[taxaLength - 1].Id;
                     var delimiter = ' > ';
                     for (var i = 0, l = taxa.length; i < l; i++) {
-                        if (i == taxa.length -1) {
+                        if (i == taxa.length - 1) {
                             delimiter = '';
                             taxonToAdd = taxa[i];
                         }
@@ -46,7 +46,7 @@
 
                             ctrl.getChildren = function (parentId, search) {
                                 return hierarchicalTaxonService.getChildTaxons(parentId, search)
-                                                               .then(function(data) {
+                                                           .then(function (data) {
                                                                    return data.Items;
                                                                });
                             };

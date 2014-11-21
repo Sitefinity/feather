@@ -44,8 +44,8 @@
                                 ng-hide="filter.isEmpty"
                                 ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
                                 ng-click="itemClicked($index, item)">
-
-                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect" ng-hide="itemDisabled(item)">
+                                
+                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-hide="itemDisabled(item) || !multiselect">
 
                             <div>
                                 <div ng-bind="bindIdentifierField(item)"/>
@@ -53,7 +53,9 @@
                                 <div ng-show="itemDisabled(item)">(not translated)</div>
                             </div>
 
-                           <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">{{item.ParentTitlesPath}}</div>
+                            <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
+                                <span sf-shrinked-breadcrumb="{{item.ParentTitlesPath}}" sf-max-length="60"></span>
+                            </div>
                         </div>
                     </div>
                     <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>

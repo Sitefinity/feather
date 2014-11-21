@@ -18,7 +18,7 @@
 
             <input type="checkbox" ng-checked="item.isChecked">
 
-            <div ng-bind="bindIdentifierField(item.item)"></div>
+            <div><span sf-shrinked-breadcrumb="{{bindIdentifierField(item.item)}}" sf-max-length="60"></span></div>
         </div>
     </div>
     <div ng-hide="currentItems.length"><i>No items found</i></div>

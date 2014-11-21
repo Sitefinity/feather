@@ -1,7 +1,7 @@
 ﻿(function () {
     var module = angular.module('sfServices', ['ngResource', 'serverDataModule']);
 
-    module.config(['$httpProvider', function($httpProvider) {
+    module.config(['$httpProvider', function ($httpProvider) {
         if (!$httpProvider.defaults.headers.get) {
             $httpProvider.defaults.headers.get = {};    
         }
@@ -26,8 +26,10 @@
             return str.substr(0, str.length - suffix.length);
         }
 
-        var getResource = function (url) {
+        var getResource = function (url, options) {
             var headerData;
+
+            var resourceOption = options || { stripTrailingSlashes: false };
 
             var culture = serverContext.getUICulture();
             if (culture) {
@@ -45,7 +47,7 @@
                     method: 'PUT',
                     headers: headerData
                 }
-            });
+            }, resourceOption);
         };
 
         function FilterBuilder(baseFilter) {
