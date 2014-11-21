@@ -511,6 +511,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return ContentHelper.AdaptMultilingualFilterExpressionRaw(filterExpression, uiCulture);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1002:AvoidToListOnIEnumerable")]
         private string GetSelectedItemsFilterExpression()
         {
             if (!this.SerializedSelectedItemsIds.IsNullOrEmpty())
