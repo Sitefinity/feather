@@ -50,7 +50,9 @@
                             <div>
                                 <div ng-bind="bindIdentifierField(item)" />
 
-                                <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">{{item.RootPath}}</div>
+                                <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
+                                    <span sf-shrinked-breadcrumb="{{item.RootPath}}" sf-max-length="60"></span>
+                                </div>
                             </div>
                         </div>
 
