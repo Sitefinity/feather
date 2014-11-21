@@ -98,16 +98,16 @@
          * Removes parts from the beginning of the breadcrumb in order to fit in the provided max length.
          */
         function dropExtraParts (parts, maxLength, valueLength, skipSymbol) {
-            var combinedWidth = valueLength,
+            var combinedLength = valueLength,
                 lastDroppedIndex;
 
             do {
                 var dropFirst = parts.length == 2;
                 var dropped = dropPartFromTheBeginning(parts, dropFirst);
-                combinedWidth -= dropped.part.length;
+                combinedLength -= dropped.part.length;
                 lastDroppedIndex = dropped.index;
             }
-            while(combinedWidth + skipSymbol.length > maxLength && parts.length >= 2);
+            while(combinedLength + skipSymbol.length > maxLength && parts.length >= 2);
 
             return lastDroppedIndex;
         }
@@ -122,6 +122,17 @@
             return parts.map(function (part, index) {
                 return index == lastIndex ? part : part + splitSymbol;
             });
+        }
+
+        /**
+         * If needed trims the provided value and puts '...' in the end.
+         */
+        function trimEnd (value, maxLength) {
+            if (value.length > maxLength) {
+                var trimmed = value.substr(0, maxLength);
+                return trimmed + '...';
+            }
+            return value;
         }
 
         return {
@@ -145,7 +156,8 @@
 
                     if(parts.length === 1) {
                         // If very long item on root level is selected.
-                        element.text(parts[0]);
+                        var trimmed = trimEnd(parts[0], maxLength);
+                        element.text(trimmed);
                         return;
                     }
 
@@ -155,7 +167,7 @@
                     parts.splice(lastDroppedIndex, 0, skipSymbol);
 
                     var text = parts.join('');
-                    element.text(text);
+                    element.text(trimEnd(text, maxLength));
                 });
             }
         };

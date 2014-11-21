@@ -30,7 +30,7 @@ describe('shrinked breadcrumb directive', function  () {
         leftOver.remove();
     });
 
-    it('[GeorgiMateev] / should drop parts of the breadcrumb the max length is exceeded.', function  () {
+    it('[GeorgiMateev] / should drop parts of the breadcrumb if the max length is exceeded.', function  () {
     	var scope = $rootScope.$new();    	
     	scope.text = 'home > page1 > page2 > page3 > page4 > page5 > page6';
 
@@ -45,7 +45,7 @@ describe('shrinked breadcrumb directive', function  () {
     	expect(actualResult).toBe(expectedResult);
     });
 
-    it('[GeorgiMateev] / should leave only the last very long part and set skip symbol in the beginning.', function  () {
+    it('[GeorgiMateev] / should leave only the last very long part and set skip symbol in the beginning and in the end.', function  () {
     	var scope = $rootScope.$new();    	
     	scope.text = 'home > page1 > page2 > page3 > page4 > page5 > this is sooo loooooooooooooooooooooooooooooooooooooooong';
 
@@ -53,7 +53,7 @@ describe('shrinked breadcrumb directive', function  () {
 
     	compileDirective(template, scope);
 
-    	var expectedResult = '... > this is sooo loooooooooooooooooooooooooooooooooooooooong';
+    	var expectedResult = '... > this is sooo looooooooooooooooooooooooo...';
 
     	var actualResult = $('#testSpan').text();
 
@@ -75,7 +75,7 @@ describe('shrinked breadcrumb directive', function  () {
     	expect(actualResult).toBe(expectedResult);
     });
 
-	it('[GeorgiMateev] / should not shrink if there is only root part and the max leng is exceeded.', function  () {
+	it('[GeorgiMateev] / should trim the end if there is only root part and the max leng is exceeded.', function  () {
     	var scope = $rootScope.$new();    	
     	scope.text = 'home so loooooooooooooooooooooooooooooooooooooooong';
 
@@ -83,7 +83,7 @@ describe('shrinked breadcrumb directive', function  () {
 
     	compileDirective(template, scope);
 
-    	var expectedResult = 'home so loooooooooooooooooooooooooooooooooooooooong';
+    	var expectedResult = 'home so loooooooooooooooooooooooooooooooooooo...';
 
     	var actualResult = $('#testSpan').text();
 
