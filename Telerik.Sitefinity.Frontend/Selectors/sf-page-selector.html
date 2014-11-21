@@ -44,8 +44,8 @@
                                 ng-hide="filter.isEmpty"
                                 ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
                                 ng-click="itemClicked($index, item)">
-
-                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect" ng-hide="itemDisabled(item)">
+                                
+                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-hide="itemDisabled(item) || !multiselect">
 
                             <div>
                                 <div ng-bind="bindIdentifierField(item)"/>

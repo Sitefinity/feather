@@ -1,5 +1,6 @@
 ﻿@model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.Fields.ChoiceFieldViewModel
 
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 
 <div class="@ViewBag.CssClass">
     @if (!Model.FieldTitle.IsNullOrEmpty())
@@ -10,6 +11,6 @@
     }
     
     <div class="sfChoiceContent" data-sf-field="@Model.FieldName" data-sf-ftype="ChoicesDropDown">
-        @Model.ChoiceValueText
+        @Model.MultiChoiceValues.GetMultipleChoiceValueString();
     </div>    
 </div>
