@@ -30,5 +30,6 @@
 {
     @Html.Script(ScriptRef.JQuery)
     @Html.Script("http://maps.googleapis.com/maps/api/js?key=" + Html.Sitefinity().GetApiKey() + "&sensor=false")
+    @Html.Script("Telerik.Sitefinity.Resources.Reference", "Telerik.Sitefinity.Resources.Scripts.jquery.ui.map.js")
     <script type="text/javascript" src='@Url.WidgetContent("Mvc/Scripts/address-field.js")'></script>
 }
