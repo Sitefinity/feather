@@ -324,6 +324,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             var items = activeDialog.Find.AllByExpression<HtmlDiv>("class=ng-binding", "ng-bind=~bindIdentifierField(item");
             int count = items.Count;
 
+            if (count == 0)
+            {
+                items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-click=itemClicked(item.item)");
+                count = items.Count;
+            }
+
             //// if items count is more than 12 elements, then you need to scroll
             if (count > 12)
             {
