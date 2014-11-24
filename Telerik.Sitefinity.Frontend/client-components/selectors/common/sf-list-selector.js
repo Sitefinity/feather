@@ -6,23 +6,23 @@
                 transclude: true,
                 scope: {
                     //For single selection
-                    selectedItemId: '=?',
-                    selectedItem: '=?',
+                    sfSelectedItemId: '=?',
+                    sfSelectedItem: '=?',
 
                     //For multiple selection
-                    selectedItems: '=?',
-                    selectedIds: '=?',
+                    sfSelectedItems: '=?',
+                    sfSelectedIds: '=?',
 
-                    provider: '=?',
-                    change: '=',
-                    sortable: '=?',
-                    itemType: '=?', /* sf-dynamic-items-selector */
-                    identifierField: '@?'
+                    sfProvider: '=?',
+                    sfChange: '=',
+                    sfSortable: '=?',
+                    sfItemType: '=?', /* sf-dynamic-items-selector */
+                    sfIdentifierField: '=?'
                 },
                 controller: function ($scope) {
                     this.defaultIdentifierField = 'Title';
 
-                    this.identifierField = $scope.identifierField || this.defaultIdentifierField;
+                    this.identifierField = $scope.sfIdentifierField || this.defaultIdentifierField;
 
                     this.bindIdentifierField = function (item) {
                         if (item) {
@@ -52,11 +52,11 @@
                         selectedItems.sort(compareFunction);
 
                         var firstItem = selectedItems[0];
-                        $scope.selectedItem = firstItem;
-                        $scope.selectedItemId = firstItem && firstItem.Id;
+                        $scope.sfSelectedItem = firstItem;
+                        $scope.sfSelectedItemId = firstItem && firstItem.Id;
 
-                        $scope.selectedItems = selectedItems;
-                        $scope.selectedIds = selectedItems.map(function (item) {
+                        $scope.sfSelectedItems = selectedItems;
+                        $scope.sfSelectedIds = selectedItems.map(function (item) {
                             return item.Id;
                         });
                     };
@@ -83,8 +83,8 @@
                     };
                 },
                 templateUrl: function (elem, attrs) {
-                    var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'client-components/selectors/common/sf-list-selector.html';
+                    var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/common/sf-list-selector.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -143,11 +143,11 @@
 
                         var emptyGuid = '00000000-0000-0000-0000-000000000000';
 
-                        var currentSelectedIds = scope.selectedIds;
+                        var currentSelectedIds = scope.sfSelectedIds;
 
                         var pushSelectedItemToTheTop = function () {
-                            if (scope.items.length === 0 && scope.selectedItems && scope.selectedItems.length > 0) {
-                                scope.items.push(scope.selectedItems[0]);
+                            if (scope.items.length === 0 && scope.sfSelectedItems && scope.sfSelectedItems.length > 0) {
+                                scope.items.push(scope.sfSelectedItems[0]);
                             }
                         };
 
@@ -185,9 +185,9 @@
                         };
 
                         var updateSelectionInTheDialog = function () {
-                            if (scope.selectedItems) {
+                            if (scope.sfSelectedItems) {
                                 Array.prototype.push.apply(scope.selectedItemsInTheDialog,
-                                    scope.selectedItems.map(function (item) {
+                                    scope.sfSelectedItems.map(function (item) {
                                         return {
                                             item: item,
                                             isChecked: true
@@ -218,16 +218,16 @@
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
 
-                        scope.$watch('provider', function (newProvider, oldProvider) {
+                        scope.$watch('sfProvider', function (newProvider, oldProvider) {
                             if (newProvider !== oldProvider) {
                                 if (ctrl.selectorType === 'NewsSelector') {
-                                    scope.selectedItems = null;
-                                    scope.selectedIds = null;
+                                    scope.sfSelectedItems = null;
+                                    scope.sfSelectedIds = null;
                                 }
                             }
                         });
 
-                        scope.$watchCollection('selectedIds', function (newIds, oldIds) {
+                        scope.$watchCollection('sfSelectedIds', function (newIds, oldIds) {
                             if (newIds && newIds.length > 0 && !areArrayEquals(newIds, currentSelectedIds)) {
                                 fetchSelectedItems();
                             }
@@ -312,44 +312,44 @@
                         scope.doneSelecting = function () {
                             scope.removeUnselectedItems();
 
-                            if (scope.change) {
+                            if (scope.sfChange) {
                                 var oldSelectedItems = [];
-                                Array.prototype.push.apply(oldSelectedItems, scope.selectedItems);
+                                Array.prototype.push.apply(oldSelectedItems, scope.sfSelectedItems);
                                 var changeArgs = {
                                     "newSelectedItems": scope.selectedItemsInTheDialog.map(function (item) {
                                         return item.item;
                                     }),
                                     "oldSelectedItems": oldSelectedItems
                                 };
-                                scope.change.call(scope.$parent, changeArgs);
+                                scope.sfChange.call(scope.$parent, changeArgs);
                             }
 
                             if (scope.selectedItemsInTheDialog.length > 0) {
                                 //set the selected item and its id to the mapped isolated scope properties
-                                scope.selectedItem = scope.selectedItemsInTheDialog[0].item;
-                                scope.selectedItemId = scope.selectedItemsInTheDialog[0].item.Id;
+                                scope.sfSelectedItem = scope.selectedItemsInTheDialog[0].item;
+                                scope.sfSelectedItemId = scope.selectedItemsInTheDialog[0].item.Id;
 
-                                if (scope.selectedItems) {
+                                if (scope.sfSelectedItems) {
                                     //Clean the array and keep all references.
-                                    scope.selectedItems.length = 0;
+                                    scope.sfSelectedItems.length = 0;
                                 }
                                 else {
-                                    scope.selectedItems = [];
+                                    scope.sfSelectedItems = [];
                                 }
 
-                                Array.prototype.push.apply(scope.selectedItems, scope.selectedItemsInTheDialog.map(function (item) {
+                                Array.prototype.push.apply(scope.sfSelectedItems, scope.selectedItemsInTheDialog.map(function (item) {
                                     return item.item;
                                 }));
 
-                                scope.selectedIds = scope.selectedItems.map(function (item) {
+                                scope.sfSelectedIds = scope.sfSelectedItems.map(function (item) {
                                     return item.Id;
                                 });
                             }
                             else {
-                                scope.selectedItem = null;
-                                scope.selectedItemId = null;
-                                scope.selectedItems = [];
-                                scope.selectedIds = [];
+                                scope.sfSelectedItem = null;
+                                scope.sfSelectedItemId = null;
+                                scope.sfSelectedItems = [];
+                                scope.sfSelectedIds = [];
                             }
 
                             resetItems();
@@ -377,13 +377,13 @@
                         };
 
                         scope.getDialogTemplate = function () {
-                            var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
+                            var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
                             var url = attrs.sfDialogTemplate || ctrl.dialogTemplateUrl;
                             return serverContext.getEmbeddedResourceUrl(assembly, url);
                         };
 
                         scope.getClosedDialogTemplate = function () {
-                            var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
+                            var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
                             var url = attrs.sfClosedDialogTemplate || ctrl.closedDialogTemplateUrl;
                             return serverContext.getEmbeddedResourceUrl(assembly, url);
                         };
@@ -410,7 +410,7 @@
                             }).length;
                         };
 
-                        scope.multiselect = (attrs.multiselect && attrs.multiselect.toLowerCase() == "true") ? true : false;
+                        scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == "true") ? true : false;
 
                         scope.selectedItemsInTheDialog = [];
 
@@ -438,19 +438,19 @@
 
                         scope.getSelectedIds = function () {
                             if (scope.multiselect) {
-                                if (scope.selectedIds && scope.selectedIds.length > 0) {
-                                    return scope.selectedIds.filter(function (id) {
+                                if (scope.sfSelectedIds && scope.sfSelectedIds.length > 0) {
+                                    return scope.sfSelectedIds.filter(function (id) {
                                         return id;
                                     });
                                 }
-                                else if (scope.selectedItems && scope.selectedItems.length > 0) {
-                                    return scope.selectedItems.map(function (item) {
+                                else if (scope.sfSelectedItems && scope.sfSelectedItems.length > 0) {
+                                    return scope.sfSelectedItems.map(function (item) {
                                         return item.Id;
                                     });
                                 }
                             }
                             else {
-                                var id = (scope.selectedItem && scope.selectedItem.Id) || scope.selectedItemId;
+                                var id = (scope.sfSelectedItem && scope.sfSelectedItem.Id) || scope.sfSelectedItemId;
                                 if (id) {
                                     var selected = [];
                                     selected.push(id);
@@ -475,8 +475,8 @@
                             });
                         };
 
-                        if (scope.selectedIds && scope.selectedIds.length !== 0) {
-                            scope.selectedIds = scope.selectedIds.filter(function (value) {
+                        if (scope.sfSelectedIds && scope.sfSelectedIds.length !== 0) {
+                            scope.sfSelectedIds = scope.sfSelectedIds.filter(function (value) {
                                 return value && value !== "";
                             });
                         }
