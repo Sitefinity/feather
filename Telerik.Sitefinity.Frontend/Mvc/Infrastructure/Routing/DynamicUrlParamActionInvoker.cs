@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
-
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
@@ -44,6 +44,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             {
                 proxyControl.RequestContext.RouteData.Values.Remove(DynamicUrlParamActionInvoker.ControllerNameKey);
                 base.InitializeRouteParameters(proxyControl);
+            }
+        }
+
+        /// <summary>
+        /// Logs exceptions thrown by the invocation of <see cref="ControllerActionInvoker"/>
+        /// </summary>
+        /// <param name="proxyControl">The proxy control.</param>
+        protected override void ExecuteController(MvcProxyBase proxyControl)
+        {
+            try
+            {
+                base.ExecuteController(proxyControl);
+            }
+            catch (Exception ex)
+            {
+                if (Exceptions.HandleException(ex, ExceptionPolicyName.IgnoreExceptions))
+                    throw;
+
+                proxyControl.Context.Response.Clear();
             }
         }
 
