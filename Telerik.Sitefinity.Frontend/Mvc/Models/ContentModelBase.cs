@@ -521,13 +521,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             {
                 var selectedItemIds = JsonSerializer.DeserializeFromString<IList<string>>(this.SerializedSelectedItemsIds);
                 var selectedItemGuids = selectedItemIds.Select(id => new Guid(id));
+                var masterIds = this.GetItemsQuery()
+                    .OfType<ILifecycleDataItemGeneric>()
+                    .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
+                    .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id)
+                    .Distinct();
 
-                var masterIds = this.GetItemsQuery().OfType<ILifecycleDataItemGeneric>().Where(c => selectedItemGuids.Contains(c.Id) && c.OriginalContentId != Guid.Empty).Select(n => n.OriginalContentId.ToString("D"));
-
-                var selectedItemConditions = selectedItemIds.Select(id => "Id = " + id.Trim()).ToList();
-                selectedItemConditions.AddRange(masterIds.Select(id => "OriginalContentId = " + id.Trim()));
-
+                var selectedItemConditions = masterIds.Select(id => "Id = {0} OR OriginalContentId = {0}".Arrange(id.ToString("D")));
                 var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
+
                 return selectedItemsFilterExpression;
             }
             else
