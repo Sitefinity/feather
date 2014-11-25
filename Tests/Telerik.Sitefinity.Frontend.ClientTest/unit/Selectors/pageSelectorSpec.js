@@ -174,7 +174,7 @@ describe("page selector", function () {
     describe('check default properties initialization of page selector', function () {
         it('[manev] / should init default page selector values.', function () {
 
-            var template = "<sf-list-selector sf-page-selector sf-multiselect='true' />";
+            var template = "<sf-list-selector sf-page-selector sf-multiselect='true' sf-identifier-field='TitlesPath' />";
 
             compileDirective(template);
 
