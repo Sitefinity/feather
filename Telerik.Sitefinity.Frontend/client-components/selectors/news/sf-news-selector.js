@@ -7,12 +7,12 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search, frontendLanguages) {
-                            var provider = ctrl.$scope.provider;
+                            var provider = ctrl.$scope.sfProvider;
                             return newsItemService.getItems(provider, skip, take, search, frontendLanguages);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
-                            var provider = ctrl.$scope.provider;
+                            var provider = ctrl.$scope.sfProvider;
                             return newsItemService.getSpecificItems(ids, provider);
                         };
 
@@ -21,7 +21,7 @@
                         ctrl.dialogTemplateUrl = 'client-components/selectors/news/sf-news-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-news-selector-template';
 
-                        var closedDialogTemplate = attrs.multiselect ?
+                        var closedDialogTemplate = attrs.sfMultiselect ?
                             'client-components/selectors/common/sf-list-group-selection.html' :
                             'client-components/selectors/common/sf-bubbles-selection.html';
 

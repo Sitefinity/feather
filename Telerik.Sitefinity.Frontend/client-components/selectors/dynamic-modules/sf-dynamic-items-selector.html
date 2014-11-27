@@ -24,9 +24,9 @@
                         <span class="input-group-addon">
                             <i class="glyphicon glyphicon-search"></i>
                         </span>
-                        <sf-items-filter filter='filter'></sf-items-filter>
+                        <sf-items-filter sf-filter='filter'></sf-items-filter>
                     </div>
-                    <div sf-endless-scroll paging='paging' class="list-group list-group-endless">
+                    <div sf-endless-scroll sf-paging='paging' class="list-group list-group-endless">
                         <div ng-repeat="item in items"
                             ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
                             ng-click="itemClicked($index, item)">
@@ -41,7 +41,9 @@
                 </div>
             </div>
             <div>
-                <sf-selected-items-view items='selectedItemsViewData' selected-items='selectedItemsInTheDialog' identifier-field='identifierField'></sf-selected-items-view>
+                <sf-selected-items-view sf-items='selectedItemsViewData' sf-selected-items='selectedItemsInTheDialog' sf-search-identifier-field='searchIdentifierField'
+                    sf-identifier-field='sfIdentifierField' sf-sortable='{{sfSortable}}'>
+                </selected-items-view>
             </div>
         </div>
     </div>

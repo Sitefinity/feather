@@ -10,7 +10,7 @@
 
                         var getItems = function (parentId, search) {
                             var siteId = ctrl.$scope.siteId;
-                            var provider = ctrl.$scope.provider;
+                            var provider = ctrl.$scope.sfProvider;
                             return pageService.getItems(parentId, siteId, provider, search);
                         };
 
@@ -26,12 +26,12 @@
                         };
 
                         ctrl.getPredecessors = function (itemId) {
-                            var provider = ctrl.$scope.provider;
+                            var provider = ctrl.$scope.sfProvider;
                             return pageService.getPredecessors(itemId, provider);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
-                            var provider = ctrl.$scope.provider;
+                            var provider = ctrl.$scope.sfProvider;
                             return pageService.getSpecificItems(ids, provider);
                         };
 
@@ -50,7 +50,7 @@
                         ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-page-selector-template';
 
-                        var closedDialogTemplate = attrs.multiselect ?
+                        var closedDialogTemplate = attrs.sfMultiselect ?
                             'client-components/selectors/common/sf-list-group-selection.html' :
                             'client-components/selectors/common/sf-bubbles-selection.html';
 
@@ -60,7 +60,7 @@
 
                         ctrl.$scope.expandSelection = true;
 
-                        ctrl.$scope.identifierField = "TitlesPath";
+                        ctrl.$scope.sfIdentifierField = "TitlesPath";
 
                         ctrl.$scope.searchIdentifierField = "Title";
                     }
