@@ -447,7 +447,6 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Scripts\address-field.js" />
     <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
     <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
     <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-selector.html" />
