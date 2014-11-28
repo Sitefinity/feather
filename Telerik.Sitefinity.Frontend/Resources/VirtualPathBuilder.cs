@@ -42,6 +42,22 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
+        /// Gets the virtual path of the specified assembly.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">path</exception>
+        public string GetVirtualPath(string path)
+        {
+            if (path.IsNullOrEmpty())
+            {
+                throw new ArgumentNullException("path");
+            }
+
+            return VirtualPathBuilder.FrontendAssemblyBasePath.Arrange(path);
+        }
+
+        /// <summary>
         /// Gets the path definition for the given assembly that is used by the virtual file resolvers.
         /// </summary>
         /// <param name="assembly">The assembly.</param>
