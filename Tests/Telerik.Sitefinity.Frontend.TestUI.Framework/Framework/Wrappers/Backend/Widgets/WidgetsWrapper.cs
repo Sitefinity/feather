@@ -272,7 +272,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void SetSearchText(string text)
         {
             var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
-            var searchInputTextBox = activeDialog.Find.ByExpression<HtmlInputText>("ng-model=filter.searchString");
+            var searchInputTextBox = activeDialog.Find.ByExpression<HtmlInputText>("ng-model=sfFilter.searchString");
 
             searchInputTextBox.Focus();
             searchInputTextBox.MouseClick();

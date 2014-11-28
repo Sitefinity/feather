@@ -4,21 +4,21 @@
             return {
                 restrict: 'EA',
                 scope: {
-                    taxonomyFields: '=',
-                    queryData: '=',
-                    provider: '=?'
+                    sfTaxonomyFields: '=',
+                    sfQueryData: '=',
+                    sfProvider: '=?'
                 },
                 templateUrl: function (elem, attrs) {
-                    var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'client-components/selectors/common/sf-filter-selector.html';
+                    var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/common/sf-filter-selector.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        if (scope.queryData && scope.queryData.QueryItems)
-                            scope.queryData = new Telerik.Sitefinity.Web.UI.QueryData(scope.queryData);
+                        if (scope.sfQueryData && scope.sfQueryData.QueryItems)
+                            scope.sfQueryData = new Telerik.Sitefinity.Web.UI.QueryData(scope.sfQueryData);
                         else
-                            scope.queryData = new Telerik.Sitefinity.Web.UI.QueryData();
+                            scope.sfQueryData = new Telerik.Sitefinity.Web.UI.QueryData();
                     }
                 }
             };

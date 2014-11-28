@@ -34,7 +34,7 @@
                     restrict: 'A',
                     link: {
                         pre: function (scope, element, attrs, ctrl) {
-                            var taxonomyId = attrs.taxonomyId;
+                            var taxonomyId = attrs.sfTaxonomyId;
 
                             if (!taxonomyId || taxonomyId === serviceHelper.emptyGuid()) {
                                 taxonomyId = sitefinity.getCategoriesTaxonomyId();
@@ -78,11 +78,11 @@
                             ctrl.selectorType = 'HierarchicalTaxonSelector';
                             ctrl.dialogTemplateUrl = 'client-components/selectors/taxonomies/sf-hierarchical-taxon-selector.html';
                             ctrl.$scope.dialogTemplateId = 'sf-hierarchical-taxon-selector';
-                            ctrl.closedDialogTemplateUrl = attrs.multiselect ? 'client-components/selectors/common/sf-list-group-selection.html' :
+                            ctrl.closedDialogTemplateUrl = attrs.sfMultiselect ? 'client-components/selectors/common/sf-list-group-selection.html' :
                                 'client-components/selectors/common/sf-bubbles-selection.html';
 
                             ctrl.$scope.hierarchical = true;
-                            ctrl.$scope.identifierField = "Breadcrumb";
+                            ctrl.$scope.sfIdentifierField = "Breadcrumb";
                             ctrl.$scope.searchIdentifierField = "Title";
                         }
                     }

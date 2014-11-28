@@ -6,22 +6,22 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        var master = attrs.master === 'true' || attrs.master === 'True';
+                        var master = attrs.sfMaster === 'true' || attrs.sfMaster === 'True';
 
                         ctrl.getItems = function (skip, take, search) {
-                            var provider = ctrl.$scope.provider;
+                            var provider = ctrl.$scope.sfProvider;
                             if (master)
-                                return dataService.getItems(ctrl.$scope.itemType, provider, skip, take, search, ctrl.identifierField);
+                                return dataService.getItems(ctrl.$scope.sfItemType, provider, skip, take, search, ctrl.identifierField);
                             else
-                                return dataService.getLiveItems(ctrl.$scope.itemType, provider, skip, take, search, ctrl.identifierField);
+                                return dataService.getLiveItems(ctrl.$scope.sfItemType, provider, skip, take, search, ctrl.identifierField);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
-                            var provider = ctrl.$scope.provider;
+                            var provider = ctrl.$scope.sfProvider;
                             if (master)
-                                return dataService.getSpecificItems(ids, ctrl.$scope.itemType, provider);
+                                return dataService.getSpecificItems(ids, ctrl.$scope.sfItemType, provider);
                             else
-                                return dataService.getSpecificLiveItems(ids, ctrl.$scope.itemType, provider);
+                                return dataService.getSpecificLiveItems(ids, ctrl.$scope.sfItemType, provider);
                         };
 
                         ctrl.selectorType = 'DynamicItemsSelector';
@@ -29,7 +29,7 @@
                         ctrl.dialogTemplateUrl = 'client-components/selectors/dynamic-modules/sf-dynamic-items-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-dynamic-items-selector-template';
 
-                        var closedDialogTemplate = attrs.multiselect ?
+                        var closedDialogTemplate = attrs.sfMultiselect ?
                             'client-components/selectors/common/sf-list-group-selection.html' :
                             'client-components/selectors/common/sf-bubbles-selection.html';
 

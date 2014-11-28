@@ -72,7 +72,7 @@ describe("timeSpan selector", function () {
         scope.selectedItem.periodType = 'periodToNow';
         scope.selectedItem.timeSpanValue = 2;
         scope.selectedItem.timeSpanInterval = 'months';
-        var template = "<sf-timespan-selector selected-item='selectedItem'></sf-timespan-selector>";
+        var template = "<sf-timespan-selector sf-selected-item='selectedItem'></sf-timespan-selector>";
 
         compileDirective(template);
 
@@ -83,7 +83,7 @@ describe("timeSpan selector", function () {
         scope.selectedItem.periodType = 'customRange';
         scope.selectedItem.fromDate = new Date("12/12/2012");
         scope.selectedItem.toDate = new Date("12/14/2012");
-        var template = "<sf-timespan-selector selected-item='selectedItem'></sf-timespan-selector>";
+        var template = "<sf-timespan-selector sf-selected-item='selectedItem'></sf-timespan-selector>";
 
         compileDirective(template);
     });
@@ -91,7 +91,7 @@ describe("timeSpan selector", function () {
     it('[EGaneva] / custom range is validated correctly.', function () {
         scope.change = jasmine.createSpy('change');
 
-        var template = "<sf-timespan-selector change='change' selected-item='selectedItem'></sf-timespan-selector>";
+        var template = "<sf-timespan-selector sf-change='change' sf-selected-item='selectedItem'></sf-timespan-selector>";
         compileDirective(template);
 
         $('.openSelectorBtn').click();
@@ -128,7 +128,7 @@ describe("timeSpan selector", function () {
             expect(args.oldSelectedItem.timeSpanInterval).toBe("days");
         };
 
-        var template = "<sf-timespan-selector change='change' selected-item='selectedItem'></sf-timespan-selector>";
+        var template = "<sf-timespan-selector sf-change='change' sf-selected-item='selectedItem'></sf-timespan-selector>";
 
         compileDirective(template);
         $('.openSelectorBtn').click();
@@ -146,7 +146,7 @@ describe("timeSpan selector", function () {
         //Close the dialog (Done button clicked)
         s.selectItem();
 
-        expect(s.selectedItem.displayText).toBe('Last 3 weeks');
+        expect(s.sfSelectedItem.displayText).toBe('Last 3 weeks');
     });
 
    
