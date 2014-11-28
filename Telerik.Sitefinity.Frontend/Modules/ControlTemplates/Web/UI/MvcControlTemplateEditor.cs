@@ -7,6 +7,7 @@ using System.Web.Script.Serialization;
 using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Modules.ControlTemplates.Web.UI;
+using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI
 {
@@ -56,7 +57,31 @@ namespace Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI
 
             descriptor.AddProperty("mvcTypes", new JavaScriptSerializer().Serialize(mvcTypesFullNames));
 
+            descriptor.AddProperty("elementIdsToBeHiddenIfMvc", new JavaScriptSerializer().Serialize(this.GetRestoreButtonsClientIds()));
+
             return new ScriptDescriptor[] { descriptor };
+        }
+
+        /// <summary>
+        /// Gets the restore buttons client ids.
+        /// </summary>
+        private List<string> GetRestoreButtonsClientIds()
+        {
+            var returnResult = new List<string>();
+
+            var topButton = BottomCommandBar.Commands.OfType<ICommandButton>()
+                                .SingleOrDefault(x => x.CommandName == "restoreTemplate");
+
+            if (topButton != null)
+                returnResult.Add(topButton.ButtonClientId);
+
+            var bottomButton = TopCommandBar.Commands.OfType<ICommandButton>()
+                                .SingleOrDefault(x => x.CommandName == "restoreTemplate");
+
+            if (bottomButton != null)
+                returnResult.Add(bottomButton.ButtonClientId);
+
+            return returnResult;
         }
 
         private const string MvcControlTemplateEditorScript = "Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.Scripts.MvcControlTemplateEditor.js";
