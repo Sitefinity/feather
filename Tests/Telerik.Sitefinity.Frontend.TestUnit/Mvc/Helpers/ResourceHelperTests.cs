@@ -53,11 +53,11 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
 
             var htmlHelper = new System.Web.Mvc.HtmlHelper(dummyViewContext, dummyViewDataContainer);
 
-            MvcHtmlString result = htmlHelper.Script(script);
+            System.Web.Mvc.MvcHtmlString result = htmlHelper.Script(script);
             Assert.AreEqual(result.ToString(), string.Format(System.Globalization.CultureInfo.InvariantCulture, "<script src=\"{0}\" type=\"text/javascript\"></script>", script));
 
             result = htmlHelper.Script(script);
-            Assert.AreEqual(result, MvcHtmlString.Empty);
+            Assert.AreEqual(result, System.Web.Mvc.MvcHtmlString.Empty);
         }
 
         #endregion

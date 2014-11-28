@@ -18,7 +18,7 @@ namespace ASP
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="partialViewName">Name of the partial view.</param>
         /// <returns>Rendered partial view.</returns>
-        public static MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName)
+        public static System.Web.Mvc.MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName)
         {
             return PartialExtensions.Partial(htmlHelper, partialViewName, null, htmlHelper.ViewData);
         }
@@ -32,7 +32,7 @@ namespace ASP
         /// <returns>
         /// Rendered partial view.
         /// </returns>
-        public static MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName, ViewDataDictionary viewData)
+        public static System.Web.Mvc.MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName, ViewDataDictionary viewData)
         {
             return PartialExtensions.Partial(htmlHelper, partialViewName, null, viewData);
         }
@@ -46,7 +46,7 @@ namespace ASP
         /// <returns>
         /// Rendered partial view.
         /// </returns>
-        public static MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName, object model)
+        public static System.Web.Mvc.MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName, object model)
         {
             return PartialExtensions.Partial(htmlHelper, partialViewName, model, htmlHelper.ViewData);
         }
@@ -61,7 +61,7 @@ namespace ASP
         /// <returns>
         /// Rendered partial view.
         /// </returns>
-        public static MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName, object model, ViewDataDictionary viewData)
+        public static System.Web.Mvc.MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName, object model, ViewDataDictionary viewData)
         {
             using (var writer = new StringWriter(CultureInfo.CurrentCulture))
             {

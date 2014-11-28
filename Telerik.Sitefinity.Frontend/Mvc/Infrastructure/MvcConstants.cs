@@ -27,5 +27,47 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
 
         /// <summary>Filename extension used by Razor views</summary>
         public static readonly string RazorFileNameExtension = ".cshtml";
+
+        /// <summary>
+        /// The MVC template condition
+        /// </summary>
+        /// <remarks>
+        /// {Module type full name} AND MVC;
+        /// </remarks>
+        public static readonly string MvcTemplateCondition = "{0} AND MVC";
+
+        /// <summary>
+        /// The friendly control name template for list.
+        /// </summary>
+        /// <remarks>
+        /// {Module title} - {ModuleType plural name} - list (MVC);
+        /// </remarks>
+        public static readonly string FriendlyControlDynamicListTemplate = "{0} - {1} - list (MVC)";
+
+        /// <summary>
+        /// The friendly control name template for detail.
+        /// </summary>
+        /// <remarks>
+        /// {Module title} - {ModuleType plural name} - single (MVC);
+        /// </remarks>
+        public static readonly string FriendlyControlDynamicDetailTemplate = "{0} - {1} - single (MVC)";
+
+        /// <summary>
+        /// The detail template name
+        /// </summary>
+        public static readonly string DetailTemplateName = "Detail.{0}";
+
+        /// <summary>
+        /// The list template name
+        /// </summary>
+        public static readonly string ListTemplateName = "List.{0}";
+
+        /// <summary>
+        /// The area format.
+        /// </summary>
+        /// <remarks>
+        /// {Module title} - {ModuleType display name};
+        /// </remarks>
+        public static readonly string DynamicAreaFormat = "{0} - {1}";
     }
 }
