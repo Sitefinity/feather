@@ -14,11 +14,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="helper">The helper.</param>
         /// <param name="containerName">Name of the container.</param>
         /// <returns></returns>
-        public static MvcHtmlString SfPlaceHolder(this HtmlHelper helper, string containerName = "Body")
+        public static System.Web.Mvc.MvcHtmlString SfPlaceHolder(this HtmlHelper helper, string containerName = "Body")
         {
             var htmlString = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<div class='sfPublicWrapper' id='PublicWrapper' runat='server'><asp:contentplaceholder id='{0}' runat='server' /></div>", containerName);
 
-            return new MvcHtmlString(htmlString);
+            return new System.Web.Mvc.MvcHtmlString(htmlString);
         }
     }
 }
