@@ -174,7 +174,7 @@ describe("page selector", function () {
     describe('check default properties initialization of page selector', function () {
         it('[manev] / should init default page selector values.', function () {
 
-            var template = "<sf-list-selector sf-page-selector multiselect='true' />";
+            var template = "<sf-list-selector sf-page-selector sf-multiselect='true' sf-identifier-field='TitlesPath' />";
 
             compileDirective(template);
 
@@ -182,7 +182,7 @@ describe("page selector", function () {
 
             var pageSelecotrScope = scope.$$childHead;
             expect(pageSelecotrScope).toBeDefined();
-            expect(pageSelecotrScope.identifierField).toBe("TitlesPath");
+            expect(pageSelecotrScope.sfIdentifierField).toBe("TitlesPath");
             expect(pageSelecotrScope.searchIdentifierField).toBe("Title");
 
             expect(pageSelecotrScope.items).toEqualArrayOfDataItems(customDataItems.Items);
@@ -190,7 +190,7 @@ describe("page selector", function () {
 
         it('[manev] / should filter items when text is typed in the filter box.', function () {
 
-            var template = "<sf-list-selector sf-page-selector multiselect='true' />";
+            var template = "<sf-list-selector sf-page-selector sf-multiselect='true' />";
 
             compileDirective(template);
 
@@ -211,7 +211,7 @@ describe("page selector", function () {
         });
 
         it('[manev] / should mark item as selected when the dialog is opened.', function () {
-            var template = "<sf-list-selector sf-page-selector multiselect='true' selected-ids='selectedIds' />";
+            var template = "<sf-list-selector sf-page-selector sf-multiselect='true' sf-selected-ids='selectedIds' />";
 
             var ids = filteredCollection.Items.map(function (item) {
                 return item.Id;

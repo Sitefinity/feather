@@ -7,13 +7,13 @@
                 transclude: true,
                 scope: {
                     ngModel: '=?',
-                    showMeridian: '@?',
-                    hourStep: '@?',
-                    minueteStep: '@?'
+                    sfShowMeridian: '@?',
+                    sfHourStep: '@?',
+                    sfMinuteStep: '@?'
                 },
                 templateUrl: function (elem, attrs) {
-                    var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'client-components/selectors/date-time/sf-date-time-picker.html';
+                    var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/date-time/sf-date-time-picker.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -26,12 +26,12 @@
                             scope.hsteps = [];
                             scope.hsteps.push({ 'label': '- Hour -', 'value': 'none' });
 
-                            if (!scope.hourStep)
-                                scope.hourStep = 1;
+                            if (!scope.sfHourStep)
+                                scope.sfHourStep = 1;
 
                             var h;
-                            if (scope.showMeridian) {
-                                for (h = 0; h < 24; h += scope.hourStep) {
+                            if (scope.sfShowMeridian) {
+                                for (h = 0; h < 24; h += scope.sfHourStep) {
                                     var hour = (h < 12) ? h : h - 12;
                                     var meridian = (h < 12) ? 'AM' : 'PM';
 
@@ -42,7 +42,7 @@
                                 }
                             }
                             else {
-                                for (h = 0; h < 24; h += scope.hourStep) {
+                                for (h = 0; h < 24; h += scope.sfHourStep) {
                                     scope.hsteps.push({ 'label': h, 'value': h });
                                 }
                             }
@@ -52,10 +52,10 @@
                             scope.msteps = [];
                             scope.msteps.push({ 'label': '- Minute -', 'value': 'none' });
 
-                            if (!scope.minueteStep)
-                                scope.minueteStep = 10;
+                            if (!scope.sfMinuteStep)
+                                scope.sfMinuteStep = 10;
 
-                            for (var m = 0; m < 60; m += scope.minueteStep) {
+                            for (var m = 0; m < 60; m += scope.sfMinuteStep) {
                                 scope.msteps.push({ 'label': m, 'value': m });
                             }
                         };

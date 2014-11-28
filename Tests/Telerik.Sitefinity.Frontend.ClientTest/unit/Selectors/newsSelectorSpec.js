@@ -239,7 +239,7 @@ describe("news selector", function () {
 
     describe('in single selection mode', function () {
         it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {
-            var template = "<sf-list-selector sf-news-selector provider='provider'/>";
+            var template = "<sf-list-selector sf-news-selector sf-provider='provider'/>";
 
             compileDirective(template);
 
@@ -261,7 +261,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should retrieve selected news item from the service when the selector is loaded.', function () {
-            var template = "<sf-list-selector sf-news-selector provider='provider' selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-news-selector sf-provider='provider' sf-selected-item-id='selectedId'/>";
 
             scope.selectedId = dataItem.Id;
 
@@ -277,7 +277,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should assign value to "selected-item" when "selected-item-id" is provided.', function () {
-            var template = "<sf-list-selector sf-news-selector selected-item='selectedItem' selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-news-selector sf-selected-item='selectedItem' sf-selected-item-id='selectedId'/>";
 
             scope.selectedId = dataItem.Id;
 
@@ -291,7 +291,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should assign value to "selected-item-id" when "selected-item" is provided.', function () {
-            var template = "<sf-list-selector sf-news-selector selected-item='selectedItem' selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-news-selector sf-selected-item='selectedItem' sf-selected-item-id='selectedId'/>";
 
             scope.selectedItem = dataItem;
 
@@ -305,7 +305,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should select news item when Done button is pressed.', function () {
-            var template = "<sf-list-selector sf-news-selector selected-item='selectedItem' selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-news-selector sf-selected-item='selectedItem' sf-selected-item-id='selectedId'/>";
 
             compileDirective(template);
 
@@ -317,8 +317,8 @@ describe("news selector", function () {
             //mock the call to the modal service.
             s.$modalInstance = { close: function () { } };
 
-            expect(s.selectedItem).toBeFalsy();
-            expect(s.selectedItemId).toBeFalsy();
+            expect(s.sfSelectedItem).toBeFalsy();
+            expect(s.sfSelectedItemId).toBeFalsy();
 
             expect(s.items).toBeDefined();
             expect(s.items[0].Id).toEqual(dataItem.Id);
@@ -327,21 +327,21 @@ describe("news selector", function () {
             //Select item in the selector
             s.itemClicked(0, s.items[0]);
 
-            expect(s.selectedItem).toBeFalsy();
-            expect(s.selectedItemId).toBeFalsy();
+            expect(s.sfSelectedItem).toBeFalsy();
+            expect(s.sfSelectedItemId).toBeFalsy();
 
             //Close the dialog (Done button clicked)
             s.doneSelecting();
 
-            expect(s.selectedItem).toBeDefined();
-            expect(s.selectedItem.Id).toEqual(dataItem.Id);
+            expect(s.sfSelectedItem).toBeDefined();
+            expect(s.sfSelectedItem.Id).toEqual(dataItem.Id);
 
-            expect(s.selectedItemId).toBeDefined();
-            expect(s.selectedItemId).toEqual(dataItem.Id);
+            expect(s.sfSelectedItemId).toBeDefined();
+            expect(s.sfSelectedItemId).toEqual(dataItem.Id);
         });
 
         it('[GMateev] / should filter items when text is typed in the filter box.', function () {
-            var template = "<sf-list-selector sf-news-selector provider='provider'/>";
+            var template = "<sf-list-selector sf-news-selector sf-provider='provider'/>";
 
             compileDirective(template);
 
@@ -381,7 +381,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should move the selected item to be first in the list of all items.', function () {
-            var template = "<sf-list-selector sf-news-selector selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-news-selector sf-selected-item-id='selectedId'/>";
 
             scope.selectedId = dataItem2.Id;
 
@@ -399,7 +399,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should mark item as selected when the dialog is opened.', function () {
-            var template = "<sf-list-selector sf-news-selector selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-news-selector sf-selected-item-id='selectedId'/>";
 
             scope.selectedId = dataItem.Id;
 
@@ -441,7 +441,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should deselect the item if it is clicked and it is already selected.', function () {
-            var template = "<sf-list-selector sf-news-selector selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-news-selector sf-selected-item-id='selectedId'/>";
 
             scope.selectedId = dataItem.Id;
 
@@ -469,7 +469,7 @@ describe("news selector", function () {
         var ids = [dataItem.Id, dataItem2.Id];
 
         it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {
-            var template = "<sf-list-selector sf-news-selector multiselect='true' provider='provider'/>";
+            var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-provider='provider'/>";
 
             compileDirective(template);
 
@@ -491,7 +491,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should retrieve selected news items from the service when the selector is loaded.', function () {
-            var template = "<sf-list-selector sf-news-selector multiselect='true' provider='provider' selected-ids='selectedIds'/>";
+            var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-provider='provider' sf-selected-ids='selectedIds'/>";
 
             scope.selectedIds = ids;
 
@@ -507,7 +507,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should assign value to "selected-items" when "selected-ids" are provided.', function () {
-            var template = "<sf-list-selector sf-news-selector multiselect='true' selected-items='selectedItems' selected-ids='selectedIds'/>";
+            var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-selected-items='selectedItems' sf-selected-ids='selectedIds'/>";
 
             scope.selectedIds = ids;
 
@@ -523,7 +523,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should assign value to "selected-ids" when "selected-items" is provided.', function () {
-            var template = "<sf-list-selector sf-news-selector multiselect='true' selected-items='selectedItems' selected-ids='selectedIds'/>";
+            var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-selected-items='selectedItems' sf-selected-ids='selectedIds'/>";
 
             scope.selectedItems = items;
 
@@ -539,7 +539,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should select news items when Done button is pressed.', function () {
-            var template = "<sf-list-selector sf-news-selector multiselect='true' selected-items='selectedItems' selected-ids='selectedIds'/>";
+            var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-selected-items='selectedItems' sf-selected-ids='selectedIds'/>";
 
             compileDirective(template);
 
@@ -551,8 +551,8 @@ describe("news selector", function () {
             //mock the call to the modal service.
             s.$modalInstance = { close: function () { } };
 
-            expect(s.selectedItems).toBeFalsy();
-            expect(s.selectedIds).toBeFalsy();
+            expect(s.sfSelectedItems).toBeFalsy();
+            expect(s.sfSelectedIds).toBeFalsy();
 
             expect(s.items).toBeDefined();
             expect(s.items[0].Id).toEqual(dataItem.Id);
@@ -562,8 +562,8 @@ describe("news selector", function () {
             s.itemClicked(0, s.items[0]);
             s.itemClicked(1, s.items[1]);
 
-            expect(s.selectedItems).toBeFalsy();
-            expect(s.selectedIds).toBeFalsy();
+            expect(s.sfSelectedItems).toBeFalsy();
+            expect(s.sfSelectedIds).toBeFalsy();
 
             //Close the dialog (Done button clicked)
             s.doneSelecting();
@@ -580,7 +580,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should mark items as selected when the dialog is opened.', function () {
-            var template = "<sf-list-selector sf-news-selector multiselect='true' selected-ids='selectedIds'/>";
+            var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-selected-ids='selectedIds'/>";
 
             scope.selectedIds = ids;
 
@@ -597,7 +597,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should select many items in the opened dialog.', function () {
-            var template = "<sf-list-selector sf-news-selector multiselect='true'/>";
+            var template = "<sf-list-selector sf-news-selector sf-multiselect='true'/>";
 
             compileDirective(template);
 
@@ -622,7 +622,7 @@ describe("news selector", function () {
         });
 
         it('[GMateev] / should deselect an item if it is clicked and it is already selected.', function () {
-            var template = "<sf-list-selector sf-news-selector multiselect='true' selected-ids='selectedIds'/>";
+            var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-selected-ids='selectedIds'/>";
 
             scope.selectedIds = ids;
 
@@ -653,7 +653,7 @@ describe("news selector", function () {
 
             var ids = customDataItems.Items.map(function (i) { return i.Id; });
 
-            var template = "<sf-list-selector sf-news-selector multiselect='true' selected-items='selectedItems' selected-ids='selectedIds'/>";
+            var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-selected-items='selectedItems' sf-selected-ids='selectedIds'/>";
 
             scope.selectedIds = ids;
             compileDirective(template);
@@ -673,7 +673,7 @@ describe("news selector", function () {
 
             var ids = [dataItem.Id, dataItem2.Id];
 
-            var template = "<sf-list-selector sf-news-selector multiselect='true' selected-items='selectedItems' selected-ids='selectedIds'/>";
+            var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-selected-items='selectedItems' sf-selected-ids='selectedIds'/>";
 
             scope.selectedIds = ids;
             compileDirective(template);

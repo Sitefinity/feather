@@ -4,29 +4,29 @@
             return {
                 restrict: "E",
                 scope: {
-                    items: '=?',
-                    selectedItems: '=?',
-                    identifierField: '=?',
-                    searchIdentifierField: '=?',
-                    sortable: '@'
+                    sfItems: '=?',
+                    sfSelectedItems: '=?',
+                    sfIdentifierField: '=?',
+                    sfSearchIdentifierField: '=?',
+                    sfSortable: '@'
                 },
                 templateUrl: function (elem, attrs) {
-                    var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'client-components/selectors/common/sf-selected-items-view.html';
+                    var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/common/sf-selected-items-view.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
                     post: function (scope, element, attrs) {
                         var defaultIdentifierField = 'Title';
-                        var identifierField = scope.identifierField || defaultIdentifierField;
+                        var identifierField = scope.sfIdentifierField || defaultIdentifierField;
 
                         // The view is binded to this collection
                         scope.currentItems = [];
 
-                        scope.$watch('items.length', function (newValue, oldValue) {
+                        scope.$watch('sfItems.length', function (newValue, oldValue) {
                             if (newValue !== 0) {
                                 scope.currentItems = [];
-                                Array.prototype.push.apply(scope.currentItems, scope.items);
+                                Array.prototype.push.apply(scope.currentItems, scope.sfItems);
 
                                 if (scope.filter.searchString && scope.filter.searchString !== "") {
                                     scope.filter.search(scope.filter.searchString);
@@ -35,7 +35,7 @@
                         });
 
                         scope.isListEmpty = function () {
-                            return scope.items.length === 0;
+                            return scope.sfItems.length === 0;
                         };
 
                         scope.bindIdentifierField = function (item) {
@@ -62,23 +62,23 @@
                         };
 
                         scope.sortItems = function (e) {
-                            var element = scope.selectedItems[e.oldIndex];
-                            scope.selectedItems.splice(e.oldIndex, 1);
-                            scope.items.splice(e.oldIndex, 1);
-                            scope.selectedItems.splice(e.newIndex, 0, element);
-                            scope.items.splice(e.newIndex, 0, element);
+                            var element = scope.sfSelectedItems[e.oldIndex];
+                            scope.sfSelectedItems.splice(e.oldIndex, 1);
+                            scope.sfItems.splice(e.oldIndex, 1);
+                            scope.sfSelectedItems.splice(e.newIndex, 0, element);
+                            scope.sfItems.splice(e.newIndex, 0, element);
                         };
 
                         scope.itemClicked = function (item) {
                             var selectedItemIndex;
-                            for (var i = 0; i < scope.selectedItems.length; i++) {
-                                if (scope.selectedItems[i].item.Id === item.Id) {
+                            for (var i = 0; i < scope.sfSelectedItems.length; i++) {
+                                if (scope.sfSelectedItems[i].item.Id === item.Id) {
                                     selectedItemIndex = i;
                                     break;
                                 }
                             }
 
-                            scope.selectedItems[selectedItemIndex].isChecked = !scope.selectedItems[selectedItemIndex].isChecked;
+                            scope.sfSelectedItems[selectedItemIndex].isChecked = !scope.sfSelectedItems[selectedItemIndex].isChecked;
                         };
 
                         scope.filter = {
@@ -88,17 +88,17 @@
                                 scope.currentItems.length = 0;
 
                                 if (!keyword) {
-                                    Array.prototype.push.apply(scope.currentItems, scope.items);
+                                    Array.prototype.push.apply(scope.currentItems, scope.sfItems);
                                 }
                                 else {
-                                    for (var i = 0; i < scope.items.length; i++) {
-                                        if (scope.searchIdentifierField) {
-                                            if (bindSearchIdentifierField(scope.items[i].item, scope.searchIdentifierField).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
-                                                scope.currentItems.push(scope.items[i]);
+                                    for (var i = 0; i < scope.sfItems.length; i++) {
+                                        if (scope.sfSearchIdentifierField) {
+                                            if (bindSearchIdentifierField(scope.sfItems[i].item, scope.sfSearchIdentifierField).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                                scope.currentItems.push(scope.sfItems[i]);
                                             }
                                         }
-                                        else if (scope.bindIdentifierField(scope.items[i].item).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
-                                            scope.currentItems.push(scope.items[i]);
+                                        else if (scope.bindIdentifierField(scope.sfItems[i].item).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                            scope.currentItems.push(scope.sfItems[i]);
                                         }
                                     }
                                 }

@@ -4,8 +4,8 @@
             return {
                 restrict: 'E',
                 templateUrl: function (elem, attrs) {
-                    var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'client-components/selectors/common/sf-provider-selector.html';
+                    var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/common/sf-provider-selector.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 require: 'ngModel',
@@ -29,8 +29,8 @@
                     };
 
                     scope.isOpen = false;
-                    scope.providerLabel = tAttrs.providerLabel ? tAttrs.providerLabel : 'Provider';
-                    scope.managerType = tAttrs.managerType;
+                    scope.providerLabel = tAttrs.sfProviderLabel ? tAttrs.sfProviderLabel : 'Provider';
+                    scope.managerType = tAttrs.sfManagerType;
                     scope.selectedProvider = null;
                     scope.isProviderSelectorVisible = false;
 

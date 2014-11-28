@@ -9,12 +9,12 @@
                 restrict: 'E',
                 transclude: true,
                 scope: {
-                    selectedItem: '=?',                   
-                    change: '='
+                    sfSelectedItem: '=?',                   
+                    sfChange: '='
                 },
                 templateUrl: function (elem, attrs) {
-                    var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'client-components/selectors/date-time/sf-timespan-selector.html';
+                    var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/date-time/sf-timespan-selector.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -96,15 +96,15 @@
                             if (validate(scope.selectedItemInTheDialog)) {
                                 formatTimeSpanItem(scope.selectedItemInTheDialog);
 
-                                if (scope.change) {
+                                if (scope.sfChange) {
                                     var changeArgs = {
                                         'newSelectedItem': scope.selectedItemInTheDialog,
-                                        'oldSelectedItem': jQuery.extend(true, {}, scope.selectedItem)
+                                        'oldSelectedItem': jQuery.extend(true, {}, scope.sfSelectedItem)
                                     };
-                                    scope.change.call(scope.$parent, changeArgs);
+                                    scope.sfChange.call(scope.$parent, changeArgs);
                                 }
 
-                                scope.selectedItem = scope.selectedItemInTheDialog;
+                                scope.sfSelectedItem = scope.selectedItemInTheDialog;
 
                                 scope.$modalInstance.close();
                             }
@@ -112,8 +112,8 @@
 
                         scope.isItemSelected = function () {
 
-                            if (scope.selectedItem) {
-                                return scope.selectedItem.displayText !== "";
+                            if (scope.sfSelectedItem) {
+                                return scope.sfSelectedItem.displayText !== "";
                             }
 
                             return false;
@@ -132,10 +132,10 @@
 
                             scope.showError = false;
                             scope.errorMessage = '';
-                            scope.selectedItemInTheDialog = jQuery.extend(true, {}, scope.selectedItem);
+                            scope.selectedItemInTheDialog = jQuery.extend(true, {}, scope.sfSelectedItem);
                         };
 
-                        formatTimeSpanItem(scope.selectedItem);
+                        formatTimeSpanItem(scope.sfSelectedItem);
                     }
                 }
             };
