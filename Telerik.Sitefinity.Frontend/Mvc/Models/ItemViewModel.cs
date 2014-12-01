@@ -16,9 +16,9 @@ using Telerik.Sitefinity.Taxonomies.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
-    public class DynamicContentObject : DynamicObject
+    public class ItemViewModel : DynamicObject
     {
-        public DynamicContentObject(IDataItem item)
+        public ItemViewModel(IDataItem item)
         {
             this.OriginalItem = item;
         }
