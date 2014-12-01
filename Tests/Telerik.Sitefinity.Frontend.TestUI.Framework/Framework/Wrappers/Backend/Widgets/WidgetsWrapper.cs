@@ -472,6 +472,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             Manager.Current.ActiveBrowser.RefreshDomTree();
             var saveButton = ActiveBrowser.Find.ByExpression<HtmlButton>("tagname=button", "class=btn btn-primary pull-left ng-scope");
+
+            saveButton.Wait.ForExists();
+
             bool result = saveButton != null && saveButton.IsVisible();
 
             return result;
