@@ -82,5 +82,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             else
                 return htmlHelper.Raw("data-sf-provider='{0}' data-sf-type='{1}' data-sf-id='{2}'".Arrange(providerNameEncoded, typeEncoded, id.ToString("D")));
         }
+
+        /// <summary>
+        /// Renders InlineEditing attributes for fields required for the Inline editing feature.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="fieldType">Type of the field.</param>
+        /// <returns></returns>
+        public static IHtmlString InlineEditingFieldAttributes(this HtmlHelper htmlHelper, string fieldName, string fieldType)
+        {
+            var fieldNameEncoded = htmlHelper.Encode(fieldName);
+            var fieldTypeEncoded = htmlHelper.Encode(fieldType);
+
+            return htmlHelper.Raw("data-sf-field='{0}' data-sf-ftype='{1}'".Arrange(fieldNameEncoded, fieldTypeEncoded));
+        }
     }
 }

@@ -16,7 +16,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2014.3.1121.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
+    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2014.3.1128.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <JSLintSkip>\Mvc\Scripts\Angular\angular.min.js|\Mvc\Scripts\Angular\angular-route.min.js|\Mvc\Scripts\Angular\|\Mvc\Scripts\Bootstrap\|\Mvc\Scripts\Kendo\</JSLintSkip>
@@ -109,17 +109,17 @@
     <Reference Include="System.Xml" />
     <Reference Include="Telerik.OpenAccess">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1121.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1128.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.OpenAccess.35.Extensions">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1121.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1128.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.OpenAccess.40.Extensions">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1121.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1128.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.OpenAccess.Runtime">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1121.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1128.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity">
       <SpecificVersion>False</SpecificVersion>
@@ -183,28 +183,15 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
-    <Compile Include="Mvc\Helpers\ContentLinkHelpers.cs" />
-    <Compile Include="Mvc\Helpers\FieldExtensions.cs" />
-    <Compile Include="Mvc\Helpers\ViewModels\Fields\ChoiceFieldViewModel.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Mvc\Helpers\ViewModels\Fields\AddressFieldViewModel.cs" />
-    <Compile Include="Mvc\Helpers\ViewModels\Fields\DateFieldViewModel.cs" />
-    <Compile Include="Mvc\Helpers\ViewModels\Fields\MediaFieldViewModel.cs" />
-    <Compile Include="Mvc\Helpers\ViewModels\Fields\TextFieldViewModel.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerMetadataAttribute.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
     <Compile Include="Mvc\Helpers\CustomFieldsHelpers.cs" />
-    <Compile Include="Mvc\Helpers\FieldHelpers.cs" />
     <Compile Include="Mvc\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Helpers\HyperLinkHelpers.cs" />
-    <Compile Include="Mvc\Helpers\RelatedDataHelpers.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
     <Compile Include="Mvc\Helpers\SitefinityContext.cs" />
     <Compile Include="Mvc\Helpers\SitefinityHelper.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\CustomTaxonomyViewModel.cs" />
-    <Compile Include="Mvc\Helpers\ViewModels\Fields\ClassificationFieldViewModel.cs" />
-    <Compile Include="Mvc\Helpers\ViewModels\Fields\RelatedDataFieldViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttribute.cs" />
@@ -386,32 +373,6 @@
     <None Include="assets\src\sass\sitefinity-backend.sass" />
     <None Include="assets\src\sass\_utility-classes.sass" />
     <None Include="assets\src\sass\_variables.sass" />
-    <EmbeddedResource Include="Mvc\Views\Shared\FlatTaxonomyField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\HierarchicalTaxonomyField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\LongTextAreaField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\RelatedDataInlineListField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\RelatedImageInlineListField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\RelatedVideoInlineListField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\RelatedDocumentInlineListField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\RelatedPageInlineListField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\RelatedDataInlineSingleField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\RelatedDocumentInlineSingleField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\RelatedImageInlineSingleField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\RelatedPageInlineSingleField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\RelatedVideoInlineSingleField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\DateField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\ShortTextField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\PriceField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\NumberField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\LongRichTextField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\YesNoField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\MultiChoiceField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\SingleChoiceField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\ImageField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\MultiImageField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\MultiVideoField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\MultiDocumentField.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\Shared\AddressField.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -486,7 +447,6 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Scripts\address-field.js" />
     <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
     <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
     <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-selector.html" />

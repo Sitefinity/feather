@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Telerik.Sitefinity.ContentLocations;
@@ -77,6 +78,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 this.AddContentItemToRouteData(requestContext, redirectUrl, item);
 
                 return true;
+            }
+            else if (urlParams.Length > 1)
+            {
+                this.TryMatchUrl(urlParams.Take(urlParams.Length - 1).ToArray(), requestContext);
+
+                return false;
             }
 
             return false;

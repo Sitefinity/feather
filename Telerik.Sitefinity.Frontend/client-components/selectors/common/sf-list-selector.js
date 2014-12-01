@@ -17,7 +17,7 @@
                     sfChange: '=',
                     sfSortable: '=?',
                     sfItemType: '=?', /* sf-dynamic-items-selector */
-                    sfIdentifierField: '=?'
+                    sfIdentifierField: '@?'
                 },
                 controller: function ($scope) {
                     this.defaultIdentifierField = 'Title';
