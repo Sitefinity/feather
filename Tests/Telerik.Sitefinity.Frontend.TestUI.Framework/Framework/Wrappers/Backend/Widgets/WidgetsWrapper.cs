@@ -471,9 +471,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         private bool WaitForSaveButton()
         {
             Manager.Current.ActiveBrowser.RefreshDomTree();
-            var saveButton = ActiveBrowser.Find.ByExpression<HtmlButton>("tagname=button", "class=btn btn-primary pull-left ng-scope");
-
-            saveButton.Wait.ForExists();
+            var saveButton = this.EM.Widgets.FeatherWidget.SaveButton;
 
             bool result = saveButton != null && saveButton.IsVisible();
 
