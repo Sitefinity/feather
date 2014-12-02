@@ -255,6 +255,10 @@
     <Compile Include="Mvc\Models\ContentModelBase.cs" />
     <Compile Include="Mvc\Models\DesignerModel.cs" />
     <Compile Include="Mvc\Models\DesignerViewConfigModel.cs" />
+    <Compile Include="Mvc\Models\Fields\RelatedDataViewModel.cs" />
+    <Compile Include="Mvc\Models\Fields\RelatedImageViewModel.cs" />
+    <Compile Include="Mvc\Models\Fields\RelatedMediaViewModel.cs" />
+    <Compile Include="Mvc\Models\Fields\RelatedPageViewModel.cs" />
     <Compile Include="Mvc\Models\ItemViewModel.cs" />
     <Compile Include="Mvc\Models\IDesignerModel.cs" />
     <Compile Include="Mvc\Models\ListDisplayMode.cs" />

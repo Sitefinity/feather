@@ -215,10 +215,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var fieldValue = this.GetMemberValue(fieldName).ToString();
             Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager man = new Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager();
             var moduleType = man.Provider.GetDynamicModuleType(parentTypeId);
-            var field = moduleType.Fields.Where(f => f.Name == fieldName).FirstOrDefault();
-            System.Xml.Linq.XDocument doc = System.Xml.Linq.XDocument.Parse(field.Choices);
-            var element = doc.Elements("element").Where(e => e.Attribute("value").Value == fieldValue).FirstOrDefault();
-            var label = element.Attribute("text").Value;
+            string label = fieldValue;
+
+            if (moduleType.Fields != null)
+            {
+                var field = moduleType.Fields.Where(f => f.Name == fieldName).FirstOrDefault();
+                if (field != null)
+                {
+                    System.Xml.Linq.XDocument doc = System.Xml.Linq.XDocument.Parse(field.Choices);
+                    var element = doc.Elements("element").Where(e => e.Attribute("value").Value == fieldValue).FirstOrDefault();
+                    label = (element != null) ? element.Attribute("text").Value : fieldValue;
+                }
+            }
 
             return label;
         }
@@ -261,15 +269,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         #region Related data fileds
 
         /// <summary>
-        /// Gets the identifier field.
+        /// Gets related items.
         /// </summary>
-        /// <param name="relatedDataType">Type of the related data.</param>
+        /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public string GetIdentifierField(string relatedDataType)
+        public IList<IDataItem> RelatedItems(string fieldName)
         {
-            var identifierField = RelatedDataHelper.GetRelatedTypeIdentifierField(relatedDataType);
-
-            return identifierField;
+            return this.OriginalItem.GetRelatedItems(fieldName).ToList<IDataItem>();
         }
 
         #endregion
