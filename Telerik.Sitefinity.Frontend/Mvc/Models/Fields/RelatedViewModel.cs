@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models.Fields
         /// <summary>
         /// Initializes a new instance of the <see cref="RelatedViewModel"/> class.
         /// </summary>
-        public RelatedViewModel()
+        protected RelatedViewModel()
         { 
         }
 
@@ -22,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models.Fields
         /// Initializes a new instance of the <see cref="RelatedViewModel"/> class.
         /// </summary>
         /// <param name="item">The item.</param>
-        public RelatedViewModel(IDataItem item)
+        protected RelatedViewModel(IDataItem item)
         {
             this.Item = item;
         }

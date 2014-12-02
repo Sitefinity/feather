@@ -257,9 +257,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public IList<string> GetHierarchicalTaxonNames(string fieldName)
         {
             var taxonIds = this.GetMemberValue(fieldName) as IList<Guid>;
+            string taxonomyName;
             TaxonomyManager manager = TaxonomyManager.GetManager();
+            if (fieldName == "Category")
+                taxonomyName = "Categories";
+            else if (fieldName == "Department")
+                taxonomyName = "Departments";
+            else
+                taxonomyName = fieldName;
+
             var taxonNames = manager.GetTaxa<HierarchicalTaxon>()
-                   .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == fieldName)
+                   .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == taxonomyName)
                    .Select(t => t.Title.ToString()).ToList();
 
             return taxonNames;
@@ -286,6 +294,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return result;
         }
 
+        /// <summary>
+        /// Gets the related item when single.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
         public T RelatedItem<T>(string fieldName) where T : RelatedViewModel, new()
         {
             T result;
