@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Web;
 using System.Web.Hosting;
+using System.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {
@@ -35,9 +37,23 @@ namespace Telerik.Sitefinity.Frontend.Resources
                     var fileName = VirtualPathUtility.GetFileName(context.Request.Url.AbsolutePath);
                     var buffer = new byte[fileStream.Length];
                     fileStream.Read(buffer, 0, (int)fileStream.Length);
+                    context.Response.ContentType = ResourceHttpHandler.GetMimeMapping(fileName);
+
+                    if (fileName.EndsWith("css", StringComparison.OrdinalIgnoreCase) ||
+                        fileName.EndsWith("js", StringComparison.OrdinalIgnoreCase) ||
+                        fileName.EndsWith("html", StringComparison.OrdinalIgnoreCase) ||
+                        fileName.EndsWith("htm", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var cache = context.Response.Cache;
+                        cache.SetCacheability(HttpCacheability.Public);
+                        cache.SetExpires(DateTime.Now + TimeSpan.FromDays(7));
+                        cache.SetValidUntilExpires(true);
+
+                        var lastWriteTime = ResourceHttpHandler.GetAssemblyLastWriteTime();
+                        cache.SetLastModified(lastWriteTime);
+                    }
 
                     this.WriteToOutput(context, buffer);
-                    context.Response.ContentType = ResourceHttpHandler.GetMimeMapping(fileName);
                 }
             }
             else
@@ -88,6 +104,13 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var mimeMappingType = Assembly.GetAssembly(typeof(HttpRuntime)).GetType("System.Web.MimeMapping");
             var getMimeMappingMethodInfo = mimeMappingType.GetMethod("GetMimeMapping", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             return (string)getMimeMappingMethodInfo.Invoke(null, new object[] { filename });
+        }
+
+        private static DateTime GetAssemblyLastWriteTime()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            AssemblyName name = assembly.GetName();
+            return File.GetLastWriteTime((new Uri(name.CodeBase)).LocalPath);
         }
     }
 }
