@@ -10,24 +10,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models.Fields
     /// <summary>
     /// This class represents view model for related data templates.
     /// </summary>
-    public class RelatedDataViewModel
-    {
+    public class RelatedDataViewModel : RelatedViewModel
+    {        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RelatedDataViewModel"/> class.
+        /// </summary>
+        public RelatedDataViewModel()
+            : base()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RelatedDataVeiwModel"/> class.
         /// </summary>
         /// <param name="item">The item.</param>
-        public RelatedDataViewModel(IDataItem item)
+        public RelatedDataViewModel(IDataItem item) : base(item) 
         {
-            this.Item = item;
         }
-
-        /// <summary>
-        /// Gets or sets the item.
-        /// </summary>
-        /// <value>
-        /// The item.
-        /// </value>
-        public IDataItem Item { get; set; }
 
         /// <summary>
         /// Gets the default URL.
@@ -42,11 +41,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models.Fields
             {
                 return ((object)this.Item).GetDefaultUrl();
             }
-        }
-
-        public object GetValue(string propertyName)
-        {
-            return ((IDynamicFieldsContainer)this.Item).GetValue(propertyName);
         }
     }
 }

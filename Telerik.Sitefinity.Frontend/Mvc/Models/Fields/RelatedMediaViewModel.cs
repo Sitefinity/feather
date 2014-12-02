@@ -7,24 +7,26 @@ using Telerik.Sitefinity.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models.Fields
 {
-    public class RelatedMediaViewModel
+    /// <summary>
+    /// This class represents view model for related media.
+    /// </summary>
+    public class RelatedMediaViewModel : RelatedViewModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RelatedMediaViewModel"/> class.
         /// </summary>
-        /// <param name="item">The item.</param>
-        public RelatedMediaViewModel(IDataItem item)
+        public RelatedMediaViewModel()
+            : base()
         {
-            this.Item = item;
         }
 
         /// <summary>
-        /// Gets or sets the item.
+        /// Initializes a new instance of the <see cref="RelatedMediaViewModel"/> class.
         /// </summary>
-        /// <value>
-        /// The item.
-        /// </value>
-        public IDataItem Item { get; set; }
+        /// <param name="item">The item.</param>
+        public RelatedMediaViewModel(IDataItem item) : base(item)
+        {
+        }
 
         /// <summary>
         /// Gets the title.

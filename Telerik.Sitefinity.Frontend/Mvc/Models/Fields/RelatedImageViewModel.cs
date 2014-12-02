@@ -7,8 +7,19 @@ using Telerik.Sitefinity.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models.Fields
 {
+    /// <summary>
+    /// This class represents view model for related image.
+    /// </summary>
     public class RelatedImageViewModel : RelatedMediaViewModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RelatedImageViewModel"/> class.
+        /// </summary>
+        public RelatedImageViewModel()
+            : base()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RelatedImageViewModel"/> class.
         /// </summary>

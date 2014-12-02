@@ -6,6 +6,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Telerik.Sitefinity.Frontend.Mvc.Models.Fields;
 using Telerik.Sitefinity.GeoLocations.Model;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Locations.Configuration;
@@ -273,9 +274,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public IList<IDataItem> RelatedItems(string fieldName)
+        public IList<T> RelatedItems<T>(string fieldName) where T : RelatedViewModel, new()
         {
-            return this.OriginalItem.GetRelatedItems(fieldName).ToList<IDataItem>();
+            IList<T> result;
+            var relatedItems = this.OriginalItem.GetRelatedItems(fieldName);
+            if (relatedItems != null)
+                result = relatedItems.ToArray().Select(item => new T() { Item = item }).ToList();
+            else
+                result = null;
+
+            return result;
+        }
+
+        public T RelatedItem<T>(string fieldName) where T : RelatedViewModel, new()
+        {
+            T result;
+            var relatedItems = this.OriginalItem.GetRelatedItems(fieldName);
+
+            if (relatedItems != null)
+                result = relatedItems.ToArray().Select(item => new T() { Item = item }).FirstOrDefault();
+            else
+                result = default(T);
+
+            return result;
         }
 
         #endregion

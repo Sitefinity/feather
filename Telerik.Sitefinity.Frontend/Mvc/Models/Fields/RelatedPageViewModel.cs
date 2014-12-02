@@ -8,24 +8,26 @@ using Telerik.Sitefinity.RelatedData;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models.Fields
 {
-    public class RelatedPageViewModel
+    /// <summary>
+    /// This class represents view model for related pages.
+    /// </summary>
+    public class RelatedPageViewModel : RelatedViewModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RelatedPageViewModel"/> class.
         /// </summary>
-        /// <param name="item">The item.</param>
-        public RelatedPageViewModel(IDataItem item)
+        public RelatedPageViewModel()
+            : base()
         {
-            this.Item = item;
         }
 
         /// <summary>
-        /// Gets or sets the item.
+        /// Initializes a new instance of the <see cref="RelatedPageViewModel"/> class.
         /// </summary>
-        /// <value>
-        /// The item.
-        /// </value>
-        public IDataItem Item { get; set; }
+        /// <param name="item">The item.</param>
+        public RelatedPageViewModel(IDataItem item) : base(item)
+        {
+        }
 
         /// <summary>
         /// Gets the title.
