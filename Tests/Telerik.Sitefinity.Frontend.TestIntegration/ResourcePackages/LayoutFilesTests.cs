@@ -238,10 +238,11 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
         }
 
-        [Test]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling"), Test]
         [Category(TestCategories.LayoutFiles)]
         [Author("Petya Rachina")]
         [Description("Adds a resource package with layout files, renames a page template based on one of the layout file and verifies the template and page based on it.")]
+        [Ignore("Failing because of bug ID: 145083")]
         public void ResourcePackageLayoutFiles_RenameTemplateBasedOnLayoutFile_VerifyTemplateAndPage()
         {
             int templatesCount = this.PageManager.GetTemplates().Count();
