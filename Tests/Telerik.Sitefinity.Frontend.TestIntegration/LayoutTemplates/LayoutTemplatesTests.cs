@@ -371,6 +371,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
         [Category(TestCategories.LayoutTemplates)]
         [Author("Petya Rachina")]
         [Description("Rename template based on layout file in Mvc/Views/Layouts, verifies the template and the page that uses it.")]
+        [Ignore("Ignored because of Bug ID 145083")]
         public void LayoutTemplates_RenameTemplateBasedOnLayoutFile_VerifyTemplateAndPage()
         {
             PageManager pageManager = PageManager.GetManager();
