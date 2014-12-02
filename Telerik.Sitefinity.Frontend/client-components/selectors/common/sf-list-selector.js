@@ -452,7 +452,7 @@
                             }
                             else {
                                 var id = (scope.sfSelectedItem && scope.sfSelectedItem.Id) || scope.sfSelectedItemId;
-                                if (id) {
+                                if (id && id !== emptyGuid) {
                                     var selected = [];
                                     selected.push(id);
                                     return selected;

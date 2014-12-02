@@ -5,6 +5,7 @@ Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEd
 
     this._containerToHide = {};
     this._mvcTypes = null;
+    this._elementIdsToBeHiddenIfMvc = null;
 };
 
 Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEditor.prototype = {
@@ -22,11 +23,10 @@ Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEd
     _valueChangedHandler: function (sender, args) {
 
         if (!this._isMvcController(sender.target.value)) {
-            jQuery(this._otherPropertiesContainer).parent().show();
             this._dataBindPropertiesItemsList(this._commonPropertiesItemsList);
+            this._toggleVisibilityOfElements(true);
         } else {
-            // hide "other properties" container (right section) for MVC widgets
-            jQuery(this._otherPropertiesContainer).parent().hide();
+            this._toggleVisibilityOfElements(false);
         }
 
         this._setModuleTitle();
@@ -37,9 +37,9 @@ Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEd
         Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEditor.callBaseMethod(this, "_dataBindSuccess", [sender, result]);
 
         if (sender._isMvcController(result.Item.ControlType)) {
-            sender._containerToHide.hide();
+            sender._toggleVisibilityOfElements(false);
         } else {
-            sender._containerToHide.show();
+            sender._toggleVisibilityOfElements(true);
         }
     },
 
@@ -50,14 +50,23 @@ Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEd
             var mvcControllerType = item.substring(0, len);
             var mvcControllerTypesArray = JSON.parse(this.get_mvcTypes());
 
-            for (var i = 0; i < mvcControllerTypesArray.length; i++) {
-                if (mvcControllerTypesArray[i] == mvcControllerType) {
+            for (var i = 0; i < mvcControllerTypesArray.length; i++)
+                if (mvcControllerTypesArray[i] == mvcControllerType)
                     return true;
-                }
-            }
         }
 
         return false;
+    },
+
+    _toggleVisibilityOfElements: function(visible){
+        var elements = JSON.parse(this.get_elementIdsToBeHiddenIfMvc());
+
+        for (var i = 0; i < elements.length; i++) {
+            var uiElement = jQuery('#' + elements[i]);
+            uiElement.toggle(visible);
+        }
+
+        this._containerToHide.toggle(visible);
     },
 
     get_mvcTypes: function () {
@@ -66,6 +75,14 @@ Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEd
 
     set_mvcTypes: function (value) {
         this._mvcTypes = value;
+    },
+
+    get_elementIdsToBeHiddenIfMvc: function () {
+        return this._elementIdsToBeHiddenIfMvc;
+    },
+
+    set_elementIdsToBeHiddenIfMvc: function (value) {
+        this._elementIdsToBeHiddenIfMvc = value;
     }
 }
 
