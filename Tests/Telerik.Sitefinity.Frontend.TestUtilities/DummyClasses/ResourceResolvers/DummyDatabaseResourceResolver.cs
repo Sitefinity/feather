@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Cache;
 using Telerik.Sitefinity.Pages.Model;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolvers
@@ -30,6 +31,18 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
                 return this.ControlPresentationResult[virtualPath];
             else
                 return null;
+        }
+
+        /// <inheritdoc />
+        protected override Microsoft.Practices.EnterpriseLibrary.Caching.ICacheManager GetCacheManager()
+        {
+            return new DummyCacheManager();
+        }
+
+        /// <inheritdoc />
+        protected override Microsoft.Practices.EnterpriseLibrary.Caching.ICacheItemExpiration[] GetControlPresentationsCacheExpirations()
+        {
+            return null;
         }
     }
 }
