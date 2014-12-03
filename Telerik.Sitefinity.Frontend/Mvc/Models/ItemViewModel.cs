@@ -235,6 +235,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return taxonNames;
         }
 
+        /// <summary>
+        /// Gets the hierarchical taxon names.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
         public IList<string> GetHierarchicalTaxonNames(string fieldName)
         {
             var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
@@ -252,6 +257,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                    .Select(t => t.Title.ToString()).ToList();
 
             return taxonNames;
+        }
+
+        /// <summary>
+        /// Gets the name of the flat taxon.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
+        public string GetFlatTaxonName(string fieldName)
+        {
+            var taxonName = this.GetFlatTaxonNames(fieldName).FirstOrDefault();
+
+            return taxonName;
+        }
+
+        /// <summary>
+        /// Gets the name of the hierarchical taxon.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
+        public string GetHierarchicalTaxonName(string fieldName)
+        {
+            string taxonName = this.GetHierarchicalTaxonNames(fieldName).FirstOrDefault();
+
+            return taxonName;
         }
 
         #endregion
