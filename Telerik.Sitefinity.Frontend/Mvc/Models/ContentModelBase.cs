@@ -339,9 +339,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             {
                 var contentResolvedType = this.ContentType;
                 var result = new List<CacheDependencyKey>(1);
-                if (viewModel.Item != null && viewModel.Item.Id != Guid.Empty)
+                if (viewModel.Item != null && viewModel.Item.Fields.Id != Guid.Empty)
                 {
-                    result.Add(new CacheDependencyKey { Key = viewModel.Item.Id.ToString(), Type = contentResolvedType });
+                    result.Add(new CacheDependencyKey { Key = viewModel.Item.Fields.Id.ToString(), Type = contentResolvedType });
                 }
 
                 return result;
@@ -465,7 +465,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             int? totalPages = null;
             if (this.SelectionMode == Models.SelectionMode.SelectedItems && this.selectedItemsIds.Count == 0)
             {
-                viewModel.Items = Enumerable.Empty<dynamic>();
+                viewModel.Items = Enumerable.Empty<ItemViewModel>();
             }
             else
             {

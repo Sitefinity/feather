@@ -17,39 +17,20 @@ using Telerik.Sitefinity.Taxonomies.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
-    public class ItemViewModel : DynamicObject
+    public class ItemViewModel
     {
         public ItemViewModel(IDataItem item)
         {
             this.OriginalItem = item;
+            this.Fields = new DynamicDataItemFieldAccessor(item);
         }
 
         public IDataItem OriginalItem { get; set; }
 
         /// <summary>
-        /// Provides the implementation for operations that get member values. Classes derived from the <see cref="T:System.Dynamic.DynamicObject" /> class can override this method to specify dynamic behavior for operations such as getting a value for a property.
+        /// Gets a property that accesses fields of the data item that is represented by this view model.
         /// </summary>
-        /// <param name="binder">Provides information about the object that called the dynamic operation. The binder.Name property provides the name of the member on which the dynamic operation is performed. For example, for the Console.WriteLine(sampleObject.SampleProperty) statement, where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject" /> class, binder.Name returns "SampleProperty". The binder.IgnoreCase property specifies whether the member name is case-sensitive.</param>
-        /// <param name="result">The result of the get operation. For example, if the method is called for a property, you can assign the property value to <paramref name="result" />.</param>
-        /// <returns>
-        /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)
-        /// </returns>
-        public override bool TryGetMember(GetMemberBinder binder, out object result)
-        {
-            string name = binder.Name;
-            var isFound = false;
-            result = null;
-
-            var propInfo = TypeDescriptor.GetProperties(this.OriginalItem)[name];
-
-            if (propInfo != null)
-            {
-                result = propInfo.GetValue(this.OriginalItem);
-                isFound = true;
-            }
-
-            return isFound;
-        }
+        public dynamic Fields { get; private set; }
 
         #region Address field
 
@@ -62,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public string GetFormattedAddress(string fieldName, string addressFormat)
         {
             string result = string.Empty;
-            var fieldValue = this.GetMemberValue(fieldName) as Address;
+            var fieldValue = this.Fields.GetMemberValue(fieldName) as Address;
 
             if (fieldValue != null && !addressFormat.IsNullOrEmpty())
             {
@@ -127,7 +108,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public string GetDateTime(string fieldName, string fieldFormat)
         {
-            var dateTimeValue = (DateTime)this.GetMemberValue(fieldName);
+            var dateTimeValue = (DateTime)this.Fields.GetMemberValue(fieldName);
 
             if (dateTimeValue == default(DateTime))
                 return null;
@@ -149,7 +130,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public string GetPrice(string fieldName, string fieldFormat)
         {
-            var fieldValue = this.GetMemberValue(fieldName);
+            var fieldValue = this.Fields.GetMemberValue(fieldName);
             if (fieldValue == null)
                 return null;
 
@@ -170,7 +151,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public string GetBool(string fieldName)
         {
-            var boolValue = (bool)this.GetMemberValue(fieldName);
+            var boolValue = (bool)this.Fields.GetMemberValue(fieldName);
 
             return boolValue ? Res.Get<Labels>().Yes : Res.Get<Labels>().No;
         }
@@ -187,7 +168,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "multi")]
         public string GetMultipleChoiceValueString(string fieldName)
         {
-            var multiChoiceValues = this.GetMemberValue(fieldName) as IEnumerable;
+            var multiChoiceValues = this.Fields.GetMemberValue(fieldName) as IEnumerable;
             if (multiChoiceValues == null)
                 return null;
 
@@ -213,7 +194,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public string GetChoiceLabel(string fieldName, Guid parentTypeId)
         {
-            var fieldValue = this.GetMemberValue(fieldName).ToString();
+            var fieldValue = this.Fields.GetMemberValue(fieldName).ToString();
             Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager man = new Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager();
             var moduleType = man.Provider.GetDynamicModuleType(parentTypeId);
             string label = fieldValue;
@@ -244,7 +225,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public IList<string> GetFlatTaxonNames(string fieldName)
         {
-            var taxonIds = this.GetMemberValue(fieldName) as IList<Guid>;
+            var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
             TaxonomyManager manager = TaxonomyManager.GetManager();
 
             var taxonNames = manager.GetTaxa<FlatTaxon>()
@@ -256,7 +237,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         public IList<string> GetHierarchicalTaxonNames(string fieldName)
         {
-            var taxonIds = this.GetMemberValue(fieldName) as IList<Guid>;
+            var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
             string taxonomyName;
             TaxonomyManager manager = TaxonomyManager.GetManager();
             if (fieldName == "Category")
@@ -314,22 +295,5 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets the member value.
-        /// </summary>
-        /// <param name="fieldName">Name of the field.</param>
-        /// <returns></returns>
-        protected object GetMemberValue(string fieldName)
-        {
-            var propInfo = TypeDescriptor.GetProperties(this.OriginalItem)[fieldName];
-
-            if (propInfo != null)
-            {
-                return propInfo.GetValue(this.OriginalItem);
-            }
-
-            return null;
-        }
     }
 }
