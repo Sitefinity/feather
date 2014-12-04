@@ -96,6 +96,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public virtual string GetFormattedAddress(string fieldName, string addressFormat)
         {
+            var cahcedResultKey = this.FieldCacheKey("GetFormattedAddress", fieldName);
+
+            object cachedResult;
+            if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
+                return cachedResult as string;
+
             string result = string.Empty;
             var fieldValue = this.Fields.GetMemberValue(fieldName) as Address;
 
@@ -146,6 +152,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 result = result.Replace("#=Country#", countryName);
                 result = result.Replace("#=State#", state);
             }
+
+            this.cachedFieldValues[cahcedResultKey] = result;
 
             return result;
         }
@@ -248,6 +256,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public virtual string GetChoiceLabel(string fieldName, Guid parentTypeId)
         {
+            var cahcedResultKey = this.FieldCacheKey("GetChoiceLabel", fieldName);
+
+            object cachedResult;
+            if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
+                return cachedResult as string;
+
             var fieldValue = this.Fields.GetMemberValue(fieldName).ToString();
             Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager man = new Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager();
             var moduleType = man.Provider.GetDynamicModuleType(parentTypeId);
@@ -264,6 +278,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 }
             }
 
+            this.cachedFieldValues[cahcedResultKey] = label;
+
             return label;
         }
 
@@ -279,12 +295,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public virtual IList<string> GetFlatTaxonNames(string fieldName)
         {
+            var cahcedResultKey = this.FieldCacheKey("GetFlatTaxonNames", fieldName);
+            object cachedResult;
+            if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
+                return cachedResult as IList<string>;
+
             var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
             TaxonomyManager manager = TaxonomyManager.GetManager();
 
             var taxonNames = manager.GetTaxa<FlatTaxon>()
                     .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == fieldName)
                     .Select(t => t.Title.ToString()).ToList();
+
+            this.cachedFieldValues[cahcedResultKey] = taxonNames;
 
             return taxonNames;
         }
@@ -296,6 +319,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public virtual IList<string> GetHierarchicalTaxonNames(string fieldName)
         {
+            var cahcedResultKey = this.FieldCacheKey("GetHierarchicalTaxonNames", fieldName);
+            object cachedResult;
+            if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
+                return cachedResult as IList<string>;
+
             var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
             string taxonomyName;
             TaxonomyManager manager = TaxonomyManager.GetManager();
@@ -309,6 +337,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var taxonNames = manager.GetTaxa<HierarchicalTaxon>()
                    .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == taxonomyName)
                    .Select(t => t.Title.ToString()).ToList();
+            this.cachedFieldValues[cahcedResultKey] = taxonNames;
 
             return taxonNames;
         }
@@ -348,12 +377,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public virtual IEnumerable<ItemViewModel> RelatedItems(string fieldName)
         {
+            var cahcedResultKey = this.FieldCacheKey("RelatedItems", fieldName);
+            object cachedResult;
+            if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
+                return cachedResult as IEnumerable<ItemViewModel>;
+                
             IEnumerable<ItemViewModel> result;
             var relatedItems = this.DataItem.GetRelatedItems(fieldName);
             if (relatedItems != null)
                 result = relatedItems.ToArray().Select(item => new ItemViewModel(item)).ToArray();
             else
                 result = null;
+
+            this.cachedFieldValues[cahcedResultKey] = result;
 
             return result;
         }
@@ -365,6 +401,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public virtual ItemViewModel RelatedItem(string fieldName)
         {
+            var cahcedResultKey = this.FieldCacheKey("RelatedItem", fieldName);
+            object cachedResult;
+            if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
+                return cachedResult as ItemViewModel;
+
             ItemViewModel result;
             var relatedItems = this.DataItem.GetRelatedItems(fieldName);
 
@@ -373,9 +414,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             else
                 result = null;
 
+            this.cachedFieldValues[cahcedResultKey] = result;
+
             return result;
         }
 
         #endregion
+
+        /// <summary>
+        /// Gets the cache key for <see cref="cachedFieldValues"/>.
+        /// </summary>
+        /// <param name="methodName">Name of the method.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
+        private string FieldCacheKey(string methodName, string fieldName)
+        {
+            return methodName + ":" + fieldName;
+        }
+
+        /// <summary>
+        /// Contains the cached field values.
+        /// </summary>
+        private Dictionary<string, object> cachedFieldValues = new Dictionary<string, object>();
     }
 }
