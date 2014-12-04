@@ -16,7 +16,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2014.2.918.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
+    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2014.3.1128.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <JSLintSkip>\Mvc\Scripts\Angular\angular.min.js|\Mvc\Scripts\Angular\angular-route.min.js|\Mvc\Scripts\Angular\|\Mvc\Scripts\Bootstrap\|\Mvc\Scripts\Kendo\</JSLintSkip>
@@ -57,19 +57,19 @@
     </Reference>
     <Reference Include="ServiceStack">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ServiceStack.Signed.4.0.22\lib\net40\ServiceStack.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Signed.4.0.33\lib\net40\ServiceStack.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Client">
-      <HintPath>..\packages\ServiceStack.Client.Signed.4.0.22\lib\net40\ServiceStack.Client.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Client.Signed.4.0.33\lib\net40\ServiceStack.Client.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common">
-      <HintPath>..\packages\ServiceStack.Common.Signed.4.0.22\lib\net40\ServiceStack.Common.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Common.Signed.4.0.33\lib\net40\ServiceStack.Common.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\packages\ServiceStack.Interfaces.4.0.22\lib\net40\ServiceStack.Interfaces.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Interfaces.4.0.33\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text">
-      <HintPath>..\packages\ServiceStack.Text.Signed.4.0.22\lib\net40\ServiceStack.Text.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Text.Signed.4.0.33\lib\net40\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -109,67 +109,67 @@
     <Reference Include="System.Xml" />
     <Reference Include="Telerik.OpenAccess">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1128.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.OpenAccess.35.Extensions">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1128.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.OpenAccess.40.Extensions">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1128.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.OpenAccess.Runtime">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1128.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Model">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Resources">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Resources.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.Resources.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Search">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Documents">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Events">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Statistics">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
-      <HintPath>..\packages\Telerik.Sitefinity.TestUtilities.7.2.5300.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.TestUtilities.7.3.5500.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.2.5300.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5500.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.Design">
-      <HintPath>..\packages\Telerik.Web.UI.2014.2.724.40\lib\net40\Telerik.Web.Design.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2014.3.1024.40\lib\net40\Telerik.Web.Design.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Web.UI.2014.2.724.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2014.3.1024.40\lib\net40\Telerik.Web.UI.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI.Skins">
-      <HintPath>..\packages\Telerik.Web.UI.2014.2.724.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2014.3.1024.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -182,11 +182,15 @@
     <Compile Include="InlineEditing\HtmlProcessor.cs" />
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
+    <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerMetadataAttribute.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
     <Compile Include="Mvc\Helpers\CustomFieldsHelpers.cs" />
     <Compile Include="Mvc\Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Mvc\Helpers\HyperLinkHelpers.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
     <Compile Include="Mvc\Helpers\SitefinityContext.cs" />
+    <Compile Include="Mvc\Helpers\SitefinityHelper.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\CustomTaxonomyViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
     <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
@@ -211,6 +215,8 @@
     <Compile Include="FilesMonitoring\IFileMonitor.cs" />
     <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\ISelfRoutingController.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\MvcWidgetProxy.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutMvcPageResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
@@ -228,7 +234,9 @@
     <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParser.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilder.cs" />
+    <Compile Include="Mvc\Infrastructure\MvcConstants.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\CategoryParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\IntParamResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\CustomActionParamsMapper.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -242,9 +250,16 @@
     <Compile Include="Mvc\Infrastructure\Routing\TaxonParamResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlParamsMapperBase.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlSegmentInfo.cs" />
+    <Compile Include="Mvc\Models\ContentDetailsViewModel.cs" />
+    <Compile Include="Mvc\Models\ContentListViewModel.cs" />
+    <Compile Include="Mvc\Models\ContentModelBase.cs" />
     <Compile Include="Mvc\Models\DesignerModel.cs" />
     <Compile Include="Mvc\Models\DesignerViewConfigModel.cs" />
+    <Compile Include="Mvc\Models\DynamicDataItemFieldAccessor.cs" />
+    <Compile Include="Mvc\Models\ItemViewModel.cs" />
     <Compile Include="Mvc\Models\IDesignerModel.cs" />
+    <Compile Include="Mvc\Models\ListDisplayMode.cs" />
+    <Compile Include="Mvc\Models\SelectionMode.cs" />
     <Compile Include="Mvc\StringResources\DesignerResources.cs" />
     <Compile Include="Resources\ResourceRegister.cs" />
     <Compile Include="Resources\PackageManager.cs" />
@@ -282,11 +297,12 @@
     <EmbeddedResource Include="Mvc\Views\Designer\Designer.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mvc\Views\Shared\" />
+    <Folder Include="assets\dist\img\" />
+    <Folder Include="assets\dist\js\" />
+    <Folder Include="assets\src\img\" />
+    <Folder Include="assets\src\js\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Styles\Images\loading.gif" />
-    <EmbeddedResource Include="Mvc\Scripts\data-providers.js" />
     <EmbeddedResource Include="Mvc\Scripts\Designer\designer.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js" />
@@ -325,24 +341,40 @@
     <EmbeddedResource Include="Mvc\Scripts\Kendo\angular-kendo.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Styles\sitefinity-theme.scss" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mvc\Styles\sitefinity-theme.css">
-      <DependentUpon>sitefinity-theme.scss</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Mvc\Styles\sitefinity-theme.min.css" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js.map" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js.map" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.json" />
-    <EmbeddedResource Include="Mvc\Styles\sitefinity-backend.scss" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js.map" />
     <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
+    <None Include="assets\csslint.json" />
+    <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
+    <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
+    <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="assets\jshint.json" />
+    <None Include="assets\package.json" />
+    <None Include="assets\src\sass\bootstrap\_alerts.sass" />
+    <None Include="assets\src\sass\bootstrap\_badges.sass" />
+    <None Include="assets\src\sass\bootstrap\_buttons.sass" />
+    <None Include="assets\src\sass\bootstrap\_datepicker.sass" />
+    <None Include="assets\src\sass\bootstrap\_forms.sass" />
+    <None Include="assets\src\sass\bootstrap\_labels.sass" />
+    <None Include="assets\src\sass\bootstrap\_list-group.sass" />
+    <None Include="assets\src\sass\bootstrap\_modals.sass" />
+    <None Include="assets\src\sass\bootstrap\_navs.sass" />
+    <None Include="assets\src\sass\bootstrap\_utilities.sass" />
+    <None Include="assets\src\sass\kendo\_editor.sass" />
+    <None Include="assets\src\sass\kendo\_kendo-ui.bootstrap.scss" />
+    <None Include="assets\src\sass\kendo\_tabstrip.sass" />
+    <None Include="assets\src\sass\modules\_Btn.sass" />
+    <None Include="assets\src\sass\modules\_BtnGroup.sass" />
+    <None Include="assets\src\sass\modules\_Modal.sass" />
+    <None Include="assets\src\sass\modules\_test.scss" />
+    <None Include="assets\src\sass\sitefinity-backend.sass" />
+    <None Include="assets\src\sass\_utility-classes.sass" />
+    <None Include="assets\src\sass\_variables.sass" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -378,59 +410,105 @@
     <EmbeddedResource Include="Mvc\Scripts\server-data.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Styles\sitefinity-backend.min.css" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Selectors\selectors.js" />
-    <EmbeddedResource Include="Services\services.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-selectors.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-services.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\list-selector.html" />
-    <EmbeddedResource Include="Selectors\taxon-selector.js" />
-    <EmbeddedResource Include="Selectors\taxon-selector.html" />
-    <EmbeddedResource Include="Services\flat-taxon-service.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-flat-taxon-service.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\list-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.js" />
     <EmbeddedResource Include="Mvc\Scripts\Templates\expander.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Scripts\Templates\provider-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Services\taxonomy-service.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxonomy-service.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\taxon-filter.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-filter.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\taxon-filter.html" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-filter.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\news-selector.html" />
-    <EmbeddedResource Include="Selectors\news-selector.js" />
-    <EmbeddedResource Include="Services\news-item-service.js" />
+    <EmbeddedResource Include="client-components\selectors\news\sf-news-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\news\sf-news-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\news\sf-news-item-service.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\style-dropdown.js" />
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
+    <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-service.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-items-tree.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-bubbles-selection.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-group-selection.html" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-service.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-items-tree.js" />
+    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
+    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
+    <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assets\gruntfile.js" />
+    <EmbeddedResource Include="Modules\ControlTemplates\Web\Scripts\MvcControlTemplateEditor.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-provider-service.js" />
+    <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.src.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Selectors\dynamic-items-selector.html" />
-    <EmbeddedResource Include="Selectors\dynamic-items-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-filter-selector.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Services\data-service.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-filter-selector.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-filter.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-filter.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-dynamic-items-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-dynamic-items-selector.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-data-service.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />

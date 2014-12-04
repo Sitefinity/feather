@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.InlineEditing.Attributes;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.InlineEditing
 {
@@ -11,6 +12,23 @@ namespace Telerik.Sitefinity.Frontend.InlineEditing
     /// </summary>
     public class HtmlProcessor
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HtmlProcessor"/> class.
+        /// </summary>
+        public HtmlProcessor()
+            : this(SystemManager.IsInlineEditingMode)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HtmlProcessor"/> class.
+        /// </summary>
+        /// <param name="isInlineEditing">Value indicating whether HTML should be generated for inline editing.</param>
+        public HtmlProcessor(bool isInlineEditing)
+        {
+            this.isInlineEditingMode = isInlineEditing;
+        }
+
         /// <summary>
         /// Creates a region which has the required by the InlineEditing attributes.
         /// </summary>
@@ -21,17 +39,24 @@ namespace Telerik.Sitefinity.Frontend.InlineEditing
         /// <returns></returns>
         public virtual HtmlRegion CreateInlineEditingRegion(TextWriter writer, string providerName, string type, Guid id)
         {
-            string htmlTagType = "div";
-            var tagBuilder = new TagBuilder(htmlTagType);
-            tagBuilder.Attributes.Add("data-sf-provider", providerName);
-            tagBuilder.Attributes.Add("data-sf-type", type);
+            if (this.isInlineEditingMode)
+            {
+                string htmlTagType = "div";
+                var tagBuilder = new TagBuilder(htmlTagType);
+                tagBuilder.Attributes.Add("data-sf-provider", providerName);
+                tagBuilder.Attributes.Add("data-sf-type", type);
 
-            if (id != Guid.Empty)
-                tagBuilder.Attributes.Add("data-sf-id", id.ToString());
+                if (id != Guid.Empty)
+                    tagBuilder.Attributes.Add("data-sf-id", id.ToString());
 
-            writer.Write(tagBuilder.ToString(TagRenderMode.StartTag));
+                writer.Write(tagBuilder.ToString(TagRenderMode.StartTag));
 
-            return new HtmlRegion(writer, htmlTagType);
+                return new HtmlRegion(writer, htmlTagType);
+            }
+            else
+            {
+                return new HtmlRegion(writer, string.Empty);
+            }
         }
 
         /// <summary>
@@ -51,7 +76,7 @@ namespace Telerik.Sitefinity.Frontend.InlineEditing
 
             var fieldInfoAttr = propattr.OfType<FieldInfoAttribute>().FirstOrDefault();
 
-            if (fieldInfoAttr == null)
+            if (fieldInfoAttr == null || !this.isInlineEditingMode)
             {
                 htmlString = propValue.ToString();
             }
@@ -62,6 +87,8 @@ namespace Telerik.Sitefinity.Frontend.InlineEditing
 
             return htmlString;
         }
+
+        private bool isInlineEditingMode;
 
         public const string InlineEditingHtmlWrapper = "<div data-sf-field='{0}' data-sf-ftype='{1}'>{2}</div>";
     }

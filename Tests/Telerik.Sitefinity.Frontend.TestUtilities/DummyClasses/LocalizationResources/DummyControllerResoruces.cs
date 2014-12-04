@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.LocalizationRes
         {
             get
             {
-                return this["DummyResource", System.Globalization.CultureInfo.InvariantCulture];
+                return this["DummyResource"];
             }
         }
     }

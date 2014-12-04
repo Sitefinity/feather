@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Web.Script.Serialization;
+using System.Web.UI;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Pages.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
@@ -22,9 +24,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="views">The views that are available to the controller.</param>
         /// <param name="viewLocations">The locations where view files can be found.</param>
         /// <param name="widgetName">Name of the widget that is being edited.</param>
+        /// <param name="controlId">Id of the control that is edited.</param>
         /// <param name="preselectedView">Name of the preselected view if there is one. Otherwise use null.</param>
-        public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, string preselectedView)
+        public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView)
         {
+            this.Caption = widgetName;
+
             if (preselectedView.IsNullOrEmpty())
             {
                 this.views = views.Where(this.IsDesignerView).Select(this.ExtractViewName);
@@ -47,6 +52,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             this.PopulateScriptReferences(widgetName, viewConfigs);
 
             this.defaultView = viewConfigs.OrderByDescending(c => c.Value.Priority).Select(c => c.Key).FirstOrDefault();
+
+            this.Control = this.LoadControl(controlId);
         }
 
         /// <inheritdoc />
@@ -76,11 +83,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
         }
 
+        /// <inheritdoc />
+        public Control Control { get; set; }
+
+        /// <inheritdoc />
+        public string Caption { get; set; }
+
         /// <summary>
         /// Determines whether the given file represents a designer view.
         /// </summary>
         /// <param name="filename">The filename.</param>
-        protected virtual bool IsDesignerView(string filename)
+        protected bool IsDesignerView(string filename)
         {
             return filename != null && filename.StartsWith(DesignerModel.DesignerViewPrefix, StringComparison.Ordinal);
         }
@@ -89,7 +102,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Extracts the name of the view.
         /// </summary>
         /// <param name="filename">The filename.</param>
-        protected virtual string ExtractViewName(string filename)
+        protected string ExtractViewName(string filename)
         {
             if (filename == null)
                 throw new ArgumentNullException("filename");
@@ -114,16 +127,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="widgetName">Name of the widget.</param>
         /// <param name="viewConfigs">The view configs.</param>
-        protected virtual void PopulateScriptReferences(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
+        protected void PopulateScriptReferences(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
         {
             var packagesManager = new PackageManager();
             var packageName = packagesManager.GetCurrentPackage();
 
             var designerWidgetName = FrontendManager.ControllerFactory.GetControllerName(typeof(DesignerController));
 
-            var viewScriptReferences = new List<string>(this.Views.Count());
+            var viewScriptReferences = new List<string>(this.views.Count());
 
-            foreach (var view in this.Views)
+            foreach (var view in this.views)
             {
                 var scriptFileName = this.GetViewScriptFileName(view);
                 var scriptPath = this.GetScriptPath(scriptFileName, widgetName, packageName);
@@ -153,7 +166,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="view">The view.</param>
         /// <returns>File name of the client script file for a given view.</returns>
-        protected virtual string GetViewScriptFileName(string view)
+        protected string GetViewScriptFileName(string view)
         {
             if (string.IsNullOrEmpty(view))
                 throw new ArgumentNullException("view");
@@ -167,7 +180,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="view">The view.</param>
         /// <param name="viewLocations">Locations where view files can be found.</param>
         /// <returns>Config for the given view if such config exists.</returns>
-        protected virtual DesignerViewConfigModel GetViewConfig(string view, IEnumerable<string> viewLocations)
+        protected DesignerViewConfigModel GetViewConfig(string view, IEnumerable<string> viewLocations)
         {
             if (view == null)
                 throw new ArgumentNullException("view");
@@ -209,6 +222,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 scriptVirtualPath : FrontendManager.VirtualPathBuilder.AddParams(scriptVirtualPath, packageName);
 
             return scriptVirtualPath;
+        }
+
+        private Control LoadControl(Guid controlId)
+        {
+            if (controlId != Guid.Empty)
+            {
+                var pageManager = PageManager.GetManager();
+                var objectData = pageManager.GetControl<ObjectData>(controlId);
+
+                var controlData = objectData as ControlData;
+                if (controlData != null && !controlData.Caption.IsNullOrEmpty())
+                {
+                    this.Caption = controlData.Caption;
+                }
+
+                return pageManager.LoadControl(objectData);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private const string DesignerViewPrefix = "DesignerView.";

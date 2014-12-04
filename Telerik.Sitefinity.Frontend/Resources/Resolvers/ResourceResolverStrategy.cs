@@ -88,6 +88,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
             this.SetFirst(new FileSystemResourceResolver(() => packagesManager.GetCurrentPackageVirtualPath()))
                 .SetNext(new FileSystemResourceResolver())
+                .SetNext(new DatabaseResourceResolver())
                 .SetNext(new EmbeddedResourceResolver());
         }
 

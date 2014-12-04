@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyDesignerModel"/> class.
         /// </summary>
-        public DummyDesignerModel() : base(new List<string>(), new List<string>(), string.Empty, string.Empty)
+        public DummyDesignerModel() : base(new List<string>(), new List<string>(), string.Empty, Guid.Empty, string.Empty)
         { 
         }
 
@@ -24,9 +24,10 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Models
         /// <param name="views">The views that are available to the controller.</param>
         /// <param name="viewLocations">The locations where view files can be found.</param>
         /// <param name="widgetName">Name of the widget that is being edited.</param>
+        /// <param name="controlId">Id of the control that is being edited.</param>
         /// <param name="preselectedView">Name of the preselected view if there is one. Otherwise use null.</param>
-        public DummyDesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, string preselectedView)
-            : base(views, viewLocations, widgetName, preselectedView)
+        public DummyDesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView)
+            : base(views, viewLocations, widgetName, controlId, preselectedView)
         {
         }
 

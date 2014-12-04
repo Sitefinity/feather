@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         {
             get
             {
-                return this["DesignerResourcesTitle", System.Globalization.CultureInfo.InvariantCulture];
+                return this["DesignerResourcesTitle"];
             }
         }
 
@@ -34,7 +34,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         {
             get
             {
-                return this["DesignerResourcesDescription", System.Globalization.CultureInfo.InvariantCulture];
+                return this["DesignerResourcesDescription"];
             }
         }
 
@@ -49,7 +49,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         {
             get
             {
-                return this["Error", System.Globalization.CultureInfo.InvariantCulture];
+                return this["Error"];
             }
         }
 
@@ -64,7 +64,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         {
             get
             {
-                return this["Cancel", System.Globalization.CultureInfo.InvariantCulture];
+                return this["Cancel"];
             }
         }
 
@@ -79,7 +79,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         {
             get
             {
-                return this["SaveAllTranslations", System.Globalization.CultureInfo.InvariantCulture];
+                return this["SaveAllTranslations"];
             }
         }
 
@@ -94,7 +94,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         {
             get
             {
-                return this["Save", System.Globalization.CultureInfo.InvariantCulture];
+                return this["Save"];
             }
         }
 
@@ -109,7 +109,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         {
             get
             {
-                return this["PropertyGrid", System.Globalization.CultureInfo.InvariantCulture];
+                return this["PropertyGrid"];
             }
         }
     }

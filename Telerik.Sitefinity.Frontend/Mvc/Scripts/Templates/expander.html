@@ -1,4 +1,7 @@
-﻿<div class="s-more-options-wrp">
-	<span class="s-title" ng-click="toggle()"><span ng-class="classExpanded" class="glyphicon glyphicon-chevron-right"></span> {{title}}</span>
-	<div class="s-body" ng-show="isExpanded" ng-transclude></div>
+﻿<div class="form-group">
+    <span ng-click="toggle()">
+        <span ng-class="classExpanded" class="glyphicon glyphicon-chevron-right"></span>
+        {{title}}
+    </span>
+    <div class="p-left-md p-top-md" ng-show="isExpanded" ng-transclude></div>
 </div>

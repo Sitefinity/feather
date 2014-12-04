@@ -1,16 +1,13 @@
-﻿/* global $telerik, document, kendo */
+/* global $telerik, document, kendo */
 
 var sitefinity = sitefinity || {};
 
 (function ($) {
 
     var loader,
-		loaderMarkup = '<div style="opacity:0.5; width:100%; z-index:3100; position:absolute;' +
-					   'top:0; height:100%; background: black center no-repeat ' +
-					   'url(#= appPath #Frontend-Assembly/Telerik.Sitefinity.Frontend/Mvc/Styles/Images/loading.gif);">' +
-					   '</div>',
-		loaderTemplate = kendo.template(loaderMarkup),
-		dialog;
+        loaderMarkup = '<div class="sf-loading-wrapper"><div class="sf-loading"><span></span></div></div>',
+        loaderTemplate = kendo.template(loaderMarkup),
+        dialog;
 
     function isScriptTag(tag) {
         return tag.tagName == 'SCRIPT' && (!tag.type || tag.type.toLowerCase() == 'text/javascript');
@@ -65,11 +62,10 @@ var sitefinity = sitefinity || {};
         lab.wait(loadHandler);
     }
 
-	/**
-	 * Represents the Sitefinity page editor.
-	 */
+  /**
+   * Represents the Sitefinity page editor.
+   */
     sitefinity.pageEditor = {
-
 		/**
 		 * Shows the loading animation in the page editor.
 		 *
@@ -124,7 +120,14 @@ var sitefinity = sitefinity || {};
 			this.showLoader(args.AppPath);
 			this.widgetContext = args;
 
-			$.get(this.widgetContext.url)
+			var separator;
+			if (this.widgetContext.url.indexOf('?') > -1)
+			    separator = '&';
+			else
+			    separator = '?';
+
+			var url = this.widgetContext.url + separator + 'controlId=' + this.widgetContext.Id;
+			$.get(url)
 				.done($.proxy(this.renderDialog, this))
 				.fail(function (data) {
 					alert('There is a problem with loading the widget designer: ' + data);

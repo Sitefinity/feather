@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,14 +11,19 @@ using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.DynamicModules;
+using Telerik.Sitefinity.DynamicModules.Builder;
+using Telerik.Sitefinity.DynamicModules.Builder.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Mvc;
+using Telerik.Sitefinity.Mvc.Proxy;
 using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Utilities.TypeConverters;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -36,7 +42,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
             var assemblies = this.RetrieveAssemblies();
-
             this.RegisterVirtualPaths(assemblies);
 
             var controllerTypes = this.GetControllers(assemblies);
@@ -63,6 +68,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 {
                     var assembly = this.LoadAssembly(assemblyFileName);
                     this.InitializeControllerContainer(assembly);
+
                     result.Add(assembly);
                 }
             }
@@ -128,6 +134,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <param name="controllers">The controllers.</param>
         protected virtual void InitializeControllers(IEnumerable<Type> controllers)
         {
+            this.RegisterTemplateableControls(controllers);
             this.RegisterControllerFactory();
             this.RemoveSitefinityViewEngine();
             this.ReplaceControllerFactory();
@@ -226,6 +233,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         protected virtual void InitializeCustomRouting()
         {
             ObjectFactory.Container.RegisterType<IControllerActionInvoker, DynamicUrlParamActionInvoker>(new ContainerControlledLifetimeManager());
+            ObjectFactory.Container.RegisterType<IRouteParamResolver, IntParamResolver>("int");
             ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
             ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
         }
@@ -233,6 +241,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #endregion
 
         #region Private members
+
+        /// <summary>
+        /// Determines whether the specified controller is allowed template registration
+        /// </summary>
+        /// <param name="controllerType">Type of the controller.</param>
+        /// <returns>
+        ///   <c>true</c> if specified controller is allowed template registration; otherwise, <c>false</c>.
+        /// </returns>
+        private bool IsTemplatableControl(Type controllerType)
+        {
+            ControllerMetadataAttribute attr;
+            var attributes = controllerType.GetCustomAttributes(typeof(ControllerMetadataAttribute), false);
+
+            if (attributes != null && attributes.Length > 0)
+            {
+                attr = (ControllerMetadataAttribute)attributes[0];
+                return attr.IsTemplatableControl;
+            }
+
+            // if there is no ControllerMetaDataAttribute, by default allow template registration
+            return true;
+        }
 
         private Assembly CurrentDomain_ReflectionOnlyAssemblyResolve(object sender, ResolveEventArgs args)
         {
@@ -247,7 +277,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var virtualPath = FrontendManager.VirtualPathBuilder.GetVirtualPath(assembly);
 
             VirtualPathManager.AddVirtualFileResolver<ResourceResolver>(
-                                                                        "~/" + virtualPath + "*", 
+                                                                        string.Format(CultureInfo.InvariantCulture, "~/{0}*", virtualPath), 
                                                                         assemblyName.Name,
                                                                         assemblyName.CodeBase);
 
@@ -258,6 +288,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                                                   new RouteHandler<ResourceHttpHandler>()),
                                                   assemblyName.Name, 
                                                   requireBasicAuthentication: false);
+        }
+
+        /// <summary>
+        /// Registers MVC widgets as templatable controls
+        /// </summary>
+        /// <param name="controllerTypes">The controller types.</param>
+        private void RegisterTemplateableControls(IEnumerable<Type> controllerTypes)
+        {
+            controllerTypes = controllerTypes.Where(x => this.IsTemplatableControl(x));
+
+            foreach (Type controllerType in controllerTypes)
+            {
+                var widgetName = controllerType.Name.Replace("Controller", string.Empty);
+                var mvcWidgetName = string.Format(CultureInfo.InvariantCulture, "{0} (MVC)", widgetName);
+
+                Telerik.Sitefinity.Modules.ControlTemplates.ControlTemplates.RegisterTemplatableControl(controllerType, controllerType, string.Empty, widgetName, mvcWidgetName);
+            }
         }
 
         private void RemoveSitefinityViewEngine()

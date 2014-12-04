@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
@@ -6,6 +7,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Frontend.Security;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
+using Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Authentication;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
@@ -30,7 +32,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
             string widgetName = "Dummy";
             using (new ObjectFactoryContainerRegion())
             {
-                ObjectFactory.Container.RegisterType<IResourceResolverStrategy, ResourceResolverStrategy>();
+                ObjectFactory.Container.RegisterType<IResourceResolverStrategy, ResourceResolverStrategyMock>();
 
                 // Act
                 var designer = this.designerController.Master(widgetName) as ViewResult;

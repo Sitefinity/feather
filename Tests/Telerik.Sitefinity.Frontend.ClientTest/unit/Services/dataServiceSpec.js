@@ -1,5 +1,5 @@
-﻿/* Tests for data-service.js */
-describe('dataService', function () {
+﻿/* Tests for sf-data-service.js */
+describe('sfDataService', function () {
     if (!String.prototype.format) {
         String.prototype.format = function () {
             var newStr = this;
@@ -13,22 +13,22 @@ describe('dataService', function () {
         }
     };    
 
-    beforeEach(module('services'));
+    beforeEach(module('sfServices'));
 
+    var appPath = 'http://mysite.com:9999/myapp';
     var dataServiceBaseUrl = 'http://mysite.com:9999/myapp/Sitefinity/Services/DynamicModules/Data.svc';
     var dummyItemType = "Telerik.Sitefinity.DynamicTypes.Model.TestModule.SomeType";
 
-    //Mock sitefinity global variable
-    beforeEach(function () {
-        sitefinity.services.getDataServiceUrl = jasmine.createSpy('getDataServiceUrl')
-            .andCallFake(function () {
-                return dataServiceBaseUrl + '/';
-            });
-    });
-
     beforeEach(module(function ($provide) {
-        var widgetContext = { culture: null };
-        $provide.value('widgetContext', widgetContext);
+        var serverContext = {
+            getRootedUrl: function (path) {
+                return appPath + '/' + path;
+            },
+            getUICulture: function () {
+                return null;
+            }
+        };
+        $provide.value('serverContext', serverContext);
     }));
 
     var $httpBackend;
@@ -47,7 +47,7 @@ describe('dataService', function () {
     beforeEach(inject(function ($injector) {
         // Set up the mock http service responses
         $httpBackend = $injector.get('$httpBackend');
-        dataService = $injector.get('dataService');
+        dataService = $injector.get('sfDataService');
     }));    
 
     beforeEach(function () {
@@ -62,7 +62,7 @@ describe('dataService', function () {
     /* Helper methods */
     var asserItems = function (params) {
         var data;
-        dataService.getItems.apply(dataService, params).then(function (res) {
+        dataService.getLiveItems.apply(dataService, params).then(function (res) {
             data = res;
         });
 
@@ -126,7 +126,7 @@ describe('dataService', function () {
             providerParam = "provider=" + provider + "&";
         }
 
-        var servicePathPattern = '?{0}itemSurrogateType={1}&itemType={1}&{2}skip={3}&take={4}';
+        var servicePathPattern = '/live?{0}itemSurrogateType={1}&itemType={1}&{2}skip={3}&take={4}';
         var url = dataServiceBaseUrl + servicePathPattern.format(filterParam, itemType, providerParam, skip, take);
 
         $httpBackend.expectGET(url).respond(dataItems);

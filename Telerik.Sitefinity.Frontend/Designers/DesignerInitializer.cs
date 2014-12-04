@@ -24,12 +24,12 @@ namespace Telerik.Sitefinity.Frontend.Designers
         {
             if (RouteTable.Routes["MvcDesigner"] == null)
             {
-                RouteTable.Routes.MapRoute("MvcDesigner", "Telerik.Sitefinity.Frontend/{controller}/{action}/{widgetName}", new { controller = "DesignerController", action = "Master" });
+                RouteTable.Routes.MapRoute("MvcDesigner", "Telerik.Sitefinity.Frontend/{controller}/Master/{widgetName}", new { controller = "DesignerController", action = "Master" });
             }
 
             if (RouteTable.Routes["MvcDesignerView"] == null)
             {
-                RouteTable.Routes.MapRoute("MvcDesignerView", "Telerik.Sitefinity.Frontend/{controller}/{action}/{widgetName}/{viewType}", new { controller = "DesignerController", action = "View", viewType = "PropertyGrid" });
+                RouteTable.Routes.MapRoute("MvcDesignerView", "Telerik.Sitefinity.Frontend/{controller}/View/{widgetName}/{viewType}", new { controller = "DesignerController", action = "View", viewType = "PropertyGrid" });
             }
 
             ObjectFactory.Container.RegisterType<IDesignerResolver, DesignerResolver>(new ContainerControlledLifetimeManager());
@@ -47,21 +47,22 @@ namespace Telerik.Sitefinity.Frontend.Designers
             if (@event.Sender.GetType() == typeof(ZoneEditor))
             {
                 var scriptRootPath = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly);
-
-                var references = PageManager.GetScriptReferences(ScriptRef.KendoWeb);
-                foreach (var scriptRef in references)
-                {
-                    @event.Scripts.Add(scriptRef);
-                }
-
+                
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Angular/angular.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Angular/angular-route.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls-0.11.0.min.js"));
-
+           
+                ////var references = PageManager.GetScriptReferences(ScriptRef.KendoAll);
+                ////foreach (var scriptRef in references)
+                ////{
+                ////    @event.Scripts.Add(scriptRef);
+                ////}
+     
+                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/kendo.all.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor-services.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor.js"));
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/angular-kendo.js"));
-
+                ////@event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/angular-kendo.js"));
+                
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/LABjs/LAB.min.js"));
 
                 var currentPackage = new PackageManager().GetCurrentPackage();

@@ -16,7 +16,7 @@
 
     var resolveTemplateUrl = function (view, serverData) {
         var widgetName = serverData.get('widgetName');
-        var templatePath = String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}', widgetName, view);
+        var templatePath = String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}?controlId={2}', widgetName, view, serverData.get('controlId'));
         return sitefinity.getRootedUrl(sitefinity.appendPackageParameter(templatePath));
     };
 

@@ -70,7 +70,7 @@
       <HintPath>.\packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.0\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
-      <HintPath>packages\Telerik.Sitefinity.TestUtilities.7.2.5300.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+      <HintPath>packages\Telerik.Sitefinity.TestUtilities.7.3.5500.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.TestUI.Core, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -94,13 +94,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GridWidgets\AddGridWidgetToToolboxForPage.cs" />
+    <Compile Include="GridWidgets\AddGridWidgetToToolboxForPageTemplate.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
+    <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />
+    <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
+    <Compile Include="MvcWidgets\MvcReorderSelectedNewsItems.cs" />
+    <Compile Include="MvcWidgets\MvcSelectManyDynamicItems.cs" />
+    <Compile Include="MvcWidgets\MvcSelectMoreThanOneDynamicItem.cs" />
+    <Compile Include="MvcWidgets\MvcSelectMoreThanOneTag.cs" />
+    <Compile Include="MvcWidgets\MvcSelectMoreThanOneNewsItem.cs" />
+    <Compile Include="MvcWidgets\MvcDynamicSelectorTest.cs" />
     <Compile Include="MvcWidgets\MvcSelectorTest.cs" />
     <Compile Include="MvcWidgets\MvcWidgetApplyNewView.cs" />
     <Compile Include="MvcWidgets\MvcWidgetDefaultDesigner.cs" />
     <Compile Include="MvcWidgets\MvcWidgetEditViewCacheInvalidation.cs" />
-    <Compile Include="Pages\DeletePageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FeatherTestCase.cs" />
     <Compile Include="FeatherTestCategories.cs" />

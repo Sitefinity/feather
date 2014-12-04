@@ -30,7 +30,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.InlineEditing
             Guid id = Guid.NewGuid();
 
             // Act: create the CreateInlineEditingRegion
-            var htmlProcessor = new HtmlProcessor();
+            var htmlProcessor = new HtmlProcessor(isInlineEditing: true);
 
             using (htmlProcessor.CreateInlineEditingRegion(writer, providerName, type, id))
             {
@@ -71,7 +71,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.InlineEditing
         public void GetStringContent_WithInlineEditingAttribute_TextElementProperlyCreated()
         {
             // Arrange
-            var htmlProcessor = new HtmlProcessor();
+            var htmlProcessor = new HtmlProcessor(isInlineEditing: true);
             var dummyWidgetModel = new DummyWidgetModel { EditableContent = this.dummyContent, NonEditableContent = this.dummyContent };
 
             var fieldName = "DummyWidget";

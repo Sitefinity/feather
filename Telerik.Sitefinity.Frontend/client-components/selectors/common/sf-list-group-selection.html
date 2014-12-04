@@ -1,0 +1,14 @@
+﻿<div class="list-group list-group-sm m-bottom-sm" ng-show="sfSelectedItems.length > 0">
+    <div ng-repeat="item in sfSelectedItems | limitTo:5"
+         data-index="{{$index}}"
+         class="list-group-item">
+         <span sf-shrinked-breadcrumb="{{hierarchical ? item.TitlesPath : bindIdentifierField(item)}}" sf-max-length="70"></span>
+    </div>
+
+    <a class="u-dib m-top-xs small" ng-click="open()" ng-show="sfSelectedItems.length > 5">and {{sfSelectedItems.length - 5}} more</a>
+</div>
+
+<button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
+    <span ng-hide="isItemSelected()">Select</span>
+    <span ng-show="isItemSelected()">Change</span>
+</button>

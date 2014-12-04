@@ -17,6 +17,9 @@ describe('modal directive', function () {
     beforeEach(inject(function ($rootScope, $q, _dialogsService_) {
         scope = $rootScope.$new();
         scope.test = 'test prop';
+        scope.open = function () {
+            this.$openModalDialog();
+        }
 
         dialogsService = _dialogsService_;
 
@@ -110,8 +113,8 @@ describe('modal directive', function () {
 
     it('[GMateev] / should open dialog when button is clicked.]', function () {
         var template =
-        '<button id="openSelectorBtn">Open</button>' +
-        '<div class="designer" modal existing-scope="true" template-url="dialog-template" open-button="#openSelectorBtn">' +
+        '<button id="openSelectorBtn" ng-click="open()">Open</button>' +
+        '<div class="designer" modal existing-scope="true" template-url="dialog-template">' +
             '<script type="text/ng-template" id="dialog-template">' +
                 '<div class="modal-body">' +
                     '<h2>Body</h2>' +
@@ -136,8 +139,8 @@ describe('modal directive', function () {
             '</script>' +
         '</div>';
 
-        var template2 = '<button id="openSelectorBtn">Open</button>' +
-                '<div class="designer" modal existing-scope="true" template-url="dialog-template" open-button="#openSelectorBtn">' +
+        var template2 = '<button id="openSelectorBtn" ng-click="open()">Open</button>' +
+                '<div class="designer" modal existing-scope="true" template-url="dialog-template">' +
                     '<script type="text/ng-template" id="dialog-template">' +
                         '<div class="modal-body">' +
                             '<h2>Body</h2>' +
