@@ -35,8 +35,8 @@
                             throw "No item found with this TaxonomyName: " + taxonItem.TaxonomyName;
                         };
 
-                        var addChildTaxonQueryItem = function (taxonItem) {
-                            var groupName = getTaxonomyName(taxonItem);
+                        var addChildTaxonQueryItem = function (taxonItem, groupName) {
+                            groupName = groupName || getTaxonomyName(taxonItem);
                             var groupItem = scope.sfQueryData.getItemByName(groupName);
 
                             if (!groupItem) {
@@ -127,7 +127,7 @@
                                             TaxonomyName: taxonomyName,
                                             Name: i.Name,
                                             Id: i.Value
-                                        });
+                                        }, taxonomyName);
                                     });
                                 }
                                 constructFilterItem(taxonomyName);
