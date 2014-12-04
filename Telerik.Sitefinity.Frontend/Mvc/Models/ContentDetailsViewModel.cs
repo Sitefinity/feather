@@ -32,7 +32,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         /// The detail news.
         /// </value>
-        public dynamic Item { get; set; }
+        public ItemViewModel Item { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable social sharing.

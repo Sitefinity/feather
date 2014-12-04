@@ -289,7 +289,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var viewModel = this.CreateDetailsViewModelInstance();
 
             viewModel.CssClass = this.DetailCssClass;
-            viewModel.Item = item;
+            viewModel.Item = new ItemViewModel(item);
             viewModel.ContentType = this.ContentType;
             viewModel.ProviderName = this.ProviderName;
             viewModel.EnableSocialSharing = this.EnableSocialSharing;
@@ -339,9 +339,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             {
                 var contentResolvedType = this.ContentType;
                 var result = new List<CacheDependencyKey>(1);
-                if (viewModel.Item != null && viewModel.Item.Id != Guid.Empty)
+                if (viewModel.Item != null && viewModel.Item.Fields.Id != Guid.Empty)
                 {
-                    result.Add(new CacheDependencyKey { Key = viewModel.Item.Id.ToString(), Type = contentResolvedType });
+                    result.Add(new CacheDependencyKey { Key = viewModel.Item.Fields.Id.ToString(), Type = contentResolvedType });
                 }
 
                 return result;
@@ -369,7 +369,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="page">The page.</param>
         /// <param name="query">The items query.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "2#")]
-        protected virtual IEnumerable<dynamic> ApplyListSettings(int page, IQueryable<IDataItem> query, out int? totalPages)
+        protected virtual IEnumerable<ItemViewModel> ApplyListSettings(int page, IQueryable<IDataItem> query, out int? totalPages)
         {
             if (page < 1)
                 throw new ArgumentException("'page' argument has to be at least 1.", "page");
@@ -383,7 +383,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             compiledFilterExpression = this.AddLiveFilterExpression(compiledFilterExpression);
             compiledFilterExpression = this.AdaptMultilingualFilterExpression(compiledFilterExpression);
 
-            var result = this.SetExpression(query, compiledFilterExpression, this.SortExpression, itemsToSkip, take, ref totalCount);
+            var result = DataProviderBase.SetExpressions(
+                query,
+                compiledFilterExpression,
+                this.SortExpression,
+                itemsToSkip,
+                take,
+                ref totalCount).Select(item => new ItemViewModel(item)).ToArray<ItemViewModel>();
 
             totalPages = (int)Math.Ceiling(totalCount.Value / (double)this.ItemsPerPage.Value);
             totalPages = this.DisplayMode == ListDisplayMode.Paging ? totalPages : null;
@@ -459,7 +465,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             int? totalPages = null;
             if (this.SelectionMode == Models.SelectionMode.SelectedItems && this.selectedItemsIds.Count == 0)
             {
-                viewModel.Items = Enumerable.Empty<dynamic>();
+                viewModel.Items = Enumerable.Empty<ItemViewModel>();
             }
             else
             {
@@ -551,19 +557,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return selectedItemsFilterExpression;
         }
 
-        private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
+        private IQueryable<ItemViewModel> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
         {
             var manager = this.GetManager();
             var relatedDataSource = manager.Provider as IRelatedDataSource;
 
             if (relatedDataSource == null)
-                return Enumerable.Empty<IDataItem>().AsQueryable();
+                return Enumerable.Empty<ItemViewModel>().AsQueryable();
 
             //// Тhe filter is adapted to the implementation of ILifecycleDataItemGeneric, so the culture is taken in advance when filtering published items.
             var filterExpression = ContentHelper.AdaptMultilingualFilterExpression(this.FilterExpression);
             int? skip = (page - 1) * this.ItemsPerPage;
 
-            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay).OfType<IDataItem>();
+            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay).OfType<ItemViewModel>();
             return relatedItems;
         }
 
