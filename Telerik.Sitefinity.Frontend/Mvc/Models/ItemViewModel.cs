@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Dynamic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using Telerik.Sitefinity.Frontend.Mvc.Models.Fields;
 using Telerik.Sitefinity.GeoLocations.Model;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Locations.Configuration;
@@ -31,22 +28,63 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="item">The item.</param>
         public ItemViewModel(IDataItem item)
         {
-            this.OriginalItem = item;
+            this.DataItem = item;
             this.Fields = new DynamicDataItemFieldAccessor(item);
         }
 
         /// <summary>
-        /// Gets or sets the original item.
+        /// Gets the data item that is represented by this view model.
         /// </summary>
         /// <value>
-        /// The original item.
+        /// The data item.
         /// </value>
-        public IDataItem OriginalItem { get; set; }
+        public IDataItem DataItem { get; private set; }
 
         /// <summary>
         /// Gets a property that accesses fields of the data item that is represented by this view model.
         /// </summary>
         public dynamic Fields { get; private set; }
+
+        /// <summary>
+        /// Gets the default URL.
+        /// </summary>
+        /// <value>
+        /// The default URL.
+        /// </value>
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
+        public string DefaultUrl
+        {
+            get
+            {
+                if (this.DataItem != null)
+                    return this.DataItem.GetDefaultUrl();
+                else
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the value of the identifier field for the item.
+        /// </summary>
+        /// <example><see cref="NewsItem"/> identifier is its Title.</example>
+        /// <value>
+        /// The identifier value.
+        /// </value>
+        public object Identifier
+        {
+            get
+            {
+                if (this.DataItem != null)
+                {
+                    var field = RelatedDataHelper.GetRelatedTypeIdentifierField(this.DataItem.GetType().FullName);
+                    return this.Fields.GetMemberValue(field);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         #region Address field
 
@@ -308,12 +346,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public virtual IList<T> RelatedItems<T>(string fieldName) where T : RelatedViewModel, new()
+        public virtual IEnumerable<ItemViewModel> RelatedItems(string fieldName)
         {
-            IList<T> result;
-            var relatedItems = this.OriginalItem.GetRelatedItems(fieldName);
+            IEnumerable<ItemViewModel> result;
+            var relatedItems = this.DataItem.GetRelatedItems(fieldName);
             if (relatedItems != null)
-                result = relatedItems.ToArray().Select(item => new T() { Item = item }).ToList();
+                result = relatedItems.ToArray().Select(item => new ItemViewModel(item)).ToArray();
             else
                 result = null;
 
@@ -323,18 +361,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <summary>
         /// Gets the related item when single.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public virtual T RelatedItem<T>(string fieldName) where T : RelatedViewModel, new()
+        public virtual ItemViewModel RelatedItem(string fieldName)
         {
-            T result;
-            var relatedItems = this.OriginalItem.GetRelatedItems(fieldName);
+            ItemViewModel result;
+            var relatedItems = this.DataItem.GetRelatedItems(fieldName);
 
             if (relatedItems != null)
-                result = relatedItems.ToArray().Select(item => new T() { Item = item }).FirstOrDefault();
+                result = relatedItems.ToArray().Select(item => new ItemViewModel(item)).FirstOrDefault();
             else
-                result = default(T);
+                result = null;
 
             return result;
         }
