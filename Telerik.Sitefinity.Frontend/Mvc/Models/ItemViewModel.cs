@@ -17,14 +17,30 @@ using Telerik.Sitefinity.Taxonomies.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
+    /// <summary>
+    /// This class represents view model for items.
+    /// </summary>
+    /// <remarks>
+    /// It is used in Master/detail widgets.
+    /// </remarks>
     public class ItemViewModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ItemViewModel"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
         public ItemViewModel(IDataItem item)
         {
             this.OriginalItem = item;
             this.Fields = new DynamicDataItemFieldAccessor(item);
         }
 
+        /// <summary>
+        /// Gets or sets the original item.
+        /// </summary>
+        /// <value>
+        /// The original item.
+        /// </value>
         public IDataItem OriginalItem { get; set; }
 
         /// <summary>
@@ -40,7 +56,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="fieldName">Name of the field.</param>
         /// <param name="addressFormat">The address format.</param>
         /// <returns></returns>
-        public string GetFormattedAddress(string fieldName, string addressFormat)
+        public virtual string GetFormattedAddress(string fieldName, string addressFormat)
         {
             string result = string.Empty;
             var fieldValue = this.Fields.GetMemberValue(fieldName) as Address;
@@ -106,7 +122,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="fieldName">Name of the field.</param>
         /// <param name="fieldFormat">The field format.</param>
         /// <returns></returns>
-        public string GetDateTime(string fieldName, string fieldFormat)
+        public virtual string GetDateTime(string fieldName, string fieldFormat)
         {
             var dateTimeValue = (DateTime)this.Fields.GetMemberValue(fieldName);
 
@@ -128,7 +144,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="fieldName">Name of the field.</param>
         /// <param name="fieldFormat">The field format.</param>
         /// <returns></returns>
-        public string GetPrice(string fieldName, string fieldFormat)
+        public virtual string GetPrice(string fieldName, string fieldFormat)
         {
             var fieldValue = this.Fields.GetMemberValue(fieldName);
             if (fieldValue == null)
@@ -149,7 +165,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="fieldName">Name of the field.</param>
         /// <param name="fieldFormat">The field format.</param>
         /// <returns></returns>
-        public string GetBool(string fieldName)
+        public virtual string GetBool(string fieldName)
         {
             var boolValue = (bool)this.Fields.GetMemberValue(fieldName);
 
@@ -166,7 +182,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="multiChoiceValues">The multi choice values.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "multi")]
-        public string GetMultipleChoiceValueString(string fieldName)
+        public virtual string GetMultipleChoiceValueString(string fieldName)
         {
             var multiChoiceValues = this.Fields.GetMemberValue(fieldName) as IEnumerable;
             if (multiChoiceValues == null)
@@ -192,7 +208,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="fieldName">Name of the field.</param>
         /// <param name="parentTypeId">The parent type identifier.</param>
         /// <returns></returns>
-        public string GetChoiceLabel(string fieldName, Guid parentTypeId)
+        public virtual string GetChoiceLabel(string fieldName, Guid parentTypeId)
         {
             var fieldValue = this.Fields.GetMemberValue(fieldName).ToString();
             Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager man = new Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager();
@@ -223,7 +239,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="fieldName">Name of the field.</param>
         /// <param name="classificationId">The classification identifier.</param>
         /// <returns></returns>
-        public IList<string> GetFlatTaxonNames(string fieldName)
+        public virtual IList<string> GetFlatTaxonNames(string fieldName)
         {
             var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
             TaxonomyManager manager = TaxonomyManager.GetManager();
@@ -240,7 +256,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public IList<string> GetHierarchicalTaxonNames(string fieldName)
+        public virtual IList<string> GetHierarchicalTaxonNames(string fieldName)
         {
             var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
             string taxonomyName;
@@ -264,7 +280,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public string GetFlatTaxonName(string fieldName)
+        public virtual string GetFlatTaxonName(string fieldName)
         {
             var taxonName = this.GetFlatTaxonNames(fieldName).FirstOrDefault();
 
@@ -276,7 +292,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public string GetHierarchicalTaxonName(string fieldName)
+        public virtual string GetHierarchicalTaxonName(string fieldName)
         {
             string taxonName = this.GetHierarchicalTaxonNames(fieldName).FirstOrDefault();
 
@@ -292,7 +308,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public IList<T> RelatedItems<T>(string fieldName) where T : RelatedViewModel, new()
+        public virtual IList<T> RelatedItems<T>(string fieldName) where T : RelatedViewModel, new()
         {
             IList<T> result;
             var relatedItems = this.OriginalItem.GetRelatedItems(fieldName);
@@ -310,7 +326,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <typeparam name="T"></typeparam>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public T RelatedItem<T>(string fieldName) where T : RelatedViewModel, new()
+        public virtual T RelatedItem<T>(string fieldName) where T : RelatedViewModel, new()
         {
             T result;
             var relatedItems = this.OriginalItem.GetRelatedItems(fieldName);
