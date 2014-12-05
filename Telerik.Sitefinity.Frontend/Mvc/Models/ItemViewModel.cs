@@ -29,7 +29,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public ItemViewModel(IDataItem item)
         {
             this.DataItem = item;
-            this.Fields = new DynamicDataItemFieldAccessor(item);
+            this.Fields = new DynamicDataItemFieldAccessor(this);
         }
 
         /// <summary>

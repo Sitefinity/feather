@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
+using Telerik.Sitefinity.Descriptors;
 using Telerik.Sitefinity.Model;
+using Telerik.Sitefinity.RelatedData;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
@@ -17,10 +19,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Initializes a new instance of the <see cref="DynamicDataItemFieldAccessor"/> class.
         /// </summary>
         /// <param name="item">The data item.</param>
-        public DynamicDataItemFieldAccessor(IDataItem item)
+        public DynamicDataItemFieldAccessor(ItemViewModel itemViewModel)
             : base()
         {
-            this.originalItem = item;
+            this.item = itemViewModel;
         }
 
         /// <summary>
@@ -36,22 +38,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (binder == null)
                 throw new ArgumentNullException("binder");
 
-            string name = binder.Name;
-            
-            bool isFound;
-            var propInfo = TypeDescriptor.GetProperties(this.originalItem)[name];
-            if (propInfo != null)
-            {
-                result = propInfo.GetValue(this.originalItem);
-                isFound = true;
-            }
-            else
-            {
-                result = null;
-                isFound = false;
-            }
+            var name = binder.Name;
+            result = this.GetMemberValue(name);
 
-            return isFound;
+            return TypeDescriptor.GetProperties(this.item.DataItem)[name] != null;
         }
 
         /// <summary>
@@ -61,10 +51,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns>The value of the member.</returns>
         public object GetMemberValue(string fieldName)
         {
-            var propInfo = TypeDescriptor.GetProperties(this.originalItem)[fieldName];
+            var propInfo = TypeDescriptor.GetProperties(this.item.DataItem)[fieldName];
             if (propInfo != null)
             {
-                return propInfo.GetValue(this.originalItem);
+                var relatedDataInfo = propInfo as RelatedDataPropertyDescriptor;
+                if (relatedDataInfo == null)
+                {
+                    return propInfo.GetValue(this.item.DataItem);
+                }
+                else
+                {
+                    if (relatedDataInfo.MetaField.AllowMultipleRelations)
+                    {
+                        return this.item.RelatedItems(fieldName);
+                    }
+                    else
+                    {
+                        return this.item.RelatedItem(fieldName);
+                    }
+                }
             }
             else
             {
@@ -72,6 +77,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
         }
 
-        private IDataItem originalItem;
+        private ItemViewModel item;
     }
 }
