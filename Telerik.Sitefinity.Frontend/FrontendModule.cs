@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
@@ -8,6 +9,8 @@ using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend
@@ -41,7 +44,10 @@ namespace Telerik.Sitefinity.Frontend
         /// <param name="initializer">The initializer.</param>
         public override void Install(SiteInitializer initializer)
         {
-            //// No installation needed.
+            if (this.FrontendServiceExists())
+            {
+                this.InitialUpgrade();
+            }
         }
 
         /// <summary>
@@ -92,5 +98,61 @@ namespace Telerik.Sitefinity.Frontend
                 designerInitializer.Initialize();
             }
         }
+
+        private void InitialUpgrade()
+        {
+            this.RemoveFrontendService();
+            this.RenameControllers();
+        }
+
+        private void RenameControllers()
+        {
+            var manager = PageManager.GetManager();
+            var controllerNameProperties = manager.GetControls<ControlData>()
+                .Where(c => c.ObjectType == "Telerik.Sitefinity.Mvc.Proxy.MvcControllerProxy" || c.ObjectType == "Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.MvcWidgetProxy, Telerik.Sitefinity.Frontend")
+                .SelectMany(c => c.Properties.Where(p => p.Name == "ControllerName"));
+
+            foreach (var property in controllerNameProperties)
+            {
+                if (property.Value == "News.Mvc.Controllers.NewsController")
+                {
+                    property.Value = "Telerik.Sitefinity.Frontend.News.Mvc.Controllers.NewsController";
+                }
+                else if (property.Value == "ContentBlock.Mvc.Controllers.ContentBlockController")
+                {
+                    property.Value = "Telerik.Sitefinity.Frontend.ContentBlock.Mvc.Controllers.ContentBlockController";
+                }
+                else if (property.Value == "Navigation.Mvc.Controllers.NavigationController")
+                {
+                    property.Value = "Telerik.Sitefinity.Frontend.Navigation.Mvc.Controllers.NavigationController";
+                }
+                else if (property.Value == "SocialShare.Mvc.Controllers.SocialShareController")
+                {
+                    property.Value = "Telerik.Sitefinity.Frontend.SocialShare.Mvc.Controllers.SocialShareController";
+                }
+                else if (property.Value == "DynamicContent.Mvc.Controllers.DynamicContentController")
+                {
+                    property.Value = "Telerik.Sitefinity.Frontend.DynamicContent.Mvc.Controllers.DynamicContentController";
+                }
+            }
+
+            manager.SaveChanges();
+        }
+
+        private void RemoveFrontendService()
+        {
+            var configManager = ConfigManager.GetManager();
+            var systemConfig = configManager.GetSection<SystemConfig>();
+            systemConfig.SystemServices.Remove(FrontendModule.FrontendServiceName);
+            configManager.SaveSection(systemConfig);
+        }
+
+        private bool FrontendServiceExists()
+        {
+            var systemConfig = Config.Get<SystemConfig>();
+            return systemConfig.SystemServices.ContainsKey(FrontendModule.FrontendServiceName);
+        }
+
+        private const string FrontendServiceName = "Telerik.Sitefinity.Frontend";
     }
 }
