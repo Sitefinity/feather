@@ -144,7 +144,7 @@
 
                         var emptyGuid = '00000000-0000-0000-0000-000000000000';
 
-                        var currentSelectedIds = scope.sfSelectedIds;
+                        var currentSelectedIds;
 
                         var pushSelectedItemToTheTop = function () {
                             if (scope.items.length === 0 && scope.sfSelectedItems && scope.sfSelectedItems.length > 0) {
@@ -163,6 +163,8 @@
 
                         var fetchSelectedItems = function () {
                             var ids = scope.getSelectedIds();
+                            currentSelectedIds = ids;
+
                             if (ids.length === 0) {
                                 return;
                             }
@@ -454,9 +456,7 @@
                             else {
                                 var id = (scope.sfSelectedItem && scope.sfSelectedItem.Id) || scope.sfSelectedItemId;
                                 if (id && id !== emptyGuid) {
-                                    var selected = [];
-                                    selected.push(id);
-                                    return selected;
+                                    return [id];
                                 }
                             }
 
