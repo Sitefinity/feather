@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 using Telerik.Sitefinity.GeoLocations.Model;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Locations.Configuration;
@@ -84,6 +85,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     return null;
                 }
             }
+        }
+
+        /// <summary>
+        /// Serializes to JSON.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
+        public virtual string SerializeToJson(string fieldName)
+        {
+            var cahcedResultKey = this.FieldCacheKey("SerializeToJson", fieldName);
+
+            object cachedResult;
+            if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
+                return cachedResult as string;
+
+            var fieldValue = this.Fields.GetMemberValue(fieldName);
+            var serializedValue = new JavaScriptSerializer().Serialize(fieldValue);
+            this.cachedFieldValues[cahcedResultKey] = serializedValue;
+
+            return serializedValue;
         }
 
         #region Address field
