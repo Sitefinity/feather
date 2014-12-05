@@ -22,17 +22,21 @@
                         // ------------------------------------------------------------------------
 
                         var getTaxonomyName = function (taxonItem) {
-                            if (taxonItem.TaxonomyId === sitefinity.getCategoriesTaxonomyId()) {
+                            var taxonField = scope.sfTaxonomyFields.filter(function (item) {
+                                return item.Id === taxonItem.TaxonomyId;
+                            });
 
-                                ////NOTE: We should return 'Category' instead of 'Categories' when taxon is of category type. 
-                                ////This will result in correct query filtering for a category taxons -> Handling old bug in Sitefinity.
-                                return "Category";
+                            if (taxonField.length > 0) {
+                                taxonField = taxonField[0];
+
+                                return taxonField.Name;
                             }
-                            return taxonItem.TaxonomyName;
+                            
+                            throw "No item found with this TaxonomyName: " + taxonItem.TaxonomyName;
                         };
 
-                        var addChildTaxonQueryItem = function (taxonItem) {
-                            var groupName = getTaxonomyName(taxonItem);
+                        var addChildTaxonQueryItem = function (taxonItem, groupName) {
+                            groupName = groupName || getTaxonomyName(taxonItem);
                             var groupItem = scope.sfQueryData.getItemByName(groupName);
 
                             if (!groupItem) {
@@ -123,7 +127,7 @@
                                             TaxonomyName: taxonomyName,
                                             Name: i.Name,
                                             Id: i.Value
-                                        });
+                                        }, taxonomyName);
                                     });
                                 }
                                 constructFilterItem(taxonomyName);

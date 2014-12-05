@@ -53,7 +53,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         /// The selected item ids.
         /// </value>
-        public virtual string SerializedSelectedItemsIds { get; set; }
+        public virtual string SerializedSelectedItemsIds
+        {
+            get
+            {
+                return this.serializedSelectedItemsIds;
+            }
+
+            set
+            {
+                if (this.serializedSelectedItemsIds != value)
+                {
+                    this.serializedSelectedItemsIds = value;
+                    if (!this.serializedSelectedItemsIds.IsNullOrEmpty())
+                    {
+                        this.selectedItemsIds = JsonSerializer.DeserializeFromString<IList<string>>(this.serializedSelectedItemsIds);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable social sharing.
@@ -271,7 +289,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var viewModel = this.CreateDetailsViewModelInstance();
 
             viewModel.CssClass = this.DetailCssClass;
-            viewModel.Item = item;
+            viewModel.Item = new ItemViewModel(item);
             viewModel.ContentType = this.ContentType;
             viewModel.ProviderName = this.ProviderName;
             viewModel.EnableSocialSharing = this.EnableSocialSharing;
@@ -321,9 +339,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             {
                 var contentResolvedType = this.ContentType;
                 var result = new List<CacheDependencyKey>(1);
-                if (viewModel.Item != null && viewModel.Item.Id != Guid.Empty)
+                if (viewModel.Item != null && viewModel.Item.Fields.Id != Guid.Empty)
                 {
-                    result.Add(new CacheDependencyKey { Key = viewModel.Item.Id.ToString(), Type = contentResolvedType });
+                    result.Add(new CacheDependencyKey { Key = viewModel.Item.Fields.Id.ToString(), Type = contentResolvedType });
                 }
 
                 return result;
@@ -351,7 +369,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="page">The page.</param>
         /// <param name="query">The items query.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "2#")]
-        protected virtual IEnumerable<dynamic> ApplyListSettings(int page, IQueryable<IDataItem> query, out int? totalPages)
+        protected virtual IEnumerable<ItemViewModel> ApplyListSettings(int page, IQueryable<IDataItem> query, out int? totalPages)
         {
             if (page < 1)
                 throw new ArgumentException("'page' argument has to be at least 1.", "page");
@@ -371,7 +389,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 this.SortExpression,
                 itemsToSkip,
                 take,
-                ref totalCount).ToArray<dynamic>();
+                ref totalCount).Select(item => new ItemViewModel(item)).ToArray<ItemViewModel>();
 
             totalPages = (int)Math.Ceiling(totalCount.Value / (double)this.ItemsPerPage.Value);
             totalPages = this.DisplayMode == ListDisplayMode.Paging ? totalPages : null;
@@ -444,8 +462,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         {
             viewModel.CurrentPage = page;
 
-            int? totalPages;
-            viewModel.Items = this.ApplyListSettings(page, query, out totalPages);
+            int? totalPages = null;
+            if (this.SelectionMode == Models.SelectionMode.SelectedItems && this.selectedItemsIds.Count == 0)
+            {
+                viewModel.Items = Enumerable.Empty<ItemViewModel>();
+            }
+            else
+            {
+                viewModel.Items = this.ApplyListSettings(page, query, out totalPages);
+                viewModel.TotalPagesCount = totalPages; 
+            }
+
             viewModel.TotalPagesCount = totalPages;
             viewModel.ProviderName = this.ProviderName;
             viewModel.ContentType = this.ContentType;
@@ -517,49 +544,89 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1002:AvoidToListOnIEnumerable")]
         private string GetSelectedItemsFilterExpression()
         {
-            if (!this.SerializedSelectedItemsIds.IsNullOrEmpty())
-            {
-                var selectedItemIds = JsonSerializer.DeserializeFromString<IList<string>>(this.SerializedSelectedItemsIds);
-                var selectedItemGuids = selectedItemIds.Select(id => new Guid(id));
-                var masterIds = this.GetItemsQuery()
-                    .OfType<ILifecycleDataItemGeneric>()
-                    .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
-                    .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id)
-                    .Distinct();
+            var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
+            var masterIds = this.GetItemsQuery()
+                .OfType<ILifecycleDataItemGeneric>()
+                .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
+                .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id)
+                .Distinct();
 
-                var selectedItemConditions = masterIds.Select(id => "Id = {0} OR OriginalContentId = {0}".Arrange(id.ToString("D")));
-                var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
+            var selectedItemConditions = masterIds.Select(id => "Id = {0} OR OriginalContentId = {0}".Arrange(id.ToString("D")));
+            var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
 
-                return selectedItemsFilterExpression;
-            }
-            else
-            {
-                return null;
-            }
+            return selectedItemsFilterExpression;
         }
 
-        private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
+        private IQueryable<ItemViewModel> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
         {
             var manager = this.GetManager();
             var relatedDataSource = manager.Provider as IRelatedDataSource;
 
             if (relatedDataSource == null)
-                return Enumerable.Empty<IDataItem>().AsQueryable();
+                return Enumerable.Empty<ItemViewModel>().AsQueryable();
 
             //// Тhe filter is adapted to the implementation of ILifecycleDataItemGeneric, so the culture is taken in advance when filtering published items.
             var filterExpression = ContentHelper.AdaptMultilingualFilterExpression(this.FilterExpression);
             int? skip = (page - 1) * this.ItemsPerPage;
 
-            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay).OfType<IDataItem>();
+            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay).OfType<ItemViewModel>();
             return relatedItems;
         }
 
+        private dynamic[] SetExpression(IQueryable<IDataItem> query, string filterExpression, string sortExpr, int? itemsToSkip, int? itemsToTake, ref int? totalCount)
+        {
+            if (this.SelectionMode == Models.SelectionMode.SelectedItems)
+            {
+                query = DataProviderBase.SetExpressions(
+                                                  query,
+                                                  filterExpression,
+                                                  string.Empty,
+                                                  null,
+                                                  null,
+                                                  ref totalCount);
+
+                query = query.OfType<ILifecycleDataItemGeneric>()
+                    .Select(x => new
+                    {
+                        item = x,
+                        orderIndex = this.selectedItemsIds.IndexOf(x.OriginalContentId.ToString()) >= 0 ? 
+                                        this.selectedItemsIds.IndexOf(x.OriginalContentId.ToString()) : 
+                                        this.selectedItemsIds.IndexOf(x.Id.ToString())
+                    })
+                    .OrderBy(x => x.orderIndex)
+                    .Select(x => x.item);
+
+                if (itemsToSkip.HasValue && itemsToSkip.Value > 0)
+                {
+                    query = query.Skip(itemsToSkip.Value);
+                }
+
+                if (itemsToTake.HasValue && itemsToTake.Value > 0)
+                {
+                    query = query.Take(itemsToTake.Value);
+                }
+            }
+            else
+            {
+                query = DataProviderBase.SetExpressions(
+                                                  query,
+                                                  filterExpression,
+                                                  sortExpr,
+                                                  itemsToSkip,
+                                                  itemsToTake,
+                                                  ref totalCount);
+            }
+
+            return query.ToArray<dynamic>();
+        }
         #endregion
 
-        #region Privte fields and constants
+        #region Private fields and constants
 
         private int? itemsPerPage = 20;
         private string sortExpression = "PublicationDate DESC";
+        private string serializedSelectedItemsIds;
+        private IList<string> selectedItemsIds = new List<string>();
 
         #endregion
     }

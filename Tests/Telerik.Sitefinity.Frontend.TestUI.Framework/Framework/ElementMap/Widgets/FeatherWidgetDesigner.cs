@@ -188,7 +188,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Find.ById<HtmlDiv>("viewsPlaceholder");
+                return this.Get<HtmlDiv>("id=viewsPlaceholder");
             }
         }
 
