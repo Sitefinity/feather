@@ -18,7 +18,7 @@ function UpdateSystemConfig
 	$featherModuleNode.SetAttribute("moduleId","00000000-0000-0000-0000-000000000000")
 	$featherModuleNode.SetAttribute("type","Telerik.Sitefinity.Frontend.FrontendModule, Telerik.Sitefinity.Frontend")
 	$featherModuleNode.SetAttribute("startupType","OnApplicationStart")
-	$featherModuleNode.SetAttribute("name","Telerik.Sitefinity.Frontend")
+	$featherModuleNode.SetAttribute("name","Feather")
 	$modulesNode.AppendChild($featherModuleNode)
 	$doc.Save($systemConfig)
 }
