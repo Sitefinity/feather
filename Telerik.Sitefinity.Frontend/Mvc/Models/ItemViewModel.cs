@@ -308,24 +308,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         #region Taxon fields
 
         /// <summary>
-        /// Gets the taxon names.
+        /// Gets the flat taxons.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <param name="classificationId">The classification identifier.</param>
         /// <returns></returns>
-        public virtual IList<string> GetFlatTaxonNames(string fieldName)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Taxons")]
+        public virtual IList<FlatTaxon> GetFlatTaxons(string fieldName)
         {
             var cahcedResultKey = this.FieldCacheKey("GetFlatTaxonNames", fieldName);
             object cachedResult;
             if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
-                return cachedResult as IList<string>;
+                return cachedResult as IList<FlatTaxon>;
 
             var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
             TaxonomyManager manager = TaxonomyManager.GetManager();
 
             var taxonNames = manager.GetTaxa<FlatTaxon>()
-                    .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == fieldName)
-                    .Select(t => t.Title.ToString()).ToList();
+                    .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == fieldName).ToList();
 
             this.cachedFieldValues[cahcedResultKey] = taxonNames;
 
@@ -333,16 +333,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
-        /// Gets the hierarchical taxon names.
+        /// Gets the list of hierarchical taxons.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public virtual IList<string> GetHierarchicalTaxonNames(string fieldName)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Taxons")]
+        public virtual IList<HierarchicalTaxon> GetHierarchicalTaxons(string fieldName)
         {
             var cahcedResultKey = this.FieldCacheKey("GetHierarchicalTaxonNames", fieldName);
             object cachedResult;
             if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
-                return cachedResult as IList<string>;
+                return cachedResult as IList<HierarchicalTaxon>;
 
             var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
             string taxonomyName;
@@ -355,35 +356,34 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 taxonomyName = fieldName;
 
             var taxonNames = manager.GetTaxa<HierarchicalTaxon>()
-                   .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == taxonomyName)
-                   .Select(t => t.Title.ToString()).ToList();
+                   .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == taxonomyName).ToList();
             this.cachedFieldValues[cahcedResultKey] = taxonNames;
 
             return taxonNames;
         }
 
         /// <summary>
-        /// Gets the name of the flat taxon.
+        /// Gets the flat taxon.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public virtual string GetFlatTaxonName(string fieldName)
+        public virtual FlatTaxon GetFlatTaxon(string fieldName)
         {
-            var taxonName = this.GetFlatTaxonNames(fieldName).FirstOrDefault();
+            var taxon = this.GetFlatTaxons(fieldName).FirstOrDefault();
 
-            return taxonName;
+            return taxon;
         }
 
         /// <summary>
-        /// Gets the name of the hierarchical taxon.
+        /// Gets the hierarchical taxon.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public virtual string GetHierarchicalTaxonName(string fieldName)
+        public virtual HierarchicalTaxon GetHierarchicalTaxon(string fieldName)
         {
-            string taxonName = this.GetHierarchicalTaxonNames(fieldName).FirstOrDefault();
+            var taxon = this.GetHierarchicalTaxons(fieldName).FirstOrDefault();
 
-            return taxonName;
+            return taxon;
         }
 
         #endregion
