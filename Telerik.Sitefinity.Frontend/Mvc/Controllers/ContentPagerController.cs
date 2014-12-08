@@ -21,6 +21,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <param name="totalPagesCount">The total pages count.</param>
         /// <param name="redirectUrlTemplate">The template of the URL used for redirecting.</param>
         /// <returns></returns>
+        [OutputCache(NoStore = true, Location = System.Web.UI.OutputCacheLocation.None)]
         public PartialViewResult Index(int currentPage, int totalPagesCount, string redirectUrlTemplate)
         {
             var model = new PagerViewModel(currentPage, totalPagesCount, redirectUrlTemplate);
