@@ -23,6 +23,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
     /// </remarks>
     public class ItemViewModel
     {
+        #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemViewModel"/> class.
         /// </summary>
@@ -32,6 +34,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             this.DataItem = item;
             this.Fields = new DynamicDataItemFieldAccessor(this);
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// Gets the data item that is represented by this view model.
@@ -86,6 +92,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 }
             }
         }
+
+        #endregion
+
+        #region Public methods
 
         /// <summary>
         /// Serializes to JSON.
@@ -268,41 +278,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return sb.ToString();
         }
 
-        /// <summary>
-        /// Gets the label.
-        /// </summary>
-        /// <param name="fieldName">Name of the field.</param>
-        /// <param name="parentTypeId">The parent type identifier.</param>
-        /// <returns></returns>
-        public virtual string GetChoiceLabel(string fieldName, Guid parentTypeId)
-        {
-            var cahcedResultKey = this.FieldCacheKey("GetChoiceLabel", fieldName);
-
-            object cachedResult;
-            if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
-                return cachedResult as string;
-
-            var fieldValue = this.Fields.GetMemberValue(fieldName).ToString();
-            Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager man = new Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager();
-            var moduleType = man.Provider.GetDynamicModuleType(parentTypeId);
-            string label = fieldValue;
-
-            if (moduleType.Fields != null)
-            {
-                var field = moduleType.Fields.Where(f => f.Name == fieldName).FirstOrDefault();
-                if (field != null)
-                {
-                    System.Xml.Linq.XDocument doc = System.Xml.Linq.XDocument.Parse(field.Choices);
-                    var element = doc.Elements("element").Where(e => e.Attribute("value").Value == fieldValue).FirstOrDefault();
-                    label = (element != null) ? element.Attribute("text").Value : fieldValue;
-                }
-            }
-
-            this.cachedFieldValues[cahcedResultKey] = label;
-
-            return label;
-        }
-
         #endregion
 
         #region Taxon fields
@@ -441,6 +416,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         #endregion
 
+        #endregion
+
+        #region Private members
+
         /// <summary>
         /// Gets the cache key for <see cref="cachedFieldValues"/>.
         /// </summary>
@@ -456,5 +435,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Contains the cached field values.
         /// </summary>
         private Dictionary<string, object> cachedFieldValues = new Dictionary<string, object>();
+
+        #endregion
     }
 }
