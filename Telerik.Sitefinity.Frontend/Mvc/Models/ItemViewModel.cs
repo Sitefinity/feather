@@ -110,14 +110,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         #region Address field
 
         /// <summary>
-        /// Gets the formatted address.
+        /// Gets the address value string depending on the provided format.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
-        /// <param name="addressFormat">The address format.</param>
+        /// <param name="format">The address format.</param>
         /// <returns></returns>
-        public virtual string GetFormattedAddress(string fieldName, string addressFormat)
+        public virtual string GetAddressString(string fieldName, string format)
         {
-            var cahcedResultKey = this.FieldCacheKey("GetFormattedAddress", fieldName);
+            var cahcedResultKey = this.FieldCacheKey("GetAddressString", fieldName);
 
             object cachedResult;
             if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
@@ -126,7 +126,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             string result = string.Empty;
             var fieldValue = this.Fields.GetMemberValue(fieldName) as Address;
 
-            if (fieldValue != null && !addressFormat.IsNullOrEmpty())
+            if (fieldValue != null && !format.IsNullOrEmpty())
             {
                 var street = string.Empty;
                 if (!string.IsNullOrEmpty(fieldValue.Street))
@@ -134,7 +134,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     street = fieldValue.Street + ",";
                 }
 
-                result = addressFormat.Replace("#=Street#", street);
+                result = format.Replace("#=Street#", street);
 
                 var zip = string.Empty;
                 if (!string.IsNullOrEmpty(fieldValue.Zip))
@@ -187,16 +187,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Gets formatted date time value.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
-        /// <param name="fieldFormat">The field format.</param>
+        /// <param name="format">The field format.</param>
         /// <returns></returns>
-        public virtual string GetDateTime(string fieldName, string fieldFormat)
+        public virtual string GetDateTime(string fieldName, string format)
         {
             var dateTimeValue = (DateTime)this.Fields.GetMemberValue(fieldName);
 
             if (dateTimeValue == default(DateTime))
                 return null;
 
-            var formattedDate = dateTimeValue.ToSitefinityUITime().ToString(fieldFormat);
+            var formattedDate = dateTimeValue.ToSitefinityUITime().ToString(format);
 
             return formattedDate;
         }
@@ -209,15 +209,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Gets formatted date time value.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
-        /// <param name="fieldFormat">The field format.</param>
+        /// <param name="format">The field format.</param>
         /// <returns></returns>
-        public virtual string GetPrice(string fieldName, string fieldFormat)
+        public virtual string GetPrice(string fieldName, string format)
         {
             var fieldValue = this.Fields.GetMemberValue(fieldName);
             if (fieldValue == null)
                 return null;
 
-            var formattedValue = string.Format(fieldValue.ToString(), fieldFormat);
+            var formattedValue = string.Format(fieldValue.ToString(), format);
 
             return formattedValue;
         }
@@ -227,10 +227,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         #region Yes/No field
 
         /// <summary>
-        /// Gets formatted date time value.
+        /// Gets field value as Yes/No string.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
-        /// <param name="fieldFormat">The field format.</param>
         /// <returns></returns>
         public virtual string GetBool(string fieldName)
         {
