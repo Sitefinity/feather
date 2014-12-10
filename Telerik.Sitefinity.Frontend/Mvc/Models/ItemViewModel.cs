@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 using Telerik.Sitefinity.GeoLocations.Model;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Locations.Configuration;
@@ -22,6 +23,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
     /// </remarks>
     public class ItemViewModel
     {
+        #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemViewModel"/> class.
         /// </summary>
@@ -29,8 +32,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public ItemViewModel(IDataItem item)
         {
             this.DataItem = item;
-            this.Fields = new DynamicDataItemFieldAccessor(item);
+            this.Fields = new DynamicDataItemFieldAccessor(this);
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// Gets the data item that is represented by this view model.
@@ -86,17 +93,41 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
         }
 
+        #endregion
+
+        #region Public methods
+
+        /// <summary>
+        /// Serializes to JSON.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
+        public virtual string SerializeToJson(string fieldName)
+        {
+            var cahcedResultKey = this.FieldCacheKey("SerializeToJson", fieldName);
+
+            object cachedResult;
+            if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
+                return cachedResult as string;
+
+            var fieldValue = this.Fields.GetMemberValue(fieldName);
+            var serializedValue = new JavaScriptSerializer().Serialize(fieldValue);
+            this.cachedFieldValues[cahcedResultKey] = serializedValue;
+
+            return serializedValue;
+        }
+
         #region Address field
 
         /// <summary>
-        /// Gets the formatted address.
+        /// Gets the address value string depending on the provided format.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
-        /// <param name="addressFormat">The address format.</param>
+        /// <param name="format">The address format.</param>
         /// <returns></returns>
-        public virtual string GetFormattedAddress(string fieldName, string addressFormat)
+        public virtual string GetAddressString(string fieldName, string format)
         {
-            var cahcedResultKey = this.FieldCacheKey("GetFormattedAddress", fieldName);
+            var cahcedResultKey = this.FieldCacheKey("GetAddressString", fieldName);
 
             object cachedResult;
             if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
@@ -105,7 +136,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             string result = string.Empty;
             var fieldValue = this.Fields.GetMemberValue(fieldName) as Address;
 
-            if (fieldValue != null && !addressFormat.IsNullOrEmpty())
+            if (fieldValue != null && !format.IsNullOrEmpty())
             {
                 var street = string.Empty;
                 if (!string.IsNullOrEmpty(fieldValue.Street))
@@ -113,7 +144,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     street = fieldValue.Street + ",";
                 }
 
-                result = addressFormat.Replace("#=Street#", street);
+                result = format.Replace("#=Street#", street);
 
                 var zip = string.Empty;
                 if (!string.IsNullOrEmpty(fieldValue.Zip))
@@ -166,16 +197,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Gets formatted date time value.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
-        /// <param name="fieldFormat">The field format.</param>
+        /// <param name="format">The field format.</param>
         /// <returns></returns>
-        public virtual string GetDateTime(string fieldName, string fieldFormat)
+        public virtual string GetDateTime(string fieldName, string format)
         {
             var dateTimeValue = (DateTime)this.Fields.GetMemberValue(fieldName);
 
             if (dateTimeValue == default(DateTime))
                 return null;
 
-            var formattedDate = dateTimeValue.ToSitefinityUITime().ToString(fieldFormat);
+            var formattedDate = dateTimeValue.ToSitefinityUITime().ToString(format);
 
             return formattedDate;
         }
@@ -188,15 +219,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Gets formatted date time value.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
-        /// <param name="fieldFormat">The field format.</param>
+        /// <param name="format">The field format.</param>
         /// <returns></returns>
-        public virtual string GetPrice(string fieldName, string fieldFormat)
+        public virtual string GetPrice(string fieldName, string format)
         {
             var fieldValue = this.Fields.GetMemberValue(fieldName);
             if (fieldValue == null)
                 return null;
 
-            var formattedValue = string.Format(fieldValue.ToString(), fieldFormat);
+            var formattedValue = string.Format(fieldValue.ToString(), format);
 
             return formattedValue;
         }
@@ -206,10 +237,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         #region Yes/No field
 
         /// <summary>
-        /// Gets formatted date time value.
+        /// Gets field value as Yes/No string.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
-        /// <param name="fieldFormat">The field format.</param>
         /// <returns></returns>
         public virtual string GetBool(string fieldName)
         {
@@ -248,64 +278,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return sb.ToString();
         }
 
-        /// <summary>
-        /// Gets the label.
-        /// </summary>
-        /// <param name="fieldName">Name of the field.</param>
-        /// <param name="parentTypeId">The parent type identifier.</param>
-        /// <returns></returns>
-        public virtual string GetChoiceLabel(string fieldName, Guid parentTypeId)
-        {
-            var cahcedResultKey = this.FieldCacheKey("GetChoiceLabel", fieldName);
-
-            object cachedResult;
-            if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
-                return cachedResult as string;
-
-            var fieldValue = this.Fields.GetMemberValue(fieldName).ToString();
-            Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager man = new Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager();
-            var moduleType = man.Provider.GetDynamicModuleType(parentTypeId);
-            string label = fieldValue;
-
-            if (moduleType.Fields != null)
-            {
-                var field = moduleType.Fields.Where(f => f.Name == fieldName).FirstOrDefault();
-                if (field != null)
-                {
-                    System.Xml.Linq.XDocument doc = System.Xml.Linq.XDocument.Parse(field.Choices);
-                    var element = doc.Elements("element").Where(e => e.Attribute("value").Value == fieldValue).FirstOrDefault();
-                    label = (element != null) ? element.Attribute("text").Value : fieldValue;
-                }
-            }
-
-            this.cachedFieldValues[cahcedResultKey] = label;
-
-            return label;
-        }
-
         #endregion
 
         #region Taxon fields
 
         /// <summary>
-        /// Gets the taxon names.
+        /// Gets the flat taxons.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <param name="classificationId">The classification identifier.</param>
         /// <returns></returns>
-        public virtual IList<string> GetFlatTaxonNames(string fieldName)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Taxons")]
+        public virtual IList<FlatTaxon> GetFlatTaxons(string fieldName)
         {
             var cahcedResultKey = this.FieldCacheKey("GetFlatTaxonNames", fieldName);
             object cachedResult;
             if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
-                return cachedResult as IList<string>;
+                return cachedResult as IList<FlatTaxon>;
 
             var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
             TaxonomyManager manager = TaxonomyManager.GetManager();
 
             var taxonNames = manager.GetTaxa<FlatTaxon>()
-                    .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == fieldName)
-                    .Select(t => t.Title.ToString()).ToList();
+                    .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == fieldName).ToList();
 
             this.cachedFieldValues[cahcedResultKey] = taxonNames;
 
@@ -313,16 +308,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
-        /// Gets the hierarchical taxon names.
+        /// Gets the list of hierarchical taxons.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public virtual IList<string> GetHierarchicalTaxonNames(string fieldName)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Taxons")]
+        public virtual IList<HierarchicalTaxon> GetHierarchicalTaxons(string fieldName)
         {
             var cahcedResultKey = this.FieldCacheKey("GetHierarchicalTaxonNames", fieldName);
             object cachedResult;
             if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
-                return cachedResult as IList<string>;
+                return cachedResult as IList<HierarchicalTaxon>;
 
             var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
             string taxonomyName;
@@ -335,35 +331,34 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 taxonomyName = fieldName;
 
             var taxonNames = manager.GetTaxa<HierarchicalTaxon>()
-                   .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == taxonomyName)
-                   .Select(t => t.Title.ToString()).ToList();
+                   .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == taxonomyName).ToList();
             this.cachedFieldValues[cahcedResultKey] = taxonNames;
 
             return taxonNames;
         }
 
         /// <summary>
-        /// Gets the name of the flat taxon.
+        /// Gets the flat taxon.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public virtual string GetFlatTaxonName(string fieldName)
+        public virtual FlatTaxon GetFlatTaxon(string fieldName)
         {
-            var taxonName = this.GetFlatTaxonNames(fieldName).FirstOrDefault();
+            var taxon = this.GetFlatTaxons(fieldName).FirstOrDefault();
 
-            return taxonName;
+            return taxon;
         }
 
         /// <summary>
-        /// Gets the name of the hierarchical taxon.
+        /// Gets the hierarchical taxon.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
         /// <returns></returns>
-        public virtual string GetHierarchicalTaxonName(string fieldName)
+        public virtual HierarchicalTaxon GetHierarchicalTaxon(string fieldName)
         {
-            string taxonName = this.GetHierarchicalTaxonNames(fieldName).FirstOrDefault();
+            var taxon = this.GetHierarchicalTaxons(fieldName).FirstOrDefault();
 
-            return taxonName;
+            return taxon;
         }
 
         #endregion
@@ -421,6 +416,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         #endregion
 
+        #endregion
+
+        #region Private members
+
         /// <summary>
         /// Gets the cache key for <see cref="cachedFieldValues"/>.
         /// </summary>
@@ -436,5 +435,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Contains the cached field values.
         /// </summary>
         private Dictionary<string, object> cachedFieldValues = new Dictionary<string, object>();
+
+        #endregion
     }
 }

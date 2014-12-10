@@ -265,7 +265,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             var viewModel = this.CreateListViewModelInstance();
 
-            viewModel.Items = query;
+            viewModel.Items = query.ToArray().Select(item => new ItemViewModel(item)).ToArray();
 
             if (this.ItemsPerPage != 0)
                 viewModel.TotalPagesCount = totalCount / this.ItemsPerPage;
@@ -557,19 +557,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return selectedItemsFilterExpression;
         }
 
-        private IQueryable<ItemViewModel> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
+        private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
         {
             var manager = this.GetManager();
             var relatedDataSource = manager.Provider as IRelatedDataSource;
 
             if (relatedDataSource == null)
-                return Enumerable.Empty<ItemViewModel>().AsQueryable();
+                return Enumerable.Empty<IDataItem>().AsQueryable();
 
             //// Тhe filter is adapted to the implementation of ILifecycleDataItemGeneric, so the culture is taken in advance when filtering published items.
             var filterExpression = ContentHelper.AdaptMultilingualFilterExpression(this.FilterExpression);
             int? skip = (page - 1) * this.ItemsPerPage;
 
-            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay).OfType<ItemViewModel>();
+            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay)
+                .OfType<IDataItem>();
+
             return relatedItems;
         }
 
