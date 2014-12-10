@@ -4,10 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Model;
+using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy;
 using Telerik.Sitefinity.Taxonomies.Model;
@@ -21,6 +23,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// </summary>
     internal class DynamicUrlParamActionInvoker : Telerik.Sitefinity.Mvc.ControllerActionInvoker
     {
+        protected override bool ShouldProcessRequest(MvcProxyBase proxyControl)
+        {
+            var shouldProcess = base.ShouldProcessRequest(proxyControl);
+
+            var configManager = ConfigManager.GetManager();
+            var toolboxesConfig = configManager.GetSection<ToolboxesConfig>();
+            shouldProcess &= toolboxesConfig != null;
+
+            return shouldProcess;
+        }
+
         /// <inheritdoc/>
         protected override void InitializeRouteParameters(MvcProxyBase proxyControl)
         {
@@ -86,6 +99,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return result;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private IEnumerable<string> GetProviderNames(ControllerBase controller, Type contentType)
         {
             var providerNameProperty = controller.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "ProviderName" && p.PropertyType == typeof(string));
@@ -96,10 +110,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             else
             {
-                var mappedManager = ManagerBase.GetMappedManager(contentType);
-                if (mappedManager != null)
+                IManager manager;
+
+                try
                 {
-                    return mappedManager.Providers.Select(p => p.Name);
+                    ManagerBase.TryGetMappedManager(contentType, string.Empty, out manager);
+                }
+                catch (Exception ex)
+                {
+                    Log.Write(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Exception occurred in the routing functionality, details: {0}", ex));
+                    manager = null;
+                }
+
+                if (manager != null)
+                {
+                    return manager.Providers.Select(p => p.Name);
                 }
                 else
                 {
