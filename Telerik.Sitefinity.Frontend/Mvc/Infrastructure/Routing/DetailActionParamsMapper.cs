@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.GenericContent.Model;
@@ -172,14 +173,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// Resolves the manager.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="System.InvalidOperationException">Items of the {0} type cannot be found by URL..Arrange(this.ItemType.FullName)</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         protected IManager ResolveManager()
         {
             var providerName = this.providerNameResolver != null ? this.providerNameResolver() : null;
-            var manager = ManagerBase.GetMappedManager(this.ItemType, providerName);
 
-            if (!(manager is IContentManager) && !(manager.Provider is IUrlProvider))
-                throw new InvalidOperationException("Items of the {0} type cannot be found by URL.".Arrange(this.ItemType.FullName));
+            IManager manager;
+
+            try
+            {
+                ManagerBase.TryGetMappedManager(this.ItemType, providerName, out manager);
+            }
+            catch (Exception ex)
+            {
+                Log.Write(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Exception occurred in the routing functionality, details: {0}", ex));
+                manager = null;
+            }
 
             return manager;
         }
