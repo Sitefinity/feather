@@ -385,7 +385,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             IList<ItemViewModel> result = new List<ItemViewModel>();
 
-            var queryResult = DataProviderBase.SetExpressions(
+            var queryResult = this.SetExpression(
                 query,
                 compiledFilterExpression,
                 this.SortExpression,
