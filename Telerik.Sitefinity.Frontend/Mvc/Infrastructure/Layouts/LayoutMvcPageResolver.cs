@@ -4,6 +4,7 @@ using System.Text;
 using System.Web;
 using System.Web.Routing;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Mvc.Rendering;
 using Telerik.Sitefinity.Services;
 
@@ -27,6 +28,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (LayoutMvcPageResolver.IsLayoutPath(virtualPath))
             {
                 var httpContext = new HttpContextWrapper(new HttpContext(HttpContext.Current.Request, HttpContext.Current.Response));
+                httpContext.Items[PackageManager.CurrentPackageKey] = context.HttpContext.Items[PackageManager.CurrentPackageKey];
                 SystemManager.RunWithHttpContext(httpContext, () => base.BuildWithMasterPage(virtualPath, context, output, placeHolders, directives));
             }
             else
