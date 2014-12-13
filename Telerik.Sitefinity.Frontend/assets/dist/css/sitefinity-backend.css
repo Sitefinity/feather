@@ -7484,6 +7484,10 @@ html .km-pane-wrapper .km-widget, .k-ie .km-pane-wrapper .k-widget, .k-ie .km-pa
   .k-editor-toolbar-wrap .k-dropdown-wrap.k-state-focused, .k-editor-toolbar-wrap .k-button-group .k-tool:focus {
     border-color: #fff; } }
 
+/* line 1, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_checkbox */
+.k-checkbox {
+  display: inline-block; }
+
 /* line 8, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_utility-classes */
 .m-top-none {
   margin-top: 0px; }
