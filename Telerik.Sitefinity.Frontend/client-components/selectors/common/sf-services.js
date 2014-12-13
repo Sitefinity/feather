@@ -9,7 +9,9 @@
         var getHeaders = $httpProvider.defaults.headers.get;
 
         //disable IE ajax request caching
-        getHeaders['If-Modified-Since'] = '0';
+        //NOTE: This breaks angular logic for loading templates through XHR request leading to 400 - bad request.
+        //Only specific format is accepted for this header by the server.  
+        //getHeaders['If-Modified-Since'] = 'Thu, 01 Feb 1900 00:00:00';
         getHeaders['Cache-Control'] = 'no-cache';
         getHeaders.Pragma = 'no-cache';
     }]);
