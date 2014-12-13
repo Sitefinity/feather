@@ -9,7 +9,7 @@ using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
-using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 
@@ -46,7 +46,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             if (this.FrontendServiceExists())
             {
-                this.InitialUpgrade();
+                this.InitialUpgrade(initializer);
             }
         }
 
@@ -99,15 +99,43 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
-        private void InitialUpgrade()
+        private void InitialUpgrade(SiteInitializer initializer)
         {
             this.RemoveFrontendService();
-            this.RenameControllers();
+            this.RenameControllers(initializer);
+            this.ClearToolboxItems();
         }
 
-        private void RenameControllers()
+        private void ClearToolboxItems()
         {
-            var manager = PageManager.GetManager();
+            var configManager = ConfigManager.GetManager();
+            var toolboxesConfig = configManager.GetSection<ToolboxesConfig>();
+
+            var pagesToolbox = toolboxesConfig.Toolboxes["PageControls"];
+            if (pagesToolbox == null)
+                return;
+
+            var mvcWidgetsSection = pagesToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
+            if (mvcWidgetsSection != null)
+            {
+                this.RemoveToolboxItemIfExists(mvcWidgetsSection, "ContentBlock");
+                this.RemoveToolboxItemIfExists(mvcWidgetsSection, "Navigation");
+                this.RemoveToolboxItemIfExists(mvcWidgetsSection, "News");
+
+                configManager.SaveSection(toolboxesConfig);
+            }
+        }
+
+        private void RemoveToolboxItemIfExists(ToolboxSection mvcWidgetsSection, string toolName)
+        {
+            var tool = mvcWidgetsSection.Tools.FirstOrDefault<ToolboxItem>(t => t.Name == toolName);
+            if (tool != null)
+                mvcWidgetsSection.Tools.Remove(tool);
+        }
+
+        private void RenameControllers(SiteInitializer initializer)
+        {
+            var manager = initializer.PageManager;
             var controllerNameProperties = manager.GetControls<ControlData>()
                 .Where(c => c.ObjectType == "Telerik.Sitefinity.Mvc.Proxy.MvcControllerProxy" || c.ObjectType == "Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.MvcWidgetProxy, Telerik.Sitefinity.Frontend")
                 .SelectMany(c => c.Properties.Where(p => p.Name == "ControllerName"));
@@ -135,8 +163,6 @@ namespace Telerik.Sitefinity.Frontend
                     property.Value = "Telerik.Sitefinity.Frontend.DynamicContent.Mvc.Controllers.DynamicContentController";
                 }
             }
-
-            manager.SaveChanges();
         }
 
         private void RemoveFrontendService()
