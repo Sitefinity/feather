@@ -383,13 +383,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             compiledFilterExpression = this.AddLiveFilterExpression(compiledFilterExpression);
             compiledFilterExpression = this.AdaptMultilingualFilterExpression(compiledFilterExpression);
 
-            var result = DataProviderBase.SetExpressions(
+            IList<ItemViewModel> result = new List<ItemViewModel>();
+
+            var queryResult = this.SetExpression(
                 query,
                 compiledFilterExpression,
                 this.SortExpression,
                 itemsToSkip,
                 take,
-                ref totalCount).Select(item => new ItemViewModel(item)).ToArray<ItemViewModel>();
+                ref totalCount);
+            foreach (var item in queryResult)
+            {
+                result.Add(new ItemViewModel(item));
+            }
 
             totalPages = (int)Math.Ceiling(totalCount.Value / (double)this.ItemsPerPage.Value);
             totalPages = this.DisplayMode == ListDisplayMode.Paging ? totalPages : null;
