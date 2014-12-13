@@ -22,7 +22,7 @@
 
       <PackageSource Include="\\telerik.com\resources\Controls\DISTRIBUTIONS\Sitefinity\nuget\feather" />
 		  <PackageSource Include="http://localhost:8088/nuget/" />
-		  <PackageSource Include="http://192.168.61.35:9090/nuget/" />
+		  <PackageSource Include="http://192.168.43.45:9090/nuget/" />
       <PackageSource Include="https://www.nuget.org/api/v2/" />
 		  <PackageSource Include="http://nuget.sitefinity.com/nuget/" />
 
