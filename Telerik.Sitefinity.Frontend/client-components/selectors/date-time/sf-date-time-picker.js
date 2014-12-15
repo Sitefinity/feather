@@ -26,8 +26,18 @@
                             scope.hsteps = [];
                             scope.hsteps.push({ 'label': '- Hour -', 'value': 'none' });
 
-                            if (!scope.sfHourStep)
+                            if (!scope.sfHourStep) {
                                 scope.sfHourStep = 1;
+                            }
+                            else {
+                                var hourStep = parseInt(scope.sfHourStep);
+                                if (!isNaN(hourStep)) {
+                                    scope.sfHourStep = hourStep;
+                                }
+                                else {
+                                    scope.sfHourStep = 1;
+                                }
+                            }
 
                             var h;
                             if (scope.sfShowMeridian) {
@@ -52,8 +62,18 @@
                             scope.msteps = [];
                             scope.msteps.push({ 'label': '- Minute -', 'value': 'none' });
 
-                            if (!scope.sfMinuteStep)
+                            if (!scope.sfMinuteStep) {
                                 scope.sfMinuteStep = 10;
+                            }
+                            else {
+                                var minuteStep = parseInt(scope.sfMinuteStep);
+                                if (!isNaN(minuteStep)) {
+                                    scope.sfMinuteStep = minuteStep;
+                                }
+                                else {
+                                    scope.sfMinuteStep = 10;
+                                }
+                            }
 
                             for (var m = 0; m < 60; m += scope.sfMinuteStep) {
                                 scope.msteps.push({ 'label': m, 'value': m });
