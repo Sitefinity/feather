@@ -1,11 +1,12 @@
 ﻿using System.Web.Mvc;
+
 using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Cache;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.HttpContext;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Views;
-using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers.Attributes
 {
@@ -27,6 +28,8 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers.At
         {
             // Arrange
             var context = new DummyHttpContext();
+            context.Items[PageRouteHandler.AddCacheDependencies] = true;
+
             var response = (DummyHttpResponse)context.Response;
             var filterContext = new ResultExecutedContext();
             filterContext.HttpContext = context;

@@ -17,7 +17,7 @@
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
     <TargetFrameworkProfile />
-    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2014.2.918.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
+    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2014.3.1209.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -51,23 +51,23 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack">
-      <HintPath>..\..\packages\ServiceStack.Signed.4.0.22\lib\net40\ServiceStack.dll</HintPath>
+      <HintPath>..\..\packages\ServiceStack.Signed.4.0.33\lib\net40\ServiceStack.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Client">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Client.Signed.4.0.22\lib\net40\ServiceStack.Client.dll</HintPath>
+      <HintPath>..\..\packages\ServiceStack.Client.Signed.4.0.33\lib\net40\ServiceStack.Client.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Common.Signed.4.0.22\lib\net40\ServiceStack.Common.dll</HintPath>
+      <HintPath>..\..\packages\ServiceStack.Common.Signed.4.0.33\lib\net40\ServiceStack.Common.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Interfaces">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Interfaces.4.0.22\lib\net40\ServiceStack.Interfaces.dll</HintPath>
+      <HintPath>..\..\packages\ServiceStack.Interfaces.4.0.33\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Text.Signed.4.0.22\lib\net40\ServiceStack.Text.dll</HintPath>
+      <HintPath>..\..\packages\ServiceStack.Text.Signed.4.0.33\lib\net40\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
@@ -99,23 +99,23 @@
     </Reference>
     <Reference Include="Telerik.OpenAccess">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Telerik.DataAccess.Core.2014.2.918.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.DataAccess.Core.2014.3.1209.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.2.5327.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Model">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.2.5327.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
       <HintPath>..\..\packages\Telerik.Sitefinity.TestUtilities.7.1.5208\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.2.5327.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI">
-      <HintPath>..\..\packages\Telerik.Web.UI.2014.2.724.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Web.UI.2014.3.1209.40\lib\net40\Telerik.Web.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
@@ -184,7 +184,9 @@
   <ItemGroup>
     <None Include="ClientScripts\test.bat" />
     <None Include="ClientScripts\test.debug.bat" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Designer.cshtml" />

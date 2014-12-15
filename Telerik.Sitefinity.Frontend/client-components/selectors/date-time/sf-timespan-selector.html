@@ -3,7 +3,7 @@
         <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
         <div ng-hide="showError">
-            <span class="label label-taxon label-full" ng-bind="selectedItem.displayText"></span>
+            <span class="label label-taxon label-full" ng-bind="sfSelectedItem.displayText"></span>
             <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
                 <span ng-hide="isItemSelected()">Select</span>
                 <span ng-show="isItemSelected()">Change</span>
@@ -59,10 +59,10 @@
 
                 <div class="label-content" ng-show="selectedItemInTheDialog.periodType=='customRange'">
                     <strong>From</strong>
-                    <sf-date-time-picker ng-model="selectedItemInTheDialog.fromDate" show-meridian="true"></sf-date-time-picker >
+                    <sf-date-time-picker ng-model="selectedItemInTheDialog.fromDate" sf-show-meridian="true"></sf-date-time-picker >
 
                     <strong>To</strong>
-                    <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate" show-meridian="true"></sf-date-time-picker >
+                    <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate" sf-show-meridian="true"></sf-date-time-picker >
                 </div>
 
             </div>

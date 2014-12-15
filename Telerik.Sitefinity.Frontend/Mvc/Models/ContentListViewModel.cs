@@ -33,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         /// The items.
         /// </value>
-        public IEnumerable<dynamic> Items { get; set; }
+        public IEnumerable<ItemViewModel> Items { get; set; }
 
         /// <summary>
         /// Gets or sets the total pages count.

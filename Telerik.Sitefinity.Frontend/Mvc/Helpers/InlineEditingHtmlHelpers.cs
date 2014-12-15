@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.InlineEditing;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -17,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="model">The object which contains the property.</param>
         /// <param name="propName">Name of the property.</param>
         /// <returns></returns>
-        public static System.Web.Mvc.MvcHtmlString TextField(this HtmlHelper helper, object model, string propName)
+        public static IHtmlString TextField(this HtmlHelper helper, object model, string propName)
         {
             var htmlProcessor = new HtmlProcessor();
             var htmlString = htmlProcessor.GetStringContent(model, propName);
@@ -32,9 +33,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="propValue">The property value.</param>
         /// <param name="fieldType">Type of the field.</param>
         /// <returns>Html required for enabling inline editing.</returns>
-        public static System.Web.Mvc.MvcHtmlString TextField(this HtmlHelper helper, string propName, string propValue, string fieldType)
+        public static IHtmlString TextField(this HtmlHelper helper, string propName, string propValue, string fieldType)
         {
-            var htmlString = string.Format(HtmlProcessor.InlineEditingHtmlWrapper, propName, fieldType, propValue);
+            string htmlString;
+
+            if (!SystemManager.IsInlineEditingMode)
+            {
+                htmlString = propValue;
+            }
+            else
+            {
+                htmlString = string.Format(HtmlProcessor.InlineEditingHtmlWrapper, propName, fieldType, propValue);
+            }
             
             return new System.Web.Mvc.MvcHtmlString(htmlString);
         }
@@ -54,7 +64,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                                    Guid id)
         {
             var htmlProcessor = new HtmlProcessor();
-
             return htmlProcessor.CreateInlineEditingRegion(
                 htmlHelper.ViewContext.Writer,
                 providerName, 
@@ -71,8 +80,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns>The inline editing attributes.</returns>
         public static IHtmlString InlineEditingAttributes(this HtmlHelper htmlHelper, string providerName, string type, Guid id)
         {
-            if (type == null)
-                throw new ArgumentNullException("type");
+            if (!SystemManager.IsInlineEditingMode)
+                return htmlHelper.Raw(string.Empty);
 
             var providerNameEncoded = providerName != null ? htmlHelper.Encode(providerName) : providerName;
             var typeEncoded = htmlHelper.Encode(type);
@@ -81,6 +90,33 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 return htmlHelper.Raw("data-sf-provider='{0}' data-sf-type='{1}'".Arrange(providerNameEncoded, typeEncoded));
             else
                 return htmlHelper.Raw("data-sf-provider='{0}' data-sf-type='{1}' data-sf-id='{2}'".Arrange(providerNameEncoded, typeEncoded, id.ToString("D")));
+        }
+
+        /// <summary>
+        /// Renders InlineEditing attributes for fields required for the Inline editing feature.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="fieldType">Type of the field.</param>
+        /// <returns></returns>
+        public static IHtmlString InlineEditingFieldAttributes(this HtmlHelper htmlHelper, string fieldName, string fieldType)
+        {
+            if (htmlHelper == null)
+                throw new ArgumentNullException("htmlHelper");
+
+            if (fieldName == null)
+                throw new ArgumentNullException("fieldName");
+
+            if (fieldType == null)
+                throw new ArgumentNullException("fieldType");
+
+            if (!SystemManager.IsInlineEditingMode)
+                return htmlHelper.Raw(string.Empty);
+
+            var fieldNameEncoded = htmlHelper.Encode(fieldName);
+            var fieldTypeEncoded = htmlHelper.Encode(fieldType);
+
+            return htmlHelper.Raw("data-sf-field='{0}' data-sf-ftype='{1}'".Arrange(fieldNameEncoded, fieldTypeEncoded));
         }
     }
 }

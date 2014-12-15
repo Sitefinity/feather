@@ -3,6 +3,7 @@ using System.Web.Caching;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
 {
@@ -23,7 +24,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
                 base.OnResultExecuted(filterContext);
 
                 var context = filterContext.HttpContext;
-                if (context != null && context.Response != null)
+                if (context != null && context.Response != null && context.Items[PageRouteHandler.AddCacheDependencies] != null)
                 {
                     var viewResult = filterContext.Result as ViewResultBase;
 

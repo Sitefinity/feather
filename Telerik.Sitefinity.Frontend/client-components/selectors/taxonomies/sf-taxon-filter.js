@@ -4,15 +4,15 @@
             return {
                 restrict: 'EA',
                 scope: {
-                    taxonomyFields: '=',
-                    queryData: '=',
-                    groupLogicalOperator: '@',
-                    itemLogicalOperator: '@',
-                    provider: '=?'
+                    sfTaxonomyFields: '=',
+                    sfQueryData: '=',
+                    sfGroupLogicalOperator: '@',
+                    sfItemLogicalOperator: '@',
+                    sfProvider: '=?'
                 },
                 templateUrl: function (elem, attrs) {
-                    var assembly = attrs.templateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.templateUrl || 'client-components/selectors/taxonomies/sf-taxon-filter.html';
+                    var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/taxonomies/sf-taxon-filter.html';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -22,28 +22,32 @@
                         // ------------------------------------------------------------------------
 
                         var getTaxonomyName = function (taxonItem) {
-                            if (taxonItem.TaxonomyId === sitefinity.getCategoriesTaxonomyId()) {
+                            var taxonField = scope.sfTaxonomyFields.filter(function (item) {
+                                return item.Id === taxonItem.TaxonomyId;
+                            });
 
-                                ////NOTE: We should return 'Category' instead of 'Categories' when taxon is of category type. 
-                                ////This will result in correct query filtering for a category taxons -> Handling old bug in Sitefinity.
-                                return "Category";
+                            if (taxonField.length > 0) {
+                                taxonField = taxonField[0];
+
+                                return taxonField.Name;
                             }
-                            return taxonItem.TaxonomyName;
+                            
+                            throw "No item found with this TaxonomyName: " + taxonItem.TaxonomyName;
                         };
 
-                        var addChildTaxonQueryItem = function (taxonItem) {
-                            var groupName = getTaxonomyName(taxonItem);
-                            var groupItem = scope.queryData.getItemByName(groupName);
+                        var addChildTaxonQueryItem = function (taxonItem, groupName) {
+                            groupName = groupName || getTaxonomyName(taxonItem);
+                            var groupItem = scope.sfQueryData.getItemByName(groupName);
 
                             if (!groupItem) {
-                                groupItem = scope.queryData.addGroup(groupName, scope.groupLogicalOperator);
+                                groupItem = scope.sfQueryData.addGroup(groupName, scope.sfGroupLogicalOperator);
                             }
 
-                            scope.queryData.addChildToGroup(groupItem, taxonItem.Name, scope.itemLogicalOperator, groupName, 'System.Guid', 'Contains', taxonItem.Id);
+                            scope.sfQueryData.addChildToGroup(groupItem, taxonItem.Name, scope.sfItemLogicalOperator, groupName, 'System.Guid', 'Contains', taxonItem.Id);
                         };
 
                         var constructFilterItem = function (selectedTaxonomyFilterKey) {
-                            var selectedTaxonQueryItems = scope.queryData.QueryItems.filter(function (f) {
+                            var selectedTaxonQueryItems = scope.sfQueryData.QueryItems.filter(function (f) {
                                 return f.Condition && f.Condition.FieldName == selectedTaxonomyFilterKey &&
                                     f.Condition.FieldType == 'System.Guid';
                             });
@@ -64,8 +68,8 @@
                                 scope.selectedTaxonomies = [];
                             }
 
-                            if (scope.queryData.QueryItems) {
-                                scope.queryData.QueryItems.forEach(function (queryItem) {
+                            if (scope.sfQueryData.QueryItems) {
+                                scope.sfQueryData.QueryItems.forEach(function (queryItem) {
                                     {
                                         if (queryItem.IsGroup)
                                             constructFilterItem(queryItem.Name);
@@ -84,10 +88,10 @@
 
                             if (oldSelectedTaxonItems && oldSelectedTaxonItems.length > 0) {
                                 oldSelectedTaxonItems.forEach(function (item) {
-                                    var groupToRemove = scope.queryData.getItemByName(getTaxonomyName(item));
+                                    var groupToRemove = scope.sfQueryData.getItemByName(getTaxonomyName(item));
 
                                     if (groupToRemove)
-                                        scope.queryData.removeGroup(groupToRemove);
+                                        scope.sfQueryData.removeGroup(groupToRemove);
                                 });
                             }
 
@@ -106,12 +110,12 @@
 
                                 delete scope.selectedTaxonomies[taxonomyName];
 
-                                var groupToRemove = scope.queryData.getItemByName(taxonomyName);
+                                var groupToRemove = scope.sfQueryData.getItemByName(taxonomyName);
 
                                 if (groupToRemove) {
-                                    scope.groupItemsMap[taxonomyName] = scope.queryData.getDirectChildren(groupToRemove);
+                                    scope.groupItemsMap[taxonomyName] = scope.sfQueryData.getDirectChildren(groupToRemove);
 
-                                    scope.queryData.removeGroup(groupToRemove);
+                                    scope.sfQueryData.removeGroup(groupToRemove);
                                 }
                             }
                             else {
@@ -123,7 +127,7 @@
                                             TaxonomyName: taxonomyName,
                                             Name: i.Name,
                                             Id: i.Value
-                                        });
+                                        }, taxonomyName);
                                     });
                                 }
                                 constructFilterItem(taxonomyName);

@@ -272,7 +272,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void SetSearchText(string text)
         {
             var activeDialog = this.EM.Widgets.FeatherWidget.ActiveTab.AssertIsPresent("Content container");
-            var searchInputTextBox = activeDialog.Find.ByExpression<HtmlInputText>("ng-model=filter.searchString");
+            var searchInputTextBox = activeDialog.Find.ByExpression<HtmlInputText>("ng-model=sfFilter.searchString");
 
             searchInputTextBox.Focus();
             searchInputTextBox.MouseClick();
@@ -323,6 +323,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 
             var items = activeDialog.Find.AllByExpression<HtmlDiv>("class=ng-binding", "ng-bind=~bindIdentifierField(item");
             int count = items.Count;
+
+            if (count == 0)
+            {
+                items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-click=itemClicked(item.item)");
+                count = items.Count;
+            }
 
             //// if items count is more than 12 elements, then you need to scroll
             if (count > 12)
@@ -465,7 +471,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         private bool WaitForSaveButton()
         {
             Manager.Current.ActiveBrowser.RefreshDomTree();
-            var saveButton = ActiveBrowser.Find.ByExpression<HtmlButton>("tagname=button", "class=btn btn-primary pull-left ng-scope");
+            var saveButton = this.EM.Widgets.FeatherWidget.SaveButton;
+
             bool result = saveButton != null && saveButton.IsVisible();
 
             return result;

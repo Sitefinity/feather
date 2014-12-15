@@ -62,9 +62,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             for (int i = 0; i < 2; i++)
             {
                 BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickAdvancedButton();
-                BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
                 BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSelectorButton();
-                BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
             }
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("newsItemsSingleSelector");

@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Caching;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Modules.Pages;
-using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
@@ -24,12 +23,29 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <inheritdoc />
         protected override bool CurrentExists(PathDefinition definition, string virtualPath)
         {
-            var controlPresentation = this.GetControlPresentation(definition, virtualPath);
-            return controlPresentation != null && !controlPresentation.Data.IsNullOrEmpty();
+            var cacheManager = this.GetCacheManager();
+            var key = this.GetExistsCacheKey(definition, virtualPath);
+            bool? result = cacheManager[key] as bool?;
+            if (result == null)
+            {
+                lock (this.existsLock)
+                {
+                    result = cacheManager[key] as bool?;
+                    if (result == null)
+                    {
+                        var controlPresentation = this.GetControlPresentation(definition, virtualPath);
+                        result = controlPresentation != null && !controlPresentation.Data.IsNullOrEmpty();
+                        
+                        cacheManager.Add(key, result, Microsoft.Practices.EnterpriseLibrary.Caching.CacheItemPriority.Normal, null, this.GetControlPresentationsCacheExpirations());
+                    }
+                }
+            }
+
+            return result.Value;
         }
 
         /// <inheritdoc />
-        protected override CacheDependency GetCurrentCacheDependency(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
+        protected override System.Web.Caching.CacheDependency GetCurrentCacheDependency(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
             var controlPresentation = this.GetControlPresentation(definition, virtualPath);
             if (controlPresentation != null)
@@ -64,24 +80,45 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             if (path == null)
                 throw new ArgumentNullException("path");
 
-            var controllerName = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
-            
-            if (controllerName == null)
-                return null;
-            
-            var controllers = this.GetControllersFullNames(definition);
-            
-            if (controllers == null)
-                return null;
+            var cacheManager = this.GetCacheManager();
+            var key = this.GetFilesCacheKey(definition, path);
+            var result = cacheManager[key] as IEnumerable<string>;
+            if (result == null)
+            {
+                lock (this.getFilesLock)
+                {
+                    result = cacheManager[key] as IEnumerable<string>;
+                    if (result == null)
+                    {
+                        var controllerName = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
 
-            var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
-            var areaName = definition.ResolverName;
+                        if (controllerName == null)
+                            return null;
 
-            // case for dynamic type
-            if (dynamicType != null)
-                areaName = this.GetDynamicTypeAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
+                        var controllers = this.GetControllersFullNames(definition);
 
-            return this.GetViewPaths(path, controllers, areaName);
+                        if (controllers == null)
+                            return null;
+
+                        var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
+                        var areaName = definition.ResolverName;
+
+                        // case for dynamic type
+                        if (dynamicType != null)
+                        {
+                            var moduleProvider = Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager.GetManager().Provider;
+                            var dynamicModule = moduleProvider.GetDynamicModule(dynamicType.ParentModuleId);
+                            areaName = this.GetDynamicTypeAreaName(dynamicModule.Title, dynamicType.DisplayName);
+                        }
+
+                        result = this.GetViewPaths(path, controllers, areaName);
+
+                        cacheManager.Add(key, result, Microsoft.Practices.EnterpriseLibrary.Caching.CacheItemPriority.Normal, null, this.GetControlPresentationsCacheExpirations());
+                    }
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -104,34 +141,59 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             if (extension == MvcConstants.RazorFileNameExtension)
             {
                 var name = Path.GetFileNameWithoutExtension(virtualPath);
-
                 var controllers = this.GetControllersFullNames(virtualPathDefinition);
 
                 if (controllers == null)
                     return null;
 
                 var pathNames = virtualPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-
                 if (pathNames == null)
                     return null;
 
-                var controllerName = string.Empty;
-
+                string controllerName;
                 if (pathNames.Length > 0)
                     controllerName = pathNames[pathNames.Length - 2];
+                else
+                    controllerName = string.Empty;
 
                 var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
-
-                var areaName = virtualPathDefinition.ResolverName;
+                
+                string areaName;
 
                 // case for dynamic types
                 if (dynamicType != null)
-                    areaName = this.GetDynamicTypeAreaName(dynamicType.GetModuleName(), dynamicType.DisplayName);
+                {
+                    var moduleProvider = Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager.GetManager().Provider;
+                    var dynamicModule = moduleProvider.GetDynamicModule(dynamicType.ParentModuleId);
+                    areaName = this.GetDynamicTypeAreaName(dynamicModule.Title, dynamicType.DisplayName);
+                }
+                else
+                {
+                    areaName = virtualPathDefinition.ResolverName;
+                }
 
                 return this.GetControlPresentationItem(controllers, name, areaName);
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets the cache manager.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Microsoft.Practices.EnterpriseLibrary.Caching.ICacheManager GetCacheManager()
+        {
+            return SystemManager.GetCacheManager(CacheManagerInstance.Global);
+        }
+
+        /// <summary>
+        /// Gets the cache item expiration objects for control presentation data items.
+        /// </summary>
+        /// <returns>The cache item expirations.</returns>
+        protected virtual Microsoft.Practices.EnterpriseLibrary.Caching.ICacheItemExpiration[] GetControlPresentationsCacheExpirations()
+        {
+            return new[] { new DataItemCacheDependency(typeof(ControlPresentation), null) };
         }
 
         /// <summary>
@@ -143,14 +205,10 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <returns>available view paths</returns>
         private IEnumerable<string> GetViewPaths(string path, IEnumerable<string> controllers, string areaName)
         {
-            var views = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
+            var viewPaths = PageManager.GetManager().GetPresentationItems<ControlPresentation>()
                                             .Where(t => controllers.Contains(t.ControlType) && t.AreaName == areaName)
+                                            .Select(t => string.Format(CultureInfo.InvariantCulture, DatabaseResourceResolver.ViewPathTemplate, path, t.Name))
                                             .ToArray();
-
-            if (views == null)
-                return null;
-
-            var viewPaths = views.Select(t => string.Format(CultureInfo.InvariantCulture, DatabaseResourceResolver.ViewPathTemplate, path, t.Name));
 
             return viewPaths;
         }
@@ -197,10 +255,30 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             return assembly.GetExportedTypes().Where(FrontendManager.ControllerFactory.IsController).Select(c => c.FullName);
         }
 
+        private string GetExistsCacheKey(PathDefinition definition, string virtualPath)
+        {
+            return "{0}_{1}_Exists_{2}".Arrange(this.GetType().Name, definition.ResolverName, virtualPath.GetHashCode());
+        }
+
+        private string GetFilesCacheKey(PathDefinition definition, string virtualPath)
+        {
+            return "{0}_{1}_GetFiles_{2}".Arrange(this.GetType().Name, definition.ResolverName, virtualPath.GetHashCode());
+        }
+
         /// <summary>Template for area name used by dynamic content MVC widget</summary>
         internal static readonly string DynamicTypeAreaNameTemplate = "{0} - {1}";
 
         /// <summary>Template for view path, consisting of path and file name</summary>
         internal static readonly string ViewPathTemplate = "{0}{1}.cshtml";
+
+        /// <summary>
+        /// Lock per instance since the cache key depends on the current resolver instance. Multiple instances won't clash.
+        /// </summary>
+        private readonly object existsLock = new object();
+
+        /// <summary>
+        /// Lock per instance since the cache key depends on the current resolver instance. Multiple instances won't clash.
+        /// </summary>
+        private readonly object getFilesLock = new object();
     }
 }

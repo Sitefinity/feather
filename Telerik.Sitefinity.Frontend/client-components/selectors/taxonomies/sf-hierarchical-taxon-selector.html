@@ -1,7 +1,7 @@
 ﻿<script type="text/ng-template" id="sf-hierarchical-taxon-selector">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancel()">&times;</button>
-        <h3 class="modal-title">Select tag</h3>
+        <h3 class="modal-title">Select {{sfDialogHeader}}</h3>
     </div>
     <div class="modal-body">
         <div kendo-tab-strip class="k-tabstrip--selection">
@@ -23,7 +23,7 @@
                         <span class="input-group-addon">
                             <i class="glyphicon glyphicon-search"></i>
                         </span>
-                        <sf-items-filter filter='filter'></sf-items-filter>
+                        <sf-items-filter sf-filter='filter'></sf-items-filter>
                     </div>
 
                     <div class="list-group list-group-endless">
@@ -62,10 +62,11 @@
                 </div>
             </div>
             <div>
-                <sf-selected-items-view items='selectedItemsViewData'
-                                        selected-items='selectedItemsInTheDialog'
-                                        search-identifier-field='searchIdentifierField'
-                                        identifier-field='identifierField'></sf-selected-items-view>
+                <sf-selected-items-view sf-items='selectedItemsViewData'
+                                        sf-selected-items='selectedItemsInTheDialog'
+                                        sf-search-identifier-field='searchIdentifierField'
+                                        sf-identifier-field='sfIdentifierField'
+                                        sf-sortable='{{sfSortable}}'></sf-selected-items-view>
             </div>
         </div>
     </div>

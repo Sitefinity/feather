@@ -32,7 +32,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="scriptPath">The path to the JavaScript file.</param>
         /// <param name="throwException">OPTIONAL: Indicates whether to throw an exception if the JavaScript is already registered. By default the value is set to <value>false</value>.</param>
         /// <returns>MvcHtmlString</returns>
-        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, bool throwException = false)
+        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, string scriptPath, bool throwException = false)
         {
             var context = helper.ViewContext.HttpContext;
 
@@ -50,17 +50,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="throwException">if set to <c>true</c> throw exception.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)
+        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)
         {
             if (ResourceHelper.TryConfigureScriptManager(scriptReference))
-                return MvcHtmlString.Empty;
+                return System.Web.Mvc.MvcHtmlString.Empty;
 
             var resourceKey = scriptReference.ToString();
             var context = helper.ViewContext.HttpContext;
             var resourceUrl = ResourceHelper.GetWebResourceUrl(scriptReference);
 
             if (string.IsNullOrEmpty(resourceUrl))
-                return MvcHtmlString.Empty;
+                return System.Web.Mvc.MvcHtmlString.Empty;
 
             return ResourceHelper.RegisterResource(context, resourceKey, resourceUrl, throwException);
         }
@@ -77,7 +77,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="throwException">if set to <c>true</c> throws exception.</param>
         /// <returns>MvcHtmlString</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, bool throwException = false)
+        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, bool throwException = false)
         {
             var context = helper.ViewContext.HttpContext;
             var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
@@ -145,7 +145,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="scriptPath">The script path.</param>
         /// <param name="throwException">if set to <c>true</c> throws exception.</param>
         /// <returns></returns>
-        private static MvcHtmlString RegisterResource(HttpContextBase context, string scriptKey, string scriptPath, bool throwException)
+        private static System.Web.Mvc.MvcHtmlString RegisterResource(HttpContextBase context, string scriptKey, string scriptPath, bool throwException)
         {
             var attributes = new KeyValuePair<string, string>[2];
             attributes[0] = new KeyValuePair<string, string>("src", scriptPath);
@@ -165,25 +165,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="tagName">Name of the tag.</param>
         /// <param name="attribbutes">The attribbutes.</param>
         /// <returns></returns>
-        private static MvcHtmlString RegisterResource(ResourceRegister register, string resourceKey, bool throwException, string tagName, KeyValuePair<string, string>[] attribbutes)
+        private static System.Web.Mvc.MvcHtmlString RegisterResource(ResourceRegister register, string resourceKey, bool throwException, string tagName, KeyValuePair<string, string>[] attribbutes)
         {
             string output;
-            MvcHtmlString result;
+            System.Web.Mvc.MvcHtmlString result;
 
             if (throwException)
             {
                 register.RegisterResource(resourceKey);
                 output = ResourceHelper.GenerateTag(tagName, attribbutes);
-                result = new MvcHtmlString(output);
+                result = new System.Web.Mvc.MvcHtmlString(output);
             }
             else if (register.TryRegisterResource(resourceKey))
             {
                 output = ResourceHelper.GenerateTag(tagName, attribbutes);
-                result = new MvcHtmlString(output);
+                result = new System.Web.Mvc.MvcHtmlString(output);
             }
             else
             {
-                result = MvcHtmlString.Empty;
+                result = System.Web.Mvc.MvcHtmlString.Empty;
             }
 
             return result;
