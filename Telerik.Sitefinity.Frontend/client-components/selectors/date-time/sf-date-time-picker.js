@@ -40,12 +40,7 @@
                             }
 
                             var h;
-                            if (!!scope.sfShowMeridian) {
-                                for (h = 0; h < 24; h += scope.sfHourStep) {
-                                    scope.hsteps.push({ 'label': h, 'value': h });
-                                }
-                            }
-                            else {
+                            if (scope.sfShowMeridian) {
                                 for (h = 0; h < 24; h += scope.sfHourStep) {
                                     var hour = (h < 12) ? h : h - 12;
                                     var meridian = (h < 12) ? 'AM' : 'PM';
@@ -54,6 +49,11 @@
                                     hour = (hour !== 0) ? hour : 12;
 
                                     scope.hsteps.push({ 'label': hour + ' ' + meridian, 'value': h });
+                                }
+                            }
+                            else {
+                                for (h = 0; h < 24; h += scope.sfHourStep) {
+                                    scope.hsteps.push({ 'label': h, 'value': h });
                                 }
                             }
                         };
