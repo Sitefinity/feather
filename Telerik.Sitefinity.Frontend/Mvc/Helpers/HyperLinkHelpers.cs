@@ -40,8 +40,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             string url;
             if (openInSamePage)
             {
-                var currentPageUrl = ControllerExtensions.GetCurrentPageUrl(null);
-                url = currentPageUrl + item.Fields.ItemDefaultUrl;
+                var appRelativeUrl = DataResolver.Resolve(item.DataItem, "URL");
+                url = UrlPath.ResolveUrl(appRelativeUrl, true);
             }
             else
             {
