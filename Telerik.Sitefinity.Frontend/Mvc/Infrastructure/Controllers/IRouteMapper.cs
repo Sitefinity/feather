@@ -3,9 +3,9 @@
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
     /// <summary>
-    /// Controllers that implement this interface can provide custom routing logic.
+    /// Classes that implement this interface can provide custom routing logic.
     /// </summary>
-    public interface ISelfRoutingController
+    public interface IRouteMapper
     {
         /// <summary>
         /// Maps the route parameters from URL and returns true of the URL is a valid route.
