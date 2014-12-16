@@ -83,6 +83,11 @@ This repository contains the core infrastructure related to [Project Feather](ht
    * [Refer to resources inside MVC views](https://github.com/Sitefinity/feather/wiki/Refer-to-resources-inside-MVC-views)
 
    * [VirtualFile structure explained](https://github.com/Sitefinity/feather/wiki/VirtualFile-structure-explained)
+   
+### Putting it all together
+
+   * [DevMagazine site overview](https://github.com/Sitefinity/feather/wiki/DevMagazine-site-overview)
+
 
 ### Putting it all together
 
