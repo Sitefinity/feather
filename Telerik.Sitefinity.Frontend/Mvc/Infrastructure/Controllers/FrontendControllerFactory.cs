@@ -107,6 +107,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var controllerVp = customPath ?? AppendDefaultPath(FrontendManager.VirtualPathBuilder.GetVirtualPath(controller.GetType().Assembly));
             pathTransformations.Add(FrontendControllerFactory.GetPathTransformation(controllerVp, currentPackage));
 
+            var frontendVp = AppendDefaultPath(FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendControllerFactory).Assembly));
+            if (!string.Equals(controllerVp, frontendVp, StringComparison.OrdinalIgnoreCase))
+            {
+                pathTransformations.Add(FrontendControllerFactory.GetPathTransformation(frontendVp, currentPackage));
+            }
+
             return pathTransformations;
         }
 

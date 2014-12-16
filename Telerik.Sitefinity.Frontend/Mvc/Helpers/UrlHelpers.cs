@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -42,10 +43,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 throw new InvalidOperationException("Could not resolve the given URL because RouteData of the current context is null.");
 
             var contentResolvedPath = string.Empty;
+            object controllerName;
 
             // "widgetName" is a parameter in the route of the Designer. It allows us to have a special fallback logic
             // where we first check for the requested resource in the widget assembly and then fallback to the current controller assembly.
-            object controllerName;
             if (helper.RequestContext.RouteData.Values.TryGetValue("widgetName", out controllerName))
                 contentResolvedPath = UrlHelpers.GetResourcePath((string)controllerName, contentPath, PackageManager.PackageUrlParameterName, packageName);
 
@@ -67,6 +68,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
+        /// Resolves URL based on the current widget.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="contentPath">The content path.</param>
+        /// <param name="assemblyName">Name of the assembly.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">contentPath</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)")]
+        public static string WidgetContent(this UrlHelper helper, string contentPath, string assemblyName)
+        {
+            if (contentPath.IsNullOrEmpty())
+                throw new ArgumentNullException("contentPath");
+
+            if (string.IsNullOrEmpty(assemblyName))
+                return UrlHelpers.WidgetContent(helper, contentPath);
+
+            var packagesManager = new PackageManager();
+            var packageName = packagesManager.GetCurrentPackage();
+
+            if (contentPath.StartsWith("~", StringComparison.Ordinal) || contentPath.StartsWith("/", StringComparison.Ordinal) || contentPath.Contains("://"))
+            {
+                var url = UrlTransformations.AppendParam(contentPath, PackageManager.PackageUrlParameterName, packageName);
+                return helper.Content(url);
+            }
+
+            var resourceUrl = string.Format("~/{0}/{1}", FrontendManager.VirtualPathBuilder.GetVirtualPath(assemblyName), contentPath);
+            var contentResolvedPath = UrlTransformations.AppendParam(resourceUrl, PackageManager.PackageUrlParameterName, packageName);
+
+            return helper.Content(contentResolvedPath);
+        }
+
+        /// <summary>
         /// Gets the resource path.
         /// </summary>
         /// <param name="controllerName">Name of the controller.</param>
@@ -77,13 +110,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         private static string GetResourcePath(string controllerName, string contentPath, string paramaterName, string packageName)
         {
             var controllerType = FrontendManager.ControllerFactory.ResolveControllerType(controllerName);
-            var alternatePath = FrontendManager.VirtualPathBuilder.GetVirtualPath(controllerType);
-            var baseUrl = "~/" + alternatePath + contentPath;
-
-            if (HostingEnvironment.VirtualPathProvider == null || HostingEnvironment.VirtualPathProvider.FileExists(baseUrl))
+            if (controllerType != null)
             {
-                alternatePath = UrlTransformations.AppendParam(baseUrl, paramaterName, packageName);
-                return alternatePath;
+                var alternatePath = FrontendManager.VirtualPathBuilder.GetVirtualPath(controllerType);
+                var baseUrl = "~/" + alternatePath + contentPath;
+
+                if (HostingEnvironment.VirtualPathProvider == null || HostingEnvironment.VirtualPathProvider.FileExists(baseUrl))
+                {
+                    alternatePath = UrlTransformations.AppendParam(baseUrl, paramaterName, packageName);
+                    return alternatePath;
+                }
             }
 
             return string.Empty;

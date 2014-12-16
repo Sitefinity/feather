@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.DynamicModules.Builder;
+using Telerik.Sitefinity.DynamicModules.Builder.Model;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
@@ -129,6 +131,66 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return url;
         }
 
+        /// <summary>
+        /// Gets the type of the dynamic content that is inferred for the given controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <returns>The dynamic module type.</returns>
+        public static DynamicModuleType GetDynamicContentType(this ControllerBase controller)
+        {
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+
+            if (controller.ControllerContext == null || controller.ControllerContext.RouteData == null)
+                return null;
+
+            var controllerName = controller.ControllerContext.RouteData.Values["controller"] as string;
+            return controller.GetDynamicContentType(controllerName);
+        }
+
+        /// <summary>
+        /// Gets the type of the dynamic content that is inferred for the given controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="controllerName">Name of the controller.</param>
+        /// <returns>
+        /// The dynamic module type.
+        /// </returns>
+        public static DynamicModuleType GetDynamicContentType(this ControllerBase controller, string controllerName)
+        {
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+
+            if (controllerName == null)
+                throw new ArgumentNullException("controllerName");
+
+            return ControllerExtensions.GetDynamicContentType(controllerName);
+        }
+
+        /// <summary>
+        /// Gets the type of the dynamic content that is inferred for the given controller name.
+        /// </summary>
+        /// <param name="controllerName">Name of the controller.</param>
+        /// <returns>
+        /// The dynamic module type.
+        /// </returns>
+        public static DynamicModuleType GetDynamicContentType(string controllerName)
+        {
+            if (controllerName == null)
+                throw new ArgumentNullException("controllerName");
+
+            if (SystemManager.GetModule("ModuleBuilder") == null)
+                return null;
+
+            var moduleProvider = ModuleBuilderManager.GetManager().Provider;
+            var dynamicContentType = moduleProvider.GetDynamicModules()
+                .Where(m => m.Status == DynamicModuleStatus.Active)
+                .Join(moduleProvider.GetDynamicModuleTypes().Where(t => t.TypeName == controllerName), m => m.Id, t => t.ParentModuleId, (m, t) => t)
+                .FirstOrDefault();
+
+            return dynamicContentType;
+        }
+
         #endregion
 
         #region Private methods
@@ -175,10 +237,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         private static IEnumerable<string> GetControllerViewEngineLocations(Controller controller, Func<VirtualPathProviderViewEngine, string[]> locationExtractor)
         {
+            string controllerName;
+            if (controller.RouteData != null && controller.RouteData.Values["controller"] as string != null)
+                controllerName = controller.RouteData.Values["controller"] as string;
+            else
+                controllerName = FrontendManager.ControllerFactory.GetControllerName(controller.GetType());
+
             return controller.ViewEngineCollection.OfType<VirtualPathProviderViewEngine>()
                 .SelectMany(v => locationExtractor(v))
                 .Distinct()
-                .Select(v => v.Replace("{1}", FrontendManager.ControllerFactory.GetControllerName(controller.GetType())))
+                .Select(v => v.Replace("{1}", controllerName))
                 .Select(VirtualPathUtility.GetDirectory)
                 .Distinct();
         }
@@ -224,11 +292,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             if (files != null)
             {
-                return files
+                var returnResult = files
                     .Where(f => viewExtensions.Any(e => f.EndsWith(e, StringComparison.Ordinal)))
                     .Select(VirtualPathUtility.GetFileName)
                     .Select(System.IO.Path.GetFileNameWithoutExtension)
                     .Distinct();
+
+                return returnResult;
             }
 
             return new string[] { };

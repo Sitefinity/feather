@@ -1,3 +1,9 @@
-<p><content-selector selected-item="selectedItem" item-type="Telerik.Sitefinity.News.Model.NewsItem"></content-selector></p>
-<p><content-selector selected-item="selectedItem" item-type="Telerik.Sitefinity.GenericContent.Model.ContentItem"></content-selector></p>
-<span>The selected id is: {{selectedItem.Id}}</span>
+<p><sf-list-selector sf-news-selector sf-selected-item="selectedNewsItem" sf-selected-item-id="properties['SelectedIdNewsItem'].PropertyValue" name="newsItemsSingleSelector"></sf-list-selector></p>
+<p><sf-list-selector sf-taxon-selector sf-selected-item="selectedTaxonItem" sf-selected-item-id="properties['SelectedIdTaxonItem'].PropertyValue" name="tagSingleSelector"></sf-list-selector></p>
+<p><sf-list-selector sf-dynamic-items-selector sf-item-type="itemType" sf-selected-item="selectedDynamicItem" sf-selected-item-id="properties['SelectedIdDynamicItem'].PropertyValue" name="dynamicItemsSingleSelector"></sf-list-selector></p>
+
+Multiple news selector: <sf-list-selector sf-news-selector sf-multiselect="true" sf-sortable="true" sf-selected-ids="SelectedIdsNewsItems" name="newsItemsMultipleSelector"></sf-list-selector>
+Multiple tags selector: <sf-list-selector sf-taxon-selector sf-multiselect="true" sf-sortable="true" sf-selected-ids="SelectedIdsTags" name="TagsMultipleSelector"></sf-list-selector>
+Dynamic items multiple selector: <sf-list-selector sf-dynamic-items-selector sf-multiselect="true" sf-sortable="true" sf-item-type="testDynamicModules" sf-selected-ids="SelectedIdsDynamicItems" name="dynamicItemsMultipleSelector"></sf-list-selector>
+
+Page selector: <sf-list-selector sf-page-selector sf-multiselect="true" sf-sortable="true" sf-selected-ids="ids" name="pageSelector"></sf-list-selector>

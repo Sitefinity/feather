@@ -21,7 +21,7 @@ describe('designer tests.', function () {
             var widgetContext = sitefinity.pageEditor.widgetContext;
 
             $httpBackend = $injector.get('$httpBackend');
-            $httpBackend.when('GET', '/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid')
+            $httpBackend.when('GET', '/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid?controlId={2}')
                 .respond('This is my property grid view response.');
 
             createController = function () {
@@ -38,7 +38,7 @@ describe('designer tests.', function () {
         }));
 
         it('[Boyko-Karadzhov] / Saving handler is called and dialog is closed.', function () {
-            $httpBackend.expectGET('/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid');
+            $httpBackend.expectGET('/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid?controlId={2}');
 
             var controller = createController();
 
@@ -53,7 +53,7 @@ describe('designer tests.', function () {
         });
 
         it('[Boyko-Karadzhov] / Saving handler that throws error is called and dialog is not closed.', function () {
-            $httpBackend.expectGET('/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid');
+            $httpBackend.expectGET('/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid?controlId={2}');
 
             var expectedException = 'Expected exception';
             var controller = createController();
@@ -72,7 +72,7 @@ describe('designer tests.', function () {
         });
 
         it('[Boyko-Karadzhov] / Canceling handler is called and dialog is closed.', function () {
-            $httpBackend.expectGET('/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid');
+            $httpBackend.expectGET('/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid?controlId={2}');
 
             var controller = createController();
 
@@ -87,7 +87,7 @@ describe('designer tests.', function () {
         });
 
         it('[Boyko-Karadzhov] / Canceling handler that throws error is called and dialog is not closed.', function () {
-            $httpBackend.expectGET('/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid');
+            $httpBackend.expectGET('/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid?controlId={2}');
 
             var expectedException = 'Expected exception';
             var controller = createController();
@@ -106,7 +106,7 @@ describe('designer tests.', function () {
         });
 
         it('[Boyko-Karadzhov] / Can save and close after one failed attempt.', function () {
-            $httpBackend.expectGET('/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid');
+            $httpBackend.expectGET('/Telerik.Sitefinity.Frontend/Designer/View/MockedWidget/PropertyGrid?controlId={2}');
 
             var expectedException = 'Expected exception';
             var controller = createController();

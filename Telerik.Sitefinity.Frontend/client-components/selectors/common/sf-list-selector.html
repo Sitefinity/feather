@@ -1,0 +1,12 @@
+﻿<div id="selectedItemsPlaceholder">
+    <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+
+    <div ng-hide="showError">
+        <div ng-include="getClosedDialogTemplate()"></div>
+    </div>
+</div>
+<div class="contentSelector" modal template-url="{{dialogTemplateId}}" window-class="sf-designer-dlg selector-dlg" existing-scope="true">
+    <div ng-include="getDialogTemplate()">
+
+    </div>
+</div>

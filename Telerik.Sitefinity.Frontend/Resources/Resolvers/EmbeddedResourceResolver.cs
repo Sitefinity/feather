@@ -91,28 +91,5 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
             return path;
         }
-
-        /// <summary>
-        /// Gets the assembly which is specified in the PathDefinition.
-        /// </summary>
-        /// <param name="definition">The path definition.</param>
-        /// <exception cref="System.InvalidOperationException">Invalid PathDefinition.</exception>
-        protected virtual Assembly GetAssembly(PathDefinition definition)
-        {
-            object assembly;
-            if (!definition.Items.TryGetValue("Assembly", out assembly))
-            {
-                lock (this)
-                {
-                    if (!definition.Items.TryGetValue("Assembly", out assembly))
-                    {
-                        assembly = Assembly.LoadFrom(definition.ResourceLocation);
-                        definition.Items.Add("Assembly", assembly);
-                    }
-                }
-            }
-            
-            return (Assembly)assembly;
-        }
     }
 }

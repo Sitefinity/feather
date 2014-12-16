@@ -1,0 +1,75 @@
+﻿<script type="text/ng-template" id="sf-page-selector-template">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h3 class="modal-title">Select a page</h3>
+    </div>
+    <div class="modal-body">
+        <div kendo-tab-strip class="k-tabstrip--selection">
+            <ul ng-show="multiselect">
+                <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
+                    All
+                </li>
+                <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
+                    Selected <span class="badge">{{getSelectedItemsCount()}}</span>
+                </li>
+            </ul>
+            <div>
+                <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
+
+                <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+
+                <div ng-hide="noItemsExist || showError">
+                    <div class="input-group m-bottom-sm">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </span>
+                        <sf-items-filter sf-filter='filter'></sf-items-filter>
+                    </div>
+                    <div class="list-group list-group-endless">
+                        <sf-items-tree ng-show="filter.isEmpty"
+                                       sf-multiselect="multiselect"
+                                       sf-expand-selection="expandSelection"
+                                       sf-items-promise="itemsPromise"
+                                       sf-selected-ids="sfSelectedIds"
+                                       sf-get-predecessors="getPredecessors(itemId)"
+                                       sf-select-item="itemClicked(dataItem)"
+                                       sf-item-selected="isItemSelectedInDialog(dataItem)"
+                                       sf-item-disabled="itemDisabled(dataItem)"
+                                       sf-get-children="getChildren(parentId)"
+                                       sf-identifier-field-value="bindIdentifierField(dataItem)"
+                                       class="k-treeview--selection"></sf-items-tree>
+
+                        <div ng-repeat="item in items"
+                             ng-hide="filter.isEmpty"
+                             ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
+                             ng-click="itemClicked($index, item)">
+
+                            <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-hide="itemDisabled(item) || !multiselect">
+
+                            <div>
+                                <div ng-bind="bindIdentifierField(item)" />
+
+                                <div ng-show="itemDisabled(item)">(not translated)</div>
+                            </div>
+
+                            <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
+                                <span sf-shrinked-breadcrumb="{{item.ParentTitlesPath}}" sf-max-length="60"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
+                    <sf-loading ng-show="showLoadingIndicator"></sf-loading>
+                </div>
+            </div>
+            <div>
+                <sf-selected-items-view sf-items='selectedItemsViewData' sf-selected-items='selectedItemsInTheDialog' sf-search-identifier-field='searchIdentifierField'
+                                        sf-identifier-field='sfIdentifierField' sf-sortable='{{sfSortable}}'>
+                    </selected-items-view>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary  pull-left" ng-click="doneSelecting()">Done selecting</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

@@ -1,0 +1,225 @@
+$tree-item-interval: 30px
+
+.k-treeview--selection.k-treeview
+
+    .k-in
+        padding: 0
+        margin:0
+        border:0
+        width: 100%
+        display: inline-block
+
+    .k-in.k-state-selected
+
+    .k-state-hover,
+    .k-state-selected,
+    .k-state-focused
+        background: none
+        box-shadow: none
+
+    .k-item
+        padding-left: 0
+        > div
+            position: relative
+
+        a
+            display: block
+            background-color: #fff
+            border-top: 1px solid #ddd
+            padding: 10px 0 10px 0
+            padding-left: $tree-item-interval //30px
+            color: #000
+            text-decoration: none
+            overflow: hidden
+            &.disabled
+                span
+                    &:first-child
+                        max-width: 300px
+                em
+                    vertical-align: top
+
+            span
+                display: inline-block
+                overflow: hidden
+                text-overflow: ellipsis
+                max-width:100%
+
+        .active
+            background-color: #428bca
+            color: #fff
+
+        .k-checkbox
+            position: absolute
+            margin-top: 0
+            z-index: 2
+            top: 12px
+            left: 1.066*$tree-item-interval //32px
+
+        .k-checkbox+.k-in a
+            padding-left: 1.833*$tree-item-interval //55px
+
+        .k-group
+            .k-item
+                >div
+                    .k-in a
+                        padding-left: 1.833*$tree-item-interval //55px
+
+                    .k-checkbox
+                        left: 1.9*$tree-item-interval //57
+
+                    .k-checkbox+.k-in a
+                        padding-left: 2.666*$tree-item-interval //80px
+
+                    .k-icon
+                        left: 1.166*$tree-item-interval //35px
+
+
+                .k-group
+                    .k-item
+                        >div
+                            .k-in a
+                                padding-left: 2.666*$tree-item-interval //80px
+
+                            .k-checkbox
+                                left: 2.733*$tree-item-interval //82px
+
+                            .k-checkbox+.k-in a
+                                padding-left: 3.5*$tree-item-interval //105px
+
+                            .k-icon
+                                left: 2*$tree-item-interval //60px
+
+
+                        .k-group
+                            .k-item
+                                >div
+                                    .k-in a
+                                        padding-left: 3.5*$tree-item-interval//105px
+
+                                    .k-checkbox
+                                        left: 3.5666*$tree-item-interval //107px
+
+                                    .k-checkbox+.k-in a
+                                        padding-left: 4.333*$tree-item-interval //130px
+
+                                    .k-icon
+                                        left: 2.833*$tree-item-interval //85px
+
+
+                                .k-group
+                                    .k-item
+                                        >div
+                                            .k-in a
+                                                padding-left: 4.333*$tree-item-interval //130px
+
+                                            .k-checkbox
+                                                left: 4.4*$tree-item-interval//132px
+
+                                            .k-checkbox+.k-in a
+                                                padding-left: 5.166*$tree-item-interval //155px
+
+                                            .k-icon
+                                                left: 3.666*$tree-item-interval //110px
+
+
+                                        .k-group
+                                            .k-item
+                                                >div
+                                                    .k-in a
+                                                        padding-left: 5.166*$tree-item-interval //155px
+
+                                                    .k-checkbox
+                                                        left: 5.233*$tree-item-interval //157px
+
+                                                    .k-checkbox+.k-in a
+                                                        padding-left: 6*$tree-item-interval//180px
+
+                                                    .k-icon
+                                                        left: 4.5*$tree-item-interval //135px
+
+
+                                                .k-group
+                                                    .k-item
+                                                        >div
+                                                            .k-in a
+                                                                padding-left: 6*$tree-item-interval //180px
+
+                                                            .k-checkbox
+                                                                left: 6.066*$tree-item-interval //182px
+
+                                                            .k-checkbox+.k-in a
+                                                                padding-left: 6.833*$tree-item-interval //205px
+
+                                                            .k-icon
+                                                                left: 5.333*$tree-item-interval //160px
+
+
+                                                        .k-group
+                                                            .k-item
+                                                                >div
+                                                                    .k-in a
+                                                                        padding-left: 6.833*$tree-item-interval //205px
+
+                                                                    .k-checkbox
+                                                                        left: 6.9*$tree-item-interval //207px
+
+                                                                    .k-checkbox+.k-in a
+                                                                        padding-left: 7.666*$tree-item-interval //230px
+
+                                                                    .k-icon
+                                                                        left: 6.166*$tree-item-interval //185px
+
+
+                                                                .k-group
+                                                                    .k-item
+                                                                        >div
+                                                                            .k-in a
+                                                                                padding-left: 7.666*$tree-item-interval //230px
+
+                                                                            .k-checkbox
+                                                                                left: 7.733*$tree-item-interval //232px
+
+                                                                            .k-checkbox+.k-in a
+                                                                                padding-left: 8.5*$tree-item-interval //255px
+
+                                                                            .k-icon
+                                                                                left: 7*$tree-item-interval//210px
+
+
+                                                                        .k-group
+                                                                            .k-item
+                                                                                >div
+                                                                                    .k-in a
+                                                                                        padding-left: 8.5*$tree-item-interval //255px
+
+                                                                                    .k-checkbox
+                                                                                        left: 8.566*$tree-item-interval //257px
+
+                                                                                    .k-checkbox+.k-in a
+                                                                                        padding-left: 9.333*$tree-item-interval //280px
+
+                                                                                    .k-icon
+                                                                                        left: 7.833*$tree-item-interval //235px
+
+
+    .k-icon
+        margin:0
+        left: 0.333*$tree-item-interval //10px
+        top: 12px
+        position: absolute
+        z-index: 2
+        vertical-align: top
+
+    >ul
+        overflow: hidden
+        border: 1px solid #ddd
+        border-radius: 4px
+        border-top: 0
+
+        >.k-item.k-first
+            >div
+                >.k-in
+                    >a
+                        border-top:0
+
+

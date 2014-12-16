@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web.Caching;
-
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 
 namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
@@ -158,6 +158,34 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <param name="definition">The definition.</param>
         /// <param name="path">The path.</param>
         protected abstract IEnumerable<string> GetCurrentFiles(PathDefinition definition, string path);
+
+        #endregion
+
+        #region Protected methods
+
+        /// <summary>
+        /// Gets the assembly which is specified in the PathDefinition.
+        /// </summary>
+        /// <param name="definition">The path definition.</param>
+        /// <exception cref="System.InvalidOperationException">Invalid PathDefinition.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom")]
+        protected virtual Assembly GetAssembly(PathDefinition definition)
+        {
+            object assembly;
+            if (!definition.Items.TryGetValue("Assembly", out assembly))
+            {
+                lock (this)
+                {
+                    if (!definition.Items.TryGetValue("Assembly", out assembly))
+                    {
+                        assembly = Assembly.LoadFrom(definition.ResourceLocation);
+                        definition.Items.Add("Assembly", assembly);
+                    }
+                }
+            }
+
+            return (Assembly)assembly;
+        }
 
         #endregion
 
