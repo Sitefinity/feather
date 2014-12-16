@@ -25,7 +25,7 @@
                         </span>
                         <sf-items-filter sf-filter='filter'></sf-items-filter>
                     </div>
-                    <div class="list-group list-group-endless">
+                    <div class="list-group list-group-endless" ng-hide="items.length===0">
                         <sf-items-tree ng-show="filter.isEmpty"
                                        sf-multiselect="multiselect"
                                        sf-expand-selection="expandSelection"
