@@ -17,6 +17,8 @@ This repository contains the core infrastructure related to [Project Feather](ht
 
    * [Getting Started](https://github.com/Sitefinity/feather/wiki/Getting-Started)
 
+   * [Upgrade instructions](https://github.com/Sitefinity/feather/wiki/Upgrade-instructions)
+
    * [FAQ](https://github.com/Sitefinity/feather/wiki/FAQ)
 
 ### Widgets
@@ -36,6 +38,26 @@ This repository contains the core infrastructure related to [Project Feather](ht
    * [Helper methods for getting localized data] (https://github.com/Sitefinity/feather/wiki/Helper-methods-for-getting-localized-data)
 
    * [Helper methods for enabling the Inline Editing feature] (https://github.com/Sitefinity/feather/wiki/Helper-methods-for-enabling-the-Inline-Editing-feature)
+
+##### Dynamic widget
+
+   * [Filter dynamic content items by URL] (https://github.com/Sitefinity/feather/wiki/Filter-dynamic-content-items-by-URL)
+
+   * [Filter dynamic content items by Related data items via the URL] (https://github.com/Sitefinity/feather/wiki/Filter-dynamic-content-items-by-Related-data-items-via-the-URL)
+
+   * [Highlight filtered dynamic content items by URL] (https://github.com/Sitefinity/feather/wiki/Highlight-filtered-dynamic-content-items-by-URL)
+
+   * [How to access properties of the DynamicContentItem] (https://github.com/Sitefinity/feather/wiki/How-to-access-properties-of-the-DynamicContentItem)
+
+   * [How to change the view of a specific field in a single Dynamic content MVC widget] (https://github.com/Sitefinity/feather/wiki/How-to-change-the-view-of-a-specific-field-in-a-single-Dynamic-content-MVC-widget)
+
+   * [How to change the view of a specific field in all Dynamic content MVC widgets] (https://github.com/Sitefinity/feather/wiki/How-to-change-the-view-of-a-specific-field-in-all-Dynamic-content-MVC-widgets)
+
+   * [How to create custom designer view for Dynamic content MVC widgets] (https://github.com/Sitefinity/feather/wiki/How-to-customize-the-view-of-the-Dynamic-content-MVC-widget)
+
+   * [How to customize an existing field in Dynamic content MVC widget] (https://github.com/Sitefinity/feather/wiki/How-to-customize-an-existing-field-in-Dynamic-content-MVC-widget)
+
+   * [How to customize the view of the Dynamic content MVC widget] (https://github.com/Sitefinity/feather/wiki/How-to-customize-the-view-of-the-Dynamic-content-MVC-widget)
 
 ### Widget designers
 
@@ -59,13 +81,27 @@ This repository contains the core infrastructure related to [Project Feather](ht
 
 ### Content selectors
 
+   * [Use content selectors outside of a widget designer's view] (https://github.com/Sitefinity/feather/wiki/Use-content-selectors-outside-of-a-widget-designer's-view)
+
    * [Use a single content item selector] (https://github.com/Sitefinity/feather/wiki/Use-a-single-content-item-selector)
+
+   * [Use a multiple content item selector] (https://github.com/Sitefinity/feather/wiki/Use-a-multiple-content-item-selector)
 
    * [Use a news selector] (https://github.com/Sitefinity/feather/wiki/Use-a-news-selector)
 
-   * [Use a taxon selector] (https://github.com/Sitefinity/feather/wiki/Use-a-taxon-selector)
-   
-   * [Use a dynamic items selector] (https://github.com/Sitefinity/feather/wiki/Use-a-dynamic-items-selector) 
+   * [Use a page selector] (https://github.com/Sitefinity/feather/wiki/Use-a-page-selector)
+
+   * [Use a flat taxon selector] (https://github.com/Sitefinity/feather/wiki/Use-a-flat-taxon-selector)
+
+   * [Use a hierarchical taxon selector] (https://github.com/Sitefinity/feather/wiki/Use-a-hierarchical-taxon-selector)
+
+   * [Use a dynamic items selector] (https://github.com/Sitefinity/feather/wiki/Use-a-dynamic-items-selector)
+
+   * [Use a DateTime picker] (https://github.com/Sitefinity/feather/wiki/Use-a-DateTime-picker)
+
+   * [Use a TimeSpan selector] (https://github.com/Sitefinity/feather/wiki/Use-a-TimeSpan--selector)
+
+   * [List of selectors scripts] (https://github.com/Sitefinity/feather/wiki/List-of-selectors-scripts)
 
 ### Packages and layout files
 
@@ -77,22 +113,29 @@ This repository contains the core infrastructure related to [Project Feather](ht
 
    * [Add customizable grid controls based on simple HTML] (https://github.com/Sitefinity/feather/wiki/Add-customizable-grid-controls-based-on-simple-HTML)
 
+### Putting it all together
+
+   * [DevMagazine site overview](https://github.com/Sitefinity/feather/wiki/DevMagazine-site-overview)
+   
+### User Guide
+
+   * [User Guide: Content Block MVC Widget](https://github.com/Sitefinity/feather/wiki/User-Guide:-Content-Block-MVC-Widget)
+
+   * [Use images from Sitefinity libraries in Feather Content block widget](https://github.com/Sitefinity/feather/wiki/Use-images-from-Sitefinity-libraries-in-Feather-Content-block-widget)
+
+   * [User Guide: Dynamic Content MVC Widget](https://github.com/Sitefinity/feather/wiki/User-Guide:-Dynamic-Content-MVC-Widget)
+
+   * [User Guide: Navigation MVC Widget](https://github.com/Sitefinity/feather/wiki/User-Guide:-Navigation--MVC-Widget)
+
+   * [User Guide: News MVC Widget](https://github.com/Sitefinity/feather/wiki/User-Guide:-News-MVC-Widget)
 
 ### Advanced
 
    * [Refer to resources inside MVC views](https://github.com/Sitefinity/feather/wiki/Refer-to-resources-inside-MVC-views)
 
+   * [Priorities for resolving MVC widgets views](https://github.com/Sitefinity/feather/wiki/Priorities-for-resolving-MVC-widgets-views)
+
    * [VirtualFile structure explained](https://github.com/Sitefinity/feather/wiki/VirtualFile-structure-explained)
-   
-### Putting it all together
-
-   * [DevMagazine site overview](https://github.com/Sitefinity/feather/wiki/DevMagazine-site-overview)
-
-
-### Putting it all together
-
-   * [DevMagazine site overview](https://github.com/Sitefinity/feather/wiki/DevMagazine-site-overview)
-   
 
 # License Information
 
