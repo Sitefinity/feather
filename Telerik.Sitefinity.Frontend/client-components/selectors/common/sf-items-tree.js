@@ -84,6 +84,7 @@
         return {
             restrict: 'E',
             scope: {
+                sfScrollContainerClass: '@',
                 sfMultiselect: '=',
                 sfExpandSelection: '=',
                 sfItemsPromise: '=',
@@ -185,9 +186,24 @@
                     // if we have multiple widgets, we need to check that the event
                     // is for the one we're interested in.
                     if (widget === scope.treeView && shouldExpandTree(scope)) {
-                        predecessorsTreePromise.promise.then(function () {                           
-                            scope.treeView.expandPath(predecessorsTree.parentsIds); 
-                        });
+                        predecessorsTreePromise.promise.then(function () {
+                            //expand the path to the selected item 
+                            scope.treeView.expandPath(predecessorsTree.parentsIds);
+
+                            if (!scope.sfScrollContainerClass) return;
+
+                            //scroll to the selected element
+                            var selectedId = scope.sfSelectedIds[0],
+                                selectedDataNode = scope.itemsDataSource.get(selectedId),
+                                selectedTreeNode = scope.treeView.findByUid(selectedDataNode.uid),
+                                container = $('.' + scope.sfScrollContainerClass),
+                                scrollTop = container.scrollTop() - container.offset().top + selectedTreeNode.offset().top,
+                                middleOffset = container.height() /2 + selectedTreeNode.height() /2;
+
+                            container.animate({
+                                    scrollTop:  scrollTop - middleOffset
+                                }, 600); 
+                            });
                     }
                 });
 
