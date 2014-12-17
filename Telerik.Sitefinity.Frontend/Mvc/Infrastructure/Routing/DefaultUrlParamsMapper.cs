@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <inheritdoc />
         protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
         {
-            var selfRouting = this.Controller as ISelfRoutingController;
+            var selfRouting = this.Controller as IRouteMapper;
             if (urlParams != null && selfRouting != null && selfRouting.TryMapRouteParameters(urlParams, requestContext))
             {
                 RouteHelper.SetUrlParametersResolved(true);
