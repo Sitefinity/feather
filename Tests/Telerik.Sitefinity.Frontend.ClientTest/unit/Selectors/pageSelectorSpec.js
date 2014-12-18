@@ -120,36 +120,6 @@ describe("page selector", function () {
         $httpBackend.whenGET(treeSelectorTemplatePath).respond({});
     }));
 
-    beforeEach(function () {
-        this.addMatchers({
-            // Used to compare arrays of primitive values
-            toEqualArrayOfValues: function (expected) {
-                var valid = true;
-                for (var i = 0; i < expected.length; i++) {
-                    if (expected[i] !== this.actual[i]) {
-                        valid = false;
-                        break;
-                    }
-                }
-                return valid;
-            },
-
-            // Used to compare arrays of data items with Id and Title
-            toEqualArrayOfDataItems: function (expected) {
-                var valid = true;
-                for (var i = 0; i < expected.length; i++) {
-                    var id = this.actual[i].item ? this.actual[i].item.Id : this.actual[i].Id;
-                    var title = this.actual[i].item ? this.actual[i].item.Title : this.actual[i].Title;
-                    if (expected[i].Id !== id || expected[i].Title !== title) {
-                        valid = false;
-                        break;
-                    }
-                }
-                return valid;
-            },
-        });
-    });
-
     afterEach(function () {
         //Tear down.
         var leftOver = $('.testDiv, .modal, .modal-backdrop');
@@ -185,7 +155,7 @@ describe("page selector", function () {
             expect(pageSelecotrScope.sfIdentifierField).toBe("TitlesPath");
             expect(pageSelecotrScope.searchIdentifierField).toBe("Title");
 
-            expect(pageSelecotrScope.items).toEqualArrayOfDataItems(customDataItems.Items);
+            expect(pageSelecotrScope.items).toEqualArrayOfObjects(customDataItems.Items, ['Id', 'Title']);
         });
 
         it('[manev] / should filter items when text is typed in the filter box.', function () {
@@ -207,7 +177,7 @@ describe("page selector", function () {
 
             expect(s.items).toBeDefined();
 
-            expect(s.items).toEqualArrayOfDataItems(filteredCollection.Items);
+            expect(s.items).toEqualArrayOfObjects(filteredCollection.Items, ['Id', 'Title']);
         });
 
         it('[manev] / should mark item as selected when the dialog is opened.', function () {

@@ -48,28 +48,6 @@ describe('items tree', function  () {
 			});
 		}
 
-		function equalArrayOfItems (actual, expected) {
-			var valid = true;
-            for (var i = 0; i < expected.length; i++) {
-                if (expected[i].Id !== actual[i].Id) {
-                    valid = false;
-                    break;
-                }
-            }
-            return valid;
-		}
-
-		function equalArrayOfValues (actual, expected) {
-			var valid = true;
-            for (var i = 0; i < expected.length; i++) {
-                if (expected[i] !== actual[i]) {
-                    valid = false;
-                    break;
-                }
-            }
-            return valid;
-		}
-
 		function equalTree (actual, expected) {
 			var actualCurrentLevel = actual.items;
 			var expectedCurrentLevel = expected;
@@ -77,8 +55,14 @@ describe('items tree', function  () {
 			var valid = true;
 
 			while(actualCurrentLevel || expectedCurrentLevel) {				
-				valid = equalArrayOfItems(actualCurrentLevel, expectedCurrentLevel);
-				if (!valid) break;
+				try {
+					// throws error if not true
+					expect(actualCurrentLevel).toEqualArrayOfObjects(expectedCurrentLevel, ['Id']);
+				}
+				catch (err) {
+					valid = false;
+					break;
+				}
 
 				var currentParentId = actual.parentsIds[currentParentIndex];
 				var actualNextLevelParent = actualCurrentLevel.filter(function  (item) {
@@ -104,16 +88,6 @@ describe('items tree', function  () {
 
 		beforeEach(function () {
 	        this.addMatchers({
-	            // Used to compare arrays of data items
-	            toEqualArrayOfItems: function (expected) {
-	                return equalArrayOfItems(this.actual, expected);
-	            },
-
-	            // Used to compare arrays of primitive values
-	            toEqualArrayOfValues: function (expected) {
-	                return equalArrayOfValues(this.actual, expected);
-	            },
-
 	            // Used to compare two trees with given parents path from the root to the bottom
 	            toEqualTree: function (expected) {
 	            	return equalTree(this.actual, expected);

@@ -147,7 +147,5 @@ describe("timeSpan selector", function () {
         s.selectItem();
 
         expect(s.sfSelectedItem.displayText).toBe('Last 3 weeks');
-    });
-
-   
+    });   
 });

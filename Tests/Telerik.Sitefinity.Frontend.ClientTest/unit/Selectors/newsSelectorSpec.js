@@ -155,36 +155,6 @@ describe("news selector", function () {
         $httpBackend.whenGET(listGroupSelectionTemplatePath).respond({});
     }));
 
-    beforeEach(function () {
-        this.addMatchers({
-            // Used to compare arrays of primitive values
-            toEqualArrayOfValues: function (expected) {
-                var valid = true;
-                for (var i = 0; i < expected.length; i++) {
-                    if (expected[i] !== this.actual[i]) {
-                        valid = false;
-                        break;
-                    }
-                }
-                return valid;
-            },
-
-            // Used to compare arrays of data items with Id and Title
-            toEqualArrayOfDataItems: function (expected) {
-                var valid = true;
-                for (var i = 0; i < expected.length; i++) {
-                    var id = this.actual[i].item ? this.actual[i].item.Id : this.actual[i].Id;
-                    var title = this.actual[i].item ? this.actual[i].item.Title : this.actual[i].Title;
-                    if (expected[i].Id !== id || expected[i].Title !== title) {
-                        valid = false;
-                        break;
-                    }
-                }
-                return valid;
-            },
-        });
-    });
-
     afterEach(function () {
         //Tear down.
         var leftOver = $('.testDiv, .modal, .modal-backdrop');
@@ -519,7 +489,7 @@ describe("news selector", function () {
 
             expect(scope.selectedItems).toBeDefined();
             expect(scope.selectedItems.length).toEqual(2);
-            expect(scope.selectedItems).toEqualArrayOfDataItems(items);
+            expect(scope.selectedItems).toEqualArrayOfObjects(items, ['Id', 'Title']);
         });
 
         it('[GMateev] / should assign value to "selected-ids" when "selected-items" is provided.', function () {
@@ -535,7 +505,7 @@ describe("news selector", function () {
 
             expect(scope.selectedItems).toBeDefined();
             expect(scope.selectedItems.length).toEqual(2);
-            expect(scope.selectedItems).toEqualArrayOfDataItems(items);
+            expect(scope.selectedItems).toEqualArrayOfObjects(items, ['Id', 'Title']);
         });
 
         it('[GMateev] / should select news items when Done button is pressed.', function () {
@@ -576,7 +546,7 @@ describe("news selector", function () {
 
             expect(scope.selectedItems).toBeDefined();
             expect(scope.selectedItems.length).toEqual(2);
-            expect(scope.selectedItems).toEqualArrayOfDataItems(items);
+            expect(scope.selectedItems).toEqualArrayOfObjects(items, ['Id', 'Title']);
         });
 
         it('[GMateev] / should mark items as selected when the dialog is opened.', function () {
@@ -593,7 +563,7 @@ describe("news selector", function () {
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(2);
-            expect(s.selectedItemsInTheDialog).toEqualArrayOfDataItems(items);
+            expect(s.selectedItemsInTheDialog).toEqualArrayOfObjects(items, ['Id', 'Title']);
         });
 
         it('[GMateev] / should select many items in the opened dialog.', function () {
@@ -635,14 +605,14 @@ describe("news selector", function () {
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(2);
-            expect(s.selectedItemsInTheDialog).toEqualArrayOfDataItems(items);
+            expect(s.selectedItemsInTheDialog).toEqualArrayOfObjects(items, ['Id', 'Title']);
 
             //Select item in the selector
             s.itemClicked(0, s.items[0]);
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(1);
-            expect(s.selectedItemsInTheDialog).toEqualArrayOfDataItems([dataItem2]);
+            expect(s.selectedItemsInTheDialog).toEqualArrayOfObjects([dataItem2], ['Id', 'Title']);
         });
     });
 
@@ -660,7 +630,7 @@ describe("news selector", function () {
 
             expect(scope.selectedItems).toBeDefined();
             expect(scope.selectedItems.length).toBe(10);
-            expect(scope.selectedItems).toEqualArrayOfDataItems(customDataItems.Items);
+            expect(scope.selectedItems).toEqualArrayOfObjects(customDataItems.Items, ['Id', 'Title']);
 
             var moreLink = $(".small");
 
