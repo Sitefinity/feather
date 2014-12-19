@@ -36,6 +36,11 @@ beforeEach(function () {
             	}
             }
             return valid;
+        },
+
+        // Used to compare objects returned by $resource
+        toEqualData: function (expected) {
+            return angular.equals(this.actual, expected);
         }
     });
 });
