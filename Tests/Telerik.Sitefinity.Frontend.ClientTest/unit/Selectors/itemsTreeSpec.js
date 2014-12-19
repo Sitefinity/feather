@@ -118,5 +118,16 @@ describe('items tree', function  () {
 			expect(result.parentsIds).toEqualArrayOfValues(parentsIds);
 			expect(result).toEqualTree(tree);
 		});
+
+		it('[GeorgiMateev] / should return only root level if the selected item is in the root level.', function () {
+			var selectedItemId = '1.2';
+
+			//construct tree only from the first level 
+			var result = sfTreeHelper.constructPredecessorsTree(predecessorsLevels[0], selectedItemId);
+
+			//assertions
+			expect(result.parentsIds).toEqualArrayOfValues([]);
+			expect(result).toEqualTree(sortedLevels[0]);
+		});
 	});
 });
