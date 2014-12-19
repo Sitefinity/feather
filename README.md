@@ -14,8 +14,11 @@ This repository contains the core infrastructure related to [Project Feather](ht
 # Documentation
 
 [Getting Started](getting-started) - Follow the intallation instructions to get started with Feather  
+
 [Upgrade Instructions](upgrade-instructions) - Upgrade your existing Feather projects following this guide  
+
 [What's new](What's-new) - See what's new in Feather  
+
 [Documenatation Home](wiki) - See full project Feather documentation in the wiki  
 
 # License Information
