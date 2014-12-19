@@ -169,20 +169,6 @@ describe("news selector", function () {
         provide.value('sfNewsItemService', newsItemService);
     });
 
-    /* Helper methods */
-    var compileDirective = function (template, container) {
-        var cntr = container || 'body';
-
-        inject(function ($compile) {
-            var directiveElement = $compile(template)(scope);
-            $(cntr).append($('<div/>').addClass('testDiv')
-                .append(directiveElement));
-        });
-
-        // $digest is necessary to finalize the directive generation
-        scope.$digest();
-    };
-
     var getNewsServiceGetItemsArgs = function () {
         var mostRecent = newsItemService.getItems.mostRecentCall;
         expect(mostRecent).toBeDefined();
@@ -211,7 +197,7 @@ describe("news selector", function () {
         it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {
             var template = "<sf-list-selector sf-news-selector sf-provider='provider'/>";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -235,7 +221,7 @@ describe("news selector", function () {
 
             scope.selectedId = dataItem.Id;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             var args = getNewsServiceGetSpecificItemsArgs();
 
@@ -251,7 +237,7 @@ describe("news selector", function () {
 
             scope.selectedId = dataItem.Id;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             expect(scope.selectedId).toBeDefined();
             expect(scope.selectedId).toEqual(dataItem.Id);
@@ -265,7 +251,7 @@ describe("news selector", function () {
 
             scope.selectedItem = dataItem;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             expect(scope.selectedId).toBeDefined();
             expect(scope.selectedId).toEqual(dataItem.Id);
@@ -277,7 +263,7 @@ describe("news selector", function () {
         it('[GMateev] / should select news item when Done button is pressed.', function () {
             var template = "<sf-list-selector sf-news-selector sf-selected-item='selectedItem' sf-selected-item-id='selectedId'/>";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -313,7 +299,7 @@ describe("news selector", function () {
         it('[GMateev] / should filter items when text is typed in the filter box.', function () {
             var template = "<sf-list-selector sf-news-selector sf-provider='provider'/>";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -355,7 +341,7 @@ describe("news selector", function () {
 
             scope.selectedId = dataItem2.Id;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -373,7 +359,7 @@ describe("news selector", function () {
 
             scope.selectedId = dataItem.Id;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -388,7 +374,7 @@ describe("news selector", function () {
         it('[GMateev] / should select only one item in the opened dialog.', function () {
             var template = "<sf-list-selector sf-news-selector/>";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -415,7 +401,7 @@ describe("news selector", function () {
 
             scope.selectedId = dataItem.Id;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -441,7 +427,7 @@ describe("news selector", function () {
         it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {
             var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-provider='provider'/>";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -465,7 +451,7 @@ describe("news selector", function () {
 
             scope.selectedIds = ids;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             var args = getNewsServiceGetSpecificItemsArgs();
 
@@ -481,7 +467,7 @@ describe("news selector", function () {
 
             scope.selectedIds = ids;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             expect(scope.selectedIds).toBeDefined();
             expect(scope.selectedIds.length).toBe(2);
@@ -497,7 +483,7 @@ describe("news selector", function () {
 
             scope.selectedItems = items;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             expect(scope.selectedIds).toBeDefined();
             expect(scope.selectedIds.length).toBe(2);
@@ -511,7 +497,7 @@ describe("news selector", function () {
         it('[GMateev] / should select news items when Done button is pressed.', function () {
             var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-selected-items='selectedItems' sf-selected-ids='selectedIds'/>";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -554,7 +540,7 @@ describe("news selector", function () {
 
             scope.selectedIds = ids;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -569,7 +555,7 @@ describe("news selector", function () {
         it('[GMateev] / should select many items in the opened dialog.', function () {
             var template = "<sf-list-selector sf-news-selector sf-multiselect='true'/>";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -596,7 +582,7 @@ describe("news selector", function () {
 
             scope.selectedIds = ids;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -626,7 +612,7 @@ describe("news selector", function () {
             var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-selected-items='selectedItems' sf-selected-ids='selectedIds'/>";
 
             scope.selectedIds = ids;
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             expect(scope.selectedItems).toBeDefined();
             expect(scope.selectedItems.length).toBe(10);
@@ -646,7 +632,7 @@ describe("news selector", function () {
             var template = "<sf-list-selector sf-news-selector sf-multiselect='true' sf-selected-items='selectedItems' sf-selected-ids='selectedIds'/>";
 
             scope.selectedIds = ids;
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             var moreLink = $(".small");
             expect(moreLink.css("display")).toBe("none");

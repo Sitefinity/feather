@@ -127,26 +127,12 @@ describe("page selector", function () {
         leftOver.remove();
     });
 
-    /* Helper methods */
-    var compileDirective = function (template, container) {
-        var cntr = container || 'body';
-
-        inject(function ($compile) {
-            var directiveElement = $compile(template)(scope);
-            $(cntr).append($('<div/>').addClass('testDiv')
-                .append(directiveElement));
-        });
-
-        // $digest is necessary to finalize the directive generation
-        scope.$digest();
-    };
-
     describe('check default properties initialization of page selector', function () {
         it('[manev] / should init default page selector values.', function () {
 
             var template = "<sf-list-selector sf-page-selector sf-multiselect='true' sf-identifier-field='TitlesPath' />";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -162,7 +148,7 @@ describe("page selector", function () {
 
             var template = "<sf-list-selector sf-page-selector sf-multiselect='true' />";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -189,7 +175,7 @@ describe("page selector", function () {
 
             scope.selectedIds = ids;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
