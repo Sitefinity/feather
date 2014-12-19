@@ -13,13 +13,13 @@ This repository contains the core infrastructure related to [Project Feather](ht
 
 # Documentation
 
-[Getting Started](getting-started) - Follow the intallation instructions to get started with Feather  
+[Getting Started](https://github.com/Sitefinity/feather/wiki/getting-started) - Follow the intallation instructions to get started with Feather  
 
-[Upgrade Instructions](upgrade-instructions) - Upgrade your existing Feather projects following this guide  
+[Upgrade Instructions](https://github.com/Sitefinity/feather/wiki/upgrade-instructions) - Upgrade your existing Feather projects following this guide  
 
-[What's new](What's-new) - See what's new in Feather  
+[What's new](https://github.com/Sitefinity/feather/wiki/What's-new) - See what's new in Feather  
 
-[Documenatation Home](wiki) - See full project Feather documentation in the wiki  
+[Documenatation Home](https://github.com/Sitefinity/feather/wiki) - See full project Feather documentation in the wiki  
 
 # License Information
 
