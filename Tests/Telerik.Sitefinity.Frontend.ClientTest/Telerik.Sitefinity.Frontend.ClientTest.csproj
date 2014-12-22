@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="helpers\kendo.all.min.js" />
+    <Content Include="unit\Selectors\itemsTreeSpec.js" />
     <Content Include="unit\Selectors\newsSelectorSpec.js" />
     <Content Include="unit\Selectors\pageSelectorSpec.js" />
+    <Content Include="unit\Selectors\shrinkedBreadcrumb.js" />
     <Content Include="unit\Services\serverContextSpec.js" />
     <EmbeddedResource Include="helpers\angular-kendo.js" />
     <Content Include="helpers\kendo.web.min.js" />
