@@ -79,8 +79,63 @@
             constructPredecessorsTree: constructPredecessorsTree
         };
     });
+    
+    /**
+     * Wrapper that extends the kendo's HierarchicalDataSource
+     * with ability to fetch tree levels from both already constructed tree and a web service.
+     */
+    module.factory('sfHybridHierarchicalDataSource', function  () {
+        function getFromAvailableItems(data, id) {
+            if (!id) {
+                return data;
+            }
+            else if(data) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Id === id) {
+                        return data[i].items;
+                    }
+                    else if (data[i].items) {
+                        var result = getFromAvailableItems(data[i].items, id);
+                        if (result) return result;
+                    }
+                }
+            }
+        };
 
-    module.directive('sfItemsTree', ['serverContext', 'sfTreeHelper', '$q', function (serverContext, sfTreeHelper, $q) {
+        function createDataSource(model, tree, getChildren) {
+            return new kendo.data.HierarchicalDataSource({
+                schema: {
+                    model: model
+                },
+                transport: {
+                    read: function (options) {
+                        var id = options.data.Id;
+                        var availableItems = getFromAvailableItems(tree, id);
+                        if (availableItems) {
+                            options.success(availableItems);
+                        }
+                        else if(id) {
+                            getChildren(id).then(function (children) {
+                                options.success(children);
+                            });
+                        }
+                    }
+                }
+            });
+        };
+
+        return {
+            getDataSource: function (model, tree, getChildren) {
+                var dataSource = createDataSource(model, tree, getChildren);
+                dataSource.data(tree);
+
+                return dataSource;
+            }
+        };
+    });
+
+    module.directive('sfItemsTree', ['serverContext', 'sfTreeHelper', 'sfHybridHierarchicalDataSource', '$q',
+        function (serverContext, sfTreeHelper, sfHybridHierarchicalDataSource, $q) {
         return {
             restrict: 'E',
             scope: {
@@ -102,9 +157,19 @@
             },
             link: function (scope, element, attrs) {
                 /* Helper methods */
-                var predecessorsTree;
-                var predecessorsTreePromise = $q.defer();
 
+                var kendoTreeCreatedPromise = $q.defer();
+
+                var model = {
+                    id: 'Id',
+                    hasChildren: 'HasChildren'
+                };
+
+                /**
+                 * Retrieves collection of predecessors and constructs a tree.
+                 * @param  {String} selectedIds the Id of the selected item
+                 * @return {Promise}            a promise for the tree
+                 */
                 var constructPredecessorsTree = function (selectedIds) {
                     var selectedId = selectedIds[0];
                     return scope.sfGetPredecessors({ itemId: selectedId })
@@ -113,83 +178,76 @@
                         });
                 };
 
-                var getFromAvailableItems = function (data, id) {
-                    if (!id) {
-                        return data;
-                    }
-                    else if(data) {
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i].Id === id) {
-                                return data[i].items;
-                            }
-                            else if (data[i].items) {
-                                var result = getFromAvailableItems(data[i].items, id);
-                                if (result) return result;
-                            }
-                        }
-                    }
-                };
-
+                /**
+                 * Determines whether the tree should be expanded to the selected item.
+                 */
                 var shouldExpandTree = function (scope) {
                     return scope.sfSelectedIds &&
                         scope.sfSelectedIds.length > 0 &&
                         !scope.sfMultiselect &&
-                        scope.sfExpandSelection
+                        scope.sfExpandSelection;
                 };
 
-                /* Scope properties */
-                scope.itemsDataSource = new kendo.data.HierarchicalDataSource({
-                    schema: {
-                        model: {
-                            id: 'Id',
-                            hasChildren: 'HasChildren'
-                        }
-                    },
-                    transport: {
-                        read: function (options) {
-                            var id = options.data.Id;
-                            var availableItems = getFromAvailableItems(predecessorsTree && predecessorsTree.items, id);
-                            if (availableItems) {
-                                options.success(availableItems);
-                            }
-                            else if(id) {
-                                scope.sfGetChildren({ parentId: id })
-                                    .then(function (children) {
-                                        options.success(children);
-                                    });
-                            }
-                        }
-                    }
-                });
+                var getChildrenCallback = function (id) {
+                    return scope.sfGetChildren({ parentId: id });
+                };
 
-                scope.sfItemsPromise.then(function (newValue) {
-                    if (shouldExpandTree(scope)) {
-                            // We have to expand only in single selection mode and when there is selected item.
-                            // The user of the directive can also disable this behaviour.
-                            constructPredecessorsTree(scope.sfSelectedIds)
-                                .then(function  (constructedTree) {
-                                    predecessorsTree = constructedTree;
+                /**
+                 * Creates a hybrid data source and sets it to the tree.
+                 */
+                var bindDataSource = function (items) {
+                    var itemsDataSource = 
+                        sfHybridHierarchicalDataSource.getDataSource(model,
+                                                                     items,
+                                                                     getChildrenCallback);
 
-                                    scope.itemsDataSource.data(predecessorsTree.items);
+                    scope.treeView.setDataSource(itemsDataSource);
+                };
 
-                                    predecessorsTreePromise.resolve();
-                                });
-                    }
-                    else {
-                        scope.itemsDataSource.data(newValue);
-                    }
-                });
+                /**
+                 * Expand the tree after the items are loaded and the kendo tree widget is created.
+                 */
+                var expandTreeToSelectedItem = function () {
+                    $q.all([
+                        constructPredecessorsTree(scope.sfSelectedIds),
+                        kendoTreeCreatedPromise.promise])
+                    .then(function (promiseResults) {
+                        var predecessorsTree = promiseResults[0];
+                        bindDataSource(predecessorsTree.items);
+
+                        return predecessorsTree;
+                    })
+                    .then(function (predecessorsTree) {
+                        scope.treeView.expandPath(predecessorsTree.parentsIds);
+                    });
+                };
+
+                /**
+                 * Bind the provided from the user items into the tree.
+                 */
+                var setItemsIntoTree = function () {
+                     $q.all([
+                        scope.sfItemsPromise,
+                        kendoTreeCreatedPromise.promise])
+                    .then(function (promiseResults) {
+                        var items = promiseResults[0];
+                        bindDataSource(items);
+                    });
+                };
 
                 scope.$on("kendoWidgetCreated", function(event, widget){
-                    // the event is emitted for every widget
-                    // if we have multiple widgets, we need to check that the event
-                    // is for the one we're interested in.
-                    if (widget === scope.treeView && shouldExpandTree(scope)) {
-                        predecessorsTreePromise.promise.then(function () {                           
-                            scope.treeView.expandPath(predecessorsTree.parentsIds); 
-                        });
+                    // check if the event is emmited from our widget
+                    if (widget === scope.treeView) {
+                        kendoTreeCreatedPromise.resolve();
                     }
                 });
+
+                if (shouldExpandTree(scope)) {
+                    expandTreeToSelectedItem();
+                }
+                else {
+                    setItemsIntoTree();
+                }
 
                 scope.checkboxes = {
                     template: '<input type="checkbox" ng-click="sfSelectItem({ dataItem: dataItem })" ng-checked="sfItemSelected({dataItem: dataItem})" ng-hide="sfItemDisabled({dataItem: dataItem})">'
