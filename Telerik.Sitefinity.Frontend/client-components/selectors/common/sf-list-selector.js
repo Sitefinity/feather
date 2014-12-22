@@ -224,7 +224,7 @@
 
                         scope.$watch('sfProvider', function (newProvider, oldProvider) {
                             if (newProvider !== oldProvider) {
-                                if (ctrl.selectorType === 'NewsSelector') {
+                                if (ctrl.selectorType === 'NewsSelector' || ctrl.selectorType === 'DynamicItemsSelector') {
                                     scope.sfSelectedItems = null;
                                     scope.sfSelectedIds = null;
                                 }

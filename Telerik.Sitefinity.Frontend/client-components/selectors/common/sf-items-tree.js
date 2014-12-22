@@ -139,6 +139,8 @@
         return {
             restrict: 'E',
             scope: {
+                // The class indicating the element with max-height and overflow-y:auto.
+                sfScrollContainerClass: '@',
                 sfMultiselect: '=',
                 sfExpandSelection: '=',
                 sfItemsPromise: '=',
@@ -219,7 +221,8 @@
                     })
                     .then(function (predecessorsTree) {
                         scope.treeView.expandPath(predecessorsTree.parentsIds);
-                    });
+                    })
+                    .then(scrollToSelectedItem);
                 };
 
                 /**
@@ -233,6 +236,25 @@
                         var items = promiseResults[0];
                         bindDataSource(items);
                     });
+                };
+
+                /**
+                 * Scrolls the items list in order to show the selected item.
+                 */
+                var scrollToSelectedItem = function () {
+                    if (!scope.sfScrollContainerClass) return;
+
+                    //scroll to the selected element
+                    var selectedId = scope.sfSelectedIds[0],
+                        selectedDataNode = scope.treeView.dataSource.get(selectedId),
+                        selectedTreeNode = scope.treeView.findByUid(selectedDataNode.uid),
+                        container = $('.' + scope.sfScrollContainerClass),
+                        scrollTop = container.scrollTop() - container.offset().top + selectedTreeNode.offset().top,
+                        middleOffset = container.height() /2 + selectedTreeNode.height() /2;
+
+                    container.animate({
+                            scrollTop:  scrollTop - middleOffset
+                        }, 600);                     
                 };
 
                 scope.$on("kendoWidgetCreated", function(event, widget){
