@@ -41,6 +41,17 @@ describe("selected items view", function () {
         $httpBackend.whenGET(selectedItemsViewTemplatePath);
     }));
 
+    afterEach(function () {
+        //Tear down.
+
+        //the collection is changed after reordering
+        allItems = [
+            { Title: "title 1", Id: "4c003fb0-2a77-61ec-be54-ff00007864f4", Name: "name 1", Type: { Value: "type 1" } },
+            { Title: "title 2", Id: "4c003fb0-2a77-61ec-be54-ff00007864f3", Name: "name 2", Type: { Value: "type 2" } },
+            { Title: "title 3", Id: "4c003fb0-2a77-61ec-be54-ff10007864f4", Name: "name 3", Type: { Value: "type 3" } }
+        ];
+    });
+
     it('[NPetrova] / should copy allItems in currentItems collection.', function () {
         scope.allItems = allItems;
         var template = "<sf-selected-items-view sf-items='allItems'></sf-selected-items-view>";
@@ -216,5 +227,266 @@ describe("selected items view", function () {
         expect(s.isItemSelected(unselectedItem.Id)).toBe(true);
     });
 
+    it('[NPetrova] / should reorder first and second item.', function () {
+        scope.allItems = allItems;
+        var template = "<sf-selected-items-view sf-items='allItems'></sf-selected-items-view>";
 
+        commonMethods.compileDirective(template, scope);
+        var s = scope.$$childHead;
+
+        expect(s.sfItems[0].Title).toBe("title 1");
+        expect(s.sfItems[1].Title).toBe("title 2");
+        expect(s.sfItems[2].Title).toBe("title 3");
+
+        var event = {
+            oldIndex: 0,
+            newIndex: 1
+        };
+        s.sortItems(event);
+
+        expect(s.sfItems[0].Title).toBe("title 2");
+        expect(s.sfItems[1].Title).toBe("title 1");
+        expect(s.sfItems[2].Title).toBe("title 3");
+
+    });
+
+    it('[NPetrova] / should reorder first and last item when some of them is selected.', function () {
+        scope.selectedItems = [];
+        scope.selectedItems.push(allItems[0]);
+        scope.selectedItems.push(allItems[1]);
+        scope.allItems = allItems;
+        var template = "<sf-selected-items-view sf-items='allItems' sf-selected-items='selectedItems'></sf-selected-items-view>";
+
+        commonMethods.compileDirective(template, scope);
+        var s = scope.$$childHead;
+
+        expect(s.sfItems[0].Title).toBe("title 1");
+        expect(s.sfItems[1].Title).toBe("title 2");
+        expect(s.sfItems[2].Title).toBe("title 3");
+        expect(s.isItemSelected(s.sfItems[0].Id)).toBe(true);
+        expect(s.isItemSelected(s.sfItems[1].Id)).toBe(true);
+        expect(s.isItemSelected(s.sfItems[2].Id)).toBe(false);
+
+        var event = {
+            oldIndex: 2,
+            newIndex: 0
+        };
+        s.sortItems(event);
+
+        expect(s.sfItems[0].Title).toBe("title 3");
+        expect(s.sfItems[1].Title).toBe("title 1");
+        expect(s.sfItems[2].Title).toBe("title 2");
+        expect(s.isItemSelected(s.sfItems[0].Id)).toBe(false);
+        expect(s.isItemSelected(s.sfItems[1].Id)).toBe(true);
+        expect(s.isItemSelected(s.sfItems[2].Id)).toBe(true);
+
+    });
+
+    it('[NPetrova] / should filter items', function () {
+        scope.allItems = allItems;
+        var template = "<sf-selected-items-view sf-items='allItems'></sf-selected-items-view>";
+
+        commonMethods.compileDirective(template, scope);
+        var s = scope.$$childHead;
+
+        expect(s.currentItems.length).toBe(3);
+
+        s.filter.search("Title");
+        expect(s.currentItems.length).toBe(3);
+
+        s.filter.search("3");
+        expect(s.currentItems.length).toBe(1);
+
+        s.filter.search("Invalid");
+        expect(s.currentItems.length).toBe(0);
+
+        s.filter.search("");
+        expect(s.currentItems.length).toBe(3);
+    });
+
+    it('[NPetrova] / should unselect selected item when filter is applied', function () {
+        var selectedItems = [];
+        selectedItems.push(allItems[1]);
+
+        scope.allItems = allItems;
+        scope.selectedItems = selectedItems;
+        var template = "<sf-selected-items-view sf-items='allItems' sf-selected-items='selectedItems'></sf-selected-items-view>";
+
+        commonMethods.compileDirective(template, scope);
+        var s = scope.$$childHead;
+
+        expect(s.currentItems.length).toBe(3);
+        expect(s.sfSelectedItems.length).toBe(1);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(true);
+
+        s.filter.search("2");
+        expect(s.currentItems.length).toBe(1);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(true);
+        //click the filtered item
+        s.itemClicked(s.currentItems[0]);
+        expect(s.sfSelectedItems.length).toBe(0);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(false);
+
+        s.filter.search("");
+        expect(s.currentItems.length).toBe(3);
+        expect(s.sfSelectedItems.length).toBe(0);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(false);
+    });
+
+    it('[NPetrova] / should reorder, select, reorder and unselect items', function () {
+        var selectedItems = [];
+        selectedItems.push(allItems[1]);
+
+        scope.allItems = allItems;
+        scope.selectedItems = selectedItems;
+        var template = "<sf-selected-items-view sf-items='allItems' sf-selected-items='selectedItems'></sf-selected-items-view>";
+
+        commonMethods.compileDirective(template, scope);
+        var s = scope.$$childHead;
+
+        expect(s.isItemSelected(allItems[0].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(true);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(false);
+        expect(s.sfItems[0].Title).toBe("title 1");
+        expect(s.sfItems[1].Title).toBe("title 2");
+        expect(s.sfItems[2].Title).toBe("title 3");
+
+        //reoder
+        s.sortItems({ oldIndex: 2, newIndex: 1 });
+        expect(s.sfSelectedItems.length).toBe(1);
+        expect(s.isItemSelected(allItems[0].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(true);
+        expect(s.sfItems[0].Title).toBe("title 1");
+        expect(s.sfItems[1].Title).toBe("title 3");
+        expect(s.sfItems[2].Title).toBe("title 2");
+
+        //select
+        s.itemClicked(s.sfItems[0]);
+        expect(s.sfSelectedItems.length).toBe(2);
+        expect(s.isItemSelected(allItems[0].Id)).toBe(true);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(true);
+        expect(s.sfItems[0].Title).toBe("title 1");
+        expect(s.sfItems[1].Title).toBe("title 3");
+        expect(s.sfItems[2].Title).toBe("title 2");
+
+        //reorder
+        s.sortItems({ oldIndex: 0, newIndex: 2 });
+        expect(s.sfSelectedItems.length).toBe(2);
+        expect(s.isItemSelected(allItems[0].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(true);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(true);
+        expect(s.sfItems[0].Title).toBe("title 3");
+        expect(s.sfItems[1].Title).toBe("title 2");
+        expect(s.sfItems[2].Title).toBe("title 1");
+
+        //unselect
+        s.itemClicked(s.sfItems[1]);
+        expect(s.sfSelectedItems.length).toBe(1);
+        expect(s.isItemSelected(allItems[0].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(true);
+        expect(s.sfItems[0].Title).toBe("title 3");
+        expect(s.sfItems[1].Title).toBe("title 2");
+        expect(s.sfItems[2].Title).toBe("title 1");
+    });
+
+    it('[NPetrova] / should filter, select, clear filter, reorder, unselect, reorder, filter, unselect and clear filter', function () {
+        var selectedItems = [];
+        selectedItems.push(allItems[2]);
+
+        scope.allItems = allItems;
+        scope.selectedItems = selectedItems;
+        var template = "<sf-selected-items-view sf-items='allItems' sf-selected-items='selectedItems'></sf-selected-items-view>";
+
+        commonMethods.compileDirective(template, scope);
+        var s = scope.$$childHead;
+
+        expect(s.sfSelectedItems.length).toBe(1);
+        expect(s.isItemSelected(allItems[0].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(true);
+        expect(s.sfItems[0].Title).toBe("title 1");
+        expect(s.sfItems[1].Title).toBe("title 2");
+        expect(s.sfItems[2].Title).toBe("title 3");
+
+        //filter
+        s.filter.search("le 2");
+        expect(s.currentItems.length).toBe(1);
+        expect(s.currentItems[0].Title).toBe("title 2");
+        expect(s.sfSelectedItems.length).toBe(1);
+        expect(s.isItemSelected(s.currentItems[0].Id)).toBe(false);
+
+        //select filtered item
+        s.itemClicked(s.currentItems[0]);
+        expect(s.currentItems.length).toBe(1);
+        expect(s.currentItems[0].Title).toBe("title 2");
+        expect(s.sfSelectedItems.length).toBe(2);
+        expect(s.isItemSelected(s.currentItems[0].Id)).toBe(true);
+
+        //clear the filter
+        s.filter.search("");
+        expect(s.sfSelectedItems.length).toBe(2);
+        expect(s.isItemSelected(allItems[0].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(true);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(true);
+        expect(s.sfItems[0].Title).toBe("title 1");
+        expect(s.sfItems[1].Title).toBe("title 2");
+        expect(s.sfItems[2].Title).toBe("title 3");
+
+        //reorder
+        s.sortItems({ oldIndex: 1, newIndex: 0 });
+        expect(s.sfSelectedItems.length).toBe(2);
+        expect(s.isItemSelected(allItems[0].Id)).toBe(true);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(true);
+        expect(s.sfItems[0].Title).toBe("title 2");
+        expect(s.sfItems[1].Title).toBe("title 1");
+        expect(s.sfItems[2].Title).toBe("title 3");
+
+        //unselect
+        s.itemClicked(s.sfItems[2]);
+        expect(s.sfSelectedItems.length).toBe(1);
+        expect(s.isItemSelected(allItems[0].Id)).toBe(true);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(false);
+        expect(s.sfItems[0].Title).toBe("title 2");
+        expect(s.sfItems[1].Title).toBe("title 1");
+        expect(s.sfItems[2].Title).toBe("title 3");
+
+        //reorder
+        s.sortItems({ oldIndex: 1, newIndex: 2 });
+        expect(s.sfSelectedItems.length).toBe(1);
+        expect(s.isItemSelected(allItems[0].Id)).toBe(true);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(false);
+        expect(s.sfItems[0].Title).toBe("title 2");
+        expect(s.sfItems[1].Title).toBe("title 3");
+        expect(s.sfItems[2].Title).toBe("title 1");
+
+        //filter
+        s.filter.search("2");
+        expect(s.currentItems.length).toBe(1);
+        expect(s.currentItems[0].Title).toBe("title 2");
+        expect(s.sfSelectedItems.length).toBe(1);
+        expect(s.isItemSelected(s.currentItems[0].Id)).toBe(true);
+
+        //unselect
+        s.itemClicked(s.currentItems[0]);
+        expect(s.currentItems.length).toBe(1);
+        expect(s.currentItems[0].Title).toBe("title 2");
+        expect(s.sfSelectedItems.length).toBe(0);
+        expect(s.isItemSelected(s.currentItems[0].Id)).toBe(false);
+
+        //clear filter
+        s.filter.search("");
+        expect(s.sfSelectedItems.length).toBe(0);
+        expect(s.isItemSelected(allItems[0].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[1].Id)).toBe(false);
+        expect(s.isItemSelected(allItems[2].Id)).toBe(false);
+        expect(s.sfItems[0].Title).toBe("title 2");
+        expect(s.sfItems[1].Title).toBe("title 3");
+        expect(s.sfItems[2].Title).toBe("title 1");
+    });
 });
