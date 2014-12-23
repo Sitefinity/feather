@@ -71,9 +71,11 @@
                         };
 
                         scope.isItemSelected = function (id) {
-                            for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                if (scope.sfSelectedItems[i].Id === id) {
-                                    return true;
+                            if (scope.sfSelectedItems) {
+                                for (var i = 0; i < scope.sfSelectedItems.length; i++) {
+                                    if (scope.sfSelectedItems[i].Id === id) {
+                                        return true;
+                                    }
                                 }
                             }
 
@@ -81,6 +83,10 @@
                         };
 
                         scope.itemClicked = function (item) {
+                            if (!scope.sfSelectedItems) {
+                                scope.sfSelectedItems = [];
+                            }
+
                             var selectedItemIndex;
                             var alreadySelected = false;
                             for (var i = 0; i < scope.sfSelectedItems.length; i++) {

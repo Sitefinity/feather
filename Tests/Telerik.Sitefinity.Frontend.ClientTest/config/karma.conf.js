@@ -26,6 +26,8 @@ module.exports = function (config) {
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.html',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.html',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/dynamic-modules/sf-data-service.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/dynamic-modules/sf-dynamic-items-selector.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/dynamic-modules/sf-dynamic-items-selector.html',
