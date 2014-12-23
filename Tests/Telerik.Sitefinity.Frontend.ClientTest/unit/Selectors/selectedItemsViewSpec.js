@@ -8,38 +8,20 @@ describe("selected items view", function () {
         { Title: "title 3", Id: "4c003fb0-2a77-61ec-be54-ff10007864f4", Name: "name 3", Type: { Value: "type 3" } }
     ];
 
-    //This is the id of the cached templates in $templateCache. The external templates are cached by a karma/grunt preprocessor.
-    var selectedItemsViewTemplatePath = 'client-components/selectors/common/sf-selected-items-view.html';
-
     //Load the module under test.
     beforeEach(module('sfSelectors'));
 
     //Load the module that contains the cached templates.
     beforeEach(module('templates'));
 
-    beforeEach(module(function ($provide) {
-        var serverContext = {
-            getRootedUrl: function (path) {
-                return appPath + '/' + path;
-            },
-            getUICulture: function () {
-                return null;
-            },
-            getEmbeddedResourceUrl: function (assembly, url) {
-                return url;
-            },
-            getFrontendLanguages: function () {
-                return ['en', 'de'];
-            }
-        };
-        $provide.value('serverContext', serverContext);
-    }));
-
     beforeEach(inject(function ($rootScope, $httpBackend, _$q_, $templateCache, _$timeout_) {
         //Build the scope with whom the directive will be compiled.
         scope = $rootScope.$new();
-        $httpBackend.whenGET(selectedItemsViewTemplatePath);
     }));
+
+    beforeEach(function () {
+        commonMethods.mockServerContextToEnableTemplateCache();
+    });
 
     afterEach(function () {
         //Tear down.
