@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 					'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
-					'Telerik.Sitefinity.Frontend/client=components/selectors/**/*.js'
+					'Telerik.Sitefinity.Frontend/client-components/selectors/**/*.js'
 			]
 		},
 		
@@ -27,6 +27,7 @@ module.exports = function (grunt) {
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selectors.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.js',
+                'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/news/sf-news-item-service.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/news/sf-news-selector.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/dynamic-modules/sf-data-service.js',
