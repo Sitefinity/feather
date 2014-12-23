@@ -35,9 +35,6 @@ describe("timeSpan selector", function () {
         $timeout = _$timeout_;
 
         serviceResult = _$q_.defer();
-
-        //Prevent failing of the template request.
-        $httpBackend.whenGET(timespanSelectorTemplatePath);
     }));
 
     beforeEach(inject(function ($templateCache) {

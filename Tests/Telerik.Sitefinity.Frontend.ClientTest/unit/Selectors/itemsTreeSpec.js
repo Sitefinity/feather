@@ -31,19 +31,27 @@ describe('items tree tests', function  () {
         return firstLevel;
     }
 
+    function constructPredecessorsCollection (levels) {
+        var predecessors = [];
+        for (var i = 0; i < levels.length; i++) {
+            Array.prototype.push.apply(predecessors, levels[i]);
+        };
+        return predecessors;
+    }    
+
     //Load the module under test.
     beforeEach(module('sfSelectors'));
 
+    //Load the module that contains the cached templates.
+    beforeEach(module('templates'));
+
+    var $q;
+    beforeEach(inject(function (_$q_) {
+        $q = _$q_;
+    }));
+
     describe('sfTreeHelper factory', function  () {
         var sfTreeHelper;
-
-        function constructPredecessorsCollection (levels) {
-            var predecessors = [];
-            for (var i = 0; i < levels.length; i++) {
-                Array.prototype.push.apply(predecessors, levels[i]);
-            };
-            return predecessors;
-        }
 
         function constructParentsIdsPath (levels) {
             return [levels[0][0], levels[1][0]].map(function (item) {
@@ -132,12 +140,10 @@ describe('items tree tests', function  () {
     });
 
     describe('sfHybridHierarchicalDataSource factory', function () {
-        var sfHybridHierarchicalDataSource;
-        var $q;
+        var sfHybridHierarchicalDataSource;        
 
-        beforeEach(inject(function (_sfHybridHierarchicalDataSource_, _$q_) {
+        beforeEach(inject(function (_sfHybridHierarchicalDataSource_) {
             sfHybridHierarchicalDataSource = _sfHybridHierarchicalDataSource_;
-            $q = _$q_;
         }));
 
         var getChildrenSpy = jasmine.createSpy('getChildren').andCallFake(function (id) {
@@ -155,9 +161,7 @@ describe('items tree tests', function  () {
             var tree = constructPredecessorsTree(sortedLevels);
 
             var dataSource = sfHybridHierarchicalDataSource
-                                .getDataSource(model,
-                                               tree,
-                                               getChildrenSpy);
+                .getDataSource(model, tree, getChildrenSpy);
 
             dataSource.bind('change', function (e) {
                 var children = this.data();
@@ -173,9 +177,7 @@ describe('items tree tests', function  () {
             var tree = constructPredecessorsTree(sortedLevels);
 
             var dataSource = sfHybridHierarchicalDataSource
-                                .getDataSource(model,
-                                               tree,
-                                               getChildrenSpy);
+                .getDataSource(model, tree, getChildrenSpy);
 
             dataSource.bind('change', function (e) {
                 var children = this.data();
@@ -188,5 +190,48 @@ describe('items tree tests', function  () {
             dataSource.read({Id: '4.2'});
             expect(getChildrenSpy).toHaveBeenCalledWith('4.2');
         });
+    });
+
+    describe('sf-items-tree directive', function () {
+        var scope;
+        var $timeout;
+
+        beforeEach(inject(function ($rootScope, _$timeout_) {
+            scope = $rootScope.$new();
+            $timeout = _$timeout_;
+        }));
+
+        beforeEach(function () {
+            commonMethods.mockServerContextToEnableTemplateCache();
+        });
+
+        it('[GeorgiMateev] / it should call the predecessors end point when the directive is loaded.', function () {
+        var template = '<sf-items-tree '+
+                         'sf-expand-selection="expandSelection" '+
+                         'sf-selected-ids="sfSelectedIds" '+
+                         'sf-get-predecessors="getPredecessors(itemId)" '+
+                         'class="k-treeview--selection"></sf-items-tree>';
+
+            scope.getPredecessors = jasmine.createSpy('getPredecessors')
+                .andCallFake(function (itemId) {
+                    var defered = $q.defer();
+                    var predecessors = constructPredecessorsCollection(predecessorsLevels);
+                    defered.resolve({ Items: predecessors });
+
+                    return defered.promise;
+                });
+
+            scope.expandSelection = true;
+            scope.sfSelectedIds = ['3.2'];
+
+            commonMethods.compileDirective(template, scope);
+
+            // Looks like kendo is using a timeout in its widgets
+            // so this method is executing all callbacks of the $timeout mock.
+            $timeout.flush(1000);
+
+            expect(scope.getPredecessors).toHaveBeenCalledWith('3.2');
+        });
+
     });
 });
