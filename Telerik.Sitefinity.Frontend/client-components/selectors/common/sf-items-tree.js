@@ -100,7 +100,7 @@
                     }
                 }
             }
-        };
+        }
 
         function createDataSource(model, tree, getChildren) {
             return new kendo.data.HierarchicalDataSource({
@@ -122,7 +122,7 @@
                     }
                 }
             });
-        };
+        }
 
         return {
             getDataSource: function (model, tree, getChildren) {
