@@ -72,7 +72,7 @@
 
                         scope.isItemSelected = function (id) {
                             for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                if (scope.sfSelectedItems[i].item.Id === id) {
+                                if (scope.sfSelectedItems[i].Id === id) {
                                     return true;
                                 }
                             }
@@ -84,7 +84,7 @@
                             var selectedItemIndex;
                             var alreadySelected = false;
                             for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                if (scope.sfSelectedItems[i].item.Id === item.Id) {
+                                if (scope.sfSelectedItems[i].Id === item.Id) {
                                     selectedItemIndex = i;
                                     alreadySelected = true;
                                     break;
