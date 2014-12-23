@@ -184,7 +184,7 @@ describe("page selector", function () {
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(filteredCollection.Items.length);
-            expect(s.selectedItemsInTheDialog[0].item.Id).toEqual(filteredCollection.Items[0].Id);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(filteredCollection.Items[0].Id);
         });
     });
 });

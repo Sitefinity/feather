@@ -189,13 +189,7 @@
 
                         var updateSelectionInTheDialog = function () {
                             if (scope.sfSelectedItems) {
-                                Array.prototype.push.apply(scope.selectedItemsInTheDialog,
-                                    scope.sfSelectedItems.map(function (item) {
-                                        return {
-                                            item: item,
-                                            isChecked: true
-                                        };
-                                    }));
+                                Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.sfSelectedItems);
                             }
                         };
 
@@ -293,7 +287,7 @@
                             var alreadySelected;
                             var selectedItemIndex;
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
-                                if (scope.selectedItemsInTheDialog[i].item.Id === item.Id) {
+                                if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
                                     alreadySelected = true;
                                     selectedItemIndex = i;
                                     break;
@@ -305,10 +299,10 @@
                             }
                             else {
                                 if (scope.multiselect) {
-                                    scope.selectedItemsInTheDialog.push({ item: item, isChecked: true });
+                                    scope.selectedItemsInTheDialog.push(item);
                                 }
                                 else {
-                                    scope.selectedItemsInTheDialog.splice(0, 1, { item: item, isChecked: true });
+                                    scope.selectedItemsInTheDialog.splice(0, 1, item);
                                 }
                             }
                         };
@@ -320,9 +314,7 @@
                                 var oldSelectedItems = [];
                                 Array.prototype.push.apply(oldSelectedItems, scope.sfSelectedItems);
                                 var changeArgs = {
-                                    "newSelectedItems": scope.selectedItemsInTheDialog.map(function (item) {
-                                        return item.item;
-                                    }),
+                                    "newSelectedItems": scope.selectedItemsInTheDialog,
                                     "oldSelectedItems": oldSelectedItems
                                 };
                                 scope.sfChange.call(scope.$parent, changeArgs);
@@ -330,8 +322,8 @@
 
                             if (scope.selectedItemsInTheDialog.length > 0) {
                                 //set the selected item and its id to the mapped isolated scope properties
-                                scope.sfSelectedItem = scope.selectedItemsInTheDialog[0].item;
-                                scope.sfSelectedItemId = scope.selectedItemsInTheDialog[0].item.Id;
+                                scope.sfSelectedItem = scope.selectedItemsInTheDialog[0];
+                                scope.sfSelectedItemId = scope.selectedItemsInTheDialog[0].Id;
 
                                 if (scope.sfSelectedItems) {
                                     //Clean the array and keep all references.
@@ -341,9 +333,7 @@
                                     scope.sfSelectedItems = [];
                                 }
 
-                                Array.prototype.push.apply(scope.sfSelectedItems, scope.selectedItemsInTheDialog.map(function (item) {
-                                    return item.item;
-                                }));
+                                Array.prototype.push.apply(scope.sfSelectedItems, scope.selectedItemsInTheDialog);
 
                                 scope.sfSelectedIds = scope.sfSelectedItems.map(function (item) {
                                     return item.Id;
@@ -402,16 +392,14 @@
 
                         scope.isItemSelectedInDialog = function (item) {
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
-                                if (scope.selectedItemsInTheDialog[i].item.Id === item.Id) {
+                                if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
                                     return true;
                                 }
                             }
                         };
 
                         scope.getSelectedItemsCount = function () {
-                            return scope.selectedItemsInTheDialog.filter(function (item) {
-                                return item.isChecked;
-                            }).length;
+                            return scope.selectedItemsInTheDialog.length;
                         };
 
                         scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == "true") ? true : false;
@@ -471,10 +459,24 @@
                         };
 
                         scope.removeUnselectedItems = function () {
-                            scope.selectedItemsViewData = [];
-                            scope.selectedItemsInTheDialog = scope.selectedItemsInTheDialog.filter(function (item) {
-                                return item.isChecked;
-                            });
+                            if (scope.multiselect) {
+                                var reoderedItems = [];
+                                if (scope.selectedItemsViewData && scope.selectedItemsViewData.length > 0) {
+                                    for (var i = 0; i < scope.selectedItemsViewData.length; i++) {
+                                        for (var j = 0; j < scope.selectedItemsInTheDialog.length; j++) {
+                                            if (scope.selectedItemsInTheDialog[j].Id === scope.selectedItemsViewData[i].Id) {
+                                                reoderedItems.push(scope.selectedItemsInTheDialog[j]);
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    scope.selectedItemsInTheDialog = [];
+                                    Array.prototype.push.apply(scope.selectedItemsInTheDialog, reoderedItems);
+                                }
+
+                                scope.selectedItemsViewData = [];
+                            }
                         };
 
                         if (scope.sfSelectedIds && scope.sfSelectedIds.length !== 0) {

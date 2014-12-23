@@ -368,7 +368,7 @@ describe("news selector", function () {
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(1);
-            expect(s.selectedItemsInTheDialog[0].item.Id).toEqual(dataItem.Id);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
         });
 
         it('[GMateev] / should select only one item in the opened dialog.', function () {
@@ -386,14 +386,14 @@ describe("news selector", function () {
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(1);
-            expect(s.selectedItemsInTheDialog[0].item.Id).toEqual(dataItem.Id);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
 
             //Select second item in the selector
             s.itemClicked(1, s.items[1]);
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(1);
-            expect(s.selectedItemsInTheDialog[0].item.Id).toEqual(dataItem2.Id);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem2.Id);
         });
 
         it('[GMateev] / should deselect the item if it is clicked and it is already selected.', function () {
@@ -410,7 +410,7 @@ describe("news selector", function () {
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(1);
-            expect(s.selectedItemsInTheDialog[0].item.Id).toEqual(dataItem.Id);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
 
             //Select item in the selector
             s.itemClicked(0, s.items[0]);
@@ -567,14 +567,14 @@ describe("news selector", function () {
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(1);
-            expect(s.selectedItemsInTheDialog[0].item.Id).toEqual(dataItem.Id);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
 
             //Select second item in the selector
             s.itemClicked(1, s.items[1]);
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(2);
-            expect(s.selectedItemsInTheDialog[1].item.Id).toEqual(dataItem2.Id);
+            expect(s.selectedItemsInTheDialog[1].Id).toEqual(dataItem2.Id);
         });
 
         it('[GMateev] / should deselect an item if it is clicked and it is already selected.', function () {
