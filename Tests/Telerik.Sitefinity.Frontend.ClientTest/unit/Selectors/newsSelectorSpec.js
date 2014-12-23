@@ -98,12 +98,6 @@ describe("news selector", function () {
         }),
     };
 
-    //This is the id of the cached templates in $templateCache. The external templates are cached by a karma/grunt preprocessor.
-    var newsSelectorTemplatePath = 'client-components/selectors/news/sf-news-selector.html';
-    var listSelectorTemplatePath = 'client-components/selectors/common/sf-list-selector.html';
-    var bubblesSelectionTemplatePath = 'client-components/selectors/common/sf-bubbles-selection.html';
-    var listGroupSelectionTemplatePath = 'client-components/selectors/common/sf-list-group-selection.html';
-
     //Load the module responsible for the modal dialog
     beforeEach(module('modalDialog'));
 
@@ -112,24 +106,6 @@ describe("news selector", function () {
 
     //Load the module that contains the cached templates.
     beforeEach(module('templates'));
-
-    beforeEach(module(function ($provide) {
-        var serverContext = {
-            getRootedUrl: function (path) {
-                return appPath + '/' + path;
-            },
-            getUICulture: function () {
-                return null;
-            },
-            getEmbeddedResourceUrl: function (assembly, url) {
-                return url;
-            },
-            getFrontendLanguages: function () {
-                return ['en', 'de'];
-            }
-        };
-        $provide.value('serverContext', serverContext);
-    }));
 
     beforeEach(module(function ($provide) {
         //Force angular to use the mock.
@@ -147,12 +123,16 @@ describe("news selector", function () {
         $timeout = _$timeout_;
 
         serviceResult = _$q_.defer();
+    }));
 
-        //Prevent failing of the template request.
-        $httpBackend.whenGET(listSelectorTemplatePath);
-        $httpBackend.whenGET(newsSelectorTemplatePath).respond({});
-        $httpBackend.whenGET(bubblesSelectionTemplatePath).respond({});
-        $httpBackend.whenGET(listGroupSelectionTemplatePath).respond({});
+    beforeEach(function () {
+        commonMethods.mockServerContextToEnableTemplateCache();
+    });
+
+    beforeEach(inject(function (serverContext) {
+        serverContext.getFrontendLanguages = function () {
+           return ['en', 'de'];
+        };
     }));
 
     afterEach(function () {

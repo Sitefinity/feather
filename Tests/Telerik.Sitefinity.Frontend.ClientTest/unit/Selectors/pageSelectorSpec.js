@@ -59,11 +59,6 @@ describe("page selector", function () {
         })
     };
 
-    //This is the id of the cached templates in $templateCache. The external templates are cached by a karma/grunt preprocessor.
-    var pageSelectorTemplatePath = 'client-components/selectors/pages/sf-page-selector.html';
-    var listSelectorTemplatePath = 'client-components/selectors/common/sf-list-selector.html';
-    var treeSelectorTemplatePath = 'client-components/selectors/common/sf-items-tree.html';
-
     //Load the module responsible for the modal dialog
     beforeEach(module('modalDialog'));
 
@@ -75,27 +70,6 @@ describe("page selector", function () {
 
     //Load the module that contains the cached templates.
     beforeEach(module('templates'));
-
-    beforeEach(module(function ($provide) {
-        var serverContext = {
-            getRootedUrl: function (path) {
-                return appPath + '/' + path;
-            },
-            getUICulture: function () {
-                return null;
-            },
-            getEmbeddedResourceUrl: function (assembly, url) {
-                return url;
-            },
-            getFrontendLanguages: function () {
-                return ['en', 'de'];
-            },
-            getCurrentFrontendRootNodeId: function () {
-                return "850B39AF-4190-412E-9A81-C72B04A34C0F";
-            }
-        };
-        $provide.value('serverContext', serverContext);
-    }));
 
     beforeEach(module(function ($provide) {
         //Force angular to use the mock.
@@ -113,11 +87,20 @@ describe("page selector", function () {
         $timeout = _$timeout_;
 
         serviceResult = _$q_.defer();
+    }));
 
-        //Prevent failing of the template request.
-        $httpBackend.whenGET(listSelectorTemplatePath);
-        $httpBackend.whenGET(pageSelectorTemplatePath).respond({});
-        $httpBackend.whenGET(treeSelectorTemplatePath).respond({});
+    beforeEach(function () {
+        commonMethods.mockServerContextToEnableTemplateCache();
+    });
+
+    beforeEach(inject(function (serverContext) {
+        serverContext.getCurrentFrontendRootNodeId = function () {
+            return "850B39AF-4190-412E-9A81-C72B04A34C0F";
+        };
+
+        serverContext.getFrontendLanguages = function () {
+           return ['en', 'de'];
+        };
     }));
 
     afterEach(function () {

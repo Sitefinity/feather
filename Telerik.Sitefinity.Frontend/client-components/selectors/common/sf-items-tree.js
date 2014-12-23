@@ -100,7 +100,7 @@
                     }
                 }
             }
-        };
+        }
 
         function createDataSource(model, tree, getChildren) {
             return new kendo.data.HierarchicalDataSource({
@@ -122,7 +122,7 @@
                     }
                 }
             });
-        };
+        }
 
         return {
             getDataSource: function (model, tree, getChildren) {
@@ -198,10 +198,8 @@
                  * Creates a hybrid data source and sets it to the tree.
                  */
                 var bindDataSource = function (items) {
-                    var itemsDataSource = 
-                        sfHybridHierarchicalDataSource.getDataSource(model,
-                                                                     items,
-                                                                     getChildrenCallback);
+                    var itemsDataSource = sfHybridHierarchicalDataSource
+                        .getDataSource(model, items, getChildrenCallback);
 
                     scope.treeView.setDataSource(itemsDataSource);
                 };
