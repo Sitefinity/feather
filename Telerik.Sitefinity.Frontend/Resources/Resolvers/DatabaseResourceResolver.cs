@@ -35,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                     {
                         var controlPresentation = this.GetControlPresentation(definition, virtualPath);
                         result = controlPresentation != null && !controlPresentation.Data.IsNullOrEmpty();
-                        
+
                         cacheManager.Add(key, result, Microsoft.Practices.EnterpriseLibrary.Caching.CacheItemPriority.Normal, null, this.GetControlPresentationsCacheExpirations());
                     }
                 }
@@ -100,16 +100,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                         if (controllers == null)
                             return null;
 
-                        var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
-                        var areaName = definition.ResolverName;
-
-                        // case for dynamic type
-                        if (dynamicType != null)
-                        {
-                            var moduleProvider = Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager.GetManager().Provider;
-                            var dynamicModule = moduleProvider.GetDynamicModule(dynamicType.ParentModuleId);
-                            areaName = this.GetDynamicTypeAreaName(dynamicModule.Title, dynamicType.DisplayName);
-                        }
+                        string areaName = this.GetAreaName(controllerName);
 
                         result = this.GetViewPaths(path, controllers, areaName);
 
@@ -156,21 +147,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                 else
                     controllerName = string.Empty;
 
-                var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
-                
-                string areaName;
-
-                // case for dynamic types
-                if (dynamicType != null)
-                {
-                    var moduleProvider = Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager.GetManager().Provider;
-                    var dynamicModule = moduleProvider.GetDynamicModule(dynamicType.ParentModuleId);
-                    areaName = this.GetDynamicTypeAreaName(dynamicModule.Title, dynamicType.DisplayName);
-                }
-                else
-                {
-                    areaName = virtualPathDefinition.ResolverName;
-                }
+                string areaName = this.GetAreaName(controllerName);
 
                 return this.GetControlPresentationItem(controllers, name, areaName);
             }
@@ -228,6 +205,27 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                                             .FirstOrDefault(cp => cp.Name == name && cp.AreaName == areaName);
 
             return returnResult;
+        }
+
+        /// <summary>
+        /// Gets the name of the area.
+        /// </summary>
+        /// <param name="controllerName">Name of the controller.</param>
+        /// <returns></returns>
+        private string GetAreaName(string controllerName)
+        {
+            var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
+            string areaName = controllerName;
+
+            // case for dynamic types
+            if (dynamicType != null)
+            {
+                var moduleProvider = Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager.GetManager().Provider;
+                var dynamicModule = moduleProvider.GetDynamicModule(dynamicType.ParentModuleId);
+                areaName = this.GetDynamicTypeAreaName(dynamicModule.Title, dynamicType.DisplayName);
+            }
+
+            return areaName;
         }
 
         /// <summary>
