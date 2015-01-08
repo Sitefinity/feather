@@ -462,6 +462,48 @@ describe("news selector", function () {
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(0);
         });
+
+        it('[NPetrova] / should show the default text values for the select and change buttons when no attributes are passed.', function () {
+            var template = "<sf-list-selector sf-news-selector />";
+
+            compileDirective(template);
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.selectButtonText).toBeDefined();
+            expect(s.selectButtonText).toBe('Select');
+            expect(s.changeButtonText).toBeDefined();
+            expect(s.changeButtonText).toBe('Change');
+        });
+
+        it('[NPetrova] / should replace the select button text with the one from the attributes.', function () {
+            var template = "<sf-list-selector sf-news-selector sf-select-button-text='Select a news...'/>";
+
+            compileDirective(template);
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.selectButtonText).toBeDefined();
+            expect(s.selectButtonText).toBe('Select a news...');
+            expect(s.changeButtonText).toBeDefined();
+            expect(s.changeButtonText).toBe('Change');
+        });
+
+        it('[NPetrova] / should replace the select and change buttons text with the one from the attributes.', function() {
+            var template = "<sf-list-selector sf-news-selector sf-select-button-text='Select a news...' sf-change-button-text='Change the news...'/>";
+
+            compileDirective(template);
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.selectButtonText).toBeDefined();
+            expect(s.selectButtonText).toBe('Select a news...');
+            expect(s.changeButtonText).toBeDefined();
+            expect(s.changeButtonText).toBe('Change the news...');
+        });
     });
 
     describe('in multi selection mode', function () {
