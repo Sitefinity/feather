@@ -59,11 +59,6 @@ describe("page selector", function () {
         })
     };
 
-    //This is the id of the cached templates in $templateCache. The external templates are cached by a karma/grunt preprocessor.
-    var pageSelectorTemplatePath = 'client-components/selectors/pages/sf-page-selector.html';
-    var listSelectorTemplatePath = 'client-components/selectors/common/sf-list-selector.html';
-    var treeSelectorTemplatePath = 'client-components/selectors/common/sf-items-tree.html';
-
     //Load the module responsible for the modal dialog
     beforeEach(module('modalDialog'));
 
@@ -75,27 +70,6 @@ describe("page selector", function () {
 
     //Load the module that contains the cached templates.
     beforeEach(module('templates'));
-
-    beforeEach(module(function ($provide) {
-        var serverContext = {
-            getRootedUrl: function (path) {
-                return appPath + '/' + path;
-            },
-            getUICulture: function () {
-                return null;
-            },
-            getEmbeddedResourceUrl: function (assembly, url) {
-                return url;
-            },
-            getFrontendLanguages: function () {
-                return ['en', 'de'];
-            },
-            getCurrentFrontendRootNodeId: function () {
-                return "850B39AF-4190-412E-9A81-C72B04A34C0F";
-            }
-        };
-        $provide.value('serverContext', serverContext);
-    }));
 
     beforeEach(module(function ($provide) {
         //Force angular to use the mock.
@@ -113,42 +87,21 @@ describe("page selector", function () {
         $timeout = _$timeout_;
 
         serviceResult = _$q_.defer();
-
-        //Prevent failing of the template request.
-        $httpBackend.whenGET(listSelectorTemplatePath);
-        $httpBackend.whenGET(pageSelectorTemplatePath).respond({});
-        $httpBackend.whenGET(treeSelectorTemplatePath).respond({});
     }));
 
     beforeEach(function () {
-        this.addMatchers({
-            // Used to compare arrays of primitive values
-            toEqualArrayOfValues: function (expected) {
-                var valid = true;
-                for (var i = 0; i < expected.length; i++) {
-                    if (expected[i] !== this.actual[i]) {
-                        valid = false;
-                        break;
-                    }
-                }
-                return valid;
-            },
-
-            // Used to compare arrays of data items with Id and Title
-            toEqualArrayOfDataItems: function (expected) {
-                var valid = true;
-                for (var i = 0; i < expected.length; i++) {
-                    var id = this.actual[i].item ? this.actual[i].item.Id : this.actual[i].Id;
-                    var title = this.actual[i].item ? this.actual[i].item.Title : this.actual[i].Title;
-                    if (expected[i].Id !== id || expected[i].Title !== title) {
-                        valid = false;
-                        break;
-                    }
-                }
-                return valid;
-            },
-        });
+        commonMethods.mockServerContextToEnableTemplateCache();
     });
+
+    beforeEach(inject(function (serverContext) {
+        serverContext.getCurrentFrontendRootNodeId = function () {
+            return "850B39AF-4190-412E-9A81-C72B04A34C0F";
+        };
+
+        serverContext.getFrontendLanguages = function () {
+           return ['en', 'de'];
+        };
+    }));
 
     afterEach(function () {
         //Tear down.
@@ -157,26 +110,12 @@ describe("page selector", function () {
         leftOver.remove();
     });
 
-    /* Helper methods */
-    var compileDirective = function (template, container) {
-        var cntr = container || 'body';
-
-        inject(function ($compile) {
-            var directiveElement = $compile(template)(scope);
-            $(cntr).append($('<div/>').addClass('testDiv')
-                .append(directiveElement));
-        });
-
-        // $digest is necessary to finalize the directive generation
-        scope.$digest();
-    };
-
     describe('check default properties initialization of page selector', function () {
         it('[manev] / should init default page selector values.', function () {
 
             var template = "<sf-list-selector sf-page-selector sf-multiselect='true' sf-identifier-field='TitlesPath' />";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -185,14 +124,14 @@ describe("page selector", function () {
             expect(pageSelecotrScope.sfIdentifierField).toBe("TitlesPath");
             expect(pageSelecotrScope.searchIdentifierField).toBe("Title");
 
-            expect(pageSelecotrScope.items).toEqualArrayOfDataItems(customDataItems.Items);
+            expect(pageSelecotrScope.items).toEqualArrayOfObjects(customDataItems.Items, ['Id', 'Title']);
         });
 
         it('[manev] / should filter items when text is typed in the filter box.', function () {
 
             var template = "<sf-list-selector sf-page-selector sf-multiselect='true' />";
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -207,7 +146,7 @@ describe("page selector", function () {
 
             expect(s.items).toBeDefined();
 
-            expect(s.items).toEqualArrayOfDataItems(filteredCollection.Items);
+            expect(s.items).toEqualArrayOfObjects(filteredCollection.Items, ['Id', 'Title']);
         });
 
         it('[manev] / should mark item as selected when the dialog is opened.', function () {
@@ -219,7 +158,7 @@ describe("page selector", function () {
 
             scope.selectedIds = ids;
 
-            compileDirective(template);
+            commonMethods.compileDirective(template, scope);
 
             $('.openSelectorBtn').click();
 
@@ -228,7 +167,7 @@ describe("page selector", function () {
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(filteredCollection.Items.length);
-            expect(s.selectedItemsInTheDialog[0].item.Id).toEqual(filteredCollection.Items[0].Id);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(filteredCollection.Items[0].Id);
         });
     });
 });

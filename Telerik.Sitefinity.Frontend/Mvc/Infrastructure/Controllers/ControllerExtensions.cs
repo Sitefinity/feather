@@ -179,6 +179,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controllerName == null)
                 throw new ArgumentNullException("controllerName");
 
+            if (SystemManager.GetModule("ModuleBuilder") == null)
+                return null;
+
             var moduleProvider = ModuleBuilderManager.GetManager().Provider;
             var dynamicContentType = moduleProvider.GetDynamicModules()
                 .Where(m => m.Status == DynamicModuleStatus.Active)

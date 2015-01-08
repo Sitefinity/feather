@@ -15,8 +15,15 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         public void Initialize()
         {
-            ObjectFactory.Container.RegisterType<IFileMonitor, FileMonitor>(new ContainerControlledLifetimeManager());
-            ObjectFactory.Container.RegisterType<IFileManager, LayoutFileManager>(ResourceType.Layouts.ToString(), new ContainerControlledLifetimeManager());
+            if (!ObjectFactory.Container.IsRegistered(typeof(IFileMonitor)))
+            {
+                ObjectFactory.Container.RegisterType<IFileMonitor, FileMonitor>(new ContainerControlledLifetimeManager());
+            }
+
+            if (!ObjectFactory.Container.IsRegistered(typeof(IFileManager), ResourceType.Layouts.ToString()))
+            {
+                ObjectFactory.Container.RegisterType<IFileManager, LayoutFileManager>(ResourceType.Layouts.ToString(), new ContainerControlledLifetimeManager());
+            }
 
             this.RegisterFileObservers();
         }

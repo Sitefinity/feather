@@ -80,9 +80,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns>The inline editing attributes.</returns>
         public static IHtmlString InlineEditingAttributes(this HtmlHelper htmlHelper, string providerName, string type, Guid id)
         {
-            if (type == null)
-                throw new ArgumentNullException("type");
-
             if (!SystemManager.IsInlineEditingMode)
                 return htmlHelper.Raw(string.Empty);
 

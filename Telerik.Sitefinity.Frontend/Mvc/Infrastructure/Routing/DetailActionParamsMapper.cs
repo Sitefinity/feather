@@ -67,7 +67,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <inheritdoc />
         protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
         {
-            if (urlParams == null)
+            if (urlParams == null || urlParams.Length == 0)
                 return false;
 
             var url = RouteHelper.GetUrlParameterString(urlParams);

@@ -28,8 +28,8 @@ function InstallFeather($featherBinDirectory)
     Write-Output "----- Installing Feather ------"
 
     Write-Output "Deploying feather assemblies to '$websiteBinariesDirectory'..."
-    Get-ChildItem Telerik.Sitefinity.Frontend.dll -recurse  -path $featherBinDirectory | Copy-Item -destination $websiteBinariesDirectory
-    Get-ChildItem Ninject.dll -recurse  -path $featherBinDirectory | Copy-Item -destination $websiteBinariesDirectory
+    Get-ChildItem Telerik.Sitefinity.Frontend.dll -force -recurse -path $featherBinDirectory | Copy-Item -destination $websiteBinariesDirectory
+    Get-ChildItem Ninject.dll -force -recurse -path $featherBinDirectory | Copy-Item -destination $websiteBinariesDirectory
         
     Write-Output "Updating Sitefinity SystemConfig.config..."
     UpdateSystemConfig
@@ -41,14 +41,14 @@ function InstallFeather($featherBinDirectory)
     Write-Output "----- Feather successfully installed ------"
 }
 
-function InstallFeatherWidgets($featherWidgetsBinDirectory)
+function InstallFeatherWidgets($featherWidgetsDirectory)
 {
     Write-Output "Deploying feather widgets assembly to '$websiteBinariesDirectory'..."
-    Get-ChildItem Telerik.Sitefinity.Frontend.ContentBlock.dll -recurse  -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.Navigation.dll -recurse  -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.News.dll -recurse  -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.SocialShare.dll -recurse  -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.DynamicContent.dll -recurse  -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
+    Get-ChildItem Telerik.Sitefinity.Frontend.ContentBlock.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
+	Get-ChildItem Telerik.Sitefinity.Frontend.Navigation.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
+	Get-ChildItem Telerik.Sitefinity.Frontend.News.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
+	Get-ChildItem Telerik.Sitefinity.Frontend.SocialShare.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
+	Get-ChildItem Telerik.Sitefinity.Frontend.DynamicContent.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
 
     InstallFeather $featherBinDirectory
 }
@@ -63,9 +63,9 @@ function InstallFeatherPackages($featherPackagesDirectory)
 	}
 	
 	Write-Output "----- Copy packages ------"
-	Get-ChildItem Bootstrap -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -recurse
-	Get-ChildItem Foundation -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -recurse
-	Get-ChildItem SemanticUI -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -recurse
+	Get-ChildItem Bootstrap -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -force -recurse
+	Get-ChildItem Foundation -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -force -recurse
+	Get-ChildItem SemanticUI -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -force -recurse
 
     Write-Output "----- Feather packages successfully installed ------"
 }
