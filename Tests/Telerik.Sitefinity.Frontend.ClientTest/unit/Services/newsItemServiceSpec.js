@@ -33,16 +33,7 @@ describe('sfNewsItemService', function () {
         // Set up the mock http service responses
         $httpBackend = $injector.get('$httpBackend');
         dataService = $injector.get('sfNewsItemService');
-    }));    
-
-    beforeEach(function () {
-        // Used to compare objects returned by $resource
-        this.addMatchers({
-            toEqualData: function (expected) {
-                return angular.equals(this.actual, expected);
-            }
-        });
-    });
+    }));
 
     /* Helper methods */
     var asserItems = function (params) {

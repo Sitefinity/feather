@@ -35,7 +35,7 @@
 
             var culture = serverContext.getUICulture();
             if (culture) {
-                headerData['SF_UI_CULTURE'] = culture;
+                headerData.SF_UI_CULTURE = culture;
             }
 
             //headerData['Cache-Control'] = 'no-cache';

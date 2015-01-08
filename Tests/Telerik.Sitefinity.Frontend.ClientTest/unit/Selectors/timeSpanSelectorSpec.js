@@ -35,9 +35,6 @@ describe("timeSpan selector", function () {
         $timeout = _$timeout_;
 
         serviceResult = _$q_.defer();
-
-        //Prevent failing of the template request.
-        $httpBackend.whenGET(timespanSelectorTemplatePath);
     }));
 
     beforeEach(inject(function ($templateCache) {
@@ -53,20 +50,6 @@ describe("timeSpan selector", function () {
         leftOver.empty();
         leftOver.remove();
     });
-
-    /* Helper methods */
-    var compileDirective = function (template, container) {
-        var cntr = container || 'body';
-
-        inject(function ($compile) {
-            var directiveElement = $compile(template)(scope);
-            $(cntr).append($('<div/>').addClass('testDiv')
-                .append(directiveElement));
-        });
-
-        // $digest is necessary to finalize the directive generation
-        scope.$digest();
-    }
     
     it('[EGaneva] / should format the timespan item for a period.', function () {
         scope.selectedItem.periodType = 'periodToNow';
@@ -74,7 +57,7 @@ describe("timeSpan selector", function () {
         scope.selectedItem.timeSpanInterval = 'months';
         var template = "<sf-timespan-selector sf-selected-item='selectedItem'></sf-timespan-selector>";
 
-        compileDirective(template);
+        commonMethods.compileDirective(template, scope);
 
         expect(scope.selectedItem.displayText).toBe("Last 2 months");
     });
@@ -85,14 +68,14 @@ describe("timeSpan selector", function () {
         scope.selectedItem.toDate = new Date("12/14/2012");
         var template = "<sf-timespan-selector sf-selected-item='selectedItem'></sf-timespan-selector>";
 
-        compileDirective(template);
+        commonMethods.compileDirective(template, scope);
     });
 
     it('[EGaneva] / custom range is validated correctly.', function () {
         scope.change = jasmine.createSpy('change');
 
         var template = "<sf-timespan-selector sf-change='change' sf-selected-item='selectedItem'></sf-timespan-selector>";
-        compileDirective(template);
+        commonMethods.compileDirective(template, scope);
 
         $('.openSelectorBtn').click();
 
@@ -130,7 +113,7 @@ describe("timeSpan selector", function () {
 
         var template = "<sf-timespan-selector sf-change='change' sf-selected-item='selectedItem'></sf-timespan-selector>";
 
-        compileDirective(template);
+        commonMethods.compileDirective(template, scope);
         $('.openSelectorBtn').click();
 
         //The scope of the selector is isolated, but it's child of the scope used for compilation.
@@ -147,7 +130,5 @@ describe("timeSpan selector", function () {
         s.selectItem();
 
         expect(s.sfSelectedItem.displayText).toBe('Last 3 weeks');
-    });
-
-   
+    });   
 });

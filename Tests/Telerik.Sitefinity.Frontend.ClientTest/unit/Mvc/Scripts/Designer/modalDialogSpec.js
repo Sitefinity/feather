@@ -32,20 +32,6 @@ describe('modal directive', function () {
         $('.testDiv').remove();
     });
 
-    /* Helper methods */
-    var compileDirective = function (template, container) {
-        var cntr = container || 'body';
-
-        inject(function ($compile) {
-            directiveElement = $compile(template)(scope);
-            $(cntr).append($('<div/>').addClass('testDiv')
-                .append(directiveElement));
-        });
-        
-        // $digest is necessary to finalize the directive generation
-        scope.$digest();
-    }
-
     var assertOpenWithController = function (templateId, skipClean) {
         var tmplId = templateId || 'dialog-template';
 
@@ -91,7 +77,7 @@ describe('modal directive', function () {
             '</script>'
         '</div>';
 
-        compileDirective(template);
+        commonMethods.compileDirective(template, scope);
 
         assertOpenWithController();
     });
@@ -106,7 +92,7 @@ describe('modal directive', function () {
             '</script>' +
         '</div>';
 
-        compileDirective(template);
+        commonMethods.compileDirective(template, scope);
 
         assertOpenWithScope();
     });
@@ -122,7 +108,7 @@ describe('modal directive', function () {
             '</script>' +
         '</div>';
 
-        compileDirective(template);
+        commonMethods.compileDirective(template, scope);
 
         expect($modal.open).not.toHaveBeenCalled();
 
@@ -148,14 +134,14 @@ describe('modal directive', function () {
                     '</script>' +
                 '</div>';
 
-        compileDirective(template);        
+        commonMethods.compileDirective(template, scope);        
 
         expect($modal.open.callCount).toBe(1);
         expect(dialogsService.getOpenedDialogsCount()).toBe(1);
 
         assertOpenWithController("outside-dialog-template", true);
 
-        compileDirective(template2);
+        commonMethods.compileDirective(template2, scope);
 
         $('#openSelectorBtn').click();
 
