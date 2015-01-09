@@ -34,7 +34,9 @@
                 dataItemPromise = getResource(queryParams, endpoint).get(
                     {
                         sort: 'Title ASC',
-                        filter: filter
+                        filter: filter,
+                        skip: skip,
+                        take: take
                     })
                     .$promise;
 
