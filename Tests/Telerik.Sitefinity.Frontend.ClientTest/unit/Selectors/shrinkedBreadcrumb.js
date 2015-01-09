@@ -1,18 +1,4 @@
 describe('shrinked breadcrumb directive', function  () {
-	/* Helper methods */
-    function compileDirective (template, scope, container) {
-        var cntr = container || 'body';
-
-        inject(function ($compile) {
-            var directiveElement = $compile(template)(scope);
-            $(cntr).append($('<div/>').addClass('testDiv')
-                .append(directiveElement));
-        });
-
-        // $digest is necessary to finalize the directive generation
-        scope.$digest();
-    };
-
     /* Variables */
     var $rootScope;
 
@@ -36,7 +22,7 @@ describe('shrinked breadcrumb directive', function  () {
 
     	var template = '<span id="testSpan" sf-shrinked-breadcrumb="{{text}}" sf-max-length="45"></span>';
 
-    	compileDirective(template, scope);
+    	commonMethods.compileDirective(template, scope);
 
     	var expectedResult = 'home > ... > page3 > page4 > page5 > page6';
 
@@ -51,7 +37,7 @@ describe('shrinked breadcrumb directive', function  () {
 
     	var template = '<span id="testSpan" sf-shrinked-breadcrumb="{{text}}" sf-max-length="45"></span>';
 
-    	compileDirective(template, scope);
+    	commonMethods.compileDirective(template, scope);
 
     	var expectedResult = '... > this is sooo looooooooooooooooooooooooo...';
 
@@ -66,7 +52,7 @@ describe('shrinked breadcrumb directive', function  () {
 
     	var template = '<span id="testSpan" sf-shrinked-breadcrumb="{{text}}" sf-max-length="45"></span>';
 
-    	compileDirective(template, scope);
+    	commonMethods.compileDirective(template, scope);
 
     	var expectedResult = 'home > page1 > page2 > page3 > page4 > page5';
 
@@ -81,7 +67,7 @@ describe('shrinked breadcrumb directive', function  () {
 
     	var template = '<span id="testSpan" sf-shrinked-breadcrumb="{{text}}" sf-max-length="45"></span>';
 
-    	compileDirective(template, scope);
+    	commonMethods.compileDirective(template, scope);
 
     	var expectedResult = 'home so loooooooooooooooooooooooooooooooooooo...';
 
@@ -96,7 +82,7 @@ describe('shrinked breadcrumb directive', function  () {
 
     	var template = '<span id="testSpan" sf-shrinked-breadcrumb="{{text}}" sf-max-length="45"></span>';
 
-    	compileDirective(template, scope);
+    	commonMethods.compileDirective(template, scope);
 
     	var expectedResult = 'home';
 
@@ -111,7 +97,7 @@ describe('shrinked breadcrumb directive', function  () {
 
     	var template = '<span id="testSpan" sf-shrinked-breadcrumb="{{text}}" sf-max-length="45"></span>';
 
-    	compileDirective(template, scope);
+    	commonMethods.compileDirective(template, scope);
 
     	var expectedResult = '... > page';
 
@@ -126,7 +112,7 @@ describe('shrinked breadcrumb directive', function  () {
 
     	var template = '<span id="testSpan" sf-shrinked-breadcrumb="{{text}}" sf-max-length="45"></span>';
 
-    	compileDirective(template, scope);
+    	commonMethods.compileDirective(template, scope);
 
     	var expectedResult = 'home > ... > page';
 
@@ -141,7 +127,7 @@ describe('shrinked breadcrumb directive', function  () {
 
     	var template = '<span id="testSpan" sf-shrinked-breadcrumb="{{text}}" sf-max-length="45"></span>';
 
-    	compileDirective(template, scope);
+    	commonMethods.compileDirective(template, scope);
 
     	var expectedResult = '';
 

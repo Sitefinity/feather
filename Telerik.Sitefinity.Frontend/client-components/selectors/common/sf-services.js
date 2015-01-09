@@ -3,7 +3,7 @@
 
     module.config(['$httpProvider', function ($httpProvider) {
         if (!$httpProvider.defaults.headers.get) {
-            $httpProvider.defaults.headers.get = {};    
+            $httpProvider.defaults.headers.get = {};
         }
 
         var getHeaders = $httpProvider.defaults.headers.get;
@@ -29,16 +29,17 @@
         }
 
         var getResource = function (url, options) {
-            var headerData;
+            var headerData = {};
 
             var resourceOption = options || { stripTrailingSlashes: false };
 
             var culture = serverContext.getUICulture();
             if (culture) {
-                headerData = {
-                    'SF_UI_CULTURE': culture
-                };
+                headerData.SF_UI_CULTURE = culture;
             }
+
+            //headerData['Cache-Control'] = 'no-cache';
+            //headerData.Pragma = 'no-cache';
 
             return $resource(url, {}, {
                 get: {
