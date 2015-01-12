@@ -195,6 +195,7 @@
     <Compile Include="DummyClasses\Mvc\Controllers\DummyControllerFactory.cs" />
     <Compile Include="DummyClasses\LocalizationResources\DummyControllerResoruces.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyCustomDesignerController.cs" />
+    <Compile Include="DummyClasses\Mvc\Controllers\DummyFailingController.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyOldDesignerController.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyScriptController.cs" />
     <Compile Include="DummyClasses\Mvc\Controllers\DummyMasterDetailController.cs" />

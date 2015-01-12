@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
+using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc;
@@ -76,6 +79,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     throw;
 
                 proxyControl.Context.Response.Clear();
+
+                if (this.ShouldDisplayErrors())
+                    proxyControl.Context.Response.Write(Res.Get<InfrastructureResources>().ErrorExecutingController);
             }
         }
 
@@ -97,6 +103,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 result.SetLast(new DefaultUrlParamsMapper(controller));
 
             return result;
+        }
+
+        /// <summary>
+        /// Determines whether errors should be displayed.
+        /// </summary>
+        /// <returns>True if errors should be displayed, False to fail silently.</returns>
+        protected virtual bool ShouldDisplayErrors()
+        {
+            var configuration = WebConfigurationManager.OpenWebConfiguration("~/Web.config");
+            var customErrors = configuration.GetSection("system.web/customErrors") as CustomErrorsSection;
+
+            if (customErrors == null)
+                return true;
+
+            return customErrors.Mode == CustomErrorsMode.Off || (customErrors.Mode == CustomErrorsMode.RemoteOnly && HttpContext.Current.Request.IsLocal);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
