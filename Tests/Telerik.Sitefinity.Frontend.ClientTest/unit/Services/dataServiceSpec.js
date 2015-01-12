@@ -117,7 +117,7 @@ describe('sfDataService', function () {
             providerParam = "provider=" + provider + "&";
         }
 
-        var servicePathPattern = '/live?{0}itemSurrogateType={1}&itemType={1}&{2}skip={3}&take={4}';
+        var servicePathPattern = '/live/?{0}itemSurrogateType={1}&itemType={1}&{2}skip={3}&take={4}';
         var url = dataServiceBaseUrl + servicePathPattern.format(filterParam, itemType, providerParam, skip, take);
 
         $httpBackend.expectGET(url).respond(dataItems);
@@ -131,7 +131,7 @@ describe('sfDataService', function () {
             providerParam = "&provider=" + provider;
         }
 
-        var servicePathPattern = '/{0}?itemType={1}{2}';
+        var servicePathPattern = '/{0}/?itemType={1}{2}';
         var url = dataServiceBaseUrl + servicePathPattern.format(itemId, itemType, providerParam);
 
         return url;
