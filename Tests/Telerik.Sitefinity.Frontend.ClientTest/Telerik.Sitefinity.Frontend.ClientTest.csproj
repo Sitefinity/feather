@@ -46,6 +46,7 @@
     <Content Include="unit\Selectors\itemsTreeSpec.js" />
     <Content Include="unit\Selectors\newsSelectorSpec.js" />
     <Content Include="unit\Selectors\pageSelectorSpec.js" />
+    <Content Include="unit\Selectors\selectedItemsViewSpec.js" />
     <Content Include="unit\Selectors\shrinkedBreadcrumb.js" />
     <Content Include="unit\Services\searchServiceSpec.js" />
     <Content Include="unit\Services\serverContextSpec.js" />

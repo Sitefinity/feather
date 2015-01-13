@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 					'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
-					'Telerik.Sitefinity.Frontend/client=components/selectors/**/*.js'
+					'Telerik.Sitefinity.Frontend/client-components/selectors/**/*.js'
 			]
 		},
 		
@@ -27,6 +27,7 @@ module.exports = function (grunt) {
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selectors.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.js',
+                'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/news/sf-news-item-service.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/news/sf-news-selector.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/dynamic-modules/sf-data-service.js',
@@ -46,8 +47,9 @@ module.exports = function (grunt) {
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-resource.js',
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-route.js',
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-mocks.js',
-					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/kendo.web.min.js',
-					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-kendo.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/kendo.all.min.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/common-methods.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/jasmine-matchers.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/Bootstrap/js/*.js',
 					'!Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/**'
 					],

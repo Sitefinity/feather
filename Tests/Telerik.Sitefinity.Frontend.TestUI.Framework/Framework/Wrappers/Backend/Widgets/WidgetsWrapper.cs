@@ -326,7 +326,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 
             if (count == 0)
             {
-                items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-click=itemClicked(item.item)");
+                items = activeDialog.Find.AllByExpression<HtmlDiv>("ng-click=itemClicked(item)");
                 count = items.Count;
             }
 

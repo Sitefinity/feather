@@ -24,7 +24,7 @@
                         scope.currentItems = [];
 
                         scope.$watch('sfItems.length', function (newValue, oldValue) {
-                            if (newValue !== 0) {
+                            if (newValue && newValue !== 0) {
                                 scope.currentItems = [];
                                 Array.prototype.push.apply(scope.currentItems, scope.sfItems);
 
@@ -32,10 +32,13 @@
                                     scope.filter.search(scope.filter.searchString);
                                 }
                             }
+                            else {
+                                scope.currentItems = [];
+                            }
                         });
 
                         scope.isListEmpty = function () {
-                            return scope.sfItems.length === 0;
+                            return scope.sfItems && scope.sfItems.length === 0;
                         };
 
                         scope.bindIdentifierField = function (item) {
@@ -62,23 +65,44 @@
                         };
 
                         scope.sortItems = function (e) {
-                            var element = scope.sfSelectedItems[e.oldIndex];
-                            scope.sfSelectedItems.splice(e.oldIndex, 1);
+                            var element = scope.sfItems[e.oldIndex];
                             scope.sfItems.splice(e.oldIndex, 1);
-                            scope.sfSelectedItems.splice(e.newIndex, 0, element);
                             scope.sfItems.splice(e.newIndex, 0, element);
                         };
 
+                        scope.isItemSelected = function (id) {
+                            if (scope.sfSelectedItems) {
+                                for (var i = 0; i < scope.sfSelectedItems.length; i++) {
+                                    if (scope.sfSelectedItems[i].Id === id) {
+                                        return true;
+                                    }
+                                }
+                            }
+
+                            return false;
+                        };
+
                         scope.itemClicked = function (item) {
+                            if (!scope.sfSelectedItems) {
+                                scope.sfSelectedItems = [];
+                            }
+
                             var selectedItemIndex;
+                            var alreadySelected = false;
                             for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                if (scope.sfSelectedItems[i].item.Id === item.Id) {
+                                if (scope.sfSelectedItems[i].Id === item.Id) {
                                     selectedItemIndex = i;
+                                    alreadySelected = true;
                                     break;
                                 }
                             }
 
-                            scope.sfSelectedItems[selectedItemIndex].isChecked = !scope.sfSelectedItems[selectedItemIndex].isChecked;
+                            if (alreadySelected) {
+                                scope.sfSelectedItems.splice(selectedItemIndex, 1);
+                            }
+                            else {
+                                scope.sfSelectedItems.push(item);
+                            }
                         };
 
                         scope.filter = {
@@ -93,11 +117,11 @@
                                 else {
                                     for (var i = 0; i < scope.sfItems.length; i++) {
                                         if (scope.sfSearchIdentifierField) {
-                                            if (bindSearchIdentifierField(scope.sfItems[i].item, scope.sfSearchIdentifierField).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                            if (bindSearchIdentifierField(scope.sfItems[i], scope.sfSearchIdentifierField).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
                                                 scope.currentItems.push(scope.sfItems[i]);
                                             }
                                         }
-                                        else if (scope.bindIdentifierField(scope.sfItems[i].item).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                        else if (scope.bindIdentifierField(scope.sfItems[i]).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
                                             scope.currentItems.push(scope.sfItems[i]);
                                         }
                                     }
