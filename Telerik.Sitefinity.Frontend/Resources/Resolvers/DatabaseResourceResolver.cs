@@ -101,7 +101,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                             return null;
 
                         var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
-                        var areaName = definition.ResolverName;
+                        var areaName = controllerName;
 
                         // case for dynamic type
                         if (dynamicType != null)
