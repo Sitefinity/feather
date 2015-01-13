@@ -583,7 +583,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private dynamic[] SetExpression(IQueryable<IDataItem> query, string filterExpression, string sortExpr, int? itemsToSkip, int? itemsToTake, ref int? totalCount)
         {
-            if (this.SelectionMode == Models.SelectionMode.SelectedItems)
+            if (sortExpr == "AsSetManually")
             {
                 query = DataProviderBase.SetExpressions(
                                                   query,
