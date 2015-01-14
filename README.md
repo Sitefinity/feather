@@ -1,6 +1,7 @@
 The Feather Project
 =======
 
+[![Build Status](featherci.cloudapp.net/job/Master_FeatherUnitTests/badge/icon)](featherci.cloudapp.net/job/Master_FeatherUnitTests/)
 [![Build Status](featherci.cloudapp.net/buildStatus/icon?job=Master_FeatherUnitTests)](featherci.cloudapp.net/job/Master_FeatherUnitTests/)
 
 This repository contains the core infrastructure related to [Project Feather](http://projectfeather.sitefinity.com).
