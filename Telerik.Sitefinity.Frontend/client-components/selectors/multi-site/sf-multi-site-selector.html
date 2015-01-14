@@ -1,0 +1,7 @@
+﻿<alert type="danger" ng-show="showError">{{::errorMessage}}</alert>
+
+<div ng-if="sites && sites.length > 1">
+    <select>
+        <option ng-repeat="site in sites">{{::site.Name}}</option>
+    </select>
+</div>

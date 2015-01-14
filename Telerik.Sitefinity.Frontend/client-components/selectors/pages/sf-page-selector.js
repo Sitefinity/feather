@@ -63,6 +63,8 @@
                         ctrl.$scope.sfIdentifierField = "TitlesPath";
 
                         ctrl.$scope.searchIdentifierField = "Title";
+
+                        ctrl.$scope.sfDialogHeader = 'Select a page';
                     }
                 }
             };

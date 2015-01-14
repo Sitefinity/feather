@@ -25,7 +25,9 @@
                             'client-components/selectors/common/sf-list-group-selection.html' :
                             'client-components/selectors/common/sf-bubbles-selection.html';
 
-                        ctrl.closedDialogTemplateUrl = closedDialogTemplate;                        
+                        ctrl.closedDialogTemplateUrl = closedDialogTemplate;
+
+                        ctrl.$scope.sfDialogHeader = 'Select news';
                     }
                 }
             };
