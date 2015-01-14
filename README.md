@@ -1,7 +1,7 @@
 The Feather Project
 =======
 
-[![Build Status](featherci.cloudapp.net/buildStatus/icon?job=AngularUpgrade_FeatherUITests_Selectors)](featherci.cloudapp.net/job/AngularUpgrade_FeatherUITests_Selectors/)
+[![Build Status](featherci.cloudapp.net/buildStatus/icon?job=Master_FeatherUnitTests)](featherci.cloudapp.net/job/Master_FeatherUnitTests/)
 
 This repository contains the core infrastructure related to [Project Feather](http://projectfeather.sitefinity.com).
 
