@@ -1,10 +1,10 @@
 The Feather Project
 =======
 
-| Test type | Status |
+| Test | Status |
 |----|----|
-| Unit tests | [![Build Status](http://featherci.cloudapp.net/buildStatus/icon?job=Master_FeatherUnitTests)](http://featherci.cloudapp.net/job/Master_FeatherUnitTests/) |
-| Integration tests | [![Build Status](http://featherci.cloudapp.net/buildStatus/icon?job=Master_FeatherIntegrationTests)](http://featherci.cloudapp.net/job/Master_FeatherIntegrationTests/) |
+| Unit | [![Build Status](http://featherci.cloudapp.net/buildStatus/icon?job=Master_FeatherUnitTests)](http://featherci.cloudapp.net/job/Master_FeatherUnitTests/) |
+| Integration | [![Build Status](http://featherci.cloudapp.net/buildStatus/icon?job=Master_FeatherIntegrationTests)](http://featherci.cloudapp.net/job/Master_FeatherIntegrationTests/) |
 
 This repository contains the core infrastructure related to [Project Feather](http://projectfeather.sitefinity.com).
 
