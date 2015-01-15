@@ -64,7 +64,7 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Telerik.Sitefinity.TestUI.Framework.1.0.5\lib\net45\Telerik.Sitefinity.TestUI.Framework.dll</HintPath>
+      <HintPath>packages\Telerik.Sitefinity.TestUI.Framework.1.0.6\lib\net45\Telerik.Sitefinity.TestUI.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.UIArrangement">
       <HintPath>.\packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.0\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
