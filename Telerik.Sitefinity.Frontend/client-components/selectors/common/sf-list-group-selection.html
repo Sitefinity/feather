@@ -9,6 +9,6 @@
 </div>
 
 <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
-    <span ng-hide="isItemSelected()">Select</span>
-    <span ng-show="isItemSelected()">Change</span>
+    <span ng-hide="isItemSelected()">{{selectButtonText}}</span>
+    <span ng-show="isItemSelected()">{{changeButtonText}}</span>
 </button>
