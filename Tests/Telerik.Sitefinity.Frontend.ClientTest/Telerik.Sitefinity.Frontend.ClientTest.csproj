@@ -48,6 +48,7 @@
     <Content Include="unit\Selectors\pageSelectorSpec.js" />
     <Content Include="unit\Selectors\selectedItemsViewSpec.js" />
     <Content Include="unit\Selectors\shrinkedBreadcrumb.js" />
+    <Content Include="unit\Services\searchServiceSpec.js" />
     <Content Include="unit\Services\serverContextSpec.js" />
     <EmbeddedResource Include="helpers\angular-kendo.js" />
     <Content Include="helpers\kendo.web.min.js" />
