@@ -9,8 +9,16 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
-                    pre: function (scope, element, attrs, ctrl) {
-                        
+                    post: function (scope, element, attrs, ctrl) {
+                        scope.link = {href: "", sfref: "", text: ""};
+
+                        scope.insertLink = function () {
+                            scope.$modalInstance.close();
+                        };
+
+                        scope.cancel = function () {
+                            scope.$modalInstance.close();
+                        };
                     }
                 }
             };
