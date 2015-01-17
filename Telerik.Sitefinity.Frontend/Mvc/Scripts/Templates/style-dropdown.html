@@ -1,7 +1,7 @@
 ﻿<div class="form-group" ng-show="cssClasses.length">
     <label for="styleSelect">Style</label>
     <select id="styleSelect" class="form-control" ng-model="selectedClass" >
-        <option value=""></option>
+        <option value="">- Select -</option>
         <option ng-repeat="cssClass in cssClasses" value="{{cssClass.value}}" ng-selected="selectedClass==cssClass.value">
             {{cssClass.title}}
         </option>

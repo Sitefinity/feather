@@ -11,7 +11,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Telerik.Sitefinity.Frontend.TestUtilities")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright © Telerik 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,8 +33,8 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.30.1")]
-[assembly: AssemblyFileVersion("1.1.30.1")]
+[assembly: AssemblyVersion("1.1.40.0")]
+[assembly: AssemblyFileVersion("1.1.40.0")]
 
 [assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestUnit")]
 [assembly: ControllerContainer]

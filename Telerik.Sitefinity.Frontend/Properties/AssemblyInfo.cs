@@ -9,7 +9,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 [assembly: AssemblyTitle("Telerik.Sitefinity.Frontend")]
 [assembly: AssemblyCompany("Telerik")]
 [assembly: AssemblyProduct("Telerik Sitefinity CMS")]
-[assembly: AssemblyCopyright("Copyright © Telerik 2014")]
+[assembly: AssemblyCopyright("Copyright © Telerik 2015")]
 [assembly: AssemblyTrademark("Sitefinity")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -30,8 +30,8 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.30.1")]
-[assembly: AssemblyFileVersion("1.1.30.1")]
+[assembly: AssemblyVersion("1.1.40.0")]
+[assembly: AssemblyFileVersion("1.1.40.0")]
 
 [assembly: ControllerContainer]
 
