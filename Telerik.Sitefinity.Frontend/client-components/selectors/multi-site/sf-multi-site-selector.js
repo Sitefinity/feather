@@ -16,10 +16,10 @@
                 });
 
                 getSitesForUserPromise.then(function (data) {
-                    scope.sites = data.Items;
-
-                    if (scope.sites.length > 0 && !scope.sfSite) {
-                        scope.sfSite = scope.sites[0];
+                    scope.sfSites = data.Items;
+                    
+                    if (scope.sfSites.length > 0 && !scope.sfSite) {
+                        scope.sfSite = scope.sfSites[0];
                     }
                 });
 
