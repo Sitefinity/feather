@@ -38,6 +38,8 @@ module.exports = function (grunt) {
 				'Telerik.Sitefinity.Frontend/client-components/selectors/pages/sf-page-service.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/pages/sf-page-selector.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/search/sf-search-service.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/tools/sf-link-selector.js',
+				'Telerik.Sitefinity.Frontend/client-components/selectors/tools/sf-link-service.js',
 				'!Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js',
 				'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
 				options: {
