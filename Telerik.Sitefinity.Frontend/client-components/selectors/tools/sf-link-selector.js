@@ -1,5 +1,25 @@
 ﻿(function () {
     angular.module('sfSelectors')
+
+        .directive('sfTestLink', ['$window', function ($window) {
+            return {
+                scope: {
+                    sfTestValue: '=',
+                    sfTestType: '@'
+                },
+                restrict: 'A',
+                link: function (scope, element, attrs) {
+                    element.click(function () {
+                        var testValue = scope.sfTestType === 'mail' ?
+                            'mailto:' + scope.sfTestValue :
+                            scope.sfTestValue;
+
+                        $window.open(testValue, '_blank');
+                    });
+                }
+            };
+        }])
+
         .directive('sfLinkSelector', ["serverContext", function (serverContext) {
 
             var linkItem = function (linkHtml) {
