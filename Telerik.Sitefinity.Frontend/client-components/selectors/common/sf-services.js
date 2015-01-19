@@ -153,6 +153,7 @@
                 getFrontendLanguages: customContext.getFrontendLanguages || sitefinity.getFrontendLanguages,
                 getCurrentFrontendRootNodeId: customContext.getCurrentFrontendRootNodeId || sitefinity.getCurrentFrontendRootNodeId,
                 setCurrentFrontendRootNodeId: customContext.setCurrentFrontendRootNodeId || sitefinity.setCurrentFrontendRootNodeId,
+                getCurrentUserId: customContext.getCurrentUserId || sitefinity.getCurrentUserId,
                 getUICulture: function () {
                     if ($injector.has('widgetContext')) {
                         return $injector.get('widgetContext').culture;

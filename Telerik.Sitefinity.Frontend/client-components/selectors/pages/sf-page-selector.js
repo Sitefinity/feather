@@ -1,6 +1,6 @@
 ﻿(function () {
     angular.module('sfSelectors')
-        .directive('sfPageSelector', ['sfPageService', "serverContext", function (pageService, serverContext) {
+        .directive('sfPageSelector', ['sfPageService', 'serverContext', function (pageService, serverContext) {
             return {
                 require: '^sfListSelector',
                 restrict: 'A',
@@ -8,17 +8,56 @@
                     pre: function (scope, element, attrs, ctrl) {
                         var rootPage = serverContext.getCurrentFrontendRootNodeId();
 
+                        // <------- Begin: Helper methods ------
+                        var getSiteMapRootNodeId = function () {
+                            var selectedSite = scope.$eval(attrs.sfPageSelector);
+
+                            if (selectedSite && selectedSite.SiteMapRootNodeId) {
+                                return selectedSite.SiteMapRootNodeId;
+                            }
+                            return rootPage;
+                        };
+
+                        var getSiteId = function () {
+                            var selectedSite = scope.$eval(attrs.sfPageSelector);
+
+                            if (selectedSite && selectedSite.Id) {
+                                return selectedSite.Id;
+                            }
+                            return ctrl.$scope.siteId;
+                        };
+
                         var getItems = function (parentId, search) {
-                            var siteId = ctrl.$scope.siteId;
+                            var siteId = getSiteId();
                             var provider = ctrl.$scope.sfProvider;
                             return pageService.getItems(parentId, siteId, provider, search);
                         };
 
+                        var allowLoadingItems = function (newSite, oldSite) {
+                            if (newSite && oldSite) {
+                                return (newSite.Id !== oldSite.Id);
+                            }
+                            else if (!newSite && !oldSite) {
+                                return false
+                            }
+                            return true;
+                        };
+                        // ------ End: Helper methods ------->
+
+                        scope.$watch(attrs.sfPageSelector, function (newSite, oldSite) {
+                            if (allowLoadingItems(newSite, oldSite)) {
+                                ctrl.clearItems();
+                                ctrl.beginLoadingItems();
+                            }
+                        });
+
                         ctrl.getItems = function (skip, take, search) {
-                            return getItems(rootPage, search);
+                            var siteMapRootNodeId = getSiteMapRootNodeId();
+
+                            return getItems(siteMapRootNodeId, search);
                         };
 
-                        ctrl.getChildren = function (parentId, search) {                            
+                        ctrl.getChildren = function (parentId, search) {
                             return getItems(parentId, search)
                                 .then(function (data) {
                                     return data.Items;
@@ -41,7 +80,6 @@
                             if (uiCulture && item.AvailableLanguages && item.AvailableLanguages.length > 0) {
                                 return item.AvailableLanguages.indexOf(uiCulture) < 0;
                             }
-
                             return false;
                         };
 
@@ -54,16 +92,20 @@
                             'client-components/selectors/common/sf-list-group-selection.html' :
                             'client-components/selectors/common/sf-bubbles-selection.html';
 
-                        ctrl.closedDialogTemplateUrl = closedDialogTemplate;                       
-
+                        ctrl.closedDialogTemplateUrl = closedDialogTemplate;
                         ctrl.$scope.hierarchical = true;
-
                         ctrl.$scope.expandSelection = true;
-
                         ctrl.$scope.sfIdentifierField = "TitlesPath";
-
                         ctrl.$scope.searchIdentifierField = "Title";
-                    }
+                        ctrl.$scope.sfDialogHeader = 'Select a page';
+
+                        ctrl.onPostLinkComleted = function () {
+                            var currentSite = scope.$eval(attrs.sfPageSelector);
+                            if (currentSite) {
+                                ctrl.beginLoadingItems();
+                            }
+                        };
+                    },
                 }
             };
         }]);
