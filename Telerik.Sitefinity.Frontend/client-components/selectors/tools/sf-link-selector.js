@@ -114,7 +114,7 @@
                         }
                     }
                     else if (this.mode == '3') {
-                        resultLink.attr('href', 'mailto:' + this.webAddress);
+                        resultLink.attr('href', 'mailto:' + this.emailAddress);
                     }
 
                     return resultLink;
