@@ -3,15 +3,13 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Data.Events;
 using Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
+using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Modules.ControlTemplates.Web.UI;
-using Telerik.Sitefinity.Modules.Libraries.Web.Events;
 using Telerik.Sitefinity.Modules.Pages;
-using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.TypeConverters;
@@ -39,6 +37,13 @@ namespace Telerik.Sitefinity.Frontend.Resources
             ObjectFactory.Container.RegisterType<DialogBase, MvcControlTemplateEditor>(typeof(ControlTemplateEditor).Name);
 
             EventHub.Subscribe<IDataEvent>(x => this.HandleIDataEvent(x));
+
+            var resourceClass = typeof(InfrastructureResources);
+            var resourceClassId = Res.GetResourceClassId(resourceClass);
+            if (!ObjectFactory.Container.IsRegistered(resourceClass, resourceClassId))
+            {
+                Res.RegisterResource(resourceClass);
+            }
         }
 
         /// <summary>

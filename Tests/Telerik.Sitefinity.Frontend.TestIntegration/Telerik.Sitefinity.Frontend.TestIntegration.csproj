@@ -167,6 +167,7 @@
     <Compile Include="GridWidgets\GridWidgetsTests.cs" />
     <Compile Include="LayoutTemplates\LayoutTemplatesTests.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelperTests.cs" />
+    <Compile Include="Mvc\Infrastructure\DynamicUrlActionInvokerTests.cs" />
     <Compile Include="Mvc\Models\ContentModelBaseTests.cs" />
     <Compile Include="Mvc\Routing\RoutingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

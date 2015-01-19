@@ -63,6 +63,7 @@ describe('designer tests.', function () {
             $scope.save();
 
             expect(function () { $scope.$digest(); }).toThrow(expectedException);
+            $rootScope.$$phase = null;
             $timeout.flush(1);
 
             expect(handlerCalled).toBe(true);
@@ -97,6 +98,7 @@ describe('designer tests.', function () {
             $scope.cancel();
 
             expect(function () { $scope.$digest(); }).toThrow(expectedException);
+            $rootScope.$$phase = null;
             $timeout.flush(1);
 
             expect(handlerCalled).toBe(true);
@@ -116,6 +118,7 @@ describe('designer tests.', function () {
             $scope.save();
 
             expect(function () { $scope.$digest(); }).toThrow(expectedException);
+            $rootScope.$$phase = null;
             $timeout.flush(1);
 
             expect(handlerCalled).toBe(true);

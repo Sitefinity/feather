@@ -219,6 +219,7 @@
     <Compile Include="Mvc\Infrastructure\Controllers\IRouteMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\MvcWidgetProxy.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
+    <Compile Include="Mvc\Infrastructure\InfrastructureResources.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutMvcPageResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />
