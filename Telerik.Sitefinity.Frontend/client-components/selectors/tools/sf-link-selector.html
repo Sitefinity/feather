@@ -3,36 +3,36 @@
 </div>
 <div class="modal-body">
     <tabset class="nav-tabs-wrapper">
-        <tab heading="Web address">
+        <tab heading="Web address" active="selectedItem.mode==1">
             <div>
                 <div><label for="webAddress">Web address</label></div>
-                <div><input type="text" id="webAddress" ng-model="link.href" /></div>
+                <div><input type="text" id="webAddress" ng-model="selectedItem.webAddress" /></div>
                 <div>
                     <label><strong>Example:</strong> http://weather.com</label>
                 </div>
             </div>
             <div>
                 <div><label for="textToDisplay1">Text to display</label></div>
-                <div><input type="text" id="textToDisplay1" ng-model="link.text" /></div>
+                <div><input type="text" id="textToDisplay1" ng-model="selectedItem.displayText" /></div>
                 <div>
                     <label><strong>Example:</strong> Weather forecast</label>
                 </div>
             </div>
             <div>
-                <label for="openInNewWin1"><input type="checkbox" id="openInNewWin" />Open this link in a new window</label>
+                <label for="openInNewWin1"><input type="checkbox" id="openInNewWin" ng-model="selectedItem.openInNewWindow" />Open this link in a new window</label>
             </div>
             <div>
                 <input type="button" value="Test this link" onclick="var address = document.getElementById('webAddress').value; if (address) { window.open(address); }" />
             </div>
         </tab>
-        <tab heading="Page from this site">
+        <tab heading="Page from this site" active="selectedItem.mode==2">
              <sf-list-selector sf-page-selector></sf-list-selector>
              <div>
                 <div><label for="textToDisplay2">Text to display</label></div>
-                <div><input type="text" id="textToDisplay2" /></div>
+                <div><input type="text" id="textToDisplay2" ng-model="selectedItem.displayText" /></div>
             </div>
             <div>
-                <label for="openInNewWin2"><input type="checkbox" id="openInNewWin2" />Open this link in a new window</label>
+                <label for="openInNewWin2"><input type="checkbox" id="openInNewWin2" ng-model="selectedItem.openInNewWindow" />Open this link in a new window</label>
             </div>
             <div>
                 <input type="button" value="Test this link" />
@@ -41,17 +41,17 @@
         <tab heading="Anchor">
         Anchor html
         </tab>
-        <tab heading="Email">
+        <tab heading="Email" active="selectedItem.mode==3">
             <div>
                 <div><label for="emailAddress">Email address</label></div>
-                <div><input type="text" id="emailAddress" /></div>
+                <div><input type="text" id="emailAddress" ng-model="selectedItem.displayText" /></div>
                 <div>
                     <label><strong>Example:</strong> johnsmith@gmail.com</label>
                 </div>
             </div>
             <div>
                 <div><label for="textToDisplay4">Text to display</label></div>
-                <div><input type="text" id="textToDisplay4" /></div>
+                <div><input type="text" id="textToDisplay4" ng-model="selectedItem.emailAddress"/></div>
                 <div>
                     <label><strong>Example:</strong> Send email to John</label>
                 </div>
