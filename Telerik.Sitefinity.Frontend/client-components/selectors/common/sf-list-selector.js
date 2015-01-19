@@ -68,6 +68,13 @@
                     this.onItemSelected = function (item) {
                     };
 
+                    this.onPostLinkComleted = function () {
+                    };
+
+                    this.clearItems = function () {
+                        $scope.items = [];
+                    };
+
                     var compareFunction = function (item1, item2) {
                         var orderedIds = $scope.getSelectedIds();
 
@@ -179,7 +186,7 @@
                                 });
                         };
 
-                        var ensureSelectionIsUpToDate = function () {
+                        ctrl.ensureSelectionIsUpToDate = function () {
                             $q.when(fetchSelectedItems()).then(function () {
                                 updateSelectionInTheDialog();
 
@@ -210,6 +217,19 @@
                                 return clonedArr1.sort().toString() === clonedArr2.sort().toString();
                             }
                             return false;
+                        };
+
+                        ctrl.beginLoadingItems = function () {
+                            scope.showLoadingIndicator = true;
+
+                            scope.itemsPromise = ctrl.getItems(scope.paging.skip, scope.paging.take)
+                                                     .then(onFirstPageLoadedSuccess, onError);
+
+                            scope.itemsPromise.finally(function () {
+                                scope.showLoadingIndicator = false;
+                            });
+
+                            ctrl.ensureSelectionIsUpToDate();
                         };
 
                         // ------------------------------------------------------------------------
@@ -356,18 +376,11 @@
                         };
 
                         scope.open = function () {
-                            scope.$openModalDialog();
+                            if (scope.$openModalDialog) {
+                                scope.$openModalDialog();
+                            }
 
-                            scope.showLoadingIndicator = true;
-
-                            scope.itemsPromise = ctrl.getItems(scope.paging.skip, scope.paging.take)
-                            .then(onFirstPageLoadedSuccess, onError);
-
-                            scope.itemsPromise.finally(function () {
-                                scope.showLoadingIndicator = false;
-                            });
-
-                            ensureSelectionIsUpToDate();
+                            ctrl.beginLoadingItems();
                         };
 
                         scope.getDialogTemplate = function () {
@@ -501,6 +514,11 @@
                                 }
                             }
                         });
+
+                        ////NOTE: Emit indication when initial setup is completed so child directives can be notified.
+                        if (ctrl.onPostLinkComleted) {
+                            ctrl.onPostLinkComleted();
+                        }
                     }
                 }
             };

@@ -1,7 +1,7 @@
 ﻿<alert type="danger" ng-show="showError">{{::errorMessage}}</alert>
 
-<div ng-if="sites && sites.length > 1">
-    <select>
-        <option ng-repeat="site in sites">{{::site.Name}}</option>
-    </select>
+<div ng-show="sites && sites.length > 1">
+    <select ng-options="site as site.Name for site in sites track by site.Id"
+            ng-model="sfSite"></select>
+    
 </div>
