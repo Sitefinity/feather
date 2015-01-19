@@ -50,9 +50,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="throwException">if set to <c>true</c> throw exception.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)
+        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false, bool useScriptManager = true)
         {
-            if (ResourceHelper.TryConfigureScriptManager(scriptReference))
+            if (useScriptManager && ResourceHelper.TryConfigureScriptManager(scriptReference))
                 return System.Web.Mvc.MvcHtmlString.Empty;
 
             var resourceKey = scriptReference.ToString();
