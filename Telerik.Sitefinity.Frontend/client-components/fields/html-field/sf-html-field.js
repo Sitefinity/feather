@@ -1,14 +1,16 @@
 ﻿(function ($) {
-	var module = angular.module('sfFields', ['kendo.directives']);
+	var module = angular.module('sfFields', ['kendo.directives', 'sfServices']);
 
-	module.directive('sfHtmlField', [function () {
+	module.directive('sfHtmlField', ['serverContext', function (serverContext) {
 		return {
 			restrict: "E",
 			scope: {
 				ngModel: '='
 			},
-			templateUrl: function () {
-				return sitefinity.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-html-field.html');
+			templateUrl: function (elem, attrs) {
+				var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+				var url = attrs.sfTemplateUrl || 'client-components/fields/html-field/sf-html-field.html';
+				return serverContext.getEmbeddedResourceUrl(assembly, url);
 			},
 			link: function (scope, element) {
 				scope.htmlViewLabel = 'HTML';
