@@ -479,6 +479,7 @@
     <EmbeddedResource Include="client-components\selectors\multi-site\sf-multi-site-selector.html" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.js" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.html" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-service.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
