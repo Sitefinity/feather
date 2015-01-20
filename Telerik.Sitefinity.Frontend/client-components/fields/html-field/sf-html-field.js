@@ -44,7 +44,13 @@
 						editor.wrapper.find('[data-role=selectbox]').kendoSelectBox('enable', false);
 						editor.wrapper.find('[data-role=colorpicker]').kendoColorPicker('enable', false);
 					} else {
-						scope.htmlViewLabel = 'HTML';
+					    scope.htmlViewLabel = 'HTML';
+
+						editor.wrapper.find('.k-tool:visible').removeClass('k-state-disabled');
+						editor.wrapper.find('[data-role=combobox]').kendoComboBox('enable', true);
+						editor.wrapper.find('[data-role=dropdownlist]').kendoDropDownList('enable', true);
+						editor.wrapper.find('[data-role=selectbox]').kendoSelectBox('enable', true);
+						editor.wrapper.find('[data-role=colorpicker]').kendoColorPicker('enable', true);
 
 						var html = editor.wrapper.find('.html');
 
@@ -55,12 +61,6 @@
 						html.remove();
 
 						content.show();
-
-						editor.wrapper.find('.k-tool:visible').removeClass('k-state-disabled');
-						editor.wrapper.find('[data-role=combobox]').kendoComboBox('enable', true);
-						editor.wrapper.find('[data-role=dropdownlist]').kendoDropDownList('enable', true);
-						editor.wrapper.find('[data-role=selectbox]').kendoSelectBox('enable', true);
-						editor.wrapper.find('[data-role=colorpicker]').kendoColorPicker('enable', true);
 					}
 
 					isInHtmlView = !isInHtmlView;
