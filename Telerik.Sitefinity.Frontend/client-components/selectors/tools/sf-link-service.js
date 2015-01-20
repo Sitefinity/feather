@@ -1,4 +1,7 @@
 ﻿(function () {
+    var GUID_REGEX = /([a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})/g;
+    var LANG_REGEX = /\|lng:([^\]]+)/;
+
     angular.module('sfSelectors')
         .factory('sfLinkService', ['serverContext', function (serverContext) {
             var linkItem = function (linkHtml) {
@@ -51,11 +54,34 @@
 
                 this.setInternalPage = function () {
                     var sfref = linkHtml.attr('sfref');
-                    idx = sfref.indexOf(']');
-                    if (idx > -1) {
-                        this.rootNodeId = sfref.substr(1, idx - 1);
-                        this.pageId = sfref.substring(idx + 1);
+
+                    var guids = sfref.match(GUID_REGEX);
+                    var cultures = sfref.match(LANG_REGEX);
+
+                    if (guids.length > 0) {
+                        this.rootNodeId = guids[0];
+
+                        if (guids.length > 1) {
+                            this.pageId = guids[1];
+                        }
                     }
+                    if (cultures.length > 1) {
+                        //NOTE: For a non-global regexp - it finds the first match and returns an array: the full match becomes array item at index 0, the first group - at index 1, and so on.
+                        this.language = cultures[1];
+                    }
+
+                    //var langDelimiter = sfref.indexOf('|');
+                    //idx = langDelimiter > -1 ? langDelimiter : sfref.indexOf(']');
+
+                    //if (idx > -1) {
+                    //    this.rootNodeId = sfref.substr(1, idx - 1);
+                    //    this.pageId = sfref.substring(idx + 1);
+
+                    //    var langDelimiter = sfref.indexOf("|lng:");
+
+                    //    var selectedCulture = langDelimiter == -1 ? serverContext.getUICulture() :
+                    //                                sfref.substring(langDelimiter, sfref.indexOf(']'));
+                    //}
                 };
 
                 this.setMode();
@@ -75,7 +101,7 @@
 
             var constructLinkItem = function (linkHtml) {
                 var item = new linkItem(linkHtml);
-                
+
                 return item;
             };
 

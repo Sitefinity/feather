@@ -1,0 +1,15 @@
+﻿<div style="display:table">
+    <div style="float:left; display: table-row">
+        <sf-site-selector sf-site="sfSite"></sf-site-selector>
+    </div>
+
+    <div style="float:right; display: table-row; margin-left:30px">
+        <sf-language-selector sf-site="sfSite"
+                              sf-culture="sfCulture"></sf-language-selector>
+    </div>
+</div>
+
+<sf-list-selector sf-template-url="client-components/selectors/multi-site/sf-list-selector.html"
+                  sf-page-selector="sfSite"
+                  sf-culture="sfCulture"
+                  sf-selected-item-id="sfSelectedItemId"></sf-list-selector>

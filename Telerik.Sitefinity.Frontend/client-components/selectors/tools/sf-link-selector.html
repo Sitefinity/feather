@@ -47,21 +47,9 @@
     <div ng-show="selectedItem.mode==2">
         <div>
 
-            <div style="display:table">
-                <div style="float:left; display: table-row">
-                    <sf-site-selector sf-site="selectedSite"></sf-site-selector>
-                </div>
-
-                <div style="float:right; display: table-row; margin-left:30px">
-                    <sf-language-selector sf-site="selectedSite"
-                                          sf-culture="selectedLanguage"></sf-language-selector>
-                </div>
-            </div>
-
-            <sf-list-selector sf-template-url="client-components/selectors/tools/sf-list-selector.html"
-                              sf-page-selector="selectedSite"
-                              sf-culture="selectedLanguage"
-                              sf-selected-item-id="id"></sf-list-selector>
+            <sf-multisite-page-selector sf-site="sfSite"
+                                        sf-culture="sfCulture"
+                                        sf-selected-item-id="sfSelectedItemId"></sf-multisite-page-selector>
 
         </div>
 

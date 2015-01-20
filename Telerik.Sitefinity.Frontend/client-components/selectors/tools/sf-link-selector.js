@@ -13,7 +13,6 @@
                 },
                 link: {
                     post: function (scope, element, attrs, ctrl) {
-
                         scope.insertLink = function () {
                             var htmlLinkObj = linkService.getHtmlLink(scope.selectedItem);
                             scope.sfLinkHtml = htmlLinkObj[0];
@@ -24,7 +23,13 @@
                             scope.$modalInstance.close();
                         };
 
+                        ////if (!scope.sfLinkHtml) {
+                        ////    scope.sfLinkHtml = '<a href="/CodeBase/widgettests" sfref="[f669d9a7-009d-4d83-ddaa-000000000002|lng:en]28d7e74c-c789-61c4-9817-ff000095605c">LINK</a>';
+                        ////}
+
                         scope.selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
+
+                        //scope.selectedItem.sfSite = { Id: scope.selectedItem. };
                     }
                 }
             };
