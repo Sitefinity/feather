@@ -1,6 +1,6 @@
 ﻿(function () {
     angular.module('sfSelectors')
-        .directive('sfLinkSelector', ['serverContext', 'sfLinkService', function (serverContext, linkService) {
+        .directive('sfLinkSelector', ['serverContext', 'sfLinkService', 'sfLinkMode', function (serverContext, linkService, sfLinkMode) {
             return {
                 restrict: 'E',
                 scope: {
@@ -24,6 +24,7 @@
                             scope.$modalInstance.close();
                         };
 
+                        scope.sfLinkMode = sfLinkMode;
                         scope.selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
                     }
                 }

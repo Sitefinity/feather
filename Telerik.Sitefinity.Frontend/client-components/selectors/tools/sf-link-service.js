@@ -1,8 +1,20 @@
 ﻿(function () {
     angular.module('sfSelectors')
-        .factory('sfLinkService', ['serverContext', function (serverContext) {
+        .factory('sfLinkMode', [function () {
+
+            var service = {
+                WebAddress: 1,
+                InternalPage: 2,
+                EmailAddress: 3
+            };
+
+            return service;
+
+        }])
+        .factory('sfLinkService', ['serverContext', 'sfLinkMode', function (serverContext, linkMode) {
+
             var linkItem = function (linkHtml) {
-                this.mode = '1';
+                this.mode = linkMode.WebAddress;
                 this.openInNewWindow = false;
                 this.webAddress = null;
                 this.site = null;
@@ -14,13 +26,13 @@
 
                 this.setMode = function () {
                     if (linkHtml.attr('sfref') && linkHtml.attr('sfref').startsWith('[')) {
-                        this.mode = '2';
+                        this.mode = linkMode.InternalPage;
                     }
                     else if (linkHtml.attr('href') && linkHtml.attr('href').indexOf('mailto:') > -1) {
-                        this.mode = '3';
+                        this.mode = linkMode.EmailAddress;
                     }
                     else {
-                        this.mode = '1';
+                        this.mode = linkMode.WebAddress;
                     }
                 };
 
@@ -61,13 +73,13 @@
                 this.setMode();
                 this.setOpenInNewWindow();
 
-                if (this.mode == '1') {
+                if (this.mode == linkMode.WebAddress) {
                     this.setWebAddress();
                 }
-                else if (this.mode == '2') {
+                else if (this.mode == linkMode.InternalPage) {
                     this.setInternalPage();
                 }
-                else if (this.mode == '3') {
+                else if (this.mode == linkMode.EmailAddress) {
                     this.setEmailAddress();
                 }
 
@@ -75,7 +87,7 @@
 
             var constructLinkItem = function (linkHtml) {
                 var item = new linkItem(linkHtml);
-                
+
                 return item;
             };
 
@@ -88,10 +100,10 @@
                 if (linkItem.openInNewWindow)
                     resultLink.attr('target', '_blank');
 
-                if (linkItem.mode == '1') {
+                if (linkItem.mode == linkMode.WebAddress) {
                     resultLink.attr('href', linkItem.webAddress);
                 }
-                else if (linkItem.mode == '2') {
+                else if (linkItem.mode == linkMode.InternalPage) {
                     if (selectedPage) {
                         var href = selectedPage.FullUrl;
                         resultLink.attr('href', href);
@@ -121,7 +133,7 @@
                         }
                     }
                 }
-                else if (linkItem.mode == '3') {
+                else if (linkItem.mode == linkMode.EmailAddress) {
                     resultLink.attr('href', 'mailto:' + linkItem.emailAddress);
                 }
 
