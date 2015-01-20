@@ -474,14 +474,15 @@
     <EmbeddedResource Include="client-components\selectors\search\sf-search-service.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.html" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.js" />
-    <EmbeddedResource Include="client-components\selectors\multi-site\sf-multi-site-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.js" />
     <EmbeddedResource Include="client-components\selectors\multi-site\sf-multi-site-service.js" />
-    <EmbeddedResource Include="client-components\selectors\multi-site\sf-multi-site-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.html" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.js" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.html" />
     <EmbeddedResource Include="client-components\selectors\localization\sf-language-selector.html" />
     <EmbeddedResource Include="client-components\selectors\localization\sf-language-selector.js" />
     <EmbeddedResource Include="client-components\selectors\localization\sf-language-service.js" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-list-selector.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
@@ -537,7 +538,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

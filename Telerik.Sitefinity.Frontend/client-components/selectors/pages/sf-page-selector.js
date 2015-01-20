@@ -7,7 +7,7 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         var rootPage = serverContext.getCurrentFrontendRootNodeId();
-
+                        debugger;
                         // <------- Begin: Helper methods ------
                         var getSiteMapRootNodeId = function () {
                             var selectedSite = scope.$eval(attrs.sfPageSelector);
@@ -38,7 +38,7 @@
                                 return newSite.Id !== oldSite.Id;
                             }
                             else if (!newSite && !oldSite) {
-                                return false
+                                return false;
                             }
                             return true;
                         };
