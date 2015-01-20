@@ -4,7 +4,8 @@
             return {
                 restrict: 'E',
                 scope: {
-                    sfLinkHtml: '@'
+                    sfLinkHtml: '=',
+                    sfEditorContent: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -25,7 +26,7 @@
                         };
 
                         scope.sfLinkMode = sfLinkMode;
-                        scope.selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
+                        scope.selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml), scope.sfEditorContent);
                     }
                 }
             };
