@@ -2,52 +2,52 @@
     <h3 class="modal-title">Insert a link</h3>
 </div>
 <div class="modal-body">
-	<div class="form-group">
-		<div class="radio">
-			<label for="webAddress">
-			  <input id="webAddress" type="radio" ng-model="selectedItem.mode" value="sfLinkMode.WebAddress" />
-			  Web address
-			</label>
-		</div>
-		<div class="radio">
-			<label for="pagesFromThisSite">
-			  <input id="pagesFromThisSite" type="radio" ng-model="selectedItem.mode" value="sfLinkMode.InternalPage" />
-			  Page from this site
-			</label>
-		</div>
-		<div class="radio">
-			<label for="email">
-			  <input id="email" type="radio" ng-model="selectedItem.mode" value="sfLinkMode.EmailAddress" />
-			  Email
-			</label>
-		</div>
-	</div>
-	<div ng-show="selectedItem.mode==sfLinkMode.WebAddress">
-		<div>
-			<div><label for="webAddress">Web address</label></div>
-			<div><input type="text" id="Text1" ng-model="selectedItem.webAddress" /></div>
-			<div>
-				<label><strong>Example:</strong> http://weather.com</label>
-			</div>
-		</div>
-		<div>
-			<div><label for="textToDisplay1">Text to display</label></div>
-			<div><input type="text" id="textToDisplay1" ng-model="selectedItem.displayText" /></div>
-			<div>
-				<label><strong>Example:</strong> Weather forecast</label>
-			</div>
-		</div>
-		<div>
-			<label for="openInNewWin1"><input type="checkbox" id="openInNewWin" ng-model="selectedItem.openInNewWindow" />Open this link in a new window</label>
-		</div>
-		<div>
-			<a ng-href="{{selectedItem.webAddress}}" target="_blank">Test this link</a>
-		</div>
-	</div>
-	<div ng-show="selectedItem.mode==sfLinkMode.InternalPage">
-	    <div>
+    <div class="form-group">
+        <div class="radio">
+            <label for="webAddress">
+                <input id="webAddress" type="radio" ng-model="selectedItem.mode" ng-value="sfLinkMode.WebAddress" />
+                Web address
+            </label>
+        </div>
+        <div class="radio">
+            <label for="pagesFromThisSite">
+                <input id="pagesFromThisSite" type="radio" ng-model="selectedItem.mode" ng-value="sfLinkMode.InternalPage" />
+                Page from this site
+            </label>
+        </div>
+        <div class="radio">
+            <label for="email">
+                <input id="email" type="radio" ng-model="selectedItem.mode" ng-value="sfLinkMode.EmailAddress" />
+                Email
+            </label>
+        </div>
+    </div>
+    <div ng-show="selectedItem.mode==sfLinkMode.WebAddress">
+        <div>
+            <div><label for="webAddress">Web address</label></div>
+            <div><input type="text" id="Text1" ng-model="selectedItem.webAddress" /></div>
+            <div>
+                <label><strong>Example:</strong> http://weather.com</label>
+            </div>
+        </div>
+        <div>
+            <div><label for="textToDisplay1">Text to display</label></div>
+            <div><input type="text" id="textToDisplay1" ng-model="selectedItem.displayText" /></div>
+            <div>
+                <label><strong>Example:</strong> Weather forecast</label>
+            </div>
+        </div>
+        <div>
+            <label for="openInNewWin1"><input type="checkbox" id="openInNewWin" ng-model="selectedItem.openInNewWindow" />Open this link in a new window</label>
+        </div>
+        <div>
+            <a ng-href="{{selectedItem.webAddress}}" target="_blank">Test this link</a>
+        </div>
+    </div>
+    <div ng-show="selectedItem.mode==sfLinkMode.InternalPage">
+        <div>
 
-            <sf-multisite-page-selector sf-site="selectedItem."
+            <sf-multisite-page-selector sf-site="sfSite"
                                         sf-culture="sfCulture"
                                         sf-selected-item-id="sfSelectedItemId"></sf-multisite-page-selector>
 
@@ -63,26 +63,26 @@
         <div>
             <input type="button" value="Test this link" />
         </div>
-	</div>
-	<div ng-show="selectedItem.mode==sfLinkMode.EmailAddress">
-		<div>
-			<div><label for="emailAddress">Email address</label></div>
-			<div><input type="text" id="emailAddress" ng-model="selectedItem.emailAddress" /></div>
-			<div>
-				<label><strong>Example:</strong> johnsmith@gmail.com</label>
-			</div>
-		</div>
-		<div>
-			<div><label for="textToDisplay4">Text to display</label></div>
-			<div><input type="text" id="textToDisplay4" ng-model="selectedItem.displayText"/></div>
-			<div>
-				<label><strong>Example:</strong> Send email to John</label>
-			</div>
-		</div>
-		<div>
-			<a ng-href="mailto:{{selectedItem.emailAddress}}">Test this link</a>
-		</div>
-	</div>
+    </div>
+    <div ng-show="selectedItem.mode==sfLinkMode.EmailAddress">
+        <div>
+            <div><label for="emailAddress">Email address</label></div>
+            <div><input type="text" id="emailAddress" ng-model="selectedItem.emailAddress" /></div>
+            <div>
+                <label><strong>Example:</strong> johnsmith@gmail.com</label>
+            </div>
+        </div>
+        <div>
+            <div><label for="textToDisplay4">Text to display</label></div>
+            <div><input type="text" id="textToDisplay4" ng-model="selectedItem.displayText" /></div>
+            <div>
+                <label><strong>Example:</strong> Send email to John</label>
+            </div>
+        </div>
+        <div>
+            <a ng-href="mailto:{{selectedItem.emailAddress}}">Test this link</a>
+        </div>
+    </div>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-primary  pull-left" ng-click="insertLink()">Insert link</button>
