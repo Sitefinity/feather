@@ -5,24 +5,24 @@
 	<div class="form-group">
 		<div class="radio">
 			<label for="webAddress">
-			  <input id="webAddress" type="radio" ng-model="selectedItem.mode" value="1" />
+			  <input id="webAddress" type="radio" ng-model="selectedItem.mode" value="sfLinkMode.WebAddress" />
 			  Web address
 			</label>
 		</div>
 		<div class="radio">
 			<label for="pagesFromThisSite">
-			  <input id="pagesFromThisSite" type="radio" ng-model="selectedItem.mode" value="2" />
+			  <input id="pagesFromThisSite" type="radio" ng-model="selectedItem.mode" value="sfLinkMode.InternalPage" />
 			  Page from this site
 			</label>
 		</div>
 		<div class="radio">
 			<label for="email">
-			  <input id="email" type="radio" ng-model="selectedItem.mode" value="3" />
+			  <input id="email" type="radio" ng-model="selectedItem.mode" value="sfLinkMode.EmailAddress" />
 			  Email
 			</label>
 		</div>
 	</div>
-	<div ng-show="selectedItem.mode==1">
+	<div ng-show="selectedItem.mode==sfLinkMode.WebAddress">
 		<div>
 			<div><label for="webAddress">Web address</label></div>
 			<div><input type="text" id="Text1" ng-model="selectedItem.webAddress" /></div>
@@ -44,7 +44,7 @@
 			<a ng-href="{{selectedItem.webAddress}}" target="_blank">Test this link</a>
 		</div>
 	</div>
-	<div ng-show="selectedItem.mode==2">
+	<div ng-show="selectedItem.mode==sfLinkMode.InternalPage">
 		 <sf-list-selector sf-page-selector></sf-list-selector>
 		 <div>
 			<div><label for="textToDisplay2">Text to display</label></div>
@@ -57,7 +57,7 @@
 			<input type="button" value="Test this link" />
 		</div>
 	</div>
-	<div ng-show="selectedItem.mode==3">
+	<div ng-show="selectedItem.mode==sfLinkMode.EmailAddress">
 		<div>
 			<div><label for="emailAddress">Email address</label></div>
 			<div><input type="text" id="emailAddress" ng-model="selectedItem.emailAddress" /></div>
