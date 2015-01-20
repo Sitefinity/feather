@@ -26,11 +26,18 @@
                 this.emailAddress = null;
                 this.displayText = '';
 
+                function startsWith (str, subStr) {
+                    return str.slice(0, subStr.length) === subStr;
+                }
+
                 this.setMode = function () {
-                    if (linkHtml.attr('sfref') && linkHtml.attr('sfref').startsWith('[')) {
+                    var sfref = linkHtml.attr('sfref');
+                    var href = linkHtml.attr('href');
+
+                    if (sfref && startsWith(sfref, '[')) {
                         this.mode = linkMode.InternalPage;
                     }
-                    else if (linkHtml.attr('href') && linkHtml.attr('href').indexOf('mailto:') > -1) {
+                    else if (href && href.indexOf('mailto:') > -1) {
                         this.mode = linkMode.EmailAddress;
                     }
                     else {
