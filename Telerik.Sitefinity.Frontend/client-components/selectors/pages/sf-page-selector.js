@@ -38,7 +38,7 @@
                                 return (newSite.Id !== oldSite.Id);
                             }
                             else if (!newSite && !oldSite) {
-                                return false
+                                return false;
                             }
                             return true;
                         };
