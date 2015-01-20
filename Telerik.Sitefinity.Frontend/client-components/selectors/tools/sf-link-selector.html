@@ -41,7 +41,7 @@
 			<label for="openInNewWin1"><input type="checkbox" id="openInNewWin" ng-model="selectedItem.openInNewWindow" />Open this link in a new window</label>
 		</div>
 		<div>
-			<input type="button" value="Test this link" onclick="var address = document.getElementById('webAddress').value; if (address) { window.open(address); }" />
+			<a ng-href="{{selectedItem.webAddress}}" target="_blank">Test this link</a>
 		</div>
 	</div>
 	<div ng-show="selectedItem.mode==sfLinkMode.InternalPage">
@@ -73,7 +73,7 @@
 			</div>
 		</div>
 		<div>
-			<input type="button" value="Test this link" onclick="var address = document.getElementById('emailAddress').value; if (address) { window.open('mailto:' + address); }" />
+			<a ng-href="mailto:{{selectedItem.emailAddress}}">Test this link</a>
 		</div>
 	</div>
 </div>
