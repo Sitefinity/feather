@@ -1,8 +1,24 @@
+/**
+ * Global methods
+ */
+
+if (!String.prototype.format) {
+    String.prototype.format = function () {
+        var newStr = this;
+
+        for (var i = 0; i < arguments.length; i++) {
+            var pattern = new RegExp("\\{"+ i +"\\}", "g");
+            newStr = newStr.replace(pattern, arguments[i]);
+        }
+
+        return newStr;
+    }
+};
+
 var commonMethods = (function () {
     /**
      * Private methods and variables.
      */
-    
 
     /**
      * Return public interface.

@@ -13,6 +13,8 @@
         }])
         .factory('sfLinkService', ['serverContext', 'sfLinkMode', function (serverContext, linkMode) {
 
+            var emptyGuid = '00000000-0000-0000-0000-000000000000';
+
             var linkItem = function (linkHtml) {
                 this.mode = linkMode.WebAddress;
                 this.openInNewWindow = false;
@@ -114,7 +116,7 @@
                         //	this.get_pageSelector().get_languageSelectorSelectedCulture() : null;
                         if (selectedPageId) {
                             var key;
-                            if (linkItem.rootNodeId && linkItem.rootNodeId != Telerik.Sitefinity.getEmptyGuid()) {
+                            if (linkItem.rootNodeId && linkItem.rootNodeId != emptyGuid) {
                                 key = linkItem.rootNodeId;
                             }
                             else if (selectedPage) {
