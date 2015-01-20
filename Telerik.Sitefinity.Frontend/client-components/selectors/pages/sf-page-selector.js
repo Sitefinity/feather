@@ -35,12 +35,28 @@
 
                         var allowLoadingItems = function (newSite, oldSite) {
                             if (newSite && oldSite) {
-                                return (newSite.Id !== oldSite.Id);
+                                return newSite.Id !== oldSite.Id;
                             }
                             else if (!newSite && !oldSite) {
                                 return false
                             }
                             return true;
+                        };
+
+                        var areLanguageEqual = function (newLang, oldLang) {
+                            if (newLang && oldLang) {
+                                return newLang.Culture === oldLang.Culture;
+                            }
+                            else if (!newLang && !oldLang) {
+                                return true;
+                            }
+                            return false;
+                        };
+
+                        var getCulture = function () {
+                            var sfCulture = scope.$eval(attrs.sfCulture);
+
+                            return sfCulture && sfCulture.Culture ? sfCulture.Culture : serverContext.getUICulture();
                         };
                         // ------ End: Helper methods ------->
 
@@ -48,6 +64,12 @@
                             if (allowLoadingItems(newSite, oldSite)) {
                                 ctrl.clearItems();
                                 ctrl.beginLoadingItems();
+                            }
+                        });
+
+                        scope.$watch(attrs.sfCulture, function (newLang, oldLang) {
+                            if (!areLanguageEqual(newLang, oldLang)) {
+                                ctrl.$scope.selectedItemsInTheDialog.length = 0;
                             }
                         });
 
@@ -75,7 +97,7 @@
                         };
 
                         ctrl.itemDisabled = function (item) {
-                            var uiCulture = serverContext.getUICulture();
+                            var uiCulture = getCulture();
 
                             if (uiCulture && item.AvailableLanguages && item.AvailableLanguages.length > 0) {
                                 return item.AvailableLanguages.indexOf(uiCulture) < 0;
@@ -105,7 +127,7 @@
                                 ctrl.beginLoadingItems();
                             }
                         };
-                    },
+                    }
                 }
             };
         }]);
