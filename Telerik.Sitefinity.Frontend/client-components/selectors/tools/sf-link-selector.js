@@ -25,8 +25,9 @@
                             scope.$modalInstance.close();
                         };
 
+                        scope.anchors = linkService.populateAnchorIds(scope.sfEditorContent);
                         scope.sfLinkMode = sfLinkMode;
-                        scope.selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml), scope.sfEditorContent);
+                        scope.selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
                     }
                 }
             };

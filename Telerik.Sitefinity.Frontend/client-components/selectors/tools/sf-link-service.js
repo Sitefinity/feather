@@ -14,7 +14,7 @@
         }])
         .factory('sfLinkService', ['serverContext', 'sfLinkMode', function (serverContext, linkMode) {
 
-            var linkItem = function (linkHtml, editorContent) {
+            var linkItem = function (linkHtml) {
                 this.mode = linkMode.WebAddress;
                 this.openInNewWindow = false;
                 this.webAddress = null;
@@ -24,7 +24,6 @@
                 this.pageId = null;
                 this.emailAddress = null;
                 this.displayText = '';
-                this.anchors = [];
                 this.selectedAnchor = null;
 
                 this.setMode = function () {
@@ -67,17 +66,6 @@
                     }
                 };
 
-                this.populateAnchorIds = function () {
-                    if (editorContent) {
-                        var wrapperDiv = document.createElement("div");
-                        wrapperDiv.innerHTML = editorContent;
-                        var that = this;
-                        jQuery(wrapperDiv).find("[id]").each(function () {
-                            that.anchors.push(this.id);
-                        });
-                    }
-                };
-
                 this.setInternalPage = function () {
                     var sfref = linkHtml.attr('sfref');
                     idx = sfref.indexOf(']');
@@ -97,7 +85,6 @@
 
                 this.setMode();
                 this.setOpenInNewWindow();
-                this.populateAnchorIds();
                 this.setDisplayText();
 
                 if (this.mode == linkMode.WebAddress) {
@@ -115,8 +102,8 @@
 
             };
 
-            var constructLinkItem = function (linkHtml, editorContent) {
-                var item = new linkItem(linkHtml, editorContent);
+            var constructLinkItem = function (linkHtml) {
+                var item = new linkItem(linkHtml);
 
                 return item;
             };
@@ -172,9 +159,24 @@
 
                 return resultLink;
             };
+
+            var populateAnchorIds = function (editorContent) {
+                var anchors = [];
+
+                if (editorContent) {
+                    var wrapperDiv = document.createElement("div");
+                    wrapperDiv.innerHTML = editorContent;
+                    jQuery(wrapperDiv).find("[id]").each(function () {
+                        anchors.push(this.id);
+                    });
+                }
+
+                return anchors;
+            };
             return {
                 constructLinkItem: constructLinkItem,
-                getHtmlLink: getHtmlLink
+                getHtmlLink: getHtmlLink,
+                populateAnchorIds: populateAnchorIds
             };
         }]);
 })();
