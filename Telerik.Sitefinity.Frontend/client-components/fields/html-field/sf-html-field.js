@@ -85,7 +85,7 @@
 				                height: modalBody.height()
 				            }
 				        };
-				    }
+				    };
 
 				    if (isFullScreen === false) {
 				        dialog.css({
@@ -103,7 +103,7 @@
 				        modalBody.height(editorWrapperInitialStyle.modalBody.height);
 
 				        isFullScreen = false;
-				    }
+				    };
 				};
 			}
 		};
