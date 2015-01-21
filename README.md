@@ -6,8 +6,8 @@ This repository contains the core infrastructure related to [Project Feather](ht
 
 | Test | Status |
 |----|----|
-| Unit | [![Build Status](http://featherci.cloudapp.net/buildStatus/icon?job=Master_FeatherUnitTests)](http://featherci.cloudapp.net/job/Master_FeatherUnitTests/) |
-| Integration | [![Build Status](http://featherci.cloudapp.net/buildStatus/icon?job=Master_FeatherIntegrationTests)](http://featherci.cloudapp.net/job/Master_FeatherIntegrationTests/) |
+| Unit | [![Build Status](http://feather-ci.cloudapp.net/buildStatus/icon?job=Master_FeatherUnitTests)](http://feather-ci.cloudapp.net/job/Master_FeatherUnitTests/) |
+| Integration | [![Build Status](http://feather-ci.cloudapp.net/buildStatus/icon?job=Master_FeatherIntegrationTests)](http://feather-ci.cloudapp.net/job/Master_FeatherIntegrationTests/) |
 
 # Related Repositories
 
