@@ -5,19 +5,25 @@
 	<div class="form-group">
 		<div class="radio">
 			<label for="webAddress">
-			  <input id="webAddress" type="radio" ng-model="selectedItem.mode" value="sfLinkMode.WebAddress" />
+			  <input id="webAddress" type="radio" ng-model="selectedItem.mode" ng-value="sfLinkMode.WebAddress" />
 			  Web address
 			</label>
 		</div>
 		<div class="radio">
 			<label for="pagesFromThisSite">
-			  <input id="pagesFromThisSite" type="radio" ng-model="selectedItem.mode" value="sfLinkMode.InternalPage" />
+			  <input id="pagesFromThisSite" type="radio" ng-model="selectedItem.mode" ng-value="sfLinkMode.InternalPage" />
 			  Page from this site
+			</label>
+		</div>
+        <div class="radio">
+			<label for="anchor">
+			  <input id="anchor" type="radio" ng-model="selectedItem.mode" ng-value="sfLinkMode.Anchor" />
+			  Anchor
 			</label>
 		</div>
 		<div class="radio">
 			<label for="email">
-			  <input id="email" type="radio" ng-model="selectedItem.mode" value="sfLinkMode.EmailAddress" />
+			  <input id="email" type="radio" ng-model="selectedItem.mode" ng-value="sfLinkMode.EmailAddress" />
 			  Email
 			</label>
 		</div>
@@ -57,6 +63,22 @@
 			<input type="button" value="Test this link" />
 		</div>
 	</div>
+    <div ng-show="selectedItem.mode==sfLinkMode.Anchor">
+		<div>
+			<div><label for="anchorSelect">Anchor</label></div>
+			<div><select id="anchorSelect" ng-model="selectedItem.selectedAnchor" ng-options="a for a in anchors" /></div>
+			<div>
+				<label>A list of anchors already inserted in the text. <a>How to insert anchor?</a></label>
+			</div>
+		</div>
+		<div>
+			<div><label for="textToDisplay4">Text to display</label></div>
+			<div><input type="text" id="textToDisplay4" ng-model="selectedItem.displayText"/></div>
+			<div>
+				<label><strong>Example:</strong>Weather forecast</label>
+			</div>
+		</div>
+	</div>
 	<div ng-show="selectedItem.mode==sfLinkMode.EmailAddress">
 		<div>
 			<div><label for="emailAddress">Email address</label></div>
@@ -66,8 +88,8 @@
 			</div>
 		</div>
 		<div>
-			<div><label for="textToDisplay4">Text to display</label></div>
-			<div><input type="text" id="textToDisplay4" ng-model="selectedItem.displayText"/></div>
+			<div><label for="textToDisplay5">Text to display</label></div>
+			<div><input type="text" id="textToDisplay5" ng-model="selectedItem.displayText"/></div>
 			<div>
 				<label><strong>Example:</strong> Send email to John</label>
 			</div>

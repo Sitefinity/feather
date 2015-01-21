@@ -5,7 +5,8 @@
             var service = {
                 WebAddress: 1,
                 InternalPage: 2,
-                EmailAddress: 3
+                Anchor: 3,
+                EmailAddress: 4
             };
 
             return service;
@@ -23,6 +24,7 @@
                 this.pageId = null;
                 this.emailAddress = null;
                 this.displayText = '';
+                this.selectedAnchor = null;
 
                 this.setMode = function () {
                     if (linkHtml.attr('sfref') && linkHtml.attr('sfref').startsWith('[')) {
@@ -30,6 +32,9 @@
                     }
                     else if (linkHtml.attr('href') && linkHtml.attr('href').indexOf('mailto:') > -1) {
                         this.mode = linkMode.EmailAddress;
+                    }
+                    else if (linkHtml.attr('href') && linkHtml.attr('href').indexOf('#') > -1) {
+                        this.mode = linkMode.Anchor;
                     }
                     else {
                         this.mode = linkMode.WebAddress;
@@ -70,14 +75,26 @@
                     }
                 };
 
+                this.setSelectedAnchor = function () {
+                    var href = linkHtml.attr('href');
+                    idx = href.indexOf('#');
+                    if (idx > -1) {
+                        this.selectedAnchor = href.substring(idx + 1);
+                    }
+                };
+
                 this.setMode();
                 this.setOpenInNewWindow();
+                this.setDisplayText();
 
                 if (this.mode == linkMode.WebAddress) {
                     this.setWebAddress();
                 }
                 else if (this.mode == linkMode.InternalPage) {
                     this.setInternalPage();
+                }
+                else if (this.mode == linkMode.Anchor) {
+                    this.setSelectedAnchor();
                 }
                 else if (this.mode == linkMode.EmailAddress) {
                     this.setEmailAddress();
@@ -133,15 +150,33 @@
                         }
                     }
                 }
+                else if (linkItem.mode == linkMode.Anchor) {
+                    resultLink.attr('href', '#' + linkItem.selectedAnchor);
+                }
                 else if (linkItem.mode == linkMode.EmailAddress) {
                     resultLink.attr('href', 'mailto:' + linkItem.emailAddress);
                 }
 
                 return resultLink;
             };
+
+            var populateAnchorIds = function (editorContent) {
+                var anchors = [];
+
+                if (editorContent) {
+                    var wrapperDiv = document.createElement("div");
+                    wrapperDiv.innerHTML = editorContent;
+                    jQuery(wrapperDiv).find("[id]").each(function () {
+                        anchors.push(this.id);
+                    });
+                }
+
+                return anchors;
+            };
             return {
                 constructLinkItem: constructLinkItem,
-                getHtmlLink: getHtmlLink
+                getHtmlLink: getHtmlLink,
+                populateAnchorIds: populateAnchorIds
             };
         }]);
 })();
