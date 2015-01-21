@@ -31,7 +31,7 @@ var commonMethods = (function () {
      */
     return {
         /**
-         * Compiles the given template with the goven scope
+         * Compiles the given template with the given scope
          * and inserts the produced html in the given container marked with a css class.
          * @param  {String} template  the raw Angular template
          * @param  {Object} scope     the scope that will be applied to the template
