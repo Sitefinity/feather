@@ -16,6 +16,7 @@
 				scope.htmlViewLabel = 'HTML';
 
 				var isInHtmlView = false;
+				var isFullScreen = false;
 				var editor = null;
 				var content = null;
 
@@ -64,6 +65,17 @@
 					}
 
 					isInHtmlView = !isInHtmlView;
+				};
+
+				scope.toggleFullScreen = function () {
+				    if (editor == null)
+				        return;
+
+				    if (isFullScreen === false) {
+				        editor.wrapper.css({ width: $("body").width(), height: $(document).height() });
+				    } else {
+				        editor.wrapper.css({ width: 600, height: 400 });
+				    }
 				};
 			}
 		};
