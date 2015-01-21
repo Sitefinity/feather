@@ -80,7 +80,8 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                         new GridControlData() { Name = "Col3T1", Title = "4 + 4 + 4", LayoutTemplatePath = baseTemplatePath + "grid-4+4+4.html", CssClass = "sfL33_34_33" },
                         new GridControlData() { Name = "Col3T2", Title = "3 + 6 + 3", LayoutTemplatePath = baseTemplatePath + "grid-3+6+3.html", CssClass = "sfL25_50_25" },
                         new GridControlData() { Name = "Col4T1", Title = "3 + 3 + 3 + 3", LayoutTemplatePath = baseTemplatePath + "grid-3+3+3+3.html", CssClass = "sfL25_25_25_25" },
-                        new GridControlData() { Name = "Col5T1", Title = "2 + 3 + 2 + 3 + 2", LayoutTemplatePath = baseTemplatePath + "grid-2+3+2+3+2.html", CssClass = "sfL20_20_20_20_20" }
+                        new GridControlData() { Name = "Col5T1", Title = "2 + 3 + 2 + 3 + 2", LayoutTemplatePath = baseTemplatePath + "grid-2+3+2+3+2.html", CssClass = "sfL20_20_20_20_20" },
+                        new GridControlData() { Name = "Col1T1", Title = "container", LayoutTemplatePath = baseTemplatePath + "container.html", CssClass = "sfL100" }
             };
 
             return layoutControls;
