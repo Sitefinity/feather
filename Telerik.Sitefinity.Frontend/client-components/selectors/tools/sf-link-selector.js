@@ -11,7 +11,7 @@
                            scope: {
                                sfLinkHtml: '=',
                                sfSelectedItem: '=',
-                               sfEditorContent: '@'
+                               sfEditorContent: '='
                            },
                            templateUrl: function (elem, attrs) {
                                var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';

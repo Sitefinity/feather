@@ -65,29 +65,34 @@
     </div>
 </div>
 <div ng-show="sfSelectedItem.mode==sfLinkMode.Anchor">
-	<div>
-		<div><label for="anchorSelect">Anchor</label></div>
-		<div>
-            <select id="anchorSelect" ng-model="sfSelectedItem.selectedAnchor" ng-options="a for a in anchors">
-                <option value="">- Select -</option>
-            </select>
-		</div>
-		<div>
-			<label>A list of anchors already inserted in the text. <a>How to insert anchor?</a></label>
-		</div>
-	</div>
-	<div>
-		<div><label for="textToDisplay4">Text to display</label></div>
-		<div><input type="text" id="text5" ng-model="sfSelectedItem.displayText"/></div>
-		<div>
-			<label><strong>Example:</strong>Weather forecast</label>
-		</div>
-	</div>
+	<div ng-hide="anchors.length==0">
+        <div>
+		    <div><label for="anchorSelect">Anchor</label></div>
+		    <div>
+                <select id="anchorSelect" ng-model="sfSelectedItem.selectedAnchor" ng-options="a for a in anchors">
+                    <option value="">- Select -</option>
+                </select>
+		    </div>
+		    <div>
+			    <label>A list of anchors already inserted in the text. <a>How to insert anchor?</a></label>
+		    </div>
+	    </div>
+	    <div>
+		    <div><label for="textToDisplay4">Text to display</label></div>
+		    <div><input type="text" id="text5" ng-model="sfSelectedItem.displayText"/></div>
+		    <div>
+			    <label><strong>Example:</strong>Weather forecast</label>
+		    </div>
+	    </div>
+    </div>
+    <div ng-show="anchors.length==0" class="alert alert-info" role="alert">
+        <label>No anchors have been inserted in the text. <a>How to insert anchor?</a></label>
+    </div>
 </div>
 <div ng-show="sfSelectedItem.mode==sfLinkMode.EmailAddress">
 	<div>
 		<div><label for="emailAddress">Email address</label></div>
-		<div><input type="text" id="Text6" ng-model="sfSelectedItem.emailAddress" /></div>
+		<div><input type="email" id="Text6" ng-model="sfSelectedItem.emailAddress" /></div>
 		<div>
 			<label><strong>Example:</strong> johnsmith@gmail.com</label>
 		</div>
