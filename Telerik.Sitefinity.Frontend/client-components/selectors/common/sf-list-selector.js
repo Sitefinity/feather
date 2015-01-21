@@ -71,8 +71,13 @@
                     this.onPostLinkComleted = function () {
                     };
 
-                    this.clearItems = function () {
+                    this.resetItems = function () {
+                        $scope.paging.skip = 0;
+                        $scope.paging.areAllItemsLoaded = false;
+                        $scope.filter.searchString = null;
                         $scope.items = [];
+                        $scope.selectedItemsInTheDialog = [];
+                        $scope.selectedItemsViewData = [];
                     };
 
                     var compareFunction = function (item1, item2) {
@@ -109,7 +114,7 @@
                                 Array.prototype.push.apply(scope.items, data.Items);
                             }
                             else {
-                                pushSelectedItemToTheTop();
+                                pushSelectedItemToTheTop(data.Items);
                                 pushNotSelectedItems(data.Items);
                             }
                             return scope.items;
@@ -155,9 +160,19 @@
 
                         var currentSelectedIds;
 
-                        var pushSelectedItemToTheTop = function () {
+                        var pushSelectedItemToTheTop = function (items) {
+
                             if (scope.items.length === 0 && scope.sfSelectedItems && scope.sfSelectedItems.length > 0) {
                                 scope.items.push(scope.sfSelectedItems[0]);
+                            }
+                            else {
+                                var ids = scope.getSelectedIds();
+                                if (scope.items.length === 0 && ids && ids.length > 0) {
+                                    Array.prototype.push.apply(scope.items,
+                                                   items.filter(function (item) {
+                                                       return ids.indexOf(item.Id) === 0;
+                                                   }));
+                                }
                             }
                         };
 
@@ -200,15 +215,6 @@
                             if (scope.sfSelectedItems) {
                                 Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.sfSelectedItems);
                             }
-                        };
-
-                        var resetItems = function () {
-                            scope.paging.skip = 0;
-                            scope.paging.areAllItemsLoaded = false;
-                            scope.filter.searchString = null;
-                            scope.items = [];
-                            scope.selectedItemsInTheDialog = [];
-                            scope.selectedItemsViewData = [];
                         };
 
                         var areArrayEquals = function (arr1, arr2) {
@@ -368,12 +374,12 @@
                                 scope.sfSelectedIds = [];
                             }
 
-                            resetItems();
+                            ctrl.resetItems();
                             scope.$modalInstance.close();
                         };
 
                         scope.cancel = function () {
-                            resetItems();
+                            ctr.resetItems();
                             scope.$modalInstance.close();
                         };
 

@@ -7,7 +7,7 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         var rootPage = serverContext.getCurrentFrontendRootNodeId();
-
+                        
                         // <------- Begin: Helper methods ------
                         var getSiteMapRootNodeId = function () {
                             var selectedSite = scope.$eval(attrs.sfPageSelector);
@@ -35,19 +35,41 @@
 
                         var allowLoadingItems = function (newSite, oldSite) {
                             if (newSite && oldSite) {
-                                return (newSite.Id !== oldSite.Id);
+                                return newSite.Id !== oldSite.Id;
                             }
                             else if (!newSite && !oldSite) {
                                 return false;
                             }
                             return true;
                         };
+
+                        var areLanguageEqual = function (newLang, oldLang) {
+                            if (newLang && oldLang) {
+                                return newLang.Culture === oldLang.Culture;
+                            }
+                            else if (!newLang && !oldLang) {
+                                return true;
+                            }
+                            return false;
+                        };
+
+                        var getCulture = function () {
+                            var sfCulture = scope.$eval(attrs.sfCulture);
+
+                            return sfCulture && sfCulture.Culture ? sfCulture.Culture : serverContext.getUICulture();
+                        };
                         // ------ End: Helper methods ------->
 
                         scope.$watch(attrs.sfPageSelector, function (newSite, oldSite) {
                             if (allowLoadingItems(newSite, oldSite)) {
-                                ctrl.clearItems();
+                                ctrl.resetItems();
                                 ctrl.beginLoadingItems();
+                            }
+                        });
+
+                        scope.$watch(attrs.sfCulture, function (newLang, oldLang) {
+                            if (!areLanguageEqual(newLang, oldLang)) {
+                                ctrl.$scope.selectedItemsInTheDialog.length = 0;
                             }
                         });
 
@@ -71,11 +93,14 @@
 
                         ctrl.getSpecificItems = function (ids) {
                             var provider = ctrl.$scope.sfProvider;
-                            return pageService.getSpecificItems(ids, provider);
+
+                            var rootId = getSiteMapRootNodeId();
+
+                            return pageService.getSpecificItems(ids, provider, rootId);
                         };
 
                         ctrl.itemDisabled = function (item) {
-                            var uiCulture = serverContext.getUICulture();
+                            var uiCulture = getCulture();
 
                             if (uiCulture && item.AvailableLanguages && item.AvailableLanguages.length > 0) {
                                 return item.AvailableLanguages.indexOf(uiCulture) < 0;
@@ -105,7 +130,7 @@
                                 ctrl.beginLoadingItems();
                             }
                         };
-                    },
+                    }
                 }
             };
         }]);

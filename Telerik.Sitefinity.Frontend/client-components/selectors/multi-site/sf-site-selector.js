@@ -1,5 +1,5 @@
 ﻿(function ($, selectorModule) {
-    selectorModule.directive('sfMultiSiteSelector', ['sfMultiSiteService', function (multiSiteService) {
+    selectorModule.directive('sfSiteSelector', ['sfMultiSiteService', function (multiSiteService) {
         return {
             restrict: 'E',
             scope: {
@@ -7,7 +7,7 @@
             },
             templateUrl: function (elem, attrs) {
                 var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                var url = attrs.sfTemplateUrl || 'client-components/selectors/multi-site/sf-multi-site-selector.html';
+                var url = attrs.sfTemplateUrl || 'client-components/selectors/multi-site/sf-site-selector.html';
                 return sitefinity.getEmbeddedResourceUrl(assembly, url);
             },
             link: function (scope, element, attrs) {
@@ -16,10 +16,10 @@
                 });
 
                 getSitesForUserPromise.then(function (data) {
-                    scope.sites = data.Items;
-
-                    if (scope.sites.length > 0 && !scope.sfSite) {
-                        scope.sfSite = scope.sites[0];
+                    scope.sfSites = data.Items;
+                    
+                    if (scope.sfSites.length > 0 && !scope.sfSite) {
+                        scope.sfSite = scope.sfSites[0];
                     }
                 });
 

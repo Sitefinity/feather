@@ -1,4 +1,7 @@
 ﻿(function () {
+    var GUID_REGEX = /([a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})/g;
+    var LANG_REGEX = /\|lng:([^\]]+)/;
+
     angular.module('sfSelectors')
         .factory('sfLinkMode', [function () {
 
@@ -14,6 +17,8 @@
         }])
         .factory('sfLinkService', ['serverContext', 'sfLinkMode', function (serverContext, linkMode) {
 
+            var emptyGuid = '00000000-0000-0000-0000-000000000000';
+
             var linkItem = function (linkHtml) {
                 this.mode = linkMode.WebAddress;
                 this.openInNewWindow = false;
@@ -26,11 +31,18 @@
                 this.displayText = '';
                 this.selectedAnchor = null;
 
+                function startsWith (str, subStr) {
+                    return str.slice(0, subStr.length) === subStr;
+                }
+
                 this.setMode = function () {
-                    if (linkHtml.attr('sfref') && linkHtml.attr('sfref').startsWith('[')) {
+                    var sfref = linkHtml.attr('sfref');
+                    var href = linkHtml.attr('href');
+
+                    if (sfref && startsWith(sfref, '[')) {
                         this.mode = linkMode.InternalPage;
                     }
-                    else if (linkHtml.attr('href') && linkHtml.attr('href').indexOf('mailto:') > -1) {
+                    else if (href && href.indexOf('mailto:') > -1) {
                         this.mode = linkMode.EmailAddress;
                     }
                     else if (linkHtml.attr('href') && linkHtml.attr('href').indexOf('#') > -1) {
@@ -68,10 +80,23 @@
 
                 this.setInternalPage = function () {
                     var sfref = linkHtml.attr('sfref');
-                    idx = sfref.indexOf(']');
-                    if (idx > -1) {
-                        this.rootNodeId = sfref.substr(1, idx - 1);
-                        this.pageId = sfref.substring(idx + 1);
+                    
+                    var guids = sfref.match(GUID_REGEX);
+                    var cultures = sfref.match(LANG_REGEX);
+
+                    if (guids.length > 0) {
+                        this.rootNodeId = guids[0];
+
+                        if (guids.length > 1) {
+                            this.pageId = guids[1];
+                        }
+                    }
+                    if (cultures && cultures.length > 1) {
+                        //NOTE: For a non-global regexp - it finds the first match and returns an array: the full match becomes array item at index 0, the first group - at index 1, and so on.
+                        this.language = cultures[1];
+                    }
+                    else {
+                        this.language = serverContext.getUICulture();
                     }
                 };
 
@@ -99,7 +124,6 @@
                 else if (this.mode == linkMode.EmailAddress) {
                     this.setEmailAddress();
                 }
-
             };
 
             var constructLinkItem = function (linkHtml) {
@@ -131,7 +155,7 @@
                         //	this.get_pageSelector().get_languageSelectorSelectedCulture() : null;
                         if (selectedPageId) {
                             var key;
-                            if (linkItem.rootNodeId && linkItem.rootNodeId != Telerik.Sitefinity.getEmptyGuid()) {
+                            if (linkItem.rootNodeId && linkItem.rootNodeId != emptyGuid) {
                                 key = linkItem.rootNodeId;
                             }
                             else if (selectedPage) {

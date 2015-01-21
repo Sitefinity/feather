@@ -7,6 +7,10 @@
           /* Private methods and variables */
           var serviceUrl = serverContext.getRootedUrl('/Sitefinity/Services/Multisite/Multisite.svc/');
 
+          var handlers = [];
+
+          var sfSites = [];
+
           var getResource = function (urlParams) {
               var url = serviceUrl;
 
@@ -17,10 +21,25 @@
               return serviceHelper.getResource(url);
           };
 
+          var addHandler = function (callback) {
+              handlers.push(callback);
+          };
+
+          var getSiteByRootNoteId = function (rootNodeId) {
+              if (sfSites) {
+                  for (var i = 0; i < sfSites.length; i++) {
+                      var site = sfSites[i];
+                      if (site.SiteMapRootNodeId === rootNodeId) {
+                          return site;
+                      }
+                  }
+              }
+          };
+
           var getSitesForUserPromise = function (defaultParams) {
               var urlTemplate = 'user/:userId/sites/';
-              
-              dataItemPromise = getResource(urlTemplate).get(
+
+              var promise = getResource(urlTemplate).get(
                   {
                       userId: serverContext.getCurrentUserId(),
                       sortExpression: defaultParams.sortExpression,
@@ -30,12 +49,27 @@
                   })
                   .$promise;
 
-              return dataItemPromise;
+              promise
+                  .then(function (data) {
+                      sfSites = data.Items;
+                  })
+                  .then(function (data) {
+                      angular.forEach(handlers, function (promise) {
+                          if (typeof promise === 'function') {
+                              promise();
+                          }
+                      });
+                  });
+
+              return promise;
           };
 
           return {
               /* Returns the data items. */
               getSitesForUserPromise: getSitesForUserPromise,
+              addHandler: addHandler,
+              getSiteByRootNoteId: getSiteByRootNoteId,
+              sfSites: sfSites
           };
       }]);
 })(angular.module('sfServices'));

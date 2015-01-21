@@ -1,25 +1,25 @@
 ﻿<div class="form-group">
 	<div class="radio">
 		<label for="webAddress">
-			<input id="webAddress" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.WebAddress" />
+			<input id="Radio1" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.WebAddress" />
 			Web address
 		</label>
 	</div>
 	<div class="radio">
 		<label for="pagesFromThisSite">
-			<input id="pagesFromThisSite" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.InternalPage" />
+			<input id="Radio2" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.InternalPage" />
 			Page from this site
 		</label>
 	</div>
     <div class="radio">
 		<label for="anchor">
-			<input id="anchor" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.Anchor" />
+			<input id="Radio3" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.Anchor" />
 			Anchor
 		</label>
 	</div>
 	<div class="radio">
 		<label for="email">
-			<input id="email" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.EmailAddress" />
+			<input id="Radio4" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.EmailAddress" />
 			Email
 		</label>
 	</div>
@@ -27,37 +27,42 @@
 <div ng-show="sfSelectedItem.mode==sfLinkMode.WebAddress">
 	<div>
 		<div><label for="webAddress">Web address</label></div>
-		<div><input type="text" id="Text1" ng-model="sfSelectedItem.webAddress" /></div>
+		<div><input type="text" id="Text2" ng-model="sfSelectedItem.webAddress" /></div>
 		<div>
 			<label><strong>Example:</strong> http://weather.com</label>
 		</div>
 	</div>
 	<div>
 		<div><label for="textToDisplay1">Text to display</label></div>
-		<div><input type="text" id="textToDisplay1" ng-model="sfSelectedItem.displayText" /></div>
+		<div><input type="text" id="text3" ng-model="sfSelectedItem.displayText" /></div>
 		<div>
 			<label><strong>Example:</strong> Weather forecast</label>
 		</div>
 	</div>
 	<div>
-		<label for="openInNewWin1"><input type="checkbox" id="openInNewWin" ng-model="sfSelectedItem.openInNewWindow" />Open this link in a new window</label>
+		<label for="openInNewWin1"><input type="checkbox" id="Checkbox1" ng-model="sfSelectedItem.openInNewWindow" />Open this link in a new window</label>
 	</div>
 	<div>
 		<a ng-href="{{sfSelectedItem.webAddress}}" target="_blank">Test this link</a>
 	</div>
 </div>
 <div ng-show="sfSelectedItem.mode==sfLinkMode.InternalPage">
-		<sf-list-selector sf-page-selector></sf-list-selector>
-		<div>
-		<div><label for="textToDisplay2">Text to display</label></div>
-		<div><input type="text" id="textToDisplay2" ng-model="sfSelectedItem.displayText" /></div>
-	</div>
-	<div>
-		<label for="openInNewWin2"><input type="checkbox" id="openInNewWin2" ng-model="sfSelectedItem.openInNewWindow" />Open this link in a new window</label>
-	</div>
-	<div>
-		<input type="button" value="Test this link" />
-	</div>
+    <div>
+        <sf-multisite-page-selector sf-site="sfSite"
+                                    sf-culture="sfCulture"
+                                    sf-selected-item-id="selectedItem.pageId"></sf-multisite-page-selector>
+    </div>
+
+    <div>
+        <div><label for="textToDisplay2">Text to display</label></div>
+        <div><input type="text" id="text4" ng-model="selectedItem.displayText" /></div>
+    </div>
+    <div>
+        <label for="openInNewWin2"><input type="checkbox" id="Checkbox2" ng-model="selectedItem.openInNewWindow" />Open this link in a new window</label>
+    </div>
+    <div>
+        <input type="button" value="Test this link" />
+    </div>
 </div>
 <div ng-show="sfSelectedItem.mode==sfLinkMode.Anchor">
 	<div>
@@ -73,7 +78,7 @@
 	</div>
 	<div>
 		<div><label for="textToDisplay4">Text to display</label></div>
-		<div><input type="text" id="textToDisplay4" ng-model="sfSelectedItem.displayText"/></div>
+		<div><input type="text" id="text5" ng-model="sfSelectedItem.displayText"/></div>
 		<div>
 			<label><strong>Example:</strong>Weather forecast</label>
 		</div>
@@ -82,14 +87,14 @@
 <div ng-show="sfSelectedItem.mode==sfLinkMode.EmailAddress">
 	<div>
 		<div><label for="emailAddress">Email address</label></div>
-		<div><input type="text" id="emailAddress" ng-model="sfSelectedItem.emailAddress" /></div>
+		<div><input type="text" id="Text6" ng-model="sfSelectedItem.emailAddress" /></div>
 		<div>
 			<label><strong>Example:</strong> johnsmith@gmail.com</label>
 		</div>
 	</div>
 	<div>
 		<div><label for="textToDisplay5">Text to display</label></div>
-		<div><input type="text" id="textToDisplay5" ng-model="sfSelectedItem.displayText"/></div>
+		<div><input type="text" id="text7" ng-model="sfSelectedItem.displayText"/></div>
 		<div>
 			<label><strong>Example:</strong> Send email to John</label>
 		</div>
