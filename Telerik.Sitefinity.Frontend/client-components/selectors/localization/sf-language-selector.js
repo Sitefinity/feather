@@ -40,24 +40,18 @@
                               scope.errorMessage = error;
                           });
 
-                          return localizationPromise;
+                          if (!scope.sfCulture && scope.sfCultures.length > 0) {
+                              scope.sfCulture = scope.sfCultures[0];
+                          }
                       };
                       
                       if (scope.sfSite) {
-                          beginLoadingLanguages().then(function () {
-                              if (!scope.sfCulture && scope.sfCultures.length > 0) {
-                                  scope.sfCulture = scope.sfCultures[0];
-                              }
-                          });
+                          beginLoadingLanguages();
                       }
 
                       scope.$watch('sfSite', function (newSite, oldSite) {
                           if (scope.sfSite) {
-                              beginLoadingLanguages().then(function () {
-                                  if (scope.sfCultures.length > 0) {
-                                      scope.sfCulture = scope.sfCultures[0];
-                                  }
-                              });
+                              beginLoadingLanguages();
                           }
                       });
                   }

@@ -66,7 +66,7 @@
 
                 this.setInternalPage = function () {
                     var sfref = linkHtml.attr('sfref');
-
+                    
                     var guids = sfref.match(GUID_REGEX);
                     var cultures = sfref.match(LANG_REGEX);
 
@@ -77,23 +77,13 @@
                             this.pageId = guids[1];
                         }
                     }
-                    if (cultures.length > 1) {
+                    if (cultures && cultures.length > 1) {
                         //NOTE: For a non-global regexp - it finds the first match and returns an array: the full match becomes array item at index 0, the first group - at index 1, and so on.
                         this.language = cultures[1];
                     }
-
-                    //var langDelimiter = sfref.indexOf('|');
-                    //idx = langDelimiter > -1 ? langDelimiter : sfref.indexOf(']');
-
-                    //if (idx > -1) {
-                    //    this.rootNodeId = sfref.substr(1, idx - 1);
-                    //    this.pageId = sfref.substring(idx + 1);
-
-                    //    var langDelimiter = sfref.indexOf("|lng:");
-
-                    //    var selectedCulture = langDelimiter == -1 ? serverContext.getUICulture() :
-                    //                                sfref.substring(langDelimiter, sfref.indexOf(']'));
-                    //}
+                    else {
+                        this.language = serverContext.getUICulture();
+                    }
                 };
 
                 this.setMode();
@@ -108,7 +98,6 @@
                 else if (this.mode == linkMode.EmailAddress) {
                     this.setEmailAddress();
                 }
-
             };
 
             var constructLinkItem = function (linkHtml) {

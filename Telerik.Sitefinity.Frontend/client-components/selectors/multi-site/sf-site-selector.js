@@ -18,6 +18,8 @@
                 getSitesForUserPromise.then(function (data) {
                     scope.sfSites = data.Items;
                     
+                    multiSiteService.currentSites = scope.sfSites;
+
                     if (scope.sfSites.length > 0 && !scope.sfSite) {
                         scope.sfSite = scope.sfSites[0];
                     }

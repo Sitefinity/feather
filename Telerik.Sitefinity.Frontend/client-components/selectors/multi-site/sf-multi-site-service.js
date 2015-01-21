@@ -7,6 +7,9 @@
           /* Private methods and variables */
           var serviceUrl = serverContext.getRootedUrl('/Sitefinity/Services/Multisite/Multisite.svc/');
 
+        
+          var currentSites = [];
+
           var getResource = function (urlParams) {
               var url = serviceUrl;
 
@@ -36,6 +39,9 @@
           return {
               /* Returns the data items. */
               getSitesForUserPromise: getSitesForUserPromise,
+
+              /* Storage for currently loaded sites. */
+              currentSites: []
           };
       }]);
 })(angular.module('sfServices'));
