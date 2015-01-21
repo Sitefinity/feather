@@ -51,7 +51,7 @@
                                 return $(this).children("[ng-click]").length > 0;
                             });
                         }
-                        
+
                         if (!shortToolbar) {
                             shortToolbar = fullToolbar.clone(true);
                             shortToolbar.html("");
@@ -82,7 +82,7 @@
                         return;
 
                     var dialog = $(".modal-dialog");
-                    var editorBodies = $(".modal-body iframe.k-content, .modal-body textarea.k-content");
+                    var editorBodies = $(".modal-body iframe.k-content, .modal-body textarea.k-content, td.k-editable-area");
 
                     if (!editorWrapperInitialStyle) {
                         editorWrapperInitialStyle = {
