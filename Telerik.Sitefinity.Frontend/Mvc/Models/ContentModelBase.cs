@@ -616,13 +616,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
             else
             {
-                query = DataProviderBase.SetExpressions(
-                                                  query,
-                                                  filterExpression,
-                                                  sortExpr,
-                                                  itemsToSkip,
-                                                  itemsToTake,
-                                                  ref totalCount);
+                try
+                {
+                    query = DataProviderBase.SetExpressions(
+                                                      query,
+                                                      filterExpression,
+                                                      sortExpr,
+                                                      itemsToSkip,
+                                                      itemsToTake,
+                                                      ref totalCount);
+                }
+                catch (MemberAccessException)
+                {
+                    this.SortExpression = DefaultSortExpression;
+                    query = DataProviderBase.SetExpressions(
+                                                      query,
+                                                      filterExpression,
+                                                      this.SortExpression,
+                                                      itemsToSkip,
+                                                      itemsToTake,
+                                                      ref totalCount);
+                }
             }
 
             return query.ToArray<dynamic>();
@@ -631,8 +645,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         #region Private fields and constants
 
+        private const string DefaultSortExpression = "PublicationDate DESC";
+
         private int? itemsPerPage = 20;
-        private string sortExpression = "PublicationDate DESC";
+        private string sortExpression = DefaultSortExpression;
         private string serializedSelectedItemsIds;
         private IList<string> selectedItemsIds = new List<string>();
 
