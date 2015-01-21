@@ -26,7 +26,15 @@
 				});
 
 				scope.openLinkSelector = function () {
-				    scope.selectedHtml = editor.selectedHtml();
+				    var selection = editor.getSelection();
+				    var parent = selection.extentNode.parentElement;
+				    if (parent.tagName.toLowerCase() === "a") {
+				        scope.selectedHtml = parent;
+				    }
+				    else {
+				        scope.selectedHtml = editor.selectedHtml();
+				    }
+
 				    angular.element("#linkSelectorModal").scope().$openModalDialog();
 				};
 

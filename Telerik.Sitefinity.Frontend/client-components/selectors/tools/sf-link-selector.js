@@ -6,7 +6,7 @@
                 scope: {
                     sfLinkHtml: '=',
                     sfSelectedItem: '=',
-                    sfEditorContent: '@'
+                    sfEditorContent: '='
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -17,6 +17,13 @@
                     post: function (scope, element, attrs, ctrl) {
                         scope.anchors = linkService.populateAnchorIds(scope.sfEditorContent);
                         scope.sfLinkMode = sfLinkMode;
+
+                        if (typeof (scope.sfLinkHtml) === "string") {
+                            var resultLink = jQuery('<a></a>');
+                            resultLink.html(scope.sfLinkHtml);
+                            scope.sfLinkHtml = resultLink;
+                        }
+
                         scope.sfSelectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
                     }
                 }
