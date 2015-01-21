@@ -20,7 +20,9 @@
 				var content = null;
 
 				scope.$on('kendoWidgetCreated', function (event, widget) {
-					widget.focus();
+                    if (widget.focus)
+                        widget.focus();
+
 					editor = widget;
 					content = editor.wrapper.find('iframe.k-content').first();
 				});
