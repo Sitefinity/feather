@@ -31,7 +31,7 @@
 
           return {
               /* Returns the data items. */
-              getLocalizationSettings: getLocalizationSettings,
+              getLocalizationSettings: getLocalizationSettings
           };
       }]);
 })(angular.module('sfServices'));

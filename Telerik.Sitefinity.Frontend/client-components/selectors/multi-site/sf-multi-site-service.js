@@ -39,7 +39,7 @@
           var getSitesForUserPromise = function (defaultParams) {
               var urlTemplate = 'user/:userId/sites/';
 
-              promise = getResource(urlTemplate).get(
+              var promise = getResource(urlTemplate).get(
                   {
                       userId: serverContext.getCurrentUserId(),
                       sortExpression: defaultParams.sortExpression,
