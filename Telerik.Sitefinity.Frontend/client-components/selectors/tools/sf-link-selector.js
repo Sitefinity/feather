@@ -10,6 +10,7 @@
                            restrict: 'E',
                            scope: {
                                sfLinkHtml: '=',
+                               sfSelectedItem: '=',
                                sfEditorContent: '@'
                            },
                            templateUrl: function (elem, attrs) {
@@ -21,28 +22,22 @@
                                post: function (scope, element, attrs, ctrl) {
 
                                    var init = function () {
-                                       
+                                       scope.anchors = linkService.populateAnchorIds(scope.sfEditorContent);
+                                       scope.sfLinkMode = sfLinkMode;
+
+                                       if (typeof (scope.sfLinkHtml) === "string") {
+                                           var resultLink = jQuery('<a></a>');
+                                           resultLink.html(scope.sfLinkHtml);
+                                           scope.sfLinkHtml = resultLink;
+                                       }
+
                                        var selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
 
                                        scope.sfSite = siteService.getSiteByRootNoteId(selectedItem.rootNodeId);
-
                                        scope.sfCulture = { Culture: selectedItem.language };
 
-                                       scope.selectedItem = selectedItem;
+                                       scope.sfSelectedItem = selectedItem;
                                    };
-
-                                   scope.insertLink = function () {
-                                       var htmlLinkObj = linkService.getHtmlLink(scope.selectedItem);
-                                       scope.sfLinkHtml = htmlLinkObj[0];
-                                       scope.$modalInstance.close();
-                                   };
-
-                                   scope.cancel = function () {
-                                       scope.$modalInstance.close();
-                                   };
-
-                                   scope.anchors = linkService.populateAnchorIds(scope.sfEditorContent);
-                                   scope.sfLinkMode = sfLinkMode;
 
                                    siteService.addHandler(function () {
                                        init();

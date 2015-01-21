@@ -1,16 +1,22 @@
-<textarea style="height: 340px;" 
+﻿<textarea id="editor" style="height: 340px;" 
     kendo-editor ng-model="ngModel" 
     k-encoded="false" 
     k-tools='["bold", "italic", "underline", "trikethrough", "subscript", "superscript", 
     "fontName", "fontSize", "foreColor", "backColor", 
     "justifyLeft", "justifyCenter", "justifyRight", "justifyFull", 
     "insertUnorderedList", "insertOrderedList", "indent", "outdent", 
-    "createLink", "unlink", "insertImage", "insertFile", 
+    {
+		name: "createLink",
+		template: "<button class=\"k-button\" ng-click=\"openLinkSelector()\">Link Selector</button>"
+	},
+     "unlink", "insertImage", "insertFile", 
     "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn", 
     "formatting", "cleanFormatting",
-	{
+    {
 		name: "htmlView",
 		template: "<button class=\"k-button\" ng-click=\"toggleHtmlView()\">\{\{htmlViewLabel\}\}</button>"
 	}
 	]'>
 </textarea>
+
+<sf-link-selector-modal id="linkSelectorModal"></sf-link-selector-modal>
