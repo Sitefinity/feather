@@ -14,6 +14,7 @@ angular.module('sfSelectors').directive('sfLinkSelectorModal', function ($inject
             var selectedItem = angular.element("#linkSelector").scope().selectedItem;
             var htmlLinkObj = linkService.getHtmlLink(selectedItem);
             $scope.selectedHtml = htmlLinkObj[0];
+            $scope.$emit('selectedHtmlChanged', $scope.selectedHtml);
             $scope.$modalInstance.close();
         };
 

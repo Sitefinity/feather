@@ -1,9 +1,9 @@
 ﻿(function ($) {
 	var module = angular.module('sfFields', ['kendo.directives', 'sfServices']);
 
-	module.directive('sfHtmlField', ['serverContext', function (serverContext) {
+    module.directive('sfHtmlField', ['serverContext', '$compile', function (serverContext, $compile) {
 		return {
-		    restrict: "E",
+			restrict: "E",
 			scope: {
 				ngModel: '='
 			},
@@ -13,7 +13,7 @@
 				return serverContext.getEmbeddedResourceUrl(assembly, url);
 			},
 			link: function (scope, element) {
-			    scope.htmlViewLabel = 'HTML';
+				scope.htmlViewLabel = 'HTML';
 
 				var isInHtmlView = false;
 				var editor = null;
@@ -26,10 +26,22 @@
 				});
 
 				scope.openLinkSelector = function () {
-				    var editor = $('#editor').data('kendoEditor');
 				    scope.selectedHtml = editor.selectedHtml();
 				    angular.element("#linkSelectorModal").scope().$openModalDialog();
 				};
+
+				scope.$on('selectedHtmlChanged', function (event, data) {
+				    scope.selectedHtml = data;
+				    var range = editor.getRange();
+				    var startIndex = range.startOffset;
+				    var endIndex = range.endOffset;
+
+				    var content = editor.value();
+				    var newContent = content.substring(0, startIndex) + data.outerHTML + content.substring(endIndex, content.length);
+
+				    editor.value(newContent);
+
+				});
 
 				scope.toggleHtmlView = function () {
 					if (editor == null)
@@ -38,10 +50,9 @@
 					if (isInHtmlView == false) {
 						scope.htmlViewLabel = 'Design';
 
-						$('<textarea class="html k-content" style="resize: none">')
-							.val(editor.value())
-							.insertAfter(content);
-
+                        var htmlEditor = $('<textarea class="html k-content" ng-model="ngModel" style="resize: none">');
+                        $compile(htmlEditor)(scope)
+                        htmlEditor.insertAfter(content);
 						content.hide();
 
 						editor.wrapper.find('.k-tool:visible').removeClass('k-state-selected').addClass('k-state-disabled').css('display', 'inline-block');
@@ -52,21 +63,16 @@
 					} else {
 						scope.htmlViewLabel = 'HTML';
 
-						var html = editor.wrapper.find('.html');
-
-						editor.value(html.val());
-
-						editor.trigger('change');
-
-						html.remove();
-
-						content.show();
-
 						editor.wrapper.find('.k-tool:visible').removeClass('k-state-disabled');
 						editor.wrapper.find('[data-role=combobox]').kendoComboBox('enable', true);
 						editor.wrapper.find('[data-role=dropdownlist]').kendoDropDownList('enable', true);
 						editor.wrapper.find('[data-role=selectbox]').kendoSelectBox('enable', true);
 						editor.wrapper.find('[data-role=colorpicker]').kendoColorPicker('enable', true);
+
+                        var html = editor.wrapper.find('.html');
+
+                        html.remove();
+                        content.show();
 					}
 
 					isInHtmlView = !isInHtmlView;
