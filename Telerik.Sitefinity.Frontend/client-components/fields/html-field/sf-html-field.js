@@ -19,6 +19,7 @@
 				var isFullScreen = false;
 				var editor = null;
 				var content = null;
+				var editorWrapperInitialStyle = null;
 
 				scope.$on('kendoWidgetCreated', function (event, widget) {
 					widget.focus();
@@ -71,10 +72,37 @@
 				    if (editor == null)
 				        return;
 
+				    var dialog = $(".modal-dialog");
+				    var modalBody = $(".modal-body");
+
+				    if (!editorWrapperInitialStyle) {
+				        editorWrapperInitialStyle = {
+				            dialog: {
+				                margin: dialog.css('margin'),
+                                width : dialog.width()
+				            },
+				            modalBody: {
+				                height: modalBody.height()
+				            }
+				        };
+				    }
+
 				    if (isFullScreen === false) {
-				        editor.wrapper.css({ width: $("body").width(), height: $(document).height() });
+				        dialog.css({
+				            margin: 0,
+				            width: $("body").width()
+				        });
+				        modalBody.height($(document).height());
+
+				        isFullScreen = true;
 				    } else {
-				        editor.wrapper.css({ width: 600, height: 400 });
+				        dialog.css({
+				            margin: editorWrapperInitialStyle.dialog.margin,
+				            width: editorWrapperInitialStyle.dialog.width
+				        });
+				        modalBody.height(editorWrapperInitialStyle.modalBody.height);
+
+				        isFullScreen = false;
 				    }
 				};
 			}
