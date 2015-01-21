@@ -137,8 +137,8 @@ describe('links service', function () {
         it('[GeorgiMateev] / should get page data from the anchor sfref attribute.', function () {
             var selectedPage = {
                 FullUrl: 'http://somesite.com/home',
-                Id: '4c003fb0-2a77-61ec-be54-ff00007864f',
-                RootId: '4c003fb0-2a77-61ec-bbbb-ff00007864f'
+                Id: '4c003fb0-2a77-61ec-be54-ff00007864fF',
+                RootId: '4c003fb0-2a77-61ec-bbbb-ff00007864fF'
             };
 
             var html = '<a sfref="[{0}|lng:en]{1}">My link</a>'

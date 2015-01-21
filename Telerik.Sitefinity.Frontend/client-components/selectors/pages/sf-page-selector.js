@@ -62,7 +62,7 @@
 
                         scope.$watch(attrs.sfPageSelector, function (newSite, oldSite) {
                             if (allowLoadingItems(newSite, oldSite)) {
-                                ctrl.clearItems();
+                                ctrl.resetItems();
                                 ctrl.beginLoadingItems();
                             }
                         });
@@ -93,7 +93,10 @@
 
                         ctrl.getSpecificItems = function (ids) {
                             var provider = ctrl.$scope.sfProvider;
-                            return pageService.getSpecificItems(ids, provider);
+
+                            var rootId = getSiteMapRootNodeId();
+
+                            return pageService.getSpecificItems(ids, provider, rootId);
                         };
 
                         ctrl.itemDisabled = function (item) {

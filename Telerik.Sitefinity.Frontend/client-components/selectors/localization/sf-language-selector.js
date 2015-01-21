@@ -33,18 +33,18 @@
                                   }
                               }
                               scope.sfCultures = siteCultures;
+
+                              if (!scope.sfCulture && scope.sfCultures.length > 0) {
+                                  scope.sfCulture = scope.sfCultures[0];
+                              }
                           });
 
                           localizationPromise.catch(function (error) {
                               scope.showError = true;
                               scope.errorMessage = error;
                           });
-
-                          if (!scope.sfCulture && scope.sfCultures.length > 0) {
-                              scope.sfCulture = scope.sfCultures[0];
-                          }
                       };
-                      
+
                       if (scope.sfSite) {
                           beginLoadingLanguages();
                       }

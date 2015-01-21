@@ -5,7 +5,7 @@
                    'sfLinkService',
                    'sfLinkMode',
                    'sfMultiSiteService',
-                   function (serverContext, linkService, sfLinkMode, multiSiteService) {
+                   function (serverContext, linkService, sfLinkMode, siteService) {
                        return {
                            restrict: 'E',
                            scope: {
@@ -18,6 +18,19 @@
                            },
                            link: {
                                post: function (scope, element, attrs, ctrl) {
+
+                                   var init = function () {
+                                       scope.sfLinkMode = sfLinkMode;
+
+                                       var selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
+
+                                       scope.sfSite = siteService.getSiteByRootNoteId(selectedItem.rootNodeId);
+
+                                       scope.sfCulture = { Culture: selectedItem.language };
+
+                                       scope.selectedItem = selectedItem;
+                                   };
+
                                    scope.insertLink = function () {
                                        var htmlLinkObj = linkService.getHtmlLink(scope.selectedItem);
                                        scope.sfLinkHtml = htmlLinkObj[0];
@@ -28,13 +41,9 @@
                                        scope.$modalInstance.close();
                                    };
 
-                                   scope.sfLinkMode = sfLinkMode;
-                                   scope.selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
-                                   
-                                   var sites = multiSiteService.currentSites;
-                                    
-                                   //scope.sfSite = { SiteMapRootNodeId: scope.selectedItem.rootNodeId };
-                                   scope.sfCulture = { Culture: scope.selectedItem.language };
+                                   siteService.addHandler(function () {
+                                       init();
+                                   });
                                }
                            }
                        };
