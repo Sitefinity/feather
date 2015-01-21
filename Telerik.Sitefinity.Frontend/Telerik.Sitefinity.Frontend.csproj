@@ -469,6 +469,8 @@
     <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-provider-service.js" />
     <EmbeddedResource Include="client-components\selectors\search\sf-search-service.js" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.js" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.html" />
     <EmbeddedResource Include="GridSystem\Templates\container.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
