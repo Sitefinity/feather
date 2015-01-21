@@ -3,7 +3,7 @@
 
 	module.directive('sfHtmlField', ['serverContext', function (serverContext) {
 		return {
-			restrict: "E",
+		    restrict: "E",
 			scope: {
 				ngModel: '='
 			},
@@ -13,7 +13,7 @@
 				return serverContext.getEmbeddedResourceUrl(assembly, url);
 			},
 			link: function (scope, element) {
-				scope.htmlViewLabel = 'HTML';
+			    scope.htmlViewLabel = 'HTML';
 
 				var isInHtmlView = false;
 				var editor = null;
@@ -24,6 +24,12 @@
 					editor = widget;
 					content = editor.wrapper.find('iframe.k-content').first();
 				});
+
+				scope.openLinkSelector = function () {
+				    var editor = $('#editor').data('kendoEditor');
+				    scope.selectedHtml = editor.selectedHtml();
+				    angular.element("#linkSelectorModal").scope().$openModalDialog();
+				};
 
 				scope.toggleHtmlView = function () {
 					if (editor == null)
