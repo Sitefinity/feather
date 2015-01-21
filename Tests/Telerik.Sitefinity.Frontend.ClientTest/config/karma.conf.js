@@ -38,6 +38,7 @@ module.exports = function (config) {
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/pages/sf-page-selector.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/pages/sf-page-selector.html',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/search/sf-search-service.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/tools/sf-link-service.js',
                   'helpers/mocks/*.js',
                   'unit/**'
         ],
