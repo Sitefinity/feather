@@ -32,15 +32,7 @@
 
 				scope.$on('selectedHtmlChanged', function (event, data) {
 				    scope.selectedHtml = data;
-				    var range = editor.getRange();
-				    var startIndex = range.startOffset;
-				    var endIndex = range.endOffset;
-
-				    var content = editor.value();
-				    var newContent = content.substring(0, startIndex) + data.outerHTML + content.substring(endIndex, content.length);
-
-				    editor.value(newContent);
-
+				    editor.exec("insertHtml", { html: data.outerHTML, split: false });
 				});
 
 				scope.toggleHtmlView = function () {

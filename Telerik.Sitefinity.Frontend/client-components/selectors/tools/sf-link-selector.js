@@ -5,7 +5,8 @@
                 restrict: 'E',
                 scope: {
                     sfLinkHtml: '=',
-                    sfSelectedItem: '='
+                    sfSelectedItem: '=',
+                    sfEditorContent: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -14,6 +15,7 @@
                 },
                 link: {
                     post: function (scope, element, attrs, ctrl) {
+                        scope.anchors = linkService.populateAnchorIds(scope.sfEditorContent);
                         scope.sfLinkMode = sfLinkMode;
                         scope.sfSelectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
                     }
