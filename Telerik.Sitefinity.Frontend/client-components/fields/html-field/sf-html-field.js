@@ -28,10 +28,10 @@
 				});
 
 				scope.toggleHtmlView = function () {
-					if (editor == null)
+					if (editor === null)
 						return;
 
-					if (isInHtmlView == false) {
+					if (isInHtmlView === false) {
 						scope.htmlViewLabel = 'Design';
 
 						$('<textarea class="html k-content" style="resize: none">')
@@ -69,12 +69,12 @@
 				};
 
 				scope.toggleFullScreen = function () {
-				    if (editor == null)
+				    if (editor === null)
 				        return;
 
 				    var dialog = $(".modal-dialog");
 				    var modalBody = $(".modal-body");
-
+					
 				    if (!editorWrapperInitialStyle) {
 				        editorWrapperInitialStyle = {
 				            dialog: {
@@ -85,12 +85,12 @@
 				                height: modalBody.height()
 				            }
 				        };
-				    };
+				    }
 
 				    if (isFullScreen === false) {
 				        dialog.css({
 				            margin: 0,
-				            width: $("body").width()
+				            width: $("body").width(),
 				        });
 				        modalBody.height($(document).height());
 
@@ -103,7 +103,7 @@
 				        modalBody.height(editorWrapperInitialStyle.modalBody.height);
 
 				        isFullScreen = false;
-				    };
+				    }
 				};
 			}
 		};
