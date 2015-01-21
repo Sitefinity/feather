@@ -9,7 +9,8 @@
                        return {
                            restrict: 'E',
                            scope: {
-                               sfLinkHtml: '@'
+                               sfLinkHtml: '=',
+                               sfEditorContent: '@'
                            },
                            templateUrl: function (elem, attrs) {
                                var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -20,8 +21,7 @@
                                post: function (scope, element, attrs, ctrl) {
 
                                    var init = function () {
-                                       scope.sfLinkMode = sfLinkMode;
-
+                                       
                                        var selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
 
                                        scope.sfSite = siteService.getSiteByRootNoteId(selectedItem.rootNodeId);
@@ -40,6 +40,9 @@
                                    scope.cancel = function () {
                                        scope.$modalInstance.close();
                                    };
+
+                                   scope.anchors = linkService.populateAnchorIds(scope.sfEditorContent);
+                                   scope.sfLinkMode = sfLinkMode;
 
                                    siteService.addHandler(function () {
                                        init();
