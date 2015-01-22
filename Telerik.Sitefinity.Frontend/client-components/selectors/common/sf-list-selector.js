@@ -19,7 +19,9 @@
                     sfItemType: '=?', /* sf-dynamic-items-selector */
                     sfIdentifierField: '@?',
                     sfDialogHeader: '@?',
-                    sfKeepSelectedItemsBound: '@?'
+                    sfKeepSelectedItemsBound: '@?',
+
+                    sfExternalPages:'=?'
                 },
                 controller: function ($scope) {
                     this.defaultIdentifierField = 'Title';
@@ -187,6 +189,11 @@
                         };
 
                         var fetchSelectedItems = function () {
+                            if (scope.multiselect && !scope.sfSelectedIds)
+                                return scope.sfSelectedItems;
+                            else if (!scope.multiselect && !scope.sfSelectedItemId)
+                                return scope.sfSelectedItem;
+
                             var ids = scope.getSelectedIds();
                             currentSelectedIds = ids;
 

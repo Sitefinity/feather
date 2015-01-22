@@ -4,7 +4,7 @@
             return {
                 restrict: "E",
                 scope: {
-                    sfItems: '=?',
+                    sfExternalPages: '=?',
                     sfSelectedItems: '=?',
                 },
                 templateUrl: function (elem, attrs) {
@@ -16,10 +16,11 @@
                     post: function (scope, element, attrs) {
 
                         // The view is binded to this collection
-                        scope.externalPages = [];
+                        if (!scope.sfExternalPages)
+                            scope.sfExternalPages = [];
 
                         scope.isListEmpty = function () {
-                            return scope.externalPages && scope.externalPages.length === 0;
+                            return scope.sfExternalPages && scope.sfExternalPages.length === 0;
                         };
 
                         scope.isItemSelected = function (id) {
@@ -35,11 +36,11 @@
                         };
 
                         scope.addItem = function () {
-                            scope.externalPages.push({ Title: 'Enter title', Url: 'Enter URL' });
+                            scope.sfExternalPages.push({ Title: 'Enter title', Url: 'Enter URL' });
                         };
 
                         scope.removeItem = function (index) {
-                            scope.externalPages.splice(index, 1);
+                            scope.sfExternalPages.splice(index, 1);
                         };
 
                         scope.itemClicked = function (item) {
