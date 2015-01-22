@@ -5,7 +5,7 @@
      'serverContext',
       function (serviceHelper, serverContext) {
           /* Private methods and variables */
-          var serviceUrl = serverContext.getRootedUrl('/Sitefinity/Services/Multisite/Multisite.svc/');
+          var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Multisite/Multisite.svc/');
 
           var handlers = [];
 
