@@ -29,7 +29,7 @@
                     };
 
                     scope.isOpen = false;
-                    scope.providerLabel = tAttrs.sfProviderLabel ? tAttrs.sfProviderLabel : 'Provider';
+                    scope.providerLabel = tAttrs.sfProviderLabel ? tAttrs.sfProviderLabel : '- Provider -';
                     scope.managerType = tAttrs.sfManagerType;
                     scope.selectedProvider = null;
                     scope.isProviderSelectorVisible = false;

@@ -303,6 +303,7 @@
     <Folder Include="assets\dist\js\" />
     <Folder Include="assets\src\img\" />
     <Folder Include="assets\src\js\" />
+    <Folder Include="assets\src\sass\modules\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Designer\designer.js" />
@@ -370,10 +371,6 @@
     <None Include="assets\src\sass\kendo\_editor.sass" />
     <None Include="assets\src\sass\kendo\_kendo-ui.bootstrap.scss" />
     <None Include="assets\src\sass\kendo\_tabstrip.sass" />
-    <None Include="assets\src\sass\modules\_Btn.sass" />
-    <None Include="assets\src\sass\modules\_BtnGroup.sass" />
-    <None Include="assets\src\sass\modules\_Modal.sass" />
-    <None Include="assets\src\sass\modules\_test.scss" />
     <None Include="assets\src\sass\sitefinity-backend.sass" />
     <None Include="assets\src\sass\_utility-classes.sass" />
     <None Include="assets\src\sass\_variables.sass" />
@@ -488,6 +485,7 @@
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-service.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.html" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.js" />
+    <EmbeddedResource Include="GridSystem\Templates\container.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

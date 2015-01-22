@@ -70,7 +70,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.GridSystem
 
             // Assert: Verify the newly created controls are properly created
             Assert.IsNotNull(dummyData, "CreateLayoutControlsData returns null data.");
-            Assert.AreEqual(10, dummyData.Count, "CreateLayoutControlsData method should return 10 items.");
+            Assert.AreEqual(11, dummyData.Count, "CreateLayoutControlsData method should return 11 items.");
 
             GridControlData oneColumnGridControl = dummyData.Where(layoutControl => layoutControl.Name == "Col1").FirstOrDefault();
             Assert.IsNotNull(oneColumnGridControl, "Grid controls was not created correctly or their names are not expected.");
