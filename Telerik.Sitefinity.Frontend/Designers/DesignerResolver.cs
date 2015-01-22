@@ -3,7 +3,6 @@ using System.Linq;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Resources;
-using Telerik.Sitefinity.Web.UI.ControlDesign;
 
 namespace Telerik.Sitefinity.Frontend.Designers
 {
@@ -28,9 +27,6 @@ namespace Telerik.Sitefinity.Frontend.Designers
             if (widgetType == null)
                 throw new ArgumentNullException("widgetType");
 
-            if (this.HasCustomWebFormsDesigner(widgetType))
-                return null;
-
             string designerUrl;
             if (!this.TryResolveUrlFromAttribute(widgetType, out designerUrl))
                 designerUrl = this.GetDefaultUrl(widgetType);
@@ -41,18 +37,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
         #endregion 
 
         #region Private members
-
-        private bool HasCustomWebFormsDesigner(Type widgetType)
-        { 
-            var attributes = widgetType.GetCustomAttributes(typeof(ControlDesignerAttribute), inherit: true);
-            var designerAttr = attributes.FirstOrDefault() as ControlDesignerAttribute;
-
-            if (designerAttr != null)
-                return true;
-
-            return false;
-        }
-
+        
         /// <summary>
         /// Resolve a designer URL for the specified widget type if such is specified with <see cref="DesignerUrlAttribute"/>.
         /// </summary>
