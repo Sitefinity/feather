@@ -30,6 +30,7 @@
                 this.emailAddress = null;
                 this.displayText = '';
                 this.selectedAnchor = null;
+                this.selectedPage = null;
 
                 function startsWith (str, subStr) {
                     return str.slice(0, subStr.length) === subStr;
@@ -132,7 +133,7 @@
                 return item;
             };
 
-            var getHtmlLink = function (linkItem, selectedPage) {
+            var getHtmlLink = function (linkItem) {
                 var resultLink = jQuery('<a></a>');
                 if (!linkItem)
                     return resultLink;
@@ -145,11 +146,11 @@
                     resultLink.attr('href', linkItem.webAddress);
                 }
                 else if (linkItem.mode == linkMode.InternalPage) {
-                    if (selectedPage) {
-                        var href = selectedPage.FullUrl;
+                    if (linkItem.selectedPage) {
+                        var href = linkItem.selectedPage.FullUrl;
                         resultLink.attr('href', href);
 
-                        var selectedPageId = selectedPage.Id;
+                        var selectedPageId = linkItem.selectedPage.Id;
                         var selectedCulture = 'en';
                         //var selectedCulture = (this.get_uiCulture() !== this.get_pageSelector().get_languageSelectorSelectedCulture()) ?
                         //	this.get_pageSelector().get_languageSelectorSelectedCulture() : null;
@@ -158,8 +159,8 @@
                             if (linkItem.rootNodeId && linkItem.rootNodeId != emptyGuid) {
                                 key = linkItem.rootNodeId;
                             }
-                            else if (selectedPage) {
-                                key = selectedPage.RootId;
+                            else if (linkItem.selectedPage) {
+                                key = linkItem.selectedPage.RootId;
                             }
                             else {
                                 key = '';
