@@ -27,14 +27,14 @@
 <div ng-show="sfSelectedItem.mode==sfLinkMode.WebAddress">
 	<div>
 		<div><label for="webAddress">Web address</label></div>
-		<div><input type="text" id="Text2" ng-model="sfSelectedItem.webAddress" /></div>
+		<div><input type="text" id="webAddress" ng-model="sfSelectedItem.webAddress" /></div>
 		<div>
 			<label><strong>Example:</strong> http://weather.com</label>
 		</div>
 	</div>
 	<div>
 		<div><label for="textToDisplay1">Text to display</label></div>
-		<div><input type="text" id="text3" ng-model="sfSelectedItem.displayText" /></div>
+		<div><input type="text" id="textToDisplay1" ng-model="sfSelectedItem.displayText" /></div>
 		<div>
 			<label><strong>Example:</strong> Weather forecast</label>
 		</div>
@@ -55,13 +55,13 @@
 
     <div>
         <div><label for="textToDisplay2">Text to display</label></div>
-        <div><input type="text" id="text4" ng-model="selectedItem.displayText" /></div>
+        <div><input type="text" id="textToDisplay2" ng-model="selectedItem.displayText" /></div>
     </div>
     <div>
         <label for="openInNewWin2"><input type="checkbox" id="Checkbox2" ng-model="selectedItem.openInNewWindow" />Open this link in a new window</label>
     </div>
     <div>
-        <input type="button" value="Test this link" />
+        <a target="_blank">Test this link</a>
     </div>
 </div>
 <div ng-show="sfSelectedItem.mode==sfLinkMode.Anchor">
@@ -78,8 +78,8 @@
 		    </div>
 	    </div>
 	    <div>
-		    <div><label for="textToDisplay4">Text to display</label></div>
-		    <div><input type="text" id="text5" ng-model="sfSelectedItem.displayText"/></div>
+		    <div><label for="textToDisplay3">Text to display</label></div>
+		    <div><input type="text" id="textToDisplay3" ng-model="sfSelectedItem.displayText"/></div>
 		    <div>
 			    <label><strong>Example:</strong>Weather forecast</label>
 		    </div>
@@ -92,14 +92,14 @@
 <div ng-show="sfSelectedItem.mode==sfLinkMode.EmailAddress">
 	<div>
 		<div><label for="emailAddress">Email address</label></div>
-		<div><input type="email" id="Text6" ng-model="sfSelectedItem.emailAddress" /></div>
+		<div><input type="email" id="emailAddress" ng-model="sfSelectedItem.emailAddress" /></div>
 		<div>
 			<label><strong>Example:</strong> johnsmith@gmail.com</label>
 		</div>
 	</div>
 	<div>
-		<div><label for="textToDisplay5">Text to display</label></div>
-		<div><input type="text" id="text7" ng-model="sfSelectedItem.displayText"/></div>
+		<div><label for="textToDisplay4">Text to display</label></div>
+		<div><input type="text" id="textToDisplay4" ng-model="sfSelectedItem.displayText"/></div>
 		<div>
 			<label><strong>Example:</strong> Send email to John</label>
 		</div>
