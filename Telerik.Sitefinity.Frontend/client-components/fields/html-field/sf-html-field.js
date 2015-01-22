@@ -61,7 +61,6 @@
                         fullToolbar.hide();
                         shortToolbar.show();
                         shortToolbar.append(customButtons);
-                        $compile(shortToolbar.html())(scope);
                     } else {
                         scope.htmlViewLabel = 'HTML';
 
@@ -102,7 +101,7 @@
                             width: $("body").width()
                         });
 
-                        // // For full screen with no scroller 
+                        // For full screen with no scroller 
                         editorBodies.height($(document).height() - $('.modal-footer').outerHeight() - $('.modal-header').outerHeight() -
                            ($('.modal-body').outerHeight() - editorWrapperInitialStyle.editorBodies.height));
 
