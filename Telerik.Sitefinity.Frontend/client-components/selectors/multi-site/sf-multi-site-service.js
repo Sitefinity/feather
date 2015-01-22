@@ -5,7 +5,7 @@
      'serverContext',
       function (serviceHelper, serverContext) {
           /* Private methods and variables */
-          var serviceUrl = serverContext.getRootedUrl('/Sitefinity/Services/Multisite/Multisite.svc/');
+          var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Multisite/Multisite.svc/');
 
           var handlers = [];
 
@@ -64,12 +64,16 @@
               return promise;
           };
 
+          var getSites = function () {
+              return sfSites;
+          };
+
           return {
               /* Returns the data items. */
               getSitesForUserPromise: getSitesForUserPromise,
               addHandler: addHandler,
               getSiteByRootNoteId: getSiteByRootNoteId,
-              sfSites: sfSites
+              sfSites: getSites
           };
       }]);
 })(angular.module('sfServices'));
