@@ -18,7 +18,8 @@
                     sfSortable: '=?',
                     sfItemType: '=?', /* sf-dynamic-items-selector */
                     sfIdentifierField: '@?',
-                    sfDialogHeader: '@?'
+                    sfDialogHeader: '@?',
+                    sfKeepSelectedItemsBound: '@?'
                 },
                 controller: function ($scope) {
                     this.defaultIdentifierField = 'Title';
@@ -203,6 +204,46 @@
                                 });
                         };
 
+                        var updateSelectedItems = function () {
+                            scope.removeUnselectedItems();
+
+                            if (scope.sfChange) {
+                                var oldSelectedItems = [];
+                                Array.prototype.push.apply(oldSelectedItems, scope.sfSelectedItems);
+                                var changeArgs = {
+                                    "newSelectedItems": scope.selectedItemsInTheDialog,
+                                    "oldSelectedItems": oldSelectedItems
+                                };
+                                scope.sfChange.call(scope.$parent, changeArgs);
+                            }
+
+                            if (scope.selectedItemsInTheDialog.length > 0) {
+                                //set the selected item and its id to the mapped isolated scope properties
+                                scope.sfSelectedItem = scope.selectedItemsInTheDialog[0];
+                                scope.sfSelectedItemId = scope.selectedItemsInTheDialog[0].Id;
+
+                                if (scope.sfSelectedItems) {
+                                    //Clean the array and keep all references.
+                                    scope.sfSelectedItems.length = 0;
+                                }
+                                else {
+                                    scope.sfSelectedItems = [];
+                                }
+
+                                Array.prototype.push.apply(scope.sfSelectedItems, scope.selectedItemsInTheDialog);
+
+                                scope.sfSelectedIds = scope.sfSelectedItems.map(function (item) {
+                                    return item.Id;
+                                });
+                            }
+                            else {
+                                scope.sfSelectedItem = null;
+                                scope.sfSelectedItemId = null;
+                                scope.sfSelectedItems = [];
+                                scope.sfSelectedIds = [];
+                            }
+                        };
+
                         ctrl.ensureSelectionIsUpToDate = function () {
                             $q.when(fetchSelectedItems()).then(function () {
                                 updateSelectionInTheDialog();
@@ -332,47 +373,15 @@
                                 else {
                                     scope.selectedItemsInTheDialog.splice(0, 1, item);
                                 }
+
+                                if (scope.sfKeepSelectedItemsBound) {
+                                    updateSelectedItems();
+                                }
                             }
                         };
 
                         scope.doneSelecting = function () {
-                            scope.removeUnselectedItems();
-
-                            if (scope.sfChange) {
-                                var oldSelectedItems = [];
-                                Array.prototype.push.apply(oldSelectedItems, scope.sfSelectedItems);
-                                var changeArgs = {
-                                    "newSelectedItems": scope.selectedItemsInTheDialog,
-                                    "oldSelectedItems": oldSelectedItems
-                                };
-                                scope.sfChange.call(scope.$parent, changeArgs);
-                            }
-
-                            if (scope.selectedItemsInTheDialog.length > 0) {
-                                //set the selected item and its id to the mapped isolated scope properties
-                                scope.sfSelectedItem = scope.selectedItemsInTheDialog[0];
-                                scope.sfSelectedItemId = scope.selectedItemsInTheDialog[0].Id;
-
-                                if (scope.sfSelectedItems) {
-                                    //Clean the array and keep all references.
-                                    scope.sfSelectedItems.length = 0;
-                                }
-                                else {
-                                    scope.sfSelectedItems = [];
-                                }
-
-                                Array.prototype.push.apply(scope.sfSelectedItems, scope.selectedItemsInTheDialog);
-
-                                scope.sfSelectedIds = scope.sfSelectedItems.map(function (item) {
-                                    return item.Id;
-                                });
-                            }
-                            else {
-                                scope.sfSelectedItem = null;
-                                scope.sfSelectedItemId = null;
-                                scope.sfSelectedItems = [];
-                                scope.sfSelectedIds = [];
-                            }
+                            updateSelectedItems();
 
                             ctrl.resetItems();
                             scope.$modalInstance.close();
