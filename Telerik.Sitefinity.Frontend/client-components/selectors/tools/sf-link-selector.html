@@ -50,15 +50,16 @@
     <div>
         <sf-multisite-page-selector sf-site="sfSite"
                                     sf-culture="sfCulture"
-                                    sf-selected-item-id="sfSelectedItem.pageId"></sf-multisite-page-selector>
+									sf-selected-item-id="sfSelectedItem.pageId"
+                                    sf-selected-item="sfSelectedItem.selectedPage"></sf-multisite-page-selector>
     </div>
 
     <div>
         <div><label for="textToDisplay2">Text to display</label></div>
-        <div><input type="text" id="textToDisplay2" ng-model="selectedItem.displayText" /></div>
+        <div><input type="text" id="textToDisplay2" ng-model="sfSelectedItem.displayText" /></div>
     </div>
     <div>
-        <label for="openInNewWin2"><input type="checkbox" id="Checkbox2" ng-model="selectedItem.openInNewWindow" />Open this link in a new window</label>
+        <label for="openInNewWin2"><input type="checkbox" id="Checkbox2" ng-model="sfSelectedItem.openInNewWindow" />Open this link in a new window</label>
     </div>
     <div>
         <a target="_blank">Test this link</a>
