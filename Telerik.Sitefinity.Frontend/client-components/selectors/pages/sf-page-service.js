@@ -32,12 +32,13 @@
                 }
             };
 
-            var getSpecificItems = function (ids, provider) {
+            var getSpecificItems = function (ids, provider, rootId) {
                 var filter = serviceHelper.filterBuilder()
                                           .specificItemsFilter(ids)
                                           .getFilter();
 
                 return getResource().get({
+                    root: rootId,
                     provider: provider,
                     filter: filter
                 }).$promise;
