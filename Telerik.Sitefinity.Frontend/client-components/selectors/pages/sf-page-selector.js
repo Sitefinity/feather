@@ -18,19 +18,9 @@
                             return rootPage;
                         };
 
-                        var getSiteId = function () {
-                            var selectedSite = scope.$eval(attrs.sfPageSelector);
-
-                            if (selectedSite && selectedSite.Id) {
-                                return selectedSite.Id;
-                            }
-                            return ctrl.$scope.siteId;
-                        };
-
                         var getItems = function (parentId, search) {
-                            var siteId = getSiteId();
                             var provider = ctrl.$scope.sfProvider;
-                            return pageService.getItems(parentId, siteId, provider, search);
+                            return pageService.getItems(parentId, provider, search);
                         };
 
                         var allowLoadingItems = function (newSite, oldSite) {
@@ -123,6 +113,15 @@
                         ctrl.$scope.sfIdentifierField = "TitlesPath";
                         ctrl.$scope.searchIdentifierField = "Title";
                         ctrl.$scope.sfDialogHeader = 'Select a page';
+
+                        var templateHtml = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}\" >" +
+                                                                "<p>" +
+                                                                    "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\">{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class=\" m-left-md \">(not translated)</em>" +
+                                                                "</p>" +
+                                                                "<p><span>{{dataItem.Status}}</span></p>" +
+                                                            "</a>";
+
+                        ctrl.$scope.singleItemTemplateHtml = templateHtml;
 
                         ctrl.onPostLinkComleted = function () {
                             var currentSite = scope.$eval(attrs.sfPageSelector);
