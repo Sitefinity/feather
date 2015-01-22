@@ -33,8 +33,8 @@
                                   }
                               }
                               scope.sfCultures = siteCultures;
-
-                              if (!scope.sfCulture && scope.sfCultures.length > 0) {
+                              
+                              if ((!scope.sfCulture || !scope.sfCulture.Culture) && scope.sfCultures.length > 0) {
                                   scope.sfCulture = scope.sfCultures[0];
                               }
                           });

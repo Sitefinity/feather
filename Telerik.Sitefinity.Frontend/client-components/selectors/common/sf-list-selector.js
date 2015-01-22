@@ -388,7 +388,7 @@
                         };
 
                         scope.cancel = function () {
-                            ctr.resetItems();
+                            ctrl.resetItems();
                             scope.$modalInstance.close();
                         };
 
