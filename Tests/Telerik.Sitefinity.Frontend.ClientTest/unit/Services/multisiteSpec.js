@@ -65,13 +65,13 @@ describe('sfMultiSiteService', function () {
         dataService.getSitesForUserPromise.apply(dataService, params).then(function (res) {
             data = res;
         });
-
+        debugger;
         expect(data).toBeUndefined();
 
         $httpBackend.flush();
 
         expect(data).toEqualData(dataItems);
-        expect(dataService.sfSites).toEqualData(dataItems.Items);
+        expect(dataService.sfSites()).toEqualData(dataItems.Items);
     };
 
     var assertError = function (params) {
