@@ -20,11 +20,12 @@
 				var content = null;
 
 				scope.$on('kendoWidgetCreated', function (event, widget) {
-                    if (widget.focus)
-                        widget.focus();
+				    if (widget.wrapper && widget.wrapper.is('.k-editor')) {
+				        widget.focus();
 
-					editor = widget;
-					content = editor.wrapper.find('iframe.k-content').first();
+				        editor = widget;
+				        content = editor.wrapper.find('iframe.k-content').first();
+				    }
 				});
 
 				scope.openLinkSelector = function () {
