@@ -25,30 +25,31 @@
                 var customButtons = null;
 
                 scope.$on('kendoWidgetCreated', function (event, widget) {
-                    if (widget.focus)
-                    widget.focus();
+                    if (widget.wrapper && widget.wrapper.is('.k-editor')) {
+                        widget.focus();
 
-                    editor = widget;
-                    content = editor.wrapper.find('iframe.k-content').first();
+                        editor = widget;
+                        content = editor.wrapper.find('iframe.k-content').first();
+                    }
                 });
 
-				scope.openLinkSelector = function () {
-				    var selection = editor.getSelection();
-				    var parent = selection.extentNode.parentElement;
-				    if (parent.tagName.toLowerCase() === "a") {
-				        scope.selectedHtml = parent;
-				    }
-				    else {
-				        scope.selectedHtml = editor.selectedHtml();
-				    }
+                scope.openLinkSelector = function () {
+                    var selection = editor.getSelection();
+                    var parent = selection.extentNode.parentElement;
+                    if (parent.tagName.toLowerCase() === "a") {
+                        scope.selectedHtml = parent;
+                    }
+                    else {
+                        scope.selectedHtml = editor.selectedHtml();
+                    }
 
-				    angular.element("#linkSelectorModal").scope().$openModalDialog();
-				};
+                    angular.element("#linkSelectorModal").scope().$openModalDialog();
+                };
 
-				scope.$on('selectedHtmlChanged', function (event, data) {
-				    scope.selectedHtml = data;
-				    editor.exec("insertHtml", { html: data.outerHTML, split: false });
-				});
+                scope.$on('selectedHtmlChanged', function (event, data) {
+                    scope.selectedHtml = data;
+                    editor.exec("insertHtml", { html: data.outerHTML, split: false });
+                });
 
                 scope.toggleHtmlView = function () {
                     if (editor === null)
@@ -81,7 +82,6 @@
                         fullToolbar.hide();
                         shortToolbar.show();
                         shortToolbar.append(customButtons);
-                        $compile(shortToolbar.html())(scope);
                     } else {
                         scope.htmlViewLabel = 'HTML';
 
@@ -122,7 +122,7 @@
                             width: $("body").width()
                         });
 
-                        // // For full screen with no scroller 
+                        // For full screen with no scroller 
                         editorBodies.height($(document).height() - $('.modal-footer').outerHeight() - $('.modal-header').outerHeight() -
                            ($('.modal-body').outerHeight() - editorWrapperInitialStyle.editorBodies.height));
 
