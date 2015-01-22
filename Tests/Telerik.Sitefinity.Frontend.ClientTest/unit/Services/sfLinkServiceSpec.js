@@ -66,10 +66,11 @@ describe('links service', function () {
 
             var linkItem = {
                 mode:linkMode.InternalPage,
-                displayText: 'My link'
+                displayText: 'My link',
+                selectedPage: selectedPage
             };
 
-            var link = linksService.getHtmlLink(linkItem, selectedPage)[0].outerHTML;
+            var link = linksService.getHtmlLink(linkItem)[0].outerHTML;
 
             var expected = '<a href="{0}" sfref="[{1}|lng:en]{2}">My link</a>'
                 .format(selectedPage.FullUrl, selectedPage.RootId, selectedPage.Id);
@@ -87,10 +88,11 @@ describe('links service', function () {
             var linkItem = {
                 mode:linkMode.InternalPage,
                 displayText: 'My link',
-                rootNodeId: '4c003fb0-2a77-61ec-bbbb-ff00007864f'
+                rootNodeId: '4c003fb0-2a77-61ec-bbbb-ff00007864f',
+                selectedPage: selectedPage
             };
 
-            var link = linksService.getHtmlLink(linkItem, selectedPage)[0].outerHTML;
+            var link = linksService.getHtmlLink(linkItem)[0].outerHTML;
 
             var expected = '<a href="{0}" sfref="[{1}|lng:en]{2}">My link</a>'
                 .format(selectedPage.FullUrl, linkItem.rootNodeId, selectedPage.Id);

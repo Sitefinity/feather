@@ -1,7 +1,8 @@
 ﻿<alert type="danger" ng-show="showError">{{::errorMessage}}</alert>
 
 <div ng-show="sfSites && sfSites.length > 1">
-    <select ng-options="site as site.Name for site in sfSites track by site.SiteMapRootNodeId"
+    <label>Site</label>
+	<select class="form-control" ng-options="site as site.Name for site in sfSites track by site.SiteMapRootNodeId"
             ng-model="sfSite"></select>
 
-</div>   
+</div>
