@@ -5,7 +5,8 @@
             scope: {
                 sfSite: '=?',
                 sfCulture: '=?',
-                sfSelectedItemId: '=?'
+                sfSelectedItemId: '=?',
+                sfSelectedItem: '=?'
             },
             templateUrl: function (elem, attrs) {
                 var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
