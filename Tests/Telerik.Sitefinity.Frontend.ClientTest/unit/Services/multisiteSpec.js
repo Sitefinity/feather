@@ -65,7 +65,7 @@ describe('sfMultiSiteService', function () {
         dataService.getSitesForUserPromise.apply(dataService, params).then(function (res) {
             data = res;
         });
-        debugger;
+        
         expect(data).toBeUndefined();
 
         $httpBackend.flush();
