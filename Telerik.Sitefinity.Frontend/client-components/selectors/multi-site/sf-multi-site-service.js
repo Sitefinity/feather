@@ -64,12 +64,16 @@
               return promise;
           };
 
+          var getSites = function () {
+              return sfSites;
+          };
+
           return {
               /* Returns the data items. */
               getSitesForUserPromise: getSitesForUserPromise,
               addHandler: addHandler,
               getSiteByRootNoteId: getSiteByRootNoteId,
-              sfSites: sfSites
+              sfSites: getSites
           };
       }]);
 })(angular.module('sfServices'));
