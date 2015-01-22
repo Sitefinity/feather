@@ -1,16 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <TestSettings name="UITestCasesRemote" id="1d0b4ce2-c116-1f11-8609-4a6bfe37db2c" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <Description>These are default test settings for a remote test run.</Description>
-  <Deployment uploadDeploymentItems="false">
-    <DeploymentItem filename="Reference Assemblies\Telerik\TestStudio\ArtOfTest.WebAii.Design.dll" />
-    <DeploymentItem filename="Telerik.Sitefinity.Frontend.TestUI.TestCases\DummyFiles\" />
+  <Deployment>
     <DeploymentItem filename="Telerik.Sitefinity.Frontend.TestUI.TestCases\app.config" />
-    <DeploymentItem filename="Reference Assemblies\Telerik\TestStudio\ArtOfTest.WebAii.dll" />
-    <DeploymentItem filename="Telerik.Sitefinity.Frontend.TestUI.TestCases\Data\" />
-    <DeploymentItem filename="Telerik.Sitefinity.Frontend.TestUI.TestCases\SetupScripts\" />
   </Deployment>
   <NamingScheme baseName="TestExecution@Sitefinity_UITests" useDefault="false" />
-  <RemoteController name="sfhv03" />
+  <RemoteController name="100.76.0.127:6901" />
   <Execution location="Remote">
     <Buckets size="1" />
     <Timeouts agentNotRespondingTimeout="90000" scriptTimeout="600000" />
@@ -31,66 +26,7 @@
         </Browser>
       </WebTestRunConfiguration>
     </TestTypeSpecific>
-    <AgentRule name="sfbpc07Agent">
-      <SelectionCriteria>
-        <AgentProperty name="agent" value="sfbpc07" />
-      </SelectionCriteria>
+    <AgentRule name="AllAgentsDefaultRole">
     </AgentRule>
   </Execution>
-  <CollectionOnlyAgents>
-    <AgentRules>
-      <AgentRule name="sfbpc06Agent">
-        <SelectionCriteria>
-          <AgentProperty name="agent" value="sfbpc06" />
-        </SelectionCriteria>
-      </AgentRule>
-      <AgentRule name="sfbpc10Agent">
-        <SelectionCriteria>
-          <AgentProperty name="agent" value="sfbpc10" />
-        </SelectionCriteria>
-        <DataCollectors>
-          <DataCollector uri="datacollector://microsoft/SystemInfo/1.0" assemblyQualifiedName="Microsoft.VisualStudio.TestTools.DataCollection.SystemInfo.SystemInfoDataCollector, Microsoft.VisualStudio.TestTools.DataCollection.SystemInfo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" friendlyName="System Information">
-          </DataCollector>
-        </DataCollectors>
-      </AgentRule>
-      <AgentRule name="sfbpc11Agent">
-        <SelectionCriteria>
-          <AgentProperty name="agent" value="sfbpc11" />
-        </SelectionCriteria>
-        <DataCollectors>
-          <DataCollector uri="datacollector://microsoft/SystemInfo/1.0" assemblyQualifiedName="Microsoft.VisualStudio.TestTools.DataCollection.SystemInfo.SystemInfoDataCollector, Microsoft.VisualStudio.TestTools.DataCollection.SystemInfo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" friendlyName="System Information">
-          </DataCollector>
-        </DataCollectors>
-      </AgentRule>
-      <AgentRule name="sfhv01Agent">
-        <SelectionCriteria>
-          <AgentProperty name="agent" value="sfhv01" />
-        </SelectionCriteria>
-      </AgentRule>
-      <AgentRule name="sfhv02Agent">
-        <SelectionCriteria>
-          <AgentProperty name="agent" value="sfhv02" />
-        </SelectionCriteria>
-      </AgentRule>
-      <AgentRule name="sfhv03Agent">
-        <SelectionCriteria>
-          <AgentProperty name="agent" value="sfhv03" />
-        </SelectionCriteria>
-        <DataCollectors>
-          <DataCollector uri="datacollector://microsoft/SystemInfo/1.0" assemblyQualifiedName="Microsoft.VisualStudio.TestTools.DataCollection.SystemInfo.SystemInfoDataCollector, Microsoft.VisualStudio.TestTools.DataCollection.SystemInfo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" friendlyName="System Information">
-          </DataCollector>
-        </DataCollectors>
-      </AgentRule>
-      <AgentRule name="sfbpc04Agent">
-        <SelectionCriteria>
-          <AgentProperty name="agent" value="sfbpc04" />
-        </SelectionCriteria>
-      </AgentRule>
-      <AgentRule name="sfbpc02Agent">
-        <SelectionCriteria>
-          <AgentProperty name="agent" value="sfbpc02" />
-        </SelectionCriteria>
-      </AgentRule>
-    </AgentRules>
-  </CollectionOnlyAgents>
 </TestSettings>
