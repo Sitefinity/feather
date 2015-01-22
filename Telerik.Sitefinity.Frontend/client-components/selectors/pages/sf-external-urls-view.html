@@ -1,0 +1,16 @@
+﻿<div ng-show="isListEmpty()" class="alert">No external URLs have been added.</div>
+
+<div class="list-group list-group-endless" ng-hide="isListEmpty()">
+    <div class="list-group-item list-group-item-multiselect"
+        ng-repeat="item in externalPages">
+		
+			<input type="checkbox" ng-checked="isItemSelected(item.Title)"  ng-click="itemClicked(item)"></input>
+			<span ng-bind="item.Title" ng-click="enterEditTitle = !enterEditTitle" ng-hide="enterEditTitle" ></span>
+			<input type="text" ng-model="item.Title" ng-blur="enterEditTitle = !enterEditTitle" ng-show="enterEditTitle"></input>
+			<span ng-bind="item.Url" ng-click="enterEditUrl = !enterEditUrl" ng-hide="enterEditUrl"></span>
+			<input type="text" ng-model="item.Url" ng-blur="enterEditUrl = !enterEditUrl" ng-show="enterEditUrl"></input>
+			<a ng-click="removeItem($index)"><i class="glyphicon glyphicon-remove-circle"></i></a>
+    </div>
+</div>
+
+<input type="button" value="Add external URL" ng-click="addItem()"></input>

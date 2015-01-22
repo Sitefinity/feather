@@ -4,6 +4,9 @@
             <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
                 All
             </li>
+            <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ">
+                External URLs
+            </li>
             <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
                 Selected <span class="badge">{{getSelectedItemsCount()}}</span>
             </li>
@@ -56,6 +59,11 @@
                 <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
                 <sf-loading ng-show="showLoadingIndicator"></sf-loading>
             </div>
+        </div>
+        <div>
+            <sf-external-urls-view sf-items='sfExternalItems' sf-selected-items='selectedItemsInTheDialog'>
+
+            </sf-external-urls-view>
         </div>
         <div>
             <sf-selected-items-view sf-items='selectedItemsViewData' sf-selected-items='selectedItemsInTheDialog' sf-search-identifier-field='searchIdentifierField'
