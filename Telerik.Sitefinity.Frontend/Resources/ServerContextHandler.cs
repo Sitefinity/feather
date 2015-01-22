@@ -8,8 +8,8 @@ using ServiceStack.Text;
 using Telerik.Microsoft.Practices.EnterpriseLibrary.Caching;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
-using Telerik.Sitefinity.Multisite;
 using Telerik.Sitefinity.Multisite.Model;
+using Telerik.Sitefinity.Security.Claims;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 
@@ -71,7 +71,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
                             .Replace("{{applicationPath}}", this.GetApplicationPath())
                             .Replace("{{currentPackage}}", currentPackage)
                             .Replace("{{frontendLanguages}}", this.GetFrontendLanguages())
-                            .Replace("{{currentFrontendRootNodeId}}", this.CurrentFrontendRootNodeId.ToString());
+                            .Replace("{{currentFrontendRootNodeId}}", this.CurrentFrontendRootNodeId.ToString())
+                            .Replace("{{currentUserId}}", this.CurrentUserId.ToString());
 
                         cache.Add(
                             cacheKey,
@@ -142,6 +143,20 @@ namespace Telerik.Sitefinity.Frontend.Resources
             get
             {
                 return SiteInitializer.CurrentFrontendRootNodeId;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current user id.
+        /// </summary>
+        /// <value>The current user id.</value>
+        protected virtual Guid CurrentUserId
+        {
+            get
+            {
+                var identity = ClaimsManager.GetCurrentIdentity();
+
+                return identity == null ? Guid.Empty : identity.UserId;
             }
         }
 

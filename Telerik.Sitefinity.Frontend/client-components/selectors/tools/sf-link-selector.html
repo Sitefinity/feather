@@ -1,0 +1,110 @@
+﻿<div class="form-group">
+	<div class="radio">
+		<label for="webAddress">
+			<input id="Radio1" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.WebAddress" />
+			Web address
+		</label>
+	</div>
+	<div class="radio">
+		<label for="pagesFromThisSite">
+			<input id="Radio2" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.InternalPage" />
+			Page from this site
+		</label>
+	</div>
+    <div class="radio">
+		<label for="anchor">
+			<input id="Radio3" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.Anchor" />
+			Anchor
+		</label>
+	</div>
+	<div class="radio">
+		<label for="email">
+			<input id="Radio4" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.EmailAddress" />
+			Email
+		</label>
+	</div>
+</div>
+<div ng-show="sfSelectedItem.mode==sfLinkMode.WebAddress">
+	<div>
+		<div><label for="webAddress">Web address</label></div>
+		<div><input type="text" id="webAddress" ng-model="sfSelectedItem.webAddress" /></div>
+		<div>
+			<label><strong>Example:</strong> http://weather.com</label>
+		</div>
+	</div>
+	<div>
+		<div><label for="textToDisplay1">Text to display</label></div>
+		<div><input type="text" id="textToDisplay1" ng-model="sfSelectedItem.displayText" /></div>
+		<div>
+			<label><strong>Example:</strong> Weather forecast</label>
+		</div>
+	</div>
+	<div>
+		<label for="openInNewWin1"><input type="checkbox" id="Checkbox1" ng-model="sfSelectedItem.openInNewWindow" />Open this link in a new window</label>
+	</div>
+	<div>
+		<a ng-href="{{sfSelectedItem.webAddress}}" target="_blank">Test this link</a>
+	</div>
+</div>
+<div ng-show="sfSelectedItem.mode==sfLinkMode.InternalPage">
+    <div>
+        <sf-multisite-page-selector sf-site="sfSite"
+                                    sf-culture="sfCulture"
+                                    sf-selected-item-id="sfSelectedItem.pageId"></sf-multisite-page-selector>
+    </div>
+
+    <div>
+        <div><label for="textToDisplay2">Text to display</label></div>
+        <div><input type="text" id="textToDisplay2" ng-model="selectedItem.displayText" /></div>
+    </div>
+    <div>
+        <label for="openInNewWin2"><input type="checkbox" id="Checkbox2" ng-model="selectedItem.openInNewWindow" />Open this link in a new window</label>
+    </div>
+    <div>
+        <a target="_blank">Test this link</a>
+    </div>
+</div>
+<div ng-show="sfSelectedItem.mode==sfLinkMode.Anchor">
+	<div ng-hide="anchors.length==0">
+        <div>
+		    <div><label for="anchorSelect">Anchor</label></div>
+		    <div>
+                <select id="anchorSelect" ng-model="sfSelectedItem.selectedAnchor" ng-options="a for a in anchors">
+                    <option value="">- Select -</option>
+                </select>
+		    </div>
+		    <div>
+			    <label>A list of anchors already inserted in the text. <a>How to insert anchor?</a></label>
+		    </div>
+	    </div>
+	    <div>
+		    <div><label for="textToDisplay3">Text to display</label></div>
+		    <div><input type="text" id="textToDisplay3" ng-model="sfSelectedItem.displayText"/></div>
+		    <div>
+			    <label><strong>Example:</strong>Weather forecast</label>
+		    </div>
+	    </div>
+    </div>
+    <div ng-show="anchors.length==0" class="alert alert-info" role="alert">
+        <label>No anchors have been inserted in the text. <a>How to insert anchor?</a></label>
+    </div>
+</div>
+<div ng-show="sfSelectedItem.mode==sfLinkMode.EmailAddress">
+	<div>
+		<div><label for="emailAddress">Email address</label></div>
+		<div><input type="email" id="emailAddress" ng-model="sfSelectedItem.emailAddress" /></div>
+		<div>
+			<label><strong>Example:</strong> johnsmith@gmail.com</label>
+		</div>
+	</div>
+	<div>
+		<div><label for="textToDisplay4">Text to display</label></div>
+		<div><input type="text" id="textToDisplay4" ng-model="sfSelectedItem.displayText"/></div>
+		<div>
+			<label><strong>Example:</strong> Send email to John</label>
+		</div>
+	</div>
+	<div>
+		<a ng-href="mailto:{{sfSelectedItem.emailAddress}}">Test this link</a>
+	</div>
+</div>

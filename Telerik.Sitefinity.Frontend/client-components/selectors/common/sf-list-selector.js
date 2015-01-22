@@ -68,6 +68,18 @@
                     this.onItemSelected = function (item) {
                     };
 
+                    this.onPostLinkComleted = function () {
+                    };
+
+                    this.resetItems = function () {
+                        $scope.paging.skip = 0;
+                        $scope.paging.areAllItemsLoaded = false;
+                        $scope.filter.searchString = null;
+                        $scope.items = [];
+                        $scope.selectedItemsInTheDialog = [];
+                        $scope.selectedItemsViewData = [];
+                    };
+
                     var compareFunction = function (item1, item2) {
                         var orderedIds = $scope.getSelectedIds();
 
@@ -102,7 +114,7 @@
                                 Array.prototype.push.apply(scope.items, data.Items);
                             }
                             else {
-                                pushSelectedItemToTheTop();
+                                pushSelectedItemToTheTop(data.Items);
                                 pushNotSelectedItems(data.Items);
                             }
                             return scope.items;
@@ -148,9 +160,19 @@
 
                         var currentSelectedIds;
 
-                        var pushSelectedItemToTheTop = function () {
+                        var pushSelectedItemToTheTop = function (items) {
+
                             if (scope.items.length === 0 && scope.sfSelectedItems && scope.sfSelectedItems.length > 0) {
                                 scope.items.push(scope.sfSelectedItems[0]);
+                            }
+                            else {
+                                var ids = scope.getSelectedIds();
+                                if (scope.items.length === 0 && ids && ids.length > 0) {
+                                    Array.prototype.push.apply(scope.items,
+                                                   items.filter(function (item) {
+                                                       return ids.indexOf(item.Id) === 0;
+                                                   }));
+                                }
                             }
                         };
 
@@ -181,7 +203,7 @@
                                 });
                         };
 
-                        var ensureSelectionIsUpToDate = function () {
+                        ctrl.ensureSelectionIsUpToDate = function () {
                             $q.when(fetchSelectedItems()).then(function () {
                                 updateSelectionInTheDialog();
 
@@ -195,15 +217,6 @@
                             }
                         };
 
-                        var resetItems = function () {
-                            scope.paging.skip = 0;
-                            scope.paging.areAllItemsLoaded = false;
-                            scope.filter.searchString = null;
-                            scope.items = [];
-                            scope.selectedItemsInTheDialog = [];
-                            scope.selectedItemsViewData = [];
-                        };
-
                         var areArrayEquals = function (arr1, arr2) {
                             if (arr1 && arr2) {
                                 var clonedArr1 = [].concat(arr1);
@@ -212,6 +225,19 @@
                                 return clonedArr1.sort().toString() === clonedArr2.sort().toString();
                             }
                             return false;
+                        };
+
+                        ctrl.beginLoadingItems = function () {
+                            scope.showLoadingIndicator = true;
+
+                            scope.itemsPromise = ctrl.getItems(scope.paging.skip, scope.paging.take)
+                                                     .then(onFirstPageLoadedSuccess, onError);
+
+                            scope.itemsPromise.finally(function () {
+                                scope.showLoadingIndicator = false;
+                            });
+
+                            ctrl.ensureSelectionIsUpToDate();
                         };
 
                         // ------------------------------------------------------------------------
@@ -348,28 +374,21 @@
                                 scope.sfSelectedIds = [];
                             }
 
-                            resetItems();
+                            ctrl.resetItems();
                             scope.$modalInstance.close();
                         };
 
                         scope.cancel = function () {
-                            resetItems();
+                            ctr.resetItems();
                             scope.$modalInstance.close();
                         };
 
                         scope.open = function () {
-                            scope.$openModalDialog();
+                            if (scope.$openModalDialog) {
+                                scope.$openModalDialog();
+                            }
 
-                            scope.showLoadingIndicator = true;
-
-                            scope.itemsPromise = ctrl.getItems(scope.paging.skip, scope.paging.take)
-                            .then(onFirstPageLoadedSuccess, onError);
-
-                            scope.itemsPromise.finally(function () {
-                                scope.showLoadingIndicator = false;
-                            });
-
-                            ensureSelectionIsUpToDate();
+                            ctrl.beginLoadingItems();
                         };
 
                         scope.getDialogTemplate = function () {
@@ -506,6 +525,11 @@
                                 }
                             }
                         });
+
+                        ////NOTE: Emit indication when initial setup is completed so child directives can be notified.
+                        if (ctrl.onPostLinkComleted) {
+                            ctrl.onPostLinkComleted();
+                        }
                     }
                 }
             };

@@ -1,18 +1,5 @@
 ﻿/* Tests for sf-data-service.js */
 describe('sfDataService', function () {
-    if (!String.prototype.format) {
-        String.prototype.format = function () {
-            var newStr = this;
-
-            for (var i = 0; i < arguments.length; i++) {
-                var pattern = new RegExp("\\{"+ i +"\\}", "g");
-                newStr = newStr.replace(pattern, arguments[i]);
-            }
-
-            return newStr;
-        }
-    };    
-
     beforeEach(module('sfServices'));
 
     var appPath = 'http://mysite.com:9999/myapp';
