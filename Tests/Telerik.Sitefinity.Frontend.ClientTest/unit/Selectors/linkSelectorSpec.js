@@ -1,4 +1,4 @@
-﻿/* Tests for news selector */
+﻿/* Tests for link selector */
 describe("link selector", function () {
     var scope;
     var serviceResult;
