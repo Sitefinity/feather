@@ -16,7 +16,7 @@
 
             <span class="handler list-group-item-drag" ng-hide="!!filter.searchString || !sfSortable"></span>
 
-            <input type="checkbox" ng-checked="isItemSelected(item.Id, item.TitlesPath)">
+            <input type="checkbox" ng-checked="isItemSelected(item.Id, item.ExternalPageId)">
 
             <div><span sf-shrinked-breadcrumb="{{bindIdentifierField(item)}}" sf-max-length="60"></span></div>
         </div>

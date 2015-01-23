@@ -15,6 +15,19 @@
                 link: {
                     post: function (scope, element, attrs) {
 
+                        //creates new guid
+                        var guid = (function () {
+                            function s4() {
+                                return Math.floor((1 + Math.random()) * 0x10000)
+                                           .toString(16)
+                                           .substring(1);
+                            }
+                            return function () {
+                                return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                                       s4() + '-' + s4() + s4() + s4();
+                            };
+                        })();
+
                         // The view is binded to this collection
                         if (!scope.sfExternalPages)
                             scope.sfExternalPages = [];
@@ -23,10 +36,10 @@
                             return scope.sfExternalPages && scope.sfExternalPages.length === 0;
                         };
 
-                        scope.isItemSelected = function (titlesPath) {
+                        scope.isItemSelected = function (externalPageId) {
                             if (scope.sfSelectedItems) {
                                 for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                    if (scope.sfSelectedItems[i].TitlesPath === titlesPath) {
+                                    if (scope.sfSelectedItems[i].ExternalPageId === externalPageId) {
                                         return true;
                                     }
                                 }
@@ -36,7 +49,7 @@
                         };
 
                         scope.addItem = function () {
-                            scope.sfExternalPages.push({ TitlesPath: 'Enter title', Url: 'Enter URL'});
+                            scope.sfExternalPages.push({ ExternalPageId: guid(), TitlesPath: 'Enter title', Url: 'Enter URL'});
                         };
 
                         scope.removeItem = function (index, item) {
@@ -55,7 +68,7 @@
                             }
 
                             for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                if (scope.sfSelectedItems[i].TitlesPath === item.TitlesPath) {
+                                if (scope.sfSelectedItems[i].ExternalPageId === item.ExternalPageId) {
                                     return i;
                                 }
                             }

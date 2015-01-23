@@ -70,11 +70,11 @@
                             scope.sfItems.splice(e.newIndex, 0, element);
                         };
 
-                        scope.isItemSelected = function (id, titlesPath) {
+                        scope.isItemSelected = function (id, externalPageId) {
                             if (scope.sfSelectedItems) {
                                 for (var i = 0; i < scope.sfSelectedItems.length; i++) {
                                     if ((id && scope.sfSelectedItems[i].Id === id) ||
-                                        (scope.sfSelectedItems[i].TitlesPath === titlesPath )) {
+                                        (scope.sfSelectedItems[i].ExternalPageId === externalPageId)) {
                                         return true;
                                     }
                                 }
@@ -92,7 +92,7 @@
                             var alreadySelected = false;
                             for (var i = 0; i < scope.sfSelectedItems.length; i++) {
                                 if ((item.Id && scope.sfSelectedItems[i].Id === item.Id)||
-                                    (!item.Id && scope.sfSelectedItems[i].TitlesPath === item.TitlesPath)) {
+                                    (!item.Id && scope.sfSelectedItems[i].ExternalPageId === item.ExternalPageId)) {
                                     selectedItemIndex = i;
                                     alreadySelected = true;
                                     break;
