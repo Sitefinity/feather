@@ -115,15 +115,16 @@
 </div>
 
 <!-- Email content -->
-<div ng-show="sfSelectedItem.mode==sfLinkMode.EmailAddress">
+<div ng-show="sfSelectedItem.mode==sfLinkMode.EmailAddress" ng-form name="emailForm">
 	<div class="form-group">
 		<label for="emailAddress">Email address</label>
 		<div class="row">
 			<div class="col-xs-9">
-				<input class="form-control" type="email" id="emailAddress" ng-model="sfSelectedItem.emailAddress" />
+				<input class="form-control" type="email" name="emailInput" id="emailAddress" ng-model="sfSelectedItem.emailAddress" />
 			</div>
 		</div>
 		<div class="text-muted">Example: <em>johnsmith@gmail.com</em></div>
+		<span ng-show="emailForm.emailInput.$error.email">Not valid email</span>
 	</div>
 
 	<div class="form-group">
