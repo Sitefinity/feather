@@ -9,7 +9,11 @@
         <sf-link-selector id="linkSelector" sf-link-html="selectedHtml" sf-selected-item="selectedItem" sf-editor-content="ngModel"></sf-link-selector>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary  pull-left" ng-click="insertLink()">Insert link</button>
+        <button 
+            type="button" 
+            class="btn btn-primary pull-left" 
+            ng-disabled="isDisabled(selectedItem)" 
+            ng-click="insertLink()">Insert link</button>
         <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
     </div>
 </script>
