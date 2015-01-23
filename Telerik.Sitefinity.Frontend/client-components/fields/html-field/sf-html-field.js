@@ -120,7 +120,7 @@
                             html: {
                                 height: designerEditor.height()
                             }
-                        }
+                        };
                     }
 
                     if (isFullScreen === false) {
@@ -138,7 +138,7 @@
 
                     modalHeaderAndFooter.toggle();
                     isFullScreen = !isFullScreen;
-                }
+                };
             }
         };
     }]);
