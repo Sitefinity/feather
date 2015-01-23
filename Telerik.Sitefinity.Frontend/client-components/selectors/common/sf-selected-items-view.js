@@ -45,13 +45,15 @@
                             return bindSearchIdentifierField(item, identifierField);
                         };
 
-                        var bindSearchIdentifierField = function (item, filterIdentifierField) {
+                        var bindSearchIdentifierField = function (item, filterIdentifierField, identifierField) {
                             if (item) {
                                 var mainField = item[filterIdentifierField];
 
                                 var valueProp = 'Value';
 
-                                if (!mainField) {
+                                if (!mainField && identifierField)
+                                    return item[identifierField];
+                                else if (!mainField) {
                                     return item.Id;
                                 }
 
@@ -119,7 +121,7 @@
                                 else {
                                     for (var i = 0; i < scope.sfItems.length; i++) {
                                         if (scope.sfSearchIdentifierField) {
-                                            if (bindSearchIdentifierField(scope.sfItems[i], scope.sfSearchIdentifierField).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                            if (bindSearchIdentifierField(scope.sfItems[i], scope.sfSearchIdentifierField, scope.sfIdentifierField).toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
                                                 scope.currentItems.push(scope.sfItems[i]);
                                             }
                                         }
