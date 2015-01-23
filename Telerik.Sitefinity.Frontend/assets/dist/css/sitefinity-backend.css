@@ -5993,6 +5993,13 @@ button.close {
 .editor-lg {
   height: 540px; }
 
+/* line 27, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+.k-tool:hover {
+  background-color: #b6bdca; }
+  /* line 29, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+  .k-tool:hover .k-createLink {
+    background-position: -312px -48px; }
+
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_tabstrip */
 .k-tabstrip.k-tabstrip--selection {
   border: none;
