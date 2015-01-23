@@ -28,7 +28,7 @@ angular.module('sfSelectors').directive('sfLinkSelectorModal', function ($inject
                     return isEmpty(selectedItem.displayText) || isEmpty(selectedItem.webAddress, "http://");
                 }
                 else if (selectedItem.mode == linkMode.InternalPage) {
-                    return isEmpty(selectedItem.displayText) || isEmpty(selectedItem.pageId);
+                    return isEmpty(selectedItem.displayText) || isEmpty(selectedItem.selectedPage);
                 }
                 else if (selectedItem.mode == linkMode.Anchor) {
                     return isEmpty(selectedItem.displayText) || isEmpty(selectedItem.selectedAnchor);
