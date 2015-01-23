@@ -189,9 +189,9 @@
                         };
 
                         var fetchSelectedItems = function () {
-                            if (scope.multiselect && !scope.sfSelectedIds)
+                            if (scope.multiselect && scope.sfSelectedItems)
                                 return scope.sfSelectedItems;
-                            else if (!scope.multiselect && !scope.sfSelectedItemId)
+                            else if (!scope.multiselect && scope.sfSelectedItem)
                                 return scope.sfSelectedItem;
 
                             var ids = scope.getSelectedIds();

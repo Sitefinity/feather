@@ -23,10 +23,10 @@
                             return scope.sfExternalPages && scope.sfExternalPages.length === 0;
                         };
 
-                        scope.isItemSelected = function (id) {
+                        scope.isItemSelected = function (titlesPath) {
                             if (scope.sfSelectedItems) {
                                 for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                    if (scope.sfSelectedItems[i].Id === id) {
+                                    if (scope.sfSelectedItems[i].TitlesPath === titlesPath) {
                                         return true;
                                     }
                                 }
@@ -36,7 +36,7 @@
                         };
 
                         scope.addItem = function () {
-                            scope.sfExternalPages.push({ Title: 'Enter title', Url: 'Enter URL', TitlesPath:'Enter title' });
+                            scope.sfExternalPages.push({ TitlesPath: 'Enter title', Url: 'Enter URL'});
                         };
 
                         scope.removeItem = function (index) {
@@ -51,7 +51,7 @@
                             var selectedItemIndex;
                             var alreadySelected = false;
                             for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                if (scope.sfSelectedItems[i].Title === item.Title) {
+                                if (scope.sfSelectedItems[i].TitlesPath === item.TitlesPath) {
                                     selectedItemIndex = i;
                                     alreadySelected = true;
                                     break;

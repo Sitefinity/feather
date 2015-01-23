@@ -2,11 +2,10 @@
 
 <div class="list-group list-group-endless" ng-hide="isListEmpty()">
     <div class="list-group-item list-group-item-multiselect"
-        ng-repeat="item in sfExternalPages">
-		
-			<input type="checkbox" ng-checked="isItemSelected(item.Title)"  ng-click="itemClicked(item)"></input>
-			<span ng-bind="item.Title" ng-click="enterEditTitle = !enterEditTitle" ng-hide="enterEditTitle" ></span>
-			<input type="text" ng-model="item.Title" ng-blur="enterEditTitle = !enterEditTitle" ng-show="enterEditTitle"></input>
+        ng-repeat="item in sfExternalPages">		
+			<input type="checkbox" ng-checked="isItemSelected(item.TitlesPath)"  ng-click="itemClicked(item)"></input>
+			<span ng-bind="item.TitlesPath" ng-click="enterEditTitle = !enterEditTitle" ng-hide="enterEditTitle" ></span>
+			<input type="text" ng-model="item.TitlesPath" ng-blur="enterEditTitle = !enterEditTitle" ng-show="enterEditTitle"></input>
 			<span ng-bind="item.Url" ng-click="enterEditUrl = !enterEditUrl" ng-hide="enterEditUrl"></span>
 			<input type="text" ng-model="item.Url" ng-blur="enterEditUrl = !enterEditUrl" ng-show="enterEditUrl"></input>
 			<a ng-click="removeItem($index)"><i class="glyphicon glyphicon-remove-circle"></i></a>
