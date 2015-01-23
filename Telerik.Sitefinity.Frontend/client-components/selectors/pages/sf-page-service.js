@@ -25,7 +25,9 @@
                     }).$promise;
                 }
                 else {
-                    return getResource('children/' + parentId).get({
+                    return getResource().get({
+                        root: parentId,
+                        hierarchyMode: true,
                         provider: provider,
                         filter: search
                     }).$promise;
