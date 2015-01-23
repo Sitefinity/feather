@@ -20,7 +20,6 @@
                            },
                            link: {
                                post: function (scope, element, attrs, ctrl) {
-
                                    var init = function () {
                                        scope.anchors = linkService.populateAnchorIds(scope.sfEditorContent);
                                        scope.sfLinkMode = sfLinkMode;
@@ -39,9 +38,14 @@
                                        scope.sfSelectedItem = selectedItem;
                                    };
 
-                                   siteService.addHandler(function () {
+                                   if (siteService.getSites().length > 0) {
                                        init();
-                                   });
+                                   }
+                                   else {
+                                       siteService.addHandler(function () {
+                                           init();
+                                       });
+                                   }
                                }
                            }
                        };

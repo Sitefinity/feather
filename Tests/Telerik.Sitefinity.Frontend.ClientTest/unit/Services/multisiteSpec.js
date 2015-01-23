@@ -71,7 +71,7 @@ describe('sfMultiSiteService', function () {
         $httpBackend.flush();
 
         expect(data).toEqualData(dataItems);
-        expect(dataService.sfSites()).toEqualData(dataItems.Items);
+        expect(dataService.getSites()).toEqualData(dataItems.Items);
     };
 
     var assertError = function (params) {
