@@ -43,10 +43,10 @@ angular.module('sfSelectors').directive('sfLinkSelectorModal', function ($inject
 
         isEmpty = function (value, initialValue) {
             if (initialValue) {
-                return value == null || value.length === 0 || value == initialValue;
+                return !value || value === initialValue;
             }
             else {
-                return value == null || value.length === 0;
+                return !value;
             }
         };
     };
