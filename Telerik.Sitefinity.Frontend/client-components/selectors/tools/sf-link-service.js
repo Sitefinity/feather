@@ -31,8 +31,9 @@
                 this.displayText = '';
                 this.selectedAnchor = null;
                 this.selectedPage = null;
+                this.isImage = false;
 
-                function startsWith (str, subStr) {
+                function startsWith(str, subStr) {
                     return str.slice(0, subStr.length) === subStr;
                 }
 
@@ -65,6 +66,7 @@
                 };
 
                 this.setDisplayText = function () {
+                    this.isImage = linkHtml.find('img').length > 0;
                     this.displayText = linkHtml.html();
                 };
 
@@ -81,7 +83,7 @@
 
                 this.setInternalPage = function () {
                     var sfref = linkHtml.attr('sfref');
-                    
+
                     var guids = sfref.match(GUID_REGEX);
                     var cultures = sfref.match(LANG_REGEX);
 
