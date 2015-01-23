@@ -121,4 +121,18 @@ describe('sfMultiSiteService', function () {
 
         expect(site).toEqualData(dataItems.Items[0]);
     });
+
+    it('[EGaneva] / should add handler.', function () {
+        var spyObject = { init: function () { } };
+
+        spyOn(spyObject, 'init');
+        dataService.addHandler(spyObject.init);
+
+        $httpBackend.expectGET('http://mysite.com:9999/myapp/Sitefinity/Services/Multisite/Multisite.svc/user/36e9e47f-0d78-6425-ae98-ff0000fc9faf/sites/?sortExpression=Name')
+        .respond(dataItems);
+
+        assertItems([{ sortExpression: 'Name' }]);
+
+        expect(spyObject.init).toHaveBeenCalled();
+    });
 });
