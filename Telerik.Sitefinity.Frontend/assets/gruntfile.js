@@ -90,6 +90,30 @@ module.exports = function (grunt) {
       }
     },
 
+    webfont: {
+      icons: {
+        src: 'src/icons/*.svg',
+        dest: 'dist/fonts/',
+        destCss: 'src/sass/icons/',
+        options: {
+          destHtml: '',
+          engine: 'node',
+          font: 'sf-icon-font',
+          stylesheet: 'scss',
+          partialPrefix: true,
+          relativeFontPath: '../fonts/',
+          template: 'feather-icons.css',
+          order: 'eot,svg,woff,ttf',
+          startCodepoint: 0x00b1,
+          normalize: true,
+          // if you decide to change the next two 4096 numbers I will murder you
+          fontHeight: 4096,
+          ascent: 4096,
+          descent: 0
+        }
+      }
+    },
+
     cssmin: {
       minify: {
         expand: true,
