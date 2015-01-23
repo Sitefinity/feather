@@ -5,7 +5,7 @@
      'serverContext',
       function (serviceHelper, serverContext) {
           /* Private methods and variables */
-          var serviceUrl = serverContext.getRootedUrl('/Sitefinity/Services/Configuration/ConfigSectionItems.svc/');
+          var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/');
 
           var getResource = function (urlParams) {
               var url = serviceUrl;
