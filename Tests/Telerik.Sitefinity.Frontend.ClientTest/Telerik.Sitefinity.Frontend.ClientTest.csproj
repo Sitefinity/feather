@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="helpers\common-methods.js" />
+    <Content Include="unit\Selectors\languageSelectorSpec.js" />
+    <Content Include="unit\Services\languageServiceSpec.js" />
     <Content Include="unit\Services\multisiteSpec.js" />
     <Content Include="unit\Services\sfLinkServiceSpec.js" />
     <EmbeddedResource Include="helpers\kendo.all.min.js" />
