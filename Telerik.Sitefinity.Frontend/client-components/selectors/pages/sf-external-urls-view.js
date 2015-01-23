@@ -64,7 +64,7 @@
 
                         var findSelectedItemIndex = function (item) {
                             if (!scope.sfSelectedItems) {
-                                return -1
+                                return -1;
                             }
 
                             for (var i = 0; i < scope.sfSelectedItems.length; i++) {
