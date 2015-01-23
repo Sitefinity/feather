@@ -4,7 +4,7 @@
             <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
                 All
             </li>
-            <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ">
+            <li >
                 External URLs
             </li>
             <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
@@ -61,7 +61,7 @@
             </div>
         </div>
         <div>
-            <sf-external-urls-view sf-items='sfExternalPages' sf-selected-items='selectedItemsInTheDialog'>
+            <sf-external-urls-view sf-external-pages='sfExternalPages' sf-selected-items='selectedItemsInTheDialog'>
 
             </sf-external-urls-view>
         </div>

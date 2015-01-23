@@ -21,7 +21,7 @@
                     sfDialogHeader: '@?',
                     sfKeepSelectedItemsBound: '@?',
 
-                    sfExternalPages:'=?'
+                    sfExternalPages: '=?'
                 },
                 controller: function ($scope) {
                     this.defaultIdentifierField = 'Title';
@@ -104,6 +104,10 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
+                    pre: function (scope) {
+                        if (!scope.sfExternalPages)
+                            scope.sfExternalPages = [];
+                    },
                     post: function (scope, element, attrs, ctrl, transclude) {
                         // ------------------------------------------------------------------------
                         // Event handlers
