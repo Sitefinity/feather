@@ -1,8 +1,9 @@
 ﻿<alert type="danger" ng-show="showError">{{::errorMessage}}</alert>
 
 <div ng-show="sfCultures && sfCultures.length > 1">
-
-    <select ng-options="c as c.DisplayName for c in sfCultures track by c.Culture"
+<label>Language</label>
+    <select class="form-control" ng-options="c as c.DisplayName for c in sfCultures track by c.Culture"
             ng-model="sfCulture"></select>
 
 </div>
+
