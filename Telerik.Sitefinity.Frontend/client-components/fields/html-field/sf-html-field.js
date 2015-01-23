@@ -19,7 +19,7 @@
                 var isFullScreen = false;
                 var editor = null;
                 var content = null;
-                var editorWrapperInitialStyle = null;
+                var originalEditorSizes = null;
                 var fullToolbar = null;
                 var shortToolbar = null;
                 var customButtons = null;
@@ -98,46 +98,47 @@
                 };
 
                 scope.toggleFullScreen = function () {
-                    if (editor === null)
+                    if (editor === null) {
                         return;
+                    }
 
-                    var dialog = $(".modal-dialog");
-                    var editorBodies = $(".modal-body iframe.k-content, .modal-body textarea.k-content, td.k-editable-area");
+                    var modalHeaderAndFooter = $(".modal-dialog > .modal-content > .modal-header, .modal-dialog > .modal-content > .modal-footer");
 
-                    if (!editorWrapperInitialStyle) {
-                        editorWrapperInitialStyle = {
+                    var mainDialog = $(".modal-dialog");
+                    var designerEditor = $("td.k-editable-area > iframe.k-content");
+                    var htmlEditor = $("td.k-editable-area");
+
+                    if (!originalEditorSizes) {
+                        originalEditorSizes = {
                             dialog: {
-                                margin: dialog.css('margin'),
-                                width: dialog.width()
+                                width: mainDialog.width(),
+                                margin: mainDialog.css('margin')
                             },
-                            editorBodies: {
-                                height: editorBodies.height()
+                            designer: {
+                                height: designerEditor.height()
+                            },
+                            html: {
+                                height: designerEditor.height()
                             }
-                        };
+                        }
                     }
 
                     if (isFullScreen === false) {
-                        dialog.css({
-                            margin: 0,
-                            width: $("body").width()
-                        });
+                        var heightToFill = $(document).height() - $("ul.k-editor-toolbar").height() * 1.1;
 
-                        // For full screen with no scroller 
-                        editorBodies.height($(document).height() - $('.modal-footer').outerHeight() - $('.modal-header').outerHeight() -
-                           ($('.modal-body').outerHeight() - editorWrapperInitialStyle.editorBodies.height));
-
-                        // For full screen editor area (scroller for Save, Cancel and Advanced buttons)
-                        // editorBodies.height($(document).height());
-                    } else {
-                        dialog.css({
-                            margin: editorWrapperInitialStyle.dialog.margin,
-                            width: editorWrapperInitialStyle.dialog.width
-                        });
-                        editorBodies.height(editorWrapperInitialStyle.editorBodies.height);
+                        mainDialog.css({ margin: 0, width: $('body').width() });
+                        designerEditor.height(heightToFill);
+                        htmlEditor.height(heightToFill);
+                    }
+                    else {
+                        mainDialog.css({ margin: originalEditorSizes.dialog.margin, width: originalEditorSizes.dialog.width });
+                        designerEditor.height(originalEditorSizes.designer.height);
+                        htmlEditor.height(originalEditorSizes.html.height);
                     }
 
+                    modalHeaderAndFooter.toggle();
                     isFullScreen = !isFullScreen;
-                };
+                }
             }
         };
     }]);
