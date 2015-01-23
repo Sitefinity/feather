@@ -36,7 +36,7 @@
                         };
 
                         scope.addItem = function () {
-                            scope.sfExternalPages.push({ Title: 'Enter title', Url: 'Enter URL' });
+                            scope.sfExternalPages.push({ Title: 'Enter title', Url: 'Enter URL', TitlesPath:'Enter title' });
                         };
 
                         scope.removeItem = function (index) {
