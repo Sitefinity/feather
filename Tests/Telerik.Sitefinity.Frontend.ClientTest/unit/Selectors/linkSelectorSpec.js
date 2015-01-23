@@ -78,7 +78,7 @@ describe("link selector", function () {
             return sfSites;
         }),
         getSiteByRootNoteId: jasmine.createSpy('siteService.getSiteByRootNoteId').andCallFake(function (rootNodeId) {
-            return sfSites[0];
+            return sfSites[1];
         }),
         getSitesForUserPromise: jasmine.createSpy('siteService.getSitesForUserPromise').andCallFake(function (editorContent) {
             if ($q) {
@@ -208,9 +208,11 @@ describe("link selector", function () {
             var directiveScope = scope.$$childHead;
 
             expect(directiveScope.sfSelectedItem.mode).toBe(1);
-            expect(directiveScope.sfSite).toBe(sfSites[0]);
+            expect(directiveScope.sfSite).toBe(sfSites[1]);
 
-            debugger;
+            var isWebAddressRadioChecked = $('#webAddressRadio').prop('checked');
+
+            expect(isWebAddressRadioChecked).toBe(true);
         });
 
         it('[Manev] / Test inital set of sfLinkMode.', function () {
@@ -245,6 +247,9 @@ describe("link selector", function () {
             expect(directiveScope.sfSelectedItem.mode).toBe(1);
             expect(directiveScope.sfSelectedItem.displayText).toBe(text);
 
+            var renderedText = $('#textToDisplay1').val();
+
+            expect(renderedText).toBe(text);
         });
 
         it('[Manev] / Test sfLinkHtml provided as a jQuery wrapper with valid anchor element with ref and sfref and no lng param.', function () {
@@ -263,10 +268,53 @@ describe("link selector", function () {
             expect(directiveScope.sfSelectedItem.displayText).toBe('LINK');
             expect(directiveScope.sfSelectedItem.pageId).toBe('28d7e74c-c789-61c4-9817-ff000095605c');
             expect(directiveScope.sfSelectedItem.rootNodeId).toBe('f669d9a7-009d-4d83-ddaa-000000000002');
-            expect(directiveScope.sfSite).toBe(sfSites[0]);
+            expect(directiveScope.sfSite).toBe(sfSites[1]);
         });
 
-        it('[Manev] / Test sfLinkHtml provided as a jQuery wrapper with valid anchor element with ref and sfref and lng param.', function () {
+        it('[Manev] / Test sfLinkHtml provided as a jQuery wrapper with valid anchor element with ref, no sfref, no target and no lng param.', function () {
+
+            scope.sfLinkHtml = $("<a href='http://www.mysite.com'>LINK</a>");
+            scope.selectedItem = "";
+            scope.sfEditorContent = "";
+
+            var template = "<sf-link-selector sf-link-html='sfLinkHtml' sf-selected-item='selectedItem' sf-editor-content='sfEditorContent'></sf-link-selector>";
+
+            commonMethods.compileDirective(template, scope);
+
+            var directiveScope = scope.$$childHead;
+
+            expect(directiveScope.sfSelectedItem.mode).toBe(1);
+            expect(directiveScope.sfSelectedItem.displayText).toBe('LINK');
+            expect(directiveScope.sfSelectedItem.webAddress).toBe('http://www.mysite.com');
+
+            var renderedText = $('#webAddress').val();
+            expect(renderedText).toBe('http://www.mysite.com');
+
+            var openInNewWin = $('#openInNewWin1').prop('checked');
+            expect(openInNewWin).toBe(false);
+        });
+
+        it('[Manev] / Test sfLinkHtml provided as a jQuery wrapper with valid anchor element with ref, target, no sfref, target and no lng param.', function () {
+
+            scope.sfLinkHtml = $("<a href='http://www.mysite.com' target='_blank'>LINK</a>");
+            scope.selectedItem = "";
+            scope.sfEditorContent = "";
+
+            var template = "<sf-link-selector sf-link-html='sfLinkHtml' sf-selected-item='selectedItem' sf-editor-content='sfEditorContent'></sf-link-selector>";
+
+            commonMethods.compileDirective(template, scope);
+
+            var directiveScope = scope.$$childHead;
+
+            expect(directiveScope.sfSelectedItem.mode).toBe(1);
+            expect(directiveScope.sfSelectedItem.displayText).toBe('LINK');
+            expect(directiveScope.sfSelectedItem.webAddress).toBe('http://www.mysite.com');
+
+            var openInNewWin = $('#openInNewWin1').prop('checked');
+            expect(openInNewWin).toBe(true);
+        });
+
+        it('[Manev] / Test sfLinkHtml provided as a jQuery wrapper with valid anchor element with ref and sfref and lng param and no target.', function () {
 
             scope.sfLinkHtml = $("<a href='CodeBase/widgettests' sfref='[f669d9a7-009d-4d83-ddaa-000000000002|lng:bg]28d7e74c-c789-61c4-9817-ff000095605c'>LINK</a>");
             scope.selectedItem = "";
@@ -277,17 +325,65 @@ describe("link selector", function () {
             commonMethods.compileDirective(template, scope);
 
             var directiveScope = scope.$$childHead;
-            
+
             expect(directiveScope.sfSelectedItem.mode).toBe(2);
             expect(directiveScope.sfSelectedItem.displayText).toBe('LINK');
             expect(directiveScope.sfSelectedItem.pageId).toBe('28d7e74c-c789-61c4-9817-ff000095605c');
             expect(directiveScope.sfSelectedItem.rootNodeId).toBe('f669d9a7-009d-4d83-ddaa-000000000002');
-            expect(directiveScope.sfSite).toBe(sfSites[0]);
+            expect(directiveScope.sfSite).toBe(sfSites[1]);
             expect(directiveScope.sfCulture).toBeDefined();
             expect(directiveScope.sfCulture.Culture).toBe('bg');
+
+            var ispagesFromThisSiteRadioChecked = $('#pagesFromThisSiteRadio').prop('checked');
+            var openInNewWin = $('#openInNewWin2').prop('checked');
+            var textToDisplay2 = $('#textToDisplay2').val();
+
+            expect(ispagesFromThisSiteRadioChecked).toBe(true);
+            expect(openInNewWin).toBe(false);
+            expect(textToDisplay2).toBe('LINK');
         });
 
-        it('[Manev] / Test sfEditorContent.', function () {
+        it('[Manev] / Test sfLinkHtml provided as a jQuery wrapper with valid anchor element with ref and sfref and lng param and with target.', function () {
+
+            scope.sfLinkHtml = $("<a href='CodeBase/widgettests' target='_blank' sfref='[f669d9a7-009d-4d83-ddaa-000000000002|lng:bg]28d7e74c-c789-61c4-9817-ff000095605c'>here is the link</a>");
+            scope.selectedItem = "";
+            scope.sfEditorContent = "";
+
+            var template = "<sf-link-selector sf-link-html='sfLinkHtml' sf-selected-item='selectedItem' sf-editor-content='sfEditorContent'></sf-link-selector>";
+
+            commonMethods.compileDirective(template, scope);
+
+            var directiveScope = scope.$$childHead;
+
+            expect(directiveScope.sfSelectedItem.mode).toBe(2);
+            expect(directiveScope.sfSelectedItem.displayText).toBe('here is the link');
+            expect(directiveScope.sfSelectedItem.pageId).toBe('28d7e74c-c789-61c4-9817-ff000095605c');
+            expect(directiveScope.sfSelectedItem.rootNodeId).toBe('f669d9a7-009d-4d83-ddaa-000000000002');
+            expect(directiveScope.sfSite).toBe(sfSites[1]);
+            expect(directiveScope.sfCulture).toBeDefined();
+            expect(directiveScope.sfCulture.Culture).toBe('bg');
+
+            var ispagesFromThisSiteRadioChecked = $('#pagesFromThisSiteRadio').prop('checked');
+            var openInNewWin = $('#openInNewWin2').prop('checked');
+            var textToDisplay2 = $('#textToDisplay2').val();
+
+            expect(ispagesFromThisSiteRadioChecked).toBe(true);
+            expect(openInNewWin).toBe(true);
+            expect(textToDisplay2).toBe('here is the link');
+
+            var allSelectors = $(document).find('select');
+
+            var selector = allSelectors.filter(function (index) {
+                return $(allSelectors[index]).attr('ng-model') === "sfSite";
+            })[0];
+
+            expect(selector).toBeDefined();
+
+            expect($(selector).find($('option'))[1].selected).toBe(true);
+            expect($(selector).find($('option'))[1].text).toBe('Site2');
+        });
+
+        it('[Manev] / Test sfEditorContent default initialization.', function () {
 
             scope.sfLinkHtml = "";
             scope.selectedItem = "";
@@ -309,6 +405,43 @@ describe("link selector", function () {
             var directiveScope = scope.$$childHead;
 
             expect(directiveScope.anchors).toEqualData(ids);
+        });
+
+        it('[Manev] / Test sfEditorContent.', function () {
+
+            scope.selectedItem = "";
+            scope.sfLinkHtml = $("<a href='CodeBase/widgettests/#f669d9a7-009d-4d83-ddaa-000000000002'>LINK</a>");
+            var ids = ['f669d9a7-009d-4d83-ddaa-000000000002', 'f669d9a7-009d-4d83-ddaa-000000000003', 'f669d9a7-009d-4d83-ddaa-000000000004'];
+
+            var titleCount = 0;
+
+            var sfEditorContents = ids.map(function (item) {
+                return "<a id='" + item + "'>Link" + ++titleCount + "</a>";
+            });
+
+            scope.sfEditorContent = sfEditorContents.toString();
+            
+            var template = "<sf-link-selector sf-link-html='sfLinkHtml' sf-selected-item='selectedItem' sf-editor-content='sfEditorContent'></sf-link-selector>";
+
+            commonMethods.compileDirective(template, scope);
+
+            var directiveScope = scope.$$childHead;
+
+            expect(directiveScope.sfSelectedItem.displayText).toBe('LINK');
+
+            var isAnchorRadioChecked = $('#anchorRadio').prop('checked');
+
+            expect(isAnchorRadioChecked).toBe(true);
+
+            var allSelectors = $(document).find('select');
+
+            var selector = allSelectors.filter(function (index) {
+                return $(allSelectors[index]).attr('ng-model') === "sfSelectedItem.selectedAnchor";
+            })[0];
+
+            expect(selector).toBeDefined();
+            expect($(selector).find($('option'))[1].selected).toBe(true);
+            expect($(selector).find($('option'))[1].text).toBe('f669d9a7-009d-4d83-ddaa-000000000002');
         });
     });
 });
