@@ -21,6 +21,9 @@
                            link: {
                                post: function (scope, element, attrs, ctrl) {
                                    var init = function () {
+
+                                       debugger;
+
                                        scope.anchors = linkService.populateAnchorIds(scope.sfEditorContent);
                                        scope.sfLinkMode = sfLinkMode;
 
