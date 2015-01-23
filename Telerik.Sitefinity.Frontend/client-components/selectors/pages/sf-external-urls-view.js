@@ -39,8 +39,26 @@
                             scope.sfExternalPages.push({ TitlesPath: 'Enter title', Url: 'Enter URL'});
                         };
 
-                        scope.removeItem = function (index) {
+                        scope.removeItem = function (index, item) {
                             scope.sfExternalPages.splice(index, 1);
+
+                            var selectedItemIndex = findSelectedItemIndex(item);
+
+                            if (selectedItemIndex > -1) {
+                                scope.sfSelectedItems.splice(selectedItemIndex, 1);
+                            }
+                        };
+
+                        var findSelectedItemIndex = function (item) {
+                            if (!scope.sfSelectedItems) {
+                                return -1
+                            }
+
+                            for (var i = 0; i < scope.sfSelectedItems.length; i++) {
+                                if (scope.sfSelectedItems[i].TitlesPath === item.TitlesPath) {
+                                    return i;
+                                }
+                            }
                         };
 
                         scope.itemClicked = function (item) {
@@ -48,17 +66,9 @@
                                 scope.sfSelectedItems = [];
                             }
 
-                            var selectedItemIndex;
-                            var alreadySelected = false;
-                            for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                if (scope.sfSelectedItems[i].TitlesPath === item.TitlesPath) {
-                                    selectedItemIndex = i;
-                                    alreadySelected = true;
-                                    break;
-                                }
-                            }
+                            var selectedItemIndex = findSelectedItemIndex(item);
 
-                            if (alreadySelected) {
+                            if (selectedItemIndex > -1) {
                                 scope.sfSelectedItems.splice(selectedItemIndex, 1);
                             }
                             else {

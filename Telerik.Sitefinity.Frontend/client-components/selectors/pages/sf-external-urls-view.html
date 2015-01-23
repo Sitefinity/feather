@@ -8,7 +8,7 @@
 			<input type="text" ng-model="item.TitlesPath" ng-blur="enterEditTitle = !enterEditTitle" ng-show="enterEditTitle"></input>
 			<span ng-bind="item.Url" ng-click="enterEditUrl = !enterEditUrl" ng-hide="enterEditUrl"></span>
 			<input type="text" ng-model="item.Url" ng-blur="enterEditUrl = !enterEditUrl" ng-show="enterEditUrl"></input>
-			<a ng-click="removeItem($index)"><i class="glyphicon glyphicon-remove-circle"></i></a>
+			<a ng-click="removeItem($index, item)"><i class="glyphicon glyphicon-remove-circle"></i></a>
     </div>
 </div>
 
