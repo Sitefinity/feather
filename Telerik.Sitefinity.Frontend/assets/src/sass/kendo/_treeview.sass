@@ -7,7 +7,25 @@ $tree-item-interval: 30px
         width: 100%
         display: inline-block
 
-    .k-in.k-state-selected
+    .k-in
+        [class*=" icon-item-"],
+        [class^=icon-item-]
+            margin: 5px 7px 0 0
+
+        .small
+            display: block
+            line-height: 1
+            margin-top: -4px
+
+        .active
+            [class*=" icon-item-"]:before,
+            [class^=icon-item-]:before
+                color: #fff
+
+            .small
+                color: #9CC5F7
+
+
 
     .k-state-hover,
     .k-state-selected,
@@ -50,7 +68,7 @@ $tree-item-interval: 30px
             position: absolute
             margin-top: 0
             z-index: 2
-            top: 12px
+            top: 15px
             left: 1.066*$tree-item-interval //32px
 
         .k-checkbox+.k-in a
@@ -203,7 +221,7 @@ $tree-item-interval: 30px
     .k-icon
         margin:0
         left: 0.333*$tree-item-interval //10px
-        top: 12px
+        top: 18px
         position: absolute
         z-index: 2
         vertical-align: top

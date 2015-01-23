@@ -7,7 +7,7 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         var rootPage = serverContext.getCurrentFrontendRootNodeId();
-                        
+
                         // <------- Begin: Helper methods ------
                         var getSiteMapRootNodeId = function () {
                             var selectedSite = scope.$eval(attrs.sfPageSelector);
@@ -115,11 +115,12 @@
                         ctrl.$scope.sfDialogHeader = 'Select a page';
 
                         var templateHtml = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}\" >" +
-                                                                "<p>" +
-                                                                    "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\">{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class=\" m-left-md \">(not translated)</em>" +
-                                                                "</p>" +
-                                                                "<p><span>{{dataItem.Status}}</span></p>" +
-                                                            "</a>";
+                                                  "<i class='pull-left icon-item-{{dataItem.Status.toLowerCase()}}'></i>" +
+                                                  "<span class='pull-left'>" +
+                                                      "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\">{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class=\" m-left-md \">(not translated)</em>" +
+                                                      "<span class='small text-muted'>{{dataItem.Status}}</span>" +
+                                                  "</span>" +
+                                            "</a>";
 
                         ctrl.$scope.singleItemTemplateHtml = templateHtml;
 
