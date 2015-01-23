@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -13,7 +9,6 @@ using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc.Rendering;
 using Telerik.Sitefinity.Utilities.TypeConverters;
-using Telerik.Sitefinity.Web.Configuration;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -90,32 +85,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
-        /// Tries the configure script manager.
-        /// </summary>
-        /// <param name="scriptReference">The script reference.</param>
-        /// <returns></returns>
-        private static bool TryConfigureScriptManager(ScriptRef scriptReference)
-        {
-            var page = HttpContext.Current.Handler as Page;
-            ScriptManager scriptManager = null;
-
-            if (page != null)
-            {
-                scriptManager = PageManager.ConfigureScriptManager(page, scriptReference, false);
-            }
-
-            if (scriptManager == null)
-                return false;
-            else
-                return true;
-        }
-
-        /// <summary>
         /// Gets the web resource URL.
         /// </summary>
         /// <param name="scriptReference">The script reference.</param>
         /// <returns></returns>
-        private static string GetWebResourceUrl(ScriptRef scriptReference)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
+        public static string GetWebResourceUrl(ScriptRef scriptReference)
         {
             var config = Config.Get<PagesConfig>().ScriptManager;
             var scriptConfig = config.ScriptReferences[scriptReference.ToString()];
@@ -136,6 +111,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return resourceUrl;
         }
+
+        /// <summary>
+        /// Tries the configure script manager.
+        /// </summary>
+        /// <param name="scriptReference">The script reference.</param>
+        /// <returns></returns>
+        private static bool TryConfigureScriptManager(ScriptRef scriptReference)
+        {
+            var page = HttpContext.Current.Handler as Page;
+            ScriptManager scriptManager = null;
+
+            if (page != null)
+            {
+                scriptManager = PageManager.ConfigureScriptManager(page, scriptReference, false);
+            }
+
+            if (scriptManager == null)
+                return false;
+            else
+                return true;
+        }        
 
         /// <summary>
         /// Registers the resource.
