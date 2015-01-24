@@ -10,10 +10,12 @@ describe('site selecor directive', function () {
 
     var sites = [{
         Id: '8d8b587d-5ac3-457f-8bb6-cafd0e79ea75',
+        SiteMapRootNodeId: '01387815-ea49-453a-9fd1-5066eff8ed61',
         Name: 'site1'
     },
     {
         Id: '487b05be-a32a-4476-bb2d-36c499eb770e',
+        SiteMapRootNodeId: 'ba387a97-55db-489d-82be-020ef8e59a2c',
         Name: 'site2'
     }];
 
@@ -98,7 +100,7 @@ describe('site selecor directive', function () {
         commonMethods.compileDirective(template, scope);
 
         var siteSelector = $('#siteSelector select');
-        expect(siteSelector.val()).toEqual(sites[1].Id);
+        expect(siteSelector.val()).toEqual(sites[1].SiteMapRootNodeId);
     });
 
     it('[GeorgiMateev] / should populate the select element in the html.',
@@ -108,7 +110,7 @@ describe('site selecor directive', function () {
         commonMethods.compileDirective(template, scope);
 
         var siteSelector = $('#siteSelector select');
-        expect(siteSelector.val()).toEqual(sites[0].Id);
+        expect(siteSelector.val()).toEqual(sites[0].SiteMapRootNodeId);
 
         var options = $('#siteSelector select option').map(function (index, option) {
             return {
