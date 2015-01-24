@@ -45,14 +45,19 @@
                         <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-hide="itemDisabled(item) || !multiselect">
 
                         <div>
-                            <div ng-bind="bindIdentifierField(item)" />
+                            <i class='pull-left icon-item-{{item.Status.toLowerCase()}}'></i>
+                            <span class="pull-left">
+                                <span ng-bind="bindIdentifierField(item)" />
+                                <span class='u-db small' ng-class="{'text-muted': !isItemSelectedInDialog(item)}">{{item.Status}}</span>
+                                <span class="u-db" ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
+                                    <span sf-shrinked-breadcrumb="{{item.ParentTitlesPath}}" sf-max-length="60"></span>
+                                </span>
+                            </span>
 
                             <div ng-show="itemDisabled(item)">(not translated)</div>
                         </div>
+                                                
 
-                        <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
-                            <span sf-shrinked-breadcrumb="{{item.ParentTitlesPath}}" sf-max-length="60"></span>
-                        </div>
                     </div>
                 </div>
                 <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>

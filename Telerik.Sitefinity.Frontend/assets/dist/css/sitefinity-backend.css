@@ -7674,6 +7674,10 @@ html .km-pane-wrapper .km-widget, .k-ie .km-pane-wrapper .k-widget, .k-ie .km-pa
 .u-dib {
   display: inline-block; }
 
+/* line 26, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/_utility-classes */
+.u-db {
+  display: block; }
+
 /* line 2, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/_global */
 a, [ng-click="toggle()"] {
   cursor: pointer; }
@@ -7863,17 +7867,20 @@ h4, .h4 {
     /* line 13, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
     .list-group-item.active:hover, .list-group-item.active:focus {
       border-color: #ddd; }
+  /* line 16, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+  .list-group-item [class*=" icon-item-"], .list-group-item [class^=icon-item-] {
+    margin-right: 7px; }
 
-/* line 17, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+/* line 21, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
 .list-group-sm .list-group-item {
   padding: 7px 15px;
   font-size: 12px; }
-  /* line 21, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+  /* line 25, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
   .list-group-sm .list-group-item:last-of-type {
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px; }
 
-/* line 26, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+/* line 30, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
 .list-group-item-multiselect > div {
   position: relative;
   z-index: 2;
@@ -7884,7 +7891,7 @@ h4, .h4 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
-  /* line 35, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+  /* line 39, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
   .list-group-item-multiselect > div:before {
     content: "";
     position: absolute;
@@ -7893,30 +7900,30 @@ h4, .h4 {
     width: 30px;
     height: 30px;
     opacity: 0; }
-/* line 44, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+/* line 48, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
 .list-group-item-multiselect > input {
   position: absolute;
   z-index: 1;
   top: 10px;
   left: 10px; }
 
-/* line 50, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+/* line 54, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
 .list-group-item-draggable {
   margin-bottom: 0;
   border-top: none; }
-  /* line 54, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+  /* line 58, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
   .list-group-item-draggable > input {
     left: 25px; }
-  /* line 57, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+  /* line 61, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
   .list-group-item-draggable > div {
     padding-left: 45px; }
 
-/* line 60, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+/* line 64, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
 .list-group-item-hint {
   width: 550px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
 
-/* line 64, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+/* line 68, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
 .list-group-item-placeholder {
   background: #ffff99;
   height: 20px;
@@ -7924,7 +7931,7 @@ h4, .h4 {
   margin-bottom: 0;
   border-top: none; }
 
-/* line 71, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+/* line 75, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
 .list-group-item-drag {
   width: 10px;
   height: 20px;
@@ -7941,7 +7948,7 @@ h4, .h4 {
   background-size: 3px 3px;
   z-index: 3; }
 
-/* line 89, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
+/* line 93, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
 .list-group-endless {
   max-height: 500px;
   overflow-y: auto;
