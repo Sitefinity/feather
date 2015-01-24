@@ -19,9 +19,10 @@
                                               .searchFilter(search)
                                               .getFilter();
                     return getResource().get({
-                                            provider: provider,
-                                            filter: filter
-                                        }).$promise;
+                        root: parentId,
+                        provider: provider,
+                        filter: filter
+                    }).$promise;
                 }
                 else {
                     return getResource('hierarchy/' + parentId).get({

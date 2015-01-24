@@ -75,6 +75,7 @@
                     this.resetItems = function () {
                         $scope.paging.skip = 0;
                         $scope.paging.areAllItemsLoaded = false;
+                        $scope.filter.isEmpty = true;
                         $scope.filter.searchString = null;
                         $scope.items = [];
                         $scope.selectedItemsInTheDialog = [];
