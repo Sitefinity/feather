@@ -1,7 +1,7 @@
 ﻿(function ($, selectorModule) {
     selectorModule.directive('sfLanguageSelector',
-        ['sfLanguageService',
-          function (languageService) {
+        ['sfLanguageService', 'serverContext',
+    function (languageService, serverContext) {
               return {
                   restrict: 'E',
                   scope: {
@@ -11,7 +11,7 @@
                   templateUrl: function (elem, attrs) {
                       var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
                       var url = attrs.sfTemplateUrl || 'client-components/selectors/localization/sf-language-selector.html';
-                      return sitefinity.getEmbeddedResourceUrl(assembly, url);
+                      return serverContext.getEmbeddedResourceUrl(assembly, url);
                   },
                   link: function (scope, element, attrs) {
 

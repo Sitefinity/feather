@@ -53,6 +53,16 @@
                         scope.$watch(attrs.sfPageSelector, function (newSite, oldSite) {
                             if (allowLoadingItems(newSite, oldSite)) {
                                 ctrl.resetItems();
+
+                                // We should clear the selection, because it is not relevant anymore.
+                                if(ctrl.$scope.sfSelectedIds) {
+                                    ctrl.$scope.sfSelectedIds.length = 0;
+                                }
+
+                                if(ctrl.$scope.sfSelectedItems) {
+                                    ctrl.$scope.sfSelectedItems.length = 0;
+                                }
+
                                 ctrl.beginLoadingItems();
                             }
                         });

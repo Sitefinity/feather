@@ -7,6 +7,7 @@ angular.module('sfSelectors').directive('sfLinkSelectorModal', function ($inject
 
     var serverContext = $injector.get('serverContext');
     var linkService = $injector.get('sfLinkService');
+    var linkMode = $injector.get("sfLinkMode");
 
     var link = function ($scope) {
 
@@ -19,6 +20,34 @@ angular.module('sfSelectors').directive('sfLinkSelectorModal', function ($inject
 
         $scope.cancel = function () {
             $scope.$modalInstance.close();
+        };
+
+        $scope.isDisabled = function (selectedItem) {
+            if (selectedItem) {
+                if (selectedItem.mode == linkMode.WebAddress) {
+                    return isEmpty(selectedItem.displayText) || isEmpty(selectedItem.webAddress, "http://");
+                }
+                else if (selectedItem.mode == linkMode.InternalPage) {
+                    return isEmpty(selectedItem.displayText) || isEmpty(selectedItem.selectedPage);
+                }
+                else if (selectedItem.mode == linkMode.Anchor) {
+                    return isEmpty(selectedItem.displayText) || isEmpty(selectedItem.selectedAnchor);
+                }
+                else {
+                    return isEmpty(selectedItem.displayText) || isEmpty(selectedItem.emailAddress);
+                }
+            }
+
+            return true;
+        };
+
+        isEmpty = function (value, initialValue) {
+            if (initialValue) {
+                return !value || value === initialValue;
+            }
+            else {
+                return !value;
+            }
         };
     };
 

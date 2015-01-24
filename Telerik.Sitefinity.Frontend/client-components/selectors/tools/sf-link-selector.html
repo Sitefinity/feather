@@ -1,4 +1,4 @@
-﻿<div class="form-group nav-wrapper">
+﻿﻿<div class="form-group nav-wrapper">
 	<span class="m-right-sm">Link to</span>
 
 	<label class="radio-inline" for="webAddressRadio">
@@ -34,7 +34,7 @@
 		<div class="text-muted">Example: <em>http://weather.com</em></div>
 	</div>
 
-	<div class="form-group">
+	<div class="form-group" ng-hide="sfSelectedItem.isImage">
 		<label for="textToDisplay1">Text to display</label>
 		<div class="row">
 			<div class="col-xs-9">
@@ -61,11 +61,11 @@
 <div ng-show="sfSelectedItem.mode==sfLinkMode.InternalPage">
 	<div class="form-group">
 			<sf-multisite-page-selector sf-site="sfSite"
-																	sf-culture="sfCulture"
-																	sf-selected-item-id="sfSelectedItem.pageId"></sf-multisite-page-selector>
+						sf-culture="sfCulture"
+						sf-selected-item="sfSelectedItem.selectedPage"></sf-multisite-page-selector>
 	</div>
 
-	<div class="form-group">
+	<div class="form-group" ng-hide="sfSelectedItem.isImage">
 		<label for="textToDisplay2">Text to display</label>
 		<div class="row">
 			<div class="col-xs-9">
@@ -79,11 +79,6 @@
 			<input type="checkbox" id="openInNewWin2" ng-model="sfSelectedItem.openInNewWindow" />
 			Open this link in a new window
 		</label>
-	</div>
-
-	<div class="form-group">
-		<span class="text-muted" ng-show="sfSelectedItem.displayText">Test this link:</span>
-		<a target="_blank">{{sfSelectedItem.displayText}}</a>
 	</div>
 </div>
 
@@ -103,7 +98,7 @@
 			<div class="text-muted">A list of anchors already inserted in the text. <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor%3F">How to insert an anchor?</a></div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" ng-hide="sfSelectedItem.isImage">
 			<label for="textToDisplay3">Text to display</label>
 			<div class="row">
 				<div class="col-xs-9">
@@ -120,18 +115,19 @@
 </div>
 
 <!-- Email content -->
-<div ng-show="sfSelectedItem.mode==sfLinkMode.EmailAddress">
+<div ng-show="sfSelectedItem.mode==sfLinkMode.EmailAddress" ng-form name="emailForm">
 	<div class="form-group">
 		<label for="emailAddress">Email address</label>
 		<div class="row">
 			<div class="col-xs-9">
-				<input class="form-control" type="email" id="emailAddress" ng-model="sfSelectedItem.emailAddress" />
+				<input class="form-control" type="email" name="emailInput" id="emailAddress" ng-model="sfSelectedItem.emailAddress" />
 			</div>
 		</div>
 		<div class="text-muted">Example: <em>johnsmith@gmail.com</em></div>
+		<span ng-show="emailForm.emailInput.$error.email">You have entered an invalid email address</span>
 	</div>
 
-	<div class="form-group">
+	<div class="form-group" ng-hide="sfSelectedItem.isImage">
 		<label for="textToDisplay4">Text to display</label>
 		<div class="row">
 			<div class="col-xs-9">
@@ -139,10 +135,5 @@
 			</div>
 		</div>
 		<div class="text-muted">Example: <em>Send email to John</em></div>
-	</div>
-
-	<div class="form-group">
-		<span class="text-muted" ng-show="sfSelectedItem.displayText">Test this link: </span>
-		<a ng-href="mailto:{{sfSelectedItem.emailAddress}}">{{ sfSelectedItem.displayText }}</a>
 	</div>
 </div>
