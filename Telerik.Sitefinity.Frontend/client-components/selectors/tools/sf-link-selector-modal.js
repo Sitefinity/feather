@@ -14,12 +14,12 @@ angular.module('sfSelectors').directive('sfLinkSelectorModal', function ($inject
         $scope.insertLink = function () {
             var selectedItem = angular.element("#linkSelector").scope().selectedItem;
             var htmlLinkObj = linkService.getHtmlLink(selectedItem);
-            $scope.$emit('selectedHtmlChanged', htmlLinkObj[0]);
-            $scope.$modalInstance.close();
+
+            $scope.$modalInstance.close(htmlLinkObj[0]);
         };
 
         $scope.cancel = function () {
-            $scope.$modalInstance.close();
+            $scope.$modalInstance.dismiss();
         };
 
         $scope.isDisabled = function (selectedItem) {
