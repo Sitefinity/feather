@@ -7869,7 +7869,7 @@ h4, .h4 {
       border-color: #ddd; }
   /* line 16, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
   .list-group-item [class*=" icon-item-"], .list-group-item [class^=icon-item-] {
-    margin: 0 7px 0 0; }
+    margin-right: 7px; }
 
 /* line 21, C:/Sitefinity/Sitefinity72Official/Projects/FeatherTest/assets/src/sass/bootstrap/_list-group */
 .list-group-sm .list-group-item {
