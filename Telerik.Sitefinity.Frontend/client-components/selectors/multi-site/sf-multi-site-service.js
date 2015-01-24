@@ -73,7 +73,7 @@
               getSitesForUserPromise: getSitesForUserPromise,
               addHandler: addHandler,
               getSiteByRootNoteId: getSiteByRootNoteId,
-              sfSites: getSites
+              getSites: getSites
           };
       }]);
 })(angular.module('sfServices'));
