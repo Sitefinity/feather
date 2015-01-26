@@ -20,7 +20,8 @@
 
                         var getItems = function (parentId, search) {
                             var provider = ctrl.$scope.sfProvider;
-                            return pageService.getItems(parentId, provider, search);
+                            var siteId = getSiteId();
+                            return pageService.getItems(parentId, siteId, provider, search);
                         };
 
                         var allowLoadingItems = function (newSite, oldSite) {
@@ -31,6 +32,15 @@
                                 return false;
                             }
                             return true;
+                        };
+
+                        var getSiteId = function () {
+                            var selectedSite = scope.$eval(attrs.sfPageSelector);
+
+                            if (selectedSite && selectedSite.Id) {
+                                return selectedSite.Id;
+                            }
+                            return ctrl.$scope.siteId;
                         };
 
                         var areLanguageEqual = function (newLang, oldLang) {
@@ -55,11 +65,11 @@
                                 ctrl.resetItems();
 
                                 // We should clear the selection, because it is not relevant anymore.
-                                if(ctrl.$scope.sfSelectedIds) {
+                                if (ctrl.$scope.sfSelectedIds) {
                                     ctrl.$scope.sfSelectedIds.length = 0;
                                 }
 
-                                if(ctrl.$scope.sfSelectedItems) {
+                                if (ctrl.$scope.sfSelectedItems) {
                                     ctrl.$scope.sfSelectedItems.length = 0;
                                 }
 
@@ -122,7 +132,12 @@
                             }
                             return false;
                         };
-                                               
+
+                        // Adds support for multilingual support
+                        ctrl.$scope.bindPageIdentifierField = function (dataItem) {
+                            return pageService.getPageTitleByCulture(dataItem, getCulture());
+                        };
+
                         ctrl.selectorType = 'PageSelector';
 
                         ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.html';
@@ -146,7 +161,6 @@
                                                       "<span class='small text-muted' ng-bind='dataItem.Status'></span>" +
                                                   "</span>" +
                                             "</a>";
-
                         ctrl.$scope.singleItemTemplateHtml = templateHtml;
 
                         ctrl.onPostLinkComleted = function () {
