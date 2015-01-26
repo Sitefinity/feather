@@ -1,6 +1,6 @@
 ﻿(function () {
     angular.module('sfSelectors')
-        .directive('sfPageSelector', ['sfPageService', 'serverContext', function (pageService, serverContext) {
+        .directive('sfPageSelector', ['sfPageService', 'serverContext', '$q', function (pageService, serverContext, $q) {
             return {
                 require: '^sfListSelector',
                 restrict: 'A',
@@ -96,8 +96,22 @@
 
                             var rootId = getSiteMapRootNodeId();
 
-                            return pageService.getSpecificItems(ids, provider, rootId);
+                            var specificItemsPromise = pageService.getSpecificItems(ids, provider, rootId);
+
+                            ctrl.$scope.selectedIdsPromise  = specificItemsPromise.then(function (data) {
+                                return data.Items.map(function (item) {
+                                    return item.Id;
+                                })
+                            });
+
+                            return specificItemsPromise;
                         };
+
+                        var resetItemsBase = ctrl.resetItems;
+                        ctrl.resetItems = function () {
+                            ctrl.$scope.selectedIdsPromise = null;
+                            resetItemsBase.apply(ctrl, arguments);
+                        }
 
                         ctrl.itemDisabled = function (item) {
                             var uiCulture = getCulture();
@@ -107,7 +121,7 @@
                             }
                             return false;
                         };
-
+                                               
                         ctrl.selectorType = 'PageSelector';
 
                         ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.html';
@@ -127,8 +141,8 @@
                         var templateHtml = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}\" >" +
                                                   "<i class='pull-left icon-item-{{dataItem.Status.toLowerCase()}}'></i>" +
                                                   "<span class='pull-left'>" +
-                                                      "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\">{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class=\" m-left-md \">(not translated)</em>" +
-                                                      "<span class='small text-muted'>{{dataItem.Status}}</span>" +
+                                                      "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\" ng-bind=\"sfIdentifierFieldValue({dataItem: dataItem})\"></span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class='m-left-md'>(not translated)</em>" +
+                                                      "<span class='small text-muted' ng-bind='dataItem.Status'></span>" +
                                                   "</span>" +
                                             "</a>";
 

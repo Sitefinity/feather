@@ -144,7 +144,7 @@
                     sfMultiselect: '=',
                     sfExpandSelection: '=',
                     sfItemsPromise: '=',
-                    sfSelectedIds: '=',
+                    sfSelectedIdsPromise: '=',
                     sfSelectItem: '&',
                     sfItemSelected: '&',
                     sfItemDisabled: '&?',
@@ -184,8 +184,8 @@
                      * Determines whether the tree should be expanded to the selected item.
                      */
                     var shouldExpandTree = function (scope) {
-                        return scope.sfSelectedIds &&
-                            scope.sfSelectedIds.length > 0 &&
+                        return scope.selectedIds &&
+                            scope.selectedIds.length > 0 &&
                             !scope.sfMultiselect &&
                             scope.sfExpandSelection;
                     };
@@ -209,7 +209,7 @@
                      */
                     var expandTreeToSelectedItem = function () {
                         $q.all([
-                            constructPredecessorsTree(scope.sfSelectedIds),
+                            constructPredecessorsTree(scope.selectedIds),
                             kendoTreeCreatedPromise.promise])
                         .then(function (promiseResults) {
                             var predecessorsTree = promiseResults[0];
@@ -243,7 +243,7 @@
                         if (!scope.sfScrollContainerClass) return;
 
                         //scroll to the selected element
-                        var selectedId = scope.sfSelectedIds[0],
+                        var selectedId = scope.selectedIds[0],
                             selectedDataNode = scope.treeView.dataSource.get(selectedId),
                             selectedTreeNode = scope.treeView.findByUid(selectedDataNode.uid),
                             container = $('.' + scope.sfScrollContainerClass),
@@ -252,8 +252,21 @@
 
                         container.animate({
                             scrollTop: scrollTop - middleOffset
+                            // /scrollTop: scrollTop
                         }, 600);
                     };
+
+                    var initialize = function () {
+                        if (shouldExpandTree(scope)) {
+                            expandTreeToSelectedItem();
+                        }
+                        else {
+                            setItemsIntoTree();
+                        }
+                        if (scope.treeView) {
+                            kendoTreeCreatedPromise.resolve();
+                        }
+                    }
 
                     scope.$on("kendoWidgetCreated", function (event, widget) {
                         // check if the event is emmited from our widget
@@ -263,21 +276,12 @@
                     });
 
                     scope.$watch('sfItemsPromise', function () {
-                        scope.sfSelectItemsPromise.then(function (items) {
-                            scope.sfSelectedIds = items.map(function (item) {
-                                return item.Id;
-                            });
+                        scope.sfSelectedIdsPromise ? 
+                            scope.sfSelectedIdsPromise.then(function (ids) {
+                                scope.selectedIds = ids;
 
-                            if (shouldExpandTree(scope)) {
-                                expandTreeToSelectedItem();
-                            }
-                            else {
-                                setItemsIntoTree();
-                            }
-                            if (scope.treeView) {
-                                kendoTreeCreatedPromise.resolve();
-                            }
-                        });
+                                initialize();
+                            }) : initialize();
                     });
 
                     scope.checkboxes = {

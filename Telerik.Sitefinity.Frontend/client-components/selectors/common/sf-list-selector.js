@@ -195,16 +195,16 @@
                                 return;
                             }
 
-                            scope.selectedItemsPromise = ctrl.getSpecificItems(ids)
+                            return ctrl.getSpecificItems(ids)
                                 .then(function (data) {
-                                    ////ctrl.updateSelection(data.Items);
                                     ctrl.onSelectedItemsLoadedSuccess(data);
+
+                                    // Return the items in order to be available in the promise handlers.
+                                    return scope.sfSelectedItems;
                                 }, onError)
                                 .finally(function () {
                                     scope.showLoadingIndicator = false;
                                 });
-
-                            return scope.selectedItemsPromise;
                         };
 
                         var updateSelectedItems = function () {
