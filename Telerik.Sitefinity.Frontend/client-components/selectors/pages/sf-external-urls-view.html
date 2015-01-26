@@ -3,13 +3,20 @@
 <div class="list-group list-group-endless" ng-hide="isListEmpty()">
     <div class="list-group-item list-group-item-multiselect"
         ng-repeat="item in sfExternalPages track by item.ExternalPageId">		
-			<input type="checkbox" ng-checked="isItemSelected(item.ExternalPageId)"  ng-click="itemClicked(item)"></input>
-			<span ng-bind="item.TitlesPath" ng-click="enterEditTitle = !enterEditTitle" ng-hide="enterEditTitle" ></span>
-			<input type="text" ng-model="item.TitlesPath" ng-blur="enterEditTitle = !enterEditTitle" ng-show="enterEditTitle"></input>
-			<span ng-bind="item.Url" ng-click="enterEditUrl = !enterEditUrl" ng-hide="enterEditUrl"></span>
-			<input type="text" ng-model="item.Url" ng-blur="enterEditUrl = !enterEditUrl" ng-show="enterEditUrl"></input>
+			<span><input type="checkbox" ng-checked="isItemSelected(item.ExternalPageId)"  ng-click="itemClicked(item)"></input></span>
+			<span><input type="text" ng-model="item.TitlesPath" ng-mouseenter="mouseOverTitle = true" ng-mouseleave="mouseOverTitle = false" sf-editable sf-exit-edit="enterEditTitle = false" sf-enter-edit="enterEditTitle = true" ng-class="{removeBorder: !enterEditTitle, highlight: (mouseOverTitle && !enterEditTitle)}"></input></span>
+			<span><input type="text" ng-model="item.Url" ng-mouseenter="mouseOverUrl = true" ng-mouseleave="mouseOverUrl = false" sf-editable sf-exit-edit="enterEditUrl = false" sf-enter-edit="enterEditUrl = true" ng-class="{removeBorder: !enterEditUrl, highlight: (mouseOverUrl && !enterEditUrl)}"></input></span>
 			<a ng-click="removeItem($index, item)"><i class="glyphicon glyphicon-remove-circle"></i></a>
     </div>
 </div>
 
 <input type="button" value="Add external URL" ng-click="addItem()"></input>
+
+<style>
+    .removeBorder {
+        border-style:none;
+    }
+    .highlight {
+        background-color: yellow
+    }
+</style>
