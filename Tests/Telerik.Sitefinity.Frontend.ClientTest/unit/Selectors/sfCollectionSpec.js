@@ -16,7 +16,7 @@
             });
         }
 
-        var directiveMarkup = '<sf-collection sf-template="template" sf-data="dataItems"></sf-collection>';
+        var directiveMarkup = '<sf-collection sf-template="{{template}}" sf-data="dataItems"></sf-collection>';
         commonMethods.compileDirective(directiveMarkup, scope);
 
         expect($('.sfCollectionItem').length).toEqual(5);
@@ -38,14 +38,14 @@
 
         scope.selectedItems = [2, 4];
 
-        var directiveMarkup = '<sf-collection sf-template="template" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></sf-collection>';
+        var directiveMarkup = '<sf-collection sf-template="{{template}}" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></sf-collection>';
         commonMethods.compileDirective(directiveMarkup, scope);
         expect($('.sfCollectionItem.sf-selected').length).toEqual(2);
         expect($('.sfCollectionItem.sf-selected span:contains(2)').length).toEqual(1);
         expect($('.sfCollectionItem.sf-selected span:contains(4)').length).toEqual(1);
     });
 
-    it('[Boyko-Karadzhov] / should have only one item selected when sf-multiselect is not present and a second item clicked.', function () {
+    it('[Boyko-Karadzhov] / should have only one item selected when sf-multiselect is not present and a second item is clicked.', function () {
         var scope = $rootScope.$new();
         scope.template = '<li ng-repeat="item in items" class="sfCollectionItem" ng-click="select(item.id)"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>';
         scope.dataItems = [];
@@ -57,12 +57,34 @@
         }
         
         scope.selectedItems = [2];
-        var directiveMarkup = '<sf-collection sf-template="template" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></sf-collection>';
+        var directiveMarkup = '<sf-collection sf-template="{{template}}" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></sf-collection>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
         $(element).find('.sfCollectionItem').has('span:contains(4)').click();
         scope.$digest();
 
         expect(scope.selectedItems.length).toEqual(1);
         expect(scope.selectedItems[0]).toEqual(4);
+    });
+
+    it('[Boyko-Karadzhov] / should have both items selected when sf-multiselect is present and a second item is clicked.', function () {
+        var scope = $rootScope.$new();
+        scope.template = '<li ng-repeat="item in items" class="sfCollectionItem" ng-click="select(item.id)"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>';
+        scope.dataItems = [];
+        for (var i = 1; i <= 5; i++) {
+            scope.dataItems.push({
+                id: i,
+                title: 'Item ' + i
+            });
+        }
+
+        scope.selectedItems = [2];
+        var directiveMarkup = '<sf-collection sf-template="{{template}}" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></sf-collection>';
+        var element = commonMethods.compileDirective(directiveMarkup, scope);
+        $(element).find('.sfCollectionItem').has('span:contains(4)').click();
+        scope.$digest();
+
+        expect(scope.selectedItems.length).toEqual(2);
+        expect(scope.selectedItems[0]).toEqual(2);
+        expect(scope.selectedItems[1]).toEqual(4);
     });
 });
