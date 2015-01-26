@@ -10,16 +10,36 @@ describe('site selecor directive', function () {
 
     var sites = [{
         Id: '8d8b587d-5ac3-457f-8bb6-cafd0e79ea75',
-        Name: 'site1'
+        Name: 'site1',
+        SiteMapRootNodeId: "f669d9a7-009d-4d83-ddaa-000000000002"
     },
     {
         Id: '487b05be-a32a-4476-bb2d-36c499eb770e',
-        Name: 'site2'
+        Name: 'site2',
+        SiteMapRootNodeId: "f669d9a7-009d-4d83-ddaa-000000000003"
     }];
 
     beforeEach(module(function ($provide) {
         provide = $provide;
         $provide.value('sfMultiSiteService', sfMultisiteServiceMock);
+    }));
+
+    beforeEach(module(function ($provide) {
+        var serverContext = {
+            getRootedUrl: function (path) {
+                return appPath + '/' + path;
+            },
+            getUICulture: function () {
+                return null;
+            },
+            getCurrentUserId: function () {
+                return 'f669d9a7-009d-4d83-ddaa-000000000002';
+            },
+            getCurrentFrontendRootNodeId: function () {
+                return 'f669d9a7-009d-4d83-ddaa-000000000002';
+            }
+        };
+        $provide.value('serverContext', serverContext);
     }));
 
     beforeEach(inject(function(_$q_, _$rootScope_) {
@@ -98,7 +118,7 @@ describe('site selecor directive', function () {
         commonMethods.compileDirective(template, scope);
 
         var siteSelector = $('#siteSelector select');
-        expect(siteSelector.val()).toEqual(sites[1].Id);
+        expect(siteSelector.val()).toEqual(sites[1].SiteMapRootNodeId);
     });
 
     it('[GeorgiMateev] / should populate the select element in the html.',
@@ -108,7 +128,7 @@ describe('site selecor directive', function () {
         commonMethods.compileDirective(template, scope);
 
         var siteSelector = $('#siteSelector select');
-        expect(siteSelector.val()).toEqual(sites[0].Id);
+        expect(siteSelector.val()).toEqual(sites[0].SiteMapRootNodeId);
 
         var options = $('#siteSelector select option').map(function (index, option) {
             return {

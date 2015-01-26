@@ -12,7 +12,8 @@ describe("page selector", function () {
         customDataItems.Items[i] = {
             Id: '4c003fb0-2a77-61ec-be54-ff00007864f' + i,
             Title: { Value: 'Dummy' + i },
-            HasChildren: true
+            HasChildren: true,
+            Status: "Published"
         };
     }
 
@@ -124,7 +125,7 @@ describe("page selector", function () {
             expect(pageSelecotrScope.sfIdentifierField).toBe("TitlesPath");
             expect(pageSelecotrScope.searchIdentifierField).toBe("Title");
 
-            expect(pageSelecotrScope.items).toEqualArrayOfObjects(customDataItems.Items, ['Id', 'Title']);
+            expect(pageSelecotrScope.items).toEqualArrayOfObjects(customDataItems.Items, ['Id', 'Title', 'Status']);
         });
 
         it('[manev] / should filter items when text is typed in the filter box.', function () {
