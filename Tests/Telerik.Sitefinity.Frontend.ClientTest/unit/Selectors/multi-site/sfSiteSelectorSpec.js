@@ -118,7 +118,7 @@ describe('site selecor directive', function () {
         commonMethods.compileDirective(template, scope);
 
         var siteSelector = $('#siteSelector select');
-        expect(siteSelector.val()).toEqual(sites[1].Id);
+        expect(siteSelector.val()).toEqual(sites[1].SiteMapRootNodeId);
     });
 
     it('[GeorgiMateev] / should populate the select element in the html.',
@@ -128,7 +128,7 @@ describe('site selecor directive', function () {
         commonMethods.compileDirective(template, scope);
 
         var siteSelector = $('#siteSelector select');
-        expect(siteSelector.val()).toEqual(sites[0].Id);
+        expect(siteSelector.val()).toEqual(sites[0].SiteMapRootNodeId);
 
         var options = $('#siteSelector select option').map(function (index, option) {
             return {
