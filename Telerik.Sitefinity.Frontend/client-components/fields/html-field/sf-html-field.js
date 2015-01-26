@@ -48,7 +48,7 @@
 
                     angular.element("#linkSelectorModal").scope().$openModalDialog().then(function (data) {
                         scope.selectedHtml = data;
-                        editor.exec("insertHtml", { html: data.outerHTML, split: false });
+                        editor.exec("insertHtml", { html: data.outerHTML, split: true });
                     });
                 };
 

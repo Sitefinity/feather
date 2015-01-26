@@ -13,7 +13,7 @@
                 return serviceHelper.getResource(url);
             };
 
-            var getItems = function (parentId, provider, search) {
+            var getItems = function (parentId, siteId, provider, search) {
                 if (search) {
                     var filter = serviceHelper.filterBuilder()
                                               .searchFilter(search)
@@ -29,6 +29,7 @@
                     return getResource().get({
                         root: parentId,
                         hierarchyMode: true,
+                        sf_site: siteId,
                         provider: provider,
                         filter: search
                     }).$promise;
