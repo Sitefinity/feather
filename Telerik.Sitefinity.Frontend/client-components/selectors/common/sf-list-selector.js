@@ -46,6 +46,27 @@
                         }
                     };
 
+                    this.removeUnselectedItems = function () {
+                        if ($scope.multiselect) {
+                            var reoderedItems = [];
+                            if ($scope.selectedItemsViewData && $scope.selectedItemsViewData.length > 0) {
+                                for (var i = 0; i < $scope.selectedItemsViewData.length; i++) {
+                                    for (var j = 0; j < $scope.selectedItemsInTheDialog.length; j++) {
+                                        if ($scope.selectedItemsInTheDialog[j].Id === $scope.selectedItemsViewData[i].Id) {
+                                            reoderedItems.push($scope.selectedItemsInTheDialog[j]);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                $scope.selectedItemsInTheDialog = [];
+                                Array.prototype.push.apply($scope.selectedItemsInTheDialog, reoderedItems);
+                            }
+
+                            $scope.selectedItemsViewData = [];
+                        }
+                    };
+
                     this.$scope = $scope;
 
                     this.onSelectedItemsLoadedSuccess = function (data) {
@@ -216,7 +237,7 @@
                         };
 
                         var updateSelectedItems = function () {
-                            scope.removeUnselectedItems();
+                            ctrl.removeUnselectedItems();
 
                             if (scope.sfChange) {
                                 var oldSelectedItems = [];
@@ -502,27 +523,7 @@
                             }
                         };
 
-                        scope.removeUnselectedItems = function () {
-                            if (scope.multiselect) {
-                                var reoderedItems = [];
-                                if (scope.selectedItemsViewData && scope.selectedItemsViewData.length > 0) {
-                                    for (var i = 0; i < scope.selectedItemsViewData.length; i++) {
-                                        for (var j = 0; j < scope.selectedItemsInTheDialog.length; j++) {
-                                            if ((scope.selectedItemsInTheDialog[j].Id && scope.selectedItemsInTheDialog[j].Id === scope.selectedItemsViewData[i].Id) ||
-                                                (scope.selectedItemsInTheDialog[j].ExternalPageId === scope.selectedItemsViewData[i].ExternalPageId)) {
-                                                reoderedItems.push(scope.selectedItemsInTheDialog[j]);
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    scope.selectedItemsInTheDialog = [];
-                                    Array.prototype.push.apply(scope.selectedItemsInTheDialog, reoderedItems);
-                                }
-
-                                scope.selectedItemsViewData = [];
-                            }
-                        };
+                        scope.removeUnselectedItems = ctrl.removeUnselectedItems;
 
                         if (scope.sfSelectedIds && scope.sfSelectedIds.length !== 0) {
                             scope.sfSelectedIds = scope.sfSelectedIds.filter(function (value) {

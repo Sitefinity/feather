@@ -7,7 +7,7 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         var rootPage = serverContext.getCurrentFrontendRootNodeId();
-                        
+
                         // <------- Begin: Helper methods ------
                         var getSiteMapRootNodeId = function () {
                             var selectedSite = scope.$eval(attrs.sfPageSelector);
@@ -106,6 +106,27 @@
                                 return item.AvailableLanguages.indexOf(uiCulture) < 0;
                             }
                             return false;
+                        };
+
+                        ctrl.removeUnselectedItems = function () {
+                            if (ctrl.$scope.multiselect) {
+                                var reoderedItems = [];
+                                if (ctrl.$scope.selectedItemsViewData && ctrl.$scope.selectedItemsViewData.length > 0) {
+                                    for (var i = 0; i < ctrl.$scope.selectedItemsViewData.length; i++) {
+                                        for (var j = 0; j < ctrl.$scope.selectedItemsInTheDialog.length; j++) {
+                                            if ((ctrl.$scope.selectedItemsInTheDialog[j].Id && ctrl.$scope.selectedItemsInTheDialog[j].Id === ctrl.$scope.selectedItemsViewData[i].Id) ||
+                                                (ctrl.$scope.selectedItemsInTheDialog[j].ExternalPageId === ctrl.$scope.selectedItemsViewData[i].ExternalPageId)) {
+                                                reoderedItems.push(ctrl.$scope.selectedItemsInTheDialog[j]);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    ctrl.$scope.selectedItemsInTheDialog = [];
+                                    Array.prototype.push.apply(ctrl.$scope.selectedItemsInTheDialog, reoderedItems);
+                                }
+
+                                ctrl.$scope.selectedItemsViewData = [];
+                            }
                         };
 
                         ctrl.selectorType = 'PageSelector';
