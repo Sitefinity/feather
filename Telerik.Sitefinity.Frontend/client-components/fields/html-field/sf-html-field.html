@@ -6,7 +6,10 @@
     "bold", "italic", "underline", "trikethrough",
     "justifyLeft", "justifyCenter", "justifyRight",
     "insertUnorderedList", "insertOrderedList", "indent", "outdent",
-    "createLink",
+    {
+        name: "createLink",
+        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openLinkSelector()\" title=\"Insert hyperlink\"><span class=\"k-tool-icon k-createLink\">Create Link</span></a>"
+    },
     "unlink", "insertImage",
     "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn",
     {
@@ -19,4 +22,6 @@
     }
     ]'>
 </textarea>
+
+<sf-link-selector-modal id="linkSelectorModal"></sf-link-selector-modal>
 
