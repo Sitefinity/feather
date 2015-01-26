@@ -60,7 +60,7 @@
                                        //// Clear dispaly text only in 'Page from current site' mode and culture for selected page is different from the current selected culture.
                                        if (scope.sfCulture &&
                                            scope.sfSelectedItem &&
-                                           scope.sfSelectedItem.mode === 2 &&
+                                           scope.sfSelectedItem.mode === sfLinkMode.InternalPage &&
                                            scope.sfSelectedItem.language !== scope.sfCulture.Culture) {
                                            scope.sfSelectedItem.displayText = '';
                                        }
