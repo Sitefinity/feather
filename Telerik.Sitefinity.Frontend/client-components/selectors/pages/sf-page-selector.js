@@ -88,7 +88,8 @@
 
                         ctrl.getPredecessors = function (itemId) {
                             var provider = ctrl.$scope.sfProvider;
-                            return pageService.getPredecessors(itemId, provider);
+                            var rootId = getSiteMapRootNodeId();
+                            return pageService.getPredecessors(itemId, provider, rootId);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
@@ -101,7 +102,7 @@
                             ctrl.$scope.selectedIdsPromise  = specificItemsPromise.then(function (data) {
                                 return data.Items.map(function (item) {
                                     return item.Id;
-                                })
+                                });
                             });
 
                             return specificItemsPromise;
@@ -111,7 +112,7 @@
                         ctrl.resetItems = function () {
                             ctrl.$scope.selectedIdsPromise = null;
                             resetItemsBase.apply(ctrl, arguments);
-                        }
+                        };
 
                         ctrl.itemDisabled = function (item) {
                             var uiCulture = getCulture();

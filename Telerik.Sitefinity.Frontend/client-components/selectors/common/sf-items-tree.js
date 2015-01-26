@@ -177,6 +177,8 @@
                         return scope.sfGetPredecessors({ itemId: selectedId })
                             .then(function (predecessors) {
                                 return sfTreeHelper.constructPredecessorsTree(predecessors.Items, selectedId);
+                            }, function (error) {
+                                return $q.reject(error);
                             });
                     };
 
@@ -220,7 +222,10 @@
                         .then(function (predecessorsTree) {
                             scope.treeView.expandPath(predecessorsTree.parentsIds);
                         })
-                        .then(scrollToSelectedItem);
+                        .then(scrollToSelectedItem)
+                        .catch(function (error) {
+                            setItemsIntoTree();
+                        });
                     };
 
                     /**
@@ -266,7 +271,7 @@
                         if (scope.treeView) {
                             kendoTreeCreatedPromise.resolve();
                         }
-                    }
+                    };
 
                     scope.$on("kendoWidgetCreated", function (event, widget) {
                         // check if the event is emmited from our widget
@@ -276,12 +281,16 @@
                     });
 
                     scope.$watch('sfItemsPromise', function () {
-                        scope.sfSelectedIdsPromise ? 
+                        if(scope.sfSelectedIdsPromise) { 
                             scope.sfSelectedIdsPromise.then(function (ids) {
                                 scope.selectedIds = ids;
 
                                 initialize();
-                            }) : initialize();
+                            });
+                        }
+                        else {
+                            initialize();
+                        }
                     });
 
                     scope.checkboxes = {

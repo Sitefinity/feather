@@ -47,9 +47,10 @@
                 }).$promise;
             };
 
-            var getPredecessors = function (itemId, provider) {
+            var getPredecessors = function (itemId, provider, rootId) {
                 return getResource('predecessor/' + itemId).get({
-                    provider: provider
+                    provider: provider,
+                    root: rootId
                 }).$promise;
             };
 
