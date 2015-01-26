@@ -15,8 +15,8 @@
             },
             link: function (scope) {
                 var hasMultipleSites = function () {
-                    scope.hasMultipleSites =  siteService.getSites().length > 1;
-                }
+                    scope.hasMultipleSites = siteService.getSites().length > 1;
+                };
 
                 if (siteService.getSites().length > 0) {
                     hasMultipleSites();
