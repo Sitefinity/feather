@@ -108,6 +108,11 @@
                             return false;
                         };
 
+                        // Adds support for multilingual support
+                        ctrl.$scope.bindPageIdentifierField = function (dataItem) {
+                            return pageService.getPageTitleByCulture(dataItem, getCulture());
+                        };
+
                         ctrl.selectorType = 'PageSelector';
 
                         ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.html';
@@ -131,7 +136,6 @@
                                                       "<span class='small text-muted'>{{dataItem.Status}}</span>" +
                                                   "</span>" +
                                             "</a>";
-
                         ctrl.$scope.singleItemTemplateHtml = templateHtml;
 
                         ctrl.onPostLinkComleted = function () {

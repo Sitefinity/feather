@@ -53,10 +53,33 @@
                 }).$promise;
             };
 
+            var getPageTitleByCulture = function (page, culture) {
+                if (page) {
+                    if (page.Title && page.Title.ValuesPerCulture) {
+                        for (var i = 0; i < page.Title.ValuesPerCulture.length; i++) {
+                            var valuePerCulture = page.Title.ValuesPerCulture[i];
+                            if (valuePerCulture.Key === culture) {
+                                return valuePerCulture.Value;
+                            }
+                        }
+                    }
+                    if (!page.TitlesPath) {
+                        return page.Id;
+                    }
+                    if (typeof page.TitlesPath === 'string') {
+                        return page.TitlesPath;
+                    }
+                    else if (page.TitlesPath.Value) {
+                        return page.TitlesPath.Value;
+                    }
+                }
+            };
+
             return {
                 getItems: getItems,
                 getSpecificItems: getSpecificItems,
-                getPredecessors: getPredecessors
+                getPredecessors: getPredecessors,
+                getPageTitleByCulture: getPageTitleByCulture
             };
         }]);
 })();
