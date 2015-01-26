@@ -12,7 +12,7 @@
 
                 return serviceHelper.getResource(url);
             };
-            
+
             var getItems = function (parentId, provider, search) {
                 if (search) {
                     var filter = serviceHelper.filterBuilder()
@@ -20,6 +20,7 @@
                                               .getFilter();
 
                     return getResource().get({
+                        root: parentId,
                         provider: provider,
                         filter: filter
                     }).$promise;

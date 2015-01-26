@@ -47,7 +47,7 @@
 
             dialogsService.increaseDialogsCount();
 
-            scope.$modalInstance.result.finally(function () {
+            return scope.$modalInstance.result.finally(function () {
                 dialogsService.decreaseDialogsCount();
 
                 $('.' + attrs.windowClass).remove();
@@ -71,7 +71,7 @@
                 }
                 else {
                     scope.$openModalDialog = function () {
-                            open(scope, attrs);
+						return open(scope, attrs);
                     };
                 }
             }

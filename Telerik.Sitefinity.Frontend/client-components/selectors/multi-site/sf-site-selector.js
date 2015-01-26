@@ -19,7 +19,10 @@
                     scope.sfSites = data.Items;
                     
                     if (scope.sfSites.length > 0 && !scope.sfSite) {
-                        scope.sfSite = scope.sfSites[0];
+                        var currentSiteMapRootNodeId = serverContext.getCurrentFrontendRootNodeId();
+                        scope.sfSite = scope.sfSites.filter(function (site) {
+                            return site.SiteMapRootNodeId === currentSiteMapRootNodeId;
+                        })[0];
                     }
                 });
 
