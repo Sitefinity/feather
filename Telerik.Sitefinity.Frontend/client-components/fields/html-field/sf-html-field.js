@@ -70,7 +70,7 @@
 
                         if (!customButtons) {
                             customButtons = fullToolbar.children().filter(function (child) {
-                                return $(this).children("[ng-click]").length > 0;
+                                return $(this).children(".js-custom-tool").length > 0;
                             });
                         }
 
