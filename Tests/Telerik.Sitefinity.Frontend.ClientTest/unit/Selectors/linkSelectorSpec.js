@@ -28,15 +28,25 @@ describe("link selector", function () {
     }
 
     var cultures = [{
-        "Culture": "tr-TR",
-        "DisplayName": "Turkish (Turkey)",
+        "Culture": "en",
+        "DisplayName": "English",
+        "FieldSuffix": "",
+        "IsDefault": true,
+        "Key": "english-en",
+        "ShortName": "en",
+        "SitesNames": ["Site1", "Site2"],
+        "SitesUsingCultureAsDefault": ["Site2"],
+        "UICulture": "en"
+    },{
+        "Culture": "de",
+        "DisplayName": "German",
         "FieldSuffix": "",
         "IsDefault": false,
-        "Key": "turkish (turkey)-tr-tr",
-        "ShortName": "tr-TR",
-        "SitesNames": ["\/"],
-        "SitesUsingCultureAsDefault": [],
-        "UICulture": "tr-TR"
+        "Key": "german-de",
+        "ShortName": "de",
+        "SitesNames": ["Site1", "Site2"],
+        "SitesUsingCultureAsDefault": ["Site1"],
+        "UICulture": "de"
     }];
 
     var sfSites =
@@ -62,7 +72,7 @@ describe("link selector", function () {
             "IsAllowedCreateEdit": false,
             "IsAllowedSetPermissions": false,
             "IsAllowedStartStop": false,
-            "IsDefault": true,
+            "IsDefault": false,
             "IsDeleteable": false,
             "IsOffline": false,
             "Name": "Site2",
@@ -155,7 +165,7 @@ describe("link selector", function () {
                 return appPath + '/' + path;
             },
             getUICulture: function () {
-                return null;
+                return "de";
             },
             getCurrentUserId: function () {
                 return '36e9e47f-0d78-6425-ae98-ff0000fc9faf';
@@ -316,7 +326,7 @@ describe("link selector", function () {
 
         it('[Manev] / Test sfLinkHtml provided as a jQuery wrapper with valid anchor element with ref and sfref and lng param and no target.', function () {
 
-            scope.sfLinkHtml = $("<a href='CodeBase/widgettests' sfref='[f669d9a7-009d-4d83-ddaa-000000000002|lng:bg]28d7e74c-c789-61c4-9817-ff000095605c'>LINK</a>");
+            scope.sfLinkHtml = $("<a href='CodeBase/widgettests' sfref='[f669d9a7-009d-4d83-ddaa-000000000002|lng:de]28d7e74c-c789-61c4-9817-ff000095605c'>LINK</a>");
             scope.selectedItem = "";
             scope.sfEditorContent = "";
 
@@ -332,7 +342,7 @@ describe("link selector", function () {
             expect(directiveScope.sfSelectedItem.rootNodeId).toBe('f669d9a7-009d-4d83-ddaa-000000000002');
             expect(directiveScope.sfSite).toBe(sfSites[1]);
             expect(directiveScope.sfCulture).toBeDefined();
-            expect(directiveScope.sfCulture.Culture).toBe('bg');
+            expect(directiveScope.sfCulture.Culture).toBe('de');
 
             var ispagesFromThisSiteRadioChecked = $('#pagesFromThisSiteRadio').prop('checked');
             var openInNewWin = $('#openInNewWin2').prop('checked');
@@ -345,7 +355,7 @@ describe("link selector", function () {
 
         it('[Manev] / Test sfLinkHtml provided as a jQuery wrapper with valid anchor element with ref and sfref and lng param and with target.', function () {
 
-            scope.sfLinkHtml = $("<a href='CodeBase/widgettests' target='_blank' sfref='[f669d9a7-009d-4d83-ddaa-000000000002|lng:bg]28d7e74c-c789-61c4-9817-ff000095605c'>here is the link</a>");
+            scope.sfLinkHtml = $("<a href='CodeBase/widgettests' target='_blank' sfref='[f669d9a7-009d-4d83-ddaa-000000000002|lng:de]28d7e74c-c789-61c4-9817-ff000095605c'>here is the link</a>");
             scope.selectedItem = "";
             scope.sfEditorContent = "";
 
@@ -361,7 +371,7 @@ describe("link selector", function () {
             expect(directiveScope.sfSelectedItem.rootNodeId).toBe('f669d9a7-009d-4d83-ddaa-000000000002');
             expect(directiveScope.sfSite).toBe(sfSites[1]);
             expect(directiveScope.sfCulture).toBeDefined();
-            expect(directiveScope.sfCulture.Culture).toBe('bg');
+            expect(directiveScope.sfCulture.Culture).toBe('de');
 
             var ispagesFromThisSiteRadioChecked = $('#pagesFromThisSiteRadio').prop('checked');
             var openInNewWin = $('#openInNewWin2').prop('checked');

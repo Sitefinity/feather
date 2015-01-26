@@ -13,11 +13,12 @@
                 return serviceHelper.getResource(url);
             };
 
-            var getItems = function (parentId, siteId, provider, search) {
+            var getItems = function (parentId, provider, search) {
                 if (search) {
                     var filter = serviceHelper.filterBuilder()
                                               .searchFilter(search)
                                               .getFilter();
+
                     return getResource().get({
                         root: parentId,
                         provider: provider,
@@ -25,9 +26,10 @@
                     }).$promise;
                 }
                 else {
-                    return getResource('hierarchy/' + parentId).get({
+                    return getResource().get({
+                        root: parentId,
+                        hierarchyMode: true,
                         provider: provider,
-                        siteId: siteId,
                         filter: search
                     }).$promise;
                 }

@@ -35,7 +35,20 @@
                               scope.sfCultures = siteCultures;
                               
                               if ((!scope.sfCulture || !scope.sfCulture.Culture) && scope.sfCultures.length > 0) {
-                                  scope.sfCulture = scope.sfCultures[0];
+
+                                  var currentCultureName = serverContext.getUICulture();
+
+                                  var currentCulture = scope.sfCultures.filter(function (culture) {
+                                      return culture.Culture === currentCultureName;
+                                  });
+
+                                  if (currentCulture.length > 0) {
+                                      // the cultures for this site contain the UI culture
+                                      scope.sfCulture = currentCulture[0];
+                                  }
+                                  else {
+                                      scope.sfCulture = getDefaultCultureForSelectedSite();
+                                  }
                               }
                           });
 
@@ -45,12 +58,25 @@
                           });
                       };
 
+                      var getDefaultCultureForSelectedSite = function () {
+                          var defaultCultureForSelectedSite = scope.sfCultures.filter(function (culture) {
+                              if (culture.SitesUsingCultureAsDefault) {
+                                  if (culture.SitesUsingCultureAsDefault.indexOf(scope.sfSite.Name) >= 0) {
+                                      return culture;
+                                  }
+                              }
+                          });
+
+                          return defaultCultureForSelectedSite[0];
+                      };
+
                       if (scope.sfSite) {
                           beginLoadingLanguages();
                       }
 
                       scope.$watch('sfSite', function (newSite, oldSite) {
                           if (scope.sfSite) {
+                              scope.sfCulture = null;
                               beginLoadingLanguages();
                           }
                       });

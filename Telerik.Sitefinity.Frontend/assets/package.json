@@ -14,7 +14,9 @@
     "grunt-sass": "^0.15.0",
     "grunt-uncss": "^0.3.6",
     "load-grunt-tasks": "^0.6.0",
-    "time-grunt": "^1.0.0"
+    "time-grunt": "^1.0.0",
+    "grunt-webfont": "git://github.com/georgieff/grunt-webfont.git"
+
   },
   "author": {
     "name": "SitefinityUX Team",
