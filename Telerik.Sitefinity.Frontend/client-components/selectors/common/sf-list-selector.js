@@ -194,7 +194,7 @@
                                 return;
                             }
 
-                            return ctrl.getSpecificItems(ids)
+                            scope.selectedItemsPromise = ctrl.getSpecificItems(ids)
                                 .then(function (data) {
                                     ////ctrl.updateSelection(data.Items);
                                     ctrl.onSelectedItemsLoadedSuccess(data);
@@ -202,6 +202,8 @@
                                 .finally(function () {
                                     scope.showLoadingIndicator = false;
                                 });
+
+                            return scope.selectedItemsPromise;
                         };
 
                         var updateSelectedItems = function () {

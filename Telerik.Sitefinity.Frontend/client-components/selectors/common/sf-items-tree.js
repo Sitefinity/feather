@@ -263,15 +263,21 @@
                     });
 
                     scope.$watch('sfItemsPromise', function () {
-                        if (shouldExpandTree(scope)) {
-                            expandTreeToSelectedItem();
-                        }
-                        else {
-                            setItemsIntoTree();
-                        }
-                        if (scope.treeView) {
-                            kendoTreeCreatedPromise.resolve();
-                        }
+                        scope.sfSelectItemsPromise.then(function (items) {
+                            scope.sfSelectedIds = items.map(function (item) {
+                                return item.Id;
+                            });
+
+                            if (shouldExpandTree(scope)) {
+                                expandTreeToSelectedItem();
+                            }
+                            else {
+                                setItemsIntoTree();
+                            }
+                            if (scope.treeView) {
+                                kendoTreeCreatedPromise.resolve();
+                            }
+                        });
                     });
 
                     scope.checkboxes = {
