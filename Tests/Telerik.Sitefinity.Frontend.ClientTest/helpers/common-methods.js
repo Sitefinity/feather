@@ -42,15 +42,18 @@ var commonMethods = (function () {
         compileDirective: function (template, scope, container, cssClass) {
             var container = container || 'body';
             var cssClass = cssClass || 'testDiv';
+            var directiveElement = null;
 
             inject(function ($compile) {
-                var directiveElement = $compile(template)(scope);
+                directiveElement = $compile(template)(scope);
                 $(container).append($('<div/>').addClass(cssClass)
                     .append(directiveElement));
             });
 
             // $digest is necessary to finalize the directive generation
             scope.$digest();
+
+            return directiveElement;
         },
 
         /**
