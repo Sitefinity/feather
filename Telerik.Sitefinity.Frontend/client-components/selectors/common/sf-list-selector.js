@@ -508,7 +508,8 @@
                                 if (scope.selectedItemsViewData && scope.selectedItemsViewData.length > 0) {
                                     for (var i = 0; i < scope.selectedItemsViewData.length; i++) {
                                         for (var j = 0; j < scope.selectedItemsInTheDialog.length; j++) {
-                                            if (scope.selectedItemsInTheDialog[j].Id === scope.selectedItemsViewData[i].Id) {
+                                            if ((scope.selectedItemsInTheDialog[j].Id && scope.selectedItemsInTheDialog[j].Id === scope.selectedItemsViewData[i].Id) ||
+                                                (scope.selectedItemsInTheDialog[j].ExternalPageId === scope.selectedItemsViewData[i].ExternalPageId)) {
                                                 reoderedItems.push(scope.selectedItemsInTheDialog[j]);
                                                 break;
                                             }

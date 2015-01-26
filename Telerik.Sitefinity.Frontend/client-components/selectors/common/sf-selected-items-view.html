@@ -12,7 +12,7 @@
     <div class="list-group list-group-endless" kendo-sortable k-options="sortableOptions" k-on-change="sortItems(kendoEvent)">
         <div class="list-group-item list-group-item-multiselect list-group-item-draggable"
             ng-click="itemClicked(item)"
-            ng-repeat="item in currentItems">
+            ng-repeat="item in currentItems track by (item.Id ? item.Id : item.ExternalPageId)">
 
             <span class="handler list-group-item-drag" ng-hide="!!filter.searchString || !sfSortable"></span>
 
