@@ -6,12 +6,12 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-
+                        var baseScope = scope.$$childTail;
                         ctrl.isItemSelected = function (id, externalPageId) {
-                            if (scope.sfSelectedItems) {
-                                for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                    if ((id && scope.sfSelectedItems[i].Id === id) ||
-                                        (externalPageId && scope.sfSelectedItems[i].ExternalPageId === externalPageId)) {
+                            if (baseScope.sfSelectedItems) {
+                                for (var i = 0; i < baseScope.sfSelectedItems.length; i++) {
+                                    if ((id && baseScope.sfSelectedItems[i].Id === id) ||
+                                        (externalPageId && baseScope.sfSelectedItems[i].ExternalPageId === externalPageId)) {
                                         return true;
                                     }
                                 }
@@ -21,15 +21,15 @@
                         };
 
                         ctrl.itemClicked = function (item) {
-                            if (!scope.sfSelectedItems) {
-                                scope.sfSelectedItems = [];
+                            if (!baseScope.sfSelectedItems) {
+                                baseScope.sfSelectedItems = [];
                             }
 
                             var selectedItemIndex;
                             var alreadySelected = false;
-                            for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                if ((item.Id && scope.sfSelectedItems[i].Id === item.Id)||
-                                    (!item.Id && scope.sfSelectedItems[i].ExternalPageId === item.ExternalPageId)) {
+                            for (var i = 0; i < baseScope.sfSelectedItems.length; i++) {
+                                if ((item.Id && baseScope.sfSelectedItems[i].Id === item.Id) ||
+                                    (!item.Id && baseScope.sfSelectedItems[i].ExternalPageId === item.ExternalPageId)) {
                                     selectedItemIndex = i;
                                     alreadySelected = true;
                                     break;
@@ -37,10 +37,10 @@
                             }
 
                             if (alreadySelected) {
-                                scope.sfSelectedItems.splice(selectedItemIndex, 1);
+                                baseScope.sfSelectedItems.splice(selectedItemIndex, 1);
                             }
                             else {
-                                scope.sfSelectedItems.push(item);
+                                baseScope.sfSelectedItems.push(item);
                             }
                         };
                     }
