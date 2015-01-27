@@ -8,6 +8,7 @@
                     sfMultiselect: '@',
                     items: '=sfData',
                     ngModel: '=',
+                    selectedItems: '=ngModel',
                     sfLoadMore: '&'
                 },
                 templateUrl: function (elem, attrs) {
@@ -15,28 +16,27 @@
                         throw { message: "You can not provide both template html and template url." };
                     }
 
-                    return attrs.sfTemplateUrl;
+                    var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    return serverContext.getEmbeddedResourceUrl(assembly, attrs.sfTemplateUrl);
                 },
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         scope.selectItem = function (item) {
-                            if (ctrl) {
-                                if (scope.sfMultiselect) {
-                                    var itemIndex = scope.selectItems.indexOf(id);
-                                    if (itemIndex < 0) {
-                                        scope.selectItems.push(id);
-                                    }
-                                    else {
-                                        scope.selectItems.splice(itemIndex, 1);
-                                    }
+                            if (scope.sfMultiselect) {
+                                var itemIndex = scope.selectedItems.indexOf(id);
+                                if (itemIndex < 0) {
+                                    scope.selectedItems.push(id);
                                 }
                                 else {
-                                    scope.selectItems = [id];
+                                    scope.selectedItems.splice(itemIndex, 1);
                                 }
-
-                                ctrl.$setViewValue(scope.selectItems);
-                                ctrl.$apply();
                             }
+                            else {
+                                scope.selectedItems = [id];
+                            }
+
+                            ctrl.$setViewValue(scope.selectedItems);
+                            ctrl.$apply();
                         };
 
                         //$scope.$on("$destroy", function () {
