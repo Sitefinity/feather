@@ -9,8 +9,7 @@
                     items: '=sfData',
                     ngModel: '=',
                     sfIdentifier: '@',
-                    selectedItems: '=ngModel',
-                    sfLoadMore: '&'
+                    selectedItems: '=ngModel'
                 },
                 templateUrl: function (elem, attrs) {
                     if (!attrs.sfTemplateUrl) {
@@ -22,9 +21,14 @@
                 },
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
+                        var classes = {
+                            grid: 'sf-collection-grid',
+                            list: 'sf-collection-list'
+                        };
+
                         scope.sfIdentifier = scope.sfIdentifier || 'Id';
 
-                        element.addClass('sf-collection-grid');
+                        element.addClass(classes.grid);
                         scope.isSelected = function (item) {
                             if (scope.selectedItems === undefined) {
                                 return false;
@@ -32,6 +36,7 @@
 
                             return scope.selectedItems.indexOf(item[scope.sfIdentifier]) >= 0;
                         };
+
                         scope.select = function (item) {
                             if (scope.selectedItems === undefined) {
                                 return;
@@ -58,13 +63,13 @@
                         };
 
                         scope.switchToGrid = function () {
-                            element.removeClass('sf-collection-list');
-                            element.addClass('sf-collection-grid');
+                            element.removeClass(classes.list);
+                            element.addClass(classes.grid);
                         };
 
                         scope.switchToList = function () {
-                            element.removeClass('sf-collection-grid');
-                            element.addClass('sf-collection-list');
+                            element.removeClass(classes.grid);
+                            element.addClass(classes.list);
                         };
                     }
                 }
