@@ -1,6 +1,6 @@
 ﻿; (function ($) {
     angular.module('sfSelectors')
-        .directive('sfCollection', ['$compile', '$q', '$http', 'serverContext', function ($compile, $q, $http, serverContext) {
+        .directive('sfCollection', ['serverContext', function (serverContext) {
             return {
                 restrict: 'A',
                 scope: {
