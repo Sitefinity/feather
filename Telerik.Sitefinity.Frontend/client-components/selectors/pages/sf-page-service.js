@@ -88,7 +88,7 @@
             //// HACK: Need to reset to the default backend site so we need to make an additional service call.
             //// Remove this method once it is resolve in the page service!
             var patchBugInSitefinityEndPointService = function (promise, siteId) {
-                var currentSite = multiSiteService.getSiteByRootNoteId(serverContext.getCurrentFrontendRootNodeId())
+                var currentSite = multiSiteService.getSiteByRootNoteId(serverContext.getCurrentFrontendRootNodeId());
 
                 var shouldResetSite = currentSite.Id !== siteId;
 

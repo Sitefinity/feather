@@ -141,6 +141,7 @@
                                     return true;
                                 });
                             }
+                            return items;
                         };
 
                         ctrl.selectorType = 'PageSelector';
