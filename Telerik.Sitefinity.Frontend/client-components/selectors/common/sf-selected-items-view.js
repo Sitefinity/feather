@@ -76,7 +76,7 @@
                             if (scope.sfSelectedItems) {
                                 for (var i = 0; i < scope.sfSelectedItems.length; i++) {
                                     if ((id && scope.sfSelectedItems[i].Id === id) ||
-                                        (scope.sfSelectedItems[i].ExternalPageId === externalPageId)) {
+                                        (externalPageId && scope.sfSelectedItems[i].ExternalPageId === externalPageId)) {
                                         return true;
                                     }
                                 }

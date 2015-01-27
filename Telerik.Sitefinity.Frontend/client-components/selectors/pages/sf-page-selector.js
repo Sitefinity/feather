@@ -115,7 +115,7 @@
                                     for (var i = 0; i < ctrl.$scope.selectedItemsViewData.length; i++) {
                                         for (var j = 0; j < ctrl.$scope.selectedItemsInTheDialog.length; j++) {
                                             if ((ctrl.$scope.selectedItemsInTheDialog[j].Id && ctrl.$scope.selectedItemsInTheDialog[j].Id === ctrl.$scope.selectedItemsViewData[i].Id) ||
-                                                (ctrl.$scope.selectedItemsInTheDialog[j].ExternalPageId === ctrl.$scope.selectedItemsViewData[i].ExternalPageId)) {
+                                                (ctrl.$scope.selectedItemsInTheDialog[j].ExternalPageId && ctrl.$scope.selectedItemsInTheDialog[j].ExternalPageId === ctrl.$scope.selectedItemsViewData[i].ExternalPageId)) {
                                                 reoderedItems.push(ctrl.$scope.selectedItemsInTheDialog[j]);
                                                 break;
                                             }
