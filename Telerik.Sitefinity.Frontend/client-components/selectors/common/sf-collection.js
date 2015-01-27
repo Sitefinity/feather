@@ -22,23 +22,26 @@
                 },
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
+                        scope.sfIdentifier = scope.sfIdentifier || 'Id';
+
+                        element.addClass('sf-collection-grid');
                         scope.isSelected = function (item) {
                             if (scope.selectedItems === undefined) {
                                 return false;
                             }
 
-                            return getItemIndex(item) >= 0;
+                            return scope.selectedItems.indexOf(item[scope.sfIdentifier]) >= 0;
                         };
-                        scope.selectItem = function (item) {
+                        scope.select = function (item) {
                             if (scope.selectedItems === undefined) {
                                 return;
                             }
 
-                            var itemIndex = getItemIndex(item);
+                            var itemIndex = scope.selectedItems.indexOf(item[scope.sfIdentifier]);
 
                             if (scope.sfMultiselect === undefined) {
                                 if (itemIndex < 0) {
-                                    scope.selectedItems = [item];
+                                    scope.selectedItems = [item[scope.sfIdentifier]];
                                 }
                                 else {
                                     scope.selectedItems = [];
@@ -46,7 +49,7 @@
                             }
                             else {
                                 if (itemIndex < 0) {
-                                    scope.selectedItems.push(item);
+                                    scope.selectedItems.push(item[scope.sfIdentifier]);
                                 }
                                 else {
                                     scope.selectedItems.splice(itemIndex, 1);
@@ -54,20 +57,14 @@
                             }
                         };
 
-                        var getItemIndex = function (item) {
-                            if (scope.selectedItems === undefined) {
-                                return;
-                            }
+                        scope.switchToGrid = function () {
+                            element.removeClass('sf-collection-list');
+                            element.addClass('sf-collection-grid');
+                        };
 
-                            var prop = scope.sfIdentifier || 'Id';
-
-                            for (var i = 0; i < scope.selectedItems.length; i++) {
-                                if (scope.selectedItems[i][prop] === item[prop]) {
-                                    return i;
-                                }
-                            }
-
-                            return -1;
+                        scope.switchToList = function () {
+                            element.removeClass('sf-collection-grid');
+                            element.addClass('sf-collection-list');
                         };
                     }
                 }
