@@ -118,6 +118,38 @@
                         }
                         return 0;
                     };
+
+                    this.onError = function (error) {
+                        var errorMessage = '';
+                        if (error && error.data && error.data.ResponseStatus) {
+                            errorMessage = error.data.ResponseStatus.Message;
+                        }
+                        else if (error && error.statusText) {
+                            errorMessage = error.statusText;
+                        }
+
+                        $scope.showError = true;
+                        $scope.errorMessage = errorMessage;
+                    };
+
+                    this.fetchSelectedItems = function () {
+                        var ids = $scope.getSelectedIds();
+                        currentSelectedIds = ids;
+
+                        if (ids.length === 0) {
+                            return;
+                        }
+
+                        var that = this;
+                        return this.getSpecificItems(ids)
+                            .then(function (data) {
+                                ////ctrl.updateSelection(data.Items);
+                                that.onSelectedItemsLoadedSuccess(data);
+                            }, that.onError)
+                            .finally(function () {
+                                $scope.showLoadingIndicator = false;
+                            });
+                    };
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -165,19 +197,6 @@
                             }
                         };
 
-                        var onError = function (error) {
-                            var errorMessage = '';
-                            if (error && error.data && error.data.ResponseStatus) {
-                                errorMessage = error.data.ResponseStatus.Message;
-                            }
-                            else if (error && error.statusText) {
-                                errorMessage = error.statusText;
-                            }
-
-                            scope.showError = true;
-                            scope.errorMessage = errorMessage;
-                        };
-
                         // ------------------------------------------------------------------------
                         // helper methods
                         // ------------------------------------------------------------------------
@@ -211,29 +230,6 @@
                                 items.filter(function (item) {
                                     return ids.indexOf(item.Id) < 0;
                                 }));
-                        };
-
-                        var fetchSelectedItems = function () {
-                            if (scope.multiselect && scope.sfSelectedItems)
-                                return scope.sfSelectedItems;
-                            else if (!scope.multiselect && scope.sfSelectedItem)
-                                return scope.sfSelectedItem;
-
-                            var ids = scope.getSelectedIds();
-                            currentSelectedIds = ids;
-
-                            if (ids.length === 0) {
-                                return;
-                            }
-
-                            return ctrl.getSpecificItems(ids)
-                                .then(function (data) {
-                                    ////ctrl.updateSelection(data.Items);
-                                    ctrl.onSelectedItemsLoadedSuccess(data);
-                                }, onError)
-                                .finally(function () {
-                                    scope.showLoadingIndicator = false;
-                                });
                         };
 
                         var updateSelectedItems = function () {
@@ -277,7 +273,7 @@
                         };
 
                         ctrl.ensureSelectionIsUpToDate = function () {
-                            $q.when(fetchSelectedItems()).then(function () {
+                            $q.when(ctrl.fetchSelectedItems()).then(function () {
                                 updateSelectionInTheDialog();
 
                                 scope.collectSelectedItems();
@@ -304,7 +300,7 @@
                             scope.showLoadingIndicator = true;
 
                             scope.itemsPromise = ctrl.getItems(scope.paging.skip, scope.paging.take)
-                                                     .then(onFirstPageLoadedSuccess, onError);
+                                                     .then(onFirstPageLoadedSuccess, ctrl.onError);
 
                             scope.itemsPromise.finally(function () {
                                 scope.showLoadingIndicator = false;
@@ -328,7 +324,7 @@
 
                         scope.$watchCollection('sfSelectedIds', function (newIds, oldIds) {
                             if (newIds && newIds.length > 0 && !areArrayEquals(newIds, currentSelectedIds)) {
-                                fetchSelectedItems();
+                                ctrl.fetchSelectedItems();
                             }
                         });
 
@@ -350,7 +346,7 @@
                                 var take = scope.paging.take;
                                 var languages = serverContext.getFrontendLanguages();
                                 return ctrl.getItems(skip, take, keyword, languages)
-                                    .then(onItemsFilteredSuccess, onError)
+                                    .then(onItemsFilteredSuccess, ctrl.onError)
                                     .finally(function () {
                                         scope.showLoadingIndicator = false;
                                     });
@@ -531,7 +527,7 @@
                             });
                         }
 
-                        fetchSelectedItems();
+                        ctrl.fetchSelectedItems();
 
                         transclude(scope, function (clone) {
                             var hasContent;

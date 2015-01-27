@@ -129,6 +129,29 @@
                             }
                         };
 
+                        ctrl.fetchSelectedItems = function () {
+                            if (ctrl.$scope.multiselect && ctrl.$scope.sfSelectedItems)
+                                return ctrl.$scope.sfSelectedItems;
+                            else if (!ctrl.$scope.multiselect && ctrl.$scope.sfSelectedItem)
+                                return ctrl.$scope.sfSelectedItem;
+
+                            var ids = ctrl.$scope.getSelectedIds();
+                            currentSelectedIds = ids;
+
+                            if (ids.length === 0) {
+                                return;
+                            }
+
+                            return ctrl.getSpecificItems(ids)
+                                .then(function (data) {
+                                    ////ctrl.updateSelection(data.Items);
+                                    ctrl.onSelectedItemsLoadedSuccess(data);
+                                }, ctrl.onError)
+                                .finally(function () {
+                                    ctrl.$scope.showLoadingIndicator = false;
+                                });
+                        };
+
                         ctrl.selectorType = 'PageSelector';
 
                         ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.html';
