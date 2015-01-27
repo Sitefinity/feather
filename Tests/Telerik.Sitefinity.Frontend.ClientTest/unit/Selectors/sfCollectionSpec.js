@@ -67,7 +67,6 @@
         var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-single-select.html" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
         $(element).find('.sfCollectionItem').has('span:contains("4")').click();
-        debugger;
         scope.$digest();
 
         expect(scope.selectedItems.length).toEqual(1);

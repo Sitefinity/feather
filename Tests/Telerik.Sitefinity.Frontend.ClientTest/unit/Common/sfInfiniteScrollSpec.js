@@ -11,7 +11,7 @@
     }));
 
 
-    it('sets the overflow-y property to scroll on initialization', function () {
+    it('[osmak] / sets the overflow-y property to scroll on initialization', function () {
 
         var markup = '<div sf-infinite-scroll="loadMore()"></div>',
             element = compile(markup)(scope);
@@ -21,7 +21,7 @@
         expect(element.css('overflow-y')).toEqual('scroll');
     });
     
-    it('calls the needsData delegate if element is scrolled to the bottom', function () {
+    it('[osmak] / calls the needsData delegate if element is scrolled to the bottom', function () {
 
         var markup = '<div style="height:200px;" sf-infinite-scroll="loadMore()">' +
                      '  <ul>' +
@@ -59,7 +59,7 @@
         expect(wasLoadMoreCalled).toBe(true);
     });
 
-    it('does not call needsData delegate if element is scrolled, but not all the way to the bottom', function () {
+    it('[osmak] / does not call needsData delegate if element is scrolled, but not all the way to the bottom', function () {
 
         var markup = '<div style="height:200px;" sf-infinite-scroll="loadMore()">' +
                      '  <ul>' +

@@ -1,6 +1,6 @@
 ﻿/*
  * sfInfiniteScroll is a directive which provides functionality for
- * infinte scrolling through the items, as an alternative to paging.
+ * infinite scrolling through the items, as an alternative to paging.
  * The implementation is very simple and solves only the core problem,
  * which is to invoke a delegate when more data is needed. The idea of
  * this directive is not to provide eye-candy features, such as loaders
