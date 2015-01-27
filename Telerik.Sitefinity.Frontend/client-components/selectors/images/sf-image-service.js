@@ -13,7 +13,7 @@
                     skip: options.skip,
                     take: options.take,
                     sortExpression: options.sort,
-                    includeSubFolderItems: options.recursive ? 'true' : 'false',
+                    includeSubFolderItems: options.recursive ? 'true' : null,
                     excludeFolders: excludeFolders
                 }).$promise;
         };
@@ -31,12 +31,12 @@
                     skip: options.skip,
                     take: options.take,
                     sortExpression: options.sort,
-                    hierarchyMode: options.recursive ? 'false' : 'true'
+                    hierarchyMode: options.recursive ? null : 'true'
                 }).$promise;
         };
 
         var getContent = function (options) {
-            callImageService(options, 'false');
+            callImageService(options, null);
         };
 
         return {
