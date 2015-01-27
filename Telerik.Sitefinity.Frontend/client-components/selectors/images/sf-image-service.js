@@ -40,8 +40,8 @@
         };
 
         return {
-            getImage: getImages,
-            getFolders: getFolder,
+            getImages: getImages,
+            getFolders: getFolders,
             getContent: getContent
         };
     }]);
