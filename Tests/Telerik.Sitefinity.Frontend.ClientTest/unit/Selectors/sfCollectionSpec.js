@@ -30,9 +30,9 @@
             expect($('.sfCollectionItem span:contains(' + i + ')').length).toEqual(1);
     });
 
-    it('[Boyko-Karadzhov] / should mark the selected items with sf-selected class.', function () {
+    it('[Boyko-Karadzhov] / should recognize selected items using the isSelected method.', function () {
         var scope = rootScope.$new();
-        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/marks-selected-items.html', '<li ng-repeat="item in items" class="sfCollectionItem"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/marks-selected-items.html', '<li ng-repeat="item in items" class="sfCollectionItem" ng-class="{\'sf-selected\': isSelected(item)}"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>');
 
         scope.dataItems = [];
         for (var i = 1; i <= 5; i++) {
@@ -94,5 +94,29 @@
         expect(scope.selectedItems.length).toEqual(2);
         expect(scope.selectedItems[0]).toEqual(2);
         expect(scope.selectedItems[1]).toEqual(4);
+    });
+
+    it('[Boyko-Karadzhov] / should set sf-collection-grid class by default.', function () {
+        var scope = rootScope.$new();
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/views.html', '<span>The collection.</span><div><a class="grid" ng-click="switchToGrid()">Grid</a><a class="list" ng-click="switchToList()">List</a></div>');
+
+        var directiveMarkup = '<div sf-collection sf-template-url="sf-collection/views.html"></div>';
+        var element = commonMethods.compileDirective(directiveMarkup, scope);
+
+        expect($(element).is('.sf-collection-grid')).toBe(true);
+        expect($(element).is('.sf-collection-list')).toBe(false);
+    });
+
+    it('[Boyko-Karadzhov] / should set sf-collection-list class when switchToList is clicked.', function () {
+        var scope = rootScope.$new();
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/views.html', '<span>The collection.</span><div><a class="grid" ng-click="switchToGrid()">Grid</a><a class="list" ng-click="switchToList()">List</a></div>');
+
+        var directiveMarkup = '<div sf-collection sf-template-url="sf-collection/views.html"></div>';
+        var element = commonMethods.compileDirective(directiveMarkup, scope);
+        $(element).find('list').click();
+        scope.$digest();
+
+        expect($(element).is('.sf-collection-grid')).toBe(false);
+        expect($(element).is('.sf-collection-list')).toBe(true);
     });
 });
