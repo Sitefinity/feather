@@ -489,6 +489,8 @@
     <EmbeddedResource Include="client-components\selectors\pages\sf-external-urls-view.html" />
     <EmbeddedResource Include="client-components\selectors\pages\sf-external-urls-view.js" />
     <EmbeddedResource Include="client-components\fields\sf-editable.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-selected-pages-view.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-selected-pages-view.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

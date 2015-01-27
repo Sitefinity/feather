@@ -12,11 +12,11 @@
     <div class="list-group list-group-endless" kendo-sortable k-options="sortableOptions" k-on-change="sortItems(kendoEvent)">
         <div class="list-group-item list-group-item-multiselect list-group-item-draggable"
             ng-click="itemClicked(item)"
-            ng-repeat="item in currentItems track by item.Id">
+            ng-repeat="item in currentItems track by (item.Id ? item.Id : item.ExternalPageId)">
 
             <span class="handler list-group-item-drag" ng-hide="!!filter.searchString || !sfSortable"></span>
 
-            <input type="checkbox" ng-checked="isItemSelected(item.Id)">
+            <input type="checkbox" ng-checked="isItemSelected(item.Id, item.ExternalPageId)">
 
             <div><span sf-shrinked-breadcrumb="{{bindIdentifierField(item)}}" sf-max-length="60"></span></div>
         </div>

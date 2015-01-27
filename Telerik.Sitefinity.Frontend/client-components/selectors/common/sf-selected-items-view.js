@@ -15,8 +15,44 @@
                     var url = attrs.sfTemplateUrl || 'client-components/selectors/common/sf-selected-items-view.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
+                controller: function ($scope) {
+                    this.isItemSelected = function (id) {
+                        if ($scope.sfSelectedItems) {
+                            for (var i = 0; i < $scope.sfSelectedItems.length; i++) {
+                                if ($scope.sfSelectedItems[i].Id === id) {
+                                    return true;
+                                }
+                            }
+                        }
+
+                        return false;
+                    };
+
+                    this.itemClicked = function (item) {
+                        if (!$scope.sfSelectedItems) {
+                            $scope.sfSelectedItems = [];
+                        }
+
+                        var selectedItemIndex;
+                        var alreadySelected = false;
+                        for (var i = 0; i < $scope.sfSelectedItems.length; i++) {
+                            if ($scope.sfSelectedItems[i].Id === item.Id) {
+                                selectedItemIndex = i;
+                                alreadySelected = true;
+                                break;
+                            }
+                        }
+
+                        if (alreadySelected) {
+                            $scope.sfSelectedItems.splice(selectedItemIndex, 1);
+                        }
+                        else {
+                            $scope.sfSelectedItems.push(item);
+                        }
+                    };
+                },
                 link: {
-                    post: function (scope, element, attrs) {
+                    post: function (scope, element, attrs, ctrl) {
                         var defaultIdentifierField = 'Title';
                         var identifierField = scope.sfIdentifierField || defaultIdentifierField;
 
@@ -72,42 +108,8 @@
                             scope.sfItems.splice(e.newIndex, 0, element);
                         };
 
-                        scope.isItemSelected = function (id, externalPageId) {
-                            if (scope.sfSelectedItems) {
-                                for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                    if ((id && scope.sfSelectedItems[i].Id === id) ||
-                                        (externalPageId && scope.sfSelectedItems[i].ExternalPageId === externalPageId)) {
-                                        return true;
-                                    }
-                                }
-                            }
-
-                            return false;
-                        };
-
-                        scope.itemClicked = function (item) {
-                            if (!scope.sfSelectedItems) {
-                                scope.sfSelectedItems = [];
-                            }
-
-                            var selectedItemIndex;
-                            var alreadySelected = false;
-                            for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                if ((item.Id && scope.sfSelectedItems[i].Id === item.Id)||
-                                    (!item.Id && scope.sfSelectedItems[i].ExternalPageId === item.ExternalPageId)) {
-                                    selectedItemIndex = i;
-                                    alreadySelected = true;
-                                    break;
-                                }
-                            }
-
-                            if (alreadySelected) {
-                                scope.sfSelectedItems.splice(selectedItemIndex, 1);
-                            }
-                            else {
-                                scope.sfSelectedItems.push(item);
-                            }
-                        };
+                        scope.isItemSelected = ctrl.isItemSelected;
+                        scope.itemClicked = ctrl.itemClicked;
 
                         scope.filter = {
                             placeholder: 'Narrow by typing',
