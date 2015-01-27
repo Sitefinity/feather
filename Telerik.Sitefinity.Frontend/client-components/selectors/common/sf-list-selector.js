@@ -1,4 +1,4 @@
-﻿(function ($) {
+(function ($) {
     angular.module('sfSelectors')
         .directive('sfListSelector', ['serverContext', '$q', function (serverContext, $q) {
             return {
@@ -549,3 +549,4 @@
             };
         }]);
 })(jQuery);
+
