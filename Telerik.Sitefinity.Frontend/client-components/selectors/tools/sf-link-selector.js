@@ -51,7 +51,10 @@
                                    }
 
                                    scope.$watch('sfSelectedItem.selectedPage', function () {
-                                       if (scope.sfSelectedItem && scope.sfSelectedItem.selectedPage && scope.sfCulture) {
+                                       if (scope.sfSelectedItem &&
+                                           scope.sfSelectedItem.selectedPage &&
+                                           scope.sfCulture &&
+                                           !scope.sfSelectedItem.displayText) {
                                            scope.sfSelectedItem.displayText = pageService.getPageTitleByCulture(scope.sfSelectedItem.selectedPage, scope.sfCulture.Culture);
                                        }
                                    });
