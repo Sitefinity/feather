@@ -65,6 +65,17 @@
                                            scope.sfSelectedItem.displayText = '';
                                        }
                                    });
+
+                                   scope.isTestLinkHidden = function () {
+                                       if (scope.sfSelectedItem) {
+                                           return scope.sfSelectedItem.linkHasChildrenElements ||
+                                               !scope.sfSelectedItem.webAddress ||
+                                               scope.sfSelectedItem.webAddress === 'http://' ||
+                                               !scope.sfSelectedItem.displayText;
+                                       }
+
+                                       return true;
+                                   };
                                }
                            }
                        };
