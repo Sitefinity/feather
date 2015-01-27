@@ -113,7 +113,7 @@
 
         var directiveMarkup = '<div sf-collection sf-template-url="sf-collection/views.html"></div>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
-        $(element).find('list').click();
+        $(element).find('.list').click();
         scope.$digest();
 
         expect($(element).is('.sf-collection-grid')).toBe(false);
