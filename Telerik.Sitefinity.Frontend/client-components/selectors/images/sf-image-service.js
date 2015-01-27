@@ -1,6 +1,48 @@
 ﻿(function () {
-    angular.module('sfServices').factory('sfImageService', [function () {
+    angular.module('sfServices').factory('sfImageService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
+        var albumServiceUrl = serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/folders/'),
+            imageServiceUrl = serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/');
+
+        var callImageService = function (options, excludeFolders) {
+            var url = options.parent ? imageServiceUrl + options.parent + "/" : imageServiceUrl;
+            return serviceHelper.getResource(url).get(
+                {
+                    itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
+                    filter: options.filter,
+                    provider: options.provider,
+                    skip: options.skip,
+                    take: options.take,
+                    sortExpression: options.sort,
+                    includeSubFolderItems: options.recursive ? 'true' : 'false',
+                    excludeFolders: excludeFolders
+                }).$promise;
+        };
+
+        var getImages = function (options) {
+            callImageService(options, 'true');
+        };
+
+        var getFolders = function (options) {
+            var url = options.parent ? albumServiceUrl + options.parent + "/" : albumServiceUrl;
+            return serviceHelper.getResource(url).get(
+                {
+                    filter: options.filter,
+                    provider: options.provider,
+                    skip: options.skip,
+                    take: options.take,
+                    sortExpression: options.sort,
+                    hierarchyMode: options.recursive ? 'false' : 'true'
+                }).$promise;
+        };
+
+        var getContent = function (options) {
+            callImageService(options, 'false');
+        };
+
         return {
+            getImage: getImages,
+            getFolders: getFolder,
+            getContent: getContent
         };
     }]);
 })();
