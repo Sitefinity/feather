@@ -65,7 +65,7 @@
 
             var getPageTitleByCulture = function (page, culture) {
                 if (page) {
-                    if (page.Title && page.Title.ValuesPerCulture) {
+                    if (page.Title && page.Title.ValuesPerCulture && culture) {
                         for (var i = 0; i < page.Title.ValuesPerCulture.length; i++) {
                             var valuePerCulture = page.Title.ValuesPerCulture[i];
                             if (valuePerCulture.Key === culture) {
@@ -73,14 +73,14 @@
                             }
                         }
                     }
-                    if (!page.TitlesPath) {
+                    if (!page.Title) {
                         return page.Id;
                     }
-                    if (typeof page.TitlesPath === 'string') {
-                        return page.TitlesPath;
+                    if (typeof page.Title === 'string') {
+                        return page.Title;
                     }
-                    else if (page.TitlesPath.Value) {
-                        return page.TitlesPath.Value;
+                    else if (page.Title.Value) {
+                        return page.Title.Value;
                     }
                 }
             };
