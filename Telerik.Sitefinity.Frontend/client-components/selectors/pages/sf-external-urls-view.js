@@ -8,7 +8,7 @@
                 restrict: "E",
                 scope: {
                     sfExternalPages: '=?',
-                    sfSelectedItems: '=?',
+                    sfSelectedItems: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -35,14 +35,33 @@
                         if (!scope.sfExternalPages)
                             scope.sfExternalPages = [];
 
+                        scope.sfExternalPagesInDialog = jQuery.extend(true, [], scope.sfExternalPages);
+
+                        scope.$watch(
+                           "sfExternalPagesInDialog",
+                           function (newValue, oldValue) {
+                               if (newValue != oldValue) {
+                                   scope.sfExternalPages.splice(0, scope.sfExternalPages.length);
+                                   var idx, page;
+                                   for (idx = 0; idx < scope.sfExternalPagesInDialog.length; idx++) {
+                                       page = scope.sfExternalPagesInDialog[idx];
+                                       if (page.Status != 'new')
+                                           scope.sfExternalPages.push(page);
+                                   }
+                               }
+                           },
+                           true
+                       );
+
+
                         scope.isListEmpty = function () {
-                            return scope.sfExternalPages && scope.sfExternalPages.length === 0;
+                            return scope.sfExternalPagesInDialog && scope.sfExternalPagesInDialog.length === 0;
                         };
 
-                        scope.isItemSelected = function (externalPageId) {
+                        scope.isItemSelected = function (externalPageId, status) {
                             if (scope.sfSelectedItems) {
                                 for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                    if (scope.sfSelectedItems[i].ExternalPageId === externalPageId) {
+                                    if (status === 'new' || scope.sfSelectedItems[i].ExternalPageId === externalPageId) {
                                         return true;
                                     }
                                 }
@@ -52,11 +71,12 @@
                         };
 
                         scope.addItem = function () {
-                            scope.sfExternalPages.push({ ExternalPageId: guid(), TitlesPath: 'Enter title', Url: 'Enter URL'});
+                            scope.sfExternalPagesInDialog.push({ ExternalPageId: guid(), TitlesPath: '', Url: '', Status: 'new' });
+
                         };
 
                         scope.removeItem = function (index, item) {
-                            scope.sfExternalPages.splice(index, 1);
+                            scope.sfExternalPagesInDialog.splice(index, 1);
 
                             var selectedItemIndex = findSelectedItemIndex(item);
 
@@ -75,6 +95,29 @@
                                     return i;
                                 }
                             }
+
+                            return -1;
+                        };
+
+                        scope.itemChanged = function (item) {
+                            var selectedItemIndex = findSelectedItemIndex(item);
+                            if (item.TitlesPath) {
+                                item.Status = 'valid';
+
+                                if (selectedItemIndex === -1) {
+                                    scope.sfSelectedItems.push(item);
+                                }
+                            }
+                            else {
+                                if (item.Url)
+                                    item.Status = 'invalid';
+                                else
+                                    item.Status = 'new';
+
+                                if (selectedItemIndex > -1) {
+                                    scope.sfSelectedItems.splice(selectedItemIndex, 1);
+                                }
+                            }
                         };
 
                         scope.itemClicked = function (item) {
@@ -87,7 +130,7 @@
                             if (selectedItemIndex > -1) {
                                 scope.sfSelectedItems.splice(selectedItemIndex, 1);
                             }
-                            else {
+                            else if (item.Status !== 'new') {
                                 scope.sfSelectedItems.push(item);
                             }
                         };
