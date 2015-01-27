@@ -1,13 +1,18 @@
 ﻿describe('collection directive', function () {
+    var rootScope;
+    var templateCache;
+
     beforeEach(module('sfSelectors'));
 
-    beforeEach(inject(function (_$rootScope_) {
-        $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$rootScope_, $templateCache) {
+        rootScope = _$rootScope_;
+        templateCache = $templateCache;
     }));
 
     it('[Boyko-Karadzhov] / should render all items.', function () {
-        var scope = $rootScope.$new();
-        scope.template = '<li ng-repeat="item in items" class="sfCollectionItem"><div><span>Id:</span><span ng-bind="item.id"></span></div><div ng-bind="item.title"></div></li>';
+        var scope = rootScope.$new();
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/reder-all-items.html', '<li ng-repeat="item in items" class="sfCollectionItem"><div><span>Id:</span><span ng-bind="item.id"></span></div><div ng-bind="item.title"></div></li>');
+
         scope.dataItems = [];
         for (var i = 1; i <= 5; i++) {
             scope.dataItems.push({
@@ -16,7 +21,7 @@
             });
         }
 
-        var directiveMarkup = '<ul sf-collection sf-template="{{template}}" sf-data="dataItems"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/reder-all-items.html" sf-data="dataItems"></ul>';
         commonMethods.compileDirective(directiveMarkup, scope);
 
         expect($('.sfCollectionItem').length).toEqual(5);
@@ -26,8 +31,9 @@
     });
 
     it('[Boyko-Karadzhov] / should mark the selected items with sf-selected class.', function () {
-        var scope = $rootScope.$new();
-        scope.template = '<li ng-repeat="item in items" class="sfCollectionItem"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>';
+        var scope = rootScope.$new();
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/marks-selected-items.html', '<li ng-repeat="item in items" class="sfCollectionItem"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>');
+
         scope.dataItems = [];
         for (var i = 1; i <= 5; i++) {
             scope.dataItems.push({
@@ -38,7 +44,7 @@
 
         scope.selectedItems = [2, 4];
 
-        var directiveMarkup = '<ul sf-collection sf-template="{{template}}" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-selected-items.html" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
         commonMethods.compileDirective(directiveMarkup, scope);
         expect($('.sfCollectionItem.sf-selected').length).toEqual(2);
         expect($('.sfCollectionItem.sf-selected span:contains(2)').length).toEqual(1);
@@ -46,8 +52,9 @@
     });
 
     it('[Boyko-Karadzhov] / should have only one item selected when sf-multiselect is not present and a second item is clicked.', function () {
-        var scope = $rootScope.$new();
-        scope.template = '<li ng-repeat="item in items" class="sfCollectionItem" ng-click="select(item.id)"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>';
+        var scope = rootScope.$new();
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/marks-single-select.html', '<li ng-repeat="item in items" class="sfCollectionItem" ng-click="select(item.id)"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>');
+
         scope.dataItems = [];
         for (var i = 1; i <= 5; i++) {
             scope.dataItems.push({
@@ -57,7 +64,7 @@
         }
         
         scope.selectedItems = [2];
-        var directiveMarkup = '<ul sf-collection sf-template="{{template}}" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-single-select.html" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
         $(element).find('.sfCollectionItem').has('span:contains(4)').click();
         scope.$digest();
@@ -67,8 +74,9 @@
     });
 
     it('[Boyko-Karadzhov] / should have both items selected when sf-multiselect is present and a second item is clicked.', function () {
-        var scope = $rootScope.$new();
-        scope.template = '<li ng-repeat="item in items" class="sfCollectionItem" ng-click="select(item.id)"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>';
+        var scope = rootScope.$new();
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/marks-multi-select.html', '<li ng-repeat="item in items" class="sfCollectionItem" ng-click="select(item.id)"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>');
+
         scope.dataItems = [];
         for (var i = 1; i <= 5; i++) {
             scope.dataItems.push({
@@ -78,7 +86,7 @@
         }
 
         scope.selectedItems = [2];
-        var directiveMarkup = '<ul sf-collection sf-template="{{template}}" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-data="dataItems" sf-multiselect ng-model="selectedItems" sf-identifier="id"></ul>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
         $(element).find('.sfCollectionItem').has('span:contains(4)').click();
         scope.$digest();
@@ -86,7 +94,5 @@
         expect(scope.selectedItems.length).toEqual(2);
         expect(scope.selectedItems[0]).toEqual(2);
         expect(scope.selectedItems[1]).toEqual(4);
-
-        debugger;
     });
 });
