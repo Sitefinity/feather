@@ -57,10 +57,15 @@
                 }).$promise;
             };
 
-            var getPredecessors = function (itemId, provider) {
-                return getResource('predecessor/' + itemId).get({
-                    provider: provider
+            var getPredecessors = function (itemId, provider, siteId) {
+                var promise = getResource('predecessor/' + itemId).get({
+                    provider: provider,
+                    site_Id: siteId
                 }).$promise;
+
+                patchBugInSitefinityEndPointService(promise, siteId);
+
+                return promise;
             };
 
             var getPageTitleByCulture = function (page, culture) {
