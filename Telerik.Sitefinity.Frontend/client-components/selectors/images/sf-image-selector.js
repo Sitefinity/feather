@@ -69,18 +69,12 @@
                     scope.sortExpression = null;
                     scope.items = [];
 
-                    var filterExpression = null;
-
-                    // initial open populates dialog with all root libraries
-                    scope.filterObject.basic = 'AllLibraries';
-
                     scope.loadMore = function () {
                         refresh(true);
                     };
 
                     scope.$watch('filterObject', function (newVal, oldVal) {
                         if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-                            filterExpression = newVal.composeExpression();
                             refresh();
                         }
                     }, true);
@@ -127,7 +121,7 @@
                             // custom filter is used (Libraries / Taxons / Dates)
                             callback = sfImageService.getContent;
                         }
-
+                        debugger;
                         callback(options).then(function (response) {
                             if (response && response.Items) {
                                 if (appendItems) {
@@ -136,11 +130,19 @@
                                 else {
                                     scope.items = response.Items;
                                 }
+
+                                debugger;
+                                // TODO: Remove
+                                console.log(response);
                             }
                         }, function (error) {
 
                         });
                     };
+
+                    // initial open populates dialog with all root libraries
+                    scope.filterObject.basic = 'AllLibraries';
+                    refresh();
                 }
             };
         }]);
