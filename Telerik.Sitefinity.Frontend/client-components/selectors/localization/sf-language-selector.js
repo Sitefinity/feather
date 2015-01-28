@@ -40,7 +40,7 @@
                                   scope.sfCultures = allCultures;
                               }
                               
-                              if ((!scope.sfCulture || !scope.sfCulture.Culture) && scope.sfCultures.length > 0) {
+                              if ((!scope.sfCulture || !scope.sfCulture.Culture) && scope.sfCultures.length > 1) {
 
                                   var currentCultureName = serverContext.getUICulture();
 
