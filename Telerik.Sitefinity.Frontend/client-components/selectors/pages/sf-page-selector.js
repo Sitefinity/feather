@@ -170,8 +170,13 @@
                         ctrl.$scope.singleItemTemplateHtml = templateHtml;
 
                         ctrl.onPostLinkComleted = function () {
-                            var currentSite = scope.$eval(attrs.sfPageSelector);
-                            if (currentSite) {
+                            if (sitefinity.isMultisiteEnabled()) {
+                                var currentSite = scope.$eval(attrs.sfPageSelector);
+                                if (currentSite) {
+                                    ctrl.beginLoadingItems();
+                                }
+                            }
+                            else {
                                 ctrl.beginLoadingItems();
                             }
                         };
