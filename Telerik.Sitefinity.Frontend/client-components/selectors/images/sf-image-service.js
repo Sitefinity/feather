@@ -4,6 +4,8 @@
             imageServiceUrl = serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/');
 
         var callImageService = function (options, excludeFolders) {
+            options = options || {};
+
             var url = options.parent ? imageServiceUrl + options.parent + "/" : imageServiceUrl;
             return serviceHelper.getResource(url).get(
                 {
@@ -19,10 +21,12 @@
         };
 
         var getImages = function (options) {
-            callImageService(options, 'true');
+            return callImageService(options, 'true');
         };
 
         var getFolders = function (options) {
+            options = options || {};
+
             var url = options.parent ? albumServiceUrl + options.parent + "/" : albumServiceUrl;
             return serviceHelper.getResource(url).get(
                 {
@@ -36,7 +40,7 @@
         };
 
         var getContent = function (options) {
-            callImageService(options, null);
+            return callImageService(options, null);
         };
 
         return {

@@ -42,7 +42,7 @@ describe('sfImageService', function () {
     /* Helper methods */
     var assertImages = function (params) {
         var data;
-        imageService.getImages.apply(imageService, params).then(function (res) {
+        imageService.getImages(params).then(function (res) {
             data = res;
         });
 
@@ -51,11 +51,11 @@ describe('sfImageService', function () {
         $httpBackend.flush();
 
         expect(data).toEqualData(dataItems);
-    }
+    };
 
     var assertFolders = function (params) {
         var data;
-        imageService.getFolders.apply(imageService, params).then(function (res) {
+        imageService.getFolders(params).then(function (res) {
             data = res;
         });
 
@@ -64,11 +64,11 @@ describe('sfImageService', function () {
         $httpBackend.flush();
 
         expect(data).toEqualData(dataItems);
-    }
+    };
 
     var assertContent = function (params) {
         var data;
-        imageService.getContent.apply(imageService, params).then(function (res) {
+        imageService.getContent(params).then(function (res) {
             data = res;
         });
 
@@ -77,11 +77,11 @@ describe('sfImageService', function () {
         $httpBackend.flush();
 
         expect(data).toEqualData(dataItems);
-    }
+    };
 
-    var assertError = function (params) {
+    var assertError = function (params, methodName) {
         var data;
-        imageService.getItem.apply(imageService, params).then(function (res) {
+        imageService[methodName](params).then(function (res) {
             data = res;
         }, function (err) {
             data = err;
@@ -96,24 +96,499 @@ describe('sfImageService', function () {
 
     /* Tests */
 
-    // Folders
-    it('[dzhenko] / should return only root folders', function () {
-        $httpBackend.expectGET(albumServicePath).respond(dataItems);
+    /* Common */
+    (function () {
+        it('[dzhenko] / passing no options object to folders should return all objects', function () {
+            var subpath = '?hierarchyMode=true'
 
-        assertFolders({parent : null, recursive : false});
-    });
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
 
-    it('[dzhenko] / should return all existing folders', function () {
-        $httpBackend.expectGET(albumServicePath).respond(dataItems);
+            assertFolders();
+        });
 
-        assertFolders({ parent: null, recursive: true });
-    });
+        it('[dzhenko] / passing no options object to images should return all objects', function () {
+            var subpath = '?excludeFolders=true&itemType=Telerik.Sitefinity.Libraries.Model.Image'
 
-    it('[dzhenko] / should return only child folders', function () {
-        var subpath = sampleGuid + '/?hierarchyMode=true';
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
 
-        $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+            assertImages();
+        });
 
-        assertFolders({ parent: sampleGuid });
-    });
+        it('[dzhenko] / passing no options object to content should return all objects', function () {
+            var subpath = '?itemType=Telerik.Sitefinity.Libraries.Model.Image'
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent();
+        });
+    }());
+
+    /* Errors */
+    (function () {
+        it('[dzhenko] / should return error on folders', function () {
+            var subpath = '?hierarchyMode=true'
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(500, errorResponse);
+
+            assertError(null, 'getFolders');
+        });
+
+        it('[dzhenko] / should return error on images', function () {
+            var subpath = '?excludeFolders=true&itemType=Telerik.Sitefinity.Libraries.Model.Image'
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(500, errorResponse);
+
+            assertError(null, 'getImages');
+        });
+
+        it('[dzhenko] / should return error on content', function () {
+            var subpath = '?itemType=Telerik.Sitefinity.Libraries.Model.Image'
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(500, errorResponse);
+
+            assertError(null, 'getContent');
+        });
+    }());
+
+    /* Folders */
+    (function () {
+        // Root folders
+        it('[dzhenko] / should return only root folders', function () {
+            var subpath = '?hierarchyMode=true';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders();
+        });
+
+        it('[dzhenko] / should return only 1 root folder', function () {
+            var subpath = '?hierarchyMode=true&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: false, take: 1 });
+        });
+
+        it('[dzhenko] / should skip 1 root folder', function () {
+            var subpath = '?hierarchyMode=true&skip=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: false, skip: 1 });
+        });
+
+        it('[dzhenko] / should skip 1 and return only 1 root folder', function () {
+            var subpath = '?hierarchyMode=true&skip=1&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: false, skip: 1, take: 1 });
+        });
+
+        it('[dzhenko] / should use custom provider with root folders', function () {
+            var subpath = '?hierarchyMode=true&provider=FakeDataProvider';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: false, provider: 'FakeDataProvider' });
+        });
+
+        it('[dzhenko] / should use filter with root folders', function () {
+            var subpath = '?filter=FakeFilterExpression&hierarchyMode=true';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: false, filter: 'FakeFilterExpression' });
+        });
+
+        it('[dzhenko] / should use sort expression with root folders', function () {
+            var subpath = '?hierarchyMode=true&sortExpression=FakeSortExpression';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: false, sort: 'FakeSortExpression' });
+        });
+
+        it('[dzhenko] / should use sort and filter expression with root folders', function () {
+            var subpath = '?filter=FakeFilterExpression&hierarchyMode=true&sortExpression=FakeSortExpression';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: false, sort: 'FakeSortExpression', filter: 'FakeFilterExpression' });
+        });
+
+        it('[dzhenko] / should use skip, take and provider with root folders', function () {
+            var subpath = '?hierarchyMode=true&provider=FakeDataProvider&skip=1&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: false, provider: 'FakeDataProvider', skip: 1, take: 1 });
+        });
+
+        it('[dzhenko] / should use all options with root folders', function () {
+            var subpath = '?filter=FakeFilterExpression&hierarchyMode=true&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: false, filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
+        });
+
+        // All folders
+        it('[dzhenko] / should return all existing folders', function () {
+            $httpBackend.expectGET(albumServicePath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: true });
+        });
+
+        it('[dzhenko] / should return only 1 folder', function () {
+            var subpath = '?take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: true, take: 1 });
+        });
+
+        it('[dzhenko] / should skip 1 folder', function () {
+            var subpath = '?skip=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: true, skip: 1 });
+        });
+
+        it('[dzhenko] / should skip 1 and return only 1  folder', function () {
+            var subpath = '?skip=1&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: true, skip: 1, take: 1 });
+        });
+
+        it('[dzhenko] / should use custom provider with all folders', function () {
+            var subpath = '?provider=FakeDataProvider';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: true, provider: 'FakeDataProvider' });
+        });
+
+        it('[dzhenko] / should use filter with all folders', function () {
+            var subpath = '?filter=FakeFilterExpression';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: true, filter: 'FakeFilterExpression' });
+        });
+
+        it('[dzhenko] / should use sort expression with all folders', function () {
+            var subpath = '?sortExpression=FakeSortExpression';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: true, sort: 'FakeSortExpression' });
+        });
+
+        it('[dzhenko] / should use sort and filter expression with all folders', function () {
+            var subpath = '?filter=FakeFilterExpression&sortExpression=FakeSortExpression';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: true, sort: 'FakeSortExpression', filter: 'FakeFilterExpression' });
+        });
+
+        it('[dzhenko] / should use skip, take and provider with all folders', function () {
+            var subpath = '?provider=FakeDataProvider&skip=1&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: true, provider: 'FakeDataProvider', skip: 1, take: 1 });
+        });
+
+        it('[dzhenko] / should use all options with all folders', function () {
+            var subpath = '?filter=FakeFilterExpression&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: null, recursive: true, filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
+        });
+
+        // Child folders
+        it('[dzhenko] / should return only child folders', function () {
+            var subpath = sampleGuid + '/?hierarchyMode=true';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: sampleGuid, recursive: false });
+        });
+
+        it('[dzhenko] / should return only 1 child folder', function () {
+            var subpath = sampleGuid + '/?hierarchyMode=true&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: sampleGuid, recursive: false, take: 1 });
+        });
+
+        it('[dzhenko] / should skip 1 child folder', function () {
+            var subpath = sampleGuid + '/?hierarchyMode=true&skip=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: sampleGuid, recursive: false, skip: 1 });
+        });
+
+        it('[dzhenko] / should skip 1 and return only 1 child folder', function () {
+            var subpath = sampleGuid + '/?hierarchyMode=true&skip=1&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: sampleGuid, recursive: false, skip: 1, take: 1 });
+        });
+
+        it('[dzhenko] / should use custom provider with child folders', function () {
+            var subpath = sampleGuid + '/?hierarchyMode=true&provider=FakeDataProvider';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: sampleGuid, recursive: false, provider: 'FakeDataProvider' });
+        });
+
+        it('[dzhenko] / should use filter with child folders', function () {
+            var subpath = sampleGuid + '/?filter=FakeFilterExpression&hierarchyMode=true';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: sampleGuid, recursive: false, filter: 'FakeFilterExpression' });
+        });
+
+        it('[dzhenko] / should use sort expression with child folders', function () {
+            var subpath = sampleGuid + '/?hierarchyMode=true&sortExpression=FakeSortExpression';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: sampleGuid, recursive: false, sort: 'FakeSortExpression' });
+        });
+
+        it('[dzhenko] / should use sort and filter expression with child folders', function () {
+            var subpath = sampleGuid + '/?filter=FakeFilterExpression&hierarchyMode=true&sortExpression=FakeSortExpression';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: sampleGuid, recursive: false, sort: 'FakeSortExpression', filter: 'FakeFilterExpression' });
+        });
+
+        it('[dzhenko] / should use skip, take and provider with child folders', function () {
+            var subpath = sampleGuid + '/?hierarchyMode=true&provider=FakeDataProvider&skip=1&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: sampleGuid, recursive: false, provider: 'FakeDataProvider', skip: 1, take: 1 });
+        });
+
+        it('[dzhenko] / should use all options with child folders', function () {
+            var subpath = sampleGuid + '/?filter=FakeFilterExpression&hierarchyMode=true&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
+
+            $httpBackend.expectGET(albumServicePath + subpath).respond(dataItems);
+
+            assertFolders({ parent: sampleGuid, recursive: false, filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
+        });
+    }());
+
+    /* Images */
+    (function () {
+        it('should return all images', function () {
+            var subpath = '?excludeFolders=true&itemType=Telerik.Sitefinity.Libraries.Model.Image';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages();
+        });
+
+        it('should return recent images', function () {
+            var subpath = '?excludeFolders=true&filter=(LastModified%3E(Sun,+25+Jan+2015+14:09:21+GMT))&itemType=Telerik.Sitefinity.Libraries.Model.Image';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ filter: '(LastModified>(Sun, 25 Jan 2015 14:09:21 GMT))' });
+        });
+
+        it('should return own images', function () {
+            var subpath = '?excludeFolders=true&filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ filter: 'Owner == (67152310-c838-6bcd-855b-ff0000c292fc)' });
+        });
+
+        it('should return images from folder and owner', function () {
+            var subpath = sampleGuid + '/?excludeFolders=true&filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ parent : sampleGuid, filter: 'Owner == (67152310-c838-6bcd-855b-ff0000c292fc)' });
+        });
+
+        it('[dzhenko] / should return only 1 image', function () {
+            var subpath = '?excludeFolders=true&itemType=Telerik.Sitefinity.Libraries.Model.Image&take=1';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ take: 1 });
+        });
+
+        it('[dzhenko] / should skip 1 image', function () {
+            var subpath = '?excludeFolders=true&itemType=Telerik.Sitefinity.Libraries.Model.Image&skip=1';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ skip: 1 });
+        });
+
+        it('[dzhenko] / should skip 1 and return only 1 image', function () {
+            var subpath = '?excludeFolders=true&itemType=Telerik.Sitefinity.Libraries.Model.Image&skip=1&take=1';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ skip : 1, take: 1 });
+        });
+
+        it('[dzhenko] / should use custom provider with all images', function () {
+            var subpath = '?excludeFolders=true&itemType=Telerik.Sitefinity.Libraries.Model.Image&provider=FakeDataProvider';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ provider: 'FakeDataProvider' });
+        });
+
+        it('[dzhenko] / should use sort expression with all images', function () {
+            var subpath = '?excludeFolders=true&itemType=Telerik.Sitefinity.Libraries.Model.Image&sortExpression=FakeSortExpression';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ sort: 'FakeSortExpression' });
+        });
+
+        it('[dzhenko] / should use sort and filter expression with images', function () {
+            var subpath = '?excludeFolders=true&filter=FakeFilterExpression&itemType=Telerik.Sitefinity.Libraries.Model.Image&sortExpression=FakeSortExpression';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ sort: 'FakeSortExpression', filter: 'FakeFilterExpression' });
+        });
+
+        it('[dzhenko] / should use skip, take and provider with images', function () {
+            var subpath = '?excludeFolders=true&itemType=Telerik.Sitefinity.Libraries.Model.Image&provider=FakeDataProvider&skip=1&take=1';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ provider: 'FakeDataProvider', skip: 1, take: 1 });
+        });
+
+        it('[dzhenko] / should use all options with images', function () {
+            var subpath = '?excludeFolders=true&filter=FakeFilterExpression&itemType=Telerik.Sitefinity.Libraries.Model.Image&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertImages({ filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
+        });
+    }());
+
+    /* Content */
+    (function () {
+        it('should return all content', function () {
+            var subpath = '?itemType=Telerik.Sitefinity.Libraries.Model.Image';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent();
+        });
+
+        it('should return recent content', function () {
+            var subpath = '?filter=(LastModified%3E(Sun,+25+Jan+2015+14:09:21+GMT))&itemType=Telerik.Sitefinity.Libraries.Model.Image';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ filter: '(LastModified>(Sun, 25 Jan 2015 14:09:21 GMT))' });
+        });
+
+        it('should return own content', function () {
+            var subpath = '?filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ filter: 'Owner == (67152310-c838-6bcd-855b-ff0000c292fc)' });
+        });
+
+        it('should return content from folder and owner', function () {
+            var subpath = sampleGuid + '/?filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ parent: sampleGuid, filter: 'Owner == (67152310-c838-6bcd-855b-ff0000c292fc)' });
+        });
+
+        it('[dzhenko] / should return only 1 content', function () {
+            var subpath = '?itemType=Telerik.Sitefinity.Libraries.Model.Image&take=1';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ take: 1 });
+        });
+
+        it('[dzhenko] / should skip 1 content', function () {
+            var subpath = '?itemType=Telerik.Sitefinity.Libraries.Model.Image&skip=1';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ skip: 1 });
+        });
+
+        it('[dzhenko] / should skip 1 and return only 1 content', function () {
+            var subpath = '?itemType=Telerik.Sitefinity.Libraries.Model.Image&skip=1&take=1';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ skip: 1, take: 1 });
+        });
+
+        it('[dzhenko] / should use custom provider with all content', function () {
+            var subpath = '?itemType=Telerik.Sitefinity.Libraries.Model.Image&provider=FakeDataProvider';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ provider: 'FakeDataProvider' });
+        });
+
+        it('[dzhenko] / should use sort expression with all content', function () {
+            var subpath = '?itemType=Telerik.Sitefinity.Libraries.Model.Image&sortExpression=FakeSortExpression';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ sort: 'FakeSortExpression' });
+        });
+
+        it('[dzhenko] / should use sort and filter expression with content', function () {
+            var subpath = '?filter=FakeFilterExpression&itemType=Telerik.Sitefinity.Libraries.Model.Image&sortExpression=FakeSortExpression';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ sort: 'FakeSortExpression', filter: 'FakeFilterExpression' });
+        });
+
+        it('[dzhenko] / should use skip, take and provider with content', function () {
+            var subpath = '?itemType=Telerik.Sitefinity.Libraries.Model.Image&provider=FakeDataProvider&skip=1&take=1';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ provider: 'FakeDataProvider', skip: 1, take: 1 });
+        });
+
+        it('[dzhenko] / should use all options with content', function () {
+            var subpath = '?filter=FakeFilterExpression&itemType=Telerik.Sitefinity.Libraries.Model.Image&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
+
+            $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
+
+            assertContent({ filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
+        });
+    }());
 });
