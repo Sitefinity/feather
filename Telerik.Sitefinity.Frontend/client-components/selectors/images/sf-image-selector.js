@@ -1,4 +1,4 @@
-﻿(function () {
+﻿; (function () {
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfInfiniteScroll');
 
@@ -8,7 +8,7 @@
                 initialLoadedItemsCount: 50,
                 infiniteScrollLoadedItemsCount: 20,
             };
-            
+
             var TaxonFilterObject = function () {
                 this.id = null;
                 this.field = null;
@@ -40,6 +40,12 @@
                 };
             };
 
+            scope.items = [];
+            scope.filterObject = {};
+            scope.sortExpression = null;
+
+            var filterExpression = null;
+
             return {
                 restrict: 'E',
                 scope: {
@@ -59,7 +65,9 @@
 
                     // initial open populates dialog with all root libraries
                     sfImageService.getFolders({ take: constants.initialLoadedItemsCount }).then(function (rootFolders) {
-                        scope.items = rootFolders;
+                        if (rootFolders && rootFolders.Items) {
+                            scope.items = rootFolders.Items;
+                        }
                     });
 
                     scope.loadMore = function () {
