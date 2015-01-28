@@ -421,7 +421,7 @@ describe('sfImageService', function () {
         });
 
         it('[dzhenko] / should return images from folder and owner', function () {
-            var subpath = sampleGuid + '/?excludeFolders=true&filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
+            var subpath = 'parent/' + sampleGuid + '/?excludeFolders=true&filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
 
             $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
 
@@ -520,7 +520,7 @@ describe('sfImageService', function () {
         });
 
         it('[dzhenko] / should return content from folder and owner', function () {
-            var subpath = sampleGuid + '/?filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
+            var subpath = 'parent/' + sampleGuid + '/?filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
 
             $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
 

@@ -41,7 +41,7 @@
                     if (this.basic !== 'AllLibraries') {
                         expression = expression.lifecycleFilter();
                     }
-                    
+
                     if (this.query) {
                         expression = expression.and().searchFilter(this.query);
                     }
@@ -73,9 +73,10 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    scope.filterObject = new FilterObject();
                     scope.sortExpression = null;
                     scope.items = [];
+                    scope.filterObject = new FilterObject();
+                    scope.selectedItem = scope.selectedItem || [];
 
                     scope.loadMore = function () {
                         refresh(true);
@@ -90,6 +91,13 @@
                     scope.$watch('sortExpression', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
                             refresh();
+                        }
+                    });
+
+                    scope.$on('sf-collection-item-selected', function (event, data) {
+                        if (data && data.IsFolder === true) {
+                            scope.filterObject.basic = null;
+                            scope.filterObject.parent = data.Id;
                         }
                     });
 
@@ -139,11 +147,9 @@
                                     scope.items = response.Items;
 
                                     // TODO: Remove
-                                    if (scope.filterObject.basic && scope.filterObject.basic === 'AllLibraries') {
-                                        scope.items.push({ Id: 1 }, { Title: 'Default Library', IsFolder: true });
-                                        scope.items.push({ Id: 2 }, { Title: 'Second Library', IsFolder: true });
-                                        scope.items.push({ Id: 3 }, { Title: 'Third Library', IsFolder: true });
-                                    }
+                                    scope.items.push({ Id: '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb', Title: 'Lib 1', IsFolder: true });
+                                    scope.items.push({ Id: '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb', Title: 'Lib 2', IsFolder: true });
+                                    scope.items.push({ Id: '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb', Title: 'Lib 3', IsFolder: true });
                                 }
 
                                 // TODO: Remove

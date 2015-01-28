@@ -6,7 +6,7 @@
         var callImageService = function (options, excludeFolders) {
             options = options || {};
 
-            var url = options.parent ? imageServiceUrl + options.parent + "/" : imageServiceUrl;
+            var url = options.parent ? imageServiceUrl + 'parent/' + options.parent + "/" : imageServiceUrl;
             return serviceHelper.getResource(url).get(
                 {
                     itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
