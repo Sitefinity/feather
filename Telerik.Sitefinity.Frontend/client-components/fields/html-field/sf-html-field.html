@@ -2,7 +2,7 @@
     kendo-editor ng-model="ngModel"
     k-encoded="false"
     k-tools='[
-    "formatting", "cleanFormatting",
+    "formatting",
     "bold", "italic", "underline", "trikethrough",
     "justifyLeft", "justifyCenter", "justifyRight",
     "insertUnorderedList", "insertOrderedList", "indent", "outdent",
@@ -12,6 +12,7 @@
     },
     "unlink", "insertImage",
     "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn",
+    "cleanFormatting",
     {
         name: "fullscreen",
         template: "<a class=\"k-button js-custom-tool\" ng-click=\"toggleFullScreen()\"><span class=\"k-icon k-i-maximize k-tool-icon\"></span></a>"
@@ -23,5 +24,5 @@
     ]'>
 </textarea>
 
-<sf-link-selector-modal id="linkSelectorModal"></sf-link-selector-modal>
 
+<sf-link-selector-modal id="linkSelectorModal"></sf-link-selector-modal>
