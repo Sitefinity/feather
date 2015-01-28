@@ -1,7 +1,7 @@
 ﻿
 <h1>The image collection</h1>
 
-<ul sf-infinite-scroll="loadMore()" style="height: 100px">
+<ul sf-infinite-scroll="$parent.loadMore()" style="height: 100px">
     <li ng-repeat="item in items">{{item.Id}}</li>
 </ul>
 
