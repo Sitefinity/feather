@@ -60,9 +60,12 @@
                         };
 
                         scope.isItemSelected = function (externalPageId, status) {
+                            if (status === 'new')
+                                return true;
+
                             if (scope.sfSelectedItems) {
                                 for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                    if (status === 'new' || scope.sfSelectedItems[i].ExternalPageId === externalPageId) {
+                                    if (scope.sfSelectedItems[i].ExternalPageId === externalPageId) {
                                         return true;
                                     }
                                 }
