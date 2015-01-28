@@ -36,7 +36,12 @@
                     take: options.take,
                     sortExpression: options.sort,
                     hierarchyMode: options.recursive ? null : 'true'
-                }).$promise;
+                }).$promise.then(function (data) {
+                    data.Items.map(function (obj) {
+                        obj.IsFolder = true;
+                    });
+                    return data;
+                });
         };
 
         var getContent = function (options) {
