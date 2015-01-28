@@ -1,2 +1,19 @@
 .form-group + .form-group
   margin-top: 30px
+
+.form-control-highlight
+	width: 100%
+	min-height: 20px
+	border: 1px solid transparent
+	padding: 0 4px
+	cursor: pointer
+
+	&:hover
+		background: #ffc
+
+	&:focus
+		cursor: text
+		background: transparent
+		outline: none
+		border-color: #66afe9
+		box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 4px rgba(102,175,233,.6)

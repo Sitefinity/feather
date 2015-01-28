@@ -7796,6 +7796,10 @@ textarea {
 h4, .h4 {
   font-weight: bold; }
 
+/* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
+:-ms-input-placeholder {
+  color: #a9a9a9; }
+
 /* line 5, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
 .row-none {
   margin-right: -0px;
@@ -7840,6 +7844,10 @@ h4, .h4 {
   .row-lg [class*="col-"] {
     padding-right: 25px;
     padding-left: 25px; }
+
+/* line 17, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
+[class*="col-"] {
+  box-sizing: border-box; }
 
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_datepicker */
 [datepicker-popup] + ul {
@@ -7940,7 +7948,7 @@ h4, .h4 {
     height: 30px;
     opacity: 0; }
 /* line 50, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
-.list-group-item-multiselect > input {
+.list-group-item-multiselect > input[type="checkbox"] {
   position: absolute;
   z-index: 1;
   top: 10px;
@@ -7951,7 +7959,7 @@ h4, .h4 {
   margin-bottom: 0;
   border-top: none; }
   /* line 60, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
-  .list-group-item-draggable > input {
+  .list-group-item-draggable > input[type="checkbox"] {
     left: 25px; }
   /* line 63, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-item-draggable > div {
@@ -7995,6 +8003,13 @@ h4, .h4 {
   border-top: 1px solid #ddd;
   border-radius: 4px; }
 
+/* line 104, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-external .list-group-item {
+  padding-left: 30px; }
+/* line 107, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+.list-group-external > input[type="checkbox"] {
+  top: 13px; }
+
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_navs */
 .nav-wrapper {
   margin: -21px -20px 30px;
@@ -8014,6 +8029,24 @@ tab {
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .form-group + .form-group {
   margin-top: 30px; }
+
+/* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+.form-control-highlight {
+  width: 100%;
+  min-height: 20px;
+  border: 1px solid transparent;
+  padding: 0 4px;
+  cursor: pointer; }
+  /* line 11, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+  .form-control-highlight:hover {
+    background: #ffc; }
+  /* line 14, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+  .form-control-highlight:focus {
+    cursor: text;
+    background: transparent;
+    outline: none;
+    border-color: #66afe9;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 4px rgba(102, 175, 233, 0.6); }
 
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_labels */
 .label-taxon {
@@ -8209,7 +8242,7 @@ tab {
   max-width: 100%; }
 
 /* line 9, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
-.modal-dialog label, .modal-dialog input {
+.modal-dialog label, .modal-dialog input[type="text"] {
   font-size: 14px;
   display: inline-block; }
 /* line 13, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
