@@ -40,28 +40,37 @@
                                   scope.sfCultures = allCultures;
                               }
                               
-                              if ((!scope.sfCulture || !scope.sfCulture.Culture) && scope.sfCultures.length > 1) {
-
-                                  var currentCultureName = serverContext.getUICulture();
-
-                                  var currentCulture = scope.sfCultures.filter(function (culture) {
-                                      return culture.Culture === currentCultureName;
-                                  });
-
-                                  if (currentCulture.length > 0) {
-                                      // the cultures for this site contain the UI culture
-                                      scope.sfCulture = currentCulture[0];
-                                  }
-                                  else {
-                                      scope.sfCulture = getDefaultCultureForSelectedSite();
-                                  }
+                              if ((!scope.sfCulture || !scope.sfCulture.Culture) && scope.sfCultures.length > 0) {
+                                  scope.sfCulture = getCulture();
                               }
+
                           });
 
                           localizationPromise.catch(function (error) {
                               scope.showError = true;
                               scope.errorMessage = error;
                           });
+                      };
+
+                      var getCulture = function () {
+                            var currentCultureName = serverContext.getUICulture();
+
+                            var currentCulture = scope.sfCultures.filter(function (culture) {
+                                return culture.Culture === currentCultureName;
+                            });
+
+                            if (currentCulture.length > 0) {
+                                // the cultures for this site contain the UI culture
+                                return currentCulture[0];
+                            }
+                            else {
+                                if (serverContext.isMultisiteEnabled()) {
+                                    return getDefaultCultureForSelectedSite();
+                                }
+                                else {
+                                    return scope.sfCultures[0];
+                                }
+                            }
                       };
 
                       var getDefaultCultureForSelectedSite = function () {
