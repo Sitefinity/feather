@@ -7,7 +7,6 @@
                     sfTemplateUrl: '@',
                     sfMultiselect: '@',
                     items: '=sfData',
-                    ngModel: '=',
                     sfIdentifier: '@',
                     selectedItems: '=ngModel'
                 },
@@ -27,6 +26,7 @@
                         };
 
                         scope.sfIdentifier = scope.sfIdentifier || 'Id';
+                        scope.selectedItems = scope.selectedItems || [];
 
                         element.addClass(classes.grid);
                         scope.isSelected = function (item) {

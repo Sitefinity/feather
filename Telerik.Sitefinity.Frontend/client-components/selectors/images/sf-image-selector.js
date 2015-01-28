@@ -76,7 +76,6 @@
                     scope.sortExpression = null;
                     scope.items = [];
                     scope.filterObject = new FilterObject();
-                    scope.selectedItem = scope.selectedItem || [];
 
                     scope.loadMore = function () {
                         refresh(true);
@@ -145,15 +144,7 @@
                                 }
                                 else {
                                     scope.items = response.Items;
-
-                                    // TODO: Remove
-                                    scope.items.push({ Id: '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb', Title: 'Lib 1', IsFolder: true });
-                                    scope.items.push({ Id: '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb', Title: 'Lib 2', IsFolder: true });
-                                    scope.items.push({ Id: '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb', Title: 'Lib 3', IsFolder: true });
                                 }
-
-                                // TODO: Remove
-                                console.log(response);
                             }
                         }, function (error) {
 
