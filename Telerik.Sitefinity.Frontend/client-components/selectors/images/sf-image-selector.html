@@ -1,3 +1,5 @@
-﻿<h1>The image selector</h1>
-
+﻿<p>The image selector</p>
+<button ng-click="filterObject.basic = 'RecentImages'">Recent</button>
+<button ng-click="filterObject.basic = 'OwnImages'">Own</button>
+<button ng-click="filterObject.basic = 'AllLibraries'">Libraries</button>
 <div sf-collection sf-data="items" ng-model="selectedItem" sf-template-url="client-components/selectors/images/sf-image-collection.html"></div>

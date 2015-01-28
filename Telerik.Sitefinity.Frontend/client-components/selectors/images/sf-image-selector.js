@@ -121,7 +121,7 @@
                             // custom filter is used (Libraries / Taxons / Dates)
                             callback = sfImageService.getContent;
                         }
-                        debugger;
+
                         callback(options).then(function (response) {
                             if (response && response.Items) {
                                 if (appendItems) {
@@ -129,9 +129,15 @@
                                 }
                                 else {
                                     scope.items = response.Items;
+
+                                    // TODO: Remove
+                                    if (scope.filterObject.basic && scope.filterObject.basic === 'AllLibraries') {
+                                        scope.items.push({ Id: 1 }, { Title: 'Default Library', IsFolder: true });
+                                        scope.items.push({ Id: 2 }, { Title: 'Second Library', IsFolder: true });
+                                        scope.items.push({ Id: 3 }, { Title: 'Third Library', IsFolder: true });
+                                    }
                                 }
 
-                                debugger;
                                 // TODO: Remove
                                 console.log(response);
                             }
