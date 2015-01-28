@@ -510,8 +510,11 @@
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-service.js" />
     <EmbeddedResource Include="client-components\common\sf-infinite-scroll.js" />
-    <Content Include="client-components\selectors\common\sf-collection.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-collection.js" />
     <EmbeddedResource Include="client-components\selectors\images\sf-image-service.js" />
+    <EmbeddedResource Include="client-components\selectors\images\sf-image-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\images\sf-image-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\images\sf-image-collection.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
