@@ -26,9 +26,10 @@ module.exports = function (config) {
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.html',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.js',
-                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.html',		  
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.html',
 				  '../../Telerik.Sitefinity.Frontend/client-components/selectors/**/*.html',
 				  '../../Telerik.Sitefinity.Frontend/client-components/selectors/**/*.js',
+                  '../../Telerik.Sitefinity.Frontend/client-components/**/*.js',
                   'helpers/mocks/*.js',
                   'unit/**'
         ],

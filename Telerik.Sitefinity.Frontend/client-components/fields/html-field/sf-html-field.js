@@ -25,7 +25,7 @@
                 var isFullScreen = false;
                 var editor = null;
                 var content = null;
-                var editorWrapperInitialStyle = null;
+                var originalEditorSizes = null;
                 var fullToolbar = null;
                 var shortToolbar = null;
                 var customButtons = null;
@@ -33,29 +33,30 @@
                 scope.$on('kendoWidgetCreated', function (event, widget) {
                     if (widget.wrapper && widget.wrapper.is('.k-editor')) {
                         widget.focus();
-
                         editor = widget;
                         content = editor.wrapper.find('iframe.k-content').first();
                     }
                 });
 
                 scope.openLinkSelector = function () {
-                    var selection = editor.getSelection();
-                    var parent = selection.extentNode.parentElement;
-                    if (parent.tagName.toLowerCase() === "a") {
-                        scope.selectedHtml = parent;
+                    var range = editor.getRange();
+                    var command = editor.toolbar.tools.createLink.command({ range: range });
+
+                    var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
+                    var aTag = nodes.length ? command.formatter.finder.findSuitable(nodes[0]) : null;
+
+                    if (aTag) {
+                        scope.selectedHtml = aTag;
                     }
                     else {
                         scope.selectedHtml = editor.selectedHtml();
                     }
 
-                    angular.element("#linkSelectorModal").scope().$openModalDialog();
+                    angular.element("#linkSelectorModal").scope().$openModalDialog().then(function (data) {
+                        scope.selectedHtml = data;
+                        editor.exec("insertHtml", { html: data.outerHTML, split: true });
+                    });
                 };
-
-                scope.$on('selectedHtmlChanged', function (event, data) {
-                    scope.selectedHtml = data;
-                    editor.exec("insertHtml", { html: data.outerHTML, split: false });
-                });
 
                 scope.toggleHtmlView = function () {
                     if (editor === null)
@@ -75,7 +76,7 @@
 
                         if (!customButtons) {
                             customButtons = fullToolbar.children().filter(function (child) {
-                                return $(this).children("[ng-click]").length > 0;
+                                return $(this).children(".js-custom-tool").length > 0;
                             });
                         }
 
@@ -104,44 +105,22 @@
                 };
 
                 scope.toggleFullScreen = function () {
-                    if (editor === null)
+                    if (editor === null) {
                         return;
-
-                    var dialog = $(".modal-dialog");
-                    var editorBodies = $(".modal-body iframe.k-content, .modal-body textarea.k-content, td.k-editable-area");
-
-                    if (!editorWrapperInitialStyle) {
-                        editorWrapperInitialStyle = {
-                            dialog: {
-                                margin: dialog.css('margin'),
-                                width: dialog.width()
-                            },
-                            editorBodies: {
-                                height: editorBodies.height()
-                            }
-                        };
                     }
+
+                    var modalHeaderAndFooter = $(".modal-dialog > .modal-content > .modal-header, .modal-dialog > .modal-content > .modal-footer");
+
+                    var mainDialog = $(".modal-dialog");
 
                     if (isFullScreen === false) {
-                        dialog.css({
-                            margin: 0,
-                            width: $("body").width()
-                        });
-
-                        // For full screen with no scroller 
-                        editorBodies.height($(document).height() - $('.modal-footer').outerHeight() - $('.modal-header').outerHeight() -
-                           ($('.modal-body').outerHeight() - editorWrapperInitialStyle.editorBodies.height));
-
-                        // For full screen editor area (scroller for Save, Cancel and Advanced buttons)
-                        // editorBodies.height($(document).height());
-                    } else {
-                        dialog.css({
-                            margin: editorWrapperInitialStyle.dialog.margin,
-                            width: editorWrapperInitialStyle.dialog.width
-                        });
-                        editorBodies.height(editorWrapperInitialStyle.editorBodies.height);
+                        mainDialog.addClass("modal-full-screen");
+                    }
+                    else {
+                        mainDialog.removeClass("modal-full-screen");
                     }
 
+                    modalHeaderAndFooter.toggle();
                     isFullScreen = !isFullScreen;
                 };
             }

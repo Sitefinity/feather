@@ -1,0 +1,48 @@
+[class^="icon-item-"],
+[class*=" icon-item-"]
+  position: relative
+  font-size: 22px
+
+  &:before
+    @extend .icon-file
+    color: #999
+    font-size: 1em
+
+  &:after
+    font-size: .75em
+    line-height: 1
+    background: #fff
+    border-radius: 50%
+    position: absolute
+    bottom: -20%
+    right: -10%
+
+  [class^="icon-"],
+  [class*=" icon-"]
+    position: absolute
+    right: -7%
+    top: -32%
+    z-index: 1
+    font-size: .65em
+
+// Icon colors
+.icon-published-single
+  color: #38AB63
+
+.icon-unpublished-single
+  color: #666
+
+.icon-scheduled-single
+  color: #1A8CFF
+
+.icon-locked-single
+  color: #FF4848
+
+.icon-draft-single
+  color: #596C9B
+
+
+// Icon with text
+.icon--text:before
+  vertical-align: baseline
+  margin-right: 0.3em

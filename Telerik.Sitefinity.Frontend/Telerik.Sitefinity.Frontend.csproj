@@ -33,6 +33,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>..\FxCop\Feather.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>bin\Debug\Telerik.Sitefinity.Frontend.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,6 +43,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\Telerik.Sitefinity.Frontend.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.IdentityModel">
@@ -173,6 +175,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfoShare\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="FilesMonitoring\FileChangeType.cs" />
     <Compile Include="FilesMonitoring\FileMonitoringInitializer.cs" />
     <Compile Include="FilesMonitoring\MonitoredDirectory.cs" />
@@ -303,7 +308,6 @@
     <Folder Include="assets\dist\js\" />
     <Folder Include="assets\src\img\" />
     <Folder Include="assets\src\js\" />
-    <Folder Include="assets\src\sass\modules\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Designer\designer.js" />
@@ -356,6 +360,10 @@
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-98a850f5da55483dd11b21851a40c70b.eot" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-98a850f5da55483dd11b21851a40c70b.ttf" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-98a850f5da55483dd11b21851a40c70b.woff" />
+    <None Include="assets\feather-icons.json" />
     <None Include="assets\jshint.json" />
     <None Include="assets\package.json" />
     <None Include="assets\src\sass\bootstrap\_alerts.sass" />
@@ -371,6 +379,10 @@
     <None Include="assets\src\sass\kendo\_editor.sass" />
     <None Include="assets\src\sass\kendo\_kendo-ui.bootstrap.scss" />
     <None Include="assets\src\sass\kendo\_tabstrip.sass" />
+    <None Include="assets\src\sass\modules\_Btn.sass" />
+    <None Include="assets\src\sass\modules\_BtnGroup.sass" />
+    <None Include="assets\src\sass\modules\_Modal.sass" />
+    <None Include="assets\src\sass\modules\_test.scss" />
     <None Include="assets\src\sass\sitefinity-backend.sass" />
     <None Include="assets\src\sass\_utility-classes.sass" />
     <None Include="assets\src\sass\_variables.sass" />
@@ -464,25 +476,34 @@
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.svg" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-98a850f5da55483dd11b21851a40c70b.svg" />
+    <Content Include="assets\feather-icons.css" />
     <Content Include="assets\gruntfile.js" />
     <EmbeddedResource Include="Modules\ControlTemplates\Web\Scripts\MvcControlTemplateEditor.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-provider-service.js" />
     <EmbeddedResource Include="client-components\selectors\search\sf-search-service.js" />
-    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.html" />
-    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.js" />
-    <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.js" />
-    <EmbeddedResource Include="client-components\selectors\multi-site\sf-multi-site-service.js" />
-    <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.html" />
-    <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.js" />
+    <Content Include="assets\src\icons\bin.svg" />
+    <Content Include="assets\src\icons\draft.svg" />
+    <Content Include="assets\src\icons\file.svg" />
+    <Content Include="assets\src\icons\homepage.svg" />
+    <Content Include="assets\src\icons\locked.svg" />
+    <Content Include="assets\src\icons\published.svg" />
+    <Content Include="assets\src\icons\scheduled.svg" />
+    <Content Include="assets\src\icons\settings.svg" />
+    <Content Include="assets\src\icons\support-tickets.svg" />
+    <Content Include="assets\src\icons\unpublished.svg" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.html" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.js" />
     <EmbeddedResource Include="client-components\selectors\localization\sf-language-selector.html" />
     <EmbeddedResource Include="client-components\selectors\localization\sf-language-selector.js" />
     <EmbeddedResource Include="client-components\selectors\localization\sf-language-service.js" />
     <EmbeddedResource Include="client-components\selectors\multi-site\sf-list-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-multi-site-service.js" />
     <EmbeddedResource Include="client-components\selectors\multi-site\sf-multisite-page-selector.html" />
     <EmbeddedResource Include="client-components\selectors\multi-site\sf-multisite-page-selector.js" />
-    <EmbeddedResource Include="client-components\selectors\tools\sf-link-service.js" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.html" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.js" />
     <EmbeddedResource Include="GridSystem\Templates\container.html" />
@@ -491,6 +512,11 @@
     <EmbeddedResource Include="client-components\fields\sf-editable.js" />
     <EmbeddedResource Include="client-components\selectors\pages\sf-selected-pages-view.js" />
     <EmbeddedResource Include="client-components\selectors\pages\sf-selected-pages-view.html" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-service.js" />
+    <EmbeddedResource Include="client-components\common\sf-infinite-scroll.js" />
+    <Content Include="client-components\selectors\common\sf-collection.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
@@ -546,7 +572,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

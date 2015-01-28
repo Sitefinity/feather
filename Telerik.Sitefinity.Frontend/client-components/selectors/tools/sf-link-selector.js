@@ -5,7 +5,8 @@
                    'sfLinkService',
                    'sfLinkMode',
                    'sfMultiSiteService',
-                   function (serverContext, linkService, sfLinkMode, siteService) {
+                   'sfPageService',
+                   function (serverContext, linkService, sfLinkMode, siteService, pageService) {
                        return {
                            restrict: 'E',
                            scope: {
@@ -22,6 +23,7 @@
                                post: function (scope, element, attrs, ctrl) {
 
                                    var init = function () {
+
                                        scope.anchors = linkService.populateAnchorIds(scope.sfEditorContent);
                                        scope.sfLinkMode = sfLinkMode;
 
@@ -37,11 +39,47 @@
                                        scope.sfCulture = { Culture: selectedItem.language };
 
                                        scope.sfSelectedItem = selectedItem;
+                                       scope.defaultDisplayText = selectedItem.displayText;
                                    };
 
-                                   siteService.addHandler(function () {
+                                   if (siteService.getSites().length > 0) {
                                        init();
+                                   }
+                                   else {
+                                       siteService.addHandler(function () {
+                                           init();
+                                       });
+                                   }
+
+                                   scope.$watch('sfSelectedItem.selectedPage', function () {
+                                       if (scope.sfSelectedItem &&
+                                           scope.sfSelectedItem.selectedPage &&
+                                           scope.sfCulture &&
+                                           !scope.defaultDisplayText) {
+                                           scope.sfSelectedItem.displayText = pageService.getPageTitleByCulture(scope.sfSelectedItem.selectedPage, scope.sfCulture.Culture);
+                                       }
                                    });
+
+                                   scope.$watch('sfCulture', function () {
+                                       //// Clear dispaly text only in 'Page from current site' mode and culture for selected page is different from the current selected culture.
+                                       if (scope.sfCulture &&
+                                           scope.sfSelectedItem &&
+                                           scope.sfSelectedItem.mode === sfLinkMode.InternalPage &&
+                                           scope.sfSelectedItem.language !== scope.sfCulture.Culture) {
+                                           scope.sfSelectedItem.displayText = '';
+                                       }
+                                   });
+
+                                   scope.isTestLinkHidden = function () {
+                                       if (scope.sfSelectedItem) {
+                                           return scope.sfSelectedItem.linkHasChildrenElements ||
+                                               !scope.sfSelectedItem.webAddress ||
+                                               scope.sfSelectedItem.webAddress === 'http://' ||
+                                               !scope.sfSelectedItem.displayText;
+                                       }
+
+                                       return true;
+                                   };
                                }
                            }
                        };

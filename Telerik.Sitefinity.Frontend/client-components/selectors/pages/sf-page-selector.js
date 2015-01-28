@@ -18,19 +18,11 @@
                             return rootPage;
                         };
 
-                        var getSiteId = function () {
-                            var selectedSite = scope.$eval(attrs.sfPageSelector);
-
-                            if (selectedSite && selectedSite.Id) {
-                                return selectedSite.Id;
-                            }
-                            return ctrl.$scope.siteId;
-                        };
-
                         var getItems = function (parentId, search) {
-                            var siteId = getSiteId();
                             var provider = ctrl.$scope.sfProvider;
-                            return pageService.getItems(parentId, siteId, provider, search);
+                            var siteId = getSiteId();
+                            var culture = getCulture();
+                            return pageService.getItems(parentId, siteId, provider, search, culture);
                         };
 
                         var allowLoadingItems = function (newSite, oldSite) {
@@ -41,6 +33,15 @@
                                 return false;
                             }
                             return true;
+                        };
+
+                        var getSiteId = function () {
+                            var selectedSite = scope.$eval(attrs.sfPageSelector);
+
+                            if (selectedSite && selectedSite.Id) {
+                                return selectedSite.Id;
+                            }
+                            return ctrl.$scope.siteId;
                         };
 
                         var areLanguageEqual = function (newLang, oldLang) {
@@ -58,18 +59,34 @@
 
                             return sfCulture && sfCulture.Culture ? sfCulture.Culture : serverContext.getUICulture();
                         };
+
+                        var invalidateCurrentSelection = function () {
+                            ctrl.resetItems();
+
+                            // We should clear the selection, because it is not relevant anymore.
+                            if (ctrl.$scope.sfSelectedIds) {
+                                ctrl.$scope.sfSelectedIds.length = 0;
+                            }
+
+                            if (ctrl.$scope.sfSelectedItems) {
+                                ctrl.$scope.sfSelectedItems.length = 0;
+                            }
+
+                            ctrl.beginLoadingItems();
+                        };
                         // ------ End: Helper methods ------->
 
                         scope.$watch(attrs.sfPageSelector, function (newSite, oldSite) {
                             if (allowLoadingItems(newSite, oldSite)) {
-                                ctrl.resetItems();
-                                ctrl.beginLoadingItems();
+                                invalidateCurrentSelection();
                             }
                         });
 
                         scope.$watch(attrs.sfCulture, function (newLang, oldLang) {
                             if (!areLanguageEqual(newLang, oldLang)) {
-                                ctrl.$scope.selectedItemsInTheDialog.length = 0;
+                                if (!ctrl.$scope.filter.isEmpty) {
+                                    invalidateCurrentSelection();
+                                }
                             }
                         });
 
@@ -152,6 +169,25 @@
                                 });
                         };
 
+                        // Adds multilingual support.
+                        ctrl.$scope.bindPageIdentifierField = function (dataItem) {
+                            return pageService.getPageTitleByCulture(dataItem, getCulture());
+                        };
+
+                        ctrl.OnItemsFiltering = function (items) {
+                            var culture = getCulture();
+                            if (items && culture) {
+                                return items.filter(function (element) {
+                                    // Check only in multilingual.
+                                    if (element.AvailableLanguages.length > 0) {
+                                        return element.AvailableLanguages.indexOf(culture) > -1;
+                                    }
+                                    return true;
+                                });
+                            }
+                            return items;
+                        };
+
                         ctrl.selectorType = 'PageSelector';
 
                         ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.html';
@@ -167,6 +203,15 @@
                         ctrl.$scope.sfIdentifierField = "TitlesPath";
                         ctrl.$scope.searchIdentifierField = "Title";
                         ctrl.$scope.sfDialogHeader = 'Select a page';
+
+                        var templateHtml = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}\" >" +
+                                                  "<i class='pull-left icon-item-{{dataItem.Status.toLowerCase()}}'></i>" +
+                                                  "<span class='pull-left'>" +
+                                                      "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\">{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class=\" m-left-md \">(not translated)</em>" +
+                                                      "<span class='small text-muted'>{{dataItem.Status}}</span>" +
+                                                  "</span>" +
+                                            "</a>";
+                        ctrl.$scope.singleItemTemplateHtml = templateHtml;
 
                         ctrl.onPostLinkComleted = function () {
                             var currentSite = scope.$eval(attrs.sfPageSelector);

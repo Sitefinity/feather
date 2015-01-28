@@ -30,6 +30,7 @@ module.exports = function (grunt) {
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.js',
                 'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/**/*.js',
+				'Telerik.Sitefinity.Frontend/client-components/**/*.js',
 				'!Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js',
 				'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
 				options: {
