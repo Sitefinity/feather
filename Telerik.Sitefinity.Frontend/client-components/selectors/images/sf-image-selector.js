@@ -29,28 +29,36 @@
                 // Parent id
                 this.parent = null;
 
-                // Last 1 day, Last 3 days, etc...
+                // Number of days since modified
                 this.date = null;
 
                 // Filter by any taxon
                 this.taxon = new TaxonFilterObject();
 
                 this.composeExpression = function () {
-                    var expression = serviceHelper.filterBuilder().lifecycleFilter();
+                    var expression = serviceHelper.filterBuilder();
 
-                    if (this.query)
-                        expression += ' AND (Title.ToUpper().Contains("' + this.query + '".ToUpper()))';
+                    if (this.basic !== 'AllLibraries') {
+                        expression = expression.lifecycleFilter();
+                    }
+                    
+                    if (this.query) {
+                        expression = expression.and().searchFilter(this.query);
+                    }
 
                     if (this.basic && this.basic === 'OwnImages')
-                        expression += ' AND Owner == (' + serverContext.getCurrentUserId() + ')';
+                        expression = expression.and().custom('Owner == (' + serverContext.getCurrentUserId() + ')');
 
-                    //if (this.date)
-                    //    expression += ' AND  == ';
+                    if (this.date) {
+                        var date = new Date();
+                        date.setDate(date.getDate() - this.date);
+                        expression = expression.and().custom('LastModified > (' + date.toGMTString() + ')');
+                    }
 
                     if (this.taxon && this.taxon.id)
-                        expression += ' AND ' + this.taxon.composeExpression();
+                        expression = expression.and().custom(this.taxon.composeExpression());
 
-                    return expression;
+                    return expression.getFilter();
                 };
             };
 
@@ -87,7 +95,7 @@
 
                     var refresh = function (appendItems) {
                         var options = {
-                            filter: scope.filterObject.composeExpression().filter
+                            filter: scope.filterObject.composeExpression()
                         };
 
                         options.parent = scope.filterObject.parent;
