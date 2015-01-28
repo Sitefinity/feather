@@ -1,6 +1,6 @@
 ﻿(function () {
     angular.module('sfServices')
-        .factory('sfPageService', ['serverContext', 'serviceHelper', 'sfMultiSiteService', function (serverContext, serviceHelper, multiSiteService) {
+        .factory('sfPageService', ['serverContext', 'serviceHelper', '$injector', function (serverContext, serviceHelper, $injector) {
             /* Private methods and variables */
             var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Pages/PagesService.svc/');
 
@@ -91,6 +91,13 @@
                 if (!siteId) {
                     return;
                 }
+
+                if (!$injector.has('sfMultiSiteService')) {
+                    return;
+                }
+
+                var multiSiteService = $injector.get('sfMultiSiteService');
+
                 var currentSite = multiSiteService.getSiteByRootNoteId(serverContext.getCurrentFrontendRootNodeId());
 
                 if (!currentSite) {
