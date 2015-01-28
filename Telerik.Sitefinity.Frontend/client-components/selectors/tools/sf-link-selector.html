@@ -34,7 +34,7 @@
 		<div class="text-muted">Example: <em>http://weather.com</em></div>
 	</div>
 
-	<div class="form-group" ng-hide="sfSelectedItem.isImage">
+	<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
 		<label for="textToDisplay1">Text to display</label>
 		<div class="row">
 			<div class="col-xs-9">
@@ -51,7 +51,7 @@
 		</label>
 	</div>
 
-	<div class="form-group" ng-show="sfSelectedItem.webAddress && sfSelectedItem.webAddress !== 'http://' && sfSelectedItem.displayText">
+	<div class="form-group" ng-hide="isTestLinkHidden()">
 		<span class="text-muted">Test this link:</span>
 		<a ng-href="{{sfSelectedItem.webAddress}}" target="_blank"> {{sfSelectedItem.displayText}} </a>
 	</div>
@@ -66,7 +66,7 @@
 						sf-selected-item-id="sfSelectedItem.pageId"></sf-multisite-page-selector>
 	</div>
 
-	<div class="form-group" ng-hide="sfSelectedItem.isImage">
+	<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
 		<label for="textToDisplay2">Text to display</label>
 		<div class="row">
 			<div class="col-xs-9">
@@ -99,7 +99,7 @@
 			<div class="text-muted">A list of anchors already inserted in the text. <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor%3F">How to insert an anchor?</a></div>
 		</div>
 
-		<div class="form-group" ng-hide="sfSelectedItem.isImage">
+		<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
 			<label for="textToDisplay3">Text to display</label>
 			<div class="row">
 				<div class="col-xs-9">
@@ -111,7 +111,7 @@
 	</div>
 
 	<div ng-show="anchors.length==0" class="alert alert-info" role="alert">
-			<label>No anchors have been inserted in the text. <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor%3F">How to insert an anchor?</a></label>
+			<label>No anchors have been inserted in the text. <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor%3F" target="_blank">How to insert an anchor?</a></label>
 	</div>
 </div>
 
@@ -128,7 +128,7 @@
 		<span ng-show="emailForm.emailInput.$error.email">You have entered an invalid email address</span>
 	</div>
 
-	<div class="form-group" ng-hide="sfSelectedItem.isImage">
+	<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
 		<label for="textToDisplay4">Text to display</label>
 		<div class="row">
 			<div class="col-xs-9">

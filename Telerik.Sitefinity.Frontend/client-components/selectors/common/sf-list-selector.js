@@ -1,4 +1,4 @@
-﻿(function ($) {
+(function ($) {
     angular.module('sfSelectors')
         .directive('sfListSelector', ['serverContext', '$q', function (serverContext, $q) {
             return {
@@ -82,6 +82,10 @@
                         $scope.selectedItemsViewData = [];
                     };
 
+                    this.OnItemsFiltering = function (items) {
+                        return items;
+                    };
+
                     var compareFunction = function (item1, item2) {
                         var orderedIds = $scope.getSelectedIds();
 
@@ -131,7 +135,7 @@
                                 pushNotSelectedItems(data.Items);
                             }
                             else {
-                                scope.items = data.Items;
+                                scope.items = ctrl.OnItemsFiltering(data.Items);
                             }
 
                             if (ctrl.onFilterItemSucceeded) {
@@ -547,3 +551,4 @@
             };
         }]);
 })(jQuery);
+

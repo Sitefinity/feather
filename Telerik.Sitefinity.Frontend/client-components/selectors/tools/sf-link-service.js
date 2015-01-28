@@ -31,7 +31,7 @@
                 this.displayText = '';
                 this.selectedAnchor = null;
                 this.selectedPage = null;
-                this.isImage = false;
+                this.linkHasChildrenElements = false;
 
                 function startsWith(str, subStr) {
                     return str.slice(0, subStr.length) === subStr;
@@ -66,7 +66,7 @@
                 };
 
                 this.setDisplayText = function () {
-                    this.isImage = linkHtml.find('img').length > 0;
+                    this.linkHasChildrenElements = linkHtml.children().length > 0;
                     this.displayText = linkHtml.html();
                 };
 
