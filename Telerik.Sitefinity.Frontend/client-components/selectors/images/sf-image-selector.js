@@ -13,8 +13,8 @@
                 this.id = null;
                 this.field = null;
 
-                this.expression = function () {
-                    return this.field + '.Contains(' + this.id + ')';
+                this.composeExpression = function () {
+                    return this.field + '.Contains({' + this.id + '})';
                 };
             };
 
@@ -32,9 +32,9 @@
                 this.date = null;
 
                 // Filter by any taxon
-                this.taxon = null;
+                this.taxon = new TaxonFilterObject();
 
-                this.expression = function () {
+                this.composeExpression = function () {
                     return serviceHelper.filterBuilder()
                                 .lifecycleFilter();
                 };
