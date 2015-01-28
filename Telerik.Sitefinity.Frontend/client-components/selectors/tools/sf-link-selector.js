@@ -42,20 +42,26 @@
                                        scope.defaultDisplayText = selectedItem.displayText;
                                    };
 
+
                                    var isCultureDefaultForSite = function (site, culture) {
-                                       if (!site || !culture || !culture.SitesUsingCultureAsDefault) {
+                                       if (!site || !culture ||
+                                           !culture.SitesUsingCultureAsDefault || culture.SitesUsingCultureAsDefault.length === 0) {
                                            return false;
                                        }
                                        return culture.SitesUsingCultureAsDefault.indexOf(site.Name) > -1;
                                    };
 
-                                   if (siteService.getSites().length > 0) {
-                                       init();
-                                   }
-                                   else {
-                                       siteService.addHandler(function () {
+                                   if (serverContext.isMultisiteEnabled()) {
+                                       if (siteService.getSites().length > 0) {
                                            init();
-                                       });
+                                       }
+                                       else {
+                                           siteService.addHandler(function () {
+                                               init();
+                                           });
+                                       }
+                                   } else {
+                                       init();
                                    }
 
                                    scope.$watch('sfSelectedItem.selectedPage', function () {
