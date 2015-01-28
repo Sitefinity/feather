@@ -36,8 +36,21 @@
                 this.taxon = new TaxonFilterObject();
 
                 this.composeExpression = function () {
-                    return serviceHelper.filterBuilder()
-                                .lifecycleFilter();
+                    var expression = serviceHelper.filterBuilder().lifecycleFilter();
+
+                    if (this.query)
+                        expression += ' AND (Title.ToUpper().Contains("' + this.query + '".ToUpper()))';
+
+                    if (this.basic && this.basic === 'OwnImages')
+                        expression += ' AND Owner == (' + serverContext.getCurrentUserId() + ')';
+
+                    //if (this.date)
+                    //    expression += ' AND  == ';
+
+                    if (this.taxon && this.taxon.id)
+                        expression += ' AND ' + this.taxon.composeExpression();
+
+                    return expression;
                 };
             };
 
