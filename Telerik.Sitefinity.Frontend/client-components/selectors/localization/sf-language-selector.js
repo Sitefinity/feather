@@ -76,8 +76,10 @@
                           return defaultCultureForSelectedSite[0];
                       };
 
-                      if (sitefinity.isMultisiteEnabled() && scope.sfSite) {
-                          beginLoadingLanguages();
+                      if (sitefinity.isMultisiteEnabled()) {
+                          if (scope.sfSite) {
+                              beginLoadingLanguages();
+                          }
                       }
                       else {
                           beginLoadingLanguages();
