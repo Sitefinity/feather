@@ -60,6 +60,8 @@
                                     scope.selectedItems.splice(itemIndex, 1);
                                 }
                             }
+
+                            scope.$emit('sf-collection-item-selected', item);
                         };
 
                         scope.switchToGrid = function () {
