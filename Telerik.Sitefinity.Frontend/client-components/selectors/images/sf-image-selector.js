@@ -138,7 +138,6 @@
                                 }
                             }
                         }, function (error) {
-                            // TODO : ?
                             alert('Error - check console');
                             console.log(error);
                         });
