@@ -40,12 +40,6 @@
                 };
             };
 
-            scope.items = [];
-            scope.filterObject = {};
-            scope.sortExpression = null;
-
-            var filterExpression = null;
-
             return {
                 restrict: 'E',
                 scope: {
