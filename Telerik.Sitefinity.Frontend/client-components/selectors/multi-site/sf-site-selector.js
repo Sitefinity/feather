@@ -11,11 +11,11 @@
                 return serverContext.getEmbeddedResourceUrl(assembly, url);
             },
             link: function (scope, element, attrs) {
-                var getSitesForUserPromise = multiSiteService.getSitesForUserPromise({
-                    sortExpression: 'Name'
-                });
+                if (serverContext.isMultisiteEnabled()) {
+                    var getSitesForUserPromise = multiSiteService.getSitesForUserPromise({
+                        sortExpression: 'Name'
+                    });
 
-                if (sitefinity.isMultisiteEnabled()) {
                     getSitesForUserPromise.then(function (data) {
                         scope.sfSites = data.Items;
 

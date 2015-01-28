@@ -42,7 +42,7 @@
                                        scope.defaultDisplayText = selectedItem.displayText;
                                    };
 
-                                   if (sitefinity.isMultisiteEnabled()) {
+                                   if (serverContext.isMultisiteEnabled()) {
                                        if (siteService.getSites().length > 0) {
                                            init();
                                        }
