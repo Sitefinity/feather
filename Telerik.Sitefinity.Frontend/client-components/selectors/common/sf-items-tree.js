@@ -167,6 +167,8 @@
                         hasChildren: 'HasChildren'
                     };
 
+                    var selectedIds;
+
                     /**
                      * Retrieves collection of predecessors and constructs a tree.
                      * @param  {String} selectedIds the Id of the selected item
@@ -186,8 +188,8 @@
                      * Determines whether the tree should be expanded to the selected item.
                      */
                     var shouldExpandTree = function (scope) {
-                        return scope.selectedIds &&
-                            scope.selectedIds.length > 0 &&
+                        return selectedIds &&
+                            selectedIds.length > 0 &&
                             !scope.sfMultiselect &&
                             scope.sfExpandSelection;
                     };
@@ -211,7 +213,7 @@
                      */
                     var expandTreeToSelectedItem = function () {
                         $q.all([
-                            constructPredecessorsTree(scope.selectedIds),
+                            constructPredecessorsTree(selectedIds),
                             kendoTreeCreatedPromise.promise])
                         .then(function (promiseResults) {
                             var predecessorsTree = promiseResults[0];
@@ -248,7 +250,7 @@
                         if (!scope.sfScrollContainerClass) return;
 
                         //scroll to the selected element
-                        var selectedId = scope.selectedIds[0],
+                        var selectedId = selectedIds[0],
                             selectedDataNode = scope.treeView.dataSource.get(selectedId),
                             selectedTreeNode = scope.treeView.findByUid(selectedDataNode.uid),
                             container = $('.' + scope.sfScrollContainerClass),
@@ -257,7 +259,6 @@
 
                         container.animate({
                             scrollTop: scrollTop - middleOffset
-                            // /scrollTop: scrollTop
                         }, 600);
                     };
 
@@ -283,7 +284,7 @@
                     scope.$watch('sfItemsPromise', function () {
                         if(scope.sfSelectedIdsPromise) { 
                             scope.sfSelectedIdsPromise.then(function (ids) {
-                                scope.selectedIds = ids;
+                                selectedIds = ids;
 
                                 initialize();
                             });

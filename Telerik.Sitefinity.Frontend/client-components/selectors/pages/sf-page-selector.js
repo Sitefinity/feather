@@ -105,8 +105,8 @@
 
                         ctrl.getPredecessors = function (itemId) {
                             var provider = ctrl.$scope.sfProvider;
-                            var rootId = getSiteMapRootNodeId();
-                            return pageService.getPredecessors(itemId, provider, rootId);
+                            var siteId = getSiteId();
+                            return pageService.getPredecessors(itemId, provider, siteId);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
