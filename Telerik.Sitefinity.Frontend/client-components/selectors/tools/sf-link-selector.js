@@ -65,7 +65,9 @@
                                            scope.sfSelectedItem &&
                                            scope.sfSelectedItem.mode === sfLinkMode.InternalPage &&
                                            scope.sfSelectedItem.language !== scope.sfCulture.Culture) {
+
                                            scope.sfSelectedItem.displayText = '';
+                                           scope.sfSelectedItem.language = scope.sfCulture.Culture;
                                        }
                                    });
 

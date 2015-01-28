@@ -19,7 +19,7 @@ describe('links service', function () {
         it('[GeorgiMateev] / it should return link from a web address.',
         function () {
             var linkItem = {
-                mode:linkMode.WebAddress,
+                mode: linkMode.WebAddress,
                 webAddress: 'http://somesite.com',
                 displayText: 'My link'
             };
@@ -32,7 +32,7 @@ describe('links service', function () {
         it('[GeorgiMateev] / it should return link with target new page.',
         function () {
             var linkItem = {
-                mode:linkMode.WebAddress,
+                mode: linkMode.WebAddress,
                 webAddress: 'http://somesite.com',
                 displayText: 'My link',
                 openInNewWindow: true
@@ -46,7 +46,7 @@ describe('links service', function () {
         it('[GeorgiMateev] / it should return link from a mail address.',
         function () {
             var linkItem = {
-                mode:linkMode.EmailAddress,
+                mode: linkMode.EmailAddress,
                 emailAddress: 'someone@gmail.com',
                 displayText: 'My link'
             };
@@ -65,9 +65,10 @@ describe('links service', function () {
             };
 
             var linkItem = {
-                mode:linkMode.InternalPage,
+                mode: linkMode.InternalPage,
                 displayText: 'My link',
-                selectedPage: selectedPage
+                selectedPage: selectedPage,
+                language: 'en'
             };
 
             var link = linksService.getHtmlLink(linkItem)[0].outerHTML;
@@ -86,10 +87,11 @@ describe('links service', function () {
             };
 
             var linkItem = {
-                mode:linkMode.InternalPage,
+                mode: linkMode.InternalPage,
                 displayText: 'My link',
                 rootNodeId: '4c003fb0-2a77-61ec-bbbb-ff00007864f',
-                selectedPage: selectedPage
+                selectedPage: selectedPage,
+                language: 'en'
             };
 
             var link = linksService.getHtmlLink(linkItem)[0].outerHTML;
@@ -99,9 +101,54 @@ describe('links service', function () {
 
             expect(link).toBe(expected);
         });
+
+        it('[Manev] / it should return link from a selected page and given root node Id with BG language.',
+           function () {
+               var selectedPage = {
+                   FullUrl: 'http://somesite.com/home',
+                   Id: '4c003fb0-2a77-61ec-be54-ff00007864f'
+               };
+
+               var linkItem = {
+                   mode: linkMode.InternalPage,
+                   displayText: 'My link',
+                   rootNodeId: '4c003fb0-2a77-61ec-bbbb-ff00007864f',
+                   selectedPage: selectedPage,
+                   language: 'bg'
+               };
+
+               var link = linksService.getHtmlLink(linkItem)[0].outerHTML;
+
+               var expected = '<a href="{0}" sfref="[{1}|lng:bg]{2}">My link</a>'
+                   .format(selectedPage.FullUrl, linkItem.rootNodeId, selectedPage.Id);
+
+               expect(link).toBe(expected);
+           });
+
+        it('[Manev] / it should return link from a selected page and given root node Id withoud any language set.',
+          function () {
+              var selectedPage = {
+                  FullUrl: 'http://somesite.com/home',
+                  Id: '4c003fb0-2a77-61ec-be54-ff00007864f'
+              };
+
+              var linkItem = {
+                  mode: linkMode.InternalPage,
+                  displayText: 'My link',
+                  rootNodeId: '4c003fb0-2a77-61ec-bbbb-ff00007864f',
+                  selectedPage: selectedPage,
+              };
+
+              var link = linksService.getHtmlLink(linkItem)[0].outerHTML;
+
+              var expected = '<a href="{0}" sfref="[{1}]{2}">My link</a>'
+                  .format(selectedPage.FullUrl, linkItem.rootNodeId, selectedPage.Id);
+
+              expect(link).toBe(expected);
+          });
     });
 
-    describe('retrieve data object from jQuery anchor element',  function () {
+    describe('retrieve data object from jQuery anchor element', function () {
         it('[GeorgiMateev] / should get the display text.', function () {
             var element = $('<a href="mailto:someone@gmail.com">My link</a>');
 
