@@ -20,19 +20,25 @@
 
                           localizationPromise.then(function (data) {
                               var allCultures = data.Cultures;
-                              var siteCultures = [];
 
-                              for (var i = 0, length = allCultures.length; i < length; i++) {
-                                  var culture = allCultures[i];
+                              if (sitefinity.isMultisiteEnabled()) {
+                                  var siteCultures = [];
 
-                                  for (var j = 0, sitesLength = culture.SitesNames.length; j < sitesLength; j++) {
-                                      var siteName = culture.SitesNames[j];
-                                      if (scope.sfSite.Name === siteName) {
-                                          siteCultures.push(culture);
+                                  for (var i = 0, length = allCultures.length; i < length; i++) {
+                                      var culture = allCultures[i];
+
+                                      for (var j = 0, sitesLength = culture.SitesNames.length; j < sitesLength; j++) {
+                                          var siteName = culture.SitesNames[j];
+                                          if (scope.sfSite.Name === siteName) {
+                                              siteCultures.push(culture);
+                                          }
                                       }
                                   }
+                                  scope.sfCultures = siteCultures;
                               }
-                              scope.sfCultures = siteCultures;
+                              else {
+                                  scope.sfCultures = allCultures;
+                              }
                               
                               if ((!scope.sfCulture || !scope.sfCulture.Culture) && scope.sfCultures.length > 0) {
 
@@ -70,7 +76,12 @@
                           return defaultCultureForSelectedSite[0];
                       };
 
-                      if (scope.sfSite) {
+                      if (sitefinity.isMultisiteEnabled()) {
+                          if (scope.sfSite) {
+                              beginLoadingLanguages();
+                          }
+                      }
+                      else {
                           beginLoadingLanguages();
                       }
 

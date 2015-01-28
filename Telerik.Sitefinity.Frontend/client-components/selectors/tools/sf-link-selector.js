@@ -42,13 +42,17 @@
                                        scope.defaultDisplayText = selectedItem.displayText;
                                    };
 
-                                   if (siteService.getSites().length > 0) {
-                                       init();
-                                   }
-                                   else {
-                                       siteService.addHandler(function () {
+                                   if (sitefinity.isMultisiteEnabled()) {
+                                       if (siteService.getSites().length > 0) {
                                            init();
-                                       });
+                                       }
+                                       else {
+                                           siteService.addHandler(function () {
+                                               init();
+                                           });
+                                       }
+                                   } else {
+                                       init();
                                    }
 
                                    scope.$watch('sfSelectedItem.selectedPage', function () {
@@ -66,7 +70,9 @@
                                            scope.sfSelectedItem &&
                                            scope.sfSelectedItem.mode === sfLinkMode.InternalPage &&
                                            scope.sfSelectedItem.language !== scope.sfCulture.Culture) {
+
                                            scope.sfSelectedItem.displayText = '';
+                                           scope.sfSelectedItem.language = scope.sfCulture.Culture;
                                        }
                                    });
 
