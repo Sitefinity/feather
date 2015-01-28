@@ -7,6 +7,7 @@
             var constants = {
                 initialLoadedItemsCount: 50,
                 infiniteScrollLoadedItemsCount: 20,
+                recentImagesLastDaysCount: 7
             };
 
             var TaxonFilterObject = function () {
@@ -22,7 +23,7 @@
                 // Query that is typed by a user in a text box.
                 this.query = null;
 
-                // Recent, My or AllLibraries
+                // RecentImages, OwnImages or AllLibraries
                 this.basic = null;
 
                 // Parent id
@@ -58,32 +59,89 @@
                     var filterExpression = null;
 
                     // initial open populates dialog with all root libraries
-                    sfImageService.getFolders({ take: constants.initialLoadedItemsCount }).then(function (rootFolders) {
-                        if (rootFolders && rootFolders.Items) {
-                            scope.items = rootFolders.Items;
+                    sfImageService.getFolders({ take: constants.initialLoadedItemsCount }).then(function (response) {
+                        if (response && response.Items) {
+                            scope.items = response.Items;
                         }
                     });
 
                     scope.loadMore = function () {
-
+                        refresh(true);
                     };
 
                     scope.$watch('filterObject', function (newVal, oldVal) {
-                        filterExpression = composeFilter(newVal);
+                        filterExpression = newVal.composeExpression();
                         refresh();
                     }, true);
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
                         refresh();
-                    }, true);
+                    });
 
-                    var refresh = function () {
+                    var refresh = function (appendItems) {
+                        var callback;
+                        var options = {};
 
+                        // Defaul filter is used (Recent / My / All)
+                        if (scope.filterObject.basic) {
+                            if (scope.filterObject.basic === 'RecentImages') {
+                                callback = sfImageService.getImages;
+
+                                options.filter = '(LastModified>(' + getPastDate(constants.recentImagesLastDaysCount).toGMTString() + '))';
+                            }
+                            else if (scope.filterObject.basic === 'OwnImages') {
+                                callback = sfImageService.getImages; // TODO: Get user guid
+                                options.filter = 'Owner == (' + '67152310-c838-6bcd-855b-ff0000c292fc' + ')';
+                            }
+                            else if (scope.filterObject.basic === 'AllLibraries') {
+                                callback = sfImageService.getFolders;
+                                options.recursive = true;
+                            }
+                            else {
+                                throw { message: 'Unknown basic filter object option.' };
+                            }
+                        }
+                            // custom filter is used (Libraries / Taxons / Dates)
+                        else {
+                            callback = sfImageService.getContent;
+                        }
+
+                        if (options.filter) {
+                            options.filter += ' AND ' + scope.filterObject.composeExpression();
+                        }
+                        else {
+                            options.filter = scope.filterObject.composeExpression();
+                        }
+
+                        options.parent = scope.filterObject.parent;
+
+                        if (appendItems) {
+                            options.skip = scope.items.length;
+                            options.take = constants.infiniteScrollLoadedItemsCount;
+                        }
+                        else {
+                            options.take = constants.initialLoadedItemsCount;
+                        }
+
+                        callback(options).then(function (response) {
+                            if (response && response.Items) {
+                                if (appendItems) {
+                                    scope.items = scope.items.concat(response.Items);
+                                }
+                                else {
+                                    scope.items = response.Items;
+                                }
+                            }
+                        }, function (error) {
+                            // TODO : ?
+                        });
                     };
 
-                    var composeFilter = function (filterObject) {
-
-                    };
+                    var getPastDate = function (daysBefore) {
+                        var now = new Date();
+                        var past = now.setDate(now.getDate() - constants.recentImagesLastDaysCount);
+                        return past;
+                    }
                 }
             };
         }]);
