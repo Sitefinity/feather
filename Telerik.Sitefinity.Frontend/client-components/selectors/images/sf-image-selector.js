@@ -95,7 +95,7 @@
 
                     var refresh = function (appendItems) {
                         var options = {
-                            filter: scope.filterObject.composeExpression().filter
+                            filter: scope.filterObject.composeExpression()
                         };
 
                         options.parent = scope.filterObject.parent;
