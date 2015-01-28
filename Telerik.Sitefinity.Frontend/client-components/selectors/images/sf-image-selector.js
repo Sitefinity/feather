@@ -80,18 +80,17 @@
 
                     var refresh = function (appendItems) {
                         var callback;
-                        var options = {};
+                        var options = {
+                            filter : scope.filterObject.composeExpression()
+                        };
 
                         // Defaul filter is used (Recent / My / All)
                         if (scope.filterObject.basic) {
                             if (scope.filterObject.basic === 'RecentImages') {
                                 callback = sfImageService.getImages;
-
-                                options.filter = '(LastModified>(' + getPastDate(constants.recentImagesLastDaysCount).toGMTString() + '))';
                             }
                             else if (scope.filterObject.basic === 'OwnImages') {
-                                callback = sfImageService.getImages; // TODO: Get user guid
-                                options.filter = 'Owner == (' + '67152310-c838-6bcd-855b-ff0000c292fc' + ')';
+                                callback = sfImageService.getImages;
                             }
                             else if (scope.filterObject.basic === 'AllLibraries') {
                                 callback = sfImageService.getFolders;
@@ -101,16 +100,9 @@
                                 throw { message: 'Unknown basic filter object option.' };
                             }
                         }
-                            // custom filter is used (Libraries / Taxons / Dates)
+                        // custom filter is used (Libraries / Taxons / Dates)
                         else {
                             callback = sfImageService.getContent;
-                        }
-
-                        if (options.filter) {
-                            options.filter += ' AND ' + scope.filterObject.composeExpression();
-                        }
-                        else {
-                            options.filter = scope.filterObject.composeExpression();
                         }
 
                         options.parent = scope.filterObject.parent;
