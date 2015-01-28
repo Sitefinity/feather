@@ -39,6 +39,7 @@
                                        scope.sfCulture = { Culture: selectedItem.language };
 
                                        scope.sfSelectedItem = selectedItem;
+                                       scope.defaultDisplayText = selectedItem.displayText;
                                    };
 
                                    if (siteService.getSites().length > 0) {
@@ -54,7 +55,7 @@
                                        if (scope.sfSelectedItem &&
                                            scope.sfSelectedItem.selectedPage &&
                                            scope.sfCulture &&
-                                           !scope.sfSelectedItem.displayText) {
+                                           !scope.defaultDisplayText) {
                                            scope.sfSelectedItem.displayText = pageService.getPageTitleByCulture(scope.sfSelectedItem.selectedPage, scope.sfCulture.Culture);
                                        }
                                    });
