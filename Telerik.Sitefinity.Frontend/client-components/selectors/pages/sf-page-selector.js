@@ -21,7 +21,8 @@
                         var getItems = function (parentId, search) {
                             var provider = ctrl.$scope.sfProvider;
                             var siteId = getSiteId();
-                            return pageService.getItems(parentId, siteId, provider, search);
+                            var culture = getCulture();
+                            return pageService.getItems(parentId, siteId, provider, search, culture);
                         };
 
                         var allowLoadingItems = function (newSite, oldSite) {
@@ -58,28 +59,34 @@
 
                             return sfCulture && sfCulture.Culture ? sfCulture.Culture : serverContext.getUICulture();
                         };
+
+                        var invalidateCurrentSelection = function () {
+                            ctrl.resetItems();
+
+                            // We should clear the selection, because it is not relevant anymore.
+                            if (ctrl.$scope.sfSelectedIds) {
+                                ctrl.$scope.sfSelectedIds.length = 0;
+                            }
+
+                            if (ctrl.$scope.sfSelectedItems) {
+                                ctrl.$scope.sfSelectedItems.length = 0;
+                            }
+
+                            ctrl.beginLoadingItems();
+                        };
                         // ------ End: Helper methods ------->
 
                         scope.$watch(attrs.sfPageSelector, function (newSite, oldSite) {
                             if (allowLoadingItems(newSite, oldSite)) {
-                                ctrl.resetItems();
-
-                                // We should clear the selection, because it is not relevant anymore.
-                                if (ctrl.$scope.sfSelectedIds) {
-                                    ctrl.$scope.sfSelectedIds.length = 0;
-                                }
-
-                                if (ctrl.$scope.sfSelectedItems) {
-                                    ctrl.$scope.sfSelectedItems.length = 0;
-                                }
-
-                                ctrl.beginLoadingItems();
+                                invalidateCurrentSelection();
                             }
                         });
 
                         scope.$watch(attrs.sfCulture, function (newLang, oldLang) {
                             if (!areLanguageEqual(newLang, oldLang)) {
-                                ctrl.$scope.selectedItemsInTheDialog.length = 0;
+                                if (!ctrl.$scope.filter.isEmpty) {
+                                    invalidateCurrentSelection();
+                                }
                             }
                         });
 
@@ -118,9 +125,23 @@
                             return false;
                         };
 
-                        // Adds support for multilingual support
+                        // Adds multilingual support.
                         ctrl.$scope.bindPageIdentifierField = function (dataItem) {
                             return pageService.getPageTitleByCulture(dataItem, getCulture());
+                        };
+
+                        ctrl.OnItemsFiltering = function (items) {
+                            var culture = getCulture();
+                            if (items && culture) {
+                                return items.filter(function (element) {
+                                    // Check only in multilingual.
+                                    if (element.AvailableLanguages.length > 0) {
+                                        return element.AvailableLanguages.indexOf(culture) > -1;
+                                    }
+                                    return true;
+                                });
+                            }
+                            return items;
                         };
 
                         ctrl.selectorType = 'PageSelector';
