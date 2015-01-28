@@ -77,36 +77,41 @@
                     scope.sortExpression = null;
                     scope.items = [];
 
-                    var filterExpression = null;
-
-                    // initial open populates dialog with all root libraries
-                    scope.filterObject.basic = 'AllLibraries';
-
                     scope.loadMore = function () {
                         refresh(true);
                     };
 
                     scope.$watch('filterObject', function (newVal, oldVal) {
-                        if (JSON.stringify(newVal) === JSON.stringify(oldVal)) {
-                            return;
+                        if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+                            refresh();
                         }
-
-                        filterExpression = newVal.composeExpression();
-                        refresh();
                     }, true);
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
-                        refresh();
+                        if (newVal !== oldVal) {
+                            refresh();
+                        }
                     });
 
                     var refresh = function (appendItems) {
-                        var callback;
                         var options = {
                             filter: scope.filterObject.composeExpression().filter
                         };
 
-                        // Defaul filter is used (Recent / My / All)
+                        options.parent = scope.filterObject.parent;
+                        options.sort = scope.sortExpression;
+
+                        if (appendItems) {
+                            options.skip = scope.items.length;
+                            options.take = constants.infiniteScrollLoadedItemsCount;
+                        }
+                        else {
+                            options.take = constants.initialLoadedItemsCount;
+                        }
+
+                        var callback;
                         if (scope.filterObject.basic) {
+                            // Defaul filter is used (Recent / My / All)
                             if (scope.filterObject.basic === 'RecentImages') {
                                 callback = sfImageService.getImages;
                             }
@@ -120,19 +125,9 @@
                                 throw { message: 'Unknown basic filter object option.' };
                             }
                         }
-                        // custom filter is used (Libraries / Taxons / Dates)
                         else {
+                            // custom filter is used (Libraries / Taxons / Dates)
                             callback = sfImageService.getContent;
-                        }
-
-                        options.parent = scope.filterObject.parent;
-
-                        if (appendItems) {
-                            options.skip = scope.items.length;
-                            options.take = constants.infiniteScrollLoadedItemsCount;
-                        }
-                        else {
-                            options.take = constants.initialLoadedItemsCount;
                         }
 
                         callback(options).then(function (response) {
@@ -142,12 +137,26 @@
                                 }
                                 else {
                                     scope.items = response.Items;
+
+                                    // TODO: Remove
+                                    if (scope.filterObject.basic && scope.filterObject.basic === 'AllLibraries') {
+                                        scope.items.push({ Id: 1 }, { Title: 'Default Library', IsFolder: true });
+                                        scope.items.push({ Id: 2 }, { Title: 'Second Library', IsFolder: true });
+                                        scope.items.push({ Id: 3 }, { Title: 'Third Library', IsFolder: true });
+                                    }
                                 }
+
+                                // TODO: Remove
+                                console.log(response);
                             }
                         }, function (error) {
 
                         });
                     };
+
+                    // initial open populates dialog with all root libraries
+                    scope.filterObject.basic = 'AllLibraries';
+                    refresh();
                 }
             };
         }]);
