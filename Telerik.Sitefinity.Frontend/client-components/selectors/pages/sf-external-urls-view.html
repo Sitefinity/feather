@@ -12,6 +12,8 @@
 
 <input type="button" value="Add external URL" ng-click="addItem()"></input>
 
+<input id="openInNewTab" type="checkbox" ng-true-value="'True'" ng-false-value="'False'" ng-model="sfOpenExternalsInNewTab" />
+<label for="openInNewTab">Open external URLs in new tab/window</label>
 <style>
     .removeBorder {
         border-style:none;

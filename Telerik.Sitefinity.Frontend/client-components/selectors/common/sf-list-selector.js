@@ -21,7 +21,8 @@
                     sfDialogHeader: '@?',
                     sfKeepSelectedItemsBound: '@?',
 
-                    sfExternalPages: '=?'
+                    sfExternalPages: '=?',
+                    sfOpenExternalsInNewTab: '='
                 },
                 controller: function ($scope) {
                     this.defaultIdentifierField = 'Title';
