@@ -34,14 +34,13 @@
                                        }
 
                                        var selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
-
+                                       
                                        scope.sfSite = siteService.getSiteByRootNoteId(selectedItem.rootNodeId);
                                        scope.sfCulture = { Culture: selectedItem.language };
 
                                        scope.sfSelectedItem = selectedItem;
                                        scope.defaultDisplayText = selectedItem.displayText;
                                    };
-
 
                                    var isCultureDefaultForSite = function (site, culture) {
                                        if (!site || !culture ||
