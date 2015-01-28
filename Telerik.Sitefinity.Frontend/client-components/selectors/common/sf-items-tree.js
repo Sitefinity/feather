@@ -144,7 +144,7 @@
                     sfMultiselect: '=',
                     sfExpandSelection: '=',
                     sfItemsPromise: '=',
-                    sfSelectedIds: '=',
+                    sfSelectedIdsPromise: '=',
                     sfSelectItem: '&',
                     sfItemSelected: '&',
                     sfItemDisabled: '&?',
@@ -167,6 +167,8 @@
                         hasChildren: 'HasChildren'
                     };
 
+                    var selectedIds;
+
                     /**
                      * Retrieves collection of predecessors and constructs a tree.
                      * @param  {String} selectedIds the Id of the selected item
@@ -177,6 +179,8 @@
                         return scope.sfGetPredecessors({ itemId: selectedId })
                             .then(function (predecessors) {
                                 return sfTreeHelper.constructPredecessorsTree(predecessors.Items, selectedId);
+                            }, function (error) {
+                                return $q.reject(error);
                             });
                     };
 
@@ -184,8 +188,8 @@
                      * Determines whether the tree should be expanded to the selected item.
                      */
                     var shouldExpandTree = function (scope) {
-                        return scope.sfSelectedIds &&
-                            scope.sfSelectedIds.length > 0 &&
+                        return selectedIds &&
+                            selectedIds.length > 0 &&
                             !scope.sfMultiselect &&
                             scope.sfExpandSelection;
                     };
@@ -209,7 +213,7 @@
                      */
                     var expandTreeToSelectedItem = function () {
                         $q.all([
-                            constructPredecessorsTree(scope.sfSelectedIds),
+                            constructPredecessorsTree(selectedIds),
                             kendoTreeCreatedPromise.promise])
                         .then(function (promiseResults) {
                             var predecessorsTree = promiseResults[0];
@@ -220,7 +224,10 @@
                         .then(function (predecessorsTree) {
                             scope.treeView.expandPath(predecessorsTree.parentsIds);
                         })
-                        .then(scrollToSelectedItem);
+                        .then(scrollToSelectedItem)
+                        .catch(function (error) {
+                            setItemsIntoTree();
+                        });
                     };
 
                     /**
@@ -243,7 +250,7 @@
                         if (!scope.sfScrollContainerClass) return;
 
                         //scroll to the selected element
-                        var selectedId = scope.sfSelectedIds[0],
+                        var selectedId = selectedIds[0],
                             selectedDataNode = scope.treeView.dataSource.get(selectedId),
                             selectedTreeNode = scope.treeView.findByUid(selectedDataNode.uid),
                             container = $('.' + scope.sfScrollContainerClass),
@@ -255,14 +262,7 @@
                         }, 600);
                     };
 
-                    scope.$on("kendoWidgetCreated", function (event, widget) {
-                        // check if the event is emmited from our widget
-                        if (widget === scope.treeView) {
-                            kendoTreeCreatedPromise.resolve();
-                        }
-                    });
-
-                    scope.$watch('sfItemsPromise', function () {
+                    var initialize = function () {
                         if (shouldExpandTree(scope)) {
                             expandTreeToSelectedItem();
                         }
@@ -271,6 +271,26 @@
                         }
                         if (scope.treeView) {
                             kendoTreeCreatedPromise.resolve();
+                        }
+                    };
+
+                    scope.$on("kendoWidgetCreated", function (event, widget) {
+                        // check if the event is emmited from our widget
+                        if (widget === scope.treeView) {
+                            kendoTreeCreatedPromise.resolve();
+                        }
+                    });
+
+                    scope.$watch('sfItemsPromise', function () {
+                        if(scope.sfSelectedIdsPromise) { 
+                            scope.sfSelectedIdsPromise.then(function (ids) {
+                                selectedIds = ids;
+
+                                initialize();
+                            });
+                        }
+                        else {
+                            initialize();
                         }
                     });
 
