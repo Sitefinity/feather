@@ -1,24 +1,28 @@
-﻿<div ng-show="isListEmpty()" class="alert">No external URLs have been added.</div>
+﻿<div ng-show="isListEmpty()" class="alert alert-info text-muted m-bottom-sm">No external URLs have been added.</div>
 
-<div class="list-group list-group-endless" ng-hide="isListEmpty()">
+<div class="list-group list-group-external list-group-endless" ng-hide="isListEmpty()">
     <div class="list-group-item list-group-item-multiselect"
-        ng-repeat="item in sfExternalPagesInDialog track by item.ExternalPageId">		
-			<span><input type="checkbox" ng-checked="isItemSelected(item.ExternalPageId, item.Status)"  ng-click="itemClicked(item)"></input></span>
-			<span><input type="text" ng-model="item.TitlesPath" ng-change="itemChanged(item)" placeholder="Enter Title" ng-mouseenter="mouseOverTitle = true" ng-mouseleave="mouseOverTitle = false" sf-editable sf-exit-edit="enterEditTitle = false" sf-enter-edit="enterEditTitle = true" ng-class="{removeBorder: !enterEditTitle, highlight: (mouseOverTitle && !enterEditTitle)}"></input></span>
-			<span><input type="text" ng-model="item.Url" placeholder="Enter URL" ng-mouseenter="mouseOverUrl = true" ng-mouseleave="mouseOverUrl = false" sf-editable sf-exit-edit="enterEditUrl = false" sf-enter-edit="enterEditUrl = true" ng-class="{removeBorder: !enterEditUrl, highlight: (mouseOverUrl && !enterEditUrl)}"></input></span>
-			<a ng-click="removeItem($index, item)"><i class="glyphicon glyphicon-remove-circle"></i></a>
+        ng-repeat="item in sfExternalPagesInDialog track by item.ExternalPageId">
+        <input type="checkbox" ng-checked="isItemSelected(item.ExternalPageId, item.Status)" ng-click="itemClicked(item)" />
+        <section class="row row-xs">
+            <a class="pull-right" ng-click="removeItem($index, item)"><i class="glyphicon glyphicon-remove-circle"></i></a>
+            <div class="col-md-5">
+                <input class="form-control-highlight" type="text" ng-model="item.TitlesPath" ng-change="itemChanged(item)" placeholder="Enter Title" sf-editable />
+            </div>
+
+            <div class="col-md-6">
+                <input class="form-control-highlight" type="text" ng-model="item.Url" placeholder="Enter URL" sf-editable />
+            </div>
+        </section>
     </div>
 </div>
 
-<input type="button" value="Add external URL" ng-click="addItem()"></input>
+<input type="button" class="btn btn-default btn-xs" value="Add external URL" ng-click="addItem()" />
 
-<input id="openInNewTab" type="checkbox" ng-true-value="'True'" ng-false-value="'False'" ng-model="sfOpenExternalsInNewTab.PropertyValue" />
-<label for="openInNewTab">Open external URLs in new tab/window</label>
-<style>
-    .removeBorder {
-        border-style:none;
-    }
-    .highlight {
-        background-color: yellow
-    }
-</style>
+<div class="checkbox m-top-md" ng-hide="isListEmpty()">
+
+    <label for="openInNewTab">
+        <input id="openInNewTab" type="checkbox" ng-true-value="'True'" ng-false-value="'False'" ng-model="sfOpenExternalsInNewTab.PropertyValue" />
+        Open external URLs in new tab/window
+    </label>
+</div>

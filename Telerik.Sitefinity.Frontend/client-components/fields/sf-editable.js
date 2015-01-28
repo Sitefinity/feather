@@ -5,7 +5,7 @@
     } catch (e) {
         module = angular.module('sfFields', []);
     }
-    
+
 
     module.directive('sfEditable', function () {
         return {
@@ -17,18 +17,6 @@
                             scope.$eval(attrs.sfExitEdit);
                         });
                     }
-                });
-
-                element.bind("blur", function (event) {
-                    scope.$apply(function () {
-                        scope.$eval(attrs.sfExitEdit);
-                    });
-                });
-
-                element.bind("focus click", function (event) {
-                    scope.$apply(function () {
-                        scope.$eval(attrs.sfEnterEdit);
-                    });
                 });
             }
         };
