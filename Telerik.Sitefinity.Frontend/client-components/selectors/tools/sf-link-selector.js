@@ -34,12 +34,20 @@
                                        }
 
                                        var selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
-
+                                       
                                        scope.sfSite = siteService.getSiteByRootNoteId(selectedItem.rootNodeId);
                                        scope.sfCulture = { Culture: selectedItem.language };
 
                                        scope.sfSelectedItem = selectedItem;
                                        scope.defaultDisplayText = selectedItem.displayText;
+                                   };
+
+                                   var isCultureDefaultForSite = function (site, culture) {
+                                       if (!site || !culture ||
+                                           !culture.SitesUsingCultureAsDefault || culture.SitesUsingCultureAsDefault.length === 0) {
+                                           return false;
+                                       }
+                                       return culture.SitesUsingCultureAsDefault.indexOf(site.Name) > -1;
                                    };
 
                                    if (serverContext.isMultisiteEnabled()) {
@@ -59,8 +67,9 @@
                                        if (scope.sfSelectedItem &&
                                            scope.sfSelectedItem.selectedPage &&
                                            scope.sfCulture &&
-                                           !scope.defaultDisplayText) {
+                                           (!scope.defaultDisplayText || !scope.sfSelectedItem.displayText)) {
                                            scope.sfSelectedItem.displayText = pageService.getPageTitleByCulture(scope.sfSelectedItem.selectedPage, scope.sfCulture.Culture);
+                                           scope.defaultDisplayText = '';
                                        }
                                    });
 
@@ -71,7 +80,11 @@
                                            scope.sfSelectedItem.mode === sfLinkMode.InternalPage &&
                                            scope.sfSelectedItem.language !== scope.sfCulture.Culture) {
 
-                                           scope.sfSelectedItem.displayText = '';
+                                           if (!isCultureDefaultForSite(scope.sfSite, scope.sfCulture) &&
+                                               !scope.defaultDisplayText) {
+                                               scope.sfSelectedItem.displayText = '';
+                                           }
+
                                            scope.sfSelectedItem.language = scope.sfCulture.Culture;
                                        }
                                    });
