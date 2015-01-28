@@ -8006,9 +8006,12 @@ h4, .h4 {
 /* line 104, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-external .list-group-item {
   padding-left: 30px; }
-/* line 107, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
-.list-group-external > input[type="checkbox"] {
-  top: 13px; }
+  /* line 107, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  .list-group-external .list-group-item > input[type="checkbox"] {
+    top: 13px; }
+  /* line 110, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  .list-group-external .list-group-item a.pull-right {
+    margin-top: 6px; }
 
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_navs */
 .nav-wrapper {
@@ -8031,17 +8034,19 @@ tab {
   margin-top: 30px; }
 
 /* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
-.form-control-highlight {
+.form-control-highlight[type=text] {
   width: 100%;
-  min-height: 20px;
+  min-height: 28px;
   border: 1px solid transparent;
+  box-shadow: none;
+  margin-bottom: 0 !important;
   padding: 0 4px;
   cursor: pointer; }
-  /* line 11, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
-  .form-control-highlight:hover {
+  /* line 13, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+  .form-control-highlight[type=text]:hover {
     background: #ffc; }
-  /* line 14, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
-  .form-control-highlight:focus {
+  /* line 16, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+  .form-control-highlight[type=text]:focus {
     cursor: text;
     background: transparent;
     outline: none;
