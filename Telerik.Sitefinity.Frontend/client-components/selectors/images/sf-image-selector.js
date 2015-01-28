@@ -79,26 +79,37 @@
                     };
 
                     scope.$watch('filterObject', function (newVal, oldVal) {
-                        if (JSON.stringify(newVal) === JSON.stringify(oldVal)) {
-                            return;
+                        if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+                            filterExpression = newVal.composeExpression();
+                            refresh();
                         }
-
-                        filterExpression = newVal.composeExpression();
-                        refresh();
                     }, true);
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
-                        refresh();
+                        if (newVal !== oldVal) {
+                            refresh();
+                        }
                     });
 
                     var refresh = function (appendItems) {
-                        var callback;
                         var options = {
                             filter: scope.filterObject.composeExpression().filter
                         };
 
-                        // Defaul filter is used (Recent / My / All)
+                        options.parent = scope.filterObject.parent;
+                        options.sort = scope.sortExpression;
+
+                        if (appendItems) {
+                            options.skip = scope.items.length;
+                            options.take = constants.infiniteScrollLoadedItemsCount;
+                        }
+                        else {
+                            options.take = constants.initialLoadedItemsCount;
+                        }
+
+                        var callback;
                         if (scope.filterObject.basic) {
+                            // Defaul filter is used (Recent / My / All)
                             if (scope.filterObject.basic === 'RecentImages') {
                                 callback = sfImageService.getImages;
                             }
@@ -112,19 +123,9 @@
                                 throw { message: 'Unknown basic filter object option.' };
                             }
                         }
-                        // custom filter is used (Libraries / Taxons / Dates)
                         else {
+                            // custom filter is used (Libraries / Taxons / Dates)
                             callback = sfImageService.getContent;
-                        }
-
-                        options.parent = scope.filterObject.parent;
-
-                        if (appendItems) {
-                            options.skip = scope.items.length;
-                            options.take = constants.infiniteScrollLoadedItemsCount;
-                        }
-                        else {
-                            options.take = constants.initialLoadedItemsCount;
                         }
 
                         callback(options).then(function (response) {
