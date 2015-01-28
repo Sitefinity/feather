@@ -126,14 +126,10 @@
                             }
                         }, function (error) {
                             // TODO : ?
+                            alert('Error - check console');
+                            console.log(error);
                         });
                     };
-
-                    var getPastDate = function (daysBefore) {
-                        var now = new Date();
-                        var past = now.setDate(now.getDate() - constants.recentImagesLastDaysCount);
-                        return past;
-                    }
                 }
             };
         }]);
