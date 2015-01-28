@@ -72,17 +72,17 @@
                     var filterExpression = null;
 
                     // initial open populates dialog with all root libraries
-                    sfImageService.getFolders({ take: constants.initialLoadedItemsCount }).then(function (response) {
-                        if (response && response.Items) {
-                            scope.items = response.Items;
-                        }
-                    });
+                    scope.filterObject.basic = 'AllLibraries';
 
                     scope.loadMore = function () {
                         refresh(true);
                     };
 
                     scope.$watch('filterObject', function (newVal, oldVal) {
+                        if (JSON.stringify(newVal) === JSON.stringify(oldVal)) {
+                            return;
+                        }
+
                         filterExpression = newVal.composeExpression();
                         refresh();
                     }, true);
@@ -94,7 +94,7 @@
                     var refresh = function (appendItems) {
                         var callback;
                         var options = {
-                            filter : scope.filterObject.composeExpression()
+                            filter: scope.filterObject.composeExpression().filter
                         };
 
                         // Defaul filter is used (Recent / My / All)
@@ -107,7 +107,6 @@
                             }
                             else if (scope.filterObject.basic === 'AllLibraries') {
                                 callback = sfImageService.getFolders;
-                                options.recursive = true;
                             }
                             else {
                                 throw { message: 'Unknown basic filter object option.' };
@@ -138,8 +137,7 @@
                                 }
                             }
                         }, function (error) {
-                            alert('Error - check console');
-                            console.log(error);
+
                         });
                     };
                 }
