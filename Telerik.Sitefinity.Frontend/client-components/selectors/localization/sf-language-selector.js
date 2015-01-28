@@ -21,7 +21,7 @@
                           localizationPromise.then(function (data) {
                               var allCultures = data.Cultures;
 
-                              if (sitefinity.isMultisiteEnabled()) {
+                              if (serverContext.isMultisiteEnabled()) {
                                   var siteCultures = [];
 
                                   for (var i = 0, length = allCultures.length; i < length; i++) {
@@ -76,7 +76,7 @@
                           return defaultCultureForSelectedSite[0];
                       };
 
-                      if (sitefinity.isMultisiteEnabled()) {
+                      if (serverContext.isMultisiteEnabled()) {
                           if (scope.sfSite) {
                               beginLoadingLanguages();
                           }
