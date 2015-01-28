@@ -47,16 +47,16 @@
                     }
 
                     if (this.basic && this.basic === 'OwnImages')
-                        expression = expression.and().custom('Owner == (' + serverContext.getCurrentUserId() + ')');
+                        expression = expression.and().append('Owner == (' + serverContext.getCurrentUserId() + ')');
 
                     if (this.date) {
                         var date = new Date();
                         date.setDate(date.getDate() - this.date);
-                        expression = expression.and().custom('LastModified > (' + date.toGMTString() + ')');
+                        expression = expression.and().append('LastModified > (' + date.toGMTString() + ')');
                     }
 
                     if (this.taxon && this.taxon.id)
-                        expression = expression.and().custom(this.taxon.composeExpression());
+                        expression = expression.and().append(this.taxon.composeExpression());
 
                     return expression.getFilter();
                 };
