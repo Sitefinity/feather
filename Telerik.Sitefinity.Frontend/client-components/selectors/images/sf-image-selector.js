@@ -67,11 +67,6 @@
                     sfImageService.getFolders({ take: constants.initialLoadedItemsCount }).then(function (rootFolders) {
                         if (rootFolders && rootFolders.Items) {
                             scope.items = rootFolders.Items;
-
-                            // TODO : Remove
-                            for (var i = 0; i < 50; i++) {
-                                scope.items.push({ Id: i });
-                            }
                         }
                     });
 
