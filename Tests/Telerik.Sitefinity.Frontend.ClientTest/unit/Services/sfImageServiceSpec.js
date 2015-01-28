@@ -396,7 +396,7 @@ describe('sfImageService', function () {
 
     /* Images */
     (function () {
-        it('should return all images', function () {
+        it('[dzhenko] / should return all images', function () {
             var subpath = '?excludeFolders=true&itemType=Telerik.Sitefinity.Libraries.Model.Image';
 
             $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
@@ -404,7 +404,7 @@ describe('sfImageService', function () {
             assertImages();
         });
 
-        it('should return recent images', function () {
+        it('[dzhenko] / should return recent images', function () {
             var subpath = '?excludeFolders=true&filter=(LastModified%3E(Sun,+25+Jan+2015+14:09:21+GMT))&itemType=Telerik.Sitefinity.Libraries.Model.Image';
 
             $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
@@ -412,7 +412,7 @@ describe('sfImageService', function () {
             assertImages({ filter: '(LastModified>(Sun, 25 Jan 2015 14:09:21 GMT))' });
         });
 
-        it('should return own images', function () {
+        it('[dzhenko] / should return own images', function () {
             var subpath = '?excludeFolders=true&filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
 
             $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
@@ -420,7 +420,7 @@ describe('sfImageService', function () {
             assertImages({ filter: 'Owner == (67152310-c838-6bcd-855b-ff0000c292fc)' });
         });
 
-        it('should return images from folder and owner', function () {
+        it('[dzhenko] / should return images from folder and owner', function () {
             var subpath = sampleGuid + '/?excludeFolders=true&filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
 
             $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
@@ -495,7 +495,7 @@ describe('sfImageService', function () {
 
     /* Content */
     (function () {
-        it('should return all content', function () {
+        it('[dzhenko] / should return all content', function () {
             var subpath = '?itemType=Telerik.Sitefinity.Libraries.Model.Image';
 
             $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
@@ -503,7 +503,7 @@ describe('sfImageService', function () {
             assertContent();
         });
 
-        it('should return recent content', function () {
+        it('[dzhenko] / should return recent content', function () {
             var subpath = '?filter=(LastModified%3E(Sun,+25+Jan+2015+14:09:21+GMT))&itemType=Telerik.Sitefinity.Libraries.Model.Image';
 
             $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
@@ -511,7 +511,7 @@ describe('sfImageService', function () {
             assertContent({ filter: '(LastModified>(Sun, 25 Jan 2015 14:09:21 GMT))' });
         });
 
-        it('should return own content', function () {
+        it('[dzhenko] / should return own content', function () {
             var subpath = '?filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
 
             $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
@@ -519,7 +519,7 @@ describe('sfImageService', function () {
             assertContent({ filter: 'Owner == (67152310-c838-6bcd-855b-ff0000c292fc)' });
         });
 
-        it('should return content from folder and owner', function () {
+        it('[dzhenko] / should return content from folder and owner', function () {
             var subpath = sampleGuid + '/?filter=Owner+%3D%3D+(67152310-c838-6bcd-855b-ff0000c292fc)&itemType=Telerik.Sitefinity.Libraries.Model.Image';
 
             $httpBackend.expectGET(imageServicePath + subpath).respond(dataItems);
