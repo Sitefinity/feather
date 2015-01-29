@@ -6,7 +6,8 @@
                 sfSite: '=?',
                 sfCulture: '=?',
                 sfSelectedItemId: '=?',
-                sfSelectedItem: '=?'
+                sfSelectedItem: '=?',
+                sfBindOnLoad: '@?'
             },
             templateUrl: function (elem, attrs) {
                 var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
