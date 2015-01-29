@@ -113,6 +113,13 @@
 
                 return this;
             },
+            append: function (filter) {
+                if (filter) {
+                    this.filter += '(' + filter + ')';
+                }
+
+                return this;
+            },
             and: function () {
                 if (this.filter) {
                     this.filter += this.andOperator;

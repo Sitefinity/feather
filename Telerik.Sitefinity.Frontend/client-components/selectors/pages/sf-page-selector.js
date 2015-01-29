@@ -84,7 +84,9 @@
 
                         scope.$watch(attrs.sfCulture, function (newLang, oldLang) {
                             if (!areLanguageEqual(newLang, oldLang)) {
-                                if (!ctrl.$scope.filter.isEmpty) {
+                                // We strictly compare to false, because the possible values of the property are true/false.
+                                // If the value is undefined this means that the property is not yet initialized.
+                                if (ctrl.$scope.filter.isEmpty === false) {
                                     invalidateCurrentSelection();
                                 }
                             }

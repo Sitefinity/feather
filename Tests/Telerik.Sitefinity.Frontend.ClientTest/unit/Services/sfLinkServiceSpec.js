@@ -83,7 +83,8 @@ describe('links service', function () {
         function () {
             var selectedPage = {
                 FullUrl: 'http://somesite.com/home',
-                Id: '4c003fb0-2a77-61ec-be54-ff00007864f'
+                Id: '4c003fb0-2a77-61ec-be54-ff00007864f',
+                RootId: '4c003fb0-2a77-61ec-bbbb-ff00007864f'
             };
 
             var linkItem = {
@@ -97,7 +98,7 @@ describe('links service', function () {
             var link = linksService.getHtmlLink(linkItem)[0].outerHTML;
 
             var expected = '<a href="{0}" sfref="[{1}|lng:en]{2}">My link</a>'
-                .format(selectedPage.FullUrl, linkItem.rootNodeId, selectedPage.Id);
+                .format(selectedPage.FullUrl, selectedPage.RootId, selectedPage.Id);
 
             expect(link).toBe(expected);
         });
@@ -106,7 +107,8 @@ describe('links service', function () {
            function () {
                var selectedPage = {
                    FullUrl: 'http://somesite.com/home',
-                   Id: '4c003fb0-2a77-61ec-be54-ff00007864f'
+                   Id: '4c003fb0-2a77-61ec-be54-ff00007864f',
+                   RootId: '4c003fb0-2a77-61ec-bbbb-ff00007864f'
                };
 
                var linkItem = {
@@ -120,7 +122,7 @@ describe('links service', function () {
                var link = linksService.getHtmlLink(linkItem)[0].outerHTML;
 
                var expected = '<a href="{0}" sfref="[{1}|lng:bg]{2}">My link</a>'
-                   .format(selectedPage.FullUrl, linkItem.rootNodeId, selectedPage.Id);
+                   .format(selectedPage.FullUrl, selectedPage.RootId, selectedPage.Id);
 
                expect(link).toBe(expected);
            });
@@ -129,7 +131,8 @@ describe('links service', function () {
           function () {
               var selectedPage = {
                   FullUrl: 'http://somesite.com/home',
-                  Id: '4c003fb0-2a77-61ec-be54-ff00007864f'
+                  Id: '4c003fb0-2a77-61ec-be54-ff00007864f',
+                  RootId: '4c003fb0-2a77-61ec-bbbb-ff00007864f'
               };
 
               var linkItem = {
@@ -142,7 +145,7 @@ describe('links service', function () {
               var link = linksService.getHtmlLink(linkItem)[0].outerHTML;
 
               var expected = '<a href="{0}" sfref="[{1}]{2}">My link</a>'
-                  .format(selectedPage.FullUrl, linkItem.rootNodeId, selectedPage.Id);
+                  .format(selectedPage.FullUrl, selectedPage.RootId, selectedPage.Id);
 
               expect(link).toBe(expected);
           });

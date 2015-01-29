@@ -157,10 +157,7 @@
                        
                         if (selectedPageId) {
                             var key;
-                            if (linkItem.rootNodeId && linkItem.rootNodeId != emptyGuid) {
-                                key = linkItem.rootNodeId;
-                            }
-                            else if (linkItem.selectedPage) {
+                            if (linkItem.selectedPage && linkItem.selectedPage.RootId && linkItem.selectedPage.RootId != emptyGuid) {
                                 key = linkItem.selectedPage.RootId;
                             }
                             else {
