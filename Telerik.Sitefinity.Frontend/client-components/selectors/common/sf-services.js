@@ -28,13 +28,14 @@
             return str.substr(0, str.length - suffix.length);
         }
 
-        var getResource = function (url, options) {
-            var headerData = {};
+        var getResource = function (url, options, headers) {
+            var headerData = headers || {};
 
             var resourceOption = options || { stripTrailingSlashes: false };
 
             var culture = serverContext.getUICulture();
-            if (culture) {
+
+            if (culture && !headerData.SF_UI_CULTURE) {
                 headerData.SF_UI_CULTURE = culture;
             }
 
@@ -123,7 +124,7 @@
                 if (this.filter) {
                     this.filter += this.andOperator;
                 }
-                
+
                 return this;
             },
             trimOperator: function () {
@@ -167,13 +168,14 @@
                     }
 
                     return customContext && customContext.uiCulture;
-                }
+                },
+                isMultisiteEnabled: customContext.isMultisiteEnabled || sitefinity.isMultisiteEnabled
             };
         };
 
         /* The context should be object containing properties: 'appPath' and optionally 'currentPackage' and 'uiCulture'. */
         this.setServerContext = function (context) {
-            customContext = context;            
+            customContext = context;
         };
 
         this.$get = ['$injector', function ($injector) {

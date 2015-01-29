@@ -1,4 +1,4 @@
-﻿﻿<div class="form-group nav-wrapper">
+<div class="form-group nav-wrapper">
 	<span class="m-right-sm">Link to</span>
 
 	<label class="radio-inline" for="webAddressRadio">
@@ -62,7 +62,8 @@
 	<div class="form-group">
 			<sf-multisite-page-selector sf-site="sfSite"
 						sf-culture="sfCulture"
-						sf-selected-item="sfSelectedItem.selectedPage"></sf-multisite-page-selector>
+						sf-selected-item="sfSelectedItem.selectedPage"
+						sf-selected-item-id="sfSelectedItem.pageId"></sf-multisite-page-selector>
 	</div>
 
 	<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
@@ -110,7 +111,7 @@
 	</div>
 
 	<div ng-show="anchors.length==0" class="alert alert-info" role="alert">
-			<label>No anchors have been inserted in the text. <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor%3F">How to insert an anchor?</a></label>
+			<label>No anchors have been inserted in the text. <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor%3F" target="_blank">How to insert an anchor?</a></label>
 	</div>
 </div>
 

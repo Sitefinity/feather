@@ -208,7 +208,7 @@ describe('items tree tests', function  () {
         it('[GeorgiMateev] / it should call the predecessors end point when the directive is loaded.', function () {
         var template = '<sf-items-tree '+
                          'sf-expand-selection="expandSelection" '+
-                         'sf-selected-ids="sfSelectedIds" '+
+                         'sf-selected-ids-promise="sfSelectedIdsPromise" '+
                          'sf-get-predecessors="getPredecessors(itemId)" '+
                          'class="k-treeview--selection"></sf-items-tree>';
 
@@ -222,15 +222,49 @@ describe('items tree tests', function  () {
                 });
 
             scope.expandSelection = true;
-            scope.sfSelectedIds = ['3.2'];
+
+            var defered = $q.defer();
+            scope.sfSelectedIdsPromise = defered.promise;
 
             commonMethods.compileDirective(template, scope);
+
+            defered.resolve(['3.2']);
 
             // Looks like kendo is using a timeout in its widgets
             // so this method is executing all callbacks of the $timeout mock.
             $timeout.flush(1000);
 
             expect(scope.getPredecessors).toHaveBeenCalledWith('3.2');
+        });
+
+        it('[GeorgiMateev] / it should show items when expanding is disabled.', function () {
+        var template = '<sf-items-tree '+
+                         'sf-selected-ids-promise="sfSelectedIdsPromise" '+
+                         'sf-get-predecessors="getPredecessors(itemId)" '+
+                         'sf-items-promise=sfItemsPromise' +
+                         'class="k-treeview--selection"></sf-items-tree>';
+
+            scope.getPredecessors = jasmine.createSpy('getPredecessors');
+
+            scope.expandSelection = false;
+
+            // Should not expand even if an item is selected.
+            var deferedSelection = $q.defer();
+            scope.sfSelectedIdsPromise = deferedSelection.promise;
+
+            var deferedItems = $q.defer();
+            scope.sfItemsPromise = deferedItems.promise;
+
+            commonMethods.compileDirective(template, scope);
+
+            deferedSelection.resolve(['3.2']);
+            deferedItems.resolve(predecessorsLevels[0]);
+
+            // Looks like kendo is using a timeout in its widgets
+            // so this method is executing all callbacks of the $timeout mock.
+            $timeout.flush(1000);
+
+            expect(scope.getPredecessors).not.toHaveBeenCalled();
         });
 
     });

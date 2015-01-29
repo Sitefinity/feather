@@ -153,9 +153,8 @@
                         resultLink.attr('href', href);
 
                         var selectedPageId = linkItem.selectedPage.Id;
-                        var selectedCulture = 'en';
-                        //var selectedCulture = (this.get_uiCulture() !== this.get_pageSelector().get_languageSelectorSelectedCulture()) ?
-                        //	this.get_pageSelector().get_languageSelectorSelectedCulture() : null;
+                        var selectedCulture = linkItem.language;
+                       
                         if (selectedPageId) {
                             var key;
                             if (linkItem.rootNodeId && linkItem.rootNodeId != emptyGuid) {

@@ -1,5 +1,11 @@
 ﻿(function ($) {
-    var module = angular.module('sfFields', ['kendo.directives', 'sfServices']);
+    var module;
+    try {
+        module = angular.module('sfFields');
+        module.requires.push('kendo.directives', 'sfServices');
+    } catch (e) {
+        module = angular.module('sfFields', ['kendo.directives', 'sfServices']);
+    }
 
     module.directive('sfHtmlField', ['serverContext', '$compile', function (serverContext, $compile) {
         return {
@@ -106,35 +112,12 @@
                     var modalHeaderAndFooter = $(".modal-dialog > .modal-content > .modal-header, .modal-dialog > .modal-content > .modal-footer");
 
                     var mainDialog = $(".modal-dialog");
-                    var designerEditor = $("td.k-editable-area > iframe.k-content");
-                    var htmlEditor = $("td.k-editable-area");
-
-                    if (!originalEditorSizes) {
-                        originalEditorSizes = {
-                            dialog: {
-                                width: mainDialog.width(),
-                                margin: mainDialog.css('margin')
-                            },
-                            designer: {
-                                height: designerEditor.height()
-                            },
-                            html: {
-                                height: designerEditor.height()
-                            }
-                        };
-                    }
 
                     if (isFullScreen === false) {
-                        var heightToFill = $(document).height() - $("ul.k-editor-toolbar").height() * 1.1;
-
-                        mainDialog.css({ margin: 0, width: $('body').width() });
-                        designerEditor.height(heightToFill);
-                        htmlEditor.height(heightToFill);
+                        mainDialog.addClass("modal-full-screen");
                     }
                     else {
-                        mainDialog.css({ margin: originalEditorSizes.dialog.margin, width: originalEditorSizes.dialog.width });
-                        designerEditor.height(originalEditorSizes.designer.height);
-                        htmlEditor.height(originalEditorSizes.html.height);
+                        mainDialog.removeClass("modal-full-screen");
                     }
 
                     modalHeaderAndFooter.toggle();

@@ -47,7 +47,7 @@
             height: 30px
             opacity: 0
 
-    > input
+    > input[type="checkbox"]
         position: absolute
         z-index: 1
         top: 10px
@@ -58,7 +58,7 @@
     margin-bottom: 0
     border-top: none
 
-    > input
+    > input[type="checkbox"]
         left: 25px
 
     > div
@@ -103,3 +103,14 @@
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.05)
     border-top: 1px solid #ddd
     border-radius: 4px
+
+
+.list-group-external
+    .list-group-item
+        padding-left: 30px
+
+        > input[type="checkbox"]
+            top: 13px
+
+        a.pull-right
+            margin-top: 6px

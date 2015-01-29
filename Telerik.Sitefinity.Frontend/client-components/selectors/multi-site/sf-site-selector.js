@@ -11,25 +11,27 @@
                 return serverContext.getEmbeddedResourceUrl(assembly, url);
             },
             link: function (scope, element, attrs) {
-                var getSitesForUserPromise = multiSiteService.getSitesForUserPromise({
-                    sortExpression: 'Name'
-                });
+                if (serverContext.isMultisiteEnabled()) {
+                    var getSitesForUserPromise = multiSiteService.getSitesForUserPromise({
+                        sortExpression: 'Name'
+                    });
 
-                getSitesForUserPromise.then(function (data) {
-                    scope.sfSites = data.Items;
-                    
-                    if (scope.sfSites.length > 0 && !scope.sfSite) {
-                        var currentSiteMapRootNodeId = serverContext.getCurrentFrontendRootNodeId();
-                        scope.sfSite = scope.sfSites.filter(function (site) {
-                            return site.SiteMapRootNodeId === currentSiteMapRootNodeId;
-                        })[0];
-                    }
-                });
+                    getSitesForUserPromise.then(function (data) {
+                        scope.sfSites = data.Items;
 
-                getSitesForUserPromise.catch(function (error) {
-                    scope.showError = true;
-                    scope.errorMessage = error;
-                });
+                        if (scope.sfSites.length > 0 && !scope.sfSite) {
+                            var currentSiteMapRootNodeId = serverContext.getCurrentFrontendRootNodeId();
+                            scope.sfSite = scope.sfSites.filter(function (site) {
+                                return site.SiteMapRootNodeId === currentSiteMapRootNodeId;
+                            })[0];
+                        }
+                    });
+
+                    getSitesForUserPromise.catch(function (error) {
+                        scope.showError = true;
+                        scope.errorMessage = error;
+                    });
+                }
             }
         };
     }]);

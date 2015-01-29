@@ -1,6 +1,6 @@
 ﻿(function () {
     angular.module('sfSelectors')
-        .directive('sfPageSelector', ['sfPageService', 'serverContext', function (pageService, serverContext) {
+        .directive('sfPageSelector', ['sfPageService', 'serverContext', '$q', function (pageService, serverContext, $q) {
             return {
                 require: '^sfListSelector',
                 restrict: 'A',
@@ -21,7 +21,8 @@
                         var getItems = function (parentId, search) {
                             var provider = ctrl.$scope.sfProvider;
                             var siteId = getSiteId();
-                            return pageService.getItems(parentId, siteId, provider, search);
+                            var culture = getCulture();
+                            return pageService.getItems(parentId, siteId, provider, search, culture);
                         };
 
                         var allowLoadingItems = function (newSite, oldSite) {
@@ -58,28 +59,34 @@
 
                             return sfCulture && sfCulture.Culture ? sfCulture.Culture : serverContext.getUICulture();
                         };
+
+                        var invalidateCurrentSelection = function () {
+                            ctrl.resetItems();
+
+                            // We should clear the selection, because it is not relevant anymore.
+                            if (ctrl.$scope.sfSelectedIds) {
+                                ctrl.$scope.sfSelectedIds.length = 0;
+                            }
+
+                            if (ctrl.$scope.sfSelectedItems) {
+                                ctrl.$scope.sfSelectedItems.length = 0;
+                            }
+
+                            ctrl.beginLoadingItems();
+                        };
                         // ------ End: Helper methods ------->
 
                         scope.$watch(attrs.sfPageSelector, function (newSite, oldSite) {
                             if (allowLoadingItems(newSite, oldSite)) {
-                                ctrl.resetItems();
-
-                                // We should clear the selection, because it is not relevant anymore.
-                                if (ctrl.$scope.sfSelectedIds) {
-                                    ctrl.$scope.sfSelectedIds.length = 0;
-                                }
-
-                                if (ctrl.$scope.sfSelectedItems) {
-                                    ctrl.$scope.sfSelectedItems.length = 0;
-                                }
-
-                                ctrl.beginLoadingItems();
+                                invalidateCurrentSelection();
                             }
                         });
 
                         scope.$watch(attrs.sfCulture, function (newLang, oldLang) {
                             if (!areLanguageEqual(newLang, oldLang)) {
-                                ctrl.$scope.selectedItemsInTheDialog.length = 0;
+                                if (!ctrl.$scope.filter.isEmpty) {
+                                    invalidateCurrentSelection();
+                                }
                             }
                         });
 
@@ -98,7 +105,8 @@
 
                         ctrl.getPredecessors = function (itemId) {
                             var provider = ctrl.$scope.sfProvider;
-                            return pageService.getPredecessors(itemId, provider);
+                            var siteId = getSiteId();
+                            return pageService.getPredecessors(itemId, provider, siteId);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
@@ -106,7 +114,21 @@
 
                             var rootId = getSiteMapRootNodeId();
 
-                            return pageService.getSpecificItems(ids, provider, rootId);
+                            var specificItemsPromise = pageService.getSpecificItems(ids, provider, rootId);
+
+                            ctrl.$scope.selectedIdsPromise  = specificItemsPromise.then(function (data) {
+                                return data.Items.map(function (item) {
+                                    return item.Id;
+                                });
+                            });
+
+                            return specificItemsPromise;
+                        };
+
+                        var resetItemsBase = ctrl.resetItems;
+                        ctrl.resetItems = function () {
+                            ctrl.$scope.selectedIdsPromise = null;
+                            resetItemsBase.apply(ctrl, arguments);
                         };
 
                         ctrl.itemDisabled = function (item) {
@@ -118,9 +140,67 @@
                             return false;
                         };
 
-                        // Adds support for multilingual support
+                        ctrl.removeUnselectedItems = function () {
+                            if (ctrl.$scope.multiselect) {
+                                var reoderedItems = [];
+                                if (ctrl.$scope.selectedItemsViewData && ctrl.$scope.selectedItemsViewData.length > 0) {
+                                    for (var i = 0; i < ctrl.$scope.selectedItemsViewData.length; i++) {
+                                        for (var j = 0; j < ctrl.$scope.selectedItemsInTheDialog.length; j++) {
+                                            if ((ctrl.$scope.selectedItemsInTheDialog[j].Id && ctrl.$scope.selectedItemsInTheDialog[j].Id === ctrl.$scope.selectedItemsViewData[i].Id) ||
+                                                (ctrl.$scope.selectedItemsInTheDialog[j].ExternalPageId && ctrl.$scope.selectedItemsInTheDialog[j].ExternalPageId === ctrl.$scope.selectedItemsViewData[i].ExternalPageId)) {
+                                                reoderedItems.push(ctrl.$scope.selectedItemsInTheDialog[j]);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    ctrl.$scope.selectedItemsInTheDialog = [];
+                                    Array.prototype.push.apply(ctrl.$scope.selectedItemsInTheDialog, reoderedItems);
+                                }
+
+                                ctrl.$scope.selectedItemsViewData = [];
+                            }
+                        };
+
+                        ctrl.fetchSelectedItems = function () {
+                            if (ctrl.$scope.multiselect && ctrl.$scope.sfSelectedItems)
+                                return ctrl.$scope.sfSelectedItems;
+                            else if (!ctrl.$scope.multiselect && ctrl.$scope.sfSelectedItem)
+                                return ctrl.$scope.sfSelectedItem;
+
+                            var ids = ctrl.$scope.getSelectedIds();
+                            currentSelectedIds = ids;
+
+                            if (ids.length === 0) {
+                                return;
+                            }
+
+                            return ctrl.getSpecificItems(ids)
+                                .then(function (data) {
+                                    ////ctrl.updateSelection(data.Items);
+                                    ctrl.onSelectedItemsLoadedSuccess(data);
+                                }, ctrl.onError)
+                                .finally(function () {
+                                    ctrl.$scope.showLoadingIndicator = false;
+                                });
+                        };
+
+                        // Adds multilingual support.
                         ctrl.$scope.bindPageIdentifierField = function (dataItem) {
                             return pageService.getPageTitleByCulture(dataItem, getCulture());
+                        };
+
+                        ctrl.OnItemsFiltering = function (items) {
+                            var culture = getCulture();
+                            if (items && culture) {
+                                return items.filter(function (element) {
+                                    // Check only in multilingual.
+                                    if (element.AvailableLanguages.length > 0) {
+                                        return element.AvailableLanguages.indexOf(culture) > -1;
+                                    }
+                                    return true;
+                                });
+                            }
+                            return items;
                         };
 
                         ctrl.selectorType = 'PageSelector';
@@ -142,15 +222,20 @@
                         var templateHtml = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}\" >" +
                                                   "<i class='pull-left icon-item-{{dataItem.Status.toLowerCase()}}'></i>" +
                                                   "<span class='pull-left'>" +
-                                                      "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\">{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class=\" m-left-md \">(not translated)</em>" +
-                                                      "<span class='small text-muted'>{{dataItem.Status}}</span>" +
+                                                      "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\" ng-bind=\"sfIdentifierFieldValue({dataItem: dataItem})\"></span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class='m-left-md'>(not translated)</em>" +
+                                                      "<span class='small text-muted' ng-bind='dataItem.Status'></span>" +
                                                   "</span>" +
                                             "</a>";
                         ctrl.$scope.singleItemTemplateHtml = templateHtml;
 
                         ctrl.onPostLinkComleted = function () {
-                            var currentSite = scope.$eval(attrs.sfPageSelector);
-                            if (currentSite) {
+                            if (serverContext.isMultisiteEnabled()) {
+                                var currentSite = scope.$eval(attrs.sfPageSelector);
+                                if (currentSite) {
+                                    ctrl.beginLoadingItems();
+                                }
+                            }
+                            else {
                                 ctrl.beginLoadingItems();
                             }
                         };

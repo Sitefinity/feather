@@ -506,6 +506,12 @@
     <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.html" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.js" />
+    <EmbeddedResource Include="GridSystem\Templates\container.html" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-external-urls-view.html" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-external-urls-view.js" />
+    <EmbeddedResource Include="client-components\fields\sf-editable.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-selected-pages-view.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-selected-pages-view.html" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.html" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-service.js" />

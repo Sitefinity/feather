@@ -172,6 +172,9 @@ describe("link selector", function () {
             },
             getCurrentFrontendRootNodeId: function () {
                 return '36e9e47f-0d78-6425-ae98-ff0000fc9faf';
+            },
+            isMultisiteEnabled: function () {
+                return true;
             }
         };
         $provide.value('serverContext', serverContext);
