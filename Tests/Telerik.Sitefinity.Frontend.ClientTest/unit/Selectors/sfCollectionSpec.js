@@ -13,7 +13,6 @@
         var scope = rootScope.$new();
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/reder-all-items.html', '<li ng-repeat="item in items" class="sfCollectionItem"><div><span>Id:</span><span ng-bind="item.id"></span></div><div ng-bind="item.title"></div></li>');
 
-        scope.selectedItems = [];
         scope.dataItems = [];
         for (var i = 1; i <= 5; i++) {
             scope.dataItems.push({
