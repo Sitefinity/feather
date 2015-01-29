@@ -1,5 +1,5 @@
 ﻿; (function ($) {
-    angular.module('feather')
+    angular.module('sfCollection', ['sfServices'])
         .directive('sfCollection', ['serverContext', function (serverContext) {
             return {
                 restrict: 'A',
