@@ -107,11 +107,13 @@
                             var selectedItemIndex = findSelectedItemIndex(item);
                             if (item.TitlesPath) {
                                 item.Status = 'valid';
-                                scope.sfSelectedItems[selectedItemIndex].TitlesPath = item.TitlesPath;
-                                scope.sfSelectedItems[selectedItemIndex].Url = item.Url;
 
                                 if (selectedItemIndex === -1) {
                                     scope.sfSelectedItems.push(item);
+                                }
+                                else {
+                                    scope.sfSelectedItems[selectedItemIndex].TitlesPath = item.TitlesPath;
+                                    scope.sfSelectedItems[selectedItemIndex].Url = item.Url;
                                 }
                             }
                             else {
