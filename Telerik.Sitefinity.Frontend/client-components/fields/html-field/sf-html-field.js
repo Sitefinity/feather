@@ -1,5 +1,11 @@
 ﻿(function ($) {
-    var module = angular.module('sfFields', ['kendo.directives', 'sfServices']);
+    var module;
+    try {
+        module = angular.module('sfFields');
+        module.requires.push('kendo.directives', 'sfServices');
+    } catch (e) {
+        module = angular.module('sfFields', ['kendo.directives', 'sfServices']);
+    }
 
     module.directive('sfHtmlField', ['serverContext', '$compile', function (serverContext, $compile) {
         return {
