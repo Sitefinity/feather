@@ -10,58 +10,6 @@
                 recentImagesLastDaysCount: 7
             };
 
-            var TaxonFilterObject = function () {
-                this.id = null;
-                this.field = null;
-
-                this.composeExpression = function () {
-                    return this.field + '.Contains({' + this.id + '})';
-                };
-            };
-
-            var FilterObject = function () {
-                // Query that is typed by a user in a text box.
-                this.query = null;
-
-                // RecentImages, OwnImages or AllLibraries
-                this.basic = null;
-
-                // Parent id
-                this.parent = null;
-
-                // Number of days since modified
-                this.date = null;
-
-                // Filter by any taxon
-                this.taxon = new TaxonFilterObject();
-
-                this.composeExpression = function () {
-                    var expression = serviceHelper.filterBuilder();
-
-                    if (this.basic !== 'AllLibraries') {
-                        expression = expression.lifecycleFilter();
-                    }
-
-                    if (this.query) {
-                        expression = expression.and().searchFilter(this.query);
-                    }
-
-                    if (this.basic && this.basic === 'OwnImages')
-                        expression = expression.and().append('Owner == (' + serverContext.getCurrentUserId() + ')');
-
-                    if (this.date) {
-                        var date = new Date();
-                        date.setDate(date.getDate() - this.date);
-                        expression = expression.and().append('LastModified > (' + date.toGMTString() + ')');
-                    }
-
-                    if (this.taxon && this.taxon.id)
-                        expression = expression.and().append(this.taxon.composeExpression());
-
-                    return expression.getFilter();
-                };
-            };
-
             return {
                 restrict: 'E',
                 scope: {
@@ -75,7 +23,7 @@
                 link: function (scope, element, attrs, ctrl) {
                     scope.sortExpression = null;
                     scope.items = [];
-                    scope.filterObject = new FilterObject();
+                    scope.filterObject = sfImageService.newFilter();
 
                     scope.loadMore = function () {
                         refresh(true);
@@ -119,10 +67,10 @@
                         var callback;
                         if (scope.filterObject.basic) {
                             // Defaul filter is used (Recent / My / All)
-                            if (scope.filterObject.basic === 'RecentImages') {
+                            if (scope.filterObject.basic === 'RecentItems') {
                                 callback = sfMediaService.images.getImages;
                             }
-                            else if (scope.filterObject.basic === 'OwnImages') {
+                            else if (scope.filterObject.basic === 'OwnItems') {
                                 callback = sfMediaService.images.getImages;
                             }
                             else if (scope.filterObject.basic === 'AllLibraries') {
