@@ -37,6 +37,9 @@ describe('site selecor directive', function () {
             },
             getCurrentFrontendRootNodeId: function () {
                 return 'f669d9a7-009d-4d83-ddaa-000000000002';
+            },
+            isMultisiteEnabled: function () {
+                return true;
             }
         };
         $provide.value('serverContext', serverContext);

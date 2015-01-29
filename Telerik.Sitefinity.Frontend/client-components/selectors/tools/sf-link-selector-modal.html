@@ -1,4 +1,4 @@
-﻿<div class="contentSelector" template-url ="sf-link-selector-template" modal size="normal" window-class="sf-designer-dlg sf-timespan-selector-dlg" existing-scope="true">
+<div class="contentSelector" template-url="sf-link-selector-template" modal size="normal" window-class="sf-designer-dlg sf-timespan-selector-dlg" existing-scope="true">
 </div>
 
 <script type="text/ng-template" id="sf-link-selector-template">
@@ -10,10 +10,10 @@
         <sf-link-selector id="linkSelector" sf-link-html="selectedHtml" sf-selected-item="selectedItem" sf-editor-content="ngModel"></sf-link-selector>
     </div>
     <div class="modal-footer">
-        <button 
-            type="button" 
-            class="btn btn-primary pull-left" 
-            ng-disabled="isDisabled(selectedItem)" 
+        <button
+            type="button"
+            class="btn btn-primary pull-left"
+            ng-disabled="isDisabled(selectedItem)"
             ng-click="insertLink()">Insert link</button>
         <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
     </div>

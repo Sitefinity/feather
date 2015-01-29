@@ -102,6 +102,10 @@ describe("page selector", function () {
         serverContext.getFrontendLanguages = function () {
            return ['en', 'de'];
         };
+
+        serverContext.isMultisiteEnabled = function () {
+            return true;
+        };
     }));
 
     afterEach(function () {

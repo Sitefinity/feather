@@ -2,85 +2,101 @@
     selectorModule.directive('sfLanguageSelector',
         ['sfLanguageService', 'serverContext',
     function (languageService, serverContext) {
-              return {
-                  restrict: 'E',
-                  scope: {
-                      sfSite: '=',
-                      sfCulture: '=?'
-                  },
-                  templateUrl: function (elem, attrs) {
-                      var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                      var url = attrs.sfTemplateUrl || 'client-components/selectors/localization/sf-language-selector.html';
-                      return serverContext.getEmbeddedResourceUrl(assembly, url);
-                  },
-                  link: function (scope, element, attrs) {
+        return {
+            restrict: 'E',
+            scope: {
+                sfSite: '=',
+                sfCulture: '=?'
+            },
+            templateUrl: function (elem, attrs) {
+                var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                var url = attrs.sfTemplateUrl || 'client-components/selectors/localization/sf-language-selector.html';
+                return serverContext.getEmbeddedResourceUrl(assembly, url);
+            },
+            link: function (scope, element, attrs) {
 
-                      var beginLoadingLanguages = function () {
-                          var localizationPromise = languageService.getLocalizationSettings();
+                var beginLoadingLanguages = function () {
+                    var localizationPromise = languageService.getLocalizationSettings();
 
-                          localizationPromise.then(function (data) {
-                              var allCultures = data.Cultures;
-                              var siteCultures = [];
+                    localizationPromise.then(function (data) {
+                        var allCultures = data.Cultures;
 
-                              for (var i = 0, length = allCultures.length; i < length; i++) {
-                                  var culture = allCultures[i];
+                        if (serverContext.isMultisiteEnabled()) {
+                            var siteCultures = [];
 
-                                  for (var j = 0, sitesLength = culture.SitesNames.length; j < sitesLength; j++) {
-                                      var siteName = culture.SitesNames[j];
-                                      if (scope.sfSite.Name === siteName) {
-                                          siteCultures.push(culture);
-                                      }
-                                  }
-                              }
-                              scope.sfCultures = siteCultures;
-                              
-                              if ((!scope.sfCulture || !scope.sfCulture.Culture) && scope.sfCultures.length > 0) {
+                            for (var i = 0, length = allCultures.length; i < length; i++) {
+                                var culture = allCultures[i];
 
-                                  var currentCultureName = serverContext.getUICulture();
+                                for (var j = 0, sitesLength = culture.SitesNames.length; j < sitesLength; j++) {
+                                    var siteName = culture.SitesNames[j];
+                                    if (scope.sfSite.Name === siteName) {
+                                        siteCultures.push(culture);
+                                    }
+                                }
+                            }
+                            scope.sfCultures = siteCultures;
+                        }
+                        else {
+                            scope.sfCultures = allCultures;
+                        }
+                        if ((!scope.sfCulture || !scope.sfCulture.Culture) && scope.sfCultures.length > 0) {
+                            scope.sfCulture = getCulture();
+                        }
+                    });
 
-                                  var currentCulture = scope.sfCultures.filter(function (culture) {
-                                      return culture.Culture === currentCultureName;
-                                  });
+                    localizationPromise.catch(function (error) {
+                        scope.showError = true;
+                        scope.errorMessage = error;
+                    });
+                };
 
-                                  if (currentCulture.length > 0) {
-                                      // the cultures for this site contain the UI culture
-                                      scope.sfCulture = currentCulture[0];
-                                  }
-                                  else {
-                                      scope.sfCulture = getDefaultCultureForSelectedSite();
-                                  }
-                              }
-                          });
+                var getCulture = function () {
+                    var currentCultureName = serverContext.getUICulture();
 
-                          localizationPromise.catch(function (error) {
-                              scope.showError = true;
-                              scope.errorMessage = error;
-                          });
-                      };
+                    var currentCulture = scope.sfCultures.filter(function (culture) {
+                        return culture.Culture === currentCultureName;
+                    });
 
-                      var getDefaultCultureForSelectedSite = function () {
-                          var defaultCultureForSelectedSite = scope.sfCultures.filter(function (culture) {
-                              if (culture.SitesUsingCultureAsDefault) {
-                                  if (culture.SitesUsingCultureAsDefault.indexOf(scope.sfSite.Name) >= 0) {
-                                      return culture;
-                                  }
-                              }
-                          });
+                    if (currentCulture.length > 0) {
+                        // the cultures for this site contain the UI culture
+                        return currentCulture[0];
+                    }
+                    else {
+                        if (serverContext.isMultisiteEnabled()) {
+                            return getDefaultCultureForSelectedSite();
+                        }
+                        else {
+                            return scope.sfCultures[0];
+                        }
+                    }
+                };
 
-                          return defaultCultureForSelectedSite[0];
-                      };
+                var getDefaultCultureForSelectedSite = function () {
+                    var defaultCultureForSelectedSite = scope.sfCultures.filter(function (culture) {
+                        if (culture.SitesUsingCultureAsDefault) {
+                            if (culture.SitesUsingCultureAsDefault.indexOf(scope.sfSite.Name) >= 0) {
+                                return culture;
+                            }
+                        }
+                    });
 
-                      if (scope.sfSite) {
-                          beginLoadingLanguages();
-                      }
-
-                      scope.$watch('sfSite', function (newSite, oldSite) {
-                          if (scope.sfSite) {
-                              scope.sfCulture = null;
-                              beginLoadingLanguages();
-                          }
-                      });
-                  }
-              };
-          }]);
+                    return defaultCultureForSelectedSite[0];
+                };
+                
+                if (serverContext.isMultisiteEnabled()) {
+                    scope.$watch('sfSite', function (newSite, oldSite) {
+                        if (scope.sfSite) {
+                            if (oldSite) {
+                                scope.sfCulture = null;
+                            }
+                            beginLoadingLanguages();
+                        }
+                    });
+                }
+                else {
+                    beginLoadingLanguages();
+                }
+            }
+        };
+    }]);
 })(jQuery, angular.module('sfSelectors'));

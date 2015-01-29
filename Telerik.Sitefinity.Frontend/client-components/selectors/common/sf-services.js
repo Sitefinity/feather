@@ -161,7 +161,8 @@
                     }
 
                     return customContext && customContext.uiCulture;
-                }
+                },
+                isMultisiteEnabled: customContext.isMultisiteEnabled || sitefinity.isMultisiteEnabled
             };
         };
 
