@@ -36,22 +36,6 @@ describe("external urls view", function () {
         ];
     });
 
-    it('[EGaneva] / should copy sfExternalPages in sfExternalPagesInDialog  collection.', function () {
-        scope.sfExternalPages = sfExternalPages;
-        var template = '<sf-external-urls-view sf-external-pages="sfExternalPages" sf-open-externals-in-new-tab="sfOpenExternalsInNewTab" sf-selected-items="selectedItemsInTheDialog"></sf-external-urls-view>';
-
-        commonMethods.compileDirective(template, scope);
-        var s = scope.$$childHead;
-
-        expect(s.sfExternalPagesInDialog).toBeDefined();
-        expect(s.sfExternalPages.length).toBe(scope.sfExternalPages.length);
-        expect(s.sfExternalPagesInDialog.length).toBe(scope.sfExternalPages.length);
-        for (var i = 0; i < scope.sfExternalPages.length; i++) {
-            expect(s.sfExternalPages[i].ExternalPageId).toBe(scope.sfExternalPages[i].ExternalPageId);
-            expect(s.sfExternalPagesInDialog[i].ExternalPageId).toBe(scope.sfExternalPages[i].ExternalPageId);
-        }
-    });
-
     it('[EGaneva] / should unselect selected item if the item is clicked.', function () {
         var selectedItems = [];
         selectedItems.push(sfExternalPages[0]);
@@ -135,11 +119,9 @@ describe("external urls view", function () {
         s.addItem();
 
         expect(s.sfExternalPages).toBeDefined();
-        expect(s.sfExternalPages.length).toBe(4);
-        expect(s.sfExternalPagesInDialog).toBeDefined();
-        expect(s.sfExternalPagesInDialog.length).toBe(5);
+        expect(s.sfExternalPages.length).toBe(5);
 
-        var newlyAddedItem = s.sfExternalPagesInDialog[4];
+        var newlyAddedItem = s.sfExternalPages[4];
 
         expect(s.isItemSelected(newlyAddedItem.ExternalPageId, newlyAddedItem.Status)).toBe(true);
         expect(s.sfSelectedItems).toBeDefined();
@@ -157,7 +139,7 @@ describe("external urls view", function () {
         var s = scope.$$childHead;
 
         s.addItem();
-        var newlyAddedItem = s.sfExternalPagesInDialog[4];
+        var newlyAddedItem = s.sfExternalPages[4];
 
         expect(s.isItemSelected(newlyAddedItem.ExternalPageId, newlyAddedItem.Status)).toBe(true);
         expect(s.sfSelectedItems.length).toBe(0);
@@ -170,7 +152,6 @@ describe("external urls view", function () {
         expect(s.sfSelectedItems[0].ExternalPageId).toBe(newlyAddedItem.ExternalPageId);
         expect(s.sfSelectedItems[0].TitlesPath).toBe(newlyAddedItem.TitlesPath);
         expect(s.sfExternalPages.length).toBe(5);
-        expect(s.sfExternalPagesInDialog.length).toBe(5);
 
         newlyAddedItem.Url = "newly added url";
         s.$apply();
@@ -188,7 +169,7 @@ describe("external urls view", function () {
         commonMethods.compileDirective(template, scope);
         var s = scope.$$childHead;
 
-        var itemToEdit = s.sfExternalPagesInDialog[3];
+        var itemToEdit = s.sfExternalPages[3];
 
         expect(s.isItemSelected(itemToEdit.ExternalPageId, itemToEdit.Status)).toBe(true);
         expect(s.sfSelectedItems.length).toBe(1);
@@ -200,8 +181,7 @@ describe("external urls view", function () {
         expect(itemToEdit.Status).toBe('new');
         expect(s.isItemSelected(itemToEdit.ExternalPageId, itemToEdit.Status)).toBe(true);
         expect(s.sfSelectedItems.length).toBe(0);
-        expect(s.sfExternalPages.length).toBe(3);
-        expect(s.sfExternalPagesInDialog.length).toBe(4);
+        expect(s.sfExternalPages.length).toBe(4);
     });
 
     it('[EGaneva] / removing external url should remove it also from selected item collection.', function () {
@@ -215,19 +195,17 @@ describe("external urls view", function () {
         commonMethods.compileDirective(template, scope);
         var s = scope.$$childHead;
 
-        var itemToRemove = s.sfExternalPagesInDialog[3];
+        var itemToRemove = s.sfExternalPages[3];
 
         expect(s.isItemSelected(itemToRemove.ExternalPageId, itemToRemove.Status)).toBe(true);
         expect(s.sfSelectedItems.length).toBe(1);
         expect(s.sfExternalPages.length).toBe(4);
-        expect(s.sfExternalPagesInDialog.length).toBe(4);
 
         s.removeItem(3, itemToRemove);
         s.$apply();
 
         expect(s.sfSelectedItems.length).toBe(0);
         expect(s.sfExternalPages.length).toBe(3);
-        expect(s.sfExternalPagesInDialog.length).toBe(3);
     });
 
     it('[EGaneva] /if no external links are available isListEmpty should be true.', function () {
@@ -239,6 +217,5 @@ describe("external urls view", function () {
 
         expect(s.isListEmpty()).toBe(true);
         expect(s.sfExternalPages.length).toBe(0);
-        expect(s.sfExternalPagesInDialog.length).toBe(0);
     });
 });

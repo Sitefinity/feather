@@ -118,7 +118,7 @@
 
                             var specificItemsPromise = pageService.getSpecificItems(ids, provider, rootId);
 
-                            ctrl.$scope.selectedIdsPromise  = specificItemsPromise.then(function (data) {
+                            ctrl.$scope.selectedIdsPromise = specificItemsPromise.then(function (data) {
                                 return data.Items.map(function (item) {
                                     return item.Id;
                                 });
@@ -130,6 +130,7 @@
                         var resetItemsBase = ctrl.resetItems;
                         ctrl.resetItems = function () {
                             ctrl.$scope.selectedIdsPromise = null;
+                            ctrl.$scope.externalPagesInTheDialog = jQuery.extend(true, [], ctrl.$scope.sfExternalPages);
                             resetItemsBase.apply(ctrl, arguments);
                         };
 
@@ -143,6 +144,7 @@
                         };
 
                         ctrl.removeUnselectedItems = function () {
+                            removeEmptyExternalPages();
                             if (ctrl.$scope.multiselect) {
                                 var reoderedItems = [];
                                 if (ctrl.$scope.selectedItemsViewData && ctrl.$scope.selectedItemsViewData.length > 0) {
@@ -205,6 +207,19 @@
                             return items;
                         };
 
+                        var removeEmptyExternalPages = function () {
+                            var externalPages = [];
+
+                            if (ctrl.$scope.externalPagesInTheDialog && ctrl.$scope.externalPagesInTheDialog.length > 0) {
+                                externalPages = jQuery.map(ctrl.$scope.externalPagesInTheDialog, function (item) {
+                                    if (item.Status != 'new')
+                                        return item;
+                                });
+                            }
+
+                            ctrl.$scope.sfExternalPages = jQuery.extend(true, {}, externalPages);
+                        };
+
                         ctrl.selectorType = 'PageSelector';
 
                         ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.html';
@@ -220,6 +235,7 @@
                         ctrl.$scope.sfIdentifierField = "TitlesPath";
                         ctrl.$scope.searchIdentifierField = "Title";
                         ctrl.$scope.sfDialogHeader = 'Select a page';
+                        ctrl.$scope.externalPagesInTheDialog = jQuery.extend(true, [], ctrl.$scope.sfExternalPages);
 
                         var templateHtml = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}\" >" +
                                                   "<i class='pull-left icon-item-{{dataItem.Status.toLowerCase()}}'></i>" +

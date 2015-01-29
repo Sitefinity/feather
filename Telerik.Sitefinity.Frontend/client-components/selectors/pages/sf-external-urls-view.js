@@ -23,27 +23,8 @@
                         if (!scope.sfExternalPages)
                             scope.sfExternalPages = [];
 
-                        scope.sfExternalPagesInDialog = jQuery.extend(true, [], scope.sfExternalPages);
-
-                        scope.$watch(
-                           "sfExternalPagesInDialog",
-                           function (newValue, oldValue) {
-                               if (newValue != oldValue) {
-                                   scope.sfExternalPages.splice(0, scope.sfExternalPages.length);
-                                   var idx, page;
-                                   for (idx = 0; idx < scope.sfExternalPagesInDialog.length; idx++) {
-                                       page = scope.sfExternalPagesInDialog[idx];
-                                       if (page.Status != 'new')
-                                           scope.sfExternalPages.push(page);
-                                   }
-                               }
-                           },
-                           true
-                       );
-
-
                         scope.isListEmpty = function () {
-                            return scope.sfExternalPagesInDialog && scope.sfExternalPagesInDialog.length === 0;
+                            return scope.sfExternalPages && scope.sfExternalPages.length === 0;
                         };
 
                         scope.isItemSelected = function (externalPageId, status) {
@@ -62,12 +43,11 @@
                         };
 
                         scope.addItem = function () {
-                            scope.sfExternalPagesInDialog.push({ ExternalPageId: kendo.guid(), TitlesPath: '', Url: '', Status: 'new' });
-
+                            scope.sfExternalPages.push({ ExternalPageId: kendo.guid(), TitlesPath: '', Url: '', Status: 'new' });
                         };
 
                         scope.removeItem = function (index, item) {
-                            scope.sfExternalPagesInDialog.splice(index, 1);
+                            scope.sfExternalPages.splice(index, 1);
 
                             var selectedItemIndex = findSelectedItemIndex(item);
 
@@ -99,8 +79,7 @@
                                     scope.sfSelectedItems.push(item);
                                 }
                                 else {
-                                    scope.sfSelectedItems[selectedItemIndex].TitlesPath = item.TitlesPath;
-                                    scope.sfSelectedItems[selectedItemIndex].Url = item.Url;
+                                    scope.sfSelectedItems[selectedItemIndex] = item;
                                 }
                             }
                             else {
