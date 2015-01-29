@@ -93,8 +93,7 @@
                                     scope.sfSelectedItems.push(item);
                                 }
                                 else {
-                                    scope.sfSelectedItems[selectedItemIndex].TitlesPath = item.TitlesPath;
-                                    scope.sfSelectedItems[selectedItemIndex].Url = item.Url;
+                                    scope.sfSelectedItems[selectedItemIndex] = item;
                                 }
                             }
                             else {

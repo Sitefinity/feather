@@ -116,7 +116,7 @@
 
                             var specificItemsPromise = pageService.getSpecificItems(ids, provider, rootId);
 
-                            ctrl.$scope.selectedIdsPromise  = specificItemsPromise.then(function (data) {
+                            ctrl.$scope.selectedIdsPromise = specificItemsPromise.then(function (data) {
                                 return data.Items.map(function (item) {
                                     return item.Id;
                                 });
@@ -206,15 +206,16 @@
                         };
 
                         var removeEmptyExternalPages = function () {
+                            var externalPages = [];
+
                             if (ctrl.$scope.externalPagesInTheDialog && ctrl.$scope.externalPagesInTheDialog.length > 0) {
-                                ctrl.$scope.sfExternalPages = jQuery.map(ctrl.$scope.externalPagesInTheDialog, function (item) {
+                                externalPages = jQuery.map(ctrl.$scope.externalPagesInTheDialog, function (item) {
                                     if (item.Status != 'new')
                                         return item;
                                 });
                             }
-                            else {
-                                ctrl.$scope.sfExternalPages = [];
-                            }
+
+                            ctrl.$scope.sfExternalPages = jQuery.extend(true, {}, externalPages);
                         };
 
                         ctrl.selectorType = 'PageSelector';
