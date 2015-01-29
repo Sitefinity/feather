@@ -35,7 +35,7 @@
                                 Id: i + '#' + parentId,
                                 Title: 'Title ' + parentId + '#' + i
                             });
-                        };
+                        }
 
                         items[0].HasChildren = true;
                         items[1].HasChildren = true;
@@ -43,7 +43,7 @@
                         console.log('Requested!');
 
                         return { Items: items };
-                    }
+                    };
 
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
 
@@ -58,7 +58,7 @@
 
                     scope.hasChildren = function (item) {
                         return item.HasChildren === true;
-                    }
+                    };
 
                     scope.isSelected = function (item) {
                         return item[scope.sfIdentifier] === scope.selectedItem;
@@ -69,7 +69,7 @@
 
                         if (sfExpandOnSelect === true) {
                             scope.expandTree(item);
-                        };
+                        }
                     };
 
                     scope.toggle = function (parent) {
@@ -126,7 +126,7 @@
                         initialData.Items.forEach(function (item) {
                             scope.hierarchy[item[scope.sfIdentifier]] = item;
                         });
-                    };
+                    }
                 }
             };
         }]);
