@@ -1,7 +1,8 @@
 ﻿; (function () {
     var sfSelectors = angular.module('sfSelectors');
+    sfSelectors.requires.push('sfImageSelector');
 
-    sfSelectors
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection'])
         .directive('sfImageSelector', ['serverContext', 'sfMediaService', 'serviceHelper', function (serverContext, sfMediaService, serviceHelper) {
             var constants = {
                 initialLoadedItemsCount: 50,
