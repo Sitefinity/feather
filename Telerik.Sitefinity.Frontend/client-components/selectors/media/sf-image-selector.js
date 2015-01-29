@@ -17,13 +17,13 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/selectors/images/sf-image-selector.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/media/sf-image-selector.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
                     scope.sortExpression = null;
                     scope.items = [];
-                    scope.filterObject = sfImageService.newFilter();
+                    scope.filterObject = sfMediaService.newFilter();
 
                     scope.loadMore = function () {
                         refresh(true);
