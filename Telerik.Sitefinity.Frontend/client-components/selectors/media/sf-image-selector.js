@@ -1,6 +1,5 @@
 ﻿; (function () {
     var sfSelectors = angular.module('sfSelectors');
-    sfSelectors.requires.push('sfInfiniteScroll');
 
     sfSelectors
         .directive('sfImageSelector', ['serverContext', 'sfMediaService', 'serviceHelper', function (serverContext, sfMediaService, serviceHelper) {

@@ -8,9 +8,7 @@
  */
 (function () {
 
-    var infiniteScroll = angular.module('sfInfiniteScroll', []);
-
-    infiniteScroll.directive('sfInfiniteScroll', [function () {
+    angular.module('feather').directive('sfInfiniteScroll', [function () {
 
         /*
          * Returns true if user has scrolled to the bottom of the element,
