@@ -1,1 +1,5 @@
-﻿<h1>TREE ITEM</h1>
+﻿{{item.Title}}
+<button ng-if="hasChildren(item)" ng-click="toggle(item)">Expand</button>
+<ul ng-if="hasChildren(item)" ng-class="{'collapsed' : item.collapsed === true}">
+    <li ng-repeat="item in item.children" ng-include src="sfItemTemplateUrl" />
+</ul>
