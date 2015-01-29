@@ -3,7 +3,7 @@
     var scope,
         compile;
 
-    beforeEach(module('sfInfiniteScroll'));
+    beforeEach(module('feather'));
 
     beforeEach(inject(function ($rootScope, $compile) {
         scope = $rootScope.$new();

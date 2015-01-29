@@ -1,0 +1,10 @@
+﻿<h5>Already uploaded images</h5>
+<p><a ng-click="select('RecentItems')" ng-class="{ 'selectedFilter': filterObject.basic === 'RecentItems' }">Recent</a></p>
+<p><a ng-click="select('OwnItems')" ng-class="{ 'selectedFilter': filterObject.basic === 'OwnItems' }">Own</a></p>
+<p><a ng-click="select('AllLibraries')" ng-class="{ 'selectedFilter': filterObject.basic === 'AllLibraries' }">Libraries</a></p>
+
+<style>
+    a.selectedFilter {
+        font-weight: bold!important;
+    }
+</style>

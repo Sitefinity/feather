@@ -515,9 +515,15 @@
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.html" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-service.js" />
-    <EmbeddedResource Include="client-components\common\sf-infinite-scroll.js" />
-    <Content Include="client-components\selectors\common\sf-collection.js" />
-    <EmbeddedResource Include="client-components\selectors\images\sf-image-service.js" />
+    <EmbeddedResource Include="client-components\collections\sf-infinite-scroll.js" />
+    <EmbeddedResource Include="client-components\collections\sf-collection.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-image-collection.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-service.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-image-basic-filters.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-basic-filters.js" />
+    <EmbeddedResource Include="client-components\feather-module.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
@@ -573,7 +579,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

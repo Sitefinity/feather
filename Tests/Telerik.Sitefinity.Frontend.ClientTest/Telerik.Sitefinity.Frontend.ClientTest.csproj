@@ -53,10 +53,10 @@
     <Content Include="unit\Selectors\modalLinkSelectorSpec.js" />
     <Content Include="unit\Selectors\multi-site\sfSiteSelectorSpec.js" />
     <Content Include="unit\Selectors\sfCollectionSpec.js" />
-    <Content Include="unit\Services\sfImageServiceSpec.js" />
     <Content Include="unit\Services\languageServiceSpec.js" />
     <Content Include="unit\Services\multisiteSpec.js" />
     <Content Include="unit\Services\sfLinkServiceSpec.js" />
+    <Content Include="unit\Services\sfMediaServiceSpec.js" />
     <EmbeddedResource Include="helpers\kendo.all.min.js" />
     <Content Include="unit\Selectors\itemsTreeSpec.js" />
     <Content Include="unit\Selectors\newsSelectorSpec.js" />

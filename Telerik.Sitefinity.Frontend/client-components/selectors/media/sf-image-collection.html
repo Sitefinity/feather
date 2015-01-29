@@ -1,0 +1,31 @@
+﻿<div sf-infinite-scroll="$parent.loadMore()" style="height: 200px">
+	<ul class="row">
+		<li ng-repeat="item in items | filter: { IsFolder : true }" class="col-md-4" ng-click="select(item)">
+			<div ng-if="item.IsFolder === true" style="height: 100px; width: 100px; border: 2px solid blue">{{item.Title}}</div>
+		</li>
+	</ul>
+	<hr />
+	<ul class="row">
+		<li ng-repeat="item in items | filter: { IsFolder : false }" class="col-md-4" ng-click="select(item)">
+			<img ng-if="item.IsFolder === false" ng-src="{{item.ThumbnailUrl}}" ng-class="{'selected' : isSelected(item)}" src="" alt="{{item.Title}}" width="100" height="100" style="border: 2px solid yellow" />
+		</li>
+	</ul>
+</div>
+
+<span>Selected item id: {{ selectedItems[0] }}</span>
+<br />
+<button ng-click="switchToGrid()">Grid</button>
+<button ng-click="switchToList()">List</button>
+
+<style>
+	.sf-collection-grid {
+		border: 3px solid green;
+	}
+
+	.sf-collection-list {
+		border: 3px solid red;
+	}
+	.selected {
+		border: 10px solid orange!important;
+	}
+</style>
