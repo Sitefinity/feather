@@ -30,14 +30,24 @@
                     };
 
                     scope.$watch('filterObject', function (newVal, oldVal) {
-                        if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-                            refresh();
+                        if (newVal && (JSON.stringify(newVal) !== JSON.stringify(oldVal))) {
+                            if (newVal.basic === 'RecentItems' && scope.sortExpression !== 'DateCreated DESC') {
+                                scope.sortExpression = 'DateCreated DESC';
+                            }
+                            else {
+                                refresh();
+                            }
                         }
                     }, true);
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
-                            refresh();
+                            if (newVal !== 'DateCreated DESC' && scope.filterObject.basic === 'RecentItems') {
+                                scope.filterObject.basic = null;
+                            }
+                            else {
+                                refresh();
+                            }
                         }
                     });
 
