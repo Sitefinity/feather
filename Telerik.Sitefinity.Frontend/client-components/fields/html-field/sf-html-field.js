@@ -45,6 +45,10 @@
                     var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
                     var aTag = nodes.length ? command.formatter.finder.findSuitable(nodes[0]) : null;
 
+                    if (jQuery.browser.msie && !aTag) {
+                        aTag = nodes.length >= 2 ? command.formatter.finder.findSuitable(nodes[1]) : null;
+                    }
+
                     if (aTag) {
                         scope.selectedHtml = aTag;
                     }
