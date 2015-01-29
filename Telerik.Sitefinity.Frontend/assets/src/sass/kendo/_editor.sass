@@ -3,71 +3,77 @@
 // that's why we're cascading
 
 .modal-body
-  .k-editor-widget
-    margin: 0
-    background: transparent
-    border: none
-    border-collapse: collapse
+	.k-editor-widget
+		margin: 0
+		background: transparent
+		border: none
+		border-collapse: collapse
 
-    .k-editor-toolbar
-      margin: -24px -20px 0
-      padding: 10px 20px
-      min-height: 34px
-      background: #f2f2f2
+		.k-editor-toolbar
+			margin: -24px -20px 0
+			padding: 10px 20px
+			min-height: 34px
+			background: #f2f2f2
 
-      > li:last-child
-        float: right
+			> li:last-child
+				float: right
 
-    .k-editable-area
-      vertical-align: top
-      border: none
+			.k-tool-group
+				.custom-tool
+					height: 30px
+					.glyphicon
+						padding-top: 2px
 
-      iframe,
-      textarea.html
-        display: block
-        margin: 12px auto -9px
-        padding: 0
-        min-height: 329px
-        max-width: 858px
+		.k-editable-area
+			vertical-align: top
+			border: none
+
+			iframe,
+			textarea.html
+				display: block
+				margin: 12px auto -9px
+				padding: 0
+				min-height: 329px
+				max-width: 858px
 
 
 .modal-full-screen
-  width: 100% !important
-  margin: 0 !important
-  position: fixed
-  top: 0
-  right: 0
-  bottom: 0
-  left: 0
+	width: 100% !important
+	margin: 0 !important
+	position: fixed
+	top: 0
+	right: 0
+	bottom: 0
+	left: 0
 
-  #viewsPlaceholder,
-  .modal-content,
-  .modal-body,
-  .modal-content-expand
-    display: block
-    height: 100%
+	#viewsPlaceholder,
+	.modal-content,
+	.modal-body,
+	.modal-content-expand
+		display: block
+		height: 100%
 
-  .k-editor
-    height: 100% !important
+	.k-editor
+		height: 100% !important
 
-  .k-content
-    border: 1px dashed transparent
-    transition: border-color .2s ease
-    -webkit-box-sizing: border-box
-    box-sizing: border-box
-    padding: 20px !important
+	.k-content
+		border: 1px dashed transparent
+		transition: border-color .2s ease
+		-webkit-box-sizing: border-box
+		box-sizing: border-box
+		padding: 20px !important
 
-    &:hover
-      border: 1px dashed #999
+		&:hover
+			border: 1px dashed #999
 
 .editor-lg
-  height: 540px
+	height: 540px
 
 
 .k-tool:hover
-  background-color: #b6bdca
-  .k-createLink
-    background-position: -312px -48px
+	background-color: #b6bdca
+	.k-createLink
+		background-position: -312px -48px
 
 
 
