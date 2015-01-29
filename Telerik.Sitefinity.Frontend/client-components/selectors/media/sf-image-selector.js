@@ -3,7 +3,7 @@
     sfSelectors.requires.push('sfInfiniteScroll');
 
     sfSelectors
-        .directive('sfImageSelector', ['serverContext', 'sfImageService', 'serviceHelper', function (serverContext, sfImageService, serviceHelper) {
+        .directive('sfImageSelector', ['serverContext', 'sfMediaService', 'serviceHelper', function (serverContext, sfMediaService, serviceHelper) {
             var constants = {
                 initialLoadedItemsCount: 50,
                 infiniteScrollLoadedItemsCount: 20,
@@ -120,13 +120,13 @@
                         if (scope.filterObject.basic) {
                             // Defaul filter is used (Recent / My / All)
                             if (scope.filterObject.basic === 'RecentImages') {
-                                callback = sfImageService.getImages;
+                                callback = sfMediaService.images.getImages;
                             }
                             else if (scope.filterObject.basic === 'OwnImages') {
-                                callback = sfImageService.getImages;
+                                callback = sfMediaService.images.getImages;
                             }
                             else if (scope.filterObject.basic === 'AllLibraries') {
-                                callback = sfImageService.getFolders;
+                                callback = sfMediaService.images.getFolders;
                             }
                             else {
                                 throw { message: 'Unknown basic filter object option.' };
@@ -134,7 +134,7 @@
                         }
                         else {
                             // custom filter is used (Libraries / Taxons / Dates)
-                            callback = sfImageService.getContent;
+                            callback = sfMediaService.images.getContent;
                         }
 
                         callback(options).then(function (response) {

@@ -1,15 +1,21 @@
 ﻿(function () {
-    angular.module('sfServices').factory('sfImageService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
-        var albumServiceUrl = serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/folders/'),
-            imageServiceUrl = serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/');
+    angular.module('sfServices').factory('sfMediaService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
+        var constants = {
+            images: {
+                itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
+                albumsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/folders/'),
+                imagesServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/')
+            }
+        };
 
-        var callImageService = function (options, excludeFolders) {
+        var getItems = function (options, excludeFolders, serviceUrl, itemType) {
             options = options || {};
 
-            var url = options.parent ? imageServiceUrl + 'parent/' + options.parent + "/" : imageServiceUrl;
+            var url = options.parent ? serviceUrl + 'parent/' + options.parent + "/" : serviceUrl;
+
             return serviceHelper.getResource(url).get(
                 {
-                    itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
+                    itemType: itemType,
                     filter: options.filter,
                     provider: options.provider,
                     skip: options.skip,
@@ -20,14 +26,10 @@
                 }).$promise;
         };
 
-        var getImages = function (options) {
-            return callImageService(options, 'true');
-        };
-
-        var getFolders = function (options) {
+        var getFolders = function (options, serviceUrl) {
             options = options || {};
 
-            var url = options.parent ? albumServiceUrl + options.parent + "/" : albumServiceUrl;
+            var url = options.parent ? serviceUrl + options.parent + "/" : serviceUrl;
             return serviceHelper.getResource(url).get(
                 {
                     filter: options.filter,
@@ -44,14 +46,20 @@
                 });
         };
 
-        var getContent = function (options) {
-            return callImageService(options, null);
-        };
+        var imagesObj = {
+            getFolders: function (options) {
+                return getFolders(options, constants.images.albumsServiceUrl);
+            },
+            getImages: function (options) {
+                return getItems(options, 'true', constants.images.imagesServiceUrl, constants.images.itemType);
+            },
+            getContent: function (options) {
+                return getItems(options, null, constants.images.imagesServiceUrl, constants.images.itemType);
+            }
+        }
 
         return {
-            getImages: getImages,
-            getFolders: getFolders,
-            getContent: getContent
+            images: imagesObj
         };
     }]);
 })();
