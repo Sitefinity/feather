@@ -19,7 +19,7 @@
             childrenRequested = true;
         };
         
-        var directiveMarkup = '<div sf-tree sf-template-url="sf-tree/dummy.html"></div>';
+        var directiveMarkup = '<div sf-tree sf-template-url="sf-tree/dummy.html" sf-request-children="requestChildren(parent)"></div>';
         commonMethods.compileDirective(directiveMarkup, scope);
 
         expect(childrenRequested).toBe(true);
