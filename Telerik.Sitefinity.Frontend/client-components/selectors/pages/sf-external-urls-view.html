@@ -11,7 +11,7 @@
             </div>
 
             <div class="col-md-6">
-                <input class="form-control-highlight" type="text" ng-model="item.Url" placeholder="Enter URL" sf-editable />
+                <input class="form-control-highlight" type="text" ng-model="item.Url" ng-change="itemChanged(item)" placeholder="Enter URL" sf-editable />
             </div>
         </section>
     </div>
