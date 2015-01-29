@@ -1,11 +1,5 @@
 ﻿(function ($) {
-    var module;
-    try {
-        module = angular.module('sfFields');
-    } catch (e) {
-        module = angular.module('sfFields', []);
-    }
-
+    var module = angular.module('sfFields', ['kendo.directives', 'sfServices']);
 
     module.directive('sfEditable', function () {
         return {
