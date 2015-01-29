@@ -523,7 +523,6 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-media-service.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-basic-filters.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-basic-filters.js" />
-    <EmbeddedResource Include="client-components\feather-module.js" />
     <Content Include="client-components\collections\sf-tree-item.html" />
     <Content Include="client-components\collections\sf-tree.js" />
     <Content Include="Mvc\assets\mvc.css" />
