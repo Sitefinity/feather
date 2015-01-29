@@ -11,7 +11,10 @@
             link: function (scope, element, attrs) {
                 var timeoutPromise = false;
 
-                scope.sfFilter.isEmpty = true;
+                // Initialize the default state.
+                if(scope.sfFilter) {
+                    scope.sfFilter.isEmpty = true;
+                }
 
                 var setFilterIsEmpty = function () {
                     if (scope.sfFilter) {
