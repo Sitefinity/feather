@@ -2,9 +2,8 @@
     angular.module('feather')
         .directive('sfCollection', ['serverContext', function (serverContext) {
             return {
-                restrict: 'A',
+                restrict: 'AE',
                 scope: {
-                    sfTemplateUrl: '@',
                     sfMultiselect: '@',
                     items: '=sfData',
                     sfIdentifier: '@',
