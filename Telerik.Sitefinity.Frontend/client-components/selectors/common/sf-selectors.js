@@ -11,6 +11,8 @@
             link: function (scope, element, attrs) {
                 var timeoutPromise = false;
 
+                scope.sfFilter.isEmpty = true;
+
                 var setFilterIsEmpty = function () {
                     if (scope.sfFilter) {
                         scope.sfFilter.isEmpty = !scope.sfFilter.searchString;
