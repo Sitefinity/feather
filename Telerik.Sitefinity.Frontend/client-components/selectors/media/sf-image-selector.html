@@ -14,15 +14,11 @@
         </div>
         <div class="col-md-2">
             <p><button>Upload image</button></p>
-            <h5>Already uploaded images</h5>
-            <p><button ng-click="filterObject.basic = 'RecentItems'">Recent</button></p>
-            <p><button ng-click="filterObject.basic = 'OwnItems'">Own</button></p>
-            <p><button ng-click="filterObject.basic = 'AllLibraries'">Libraries</button></p>
+            <span sf-media-basic-filters ng-model="filterObject" sf-template-url="client-components/selectors/media/sf-image-basic-filters.html"></span>
             <br />
             <h5>Libraries</h5>
 
         </div>
     </div>
-
 
 </div>

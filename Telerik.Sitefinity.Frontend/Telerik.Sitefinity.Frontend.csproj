@@ -515,6 +515,8 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-service.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-image-basic-filters.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-basic-filters.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
