@@ -19,19 +19,6 @@
                 link: {
                     post: function (scope, element, attrs) {
 
-                        //creates new guid
-                        var guid = (function () {
-                            function s4() {
-                                return Math.floor((1 + Math.random()) * 0x10000)
-                                           .toString(16)
-                                           .substring(1);
-                            }
-                            return function () {
-                                return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                                       s4() + '-' + s4() + s4() + s4();
-                            };
-                        })();
-
                         // The view is binded to this collection
                         if (!scope.sfExternalPages)
                             scope.sfExternalPages = [];
@@ -56,8 +43,7 @@
                         };
 
                         scope.addItem = function () {
-                            scope.sfExternalPages.push({ ExternalPageId: guid(), TitlesPath: '', Url: '', Status: 'new' });
-
+                            scope.sfExternalPages.push({ ExternalPageId: kendo.guid(), TitlesPath: '', Url: '', Status: 'new' });
                         };
 
                         scope.removeItem = function (index, item) {
