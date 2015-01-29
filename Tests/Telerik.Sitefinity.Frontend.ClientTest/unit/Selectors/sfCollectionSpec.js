@@ -2,7 +2,7 @@
     var rootScope;
     var templateCache;
 
-    beforeEach(module('feather'));
+    beforeEach(module('sfCollection'));
 
     beforeEach(inject(function (_$rootScope_, $templateCache) {
         rootScope = _$rootScope_;
