@@ -55,28 +55,7 @@ describe("link selector modal", function () {
     beforeEach(module(function ($provide) {
         //Force angular to use the mock.
         $provide.value('sfLinkService', linkServiceMock);
-        //$provide.value('sfMultiSiteService', siteService);
-        //$provide.value('sfLanguageService', languageService);
-        //$provide.value('sfPageService', pagesService);
         provide = $provide;
-    }));
-
-    beforeEach(module(function ($provide) {
-        var serverContext = {
-            getRootedUrl: function (path) {
-                return appPath + '/' + path;
-            },
-            getUICulture: function () {
-                return null;
-            },
-            getCurrentUserId: function () {
-                return '36e9e47f-0d78-6425-ae98-ff0000fc9faf';
-            },
-            getCurrentFrontendRootNodeId: function () {
-                return '36e9e47f-0d78-6425-ae98-ff0000fc9faf';
-            }
-        };
-        $provide.value('serverContext', serverContext);
     }));
 
     beforeEach(inject(function (_$rootScope_, $httpBackend, _$q_, $templateCache, _$timeout_, $injector) {
@@ -91,12 +70,6 @@ describe("link selector modal", function () {
     beforeEach(function () {
         commonMethods.mockServerContextToEnableTemplateCache();
     });
-
-    beforeEach(inject(function (serverContext) {
-        serverContext.getFrontendLanguages = function () {
-            return ['en', 'de'];
-        };
-    }));
 
     afterEach(function () {
         //Tear down.
