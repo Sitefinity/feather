@@ -231,6 +231,9 @@
                         ctrl.$scope.singleItemTemplateHtml = templateHtml;
 
                         ctrl.onPostLinkComleted = function () {
+                            var bindOnLoad = scope.$eval(attrs.sfBindOnLoad);
+                            if (!bindOnLoad) return;
+
                             if (serverContext.isMultisiteEnabled()) {
                                 var currentSite = scope.$eval(attrs.sfPageSelector);
                                 if (currentSite) {
