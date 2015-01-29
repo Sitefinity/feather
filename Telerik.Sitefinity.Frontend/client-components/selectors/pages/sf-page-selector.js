@@ -142,6 +142,50 @@
                             return false;
                         };
 
+                        ctrl.removeUnselectedItems = function () {
+                            if (ctrl.$scope.multiselect) {
+                                var reoderedItems = [];
+                                if (ctrl.$scope.selectedItemsViewData && ctrl.$scope.selectedItemsViewData.length > 0) {
+                                    for (var i = 0; i < ctrl.$scope.selectedItemsViewData.length; i++) {
+                                        for (var j = 0; j < ctrl.$scope.selectedItemsInTheDialog.length; j++) {
+                                            if ((ctrl.$scope.selectedItemsInTheDialog[j].Id && ctrl.$scope.selectedItemsInTheDialog[j].Id === ctrl.$scope.selectedItemsViewData[i].Id) ||
+                                                (ctrl.$scope.selectedItemsInTheDialog[j].ExternalPageId && ctrl.$scope.selectedItemsInTheDialog[j].ExternalPageId === ctrl.$scope.selectedItemsViewData[i].ExternalPageId)) {
+                                                reoderedItems.push(ctrl.$scope.selectedItemsInTheDialog[j]);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    ctrl.$scope.selectedItemsInTheDialog = [];
+                                    Array.prototype.push.apply(ctrl.$scope.selectedItemsInTheDialog, reoderedItems);
+                                }
+
+                                ctrl.$scope.selectedItemsViewData = [];
+                            }
+                        };
+
+                        ctrl.fetchSelectedItems = function () {
+                            if (ctrl.$scope.multiselect && ctrl.$scope.sfSelectedItems)
+                                return ctrl.$scope.sfSelectedItems;
+                            else if (!ctrl.$scope.multiselect && ctrl.$scope.sfSelectedItem)
+                                return ctrl.$scope.sfSelectedItem;
+
+                            var ids = ctrl.$scope.getSelectedIds();
+                            currentSelectedIds = ids;
+
+                            if (ids.length === 0) {
+                                return;
+                            }
+
+                            return ctrl.getSpecificItems(ids)
+                                .then(function (data) {
+                                    ////ctrl.updateSelection(data.Items);
+                                    ctrl.onSelectedItemsLoadedSuccess(data);
+                                }, ctrl.onError)
+                                .finally(function () {
+                                    ctrl.$scope.showLoadingIndicator = false;
+                                });
+                        };
+
                         // Adds multilingual support.
                         ctrl.$scope.bindPageIdentifierField = function (dataItem) {
                             return pageService.getPageTitleByCulture(dataItem, getCulture());

@@ -1,0 +1,28 @@
+﻿<div ng-show="isListEmpty()" class="alert alert-info text-muted m-bottom-sm">No external URLs have been added.</div>
+
+<div class="list-group list-group-external list-group-endless" ng-hide="isListEmpty()">
+    <div class="list-group-item list-group-item-multiselect"
+        ng-repeat="item in sfExternalPagesInDialog track by item.ExternalPageId">
+        <input type="checkbox" ng-checked="isItemSelected(item.ExternalPageId, item.Status)" ng-click="itemClicked(item)" />
+        <section class="row row-xs">
+            <a class="pull-right" ng-click="removeItem($index, item)"><i class="glyphicon glyphicon-remove-circle"></i></a>
+            <div class="col-md-5">
+                <input class="form-control-highlight" type="text" ng-model="item.TitlesPath" ng-change="itemChanged(item)" placeholder="Enter Title" sf-editable />
+            </div>
+
+            <div class="col-md-6">
+                <input class="form-control-highlight" type="text" ng-model="item.Url" ng-change="itemChanged(item)" placeholder="Enter URL" sf-editable />
+            </div>
+        </section>
+    </div>
+</div>
+
+<input type="button" class="btn btn-default btn-xs" value="Add external URL" ng-click="addItem()" />
+
+<div class="checkbox m-top-md" ng-hide="isListEmpty()">
+
+    <label for="openInNewTab">
+        <input id="openInNewTab" type="checkbox" ng-true-value="'True'" ng-false-value="'False'" ng-model="sfOpenExternalsInNewTab.PropertyValue" />
+        Open external URLs in new tab/window
+    </label>
+</div>

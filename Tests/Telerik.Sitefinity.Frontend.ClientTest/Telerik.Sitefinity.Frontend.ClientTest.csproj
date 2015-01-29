@@ -47,6 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="helpers\common-methods.js" />
     <Content Include="unit\Common\sfInfiniteScrollSpec.js" />
+    <Content Include="unit\Selectors\externalUrlsViewSpec.js" />
     <Content Include="unit\Selectors\languageSelectorSpec.js" />
     <Content Include="unit\Selectors\linkSelectorSpec.js" />
     <Content Include="unit\Selectors\modalLinkSelectorSpec.js" />
