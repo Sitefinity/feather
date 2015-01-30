@@ -24,9 +24,10 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    scope.sfItemTemplateAssembly = scope.sfItemTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    scope.itemTemplateUrl = scope.sfItemTemplateUrl || 'client-components/collections/sf-tree-item.html';
-                    scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(scope.sfItemTemplateAssembly, scope.sfItemTemplateUrl);
+                    var itemAssembly = scope.sfItemTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var itemUrl = scope.sfItemTemplateUrl || 'client-components/collections/sf-tree-item.html';
+                    scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(itemAssembly, itemUrl);
+
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.hierarchy = {};
 
