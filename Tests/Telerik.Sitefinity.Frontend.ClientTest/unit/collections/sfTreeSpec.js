@@ -67,6 +67,37 @@
         expect(requestedParent).toEqual('2');
     });
 
-    //it('[Boyko-Karadzhov] / should mark preselected items bound by ng-model as selected.', function () {
-    //});
+    it('[Boyko-Karadzhov] / should mark preselected item bound by ng-model as selected.', function () {
+        var scope = $rootScope.$new();
+        scope.selectedId = '3';
+
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span ng-class="{ \'selected\': isSelected(node) }" ng-click="toggle(node)">{{node.Id}}</span><ul><li ng-repeat="node in node.children" ng-include="sf-tree/selected-item.html"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul><li ng-repeat="node in hierarchy" ng-include="sf-tree/expand-item.html"></li></ul>');
+
+        scope.requestChildren = function (parent) {
+            var result = $q.defer();
+
+            if (!parent) {
+                result.resolve([{ id: '1' }, { id: '2' }]);
+            }
+            else if (parent === '2') {
+                result.resolve([{ id: '3' }, { id: '4' }]);
+            }
+            else {
+                result.resolve({});
+                requestedParent = parent;
+                requestedWithParentCount++;
+            }
+
+            return result.promise;
+        };
+
+        var directiveMarkup = '<div sf-tree ng-model="selectedId" sf-template-url="sf-tree/expand.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
+        commonMethods.compileDirective(directiveMarkup, scope);
+
+        $('ul li span:contains("2")').click();
+        scope.$digest();
+
+        expect($('span:contains("3")').is('.selected')).toBe(true);
+    });
 });
