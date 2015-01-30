@@ -22,10 +22,6 @@ describe("selected pages view", function () {
         filteredCollection.Items[i] = customDataItems.Items[i];
     }
 
-    var serviceResult;
-    var $q;
-    var provide;
-
     //Load the kendo module directives .
     beforeEach(module('kendo.directives'));
 
@@ -43,31 +39,11 @@ describe("selected pages view", function () {
     beforeEach(inject(function ($rootScope, _$httpBackend_, _$q_, $templateCache, _$timeout_) {
         //Build the scope with whom the directive will be compiled.
         scope = $rootScope.$new();
-        scope.provider = 'OpenAccessDataProvider';
-
-        $q = _$q_;
-        $timeout = _$timeout_;
-
-        serviceResult = _$q_.defer();
     }));
 
     beforeEach(function () {
         commonMethods.mockServerContextToEnableTemplateCache();
     });
-
-    beforeEach(inject(function (serverContext) {
-        serverContext.getCurrentFrontendRootNodeId = function () {
-            return "850B39AF-4190-412E-9A81-C72B04A34C0F";
-        };
-
-        serverContext.getFrontendLanguages = function () {
-            return ['en', 'de'];
-        };
-
-        serverContext.isMultisiteEnabled = function () {
-            return true;
-        };
-    }));
 
     afterEach(function () {
         tearDownCleanUp();
