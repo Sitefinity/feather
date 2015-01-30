@@ -98,7 +98,13 @@ describe('sfMediaService', function () {
         {
             itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
             itemsServicePath: appPath + '/Sitefinity/Services/Content/ImageService.svc/',
-            albumsServicePath: appPath + '/Sitefinity/Services/Content/AlbumService.svc/folders/'
+            albumsServicePath: appPath + '/Sitefinity/Services/Content/AlbumService.svc/folders/',
+            callbacks: {
+                testedObject: 'images',
+                folders: 'getFolders',
+                items: 'getImages',
+                content: 'getContent'
+            }
         }
     ];
 
@@ -117,19 +123,19 @@ describe('sfMediaService', function () {
             mediaService = $injector.get('sfMediaService');
 
             assertFolders = function (params) {
-                baseAssertFolders(params, mediaService.images.getFolders);
+                baseAssertFolders(params, mediaService[testObjSettings.callbacks.testedObject][testObjSettings.callbacks.folders]);
             }
 
             assertItems = function (params) {
-                baseAssertItems(params, mediaService.images.getImages);
+                baseAssertItems(params, mediaService[testObjSettings.callbacks.testedObject][testObjSettings.callbacks.items]);
             }
 
             assertContent = function (params) {
-                baseAssertContent(params, mediaService.images.getContent);
+                baseAssertContent(params, mediaService[testObjSettings.callbacks.testedObject][testObjSettings.callbacks.content]);
             }
 
            assertError = function (params, methodName) {
-                baseAssertError(params, mediaService.images[methodName]);
+               baseAssertError(params, mediaService[testObjSettings.callbacks.testedObject][methodName]);
             }
         }));
 
