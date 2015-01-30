@@ -13,11 +13,11 @@ module.exports = function (config) {
                   'helpers/jasmine-matchers.js',
                   '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls-0.11.0.min.js',
 
+				  '../../Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js',
                   '../../Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 	              '../../Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
 	              '../../Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
-                  '../../Telerik.Sitefinity.Frontend/client-components/feather-module.js',
-				  '../../Telerik.Sitefinity.Frontend/client-components/fields/**.js',
+				  '../../Telerik.Sitefinity.Frontend/client-components/fields/**/*.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-services.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selectors.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-bubbles-selection.html',
