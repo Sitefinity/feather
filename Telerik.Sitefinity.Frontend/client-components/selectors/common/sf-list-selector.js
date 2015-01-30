@@ -505,6 +505,8 @@
                                 else if (scope.sfSelectedItems && scope.sfSelectedItems.length > 0) {
                                     return scope.sfSelectedItems.map(function (item) {
                                         return item.Id;
+                                    }).filter(function (id) {
+                                        return id;
                                     });
                                 }
                             }
