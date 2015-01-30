@@ -1,5 +1,5 @@
 ﻿; (function ($) {
-    angular.module('sfLibraryFilter', ['sfServices'])
+    angular.module('sfLibraryFilter', ['sfServices', 'sfTree'])
         .directive('sfLibraryFilter', ['serverContext', 'sfMediaService', function (serverContext, sfMediaService) {
             var constants = {
                 foldersCallback: 'getFolders'
@@ -13,11 +13,11 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/selectors/media/sf-library-picker.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/media/sf-library-filter.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    if (!(scope.filterObject instanceof MediaFilter)) {
+                    if (scope.filterObject && sfMediaService.newFilter().constructor.prototype !== scope.filterObject.constructor.prototype) {
                         throw { Message: 'ng-model must be of type MediaFilter.' };
                     };
 
@@ -32,7 +32,8 @@
                     scope.selectedItemId = null;
 
                     scope.requestChildrenCallback = function (parent) {
-                        sfMediaService[scope.sfMediaType][constants.foldersCallback](parent.parent).then(function (response) {
+                        parent = parent || {};
+                        return sfMediaService[scope.sfMediaType][constants.foldersCallback]({ parent: parent.Id }).then(function (response) {
                             if (response) {
                                 return response.Items;
                             }
