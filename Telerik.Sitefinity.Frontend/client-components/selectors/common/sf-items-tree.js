@@ -282,6 +282,7 @@
                     });
 
                     scope.$watch('sfItemsPromise', function () {
+                        selectedIds = null;
                         if(scope.sfSelectedIdsPromise) { 
                             scope.sfSelectedIdsPromise.then(function (ids) {
                                 selectedIds = ids;
