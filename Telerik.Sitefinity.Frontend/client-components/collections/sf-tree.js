@@ -1,16 +1,22 @@
 ﻿; (function ($) {
     angular.module('sfTree', ['sfServices'])
-        .directive('sfTree', ['serverContext', function (serverContext) {
+        .directive('sfTree', ['serverContext', '$q', function (serverContext, $q) {
+            var TreeNode = function (item) {
+                this.item = item;
+                this.children = null;
+                this.collapsed = true;
+            };
+
             return {
                 restrict: 'AE',
                 scope: {
-                    selectedItem: '=?ngModel',
+                    selectedId: '=?ngModel',
                     sfIdentifier: '@',
                     sfHasChildrenField: '@',
                     sfExpandOnSelect: '@',
                     sfItemTemplateUrl: '@',
                     sfItemTemplateAssembly: '@',
-                    sfRequestChildren: '^&'
+                    sfRequestChildren: '&'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -22,20 +28,19 @@
                     scope.sfItemTemplateUrl = scope.sfItemTemplateUrl || 'client-components/collections/sf-tree-item.html';
                     scope.sfItemTemplateUrl = serverContext.getEmbeddedResourceUrl(scope.sfItemTemplateAssembly, scope.sfItemTemplateUrl);
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
-
                     scope.hierarchy = {};
 
-                    // TODO: Remove
-                    //scope.sfRequestChildren = function (parentId) {
-                    //    if (parentId === undefined) {
-                    //        parentId = 'root';
-                    //    }
+                    // In case no function for getting children is provided, a default one returning empty array is provided.
+                    scope.sfRequestChildren = scope.sfRequestChildren || function () { return []; };
 
+                    // TODO: Remove
+                    //scope.sfRequestChildren = function (parentItem) {
+                    //    parentItem = parentItem || { Id: 'Root' };
                     //    var items = [];
                     //    for (var i = 0; i < 5; i++) {
                     //        items.push({
-                    //            Id: i + '#' + parentId,
-                    //            Title: 'Title ' + parentId + '#' + i
+                    //            Id: i + '#' + parentItem.Id,
+                    //            Title: i + '#' + 'Title ' + parentItem.Id
                     //        });
                     //    };
 
@@ -44,10 +49,12 @@
 
                     //    console.log('Requested!');
 
-                    //    return { Items: items };
+                    //    var result = $q.defer();
+                    //    result.resolve(items);
+                    //    return result.promise;
                     //}
 
-
+                    //TODO : THIS
                     //var hItem = {};
                     //scope.hasChildren = function (item) {
                     //    return (hItem.children !== null && hItem.children.length > 0) ||
@@ -55,77 +62,57 @@
                     //            (item[scope.sfHasChildrenField] === true);
                     //};
 
-                    scope.hasChildren = function (item) {
-                        return item.HasChildren === true;
+                    scope.hasChildren = function (node) {
+                        return node.item.HasChildren === true;
                     };
 
-                    scope.isSelected = function (item) {
-                        return item[scope.sfIdentifier] === scope.selectedItem;
+                    scope.isSelected = function (node) {
+                        return node.item[scope.sfIdentifier] === scope.selectedId;
                     };
 
-                    scope.select = function (item) {
-                        scope.selectedItem = item[scope.sfIdentifier];
+                    scope.select = function (node) {
+                        scope.selectedId = node.item[scope.sfIdentifier];
 
                         if (sfExpandOnSelect === true) {
-                            scope.expandTree(item);
+                            scope.expandTree(node);
                         }
                     };
 
                     scope.toggle = function (parent) {
-                        if (!parent) {
+                        if (!parent || parent.children === {}) {
                             return;
                         }
 
-                        if (parent.collapsed === true) {
-                            parent.collapsed = false;
-                        }
-                        else if (parent.collapsed === false) {
-                            parent.collapsed = true;
-                        }
-                            // If we reach here we have no property, so the children were never populated
-                        else {
-                            // TODO: Add!
-                            scope.sfRequestChildren(parent[scope.sfIdentifier]).then(function (data) {
-                                if (data && data.Items) {
+                        // no requests yet
+                        if (parent.children === null) {
+                            scope.sfRequestChildren(parent.item).then(function (items) {
+                                if (items && items instanceof Array) {
                                     parent.children = parent.children || {};
 
-                                    data.Items.forEach(function (item) {
-                                        parent.children[item[scope.sfIdentifier]] = item;
-                                    });
+                                    // Item must remain collapsed if it has no children
+                                    if (items.length === 0) {
+                                        parent.collapsed = !parent.collapsed;
+                                    }
+                                    else {
+                                        items.forEach(function (item) {
+                                            parent.children[item[scope.sfIdentifier]] = new TreeNode(item);
+                                        });
+                                    }
                                 }
                             });
-
-                            parent.collapsed = false;
-
-                            // TODO: Remove!
-                            //var expandData = scope.sfRequestChildren(parent[scope.sfIdentifier]);
-                            //if (expandData && expandData.Items) {
-                            //    parent.children = parent.children || {};
-
-                            //    expandData.Items.forEach(function (item) {
-                            //        parent.children[item[scope.sfIdentifier]] = item;
-                            //    });
-                            //}
                         }
+
+                        parent.collapsed = !parent.collapsed;
                     };
 
                     // Initial load of root elements
-                    // TODO: Add!
-                    scope.sfRequestChildren().then(function (data) {
-                        if (data && data.Items) {
-                            data.Items.forEach(function (item) {
-                                scope.hierarchy[item[scope.sfIdentifier]] = item;
+                    scope.sfRequestChildren(null).then(function (items) {
+                        if (items && items instanceof Array) {
+                            items.forEach(function (item) {
+                                scope.hierarchy[item[scope.sfIdentifier]] = new TreeNode(item);
                             });
                         }
                     });
-
-                    // TODO: Remove!
-                    //var initialData = scope.sfRequestChildren();
-                    //if (initialData && initialData.Items) {
-                    //    initialData.Items.forEach(function (item) {
-                    //        scope.hierarchy[item[scope.sfIdentifier]] = item;
-                    //    });
-                    //};
                 }
             };
         }]);
