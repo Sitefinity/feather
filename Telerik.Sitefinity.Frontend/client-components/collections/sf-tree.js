@@ -57,7 +57,7 @@
 
                     scope.hasChildren = function (item) {
                         return item.HasChildren === true;
-                    }
+                    };
 
                     scope.isSelected = function (item) {
                         return item[scope.sfIdentifier] === scope.selectedItem;
@@ -68,7 +68,7 @@
 
                         if (sfExpandOnSelect === true) {
                             scope.expandTree(item);
-                        };
+                        }
                     };
 
                     scope.toggle = function (parent) {
@@ -116,7 +116,7 @@
                             data.Items.forEach(function (item) {
                                 scope.hierarchy[item[scope.sfIdentifier]] = item;
                             });
-                        };
+                        }
                     });
 
                     // TODO: Remove!
