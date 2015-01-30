@@ -10,7 +10,7 @@
 		border-collapse: collapse
 
 		.k-editor-toolbar
-			margin: -24px -20px 0
+			margin: -24px 0 0
 			padding: 10px 20px
 			min-height: 34px
 			background: #f2f2f2
@@ -21,21 +21,31 @@
 			.k-tool-group
 				.custom-tool
 					height: 30px
+
 					.glyphicon
 						padding-top: 2px
 
 		.k-editable-area
 			vertical-align: top
 			border: none
+			padding: 0
 
 			iframe,
 			textarea.html
 				display: block
-				margin: 12px auto -9px
+				margin: 0 auto
 				padding: 0
-				min-height: 329px
-				max-width: 858px
+				min-height: 347px
+				max-width: 900px
 
+			textarea.html
+				padding: 20px
+				box-sizing: border-box
+
+
+.kendo-content-block
+	display: block
+	margin: 3px -20px -20px
 
 .modal-full-screen
 	width: 100% !important
@@ -49,7 +59,7 @@
 	#viewsPlaceholder,
 	.modal-content,
 	.modal-body,
-	.modal-content-expand
+	.kendo-content-block
 		display: block
 		height: 100%
 
@@ -61,7 +71,6 @@
 		transition: border-color .2s ease
 		-webkit-box-sizing: border-box
 		box-sizing: border-box
-		padding: 20px !important
 
 		&:hover
 			border: 1px dashed #999
