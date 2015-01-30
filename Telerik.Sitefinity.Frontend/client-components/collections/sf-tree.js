@@ -85,7 +85,7 @@
 
                         // no requests yet
                         if (parentNode.children === null) {
-                            scope.sfRequestChildren(parentNode.item).then(function (items) {
+                            scope.sfRequestChildren({ parent: parentNode.item }).then(function (items) {
                                 if (items && items instanceof Array) {
                                     parent.children = parentNode.children || {};
 
@@ -106,7 +106,7 @@
                     };
 
                     // Initial load of root elements
-                    scope.sfRequestChildren(null).then(function (items) {
+                    scope.sfRequestChildren({ parent: null }).then(function (items) {
                         if (items && items instanceof Array) {
                             items.forEach(function (item) {
                                 scope.hierarchy[item[scope.sfIdentifier]] = new TreeNode(item);

@@ -43,9 +43,10 @@
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul><li ng-repeat="node in hierarchy" ng-include="sf-tree/expand-item.html"></li></ul>');
 
         scope.requestChildren = function (parent) {
+            debugger;
             var result = $q.defer();
 
-            if (parent === null) {
+            if (!parent) {
                 result.resolve([{ Id: '1' }, { Id: '2' }]);
             }
             else {
@@ -73,8 +74,10 @@
         var scope = $rootScope.$new();
         scope.selectedId = '3';
 
-        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span class="current" ng-class="{ \'selected\': isSelected(node) }" ng-click="select(node)">{{node.item.id}}</span><ul><li ng-repeat="node in node.children" ng-include="sf-tree/selected-item.html"></li></ul>');
-        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul><li ng-repeat="node in hierarchy" ng-include="sf-tree/expand-item.html"></li></ul>');
+        //templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span ng-class="{ \'selected\': isSelected(node) }" ng-click="select(node)">{{node.item.id}}</span><ul><li ng-repeat="node in node.children" ng-include="sf-tree/selected-item.html"></li></ul>');
+        //templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul ><li class="current" ng-repeat="node in hierarchy" ng-include="sf-tree/selected-item.html"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand-item.html', '<span ng-click="toggle(node)">{{node.item.id}}</span><ul><li ng-repeat="node in node.children" ng-include="sf-tree/expand-item.html"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul><li class="current" ng-repeat="node in hierarchy" ng-include="sf-tree/expand-item.html"></li></ul>');
 
         scope.requestChildren = function (parent) {
             var result = $q.defer();
@@ -82,21 +85,35 @@
             if (parent === null) {
                 result.resolve([{ id: '1' }, { id: '2' }]);
             }
-            else if (parent === '2') {
+            else if (parent.id === '2') {
                 result.resolve([{ id: '3' }, { id: '4' }]);
             }
             else {
                 result.resolve([]);
-                requestedParent = parent;
             }
 
             return result.promise;
         };
+        //scope.requestChildren = function (parent) {
+        //    var result = $q.defer();
 
-        var directiveMarkup = '<div sf-tree ng-model="selectedId" sf-template-url="sf-tree/expand.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
+        //    if (parent === null) {
+        //        result.resolve([{ Id: '1' }, { Id: '2' }]);
+        //    }
+        //    else {
+        //        result.resolve([]);
+        //    }
+
+        //    return result.promise;
+        //};
+
+        var directiveMarkup = '<div sf-tree sf-template-url="sf-tree/expand.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
+        //var directiveMarkup = '<div sf-tree ng-model="selectedId" sf-template-url="sf-tree/expand.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
         commonMethods.compileDirective(directiveMarkup, scope);
 
-        expect($('.current')).toEqual(1);
+        expect($('.current').length).toEqual(2);
+
+        expect($('.current').length).toEqual(2);
 
         expect($('span:contains("2")').is('.selected')).toBe(false);
         expect($('span:contains("3")').is('.selected')).toBe(true);
