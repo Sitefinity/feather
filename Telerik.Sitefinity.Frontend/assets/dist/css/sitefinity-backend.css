@@ -6092,17 +6092,21 @@ button.close {
 /* line 25, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
 .k-treeview--selection.k-treeview .k-in .active .small {
   color: #9CC5F7; }
-/* line 32, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+/* line 30, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+.k-treeview--selection.k-treeview .k-in .disabled [class*=" icon-item-"], .k-treeview--selection.k-treeview .k-in .disabled [class^=icon-item-] {
+  opacity: 0.5;
+  color: blue; }
+/* line 37, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
 .k-treeview--selection.k-treeview .k-state-hover, .k-treeview--selection.k-treeview .k-state-selected, .k-treeview--selection.k-treeview .k-state-focused {
   background: none;
   box-shadow: none; }
-/* line 36, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+/* line 41, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
 .k-treeview--selection.k-treeview .k-item {
   padding-left: 0; }
-  /* line 38, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 43, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item > div {
     position: relative; }
-  /* line 41, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 46, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item a {
     display: block;
     background-color: #fff;
@@ -6112,141 +6116,141 @@ button.close {
     color: #000;
     text-decoration: none;
     overflow: hidden; }
-    /* line 52, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+    /* line 57, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
     .k-treeview--selection.k-treeview .k-item a.disabled span:first-child {
       max-width: 300px; }
-    /* line 54, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+    /* line 59, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
     .k-treeview--selection.k-treeview .k-item a.disabled em {
       vertical-align: top; }
-    /* line 57, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+    /* line 62, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
     .k-treeview--selection.k-treeview .k-item a span {
       display: inline-block;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100%; }
-  /* line 63, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 68, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .active {
     background-color: #428bca;
     color: #fff; }
-  /* line 67, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 72, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-checkbox {
     position: absolute;
     margin-top: 0;
     z-index: 2;
     top: 15px;
     left: 31.98px; }
-  /* line 74, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 79, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-checkbox + .k-in a {
     padding-left: 54.99px; }
-  /* line 80, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 85, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item > div .k-in a {
     padding-left: 54.99px; }
-  /* line 83, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 88, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item > div .k-checkbox {
     left: 57px; }
-  /* line 86, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 91, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item > div .k-checkbox + .k-in a {
     padding-left: 79.98px; }
-  /* line 89, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 94, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item > div .k-icon {
     left: 34.98px; }
-  /* line 96, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 101, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item > div .k-in a {
     padding-left: 79.98px; }
-  /* line 99, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 104, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item > div .k-checkbox {
     left: 81.99px; }
-  /* line 102, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 107, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item > div .k-checkbox + .k-in a {
     padding-left: 105px; }
-  /* line 105, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 110, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item > div .k-icon {
     left: 60px; }
-  /* line 112, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 117, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-in a {
     padding-left: 105px; }
-  /* line 115, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 120, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox {
     left: 106.998px; }
-  /* line 118, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 123, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox + .k-in a {
     padding-left: 129.99px; }
-  /* line 121, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 126, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-icon {
     left: 84.99px; }
-  /* line 128, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 133, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-in a {
     padding-left: 129.99px; }
-  /* line 131, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 136, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox {
     left: 132px; }
-  /* line 134, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 139, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox + .k-in a {
     padding-left: 154.98px; }
-  /* line 137, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 142, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-icon {
     left: 109.98px; }
-  /* line 144, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 149, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-in a {
     padding-left: 154.98px; }
-  /* line 147, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 152, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox {
     left: 156.99px; }
-  /* line 150, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 155, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox + .k-in a {
     padding-left: 180px; }
-  /* line 153, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 158, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-icon {
     left: 135px; }
-  /* line 160, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 165, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-in a {
     padding-left: 180px; }
-  /* line 163, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 168, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox {
     left: 181.98px; }
-  /* line 166, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 171, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox + .k-in a {
     padding-left: 204.99px; }
-  /* line 169, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 174, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-icon {
     left: 159.99px; }
-  /* line 176, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 181, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-in a {
     padding-left: 204.99px; }
-  /* line 179, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 184, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox {
     left: 207px; }
-  /* line 182, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 187, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox + .k-in a {
     padding-left: 229.98px; }
-  /* line 185, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 190, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-icon {
     left: 184.98px; }
-  /* line 192, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 197, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-in a {
     padding-left: 229.98px; }
-  /* line 195, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 200, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox {
     left: 231.99px; }
-  /* line 198, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 203, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox + .k-in a {
     padding-left: 255px; }
-  /* line 201, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 206, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-icon {
     left: 210px; }
-  /* line 208, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 213, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-in a {
     padding-left: 255px; }
-  /* line 211, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 216, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox {
     left: 256.98px; }
-  /* line 214, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 219, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-checkbox + .k-in a {
     padding-left: 279.99px; }
-  /* line 217, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 222, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item .k-group .k-item > div .k-icon {
     left: 234.99px; }
-/* line 221, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+/* line 226, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
 .k-treeview--selection.k-treeview .k-icon {
   margin: 0;
   left: 9.99px;
@@ -6254,13 +6258,13 @@ button.close {
   position: absolute;
   z-index: 2;
   vertical-align: top; }
-/* line 229, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+/* line 234, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
 .k-treeview--selection.k-treeview > ul {
   overflow: hidden;
   border: 1px solid #ddd;
   border-radius: 4px;
   border-top: 0; }
-  /* line 238, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
+  /* line 243, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_treeview */
   .k-treeview--selection.k-treeview > ul > .k-item.k-first > div > .k-in > a {
     border-top: 0; }
 
@@ -8254,21 +8258,21 @@ tab {
   margin-right: 0.3em; }
 
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
-.input-group .form-control {
-  height: 34px; }
-
-/* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
 .row {
   max-width: 100%; }
 
-/* line 9, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
-.modal-dialog label, .modal-dialog input[type="text"] {
+/* line 6, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
+.modal-dialog label, .modal-dialog .form-control {
   font-size: 14px;
   display: inline-block; }
-/* line 13, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
+/* line 10, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
+.modal-dialog .form-control {
+  height: 34px;
+  border-radius: 4px; }
+/* line 14, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
 .modal-dialog select {
   -webkit-appearance: menulist-button !important; }
-/* line 16, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
+/* line 17, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
 .modal-dialog p {
   font-size: 12px; }
 
