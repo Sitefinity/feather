@@ -100,4 +100,24 @@
 
         expect($('span:contains("3")').is('.selected')).toBe(true);
     });
+
+    it('[Boyko-Karadzhov] / should mark as collapsed all initially loaded items.', function () {
+        var scope = $rootScope.$new();
+
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand-item.html', '<span ng-click="toggle(node)" ng-class="{ \'collapsed\': node.collapsed }">{{node.Id}}</span><ul><li ng-repeat="node in node.children" ng-include="sf-tree/expand-item.html"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul><li ng-repeat="node in hierarchy" ng-include="sf-tree/expand-item.html"></li></ul>');
+
+        scope.requestChildren = function (parent) {
+            var result = $q.defer();
+            result.resolve([{ Id: '1' }, { Id: '2' }]);
+
+            return result.promise;
+        };
+
+        var directiveMarkup = '<div sf-tree sf-template-url="sf-tree/expand.html" sf-request-children="requestChildren(parent)"></div>';
+        commonMethods.compileDirective(directiveMarkup, scope);
+        scope.$digest();
+
+        expect($('span.collapsed').length).toEqual(2);
+    });
 });
