@@ -1,5 +1,5 @@
 ﻿describe('tree directive', function () {
-    beforeEach('sfTree');
+    beforeEach(module('sfTree'));
 
     var $rootScope;
     var $q;
@@ -24,7 +24,7 @@
 
             var result = $q.defer();
             result.resolve({});
-            return result.$promise;
+            return result.promise;
         };
         
         var directiveMarkup = '<div sf-tree sf-template-url="sf-tree/dummy.html" sf-request-children="requestChildren(parent)"></div>';
@@ -39,7 +39,7 @@
         var requestedParent = null;
         var requestedWithParentCount = 0;
 
-        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand-item.html', '<span ng-click="expand(node)">{{node.Id}}</span><ul><li ng-repeat="node in node.children" ng-include="sf-tree/expand-item.html"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand-item.html', '<span ng-click="toggle(node)">{{node.Id}}</span><ul><li ng-repeat="node in node.children" ng-include="sf-tree/expand-item.html"></li></ul>');
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul><li ng-repeat="node in hierarchy" ng-include="sf-tree/expand-item.html"></li></ul>');
 
         scope.requestChildren = function (parent) {
@@ -54,7 +54,7 @@
                 requestedWithParentCount++;
             }
 
-            return result.$promise;
+            return result.promise;
         };
 
         var directiveMarkup = '<div sf-tree sf-template-url="sf-tree/expand.html" sf-request-children="requestChildren(parent)"></div>';
@@ -66,4 +66,7 @@
         expect(requestedWithParentCount).toEqual(1);
         expect(requestedParent).toEqual('2');
     });
+
+    //it('[Boyko-Karadzhov] / should mark preselected items bound by ng-model as selected.', function () {
+    //});
 });
