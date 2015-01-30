@@ -73,36 +73,36 @@
                     scope.select = function (node) {
                         scope.selectedId = node.item[scope.sfIdentifier];
 
-                        if (sfExpandOnSelect === true) {
-                            scope.expandTree(node);
+                        if (scope.sfExpandOnSelect !== undefined) {
+                            scope.toggle(node);
                         }
                     };
 
-                    scope.toggle = function (parent) {
-                        if (!parent || parent.children === {}) {
+                    scope.toggle = function (parentNode) {
+                        if (!parentNode || parentNode.children === {}) {
                             return;
                         }
 
                         // no requests yet
-                        if (parent.children === null) {
-                            scope.sfRequestChildren(parent.item).then(function (items) {
+                        if (parentNode.children === null) {
+                            scope.sfRequestChildren(parentNode.item).then(function (items) {
                                 if (items && items instanceof Array) {
-                                    parent.children = parent.children || {};
+                                    parent.children = parentNode.children || {};
 
                                     // Item must remain collapsed if it has no children
                                     if (items.length === 0) {
-                                        parent.collapsed = !parent.collapsed;
+                                        parentNode.collapsed = !parentNode.collapsed;
                                     }
                                     else {
                                         items.forEach(function (item) {
-                                            parent.children[item[scope.sfIdentifier]] = new TreeNode(item);
+                                            parentNode.children[item[scope.sfIdentifier]] = new TreeNode(item);
                                         });
                                     }
                                 }
                             });
                         }
 
-                        parent.collapsed = !parent.collapsed;
+                        parentNode.collapsed = !parentNode.collapsed;
                     };
 
                     // Initial load of root elements

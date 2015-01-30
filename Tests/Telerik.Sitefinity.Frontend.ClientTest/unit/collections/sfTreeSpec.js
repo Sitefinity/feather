@@ -23,7 +23,7 @@
             requestedParent = parent;
 
             var result = $q.defer();
-            result.resolve({});
+            result.resolve([]);
             return result.promise;
         };
         
@@ -45,11 +45,11 @@
         scope.requestChildren = function (parent) {
             var result = $q.defer();
 
-            if (!parent) {
+            if (parent === null) {
                 result.resolve([{ Id: '1' }, { Id: '2' }]);
             }
             else {
-                result.resolve({});
+                result.resolve([]);
                 requestedParent = parent;
                 requestedWithParentCount++;
             }
@@ -73,22 +73,21 @@
         var scope = $rootScope.$new();
         scope.selectedId = '3';
 
-        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span ng-class="{ \'selected\': isSelected(node) }" ng-click="toggle(node)">{{node.item.Id}}</span><ul><li ng-repeat="node in node.children" ng-include="sf-tree/selected-item.html"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span class="current" ng-class="{ \'selected\': isSelected(node) }" ng-click="select(node)">{{node.item.id}}</span><ul><li ng-repeat="node in node.children" ng-include="sf-tree/selected-item.html"></li></ul>');
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul><li ng-repeat="node in hierarchy" ng-include="sf-tree/expand-item.html"></li></ul>');
 
         scope.requestChildren = function (parent) {
             var result = $q.defer();
 
-            if (!parent) {
+            if (parent === null) {
                 result.resolve([{ id: '1' }, { id: '2' }]);
             }
             else if (parent === '2') {
                 result.resolve([{ id: '3' }, { id: '4' }]);
             }
             else {
-                result.resolve({});
+                result.resolve([]);
                 requestedParent = parent;
-                requestedWithParentCount++;
             }
 
             return result.promise;
@@ -97,10 +96,16 @@
         var directiveMarkup = '<div sf-tree ng-model="selectedId" sf-template-url="sf-tree/expand.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
         commonMethods.compileDirective(directiveMarkup, scope);
 
+        expect($('.current')).toEqual(1);
+
+        expect($('span:contains("2")').is('.selected')).toBe(false);
+        expect($('span:contains("3")').is('.selected')).toBe(true);
+
         $('ul li span:contains("2")').click();
         scope.$digest();
 
-        expect($('span:contains("3")').is('.selected')).toBe(true);
+        expect($('span:contains("2")').is('.selected')).toBe(true);
+        expect($('span:contains("3")').is('.selected')).toBe(false);
     });
 
     it('[Boyko-Karadzhov] / should mark as collapsed all initially loaded items.', function () {
