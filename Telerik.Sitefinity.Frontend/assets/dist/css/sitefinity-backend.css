@@ -5977,7 +5977,7 @@ button.close {
   border-collapse: collapse; }
   /* line 9, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
   .modal-body .k-editor-widget .k-editor-toolbar {
-    margin: -24px -20px 0;
+    margin: -24px 0 0;
     padding: 10px 20px;
     min-height: 34px;
     background: #f2f2f2; }
@@ -5987,16 +5987,26 @@ button.close {
   /* line 18, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
   .modal-body .k-editor-widget .k-editable-area {
     vertical-align: top;
-    border: none; }
-    /* line 23, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+    border: none;
+    padding: 0; }
+    /* line 24, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
     .modal-body .k-editor-widget .k-editable-area iframe, .modal-body .k-editor-widget .k-editable-area textarea.html {
       display: block;
-      margin: 12px auto -9px;
+      margin: 0 auto;
       padding: 0;
-      min-height: 329px;
-      max-width: 858px; }
+      min-height: 347px;
+      max-width: 900px; }
+    /* line 31, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+    .modal-body .k-editor-widget .k-editable-area textarea.html {
+      padding: 20px;
+      box-sizing: border-box; }
 
-/* line 31, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+/* line 36, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+.kendo-content-block {
+  display: block;
+  margin: 3px -20px -20px; }
+
+/* line 40, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
 .modal-full-screen {
   width: 100% !important;
   margin: 0 !important;
@@ -6005,32 +6015,31 @@ button.close {
   right: 0;
   bottom: 0;
   left: 0; }
-  /* line 43, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
-  .modal-full-screen #viewsPlaceholder, .modal-full-screen .modal-content, .modal-full-screen .modal-body, .modal-full-screen .modal-content-expand {
+  /* line 52, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+  .modal-full-screen #viewsPlaceholder, .modal-full-screen .modal-content, .modal-full-screen .modal-body, .modal-full-screen .kendo-content-block {
     display: block;
     height: 100%; }
-  /* line 47, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+  /* line 56, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
   .modal-full-screen .k-editor {
     height: 100% !important; }
-  /* line 50, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+  /* line 59, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
   .modal-full-screen .k-content {
     border: 1px dashed transparent;
     transition: border-color 0.2s ease;
     -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 20px !important; }
-    /* line 57, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+    box-sizing: border-box; }
+    /* line 65, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
     .modal-full-screen .k-content:hover {
       border: 1px dashed #999; }
 
-/* line 60, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+/* line 68, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
 .editor-lg {
   height: 540px; }
 
-/* line 64, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+/* line 72, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
 .k-tool:hover {
   background-color: #b6bdca; }
-  /* line 66, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
+  /* line 74, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_editor */
   .k-tool:hover .k-createLink {
     background-position: -312px -48px; }
 
