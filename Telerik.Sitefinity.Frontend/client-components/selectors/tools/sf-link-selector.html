@@ -63,7 +63,8 @@
 			<sf-multisite-page-selector sf-site="sfSite"
 						sf-culture="sfCulture"
 						sf-selected-item="sfSelectedItem.selectedPage"
-						sf-selected-item-id="sfSelectedItem.pageId"></sf-multisite-page-selector>
+						sf-selected-item-id="sfSelectedItem.pageId"
+						sf-bind-on-load="true"></sf-multisite-page-selector>
 	</div>
 
 	<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
@@ -96,7 +97,7 @@
 				</div>
 			</div>
 
-			<div class="text-muted">A list of anchors already inserted in the text. <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor%3F">How to insert an anchor?</a></div>
+			<div class="text-muted">A list of anchors already inserted in the text. <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor">How to insert an anchor?</a></div>
 		</div>
 
 		<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
@@ -111,7 +112,7 @@
 	</div>
 
 	<div ng-show="anchors.length==0" class="alert alert-info" role="alert">
-			<label>No anchors have been inserted in the text. <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor%3F" target="_blank">How to insert an anchor?</a></label>
+			<label>No anchors have been inserted in the text. <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor" target="_blank">How to insert an anchor?</a></label>
 	</div>
 </div>
 
