@@ -8254,21 +8254,21 @@ tab {
   margin-right: 0.3em; }
 
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
-.input-group .form-control {
-  height: 34px; }
-
-/* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
 .row {
   max-width: 100%; }
 
-/* line 9, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
-.modal-dialog label, .modal-dialog input[type="text"] {
+/* line 6, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
+.modal-dialog label, .modal-dialog .form-control {
   font-size: 14px;
   display: inline-block; }
-/* line 13, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
+/* line 10, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
+.modal-dialog .form-control {
+  height: 34px;
+  border-radius: 4px; }
+/* line 14, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
 .modal-dialog select {
   -webkit-appearance: menulist-button !important; }
-/* line 16, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
+/* line 17, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
 .modal-dialog p {
   font-size: 12px; }
 
