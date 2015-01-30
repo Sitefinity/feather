@@ -25,8 +25,8 @@
                 },
                 link: function (scope, element, attrs, ctrl) {
                     scope.sfItemTemplateAssembly = scope.sfItemTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    scope.sfItemTemplateUrl = scope.sfItemTemplateUrl || 'client-components/collections/sf-tree-item.html';
-                    scope.sfItemTemplateUrl = serverContext.getEmbeddedResourceUrl(scope.sfItemTemplateAssembly, scope.sfItemTemplateUrl);
+                    scope.itemTemplateUrl = scope.sfItemTemplateUrl || 'client-components/collections/sf-tree-item.html';
+                    scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(scope.sfItemTemplateAssembly, scope.sfItemTemplateUrl);
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.hierarchy = {};
 
@@ -87,11 +87,11 @@
                         if (parentNode.children === null) {
                             scope.sfRequestChildren({ parent: parentNode.item }).then(function (items) {
                                 if (items && items instanceof Array) {
-                                    parent.children = parentNode.children || {};
+                                    parentNode.children = parentNode.children || {};
 
                                     // Item must remain collapsed if it has no children
                                     if (items.length === 0) {
-                                        parentNode.collapsed = !parentNode.collapsed;
+                                        parentNode.collapsed = false;
                                     }
                                     else {
                                         items.forEach(function (item) {
