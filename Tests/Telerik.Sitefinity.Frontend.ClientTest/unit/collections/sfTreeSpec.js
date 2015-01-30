@@ -12,7 +12,6 @@
     }));
 
     it('[Boyko-Karadzhov] / should request items initially once with null parent.', function () {
-        //debugger;
         var scope = $rootScope.$new();
         var childrenRequestedCount = 0;
         var requestedParent = 'not null';
