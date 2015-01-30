@@ -24,43 +24,15 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    scope.sfItemTemplateAssembly = scope.sfItemTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    scope.itemTemplateUrl = scope.sfItemTemplateUrl || 'client-components/collections/sf-tree-item.html';
-                    scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(scope.sfItemTemplateAssembly, scope.sfItemTemplateUrl);
+                    var itemAssembly = scope.sfItemTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var itemUrl = scope.sfItemTemplateUrl || 'client-components/collections/sf-tree-item.html';
+                    scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(itemAssembly, itemUrl);
+
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.hierarchy = {};
 
                     // In case no function for getting children is provided, a default one returning empty array is provided.
                     scope.sfRequestChildren = scope.sfRequestChildren || function () { return []; };
-
-                    // TODO: Remove
-                    //scope.sfRequestChildren = function (parentItem) {
-                    //    parentItem = parentItem || { Id: 'Root' };
-                    //    var items = [];
-                    //    for (var i = 0; i < 5; i++) {
-                    //        items.push({
-                    //            Id: i + '#' + parentItem.Id,
-                    //            Title: i + '#' + 'Title ' + parentItem.Id
-                    //        });
-                    //    };
-
-                    //    items[0].HasChildren = true;
-                    //    items[1].HasChildren = true;
-
-                    //    console.log('Requested!');
-
-                    //    var result = $q.defer();
-                    //    result.resolve(items);
-                    //    return result.promise;
-                    //}
-
-                    //TODO : THIS
-                    //var hItem = {};
-                    //scope.hasChildren = function (item) {
-                    //    return (hItem.children !== null && hItem.children.length > 0) ||
-                    //            (!scope.sfHasChildrenField && hItem.children === null) ||
-                    //            (item[scope.sfHasChildrenField] === true);
-                    //};
 
                     scope.hasChildren = function (node) {
                         return node.item.HasChildren === true;
@@ -89,7 +61,7 @@
                                 if (items && items instanceof Array) {
                                     parentNode.children = parentNode.children || {};
 
-                                    // Item must remain collapsed if it has no children
+                                    // Item must remain expanded if it has no children
                                     if (items.length === 0) {
                                         parentNode.collapsed = false;
                                     }

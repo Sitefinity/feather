@@ -1,5 +1,5 @@
 ﻿{{node.item.Title}}
 <button ng-if="hasChildren(node)" ng-click="toggle(node)">Expand</button>
 <ul ng-if="hasChildren(node)" ng-class="{'collapsed' : node.collapsed === true}">
-    <li ng-repeat="node in node.children" ng-include src="sfItemTemplateUrl" />
+    <li ng-repeat="node in node.children" ng-include src="itemTemplateUrl" />
 </ul>
