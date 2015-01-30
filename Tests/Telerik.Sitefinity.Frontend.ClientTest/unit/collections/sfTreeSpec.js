@@ -64,7 +64,9 @@
         scope.$digest();
 
         expect(requestedWithParentCount).toEqual(1);
-        expect(requestedParent).toEqual('2');
+        expect(requestedParent).not.toBe(null);
+        if (requestedParent)
+            expect(requestedParent.Id).toEqual('2');
     });
 
     it('[Boyko-Karadzhov] / should mark preselected item bound by ng-model as selected.', function () {
