@@ -52,6 +52,7 @@
     <Content Include="unit\Selectors\linkSelectorSpec.js" />
     <Content Include="unit\Selectors\modalLinkSelectorSpec.js" />
     <Content Include="unit\Selectors\multi-site\sfSiteSelectorSpec.js" />
+    <Content Include="unit\Selectors\selectedPagesViewrSpec.js" />
     <Content Include="unit\Selectors\sfCollectionSpec.js" />
     <Content Include="unit\Services\sfImageServiceSpec.js" />
     <Content Include="unit\Services\languageServiceSpec.js" />
