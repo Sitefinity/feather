@@ -1,5 +1,5 @@
 ﻿describe('tree directive', function () {
-    beforeEach('sfTree');
+    beforeEach(module('sfTree'));
 
     var $rootScope;
     var $q;
@@ -12,7 +12,7 @@
     }));
 
     it('[Boyko-Karadzhov] / should request items initially once with null parent.', function () {
-        debugger;
+        //debugger;
         var scope = $rootScope.$new();
         var childrenRequestedCount = 0;
         var requestedParent = 'not null';
