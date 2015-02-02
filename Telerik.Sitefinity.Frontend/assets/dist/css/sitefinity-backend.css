@@ -7932,22 +7932,27 @@ h4, .h4 {
     .list-group-item.active:hover, .list-group-item.active:focus {
       border-color: #ddd; }
   /* line 16, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  .list-group-item:hover, .list-group-item:focus {
+    color: #555;
+    text-decoration: none;
+    background-color: #f5f5f5; }
+  /* line 22, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-item [class*=" icon-item-"], .list-group-item [class^=icon-item-] {
     margin-right: 7px; }
-    /* line 18, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+    /* line 24, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
     .list-group-item [class*=" icon-item-"]:after, .list-group-item [class^=icon-item-]:after {
       bottom: 0; }
 
-/* line 23, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 29, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-sm .list-group-item {
   padding: 7px 15px;
   font-size: 12px; }
-  /* line 27, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 33, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-sm .list-group-item:last-of-type {
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px; }
 
-/* line 32, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 38, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-multiselect > div {
   position: relative;
   z-index: 2;
@@ -7958,7 +7963,7 @@ h4, .h4 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
-  /* line 41, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 47, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-item-multiselect > div:before {
     content: "";
     position: absolute;
@@ -7967,30 +7972,30 @@ h4, .h4 {
     width: 30px;
     height: 30px;
     opacity: 0; }
-/* line 50, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 56, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-multiselect > input[type="checkbox"] {
   position: absolute;
   z-index: 1;
   top: 10px;
   left: 10px; }
 
-/* line 56, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 62, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-draggable {
   margin-bottom: 0;
   border-top: none; }
-  /* line 60, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 66, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-item-draggable > input[type="checkbox"] {
     left: 25px; }
-  /* line 63, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 69, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-item-draggable > div {
     padding-left: 45px; }
 
-/* line 66, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 72, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-hint {
   width: 550px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
 
-/* line 70, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 76, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-placeholder {
   background: #ffff99;
   height: 20px;
@@ -7998,7 +8003,7 @@ h4, .h4 {
   margin-bottom: 0;
   border-top: none; }
 
-/* line 77, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 83, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-item-drag {
   width: 10px;
   height: 20px;
@@ -8015,7 +8020,7 @@ h4, .h4 {
   background-size: 3px 3px;
   z-index: 3; }
 
-/* line 95, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 101, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-endless {
   max-height: 500px;
   overflow-y: auto;
@@ -8023,13 +8028,13 @@ h4, .h4 {
   border-top: 1px solid #ddd;
   border-radius: 4px; }
 
-/* line 104, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+/* line 110, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
 .list-group-external .list-group-item {
   padding-left: 30px; }
-  /* line 107, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 113, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-external .list-group-item > input[type="checkbox"] {
     top: 13px; }
-  /* line 110, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
+  /* line 116, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group */
   .list-group-external .list-group-item a.pull-right {
     margin-top: 6px; }
 

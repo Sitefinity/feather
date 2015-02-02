@@ -1,116 +1,122 @@
 .list-group-item
-    color: #000
-    max-width: 100%
-    @include text-overflow()
+	color: #000
+	max-width: 100%
+	@include text-overflow()
 
-    > div
-        cursor: default
-        overflow: hidden
-        text-overflow: ellipsis
-    &.active
-        border-color: #ddd
-        &:hover,
-        &:focus
-            border-color: #ddd
-    [class*=" icon-item-"],
-    [class^=icon-item-]
-        margin-right: 7px
-        &:after
-            bottom: 0
+	> div
+		cursor: default
+		overflow: hidden
+		text-overflow: ellipsis
+	&.active
+		border-color: #ddd
+		&:hover,
+		&:focus
+			border-color: #ddd
+	&:hover,
+	&:focus
+		color: #555
+		text-decoration: none
+		background-color: #f5f5f5
+
+	[class*=" icon-item-"],
+	[class^=icon-item-]
+		margin-right: 7px
+		&:after
+			bottom: 0
 
 
 .list-group-sm
-    .list-group-item
-        padding: 7px 15px
-        font-size: 12px
+	.list-group-item
+		padding: 7px 15px
+		font-size: 12px
 
-        &:last-of-type
-            @include border-bottom-radius($list-group-border-radius)
+		&:last-of-type
+			@include border-bottom-radius($list-group-border-radius)
 
 
 .list-group-item-multiselect
-    > div
-        position: relative
-        z-index: 2
-        display: block
-        padding-left: 30px
-        margin-left: -10px
-        max-width: 100%
-        @include text-overflow()
+	> div
+		position: relative
+		z-index: 2
+		display: block
+		padding-left: 30px
+		margin-left: -10px
+		max-width: 100%
+		@include text-overflow()
 
-        &:before
-            content: ""
-            position: absolute
-            background: #fff
-            left: 0
-            width: 30px
-            height: 30px
-            opacity: 0
+		&:before
+			content: ""
+			position: absolute
+			background: #fff
+			left: 0
+			width: 30px
+			height: 30px
+			opacity: 0
 
-    > input[type="checkbox"]
-        position: absolute
-        z-index: 1
-        top: 10px
-        left: 10px
+	> input[type="checkbox"]
+		position: absolute
+		z-index: 1
+		top: 10px
+		left: 10px
 
 // Draggable items
 .list-group-item-draggable
-    margin-bottom: 0
-    border-top: none
+	margin-bottom: 0
+	border-top: none
 
-    > input[type="checkbox"]
-        left: 25px
+	> input[type="checkbox"]
+		left: 25px
 
-    > div
-        padding-left: 45px
+	> div
+		padding-left: 45px
 
 // Currently dragged item
 .list-group-item-hint
-    width: 550px
-    box-shadow: 0 0 6px rgba(0, 0, 0, .4)
+	width: 550px
+	box-shadow: 0 0 6px rgba(0, 0, 0, .4)
 
 // Placeholder for the dragged item
 .list-group-item-placeholder
-    background: #ffff99
-    height: 20px
-    box-shadow: 0 0 1px rgba(0, 0, 0, .2) inset
-    margin-bottom: 0
-    border-top: none
+	background: #ffff99
+	height: 20px
+	box-shadow: 0 0 1px rgba(0, 0, 0, .2) inset
+	margin-bottom: 0
+	border-top: none
 
 // Area that triggers the dragging
 .list-group-item-drag
-    width: 10px
-    height: 20px
-    position: absolute
-    left: 7px
-    top: 10px
-    cursor: move
+	width: 10px
+	height: 20px
+	position: absolute
+	left: 7px
+	top: 10px
+	cursor: move
 
-    background-image: -webkit-repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
-    background-image: -moz-repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
-    background-image: -ms-repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
-    background-image: repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
-    -webkit-background-size: 3px 3px
-    -moz-background-size: 3px 3px
-    background-size: 3px 3px
-    z-index: 3
+	background-image: -webkit-repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
+	background-image: -moz-repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
+	background-image: -ms-repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
+	background-image: repeating-radial-gradient(center center, rgba(0,0,0,.4), rgba(0,0,0,.4) 1px, transparent 1px, transparent 100%)
+	-webkit-background-size: 3px 3px
+	-moz-background-size: 3px 3px
+	background-size: 3px 3px
+	z-index: 3
 
 
 // Endless scroll
 .list-group-endless
-    max-height: 500px
-    overflow-y: auto
-    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.05)
-    border-top: 1px solid #ddd
-    border-radius: 4px
+	max-height: 500px
+	overflow-y: auto
+	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.05)
+	border-top: 1px solid #ddd
+	border-radius: 4px
 
 
 .list-group-external
-    .list-group-item
-        padding-left: 30px
+	.list-group-item
+		padding-left: 30px
 
-        > input[type="checkbox"]
-            top: 13px
+		> input[type="checkbox"]
+			top: 13px
 
-        a.pull-right
-            margin-top: 6px
+		a.pull-right
+			margin-top: 6px
