@@ -8395,3 +8395,13 @@ tab {
   /* line 111, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_tooltip */
   .Tooltip-info--dark a {
     color: #a0c5e4; }
+
+/* line 1, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_options */
+.Options {
+  margin: 50px -20px -20px;
+  padding: 20px;
+  border-top: 1px solid #e5e5e5; }
+
+/* line 6, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_options */
+.Options-toggler + div {
+  margin-top: 20px; }
