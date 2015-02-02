@@ -117,8 +117,6 @@
                                     scope.items = response.Items;
                                 }
                             }
-                        }, function (error) {
-
                         });
                     };
 

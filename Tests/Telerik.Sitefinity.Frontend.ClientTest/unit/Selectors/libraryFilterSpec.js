@@ -1,8 +1,6 @@
-﻿describe('library filter', function () {
-    beforeEach(module('sfLibraryFilter'));
-
+﻿describe('Library filter', function () {
     var $rootScope;
-    var sfMediaService;
+    var mediaService;
     var templateCache;
 
     var getFoldersObj = {
@@ -13,21 +11,28 @@
         }
     };
 
+    beforeEach(module('templates'));
+    beforeEach(module('sfLibraryFilter'));
+
+    beforeEach(inject(function ($injector) {
+        mediaService = $injector.get('sfMediaService');
+    }));
+
     beforeEach(inject(function (_$rootScope_, $templateCache) {
         $rootScope = _$rootScope_;
         templateCache = $templateCache;
     }));
 
-    beforeEach(inject(function ($injector) {
-        sfMediaService = $injector.get('sfMediaService');
-    }));
+    beforeEach(function () {
+        commonMethods.mockServerContextToEnableTemplateCache();
+    });
 
     it('[dzhenko] / should properly throw exception if passed filter object is not of a kind sfMediaService.newFilter()', function () {
         var scope = $rootScope.$new();
 
         scope.filterObject = { };
 
-        sfMediaService.specTest = getFoldersObj;
+        mediaService.specTest = getFoldersObj;
 
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/client-components/selectors/media/sf-library-filter.html', '');
 
@@ -41,9 +46,9 @@
     it('[dzhenko] / should properly throw exception if passed sf-media-type is not present in sfMediaSerice', function () {
         var scope = $rootScope.$new();
 
-        scope.filterObject = sfMediaService.newFilter();
+        scope.filterObject = mediaService.newFilter();
 
-        sfMediaService.specTest = getFoldersObj;
+        mediaService.specTest = getFoldersObj;
 
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/client-components/selectors/media/sf-library-filter.html', '');
 
@@ -57,9 +62,9 @@
     it('[dzhenko] / should properly throw exception if passed sf-media-type object does not contain getFolders method', function () {
         var scope = $rootScope.$new();
 
-        scope.filterObject = sfMediaService.newFilter();
+        scope.filterObject = mediaService.newFilter();
 
-        sfMediaService.specTest = {
+        mediaService.specTest = {
             notGetFoldersFunc: function () {
                 return [];
             }
@@ -77,9 +82,9 @@
     it('[dzhenko] / should not throw exception when passed filterObject and media type are correct', function () {
         var scope = $rootScope.$new();
 
-        scope.filterObject = sfMediaService.newFilter();
+        scope.filterObject = mediaService.newFilter();
 
-        sfMediaService.specTest = getFoldersObj;
+        mediaService.specTest = getFoldersObj;
 
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/client-components/selectors/media/sf-library-filter.html', '');
 
