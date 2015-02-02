@@ -527,6 +527,8 @@
     <EmbeddedResource Include="client-components\collections\sf-tree-item.html" />
     <EmbeddedResource Include="client-components\collections\sf-tree.html" />
     <EmbeddedResource Include="client-components\collections\sf-tree.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-flat-taxon-collection.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-flat-taxon-filter.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
