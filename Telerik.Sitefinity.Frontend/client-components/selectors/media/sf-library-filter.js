@@ -46,14 +46,10 @@
                         if (newVal !== oldVal) {
                             filter.parent = newVal;
                         }
-                        // clicking the same item should remove the filter
-                        else {
-                            filter.parent = null;
-                        }
 
                         // media selector watches this and reacts to changes.
                         scope.filterObject = filter;
-                    });
+                    }, true);
                 }
             };
         }]);

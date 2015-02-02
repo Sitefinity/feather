@@ -43,7 +43,12 @@
                     };
 
                     scope.select = function (node) {
-                        scope.selectedItemId = node.item[scope.sfIdentifier];
+                        if (node.item[scope.sfIdentifier] !== scope.selectedItemId) {
+                            scope.selectedItemId = node.item[scope.sfIdentifier];
+                        }
+                        else {
+                            scope.selectedItemId = null;
+                        }
 
                         if (scope.sfExpandOnSelect !== undefined) {
                             scope.toggle(node);

@@ -7,7 +7,15 @@
             var constants = {
                 initialLoadedItemsCount: 50,
                 infiniteScrollLoadedItemsCount: 20,
-                recentImagesLastDaysCount: 7
+                recentImagesLastDaysCount: 7,
+                filterOptions: {
+                    basic: {
+                        allLibraries: 'AllLibraries',
+                        ownItems: 'OwnItems',
+                        recentItems: 'RecentItems'
+                    },
+                    dateCreatedDescending: 'DateCreated DESC'
+                }
             };
 
             return {
@@ -72,6 +80,11 @@
                         }
                         else {
                             options.take = constants.initialLoadedItemsCount;
+                        }
+
+                        // checks if all properties of the filter object are null - if so All libraries should be shown.
+                        if (JSON.stringify(sfMediaService.newFilter()) === JSON.stringify(scope.filterObject)) {
+                            scope.filterObject.basic = 'AllLibraries';
                         }
 
                         var callback;
