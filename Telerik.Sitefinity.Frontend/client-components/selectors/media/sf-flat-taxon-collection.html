@@ -1,0 +1,3 @@
+﻿<ul sf-infinite-scroll="$parent.loadMore()" style="height: 100px;">
+    <li ng-repeat="item in items" ng-click="select(item)" ng-class="{ 'selected': isSelected(item) }">{{item.Title}}</li>
+</ul>
