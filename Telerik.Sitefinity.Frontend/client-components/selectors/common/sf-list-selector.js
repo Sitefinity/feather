@@ -208,8 +208,8 @@
                         // ------------------------------------------------------------------------
 
                         var emptyGuid = '00000000-0000-0000-0000-000000000000';
-                        var defaultSelectButtonText = 'Select';
-                        var defaultChangeButtonText = 'Change';
+                        var defaultSelectButtonText = 'select';
+                        var defaultChangeButtonText = 'change';
 
                         var currentSelectedIds;
 

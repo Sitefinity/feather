@@ -19,3 +19,10 @@
 		outline: none
 		border-color: #66afe9
 		box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 4px rgba(102,175,233,.6)
+
+//checkbox list hack, because of way we render directives (html tags)
+
+sf-filter-selector
+	sf-date-filter
+		>.checkbox
+			margin-top: -5px
