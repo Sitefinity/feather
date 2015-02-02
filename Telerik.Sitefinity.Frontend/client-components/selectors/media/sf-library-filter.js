@@ -41,6 +41,7 @@
                     };
 
                     scope.$watch('selectedItemId', function (newVal, oldVal) {
+                        // removes all taxons, so only the parent is set.
                         var filter = sfMediaService.newFilter();
 
                         if (newVal !== oldVal) {
@@ -49,7 +50,7 @@
 
                         // media selector watches this and reacts to changes.
                         scope.filterObject = filter;
-                    }, true);
+                    });
                 }
             };
         }]);
