@@ -28,18 +28,17 @@
                         if (newValue === null)
                             return;
 
-                        var taxon;
-                        if (newValue.length > 0)
-                            taxon = newValue[0];
-                        else
-                            return;
+                        var taxon = newValue.length > 0 ? newValue[0] : null;
 
-                        if (scope.filterObject && scope.filterObject.taxon && scope.filterObject.taxon === taxon.Id)
+                        if (scope.filterObject && scope.filterObject.taxon && taxon && scope.filterObject.taxon.id === taxon)
                             return;
 
                         var filter = mediaService.newFilter();
-                        filter.taxon.id = taxon;
-                        filter.taxon.field = scope.sfField;
+                        if (taxon) {
+                            filter.taxon.id = taxon;
+                            filter.taxon.field = scope.sfField;
+                        }
+
                         scope.filterObject = filter;
                     });
 
