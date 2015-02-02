@@ -108,10 +108,15 @@
                             callback = sfMediaService.images.getContent;
                         }
 
+                        if (appendItems) {
+                            scope.isLoading = true;
+                        }
+
                         callback(options).then(function (response) {
                             if (response && response.Items) {
                                 if (appendItems) {
                                     scope.items = scope.items.concat(response.Items);
+                                    scope.isLoading = false;
                                 }
                                 else {
                                     scope.items = response.Items;
