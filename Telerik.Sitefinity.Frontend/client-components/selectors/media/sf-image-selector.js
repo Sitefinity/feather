@@ -39,8 +39,8 @@
 
                     scope.$watch('filterObject', function (newVal, oldVal) {
                         if (newVal && (JSON.stringify(newVal) !== JSON.stringify(oldVal))) {
-                            if (newVal.basic === 'RecentItems' && scope.sortExpression !== 'DateCreated DESC') {
-                                scope.sortExpression = 'DateCreated DESC';
+                            if (newVal.basic === constants.filterOptions.basic.recentItems && scope.sortExpression !== constants.filterOptions.dateCreatedDescending) {
+                                scope.sortExpression = constants.filterOptions.dateCreatedDescending;
                             }
                             else {
                                 refresh();
@@ -50,7 +50,7 @@
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
-                            if (newVal !== 'DateCreated DESC' && scope.filterObject.basic === 'RecentItems') {
+                            if (newVal !== constants.filterOptions.dateCreatedDescending && scope.filterObject.basic === constants.filterOptions.basic.recentItems) {
                                 scope.filterObject.basic = null;
                             }
                             else {
@@ -84,19 +84,19 @@
 
                         // checks if all properties of the filter object are null - if so All libraries should be shown.
                         if (JSON.stringify(sfMediaService.newFilter()) === JSON.stringify(scope.filterObject)) {
-                            scope.filterObject.basic = 'AllLibraries';
+                            scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
                         }
 
                         var callback;
                         if (scope.filterObject.basic) {
                             // Defaul filter is used (Recent / My / All)
-                            if (scope.filterObject.basic === 'RecentItems') {
+                            if (scope.filterObject.basic === constants.filterOptions.basic.recentItems) {
                                 callback = sfMediaService.images.getImages;
                             }
-                            else if (scope.filterObject.basic === 'OwnItems') {
+                            else if (scope.filterObject.basic === constants.filterOptions.basic.ownItems) {
                                 callback = sfMediaService.images.getImages;
                             }
-                            else if (scope.filterObject.basic === 'AllLibraries') {
+                            else if (scope.filterObject.basic === constants.filterOptions.basic.allLibraries) {
                                 callback = sfMediaService.images.getFolders;
                             }
                             else {
@@ -123,7 +123,7 @@
                     };
 
                     // initial open populates dialog with all root libraries
-                    scope.filterObject.basic = 'AllLibraries';
+                    scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
                     refresh();
                 }
             };
