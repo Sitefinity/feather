@@ -35,7 +35,18 @@
                     scope.sfRequestChildren = scope.sfRequestChildren || function () { return []; };
 
                     scope.hasChildren = function (node) {
-                        return node.item.HasChildren === true;
+                        node = node || {};
+
+                        var result = false;
+
+                        if (scope.sfHasChildrenField === undefined) {
+                            result = JSON.stringify({}) !== JSON.stringify(node.children);
+                        }
+                        else {
+                            result = node.item[scope.sfHasChildrenField] === true;
+                        }
+
+                        return result;
                     };
 
                     scope.isSelected = function (node) {
