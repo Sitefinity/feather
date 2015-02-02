@@ -37,7 +37,7 @@ describe('items tree tests', function  () {
             Array.prototype.push.apply(predecessors, levels[i]);
         };
         return predecessors;
-    }    
+    }
 
     //Load the module under test.
     beforeEach(module('sfSelectors'));
@@ -55,7 +55,7 @@ describe('items tree tests', function  () {
 
         function constructParentsIdsPath (levels) {
             return [levels[0][0], levels[1][0]].map(function (item) {
-                return item.Id; 
+                return item.Id;
             });
         }
 
@@ -65,7 +65,7 @@ describe('items tree tests', function  () {
             var currentParentIndex = 0;
             var valid = true;
 
-            while(actualCurrentLevel || expectedCurrentLevel) {             
+            while(actualCurrentLevel || expectedCurrentLevel) {
                 try {
                     // throws error if not true
                     expect(actualCurrentLevel).toEqualArrayOfObjects(expectedCurrentLevel, ['Id']);
@@ -77,7 +77,7 @@ describe('items tree tests', function  () {
 
                 var currentParentId = actual.parentsIds[currentParentIndex];
                 var actualNextLevelParent = actualCurrentLevel.filter(function  (item) {
-                    return item.Id === currentParentId; 
+                    return item.Id === currentParentId;
                 })[0];
 
                 if(!actualNextLevelParent) break;
@@ -85,7 +85,7 @@ describe('items tree tests', function  () {
                 var actualCurrentLevel = actualNextLevelParent.items;
 
                 var expectedNextLevelParent = expectedCurrentLevel.filter(function  (item) {
-                    return item.Id === currentParentId; 
+                    return item.Id === currentParentId;
                 })[0];
 
                 if(!expectedNextLevelParent) break;
@@ -130,7 +130,7 @@ describe('items tree tests', function  () {
         it('[GeorgiMateev] / should return only root level if the selected item is in the root level.', function () {
             var selectedItemId = '1.2';
 
-            //construct tree only from the first level 
+            //construct tree only from the first level
             var result = sfTreeHelper.constructPredecessorsTree(predecessorsLevels[0], selectedItemId);
 
             //assertions
@@ -140,7 +140,7 @@ describe('items tree tests', function  () {
     });
 
     describe('sfHybridHierarchicalDataSource factory', function () {
-        var sfHybridHierarchicalDataSource;        
+        var sfHybridHierarchicalDataSource;
 
         beforeEach(inject(function (_sfHybridHierarchicalDataSource_) {
             sfHybridHierarchicalDataSource = _sfHybridHierarchicalDataSource_;
@@ -210,7 +210,7 @@ describe('items tree tests', function  () {
                          'sf-expand-selection="expandSelection" '+
                          'sf-selected-ids-promise="sfSelectedIdsPromise" '+
                          'sf-get-predecessors="getPredecessors(itemId)" '+
-                         'class="k-treeview--selection"></sf-items-tree>';
+                         'class="k-treeview--list-group"></sf-items-tree>';
 
             scope.getPredecessors = jasmine.createSpy('getPredecessors')
                 .andCallFake(function (itemId) {
@@ -242,7 +242,7 @@ describe('items tree tests', function  () {
                          'sf-selected-ids-promise="sfSelectedIdsPromise" '+
                          'sf-get-predecessors="getPredecessors(itemId)" '+
                          'sf-items-promise=sfItemsPromise' +
-                         'class="k-treeview--selection"></sf-items-tree>';
+                         'class="k-treeview--list-group"></sf-items-tree>';
 
             scope.getPredecessors = jasmine.createSpy('getPredecessors');
 
