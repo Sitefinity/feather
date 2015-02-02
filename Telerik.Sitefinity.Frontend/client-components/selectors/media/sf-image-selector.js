@@ -112,17 +112,20 @@
                             scope.isLoading = true;
                         }
 
-                        callback(options).then(function (response) {
-                            if (response && response.Items) {
-                                if (appendItems) {
-                                    scope.items = scope.items.concat(response.Items);
-                                    scope.isLoading = false;
+                        callback(options)
+                            .then(function (response) {
+                                if (response && response.Items) {
+                                    if (appendItems) {
+                                        scope.items = scope.items.concat(response.Items);
+                                    }
+                                    else {
+                                        scope.items = response.Items;
+                                    }
                                 }
-                                else {
-                                    scope.items = response.Items;
-                                }
-                            }
-                        });
+                            })
+                            .finally(function () {
+                                scope.isLoading = false;
+                            });
                     };
 
                     // initial open populates dialog with all root libraries
