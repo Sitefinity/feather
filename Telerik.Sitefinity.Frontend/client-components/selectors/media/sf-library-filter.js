@@ -19,15 +19,15 @@
                 link: function (scope, element, attrs, ctrl) {
                     if (scope.filterObject && sfMediaService.newFilter().constructor.prototype !== scope.filterObject.constructor.prototype) {
                         throw { Message: 'ng-model must be of type MediaFilter.' };
-                    };
+                    }
 
                     if (sfMediaService[scope.sfMediaType] === undefined) {
                         throw { Message: 'sf-media-type is not valid - not found on sfMediaService.' };
-                    };
+                    }
 
                     if (sfMediaService[scope.sfMediaType][constants.foldersCallback] === undefined) {
                         throw { Message: scope.sfMediaType + ' does not contain ' + constants.foldersCallback + ' callback.' };
-                    };
+                    }
 
                     scope.selectedItemId = null;
 
@@ -41,13 +41,18 @@
                     };
 
                     scope.$watch('selectedItemId', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
-                            var filter = sfMediaService.newFilter();
-                            filter.parent = newVal;
+                        var filter = sfMediaService.newFilter();
 
-                            // media selector watches this and reacts to changes.
-                            scope.filterObject = filter;
+                        if (newVal !== oldVal) {
+                            filter.parent = newVal;
                         }
+                        // clicking the same item should remove the filter
+                        else {
+                            filter.parent = null;
+                        }
+
+                        // media selector watches this and reacts to changes.
+                        scope.filterObject = filter;
                     });
                 }
             };

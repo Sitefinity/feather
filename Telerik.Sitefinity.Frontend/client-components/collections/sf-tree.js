@@ -10,7 +10,7 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    selectedId: '=?ngModel',
+                    selectedItemId: '=?ngModel',
                     sfIdentifier: '@',
                     sfHasChildrenField: '@',
                     sfExpandOnSelect: '@',
@@ -39,15 +39,17 @@
                     };
 
                     scope.isSelected = function (node) {
-                        return node.item[scope.sfIdentifier] === scope.selectedId;
+                        return node.item[scope.sfIdentifier] === scope.selectedItemId;
                     };
 
                     scope.select = function (node) {
-                        scope.selectedId = node.item[scope.sfIdentifier];
+                        scope.selectedItemId = node.item[scope.sfIdentifier];
 
                         if (scope.sfExpandOnSelect !== undefined) {
                             scope.toggle(node);
                         }
+
+                        scope.$emit('sf-tree-item-selected', node.item);
                     };
 
                     scope.toggle = function (parentNode) {

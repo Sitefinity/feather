@@ -7,7 +7,7 @@
                     sfMultiselect: '@',
                     items: '=sfData',
                     sfIdentifier: '@',
-                    selectedItems: '=?ngModel'
+                    selectedItemIds: '=?ngModel'
                 },
                 templateUrl: function (elem, attrs) {
                     if (!attrs.sfTemplateUrl) {
@@ -24,38 +24,38 @@
                     };
 
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
-                    scope.selectedItems = scope.selectedItems || [];
+                    scope.selectedItemIds = scope.selectedItemIds || [];
 
                     element.addClass(classes.grid);
                     scope.isSelected = function (item) {
-                        if (scope.selectedItems === undefined) {
+                        if (scope.selectedItemIds === undefined) {
                             return false;
                         }
 
-                        return scope.selectedItems.indexOf(item[scope.sfIdentifier]) >= 0;
+                        return scope.selectedItemIds.indexOf(item[scope.sfIdentifier]) >= 0;
                     };
 
                     scope.select = function (item) {
-                        if (scope.selectedItems === undefined) {
+                        if (scope.selectedItemIds === undefined) {
                             return;
                         }
 
-                        var itemIndex = scope.selectedItems.indexOf(item[scope.sfIdentifier]);
+                        var itemIndex = scope.selectedItemIds.indexOf(item[scope.sfIdentifier]);
 
                         if (scope.sfMultiselect === undefined) {
                             if (itemIndex < 0) {
-                                scope.selectedItems = [item[scope.sfIdentifier]];
+                                scope.selectedItemIds = [item[scope.sfIdentifier]];
                             }
                             else {
-                                scope.selectedItems = [];
+                                scope.selectedItemIds = [];
                             }
                         }
                         else {
                             if (itemIndex < 0) {
-                                scope.selectedItems.push(item[scope.sfIdentifier]);
+                                scope.selectedItemIds.push(item[scope.sfIdentifier]);
                             }
                             else {
-                                scope.selectedItems.splice(itemIndex, 1);
+                                scope.selectedItemIds.splice(itemIndex, 1);
                             }
                         }
 
