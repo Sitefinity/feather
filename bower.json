@@ -1,0 +1,30 @@
+{
+  "name": "ProjectFeather",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Sitefinity/ProjectFeather",
+  "authors": [
+    "jordan-angelov <jordan.bourgas@gmail.com>"
+  ],
+  "description": "Website for Project Feather",
+  "moduleType": [
+    "node"
+  ],
+  "license": "rights-reserved",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.2.25",
+    "bootstrap": "~3.2.0"
+  },
+  "devDependencies": {
+    "angular-bootstrap": "~0.12.0",
+    "moment": "~2.9.0",
+    "angular-scroll": "~0.6.4"
+  }
+}

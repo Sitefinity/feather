@@ -1,0 +1,102 @@
+<div ng-controller="ProgressCtrl">
+	<div id="hero" class="white">
+		<div class="container">
+			<div class="col-md-12">
+				<h1>Project progress</h1>
+				<h5 id="comlpeted-count">
+					{{totalCountCompleted}}/{{totalCount}}
+					<span>components completed</span>
+				</h5>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="container pr" ng-class="{'loading': loading}">
+		<div class="preloader medium">
+			<span>Updating...</span>
+			<div class="indicator">
+				<div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div>
+			</div>
+		</div>
+
+		<div class="row preload">
+			<div class="col-md-3">
+				<div class="sticky-nav" ng-class="{'visible':sticky}">
+					<ul du-spy-context>
+						<li ng-repeat="section in progress.sections" >
+							<a ng-attr-href="#section{{$index}}"  du-smooth-scroll du-scrollspy>
+								{{section.name}} <span>({{section.widgets.length}})</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="col-md-9 progress-update">
+				<div id="progress" ng-class="{'animate':animate}"  du-scroll-container>
+					<ul class="sections" ng-repeat="section in progress.sections">
+						<li class="section" id="section{{$index}}">
+							<div class="section-description">
+								<h3>{{section.name}}</h3>
+								<p>{{section.description}}</p>
+								<h4 class="section-progress">{{(section.widgets | filter: {progress:100}).length}}/{{section.widgets.length}}</h4>
+							</div>
+							<ul class="widgets">
+								<li class="widget dropdown dropdown-toggle dropup" ng-class="{'pointer':widget.releases.length || widget.longDescription != ''}"  dropdown-toggle dropdown ng-repeat="widget in section.widgets">
+									<div class="widget-status" ng-class="{'not-started': widget.progress == 0, 'in-progress':widget.progress > 0 && widget.progress < 100, 'done':widget.progress == 100, 'unstable':widget.unstable == true}">
+										<span ng-if="widget.progress == 0">Not started</span>
+										<span ng-if="widget.progress > 0 && widget.progress < 100">In Progress</span>
+										<span ng-if="widget.progress == 100">Done</span>
+									</div>
+									<div class="name">
+										<h4>{{widget.name}}</h4>
+										<p>{{widget.shortDescription}}&nbsp;</p>
+									</div>
+
+									<div class="prgs" ng-class="{'unstable':widget.unstable, 'not-started':widget.progress == 0,'in-progress':widget.progress > 0 && widget.progress < 100, 'done': widget.progress == 100}">
+										<span class="dot start"></span>
+										<span class="dot end"></span>
+										<span class="line" ng-attr-style="width: {{widget.progress}}%">
+											<span class="dot edge">
+												<span class="glyphicon" ng-class="{'glyphicon-chevron-right':widget.progress > 0 && widget.progress < 100, 'glyphicon-ok': widget.progress == 100}"></span>
+											</span>
+										</span>
+									</div>
+									<div class="dropdown-menu" role="menu" ng-if="widget.releases.length > 0 || widget.longDescription != ''" ng-click="$event.stopPropagation()">
+										<i class="fa fa-caret-down"></i>
+										<ul class="releases" ng-if="widget.releases.length > 0">
+											<li class="release" ng-repeat="release in widget.releases">
+												<span class="status glyphicon" ng-class="{'glyphicon-remove':!release.commitHash, 'glyphicon-ok': release.commitHash}"></span>
+												<h5 ng-class="{'invisible': !release.name}">{{release.name}}</h5>
+												<p ng-if="release.date">{{ release.date | moment: 'fromNow'}}</p>
+												<p ng-if="!release.date">Not done</p>												
+												<div class="tag"  ng-if="release.date && release.tag">
+													<span class="glyphicon glyphicon-tag"></span>
+													<a title="Release tag" target="_blank" ng-href="http://github.com/Sitefinity/feather/releases/tag/{{release.tag}}">{{release.tag}}</a>
+												</div>
+												<div class="commit"  ng-if="release.date && release.commitHash">
+													<i class="fa fa-code-fork"></i>
+													<a title="Commit Hash" target="_blank" ng-href="http://github.com/Sitefinity/feather/commit/{{release.commitHash}}" target="_blank">{{release.commitHash | length : 6}}</a>
+												</div>
+												<div class="article"  ng-if="release.article">
+													<i class="fa fa-bookmark-o"></i>
+													<a title="Wiki article" ng-if="release.article" target="_blank" ng-href="http://github.com/Sitefinity/feather/wiki/{{release.article}}" target="_blank">Wiki</a>
+												</div>
+											</li>
+										</ul>
+										<div class="long-description" ng-if="widget.longDescription">
+											<span class="fa fa-warning" ng-if="widget.unstable"></span> {{widget.longDescription}}
+										</div>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

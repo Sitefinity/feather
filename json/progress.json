@@ -1,0 +1,1201 @@
+{
+   "sections" : [
+      {
+         "description" : "Bundle your CSS, images, widget templates, layout templates and a master template, all in one reusable package.",
+         "name" : "Frontend packages",
+         "widgets" : [
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Reusable resource packages",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Feather-resource-packages",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Reusable resource packages",
+                     "tag" : "v1.0.0.0"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Built-in packages",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Feather-resource-packages#bootstrap-resource-package",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Bootstrap package",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Feather-resource-packages#semanticui-package",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "SemanticUI package",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Feather-resource-packages#foundation-package",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Foundation",
+                     "tag" : "v1.0.0.0"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Customizable grid widgets",
+               "progress" : 90,
+               "releases" : [
+                  {
+                     "article" : "Add-customizable-grid-controls-based-on-simple-HTML",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Customizable grid widgets",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "name" : "Auto-registration of grid widgets"
+                  }
+               ],
+               "shortDescription" : "In progress",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "Create new designers or modify existing ones in a matter of minutes.",
+         "name" : "New designers framework",
+         "widgets" : [
+            {
+               "expectedBy" : "",
+               "longDescription" : "AngularJS SPA implementation of Widget Designers.",
+               "name" : "New widget designers",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Create-a-custom-designer-view",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Easy creation of designers",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Pass-server-data-to-widget-designer-views",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Server data access",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Use-a-custom-widget-designer-window",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Custom windows",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Overriding-the-default-widget-designer-buttons",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Buttons override",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Customize-properties-displayed-inside-the-property-editor",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Properties customization",
+                     "tag" : "v1.0.0.0"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Dynamic items selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-dynamic-items-selector",
+                     "commitHash" : "f0ea5c036c2f48dffe91c56854988718b4fff9f0",
+                     "date" : "10-08-2014",
+                     "name" : "Dynamic items selector built with AngularJS",
+                     "tag" : "v1.0.10.2"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Multiple select option",
+                     "tag" : "v1.1.20.3"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "News selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-news-selector",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "News selector built with AngularJS.",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Multiple select option",
+                     "tag" : "v1.1.20.3"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Category selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Multiple select option",
+                     "tag" : "v1.1.20.3"
+                  },
+                  {
+                     "article" : "Use-a-hierarchical-taxon-selector",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Hierarchical taxonomy selector built with AngularJS.",
+                     "tag" : "v1.1.20.3"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Tag selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-flat-taxon-selector",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Flat taxonomy selector built with AngularJS.",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Multiple select option",
+                     "tag" : "v1.1.20.3"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Datetime selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-DateTime-picker",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Datetime selector",
+                     "tag" : "v1.1.20.3"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Timespan selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-TimeSpan--selector",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Timespan selector",
+                     "tag" : "v1.1.20.3"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Page selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-page-selector",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Page selector with multi-selection option",
+                     "tag" : "v1.1.20.3"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "da098ffc28cb472c36011357ddbaebc3cb1bd33f",
+                     "date" : "01-24-2015",
+                     "name" : "Page status indicator",
+                     "tag" : "v.1.1.50.2"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
+                     "date" : "01-30-2015 18:30 +0200",
+                     "name" : "Select external URLs",
+                     "tag" : "v1.1.60.2"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "Select a page from the site and language that you choose.",
+               "name" : "Multi-site page selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-multisite-page-selector",
+                     "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
+                     "date" : "01-30-2015 18:30 +0200",
+                     "name" : "Multi-site page selector ",
+                     "tag" : "v1.1.60.2"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Site selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-Site-selector",
+                     "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
+                     "date" : "01-30-2015 18:30 +0200",
+                     "name" : "Site selector implementation for multi-site installations.",
+                     "tag" : "v1.1.60.2"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Language selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-Language-selector",
+                     "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
+                     "date" : "01-30-2015 18:30 +0200",
+                     "name" : "Language selector implementation",
+                     "tag" : "v1.1.60.2"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "Link selector with multi-language and multi-site support, web address, anchor, email.",
+               "name" : "Link selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "",
+                     "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
+                     "date" : "01-30-2015 18:30 +0200",
+                     "name" : "Link selector implementation",
+                     "tag" : "v1.1.60.2"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "Image selector with multiple image libraries support, filtering and sorting options and image tagging during upload.",
+               "name" : "Image selector",
+               "progress" : 0,
+               "shortDescription" : "Coming soon",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "Video selector with multiple image libraries support, filtering and sorting options and image tagging during upload.",
+               "name" : "Video selector",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "Document selector with multiple image libraries support, filtering and sorting options and image tagging during upload.",
+               "name" : "Document selector",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "Dynamic widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Customizeable views",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Dynamic-Content-Widget",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Auto-generated views for dynamic content types",
+                     "tag" : "v1.1.20.3"
+                  },
+                  {
+                     "article" : "How-to-customize-an-existing-field-in-Dynamic-content-MVC-widget",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Editable views",
+                     "tag" : "v1.1.20.3"
+                  },
+                  {
+                     "article" : "How-to-customize-an-existing-field-in-Dynamic-content-MVC-widget",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Custom fields",
+                     "tag" : "v1.1.20.3"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Scaffolding",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "How-to-customize-the-view-of-the-Dynamic-content-MVC-widget",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Templates scaffolding",
+                     "tag" : "v1.1.20.3"
+                  },
+                  {
+                     "article" : "How-to-change-the-view-of-a-specific-field-in-all-Dynamic-content-MVC-widgets",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Fields scaffolding",
+                     "tag" : "v1.1.20.3"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Advanced filtering",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Filter-dynamic-content-items-by-URL",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "URL filtering",
+                     "tag" : "v1.1.20.3"
+                  },
+                  {
+                     "article" : "Filter-dynamic-content-items-by-Related-data-items-via-the-URL",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "URL filtering by related data",
+                     "tag" : "v1.1.20.3"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Related data support",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "How-to-access-properties-of-the-DynamicContentItem",
+                     "commitHash" : "6caab6b37f65e1465bab9a0eb44b2a63513e7024",
+                     "date" : "12-16-2014",
+                     "name" : "Related data access",
+                     "tag" : "v1.1.20.3"
+                  },
+                  {
+                     "article" : "Access-Parent-Child-items-in-Dynamic-widget-views",
+                     "commitHash" : "07cf7d0d422548467433803f43354e14d7ef823f",
+                     "date" : "01-16-2015",
+                     "name" : "API for hierarchical types",
+                     "tag" : "v1.1.40.0"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "Comments for dynamic content items",
+               "name" : "Comments",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "Content widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "News widget with inline editing and custom designer that is highly customizable.",
+               "name" : "News",
+               "progress" : 90,
+               "releases" : [
+                  {
+                     "article" : "News-Widget",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Base functionality",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "07cf7d0d422548467433803f43354e14d7ef823f",
+                     "date" : "01-16-2015",
+                     "name" : "Sort items manually or in advanced mode.",
+                     "tag" : "v1.1.40.0"
+                  },
+                  {
+                     "name" : "Comments"
+                  }
+               ],
+               "shortDescription" : "In progress",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Content block",
+               "progress" : 40,
+               "releases" : [
+                  {
+                     "article" : "Content-Block-Widget",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Base functionality",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "07cf7d0d422548467433803f43354e14d7ef823f",
+                     "date" : "01-16-2015",
+                     "name" : "HTML View",
+                     "tag" : "v1.1.40.0"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "da098ffc28cb472c36011357ddbaebc3cb1bd33f",
+                     "date" : "01-24-2015",
+                     "name" : "Full screen toggle",
+                     "tag" : "v.1.1.50.2"
+                  },
+                  {
+                     "article" : "Use-Link-selector-in-Content-block-widget",
+                     "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
+                     "date" : "01-30-2015 18:30 +0200",
+                     "name" : "Hyperlink Manager",
+                     "tag" : "v1.1.60.2"
+                  },
+                  {
+                     "name" : "Image Manager"
+                  },
+                  {
+                     "name" : "Media Manager"
+                  },
+                  {
+                     "name" : "Document Manager\r\n"
+                  }
+               ],
+               "shortDescription" : "In progress",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Image",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Image Gallery",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Video",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Video gallery",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Document link",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Download list",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Form",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "List",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Feed",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Forums",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Comments",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "Navigation widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "See release notes for special instructions how to upgrade from 1.1.50 to 1.1.60.",
+               "name" : "Navigation",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Navigation-Widget",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Base functionality",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "da098ffc28cb472c36011357ddbaebc3cb1bd33f",
+                     "date" : "01-24-2015",
+                     "name" : "Select pages manually",
+                     "tag" : "v.1.1.50.2"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "da098ffc28cb472c36011357ddbaebc3cb1bd33f",
+                     "date" : "01-24-2015",
+                     "name" : "Select all pages under particular page",
+                     "tag" : "v.1.1.50.2"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
+                     "date" : "01-30-2015 18:30 +0200",
+                     "name" : "Select External URLs",
+                     "tag" : "v1.1.60.2"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : true
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Archive",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Language selector",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Breadcrumb",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Site selector",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "Data widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "XML Data source",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Site map data source",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "OpenAccess data source",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "Script and styles widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "CSS",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Java Script",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Google Analytics",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "Login widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Login form",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Login/out button",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Change password",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Registration",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Profile",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Users list",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "Social widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "Share the page on social networks",
+               "name" : "Social share",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Social-Share-Widget",
+                     "commitHash" : "a666004208d71bc5541034416bbb634d51c964eb",
+                     "date" : "01-09-2015",
+                     "name" : "Social Share widget",
+                     "tag" : "v1.1.30.1"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Facebook feed",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Facebook like",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Twitter feed",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Twitter widget",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "Search widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Search",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Search-Box-Widget",
+                     "commitHash" : "07cf7d0d422548467433803f43354e14d7ef823f",
+                     "date" : "01-16-2015",
+                     "name" : "Search box widget",
+                     "tag" : "v1.1.40.0"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "mid Mar '15",
+               "longDescription" : "",
+               "name" : "Search results",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Search-Results-Widget",
+                     "commitHash" : "07cf7d0d422548467433803f43354e14d7ef823f",
+                     "date" : "01-16-2015",
+                     "name" : "Search results widget",
+                     "tag" : "v1.1.40.0"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "Classifications widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Categories",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Tags",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "Email campaigns widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Subscribe form",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Unsubscribe",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "E-Commerce widgets",
+         "widgets" : [
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Product list",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Shopping cart",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Shopping cart summary",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Checkout",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Currency selector",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Orders list",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Order invoice",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Your downloads",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Departments",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Buy now",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Google conversion tracking",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Filter products",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Wish list",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "General features",
+         "widgets" : [
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "MVC goodness",
+               "progress" : 90,
+               "releases" : [
+                  {
+                     "article" : "Create-a-%E2%80%9CHello-World%E2%80%9D-MVC-widget-in-a-separate-assembly",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Widgets in separate assemblies",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Page-templates-based-on-layout-files-with-Feather",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Page templates based on layout files",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Add-custom-commands-for-editing-widget-with-Feather",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Custom commands for editing widgets",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "How-to-implement-a-Master-Detail-content-controller",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Built-in master/detail functionality",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "How-to-implement-action-that-filters-by-category-or-tag",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Built-in filtering by taxonomy",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Built-in integration with Ninject",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "name" : "Custom routes for MVC widgets"
+                  },
+                  {
+                     "name" : "Precompilation for widget templates"
+                  }
+               ],
+               "shortDescription" : "In progress",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Helper Methods",
+               "progress" : 90,
+               "releases" : [
+                  {
+                     "article" : "Refer-to-resources-inside-MVC-views",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Register scripts in views",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Helper-methods-for-enabling-the-Inline-Editing-feature",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Enable inline editing",
+                     "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Helper-methods-for-getting-localized-data",
+                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
+                     "date" : "09-24-2014",
+                     "name" : "Get localized data",
+                     "tag" : "v1.0.0.0"
+                  }
+               ],
+               "shortDescription" : "In progress",
+               "unstable" : false
+            }
+         ]
+      }
+   ]
+}

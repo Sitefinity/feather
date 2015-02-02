@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html ng-app="feather">
+<head>
+	<title>Project Feather</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+	<link href="css/feather.css" rel="stylesheet" />
+	<script src="feather.min.js"></script>
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-111455-3']);
+		_gaq.push(['_setDomainName', '.sitefinity.com']);
+		_gaq.push(['_addIgnoredRef', 'sitefinity.com']);
+		_gaq.push(['_trackPageview']);
+		setTimeout("_gaq.push(['_trackEvent', '15_seconds', 'read'])", 15000);
+
+		(function () {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+    <link rel="shortcut icon" sizes="16x16 32x32 48x48 64x64" href="images/favicon/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/favicon/favicon-152.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/favicon/favicon-144.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="images/favicon/favicon-120.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/favicon/favicon-114.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/favicon/favicon-76.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/favicon/favicon-72.png">
+    <link rel="apple-touch-icon" href="images/favicon/favicon-57.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="images/favicon/favicon-144.png">
+
+</head>
+<body sticky>
+	<header>
+		<div id="header" ng-class="{'sticky':sticky}">
+			<div  class="container">
+				<div class="col-md-5">
+					<a href="#/home" id="logo">
+						<h1>Project Feather</h1>
+						<span>light like a feather, powerful like a hammer</span>
+					</a>
+				</div>
+				<div class="col-md-7 navigation">
+					<ul id="main-navigation">
+						<li ng-class="{'active': current == 'home'}"><a  class="link" href="#home">Home</a></li>
+						<li ng-class="{'active': current == 'progress'}"><a class="link" href="#progress">Project Progress</a></li>
+						<li ng-class="{'active': current == 'faq'}"><a  class="link" href="#faq">FAQ</a></li>
+						<li><a href="https://github.com/Sitefinity/feather/wiki/getting-started" class="btn btn-success">Get Started</a></li>
+					</ul>
+					<ul id="sub-navigation">
+							<li><a href="https://github.com/Sitefinity/feather">GitHub project</a></li>
+							<li><a href="https://plus.google.com/u/0/communities/101682685148530961591">Google+ community</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div ng-view autoscroll="true">
+		
+	</div>
+	
+	<footer>
+		<div class="container">
+			<div class="row" id="join">
+				<div class="col-md-4">
+					<h3>Join the Project</h3>
+				</div>
+				<div class="col-md-8 text-right">                    
+					<a href="https://github.com/Sitefinity/feather" class="btn btn-default">
+						Fork on github <i class="fa fa-github"></i>
+					</a>
+					<a href="https://plus.google.com/u/0/communities/101682685148530961591" target="_blank" class="btn btn-primary">
+						Join the discussion on g+ <i class="fa fa-google-plus"></i>
+					</a>
+				</div>
+			</div>
+			<hr />
+			<div class="row text-center">
+				<h4>Project Feather is Powered By:</h4>
+				<ul class="list-unstyled list-inline">
+					<li><span class="logo text-hide logo-github">github</span></li>
+					<li class="m-left-sm"><span class="logo text-hide logo-nuget">nuget</span></li>
+					<li class="m-left-sm"><span class="logo text-hide logo-angular">Angularjs</span></li>
+					<li class="m-left-sm"><span class="logo text-hide logo-bootstrap">Bootstrap</span></li>
+					<li class="m-left-sm"><span class="logo text-hide logo-aspnet">ASP.net</span></li>
+					<li class="m-left-sm"><span class="logo text-hide logo-telerik">Telerik</span></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

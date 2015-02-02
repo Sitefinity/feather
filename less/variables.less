@@ -1,0 +1,71 @@
+@gray-darker:            lighten(#000, 13.5%); // #222
+@gray-dark:              lighten(#000, 20%);   // #333
+@gray:                   lighten(#000, 33.5%); // #555
+@gray-light:             lighten(#000, 60%);   // #999
+@gray-lighter:           lighten(#000, 93.5%); // #eee
+
+@ultralight	:	300;
+@regular	:	400;
+@light		:	300;
+@medium		:	600;
+@bold		:	700;
+
+@brand-primary:         #5777c7;
+@brand-primary-dark:	darken(@brand-primary, 35%);
+@brand-success:         #5cb85c;
+@brand-info:            #5b83de;
+@brand-warning:         #f0ad4e;
+@brand-danger:          #FF0000;
+@action:				#38ab63;
+@brand-notification:	#FFFDB6;
+
+@font-family-sans-serif:  "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-serif:       Georgia, "Times New Roman", Times, serif;
+@code-family:		      'Source Code Pro', sans-serif;
+
+
+
+@icon-font-path:          "//netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/";
+
+
+.pattern-background() {
+	background-color: desaturate(@brand-primary-dark, 15%);
+	background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+	linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px),
+	linear-gradient(rgba(255,255,255,.03) 1.1px, transparent 1px),
+	linear-gradient(90deg, rgba(255,255,255,.03) 1.1px, transparent 1px);
+	background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+	background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
+	background-attachment: fixed;
+	-webkit-animation: sliding 8s linear infinite;
+    animation: sliding 8s linear infinite;
+}
+
+@-webkit-keyframes sliding {
+    from {background-position: 0 0;}
+    to {background-position: 0 -100px;}
+}
+
+@keyframes sliding{
+    from {background-position: 0 0;}
+    to {background-position: 0 -100px;}
+}
+
+.btn-action {
+  .button-variant(#fff; @action; @action);
+}
+
+.btn-lg {
+	font-size: 16px;
+}
+
+
+@-webkit-keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
