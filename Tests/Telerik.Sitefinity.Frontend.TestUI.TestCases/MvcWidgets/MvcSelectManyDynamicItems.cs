@@ -23,7 +23,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
         TestCategory(FeatherTestCategories.Selectors)]
         public void MvcSelectManyDynamicItems()
-
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
@@ -32,13 +31,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("dynamicItemsMultipleSelector");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(50);
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(selectedNames);
-            var countOfSelectedItems = selectedNames.Count();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(this.selectedNames);
+            var countOfSelectedItems = this.selectedNames.Count();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(14);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(selectedNamesInDesigner);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.selectedNamesInDesigner);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
 
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
@@ -69,8 +68,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "SelectorWidget";
 
-        private readonly string[] selectedNames = { "Item Title1", "Item Title2", "Item Title6", "Item Title16", "Item Title11", "Item Title30",
-                                                       "Item Title21", "Item Title23", "Item Title24", "Item Title25", "Item Title49", "Item Title22", "Item Title31", "Item Title35" };
+        private readonly string[] selectedNames = 
+        { 
+            "Item Title1", "Item Title2", "Item Title6", "Item Title16", "Item Title11", "Item Title30",
+            "Item Title21", "Item Title23", "Item Title24", "Item Title25", "Item Title49", "Item Title22", "Item Title31", "Item Title35" 
+        };
+
         private readonly string[] selectedNamesInDesigner = { "Item Title1", "Item Title2", "Item Title6", "Item Title16", "Item Title11" };
     }
 }

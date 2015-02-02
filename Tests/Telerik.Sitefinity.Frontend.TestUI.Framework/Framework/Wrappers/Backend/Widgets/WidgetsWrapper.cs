@@ -178,6 +178,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
                 itemDiv.ScrollToVisible();
                 itemDiv.MouseClick();
             }
+
             ActiveBrowser.RefreshDomTree();
         }
 
@@ -276,7 +277,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 
             searchInputTextBox.Focus();
             searchInputTextBox.MouseClick();
-            if (text != "")
+            if (text != string.Empty)
             {
                 searchInputTextBox.Text = string.Empty;
                 Manager.Current.Desktop.KeyBoard.TypeText(text);
@@ -338,7 +339,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
                 items[count - 1].ScrollToVisible();
             }
            
-            bool isCountCorrect = (expected == items.Count);
+            bool isCountCorrect = expected == items.Count;
             return isCountCorrect;
         }
 
@@ -456,6 +457,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             {
                 spanList = this.EM.Widgets.FeatherWidget.Find.AllByExpression<HtmlSpan>("class=handler list-group-item-drag");
             }
+
             int actualSpanCount = spanList.Count;
 
             Assert.AreEqual(expectedSpanCount, actualSpanCount, "Expected and actual count of span elements are not equal.");
