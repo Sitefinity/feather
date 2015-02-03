@@ -5,7 +5,7 @@
         return {
             restrict: "E",
             scope: {
-                ngModel: '='
+                sfModel: '='
             },
             templateUrl: function (elem, attrs) {
                 var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -63,7 +63,7 @@
                     if (isInHtmlView === false) {
                         scope.htmlViewLabel = 'Design';
 
-                        var htmlEditor = $('<textarea class="html k-content" ng-model="ngModel" style="resize: none">');
+                        var htmlEditor = $('<textarea class="html k-content" ng-model="sfModel" style="resize: none">');
                         $compile(htmlEditor)(scope);
                         htmlEditor.insertAfter(content);
                         content.hide();
