@@ -1,7 +1,7 @@
-﻿<div class="form-group">
-    <span ng-click="toggle()">
-        <span ng-class="classExpanded" class="glyphicon glyphicon-chevron-right"></span>
+﻿<div class="Options">
+    <span ng-click="toggle()" class="Options-toggler text-muted">
+        <span ng-class="classExpanded" class="glyphicon glyphicon-triangle-right"></span>
         {{title}}
     </span>
-    <div class="p-left-md p-top-md" ng-show="isExpanded" ng-transclude></div>
+    <div ng-show="isExpanded" ng-transclude></div>
 </div>

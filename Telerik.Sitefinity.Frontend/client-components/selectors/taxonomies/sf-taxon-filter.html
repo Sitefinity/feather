@@ -8,7 +8,7 @@
 
     <sf-list-selector class="label-content"
                       sf-taxon-selector
-                      sf-dialog-header="Select {{taxonomy.Title}}"
+                      sf-dialog-header="Select {{taxonomy.Title|lowercase}}"
                       ng-if="selectedTaxonomies.hasOwnProperty(taxonomy.Name) && taxonomy.TaxonomyType === 0"
                       sf-multiselect="true"
                       sf-selected-ids="selectedTaxonomies[taxonomy.Name]"
@@ -18,7 +18,7 @@
 
     <sf-list-selector class="label-content"
                       sf-hierarchical-taxon-selector
-                      sf-dialog-header="Select {{taxonomy.Title}}"
+                      sf-dialog-header="Select {{taxonomy.Title|lowercase}}"
                       ng-if="selectedTaxonomies.hasOwnProperty(taxonomy.Name) && taxonomy.TaxonomyType === 1"
                       sf-multiselect="true"
                       sf-selected-ids="selectedTaxonomies[taxonomy.Name]"
