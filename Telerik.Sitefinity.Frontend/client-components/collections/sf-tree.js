@@ -32,7 +32,7 @@
                     scope.hierarchy = {};
 
                     // In case no function for getting children is provided, a default one returning empty array is provided.
-                    scope.sfRequestChildren = scope.sfRequestChildren || function () { return []; };
+                    scope.sfRequestChildren = scope.sfRequestChildren || function () { var r = $q.defer(); r.resolve([]); return r.$promise; };
 
                     scope.hasChildren = function (node) {
                         node = node || {};
@@ -56,9 +56,6 @@
                     scope.select = function (node) {
                         if (node.item[scope.sfIdentifier] !== scope.selectedItemId) {
                             scope.selectedItemId = node.item[scope.sfIdentifier];
-                        }
-                        else {
-                            scope.selectedItemId = null;
                         }
 
                         if (scope.sfExpandOnSelect !== undefined) {
