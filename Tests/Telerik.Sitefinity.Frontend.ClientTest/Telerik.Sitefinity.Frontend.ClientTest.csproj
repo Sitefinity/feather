@@ -50,6 +50,7 @@
     <Content Include="unit\collections\sfTreeSpec.js" />
     <Content Include="unit\selectors\externalUrlsViewSpec.js" />
     <Content Include="unit\selectors\languageSelectorSpec.js" />
+    <Content Include="unit\selectors\libraryFilterSpec.js" />
     <Content Include="unit\selectors\linkSelectorSpec.js" />
     <Content Include="unit\selectors\modalLinkSelectorSpec.js" />
     <Content Include="unit\selectors\multi-site\sfSiteSelectorSpec.js" />

@@ -71,7 +71,7 @@ module.exports = function (grunt) {
 			  base: 'Telerik.Sitefinity.Frontend'
 			},
 			main: {
-			  src: ['Telerik.Sitefinity.Frontend/client-components/selectors/**/*.html'],
+			  src: ['Telerik.Sitefinity.Frontend/client-components/**/*.html'],
 			  dest: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js'
 			},
 		},
