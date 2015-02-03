@@ -16,6 +16,7 @@
                     sfExpandOnSelect: '@',
                     sfItemTemplateUrl: '@',
                     sfItemTemplateAssembly: '@',
+                    sfDeselectable: '@',
                     sfRequestChildren: '&'
                 },
                 templateUrl: function (elem, attrs) {
@@ -56,6 +57,10 @@
                     scope.select = function (node) {
                         if (node.item[scope.sfIdentifier] !== scope.selectedItemId) {
                             scope.selectedItemId = node.item[scope.sfIdentifier];
+                        }
+                        else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
+                            // item is deselected
+                            scope.selectedItemId = null;
                         }
 
                         if (scope.sfExpandOnSelect !== undefined) {

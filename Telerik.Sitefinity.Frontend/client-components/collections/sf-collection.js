@@ -5,6 +5,7 @@
                 restrict: 'AE',
                 scope: {
                     sfMultiselect: '@',
+                    sfDeselectable: '@',
                     items: '=sfData',
                     sfIdentifier: '@',
                     selectedItemIds: '=?ngModel'
@@ -25,7 +26,7 @@
 
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.selectedItemIds = scope.selectedItemIds || [];
-
+                    
                     element.addClass(classes.grid);
                     scope.isSelected = function (item) {
                         if (scope.selectedItemIds === undefined) {
@@ -46,7 +47,8 @@
                             if (itemIndex < 0) {
                                 scope.selectedItemIds = [item[scope.sfIdentifier]];
                             }
-                            else {
+                            else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
+                                // item is deselected
                                 scope.selectedItemIds = [];
                             }
                         }
@@ -54,7 +56,8 @@
                             if (itemIndex < 0) {
                                 scope.selectedItemIds.push(item[scope.sfIdentifier]);
                             }
-                            else {
+                            else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
+                                // item is deselected
                                 scope.selectedItemIds.splice(itemIndex, 1);
                             }
                         }
