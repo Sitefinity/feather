@@ -12,12 +12,21 @@
 		&:hover,
 		&:focus
 			border-color: #ddd
+	&:hover,
+	&:focus
+		background-color: #f5f5f5
+
 	[class*=" icon-item-"],
 	[class^=icon-item-]
 		margin-right: 7px
 		&:after
 			bottom: 0
 
+.list-group-selection,
+.list-group-external
+	.list-group-item
+		&:hover
+			background-color: transparent
 
 .list-group-sm
 	.list-group-item
@@ -27,13 +36,6 @@
 		&:last-of-type
 			@include border-bottom-radius($list-group-border-radius)
 
-.list-group-hover
-	.list-group-item
-		&:hover,
-		&:focus
-			color: #555
-			text-decoration: none
-			background-color: #f5f5f5
 
 .list-group-item-multiselect
 	> div
