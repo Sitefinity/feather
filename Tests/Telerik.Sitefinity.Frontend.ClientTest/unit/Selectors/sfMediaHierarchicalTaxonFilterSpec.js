@@ -50,7 +50,26 @@
         commonMethods.compileDirective(directiveMarkup, scope);
         scope.$digest();
 
-        $('span ul li:contains("Taxon 5")').click();
+        $('span ul li:visible:contains("Taxon 5")').click();
+        scope.$digest();
+
+        expect(scope.filterObject.taxon).not.toBe(null);
+        expect(scope.filterObject.taxon.id).toEqual(5);
+        expect(scope.filterObject.basic).toBe(null);
+    });
+
+    it('[Boyko-Karadzhov] / should set taxon id in the filter object when taxon is selected from search results.', function () {
+        var scope = rootScope.$new();
+        scope.filterObject = mediaService.newFilter();
+        scope.filterObject.basic = 'someValue';
+
+        commonMethods.compileDirective(directiveMarkup, scope);
+        scope.$digest();
+
+        $('span input').val('Searched');
+        scope.$digest();
+
+        $('span ul li:visible:contains("Searched 5")').click();
         scope.$digest();
 
         expect(scope.filterObject.taxon).not.toBe(null);
