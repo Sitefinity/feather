@@ -2,12 +2,20 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfMediaBasicFilters', 'sfMediaFlatTaxonFilter'])
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter'])
         .directive('sfImageSelector', ['serverContext', 'sfMediaService', 'serviceHelper', function (serverContext, sfMediaService, serviceHelper) {
             var constants = {
                 initialLoadedItemsCount: 50,
                 infiniteScrollLoadedItemsCount: 20,
-                recentImagesLastDaysCount: 7
+                recentImagesLastDaysCount: 7,
+                filterOptions: {
+                    basic: {
+                        allLibraries: 'AllLibraries',
+                        ownItems: 'OwnItems',
+                        recentItems: 'RecentItems'
+                    },
+                    dateCreatedDescending: 'DateCreated DESC'
+                }
             };
 
             return {
@@ -31,8 +39,8 @@
 
                     scope.$watch('filterObject', function (newVal, oldVal) {
                         if (newVal && (JSON.stringify(newVal) !== JSON.stringify(oldVal))) {
-                            if (newVal.basic === 'RecentItems' && scope.sortExpression !== 'DateCreated DESC') {
-                                scope.sortExpression = 'DateCreated DESC';
+                            if (newVal.basic === constants.filterOptions.basic.recentItems && scope.sortExpression !== constants.filterOptions.dateCreatedDescending) {
+                                scope.sortExpression = constants.filterOptions.dateCreatedDescending;
                             }
                             else {
                                 refresh();
@@ -42,7 +50,7 @@
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
-                            if (newVal !== 'DateCreated DESC' && scope.filterObject.basic === 'RecentItems') {
+                            if (newVal !== constants.filterOptions.dateCreatedDescending && scope.filterObject.basic === constants.filterOptions.basic.recentItems) {
                                 scope.filterObject.basic = null;
                             }
                             else {
@@ -74,16 +82,21 @@
                             options.take = constants.initialLoadedItemsCount;
                         }
 
+                        // checks if all properties of the filter object are null - if so All libraries should be shown.
+                        if (JSON.stringify(sfMediaService.newFilter()) === JSON.stringify(scope.filterObject)) {
+                            scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
+                        }
+
                         var callback;
                         if (scope.filterObject.basic) {
                             // Defaul filter is used (Recent / My / All)
-                            if (scope.filterObject.basic === 'RecentItems') {
+                            if (scope.filterObject.basic === constants.filterOptions.basic.recentItems) {
                                 callback = sfMediaService.images.getImages;
                             }
-                            else if (scope.filterObject.basic === 'OwnItems') {
+                            else if (scope.filterObject.basic === constants.filterOptions.basic.ownItems) {
                                 callback = sfMediaService.images.getImages;
                             }
-                            else if (scope.filterObject.basic === 'AllLibraries') {
+                            else if (scope.filterObject.basic === constants.filterOptions.basic.allLibraries) {
                                 callback = sfMediaService.images.getFolders;
                             }
                             else {
@@ -95,22 +108,28 @@
                             callback = sfMediaService.images.getContent;
                         }
 
-                        callback(options).then(function (response) {
-                            if (response && response.Items) {
-                                if (appendItems) {
-                                    scope.items = scope.items.concat(response.Items);
-                                }
-                                else {
-                                    scope.items = response.Items;
-                                }
-                            }
-                        }, function (error) {
+                        if (appendItems) {
+                            scope.isLoading = true;
+                        }
 
-                        });
+                        callback(options)
+                            .then(function (response) {
+                                if (response && response.Items) {
+                                    if (appendItems) {
+                                        scope.items = scope.items.concat(response.Items);
+                                    }
+                                    else {
+                                        scope.items = response.Items;
+                                    }
+                                }
+                            })
+                            .finally(function () {
+                                scope.isLoading = false;
+                            });
                     };
 
                     // initial open populates dialog with all root libraries
-                    scope.filterObject.basic = 'AllLibraries';
+                    scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
                     refresh();
                 }
             };
