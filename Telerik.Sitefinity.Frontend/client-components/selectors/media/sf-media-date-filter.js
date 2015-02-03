@@ -21,7 +21,7 @@
 
             var constants = {
                 dates: [
-                    { text: 'Any time', dateValue: '' },
+                    { text: 'Any time', dateValue: 'AnyTime' },
                     { text: 'Last 1 day', dateValue: getDate(1) },
                     { text: 'Last 3 days', dateValue: getDate(3) },
                     { text: 'Last 1 week', dateValue: getDate(7) },

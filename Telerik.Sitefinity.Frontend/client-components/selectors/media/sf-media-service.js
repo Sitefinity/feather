@@ -47,7 +47,7 @@
                 if (this.basic && this.basic === 'OwnItems')
                     expression = expression.and().append('Owner == (' + serverContext.getCurrentUserId() + ')');
 
-                if (this.date) {
+                if (this.date && this.date !== 'AnyTime') {
                     expression = expression.and().append('LastModified > (' + this.date.toGMTString() + ')');
                 }
 
