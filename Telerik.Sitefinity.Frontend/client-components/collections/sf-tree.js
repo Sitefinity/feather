@@ -69,7 +69,7 @@
                     };
 
                     scope.toggle = function (parentNode) {
-                        if (!parentNode || parentNode.children === {}) {
+                        if (!parentNode || JSON.stringify(parentNode.children) === JSON.stringify({})) {
                             return;
                         }
 
