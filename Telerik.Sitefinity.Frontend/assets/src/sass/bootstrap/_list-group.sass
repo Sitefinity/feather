@@ -14,8 +14,6 @@
 			border-color: #ddd
 	&:hover,
 	&:focus
-		color: #555
-		text-decoration: none
 		background-color: #f5f5f5
 
 	[class*=" icon-item-"],
@@ -24,6 +22,11 @@
 		&:after
 			bottom: 0
 
+.list-group-selection,
+.list-group-external
+	.list-group-item
+		&:hover
+			background-color: transparent
 
 .list-group-sm
 	.list-group-item
