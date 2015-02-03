@@ -17,8 +17,8 @@
                 }
 
                 return now;
-            }
-
+            };
+            
             var constants = {
                 dates: [
                     { text: 'Any time', dateValue: 'AnyTime' },
