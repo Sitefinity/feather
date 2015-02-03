@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('sfSelectors')
+    angular.module('sfMediaBasicFilters', ['sfServices'])
         .directive('sfMediaBasicFilters', ['serverContext', 'sfMediaService', function (serverContext, mediaService) {
             return {
                 restrict: 'A',
