@@ -1,6 +1,6 @@
 ﻿; (function ($) {
-    angular.module('sfDateFilter', ['sfServices', 'sfCollection'])
-        .directive('sfDateFilter', ['serverContext', 'sfMediaService', function (serverContext, sfMediaService) {
+    angular.module('sfMediaDateFilter', ['sfServices', 'sfCollection'])
+        .directive('sfMediaDateFilter', ['serverContext', 'sfMediaService', function (serverContext, sfMediaService) {
             var getDate = function (daysToSubstract, monthsToSubstract, yearsToSubstract) {
                 var now = new Date();
 
@@ -13,7 +13,7 @@
                 }
 
                 if (yearsToSubstract) {
-                    now.setDate(now.getYear() - yearsToSubstract);
+                    now.setYear(now.getYear() - yearsToSubstract);
                 }
 
                 return now;
@@ -21,7 +21,7 @@
 
             var constants = {
                 dates: [
-                    { text: 'Any time', dateValue: getDate(0) },
+                    { text: 'Any time', dateValue: '' },
                     { text: 'Last 1 day', dateValue: getDate(1) },
                     { text: 'Last 3 days', dateValue: getDate(3) },
                     { text: 'Last 1 week', dateValue: getDate(7) },
@@ -36,7 +36,7 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    filterObject: '=ngModel'
+                    filterObject: '=sfModel'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -49,16 +49,14 @@
                     }
 
                     scope.dates = constants.dates;
-                    scope.selectedDate = [constants.dates[0].dateValue];
+                    scope.selectedDate = [];
 
                     scope.$watch('selectedDate', function (newVal, oldVal) {
                         // removes all taxons, so only the parent is set.
                         var filter = sfMediaService.newFilter();
 
-                        // if deselected the default (1st) value of all dates is set.
-                        filter.date = constants.dates[0].dateValue;
-
-                        if (newVal !== oldVal) {
+                        // if deselected (undefined) the value must remain the original null
+                        if (newVal !== oldVal && newVal[0] !== undefined) {
                             // sf collection always binds to array of items.
                             filter.date = newVal[0];
                         }

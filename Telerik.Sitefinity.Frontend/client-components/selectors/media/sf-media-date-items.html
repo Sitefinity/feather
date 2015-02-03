@@ -1,3 +1,9 @@
 ﻿<ul>
     <li ng-repeat="item in items" ng-click="select(item)" ng-class="{ 'selected': isSelected(item) }">{{item.text}}</li>
 </ul>
+
+<style scoped>
+    .selected {
+        color : magenta;
+    }
+</style>

@@ -42,7 +42,7 @@
 
                         var itemIndex = scope.selectedItemIds.indexOf(item[scope.sfIdentifier]);
 
-                        if (scope.sfMultiselect === undefined) {
+                        if (scope.sfMultiselect === undefined || scope.sfMultiselect.toLowerCase() === 'false') {
                             if (itemIndex < 0) {
                                 scope.selectedItemIds = [item[scope.sfIdentifier]];
                             }
