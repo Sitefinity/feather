@@ -31,21 +31,21 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("newsItemsMultipleSelector");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(selectedNewsNames);
-            var countOfSelectedItems = selectedNewsNames.Count();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(this.selectedNewsNames);
+            var countOfSelectedItems = this.selectedNewsNames.Count();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);
             
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(4);
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ReorderSelectedItems(expectedOrderOfNames, selectedNewsNames, reorderedIndexMapping);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ReorderSelectedItems(this.expectedOrderOfNames, this.selectedNewsNames, this.reorderedIndexMapping);
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(expectedOrderOfNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.expectedOrderOfNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
 
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("newsItemsMultipleSelector");
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(expectedOrderOfNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.expectedOrderOfNames);
         }
 
         /// <summary>
@@ -73,8 +73,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
         private readonly Dictionary<int, int> reorderedIndexMapping = new Dictionary<int, int>()
         {
-            {3, 0},
-            {1, 3}
+            { 3, 0 },
+            { 1, 3 }
         };
     }
 }
