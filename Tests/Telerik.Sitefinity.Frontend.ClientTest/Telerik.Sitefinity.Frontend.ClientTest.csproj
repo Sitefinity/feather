@@ -48,6 +48,7 @@
     <Content Include="helpers\common-methods.js" />
     <Content Include="unit\collections\sfInfiniteScrollSpec.js" />
     <Content Include="unit\collections\sfTreeSpec.js" />
+    <Content Include="unit\selectors\sfMediaDateFilterSpec.js" />
     <Content Include="unit\selectors\externalUrlsViewSpec.js" />
     <Content Include="unit\selectors\languageSelectorSpec.js" />
     <Content Include="unit\selectors\libraryFilterSpec.js" />
