@@ -530,6 +530,9 @@
     <EmbeddedResource Include="GridSystem\Templates\container.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-flat-taxon-collection.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-flat-taxon-filter.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-date-filter.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-date-filter.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-date-items.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
@@ -550,7 +553,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
