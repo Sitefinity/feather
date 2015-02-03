@@ -1,2 +1,7 @@
-﻿<input ng-show="!showError" ng-model="sfModel" sf-change="sfSearchCallback()" placeholder="sfPlaceholder" />
+﻿<div ng-show="!showError">
+    <input ng-model="sfModel" sf-change="sfSearchCallback()" placeholder="sfPlaceholder" />
+    <ul ng-show="showSuggestions">
+        <li ng-repeat="item in suggestions">item.Title</li>
+    </ul>
+</div>
 <span ng-show="showError">sfAction attribute is required!</span>

@@ -16,6 +16,10 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
+                    scope.showError = false;
+                    scope.showSuggestions = false;
+                    scope.suggestions = [];
+
                     if (!scope.sfAction)
                         scope.showError = true;
 
@@ -25,6 +29,15 @@
                     scope.sfSearchCallback = function () {
                         if (!scope.sfModel || scope.sfModel.length >= scope.sfMinTextLength) {
                             scope.sfAction({ query: scope.sfModel });
+
+                            if (scope.sfEnableAutocomplete && scope.sfGetSuggestions) {
+                                scope.sfGetSuggestions({ query: scope.sfModel }).then(function (response) {
+                                    if (response && response.Items && response.Items.length) {
+                                        scope.suggestions = response.Items;
+                                        scope.showSuggestions = true;
+                                    }
+                                });
+                            }
                         }
                     };
                 }
