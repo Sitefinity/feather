@@ -20,7 +20,7 @@
                     </span>
                     <sf-items-filter sf-filter='filter'></sf-items-filter>
                 </div>
-                <div sf-endless-scroll sf-paging='paging' class="list-group list-group-endless">
+                <div sf-endless-scroll sf-paging='paging' class="list-group list-group-endless list-group-hover">
                     <div ng-repeat="item in items"
                          ng-class="{'list-group-item': true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
                          ng-click="itemClicked($index, item)">
