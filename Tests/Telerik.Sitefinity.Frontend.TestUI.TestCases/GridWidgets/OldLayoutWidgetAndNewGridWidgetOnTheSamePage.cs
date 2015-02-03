@@ -39,8 +39,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// </summary>
         public void VerifyGridWidgetOnTheFrontend()
         {
-            string[] layoutsNew = new string[] {LayouClass3, LayouClass4 };
-            string[] layoutsOld = new string[] { LayouClass1, LayouClass2};
+            string[] layoutsNew = new string[] { LayouClass3, LayouClass4 };
+            string[] layoutsOld = new string[] { LayouClass1, LayouClass2 };
 
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
             ActiveBrowser.WaitUntilReady();

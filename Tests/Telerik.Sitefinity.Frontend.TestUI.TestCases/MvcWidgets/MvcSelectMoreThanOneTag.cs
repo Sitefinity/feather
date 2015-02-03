@@ -31,8 +31,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("TagsMultipleSelector");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(20);
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(selectedTagNames);
-            var countOfSelectedItems = selectedTagNames.Count();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(this.selectedTagNames);
+            var countOfSelectedItems = this.selectedTagNames.Count();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText("Title15");
 
@@ -42,7 +42,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(5);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(newSelectedTagNames);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.newSelectedTagNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
 
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
