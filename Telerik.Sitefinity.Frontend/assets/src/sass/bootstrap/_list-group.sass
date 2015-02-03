@@ -3,6 +3,9 @@
 	max-width: 100%
 	@include text-overflow()
 
+	&:first-child
+		border-top: 1px solid #ddd
+
 	> div
 		cursor: default
 		overflow: hidden
@@ -110,16 +113,13 @@
 	max-height: 500px
 	overflow-y: auto
 	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.05)
-	border-top: 1px solid #ddd
+	// border-top: 1px solid #ddd
 	border-radius: 4px
 
-
+// External links in link selector
 .list-group-external
 	.list-group-item
-		padding-left: 30px
+		padding: 10px 5px 5px 30px
 
-		> input[type="checkbox"]
-			top: 13px
-
-		a.pull-right
-			margin-top: 6px
+		input[type="text"]
+			margin-top: -5px
