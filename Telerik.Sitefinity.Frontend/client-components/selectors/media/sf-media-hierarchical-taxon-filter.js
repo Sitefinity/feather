@@ -1,4 +1,4 @@
-﻿; (function ($) {
+﻿(function ($) {
     angular.module('sfMediaHierarchicalTaxonFilter', ['sfServices', 'sfTree'])
         .directive('sfMediaHierarchicalTaxonFilter', ['serverContext', 'sfMediaService', 'sfHierarchicalTaxonService', function (serverContext, mediaService, taxonService) {
             return {
