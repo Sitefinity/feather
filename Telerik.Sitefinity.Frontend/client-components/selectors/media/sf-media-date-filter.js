@@ -17,7 +17,7 @@
                 }
 
                 return now;
-            }
+            };
 
             var constants = {
                 dates: [

@@ -77,28 +77,6 @@
         expect(scope.filterObject.basic).toBe(null);
     });
 
-    it('[dzhenko] / should properly set parent to null when clicked second time (deselected)', function () {
-        var scope = $rootScope.$new();
-
-        scope.filterObject = mediaService.newFilter();
-
-        mediaService.specTest = getFoldersObj;
-
-        var directiveMarkup = '<span sf-library-filter ng-model="filterObject" sf-media-type="specTest"></span>';
-
-        commonMethods.compileDirective(directiveMarkup, scope);
-
-        expect(scope.filterObject.parent).toBe(null);
-
-        $('ul li span:contains("Title1")').click();
-        scope.$digest();
-        expect(scope.filterObject.parent).toEqual('1');
-
-        $('ul li span:contains("Title1")').click();
-        scope.$digest();
-        expect(scope.filterObject.parent).toBe(null);
-    });
-
     it('[dzhenko] / should properly throw exception if passed filter object is not of a kind sfMediaService.newFilter()', function () {
         var scope = $rootScope.$new();
 
