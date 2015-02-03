@@ -1,14 +1,14 @@
 ﻿; (function ($) {
     angular.module('sfSearchBox', [])
-        .directive('sfSearchBox', function () {
+        .directive('sfSearchBox', ['serverContext', function (serverContext) {
             return {
                 restrict: 'AE',
                 scope: {
-                    sfAction: '@',
+                    sfAction: '&',
                     sfMinTextLength: '@?',
                     sfPlaceholder: '@?',
                     sfEnableAutocomplete: '@',
-                    sfGetSuggestions: '@?'
+                    sfGetSuggestions: '&?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -42,5 +42,5 @@
                     };
                 }
             };
-        });
+        }]);
 })(jQuery);
