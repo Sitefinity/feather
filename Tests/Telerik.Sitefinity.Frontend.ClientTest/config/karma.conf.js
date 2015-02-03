@@ -46,7 +46,7 @@ module.exports = function (config) {
             '../../Telerik.Sitefinity.Frontend/Designers/Scripts/*.js': 'coverage',
             '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/*.js': 'coverage',
             '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Designer/*.js': 'coverage',
-            '../../Telerik.Sitefinity.Frontend/client-components/selectors/**/*.html': ['ng-html2js']
+            '../../Telerik.Sitefinity.Frontend/client-components/**/*.html': ['ng-html2js']
         },
 
         //Converts directive's external html templates into javascript strings and stores them in the Angular's $templateCache service.

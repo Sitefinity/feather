@@ -10,7 +10,7 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    selectedId: '=?ngModel',
+                    selectedItemId: '=?ngModel',
                     sfIdentifier: '@',
                     sfHasChildrenField: '@',
                     sfExpandOnSelect: '@',
@@ -35,23 +35,41 @@
                     scope.sfRequestChildren = scope.sfRequestChildren || function () { return []; };
 
                     scope.hasChildren = function (node) {
-                        return node.item.HasChildren === true;
+                        node = node || {};
+
+                        var result = false;
+
+                        if (scope.sfHasChildrenField === undefined) {
+                            result = JSON.stringify({}) !== JSON.stringify(node.children);
+                        }
+                        else {
+                            result = node.item[scope.sfHasChildrenField] === true;
+                        }
+
+                        return result;
                     };
 
                     scope.isSelected = function (node) {
-                        return node.item[scope.sfIdentifier] === scope.selectedId;
+                        return node.item[scope.sfIdentifier] === scope.selectedItemId;
                     };
 
                     scope.select = function (node) {
-                        scope.selectedId = node.item[scope.sfIdentifier];
+                        if (node.item[scope.sfIdentifier] !== scope.selectedItemId) {
+                            scope.selectedItemId = node.item[scope.sfIdentifier];
+                        }
+                        else {
+                            scope.selectedItemId = null;
+                        }
 
                         if (scope.sfExpandOnSelect !== undefined) {
                             scope.toggle(node);
                         }
+
+                        scope.$emit('sf-tree-item-selected', node.item);
                     };
 
                     scope.toggle = function (parentNode) {
-                        if (!parentNode || parentNode.children === {}) {
+                        if (!parentNode || JSON.stringify(parentNode.children) === JSON.stringify({})) {
                             return;
                         }
 

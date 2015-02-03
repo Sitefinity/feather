@@ -133,6 +133,20 @@
         expect($('ul li span:contains("2")').is('.collapsed')).toBe(true);
     });
 
+    it('[dzhenko] / should deselect item if clicked for the second time.', function () {
+        var scope = $rootScope.$new();
+        scope.selectedId = '1';
+
+        selectionSetup(scope);
+
+        expect(scope.selectedId).toEqual('1');
+
+        $('ul li span:contains("1") a.selector').click();
+        scope.$digest();
+
+        expect(scope.selectedId).toEqual(null);
+    });
+
     var selectionSetup = function (scope, directiveMarkup) {
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span ng-class="{ \'selected\': isSelected(node), \'collapsed\': node.collapsed }">{{node.item.id}}<a ng-click="toggle(node)" class="expander"></a><a class="selector" ng-click="select(node)"></a></span><ul><li ng-repeat="node in node.children" ng-include src="itemTemplateUrl"></li></ul>');
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul ><li ng-repeat="node in hierarchy" ng-include src="itemTemplateUrl"></li></ul>');
