@@ -21,15 +21,18 @@
 
     var generictTestForValue = function (sortOptionIndex, expectedValue) {
         var scope = $rootScope.$new();
-        var directiveMarkup = '<div class="sort-box" sf-sort-box sf-action="callback"></div>';
+        scope.sortValue = null;
+        var directiveMarkup = '<div sf-sort-box sf-model="sortValue"></div>';
         commonMethods.compileDirective(directiveMarkup, scope);
         var s = scope.$$childHead;
 
         if (sortOptionIndex) {
             s.sfModel = s.sfSortOptions[sortOptionIndex].value;
-        }
+        };
 
-        expect(s.sfModel).toEqual(expectedValue);
+        scope.$digest();
+
+        expect(scope.sortValue).toEqual(expectedValue);
     };
 
     it('[dzhenko] / should have first sort value on default.', function () {
@@ -46,5 +49,24 @@
 
     it('[dzhenko] / should have proper third sort value.', function () {
         generictTestForValue(3, 'Title DESC');
+    });
+
+    it('[dzhenko] / should have proper default value if provided custom sort items.', function () {
+        var scope = $rootScope.$new();
+        scope.sortValue = null;
+        scope.sortItems = [
+                    {
+                        title: 'New Title 1',
+                        value: 'New Value 1'
+                    }, {
+                        title: 'New Title 2',
+                        value: 'New Value 2'
+                    }];
+
+        var directiveMarkup = '<div sf-sort-box sf-model="sortValue" sf-sort-options="sortItems"></div>';
+        commonMethods.compileDirective(directiveMarkup, scope);
+        scope.$digest();
+
+        expect(scope.sortValue).toEqual('New Value 1');
     });
 });
