@@ -3,7 +3,7 @@
     sfSelectors.requires.push('sfImageSelector');
 
     angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection',
-                                        'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter', 'sfMediaDateFilter', 'sfSearchBox'])
+                                        'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter', 'sfMediaDateFilter', 'sfSearchBox', 'sfSortBox'])
         .directive('sfImageSelector', ['serverContext', 'sfMediaService', 'serviceHelper', function (serverContext, sfMediaService, serviceHelper) {
             var constants = {
                 initialLoadedItemsCount: 50,
@@ -34,6 +34,7 @@
                     scope.items = [];
                     scope.filterObject = sfMediaService.newFilter();
                     scope.isLoading = false;
+                    scope.showSortingAndView = false;
 
                     scope.loadMore = function () {
                         refresh(true);

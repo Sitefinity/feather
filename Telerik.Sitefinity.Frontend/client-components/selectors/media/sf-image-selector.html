@@ -10,6 +10,12 @@
             </div>
             <div class="row">
                 <div sf-collection sf-data="items" sf-model="selectedItem" sf-template-url="client-components/selectors/media/sf-image-collection.html"></div>
+                <div>
+                    <button type="button" class="btn btn-link" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">Sorting and view</button>
+                    <div ng-show="showSortingAndView">
+                        <sf-sort-box class="pull-left" sf-model="sortExpression"></sf-sort-box>
+                    </div>
+                </div>                
             </div>
         </div>
 
