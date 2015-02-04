@@ -8,7 +8,7 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    filterObject: '=ngModel',
+                    filterObject: '=sfModel',
                     sfMediaType: '@'
                 },
                 templateUrl: function (elem, attrs) {

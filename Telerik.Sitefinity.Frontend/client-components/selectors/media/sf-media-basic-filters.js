@@ -4,7 +4,7 @@
             return {
                 restrict: 'A',
                 scope: {
-                    filterObject: '=ngModel'
+                    filterObject: '=sfModel'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';

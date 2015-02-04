@@ -6,7 +6,7 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    filterObject: '=ngModel',
+                    filterObject: '=sfModel',
                     sfField: '@',
                     sfTitle: '@',
                     sfTaxonomyId: '@'

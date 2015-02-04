@@ -41,7 +41,7 @@
 
         mediaService.specTest = getFoldersObj;
 
-        var directiveMarkup = '<span sf-library-filter ng-model="filterObject" sf-media-type="specTest"></span>';
+        var directiveMarkup = '<span sf-library-filter sf-model="filterObject" sf-media-type="specTest"></span>';
 
         commonMethods.compileDirective(directiveMarkup, scope);
 
@@ -60,7 +60,7 @@
 
         mediaService.specTest = getFoldersObj;
 
-        var directiveMarkup = '<span sf-library-filter ng-model="filterObject" sf-media-type="specTest"></span>';
+        var directiveMarkup = '<span sf-library-filter sf-model="filterObject" sf-media-type="specTest"></span>';
 
         commonMethods.compileDirective(directiveMarkup, scope);
 
@@ -84,7 +84,7 @@
 
         mediaService.specTest = getFoldersObj;
 
-        var directiveMarkup = '<span sf-library-filter ng-model="filterObject" sf-media-type="specTest"></span>';
+        var directiveMarkup = '<span sf-library-filter sf-model="filterObject" sf-media-type="specTest"></span>';
 
         commonMethods.compileDirective(directiveMarkup, scope);
 
@@ -106,7 +106,7 @@
 
         mediaService.specTest = getFoldersObj;
 
-        var directiveMarkup = '<span sf-library-filter ng-model="filterObject" sf-media-type="specTest"></span>';
+        var directiveMarkup = '<span sf-library-filter sf-model="filterObject" sf-media-type="specTest"></span>';
         
         expect(function () {
             commonMethods.compileDirective(directiveMarkup, scope);
@@ -120,7 +120,7 @@
 
         mediaService.specTest = getFoldersObj;
 
-        var directiveMarkup = '<span sf-library-filter ng-model="filterObject" sf-media-type="unexistingType"></span>';
+        var directiveMarkup = '<span sf-library-filter sf-model="filterObject" sf-media-type="unexistingType"></span>';
 
         expect(function () {
             commonMethods.compileDirective(directiveMarkup, scope);
@@ -138,7 +138,7 @@
             }
         };
 
-        var directiveMarkup = '<span sf-library-filter ng-model="filterObject" sf-media-type="specTest"></span>';
+        var directiveMarkup = '<span sf-library-filter sf-model="filterObject" sf-media-type="specTest"></span>';
 
         expect(function () {
             commonMethods.compileDirective(directiveMarkup, scope);
@@ -152,7 +152,7 @@
 
         mediaService.specTest = getFoldersObj;
 
-        var directiveMarkup = '<span sf-library-filter ng-model="filterObject" sf-media-type="specTest"></span>';
+        var directiveMarkup = '<span sf-library-filter sf-model="filterObject" sf-media-type="specTest"></span>';
 
         commonMethods.compileDirective(directiveMarkup, scope);
 
