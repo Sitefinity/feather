@@ -4,20 +4,15 @@
         return {
             restrict: 'AE',
             scope: {
-                sfAction: '&',
                 sfSortOptions: '@?',
+                sfModel: '='
             },
             templateUrl: function (elem, attrs) {
                 var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
                 var url = attrs.sfTemplateUrl || 'client-components/sorting/sf-sort-box.html';
                 return serverContext.getEmbeddedResourceUrl(assembly, url);
             },
-            link: function (scope, element, attrs, ctrl) {
-                if (!scope.sfAction) {
-                    scope.showError = true;
-                    throw { message: 'sf-action must be provided.' };
-                }
-                    
+            link: function (scope, element, attrs, ctrl) {                  
                 if (!scope.sfSortOptions) {
                     /*
                     * Provides a list of supported sorting options.
@@ -48,9 +43,6 @@
                 * Title (Z-A) - Orders items by Title in descending order
                 */
                 scope.sfModel = scope.sfSortOptions[0].value;
-                scope.sfSortCallback = function () {
-                    scope.sfAction({ sortExpression: scope.sfModel });
-                };
             }
         };
     }]);

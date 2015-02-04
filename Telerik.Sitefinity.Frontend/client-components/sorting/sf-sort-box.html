@@ -1,5 +1,2 @@
 ﻿
-﻿<div ng-show="!showError">
-    <select ng-model="sfModel" ng-options="sort.value as sort.title for sort in sfSortOptions" ng-change="sfSortCallback()"></select>
-</div>
-<span ng-show="showError">sfAction attribute is required!</span>
+<select ng-model="sfModel" ng-options="sort.value as sort.title for sort in sfSortOptions"></select>
