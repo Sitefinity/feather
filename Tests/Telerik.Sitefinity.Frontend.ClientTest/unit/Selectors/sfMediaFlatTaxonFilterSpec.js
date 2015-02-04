@@ -3,7 +3,7 @@
     var provide;
     var $q;
     var mediaService;
-    var directiveMarkup = '<span sf-media-flat-taxon-filter ng-model="filterObject" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-title="Tags" sf-field="Tags"></span>';
+    var directiveMarkup = '<span sf-media-flat-taxon-filter sf-model="filterObject" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-title="Tags" sf-field="Tags"></span>';
 
     //Load the module that contains the cached templates.
     beforeEach(module('templates'));

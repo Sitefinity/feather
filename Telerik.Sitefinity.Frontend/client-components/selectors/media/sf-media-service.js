@@ -47,10 +47,8 @@
                 if (this.basic && this.basic === 'OwnItems')
                     expression = expression.and().append('Owner == (' + serverContext.getCurrentUserId() + ')');
 
-                if (this.date) {
-                    var date = new Date();
-                    date.setDate(date.getDate() - this.date);
-                    expression = expression.and().append('LastModified > (' + date.toGMTString() + ')');
+                if (this.date && this.date !== 'AnyTime') {
+                    expression = expression.and().append('LastModified > (' + this.date.toGMTString() + ')');
                 }
 
                 if (this.taxon && this.taxon.id)

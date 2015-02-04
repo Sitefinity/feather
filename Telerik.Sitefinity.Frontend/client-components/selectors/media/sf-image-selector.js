@@ -2,7 +2,8 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter', 'sfMediaHierarchicalTaxonFilter'])
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection',
+                                        'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter', 'sfMediaDateFilter', 'sfMediaFlatTaxonFilter', 'sfMediaHierarchicalTaxonFilter'])
         .directive('sfImageSelector', ['serverContext', 'sfMediaService', 'serviceHelper', function (serverContext, sfMediaService, serviceHelper) {
             var constants = {
                 initialLoadedItemsCount: 50,
@@ -21,7 +22,7 @@
             return {
                 restrict: 'E',
                 scope: {
-                    selectedItem: '=?ngModel'
+                    selectedItem: '=?sfModel'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -138,6 +139,9 @@
                     // initial open populates dialog with all root libraries
                     scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
                     refresh();
+
+                    // initial filter dropdown option
+                    scope.selectedFilterOption = 1;
                 }
             };
         }]);
