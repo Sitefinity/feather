@@ -1,15 +1,22 @@
-@import "bootstrap"
+// Pre define Bootstrap variables
+@import "_variables"
 
+// Import Bootstrap from npm
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap"
+
+// Overwrite Kendo styles
 @import "kendo/_editor"
 @import "kendo/_tabstrip"
 @import "kendo/_treeview"
 @import "kendo/_kendo-ui.bootstrap"
 @import "kendo/_checkbox"
 
+// Global styles
 @import "_utility-classes"
 @import "_global"
 @import "_loading"
 
+// Overwrite Bootstrap styles
 @import "bootstrap/_type"
 @import "bootstrap/_grid"
 @import "bootstrap/_datepicker"
@@ -30,4 +37,7 @@
 
 // Needed for foundation overwrites
 @import "_foundation-overwrites"
+
+// Custom styles
 @import "modules/_tooltip"
+@import "modules/_options"

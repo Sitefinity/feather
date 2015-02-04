@@ -38,7 +38,7 @@
                                    sf-identifier-field-value="bindPageIdentifierField(dataItem)"
                                    sf-status-field-value="getStatusField(dataItem)"
                                    sf-single-item-template-html="{{singleItemTemplateHtml}}"
-                                   class="k-treeview--selection"></sf-items-tree>
+                                   class="k-treeview--list-group"></sf-items-tree>
 
                     <div ng-repeat="item in items"
                          ng-hide="filter.isEmpty"
@@ -59,7 +59,7 @@
 
                             <div ng-show="itemDisabled(item)">(not translated)</div>
                         </div>
-                                                
+
 
                     </div>
                 </div>

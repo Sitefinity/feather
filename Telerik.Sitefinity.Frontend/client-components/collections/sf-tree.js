@@ -10,7 +10,7 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    selectedItemId: '=?ngModel',
+                    selectedItemId: '=?sfModel',
                     sfIdentifier: '@',
                     sfHasChildrenField: '@',
                     sfExpandOnSelect: '@',
@@ -31,7 +31,7 @@
 
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.hierarchy = {};
-
+                    
                     // In case no function for getting children is provided, a default one returning empty array is provided.
                     scope.sfRequestChildren = scope.sfRequestChildren || function () { var r = $q.defer(); r.resolve([]); return r.$promise; };
 

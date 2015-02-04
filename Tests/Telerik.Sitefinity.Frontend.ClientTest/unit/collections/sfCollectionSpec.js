@@ -44,7 +44,7 @@
 
         scope.selectedItems = [2, 4];
 
-        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-selected-items.html" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-selected-items.html" sf-data="dataItems" sf-model="selectedItems" sf-identifier="id"></ul>';
         commonMethods.compileDirective(directiveMarkup, scope);
         expect($('.sfCollectionItem.sf-selected').length).toEqual(2);
         expect($('.sfCollectionItem.sf-selected span:contains(2)').length).toEqual(1);
@@ -64,7 +64,7 @@
         }
         
         scope.selectedItems = [2];
-        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-single-select.html" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-single-select.html" sf-data="dataItems" sf-model="selectedItems" sf-identifier="id"></ul>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
         $(element).find('.sfCollectionItem').has('span:contains("4")').click();
         scope.$digest();
@@ -86,7 +86,7 @@
         }
 
         scope.selectedItems = [2];
-        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-data="dataItems" sf-multiselect ng-model="selectedItems" sf-identifier="id"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-data="dataItems" sf-multiselect sf-model="selectedItems" sf-identifier="id"></ul>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
         $('.sfCollectionItem:contains("4")').click();
         scope.$digest();
@@ -133,7 +133,7 @@
         }
 
         scope.selectedItems = [2];
-        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-data="dataItems" sf-model="selectedItems" sf-identifier="id"></ul>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
         $('.sfCollectionItem:contains("4")').click();
         scope.$digest();
@@ -159,7 +159,7 @@
         }
 
         scope.selectedItems = [];
-        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-deselectable sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-deselectable sf-data="dataItems" sf-model="selectedItems" sf-identifier="id"></ul>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
 
         $('.sfCollectionItem:contains("4")').click();
@@ -186,7 +186,7 @@
         }
 
         scope.selectedItems = [];
-        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-multiselect sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-multiselect sf-data="dataItems" sf-model="selectedItems" sf-identifier="id"></ul>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
 
         $('.sfCollectionItem:contains("4")').click();
@@ -217,7 +217,7 @@
         }
 
         scope.selectedItems = [];
-        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-multiselect sf-deselectable sf-data="dataItems" ng-model="selectedItems" sf-identifier="id"></ul>';
+        var directiveMarkup = '<ul sf-collection sf-template-url="sf-collection/marks-multi-select.html" sf-multiselect sf-deselectable sf-data="dataItems" sf-model="selectedItems" sf-identifier="id"></ul>';
         var element = commonMethods.compileDirective(directiveMarkup, scope);
 
         $('.sfCollectionItem:contains("4")').click();
