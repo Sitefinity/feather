@@ -17,7 +17,7 @@
             },
             link: function (scope, element, attrs, ctrl) {
                 scope.selectedTaxonId = null;
-                scope.taxons = [];
+                scope.filteredTaxons = [];
 
                 scope.requestChildrenCallback = function (taxon) {
                     if (taxon) {
@@ -36,6 +36,10 @@
                         scope.filterObject.taxon &&
                         scope.filterObject.taxon.id === newVal)
                         return;
+
+                    if (angular.isArray(newVal) && newVal.length > 0) {
+                        newVal = newVal[0];
+                    }
 
                     var filter = mediaService.newFilter();
                     filter.taxon.id = newVal;

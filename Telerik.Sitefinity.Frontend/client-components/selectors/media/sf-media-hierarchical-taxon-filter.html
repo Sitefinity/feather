@@ -6,7 +6,7 @@
 
 <sf-tree
     ng-hide="query"
-    ng-model="selectedTaxonId"
+    sf-model="selectedTaxonId"
     sf-request-children="requestChildrenCallback(parent)"
     sf-has-children-field="HasChildren"></sf-tree>
 
@@ -14,4 +14,4 @@
     ng-show="query"
     sf-template-url="client-components/selectors/media/sf-media-hierarchical-taxon-collection.html"
     sf-data="filteredTaxons"
-    ng-model="[selectedTaxonId]"></sf-collection>
+    sf-model="selectedTaxonId"></sf-collection>

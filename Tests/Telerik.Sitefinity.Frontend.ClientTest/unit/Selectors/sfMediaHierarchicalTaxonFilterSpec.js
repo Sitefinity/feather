@@ -56,7 +56,7 @@
 
         commonMethods.compileDirective(directiveMarkup, scope);
         scope.$digest();
-        debugger;
+
         $('span ul li:visible:contains("Taxon 50") span').click();
         scope.$digest();
 
@@ -74,13 +74,15 @@
         scope.$digest();
 
         $('span input').val('Searched');
-        scope.$digest();
+        angular.element('span input').triggerHandler('input');
+        scope.$apply();
 
-        $('span ul li:visible:contains("Searched 5")').click();
+        $('span ul li:visible:contains("Searched 50") span').click();
         scope.$digest();
 
         expect(scope.filterObject.taxon).not.toBe(null);
-        expect(scope.filterObject.taxon.id).toEqual(5);
+        expect(scope.$$childHead.selectedTaxonId).toEqual(50);
+        expect(scope.filterObject.taxon.id).toEqual(50);
         expect(scope.filterObject.basic).toBe(null);
     });
 });
