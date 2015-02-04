@@ -7,7 +7,7 @@
 
     //Load the module that contains the cached templates.
     beforeEach(module('templates'));
-    beforeEach(module('sfMediaFlatTaxonFilter'));
+    beforeEach(module('sfMediaHierarchicalTaxonFilter'));
 
     beforeEach(module(function ($provide) {
         $provide.value('sfHierarchicalTaxonService', hierarchicalTaxonService);
@@ -23,6 +23,13 @@
 
     beforeEach(function () {
         commonMethods.mockServerContextToEnableTemplateCache();
+    });
+
+    afterEach(function () {
+        //Tear down.
+        var leftOver = $('.testDiv');
+        leftOver.empty();
+        leftOver.remove();
     });
 
     var hierarchicalTaxonService = {
@@ -49,12 +56,12 @@
 
         commonMethods.compileDirective(directiveMarkup, scope);
         scope.$digest();
-
-        $('span ul li:visible:contains("Taxon 5")').click();
+        debugger;
+        $('span ul li:visible:contains("Taxon 50") span').click();
         scope.$digest();
 
         expect(scope.filterObject.taxon).not.toBe(null);
-        expect(scope.filterObject.taxon.id).toEqual(5);
+        expect(scope.filterObject.taxon.id).toEqual(50);
         expect(scope.filterObject.basic).toBe(null);
     });
 

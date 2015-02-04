@@ -25,6 +25,13 @@
         commonMethods.mockServerContextToEnableTemplateCache();
     });
 
+    afterEach(function () {
+        //Tear down.
+        var leftOver = $('.testDiv');
+        leftOver.empty();
+        leftOver.remove();
+    });
+
     var flatTaxonService = {
         getTaxons: function (taxonomyId, skip, take, search, frontendLanguages) {
             var result = [];

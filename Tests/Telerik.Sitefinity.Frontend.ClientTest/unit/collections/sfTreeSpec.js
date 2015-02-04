@@ -11,6 +11,13 @@
         templateCache = $templateCache;
     }));
 
+    afterEach(function () {
+        //Tear down.
+        var leftOver = $('.testDiv');
+        leftOver.empty();
+        leftOver.remove();
+    });
+
     it('[Boyko-Karadzhov] / should request items initially once with null parent.', function () {
         var scope = $rootScope.$new();
         var childrenRequestedCount = 0;

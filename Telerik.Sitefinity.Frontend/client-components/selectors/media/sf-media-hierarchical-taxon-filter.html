@@ -1,2 +1,9 @@
 ﻿<h5>{{sfTitle}}</h5>
-<sf-tree ng-model="selectedItemId" sf-request-children="requestChildrenCallback(parent)" />
+
+<p>
+    <input type="text" ng-model="query">
+</p>
+
+<sf-tree ng-model="selectedTaxonId"
+    sf-request-children="requestChildrenCallback(parent)"
+    sf-has-children-field="HasChildren" />
