@@ -7,7 +7,7 @@
                     sfMultiselect: '@',
                     items: '=sfData',
                     sfIdentifier: '@',
-                    selectedItemIds: '=?ngModel'
+                    selectedItemIds: '=?sfModel'
                 },
                 templateUrl: function (elem, attrs) {
                     if (!attrs.sfTemplateUrl) {

@@ -69,7 +69,7 @@
             expect(requestedParent.Id).toEqual('2');
     });
 
-    it('[Boyko-Karadzhov] / should mark preselected item bound by ng-model as selected.', function () {
+    it('[Boyko-Karadzhov] / should mark preselected item bound by sf-model as selected.', function () {
         var scope = $rootScope.$new();
         scope.selectedId = '3';
 
@@ -105,7 +105,7 @@
         expect($('div.initialMarkCollapsed span.collapsed').length).toEqual(2);
     });
 
-    it('[Boyko-Karadzhov] / should set the bound property in ng-model to the currently selected item.', function () {
+    it('[Boyko-Karadzhov] / should set the bound property in sf-model to the currently selected item.', function () {
         var scope = $rootScope.$new();
         scope.selectedId = '3';
 
@@ -124,7 +124,7 @@
         var scope = $rootScope.$new();
         scope.selectedId = '3';
 
-        selectionSetup(scope, '<div sf-tree ng-model="selectedId" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id" sf-expand-on-click></div>');
+        selectionSetup(scope, '<div sf-tree sf-model="selectedId" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id" sf-expand-on-click></div>');
 
         $('ul li span:contains("2") a.selector').click();
         scope.$digest();
@@ -167,7 +167,7 @@
             return result.promise;
         };
 
-        var directiveMarkup = directiveMarkup || '<div sf-tree ng-model="selectedId" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
+        var directiveMarkup = directiveMarkup || '<div sf-tree sf-model="selectedId" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
         commonMethods.compileDirective(directiveMarkup, scope);
     };
 });

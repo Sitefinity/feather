@@ -21,7 +21,7 @@
             return {
                 restrict: 'E',
                 scope: {
-                    selectedItem: '=?ngModel'
+                    selectedItem: '=?sfModel'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
