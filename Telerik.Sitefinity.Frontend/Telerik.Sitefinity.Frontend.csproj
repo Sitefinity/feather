@@ -454,10 +454,7 @@
     <None Include="assets\src\sass\kendo\_editor.sass" />
     <None Include="assets\src\sass\kendo\_kendo-ui.bootstrap.scss" />
     <None Include="assets\src\sass\kendo\_tabstrip.sass" />
-    <None Include="assets\src\sass\modules\_Btn.sass" />
-    <None Include="assets\src\sass\modules\_BtnGroup.sass" />
-    <None Include="assets\src\sass\modules\_Modal.sass" />
-    <None Include="assets\src\sass\modules\_test.scss" />
+    <None Include="assets\src\sass\modules\_tooltip.sass" />
     <None Include="assets\src\sass\sitefinity-backend.sass" />
     <None Include="assets\src\sass\_utility-classes.sass" />
     <None Include="assets\src\sass\_variables.sass" />
@@ -514,6 +511,8 @@
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-98a850f5da55483dd11b21851a40c70b.svg" />
+    <EmbeddedResource Include="assets\dist\css\html-field.css" />
+    <EmbeddedResource Include="assets\dist\css\html-field.min.css" />
     <Content Include="assets\feather-icons.css" />
     <Content Include="assets\gruntfile.js" />
     <EmbeddedResource Include="Modules\ControlTemplates\Web\Scripts\MvcControlTemplateEditor.js" />
@@ -532,6 +531,9 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-media-flat-taxon-filter.html" />
     <EmbeddedResource Include="client-components\search\sf-search-box.html" />
     <EmbeddedResource Include="client-components\search\sf-search-box.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-date-filter.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-date-filter.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-date-items.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

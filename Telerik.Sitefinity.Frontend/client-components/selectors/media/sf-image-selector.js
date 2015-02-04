@@ -2,7 +2,8 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter', 'sfSearchBox'])
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection',
+                                        'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter', 'sfMediaDateFilter', 'sfSearchBox'])
         .directive('sfImageSelector', ['serverContext', 'sfMediaService', 'serviceHelper', function (serverContext, sfMediaService, serviceHelper) {
             var constants = {
                 initialLoadedItemsCount: 50,
@@ -21,7 +22,7 @@
             return {
                 restrict: 'E',
                 scope: {
-                    selectedItem: '=?ngModel'
+                    selectedItem: '=?sfModel'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -32,6 +33,7 @@
                     scope.sortExpression = null;
                     scope.items = [];
                     scope.filterObject = sfMediaService.newFilter();
+                    scope.isLoading = false;
 
                     scope.loadMore = function () {
                         refresh(true);
@@ -72,6 +74,9 @@
                     });
 
                     var refresh = function (appendItems) {
+                        if (scope.isLoading)
+                            return;
+
                         var options = {
                             filter: scope.filterObject.composeExpression()
                         };
@@ -112,30 +117,36 @@
                             // custom filter is used (Libraries / Taxons / Dates)
                             callback = sfMediaService.images.getContent;
                         }
-
-                        if (appendItems) {
+                        
+                        if (scope.isLoading === false) {
                             scope.isLoading = true;
-                        }
 
-                        callback(options)
-                            .then(function (response) {
-                                if (response && response.Items) {
-                                    if (appendItems) {
-                                        scope.items = scope.items.concat(response.Items);
+                            var itemsLength = scope.items ? scope.items.length : 0;
+                            callback(options)
+                                .then(function (response) {
+                                    if (response && response.Items) {
+                                        if (appendItems) {
+                                            if (scope.items && scope.items.length === itemsLength) {
+                                                scope.items = scope.items.concat(response.Items);
+                                            }
+                                        }
+                                        else {
+                                            scope.items = response.Items;
+                                        }
                                     }
-                                    else {
-                                        scope.items = response.Items;
-                                    }
-                                }
-                            })
-                            .finally(function () {
-                                scope.isLoading = false;
-                            });
+                                })
+                                .finally(function () {
+                                    scope.isLoading = false;
+                                });
+                        }
                     };
 
                     // initial open populates dialog with all root libraries
                     scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
                     refresh();
+
+                    // initial filter dropdown option
+                    scope.selectedFilterOption = 1;
                 }
             };
         }]);

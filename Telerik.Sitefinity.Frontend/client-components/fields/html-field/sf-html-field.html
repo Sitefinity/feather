@@ -1,6 +1,7 @@
 ﻿<textarea id="editor" style="height: 340px;"
-    kendo-editor ng-model="ngModel"
+    kendo-editor ng-model="sfModel"
     k-encoded="false"
+    k-stylesheets='["/Frontend-Assembly/Telerik.Sitefinity.Frontend/assets/dist/css/html-field.min.css"]',
     k-tools='[
     "formatting",
     "bold", "italic", "underline", "trikethrough",
@@ -15,7 +16,7 @@
     "cleanFormatting",
     {
         name: "fullscreen",
-        template: "<a class=\"k-button js-custom-tool\" ng-click=\"toggleFullScreen()\"><span class=\"k-icon k-i-maximize k-tool-icon\"></span></a>"
+        template: "<a class=\"k-button js-custom-tool custom-tool\" ng-click=\"toggleFullScreen()\"><span class=\"js-fullScreen glyphicon\"></span></a>"
     },
     {
         name: "htmlView",
@@ -23,6 +24,5 @@
     }
     ]'>
 </textarea>
-
 
 <sf-link-selector-modal id="linkSelectorModal"></sf-link-selector-modal>
