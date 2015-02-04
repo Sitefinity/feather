@@ -62,9 +62,17 @@
 			line-height: 1
 			margin-top: -1px
 
+		// Grey background when item is hovered
 		&:hover,
 		&:focus
-			background-color: #f5f5f5
+			&:after
+				content: ""
+				position: absolute
+				background: #f5f5f5
+				height: 100%
+				width: 200%
+				left: -100%
+				top: 0
 
 		// When item is selected
 		&.active
@@ -106,6 +114,8 @@
 			text-overflow: ellipsis
 			max-width: 94%
 			line-height: 1.4
+			position: relative
+			z-index: 1
 
 	// Checkbox when list has multiselect
 	.k-checkbox
@@ -137,9 +147,10 @@
 
 .k-treeview--taxon
 	.k-treeview
-		.k-checkbox
-			top: 10px
+		.k-icon
+			top: 13px
 			left: 10px
 
-		.k-checkbox + .k-in a
-			padding-left: 30px
+		.k-checkbox
+			top: 10px
+			left: 32px
