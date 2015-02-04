@@ -41,15 +41,13 @@
                     };
 
                     scope.$watch('selectedItemId', function (newVal, oldVal) {
-                        // removes all taxons, so only the parent is set.
-                        var filter = sfMediaService.newFilter();
-
                         if (newVal !== oldVal) {
+                            var filter = sfMediaService.newFilter();
                             filter.parent = newVal;
-                        }
 
-                        // media selector watches this and reacts to changes.
-                        scope.filterObject = filter;
+                            // media selector watches this and reacts to changes.
+                            scope.filterObject = filter;
+                        }
                     });
                 }
             };

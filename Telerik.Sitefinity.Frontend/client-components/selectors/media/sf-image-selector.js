@@ -40,16 +40,28 @@
                     };
 
                     scope.narrowResults = function (query) {
-                        scope.filterObject.query = query;
+                        if (query && scope.filterObject.basic === constants.filterOptions.basic.allLibraries) {
+                            scope.filterObject.basic = null;
+                        }
+
+                        scope.filterObject.query = query || null;
                     };
 
                     scope.$watch('filterObject', function (newVal, oldVal) {
-                        if (newVal && (JSON.stringify(newVal) !== JSON.stringify(oldVal))) {
-                            if (newVal.basic === constants.filterOptions.basic.recentItems && scope.sortExpression !== constants.filterOptions.dateCreatedDescending) {
-                                scope.sortExpression = constants.filterOptions.dateCreatedDescending;
+                        if (newVal) {
+                            var newValSerialized = JSON.stringify(newVal);
+                            if (newValSerialized === JSON.stringify(sfMediaService.newFilter())) {
+                                scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
+                                return;
                             }
-                            else {
-                                refresh();
+
+                            if (newValSerialized !== JSON.stringify(oldVal)) {
+                                if (newVal.basic === constants.filterOptions.basic.recentItems && scope.sortExpression !== constants.filterOptions.dateCreatedDescending) {
+                                    scope.sortExpression = constants.filterOptions.dateCreatedDescending;
+                                }
+                                else {
+                                    refresh();
+                                }
                             }
                         }
                     }, true);
@@ -92,7 +104,10 @@
                         }
 
                         var callback;
-                        if (scope.filterObject.basic) {
+                        if (scope.filterObject.query) {
+                            callback = sfMediaService.images.getImages;
+                        }
+                        else if (scope.filterObject.basic) {
                             // Defaul filter is used (Recent / My / All)
                             if (scope.filterObject.basic === constants.filterOptions.basic.recentItems) {
                                 callback = sfMediaService.images.getImages;
@@ -111,7 +126,7 @@
                             // custom filter is used (Libraries / Taxons / Dates)
                             callback = sfMediaService.images.getContent;
                         }
-                        
+
                         if (scope.isLoading === false) {
                             scope.isLoading = true;
 
@@ -137,6 +152,7 @@
 
                     // initial open populates dialog with all root libraries
                     scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
+                    refresh();
 
                     // initial filter dropdown option
                     scope.selectedFilterOption = 1;
