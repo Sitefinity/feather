@@ -132,6 +132,9 @@
                     // initial open populates dialog with all root libraries
                     scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
                     refresh();
+
+                    // initial filter dropdown option
+                    scope.selectedFilterOption = 1;
                 }
             };
         }]);
