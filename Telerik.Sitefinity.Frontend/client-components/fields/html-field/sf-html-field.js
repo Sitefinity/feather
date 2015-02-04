@@ -5,7 +5,7 @@
         return {
             restrict: "E",
             scope: {
-                ngModel: '='
+                sfModel: '='
             },
             templateUrl: function (elem, attrs) {
                 var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -23,12 +23,16 @@
                 var fullToolbar = null;
                 var shortToolbar = null;
                 var customButtons = null;
+                var fullScreenIcon = null;
 
                 scope.$on('kendoWidgetCreated', function (event, widget) {
                     if (widget.wrapper && widget.wrapper.is('.k-editor')) {
                         widget.focus();
                         editor = widget;
                         content = editor.wrapper.find('iframe.k-content').first();
+
+                        fullScreenIcon = $(".js-fullScreen");
+                        fullScreenIcon.addClass("glyphicon-resize-full");
                     }
                 });
 
@@ -63,7 +67,7 @@
                     if (isInHtmlView === false) {
                         scope.htmlViewLabel = 'Design';
 
-                        var htmlEditor = $('<textarea class="html k-content" ng-model="ngModel" style="resize: none">');
+                        var htmlEditor = $('<textarea class="html k-content" ng-model="sfModel" style="resize: none">');
                         $compile(htmlEditor)(scope);
                         htmlEditor.insertAfter(content);
                         content.hide();
@@ -107,15 +111,22 @@
                         return;
                     }
 
+                    fullScreenIcon = $(".js-fullScreen");
+
                     var modalHeaderAndFooter = $(".modal-dialog > .modal-content > .modal-header, .modal-dialog > .modal-content > .modal-footer");
 
                     var mainDialog = $(".modal-dialog");
 
                     if (isFullScreen === false) {
                         mainDialog.addClass("modal-full-screen");
+                        fullScreenIcon.removeClass("glyphicon-resize-full");
+                        fullScreenIcon.addClass("glyphicon-resize-small");
                     }
                     else {
                         mainDialog.removeClass("modal-full-screen");
+
+                        fullScreenIcon.removeClass("glyphicon-resize-small");
+                        fullScreenIcon.addClass("glyphicon-resize-full");
                     }
 
                     modalHeaderAndFooter.toggle();

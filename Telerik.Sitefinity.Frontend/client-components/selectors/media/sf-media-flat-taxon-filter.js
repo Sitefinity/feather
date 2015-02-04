@@ -20,6 +20,7 @@
                     scope.selectedItems = [];
                     scope.taxons = [];
                     scope.query = null;
+                    scope.isLoading = false;
 
                     scope.$watch('selectedItems', function (newValue, oldValue) {
                         if (newValue === oldValue)
@@ -53,15 +54,27 @@
                     };
 
                     var load = function (append) {
+                        if (scope.isLoading)
+                            return;
+
+                        scope.isLoading = true;
                         var skip = append ? scope.taxons.length : 0;
                         taxonService.getTaxons(scope.sfTaxonomyId, skip, pageSize, scope.query)
                             .then(function (data) {
                                 if (data && data.Items) {
-                                    if (append)
-                                        scope.taxons = scope.taxons.concat(data.Items);
-                                    else
+                                    if (append) {
+                                        if (scope.taxons && scope.taxons.length === skip) {
+                                            scope.taxons = scope.taxons.concat(data.Items);
+                                            scope.$digest();
+                                        }
+                                    }
+                                    else {
                                         scope.taxons = data.Items;
+                                    }
                                 }
+                            })
+                            .finally(function () {
+                                scope.isLoading = false;
                             });
                     };
 

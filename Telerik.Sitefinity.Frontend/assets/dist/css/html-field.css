@@ -1,0 +1,5 @@
+/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/html-field.sass */
+body[contenteditable="true"] {
+  padding: 20px;
+  box-sizing: border-box;
+  height: auto; }
