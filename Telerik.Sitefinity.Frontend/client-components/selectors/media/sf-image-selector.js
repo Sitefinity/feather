@@ -39,13 +39,6 @@
                         refresh(true);
                     };
 
-                    scope.sortResults = function (sortExpression) {
-                        if (sortExpression) {
-                            scope.sortExpression = sortExpression;
-                            //refresh();
-                        }
-                    };
-
                     scope.$watch('filterObject', function (newVal, oldVal) {
                         if (newVal && (JSON.stringify(newVal) !== JSON.stringify(oldVal))) {
                             if (newVal.basic === constants.filterOptions.basic.recentItems && scope.sortExpression !== constants.filterOptions.dateCreatedDescending) {
