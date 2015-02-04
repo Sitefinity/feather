@@ -20,8 +20,8 @@
             };
 
             var constants = {
-                dates: [
-                    { text: 'Any time', dateValue: 'AnyTime' },
+                anyTimeDate: { text: 'Any time', dateValue: 'AnyTime' },
+                defaultDates: [
                     { text: 'Last 1 day', dateValue: getDate(1) },
                     { text: 'Last 3 days', dateValue: getDate(3) },
                     { text: 'Last 1 week', dateValue: getDate(7) },
@@ -32,11 +32,13 @@
                     { text: 'Last 5 years', dateValue: getDate(0, 0, 5) }
                 ]
             };
-
+            ///////////////////////////////////// TODO : any time constant, default values constants, concat and have all by default.
             return {
                 restrict: 'AE',
                 scope: {
-                    filterObject: '=sfModel'
+                    filterObject: '=sfModel',
+                    sfDates: '@',
+                    sfShowAnyTime: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -47,27 +49,27 @@
                     if (scope.filterObject && sfMediaService.newFilter().constructor.prototype !== scope.filterObject.constructor.prototype) {
                         throw { Message: 'ng-model must be of type MediaFilter.' };
                     }
+                    
+                    scope.dates = scope.sfDates || constants.defaultDates;
 
-                    scope.dates = constants.dates;
+                    if (scope.sfShowAnyTime !== undefined && scope.sfShowAnyTime.toLowerCase() !== 'false') {
+                        scope.dates.unshift(constants.anyTimeDate);
+                    }
+
                     scope.selectedDate = [];
 
                     scope.$watch('selectedDate', function (newVal, oldVal) {
-                        if (newVal && newVal[0]) {
-                            // removes all taxons, so only the parent is set.
-                            var filter = sfMediaService.newFilter();
+                        // removes all taxons, so only the parent is set.
+                        var filter = sfMediaService.newFilter();
 
-                            // if deselected (undefined) the value must remain the original null
-                            if (newVal !== oldVal && newVal[0] !== undefined) {
-                                // sf collection always binds to array of items.
-                                filter.date = newVal[0];
-                            }
+                        // if deselected (undefined) the value must remain the original null
+                        if (newVal !== oldVal && newVal[0] !== undefined) {
+                            // sf collection always binds to array of items.
+                            filter.date = newVal[0];
+                        }
 
-                            // media selector watches this and reacts to changes.
-                            scope.filterObject = filter;
-                        }
-                        else {
-                            scope.selectedDate = [scope.filterObject.date];
-                        }
+                        // media selector watches this and reacts to changes.
+                        scope.filterObject = filter;
                     }, true);
                 }
             };
