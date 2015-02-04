@@ -5,6 +5,7 @@
                 restrict: 'AE',
                 scope: {
                     sfMultiselect: '@',
+                    sfDeselectable: '@',
                     items: '=sfData',
                     sfIdentifier: '@',
                     selectedItemIds: '=?sfModel'
@@ -25,7 +26,7 @@
 
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.selectedItemIds = scope.selectedItemIds || [];
-
+                    
                     element.addClass(classes.grid);
                     scope.isSelected = function (item) {
                         if (scope.selectedItemIds === undefined) {
@@ -42,11 +43,12 @@
 
                         var itemIndex = scope.selectedItemIds.indexOf(item[scope.sfIdentifier]);
 
-                        if (scope.sfMultiselect === undefined) {
+                        if (scope.sfMultiselect === undefined || scope.sfMultiselect.toLowerCase() === 'false') {
                             if (itemIndex < 0) {
                                 scope.selectedItemIds = [item[scope.sfIdentifier]];
                             }
-                            else {
+                            else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
+                                // item is deselected
                                 scope.selectedItemIds = [];
                             }
                         }
@@ -54,7 +56,8 @@
                             if (itemIndex < 0) {
                                 scope.selectedItemIds.push(item[scope.sfIdentifier]);
                             }
-                            else {
+                            else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
+                                // item is deselected
                                 scope.selectedItemIds.splice(itemIndex, 1);
                             }
                         }

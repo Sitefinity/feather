@@ -16,6 +16,7 @@
                     sfExpandOnSelect: '@',
                     sfItemTemplateUrl: '@',
                     sfItemTemplateAssembly: '@',
+                    sfDeselectable: '@',
                     sfRequestChildren: '&'
                 },
                 templateUrl: function (elem, attrs) {
@@ -32,7 +33,7 @@
                     scope.hierarchy = {};
                     
                     // In case no function for getting children is provided, a default one returning empty array is provided.
-                    scope.sfRequestChildren = scope.sfRequestChildren || function () { return []; };
+                    scope.sfRequestChildren = scope.sfRequestChildren || function () { var r = $q.defer(); r.resolve([]); return r.$promise; };
 
                     scope.hasChildren = function (node) {
                         node = node || {};
@@ -57,7 +58,8 @@
                         if (node.item[scope.sfIdentifier] !== scope.selectedItemId) {
                             scope.selectedItemId = node.item[scope.sfIdentifier];
                         }
-                        else {
+                        else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
+                            // item is deselected
                             scope.selectedItemId = null;
                         }
 

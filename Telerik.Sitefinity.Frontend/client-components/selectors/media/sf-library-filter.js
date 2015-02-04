@@ -18,7 +18,7 @@
                 },
                 link: function (scope, element, attrs, ctrl) {
                     if (scope.filterObject && sfMediaService.newFilter().constructor.prototype !== scope.filterObject.constructor.prototype) {
-                        throw { Message: 'ng-model must be of type MediaFilter.' };
+                        throw { Message: 'sf-model must be of type MediaFilter.' };
                     }
 
                     if (sfMediaService[scope.sfMediaType] === undefined) {

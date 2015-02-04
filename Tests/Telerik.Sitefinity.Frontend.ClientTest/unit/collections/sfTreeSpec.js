@@ -133,11 +133,31 @@
         expect($('ul li span:contains("2")').is('.collapsed')).toBe(true);
     });
 
-    it('[dzhenko] / should deselect item if clicked for the second time.', function () {
+    it('[dzhenko] / should deselect item if clicked for the second time if the tree has sf-deselectable attribute.', function () {
         var scope = $rootScope.$new();
         scope.selectedId = '1';
 
-        selectionSetup(scope);
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span ng-class="{ \'selected\': isSelected(node), \'collapsed\': node.collapsed }">{{node.item.id}}<a ng-click="toggle(node)" class="expander"></a><a class="selector" ng-click="select(node)"></a></span><ul><li ng-repeat="node in node.children" ng-include src="itemTemplateUrl"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul ><li ng-repeat="node in hierarchy" ng-include src="itemTemplateUrl"></li></ul>');
+
+        scope.requestChildren = function (parent) {
+            var result = $q.defer();
+
+            if (parent === null) {
+                result.resolve([{ id: '1' }, { id: '2' }]);
+            }
+            else if (parent.id === '2') {
+                result.resolve([{ id: '3' }, { id: '4' }]);
+            }
+            else {
+                result.resolve([]);
+            }
+
+            return result.promise;
+        };
+
+        var directiveMarkup = directiveMarkup || '<div sf-tree sf-model="selectedId" sf-deselectable sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
+        commonMethods.compileDirective(directiveMarkup, scope);
 
         expect(scope.selectedId).toEqual('1');
 
@@ -145,6 +165,40 @@
         scope.$digest();
 
         expect(scope.selectedId).toEqual(null);
+    });
+
+    it('[dzhenko] / should deselect item if clicked for the second time if the tree is missing sf-deselectable attribute.', function () {
+        var scope = $rootScope.$new();
+        scope.selectedId = '1';
+
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span ng-class="{ \'selected\': isSelected(node), \'collapsed\': node.collapsed }">{{node.item.id}}<a ng-click="toggle(node)" class="expander"></a><a class="selector" ng-click="select(node)"></a></span><ul><li ng-repeat="node in node.children" ng-include src="itemTemplateUrl"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul ><li ng-repeat="node in hierarchy" ng-include src="itemTemplateUrl"></li></ul>');
+
+        scope.requestChildren = function (parent) {
+            var result = $q.defer();
+
+            if (parent === null) {
+                result.resolve([{ id: '1' }, { id: '2' }]);
+            }
+            else if (parent.id === '2') {
+                result.resolve([{ id: '3' }, { id: '4' }]);
+            }
+            else {
+                result.resolve([]);
+            }
+
+            return result.promise;
+        };
+
+        var directiveMarkup = directiveMarkup || '<div sf-tree sf-model="selectedId" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
+        commonMethods.compileDirective(directiveMarkup, scope);
+
+        expect(scope.selectedId).toEqual('1');
+
+        $('ul li span:contains("1") a.selector').click();
+        scope.$digest();
+
+        expect(scope.selectedId).toEqual('1');
     });
 
     var selectionSetup = function (scope, directiveMarkup) {

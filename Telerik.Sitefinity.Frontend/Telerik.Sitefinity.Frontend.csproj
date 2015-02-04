@@ -529,6 +529,9 @@
     <EmbeddedResource Include="GridSystem\Templates\container.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-flat-taxon-collection.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-flat-taxon-filter.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-date-filter.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-date-filter.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-date-items.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
