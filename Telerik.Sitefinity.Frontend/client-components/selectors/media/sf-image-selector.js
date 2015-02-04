@@ -3,7 +3,7 @@
     sfSelectors.requires.push('sfImageSelector');
 
     angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection',
-                                        'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter', 'sfMediaDateFilter'])
+                                        'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter', 'sfMediaDateFilter', 'sfSortBox'])
         .directive('sfImageSelector', ['serverContext', 'sfMediaService', 'serviceHelper', function (serverContext, sfMediaService, serviceHelper) {
             var constants = {
                 initialLoadedItemsCount: 50,
