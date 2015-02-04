@@ -42,7 +42,7 @@
                     scope.sortResults = function (sortExpression) {
                         if (sortExpression) {
                             scope.sortExpression = sortExpression;
-                            refresh();
+                            //refresh();
                         }
                     };
 
