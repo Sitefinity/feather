@@ -3,7 +3,7 @@
     var provide;
     var $q;
     var mediaService;
-    var directiveMarkup = '<span sf-media-date-filter sf-model="filterObject"></span>';
+    var directiveMarkup = '<span sf-media-date-filter sf-show-any-time sf-model="filterObject"></span>';
     var scope;
 
     //Load the module that contains the cached templates.

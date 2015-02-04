@@ -32,7 +32,6 @@
                     { text: 'Last 5 years', dateValue: getDate(0, 0, 5) }
                 ]
             };
-            ///////////////////////////////////// TODO : any time constant, default values constants, concat and have all by default.
             return {
                 restrict: 'AE',
                 scope: {
@@ -49,7 +48,11 @@
                     if (scope.filterObject && sfMediaService.newFilter().constructor.prototype !== scope.filterObject.constructor.prototype) {
                         throw { Message: 'ng-model must be of type MediaFilter.' };
                     }
-                    
+
+                    // Unable to access scope properties bound by @
+                    scope.sfDates = attrs.sfDates;
+                    scope.sfShowAnyTime = attrs.sfShowAnyTime;
+
                     scope.dates = scope.sfDates || constants.defaultDates;
 
                     if (scope.sfShowAnyTime !== undefined && scope.sfShowAnyTime.toLowerCase() !== 'false') {
