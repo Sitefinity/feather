@@ -34,6 +34,7 @@
                     scope.items = [];
                     scope.filterObject = sfMediaService.newFilter();
                     scope.isLoading = false;
+                    scope.showSortingAndView = false;
 
                     scope.loadMore = function () {
                         refresh(true);
