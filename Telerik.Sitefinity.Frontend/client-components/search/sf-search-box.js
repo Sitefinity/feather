@@ -32,8 +32,8 @@
 
                             if (scope.sfEnableAutocomplete && scope.sfGetSuggestions) {
                                 scope.sfGetSuggestions({ query: scope.sfModel }).then(function (response) {
-                                    if (response && response.Items && response.Items.length) {
-                                        scope.suggestions = response.Items;
+                                    if (response && response.length) {
+                                        scope.suggestions = response;
                                         scope.showSuggestions = true;
                                     }
                                 });
