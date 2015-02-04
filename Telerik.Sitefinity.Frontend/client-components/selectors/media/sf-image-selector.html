@@ -22,10 +22,16 @@
         <div class="col-md-2">
             <p><button>Upload image</button></p>
 
-            <span sf-media-basic-filters sf-model="filterObject" sf-template-url="client-components/selectors/media/sf-image-basic-filters.html"></span>
-            <br />
+            <span sf-media-basic-filters
+                sf-model="filterObject"
+                sf-template-url="client-components/selectors/media/sf-image-basic-filters.html"></span>
 
-            <span ng-show="selectedFilterOption == 1" sf-library-filter sf-model="filterObject" sf-media-type="images"></span>
+            <br/>
+
+            <span ng-show="selectedFilterOption == 1"
+                sf-library-filter
+                sf-model="filterObject"
+                sf-media-type="images"></span>
 
             <span ng-show="selectedFilterOption == 2"
                 sf-media-hierarchical-taxon-filter
@@ -34,14 +40,21 @@
                 sf-taxonomy-id="E5CD6D69-1543-427B-AD62-688A99F5E7D4"
                 sf-field="Category"></span>
 
-            <!--<span ng-show="selectedFilterOption == 3" sf-media-flat-taxon-filter sf-model="filterObject" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-title="Tags" sf-field="Tags"></span>-->
+            <span ng-show="selectedFilterOption == 3"
+                sf-media-flat-taxon-filter
+                sf-model="filterObject"
+                sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374"
+                sf-title="Tags"
+                sf-field="Tags"></span>
 
-            <span ng-show="selectedFilterOption == 4" sf-media-date-filter sf-show-any-time sf-model="filterObject"></span>
+            <span ng-show="selectedFilterOption == 4"
+                sf-media-date-filter
+                sf-show-any-time sf-model="filterObject"></span>
 
             <select ng-model="selectedFilterOption">
                 <option value="1" selected="selected">Libraries</option>
-                <option value="2" selected="selected">Categories</option>
-                <!--<option value="3">Tags</option>-->
+                <option value="2">Categories</option>
+                <option value="3">Tags</option>
                 <option value="4">Dates</option>
             </select>
         </div>

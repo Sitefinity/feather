@@ -81,7 +81,6 @@
         scope.$digest();
 
         expect(scope.filterObject.taxon).not.toBe(null);
-        expect(scope.$$childHead.selectedTaxonId).toEqual(50);
         expect(scope.filterObject.taxon.id).toEqual(50);
         expect(scope.filterObject.basic).toBe(null);
     });
