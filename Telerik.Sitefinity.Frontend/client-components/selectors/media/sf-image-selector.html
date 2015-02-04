@@ -6,10 +6,16 @@
         <div class="col-md-10">
             <div class="row">
                 <span class="pull-left">Breadcrumb</span>
-                <input class="pull-right" type="text" ng-model="filterObject.query" placeholder="Search by title" />
+                <sf-search-box class="pull-right" sf-placeholder="Narrow by typing" sf-action="narrowResults(query)"> </sf-search-box>
             </div>
             <div class="row">
                 <div sf-collection sf-data="items" sf-model="selectedItem" sf-template-url="client-components/selectors/media/sf-image-collection.html"></div>
+                <div>
+                    <button type="button" class="btn btn-link" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">Sorting and view</button>
+                    <div ng-show="showSortingAndView">
+                        <sf-sort-box class="pull-left" sf-model="sortExpression"></sf-sort-box>
+                    </div>
+                </div>                
             </div>
         </div>
 
