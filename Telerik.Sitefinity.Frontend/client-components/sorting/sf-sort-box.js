@@ -4,7 +4,7 @@
         return {
             restrict: 'AE',
             scope: {
-                sfSortOptions: '@?',
+                sfSortOptions: '=?',
                 sfModel: '='
             },
             templateUrl: function (elem, attrs) {
