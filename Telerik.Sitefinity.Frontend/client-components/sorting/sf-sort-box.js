@@ -1,5 +1,5 @@
 ﻿; (function ($) {
-    angular.module('sfSortBox', [])
+    angular.module('sfSortBox', ['sfServices'])
     .directive('sfSortBox', ['serverContext', function (serverContext) {
         return {
             restrict: 'AE',
@@ -13,8 +13,11 @@
                 return serverContext.getEmbeddedResourceUrl(assembly, url);
             },
             link: function (scope, element, attrs, ctrl) {
-                if (!scope.sfAction)
+                if (!scope.sfAction) {
                     scope.showError = true;
+                    throw { message: 'sf-action must be provided.' };
+                }
+                    
                 if (!scope.sfSortOptions) {
                     /*
                     * Provides a list of supported sorting options.
@@ -34,6 +37,7 @@
                         value: 'Title DESC'
                     }];
                 }
+
                 /*
                 * The predefined sort expressions present in the user interface. Can have
                 * following values:
