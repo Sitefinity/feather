@@ -31,8 +31,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("newsItemsMultipleSelector");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(selectedNewsNames);
-            var countOfSelectedItems = selectedNewsNames.Count();
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(this.selectedNewsNames);
+            var countOfSelectedItems = this.selectedNewsNames.Count();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText("Title15");
 
@@ -43,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(5);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
 
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(newSelectedNewsNames, true);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.newSelectedNewsNames, true);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
 
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);

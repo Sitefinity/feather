@@ -10,9 +10,10 @@
 			<img ng-if="item.IsFolder === false" ng-src="{{item.ThumbnailUrl}}" ng-class="{'selected' : isSelected(item)}" src="" alt="{{item.Title}}" width="100" height="100" style="border: 2px solid yellow" />
 		</li>
 	</ul>
+    <div ng-show="$parent.isLoading">Loading...</div>
 </div>
 
-<span>Selected item id: {{ selectedItems[0] }}</span>
+<span>Selected item id: {{ $parent.selectedItems[0] }}</span>
 <br />
 <button ng-click="switchToGrid()">Grid</button>
 <button ng-click="switchToList()">List</button>
@@ -25,7 +26,7 @@
 	.sf-collection-list {
 		border: 3px solid red;
 	}
-	.selected {
+	img.selected {
 		border: 10px solid orange!important;
 	}
 </style>

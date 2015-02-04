@@ -23,8 +23,7 @@ module.exports = function (grunt) {
 				'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 				'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
 				'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
-				'Telerik.Sitefinity.Frontend/client-components/feather-module.js',
-				'Telerik.Sitefinity.Frontend/client-components/fields/**.js',
+				'Telerik.Sitefinity.Frontend/client-components/fields/**/*.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-services.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selectors.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.js',
@@ -72,7 +71,7 @@ module.exports = function (grunt) {
 			  base: 'Telerik.Sitefinity.Frontend'
 			},
 			main: {
-			  src: ['Telerik.Sitefinity.Frontend/client-components/selectors/**/*.html'],
+			  src: ['Telerik.Sitefinity.Frontend/client-components/**/*.html'],
 			  dest: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js'
 			},
 		},

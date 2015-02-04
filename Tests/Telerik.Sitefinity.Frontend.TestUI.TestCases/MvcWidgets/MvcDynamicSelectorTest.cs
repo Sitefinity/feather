@@ -23,7 +23,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
         TestCategory(FeatherTestCategories.Selectors)]
         public void MvcDynamicSelectorTest()
-
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);

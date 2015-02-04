@@ -13,11 +13,11 @@ module.exports = function (config) {
                   'helpers/jasmine-matchers.js',
                   '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls-0.11.0.min.js',
 
+				  '../../Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js',
                   '../../Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 	              '../../Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
 	              '../../Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
-                  '../../Telerik.Sitefinity.Frontend/client-components/feather-module.js',
-				  '../../Telerik.Sitefinity.Frontend/client-components/fields/**.js',
+				  '../../Telerik.Sitefinity.Frontend/client-components/fields/**/*.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-services.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selectors.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-bubbles-selection.html',
@@ -46,7 +46,7 @@ module.exports = function (config) {
             '../../Telerik.Sitefinity.Frontend/Designers/Scripts/*.js': 'coverage',
             '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/*.js': 'coverage',
             '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Designer/*.js': 'coverage',
-            '../../Telerik.Sitefinity.Frontend/client-components/selectors/**/*.html': ['ng-html2js']
+            '../../Telerik.Sitefinity.Frontend/client-components/**/*.html': ['ng-html2js']
         },
 
         //Converts directive's external html templates into javascript strings and stores them in the Angular's $templateCache service.

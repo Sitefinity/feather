@@ -1,10 +1,10 @@
 ﻿(function () {
-    angular.module('sfSelectors')
+    angular.module('sfMediaBasicFilters', ['sfServices'])
         .directive('sfMediaBasicFilters', ['serverContext', 'sfMediaService', function (serverContext, mediaService) {
             return {
                 restrict: 'A',
                 scope: {
-                    filterObject: '=ngModel'
+                    filterObject: '=sfModel'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';

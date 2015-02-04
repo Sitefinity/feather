@@ -1,0 +1,10 @@
+﻿<h5>{{sfTitle}}</h5>
+
+<p>
+    <input type="text" ng-model="query"></input>
+</p>
+
+<span sf-collection sf-model="selectedItems" 
+    sf-data="taxons" 
+    sf-template-url="client-components/selectors/media/sf-flat-taxon-collection.html">
+</span>

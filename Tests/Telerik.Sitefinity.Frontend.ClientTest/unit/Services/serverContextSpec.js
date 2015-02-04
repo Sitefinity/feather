@@ -24,11 +24,16 @@
     
     describe('default context - sitefinity', function () {
         var serverContext;
+        var originalGetRootedUrl;
+        var originalGetEmbeddedResourceUrl;
 
         beforeEach(module('sfServices'));
 
         //Mock sitefinity global variable
         beforeEach(function () {
+            originalGetRootedUrl = sitefinity.getRootedUrl;
+            originalGetEmbeddedResourceUrl = sitefinity.getEmbeddedResourceUrl;
+
             sitefinity.getRootedUrl = jasmine.createSpy()
                 .andCallFake(function (path) {
                     return appPath + '/' + path;
@@ -43,6 +48,11 @@
         beforeEach(module(function ($provide) {
             $provide.value('widgetContext', widgetContext);
         }));
+
+        afterEach(function () {
+            sitefinity.getRootedUrl = originalGetRootedUrl;
+            sitefinity.getEmbeddedResourceUrl = originalGetEmbeddedResourceUrl;
+        });
 
         beforeEach(inject(function (_serverContext_) {
             serverContext = _serverContext_;

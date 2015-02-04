@@ -1,0 +1,5 @@
+﻿<span ng-bind="node.item.Title" ng-class="{'selected' : isSelected(node) === true}" ng-click="select(node)" />
+<button ng-if="hasChildren(node)" ng-click="toggle(node)">Expand</button>
+<ul ng-if="hasChildren(node)" ng-class="{'collapsed' : node.collapsed === true}">
+    <li ng-repeat="node in node.children" ng-include src="itemTemplateUrl" />
+</ul>

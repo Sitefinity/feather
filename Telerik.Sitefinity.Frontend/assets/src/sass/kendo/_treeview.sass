@@ -1,241 +1,156 @@
-$tree-item-interval: 30px
-.k-treeview--selection.k-treeview
-    .k-in
-        padding: 0
-        margin:0
-        border:0
-        width: 100%
-        display: inline-block
+// Disclaimer
+// There are some very ugly hacks in the code below
+// That's what it takes to make the Kendo Treeview look
+// like an expandable Bootstrap List group. Enjoy. :-)
 
-    .k-in
-        [class*=" icon-item-"],
-        [class^=icon-item-]
-            margin: 5px 7px 0 0
+.k-treeview.k-treeview--list-group
+	// Expand/collapse icon
+	.k-icon
+		margin:0
+		left: 10px
+		top: 18px
+		position: absolute
+		z-index: 2
+		vertical-align: top
 
-        .small
-            display: block
-            line-height: 1
-            margin-top: -4px
+	// Item
+	.k-item
+		padding-left: 20px
+		position: relative
 
-        .active
-            [class*=" icon-item-"]:before,
-            [class^=icon-item-]:before
-                color: #fff
+		> div
+			position: relative
 
-            .small
-                color: #9CC5F7
+	// Parent element of the link below
+	.k-in
+		padding: 0
+		margin:0
+		border:0
+		width: 100%
+		display: inline-block
 
+	// Link in every item
+	a
+		display: block
+		background-color: #fff
+		padding: 10px 0 10px 0
+		padding-left: 30px
+		color: #000
+		text-decoration: none
+		overflow: hidden
 
+		// Item borders
+		&:before
+			content: ""
+			position: absolute
+			z-index: 1
+			height: 1px
+			width: 200%
+			left: -100%
+			top: 0
+			background: #ddd
 
-    .k-state-hover,
-    .k-state-selected,
-    .k-state-focused
-        background: none
-        box-shadow: none
+		// Item status icon
+		[class*=" icon-item-"],
+		[class^=icon-item-]
+			margin: 5px 7px 0 0
+			z-index: 1
 
-    .k-item
-        padding-left: 0
-        > div
-            position: relative
+		// Item status text
+		.small
+			display: block
+			line-height: 1
+			margin-top: -1px
 
-        a
-            display: block
-            background-color: #fff
-            border-top: 1px solid #ddd
-            padding: 10px 0 10px 0
-            padding-left: $tree-item-interval //30px
-            color: #000
-            text-decoration: none
-            overflow: hidden
-            &.disabled
-                span
-                    &:first-child
-                        max-width: 300px
-                em
-                    vertical-align: top
+		// Grey background when item is hovered
+		&:hover,
+		&:focus
+			&:after
+				content: ""
+				position: absolute
+				background: #f5f5f5
+				height: 100%
+				width: 200%
+				left: -100%
+				top: 0
 
-            span
-                display: inline-block
-                overflow: hidden
-                text-overflow: ellipsis
-                max-width:100%
+		// When item is selected
+		&.active
+			color: #fff
 
-        .active
-            background-color: #428bca
-            color: #fff
+			> span
+				color: #fff
+				position: relative
+				z-index: 10
 
-        .k-checkbox
-            position: absolute
-            margin-top: 0
-            z-index: 2
-            top: 15px
-            left: 1.066*$tree-item-interval //32px
+			// Blue background when item is selected
+			&:after
+				content: ""
+				position: absolute
+				background: #428bca
+				height: 100%
+				width: 200%
+				left: -100%
+				top: 0
 
-        .k-checkbox+.k-in a
-            padding-left: 1.833*$tree-item-interval //55px
+			[class*=" icon-item-"]:before,
+			[class^=icon-item-]:before
+				color: #fff
 
-        .k-group
-            .k-item
-                >div
-                    .k-in a
-                        padding-left: 1.833*$tree-item-interval //55px
+			.small
+				color: #9CC5F7
 
-                    .k-checkbox
-                        left: 1.9*$tree-item-interval //57
+		// When item is disabled
+		// (e.g. in link selector when the page is not translated to a language)
+		&.disabled
+			[class*=" icon-item-"],
+			[class^=icon-item-]
+				opacity: .5
+				color: blue
 
-                    .k-checkbox+.k-in a
-                        padding-left: 2.666*$tree-item-interval //80px
+		> span
+			display: inline-block
+			overflow: hidden
+			text-overflow: ellipsis
+			max-width: 94%
+			line-height: 1.4
+			position: relative
+			z-index: 1
 
-                    .k-icon
-                        left: 1.166*$tree-item-interval //35px
+	// Checkbox when list has multiselect
+	.k-checkbox
+		position: absolute
+		margin-top: 0
+		z-index: 2
+		top: 15px
+		left: 32px
 
+	.k-checkbox + .k-in a
+		padding-left: 55px
 
-                .k-group
-                    .k-item
-                        >div
-                            .k-in a
-                                padding-left: 2.666*$tree-item-interval //80px
+	// Hover & focus states
+	.k-state-hover,
+	.k-state-selected,
+	.k-state-focused
+		background: none
+		box-shadow: none
 
-                            .k-checkbox
-                                left: 2.733*$tree-item-interval //82px
+	> .k-group
+		overflow: hidden
+		border: 1px solid #ddd
+		border-radius: 4px
+		border-top: 0
 
-                            .k-checkbox+.k-in a
-                                padding-left: 3.5*$tree-item-interval //105px
+		> li
+			padding-left: 0
+			position: relative
 
-                            .k-icon
-                                left: 2*$tree-item-interval //60px
+.k-treeview--taxon
+	.k-treeview
+		.k-icon
+			top: 13px
+			left: 10px
 
-
-                        .k-group
-                            .k-item
-                                >div
-                                    .k-in a
-                                        padding-left: 3.5*$tree-item-interval//105px
-
-                                    .k-checkbox
-                                        left: 3.5666*$tree-item-interval //107px
-
-                                    .k-checkbox+.k-in a
-                                        padding-left: 4.333*$tree-item-interval //130px
-
-                                    .k-icon
-                                        left: 2.833*$tree-item-interval //85px
-
-
-                                .k-group
-                                    .k-item
-                                        >div
-                                            .k-in a
-                                                padding-left: 4.333*$tree-item-interval //130px
-
-                                            .k-checkbox
-                                                left: 4.4*$tree-item-interval//132px
-
-                                            .k-checkbox+.k-in a
-                                                padding-left: 5.166*$tree-item-interval //155px
-
-                                            .k-icon
-                                                left: 3.666*$tree-item-interval //110px
-
-
-                                        .k-group
-                                            .k-item
-                                                >div
-                                                    .k-in a
-                                                        padding-left: 5.166*$tree-item-interval //155px
-
-                                                    .k-checkbox
-                                                        left: 5.233*$tree-item-interval //157px
-
-                                                    .k-checkbox+.k-in a
-                                                        padding-left: 6*$tree-item-interval//180px
-
-                                                    .k-icon
-                                                        left: 4.5*$tree-item-interval //135px
-
-
-                                                .k-group
-                                                    .k-item
-                                                        >div
-                                                            .k-in a
-                                                                padding-left: 6*$tree-item-interval //180px
-
-                                                            .k-checkbox
-                                                                left: 6.066*$tree-item-interval //182px
-
-                                                            .k-checkbox+.k-in a
-                                                                padding-left: 6.833*$tree-item-interval //205px
-
-                                                            .k-icon
-                                                                left: 5.333*$tree-item-interval //160px
-
-
-                                                        .k-group
-                                                            .k-item
-                                                                >div
-                                                                    .k-in a
-                                                                        padding-left: 6.833*$tree-item-interval //205px
-
-                                                                    .k-checkbox
-                                                                        left: 6.9*$tree-item-interval //207px
-
-                                                                    .k-checkbox+.k-in a
-                                                                        padding-left: 7.666*$tree-item-interval //230px
-
-                                                                    .k-icon
-                                                                        left: 6.166*$tree-item-interval //185px
-
-
-                                                                .k-group
-                                                                    .k-item
-                                                                        >div
-                                                                            .k-in a
-                                                                                padding-left: 7.666*$tree-item-interval //230px
-
-                                                                            .k-checkbox
-                                                                                left: 7.733*$tree-item-interval //232px
-
-                                                                            .k-checkbox+.k-in a
-                                                                                padding-left: 8.5*$tree-item-interval //255px
-
-                                                                            .k-icon
-                                                                                left: 7*$tree-item-interval//210px
-
-
-                                                                        .k-group
-                                                                            .k-item
-                                                                                >div
-                                                                                    .k-in a
-                                                                                        padding-left: 8.5*$tree-item-interval //255px
-
-                                                                                    .k-checkbox
-                                                                                        left: 8.566*$tree-item-interval //257px
-
-                                                                                    .k-checkbox+.k-in a
-                                                                                        padding-left: 9.333*$tree-item-interval //280px
-
-                                                                                    .k-icon
-                                                                                        left: 7.833*$tree-item-interval //235px
-
-
-    .k-icon
-        margin:0
-        left: 0.333*$tree-item-interval //10px
-        top: 18px
-        position: absolute
-        z-index: 2
-        vertical-align: top
-
-    >ul
-        overflow: hidden
-        border: 1px solid #ddd
-        border-radius: 4px
-        border-top: 0
-
-        >.k-item.k-first
-            >div
-                >.k-in
-                    >a
-                        border-top:0
-
-
+		.k-checkbox
+			top: 10px
+			left: 32px
