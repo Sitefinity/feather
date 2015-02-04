@@ -3,7 +3,7 @@
     sfSelectors.requires.push('sfImageSelector');
 
     angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection',
-                                        'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter', 'sfMediaDateFilter'])
+                                        'sfMediaBasicFilters', 'sfLibraryFilter', 'sfMediaFlatTaxonFilter', 'sfMediaDateFilter', 'sfSearchBox'])
         .directive('sfImageSelector', ['serverContext', 'sfMediaService', 'serviceHelper', function (serverContext, sfMediaService, serviceHelper) {
             var constants = {
                 initialLoadedItemsCount: 50,
@@ -37,6 +37,10 @@
 
                     scope.loadMore = function () {
                         refresh(true);
+                    };
+
+                    scope.narrowResults = function (query) {
+                        scope.filterObject.query = query;
                     };
 
                     scope.$watch('filterObject', function (newVal, oldVal) {
@@ -87,11 +91,6 @@
                             options.take = constants.initialLoadedItemsCount;
                         }
 
-                        // checks if all properties of the filter object are null - if so All libraries should be shown.
-                        if (JSON.stringify(sfMediaService.newFilter()) === JSON.stringify(scope.filterObject)) {
-                            scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
-                        }
-
                         var callback;
                         if (scope.filterObject.basic) {
                             // Defaul filter is used (Recent / My / All)
@@ -138,7 +137,6 @@
 
                     // initial open populates dialog with all root libraries
                     scope.filterObject.basic = constants.filterOptions.basic.allLibraries;
-                    refresh();
 
                     // initial filter dropdown option
                     scope.selectedFilterOption = 1;
