@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    angular.module('sfMediaHierarchicalTaxonFilter', ['sfServices', 'sfTree'])
+    angular.module('sfMediaHierarchicalTaxonFilter', ['sfServices', 'sfTree', 'sfCollection'])
     .directive('sfMediaHierarchicalTaxonFilter', ['serverContext', 'sfMediaService', 'sfHierarchicalTaxonService',
     function (serverContext, mediaService, taxonService) {
         return {
@@ -24,7 +24,7 @@
                         return getChildTaxons(taxon.Id);
                     }
                     else {
-                        return getRootTaxons();
+                        return getTaxons();
                     }
                 };
 
@@ -44,13 +44,16 @@
                     scope.filterObject = filter;
                 });
 
-                scope.$watch('query', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        //TODO: change the tree with flat collection
-                    }
+                scope.$watch('query', function (newVal, oldVal) {
+                    if (!newVal || newVal === oldVal)
+                        return;
+
+                    getTaxons().then(function (items) {
+                       scope.filteredTaxons = items;
+                    });
                 });
 
-                function getRootTaxons() {
+                function getTaxons() {
                     var skip = 0;
                     var pageSize = 100; // not used by the service
                     return taxonService.getTaxons(

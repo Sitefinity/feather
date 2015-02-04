@@ -4,6 +4,14 @@
     <input type="text" ng-model="query">
 </p>
 
-<sf-tree ng-model="selectedTaxonId"
+<sf-tree
+    ng-hide="query"
+    ng-model="selectedTaxonId"
     sf-request-children="requestChildrenCallback(parent)"
-    sf-has-children-field="HasChildren" />
+    sf-has-children-field="HasChildren"></sf-tree>
+
+<sf-collection
+    ng-show="query"
+    sf-template-url="client-components/selectors/media/sf-media-hierarchical-taxon-collection.html"
+    sf-data="filteredTaxons"
+    ng-model="[selectedTaxonId]"></sf-collection>
