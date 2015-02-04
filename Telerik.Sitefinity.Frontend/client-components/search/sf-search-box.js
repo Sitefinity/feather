@@ -30,13 +30,16 @@
                         if (!scope.sfModel || scope.sfModel.length >= scope.sfMinTextLength) {
                             scope.sfAction({ query: scope.sfModel });
 
-                            if (scope.sfEnableAutocomplete && scope.sfGetSuggestions) {
+                            if (scope.sfModel && scope.sfEnableAutocomplete && scope.sfGetSuggestions) {
                                 scope.sfGetSuggestions({ query: scope.sfModel }).then(function (response) {
                                     if (response && response.length) {
                                         scope.suggestions = response;
                                         scope.showSuggestions = true;
                                     }
                                 });
+                            }
+                            else {
+                                scope.showSuggestions = false;
                             }
                         }
                     };
