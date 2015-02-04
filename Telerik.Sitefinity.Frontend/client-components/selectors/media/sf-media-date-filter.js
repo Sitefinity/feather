@@ -36,7 +36,7 @@
                 restrict: 'AE',
                 scope: {
                     filterObject: '=sfModel',
-                    sfDates: '@',
+                    sfDates: '=',
                     sfShowAnyTime: '@'
                 },
                 templateUrl: function (elem, attrs) {
@@ -50,7 +50,6 @@
                     }
 
                     // Unable to access scope properties bound by @
-                    scope.sfDates = attrs.sfDates;
                     scope.sfShowAnyTime = attrs.sfShowAnyTime;
 
                     scope.dates = scope.sfDates || constants.defaultDates;

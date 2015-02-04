@@ -150,6 +150,28 @@
 
             assertFilter(scope.filterObject, expectedDate);
         });
+
+        it('[dzhenko] / should not have any time option if such is not provided in the directive markup.', function () {
+            var dirMarkup = '<span sf-media-date-filter sf-model="filterObject"></span>';
+            commonMethods.compileDirective(dirMarkup, scope);
+            scope.$digest();
+
+            expect($('span ul li:contains("Any Time")').length).toEqual(0);
+        });
+
+        it('[dzhenko] / should use custom dates if such are provided.', function () {
+            var date1 = new Date(1998, 11);
+            var date2 = new Date(1998, 9);
+            scope.datesToUse = [{ text: 'Custom Date 1', dateValue: date1 },
+                                { text: 'Custom Date 2', dateValue: date2 }, ];
+
+            var dirMarkup = '<span sf-dates="datesToUse" sf-media-date-filter sf-model="filterObject"></span>';
+            commonMethods.compileDirective(dirMarkup, scope);
+            scope.$digest();
+
+            expect($('span ul li:contains("Custom Date 1")').length).toEqual(1);
+            expect($('span ul li:contains("Custom Date 2")').length).toEqual(1);
+        });
     });
 
     describe('verifies error message', function () {
