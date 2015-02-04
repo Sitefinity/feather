@@ -1,6 +1,6 @@
 ﻿<div ng-show="!showError">
     <input ng-model="sfModel" ng-change="sfSearchCallback()" placeholder="{{sfPlaceholder}}" />
-    <ul ng-show="showSuggestions">
+    <ul ng-if="sfEnableSuggestions" ng-show="showSuggestions">
         <li ng-repeat="item in suggestions">{{item}}</li>
     </ul>
 </div>

@@ -7,7 +7,7 @@
                     sfAction: '&',
                     sfMinTextLength: '@?',
                     sfPlaceholder: '@?',
-                    sfEnableAutocomplete: '@',
+                    sfEnableSuggestions: '@',
                     sfGetSuggestions: '&?'
                 },
                 templateUrl: function (elem, attrs) {
@@ -30,7 +30,7 @@
                         if (!scope.sfModel || scope.sfModel.length >= scope.sfMinTextLength) {
                             scope.sfAction({ query: scope.sfModel });
 
-                            if (scope.sfModel && scope.sfEnableAutocomplete && scope.sfGetSuggestions) {
+                            if (scope.sfModel && scope.sfEnableSuggestions && scope.sfGetSuggestions) {
                                 scope.sfGetSuggestions({ query: scope.sfModel }).then(function (response) {
                                     if (response && response.length) {
                                         scope.suggestions = response;
