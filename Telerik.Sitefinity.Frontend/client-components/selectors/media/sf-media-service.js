@@ -152,7 +152,7 @@
                     }
                 }
 
-            }
+            };
 
             var reset = function () {
                 self.query = null;

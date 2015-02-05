@@ -306,7 +306,7 @@
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
                         if (data && data.IsFolder === true) {
-                            scope.filterObject.set.parent.to(data.Id)
+                            scope.filterObject.set.parent.to(data.Id);
                         }
                     });
 
