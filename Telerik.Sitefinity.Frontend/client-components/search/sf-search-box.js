@@ -20,7 +20,7 @@
                     scope.showSuggestions = false;
                     scope.suggestions = [];
 
-                    if (!scope.sfAction)
+                    if (!attrs.sfAction)
                         scope.showError = true;
 
                     if (!scope.sfMinTextLength)
@@ -30,7 +30,7 @@
                         if (!scope.sfModel || scope.sfModel.length >= scope.sfMinTextLength) {
                             scope.sfAction({ query: scope.sfModel });
 
-                            if (scope.sfModel && scope.sfEnableSuggestions && scope.sfGetSuggestions) {
+                            if (scope.sfModel && scope.sfEnableSuggestions && attrs.sfGetSuggestions) {
                                 scope.sfGetSuggestions({ query: scope.sfModel }).then(function (response) {
                                     if (response && response.length) {
                                         scope.suggestions = response;

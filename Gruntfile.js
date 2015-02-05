@@ -24,6 +24,7 @@ module.exports = function (grunt) {
 				'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
 				'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
 				'Telerik.Sitefinity.Frontend/client-components/fields/**/*.js',
+				'Telerik.Sitefinity.Frontend/client-components/search/**/*.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-services.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selectors.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.js',

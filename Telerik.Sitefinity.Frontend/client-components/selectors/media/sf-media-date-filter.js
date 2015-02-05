@@ -32,6 +32,7 @@
                     { text: 'Last 5 years', dateValue: getDate(0, 0, 5) }
                 ]
             };
+
             return {
                 restrict: 'AE',
                 scope: {
@@ -61,17 +62,16 @@
                     scope.selectedDate = [];
 
                     scope.$watch('selectedDate', function (newVal, oldVal) {
-                        // removes all taxons, so only the parent is set.
-                        var filter = sfMediaService.newFilter();
-
                         // if deselected (undefined) the value must remain the original null
                         if (newVal !== oldVal && newVal[0] !== undefined) {
+                        var filter = sfMediaService.newFilter();
+
                             // sf collection always binds to array of items.
                             filter.date = newVal[0];
-                        }
 
                         // media selector watches this and reacts to changes.
                         scope.filterObject = filter;
+                        }
                     }, true);
                 }
             };
