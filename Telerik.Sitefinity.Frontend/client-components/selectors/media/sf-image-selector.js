@@ -85,9 +85,33 @@
                         }
                     });
 
+                    var loadPredecessorsFolders = function () {
+                        if (!scope.filterObject.parent) {
+                            return;
+                        }
+                        var options = {
+                            parent : 'predecessors/' + scope.filterObject.parent,
+                            excludeNeighbours: true
+                        };
+                        sfMediaService.images
+                                      .getFolders(options)
+                                      .then(function (data) {
+                                          scope.breadcrumbs = data.Items;
+                                      });
+                    };
+
+                    scope.onBreadcrumbItemClick = function (item) {
+                        var filter = sfMediaService.newFilter();
+                        filter.parent = item && item.Id ? item.Id : filter.parent;
+                        scope.sortExpression = null;
+                        scope.filterObject = filter;
+                    };
+
                     var refresh = function (appendItems) {
                         if (scope.isLoading)
                             return;
+
+                        scope.breadcrumbs = [];
 
                         var options = {
                             filter: scope.filterObject.composeExpression()
@@ -126,6 +150,8 @@
                         else {
                             // custom filter is used (Libraries / Taxons / Dates)
                             callback = sfMediaService.images.getContent;
+
+                            loadPredecessorsFolders();
                         }
 
                         if (scope.isLoading === false) {
