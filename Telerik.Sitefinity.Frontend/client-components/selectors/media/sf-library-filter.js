@@ -41,7 +41,7 @@
                     };
 
                     scope.$watch('selectedItemId', function (newVal, oldVal) {
-                        if (newVal !== oldVal && newVal[0]) {
+                        if (newVal !== oldVal && newVal && newVal[0]) {
                             var filter = sfMediaService.newFilter();
                             filter.parent = newVal[0];
 

@@ -33,7 +33,7 @@
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.selectedItemIds = scope.selectedItemIds || [];
                     scope.hierarchy = {};
-                    
+
                     // In case no function for getting children is provided, a default one returning empty array is provided.
                     scope.sfRequestChildren = scope.sfRequestChildren || function () { var r = $q.defer(); r.resolve([]); return r.$promise; };
 
@@ -65,13 +65,16 @@
                             return;
                         }
 
+                        var multiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.toLowerCase() !== 'false';
+                        var deselectable = scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false';
+
                         var itemIndex = scope.selectedItemIds.indexOf(node.item[scope.sfIdentifier]);
 
-                        if (scope.sfMultiselect === undefined || scope.sfMultiselect.toLowerCase() === 'false') {
+                        if (!multiselect) {
                             if (itemIndex < 0) {
                                 scope.selectedItemIds = [node.item[scope.sfIdentifier]];
                             }
-                            else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
+                            else if (deselectable) {
                                 // item is deselected
                                 scope.selectedItemIds = [];
                             }
@@ -80,7 +83,7 @@
                             if (itemIndex < 0) {
                                 scope.selectedItemIds.push(node.item[scope.sfIdentifier]);
                             }
-                            else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
+                            else if (deselectable) {
                                 // item is deselected
                                 scope.selectedItemIds.splice(itemIndex, 1);
                             }
