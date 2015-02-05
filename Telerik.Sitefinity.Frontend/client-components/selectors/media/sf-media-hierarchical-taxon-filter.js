@@ -37,12 +37,16 @@
                         scope.filterObject.taxon.id === newVal)
                         return;
 
+                    var selectedTaxonId;
                     if (angular.isArray(newVal) && newVal.length > 0) {
-                        newVal = newVal[0];
+                        selectedTaxonId = newVal[0];
+                    }
+                    else {
+                        return;
                     }
 
                     var filter = mediaService.newFilter();
-                    filter.taxon.id = newVal;
+                    filter.taxon.id = selectedTaxonId;
                     filter.taxon.field = scope.sfField;
 
                     scope.filterObject = filter;
