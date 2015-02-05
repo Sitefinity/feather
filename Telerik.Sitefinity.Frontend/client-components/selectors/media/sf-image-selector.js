@@ -111,6 +111,9 @@
                         else if (scope.filterObject.basic) {
                             // Defaul filter is used (Recent / My / All)
                             if (scope.filterObject.basic === constants.filterOptions.basic.recentItems) {
+                                // When the filter is Recent items, the number of displayed items is fixed and we should not append more.
+                                if (appendItems) return;
+
                                 callback = sfMediaService.images.getImages;
                             }
                             else if (scope.filterObject.basic === constants.filterOptions.basic.ownItems) {
