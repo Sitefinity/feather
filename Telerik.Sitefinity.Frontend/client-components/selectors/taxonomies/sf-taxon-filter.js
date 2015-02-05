@@ -23,7 +23,7 @@
 
                         var getTaxonomyName = function (taxonItem) {
                             var taxonField = scope.sfTaxonomyFields.filter(function (item) {
-                                return item.Id === taxonItem.TaxonomyId;
+                                return item.Id === taxonItem.RootTaxonomyId;
                             });
 
                             if (taxonField.length > 0) {
