@@ -3,8 +3,8 @@
     sfSelectors.requires.push('sfImageSelector');
 
     angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox'])
-        .directive('sfImageSelector', ['serverContext', 'sfMediaService', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
-        function (serverContext, sfMediaService, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
+        .directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
+        function (sfMediaService, sfMediaFilter, serverContext, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
             var helpers = {
                 getDate: function (daysToSubstract, monthsToSubstract, yearsToSubstract) {
                     var now = new Date();
@@ -200,7 +200,7 @@
 
                     scope.sortExpression = null;
                     scope.items = [];
-                    scope.filterObject = sfMediaService.newFilter();
+                    scope.filterObject = sfMediaFilter.newFilter();
                     scope.isLoading = false;
                     scope.showSortingAndView = false;
 

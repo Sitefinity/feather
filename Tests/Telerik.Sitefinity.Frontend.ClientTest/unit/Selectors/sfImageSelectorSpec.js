@@ -2,24 +2,25 @@
     var rootScope;
     var provide;
     var $q;
-    var originalMediaService;
     var directiveMarkup = '<sf-image-selector/>';
+    var filter;
 
     beforeEach(module('templates'));
     beforeEach(module('sfImageSelector'));
 
     beforeEach(module(function ($provide) {
-        $provide.value('sfMediaService', sfMediaService);
-        $provide.value('sfFlatTaxonService', flatTaxonService);
-        $provide.value('sfHierarchicalTaxonService', sfHierarchicalTaxonService);
+        $provide.value('sfFlatTaxonService', fakeFlatTaxonService);
+        $provide.value('sfHierarchicalTaxonService', fakeHierarchicalTaxonService);
 
         provide = $provide;
     }));
 
-    beforeEach(inject(function (_$rootScope_, _$q_, sfMediaService) {
+    beforeEach(inject(function (_$rootScope_, _$q_, $injector) {
         rootScope = _$rootScope_;
         $q = _$q_;
-        originalMediaService = sfMediaService;
+        filter = $injector.get('sfMediaService').newFilter();
+
+        provide.value('sfMediaService', fakeMediaService);
     }));
 
     beforeEach(function () {
@@ -52,8 +53,10 @@
         return items;
     }
 
-    var sfMediaService = {
-        newFilter: originalMediaService.newFilter,
+    var fakeMediaService = {
+        newFilter: function () {
+            return filter;
+        },
         images: {
             getFolders: function (options) {
                 return itemsPromiseTransform(genericGet());
@@ -67,7 +70,7 @@
         }
     };
 
-    var sfFlatTaxonService = {
+    var fakeFlatTaxonService = {
         getTaxons: function (taxonomyId, skip, take, search, frontendLanguages) {
             var result = [];
             for (var i = skip; i < take + skip && i < 100; i++) {
@@ -84,7 +87,7 @@
         }
     };
 
-    var sfHierarchicalTaxonService = {
+    var fakeHierarchicalTaxonService = {
         getTaxons: function (taxonomyId, skip, take, search, frontendLanguages) {
             var result = [];
             for (var i = skip; i < take + skip && i < 100; i++) {
@@ -108,40 +111,16 @@
     // Library filter
     (function () {
         it('[dzhenko] / should properly set parent id of filter object', function () {
-            var scope = $rootScope.$new();
+            var scope = rootScope.$new();
             commonMethods.compileDirective(directiveMarkup, scope);
             var s = scope.$$childHead;
 
             expect(s.filters.library.selected).toBe(null);
 
-            $('ul li span:contains("Title1")').click();
+            $('ul.sf-tree li span:contains("Title1")').first().click();
             scope.$digest();
 
-            expect(scope.filterObject.parent).toEqual('1');
-        });
-
-        it('[dzhenko] / should properly set basic property to null when parent Id is selected', function () {
-            var scope = $rootScope.$new();
-
-            scope.filterObject = mediaService.newFilter();
-
-            mediaService.specTest = getFoldersObj;
-
-            var directiveMarkup = '<span sf-library-filter sf-model="filterObject" sf-media-type="specTest"></span>';
-
-            commonMethods.compileDirective(directiveMarkup, scope);
-
-            scope.filterObject.basic = "Initial Value";
-            scope.$digest();
-
-            expect(scope.filterObject.parent).toBe(null);
-            expect(scope.filterObject.basic).toEqual("Initial Value");
-
-            $('ul li span:contains("Title1")').click();
-            scope.$digest();
-
-            expect(scope.filterObject.parent).toEqual('1');
-            expect(scope.filterObject.basic).toBe(null);
+            expect(s.filters.library.selected).toEqual('1');
         });
     }());
 });
