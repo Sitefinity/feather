@@ -8,9 +8,21 @@
                     pre: function (scope, element, attrs, ctrl) {
                         var mediaType = attrs.sfMediaType;
 
-                        ctrl.getItems = function (skip, take) {
+                        var getFilter = function (search) {
+                            var filter = serviceHelper.filterBuilder()
+                                                      .searchFilter(search)
+                                                      .getFilter();
+
+                            return filter;
+                        };
+
+                        ctrl.getItems = function (skip, take, search) {
                             var options = {
                                 parent: null,
+                                skip: skip,
+                                take: take,
+                                filter: getFilter(search),
+                                recursive: search ? true : null,
                                 sort: "Title ASC"
                             };
 
@@ -22,9 +34,10 @@
                             }
                         };
 
-                        ctrl.getChildren = function (parentId) {
+                        ctrl.getChildren = function (parentId, search) {
                             var options = {
                                 parent: parentId,
+                                filter: getFilter(search),
                                 sort: "Title ASC"
                             };
 
