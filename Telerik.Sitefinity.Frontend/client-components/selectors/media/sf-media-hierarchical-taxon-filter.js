@@ -38,11 +38,14 @@
                         return;
 
                     var selectedTaxonId;
-                    if (angular.isArray(newVal) && newVal.length > 0) {
-                        selectedTaxonId = newVal[0];
+                    if (angular.isArray(newVal)) {
+                        if (newVal.length > 0)
+                            selectedTaxonId = newVal[0];
+                        else
+                            return;
                     }
                     else {
-                        return;
+                        selectedTaxonId = newVal;
                     }
 
                     var filter = mediaService.newFilter();
