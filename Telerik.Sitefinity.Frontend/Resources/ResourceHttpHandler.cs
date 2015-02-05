@@ -38,7 +38,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                     var buffer = new byte[fileStream.Length];
                     fileStream.Read(buffer, 0, (int)fileStream.Length);
                     context.Response.ContentType = ResourceHttpHandler.GetMimeMapping(fileName);
-
+#if !DEBUG
                     if (fileName.EndsWith("css", StringComparison.OrdinalIgnoreCase) ||
                         fileName.EndsWith("js", StringComparison.OrdinalIgnoreCase) ||
                         fileName.EndsWith("html", StringComparison.OrdinalIgnoreCase) ||
@@ -52,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                         var lastWriteTime = ResourceHttpHandler.GetAssemblyLastWriteTime();
                         cache.SetLastModified(lastWriteTime);
                     }
-
+#endif
                     this.WriteToOutput(context, buffer);
                 }
             }
@@ -106,6 +106,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return (string)getMimeMappingMethodInfo.Invoke(null, new object[] { filename });
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         private static DateTime GetAssemblyLastWriteTime()
         {
             var assembly = Assembly.GetExecutingAssembly();
