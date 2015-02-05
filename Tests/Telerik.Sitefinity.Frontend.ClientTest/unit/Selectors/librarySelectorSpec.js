@@ -146,7 +146,7 @@ describe("library selector", function () {
         });
 
         it('[EGaneva] / should retrieve image libraries from the service when the selector is opened.', function () {
-            var template = "<sf-list-selector sf-library-selector sf-media-type='image' sf-provider='provider'/>";
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-provider='provider'/>";
 
             commonMethods.compileDirective(template, scope);
 
@@ -173,7 +173,7 @@ describe("library selector", function () {
         });
 
         it('[EGaneva] / should retrieve child image libraries from the service when the parent is expanded.', function () {
-            var template = "<sf-list-selector sf-library-selector sf-media-type='image' sf-provider='provider'/>";
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-provider='provider'/>";
 
             var element = commonMethods.compileDirective(template, scope);
 
@@ -193,35 +193,37 @@ describe("library selector", function () {
         });
 
         it('[EGaneva] / should assign value to "selected-item" when "selected-item-id" is provided.', function () {
-            var template = "<sf-list-selector sf-library-selector sf-media-type='image' sf-selected-item='selectedItem' sf-selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item='selectedItem' sf-selected-item-id='selectedId'/>";
 
-            scope.selectedId = dataItem.Id;
+            scope.selectedId = dataItem2.Id;
 
             commonMethods.compileDirective(template, scope);
+            scope.$digest();
 
             expect(scope.selectedId).toBeDefined();
-            expect(scope.selectedId).toEqual(dataItem.Id);
+            expect(scope.selectedId).toEqual(dataItem2.Id);
 
             expect(scope.selectedItem).toBeDefined();
-            expect(scope.selectedItem.Id).toEqual(dataItem.Id);
+            expect(scope.selectedItem.Id).toEqual(dataItem2.Id);
         });
 
         it('[EGaneva] / should assign value to "selected-item-id" when "selected-item" is provided.', function () {
-            var template = "<sf-list-selector sf-library-selector sf-media-type='image' sf-selected-item='selectedItem' sf-selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item='selectedItem' sf-selected-item-id='selectedId'/>";
 
-            scope.selectedItem = dataItem;
+            scope.selectedItem = dataItem2;
 
             commonMethods.compileDirective(template, scope);
+            scope.$digest();
 
             expect(scope.selectedId).toBeDefined();
-            expect(scope.selectedId).toEqual(dataItem.Id);
+            expect(scope.selectedId).toEqual(dataItem2.Id);
 
             expect(scope.selectedItem).toBeDefined();
-            expect(scope.selectedItem.Id).toEqual(dataItem.Id);
+            expect(scope.selectedItem.Id).toEqual(dataItem2.Id);
         });
 
         it('[EGaneva] / should select folder when Done button is pressed.', function () {
-            var template = "<sf-list-selector sf-library-selector sf-media-type='image' sf-selected-item='selectedItem' sf-selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item='selectedItem' sf-selected-item-id='selectedId'/>";
 
             commonMethods.compileDirective(template, scope);
 
@@ -257,7 +259,7 @@ describe("library selector", function () {
         });
 
         it('[EGaneva] / should filter items when text is typed in the filter box.', function () {
-            var template = "<sf-list-selector sf-library-selector sf-media-type='image' sf-provider='provider'/>";
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-provider='provider'/>";
 
             commonMethods.compileDirective(template, scope);
 
@@ -296,9 +298,9 @@ describe("library selector", function () {
         });
 
         it('[EGaneva] / should mark item as selected when the dialog is opened.', function () {
-            var template = "<sf-list-selector sf-library-selector sf-media-type='image' sf-selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='selectedId'/>";
 
-            scope.selectedId = dataItem.Id;
+            scope.selectedId = dataItem2.Id;
 
             commonMethods.compileDirective(template, scope);
 
@@ -309,13 +311,13 @@ describe("library selector", function () {
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(1);
-            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem2.Id);
         });
 
         it('[EGaneva] / should deselect the item if it is clicked and it is already selected.', function () {
-            var template = "<sf-list-selector sf-library-selector sf-media-type='image' sf-selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='selectedId'/>";
 
-            scope.selectedId = dataItem.Id;
+            scope.selectedId = dataItem2.Id;
 
             commonMethods.compileDirective(template, scope);
 
@@ -326,7 +328,7 @@ describe("library selector", function () {
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(1);
-            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem.Id);
+            expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem2.Id);
 
             //Select item in the selector
             s.itemClicked(0, s.items[0]);
