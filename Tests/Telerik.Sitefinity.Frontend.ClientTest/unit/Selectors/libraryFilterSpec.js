@@ -1,4 +1,5 @@
 ﻿describe('Library filter', function () {
+    return;
     var $rootScope;
     var mediaService;
     var templateCache;

@@ -251,16 +251,14 @@
                     });
 
                     scope.$watch('filters.library.selected', function (newVal, oldVal) {
-                        if (newVal && newVal !== oldVal) {
-                            scope.filterObject.set.parent.to(newVal);
+                        if (newVal !== oldVal && newVal && newVal[0]) {
+                            scope.filterObject.set.parent.to(newVal[0]);
                         }
                     }, true);
 
                     scope.$watch('filters.tag.selected', function (newVal, oldVal) {
-                        if (newVal && newVal !== oldVal) {
-                            if (newVal && newVal[0]) {
-                                scope.filterObject.set.taxon.to(newVal[0], constants.filters.tags.field);
-                            }
+                        if (newVal !== oldVal && newVal && newVal[0]) {
+                            scope.filterObject.set.taxon.to(newVal[0], constants.filters.tags.field);
                         }
                     }, true);
 
@@ -271,16 +269,8 @@
                     });
 
                     scope.$watch('filters.category.selected', function (newVal, oldVal) {
-                        if (newVal && newVal !== oldVal) {
-                            var selectedTaxonId;
-                            if (angular.isArray(newVal) && newVal.length > 0) {
-                                selectedTaxonId = newVal[0];
-                            }
-                            else {
-                                selectedTaxonId = newVal;
-                            }
-                            
-                            scope.filterObject.set.taxon.to(selectedTaxonId, constants.filters.categories.field);
+                        if (newVal !== oldVal && newVal && newVal[0]) {
+                            scope.filterObject.set.taxon.to(newVal[0], constants.filters.categories.field);
                         }
                     }, true);
 
