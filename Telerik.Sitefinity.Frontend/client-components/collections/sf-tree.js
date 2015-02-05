@@ -10,7 +10,8 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    selectedItemId: '=?sfModel',
+                    selectedItemIds: '=?sfModel',
+                    sfMultiselect: '@',
                     sfIdentifier: '@',
                     sfHasChildrenField: '@',
                     sfExpandOnSelect: '@',
@@ -30,6 +31,7 @@
                     scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(itemAssembly, itemUrl);
 
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
+                    scope.selectedItemIds = scope.selectedItemIds || [];
                     scope.hierarchy = {};
                     
                     // In case no function for getting children is provided, a default one returning empty array is provided.
@@ -51,16 +53,37 @@
                     };
 
                     scope.isSelected = function (node) {
-                        return node.item[scope.sfIdentifier] === scope.selectedItemId;
+                        if (scope.selectedItemIds === undefined) {
+                            return false;
+                        }
+
+                        return scope.selectedItemIds.indexOf(node.item[scope.sfIdentifier]) >= 0;
                     };
 
                     scope.select = function (node) {
-                        if (node.item[scope.sfIdentifier] !== scope.selectedItemId) {
-                            scope.selectedItemId = node.item[scope.sfIdentifier];
+                        if (scope.selectedItemIds === undefined) {
+                            return;
                         }
-                        else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
-                            // item is deselected
-                            scope.selectedItemId = null;
+
+                        var itemIndex = scope.selectedItemIds.indexOf(node.item[scope.sfIdentifier]);
+
+                        if (scope.sfMultiselect === undefined || scope.sfMultiselect.toLowerCase() === 'false') {
+                            if (itemIndex < 0) {
+                                scope.selectedItemIds = [node.item[scope.sfIdentifier]];
+                            }
+                            else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
+                                // item is deselected
+                                scope.selectedItemIds = [];
+                            }
+                        }
+                        else {
+                            if (itemIndex < 0) {
+                                scope.selectedItemIds.push(node.item[scope.sfIdentifier]);
+                            }
+                            else if (scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false') {
+                                // item is deselected
+                                scope.selectedItemIds.splice(itemIndex, 1);
+                            }
                         }
 
                         if (scope.sfExpandOnSelect !== undefined) {

@@ -4,11 +4,11 @@
             return {
                 restrict: 'AE',
                 scope: {
+                    items: '=sfData',
+                    selectedItemIds: '=?sfModel',
                     sfMultiselect: '@',
                     sfDeselectable: '@',
-                    items: '=sfData',
-                    sfIdentifier: '@',
-                    selectedItemIds: '=?sfModel'
+                    sfIdentifier: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     if (!attrs.sfTemplateUrl) {

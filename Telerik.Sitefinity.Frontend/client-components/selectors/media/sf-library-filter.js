@@ -41,9 +41,9 @@
                     };
 
                     scope.$watch('selectedItemId', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
+                        if (newVal !== oldVal && newVal[0]) {
                             var filter = sfMediaService.newFilter();
-                            filter.parent = newVal;
+                            filter.parent = newVal[0];
 
                             // media selector watches this and reacts to changes.
                             scope.filterObject = filter;
