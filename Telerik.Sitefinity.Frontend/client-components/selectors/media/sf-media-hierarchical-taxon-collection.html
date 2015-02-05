@@ -1,0 +1,7 @@
+<ul>
+    <li ng-repeat="item in items">
+        <span ng-bind="::item.Title"
+            ng-click="select(item)"
+            ng-class="{'selected' : isSelected(item) === true}"></span>
+    </li>
+</ul>

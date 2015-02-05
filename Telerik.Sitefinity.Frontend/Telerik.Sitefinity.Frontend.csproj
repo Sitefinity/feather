@@ -536,6 +536,9 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-media-date-items.html" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.html" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-hierarchical-taxon-filter.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-hierarchical-taxon-filter.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-hierarchical-taxon-collection.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

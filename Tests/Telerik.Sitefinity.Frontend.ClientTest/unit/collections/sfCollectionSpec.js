@@ -9,6 +9,13 @@
         templateCache = $templateCache;
     }));
 
+    afterEach(function () {
+        //Tear down.
+        var leftOver = $('.testDiv');
+        leftOver.empty();
+        leftOver.remove();
+    });
+
     it('[Boyko-Karadzhov] / should render all items.', function () {
         var scope = rootScope.$new();
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/reder-all-items.html', '<li ng-repeat="item in items" class="sfCollectionItem"><div><span>Id:</span><span ng-bind="item.id"></span></div><div ng-bind="item.title"></div></li>');

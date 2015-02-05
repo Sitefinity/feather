@@ -1,0 +1,17 @@
+﻿<h5>{{sfTitle}}</h5>
+
+<p>
+    <input type="text" ng-model="query">
+</p>
+
+<sf-tree
+    ng-hide="query"
+    sf-model="selectedTaxonId"
+    sf-request-children="requestChildrenCallback(parent)"
+    sf-has-children-field="HasChildren"></sf-tree>
+
+<sf-collection
+    ng-show="query"
+    sf-template-url="client-components/selectors/media/sf-media-hierarchical-taxon-collection.html"
+    sf-data="filteredTaxons"
+    sf-model="selectedTaxonId"></sf-collection>
