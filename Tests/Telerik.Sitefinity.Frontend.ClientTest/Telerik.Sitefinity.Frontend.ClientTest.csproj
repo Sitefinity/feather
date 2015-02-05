@@ -49,6 +49,7 @@
     <Content Include="unit\collections\sfInfiniteScrollSpec.js" />
     <Content Include="unit\collections\sfTreeSpec.js" />
     <Content Include="unit\search\sfSearchBoxSpec.js" />
+    <Content Include="unit\selectors\librarySelectorSpec.js" />
     <Content Include="unit\selectors\sfMediaDateFilterSpec.js" />
     <Content Include="unit\selectors\externalUrlsViewSpec.js" />
     <Content Include="unit\selectors\languageSelectorSpec.js" />
