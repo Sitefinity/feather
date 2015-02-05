@@ -34,6 +34,13 @@
         commonMethods.mockServerContextToEnableTemplateCache();
     });
 
+    afterEach(function () {
+        //Tear down.
+        var leftOver = $('.testDiv');
+        leftOver.empty();
+        leftOver.remove();
+    });
+
     it('[dzhenko] / should properly set parent id of filter object', function () {
         var scope = $rootScope.$new();
 
