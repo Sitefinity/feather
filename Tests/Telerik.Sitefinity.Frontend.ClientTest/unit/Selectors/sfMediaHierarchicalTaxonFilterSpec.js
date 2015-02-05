@@ -73,11 +73,12 @@
         commonMethods.compileDirective(directiveMarkup, scope);
         scope.$digest();
 
-        $('span input').val('Searched');
-        angular.element('span input').triggerHandler('input');
+        scope.$$childHead.query = 'Searched';
         scope.$apply();
 
-        $('span ul li:visible:contains("Searched 50") span').click();
+        var elem = $('span ul li:visible:contains("Searched 50") span');
+        elem.click();
+
         scope.$digest();
 
         expect(scope.filterObject.taxon).not.toBe(null);
