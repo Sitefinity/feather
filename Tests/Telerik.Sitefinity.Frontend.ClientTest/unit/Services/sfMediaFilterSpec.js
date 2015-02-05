@@ -1,40 +1,10 @@
 ﻿/* Tests for sf-media-service.js */
 describe('sfMediaFilter', function () {
-    //var $httpBackend;
     var mediaFilter;
-
-    //var dataItems = {
-    //    Items: [{
-    //        Id: '4a003fb0-2a77-61ec-be54-ff00007864f4',
-    //        IsFolder: true
-    //    }],
-    //    TotalCount: 1
-    //};
-
-    //var errorResponse = {
-    //    Detail: 'Error'
-    //};
-
-    //var appPath = 'http://mysite.com:9999/myapp';
-    //var sampleGuid = '1ac3b615-0ce5-46dc-a0af-5c5d1f146df9';
 
     beforeEach(module('sfServices'));
 
-    //beforeEach(module(function ($provide) {
-    //    var serverContext = {
-    //        getRootedUrl: function (path) {
-    //            return appPath + '/' + path;
-    //        },
-    //        getUICulture: function () {
-    //            return null;
-    //        }
-    //    };
-    //    $provide.value('serverContext', serverContext);
-    //}));
-
     beforeEach(inject(function ($injector) {
-        // Set up the mock http service responses
-        //$httpBackend = $injector.get('$httpBackend');
         mediaFilter = $injector.get('sfMediaFilter');
     }));
 

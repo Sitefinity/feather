@@ -1,26 +1,20 @@
 ﻿describe('Image selector', function () {
     var rootScope;
-    var provide;
     var $q;
     var directiveMarkup = '<sf-image-selector/>';
-    var filter;
 
     beforeEach(module('templates'));
     beforeEach(module('sfImageSelector'));
 
     beforeEach(module(function ($provide) {
+        $provide.value('sfMediaService', fakeMediaService);
         $provide.value('sfFlatTaxonService', fakeFlatTaxonService);
         $provide.value('sfHierarchicalTaxonService', fakeHierarchicalTaxonService);
-
-        provide = $provide;
     }));
 
-    beforeEach(inject(function (_$rootScope_, _$q_, $injector) {
+    beforeEach(inject(function (_$rootScope_, _$q_) {
         rootScope = _$rootScope_;
         $q = _$q_;
-        filter = $injector.get('sfMediaService').newFilter();
-
-        provide.value('sfMediaService', fakeMediaService);
     }));
 
     beforeEach(function () {
@@ -54,9 +48,6 @@
     }
 
     var fakeMediaService = {
-        newFilter: function () {
-            return filter;
-        },
         images: {
             getFolders: function (options) {
                 return itemsPromiseTransform(genericGet());
@@ -110,17 +101,33 @@
 
     // Library filter
     (function () {
-        it('[dzhenko] / should properly set parent id of filter object', function () {
+        it('[dzhenko] / library filter: should properly set parent id of filter object', function () {
             var scope = rootScope.$new();
             commonMethods.compileDirective(directiveMarkup, scope);
             var s = scope.$$childHead;
 
-            expect(s.filters.library.selected).toBe(null);
+            expect(s.filters.library.selected[0]).toBeUndefined();
 
             $('ul.sf-tree li span:contains("Title1")').first().click();
             scope.$digest();
 
-            expect(s.filters.library.selected).toEqual('1');
+            expect(s.filters.library.selected[0]).toEqual(1);
+        });
+
+        it('[dzhenko] / library filter: should properly set other selected values to null when parent id of filter object is set', function () {
+            var scope = rootScope.$new();
+            commonMethods.compileDirective(directiveMarkup, scope);
+            var s = scope.$$childHead;
+
+            $('ul.sf-tree li span:contains("Title1")').first().click();
+            scope.$digest();
+
+            expect(s.filters.tag.selected[0]).toBeUndefined();
+            expect(s.filters.category.selected[0]).toBeUndefined();
+            expect(s.filters.date.selected[0]).toBeUndefined();
+
+            expect(s.filters.tag.query).toBe(null);
+            expect(s.filters.category.query).toBe(null);
         });
     }());
 });
