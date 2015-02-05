@@ -1,35 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
         .directive('sfLibrarySelector', ['serviceHelper', 'sfMediaService', function (serviceHelper, mediaService) {
-            var _applyBreadcrumbPath = function (result) {
-                //var taxa = result.Items;
-                //var taxonToAdd = null;
-                //var taxonPathTitle = '';
-                //var taxaLength = taxa.length;
-                //if (taxaLength > 0) {
-                //    var taxonId = taxa[taxaLength - 1].Id;
-                //    var delimiter = ' > ';
-                //    for (var i = 0, l = taxa.length; i < l; i++) {
-                //        if (i == taxa.length - 1) {
-                //            delimiter = '';
-                //            taxonToAdd = taxa[i];
-                //        }
-                //        taxonPathTitle += taxa[i].Title + delimiter;
-                //    }
-                //    if (taxonId !== taxonToAdd.Id) {
-                //        throw 'unexpected end of the taxon path.';
-                //    }
-                //    taxonToAdd.TitlesPath = taxonToAdd.TitlesPath || taxonPathTitle;
-
-                //    taxonToAdd.Breadcrumb = taxonToAdd.TitlesPath;
-                //}
-                //else {
-                //    throw "Getting the taxon path returned an empty collection.";
-                //}
-                //return taxonToAdd;
-                return null;
-            };
-
             return {
                 require: '^sfListSelector',
                 restrict: 'A',
@@ -51,12 +22,7 @@
                                 sort: "Title ASC"
                             };
 
-                            switch (mediaType) {
-                                case 'image':
-                                    return mediaService.images.getFolders(options);
-                                default:
-                                    return mediaService.images.getFolders(options);
-                            }
+                            return mediaService[mediaType].getFolders(options);
                         };
 
                         ctrl.getChildren = function (parentId, search) {
@@ -70,12 +36,7 @@
                                 sort: "Title ASC"
                             };
 
-                            switch (mediaType) {
-                                case 'image':
-                                    return mediaService.images.getFolders(options).then(function (data) { return data.Items; });
-                                default:
-                                    return mediaService.images.getFolders(options).then(function (data) { return data.Items; });
-                            }
+                            return mediaService[mediaType].getFolders(options).then(function (data) { return data.Items; });
                         };
 
                         ctrl.getSpecificItems = function (ids) {
@@ -86,34 +47,29 @@
                             var options = {
                                 skip: 0,
                                 take: 100,
-                                filter: filter,
+                                recursive: true,
+                                filter: filter
                             };
 
-                            switch (mediaType) {
-                                case 'image':
-                                    return mediaService.images.getFolders(options);
-                                default:
-                                    return mediaService.images.getFolders(options);
-                            }
+                            return mediaService[mediaType].getFolders(options);
                         };
 
                         ctrl.onSelectedItemsLoadedSuccess = function (data) {
-                            var items = [];
-
                             angular.forEach(data.Items, function (result) {
-                                items.push(_applyBreadcrumbPath({ Items: result }));
+                                result.Breadcrumb = result.Path;
+                                result.TitlesPath = result.Path;
                             });
 
-                            ctrl.updateSelection(items);
+                            ctrl.updateSelection(data.Items);
                         };
 
                         ctrl.onItemSelected = function (item) {
-                            item.Breadcrumb = item.TitlesPath ? item.TitlesPath + " > " + item.Title : item.Title;
+                            item.Breadcrumb = item.Path ? item.Path : item.Title;
                         };
 
                         ctrl.onFilterItemSucceeded = function (items) {
                             angular.forEach(items, function (item) {
-                                item.RootPath = item.TitlesPath ? "Under " + item.TitlesPath : 'On Top Level';
+                                item.RootPath = item.Path ? "Under " + item.Path.replace(' > ' + item.Title, '') : 'On Top Level';
                             });
                         };
 

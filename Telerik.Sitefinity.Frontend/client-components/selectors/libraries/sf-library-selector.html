@@ -15,9 +15,9 @@
 
             <div ng-hide="noItemsExist || showError">
                 <div class="input-group m-bottom-sm">
-                   <!-- <span class="input-group-addon">
+                    <span class="input-group-addon">
                         <i class="glyphicon glyphicon-search"></i>
-                    </span>-->
+                    </span>
                     <sf-items-filter sf-filter='filter'></sf-items-filter>
                 </div>
 
@@ -45,9 +45,9 @@
                         <div>
                             <div ng-bind="bindIdentifierField(item)" />
 
-                            <!--<div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
+                            <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
                                 <span sf-shrinked-breadcrumb="{{item.RootPath}}" sf-max-length="60"></span>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
 
