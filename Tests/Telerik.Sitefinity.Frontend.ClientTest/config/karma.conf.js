@@ -9,7 +9,6 @@ module.exports = function (config) {
                   'helpers/angular-resource.js',
                   'helpers/angular-mocks.js',
                   'helpers/kendo.all.min.js',
-				  'helpers/angular-kendo.js',
                   'helpers/common-methods.js',
                   'helpers/jasmine-matchers.js',
                   '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls-0.11.0.min.js',

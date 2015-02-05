@@ -179,21 +179,17 @@ describe("library selector", function () {
 
             $('.openSelectorBtn').click();
 
-            $timeout.flush(1000);
-            var treeview = jQuery('[kendo-tree-view="treeView"]').data("kendoTreeView");
-            treeview.bind("dataBound", function () {
-                jQuery('.k-item[data-uid="4c003fb0-2a77-61ec-be54-ff00007864f4"]').find(".k-plus").click();
+            scope.$$childTail.getChildren("4c003fb0-2a77-61ec-be54-ff00007864f4");
 
-                var args = libraryServiceGetItemsArgs();
+            var args = libraryServiceGetItemsArgs();
 
-                expect(args[0]).toBeDefined();
+            expect(args[0]).toBeDefined();
 
-                //parent
-                expect(args[0].parent).toBe("4c003fb0-2a77-61ec-be54-ff00007864f4");
+            //parent
+            expect(args[0].parent).toBe("4c003fb0-2a77-61ec-be54-ff00007864f4");
 
-                //sort
-                expect(args[0].sort).toBe('Title ASC');
-            });
+            //sort
+            expect(args[0].sort).toBe('Title ASC');
         });
 
         it('[EGaneva] / should assign value to "selected-item" when "selected-item-id" is provided.', function () {
