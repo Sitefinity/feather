@@ -192,7 +192,7 @@
                 dateScope.$digest();
 
                 expect(dateS.filters.date.selected).not.toBe(null);
-                expect(dateS.filters.date.selected[0]).toBe(null);
+                expect(dateS.filters.date.selected[0]).toBe('AnyTime');
             });
 
             it('[NPetrova] / should set correct date in the filter object when Last 1 day is selected.', function () {
