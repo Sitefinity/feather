@@ -1,9 +1,10 @@
 ﻿describe('Flat taxon field', function () {
-    var rootScope;
-    var provide;
-    var $q;
-    var mediaService;
-    var directiveMarkup = '<sf-flat-taxon-field sf-model="selectedTags" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374"></sf-flat-taxon-field>';
+    var rootScope,
+        provide,
+        $q,
+        mediaService,
+        tagsId = 'CB0F3A19-A211-48a7-88EC-77495C0F5374',
+        directiveMarkup = '<sf-flat-taxon-field sf-model="selectedTags" sf-taxonomy-id="' + tagsId + '"></sf-flat-taxon-field>';
 
     //Load the module that contains the cached templates.
     beforeEach(module('templates'));
@@ -55,5 +56,20 @@
         expect($(':contains("Taxon id-123")').length).toEqual(1);
         expect($(':contains("Taxon id-456")').length).toEqual(1);
         expect($(':contains("Taxon id-789")').length).toEqual(1);
+    });
+
+    it('[Boyko-Karadzhov] / should call the taxon service to add new taxa.', function () {
+        var scope = rootScope.$new();
+        scope.selectedTags = [];
+
+        flatTaxonService.addTaxa = function (taxonomyId, provider, itemType, taxonTitles) {
+            expect(taxonomyId).toEqual(tagsId);
+            expect(taxonTitles).not.toBe(null);
+            expect(taxonTitles).toEqual(['new taxon']);
+        };
+
+        commonMethods.compileDirective(directiveMarkup, scope);
+        scope.$digest();
+        scope.$$childHead.taxonAdded('new taxon');
     });
 });
