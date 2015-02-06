@@ -741,36 +741,6 @@
       },
       {
          "description" : "",
-         "name" : "Data widgets",
-         "widgets" : [
-            {
-               "expectedBy" : "",
-               "longDescription" : "",
-               "name" : "XML Data source",
-               "progress" : 0,
-               "shortDescription" : "Not started",
-               "unstable" : false
-            },
-            {
-               "expectedBy" : "",
-               "longDescription" : "",
-               "name" : "Site map data source",
-               "progress" : 0,
-               "shortDescription" : "Not started",
-               "unstable" : false
-            },
-            {
-               "expectedBy" : "",
-               "longDescription" : "",
-               "name" : "OpenAccess data source",
-               "progress" : 0,
-               "shortDescription" : "Not started",
-               "unstable" : false
-            }
-         ]
-      },
-      {
-         "description" : "",
          "name" : "Script and styles widgets",
          "widgets" : [
             {
