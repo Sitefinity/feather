@@ -5,7 +5,15 @@
     <div class="row">
         <div class="col-md-10">
             <div class="row">
-                <span class="pull-left">Breadcrumb</span>
+                <span class="pull-left"
+                      ng-show="breadcrumbs && breadcrumbs.length > 0">
+                    <ol class="breadcrumb">
+                        <li ng-click="onBreadcrumbItemClick()"><a>All libraries</a></li>
+                        <li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
+                            <a>{{::item.Title}}</a>
+                        </li>
+                    </ol>
+                </span>
                 <sf-search-box class="pull-right" sf-placeholder="Narrow by typing" sf-action="narrowResults(query)"> </sf-search-box>
             </div>
             <div class="row">
@@ -15,7 +23,7 @@
                     <div ng-show="showSortingAndView">
                         <sf-sort-box class="pull-left" sf-model="sortExpression"></sf-sort-box>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
 
@@ -23,33 +31,33 @@
             <p><button>Upload image</button></p>
 
             <span sf-media-basic-filters
-                sf-model="filterObject"
-                sf-template-url="client-components/selectors/media/sf-image-basic-filters.html"></span>
+                  sf-model="filterObject"
+                  sf-template-url="client-components/selectors/media/sf-image-basic-filters.html"></span>
 
-            <br/>
+            <br />
 
             <span ng-show="selectedFilterOption == 1"
-                sf-library-filter
-                sf-model="filterObject"
-                sf-media-type="images"></span>
+                  sf-library-filter
+                  sf-model="filterObject"
+                  sf-media-type="images"></span>
 
             <span ng-show="selectedFilterOption == 2"
-                sf-media-hierarchical-taxon-filter
-                sf-model="filterObject"
-                sf-title="Categories"
-                sf-taxonomy-id="E5CD6D69-1543-427B-AD62-688A99F5E7D4"
-                sf-field="Category"></span>
+                  sf-media-hierarchical-taxon-filter
+                  sf-model="filterObject"
+                  sf-title="Categories"
+                  sf-taxonomy-id="E5CD6D69-1543-427B-AD62-688A99F5E7D4"
+                  sf-field="Category"></span>
 
             <span ng-show="selectedFilterOption == 3"
-                sf-media-flat-taxon-filter
-                sf-model="filterObject"
-                sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374"
-                sf-title="Tags"
-                sf-field="Tags"></span>
+                  sf-media-flat-taxon-filter
+                  sf-model="filterObject"
+                  sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374"
+                  sf-title="Tags"
+                  sf-field="Tags"></span>
 
             <span ng-show="selectedFilterOption == 4"
-                sf-media-date-filter
-                sf-show-any-time sf-model="filterObject"></span>
+                  sf-media-date-filter
+                  sf-show-any-time sf-model="filterObject"></span>
 
             <select ng-model="selectedFilterOption">
                 <option value="1" selected="selected">Libraries</option>
