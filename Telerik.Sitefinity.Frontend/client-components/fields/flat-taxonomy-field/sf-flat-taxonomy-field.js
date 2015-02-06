@@ -33,20 +33,15 @@
                 };
 
                 scope.taxonAdded = function (newTaxon) {
-                    if (existingTaxons.indexOf(newTaxon) === -1) {
-                        taxonService.addTaxa(scope.sfTaxonomyId, null, null, [newTaxon.Title]);
+                    if (newTaxon && existingTaxons.indexOf(newTaxon) === -1) {
+                        taxonService.addTaxa(scope.sfTaxonomyId, null, null, [newTaxon.Title])
+                            .then(function (data) {
+                                if (data && data.length > 0) {
+                                    newTaxon.Id = data[0].Id;
+                                }
+                            });
                     }
-                }
-
-                //scope.$watch('sfModel', function (newValue, oldValue) {
-                //    if (oldValue && newValue.length > oldValue.length) {
-                //        var newTaxon = newValue[newValue.length - 1];
-                //        if (existingTags.indexOf(newTaxon) === -1) {
-                //            taxonService.addTaxa(scope.sfTaxonomyId, null, null, [newTaxon.Title]);
-                //        }
-
-                //    }
-                //}, true);
+                };
             }
         };
     }]);

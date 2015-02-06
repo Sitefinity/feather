@@ -25,7 +25,7 @@
                 }
                 url += "ensure/";
 
-                return serviceHelper.getResource(url);
+                return serviceHelper.getResource(url, null, null, true);
             };
 
             var getTaxons = function (taxonomyId, skip, take, search, frontendLanguages) {
@@ -70,7 +70,7 @@
             };
 
             var addTaxa = function (taxonomyId, provider, itemType, taxonTitles) {
-                putResource(taxonomyId).put(taxonTitles).$promise;
+                dataItemPromise = putResource(taxonomyId).put(taxonTitles).$promise;
 
                 return dataItemPromise;
             };
