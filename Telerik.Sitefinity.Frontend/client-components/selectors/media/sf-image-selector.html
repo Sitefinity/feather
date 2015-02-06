@@ -5,7 +5,15 @@
     <div class="row">
         <div class="col-md-10">
             <div class="row">
-                <span class="pull-left">Breadcrumb</span>
+                <span class="pull-left"
+                      ng-show="breadcrumbs && breadcrumbs.length > 0">
+                    <ol class="breadcrumb">
+                        <li ng-click="onBreadcrumbItemClick()"><a>All libraries</a></li>
+                        <li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
+                            <a>{{::item.Title}}</a>
+                        </li>
+                    </ol>
+                </span>
                 <sf-search-box class="pull-right" sf-placeholder="Narrow by typing" sf-action="narrowResults(query)"> </sf-search-box>
             </div>
             <div class="row">

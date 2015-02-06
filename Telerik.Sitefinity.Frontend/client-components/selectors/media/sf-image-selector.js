@@ -132,10 +132,19 @@
                         }
                     };
 
+                    scope.onBreadcrumbItemClick = function (item) {
+                        var filter = sfMediaService.newFilter();
+                        filter.parent = item && item.Id ? item.Id : filter.parent;
+                        scope.sortExpression = null;
+                        scope.filterObject = filter;
+                    };
+
                     var refresh = function (appendItems) {
                         if (scope.isLoading) {
                             return;
                         }
+
+                        scope.breadcrumbs = [];
 
                         var options = {
                             filter: scope.filterObject.composeExpression(),

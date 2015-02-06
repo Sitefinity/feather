@@ -37,7 +37,8 @@
                     skip: options.skip,
                     take: options.take,
                     sortExpression: options.sort,
-                    hierarchyMode: options.recursive ? null : 'true'
+                    hierarchyMode: options.recursive ? null : 'true',
+                    excludeNeighbours: options.excludeNeighbours
                 }).$promise.then(function (data) {
                     data.Items.map(function (obj) {
                         obj.IsFolder = true;
@@ -86,6 +87,19 @@
                 }
 
                 return callback(options);
+            },
+            getPredecessorsFolders: function (id) {
+                if (!id) {
+                    return;
+                }
+                var options = {
+                    parent: 'predecessors/' + id,
+                    excludeNeighbours: true
+                };
+                return getFolders(options, constants.images.albumsServiceUrl)
+                          .then(function (data) {
+                              return data.Items;
+                          });
             }
         };
 
