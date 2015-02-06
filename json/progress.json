@@ -354,9 +354,9 @@
             },
             {
                "expectedBy" : "",
-               "longDescription" : "Image selector with multiple image libraries support, filtering and sorting options and image tagging during upload.",
+               "longDescription" : "Image Selector development is in progress.",
                "name" : "Image selector",
-               "progress" : 0,
+               "progress" : 60,
                "shortDescription" : "Coming soon",
                "unstable" : false
             },
