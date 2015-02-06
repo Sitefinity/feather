@@ -48,6 +48,7 @@
     <Content Include="helpers\common-methods.js" />
     <Content Include="unit\collections\sfInfiniteScrollSpec.js" />
     <Content Include="unit\collections\sfTreeSpec.js" />
+    <Content Include="unit\fields\sfFlatTaxonFieldSpecs.js" />
     <Content Include="unit\search\sfSearchBoxSpec.js" />
     <Content Include="unit\selectors\sfImageSelectorSpec.js" />
     <Content Include="unit\selectors\externalUrlsViewSpec.js" />
