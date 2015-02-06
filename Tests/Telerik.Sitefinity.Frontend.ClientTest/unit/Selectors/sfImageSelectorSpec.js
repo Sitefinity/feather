@@ -95,6 +95,20 @@
     * Filters
     */
 
+    // Basic filter
+    it('[dzhenko] / basic filter: should properly set basic id of filter object', function () {
+        var scope = rootScope.$new();
+        commonMethods.compileDirective(directiveMarkup, scope);
+        var s = scope.$$childHead;
+
+        expect(s.filters.library.selected[0]).toBeUndefined();
+
+        $('ul.sf-tree li span:contains("Title1")').first().click();
+        scope.$digest();
+
+        expect(s.filters.library.selected[0]).toEqual(1);
+    });
+
     // Library filter
     it('[dzhenko] / library filter: should properly set parent id of filter object', function () {
         var scope = rootScope.$new();

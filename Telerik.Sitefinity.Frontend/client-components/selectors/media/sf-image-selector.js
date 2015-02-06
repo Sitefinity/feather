@@ -30,9 +30,11 @@
                 infiniteScrollLoadedItemsCount: 20,
                 recentImagesLastDaysCount: 7,
                 filters: {
-                    basic: {
-
-                    },
+                    basic: [
+                        { title: 'Recent Images', value: 'recentItems' },
+                        { title: 'My Images', value: 'ownItems' },
+                        { title: 'All Libraries', value: 'allLibraries' }
+                    ],
                     dates: [
                         { text: 'Any time', dateValue: null },
                         { text: 'Last 1 day', dateValue: helpers.getDate(1) },
@@ -180,10 +182,12 @@
 
                     scope.filters = {
                         basic: {
-                            all: [{ title: 'Recent Images', value: 'recentItems' },
-                                { title: 'My Images', value: 'ownItems' },
-                                { title: 'All Libraries', value: 'allLibraries' }],
+                            all: constants.filters.basic,
                             selected: null,
+                            select: function (basicFilter) {
+                                scope.filters.basic.selected = basicFilter;
+                                scope.filterObject.set.basic[basicFilter]();
+                            },
                         },
                         library: {
                             selected: null,
@@ -208,10 +212,6 @@
                         }
                     };
 
-                    scope.selectBasicFilter = function (basicFilter) {
-                        scope.filterObject.set.basic[basicFilter]();
-                    };
-
                     scope.narrowResults = scope.filterObject.set.query.to;
 
                     // load more images
@@ -227,6 +227,7 @@
                         if (newVal !== oldVal) {
                             if (newVal !== scope.filterObject.constants.dateCreatedDescending && scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
                                 scope.filterObjects.set.basic.none();
+                                scope.filters.basic.selected = null;
                             }
                             else {
                                 refresh();
@@ -236,12 +237,14 @@
 
                     scope.$watch('filters.library.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
+                            scope.filters.basic.selected = null;
                             scope.filterObject.set.parent.to(newVal[0]);
                         }
                     }, true);
 
                     scope.$watch('filters.tag.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
+                            scope.filters.basic.selected = null;
                             scope.filterObject.set.taxon.to(newVal[0], constants.filters.tags.field);
                         }
                     }, true);
@@ -254,6 +257,7 @@
 
                     scope.$watch('filters.category.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
+                            scope.filters.basic.selected = null;
                             scope.filterObject.set.taxon.to(newVal[0], constants.filters.categories.field);
                         }
                     }, true);
@@ -268,6 +272,7 @@
 
                     scope.$watch('filters.date.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
+                            scope.filters.basic.selected = null;
                             if (newVal && newVal[0]) {
                                 scope.filterObject.set.date.to(newVal[0]);
                             }
@@ -280,6 +285,7 @@
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
                         if (data && data.IsFolder === true) {
+                            scope.filters.basic.selected = null;
                             scope.filterObject.set.parent.to(data.Id);
                         }
                     });

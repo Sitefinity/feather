@@ -26,9 +26,10 @@
 
             <!--Basic Filter-->
             <h5>Already uploaded images</h5>
-            <p><a ng-repeat="basicFilter in scope.filters.basic.all" 
-                ng-click="scope.filters.basic.selected = basicFilter.title" 
-                ng-class="{ 'selected': scope.filters.basic.selected === basicFilter.value }">{{basicFilter.title}}</a></p>
+            <p ng-repeat="basicFilter in filters.basic.all">
+                <a ng-click="filters.basic.select(basicFilter.value)" ng-class="{ 'selected': filters.basic.selected === basicFilter.value}">{{basicFilter.title}}</a>
+            </p>
+
             <br />
 
             <!--Library Filter-->
