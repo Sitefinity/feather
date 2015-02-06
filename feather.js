@@ -1,4 +1,4 @@
-var feather = angular.module('feather', ['ngRoute', 'ui.bootstrap', 'duScroll']).value('duScrollOffset', 140);
+var feather = angular.module('feather', ['angularMoment', 'ngRoute', 'ui.bootstrap', 'duScroll']).value('duScrollOffset', 140);
 
 feather.directive("sticky", function ($window) {
     return function(rootScope, element, attrs) {
@@ -13,13 +13,6 @@ feather.directive("sticky", function ($window) {
     };
 });
 
-feather.filter('moment', function () {
-  return function (input, momentFn) {
-    var args = Array.prototype.slice.call(arguments, 2),
-        momentObj = moment(input);
-    return momentObj[momentFn].apply(momentObj, args);
-  };
-});
 
 feather.filter('length', function () {
 	return function (input) {
@@ -72,9 +65,18 @@ feather.controller('ProgressCtrl', function ($scope, $rootScope, $http, $timeout
 			$scope.totalCount =  $scope.totalCount + section.widgets.length;
 
 			angular.forEach(section.widgets, function(widget, key) {
+
 				if(widget.progress == 100) {
 					$scope.totalCountCompleted++;
 				}
+
+				angular.forEach(widget.releases, function(release, key) {
+					var strp = release.date;
+					if(strp) {
+						var str = strp.replace(/-/g, '/');
+	 					release.date = str;
+ 					}
+				});
 			});
 		});
 

@@ -71,7 +71,9 @@
 											<li class="release" ng-repeat="release in widget.releases">
 												<span class="status glyphicon" ng-class="{'glyphicon-remove':!release.commitHash, 'glyphicon-ok': release.commitHash}"></span>
 												<h5 ng-class="{'invisible': !release.name}">{{release.name}}</h5>
-												<p ng-if="release.date">{{ release.date | moment: 'fromNow'}}</p>
+												<p ng-if="release.date">
+													<span am-time-ago="release.date"></span>
+												</p>
 												<p ng-if="!release.date">Not done</p>												
 												<div class="tag"  ng-if="release.date && release.tag">
 													<span class="glyphicon glyphicon-tag"></span>
