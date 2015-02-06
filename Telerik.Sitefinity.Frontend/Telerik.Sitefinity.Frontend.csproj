@@ -522,6 +522,8 @@
     <EmbeddedResource Include="client-components\search\sf-search-box.js" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.html" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-collection.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.js" />
