@@ -35,8 +35,9 @@
                         { title: 'My Images', value: 'ownItems' },
                         { title: 'All Libraries', value: 'allLibraries' }
                     ],
+                    anyDateValue: 'AnyTime',
                     dates: [
-                        { text: 'Any time', dateValue: null },
+                        { text: 'Any time', dateValue: 'AnyTime' },
                         { text: 'Last 1 day', dateValue: helpers.getDate(1) },
                         { text: 'Last 3 days', dateValue: helpers.getDate(3) },
                         { text: 'Last 1 week', dateValue: helpers.getDate(7) },
@@ -196,26 +197,31 @@
                             select: function (basicFilter) {
                                 scope.filters.basic.selected = basicFilter;
                                 scope.filterObject.set.basic[basicFilter]();
+
+                                scope.filters.library.selected = [];
+                                scope.filters.date.selected = [];
+                                scope.filters.tag.selected = [];
+                                scope.filters.category.selected = [];
                             },
                         },
                         library: {
-                            selected: null,
+                            selected: [],
                             getChildren: filtersLogic.loadLibraryChildren
                         },
                         date: {
                             all: constants.filters.dates,
-                            selected: constants.filters.dates[0].dateValue
+                            selected: []
                         },
                         tag: {
                             all: [],
-                            selected: null,
+                            selected: [],
                             query: null,
                             isLoading: false,
                             loadMore: filtersLogic.loadMoreTags
                         },
                         category: {
                             filtered: [],
-                            selected: null,
+                            selected: [],
                             query: null,
                             getChildren: filtersLogic.loadCategoryChildren
                         }
@@ -280,13 +286,13 @@
                     });
 
                     scope.$watchCollection('filters.date.selected', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
+                        if (newVal !== oldVal && newVal[0]) {
                             scope.filters.basic.selected = null;
-                            if (newVal && newVal[0]) {
-                                scope.filterObject.set.date.to(newVal[0]);
+                            if (newVal[0] === constants.filters.anyDateValue) {
+                                scope.filterObject.set.date.all();
                             }
                             else {
-                                scope.filterObject.set.date.all();
+                                scope.filterObject.set.date.to(newVal[0]);
                             }
                         }
                     });
