@@ -529,6 +529,8 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-upload-image-properties.html" />
     <EmbeddedResource Include="client-components\fields\flat-taxon-field\sf-flat-taxon-field.html" />
     <EmbeddedResource Include="client-components\fields\flat-taxon-field\sf-flat-taxon-field.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-collection.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.js" />
