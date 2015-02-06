@@ -525,11 +525,12 @@
     <EmbeddedResource Include="client-components\search\sf-search-box.js" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.html" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.js" />
-    
     <EmbeddedResource Include="client-components\selectors\media\sf-upload-image-properties.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-upload-image-properties.html" />
     <EmbeddedResource Include="client-components\fields\flat-taxonomy-field\sf-flat-taxonomy-field.html" />
     <EmbeddedResource Include="client-components\fields\flat-taxonomy-field\sf-flat-taxonomy-field.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-collection.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.js" />
