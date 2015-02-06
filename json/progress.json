@@ -530,7 +530,7 @@
                "expectedBy" : "mid Mar '15",
                "longDescription" : "",
                "name" : "Content block",
-               "progress" : 40,
+               "progress" : 60,
                "releases" : [
                   {
                      "article" : "Content-Block-Widget",
@@ -1160,6 +1160,51 @@
                      "date" : "09-24-2014",
                      "name" : "Get localized data",
                      "tag" : "v1.0.0.0"
+                  }
+               ],
+               "shortDescription" : "In progress",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Client components",
+               "progress" : 40,
+               "releases" : [
+                  {
+                     "article" : "Use-a-generic-collection-directive",
+                     "commitHash" : "3a8f44fa4a12a72622c0bb7c539c94f6f1f736fe",
+                     "date" : "02-06-2015 18:15 +0200",
+                     "name" : "Collection directive",
+                     "tag" : "v1.1.70.1"
+                  },
+                  {
+                     "article" : "Use-a-generic-tree-directive",
+                     "commitHash" : "3a8f44fa4a12a72622c0bb7c539c94f6f1f736fe",
+                     "date" : "02-06-2015 18:15 +0200",
+                     "name" : "Tree directive",
+                     "tag" : "v1.1.70.1"
+                  },
+                  {
+                     "article" : "Use-a-sort-box-directive",
+                     "commitHash" : "3a8f44fa4a12a72622c0bb7c539c94f6f1f736fe",
+                     "date" : "02-06-2015 18:15 +0200",
+                     "name" : "Sort box directive",
+                     "tag" : "v1.1.70.1"
+                  },
+                  {
+                     "article" : "Use-a-search-box-directive",
+                     "commitHash" : "3a8f44fa4a12a72622c0bb7c539c94f6f1f736fe",
+                     "date" : "02-06-2015 18:15 +0200",
+                     "name" : "Search box directive",
+                     "tag" : "v1.1.70.1"
+                  },
+                  {
+                     "article" : "Use-an-infinite-scroll-directive",
+                     "commitHash" : "3a8f44fa4a12a72622c0bb7c539c94f6f1f736fe",
+                     "date" : "02-06-2015 18:15 +0200",
+                     "name" : "Infinite scroll directive",
+                     "tag" : "v1.1.70.1"
                   }
                ],
                "shortDescription" : "In progress",
