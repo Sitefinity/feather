@@ -62,6 +62,7 @@
     <Content Include="unit\services\sfLinkServiceSpec.js" />
     <Content Include="unit\services\sfMediaFilterSpec.js" />
     <Content Include="unit\services\sfMediaServiceSpec.js" />
+    <Content Include="unit\sorting\sfSortBoxSpec.js" />
     <EmbeddedResource Include="helpers\kendo.all.min.js" />
     <Content Include="unit\selectors\itemsTreeSpec.js" />
     <Content Include="unit\selectors\newsSelectorSpec.js" />
