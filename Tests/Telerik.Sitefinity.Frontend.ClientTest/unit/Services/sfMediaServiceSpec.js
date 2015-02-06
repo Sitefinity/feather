@@ -102,7 +102,7 @@ describe('sfMediaService', function () {
             callbacks: {
                 testedObject: 'images',
                 folders: 'getFolders',
-                items: 'getImages',
+                items: 'getMedia',
                 content: 'getContent'
             }
         }
@@ -183,7 +183,7 @@ describe('sfMediaService', function () {
 
                 $httpBackend.expectGET(itemsServicePath + subpath).respond(500, errorResponse);
 
-                assertError(null, 'getImages');
+                assertError(null, 'getMedia');
             });
 
             it('[dzhenko] / should return error on content', function () {
