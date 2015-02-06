@@ -244,19 +244,19 @@
                         }
                     });
 
-                    scope.$watch('filters.library.selected', function (newVal, oldVal) {
+                    scope.$watchCollection('filters.library.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.parent.to(newVal[0]);
                         }
-                    }, true);
+                    });
 
-                    scope.$watch('filters.tag.selected', function (newVal, oldVal) {
+                    scope.$watchCollection('filters.tag.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.taxon.to(newVal[0], constants.filters.tags.field);
                         }
-                    }, true);
+                    });
 
                     scope.$watch('filters.tag.query', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
@@ -264,12 +264,12 @@
                         }
                     });
 
-                    scope.$watch('filters.category.selected', function (newVal, oldVal) {
+                    scope.$watchCollection('filters.category.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.taxon.to(newVal[0], constants.filters.categories.field);
                         }
-                    }, true);
+                    });
 
                     scope.$watch('filters.category.query', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
@@ -279,7 +279,7 @@
                         }
                     });
 
-                    scope.$watch('filters.date.selected', function (newVal, oldVal) {
+                    scope.$watchCollection('filters.date.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
                             scope.filters.basic.selected = null;
                             if (newVal && newVal[0]) {
@@ -289,7 +289,7 @@
                                 scope.filterObject.set.date.all();
                             }
                         }
-                    }, true);
+                    });
 
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
