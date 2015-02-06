@@ -18,6 +18,7 @@
                                 skip: skip,
                                 take: take,
                                 filter: filter,
+                                provider: ctrl.$scope.sfProvider,
                                 recursive: search ? true : null,
                                 sort: "Title ASC"
                             };
@@ -32,6 +33,7 @@
 
                             var options = {
                                 parent: parentId,
+                                provider: ctrl.$scope.sfProvider,
                                 filter: filter,
                                 sort: "Title ASC"
                             };
@@ -47,6 +49,7 @@
                             var options = {
                                 skip: 0,
                                 take: 100,
+                                provider: ctrl.$scope.sfProvider,
                                 recursive: true,
                                 filter: filter
                             };
