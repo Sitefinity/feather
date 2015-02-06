@@ -2,8 +2,8 @@
     angular.module('sfServices').factory('sfMediaService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
         var constants = {
             images: {
-                itemType : 'Telerik.Sitefinity.Libraries.Model.Image',
-                albumsServiceUrl : serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/folders/'),
+                itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
+                albumsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/folders/'),
                 imagesServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/')
             }
         };
@@ -108,6 +108,19 @@
             },
             getContent: function (options) {
                 return getItems(options, null, constants.images.imagesServiceUrl, constants.images.itemType);
+            },
+            getPredecessorsFolders: function (id) {
+                if (!id) {
+                    return;
+                }
+                var options = {
+                    parent: 'predecessors/' + id,
+                    excludeNeighbours: true
+                };
+                return getFolders(options, constants.images.albumsServiceUrl)
+                          .then(function (data) {
+                              return data.Items;
+                          });
             }
         };
 
