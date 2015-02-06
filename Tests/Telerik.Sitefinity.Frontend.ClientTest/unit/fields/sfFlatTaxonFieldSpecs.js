@@ -59,17 +59,22 @@
     });
 
     it('[Boyko-Karadzhov] / should call the taxon service to add new taxa.', function () {
+        var newTaxonTitle = 'new taxon';
         var scope = rootScope.$new();
         scope.selectedTags = [];
 
         flatTaxonService.addTaxa = function (taxonomyId, provider, itemType, taxonTitles) {
             expect(taxonomyId).toEqual(tagsId);
             expect(taxonTitles).not.toBe(null);
-            expect(taxonTitles).toEqual(['new taxon']);
+            expect(taxonTitles).toEqual([newTaxonTitle]);
+
+            var defer = $q.defer();
+            defer.resolve(null);
+            return defer.promise;
         };
 
         commonMethods.compileDirective(directiveMarkup, scope);
         scope.$digest();
-        scope.$$childHead.taxonAdded('new taxon');
+        scope.$$childHead.taxonAdded({ Title: newTaxonTitle });
     });
 });
