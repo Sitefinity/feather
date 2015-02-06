@@ -17,7 +17,6 @@
                 return serverContext.getEmbeddedResourceUrl(assembly, url);
             },
             link: function (scope, element) {
-                var existingTaxons = [];
                 scope.selectedTaxons = [];
 
                 var retrieveInitialTaxons = function () {
@@ -47,9 +46,6 @@
                     return taxonService.getTaxons(scope.sfTaxonomyId, null, null, query)
                         .then(function (data) {
                             if (data && data.Items) {
-                                existingTaxons = jQuery.map(data.Items, function (item, index) {
-                                    return item.Title;
-                                });
                                 return data.Items;
                             }
                             else return [];
@@ -60,7 +56,7 @@
                 };
 
                 scope.taxonAdded = function (newTaxon) {
-                    if (newTaxon && existingTaxons.indexOf(newTaxon) === -1) {
+                    if (newTaxon) {
                         taxonService.addTaxa(scope.sfTaxonomyId, null, null, [newTaxon.Title])
                             .then(function (data) {
                                 if (data && data.length > 0) {
