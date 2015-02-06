@@ -92,7 +92,7 @@ describe('libraries breadcrumb in image selector', function () {
     });
 
     it('[GeorgiMateev] / should the predecessors of the selected folder for filtering into the breadcrumb.', function () {
-        var template = '<sf-image-selector sf-model="filterObject"></sf-image-selector>';
+        var template = '<sf-image-selector></sf-image-selector>';
         var scope = $rootScope.$new();
 
         commonMethods.compileDirective(template, scope);
@@ -110,7 +110,7 @@ describe('libraries breadcrumb in image selector', function () {
     });
 
     it('[GeorgiMateev] / should set the parent prop of the filter object to be the selected folder Id', function () {
-        var template = '<sf-image-selector sf-model="filterObject"></sf-image-selector>';
+        var template = '<sf-image-selector></sf-image-selector>';
         var scope = $rootScope.$new();
 
         commonMethods.compileDirective(template, scope);
