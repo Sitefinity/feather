@@ -26,9 +26,9 @@
 
             <!--Basic Filter-->
             <h5>Already uploaded images</h5>
-            <p><a ng-click="filterObject.set.basic.recentItems()" ng-class="{ 'selectedFilter': filterObject.basic === 'RecentItems' }">Recent images</a></p>
-            <p><a ng-click="filterObject.set.basic.ownItems()" ng-class="{ 'selectedFilter': filterObject.basic === 'OwnItems' }">My images</a></p>
-            <p><a ng-click="filterObject.set.basic.allLibraries()" ng-class="{ 'selectedFilter': filterObject.basic === 'AllLibraries' }">All libraries</a></p>
+            <p><a ng-repeat="basicFilter in scope.filters.basic.all" 
+                ng-click="scope.filters.basic.selected = basicFilter.title" 
+                ng-class="{ 'selected': scope.filters.basic.selected === basicFilter.value }">{{basicFilter.title}}</a></p>
             <br />
 
             <!--Library Filter-->

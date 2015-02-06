@@ -30,6 +30,9 @@
                 infiniteScrollLoadedItemsCount: 20,
                 recentImagesLastDaysCount: 7,
                 filters: {
+                    basic: {
+
+                    },
                     dates: [
                         { text: 'Any time', dateValue: null },
                         { text: 'Last 1 day', dateValue: helpers.getDate(1) },
@@ -133,11 +136,10 @@
                         }
 
                         var options = {
-                            filter: scope.filterObject.composeExpression()
+                            filter: scope.filterObject.composeExpression(),
+                            parent: scope.filterObject.parent,
+                            sort: scope.sortExpression
                         };
-
-                        options.parent = scope.filterObject.parent;
-                        options.sort = scope.sortExpression;
 
                         if (appendItems) {
                             options.skip = scope.items.length;
@@ -147,39 +149,11 @@
                             options.take = constants.initialLoadedItemsCount;
                         }
 
-                        var callback;
-                        if (scope.filterObject.query) {
-                            callback = sfMediaService.images.getImages;
-                        }
-                        else if (scope.filterObject.basic) {
-                            // Defaul filter is used (Recent / My / All)
-                            if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
-
-                                // When the filter is Recent items, the number of displayed items is fixed and we should not append more.
-                                if (appendItems) return;
-
-                                callback = sfMediaService.images.getImages;
-                            }
-                            else if (scope.filterObject.basic === scope.filterObject.constants.basic.ownItems) {
-                                callback = sfMediaService.images.getImages;
-                            }
-                            else if (scope.filterObject.basic === scope.filterObject.constants.basic.allLibraries) {
-                                callback = sfMediaService.images.getFolders;
-                            }
-                            else {
-                                throw { message: 'Unknown basic filter object option.' };
-                            }
-                        }
-                        else {
-                            // custom filter is used (Libraries / Taxons / Dates)
-                            callback = sfMediaService.images.getContent;
-                        }
-
                         if (scope.isLoading === false) {
                             scope.isLoading = true;
 
                             var itemsLength = scope.items ? scope.items.length : 0;
-                            callback(options)
+                            sfMediaService.images.get(options, scope.filterObject, appendItems)
                                 .then(function (response) {
                                     if (response && response.Items) {
                                         if (appendItems) {
@@ -198,13 +172,19 @@
                         }
                     };
 
+                    scope.filterObject = sfMediaFilter.newFilter();
                     scope.sortExpression = null;
                     scope.items = [];
-                    scope.filterObject = sfMediaFilter.newFilter();
                     scope.isLoading = false;
                     scope.showSortingAndView = false;
 
                     scope.filters = {
+                        basic: {
+                            all: [{ title: 'Recent Images', value: 'recentItems' },
+                                { title: 'My Images', value: 'ownItems' },
+                                { title: 'All Libraries', value: 'allLibraries' }],
+                            selected: null,
+                        },
                         library: {
                             selected: null,
                             getChildren: filtersLogic.loadLibraryChildren
@@ -226,6 +206,10 @@
                             query: null,
                             getChildren: filtersLogic.loadCategoryChildren
                         }
+                    };
+
+                    scope.selectBasicFilter = function (basicFilter) {
+                        scope.filterObject.set.basic[basicFilter]();
                     };
 
                     scope.narrowResults = scope.filterObject.set.query.to;

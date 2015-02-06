@@ -50,11 +50,42 @@
             getFolders: function (options) {
                 return getFolders(options, constants.images.albumsServiceUrl);
             },
-            getImages: function (options) {
+            getMedia: function (options) {
                 return getItems(options, 'true', constants.images.imagesServiceUrl, constants.images.itemType);
             },
             getContent: function (options) {
                 return getItems(options, null, constants.images.imagesServiceUrl, constants.images.itemType);
+            },
+            get: function (options, filterObject, appendItems) {
+                var callback;
+                if (filterObject.query) {
+                    callback = imagesObj.getMedia;
+                }
+                else if (filterObject.basic) {
+                    // Defaul filter is used (Recent / My / All)
+                    if (filterObject.basic === filterObject.constants.basic.recentItems) {
+
+                        // When the filter is Recent items, the number of displayed items is fixed and we should not append more.
+                        if (appendItems) return;
+
+                        callback = imagesObj.getMedia;
+                    }
+                    else if (filterObject.basic === filterObject.constants.basic.ownItems) {
+                        callback = imagesObj.getMedia;
+                    }
+                    else if (filterObject.basic === filterObject.constants.basic.allLibraries) {
+                        callback = imagesObj.getFolders;
+                    }
+                    else {
+                        throw { message: 'Unknown basic filter object option.' };
+                    }
+                }
+                else {
+                    // custom filter is used (Libraries / Taxons / Dates)
+                    callback = imagesObj.getContent;
+                }
+
+                return callback(options);
             }
         };
 

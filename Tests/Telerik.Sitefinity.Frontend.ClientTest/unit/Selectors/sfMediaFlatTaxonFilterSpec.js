@@ -52,8 +52,6 @@
 
     it('[Boyko-Karadzhov] / should set taxon id in the filter object when taxon is selected.', function () {
         var scope = rootScope.$new();
-        scope.filterObject = mediaService.newFilter();
-        scope.filterObject.basic = 'someValue';
 
         commonMethods.compileDirective(directiveMarkup, scope);
         scope.$digest();
