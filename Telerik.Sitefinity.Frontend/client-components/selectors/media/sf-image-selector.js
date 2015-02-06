@@ -143,8 +143,8 @@
                             if (promise) {
                                 promise.then(function (items) {
                                     scope.breadcrumbs = items;
-                                })
-                            };
+                                });
+                            }
                         }
 
                         if (scope.isLoading === false) {
