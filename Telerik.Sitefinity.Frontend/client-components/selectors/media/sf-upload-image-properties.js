@@ -2,12 +2,12 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfUploadImageProperties');
 
-    angular.module('sfUploadImageProperties', ['sfServices'])
+    angular.module('sfUploadImageProperties', ['sfFlatTaxonField'])
         .directive('sfUploadImageProperties', ['serverContext', 'serviceHelper', function (serverContext, serviceHelper) {
             return {
                 restrict: 'E',
                 scope: {
-                    selectedItem: '=?sfModel',
+                    sfModel: '='
                     uploadInfo: '=?'
                 },
                 templateUrl: function (elem, attrs) {
@@ -16,8 +16,7 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    scope.tags = [];
-
+                    
                     // TODO dummy data, please remove after integration with other components.
                     scope.uploadInfo = scope.uploadInfo || {};
                     scope.uploadInfo.percentage = 99;

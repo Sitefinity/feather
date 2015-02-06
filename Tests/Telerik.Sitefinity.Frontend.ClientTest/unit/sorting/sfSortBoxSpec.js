@@ -47,7 +47,7 @@
         generictTestForValue(2, 'Title ASC');
     });
 
-    it('[dzhenko] / should have proper third sort value.', function () {
+    it('[dzhenko] / should have proper fourth sort value.', function () {
         generictTestForValue(3, 'Title DESC');
     });
 
