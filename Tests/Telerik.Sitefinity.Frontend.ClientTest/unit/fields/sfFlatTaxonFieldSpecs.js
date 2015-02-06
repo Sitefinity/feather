@@ -35,7 +35,7 @@
     var flatTaxonService = {
         getSpecificItems: function (taxonomyId, ids) {
             var result = [];
-            for (var i = 0; i < ids; i++) {
+            for (var i = 0; i < ids.length; i++) {
                 result.push({ Id: ids[i], Title: 'Taxon ' + ids[i] });
             }
 
@@ -49,11 +49,11 @@
         var scope = rootScope.$new();
         scope.selectedTags = ['id-123', 'id-456', 'id-789'];
 
-        commonMethods.compileDirective(directiveMarkup, scope);
+        var element = commonMethods.compileDirective(directiveMarkup, scope);
         scope.$digest();
 
-        expect($(':contains("Taxon id-123")').length).toEqual(1);
-        expect($(':contains("Taxon id-456")').length).toEqual(1);
-        expect($(':contains("Taxon id-789")').length).toEqual(1);
+        expect($(element).find('span:contains("Taxon id-123")').length).toEqual(1);
+        expect($(element).find('span:contains("Taxon id-456")').length).toEqual(1);
+        expect($(element).find('span:contains("Taxon id-789")').length).toEqual(1);
     });
 });

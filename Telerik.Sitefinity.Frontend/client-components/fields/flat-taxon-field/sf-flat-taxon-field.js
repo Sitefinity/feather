@@ -18,6 +18,31 @@
             },
             link: function (scope, element) {
                 var existingTaxons = [];
+                scope.selectedTaxons = [];
+
+                var retrieveInitialTaxons = function () {
+                    if (scope.sfModel && scope.sfModel.length > 0) {
+                        scope.isLoading = true;
+                        taxonService.getSpecificItems(scope.sfTaxonomyId, scope.sfModel)
+                            .then(function (data) {
+                                if (data && data.Items) {
+                                    scope.selectedTaxons = data.Items;
+                                }
+                            })
+                            .finally(function () {
+                                scope.isLoading = false;
+                            });
+                    }
+                };
+
+                retrieveInitialTaxons();
+
+                scope.$watchCollection('selectedTaxons', function (newSelectedTaxons, oldSelectedTaxons) {
+                    scope.sfModel = jQuery.map(newSelectedTaxons, function (item, index) {
+                        return item.Id;
+                    });
+                });
+
                 scope.loadTaxons = function (query) {
                     return taxonService.getTaxons(scope.sfTaxonomyId, null, null, query)
                         .then(function (data) {
