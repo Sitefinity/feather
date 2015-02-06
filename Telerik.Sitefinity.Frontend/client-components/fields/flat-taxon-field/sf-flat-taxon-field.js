@@ -1,7 +1,9 @@
 ﻿(function ($) {
-    var module = angular.module('sfFields', ['kendo.directives', 'sfServices', 'ngTagsInput']);
+    var sfFields = angular.module('sfFields');
+    sfFields.requires.push('sfFlatTaxonField');
+    var module = angular.module('sfFlatTaxonField', ['sfServices', 'ngTagsInput']);
 
-    module.directive('sfFlatTaxonomyField', ['serverContext', 'sfFlatTaxonService', function (serverContext, taxonService) {
+    module.directive('sfFlatTaxonField', ['serverContext', 'sfFlatTaxonService', function (serverContext, taxonService) {
         return {
             restrict: "E",
             scope: {
@@ -11,7 +13,7 @@
             },
             templateUrl: function (elem, attrs) {
                 var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                var url = attrs.sfTemplateUrl || 'client-components/fields/flat-taxonomy-field/sf-flat-taxonomy-field.html';
+                var url = attrs.sfTemplateUrl || 'client-components/fields/flat-taxon-field/sf-flat-taxon-field.html';
                 return serverContext.getEmbeddedResourceUrl(assembly, url);
             },
             link: function (scope, element) {

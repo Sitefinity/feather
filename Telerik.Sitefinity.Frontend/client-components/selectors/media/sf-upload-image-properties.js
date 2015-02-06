@@ -2,7 +2,7 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfUploadImageProperties');
 
-    angular.module('sfUploadImageProperties', ['sfFields', 'sfServices'])
+    angular.module('sfUploadImageProperties', ['sfFlatTaxonField'])
         .directive('sfUploadImageProperties', ['serverContext', 'serviceHelper', function (serverContext, serviceHelper) {
             return {
                 restrict: 'E',
