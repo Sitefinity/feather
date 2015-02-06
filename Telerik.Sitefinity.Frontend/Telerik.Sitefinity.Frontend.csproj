@@ -537,6 +537,7 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-media-service.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-tag-taxon-items.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-filter.js" />
+    <EmbeddedResource Include="client-components\fields\sf-fields.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

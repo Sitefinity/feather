@@ -7,7 +7,7 @@
             return {
                 restrict: 'E',
                 scope: {
-                    selectedItem: '=?sfModel'
+                    sfModel: '='
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -15,7 +15,6 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    scope.tags = [];
                     
                 }
             };
