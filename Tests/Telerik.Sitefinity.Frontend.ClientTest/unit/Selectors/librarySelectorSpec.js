@@ -8,27 +8,30 @@ describe("library selector", function () {
         Id: '4c003fb0-2a77-61ec-be54-ff00007864f4',
         ParentId: null,
         HasChildren: true,
-        Title: { Value: 'Dummy' }
+        Path: null,
+        Title: 'Dummy'
     };
 
     var childDataItem = {
         Id: '4c003fb0-2a77-61ec-be54-ff00007864f5',
         ParentId: '4c003fb0-2a77-61ec-be54-ff00007864f4',
         HasChildren: false,
-        Title: { Value: 'DummyChild' }
+        Path: 'Dummy > DummyChild',
+        Title: 'DummyChild'
     };
 
     var dataItem2 = {
         Id: '4c003fb0-2a77-61ec-be54-ff11117864f4',
         ParentId: null,
         HasChildren: false,
-        Title: { Value: 'Filtered' },
+        Title: 'Filtered',
+        Path: null,
         Filter: true
     };
 
     var dataItems = {
         Items: [dataItem, dataItem2, childDataItem],
-        TotalCount: 2
+        TotalCount: 3
     };
 
     var customDataItems = {
@@ -39,7 +42,7 @@ describe("library selector", function () {
     for (var i = 0; i < ITEMS_COUNT; i++) {
         customDataItems.Items[i] = {
             Id: '4c003fb0-2a77-61ec-be54-ff00007864f' + i,
-            Title: { Value: 'Dummy' + i }
+            Title: 'Dummy' + i
         };
     }
 
@@ -116,8 +119,19 @@ describe("library selector", function () {
         leftOver.remove();
 
         //The selector mutates the selected item when it is retrieved from the service.
-        dataItem.Title = { Value: 'Dummy' };
-        dataItem2.Title = { Value: 'Filtered' };
+        dataItem.Title = 'Dummy';
+        dataItem.Breadcrumb = null;
+        dataItem.RootPath = null;
+        dataItem.TitlesPath = null;
+        dataItem2.Title = 'Filtered';
+        dataItem2.Breadcrumb = null;
+        dataItem2.RootPath = null;
+        dataItem2.TitlesPath = null;
+        dataItem2.Path = null;
+        childDataItem.Title = 'DummyChild';
+        childDataItem.Breadcrumb = null;
+        childDataItem.RootPath = null;
+        childDataItem.TitlesPath = null;
 
         //Sets default mediaService mock.
         provide.value('sfMediaService', mediaService);
@@ -163,7 +177,7 @@ describe("library selector", function () {
             expect(args[0].sort).toBe('Title ASC');
 
             //Provider
-            //expect(args[0]).toBe('OpenAccessDataProvider');
+            expect(args[0].provider).toBe('OpenAccessDataProvider');
 
             //Skip
             expect(args[0].skip).toBe(0);
@@ -188,8 +202,14 @@ describe("library selector", function () {
             //parent
             expect(args[0].parent).toBe("4c003fb0-2a77-61ec-be54-ff00007864f4");
 
+            //provider
+            expect(args[0].provider).toBe('OpenAccessDataProvider');
+
             //sort
             expect(args[0].sort).toBe('Title ASC');
+
+            //filter
+            expect(args[0].filter).not.toBe();
         });
 
         it('[EGaneva] / should assign value to "selected-item" when "selected-item-id" is provided.', function () {
@@ -291,6 +311,9 @@ describe("library selector", function () {
             //Filter
             expect(args[0].filter).toBe('(Title.ToUpper().Contains("filter".ToUpper()))');
 
+            //Provider
+            expect(args[0].provider).toBe('OpenAccessDataProvider');
+
             expect(s.items).toBeDefined();
             expect(s.items[0].Id).toEqual(dataItem2.Id);
             expect(s.items[0].Filter).toBe(true);
@@ -337,6 +360,105 @@ describe("library selector", function () {
             expect(s.selectedItemsInTheDialog.length).toEqual(0);
         });
 
-   
+        it('[NPetrova] / should add breadcrumb when root level item is selected', function () {
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='selectedId'/>";
+
+            commonMethods.compileDirective(template, scope);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.items[1].Breadcrumb).not.toBe();
+
+            //Select item in the selector
+            s.itemClicked(0, s.items[1]);
+
+            expect(s.items[1].Breadcrumb).toBeDefined();
+            expect(s.items[1].Breadcrumb).toBe('Filtered');
+        });
+
+        it('[NPetrova] / should add breadcrumb when child item is selected', function () {
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='selectedId'/>";
+
+            commonMethods.compileDirective(template, scope);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.items[2].Breadcrumb).not.toBe();
+
+            //Select item in the selector
+            s.itemClicked(0, s.items[2]);
+
+            expect(s.items[2].Breadcrumb).toBeDefined();
+            expect(s.items[2].Breadcrumb).toBe('Dummy > DummyChild');
+        });
+
+        it('[NPetrova] / should add child item\'s RootPath when items are filtered', function () {
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-provider='provider'/>";
+
+            dataItem2.Path = "Parent > Child";
+            dataItem2.Title = "Child";
+
+            commonMethods.compileDirective(template, scope);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            //Apply filter
+            s.$apply(function () {
+                s.filter.searchString = 'filter';
+                s.filter.search(s.filter.searchString);
+            });
+
+            expect(s.items).toBeDefined();
+            expect(s.items[0].Id).toEqual(dataItem2.Id);
+            expect(s.items[0].RootPath).toBe('Under Parent');
+        });
+
+        it('[NPetrova] / should add root level item\'s RootPath when items are filtered', function () {
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-provider='provider'/>";
+
+            commonMethods.compileDirective(template, scope);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            //Apply filter
+            s.$apply(function () {
+                s.filter.searchString = 'filter';
+                s.filter.search(s.filter.searchString);
+            });
+
+            expect(s.items).toBeDefined();
+            expect(s.items[0].Id).toEqual(dataItem2.Id);
+            expect(s.items[0].RootPath).toBe('On Top Level');
+        });
+
+        it('[NPetrova] / should deselect the item if it is clicked and it is already selected.', function () {
+            var template = "<sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='selectedId'/>";
+
+            scope.selectedId = childDataItem.Id;
+
+            commonMethods.compileDirective(template, scope);
+
+            $('.openSelectorBtn').click();
+
+            //The scope of the selector is isolated, but it's child of the scope used for compilation.
+            var s = scope.$$childHead;
+
+            expect(s.sfSelectedItem.Breadcrumb).toBeDefined();
+            expect(s.sfSelectedItem.Breadcrumb).toBe('Filtered');
+            expect(s.sfSelectedItem.TitlesPath).toBeDefined();
+            expect(s.sfSelectedItem.TitlesPath).toBe('Filtered');
+        });
     });
 });
