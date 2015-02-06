@@ -18,6 +18,16 @@
                 return serviceHelper.getResource(url);
             };
 
+            var putResource = function (taxonomyId) {
+                var url;
+                if (taxonomyId && taxonomyId !== "") {
+                    url = serviceUrl + taxonomyId + '/';
+                }
+                url += "ensure/";
+
+                return serviceHelper.getResource(url);
+            };
+
             var getTaxons = function (taxonomyId, skip, take, search, frontendLanguages) {
                 var filter = serviceHelper.filterBuilder()
                     .searchFilter(search, frontendLanguages)
@@ -59,11 +69,18 @@
                 return dataItemPromise;
             };
 
+            var addTaxa = function (taxonomyId, provider, itemType, taxonTitles) {
+                putResource(taxonomyId).put(taxonTitles).$promise;
+
+                return dataItemPromise;
+            };
+
             return {
                 /* Returns the data items. */
                 getTaxons: getTaxons,
                 getSpecificItems: getSpecificItems,
-                getTaxon: getTaxon
+                getTaxon: getTaxon,
+                addTaxa: addTaxa
             };
         }]);
 })();
