@@ -208,6 +208,108 @@
         expect(scope.selectedIds[0]).toEqual('1');
     });
 
+    it('[dzhenko] / should select second item if sf-multiselect is present.', function () {
+        var scope = $rootScope.$new();
+
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span ng-class="{ \'selected\': isSelected(node), \'collapsed\': node.collapsed }">{{node.item.id}}<a ng-click="toggle(node)" class="expander"></a><a class="selector" ng-click="select(node)"></a></span><ul><li ng-repeat="node in node.children" ng-include src="itemTemplateUrl"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul ><li ng-repeat="node in hierarchy" ng-include src="itemTemplateUrl"></li></ul>');
+
+        scope.requestChildren = function (parent) {
+            var result = $q.defer();
+
+            if (parent === null) {
+                result.resolve([{ id: '1' }, { id: '2' }]);
+            }
+            else if (parent.id === '2') {
+                result.resolve([{ id: '3' }, { id: '4' }]);
+            }
+            else {
+                result.resolve([]);
+            }
+
+            return result.promise;
+        };
+
+        var directiveMarkup = directiveMarkup || '<div sf-tree sf-multiselect sf-model="selectedIds" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
+        commonMethods.compileDirective(directiveMarkup, scope);
+
+        $('ul li span:contains("1") a.selector').click();
+        $('ul li span:contains("2") a.selector').click();
+        scope.$digest();
+
+        expect(scope.selectedIds[0]).toEqual('1');
+        expect(scope.selectedIds[1]).toEqual('2');
+    });
+
+    it('[dzhenko] / should not deselect second item if sf-multiselect is present and sf-deselect is not.', function () {
+        var scope = $rootScope.$new();
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span ng-class="{ \'selected\': isSelected(node), \'collapsed\': node.collapsed }">{{node.item.id}}<a ng-click="toggle(node)" class="expander"></a><a class="selector" ng-click="select(node)"></a></span><ul><li ng-repeat="node in node.children" ng-include src="itemTemplateUrl"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul ><li ng-repeat="node in hierarchy" ng-include src="itemTemplateUrl"></li></ul>');
+
+        scope.requestChildren = function (parent) {
+            var result = $q.defer();
+
+            if (parent === null) {
+                result.resolve([{ id: '1' }, { id: '2' }]);
+            }
+            else if (parent.id === '2') {
+                result.resolve([{ id: '3' }, { id: '4' }]);
+            }
+            else {
+                result.resolve([]);
+            }
+
+            return result.promise;
+        };
+
+        var directiveMarkup = directiveMarkup || '<div sf-tree sf-multiselect sf-model="selectedIds" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
+        commonMethods.compileDirective(directiveMarkup, scope);
+
+        $('ul li span:contains("1") a.selector').click();
+        $('ul li span:contains("2") a.selector').click();
+        scope.$digest();
+        $('ul li span:contains("2") a.selector').click();
+        scope.$digest();
+
+        expect(scope.selectedIds[0]).toEqual('1');
+        expect(scope.selectedIds[1]).toEqual('2');
+    });
+
+    it('[dzhenko] / should deselect second item if sf-multiselect and sf-deselectable are present.', function () {
+        var scope = $rootScope.$new();
+
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span ng-class="{ \'selected\': isSelected(node), \'collapsed\': node.collapsed }">{{node.item.id}}<a ng-click="toggle(node)" class="expander"></a><a class="selector" ng-click="select(node)"></a></span><ul><li ng-repeat="node in node.children" ng-include src="itemTemplateUrl"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul ><li ng-repeat="node in hierarchy" ng-include src="itemTemplateUrl"></li></ul>');
+
+        scope.requestChildren = function (parent) {
+            var result = $q.defer();
+
+            if (parent === null) {
+                result.resolve([{ id: '1' }, { id: '2' }]);
+            }
+            else if (parent.id === '2') {
+                result.resolve([{ id: '3' }, { id: '4' }]);
+            }
+            else {
+                result.resolve([]);
+            }
+
+            return result.promise;
+        };
+
+        var directiveMarkup = directiveMarkup || '<div sf-tree sf-multiselect sf-deselectable sf-model="selectedIds" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
+        commonMethods.compileDirective(directiveMarkup, scope);
+
+        $('ul li span:contains("1") a.selector').click();
+        $('ul li span:contains("2") a.selector').click();
+        scope.$digest();
+        $('ul li span:contains("2") a.selector').click();
+        scope.$digest();
+
+        expect(scope.selectedIds[0]).toEqual('1');
+        expect(scope.selectedIds[1]).toEqual(undefined);
+    });
+
     var selectionSetup = function (scope, directiveMarkup) {
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/selected-item.html', '<span ng-class="{ \'selected\': isSelected(node), \'collapsed\': node.collapsed }">{{node.item.id}}<a ng-click="toggle(node)" class="expander"></a><a class="selector" ng-click="select(node)"></a></span><ul><li ng-repeat="node in node.children" ng-include src="itemTemplateUrl"></li></ul>');
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul ><li ng-repeat="node in hierarchy" ng-include src="itemTemplateUrl"></li></ul>');
