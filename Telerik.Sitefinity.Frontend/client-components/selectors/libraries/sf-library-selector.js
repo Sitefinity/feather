@@ -6,7 +6,7 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        var mediaType = attrs.sfMediaType;
+                        var mediaType = attrs.sfMediaType ? attrs.sfMediaType : 'images';
 
                         ctrl.getItems = function (skip, take, search) {
                             var filter = serviceHelper.filterBuilder()

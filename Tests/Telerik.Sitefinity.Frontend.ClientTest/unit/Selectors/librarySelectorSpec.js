@@ -331,7 +331,7 @@ describe("library selector", function () {
             expect(s.selectedItemsInTheDialog[0].Id).toEqual(dataItem2.Id);
 
             //Select item in the selector
-            s.itemClicked(0, s.items[0]);
+            s.itemClicked(0, s.items[1]);
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(0);
