@@ -56,8 +56,9 @@
 
                         ctrl.onSelectedItemsLoadedSuccess = function (data) {
                             angular.forEach(data.Items, function (result) {
-                                result.Breadcrumb = result.Path;
-                                result.TitlesPath = result.Path;
+                                var breadcrumb = result.Path ? result.Path : result.Title;
+                                result.Breadcrumb = breadcrumb;
+                                result.TitlesPath = breadcrumb;
                             });
 
                             ctrl.updateSelection(data.Items);
