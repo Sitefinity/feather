@@ -176,7 +176,7 @@
                             scope.noItemsExist = !data.Items.length;
                             scope.paging.skip += data.Items.length;
 
-                            if (scope.multiselect) {
+                            if (scope.multiselect || ctrl.selectorType === 'LibrarySelector') {
                                 Array.prototype.push.apply(scope.items, data.Items);
                             }
                             else {
