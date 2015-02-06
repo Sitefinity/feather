@@ -48,11 +48,11 @@
     <Content Include="helpers\common-methods.js" />
     <Content Include="unit\collections\sfInfiniteScrollSpec.js" />
     <Content Include="unit\collections\sfTreeSpec.js" />
+    <Content Include="unit\fields\sfFlatTaxonFieldSpecs.js" />
     <Content Include="unit\search\sfSearchBoxSpec.js" />
-    <Content Include="unit\selectors\sfMediaDateFilterSpec.js" />
+    <Content Include="unit\selectors\sfImageSelectorSpec.js" />
     <Content Include="unit\selectors\externalUrlsViewSpec.js" />
     <Content Include="unit\selectors\languageSelectorSpec.js" />
-    <Content Include="unit\selectors\libraryFilterSpec.js" />
     <Content Include="unit\selectors\linkSelectorSpec.js" />
     <Content Include="unit\selectors\modalLinkSelectorSpec.js" />
     <Content Include="unit\selectors\multi-site\sfSiteSelectorSpec.js" />
@@ -63,6 +63,7 @@
     <Content Include="unit\services\languageServiceSpec.js" />
     <Content Include="unit\services\multisiteSpec.js" />
     <Content Include="unit\services\sfLinkServiceSpec.js" />
+    <Content Include="unit\services\sfMediaFilterSpec.js" />
     <Content Include="unit\services\sfMediaServiceSpec.js" />
     <EmbeddedResource Include="helpers\kendo.all.min.js" />
     <Content Include="unit\selectors\itemsTreeSpec.js" />
