@@ -79,7 +79,7 @@
 
                         ctrl.selectorType = 'LibrarySelector';
                         ctrl.dialogTemplateUrl = 'client-components/selectors/media/sf-library-selector.html';
-                        ctrl.$scope.dialogTemplateId = 'sf-hierarchical-taxon-selector';
+                        ctrl.$scope.dialogTemplateId = 'sf-library-selector';
                         ctrl.$scope.sfDialogHeader = 'Select a library';
                         ctrl.closedDialogTemplateUrl = attrs.sfMultiselect ? 'client-components/selectors/common/sf-list-group-selection.html' :
                             'client-components/selectors/common/sf-bubbles-selection.html';
