@@ -78,7 +78,7 @@
                         };
 
                         ctrl.selectorType = 'LibrarySelector';
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/libraries/sf-library-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/media/sf-library-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-hierarchical-taxon-selector';
                         ctrl.$scope.sfDialogHeader = 'Select a library';
                         ctrl.closedDialogTemplateUrl = attrs.sfMultiselect ? 'client-components/selectors/common/sf-list-group-selection.html' :
