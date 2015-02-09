@@ -124,19 +124,19 @@ describe('sfMediaService', function () {
 
             assertFolders = function (params) {
                 baseAssertFolders(params, mediaService[testObjSettings.callbacks.testedObject][testObjSettings.callbacks.folders]);
-            }
+            };
 
             assertItems = function (params) {
                 baseAssertItems(params, mediaService[testObjSettings.callbacks.testedObject][testObjSettings.callbacks.items]);
-            }
+            };
 
             assertContent = function (params) {
                 baseAssertContent(params, mediaService[testObjSettings.callbacks.testedObject][testObjSettings.callbacks.content]);
-            }
+            };
 
-           assertError = function (params, methodName) {
-               baseAssertError(params, mediaService[testObjSettings.callbacks.testedObject][methodName]);
-            }
+            assertError = function (params, methodName) {
+                baseAssertError(params, mediaService[testObjSettings.callbacks.testedObject][methodName]);
+            };
         }));
 
         /* Tests */
@@ -144,7 +144,7 @@ describe('sfMediaService', function () {
         /* Common */
         (function () {
             it('[dzhenko] / passing no options object to folders should return all objects', function () {
-                var subpath = '?hierarchyMode=true'
+                var subpath = '?hierarchyMode=true';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -171,7 +171,7 @@ describe('sfMediaService', function () {
         /* Errors */
         (function () {
             it('[dzhenko] / should return error on folders', function () {
-                var subpath = '?hierarchyMode=true'
+                var subpath = '?hierarchyMode=true';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(500, errorResponse);
 

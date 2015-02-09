@@ -21,7 +21,7 @@ describe('sfMediaFilter', function () {
         expect(called).toBe(true);
 
         return filter;
-    }
+    };
 
     var assertAllButOnePropertyAreNull = function (filter, propName) {
         if (propName !== 'basic') {
@@ -44,7 +44,7 @@ describe('sfMediaFilter', function () {
             expect(filter.taxon.id).toBe(null);
             expect(filter.taxon.field).toBe(null);
         }
-    }
+    };
 
     it('[dzhenko] / a new filter should have all its properties null', function () {
         assertAllButOnePropertyAreNull(mediaFilter.newFilter(), null);

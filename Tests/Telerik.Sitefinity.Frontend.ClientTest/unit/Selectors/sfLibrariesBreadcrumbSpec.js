@@ -22,7 +22,7 @@ describe('libraries breadcrumb in image selector', function () {
         var defer = $q.defer();
         defer.resolve({ Items: items });
         return defer.promise;
-    }
+    };
 
     var genericGet = function () {
         var items = [];

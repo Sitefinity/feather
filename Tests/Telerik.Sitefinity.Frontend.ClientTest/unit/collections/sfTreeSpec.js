@@ -32,7 +32,7 @@
         }
 
         return result.promise;
-    }
+    };
 
     it('[Boyko-Karadzhov] / should request items initially once with null parent.', function () {
         var scope = $rootScope.$new();
@@ -304,7 +304,7 @@
 
         scope.requestChildren = defaultRequestChildrend;
 
-        var directiveMarkup = directiveMarkup || '<div sf-tree sf-model="selectedIds" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
+        directiveMarkup = directiveMarkup || '<div sf-tree sf-model="selectedIds" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/selected-item.html" sf-request-children="requestChildren(parent)" sf-identifier="id"></div>';
         commonMethods.compileDirective(directiveMarkup, scope);
     };
 });

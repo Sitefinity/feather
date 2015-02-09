@@ -72,7 +72,7 @@ describe('sfSearchService', function () {
         $httpBackend.flush();
 
         expect(data.data).toEqualData(errorResponse);
-    }
+    };
 
     /* Tests */
     it('[NPetrova] / should retrieve items without filter and paging.', function () {

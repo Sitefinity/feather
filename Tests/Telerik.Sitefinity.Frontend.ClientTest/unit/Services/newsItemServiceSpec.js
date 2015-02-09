@@ -75,7 +75,7 @@ describe('sfNewsItemService', function () {
         $httpBackend.flush();
 
         expect(data.data).toEqualData(errorResponse);
-    }
+    };
 
     /* Tests */
     it('[GMateev] / should retrieve items without filter and paging.', function () {
