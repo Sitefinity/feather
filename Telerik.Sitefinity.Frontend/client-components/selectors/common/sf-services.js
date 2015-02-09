@@ -28,7 +28,7 @@
             return str.substr(0, str.length - suffix.length);
         }
 
-        var getResource = function (url, options, headers) {
+        var getResource = function (url, options, headers, isArray) {
             var headerData = headers || {};
 
             var resourceOption = options || { stripTrailingSlashes: false };
@@ -45,10 +45,12 @@
             return $resource(url, {}, {
                 get: {
                     method: 'GET',
+                    isArray: isArray,
                     headers: headerData
                 },
                 put: {
                     method: 'PUT',
+                    isArray: isArray,
                     headers: headerData
                 }
             }, resourceOption);

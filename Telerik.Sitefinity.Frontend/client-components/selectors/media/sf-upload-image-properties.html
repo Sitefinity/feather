@@ -1,0 +1,51 @@
+﻿<div>
+    <h4>Upload image</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-10">
+            <div class="row">
+                <label>Image to upload</label>
+                <div class="progress">
+                    <button type="button" class="close" ng-click="uploadInfo.cancel()">×</button>
+                    <div class="progress-bar"
+                        role="progressbar"
+                        ng-attr-aria-valuenow="{{uploadInfo.percentage}}"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        ng-style="{width: uploadInfo.percentage + '%'}">
+                        <span ng-bind="uploadInfo.fileName"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label>Where to store the uploaded image?</label>
+                <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='image.ParentId'/>
+            </div>
+            <div class="row">
+                <label>Title</label>
+                <input type="text" ng-model="image.Title" />
+            </div>
+            <div class="row">
+                <label>Alternative text</label>
+                <input type="text" ng-model="image.AlternativeText" />
+            </div>
+            <expander expander-title='Categories and tags'>
+                <div class="row">
+                    <label>Categories</label>
+                    <sf-list-selector class="label-content"
+                                      sf-hierarchical-taxon-selector
+                                      sf-dialog-header="Select Category"
+                                      sf-multiselect="true"
+                                      sf-selected-ids="selectedCategoryIds"
+                                      sf-provider="sfProvider">
+                    </sf-list-selector>
+                </div>
+                <div class="row">
+                    <label>Tags</label>
+                    <sf-flat-taxon-field sf-model="image.Tags" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
+                </div>
+            </expander>
+        </div>
+    </div>
+</div>

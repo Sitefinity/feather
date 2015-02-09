@@ -1,0 +1,3 @@
+﻿<tags-input ng-model="selectedTaxons" display-property="Title" on-tag-added="taxonAdded($tag)">
+    <auto-complete ng-if="sfEnableAutoComplete" source="loadTaxons($query)"></auto-complete>
+</tags-input>
