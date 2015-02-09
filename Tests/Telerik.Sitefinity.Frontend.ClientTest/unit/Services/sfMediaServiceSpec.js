@@ -2,6 +2,7 @@
 describe('sfMediaService', function () {
     var $httpBackend;
     var mediaService;
+    var $interpolate;
 
     var dataItems = {
         Items: [{
@@ -36,6 +37,7 @@ describe('sfMediaService', function () {
         // Set up the mock http service responses
         $httpBackend = $injector.get('$httpBackend');
         mediaService = $injector.get('sfMediaService');
+        $interpolate = $injector.get('$interpolate');
     }));
 
     /* Helper methods */
@@ -97,13 +99,15 @@ describe('sfMediaService', function () {
     var allTestObjectsSettings = [
         {
             itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
+            parentType: 'Telerik.Sitefinity.Libraries.Model.Album',
             itemsServicePath: appPath + '/Sitefinity/Services/Content/ImageService.svc/',
             albumsServicePath: appPath + '/Sitefinity/Services/Content/AlbumService.svc/folders/',
             callbacks: {
                 testedObject: 'images',
                 folders: 'getFolders',
                 items: 'getMedia',
-                content: 'getContent'
+                content: 'getContent',
+                upload: 'upload'
             }
         }
     ];
@@ -114,6 +118,7 @@ describe('sfMediaService', function () {
         var albumsServicePath = testObjSettings.albumsServicePath;
         var itemsServicePath = testObjSettings.itemsServicePath;
         var itemType = testObjSettings.itemType;
+        var parentType = testObjSettings.parentType;
         var assertFolders,
             assertItems,
             assertContent,
@@ -535,6 +540,40 @@ describe('sfMediaService', function () {
                 $httpBackend.expectGET(itemsServicePath + subpath).respond(dataItems);
 
                 assertItems({ filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
+            });
+
+            it('[Boyko-Karadzhov] / should issue a PUT request to create image media item on upload.', function () {
+                var settings = {
+                    libraryId: 'myLibraryId',
+                    itemId: '00000000-0000-0000-0000-000000000000',
+                    itemType: itemType,
+                    provider: '',
+                    parentItemType: parentType,
+                    newParentId: 'myLibraryId'
+                };
+
+                var createImageUrl = itemsServicePath + 'parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}';
+                var expectedUrl = $interpolate(createImageUrl)(settings);
+
+                var item = {
+                    Item: {
+                        Id: 'resultingItemId'
+                    }
+                };
+
+                $httpBackend.expectPUT(expectedUrl).respond(item);
+
+                var data;
+                var file = {};
+                mediaService[testObjSettings.callbacks.testedObject].upload(file, settings.libraryId).then(function (res) {
+                    data = res;
+                });
+
+                expect(data).toBeUndefined();
+
+                $httpBackend.flush();
+
+                expect(data).toEqualData(item);
             });
         }());
 
