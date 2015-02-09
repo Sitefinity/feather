@@ -198,8 +198,10 @@
                                 .finally(function () {
                                     scope.isLoading = false;
 
-                                    // scrolls the collection of items to the top
-                                    element.find('div[class*="sf-collection-"] > div[sf-infinite-scroll]').scrollTop(0);
+                                    if (!appendItems) {
+                                        // scrolls the collection of items to the top
+                                        element.find('div[class*="sf-collection-"] > div[sf-infinite-scroll]').scrollTop(0);
+                                    }
                                 });
                         }
                     };
