@@ -53,9 +53,9 @@
 
     var fakeMediaService = {
         images: {
-            get: function () { return itemsPromiseTransform(genericGet()) },
-            getFolders: function () { return itemsPromiseTransform(genericGet()) },
-            getPredecessorsFolders: function () { return itemsPromiseTransform(genericGet()) }
+            get: function () { return itemsPromiseTransform(genericGet()); },
+            getFolders: function () { return itemsPromiseTransform(genericGet()); },
+            getPredecessorsFolders: function () { return itemsPromiseTransform(genericGet()); }
         }
     };
 
