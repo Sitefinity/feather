@@ -34,6 +34,7 @@
     var itemsPromiseTransform = function (items) {
         var defer = $q.defer();
         defer.resolve({ Items: items });
+
         return defer.promise;
     };
 
@@ -52,8 +53,9 @@
 
     var fakeMediaService = {
         images: {
-            get: function () { return itemsPromiseTransform(genericGet()); },
-            getFolders: function () { return itemsPromiseTransform(genericGet()); }
+            get: function () { return itemsPromiseTransform(genericGet()) },
+            getFolders: function () { return itemsPromiseTransform(genericGet()) },
+            getPredecessorsFolders: function () { return itemsPromiseTransform(genericGet()) }
         }
     };
 
