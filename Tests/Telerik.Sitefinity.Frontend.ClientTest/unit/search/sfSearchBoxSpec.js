@@ -48,7 +48,7 @@
         var childScope = scope.$$childHead;
 
         expect(childScope.sfMinTextLength).toBeDefined();
-        expect(childScope.sfMinTextLength).toBe(3);
+        expect(childScope.sfMinTextLength).toBe(0);
     });
 
     it('[NPetrova] / should init sfMinTextLength with the passed value', function () {
