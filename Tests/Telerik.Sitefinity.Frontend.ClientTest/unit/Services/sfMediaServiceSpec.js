@@ -18,6 +18,7 @@ describe('sfMediaService', function () {
 
     var appPath = 'http://mysite.com:9999/myapp';
     var sampleGuid = '1ac3b615-0ce5-46dc-a0af-5c5d1f146df9';
+    var uploadUrl = appPath + '/Telerik.Sitefinity.Html5UploadHandler.ashx';
 
     beforeEach(module('sfServices'));
 
@@ -542,7 +543,7 @@ describe('sfMediaService', function () {
                 assertItems({ filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
             });
 
-            it('[Boyko-Karadzhov] / should issue a PUT request to create image media item on upload.', function () {
+            it('[Boyko-Karadzhov] / should issue a PUT request to create a media item on upload and upload the file to it.', function () {
                 var settings = {
                     libraryId: 'myLibraryId',
                     itemId: '00000000-0000-0000-0000-000000000000',
@@ -562,6 +563,7 @@ describe('sfMediaService', function () {
                 };
 
                 $httpBackend.expectPUT(expectedUrl).respond(item);
+                $httpBackend.expectPOST(uploadUrl).respond(item);
 
                 var data;
                 var file = {};
