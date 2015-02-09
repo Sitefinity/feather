@@ -3,7 +3,14 @@
     <hr />
 
     <div class="row">
-        <div class="col-md-10">
+        <!--Upload image-->
+        <div ng-show="isInUploadMode" class="col-md-10">
+            <p class="text-center lead"><a href="#" >Select image from your computer</a></p>
+            <p class="text-center">or simpy implement drag & drop here</p>
+        </div>
+        
+        <!--Select image-->
+        <div ng-hide="isInUploadMode" class="col-md-10">
             <div class="row">
                 <span class="pull-left"
                       ng-show="breadcrumbs && breadcrumbs.length > 0">
@@ -29,7 +36,7 @@
 
         <div class="col-md-2">
             <p>
-                <button>Upload image</button>
+                <button ng-click="isInUploadMode = !isInUploadMode">Upload image</button>
             </p>
 
             <!--Basic Filter-->
