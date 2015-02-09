@@ -495,6 +495,9 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.bootstrap.min.css" />
+    <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.min.css" />
+    <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
     <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
     <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
@@ -522,6 +525,10 @@
     <EmbeddedResource Include="client-components\search\sf-search-box.js" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.html" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-upload-image-properties.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-upload-image-properties.html" />
+    <EmbeddedResource Include="client-components\fields\flat-taxonomy-field\sf-flat-taxonomy-field.html" />
+    <EmbeddedResource Include="client-components\fields\flat-taxonomy-field\sf-flat-taxonomy-field.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-collection.html" />
