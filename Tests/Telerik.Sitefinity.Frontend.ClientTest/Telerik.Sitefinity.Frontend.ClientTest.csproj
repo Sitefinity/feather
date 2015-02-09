@@ -59,9 +59,7 @@
     <Content Include="unit\selectors\modalLinkSelectorSpec.js" />
     <Content Include="unit\selectors\multi-site\sfSiteSelectorSpec.js" />
     <Content Include="unit\collections\sfCollectionSpec.js" />
-    <Content Include="unit\selectors\sfMediaFlatTaxonFilterSpec.js" />
     <Content Include="unit\selectors\sfHierarchicalTaxonSelector.js" />
-    <Content Include="unit\selectors\sfMediaHierarchicalTaxonFilterSpec.js" />
     <Content Include="unit\services\languageServiceSpec.js" />
     <Content Include="unit\services\multisiteSpec.js" />
     <Content Include="unit\services\sfLinkServiceSpec.js" />
