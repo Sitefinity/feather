@@ -241,7 +241,7 @@
                     scope.$watch('sortExpression', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
                             if (newVal !== scope.filterObject.constants.dateCreatedDescending && scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
-                                scope.filterObjects.set.basic.none();
+                                scope.filterObject.set.basic.none();
                                 scope.filters.basic.selected = null;
                             }
                             else {
