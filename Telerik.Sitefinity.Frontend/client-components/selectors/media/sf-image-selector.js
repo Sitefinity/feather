@@ -134,12 +134,19 @@
                     };
 
                     scope.onBreadcrumbItemClick = function (item) {
-                        var filter = sfMediaService.newFilter();
-                        filter.parent = item && item.Id ? item.Id : filter.parent;
-                        scope.sortExpression = null;
-                        scope.filterObject = filter;
-                    };
+                        var parent = item ? item.Id : null;
 
+                        if (parent && parent === scope.filterObject.parent) {
+                            return;
+                        }
+                        scope.sortExpression = null;
+                        scope.filterObject.parent = parent;
+                        if (!scope.filterObject.parent){
+                            scope.filterObject.set.basic.allLibraries();
+                        }
+                        refresh();
+                    };
+                    
                     var refresh = function (appendItems) {
                         if (scope.isLoading) {
                             return;
@@ -165,6 +172,16 @@
                             scope.isLoading = true;
 
                             var itemsLength = scope.items ? scope.items.length : 0;
+
+                            if (!scope.filterObject.query && !scope.filterObject.basic) {
+                                var getPromise = sfMediaService.images.getPredecessorsFolders(scope.filterObject.parent);
+                                if (getPromise) {
+                                    getPromise.then(function (items) {
+                                        scope.breadcrumbs = items;
+                                    });
+                                }
+                            }
+
                             sfMediaService.images.get(options, scope.filterObject, appendItems)
                                 .then(function (response) {
                                     if (response && response.Items) {
@@ -181,8 +198,10 @@
                                 .finally(function () {
                                     scope.isLoading = false;
 
-                                    // scrolls the collection of items to the top
-                                    element.find('div[class*="sf-collection-"] > div[sf-infinite-scroll]').scrollTop(0);
+                                    if (!appendItems) {
+                                        // scrolls the collection of items to the top
+                                        element.find('div[class*="sf-collection-"] > div[sf-infinite-scroll]').scrollTop(0);
+                                    }
                                 });
                         }
                     };

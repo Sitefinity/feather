@@ -28,7 +28,7 @@
 
         if (sortOptionIndex) {
             s.sfModel = s.sfSortOptions[sortOptionIndex].value;
-        };
+        }
 
         scope.$digest();
 

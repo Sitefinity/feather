@@ -66,7 +66,7 @@
             get: function (options, filterObject, appendItems) {
                 var callback;
                 if (filterObject.query) {
-                    callback = imagesObj.getMedia;
+                    callback = imagesObj.getContent;
                 }
                 else if (filterObject.basic) {
                     // Defaul filter is used (Recent / My / All)

@@ -34,8 +34,9 @@
     var itemsPromiseTransform = function (items) {
         var defer = $q.defer();
         defer.resolve({ Items: items });
+
         return defer.promise;
-    }
+    };
 
     var genericGet = function () {
         var items = [];
@@ -52,10 +53,11 @@
 
     var fakeMediaService = {
         images: {
-            get: function () { return itemsPromiseTransform(genericGet()) },
-            getFolders: function () { return itemsPromiseTransform(genericGet()) }
+            get: function () { return itemsPromiseTransform(genericGet()); },
+            getFolders: function () { return itemsPromiseTransform(genericGet()); },
+            getPredecessorsFolders: function () { return itemsPromiseTransform(genericGet()); }
         }
-    }
+    };
 
     var fakeFlatTaxonService = {
         getTaxons: function (taxonomyId, skip, take, search, frontendLanguages) {
