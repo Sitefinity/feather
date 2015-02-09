@@ -182,7 +182,7 @@
                                     scope.isLoading = false;
 
                                     // scrolls the collection of items to the top
-                                    $("div[class*='sf-collection'] > div[sf-infinite-scroll]").scrollTop(0);
+                                    element.find('div[class*="sf-collection-"] > div[sf-infinite-scroll]').scrollTop(0);
                                 });
                         }
                     };
