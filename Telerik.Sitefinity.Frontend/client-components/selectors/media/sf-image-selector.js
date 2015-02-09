@@ -71,6 +71,10 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
+
+                    /*
+                    * Filters inner logic
+                    */
                     var filtersLogic = {
                         // Library filter
                         loadLibraryChildren: function (parent) {
@@ -146,6 +150,10 @@
                         }
                         refresh();
                     };
+
+                    /*
+                    * Content collection refresh
+                    */
                     
                     var refresh = function (appendItems) {
                         if (scope.isLoading) {
@@ -205,6 +213,45 @@
                                 });
                         }
                     };
+
+                    /*
+                    * File uploading
+                    */
+
+                    var fileUploadInput = element.find('.file-upload-chooser-input');
+
+                    fileUploadInput.change(function (ev) {
+                        scope.$apply(function () {
+                            var fileInput = fileUploadInput.get(0);
+                            if (fileInput.files && fileInput.files[0]) {
+                                scope.model.file = fileInput.files[0];
+                                // open the upload properties dialog here
+                            }
+                        });
+                    });
+
+                    // holds the uploaded file model
+                    scope.model = {
+                        file: null,
+                        library: null,
+                        title: null,
+                        altText: null,
+                        categories: [],
+                        tags: []
+                    };
+
+                    scope.openUploadDialog = function () {
+                        // // call the click event in a timeout to avoid digest loop
+                        setTimeout(function () {
+                            fileUploadInput.click();
+                        }, 0);
+
+                        return false;
+                    };
+
+                    /*
+                    * Scope properties
+                    */
 
                     scope.filterObject = sfMediaFilter.newFilter();
                     scope.sortExpression = null;

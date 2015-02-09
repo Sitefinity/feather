@@ -5,8 +5,9 @@
     <div class="row">
         <!--Upload image-->
         <div ng-show="isInUploadMode" class="col-md-10">
-            <p class="text-center lead"><a href="#" >Select image from your computer</a></p>
-            <p class="text-center">or simpy implement drag & drop here</p>
+            <p class="text-center lead"><a ng-click="openUploadDialog()">Select image from your computer</a></p>
+            <input type="file" class="file-upload-chooser-input" style="display:none!important" />
+            <p class="text-center">or simpy implement drag &amp; drop here</p>
         </div>
         
         <!--Select image-->
