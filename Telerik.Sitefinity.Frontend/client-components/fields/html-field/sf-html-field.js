@@ -62,6 +62,12 @@
                     });
                 };
 
+                scope.openImageSelector = function () {
+                    angular.element("#imageSelectorModal").scope().$openModalDialog().then(function (data) {
+
+                    });
+                };
+
                 scope.toggleHtmlView = function () {
                     if (editor === null)
                         return;
