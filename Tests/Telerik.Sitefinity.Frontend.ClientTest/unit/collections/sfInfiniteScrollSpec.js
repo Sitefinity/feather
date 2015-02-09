@@ -39,7 +39,7 @@
 
         scope.loadMore = function () {
             wasLoadMoreCalled = true;
-        }
+        };
 
         element = compile(markup)(scope);
         scope.$digest();
@@ -77,7 +77,7 @@
 
         scope.loadMore = function () {
             wasLoadMoreCalled = true;
-        }
+        };
 
         element = compile(markup)(scope);
         scope.$digest();

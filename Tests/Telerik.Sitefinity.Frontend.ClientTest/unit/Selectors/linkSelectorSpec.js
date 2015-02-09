@@ -406,7 +406,7 @@ describe("link selector", function () {
             var titleCount = 0;
 
             var sfEditorContents = ids.map(function (item) {
-                return "<a id='" + item + "'>Link" + ++titleCount + "</a>";
+                return "<a id='" + item + "'>Link" + (++titleCount) + "</a>";
             });
 
             scope.sfEditorContent = sfEditorContents.toString();
@@ -429,7 +429,7 @@ describe("link selector", function () {
             var titleCount = 0;
 
             var sfEditorContents = ids.map(function (item) {
-                return "<a id='" + item + "'>Link" + ++titleCount + "</a>";
+                return "<a id='" + item + "'>Link" + (++titleCount) + "</a>";
             });
 
             scope.sfEditorContent = sfEditorContents.toString();

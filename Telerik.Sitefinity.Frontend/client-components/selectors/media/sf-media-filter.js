@@ -135,10 +135,7 @@
                 },
                 query: {
                     to: function (query) {
-                        if (query && self.basic === self.constants.basic.allLibraries) {
-                            self.basic = null;
-                        }
-
+                        reset();
                         self.query = query;
                         changed();
                     }

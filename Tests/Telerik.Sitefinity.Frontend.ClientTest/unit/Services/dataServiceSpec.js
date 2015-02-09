@@ -83,11 +83,11 @@ describe('sfDataService', function () {
         searchField = searchField || 'Title';
 
         if (search) {
-            return "(" + searchField + ".ToUpper().Contains(%22"+ search +"%22.ToUpper()))";
+            return "(" + searchField + ".ToUpper().Contains(%22" + search + "%22.ToUpper()))";
         }
 
         return "";
-    }
+    };
 
     var expectGetItemsServiceCall = function (itemType, provider, skip, take, search, searchField) {
         itemType = itemType || dummyItemType;
@@ -122,7 +122,7 @@ describe('sfDataService', function () {
         var url = dataServiceBaseUrl + servicePathPattern.format(itemId, itemType, providerParam);
 
         return url;
-    }
+    };
 
     var expectGetItemServiceCall = function (itemId, itemType, provider) {
         var url = constructGetItemServiceUrl(itemId, itemType, provider);
@@ -134,7 +134,7 @@ describe('sfDataService', function () {
         var url = constructGetItemServiceUrl(itemId, itemType, provider);
 
         $httpBackend.expectGET(url).respond(500, errorResponse);
-    }
+    };
 
     /* Tests */
     it('[GMateev] / should retrieve items without filter and paging.', function () {

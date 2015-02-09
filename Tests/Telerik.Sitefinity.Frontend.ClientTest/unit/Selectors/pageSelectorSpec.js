@@ -21,7 +21,7 @@ describe("page selector", function () {
         TotalCount: ITEMS_COUNT - 1
     };
 
-    for (var i = 0; i < ITEMS_COUNT - 1; i++) {
+    for (i = 0; i < ITEMS_COUNT - 1; i++) {
         filteredCollection.Items[i] = customDataItems.Items[i];
     }
 
