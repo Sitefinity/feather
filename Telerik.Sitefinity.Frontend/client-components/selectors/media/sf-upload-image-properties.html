@@ -6,6 +6,17 @@
         <div class="col-md-10">
             <div class="row">
                 <label>Image to upload</label>
+                <div class="progress">
+                    <button type="button" class="close" ng-click="uploadInfo.cancel()">×</button>
+                    <div class="progress-bar"
+                        role="progressbar"
+                        ng-attr-aria-valuenow="{{uploadInfo.percentage}}"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        ng-style="{width: uploadInfo.percentage + '%'}">
+                        <span ng-bind="uploadInfo.fileName"></span>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <label>Where to store the uploaded image?</label>
