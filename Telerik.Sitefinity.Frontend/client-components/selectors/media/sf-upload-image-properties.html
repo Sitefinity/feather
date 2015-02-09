@@ -31,13 +31,20 @@
                 <input type="text" ng-model="image.AlternativeText" />
             </div>
             <expander expander-title='Categories and tags'>
-               <div class="row">
-                <label>Categories</label>
-            </div>
-            <div class="row">
-                <label>Tags</label>
-                <sf-flat-taxon-field sf-model="image.Tags" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
-            </div>
+                <div class="row">
+                    <label>Categories</label>
+                    <sf-list-selector class="label-content"
+                                      sf-hierarchical-taxon-selector
+                                      sf-dialog-header="Select Category"
+                                      sf-multiselect="true"
+                                      sf-selected-ids="selectedCategoryIds"
+                                      sf-provider="sfProvider">
+                    </sf-list-selector>
+                </div>
+                <div class="row">
+                    <label>Tags</label>
+                    <sf-flat-taxon-field sf-model="image.Tags" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
+                </div>
             </expander>
         </div>
     </div>
