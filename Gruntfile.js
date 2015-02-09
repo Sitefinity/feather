@@ -12,7 +12,8 @@ module.exports = function (grunt) {
 					'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
-					'Telerik.Sitefinity.Frontend/client-components/**/*.js'
+					'Telerik.Sitefinity.Frontend/client-components/**/*.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/**/*.js'
 			]
 		},
 		

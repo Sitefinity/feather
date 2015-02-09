@@ -115,7 +115,8 @@
             result.resolve(['suggestion1', 'suggestion2']);
 
             return result.promise;
-        }
+        };
+
         var template = '<sf-search-box sf-enable-suggestions="true" sf-get-suggestions="getSuggestions(query)"> </sf-search-box>';
 
         commonMethods.compileDirective(template, scope);
