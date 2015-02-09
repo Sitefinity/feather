@@ -53,10 +53,11 @@
     var fakeMediaService = {
         images: {
             get: function () { return itemsPromiseTransform(genericGet()) },
-            getFolders: function () { return itemsPromiseTransform(genericGet()) }
+            getFolders: function () { return itemsPromiseTransform(genericGet()) },
+            getPredecessorsFolders: function () { return itemsPromiseTransform(genericGet()) },
         }
     }
-
+ 
     var fakeFlatTaxonService = {
         getTaxons: function (taxonomyId, skip, take, search, frontendLanguages) {
             var result = [];
