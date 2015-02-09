@@ -7,7 +7,7 @@
             return {
                 restrict: 'E',
                 scope: {
-                    sfModel: '='
+                    sfModel: '=',
                     uploadInfo: '=?'
                 },
                 templateUrl: function (elem, attrs) {
