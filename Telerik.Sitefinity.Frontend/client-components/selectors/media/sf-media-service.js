@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('sfServices').factory('sfMediaService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
+    angular.module('sfServices').factory('sfMediaService', ['serviceHelper', 'serverContext', '$q', function (serviceHelper, serverContext, $q) {
         var constants = {
             images: {
                 itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
@@ -47,6 +47,12 @@
                 });
         };
 
+        var getEmptyArray = function () {
+            var defer = $q.defer();
+            defer.resolve([]);
+            return defer.promise;
+        };
+
         var imagesObj = {
             getFolders: function (options) {
                 return getFolders(options, constants.images.albumsServiceUrl);
@@ -65,11 +71,13 @@
                 else if (filterObject.basic) {
                     // Defaul filter is used (Recent / My / All)
                     if (filterObject.basic === filterObject.constants.basic.recentItems) {
-
                         // When the filter is Recent items, the number of displayed items is fixed and we should not append more.
-                        if (appendItems) return;
-
-                        callback = imagesObj.getMedia;
+                        if (appendItems) {
+                            callback = getEmptyArray;
+                        }
+                        else {
+                            callback = imagesObj.getMedia;
+                        }
                     }
                     else if (filterObject.basic === filterObject.constants.basic.ownItems) {
                         callback = imagesObj.getMedia;
