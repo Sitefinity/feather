@@ -99,7 +99,8 @@
             </span>
 
             <!--Filter dropdown-->
-            <select ng-model="selectedFilterOption">
+            <button type="button" class="btn btn-link" ng-show="!showOtherFilterOptions" ng-click="showOtherFilterOptions = true">Other filter options</button>
+            <select ng-show="showOtherFilterOptions" ng-model="selectedFilterOption">
                 <option value="1" selected="selected">Libraries</option>
                 <option value="2">Tags</option>
                 <option value="3">Categories</option>

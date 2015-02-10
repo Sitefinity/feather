@@ -291,6 +291,7 @@
                             all: constants.filters.basic,
                             selected: null,
                             select: function (basicFilter) {
+                                scope.isInUploadMode = false;
                                 scope.filters.basic.selected = basicFilter;
 
                                 if (basicFilter === constants.filters.basic[0].value) {
@@ -420,13 +421,19 @@
                             }
                         }
                     });
+                    
 
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
+                        scope.isInUploadMode = false;
                         if (data && data.IsFolder === true) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.parent.to(data.Id);
                         }
+                    });
+
+                    scope.$on('sf-tree-item-selected', function (event, data) {
+                        scope.isInUploadMode = false;
                     });
 
                     /*
