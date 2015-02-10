@@ -2,7 +2,7 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfUploadImageProperties'])
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfUploadImageProperties', 'sfFileDragDrop'])
         .directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
         function (sfMediaService, sfMediaFilter, serverContext, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
             var helpers = {
@@ -76,6 +76,7 @@
                     /*
                     * Filters inner logic
                     */
+
                     var filtersLogic = {
                         // Library filter
                         loadLibraryChildren: function (parent) {
