@@ -64,7 +64,6 @@
 
                 scope.openImageSelector = function () {
                     angular.element("#imageSelectorModal").scope().$openModalDialog().then(function (data) {
-
                     });
                 };
 
