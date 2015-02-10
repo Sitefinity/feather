@@ -140,6 +140,17 @@
                         scope.filterObject = filter;
                     };
 
+                    scope.isGrid = true;
+                    scope.switchToGrid = function () {
+                        scope.isGrid = true;
+                        scope.isList = false;
+                    };
+
+                    scope.switchToList = function () {
+                        scope.isGrid = false;
+                        scope.isList = true;
+                    };
+
                     var refresh = function (appendItems) {
                         if (scope.isLoading) {
                             return;
@@ -168,6 +179,26 @@
                             sfMediaService.images.get(options, scope.filterObject, appendItems)
                                 .then(function (response) {
                                     if (response && response.Items) {
+
+                                        function removeNonNumeric(item){
+                                            return item.replace(/\D/g, "");
+                                        }
+
+                                        // Remove unnecessary (non-numeric) characters from LastModified string
+                                        for (var key in response.Items) {
+                                            var item = response.Items[key];
+                                            if (item.LastModified) {
+                                                item.LastModified = removeNonNumeric(item.LastModified);
+                                            }
+                                            if (item.ImagesCount) {
+                                                item.ImagesCount = removeNonNumeric(item.ImagesCount);
+                                            }
+                                            if (item.LibrariesCount) {
+                                                item.LibrariesCount = removeNonNumeric(item.LibrariesCount);
+                                            }
+                                        }
+                                        console.log(response.Items);
+
                                         if (appendItems) {
                                             if (scope.items && scope.items.length === itemsLength) {
                                                 scope.items = scope.items.concat(response.Items);

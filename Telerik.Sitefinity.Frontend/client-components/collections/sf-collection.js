@@ -10,6 +10,8 @@
                     sfDeselectable: '@',
                     sfIdentifier: '@'
                 },
+
+
                 templateUrl: function (elem, attrs) {
                     if (!attrs.sfTemplateUrl) {
                         throw { message: "You must provide template url." };
@@ -26,7 +28,7 @@
 
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.selectedItemIds = scope.selectedItemIds || [];
-                    
+
                     element.addClass(classes.grid);
                     scope.isSelected = function (item) {
                         if (scope.selectedItemIds === undefined) {
@@ -63,16 +65,6 @@
                         }
 
                         scope.$emit('sf-collection-item-selected', item);
-                    };
-
-                    scope.switchToGrid = function () {
-                        element.removeClass(classes.list);
-                        element.addClass(classes.grid);
-                    };
-
-                    scope.switchToList = function () {
-                        element.removeClass(classes.grid);
-                        element.addClass(classes.list);
                     };
                 }
             };
