@@ -157,6 +157,17 @@
                         refresh();
                     };
 
+                    scope.isGrid = true;
+                    scope.switchToGrid = function () {
+                        scope.isGrid = true;
+                        scope.isList = false;
+                    };
+
+                    scope.switchToList = function () {
+                        scope.isGrid = false;
+                        scope.isList = true;
+                    };
+
                     /*
                     * Content collection refresh
                     */
@@ -198,6 +209,25 @@
                             sfMediaService.images.get(options, scope.filterObject, appendItems)
                                 .then(function (response) {
                                     if (response && response.Items) {
+
+                                        function removeNonNumeric(item){
+                                            return item.replace(/\D/g, "");
+                                        }
+
+                                        // Remove unnecessary (non-numeric) characters from LastModified string
+                                        for (var key in response.Items) {
+                                            var item = response.Items[key];
+                                            if (item.LastModified) {
+                                                item.LastModified = removeNonNumeric(item.LastModified);
+                                            }
+                                            if (item.ImagesCount) {
+                                                item.ImagesCount = removeNonNumeric(item.ImagesCount);
+                                            }
+                                            if (item.LibrariesCount) {
+                                                item.LibrariesCount = removeNonNumeric(item.LibrariesCount);
+                                            }
+                                        }
+
                                         if (appendItems) {
                                             if (scope.items && scope.items.length === itemsLength) {
                                                 scope.items = scope.items.concat(response.Items);
@@ -291,6 +321,7 @@
                             all: constants.filters.basic,
                             selected: null,
                             select: function (basicFilter) {
+                                scope.isInUploadMode = false;
                                 scope.filters.basic.selected = basicFilter;
 
                                 if (basicFilter === constants.filters.basic[0].value) {
@@ -420,13 +451,19 @@
                             }
                         }
                     });
+                    
 
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
+                        scope.isInUploadMode = false;
                         if (data && data.IsFolder === true) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.parent.to(data.Id);
                         }
+                    });
+
+                    scope.$on('sf-tree-item-selected', function (event, data) {
+                        scope.isInUploadMode = false;
                     });
 
                     /*
@@ -446,6 +483,7 @@
                     }());
                 }
             };
+
         }])
         .controller('uploadPropertiesCtrl', function () {
         });

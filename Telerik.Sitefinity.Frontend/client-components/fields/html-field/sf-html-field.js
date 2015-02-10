@@ -86,7 +86,6 @@
                                 editor.exec("insertHtml", { html: markup, split: true });
                             });
                         });
-
                 };
 
                 scope.toggleHtmlView = function () {
