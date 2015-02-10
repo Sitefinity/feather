@@ -93,65 +93,64 @@
                              }
                          };
 
-                     return $http.put(url, image);
-                 };
-
-                 var FileUpload = function () {
                      var deferred = $q.defer();
 
-                     FileUpload.prototype.upload = function (url, formData) {
-                         var xhr = new $window.XMLHttpRequest();
-                         xhr.onload = function (e) {
-                             if (xhr.readyState === 4) {
-                                 if (xhr.status === 200) {
-                                     deferred.resolve(JSON.parse(xhr.responseText));
-                                 } else {
-                                     deferred.reject(xhr.statusText);
-                                 }
+                     $http.put(url, image)
+                        .success(function (data) {
+                            deferred.resolve(data);
+                        })
+                        .error(function (error) {
+                            deferred.reject(error);
+                        });
+
+                     return deferred.promise;
+                 };
+
+                 var uploadFile = function (url, formData) {
+                     var deferred = $q.defer();
+                     var xhr = new $window.XMLHttpRequest();
+                     xhr.onload = function (e) {
+                         if (xhr.readyState === 4) {
+                             if (xhr.status === 200) {
+                                 deferred.resolve(JSON.parse(xhr.responseText));
+                             } else {
+                                 deferred.reject(xhr.statusText);
                              }
-                         };
-                         xhr.upload.onprogress = function (e) {
-                             var done = e.position || e.loaded,
-                                 total = e.totalSize || e.total,
-                                 present = Math.floor(done / total * 100);
-                             deferred.notify(present);
-                         };
-                         xhr.onerror = function (e) {
-                             deferred.reject(xhr.statusText);
-                         };
-
-                         xhr.open('POST', url);
-                         xhr.send(formData);
+                         }
+                     };
+                     xhr.upload.onprogress = function (e) {
+                         var done = e.position || e.loaded,
+                             total = e.totalSize || e.total,
+                             present = Math.floor(done / total * 100);
+                         deferred.notify(present);
+                     };
+                     xhr.onerror = function (e) {
+                         deferred.reject(xhr.statusText);
                      };
 
-                     FileUpload.prototype.getDeferred = function () {
-                         return deferred;
-                     };
+                     xhr.open('POST', url);
+                     xhr.send(formData);
+
+                     return deferred.promise;
                  };
 
                  var uploadImage = function (settings) {
-                     var fileUpload = new FileUpload();
+                     return createImage(settings)
+                        .then(function (data) {
+                            var formData = new FormData();
+                            formData.append('ContentType', constants.images.itemType);
+                            formData.append('LibraryId', settings.libraryId);
+                            formData.append('ContentId', data.Item.Id);
+                            formData.append('Workflow', 'Upload');
+                            formData.append('ProviderName', settings.provider || '');
+                            formData.append('SkipWorkflow', 'true');
+                            formData.append('ImageFile', settings.file);
 
-                     var deferred = fileUpload.getDeferred();
-                     
-                     createImage(settings)
-                         .success(function (data) {
-                             var formData = new FormData();
-                             formData.append('ContentType', constants.images.itemType);
-                             formData.append('LibraryId', settings.libraryId);
-                             formData.append('ContentId', data.Item.Id);
-                             formData.append('Workflow', 'Upload');
-                             formData.append('ProviderName', settings.provider || '');
-                             formData.append('SkipWorkflow', 'true');
-                             formData.append('ImageFile', settings.file);
-
-                             fileUpload.upload(constants.files.uploadHandlerUrl, formData);
-                         })
-                         .error(function () {
-                             deferred.reject('Image creation error!');
-                         });
-
-                     return deferred.promise;
+                            return uploadFile(constants.files.uploadHandlerUrl, formData);
+                        })
+                        .catch(function (error) {
+                            throw error;
+                        });
                  };
 
                  var imagesObj = {
