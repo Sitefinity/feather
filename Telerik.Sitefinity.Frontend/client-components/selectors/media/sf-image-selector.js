@@ -2,7 +2,7 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox'])
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfUploadImageProperties'])
         .directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
         function (sfMediaService, sfMediaFilter, serverContext, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
             var helpers = {
@@ -35,6 +35,7 @@
                         { title: 'My Images', value: 'ownItems' },
                         { title: 'All Libraries', value: 'allLibraries' }
                     ],
+                    basicRecentItemsValue : 'recentItems',
                     anyDateValue: 'AnyTime',
                     dates: [
                         { text: 'Any time', dateValue: 'AnyTime' },
@@ -145,7 +146,7 @@
                         }
                         scope.sortExpression = null;
                         scope.filterObject.parent = parent;
-                        if (!scope.filterObject.parent){
+                        if (!scope.filterObject.parent) {
                             scope.filterObject.set.basic.allLibraries();
                         }
                         refresh();
@@ -154,7 +155,7 @@
                     /*
                     * Content collection refresh
                     */
-                    
+
                     var refresh = function (appendItems) {
                         if (scope.isLoading) {
                             return;
@@ -218,29 +219,51 @@
                     * File uploading
                     */
 
+                    var uploadFile = function () {
+                        // actial upload
+                    }
+
                     var fileUploadInput = element.find('.file-upload-chooser-input');
 
-                    fileUploadInput.change(function (ev) {
+                    fileUploadInput.change(function () {
                         scope.$apply(function () {
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
+                                // holds the uploaded file model
+                                scope.model = {
+                                    file: null,
+                                    ParentId: null,
+                                    Title: null,
+                                    AlternativeText: null,
+                                    Categories: [],
+                                    Tags: []
+                                };
+
                                 scope.model.file = fileInput.files[0];
-                                // open the upload properties dialog here
+
+                                angular.element('.uploadPropertiesModal').scope().$openModalDialog()
+                                    .then(function (doUploadFile) {
+                                        if (doUploadFile) {
+                                            uploadFile();
+
+                                            scope.isInUploadMode = false;
+
+                                            // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
+                                            fileUploadInput.val(null);
+
+                                            // enter Recent items mode to show your uploaded item
+                                            scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                                        }
+                                    });
                             }
                         });
                     });
 
-                    // holds the uploaded file model
-                    scope.model = {
-                        file: null,
-                        library: null,
-                        title: null,
-                        altText: null,
-                        categories: [],
-                        tags: []
+                    scope.closeUploadImageDialog = function (doUploadFile) {
+                        angular.element('.uploadPropertiesModal').scope().$modalInstance.close(doUploadFile);
                     };
 
-                    scope.openUploadDialog = function () {
+                    scope.openSelectFileDialog = function () {
                         // // call the click event in a timeout to avoid digest loop
                         setTimeout(function () {
                             fileUploadInput.click();
@@ -391,5 +414,7 @@
                     }());
                 }
             };
-        }]);
+        }])
+        .controller('uploadPropertiesCtrl', function () {
+        });
 })();
