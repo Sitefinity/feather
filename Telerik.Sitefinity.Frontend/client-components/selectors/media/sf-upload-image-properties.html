@@ -1,34 +1,34 @@
 ﻿<div>
-    <h4>Upload image</h4>
-    <hr />
-
     <div class="row">
         <div class="col-md-10">
             <div class="row">
                 <label>Image to upload</label>
+                <p>
+                    <span class="pull-left" ng-bind="model.file.name"></span>
+                    <span class="pull-right" ng-bind="model.file.textSize"></span>
+                </p>
                 <div class="progress">
-                    <button type="button" class="close" ng-click="uploadInfo.cancel()">×</button>
+                    <button type="button" class="close" ng-click="sfCancelUploadCallback()">×</button>
                     <div class="progress-bar"
                         role="progressbar"
                         ng-attr-aria-valuenow="{{uploadInfo.percentage}}"
                         aria-valuemin="0"
                         aria-valuemax="100"
                         ng-style="{width: uploadInfo.percentage + '%'}">
-                        <span ng-bind="uploadInfo.fileName"></span>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <label>Where to store the uploaded image?</label>
-                <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='image.ParentId'/>
+                <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.ParentId' />
             </div>
             <div class="row">
                 <label>Title</label>
-                <input type="text" ng-model="image.Title" />
+                <input type="text" ng-model="model.Title" />
             </div>
             <div class="row">
                 <label>Alternative text</label>
-                <input type="text" ng-model="image.AlternativeText" />
+                <input type="text" ng-model="model.AlternativeText" />
             </div>
             <expander expander-title='Categories and tags'>
                 <div class="row">
@@ -37,13 +37,13 @@
                                       sf-hierarchical-taxon-selector
                                       sf-dialog-header="Select Category"
                                       sf-multiselect="true"
-                                      sf-selected-ids="selectedCategoryIds"
+                                      sf-selected-ids="model.Categories"
                                       sf-provider="sfProvider">
                     </sf-list-selector>
                 </div>
                 <div class="row">
                     <label>Tags</label>
-                    <sf-flat-taxon-field sf-model="image.Tags" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
+                    <sf-flat-taxon-field sf-model="model.Tags" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
                 </div>
             </expander>
         </div>
