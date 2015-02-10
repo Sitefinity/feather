@@ -60,7 +60,8 @@
                 },
                 sorting: {
                     asc: 'ASC',
-                    desc: 'DESC'
+                    desc: 'DESC',
+                    defaultValue: 'DateCreated DESC'
                 }
             };
 
@@ -221,6 +222,11 @@
                             selected: null,
                             select: function (basicFilter) {
                                 scope.filters.basic.selected = basicFilter;
+
+                                if (basicFilter === constants.filters.basic[0].value) {
+                                    scope.sortExpression = constants.sorting.defaultValue;
+                                }
+
                                 scope.filterObject.set.basic[basicFilter]();
 
                                 scope.filters.library.selected = [];
@@ -270,9 +276,11 @@
                     };
 
                     var isSortingReverse = function (sortExpression) {
-                        var descIndex = sortExpression.toUpperCase().indexOf(constants.sorting.desc);
-                        if (descIndex > -1)
-                            return true;
+                        if (sortExpression) {
+                            var descIndex = sortExpression.toUpperCase().indexOf(constants.sorting.desc);
+                            if (descIndex > -1)
+                                return true;
+                        }
 
                         return false;
                     };
