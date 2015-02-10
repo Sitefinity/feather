@@ -85,11 +85,10 @@
                 var searchFilter = '(' + field + '.ToUpper().Contains("' + search + '".ToUpper()))';
 
                 if (frontendLanguages && frontendLanguages.length > 1) {
-                    searchFilter = searchFilter + ' OR (';
                     for (var i = 0; i < frontendLanguages.length; i++) {
-                        searchFilter = searchFilter + field + '["' + frontendLanguages[i] + '"]=null AND ';
+                        var localizedField = String.format("{0}[\"{1}\"]", field, frontendLanguages[i]);
+                        searchFilter += String.format("OR {0}.ToUpper().Contains(\"{1}\".ToUpper())", localizedField, search);
                     }
-                    searchFilter = searchFilter + field + '[""]!=null AND ' + field + '[""].Contains("' + search + '"))';
                     searchFilter = '(' + searchFilter + ')';
                 }
 

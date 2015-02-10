@@ -5,7 +5,8 @@
                 itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
                 albumsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/folders/'),
                 imagesServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/')
-            }
+            },
+            librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/')
         };
 
         var getItems = function (options, excludeFolders, serviceUrl, itemType) {
@@ -94,7 +95,19 @@
                     callback = imagesObj.getContent;
                 }
 
-                return callback(options);
+                var callbackWrap = function () {
+                    var allLanguageSearch = enableAllLanguagesSearch.toLowerCase() === "true";
+                    options.filter = filterObject.composeExpression(allLanguageSearch);
+                    return callback(options);
+                };
+
+                if (enableAllLanguagesSearch === null) {
+                    return getEnableAllLanguagesSearch()
+                        .then(callbackWrap);
+                }
+                else {
+                    return callbackWrap();
+                }
             },
             getPredecessorsFolders: function (id) {
                 if (!id) {
@@ -108,6 +121,36 @@
                           .then(function (data) {
                               return data.Items;
                           });
+            }
+        };
+
+        var enableAllLanguagesSearch = null;
+
+        var getLibrarySettings = function () {
+            var url = constants.librarySettingsServiceUrl;
+            return serviceHelper.getResource(url).get(
+                {
+                    nodeName: 'librariesConfig_0',
+                    mode: 'Form'
+                }).$promise;
+        };
+
+        var getEnableAllLanguagesSearch = function () {
+            if (enableAllLanguagesSearch === null) {
+                return getLibrarySettings().then(function (data) {
+                    if (data && data.Items) {
+                        enableAllLanguagesSearch = data.Items.filter(function (item) { return item.Key == "EnableAllLanguagesSearch"; })[0].Value;
+                    }
+                    else {
+                        enableAllLanguagesSearch = false;
+                    }
+
+                    return enableAllLanguagesSearch;
+                });
+            } else {
+                var deferred = $q.defer();
+                deferred.resolve(enableAllLanguagesSearch);
+                return deferred.promise;
             }
         };
 
