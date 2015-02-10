@@ -211,9 +211,9 @@
                                 .then(function (response) {
                                     if (response && response.Items) {
 
-                                        function removeNonNumeric(item){
+                                        var removeNonNumeric = function (item) {
                                             return item.replace(/\D/g, "");
-                                        }
+                                        };
 
                                         // Remove unnecessary (non-numeric) characters from LastModified string
                                         for (var key in response.Items) {
