@@ -7,7 +7,7 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    sfFileDroppedCallback: '&'
+                    sfDataTransferCallback: '&'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
