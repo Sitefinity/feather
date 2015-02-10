@@ -3,7 +3,7 @@
     sfFields.requires.push('sfHtmlField');
     var module = angular.module('sfHtmlField', ['kendo.directives', 'sfServices']);
 
-    module.directive('sfHtmlField', ['serverContext', '$compile', function (serverContext, $compile) {
+    module.directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
         return {
             restrict: "E",
             scope: {
@@ -63,9 +63,30 @@
                 };
 
                 scope.openImageSelector = function () {
-                    angular.element("#imageSelectorModal").scope().$openModalDialog().then(function (data) {
+                    angular.element("#imageSelectorModal").scope().$openModalDialog()
+                        .then(function (data) {
+                            return mediaService.images.getById(data);
+                        })
+                        .then(function (data) {
+                            mediaService.getLibrarySettings().then(function (settings) {
+                                // TODO: Get this from properties dialog
+                                var properties = {
+                                    item: data.Item,
+                                    title: 'Test image title',
+                                    alternativeText: 'Test image alt',
+                                    margin: {
+                                        top: null,
+                                        left: null,
+                                        bottom: null,
+                                        right: null
+                                    }
+                                };
 
-                    });
+                                var markup = mediaMarkupService.image.markup(properties, settings);
+                                editor.exec("insertHtml", { html: markup, split: true });
+                            });
+                        });
+
                 };
 
                 scope.toggleHtmlView = function () {

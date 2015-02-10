@@ -1,6 +1,7 @@
 ﻿; (function ($) {
-    angular.module('sfMediaMarkupService', ['sfServices'])
+    angular.module('sfServices')
         .factory('sfMediaMarkupService', ['sfMediaService', function (mediaService) {
+            // TODO: This class is currently not used. For now it is here just for clarity. Remove if not needed after full integration.
             var ImageProperties = function () {
                 this.item = null; //MediaItem view model
                 this.provider = null; //Name of the data provider

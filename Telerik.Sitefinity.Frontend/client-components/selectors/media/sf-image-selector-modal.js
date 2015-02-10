@@ -8,25 +8,30 @@ sfSelectors.requires.push('sfImageSelectorModal');
 angular.module('sfImageSelectorModal', ['sfServices', 'sfImageSelector'])
     .directive('sfImageSelectorModal', ['serverContext', function (serverContext) {
 
-    var link = function ($scope) {
+        var link = function ($scope) {
+            $scope.model = {
+                selectedItemIds: []
+            };
 
-        $scope.insertImage = function () {
-            $scope.$modalInstance.close();
+            $scope.done = function () {
+                if ($scope.model.selectedItemIds.length) {
+                    $scope.$modalInstance.close($scope.model.selectedItemIds[0]);
+                }
+            };
+
+            $scope.cancel = function () {
+                $scope.$modalInstance.dismiss();
+            };
         };
 
-        $scope.cancel = function () {
-            $scope.$modalInstance.close();
+        return {
+            restrict: 'E',
+            templateUrl: function (elem, attrs) {
+                var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                var url = attrs.sfTemplateUrl || 'client-components/selectors/media/sf-image-selector-modal.html';
+                return serverContext.getEmbeddedResourceUrl(assembly, url);
+            },
+            scope: true,
+            link: link
         };
-    };
-
-    return {
-        restrict: 'E',
-        templateUrl: function (elem, attrs) {
-            var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-            var url = attrs.sfTemplateUrl || 'client-components/selectors/media/sf-image-selector-modal.html';
-            return serverContext.getEmbeddedResourceUrl(assembly, url);
-        },
-        scope: true,
-        link: link
-    };
-}]);
+    }]);

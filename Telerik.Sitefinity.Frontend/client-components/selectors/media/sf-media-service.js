@@ -9,6 +9,17 @@
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/')
         };
 
+        var getById = function (id, provider, itemType, serviceUrl) {
+            var url = serviceUrl + id;
+
+            return serviceHelper.getResource(url).get(
+                {
+                    provider: provider,
+                    itemType: itemType,
+                    published: true
+                }).$promise;
+        };
+
         var getItems = function (options, excludeFolders, serviceUrl, itemType) {
             options = options || {};
 
@@ -55,6 +66,9 @@
         };
 
         var imagesObj = {
+            getById: function (id, provider) {
+                return getById(id, provider, constants.images.itemType, constants.images.imagesServiceUrl);
+            },
             getFolders: function (options) {
                 return getFolders(options, constants.images.albumsServiceUrl);
             },
@@ -97,11 +111,10 @@
 
                 return getLibrarySettings()
                     .then(function (settings) {
-                        var allLanguageSearch = settings.EnableAllLanguagesSearch.toLowerCase() === "true";
+                        var allLanguageSearch = settings.EnableAllLanguagesSearch.toLowerCase() === 'true';
                         options.filter = filterObject.composeExpression(allLanguageSearch);
                         return callback(options);
-                    })
-                    .then(callbackWrap);
+                    });
             },
             getPredecessorsFolders: function (id) {
                 if (!id) {
