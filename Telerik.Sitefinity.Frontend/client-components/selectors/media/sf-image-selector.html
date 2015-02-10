@@ -106,8 +106,11 @@
                     sf-template-url="client-components/selectors/media/sf-media-date-items.html"></span>
             </span>
         </div>
+
         <!--Filter dropdown-->
         <div class="Media-settings Media-settings--bottom">
+            <button type="button" class="btn btn-link" ng-show="!showOtherFilterOptions" ng-click="showOtherFilterOptions = true">Other filter options</button>
+
             <select class="form-control form-control-sm" ng-model="selectedFilterOption">
                 <option value="1" selected="selected">Libraries</option>
                 <option value="2">Tags</option>
