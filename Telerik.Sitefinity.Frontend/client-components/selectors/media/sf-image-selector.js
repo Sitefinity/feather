@@ -220,7 +220,7 @@
 
                     var uploadFile = function () {
                         // actial upload
-                    }
+                    };
 
                     var fileUploadInput = element.find('.file-upload-chooser-input');
 
