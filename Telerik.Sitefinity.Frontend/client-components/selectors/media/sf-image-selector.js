@@ -58,6 +58,11 @@
                         field: 'Category',
                         taxonomyId: 'E5CD6D69-1543-427B-AD62-688A99F5E7D4'
                     }
+                },
+                sorting: {
+                    asc: 'ASC',
+                    desc: 'DESC',
+                    defaultValue: 'DateCreated DESC'
                 }
             };
 
@@ -287,6 +292,11 @@
                             selected: null,
                             select: function (basicFilter) {
                                 scope.filters.basic.selected = basicFilter;
+
+                                if (basicFilter === constants.filters.basic[0].value) {
+                                    scope.sortExpression = constants.sorting.defaultValue;
+                                }
+
                                 scope.filterObject.set.basic[basicFilter]();
 
                                 scope.filters.library.selected = [];
@@ -325,17 +335,40 @@
                         refresh(true);
                     };
 
+                    //sorting helpers
+                    var getSortField = function (sortExpression) {
+                        if (!sortExpression)
+                            return '';
+
+                        var fieldName = sortExpression.slice(0, sortExpression.indexOf(' '));
+
+                        return fieldName;
+                    };
+
+                    var isSortingReverse = function (sortExpression) {
+                        if (sortExpression) {
+                            var descIndex = sortExpression.toUpperCase().indexOf(constants.sorting.desc);
+                            if (descIndex > -1)
+                                return true;
+                        }
+
+                        return false;
+                    };
+
                     /*
                     * Watches.
                     */
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
-                            if (newVal !== scope.filterObject.constants.dateCreatedDescending && scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
-                                scope.filterObject.set.basic.none();
-                                scope.filters.basic.selected = null;
+                            if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
+                                scope.recentItemsSortExpression = {
+                                    field: getSortField(newVal),
+                                    reverse: isSortingReverse(newVal)
+                                };
                             }
                             else {
+                                scope.recentItemsSortExpression = null;
                                 refresh();
                             }
                         }
