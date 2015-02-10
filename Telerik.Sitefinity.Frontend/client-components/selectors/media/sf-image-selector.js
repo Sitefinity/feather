@@ -35,7 +35,7 @@
                         { title: 'My Images', value: 'ownItems' },
                         { title: 'All Libraries', value: 'allLibraries' }
                     ],
-                    basicRecentItemsValue : 'recentItems',
+                    basicRecentItemsValue: 'recentItems',
                     anyDateValue: 'AnyTime',
                     dates: [
                         { text: 'Any time', dateValue: 'AnyTime' },
@@ -210,6 +210,8 @@
                                     if (!appendItems) {
                                         // scrolls the collection of items to the top
                                         element.find('div[class*="sf-collection-"] > div[sf-infinite-scroll]').scrollTop(0);
+
+                                        console.log(scope.breadcrumbs);
                                     }
                                 });
                         }
@@ -232,28 +234,39 @@
                         // TODO: actial upload
                         console.log('actial file uploaded:');
                         console.log(scope.model);
+                    };
 
-                        scope.isInUploadMode = false;
-
-                        // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
-                        fileUploadInput.val(null);
-
-                        // enter Recent items mode to show your uploaded item
-                        scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                    var getLibraryId = function () {
+                        if (scope.breadcrumbs && scope.breadcrumbs.length) {
+                            return scope.breadcrumbs[scope.breadcrumbs.length - 1].Id;
+                        }
+                        else {
+                            return null;
+                        }
                     };
 
                     // drag-drop logic
                     scope.dataTransferDropped = function (dataTransferObject) {
                         // using only the first file
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
-                            scope.model.file = dataTransferObject.files[0];
+                            if (!scope.isInUploadMode) {
+                                if (scope.selectedFilterOption == 1) {
+                                    // set library id or null if in default library
+                                    scope.model.ParentId = getLibraryId();
+                                }
+                                else if (scope.selectedFilterOption == 2) {
+                                    if (scope.filters.tag.selected[0]) {
+                                        scope.model.Tags.push(scope.filters.tag.selected[0]);
+                                    }
+                                }
+                                else if (scope.selectedFilterOption == 3) {
+                                    if (scope.filters.category.selected[0]) {
+                                        scope.model.Categories.push(scope.filters.category.selected[0]);
+                                    }
+                                }
+                            }
 
-                            if (scope.isInUploadMode) {
-                                openUploadPropertiesDialog();
-                            }
-                            else {
-                                uploadFile();
-                            }
+                            openUploadPropertiesDialog(dataTransferObject.files[0]);
                         }
                     };
 
@@ -263,19 +276,37 @@
                         scope.$apply(function () {
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
-                                scope.model.file = fileInput.files[0];
-
-                                openUploadPropertiesDialog();
+                                openUploadPropertiesDialog(fileInput.files[0]);
                             }
                         });
                     });
 
-                    var openUploadPropertiesDialog = function () {
+                    var openUploadPropertiesDialog = function (file) {
+                        scope.model.file = file;
+
                         angular.element('.uploadPropertiesModal').scope().$openModalDialog()
                             .then(function (doUploadFile) {
                                 if (doUploadFile) {
                                     uploadFile();
+
+                                    scope.isInUploadMode = false;
+
+                                    // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
+                                    fileUploadInput.val(null);
+
+                                    // enter Recent items mode to show your uploaded item
+                                    scope.filters.basic.select(constants.filters.basicRecentItemsValue);
                                 }
+
+                                // clears the model
+                                scope.model = {
+                                    file: null,
+                                    ParentId: null,
+                                    Title: null,
+                                    AlternativeText: null,
+                                    Categories: [],
+                                    Tags: []
+                                };
                             });
                     };
 
@@ -321,10 +352,6 @@
                             selected: [],
                             getChildren: filtersLogic.loadLibraryChildren
                         },
-                        date: {
-                            all: constants.filters.dates,
-                            selected: []
-                        },
                         tag: {
                             all: [],
                             selected: [],
@@ -337,6 +364,10 @@
                             selected: [],
                             query: null,
                             getChildren: filtersLogic.loadCategoryChildren
+                        },
+                        date: {
+                            all: constants.filters.dates,
+                            selected: []
                         }
                     };
 
