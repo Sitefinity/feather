@@ -123,9 +123,11 @@ describe('sfMediaService', function () {
         var assertFolders,
             assertItems,
             assertContent,
-            assertError;
+            assertError,
+            $window,
+            $rootScope;
 
-        beforeEach(inject(function ($injector) {
+        beforeEach(inject(function ($injector, _$window_, _$rootScope_) {
             mediaService = $injector.get('sfMediaService');
 
             assertFolders = function (params) {
@@ -143,6 +145,9 @@ describe('sfMediaService', function () {
             assertError = function (params, methodName) {
                 baseAssertError(params, mediaService[testObjSettings.callbacks.testedObject][methodName]);
             };
+
+            $window = _$window_;
+            $rootScope = _$rootScope_;
         }));
 
         /* Tests */
@@ -447,6 +452,27 @@ describe('sfMediaService', function () {
 
         /* Images */
         (function () {
+
+            var getXmlHttpRequestMock = function (window) {
+                window.XMLHttpRequest = angular.noop;
+
+                var onprogressSpy = jasmine.createSpy("onprogress");
+                var openSpy = jasmine.createSpy("open");
+                var sendSpy = jasmine.createSpy("send");
+
+                var xhrObj = {
+                    upload: {
+                        onprogress: onprogressSpy
+                    },
+                    open: openSpy,
+                    send: sendSpy,
+                };
+
+                spyOn(window, "XMLHttpRequest").andReturn(xhrObj);
+
+                return xhrObj;
+            };
+
             it('[dzhenko] / should return all images', function () {
                 var subpath = '?excludeFolders=true&itemType=' + itemType;
 
@@ -563,18 +589,30 @@ describe('sfMediaService', function () {
                 };
 
                 $httpBackend.expectPUT(expectedUrl).respond(item);
-                $httpBackend.expectPOST(uploadUrl).respond(item);
 
                 var data;
                 var file = {};
-                mediaService[testObjSettings.callbacks.testedObject].upload(file, settings.libraryId).then(function (res) {
-                    data = res;
-                });
+                mediaService[testObjSettings.callbacks.testedObject]
+                    .upload(file, settings.libraryId)
+                    .then(function (res) {
+                        data = res;
+                    });
 
                 expect(data).toBeUndefined();
 
-                $httpBackend.flush();
+                var xhrObj = getXmlHttpRequestMock($window);
 
+                $httpBackend.flush();
+                
+                xhrObj.readyState = 4;
+                xhrObj.status = 200;
+                xhrObj.responseText = JSON.stringify(item);
+
+                $rootScope.$apply(xhrObj.onload);
+
+                expect(xhrObj.onload).toBeDefined();
+                expect(xhrObj.open).toHaveBeenCalled();
+                expect(xhrObj.send).toHaveBeenCalled();
                 expect(data).toEqualData(item);
             });
         }());
