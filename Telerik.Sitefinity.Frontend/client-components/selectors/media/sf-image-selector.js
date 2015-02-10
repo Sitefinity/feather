@@ -2,7 +2,7 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfUploadImageProperties', 'sfFileDragDrop'])
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfUploadImageProperties', 'sfDragDrop'])
         .directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
         function (sfMediaService, sfMediaFilter, serverContext, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
             var helpers = {
@@ -226,8 +226,11 @@
                     };
 
                     // drag-drop logic
-                    scope.fileDropped = function (file) {
-                        openUploadPropertiesDialog(file);
+                    scope.dataTransferDropped = function (dataTransferObject) {
+                        // using only the first file
+                        if (dataTransferObject.files && dataTransferObject.files[0]) {
+                            openUploadPropertiesDialog(dataTransferObject.files[0]);
+                        }
                     };
 
                     // input logic

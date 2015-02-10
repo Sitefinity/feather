@@ -3,7 +3,7 @@
     <hr />
 
     <div class="row">
-        <div sf-file-drag-drop sf-file-dropped-callback="fileDropped(file)"></div>
+        <div sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)"></div>
 
         <!--Upload image-->
         <div ng-show="isInUploadMode" class="col-md-10">

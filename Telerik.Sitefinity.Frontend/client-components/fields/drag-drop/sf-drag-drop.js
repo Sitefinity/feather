@@ -1,9 +1,9 @@
 ﻿; (function () {
     var sfSelectors = angular.module('sfSelectors');
-    sfSelectors.requires.push('sfFileDragDrop');
+    sfSelectors.requires.push('sfDragDrop');
 
-    angular.module('sfFileDragDrop', ['sfServices'])
-        .directive('sfFileDragDrop', ['serverContext', 'serviceHelper', function (serverContext, serviceHelper) {
+    angular.module('sfDragDrop', ['sfServices'])
+        .directive('sfDragDrop', ['serverContext', 'serviceHelper', function (serverContext, serviceHelper) {
             return {
                 restrict: 'AE',
                 scope: {
@@ -11,7 +11,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/fields/drag-drop/sf-file-drag-drop.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/fields/drag-drop/sf-drag-drop.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
@@ -55,7 +55,7 @@
                                 e.preventDefault();
                                 e.stopPropagation();
 
-                                scope.sfFileDroppedCallback({ file: e.originalEvent.dataTransfer.files[0] });
+                                scope.sfFileDroppedCallback({ dataTransferObject: e.originalEvent.dataTransfer });
                             }
                         }
                     });
