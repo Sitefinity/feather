@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('sfServices').factory('sfMediaFilter', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
+    angular.module('sfServices').factory('sfMediaFilter', ['serviceHelper', 'serverContext', 'sfMediaService', function (serviceHelper, serverContext, mediaService) {
         var TaxonFilter = function () {
             this.id = null;
             this.field = null;
@@ -44,7 +44,7 @@
                 }
             };
 
-            this.composeExpression = function () {
+            this.composeExpression = function (allLanguageSearch) {
                 var expression = serviceHelper.filterBuilder();
 
                 if (this.basic !== this.constants.basic.allLibraries) {
@@ -52,7 +52,11 @@
                 }
 
                 if (this.query) {
-                    expression = expression.and().searchFilter(this.query);
+                    var languages;
+                    if (allLanguageSearch)
+                        languages = serverContext.getFrontendLanguages();
+
+                    expression = expression.and().searchFilter(this.query, languages);
                 }
 
                 if (this.basic === this.constants.basic.ownItems)
