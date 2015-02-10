@@ -133,7 +133,7 @@
                      var fileUpload = new FileUpload();
 
                      var deferred = fileUpload.getDeferred();
-
+                     
                      createImage(settings)
                          .success(function (data) {
                              var formData = new FormData();
@@ -237,7 +237,8 @@
                              title: model.Title || model.file.name,
                              alternativeText: model.AlternativeText,
                              categories: model.Categories,
-                             tags: model.Tags
+                             tags: model.Tags,
+                             file: model.file
                          };
                          return uploadImage(settings);
                      }
