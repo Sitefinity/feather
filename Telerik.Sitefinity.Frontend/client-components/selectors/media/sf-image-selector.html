@@ -1,39 +1,36 @@
 ﻿<div class="Media">
     <div class="Media-content">
         <!--Upload image-->
-        <div ng-show="isInUploadMode" class="col-md-10">
-            <p class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></p>
-            <input type="file" class="file-upload-chooser-input" style="display:none!important" />
-            <p class="text-center">or simpy implement drag &amp; drop here</p>
+        <div ng-show="isInUploadMode" class="Media-upload-text">
+            <div class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
+            <input type="file" class="file-upload-chooser-input" style="display:none !important" />
+            <div class="text-center">or simpy implement drag &amp; drop here</div>
         </div>
 
         <!--Select image-->
-        <div ng-hide="isInUploadMode" class="col-md-10">
+        <div ng-hide="isInUploadMode">
             <div class="Media-settings">
-                <span class="pull-left"
-                    ng-show="breadcrumbs && breadcrumbs.length > 0">
-                    <ol class="breadcrumb">
-                        <li ng-click="onBreadcrumbItemClick()"><a>All libraries</a></li>
-                        <li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
-                            <a>{{::item.Title}}</a>
-                        </li>
-                    </ol>
-                </span>
+                <ol class="pull-left breadcrumb" ng-show="breadcrumbs && breadcrumbs.length > 0">
+                    <li ng-click="onBreadcrumbItemClick()"><a>All libraries</a></li>
+                    <li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
+                        <a>{{::item.Title}}</a>
+                    </li>
+                </ol>
                 <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)"> </sf-search-box>
             </div>
-        </div>
 
-        <div sf-collection sf-data="items" sf-model="selectedItem" sf-template-url="client-components/selectors/media/sf-image-collection.html" ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }"></div>
+            <div sf-collection sf-data="items" sf-model="selectedItem" sf-template-url="client-components/selectors/media/sf-image-collection.html" ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }"></div>
 
-        <div class="Media-settings Media-settings--bottom">
-            <button type="button" class="btn btn-link btn-sm" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">Sorting and view</button>
-            <div ng-show="showSortingAndView" class="row">
+            <div class="Media-settings Media-settings--bottom">
+                <button type="button" class="btn btn-link btn-sm" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">Sorting and view</button>
+                <div ng-show="showSortingAndView" class="row">
 
-                <sf-sort-box class="col-xs-3" sf-model="sortExpression"></sf-sort-box>
+                    <sf-sort-box class="col-xs-3" sf-model="sortExpression"></sf-sort-box>
 
-                <div class="Media-settings-sort col-xs-9">
-                    <span ng-click="switchToGrid()" ng-class="{ 'is-selected' : isGrid }"><span class="glyphicon glyphicon-th"></span></span>
-                    <span ng-click="switchToList()" ng-class="{ 'is-selected' : isList }"><span class="glyphicon glyphicon-th-list"></span></span>
+                    <div class="Media-settings-sort col-xs-9">
+                        <span ng-click="switchToGrid()" ng-class="{ 'is-selected' : isGrid }"><span class="glyphicon glyphicon-th"></span></span>
+                        <span ng-click="switchToList()" ng-class="{ 'is-selected' : isList }"><span class="glyphicon glyphicon-th-list"></span></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,11 +39,13 @@
     <div class="Media-sidebar">
         <div class="Media-sidebar-content">
             <ul class="nav nav-pills nav-stacked nav-sm">
-                <li><button ng-click="isInUploadMode = !isInUploadMode">Upload image</button></li>
+                <li ng-class="{ 'active' : isInUploadMode }"><a ng-click="isInUploadMode = !isInUploadMode">Upload image</a></li>
             </ul>
 
+            <br />
+
             <!--Basic Filter-->
-            <strong class="m-left-xs">Already uploaded images</strong>
+            <div class="m-bottom-xs m-left-xs"><strong>Already uploaded images</strong></div>
 
             <ul class="nav nav-pills nav-stacked nav-sm">
                 <li ng-repeat="basicFilter in filters.basic.all"
@@ -59,7 +58,7 @@
 
             <!--Library Filter-->
             <div ng-show="selectedFilterOption == 1">
-                <strong class="m-left-xs">Libraries</strong>
+                <strong class="m-bottom-xs m-left-xs">Libraries</strong>
                 <div sf-tree
                     sf-model="filters.library.selected"
                     sf-request-children="filters.library.getChildren(parent)"
@@ -68,7 +67,7 @@
 
             <!--Tags Filter-->
             <span ng-show="selectedFilterOption == 2">
-                <div class="m-bottom-xs"><strong>Tags</strong></div>
+                <div class="m-bottom-xs m-left-xs"><strong>Tags</strong></div>
                 <p class="m-bottom-xs">
                     <input class="form-control form-control-sm" type="text" placeholder="Narrow by typing..." ng-model="filters.tag.query"></input>
                 </p>
@@ -80,7 +79,7 @@
 
             <!--Categories Filter-->
             <span ng-show="selectedFilterOption == 3">
-                <div class="m-bottom-xs"><strong>Categories</strong></div>
+                <div class="m-bottom-xs m-left-xs"><strong>Categories</strong></div>
                 <p class="m-bottom-xs">
                     <input class="form-control form-control-sm" type="text" placeholder="Narrow by typing..." ng-model="filters.category.query">
                 </p>
@@ -99,7 +98,7 @@
 
             <!--Date Filter-->
             <span ng-show="selectedFilterOption == 4">
-                <div class="m-bottom-xs"><strong>Dates</strong></div>
+                <div class="m-bottom-xs m-left-xs"><strong>Dates</strong></div>
                 <span sf-collection
                     sf-model="filters.date.selected"
                     sf-identifier="dateValue"

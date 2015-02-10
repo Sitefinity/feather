@@ -8893,43 +8893,54 @@ tab {
   top: 0;
   left: 0;
   right: 0; }
+  /* line 196, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
+  .Media-settings .breadcrumb {
+    padding: 2px 0 0; }
 
-/* line 196, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
+/* line 199, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
 .Media-settings--bottom {
   top: auto;
   bottom: 0; }
 
-/* line 201, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
+/* line 204, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
 .Media-settings-sort > span {
   font-size: 20px;
   cursor: pointer;
   color: #999; }
-  /* line 206, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
+  /* line 209, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
   .Media-settings-sort > span.is-selected {
     color: #596C9B; }
 
-/* line 211, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
+/* line 212, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
+.Media-upload-text {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin-top: -50px; }
+
+/* line 221, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
 .nav-sm > li > a {
   padding: 6px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-/* line 215, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
+/* line 225, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
 .nav-pills {
   font-size: 13px; }
 
-/* line 219, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
+/* line 229, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
 .nav-stacked strong {
   padding: 6px;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
-/* line 224, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
+/* line 234, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
 .nav-stacked a {
   color: #000; }
-/* line 229, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
+/* line 239, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector.sass */
 .nav-stacked li.active > a, .nav-stacked li.active > a:hover {
   background-color: #bdbdbd; }
 

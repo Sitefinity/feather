@@ -227,7 +227,6 @@
                                                 item.LibrariesCount = removeNonNumeric(item.LibrariesCount);
                                             }
                                         }
-                                        console.log(response.Items);
 
                                         if (appendItems) {
                                             if (scope.items && scope.items.length === itemsLength) {
