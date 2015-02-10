@@ -3,6 +3,8 @@
     <hr />
 
     <div class="row">
+        <div sf-drag-drop sf-file-dropped-callback="fileDropped(file)"></div>
+
         <!--Upload image-->
         <div ng-show="isInUploadMode" class="col-md-10">
             <p class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></p>
