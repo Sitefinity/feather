@@ -27,7 +27,8 @@ describe('items tree tests', function  () {
             //we assign the children to the first element of the level
             currentLevel[0].items = levels[i + 1];
             currentLevel = levels[i + 1];
-        };
+        }
+
         return firstLevel;
     }
 
@@ -35,7 +36,8 @@ describe('items tree tests', function  () {
         var predecessors = [];
         for (var i = 0; i < levels.length; i++) {
             Array.prototype.push.apply(predecessors, levels[i]);
-        };
+        }
+
         return predecessors;
     }
 
@@ -65,6 +67,12 @@ describe('items tree tests', function  () {
             var currentParentIndex = 0;
             var valid = true;
 
+            var isParentIdFunc = function (parentId) {
+                return function (item) {
+                    return item.Id === parentId;
+                };
+            };
+
             while(actualCurrentLevel || expectedCurrentLevel) {
                 try {
                     // throws error if not true
@@ -76,21 +84,18 @@ describe('items tree tests', function  () {
                 }
 
                 var currentParentId = actual.parentsIds[currentParentIndex];
-                var actualNextLevelParent = actualCurrentLevel.filter(function  (item) {
-                    return item.Id === currentParentId;
-                })[0];
+                
+                var actualNextLevelParent = actualCurrentLevel.filter(isParentIdFunc(currentParentId))[0];
 
                 if(!actualNextLevelParent) break;
 
-                var actualCurrentLevel = actualNextLevelParent.items;
+                actualCurrentLevel = actualNextLevelParent.items;
 
-                var expectedNextLevelParent = expectedCurrentLevel.filter(function  (item) {
-                    return item.Id === currentParentId;
-                })[0];
+                var expectedNextLevelParent = expectedCurrentLevel.filter(isParentIdFunc(currentParentId))[0];
 
                 if(!expectedNextLevelParent) break;
 
-                var expectedCurrentLevel = expectedNextLevelParent.items;
+                expectedCurrentLevel = expectedNextLevelParent.items;
 
                 currentParentIndex++;
             }

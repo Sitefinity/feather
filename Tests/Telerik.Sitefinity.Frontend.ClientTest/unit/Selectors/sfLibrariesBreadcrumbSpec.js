@@ -22,7 +22,7 @@ describe('libraries breadcrumb in image selector', function () {
         var defer = $q.defer();
         defer.resolve({ Items: items });
         return defer.promise;
-    }
+    };
 
     var genericGet = function () {
         var items = [];
@@ -30,7 +30,7 @@ describe('libraries breadcrumb in image selector', function () {
             items[i] = {
                 HasChildren: true,
                 Id: i,
-                Title: 'Title'+i
+                Title: 'Title' + i
             };
         }
 
@@ -52,13 +52,19 @@ describe('libraries breadcrumb in image selector', function () {
     var fakeMediaService = {
         newFilter: function () {
             return {
-                composeExpression: function() {
-                    
+                composeExpression: function () {
+
                 },
                 taxon: {
-                    composeExpression: function() {
-                    
-                    }    
+                    composeExpression: function () {
+
+                    }
+                },
+                set: {
+                    basic: {
+                        allLibraries: function () {
+                        },
+                    }
                 }
             };
         },
@@ -72,13 +78,14 @@ describe('libraries breadcrumb in image selector', function () {
             getContent: function (options) {
                 return itemsPromiseTransform(genericGet());
             },
+            get: function (options, filterObject, appendItems) {
+                return itemsPromiseTransform(genericGet());
+            },
             getPredecessorsFolders: function (options) {
-                var defer = $q.defer();
-                defer.resolve(genericGet());
-                return defer.promise;
+                return itemsPromiseTransform(genericGet());
             }
         }
-    };    
+    };
 
     beforeEach(function () {
         commonMethods.mockServerContextToEnableTemplateCache();
@@ -94,7 +101,6 @@ describe('libraries breadcrumb in image selector', function () {
     it('[GeorgiMateev] / should the predecessors of the selected folder for filtering into the breadcrumb.', function () {
         var template = '<sf-image-selector></sf-image-selector>';
         var scope = $rootScope.$new();
-
         commonMethods.compileDirective(template, scope);
 
         var s = scope.$$childHead;
@@ -120,11 +126,10 @@ describe('libraries breadcrumb in image selector', function () {
         // select filter by library
         s.filterObject = fakeMediaService.newFilter();
         s.filterObject.parent = 'some Id';
-
         s.$digest();
 
         // simulate click on the breadcrumb item
-        var bcItem = s.breadcrumbs[1];
+        var bcItem = genericGet()[1];
         s.onBreadcrumbItemClick(bcItem);
 
         expect(s.filterObject.parent).toEqual(bcItem.Id);

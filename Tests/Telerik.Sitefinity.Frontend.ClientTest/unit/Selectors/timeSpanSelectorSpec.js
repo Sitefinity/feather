@@ -107,7 +107,7 @@ describe("timeSpan selector", function () {
             expect(args.oldSelectedItem).toBeDefined();
             expect(args.oldSelectedItem.displayText).toBe('Any time');
             expect(args.oldSelectedItem.periodType).toBe('anyTime');
-            expect(args.oldSelectedItem.timeSpanValue).toBeFalsy;
+            expect(args.oldSelectedItem.timeSpanValue).toBeFalsy();
             expect(args.oldSelectedItem.timeSpanInterval).toBe("days");
         };
 

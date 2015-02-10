@@ -87,7 +87,7 @@ describe('sfMultiSiteService', function () {
         $httpBackend.flush();
 
         expect(data.data).toEqualData(errorResponse);
-    }
+    };
 
     /* Tests */
     it('[EGaneva] / should retrieve items.', function () {

@@ -48,7 +48,7 @@
         var childScope = scope.$$childHead;
 
         expect(childScope.sfMinTextLength).toBeDefined();
-        expect(childScope.sfMinTextLength).toBe(3);
+        expect(childScope.sfMinTextLength).toBe(0);
     });
 
     it('[NPetrova] / should init sfMinTextLength with the passed value', function () {
@@ -115,7 +115,8 @@
             result.resolve(['suggestion1', 'suggestion2']);
 
             return result.promise;
-        }
+        };
+
         var template = '<sf-search-box sf-enable-suggestions="true" sf-get-suggestions="getSuggestions(query)"> </sf-search-box>';
 
         commonMethods.compileDirective(template, scope);

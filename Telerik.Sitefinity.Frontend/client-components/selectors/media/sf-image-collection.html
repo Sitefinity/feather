@@ -1,6 +1,6 @@
 ﻿<div class="Media-items" sf-infinite-scroll="$parent.loadMore()">
-	<div>
-		<div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder" ng-click="select(item)">
+	<div ng-if="items.length === 0">No items found</div>
+		<div ng-repeat="item in items | filter: { IsFolder : true } | orderBy: $parent.recentItemsSortExpression.field : $parent.recentItemsSortExpression.reverse" class="Media-folder" ng-click="select(item)">
 			<div ng-if="item.IsFolder === true">
 				<div class="Media-file-thumb">
 					<i class="glyphicon glyphicon-folder-close"></i>
@@ -20,7 +20,8 @@
 	</div>
 
 	<div>
-		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}">
+
+		<div ng-repeat="item in items | filter: { IsFolder : false } | orderBy: $parent.recentItemsSortExpression.field : $parent.recentItemsSortExpression.reverse" class="Media-file" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}">
 			<div class="Media-file-wrapper">
 
 				<div class="Media-file-thumb">

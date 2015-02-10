@@ -33,7 +33,7 @@
 
         expect($('.sfCollectionItem').length).toEqual(5);
 
-        for (var i = 1; i <= 5; i++)
+        for (i = 1; i <= 5; i++)
             expect($('.sfCollectionItem span:contains(' + i + ')').length).toEqual(1);
     });
 

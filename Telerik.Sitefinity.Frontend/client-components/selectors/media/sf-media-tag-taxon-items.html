@@ -1,4 +1,4 @@
-﻿<ul class="sf-Tree" sf-infinite-scroll="$parent.filters.tagTaxons.loadMore()">
+﻿<ul class="sf-Tree" sf-infinite-scroll="$parent.filters.tag.loadMore()">
     <li class="sf-Tree-item" ng-repeat="item in items" ng-click="select(item)">
         <span ng-class="{ 'is-selected': isSelected(item) }">{{item.Title}}</span>
     </li>

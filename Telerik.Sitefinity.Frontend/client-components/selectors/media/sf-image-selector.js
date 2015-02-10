@@ -2,7 +2,7 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox'])
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfUploadImageProperties'])
         .directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
         function (sfMediaService, sfMediaFilter, serverContext, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
             var helpers = {
@@ -35,6 +35,7 @@
                         { title: 'My Images', value: 'ownItems' },
                         { title: 'All Libraries', value: 'allLibraries' }
                     ],
+                    basicRecentItemsValue : 'recentItems',
                     anyDateValue: 'AnyTime',
                     dates: [
                         { text: 'Any time', dateValue: 'AnyTime' },
@@ -71,6 +72,10 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
+
+                    /*
+                    * Filters inner logic
+                    */
                     var filtersLogic = {
                         // Library filter
                         loadLibraryChildren: function (parent) {
@@ -134,10 +139,17 @@
                     };
 
                     scope.onBreadcrumbItemClick = function (item) {
-                        var filter = sfMediaService.newFilter();
-                        filter.parent = item && item.Id ? item.Id : filter.parent;
+                        var parent = item ? item.Id : null;
+
+                        if (parent && parent === scope.filterObject.parent) {
+                            return;
+                        }
                         scope.sortExpression = null;
-                        scope.filterObject = filter;
+                        scope.filterObject.parent = parent;
+                        if (!scope.filterObject.parent) {
+                            scope.filterObject.set.basic.allLibraries();
+                        }
+                        refresh();
                     };
 
                     scope.isGrid = true;
@@ -151,6 +163,10 @@
                         scope.isList = true;
                     };
 
+                    /*
+                    * Content collection refresh
+                    */
+
                     var refresh = function (appendItems) {
                         if (scope.isLoading) {
                             return;
@@ -159,7 +175,6 @@
                         scope.breadcrumbs = [];
 
                         var options = {
-                            filter: scope.filterObject.composeExpression(),
                             parent: scope.filterObject.parent,
                             sort: scope.sortExpression
                         };
@@ -176,6 +191,16 @@
                             scope.isLoading = true;
 
                             var itemsLength = scope.items ? scope.items.length : 0;
+
+                            if (!scope.filterObject.query && !scope.filterObject.basic) {
+                                var getPromise = sfMediaService.images.getPredecessorsFolders(scope.filterObject.parent);
+                                if (getPromise) {
+                                    getPromise.then(function (items) {
+                                        scope.breadcrumbs = items;
+                                    });
+                                }
+                            }
+
                             sfMediaService.images.get(options, scope.filterObject, appendItems)
                                 .then(function (response) {
                                     if (response && response.Items) {
@@ -211,9 +236,75 @@
                                 })
                                 .finally(function () {
                                     scope.isLoading = false;
+
+                                    if (!appendItems) {
+                                        // scrolls the collection of items to the top
+                                        element.find('div[class*="sf-collection-"] > div[sf-infinite-scroll]').scrollTop(0);
+                                    }
                                 });
                         }
                     };
+
+                    /*
+                    * File uploading
+                    */
+
+                    var uploadFile = function () {
+                        // actial upload
+                    };
+
+                    var fileUploadInput = element.find('.file-upload-chooser-input');
+
+                    fileUploadInput.change(function () {
+                        scope.$apply(function () {
+                            var fileInput = fileUploadInput.get(0);
+                            if (fileInput.files && fileInput.files[0]) {
+                                // holds the uploaded file model
+                                scope.model = {
+                                    file: null,
+                                    ParentId: null,
+                                    Title: null,
+                                    AlternativeText: null,
+                                    Categories: [],
+                                    Tags: []
+                                };
+
+                                scope.model.file = fileInput.files[0];
+
+                                angular.element('.uploadPropertiesModal').scope().$openModalDialog()
+                                    .then(function (doUploadFile) {
+                                        if (doUploadFile) {
+                                            uploadFile();
+
+                                            scope.isInUploadMode = false;
+
+                                            // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
+                                            fileUploadInput.val(null);
+
+                                            // enter Recent items mode to show your uploaded item
+                                            scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                                        }
+                                    });
+                            }
+                        });
+                    });
+
+                    scope.closeUploadImageDialog = function (doUploadFile) {
+                        angular.element('.uploadPropertiesModal').scope().$modalInstance.close(doUploadFile);
+                    };
+
+                    scope.openSelectFileDialog = function () {
+                        // // call the click event in a timeout to avoid digest loop
+                        setTimeout(function () {
+                            fileUploadInput.click();
+                        }, 0);
+
+                        return false;
+                    };
+
+                    /*
+                    * Scope properties
+                    */
 
                     scope.filterObject = sfMediaFilter.newFilter();
                     scope.sortExpression = null;
@@ -353,5 +444,8 @@
                     }());
                 }
             };
-        }]);
+
+        }])
+        .controller('uploadPropertiesCtrl', function () {
+        });
 })();

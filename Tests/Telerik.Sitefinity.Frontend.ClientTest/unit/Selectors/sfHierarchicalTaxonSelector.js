@@ -10,12 +10,12 @@
                           '</sf-list-selector>';
 
     var taxons = [];
-    for (var i = 0; i < 10; i++) {
+    for (i = 0; i < 10; i++) {
         taxons.push({ Id: i, Title: "Taxon " + i });
     }
 
     var hierarhicalTaxons = [];
-    for (var i = 0; i < 10; i++) {
+    for (i = 0; i < 10; i++) {
         hierarhicalTaxons.push(
             [{
                 Id: i,
@@ -43,7 +43,7 @@
     beforeEach(function () {
         sitefinity.getCategoriesTaxonomyId = function () {
             return 'e5cd6d69-1543-427b-ad62-688a99f5e7d4';
-        }
+        };
         commonMethods.mockServerContextToEnableTemplateCache();
     });
 
@@ -147,7 +147,7 @@
 
         var taxon = { Id: '0', Title: 'Taxon', TitlesPath: 'TitlesPath' };
 
-        directiveScope.itemClicked(taxon)
+        directiveScope.itemClicked(taxon);
 
         expect(taxon.Breadcrumb).toBe('TitlesPath > Taxon');
     });

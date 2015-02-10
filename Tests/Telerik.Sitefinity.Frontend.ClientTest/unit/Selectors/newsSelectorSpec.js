@@ -171,7 +171,7 @@ describe("news selector", function () {
         expect(mostRecent.args).toBeDefined();
 
         return mostRecent.args;
-    }
+    };
 
     describe('in single selection mode', function () {
         it('[GMateev] / should retrieve news items from the service when the selector is opened.', function () {

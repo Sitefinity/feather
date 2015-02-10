@@ -1,15 +1,26 @@
 ﻿<div class="Media">
     <div class="Media-content">
-        <div class="Media-settings">
-            <div ng-show="breadcrumbs && breadcrumbs.length > 0">
+        <!--Upload image-->
+        <div ng-show="isInUploadMode" class="col-md-10">
+            <p class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></p>
+            <input type="file" class="file-upload-chooser-input" style="display:none!important" />
+            <p class="text-center">or simpy implement drag &amp; drop here</p>
+        </div>
 
-                <div class="Breadcrumb">
-                    <a>All libraries</a>
-                    <a>{{::item.Title}}</a>
-                </div>
-
+        <!--Select image-->
+        <div ng-hide="isInUploadMode" class="col-md-10">
+            <div class="Media-settings">
+                <span class="pull-left"
+                    ng-show="breadcrumbs && breadcrumbs.length > 0">
+                    <ol class="breadcrumb">
+                        <li ng-click="onBreadcrumbItemClick()"><a>All libraries</a></li>
+                        <li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
+                            <a>{{::item.Title}}</a>
+                        </li>
+                    </ol>
+                </span>
+                <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)"> </sf-search-box>
             </div>
-            <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)"> </sf-search-box>
         </div>
 
         <div sf-collection sf-data="items" sf-model="selectedItem" sf-template-url="client-components/selectors/media/sf-image-collection.html" ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }"></div>
@@ -31,10 +42,9 @@
     <div class="Media-sidebar">
         <div class="Media-sidebar-content">
             <ul class="nav nav-pills nav-stacked nav-sm">
-                <li><a>Upload image</a></li>
+                <li><button ng-click="isInUploadMode = !isInUploadMode">Upload image</button></li>
             </ul>
 
-            <br />
             <!--Basic Filter-->
             <strong class="m-left-xs">Already uploaded images</strong>
 
@@ -108,3 +118,20 @@
         </div>
     </div>
 </div>
+
+<div class="uploadPropertiesModal" template-url="sf-upload-properties-template" modal size="normal" window-class="sf-designer-dlg sf-timespan-selector-dlg" existing-scope="true">
+</div>
+
+<script type="text/ng-template" id="sf-upload-properties-template">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="closeUploadImageDialog()">&times;</button>
+        <h3 class="modal-title">Upload image</h3>
+    </div>
+    <div class="modal-body">
+        <div sf-upload-image-properties sf-model="model" sf-cancel-upload-callback="closeUploadImageDialog()"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left" ng-click="closeUploadImageDialog(true)">Done</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="closeUploadImageDialog()">Cancel</button>
+    </div>
+</script>

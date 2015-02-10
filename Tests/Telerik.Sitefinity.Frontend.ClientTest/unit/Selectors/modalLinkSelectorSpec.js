@@ -35,7 +35,7 @@ describe("link selector modal", function () {
             if (selector === '#linkSelector') {
                 return {
                     scope: linkSelectorScopeMock
-                }
+                };
             }
             else {
                 return angularElementOriginal(selector);
