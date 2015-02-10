@@ -571,15 +571,15 @@ describe('sfMediaService', function () {
 
             it('[Boyko-Karadzhov] / should issue a PUT request to create a media item on upload and upload the file to it.', function () {
                 var settings = {
-                    libraryId: 'myLibraryId',
+                    ParentId: 'myLibraryId',
                     itemId: '00000000-0000-0000-0000-000000000000',
                     itemType: itemType,
                     provider: '',
                     parentItemType: parentType,
-                    newParentId: 'myLibraryId'
+                    file: { }
                 };
 
-                var createImageUrl = itemsServicePath + 'parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}';
+                var createImageUrl = itemsServicePath + 'parent/{{ParentId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{ParentId}}';
                 var expectedUrl = $interpolate(createImageUrl)(settings);
 
                 var item = {
@@ -587,13 +587,11 @@ describe('sfMediaService', function () {
                         Id: 'resultingItemId'
                     }
                 };
-
                 $httpBackend.expectPUT(expectedUrl).respond(item);
 
                 var data;
-                var file = {};
                 mediaService[testObjSettings.callbacks.testedObject]
-                    .upload(file, settings.libraryId)
+                    .upload(settings)
                     .then(function (res) {
                         data = res;
                     });

@@ -24,7 +24,7 @@
                         scope.showError = true;
 
                     if (!scope.sfMinTextLength)
-                        scope.sfMinTextLength = 3;
+                        scope.sfMinTextLength = 0;
 
                     scope.sfSearchCallback = function () {
                         if (!scope.sfModel || scope.sfModel.length >= scope.sfMinTextLength) {

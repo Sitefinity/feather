@@ -19,7 +19,8 @@
                      },
                      files: {
                          uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
-                     }
+                     },
+                     librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/')
                  };
 
                  var getItems = function (options, excludeFolders, serviceUrl, itemType) {
@@ -71,18 +72,24 @@
                      return '/Date(' + date.getTime() + '-0000)/';
                  };
 
-                 var createImage = function (file, settings) {
+                 var createImage = function (settings) {
                      var nowToWcfDate = toWcfDate(new Date()),
                          url = $interpolate(constants.images.createImageUrl)(settings),
                          image = {
                              Item: {
                                  Title: {
-                                     PersistedValue: file.name,
-                                     Value: file.name
+                                     PersistedValue: settings.title,
+                                     Value: settings.title
+                                 },
+                                 AlternativeText: {
+                                     PersistedValue: settings.alternativeText,
+                                     Value: settings.alternativeText
                                  },
                                  DateCreated: nowToWcfDate,
                                  PublicationDate: nowToWcfDate,
-                                 LastModified: nowToWcfDate
+                                 LastModified: nowToWcfDate,
+                                 Tags: settings.tags,
+                                 Category: settings.categories
                              }
                          };
 
@@ -122,12 +129,12 @@
                      };
                  };
 
-                 var uploadImage = function (file, settings) {
+                 var uploadImage = function (settings) {
                      var fileUpload = new FileUpload();
 
                      var deferred = fileUpload.getDeferred();
 
-                     createImage(file, settings)
+                     createImage(settings)
                          .success(function (data) {
                              var formData = new FormData();
                              formData.append('ContentType', constants.images.itemType);
@@ -136,7 +143,7 @@
                              formData.append('Workflow', 'Upload');
                              formData.append('ProviderName', settings.provider || '');
                              formData.append('SkipWorkflow', 'true');
-                             formData.append('ImageFile', file);
+                             formData.append('ImageFile', settings.file);
 
                              fileUpload.upload(constants.files.uploadHandlerUrl, formData);
                          })
@@ -188,7 +195,19 @@
                              callback = imagesObj.getContent;
                          }
 
-                         return callback(options);
+                         var callbackWrap = function () {
+                             var allLanguageSearch = enableAllLanguagesSearch.toLowerCase() === "true";
+                             options.filter = filterObject.composeExpression(allLanguageSearch);
+                             return callback(options);
+                         };
+
+                         if (enableAllLanguagesSearch === null) {
+                             return getEnableAllLanguagesSearch()
+                                 .then(callbackWrap);
+                         }
+                         else {
+                             return callbackWrap();
+                         }
                      },
                      getPredecessorsFolders: function (id) {
                          if (!id) {
@@ -203,20 +222,54 @@
                                        return data.Items;
                                    });
                      },
-                     upload: function (file, parentId, provider) {
+                     upload: function (model) {
 
                          var defaultLibraryId = '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb';
-                         var libraryId = parentId || defaultLibraryId;
+                         var libraryId = model.ParentId || defaultLibraryId;
 
                          var settings = {
                              libraryId: libraryId,
+                             newParentId: libraryId,
                              itemId: serviceHelper.emptyGuid(),
                              itemType: constants.images.itemType,
-                             provider: provider,
+                             provider: model.provider,
                              parentItemType: constants.albums.albumItemType,
-                             newParentId: libraryId
+                             title: model.Title || model.file.name,
+                             alternativeText: model.AlternativeText,
+                             categories: model.Categories,
+                             tags: model.Tags
                          };
-                         return uploadImage(file, settings);
+                         return uploadImage(settings);
+                     }
+                 };
+
+                 var enableAllLanguagesSearch = null;
+
+                 var getLibrarySettings = function () {
+                     var url = constants.librarySettingsServiceUrl;
+                     return serviceHelper.getResource(url).get(
+                         {
+                             nodeName: 'librariesConfig_0',
+                             mode: 'Form'
+                         }).$promise;
+                 };
+
+                 var getEnableAllLanguagesSearch = function () {
+                     if (enableAllLanguagesSearch === null) {
+                         return getLibrarySettings().then(function (data) {
+                             if (data && data.Items) {
+                                 enableAllLanguagesSearch = data.Items.filter(function (item) { return item.Key == "EnableAllLanguagesSearch"; })[0].Value;
+                             }
+                             else {
+                                 enableAllLanguagesSearch = false;
+                             }
+
+                             return enableAllLanguagesSearch;
+                         });
+                     } else {
+                         var deferred = $q.defer();
+                         deferred.resolve(enableAllLanguagesSearch);
+                         return deferred.promise;
                      }
                  };
 
