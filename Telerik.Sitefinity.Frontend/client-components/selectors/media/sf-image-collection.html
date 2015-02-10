@@ -1,13 +1,13 @@
 ﻿<div sf-infinite-scroll="$parent.loadMore()" style="height: 200px">
     <div ng-if="items.length === 0">No items found</div>
 	<ul class="row">
-		<li ng-repeat="item in items | filter: { IsFolder : true }" class="col-md-4" ng-click="select(item)">
+		<li ng-repeat="item in items | filter: { IsFolder : true } | orderBy: $parent.recentItemsSortExpression.field : $parent.recentItemsSortExpression.reverse" class="col-md-4" ng-click="select(item)">
 			<div ng-if="item.IsFolder === true" style="height: 100px; width: 100px; border: 2px solid blue">{{item.Title}}</div>
 		</li>
 	</ul>
 	<hr />
 	<ul class="row">
-		<li ng-repeat="item in items | filter: { IsFolder : false }" class="col-md-4" ng-click="select(item)">
+		<li ng-repeat="item in items | filter: { IsFolder : false } | orderBy: $parent.recentItemsSortExpression.field : $parent.recentItemsSortExpression.reverse" class="col-md-4" ng-click="select(item)">
 			<img ng-if="item.IsFolder === false" ng-src="{{item.ThumbnailUrl}}" ng-class="{'selected' : isSelected(item)}" src="" alt="{{item.Title}}" width="100" height="100" style="border: 2px solid yellow" />
 		</li>
 	</ul>
