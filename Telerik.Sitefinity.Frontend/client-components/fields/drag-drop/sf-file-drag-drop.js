@@ -11,7 +11,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/fields/file-drag-drop/sf-file-drag-drop.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/fields/drag-drop/sf-file-drag-drop.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
