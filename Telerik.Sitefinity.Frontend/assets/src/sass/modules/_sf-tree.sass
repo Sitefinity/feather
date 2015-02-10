@@ -1,0 +1,52 @@
+.sf-Tree
+	list-style: none
+	padding: 0
+
+	.sf-Tree
+		margin: 0
+		padding-left: 10px
+		transition: opacity .2s ease .1s, max-height 1s ease
+		opacity: 1
+		max-height: 400px
+
+		&.is-collapsed
+			max-height: 0
+			opacity: 0
+			transition: opacity 0, max-height .1s ease
+
+.sf-Tree-item
+	span
+		padding: 5px
+		display: block
+		cursor: pointer
+		border-radius: 4px
+
+		&:hover,
+		&:focus
+			background-color: #eee
+
+		&.is-selected
+			background-color: #bdbdbd
+			color: #fff
+
+.sf-Tree-expander
+	height: 0
+	width: 0
+	float: left
+	background: none
+	border: 6px solid transparent
+	border-left-color: #666
+	margin: 8px 0 0 -12px
+	transition: transform .2s ease
+	transform-origin: 20% 60%
+	transform: rotateZ(0)
+
+	&:before
+		content: ""
+		display: block
+		margin: -10px 0 0 -10px
+		width: 20px
+		height: 20px
+
+	&.is-expanded
+		transform: rotateZ(90deg)

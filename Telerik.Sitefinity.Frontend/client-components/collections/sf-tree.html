@@ -1,12 +1,4 @@
-﻿<ul class="sf-tree">
-    <li ng-repeat="node in hierarchy" ng-include src="itemTemplateUrl" />
+﻿<ul class="sf-Tree">
+    <li class="sf-Tree-item" ng-repeat="node in hierarchy" ng-include src="itemTemplateUrl" />
 </ul>
 
-<style>
-    .collapsed {
-        display:none;
-    }
-    span.selected {
-        color:red;
-    }
-</style>

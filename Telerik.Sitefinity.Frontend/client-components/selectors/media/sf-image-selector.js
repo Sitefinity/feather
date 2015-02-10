@@ -58,6 +58,11 @@
                         field: 'Category',
                         taxonomyId: 'E5CD6D69-1543-427B-AD62-688A99F5E7D4'
                     }
+                },
+                sorting: {
+                    asc: 'ASC',
+                    desc: 'DESC',
+                    defaultValue: 'DateCreated DESC'
                 }
             };
 
@@ -153,6 +158,17 @@
                         refresh();
                     };
 
+                    scope.isGrid = true;
+                    scope.switchToGrid = function () {
+                        scope.isGrid = true;
+                        scope.isList = false;
+                    };
+
+                    scope.switchToList = function () {
+                        scope.isGrid = false;
+                        scope.isList = true;
+                    };
+
                     /*
                     * Content collection refresh
                     */
@@ -194,6 +210,25 @@
                             sfMediaService.images.get(options, scope.filterObject, appendItems)
                                 .then(function (response) {
                                     if (response && response.Items) {
+
+                                        function removeNonNumeric(item){
+                                            return item.replace(/\D/g, "");
+                                        }
+
+                                        // Remove unnecessary (non-numeric) characters from LastModified string
+                                        for (var key in response.Items) {
+                                            var item = response.Items[key];
+                                            if (item.LastModified) {
+                                                item.LastModified = removeNonNumeric(item.LastModified);
+                                            }
+                                            if (item.ImagesCount) {
+                                                item.ImagesCount = removeNonNumeric(item.ImagesCount);
+                                            }
+                                            if (item.LibrariesCount) {
+                                                item.LibrariesCount = removeNonNumeric(item.LibrariesCount);
+                                            }
+                                        }
+
                                         if (appendItems) {
                                             if (scope.items && scope.items.length === itemsLength) {
                                                 scope.items = scope.items.concat(response.Items);
@@ -210,8 +245,6 @@
                                     if (!appendItems) {
                                         // scrolls the collection of items to the top
                                         element.find('div[class*="sf-collection-"] > div[sf-infinite-scroll]').scrollTop(0);
-
-                                        console.log(scope.breadcrumbs);
                                     }
                                 });
                         }
@@ -339,7 +372,13 @@
                             all: constants.filters.basic,
                             selected: null,
                             select: function (basicFilter) {
+                                scope.isInUploadMode = false;
                                 scope.filters.basic.selected = basicFilter;
+
+                                if (basicFilter === constants.filters.basic[0].value) {
+                                    scope.sortExpression = constants.sorting.defaultValue;
+                                }
+
                                 scope.filterObject.set.basic[basicFilter]();
 
                                 scope.filters.library.selected = [];
@@ -378,17 +417,40 @@
                         refresh(true);
                     };
 
+                    //sorting helpers
+                    var getSortField = function (sortExpression) {
+                        if (!sortExpression)
+                            return '';
+
+                        var fieldName = sortExpression.slice(0, sortExpression.indexOf(' '));
+
+                        return fieldName;
+                    };
+
+                    var isSortingReverse = function (sortExpression) {
+                        if (sortExpression) {
+                            var descIndex = sortExpression.toUpperCase().indexOf(constants.sorting.desc);
+                            if (descIndex > -1)
+                                return true;
+                        }
+
+                        return false;
+                    };
+
                     /*
                     * Watches.
                     */
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
-                            if (newVal !== scope.filterObject.constants.dateCreatedDescending && scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
-                                scope.filterObject.set.basic.none();
-                                scope.filters.basic.selected = null;
+                            if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
+                                scope.recentItemsSortExpression = {
+                                    field: getSortField(newVal),
+                                    reverse: isSortingReverse(newVal)
+                                };
                             }
                             else {
+                                scope.recentItemsSortExpression = null;
                                 refresh();
                             }
                         }
@@ -440,13 +502,19 @@
                             }
                         }
                     });
+                    
 
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
+                        scope.isInUploadMode = false;
                         if (data && data.IsFolder === true) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.parent.to(data.Id);
                         }
+                    });
+
+                    scope.$on('sf-tree-item-selected', function (event, data) {
+                        scope.isInUploadMode = false;
                     });
 
                     /*
@@ -466,6 +534,7 @@
                     }());
                 }
             };
+
         }])
         .controller('uploadPropertiesCtrl', function () {
         });
