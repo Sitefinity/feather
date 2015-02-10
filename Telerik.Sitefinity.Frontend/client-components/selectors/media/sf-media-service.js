@@ -126,7 +126,7 @@
 
         var enableAllLanguagesSearch = null;
 
-        var getLibrarySettigns = function () {
+        var getLibrarySettings = function () {
             var url = constants.librarySettingsServiceUrl;
             return serviceHelper.getResource(url).get(
                 {
@@ -137,7 +137,7 @@
 
         var getEnableAllLanguagesSearch = function () {
             if (enableAllLanguagesSearch === null) {
-                return getLibrarySettigns().then(function (data) {
+                return getLibrarySettings().then(function (data) {
                     if (data && data.Items) {
                         enableAllLanguagesSearch = data.Items.filter(function (item) { return item.Key == "EnableAllLanguagesSearch"; })[0].Value;
                     }
