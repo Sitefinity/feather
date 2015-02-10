@@ -219,17 +219,41 @@
                     * File uploading
                     */
 
+                    scope.model = {
+                        file: null,
+                        ParentId: null,
+                        Title: null,
+                        AlternativeText: null,
+                        Categories: [],
+                        Tags: []
+                    };
+
                     var uploadFile = function () {
+                        // TODO: actial upload
                         console.log('actial file uploaded:');
                         console.log(scope.model);
-                        // actial upload
+
+                        scope.isInUploadMode = false;
+
+                        // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
+                        fileUploadInput.val(null);
+
+                        // enter Recent items mode to show your uploaded item
+                        scope.filters.basic.select(constants.filters.basicRecentItemsValue);
                     };
 
                     // drag-drop logic
                     scope.dataTransferDropped = function (dataTransferObject) {
                         // using only the first file
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
-                            openUploadPropertiesDialog(dataTransferObject.files[0]);
+                            scope.model.file = dataTransferObject.files[0];
+
+                            if (scope.isInUploadMode) {
+                                openUploadPropertiesDialog();
+                            }
+                            else {
+                                uploadFile();
+                            }
                         }
                     };
 
@@ -239,37 +263,23 @@
                         scope.$apply(function () {
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
-                                openUploadPropertiesDialog(fileInput.files[0]);
+                                scope.model.file = fileInput.files[0];
+
+                                openUploadPropertiesDialog();
                             }
                         });
                     });
 
-                    var openUploadPropertiesDialog = function (file) {
-                        scope.model = {
-                            file: file,
-                            ParentId: null,
-                            Title: null,
-                            AlternativeText: null,
-                            Categories: [],
-                            Tags: []
-                        };
-
+                    var openUploadPropertiesDialog = function () {
                         angular.element('.uploadPropertiesModal').scope().$openModalDialog()
                             .then(function (doUploadFile) {
                                 if (doUploadFile) {
                                     uploadFile();
-
-                                    scope.isInUploadMode = false;
-
-                                    // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
-                                    fileUploadInput.val(null);
-
-                                    // enter Recent items mode to show your uploaded item
-                                    scope.filters.basic.select(constants.filters.basicRecentItemsValue);
                                 }
                             });
                     };
 
+                    // called with both close and done
                     scope.closeUploadImageDialog = function (doUploadFile) {
                         angular.element('.uploadPropertiesModal').scope().$modalInstance.close(doUploadFile);
                     };
