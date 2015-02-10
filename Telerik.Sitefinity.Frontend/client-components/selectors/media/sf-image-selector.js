@@ -164,7 +164,6 @@
                         scope.breadcrumbs = [];
 
                         var options = {
-                            filter: scope.filterObject.composeExpression(),
                             parent: scope.filterObject.parent,
                             sort: scope.sortExpression
                         };
