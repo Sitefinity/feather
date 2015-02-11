@@ -1,9 +1,5 @@
 ﻿﻿<div class="Media">
     <div class="Media-content"  sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)">
-        <div class="sf-Drag">
-            <strong>Drop image here to upload</strong>
-        </div>
-
         <!--Upload image-->
         <div ng-show="isInUploadMode" class="Media-upload-text">
             <div class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
@@ -125,19 +121,19 @@
     </div>
 </div>
 
-<div class="uploadPropertiesModal" template-url="sf-upload-properties-template" modal size="normal" window-class="sf-designer-dlg sf-timespan-selector-dlg" existing-scope="true">
+<div class="uploadPropertiesModal" template-url="sf-upload-image-properties.html" modal size="normal" window-class="sf-designer-dlg sf-timespan-selector-dlg" existing-scope="true">
 </div>
 
 <script type="text/ng-template" id="sf-upload-properties-template">
     <div class="modal-header">
-        <button type="button" class="close" ng-click="closeUploadImageDialog()">&times;</button>
+        <button type="button" class="close" ng-click="cancelUploadImage()">&times;</button>
         <h3 class="modal-title">Upload image</h3>
     </div>
     <div class="modal-body">
         <div sf-upload-image-properties sf-model="model" sf-cancel-upload-callback="closeUploadImageDialog()"></div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" ng-click="closeUploadImageDialog(true)">Done</button>
-        <button type="button" class="btn btn-link  pull-left" ng-click="closeUploadImageDialog()">Cancel</button>
+        <button type="button" class="btn btn-primary pull-left" ng-click="startUploadImage()">Upload</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancelUploadImage()">Cancel</button>
     </div>
 </script>

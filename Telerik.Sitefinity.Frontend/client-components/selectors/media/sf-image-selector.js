@@ -263,20 +263,6 @@
                         Tags: []
                     };
 
-                    var uploadFile = function () {
-
-                        var successAction = function (data) {
-                        };
-                        var progressAction = function (data) {
-                        };
-                        var errorAction = function (data) {
-                        };
-
-                        sfMediaService.images
-                                      .upload(scope.model)
-                                      .then(successAction, errorAction, progressAction);
-                    };
-
                     var getLibraryId = function () {
                         if (scope.breadcrumbs && scope.breadcrumbs.length) {
                             return scope.breadcrumbs[scope.breadcrumbs.length - 1].Id;
@@ -353,8 +339,12 @@
                     };
 
                     // called with both close and done
-                    scope.closeUploadImageDialog = function (doUploadFile) {
-                        angular.element('.uploadPropertiesModal').scope().$modalInstance.close(doUploadFile);
+                    scope.startUploadImage = function () {
+                        angular.element('.uploadPropertiesModal').scope().$modalInstance.close();
+                    };
+
+                    scope.cancelUploadImage = function () {
+                        angular.element('.uploadPropertiesModal').scope().$modalInstance.close();
                     };
 
                     scope.openSelectFileDialog = function () {
