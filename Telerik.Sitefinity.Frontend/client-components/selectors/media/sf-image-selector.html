@@ -110,9 +110,9 @@
 
         <!--Filter dropdown-->
         <div class="Media-settings Media-settings--bottom">
-            <button type="button" class="btn btn-link" ng-show="!showOtherFilterOptions" ng-click="showOtherFilterOptions = true">Other filter options</button>
+            <button type="button" class="btn btn-link btn-sm" ng-show="!showOtherFilterOptions" ng-click="showOtherFilterOptions = true">Other filter options</button>
 
-            <select class="form-control form-control-sm" ng-model="selectedFilterOption">
+            <select ng-show="showOtherFilterOptions" class="form-control form-control-sm" ng-model="selectedFilterOption">
                 <option value="1" selected="selected">Libraries</option>
                 <option value="2">Tags</option>
                 <option value="3">Categories</option>
