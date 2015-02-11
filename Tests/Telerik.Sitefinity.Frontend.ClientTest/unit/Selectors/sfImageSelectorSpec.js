@@ -299,4 +299,58 @@
             });
         });
     }());
+
+    /*
+    * Upload
+    */
+
+    // Drag drop prepopulating
+    (function () {
+        var suppressedDataTransferDroppedFunc = function (s) {
+            try {
+                s.dataTransferDropped({ files: ['fake'] });
+                s.$digest();
+            } catch (e) {
+                // no actual angular bootstrap window to open - suppres warning
+            }
+        };
+
+        it('[dzhenko] / should populate library property on uploaded image when dropped in library filter mode.', function () {
+            var scope = rootScope.$new();
+            var el = commonMethods.compileDirective(directiveMarkup, scope);
+            var s = scope.$$childHead;
+
+            s.breadcrumbs = [{ Id: 1 }, { Id: 2 }, { Id: 3 }, { Id: 4 }, { Id: 5 }];
+            
+            suppressedDataTransferDroppedFunc(s);
+
+            expect(s.model.ParentId).toEqual(5);
+        });
+
+        it('[dzhenko] / should populate tag property on uploaded image when dropped in tag filter mode.', function () {
+            var scope = rootScope.$new();
+            var el = commonMethods.compileDirective(directiveMarkup, scope);
+            var s = scope.$$childHead;
+
+            s.filters.tag.selected = ['tag1'];
+            s.selectedFilterOption = 2;
+
+            suppressedDataTransferDroppedFunc(s);
+
+            expect(s.model.Tags[0]).toEqual('tag1');
+        });
+
+        it('[dzhenko] / should populate category property on uploaded image when dropped in category filter mode.', function () {
+            var scope = rootScope.$new();
+            var el = commonMethods.compileDirective(directiveMarkup, scope);
+            var s = scope.$$childHead;
+
+            s.filters.category.selected = ['cat1'];
+            s.selectedFilterOption = 3;
+
+            suppressedDataTransferDroppedFunc(s);
+
+            expect(s.model.Categories[0]).toEqual('cat1');
+        });
+    }());
 });
