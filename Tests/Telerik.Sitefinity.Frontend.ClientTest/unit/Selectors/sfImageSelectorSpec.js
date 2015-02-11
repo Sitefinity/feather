@@ -105,7 +105,7 @@
 
         expect(s.filters.library.selected[0]).toBeUndefined();
 
-        $('ul.sf-tree li span:contains("Title1")').first().click();
+        $('ul.sf-Tree li span:contains("Title1")').first().click();
         scope.$digest();
 
         expect(s.filters.library.selected[0]).toEqual(1);
@@ -119,7 +119,7 @@
 
         expect(s.filters.library.selected[0]).toBeUndefined();
 
-        $('ul.sf-tree li span:contains("Title1")').first().click();
+        $('ul.sf-Tree li span:contains("Title1")').first().click();
         scope.$digest();
 
         expect(s.filters.library.selected[0]).toEqual(1);
@@ -275,6 +275,27 @@
                 expectedDate.setYear(expectedDate.getFullYear() - 5);
 
                 assertFilter(expectedDate);
+            });
+
+            it('[Boyko-Karadzhov] / should set is-grid class by default.', function () {
+                var scope = rootScope.$new();
+                
+                var element = commonMethods.compileDirective(directiveMarkup, scope);
+
+                expect($(element.find('[sf-collection]')[0]).is('.is-grid')).toBe(true);
+                expect($(element.find('[sf-collection]')[0]).is('.is-list')).toBe(false);
+            });
+
+            it('[Boyko-Karadzhov] / should set is-list class when switchToList is clicked.', function () {
+                var scope = rootScope.$new();
+                
+                var element = commonMethods.compileDirective(directiveMarkup, scope);
+
+                scope.$$childTail.switchToList();
+                scope.$digest();
+
+                expect($(element.find('[sf-collection]')[0]).is('.is-grid')).toBe(false);
+                expect($(element.find('[sf-collection]')[0]).is('.is-list')).toBe(true);
             });
         });
     }());

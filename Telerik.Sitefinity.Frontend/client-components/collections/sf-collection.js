@@ -21,15 +21,9 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, attrs.sfTemplateUrl);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    var classes = {
-                        grid: 'sf-collection-grid',
-                        list: 'sf-collection-list'
-                    };
-
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.selectedItemIds = scope.selectedItemIds || [];
 
-                    element.addClass(classes.grid);
                     scope.isSelected = function (item) {
                         if (scope.selectedItemIds === undefined) {
                             return false;

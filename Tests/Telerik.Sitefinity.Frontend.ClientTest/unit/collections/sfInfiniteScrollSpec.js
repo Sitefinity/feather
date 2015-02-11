@@ -18,7 +18,7 @@
 
         scope.$digest();
 
-        expect(element.css('overflow-y')).toEqual('scroll');
+        expect(element.css('overflow-y')).toEqual('auto');
     });
     
     it('[osmak] / calls the needsData delegate if element is scrolled to the bottom', function () {
