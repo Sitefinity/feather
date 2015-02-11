@@ -42,14 +42,14 @@
                         element.addClass(constants.dragOverClass);
                     });
 
-                    $('.sf-Drag').on('dragleave', function (e) {
+                    element.find('.sf-Drag').on('dragleave', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
 
                         element.removeClass(constants.dragOverClass);
                     });
 
-                    $('.sf-Drag').on('drop', function (e) {
+                    element.find('.sf-Drag').on('drop', function (e) {
                         element.removeClass(constants.dragStartClass);
                         element.removeClass(constants.dragOverClass);
 
