@@ -317,7 +317,7 @@
                     var openUploadPropertiesDialog = function (file) {
                         scope.model.file = file;
 
-                        angular.element('.uploadPropertiesModal').scope().$openModalDialog(scope.model)
+                        angular.element('.uploadPropertiesModal').scope().$openModalDialog({ model: scope.model })
                             .then(function (uploadedImageId) {
                                 if (uploadedImageId) {
                                     scope.selectedItems.push(uploadedImageId);
@@ -357,7 +357,9 @@
 
                     if (!scope.selectedItems || !angular.isArray(scope.selectedItems)) {
                         scope.selectedItems = [];
-                    };
+                    }
+
+                    scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-upload-image-properties.html');
 
                     scope.filters = {
                         basic: {
