@@ -2,6 +2,7 @@
 describe('sfMediaService', function () {
     var $httpBackend;
     var mediaService;
+    var $interpolate;
 
     var dataItems = {
         Items: [{
@@ -17,6 +18,7 @@ describe('sfMediaService', function () {
 
     var appPath = 'http://mysite.com:9999/myapp';
     var sampleGuid = '1ac3b615-0ce5-46dc-a0af-5c5d1f146df9';
+    var uploadUrl = appPath + '/Telerik.Sitefinity.Html5UploadHandler.ashx';
 
     beforeEach(module('sfServices'));
 
@@ -36,6 +38,7 @@ describe('sfMediaService', function () {
         // Set up the mock http service responses
         $httpBackend = $injector.get('$httpBackend');
         mediaService = $injector.get('sfMediaService');
+        $interpolate = $injector.get('$interpolate');
     }));
 
     /* Helper methods */
@@ -97,13 +100,15 @@ describe('sfMediaService', function () {
     var allTestObjectsSettings = [
         {
             itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
+            parentType: 'Telerik.Sitefinity.Libraries.Model.Album',
             itemsServicePath: appPath + '/Sitefinity/Services/Content/ImageService.svc/',
             albumsServicePath: appPath + '/Sitefinity/Services/Content/AlbumService.svc/folders/',
             callbacks: {
                 testedObject: 'images',
                 folders: 'getFolders',
                 items: 'getMedia',
-                content: 'getContent'
+                content: 'getContent',
+                upload: 'upload'
             }
         }
     ];
@@ -114,12 +119,15 @@ describe('sfMediaService', function () {
         var albumsServicePath = testObjSettings.albumsServicePath;
         var itemsServicePath = testObjSettings.itemsServicePath;
         var itemType = testObjSettings.itemType;
+        var parentType = testObjSettings.parentType;
         var assertFolders,
             assertItems,
             assertContent,
-            assertError;
+            assertError,
+            $window,
+            $rootScope;
 
-        beforeEach(inject(function ($injector) {
+        beforeEach(inject(function ($injector, _$window_, _$rootScope_) {
             mediaService = $injector.get('sfMediaService');
 
             assertFolders = function (params) {
@@ -137,6 +145,9 @@ describe('sfMediaService', function () {
             assertError = function (params, methodName) {
                 baseAssertError(params, mediaService[testObjSettings.callbacks.testedObject][methodName]);
             };
+
+            $window = _$window_;
+            $rootScope = _$rootScope_;
         }));
 
         /* Tests */
@@ -441,6 +452,27 @@ describe('sfMediaService', function () {
 
         /* Images */
         (function () {
+
+            var getXmlHttpRequestMock = function (window) {
+                window.XMLHttpRequest = angular.noop;
+
+                var onprogressSpy = jasmine.createSpy("onprogress");
+                var openSpy = jasmine.createSpy("open");
+                var sendSpy = jasmine.createSpy("send");
+
+                var xhrObj = {
+                    upload: {
+                        onprogress: onprogressSpy
+                    },
+                    open: openSpy,
+                    send: sendSpy,
+                };
+
+                spyOn(window, "XMLHttpRequest").andReturn(xhrObj);
+
+                return xhrObj;
+            };
+
             it('[dzhenko] / should return all images', function () {
                 var subpath = '?excludeFolders=true&itemType=' + itemType;
 
@@ -535,6 +567,51 @@ describe('sfMediaService', function () {
                 $httpBackend.expectGET(itemsServicePath + subpath).respond(dataItems);
 
                 assertItems({ filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
+            });
+
+            it('[Boyko-Karadzhov] / should issue a PUT request to create a media item on upload and upload the file to it.', function () {
+                var settings = {
+                    ParentId: 'myLibraryId',
+                    itemId: '00000000-0000-0000-0000-000000000000',
+                    itemType: itemType,
+                    provider: '',
+                    parentItemType: parentType,
+                    file: { }
+                };
+
+                var createImageUrl = itemsServicePath + 'parent/{{ParentId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{ParentId}}';
+                var expectedUrl = $interpolate(createImageUrl)(settings);
+
+                var item = {
+                    Item: {
+                        Id: 'resultingItemId'
+                    }
+                };
+                $httpBackend.expectPUT(expectedUrl).respond(item);
+
+                var data;
+                mediaService[testObjSettings.callbacks.testedObject]
+                    .upload(settings)
+                    .then(function (res) {
+                        data = res;
+                    });
+
+                expect(data).toBeUndefined();
+
+                var xhrObj = getXmlHttpRequestMock($window);
+
+                $httpBackend.flush();
+                
+                xhrObj.readyState = 4;
+                xhrObj.status = 200;
+                xhrObj.responseText = JSON.stringify(item);
+
+                $rootScope.$apply(xhrObj.onload);
+
+                expect(xhrObj.onload).toBeDefined();
+                expect(xhrObj.open).toHaveBeenCalled();
+                expect(xhrObj.send).toHaveBeenCalled();
+                expect(data).toEqualData(item);
             });
         }());
 

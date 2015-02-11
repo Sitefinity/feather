@@ -264,9 +264,17 @@
                     };
 
                     var uploadFile = function () {
-                        // TODO: actial upload
-                        console.log('actial file uploaded:');
-                        console.log(scope.model);
+
+                        var successAction = function (data) {
+                        };
+                        var progressAction = function (data) {
+                        };
+                        var errorAction = function (data) {
+                        };
+
+                        sfMediaService.images
+                                      .upload(scope.model)
+                                      .then(successAction, errorAction, progressAction);
                     };
 
                     var getLibraryId = function () {
@@ -309,6 +317,7 @@
                         scope.$apply(function () {
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
+                              
                                 openUploadPropertiesDialog(fileInput.files[0]);
                             }
                         });
@@ -332,6 +341,7 @@
                                 }
 
                                 // clears the model
+                               
                                 scope.model = {
                                     file: null,
                                     ParentId: null,
