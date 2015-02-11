@@ -338,7 +338,7 @@
                                 }
 
                                 // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
-                                fileUploadInput.val(null);
+                                fileUploadInput.replaceWith(fileUploadInput = fileUploadInput.clone(true));
 
                                 // clears the model
                                 scope.model = {
