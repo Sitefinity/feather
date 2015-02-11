@@ -3,10 +3,12 @@
         var constants = {
             images: {
                 itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
+                albumItemType: 'Telerik.Sitefinity.Libraries.Model.Album',
                 albumsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/folders/'),
                 imagesServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/'),
                 createImageUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}')
             },
+            uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/')
         };
 
@@ -144,7 +146,7 @@
                 formData.append('SkipWorkflow', 'true');
                 formData.append('ImageFile', settings.file);
 
-                return uploadFile(constants.files.uploadHandlerUrl, formData);
+                return uploadFile(constants.uploadHandlerUrl, formData);
             })
             .catch(function (error) {
                 throw error;
@@ -226,7 +228,7 @@
                     itemId: serviceHelper.emptyGuid(),
                     itemType: constants.images.itemType,
                     provider: model.provider,
-                    parentItemType: constants.albums.albumItemType,
+                    parentItemType: constants.images.albumItemType,
                     title: model.Title || model.file.name,
                     alternativeText: model.AlternativeText,
                     categories: model.Categories,

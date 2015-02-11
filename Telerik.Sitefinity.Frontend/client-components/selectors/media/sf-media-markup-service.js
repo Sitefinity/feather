@@ -56,7 +56,7 @@
                         var parts = sfref.substring(startIdx + 1, endIdx).split("|");
                         if (parts.length > 1) {
                             for (var i = 1; i < parts.length; i++) {
-                                if (parts[i].indexOf(":") == -1)
+                                if (parts[i].indexOf(":") === -1)
                                     return parts[i];
                             }
                         }
@@ -73,8 +73,8 @@
                         var parts = sfref.substring(startIdx + 1, endIdx).split("|");
                         if (parts.length > 1) {
                             for (var i = 1; i < parts.length; i++) {
-                                var indx = parts[i].indexOf("tmb:")
-                                if (indx == 0)
+                                var indx = parts[i].indexOf("tmb:");
+                                if (indx === 0)
                                     return parts[i].substring(indx + 4);
                             }
                         }
@@ -182,11 +182,16 @@
 
                     var result = new ImageProperties();
                     result.item.Id = getIdFromSfrefAttr(sfref);
-                    result.item.MediaUrl = jMarkup.attr('src');
-
                     result.provider = getProviderFromSfrefAttr(sfref);
                     result.thumbnail.name = getThumbnailNameFromSfrefAttr(sfref);
                     result.displayMode = jMarkup.attr('displayMode');
+
+                    if (result.displayMode === 'Thumbnail') {
+                        result.thumbnail.url = jMarkup.attr('src');
+                    }
+                    else {
+                        result.item.MediaUrl = jMarkup.attr('src');
+                    }
 
                     result.title = jMarkup.attr('title');
                     result.alternativeText = jMarkup.attr('alt');
