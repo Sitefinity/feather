@@ -1,67 +1,76 @@
-﻿<div>
-    <h4>Select Image</h4>
-    <hr />
-
-    <div class="row">
+﻿﻿<div class="Media">
+    <div sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)"></div>
+    <div class="Media-content">
         <!--Upload image-->
-        <div ng-show="isInUploadMode" class="col-md-10">
-            <p class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></p>
-            <input type="file" class="file-upload-chooser-input" style="display:none!important" />
-            <p class="text-center">or simpy implement drag &amp; drop here</p>
+        <div ng-show="isInUploadMode" class="Media-upload-text">
+            <div class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
+            <input type="file" class="file-upload-chooser-input" style="display:none !important" />
+            <div class="text-center">or simpy implement drag &amp; drop here</div>
         </div>
-        
+
         <!--Select image-->
-        <div ng-hide="isInUploadMode" class="col-md-10">
-            <div class="row">
-                <span class="pull-left"
-                    ng-show="breadcrumbs && breadcrumbs.length > 0">
-                    <ol class="breadcrumb">
-                        <li ng-click="onBreadcrumbItemClick()"><a>All libraries</a></li>
-                        <li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
-                            <a>{{::item.Title}}</a>
-                        </li>
-                    </ol>
-                </span>
-                <sf-search-box class="pull-right" sf-placeholder="Narrow by typing" sf-action="narrowResults(query)"></sf-search-box>
+        <div ng-hide="isInUploadMode">
+            <div class="Media-settings">
+                <ol class="pull-left breadcrumb" ng-show="breadcrumbs && breadcrumbs.length > 0">
+                    <li ng-click="onBreadcrumbItemClick()"><a>All libraries</a></li>
+                    <li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
+                        <a>{{::item.Title}}</a>
+                    </li>
+                </ol>
+                <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)"> </sf-search-box>
             </div>
-            <div class="row">
-                <div sf-collection sf-data="items" sf-model="selectedItem" sf-template-url="client-components/selectors/media/sf-image-collection.html"></div>
-                <div>
-                    <button type="button" class="btn btn-link" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">Sorting and view</button>
-                    <div ng-show="showSortingAndView">
-                        <sf-sort-box class="pull-left" sf-model="sortExpression"></sf-sort-box>
+
+            <div sf-collection sf-data="items" sf-model="selectedItem" sf-template-url="client-components/selectors/media/sf-image-collection.html" ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }"></div>
+
+            <div class="Media-settings Media-settings--bottom">
+                <button type="button" class="btn btn-link btn-sm" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">Sorting and view</button>
+                <div ng-show="showSortingAndView" class="row">
+
+                    <sf-sort-box class="col-xs-3" sf-model="sortExpression"></sf-sort-box>
+
+                    <div class="Media-settings-sort col-xs-9">
+                        <span ng-click="switchToGrid()" ng-class="{ 'is-selected' : isGrid }"><span class="glyphicon glyphicon-th"></span></span>
+                        <span ng-click="switchToList()" ng-class="{ 'is-selected' : isList }"><span class="glyphicon glyphicon-th-list"></span></span>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col-md-2">
-            <p>
-                <button ng-click="isInUploadMode = !isInUploadMode">Upload image</button>
-            </p>
+    <div class="Media-sidebar">
+        <div class="Media-sidebar-content">
+            <ul class="nav nav-pills nav-stacked nav-sm">
+                <li ng-class="{ 'active' : isInUploadMode }"><a ng-click="isInUploadMode = !isInUploadMode">Upload image</a></li>
+            </ul>
+
+            <br />
 
             <!--Basic Filter-->
-            <h5>Already uploaded images</h5>
-            <p ng-repeat="basicFilter in filters.basic.all">
-                <a ng-click="filters.basic.select(basicFilter.value)" ng-class="{ 'selected': filters.basic.selected === basicFilter.value}">{{basicFilter.title}}</a>
-            </p>
+            <div class="m-bottom-xs m-left-xs"><strong>Already uploaded images</strong></div>
+
+            <ul class="nav nav-pills nav-stacked nav-sm">
+                <li ng-repeat="basicFilter in filters.basic.all"
+                    ng-class="{ 'active': filters.basic.selected === basicFilter.value}">
+                    <a ng-click="filters.basic.select(basicFilter.value)" >{{basicFilter.title}}</a>
+                </li>
+            </ul>
 
             <br />
 
             <!--Library Filter-->
-            <span ng-show="selectedFilterOption == 1">
-                <h5>Libraries</h5>
-                <span sf-tree
+            <div ng-show="selectedFilterOption == 1">
+                <strong class="m-bottom-xs m-left-xs">Libraries</strong>
+                <div sf-tree
                     sf-model="filters.library.selected"
                     sf-request-children="filters.library.getChildren(parent)"
-                    sf-has-children-field="HasChildren"></span>
-            </span>
+                    sf-has-children-field="HasChildren"></div>
+            </div>
 
             <!--Tags Filter-->
             <span ng-show="selectedFilterOption == 2">
-                <h5>Tags</h5>
-                <p>
-                    <input type="text" ng-model="filters.tag.query"></input>
+                <div class="m-bottom-xs m-left-xs"><strong>Tags</strong></div>
+                <p class="m-bottom-xs">
+                    <input class="form-control form-control-sm" type="text" placeholder="Narrow by typing..." ng-model="filters.tag.query"></input>
                 </p>
                 <span sf-collection
                     sf-model="filters.tag.selected"
@@ -71,9 +80,9 @@
 
             <!--Categories Filter-->
             <span ng-show="selectedFilterOption == 3">
-                <h5>Categories</h5>
-                <p>
-                    <input type="text" ng-model="filters.category.query">
+                <div class="m-bottom-xs m-left-xs"><strong>Categories</strong></div>
+                <p class="m-bottom-xs">
+                    <input class="form-control form-control-sm" type="text" placeholder="Narrow by typing..." ng-model="filters.category.query">
                 </p>
                 <span sf-tree
                     ng-hide="filters.category.query"
@@ -90,16 +99,20 @@
 
             <!--Date Filter-->
             <span ng-show="selectedFilterOption == 4">
-                <h5>Dates</h5>
+                <div class="m-bottom-xs m-left-xs"><strong>Dates</strong></div>
                 <span sf-collection
                     sf-model="filters.date.selected"
                     sf-identifier="dateValue"
                     sf-data="filters.date.all"
                     sf-template-url="client-components/selectors/media/sf-media-date-items.html"></span>
             </span>
+        </div>
 
-            <!--Filter dropdown-->
-            <select ng-model="selectedFilterOption">
+        <!--Filter dropdown-->
+        <div class="Media-settings Media-settings--bottom">
+            <button type="button" class="btn btn-link" ng-show="!showOtherFilterOptions" ng-click="showOtherFilterOptions = true">Other filter options</button>
+
+            <select class="form-control form-control-sm" ng-model="selectedFilterOption">
                 <option value="1" selected="selected">Libraries</option>
                 <option value="2">Tags</option>
                 <option value="3">Categories</option>

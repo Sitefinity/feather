@@ -1,33 +1,56 @@
-﻿<div sf-infinite-scroll="$parent.loadMore()" style="height: 200px">
-    <div ng-if="items.length === 0">No items found</div>
-	<ul class="row">
-		<li ng-repeat="item in items | filter: { IsFolder : true }" class="col-md-4" ng-click="select(item)">
-			<div ng-if="item.IsFolder === true" style="height: 100px; width: 100px; border: 2px solid blue">{{item.Title}}</div>
-		</li>
-	</ul>
-	<hr />
-	<ul class="row">
-		<li ng-repeat="item in items | filter: { IsFolder : false }" class="col-md-4" ng-click="select(item)">
-			<img ng-if="item.IsFolder === false" ng-src="{{item.ThumbnailUrl}}" ng-class="{'selected' : isSelected(item)}" src="" alt="{{item.Title}}" width="100" height="100" style="border: 2px solid yellow" />
-		</li>
-	</ul>
-    <div ng-show="$parent.isLoading">Loading...</div>
+﻿<div class="Media-items" sf-infinite-scroll="$parent.loadMore()">
+	<div ng-if="items.length === 0">No items found</div>
+
+	<div>
+		<div ng-repeat="item in items | filter: { IsFolder : true } | orderBy: $parent.recentItemsSortExpression.field : $parent.recentItemsSortExpression.reverse" class="Media-folder" ng-click="select(item)">
+			<div ng-if="item.IsFolder === true">
+				<div class="Media-file-thumb">
+					<i class="glyphicon glyphicon-folder-close"></i>
+					<strong>{{item.Title}}</strong>
+				</div>
+
+				<div class="Media-folder-title">
+					{{item.Title}}
+				</div>
+
+				<div class="Media-item-meta">
+					<span ng-show="item.ImagesCount">{{item.ImagesCount + " folders"}}</span><br />
+					<span ng-show="item.ImagesCount">{{item.ImagesCount + " images"}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<div ng-repeat="item in items | filter: { IsFolder : false } | orderBy: $parent.recentItemsSortExpression.field : $parent.recentItemsSortExpression.reverse" class="Media-file" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}">
+			<div class="Media-file-wrapper">
+
+				<div class="Media-file-thumb">
+					<div class="Media-file-thumb-holder">
+						<img ng-if="item.IsFolder === false" ng-src="{{item.ThumbnailUrl}}" src="" alt="{{item.Title}}" />
+					</div>
+				</div>
+
+				<div class="Media-item-title">
+					{{item.Title}}
+				</div>
+
+				<div class="Media-item-meta">
+					{{item.Extension.toUpperCase().replace(".", "")}}<br />
+					{{item.Width + "x" + item.Height}}<br />
+					{{item.TotalSize + "KB"}}<br />
+				</div>
+
+				<div class="Media-item-date">
+					{{item.LastModified | date : 'MM/dd/yyyy HH:mm'}}<br />
+					{{"by " + item.Author}}
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="text-center">
+		<sf-loading ng-show="$parent.isLoading"></sf-loading>
+	</div>
 </div>
-
-<span>Selected item id: {{ $parent.selectedItem[0] }}</span>
-<br />
-<button ng-click="switchToGrid()">Grid</button>
-<button ng-click="switchToList()">List</button>
-
-<style>
-	.sf-collection-grid {
-		border: 3px solid green;
-	}
-
-	.sf-collection-list {
-		border: 3px solid red;
-	}
-	img.selected {
-		border: 10px solid orange!important;
-	}
-</style>
