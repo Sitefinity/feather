@@ -31,7 +31,7 @@
         var modalDialogClass = '.modal-dialog';
         var backdropClass = 'div.modal-backdrop';
 
-        var open = function (scope, attrs) {
+        var open = function (scope, attrs, resolve) {
             //Hide already opened dialogs.
             $(modalDialogClass).hide();
 
