@@ -136,3 +136,5 @@ _SpecRunner.html
 #Angular directive templates converted in javascript. Used in client tests.
 Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js
 /.JustCode
+
+Tests/Telerik.Sitefinity.Frontend.ClientTest/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache

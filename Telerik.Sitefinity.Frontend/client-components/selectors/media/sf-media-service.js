@@ -1,10 +1,11 @@
 ﻿(function () {
-    angular.module('sfServices').factory('sfMediaService', ['serviceHelper', 'serverContext', '$q', function (serviceHelper, serverContext, $q) {
+    angular.module('sfServices').factory('sfMediaService', ['$http', 'serviceHelper', 'serverContext', '$interpolate', '$q', '$window', function ($http, serviceHelper, serverContext, $interpolate, $q, $window) {
         var constants = {
             images: {
                 itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
                 albumsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/folders/'),
-                imagesServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/')
+                imagesServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/'),
+                createImageUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}')
             },
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/')
         };
@@ -63,6 +64,91 @@
             var defer = $q.defer();
             defer.resolve([]);
             return defer.promise;
+        };
+
+        var toWcfDate = function (date) {
+            return '/Date(' + date.getTime() + '-0000)/';
+        };
+
+        var createImage = function (settings) {
+            var nowToWcfDate = toWcfDate(new Date()),
+                url = $interpolate(constants.images.createImageUrl)(settings),
+                image = {
+                    Item: {
+                        Title: {
+                            PersistedValue: settings.title,
+                            Value: settings.title
+                        },
+                        AlternativeText: {
+                            PersistedValue: settings.alternativeText,
+                            Value: settings.alternativeText
+                        },
+                        DateCreated: nowToWcfDate,
+                        PublicationDate: nowToWcfDate,
+                        LastModified: nowToWcfDate,
+                        Tags: settings.tags,
+                        Category: settings.categories
+                    }
+                };
+
+            var deferred = $q.defer();
+
+            $http.put(url, image)
+            .success(function (data) {
+                deferred.resolve(data);
+            })
+            .error(function (error) {
+                deferred.reject(error);
+            });
+
+            return deferred.promise;
+        };
+
+        var uploadFile = function (url, formData) {
+            var deferred = $q.defer();
+            var xhr = new $window.XMLHttpRequest();
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        deferred.resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        deferred.reject(xhr.statusText);
+                    }
+                }
+            };
+            xhr.upload.onprogress = function (e) {
+                var done = e.position || e.loaded,
+                    total = e.totalSize || e.total,
+                    present = Math.floor(done / total * 100);
+                deferred.notify(present);
+            };
+            xhr.onerror = function (e) {
+                deferred.reject(xhr.statusText);
+            };
+
+            xhr.open('POST', url);
+            xhr.send(formData);
+
+            return deferred.promise;
+        };
+
+        var uploadImage = function (settings) {
+            return createImage(settings)
+            .then(function (data) {
+                var formData = new FormData();
+                formData.append('ContentType', constants.images.itemType);
+                formData.append('LibraryId', settings.libraryId);
+                formData.append('ContentId', data.Item.Id);
+                formData.append('Workflow', 'Upload');
+                formData.append('ProviderName', settings.provider || '');
+                formData.append('SkipWorkflow', 'true');
+                formData.append('ImageFile', settings.file);
+
+                return uploadFile(constants.files.uploadHandlerUrl, formData);
+            })
+            .catch(function (error) {
+                throw error;
+            });
         };
 
         var imagesObj = {
@@ -128,6 +214,26 @@
                           .then(function (data) {
                               return data.Items;
                           });
+            },
+            upload: function (model) {
+
+                var defaultLibraryId = '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb';
+                var libraryId = model.ParentId || defaultLibraryId;
+
+                var settings = {
+                    libraryId: libraryId,
+                    newParentId: libraryId,
+                    itemId: serviceHelper.emptyGuid(),
+                    itemType: constants.images.itemType,
+                    provider: model.provider,
+                    parentItemType: constants.albums.albumItemType,
+                    title: model.Title || model.file.name,
+                    alternativeText: model.AlternativeText,
+                    categories: model.Categories,
+                    tags: model.Tags,
+                    file: model.file
+                };
+                return uploadImage(settings);
             }
         };
 
