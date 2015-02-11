@@ -34,13 +34,13 @@
                     }
                 };
 
-                retrieveInitialTaxons();
-
-                scope.$watchCollection('selectedTaxons', function (newSelectedTaxons, oldSelectedTaxons) {
-                    scope.sfModel = jQuery.map(newSelectedTaxons, function (item, index) {
+                var mapModel = function () {
+                    scope.sfModel = jQuery.map(scope.selectedTaxons, function (item, index) {
                         return item.Id;
                     });
-                });
+                };
+
+                retrieveInitialTaxons();
 
                 scope.loadTaxons = function (query) {
                     return taxonService.getTaxons(scope.sfTaxonomyId, null, null, query)
@@ -56,14 +56,22 @@
                 };
 
                 scope.taxonAdded = function (newTaxon) {
-                    if (newTaxon) {
+                    if (newTaxon.Id) {
+                        mapModel();
+                    }
+                    else if (newTaxon.Title) {
                         taxonService.addTaxa(scope.sfTaxonomyId, null, null, [newTaxon.Title])
                             .then(function (data) {
                                 if (data && data.length > 0) {
                                     newTaxon.Id = data[0].Id;
+                                    mapModel();
                                 }
                             });
                     }
+                };
+
+                scope.taxonRemoved = function (removedTaxon) {
+                    mapModel();
                 };
             }
         };
