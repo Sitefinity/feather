@@ -63,29 +63,48 @@
                 };
 
                 scope.openImageSelector = function () {
-                    angular.element("#imageSelectorModal").scope().$openModalDialog()
-                        .then(function (data) {
-                            return mediaService.images.getById(data);
-                        })
-                        .then(function (data) {
-                            mediaService.getLibrarySettings().then(function (settings) {
-                                // TODO: Get this from properties dialog
-                                var properties = {
-                                    item: data.Item,
-                                    title: 'Test image title',
-                                    alternativeText: 'Test image alt',
-                                    margin: {
-                                        top: null,
-                                        left: null,
-                                        bottom: null,
-                                        right: null
-                                    }
-                                };
+                    var range = editor.getRange();
+                    var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
 
-                                var markup = mediaMarkupService.image.markup(properties, settings);
+                    mediaService.getLibrarySettings().then(function (settings) {
+                        var properties;
+
+                        var imageWrapper = $(nodes).closest('span.sfImageWrapper');
+                        if (imageWrapper.length) {
+                            properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML, settings);
+                        }
+                        else if ($(nodes).is('img')) {
+                            properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML, settings);
+                        }
+                        else {
+                            // Default data for testing. Remove after integration with properties dialog.
+                            properties = {
+                                item: null,
+                                title: 'Test image title',
+                                alternativeText: 'Test image alt',
+                                margin: {
+                                    top: null,
+                                    left: null,
+                                    bottom: null,
+                                    right: null
+                                }
+                            };
+                        }
+
+                        angular.element("#imageSelectorModal").scope().$openModalDialog()
+                            .then(function (selectedImageId) {
+                                return mediaService.images.getById(selectedImageId);
+                            })
+                            .then(function (data) {
+                                properties.item = data.Item;
+
+                                // TODO: Pass the properties to the properties dialog and then exec insertHtml.
+
+                                var wrapIt = true;
+                                var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
                                 editor.exec("insertHtml", { html: markup, split: true });
                             });
-                        });
+                    });
                 };
 
                 scope.toggleHtmlView = function () {
