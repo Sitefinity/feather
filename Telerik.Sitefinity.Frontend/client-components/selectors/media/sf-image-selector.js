@@ -150,7 +150,7 @@
                         if (parent && parent === scope.filterObject.parent) {
                             return;
                         }
-                        scope.sortExpression = null;
+                        
                         scope.filterObject.parent = parent;
                         if (!scope.filterObject.parent) {
                             scope.filterObject.set.basic.allLibraries();
@@ -375,6 +375,7 @@
                     scope.items = [];
                     scope.isLoading = false;
                     scope.showSortingAndView = false;
+                    scope.clearSearch = false;
 
                     scope.filters = {
                         basic: {
@@ -394,6 +395,8 @@
                                 scope.filters.date.selected = [];
                                 scope.filters.tag.selected = [];
                                 scope.filters.category.selected = [];
+
+                                scope.clearSearch = !scope.clearSearch;
                             },
                         },
                         library: {
@@ -469,6 +472,8 @@
                         if (newVal !== oldVal && newVal && newVal[0]) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.parent.to(newVal[0]);
+
+                            scope.clearSearch = !scope.clearSearch;
                         }
                     });
 
@@ -476,6 +481,8 @@
                         if (newVal !== oldVal && newVal && newVal[0]) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.taxon.to(newVal[0], constants.filters.tags.field);
+
+                            scope.clearSearch = !scope.clearSearch;
                         }
                     });
 
@@ -489,6 +496,8 @@
                         if (newVal !== oldVal && newVal && newVal[0]) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.taxon.to(newVal[0], constants.filters.categories.field);
+
+                            scope.clearSearch = !scope.clearSearch;
                         }
                     });
 
@@ -509,6 +518,8 @@
                             else {
                                 scope.filterObject.set.date.to(newVal[0]);
                             }
+
+                            scope.clearSearch = !scope.clearSearch;
                         }
                     });
 
