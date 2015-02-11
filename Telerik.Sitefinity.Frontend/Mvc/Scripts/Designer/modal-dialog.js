@@ -31,7 +31,7 @@
         var modalDialogClass = '.modal-dialog';
         var backdropClass = 'div.modal-backdrop';
 
-        var open = function (scope, attrs) {
+        var open = function (scope, attrs, resolve) {
             //Hide already opened dialogs.
             $(modalDialogClass).hide();
 
@@ -40,7 +40,8 @@
                 scope: attrs.existingScope && scope,
                 templateUrl: attrs.templateUrl,
                 controller: resolveControllerName(attrs),
-                windowClass: attrs.windowClass
+                windowClass: attrs.windowClass,
+                resolve: resolve
             });
 
             scope.$modalInstance = modalInstance;
@@ -70,8 +71,8 @@
                     open(scope, attrs);
                 }
                 else {
-                    scope.$openModalDialog = function () {
-						return open(scope, attrs);
+                    scope.$openModalDialog = function (resolve) {
+						return open(scope, attrs, resolve);
                     };
                 }
             }
