@@ -17,7 +17,7 @@
                         <a>{{::item.Title}}</a>
                     </li>
                 </ol>
-                <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)"> </sf-search-box>
+                <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)" sf-clear-search-string="clearSearch"> </sf-search-box>
             </div>
 
             <div sf-collection sf-data="items" sf-model="selectedItem" sf-template-url="client-components/selectors/media/sf-image-collection.html" ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }"></div>
