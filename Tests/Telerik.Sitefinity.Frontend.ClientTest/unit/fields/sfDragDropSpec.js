@@ -45,4 +45,24 @@
         expect(called).toBe(true);
         expect(passedObj).toEqual(fakeDataTransferObject);
     });
+
+    it('[dzhenko] / should trigger callback on item dropped.', function () {
+        var scope = rootScope.$new();
+        var called = false;
+        var passedObj = null;
+
+        scope.dataTransferDropped = function (dataTransferObject) {
+            called = true;
+            passedObj = dataTransferObject;
+        };
+
+        var element = commonMethods.compileDirective(directiveMarkup, scope);
+        scope.$digest();
+
+        element.trigger(fakeEvent, fakeDataTransferObject);
+        scope.$digest();
+
+        expect(called).toBe(true);
+        expect(passedObj).toEqual(fakeDataTransferObject);
+    });
 });
