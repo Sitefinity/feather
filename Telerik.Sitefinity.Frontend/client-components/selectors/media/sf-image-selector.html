@@ -1,6 +1,9 @@
 ﻿﻿<div class="Media">
-    <div sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)"></div>
-    <div class="Media-content">
+    <div class="Media-content"  sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)">
+        <div class="sf-Drag">
+            <strong>Drop image here to upload</strong>
+        </div>
+
         <!--Upload image-->
         <div ng-show="isInUploadMode" class="Media-upload-text">
             <div class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
