@@ -55,8 +55,9 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             var currentPackage = new PackageManager().GetCurrentPackage() ?? string.Empty;
             var currentSiteId = this.GetCurrentSiteId();
+            var currentUserId = this.CurrentUserId.ToString();
 
-            var cacheKey = string.Format(CultureInfo.InvariantCulture, ServerContextHandler.ScriptCacheKeyPattern, currentPackage, currentSiteId);
+            var cacheKey = string.Format(CultureInfo.InvariantCulture, ServerContextHandler.ScriptCacheKeyPattern, currentPackage, currentSiteId, currentUserId);
 
             var cache = this.GetCacheManager();
             var script = cache[cacheKey] as string;
@@ -72,7 +73,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                             .Replace("{{currentPackage}}", currentPackage)
                             .Replace("{{frontendLanguages}}", this.GetFrontendLanguages())
                             .Replace("{{currentFrontendRootNodeId}}", this.CurrentFrontendRootNodeId.ToString())
-                            .Replace("{{currentUserId}}", this.CurrentUserId.ToString())
+                            .Replace("{{currentUserId}}", currentUserId)
                             .Replace("{{isMultisiteMode}}", SystemManager.CurrentContext.IsMultisiteMode.ToString());
 
                         cache.Add(
@@ -184,6 +185,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
         private const string ScriptPath = "~/{0}Resources/ServerContext.js";
 
-        private const string ScriptCacheKeyPattern = "FeatherServerContext-{0}-{1}";
+        private const string ScriptCacheKeyPattern = "FeatherServerContext-{0}-{1}-{2}";
     }
 }
