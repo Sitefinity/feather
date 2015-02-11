@@ -244,7 +244,7 @@
 
                                     if (!appendItems) {
                                         // scrolls the collection of items to the top
-                                        element.find('div[class*="sf-collection-"] > div[sf-infinite-scroll]').scrollTop(0);
+                                        element.find('.Media-items').scrollTop(0);
                                     }
                                 });
                         }
@@ -317,7 +317,7 @@
                         scope.$apply(function () {
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
-                              
+
                                 openUploadPropertiesDialog(fileInput.files[0]);
                             }
                         });
@@ -333,15 +333,14 @@
 
                                     scope.isInUploadMode = false;
 
-                                    // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
-                                    fileUploadInput.val(null);
-
                                     // enter Recent items mode to show your uploaded item
                                     scope.filters.basic.select(constants.filters.basicRecentItemsValue);
                                 }
 
+                                // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
+                                fileUploadInput.val(null);
+
                                 // clears the model
-                               
                                 scope.model = {
                                     file: null,
                                     ParentId: null,
@@ -512,7 +511,7 @@
                             }
                         }
                     });
-                    
+
 
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
@@ -544,8 +543,5 @@
                     }());
                 }
             };
-
-        }])
-        .controller('uploadPropertiesCtrl', function () {
-        });
+        }]);
 })();
