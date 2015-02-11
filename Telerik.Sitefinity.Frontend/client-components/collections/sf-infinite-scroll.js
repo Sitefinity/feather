@@ -6,7 +6,7 @@
  * this directive is not to provide eye-candy features, such as loaders
  * etc.
  */
-(function () {
+; (function () {
 
     angular.module('sfInfiniteScroll', []).directive('sfInfiniteScroll', [function () {
 

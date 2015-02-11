@@ -542,6 +542,7 @@
     <EmbeddedResource Include="client-components\fields\sf-fields.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector-modal.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector-modal.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-markup-service.js" />
     <EmbeddedResource Include="client-components\fields\drag-drop\sf-drag-drop.html" />
     <EmbeddedResource Include="client-components\fields\drag-drop\sf-drag-drop.js" />
     <Content Include="Mvc\assets\mvc.css" />
