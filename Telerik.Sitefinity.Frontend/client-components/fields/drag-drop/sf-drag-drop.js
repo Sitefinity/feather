@@ -55,7 +55,7 @@
                                 e.preventDefault();
                                 e.stopPropagation();
 
-                                scope.sfFileDroppedCallback({ dataTransferObject: e.originalEvent.dataTransfer });
+                                scope.sfDataTransferCallback({ dataTransferObject: e.originalEvent.dataTransfer });
                             }
                         }
                     });
