@@ -1,7 +1,10 @@
 ﻿describe('Drag Drop', function () {
     var rootScope,
-        directiveMarkup = '<div sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)"></div>',
-        fakeDataTransferObject = { originalEvent: { dataTransfer: { files: ['fakeFile'] }}};
+        directiveMarkup = '<div sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)"></div>';
+
+    var fakeDataTransferObject = { files: ['fakeFile'] };
+    var fakeEvent = $.Event("drop");
+    fakeEvent.originalEvent = { dataTransfer: fakeDataTransferObject };
 
     //Load the module that contains the cached templates.
     beforeEach(module('templates'));
@@ -36,7 +39,7 @@
         var element = commonMethods.compileDirective(directiveMarkup, scope);
         scope.$digest();
 
-        element.trigger('drop', fakeDataTransferObject);
+        element.trigger(fakeEvent, fakeDataTransferObject);
         scope.$digest();
 
         expect(called).toBe(true);
