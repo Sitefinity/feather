@@ -8,7 +8,8 @@
                     sfMinTextLength: '@?',
                     sfPlaceholder: '@?',
                     sfEnableSuggestions: '@',
-                    sfGetSuggestions: '&?'
+                    sfGetSuggestions: '&?',
+                    sfClearSearchString: '='
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -25,6 +26,12 @@
 
                     if (!scope.sfMinTextLength)
                         scope.sfMinTextLength = 0;
+
+                    scope.$watch('sfClearSearchString', function (newVal, oldVal) {
+                        if (newVal !== oldVal && scope.sfModel) {
+                            scope.sfModel = "";
+                        }
+                    });
 
                     scope.sfSearchCallback = function () {
                         if (!scope.sfModel || scope.sfModel.length >= scope.sfMinTextLength) {
