@@ -103,30 +103,6 @@
         expect(scope.selectedItems[1]).toEqual(4);
     });
 
-    it('[Boyko-Karadzhov] / should set sf-collection-grid class by default.', function () {
-        var scope = rootScope.$new();
-        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/views.html', '<span>The collection.</span><div><a class="grid" ng-click="switchToGrid()">Grid</a><a class="list" ng-click="switchToList()">List</a></div>');
-
-        var directiveMarkup = '<div sf-collection sf-template-url="sf-collection/views.html"></div>';
-        var element = commonMethods.compileDirective(directiveMarkup, scope);
-
-        expect($(element).is('.sf-collection-grid')).toBe(true);
-        expect($(element).is('.sf-collection-list')).toBe(false);
-    });
-
-    it('[Boyko-Karadzhov] / should set sf-collection-list class when switchToList is clicked.', function () {
-        var scope = rootScope.$new();
-        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/views.html', '<span>The collection.</span><div><a class="grid" ng-click="switchToGrid()">Grid</a><a class="list" ng-click="switchToList()">List</a></div>');
-
-        var directiveMarkup = '<div sf-collection sf-template-url="sf-collection/views.html"></div>';
-        var element = commonMethods.compileDirective(directiveMarkup, scope);
-        $(element).find('.list').click();
-        scope.$digest();
-
-        expect($(element).is('.sf-collection-grid')).toBe(false);
-        expect($(element).is('.sf-collection-list')).toBe(true);
-    });
-
     it('[dzhenko] / should have the only selected item if clicked twice and sf-deselectable and sf-multiselect are NOT present (by default deselecting is not allowed).', function () {
         var scope = rootScope.$new();
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/marks-multi-select.html', '<li ng-repeat="item in items" class="sfCollectionItem" ng-click="select(item)"><div><span>Id:</span><span>{{item.id}}</span></div><div>{{item.Title}}</div></li>');
