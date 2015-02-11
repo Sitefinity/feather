@@ -150,7 +150,7 @@
                         if (parent && parent === scope.filterObject.parent) {
                             return;
                         }
-                        scope.sortExpression = null;
+                        
                         scope.filterObject.parent = parent;
                         if (!scope.filterObject.parent) {
                             scope.filterObject.set.basic.allLibraries();
