@@ -60,9 +60,11 @@
                     }
                 },
                 sorting: {
-                    asc: 'ASC',
-                    desc: 'DESC',
-                    defaultValue: 'DateCreated DESC'
+                    defaultValue: 'DateCreated DESC',
+                    dateCreatedDesc: 'DateCreated DESC',
+                    lastModifiedDesc: 'LastModified DESC',
+                    titleAsc: 'Title ASC',
+                    titleDesc: 'Title DESC'
                 }
             };
 
@@ -324,35 +326,15 @@
                         scope.model.file = file;
 
                         angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: function () { return scope.model; } })
-                            .then(function (uploadedImage) {
-                                if (uploadedImage) {
-                                    openImagePropertiesDialog(uploadedImage);
+                            .then(function (uploadedImageId) {
+                                if (uploadedImageId) {
+                                    scope.selectedItems.push(uploadedImageId);
+                                    scope.isInUploadMode = false;
+                                    scope.filters.basic.select(constants.filters.basicRecentItemsValue);
                                 }
+
+                                restoreFileModel();
                             });
-                    };
-
-                    var openImagePropertiesDialog = function (file) {
-                        var imagePropertiesElement = angular.element('.imagePropertiesModal');
-                        var localAttrs = {
-                            templateUrl: imagePropertiesElement.attr('template-url'),
-                            existingScope: imagePropertiesElement.attr('existing-scope'),
-                            dialogController: imagePropertiesElement.attr('dialog-controller'),
-                            windowClass: imagePropertiesElement.attr('window-class')
-                        };
-
-                        imagePropertiesElement.scope().$openModalDialog({
-                            sfFileModel: function () {
-                                return scope.model;
-                            }
-                        }, localAttrs)
-                        .then(function (uploadedImage) {
-                            if (uploadedImage) {
-                                scope.selectedItems.push(uploadedImage.ContentId);
-                                scope.isInUploadMode = false;
-                                scope.filters.basic.select(constants.filters.basicRecentItemsValue);
-                            }
-                            restoreFileModel();
-                        });
                     };
 
                     // cleares both scope model and html input
@@ -386,7 +368,6 @@
                     }
 
                     scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-upload-image-properties.html');
-                    scope.imagePropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-image-properties.html');
 
                     scope.filters = {
                         basic: {
@@ -465,7 +446,7 @@
 
                             default:
                                 scope.filters.basic.select(scope.filters.basic.selected || constants.filters.basicRecentItemsValue);
-                        }
+                            }
                     };
 
                     // load more images
@@ -473,24 +454,31 @@
                         refresh(true);
                     };
 
-                    //sorting helpers
-                    var getSortField = function (sortExpression) {
-                        if (!sortExpression)
-                            return '';
-
-                        var fieldName = sortExpression.slice(0, sortExpression.indexOf(' '));
-
-                        return fieldName;
+                    var extractDate = function (dateString) {
+                        return parseInt(dateString.substring(dateString.indexOf('Date') + 'Date('.length, dateString.indexOf(')')));
                     };
 
-                    var isSortingReverse = function (sortExpression) {
-                        if (sortExpression) {
-                            var descIndex = sortExpression.toUpperCase().indexOf(constants.sorting.desc);
-                            if (descIndex > -1)
-                                return true;
+                    var reorderItems = function (val) {
+                        if (val === constants.sorting.dateCreatedDesc) {
+                            scope.items.sort(function (a, b) {
+                                return extractDate(b.DateCreated) - extractDate(a.DateCreated);
+                            });
                         }
-
-                        return false;
+                        else if (val === constants.sorting.lastModifiedDesc) {
+                            scope.items.sort(function (a, b) {
+                                return extractDate(b.DateModified) - extractDate(a.DateModified);
+                            });
+                        }
+                        else if (val === constants.sorting.titleDesc) {
+                            scope.items.sort(function (a, b) {
+                                return b.Title.localeCompare(a.Title);
+                            });
+                        }
+                        else if (val === constants.sorting.titleAsc) {
+                            scope.items.sort(function (a, b) {
+                                return a.Title.localeCompare(b.Title);
+                            });
+                        }
                     };
 
                     scope.switchToUploadMode = function () {
@@ -508,15 +496,12 @@
                     */
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
+                        if(newVal !== oldVal) {
                             if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
-                                scope.recentItemsSortExpression = {
-                                    field: getSortField(newVal),
-                                    reverse: isSortingReverse(newVal)
-                                };
+                                // In recent items we reorder the items on client side
+                                reorderItems(newVal);
                             }
                             else {
-                                scope.recentItemsSortExpression = null;
                                 refresh();
                             }
                         }
@@ -541,7 +526,7 @@
                     });
 
                     scope.$watch('filters.tag.query', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
+                        if(newVal !== oldVal) {
                             filtersLogic.loadTagTaxons(false);
                         }
                     });
@@ -556,8 +541,8 @@
                     });
 
                     scope.$watch('filters.category.query', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
-                            filtersLogic.getCategoryTaxons().then(function (items) {
+                        if(newVal !== oldVal) {
+                            filtersLogic.getCategoryTaxons().then(function(items) {
                                 scope.filters.category.filtered = items;
                             });
                         }
@@ -621,12 +606,15 @@
 
             $scope.model.file.textSize = Math.round($scope.model.file.size / 1000) + " KB";
 
+            var fileName = $scope.model.file.name;
             $scope.uploadInfo = {};
-            $scope.uploadInfo.fileName = $scope.model.file.name;
+            $scope.uploadInfo.fileName = fileName;
+
+            $scope.model.title = fileName.slice(0, fileName.lastIndexOf('.'));
 
             var successAction = function (data) {
                 var firstItem = data[0] || {};
-                $modalInstance.close(firstItem);
+                $modalInstance.close(firstItem.ContentId);
             };
 
             var progressAction = function (progress) {
