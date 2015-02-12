@@ -119,8 +119,8 @@
                     }
                 },
                 parent: {
-                    to: function (parentId) {
-                        if (self.parent !== parentId) {
+                    to: function (parentId, forceRebind) {
+                        if (self.parent !== parentId || forceRebind) {
                             reset();
                             self.parent = parentId;
                             changed();
