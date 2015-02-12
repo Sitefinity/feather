@@ -15,8 +15,6 @@
                         <span ng-show="imageProperties.title.$error.required">Title is required</span>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
                 <div class="row">
                     <div class="col-xs-8">
                         <label>Alternative text</label>
@@ -26,13 +24,42 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-xs-8">
-                         <expander expander-title='More options'>
+            <div class="row">
+                <div class="col-xs-8">
+                    <p>Alignment</p>
+                    <ul>
+                        <li>
+                            <label>
+                                <input type="radio" ng-model="model.alignment" value="None" />
+                                None
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" ng-model="model.alignment" value="Left" />
+                                Left
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" ng-model="model.alignment" value="Cemter" />
+                                Center
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" ng-model="model.alignment" value="Right" />
+                                Right
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <expander expander-title='More options'>
 
-                        </expander>
-                    </div>
+                    </expander>
                 </div>
             </div>
         </form>
