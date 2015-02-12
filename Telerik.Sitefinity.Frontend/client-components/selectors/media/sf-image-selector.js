@@ -610,7 +610,7 @@
             $scope.uploadInfo = {};
             $scope.uploadInfo.fileName = fileName;
 
-            $scope.model.title = fileName.slice(0, fileName.lastIndexOf('.'))
+            $scope.model.title = fileName.slice(0, fileName.lastIndexOf('.'));
 
             var successAction = function (data) {
                 var firstItem = data[0] || {};
