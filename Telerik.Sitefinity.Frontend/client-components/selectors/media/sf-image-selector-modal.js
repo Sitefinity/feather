@@ -14,12 +14,19 @@ angular.module('sfImageSelectorModal', ['sfServices', 'sfImageSelector'])
             };
 
             $scope.done = function () {
-                if ($scope.model.selectedItemIds.length) {
-                    $scope.$modalInstance.close($scope.model.selectedItemIds[0]);
+                var selectedIds = $scope.model.selectedItemIds;
+                var length = selectedIds.length;
+
+                if (length) {
+                    // clear selected ids before closing the dialog
+                    $scope.model.selectedItemIds = [];
+                    $scope.$modalInstance.close(selectedIds[length - 1]);
                 }
             };
 
             $scope.cancel = function () {
+                // clear selected ids before closing the dialog
+                $scope.model.selectedItemIds = [];
                 $scope.$modalInstance.dismiss();
             };
         };
