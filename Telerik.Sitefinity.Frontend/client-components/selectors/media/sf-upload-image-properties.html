@@ -1,4 +1,4 @@
-<div class="modal-header">
+﻿<div class="modal-header">
     <button type="button" class="close" ng-click="cancelUpload()">&times;</button>
     <h3 class="modal-title">Upload image</h3>
 </div>
@@ -30,7 +30,10 @@
         <div class="row">
             <div class="col-xs-8">
                 <label>Title</label>
-                <input class="form-control" type="text" ng-model="model.Title" />
+                <input class="form-control" type="text" ng-model="model.title" />
+                <div  ng-show="!model.title" class="alert alert-danger" role="alert">
+				    Title is required!
+				</div>
             </div>
         </div>
     </div>
@@ -61,6 +64,6 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()">Upload</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()" ng-show="model.title">Upload</button>
     <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">Cancel</button>
 </div>
