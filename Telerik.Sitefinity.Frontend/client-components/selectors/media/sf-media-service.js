@@ -91,20 +91,11 @@
                         LastModified: nowToWcfDate,
                         Tags: settings.tags,
                         Category: settings.categories
-                    }
+                    },
+                    ItemType: constants.images.itemType
                 };
 
-            var deferred = $q.defer();
-
-            $http.put(url, image)
-            .success(function (data) {
-                deferred.resolve(data);
-            })
-            .error(function (error) {
-                deferred.reject(error);
-            });
-
-            return deferred.promise;
+            return serviceHelper.getResource(url).put(image).$promise;
         };
 
         var uploadFile = function (url, formData) {
@@ -145,6 +136,11 @@
                 formData.append('Workflow', 'Upload');
                 formData.append('ProviderName', settings.provider || '');
                 formData.append('SkipWorkflow', 'true');
+
+                if (serverContext.getUICulture()) {
+                    formData.append('Culture', serverContext.getUICulture());
+                }
+
                 formData.append('ImageFile', settings.file);
 
                 return uploadFile(constants.uploadHandlerUrl, formData);
