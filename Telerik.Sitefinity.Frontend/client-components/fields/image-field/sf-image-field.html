@@ -1,0 +1,18 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <img ng-src="image.Url" src="" width="400" height="300" alt="image.Title" />
+        </div>
+
+        <div class="col-md-7">
+            <label>Type</label><span ng-bind="image.Title"></span>
+            <label>File size</label><span ng-bind="image.Title"></span>
+            <label>Uploaded</label><span ng-bind="image.Title"></span>
+            <br />
+            <button class="btn btn-sm" ng-click="changeImage()">Change image</button>
+            <button class="btn btn-sm" ng-click="editAllProperties()">Edit all properties</button>
+        </div>
+    </div>
+</div>
+
+<sf-image-selector-modal class="imageSelectorModal"></sf-image-selector-modal>
