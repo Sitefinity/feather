@@ -137,6 +137,11 @@
                                 })
                                 .finally(function () {
                                     scope.filters.tag.isLoading = false;
+
+                                    if (!append) {
+                                        // scrolls the collection of items to the top
+                                        element.find('.sf-Tree').scrollTop(0);
+                                    }
                                 });
                         },
                         loadMoreTags: function () {
