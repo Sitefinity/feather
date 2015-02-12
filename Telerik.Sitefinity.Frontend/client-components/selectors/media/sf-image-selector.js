@@ -2,7 +2,7 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfDragDrop'])
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfDragDrop', 'expander'])
         .directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
         function (sfMediaService, sfMediaFilter, serverContext, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
             var helpers = {
@@ -49,12 +49,12 @@
                         { text: 'Last 5 years', dateValue: helpers.getDate(0, 0, 5) }
                     ],
                     tags: {
-                        pageSize: 10,
+                        pageSize: 30,
                         field: 'Tags',
                         taxonomyId: 'CB0F3A19-A211-48a7-88EC-77495C0F5374'
                     },
                     categories: {
-                        pageSize: 10, // not used by the service
+                        pageSize: 30, // not used by the service
                         field: 'Category',
                         taxonomyId: 'E5CD6D69-1543-427B-AD62-688A99F5E7D4'
                     }
