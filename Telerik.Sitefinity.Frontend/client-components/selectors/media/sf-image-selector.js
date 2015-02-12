@@ -60,9 +60,11 @@
                     }
                 },
                 sorting: {
-                    asc: 'ASC',
-                    desc: 'DESC',
-                    defaultValue: 'DateCreated DESC'
+                    defaultValue: 'DateCreated DESC',
+                    dateCreatedDesc: 'DateCreated DESC',
+                    lastModifiedDesc: 'LastModified DESC',
+                    titleAsc: 'Title ASC',
+                    titleDesc: 'Title DESC'
                 }
             };
 
@@ -139,6 +141,11 @@
                                 })
                                 .finally(function () {
                                     scope.filters.tag.isLoading = false;
+
+                                    if (!append) {
+                                        // scrolls the collection of items to the top
+                                        element.find('.sf-Tree').scrollTop(0);
+                                    }
                                 });
                         },
                         loadMoreTags: function () {
@@ -385,6 +392,7 @@
                             },
                         },
                         library: {
+                            index: 1,
                             selected: [],
                             getChildren: filtersLogic.loadLibraryChildren
                         },
@@ -407,31 +415,80 @@
                         }
                     };
 
-                    scope.narrowResults = scope.filterObject.set.query.to;
+                    scope.narrowResults = function (query) {
+                        if (query) {
+                            scope.filterObject.set.query.to(query);
+                            return;
+                        }
+                        switch (scope.selectedFilterOption) {
+                            case '1':
+                                if (scope.filters.library.selected)
+                                    scope.filterObject.set.parent.to(scope.filters.library.selected[0], true);
+                                break;
+                            case '2':
+                                if (scope.filters.tag.selected)
+                                    scope.filterObject.set.taxon.to(scope.filters.tag.selected[0], constants.filters.tags.field);
+                                break;
+                            case '3':
+                                if (scope.filters.category.selected)
+                                    scope.filterObject.set.taxon.to(scope.filters.category.selected[0], constants.filters.categories.field);
+                                break;
+                            case '4':
+                                if (scope.filters.date.selected) {
+                                    if (scope.filters.date.selected[0] === constants.filters.anyDateValue) {
+                                        scope.filterObject.set.date.all();
+                                    }
+                                    else {
+                                        scope.filterObject.set.date.to(scope.filters.date.selected[0]);
+                                    }
+                                }
+                                break;
+
+                            default:
+                                scope.filters.basic.select(scope.filters.basic.selected || constants.filters.basicRecentItemsValue);
+                            }
+                    };
 
                     // load more images
                     scope.loadMore = function () {
                         refresh(true);
                     };
 
-                    //sorting helpers
-                    var getSortField = function (sortExpression) {
-                        if (!sortExpression)
-                            return '';
-
-                        var fieldName = sortExpression.slice(0, sortExpression.indexOf(' '));
-
-                        return fieldName;
+                    var extractDate = function (dateString) {
+                        return parseInt(dateString.substring(dateString.indexOf('Date') + 'Date('.length, dateString.indexOf(')')));
                     };
 
-                    var isSortingReverse = function (sortExpression) {
-                        if (sortExpression) {
-                            var descIndex = sortExpression.toUpperCase().indexOf(constants.sorting.desc);
-                            if (descIndex > -1)
-                                return true;
+                    var reorderItems = function (val) {
+                        if (val === constants.sorting.dateCreatedDesc) {
+                            scope.items.sort(function (a, b) {
+                                return extractDate(b.DateCreated) - extractDate(a.DateCreated);
+                            });
                         }
+                        else if (val === constants.sorting.lastModifiedDesc) {
+                            scope.items.sort(function (a, b) {
+                                return extractDate(b.DateModified) - extractDate(a.DateModified);
+                            });
+                        }
+                        else if (val === constants.sorting.titleDesc) {
+                            scope.items.sort(function (a, b) {
+                                return b.Title.localeCompare(a.Title);
+                            });
+                        }
+                        else if (val === constants.sorting.titleAsc) {
+                            scope.items.sort(function (a, b) {
+                                return a.Title.localeCompare(b.Title);
+                            });
+                        }
+                    };
 
-                        return false;
+                    scope.switchToUploadMode = function () {
+                        scope.isInUploadMode = !scope.isInUploadMode;
+                        // clear filter selection
+                        scope.filters.basic.selected = null;
+                        scope.filters.library.selected = [];
+                        scope.filters.date.selected = [];
+                        scope.filters.tag.selected = [];
+                        scope.filters.category.selected = [];
                     };
 
                     /*
@@ -439,15 +496,12 @@
                     */
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
+                        if(newVal !== oldVal) {
                             if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
-                                scope.recentItemsSortExpression = {
-                                    field: getSortField(newVal),
-                                    reverse: isSortingReverse(newVal)
-                                };
+                                // In recent items we reorder the items on client side
+                                reorderItems(newVal);
                             }
                             else {
-                                scope.recentItemsSortExpression = null;
                                 refresh();
                             }
                         }
@@ -472,7 +526,7 @@
                     });
 
                     scope.$watch('filters.tag.query', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
+                        if(newVal !== oldVal) {
                             filtersLogic.loadTagTaxons(false);
                         }
                     });
@@ -487,8 +541,8 @@
                     });
 
                     scope.$watch('filters.category.query', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
-                            filtersLogic.getCategoryTaxons().then(function (items) {
+                        if(newVal !== oldVal) {
+                            filtersLogic.getCategoryTaxons().then(function(items) {
                                 scope.filters.category.filtered = items;
                             });
                         }
@@ -530,7 +584,7 @@
                         restoreFileModel();
 
                         // initial filter dropdown option
-                        scope.selectedFilterOption = 1;
+                        scope.selectedFilterOption = '1';
 
                         filtersLogic.loadTagTaxons(false);
 

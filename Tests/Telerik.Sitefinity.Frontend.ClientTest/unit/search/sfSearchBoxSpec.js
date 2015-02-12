@@ -133,4 +133,31 @@
         expect(childScope.suggestions[0]).toBe('suggestion1');
         expect(childScope.suggestions[1]).toBe('suggestion2');
     });
+
+    it('[pivanova] / should set sfClearSearchString', function () {
+        var scope = rootScope.$new();
+
+        var template = '<sf-search-box sf-clear-search-string="false"></sf-search-box>';
+
+        commonMethods.compileDirective(template, scope);
+
+        var childScope = scope.$$childHead;
+        expect(childScope.sfClearSearchString).toBe(false);
+    });
+
+    it('[pivanova] / should clear sfModel if sfClearSearchString is changed', function () {
+        var scope = rootScope.$new();
+        scope.clearSearch = false;
+        var template = '<sf-search-box sf-clear-search-string="clearSearch"></sf-search-box>';
+
+        commonMethods.compileDirective(template, scope);
+
+        var childScope = scope.$$childHead;
+        childScope.sfModel = "model";
+
+        scope.clearSearch = true;
+        scope.$apply();
+
+        expect(childScope.sfModel).toBe("");
+    });
 });
