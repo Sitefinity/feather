@@ -324,15 +324,35 @@
                         scope.model.file = file;
 
                         angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: function () { return scope.model; } })
-                            .then(function (uploadedImageId) {
-                                if (uploadedImageId) {
-                                    scope.selectedItems.push(uploadedImageId);
-                                    scope.isInUploadMode = false;
-                                    scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                            .then(function (uploadedImage) {
+                                if (uploadedImage) {
+                                    openImagePropertiesDialog(uploadedImage);
                                 }
-
-                                restoreFileModel();
                             });
+                    };
+
+                    var openImagePropertiesDialog = function (file) {
+                        var imagePropertiesElement = angular.element('.imagePropertiesModal');
+                        var localAttrs = {
+                            templateUrl: imagePropertiesElement.attr('template-url'),
+                            existingScope: imagePropertiesElement.attr('existing-scope'),
+                            dialogController: imagePropertiesElement.attr('dialog-controller'),
+                            windowClass: imagePropertiesElement.attr('window-class')
+                        };
+
+                        imagePropertiesElement.scope().$openModalDialog({
+                            sfFileModel: function () {
+                                return scope.model;
+                            }
+                        }, localAttrs)
+                        .then(function (uploadedImage) {
+                            if (uploadedImage) {
+                                scope.selectedItems.push(uploadedImage.ContentId);
+                                scope.isInUploadMode = false;
+                                scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                            }
+                            restoreFileModel();
+                        });
                     };
 
                     // cleares both scope model and html input
@@ -366,6 +386,7 @@
                     }
 
                     scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-upload-image-properties.html');
+                    scope.imagePropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-image-properties.html');
 
                     scope.filters = {
                         basic: {
@@ -444,7 +465,7 @@
 
                             default:
                                 scope.filters.basic.select(scope.filters.basic.selected || constants.filters.basicRecentItemsValue);
-                            }
+                        }
                     };
 
                     // load more images
@@ -454,7 +475,7 @@
 
                     //sorting helpers
                     var getSortField = function (sortExpression) {
-                        if(!sortExpression)
+                        if (!sortExpression)
                             return '';
 
                         var fieldName = sortExpression.slice(0, sortExpression.indexOf(' '));
@@ -463,9 +484,9 @@
                     };
 
                     var isSortingReverse = function (sortExpression) {
-                        if(sortExpression) {
+                        if (sortExpression) {
                             var descIndex = sortExpression.toUpperCase().indexOf(constants.sorting.desc);
-                            if (descIndex > - 1)
+                            if (descIndex > -1)
                                 return true;
                         }
 
@@ -487,7 +508,7 @@
                     */
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
-                        if(newVal !== oldVal) {
+                        if (newVal !== oldVal) {
                             if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
                                 scope.recentItemsSortExpression = {
                                     field: getSortField(newVal),
@@ -520,7 +541,7 @@
                     });
 
                     scope.$watch('filters.tag.query', function (newVal, oldVal) {
-                        if(newVal !== oldVal) {
+                        if (newVal !== oldVal) {
                             filtersLogic.loadTagTaxons(false);
                         }
                     });
@@ -535,8 +556,8 @@
                     });
 
                     scope.$watch('filters.category.query', function (newVal, oldVal) {
-                        if(newVal !== oldVal) {
-                            filtersLogic.getCategoryTaxons().then(function(items) {
+                        if (newVal !== oldVal) {
+                            filtersLogic.getCategoryTaxons().then(function (items) {
                                 scope.filters.category.filtered = items;
                             });
                         }
@@ -605,7 +626,7 @@
 
             var successAction = function (data) {
                 var firstItem = data[0] || {};
-                $modalInstance.close(firstItem.ContentId);
+                $modalInstance.close(firstItem);
             };
 
             var progressAction = function (progress) {
