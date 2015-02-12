@@ -150,9 +150,9 @@
                         if (parent && parent === scope.filterObject.parent) {
                             return;
                         }
-                        
+                        scope.filters.library.selected = [parent];
                         scope.filterObject.parent = parent;
-                        if (!scope.filterObject.parent) {
+                        if (!parent) {
                             scope.filterObject.set.basic.allLibraries();
                         }
                         refresh();
@@ -529,6 +529,7 @@
                         scope.isInUploadMode = false;
                         if (data && data.IsFolder === true) {
                             scope.filters.basic.selected = null;
+                            scope.filters.library.selected = [data.Id];
                             scope.filterObject.set.parent.to(data.Id);
                         }
                     });
