@@ -141,6 +141,11 @@
                                 })
                                 .finally(function () {
                                     scope.filters.tag.isLoading = false;
+
+                                    if (!append) {
+                                        // scrolls the collection of items to the top
+                                        element.find('.sf-Tree').scrollTop(0);
+                                    }
                                 });
                         },
                         loadMoreTags: function () {
@@ -387,6 +392,7 @@
                             },
                         },
                         library: {
+                            index: 1,
                             selected: [],
                             getChildren: filtersLogic.loadLibraryChildren
                         },
@@ -409,7 +415,39 @@
                         }
                     };
 
-                    scope.narrowResults = scope.filterObject.set.query.to;
+                    scope.narrowResults = function (query) {
+                        if (query) {
+                            scope.filterObject.set.query.to(query);
+                            return;
+                        }
+                        switch (scope.selectedFilterOption) {
+                            case '1':
+                                if (scope.filters.library.selected)
+                                    scope.filterObject.set.parent.to(scope.filters.library.selected[0], true);
+                                break;
+                            case '2':
+                                if (scope.filters.tag.selected)
+                                    scope.filterObject.set.taxon.to(scope.filters.tag.selected[0], constants.filters.tags.field);
+                                break;
+                            case '3':
+                                if (scope.filters.category.selected)
+                                    scope.filterObject.set.taxon.to(scope.filters.category.selected[0], constants.filters.categories.field);
+                                break;
+                            case '4':
+                                if (scope.filters.date.selected) {
+                                    if (scope.filters.date.selected[0] === constants.filters.anyDateValue) {
+                                        scope.filterObject.set.date.all();
+                                    }
+                                    else {
+                                        scope.filterObject.set.date.to(scope.filters.date.selected[0]);
+                                    }
+                                }
+                                break;
+
+                            default:
+                                scope.filters.basic.select(scope.filters.basic.selected || constants.filters.basicRecentItemsValue);
+                            }
+                    };
 
                     // load more images
                     scope.loadMore = function () {
@@ -443,12 +481,22 @@
                         }
                     };
 
+                    scope.switchToUploadMode = function () {
+                        scope.isInUploadMode = !scope.isInUploadMode;
+                        // clear filter selection
+                        scope.filters.basic.selected = null;
+                        scope.filters.library.selected = [];
+                        scope.filters.date.selected = [];
+                        scope.filters.tag.selected = [];
+                        scope.filters.category.selected = [];
+                    };
+
                     /*
                     * Watches.
                     */
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
+                        if(newVal !== oldVal) {
                             if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
                                 // In recent items we reorder the items on client side
                                 reorderItems(newVal);
@@ -478,7 +526,7 @@
                     });
 
                     scope.$watch('filters.tag.query', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
+                        if(newVal !== oldVal) {
                             filtersLogic.loadTagTaxons(false);
                         }
                     });
@@ -493,8 +541,8 @@
                     });
 
                     scope.$watch('filters.category.query', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
-                            filtersLogic.getCategoryTaxons().then(function (items) {
+                        if(newVal !== oldVal) {
+                            filtersLogic.getCategoryTaxons().then(function(items) {
                                 scope.filters.category.filtered = items;
                             });
                         }
@@ -536,7 +584,7 @@
                         restoreFileModel();
 
                         // initial filter dropdown option
-                        scope.selectedFilterOption = 1;
+                        scope.selectedFilterOption = '1';
 
                         filtersLogic.loadTagTaxons(false);
 
