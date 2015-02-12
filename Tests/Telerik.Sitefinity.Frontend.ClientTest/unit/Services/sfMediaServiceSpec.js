@@ -571,7 +571,7 @@ describe('sfMediaService', function () {
 
             it('[Boyko-Karadzhov] / should issue a PUT request to create a media item on upload and upload the file to it.', function () {
                 var settings = {
-                    ParentId: 'myLibraryId',
+                    parentId: 'myLibraryId',
                     itemId: '00000000-0000-0000-0000-000000000000',
                     itemType: itemType,
                     provider: '',
@@ -579,7 +579,7 @@ describe('sfMediaService', function () {
                     file: { }
                 };
 
-                var createImageUrl = itemsServicePath + 'parent/{{ParentId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{ParentId}}';
+                var createImageUrl = itemsServicePath + 'parent/{{parentId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{parentId}}';
                 var expectedUrl = $interpolate(createImageUrl)(settings);
 
                 var item = {

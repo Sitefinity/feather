@@ -139,7 +139,9 @@
                 },
                 query: {
                     to: function (query) {
+                        var currentParent = self.parent;
                         reset();
+                        self.parent = currentParent;
                         self.query = query;
                         changed();
                     }

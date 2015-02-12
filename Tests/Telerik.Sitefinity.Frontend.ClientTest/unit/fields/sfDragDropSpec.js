@@ -1,9 +1,8 @@
 ﻿describe('Drag Drop', function () {
-    var rootScope,
-        directiveMarkup = '<div sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)"></div>';
+    var rootScope;
 
     var fakeDataTransferObject = { files: ['fakeFile'] };
-    var fakeEvent = $.Event("drop");
+    var fakeEvent = $.Event('drop');
     fakeEvent.originalEvent = { dataTransfer: fakeDataTransferObject };
 
     //Load the module that contains the cached templates.
@@ -27,7 +26,9 @@
     });
 
     it('[dzhenko] / should trigger callback on item dropped.', function () {
+        var directiveMarkup = '<div sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)"></div>';
         var scope = rootScope.$new();
+
         var called = false;
         var passedObj = null;
 
@@ -37,9 +38,13 @@
         };
 
         var element = commonMethods.compileDirective(directiveMarkup, scope);
-        scope.$digest();
+        var s = scope.$$childHead;
 
-        element.trigger(fakeEvent, fakeDataTransferObject);
+        expect($('.sf-Drag').length).toBe(1);
+
+        $('.sf-Drag').trigger(fakeEvent, fakeDataTransferObject);
+
+        s.$digest();
         scope.$digest();
 
         expect(called).toBe(true);

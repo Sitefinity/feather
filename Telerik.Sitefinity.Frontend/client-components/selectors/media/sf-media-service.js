@@ -90,20 +90,11 @@
                         LastModified: nowToWcfDate,
                         Tags: settings.tags,
                         Category: settings.categories
-                    }
+                    },
+                    ItemType: constants.images.itemType
                 };
 
-            var deferred = $q.defer();
-
-            $http.put(url, image)
-            .success(function (data) {
-                deferred.resolve(data);
-            })
-            .error(function (error) {
-                deferred.reject(error);
-            });
-
-            return deferred.promise;
+            return serviceHelper.getResource(url).put(image).$promise;
         };
 
         var uploadFile = function (url, formData) {
@@ -144,6 +135,11 @@
                 formData.append('Workflow', 'Upload');
                 formData.append('ProviderName', settings.provider || '');
                 formData.append('SkipWorkflow', 'true');
+
+                if (serverContext.getUICulture()) {
+                    formData.append('Culture', serverContext.getUICulture());
+                }
+
                 formData.append('ImageFile', settings.file);
 
                 return uploadFile(constants.uploadHandlerUrl, formData);
@@ -220,7 +216,7 @@
             upload: function (model) {
 
                 var defaultLibraryId = '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb';
-                var libraryId = model.ParentId || defaultLibraryId;
+                var libraryId = model.parentId || defaultLibraryId;
 
                 var settings = {
                     libraryId: libraryId,
@@ -230,9 +226,9 @@
                     provider: model.provider,
                     parentItemType: constants.images.albumItemType,
                     title: model.Title || model.file.name,
-                    alternativeText: model.AlternativeText,
-                    categories: model.Categories,
-                    tags: model.Tags,
+                    alternativeText: model.alternativeText,
+                    categories: model.categories,
+                    tags: model.tags,
                     file: model.file
                 };
                 return uploadImage(settings);

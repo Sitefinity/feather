@@ -1,0 +1,29 @@
+.sf-Drag
+	position: absolute
+	top: 0
+	right: 0
+	bottom: 0
+	left: 0
+	z-index: -1
+	line-height: 100%
+
+	> strong
+		position: absolute
+		width: 100%
+		top: 50%
+		left: 0
+		right: 0
+		margin-top: 10px
+		text-align: center
+		pointer-events: none
+		font-size: 30px
+
+	.sf-Drag-start &
+		z-index: 5
+		background: rgba(255, 255, 255, .9)
+		border: 2px dashed #105CB6
+
+	.sf-Drag-over &
+		z-index: 5
+		background: rgba(#f2f2f2, .9)
+		border: 2px solid #105CB6

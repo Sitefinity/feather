@@ -2,31 +2,34 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfDragDrop');
 
-    angular.module('sfDragDrop', ['sfServices'])
-        .directive('sfDragDrop', ['serverContext', 'serviceHelper', function (serverContext, serviceHelper) {
+    angular.module('sfDragDrop', [])
+        .directive('sfDragDrop', [function () {
             return {
                 restrict: 'AE',
                 scope: {
+                    sfTemplateHtml: '@',
                     sfDataTransferCallback: '&'
                 },
-                templateUrl: function (elem, attrs) {
-                    var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/fields/drag-drop/sf-drag-drop.html';
-                    return serverContext.getEmbeddedResourceUrl(assembly, url);
-                },
                 link: function (scope, element, attrs, ctrl) {
-                    var constatns = {
-                        dragStartClass: 'sf-css-drag-start',
-                        dragOverClass: 'sf-css-drag-over'
+                    var constants = {
+                        dragStartClass: 'sf-Drag-start',
+                        dragOverClass: 'sf-Drag-over'
                     };
 
                     var addDragStartClass = function () {
-                        element.addClass(constatns.dragStartClass);
+                        element.addClass(constants.dragStartClass);
                     };
 
                     var removeDragStartClass = function () {
-                        element.removeClass(constatns.dragStartClass);
+                        element.removeClass(constants.dragStartClass);
                     };
+
+                    if (scope.sfTemplateHtml) {
+                        element.prepend($(scope.sfTemplateHtml));
+                    }
+                    else {
+                        element.prepend($('<div class="sf-Drag"><strong>Drop image here to upload</strong></div>'));
+                    }
 
                     $(document).on('dragover', addDragStartClass);
 
@@ -36,19 +39,19 @@
                         e.preventDefault();
                         e.stopPropagation();
 
-                        element.addClass(constatns.dragOverClass);
+                        element.addClass(constants.dragOverClass);
                     });
 
-                    element.on('dragleave', function (e) {
+                    element.find('.sf-Drag').on('dragleave', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
 
-                        element.removeClass(constatns.dragOverClass);
+                        element.removeClass(constants.dragOverClass);
                     });
 
-                    element.on('drop', function (e) {
-                        element.removeClass(constatns.dragStartClass);
-                        element.removeClass(constatns.dragOverClass);
+                    element.find('.sf-Drag').on('drop', function (e) {
+                        element.removeClass(constants.dragStartClass);
+                        element.removeClass(constants.dragOverClass);
 
                         if (e.originalEvent.dataTransfer) {
                             if (e.originalEvent.dataTransfer.files[0]) {
