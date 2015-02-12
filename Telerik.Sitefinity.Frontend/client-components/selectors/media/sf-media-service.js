@@ -225,7 +225,7 @@
                     itemType: constants.images.itemType,
                     provider: model.provider,
                     parentItemType: constants.images.albumItemType,
-                    title: model.Title || model.file.name,
+                    title: model.title || model.file.name,
                     alternativeText: model.alternativeText,
                     categories: model.categories,
                     tags: model.tags,

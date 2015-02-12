@@ -606,8 +606,11 @@
 
             $scope.model.file.textSize = Math.round($scope.model.file.size / 1000) + " KB";
 
+            var fileName = $scope.model.file.name;
             $scope.uploadInfo = {};
-            $scope.uploadInfo.fileName = $scope.model.file.name;
+            $scope.uploadInfo.fileName = fileName;
+
+            $scope.model.title = fileName.slice(0, fileName.lastIndexOf('.'))
 
             var successAction = function (data) {
                 var firstItem = data[0] || {};
