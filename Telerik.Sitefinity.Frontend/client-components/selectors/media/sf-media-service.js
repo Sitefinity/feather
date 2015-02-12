@@ -25,7 +25,6 @@
 
         var getItems = function (options, excludeFolders, serviceUrl, itemType) {
             options = options || {};
-            excludeFolders = excludeFolders ? excludeFolders : options.excludeFolders;
 
             var url = options.parent ? serviceUrl + 'parent/' + options.parent + "/" : serviceUrl;
 
@@ -37,7 +36,7 @@
                     skip: options.skip,
                     take: options.take,
                     sortExpression: options.sort,
-                    includeSubFoldersItems: options.recursive ? 'true' : null,
+                    includeSubFolderItems: options.recursive ? 'true' : null,
                     excludeFolders: excludeFolders
                 }).$promise;
         };
@@ -198,21 +197,6 @@
                     .then(function (settings) {
                         var allLanguageSearch = settings.EnableAllLanguagesSearch.toLowerCase() === 'true';
                         options.filter = filterObject.composeExpression(allLanguageSearch);
-
-                        var selectedFolderSearch = settings.EnableSelectedFolderSearch.toLowerCase() === 'true';
-                        if (filterObject.query) {
-                            if (selectedFolderSearch) {
-                                options.parent = filterObject.parent;
-                                options.recursive = true;
-                                options.excludeFolders = true;
-                            }
-                            else {
-                                options.parent = null;
-                                options.recursive = false;
-                                options.excludeFolders = false;
-                            }
-                        }
-
                         return callback(options);
                     });
             },
@@ -232,7 +216,7 @@
             upload: function (model) {
 
                 var defaultLibraryId = '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb';
-                var libraryId = model.ParentId || defaultLibraryId;
+                var libraryId = model.parentId || defaultLibraryId;
 
                 var settings = {
                     libraryId: libraryId,
@@ -242,9 +226,9 @@
                     provider: model.provider,
                     parentItemType: constants.images.albumItemType,
                     title: model.Title || model.file.name,
-                    alternativeText: model.AlternativeText,
-                    categories: model.Categories,
-                    tags: model.Tags,
+                    alternativeText: model.alternativeText,
+                    categories: model.categories,
+                    tags: model.tags,
                     file: model.file
                 };
                 return uploadImage(settings);

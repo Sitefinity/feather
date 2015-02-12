@@ -2,14 +2,14 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfDragDrop');
 
-    angular.module('sfDragDrop', ['sfServices'])
-        .directive('sfDragDrop', ['serverContext', 'serviceHelper', function (serverContext, serviceHelper) {
+    angular.module('sfDragDrop', [])
+        .directive('sfDragDrop', [function () {
             return {
                 restrict: 'AE',
                 scope: {
+                    sfTemplateHtml: '@',
                     sfDataTransferCallback: '&'
                 },
-
                 link: function (scope, element, attrs, ctrl) {
                     var constants = {
                         dragStartClass: 'sf-Drag-start',
@@ -24,6 +24,13 @@
                         element.removeClass(constants.dragStartClass);
                     };
 
+                    if (scope.sfTemplateHtml) {
+                        element.prepend($(scope.sfTemplateHtml));
+                    }
+                    else {
+                        element.prepend($('<div class="sf-Drag"><strong>Drop image here to upload</strong></div>'));
+                    }
+
                     $(document).on('dragover', addDragStartClass);
 
                     $(document).on('dragleave', removeDragStartClass);
@@ -35,14 +42,14 @@
                         element.addClass(constants.dragOverClass);
                     });
 
-                    $('.sf-Drag').on('dragleave', function (e) {
+                    element.find('.sf-Drag').on('dragleave', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
 
                         element.removeClass(constants.dragOverClass);
                     });
 
-                    $('.sf-Drag').on('drop', function (e) {
+                    element.find('.sf-Drag').on('drop', function (e) {
                         element.removeClass(constants.dragStartClass);
                         element.removeClass(constants.dragOverClass);
 

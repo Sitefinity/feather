@@ -2,7 +2,7 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfUploadImageProperties', 'sfDragDrop'])
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfDragDrop'])
         .directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
         function (sfMediaService, sfMediaFilter, serverContext, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
             var helpers = {
@@ -69,7 +69,7 @@
             return {
                 restrict: 'E',
                 scope: {
-                    selectedItem: '=?sfModel'
+                    selectedItems: '=?sfModel'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -92,6 +92,7 @@
                                 }
                             });
                         },
+
                         // Category filter
                         getCategoryChildTaxons: function (parentId) {
                             return sfHierarchicalTaxonService.getChildTaxons(parentId, scope.query)
@@ -114,6 +115,7 @@
                                 return filtersLogic.getCategoryTaxons();
                             }
                         },
+
                         // Tag filter
                         loadTagTaxons: function (append) {
                             if (scope.filters.tag.isLoading) {
@@ -144,26 +146,27 @@
                         }
                     };
 
+                    // breadcrumb logic
                     scope.onBreadcrumbItemClick = function (item) {
                         var parent = item ? item.Id : null;
 
                         if (parent && parent === scope.filterObject.parent) {
                             return;
                         }
-                        scope.filters.library.selected = [parent];
+
                         scope.filterObject.parent = parent;
-                        if (!parent) {
+                        if (!scope.filterObject.parent) {
                             scope.filterObject.set.basic.allLibraries();
                         }
                         refresh();
                     };
 
+                    // view mode alternation
                     scope.isGrid = true;
                     scope.switchToGrid = function () {
                         scope.isGrid = true;
                         scope.isList = false;
                     };
-
                     scope.switchToList = function () {
                         scope.isGrid = false;
                         scope.isList = true;
@@ -254,29 +257,7 @@
                     * File uploading
                     */
 
-                    scope.model = {
-                        file: null,
-                        ParentId: null,
-                        Title: null,
-                        AlternativeText: null,
-                        Categories: [],
-                        Tags: []
-                    };
-
-                    var uploadFile = function () {
-
-                        var successAction = function (data) {
-                        };
-                        var progressAction = function (data) {
-                        };
-                        var errorAction = function (data) {
-                        };
-
-                        sfMediaService.images
-                                      .upload(scope.model)
-                                      .then(successAction, errorAction, progressAction);
-                    };
-
+                    // fetching of library when file is dropped in library filter mode
                     var getLibraryId = function () {
                         if (scope.breadcrumbs && scope.breadcrumbs.length) {
                             return scope.breadcrumbs[scope.breadcrumbs.length - 1].Id;
@@ -293,16 +274,16 @@
                             if (!scope.isInUploadMode) {
                                 if (scope.selectedFilterOption == 1) {
                                     // set library id or null if in default library
-                                    scope.model.ParentId = getLibraryId();
+                                    scope.model.parentId = getLibraryId();
                                 }
                                 else if (scope.selectedFilterOption == 2) {
                                     if (scope.filters.tag.selected[0]) {
-                                        scope.model.Tags.push(scope.filters.tag.selected[0]);
+                                        scope.model.tags.push(scope.filters.tag.selected[0]);
                                     }
                                 }
                                 else if (scope.selectedFilterOption == 3) {
                                     if (scope.filters.category.selected[0]) {
-                                        scope.model.Categories.push(scope.filters.category.selected[0]);
+                                        scope.model.categories.push(scope.filters.category.selected[0]);
                                     }
                                 }
                             }
@@ -323,40 +304,7 @@
                         });
                     });
 
-                    var openUploadPropertiesDialog = function (file) {
-                        scope.model.file = file;
-
-                        angular.element('.uploadPropertiesModal').scope().$openModalDialog()
-                            .then(function (doUploadFile) {
-                                if (doUploadFile) {
-                                    uploadFile();
-
-                                    scope.isInUploadMode = false;
-
-                                    // enter Recent items mode to show your uploaded item
-                                    scope.filters.basic.select(constants.filters.basicRecentItemsValue);
-                                }
-
-                                // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
-                                fileUploadInput.replaceWith(fileUploadInput = fileUploadInput.clone(true));
-
-                                // clears the model
-                                scope.model = {
-                                    file: null,
-                                    ParentId: null,
-                                    Title: null,
-                                    AlternativeText: null,
-                                    Categories: [],
-                                    Tags: []
-                                };
-                            });
-                    };
-
-                    // called with both close and done
-                    scope.closeUploadImageDialog = function (doUploadFile) {
-                        angular.element('.uploadPropertiesModal').scope().$modalInstance.close(doUploadFile);
-                    };
-
+                    // called when 'select from your computer' link is clicked
                     scope.openSelectFileDialog = function () {
                         // // call the click event in a timeout to avoid digest loop
                         setTimeout(function () {
@@ -364,6 +312,37 @@
                         }, 0);
 
                         return false;
+                    };
+
+                    // Upload properties logic
+                    var openUploadPropertiesDialog = function (file) {
+                        scope.model.file = file;
+
+                        angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: function () { return scope.model; } })
+                            .then(function (uploadedImageId) {
+                                if (uploadedImageId) {
+                                    scope.selectedItems.push(uploadedImageId);
+                                    scope.isInUploadMode = false;
+                                    scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                                }
+
+                                restoreFileModel();
+                            });
+                    };
+
+                    // cleares both scope model and html input
+                    var restoreFileModel = function () {
+                        // remove the selected file - if missing change will not trigger on file select -> cancel -> same file select
+                        fileUploadInput.replaceWith(fileUploadInput = fileUploadInput.clone(true));
+
+                        scope.model = {
+                            file: null,
+                            parentId: null,
+                            title: null,
+                            alternativeText: null,
+                            categories: [],
+                            tags: []
+                        };
                     };
 
                     /*
@@ -376,6 +355,12 @@
                     scope.isLoading = false;
                     scope.showSortingAndView = false;
                     scope.clearSearch = false;
+
+                    if (!scope.selectedItems || !angular.isArray(scope.selectedItems)) {
+                        scope.selectedItems = [];
+                    }
+
+                    scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-upload-image-properties.html');
 
                     scope.filters = {
                         basic: {
@@ -468,7 +453,7 @@
                         }
                     });
 
-                    scope.$watchCollection('filters.library.selected', function (newVal, oldVal) {
+                    scope.$watch('filters.library.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.parent.to(newVal[0]);
@@ -477,7 +462,7 @@
                         }
                     });
 
-                    scope.$watchCollection('filters.tag.selected', function (newVal, oldVal) {
+                    scope.$watch('filters.tag.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.taxon.to(newVal[0], constants.filters.tags.field);
@@ -492,7 +477,7 @@
                         }
                     });
 
-                    scope.$watchCollection('filters.category.selected', function (newVal, oldVal) {
+                    scope.$watch('filters.category.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.taxon.to(newVal[0], constants.filters.categories.field);
@@ -509,7 +494,7 @@
                         }
                     });
 
-                    scope.$watchCollection('filters.date.selected', function (newVal, oldVal) {
+                    scope.$watch('filters.date.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal[0]) {
                             scope.filters.basic.selected = null;
                             if (newVal[0] === constants.filters.anyDateValue) {
@@ -523,13 +508,11 @@
                         }
                     });
 
-
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
                         scope.isInUploadMode = false;
                         if (data && data.IsFolder === true) {
                             scope.filters.basic.selected = null;
-                            scope.filters.library.selected = [data.Id];
                             scope.filterObject.set.parent.to(data.Id);
                         }
                     });
@@ -543,6 +526,9 @@
                     */
 
                     (function initializeWindow() {
+                        // set initial file model
+                        restoreFileModel();
+
                         // initial filter dropdown option
                         scope.selectedFilterOption = 1;
 
@@ -554,6 +540,41 @@
                         scope.filters.basic.select(constants.filters.basicRecentItemsValue);
                     }());
                 }
+            };
+        }])
+
+        /*
+        * Upload properties controller
+        */
+
+        .controller('SfImageSelectorUploadPropertiesCtrl', ['$scope', '$modalInstance', 'sfMediaService', 'sfFileModel', function myfunction($scope, $modalInstance, sfMediaService, sfFileModel) {
+            $scope.model = sfFileModel;
+
+            $scope.model.file.textSize = Math.round($scope.model.file.size / 1000) + " KB";
+
+            $scope.uploadInfo = {};
+            $scope.uploadInfo.fileName = $scope.model.file.name;
+
+            var successAction = function (data) {
+                var firstItem = data[0] || {};
+                $modalInstance.close(firstItem.ContentId);
+            };
+
+            var progressAction = function (progress) {
+                $scope.uploadInfo.percentage = progress;
+            };
+
+            var errorAction = function (err) {
+                console.log(err);
+                $modalInstance.close();
+            };
+
+            $scope.uploadImage = function () {
+                sfMediaService.images.upload($scope.model).then(successAction, errorAction, progressAction);
+            };
+
+            $scope.cancelUpload = function () {
+                $modalInstance.close();
             };
         }]);
 })();
