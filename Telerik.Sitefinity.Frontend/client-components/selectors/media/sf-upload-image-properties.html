@@ -1,4 +1,4 @@
-<div class="modal-header">
+﻿<div class="modal-header">
     <button type="button" class="close" ng-click="cancelUpload()">&times;</button>
     <h3 class="modal-title">Upload image</h3>
 </div>
@@ -24,13 +24,13 @@
     </div>
     <div class="form-group">
         <label>Where to store the uploaded image?</label>
-        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.ParentId' />
+        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.parentId' />
     </div>
     <div class="form-group">
         <div class="row">
             <div class="col-xs-8">
                 <label>Title</label>
-                <input class="form-control" type="text" ng-model="model.Title" />
+                <input class="form-control" type="text" ng-model="model.title" />
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
         <div class="row">
             <div class="col-xs-8">
                 <label>Alternative text</label>
-                <input class="form-control" type="text" ng-model="model.AlternativeText" />
+                <input class="form-control" type="text" ng-model="model.alternativeText" />
             </div>
         </div>
     </div>
