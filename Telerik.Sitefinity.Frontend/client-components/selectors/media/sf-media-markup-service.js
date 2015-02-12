@@ -65,7 +65,9 @@
                 return null;
             };
 
-            var getThumbnailNameFromSfrefAttr = function (sfref) {
+            var getThumbnailNameFromSfrefAttr = function (sfref, librarySettings) {
+                librarySettings = librarySettings || 'tmb:';
+
                 if (sfref) {
                     var startIdx = sfref.indexOf("[");
                     var endIdx = sfref.indexOf("]");
@@ -73,7 +75,7 @@
                         var parts = sfref.substring(startIdx + 1, endIdx).split("|");
                         if (parts.length > 1) {
                             for (var i = 1; i < parts.length; i++) {
-                                var indx = parts[i].indexOf("tmb:");
+                                var indx = parts[i].indexOf(librarySettings.ThumbnailExtensionPrefix);
                                 if (indx === 0)
                                     return parts[i].substring(indx + 4);
                             }
@@ -84,6 +86,8 @@
             };
 
             var resolveThumbnailUrl = function (tmbDefaultUrl, tmbName, librarySettings) {
+                librarySettings = librarySettings || 'tmb:';
+
                 if (tmbName) {
                     var parts = tmbDefaultUrl.split('.');
                     if (parts.length > 1) {
@@ -103,6 +107,18 @@
                 return tmbDefaultUrl;
             };
 
+            var stripPxFromStyle = function (style) {
+                if (!style || style.length < 2)
+                    return style;
+
+                if (style.substr(style.length - 2, 2).toLowerCase() === 'px') {
+                    return style.substr(0, style.length - 2);
+                }
+                else {
+                    return style;
+                }
+            };
+
             var image = {
                 markup: function (properties, librarySettings, wrapIt) {
                     var sfref = '';
@@ -111,7 +127,7 @@
                         sfref = getSfrefAttribute('images', properties.item.Id, properties.provider, properties.thumbnail.name);
                         src = resolveThumbnailUrl(properties.thumbnail.url, properties.thumbnail.name, librarySettings);
                     } else {
-                        sfref = getSfrefAttribute('images', properties.item.Id);
+                        sfref = getSfrefAttribute('images', properties.item.Id, properties.provider);
                         src = properties.item.MediaUrl;
                     }
 
@@ -183,7 +199,7 @@
                     var result = new ImageProperties();
                     result.item.Id = getIdFromSfrefAttr(sfref);
                     result.provider = getProviderFromSfrefAttr(sfref);
-                    result.thumbnail.name = getThumbnailNameFromSfrefAttr(sfref);
+                    result.thumbnail.name = getThumbnailNameFromSfrefAttr(sfref, librarySettings);
                     result.displayMode = jMarkup.attr('displayMode');
 
                     if (result.displayMode === 'Thumbnail') {
@@ -213,10 +229,10 @@
                         }
                     }
 
-                    result.margin.top = jMarkup[0].style.marginTop;
-                    result.margin.left = jMarkup[0].style.marginLeft;
-                    result.margin.bottom = jMarkup[0].style.marginBottom;
-                    result.margin.right = jMarkup[0].style.marginRight;
+                    result.margin.top = stripPxFromStyle(jMarkup[0].style.marginTop);
+                    result.margin.left = stripPxFromStyle(jMarkup[0].style.marginLeft);
+                    result.margin.bottom = stripPxFromStyle(jMarkup[0].style.marginBottom);
+                    result.margin.right = stripPxFromStyle(jMarkup[0].style.marginRight);
 
                     result.openOriginalImageOnClick = jMarkup.attr('openOriginalImageOnClick') == 'true';
 
