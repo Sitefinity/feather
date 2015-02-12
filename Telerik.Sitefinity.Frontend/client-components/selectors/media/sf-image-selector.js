@@ -439,6 +439,16 @@
                         return false;
                     };
 
+                    scope.switchToUploadMode = function () {
+                        scope.isInUploadMode = !scope.isInUploadMode;
+                        // clear filter selection
+                        scope.filters.basic.selected = null;
+                        scope.filters.library.selected = [];
+                        scope.filters.date.selected = [];
+                        scope.filters.tag.selected = [];
+                        scope.filters.category.selected = [];
+                    };
+
                     /*
                     * Watches.
                     */
