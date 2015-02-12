@@ -60,9 +60,11 @@
                     }
                 },
                 sorting: {
-                    asc: 'ASC',
-                    desc: 'DESC',
-                    defaultValue: 'DateCreated DESC'
+                    defaultValue: 'DateCreated DESC',
+                    dateCreatedDesc: 'DateCreated DESC',
+                    lastModifiedDesc: 'LastModified DESC',
+                    titleAsc: 'Title ASC',
+                    titleDesc: 'Title DESC'
                 }
             };
 
@@ -452,24 +454,31 @@
                         refresh(true);
                     };
 
-                    //sorting helpers
-                    var getSortField = function (sortExpression) {
-                        if(!sortExpression)
-                            return '';
-
-                        var fieldName = sortExpression.slice(0, sortExpression.indexOf(' '));
-
-                        return fieldName;
+                    var extractDate = function (dateString) {
+                        return parseInt(dateString.substring(dateString.indexOf('Date') + 'Date('.length, dateString.indexOf(')')));
                     };
 
-                    var isSortingReverse = function (sortExpression) {
-                        if(sortExpression) {
-                            var descIndex = sortExpression.toUpperCase().indexOf(constants.sorting.desc);
-                            if (descIndex > - 1)
-                                return true;
+                    var reorderItems = function (val) {
+                        if (val === constants.sorting.dateCreatedDesc) {
+                            scope.items.sort(function (a, b) {
+                                return extractDate(b.DateCreated) - extractDate(a.DateCreated);
+                            });
                         }
-
-                        return false;
+                        else if (val === constants.sorting.lastModifiedDesc) {
+                            scope.items.sort(function (a, b) {
+                                return extractDate(b.DateModified) - extractDate(a.DateModified);
+                            });
+                        }
+                        else if (val === constants.sorting.titleDesc) {
+                            scope.items.sort(function (a, b) {
+                                return b.Title.localeCompare(a.Title);
+                            });
+                        }
+                        else if (val === constants.sorting.titleAsc) {
+                            scope.items.sort(function (a, b) {
+                                return a.Title.localeCompare(b.Title);
+                            });
+                        }
                     };
 
                     scope.switchToUploadMode = function () {
@@ -489,13 +498,10 @@
                     scope.$watch('sortExpression', function (newVal, oldVal) {
                         if(newVal !== oldVal) {
                             if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
-                                scope.recentItemsSortExpression = {
-                                    field: getSortField(newVal),
-                                    reverse: isSortingReverse(newVal)
-                                };
+                                // In recent items we reorder the items on client side
+                                reorderItems(newVal);
                             }
                             else {
-                                scope.recentItemsSortExpression = null;
                                 refresh();
                             }
                         }
