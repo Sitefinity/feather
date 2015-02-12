@@ -1,64 +1,66 @@
-﻿<div>
-    <div class="modal-header">
-        <button type="button" class="close" ng-click="cancelUpload()">&times;</button>
-        <h3 class="modal-title">Upload image</h3>
-    </div>
-    <div class="modal-body">
-        <div>
-            <div class="row">
-                <div class="col-md-10">
-                    <div class="row">
-                        <label>Image to upload</label>
-                        <p>
-                            <span class="pull-left" ng-bind="model.file.name"></span>
-                            <span class="pull-right" ng-bind="model.file.textSize"></span>
-                        </p>
-                        <div class="progress">
-                            <button type="button" class="close" ng-click="cancelUpload()">×</button>
-                            <div class="progress-bar"
-                                role="progressbar"
-                                ng-attr-aria-valuenow="{{uploadInfo.percentage}}"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                                ng-style="{width: uploadInfo.percentage + '%'}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label>Where to store the uploaded image?</label>
-                        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.parentId' />
-                    </div>
-                    <div class="row">
-                        <label>Title</label>
-                        <input type="text" ng-model="model.title" />
-                    </div>
-                    <div class="row">
-                        <label>Alternative text</label>
-                        <input type="text" ng-model="model.alternativeText" />
-                    </div>
-                    <expander expander-title='Categories and tags'>
-                <div class="row">
-                    <label>Categories</label>
-                    <sf-list-selector class="label-content"
-                                      sf-hierarchical-taxon-selector
-                                      sf-dialog-header="Select Category"
-                                      sf-multiselect="true"
-                                      sf-selected-ids="model.categories"
-                                      sf-provider="sfProvider">
-                    </sf-list-selector>
-                </div>
-                <div class="row">
-                    <label>Tags</label>
-                    <sf-flat-taxon-field sf-model="model.tags" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
-                </div>
-            </expander>
-                </div>
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancelUpload()">&times;</button>
+    <h3 class="modal-title">Upload image</h3>
+</div>
+
+<div class="modal-body">
+    ﻿<div class="form-group">
+        <label>Image to upload</label>
+
+        <div class="sf-Progress">
+            <p class="sf-Progress-file">
+                <span ng-bind="model.file.name"></span>
+                <a type="button" class="sf-Progress-close pull-right" ng-click="sfCancelUploadCallback()">×</a>
+                <span class="pull-right" ng-bind="model.file.textSize"></span>
+            </p>
+            <div class="sf-Progress-bar progress-bar"
+                role="progressbar"
+                ng-attr-aria-valuenow="{{uploadInfo.percentage}}"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                ng-style="{width: uploadInfo.percentage + '%'}">
             </div>
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()">Upload</button>
-        <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">Cancel</button>
+    <div class="form-group">
+        <label>Where to store the uploaded image?</label>
+        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.ParentId' />
     </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-8">
+                <label>Title</label>
+                <input class="form-control" type="text" ng-model="model.Title" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-8">
+                <label>Alternative text</label>
+                <input class="form-control" type="text" ng-model="model.AlternativeText" />
+            </div>
+        </div>
+    </div>
+    <expander expander-title='Categories and tags'>
+        <div class="form-group">
+            <label>Categories</label>
+            <sf-list-selector sf-hierarchical-taxon-selector
+                              sf-dialog-header="Select Category"
+                              sf-multiselect="true"
+                              sf-selected-ids="model.categories"
+                              sf-provider="sfProvider">
+            </sf-list-selector>
+        </div>
 
+        <div class="form-group">
+            <label>Tags</label>
+            <sf-flat-taxon-field sf-model="model.tags" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
+        </div>
+    </expander>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()">Upload</button>
+    <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">Cancel</button>
 </div>
