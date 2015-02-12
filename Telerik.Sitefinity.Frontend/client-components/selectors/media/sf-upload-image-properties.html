@@ -10,7 +10,7 @@
         <div class="sf-Progress">
             <p class="sf-Progress-file">
                 <span ng-bind="model.file.name"></span>
-                <a type="button" class="sf-Progress-close pull-right" ng-click="sfCancelUploadCallback()">×</a>
+                <a type="button" class="sf-Progress-close pull-right" ng-click="cancelUpload()">×</a>
                 <span class="pull-right" ng-bind="model.file.textSize"></span>
             </p>
             <div class="sf-Progress-bar progress-bar"
@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <label>Where to store the uploaded image?</label>
-        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.ParentId' />
+        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.parentId' />
     </div>
     <div class="form-group">
         <div class="row">
@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-xs-8">
                 <label>Alternative text</label>
-                <input class="form-control" type="text" ng-model="model.AlternativeText" />
+                <input class="form-control" type="text" ng-model="model.alternativeText" />
             </div>
         </div>
     </div>
