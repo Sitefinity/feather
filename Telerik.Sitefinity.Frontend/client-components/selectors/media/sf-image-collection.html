@@ -1,6 +1,4 @@
 ﻿<div class="Media-items" sf-infinite-scroll="$parent.loadMore()">
-	<div ng-if="items.length === 0">No items found</div>
-
 	<div>
 		<div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder" ng-click="select(item)">
 			<div ng-if="item.IsFolder === true">
