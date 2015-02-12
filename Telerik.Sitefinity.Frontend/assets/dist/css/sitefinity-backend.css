@@ -9038,7 +9038,7 @@ tab {
   /* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .tags {
     overflow: hidden;
-    padding: 6px 6px 1px;
+    padding: 3px 3px 1px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background: #fff;
@@ -9055,7 +9055,6 @@ tab {
       box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6); }
     /* line 16, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
     .sf-FlatTaxonField .tags.focused {
-      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
       box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
   /* line 19, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .tag-list {
@@ -9064,7 +9063,7 @@ tab {
     list-style-type: none; }
   /* line 24, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .tag-item {
-    padding: 0.2em 0.6em 0.3em;
+    padding: 0.1em 0.6em 0.2em;
     float: left;
     background-color: #e4e4e4;
     color: #000;
@@ -9073,24 +9072,29 @@ tab {
     line-height: 1.7em;
     font-size: 86%;
     border-radius: 0.25em;
-    margin-right: 0.5em;
-    margin-bottom: 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 2px;
     position: relative;
     max-width: 33%;
     text-overflow: ellipsis;
-    overflow: hidden; }
-    /* line 41, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    overflow: hidden;
+    border: 1px solid transparent; }
+    /* line 42, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
     .sf-FlatTaxonField .tag-item:first-child {
       margin-left: 0; }
-    /* line 45, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
-    .sf-FlatTaxonField .tag-item:hover .remove-button {
+    /* line 47, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    .sf-FlatTaxonField .tag-item:hover .remove-button, .sf-FlatTaxonField .tag-item.selected .remove-button {
       display: block; }
-  /* line 48, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    /* line 50, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    .sf-FlatTaxonField .tag-item.selected {
+      background: #f2dede;
+      border: 1px solid #ebccd1; }
+  /* line 54, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .remove-button {
     display: none;
     position: absolute;
     right: 4px;
-    top: 5px;
+    top: 4px;
     color: #fff;
     border-radius: 50%;
     background: #ED2C2C;
@@ -9101,11 +9105,11 @@ tab {
     vertical-align: middle;
     font-weight: 700;
     line-height: 18px; }
-    /* line 65, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    /* line 71, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
     .sf-FlatTaxonField .remove-button:focus, .sf-FlatTaxonField .remove-button:hover {
       text-decoration: none;
       background-color: #9E0C0C; }
-  /* line 69, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+  /* line 75, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .input {
     border: 0;
     outline: 0;
@@ -9114,7 +9118,7 @@ tab {
     float: left;
     line-height: 1.7em;
     font-size: 86%; }
-  /* line 78, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+  /* line 84, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .suggestion-list {
     position: absolute;
     background: #fff;
@@ -9122,15 +9126,17 @@ tab {
     border: 1px solid #ccc;
     border-radius: 4px;
     padding-top: 10px;
-    margin-top: -10px; }
-    /* line 87, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    padding-left: 0;
+    margin-top: -10px;
+    list-style: none; }
+    /* line 95, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
     .sf-FlatTaxonField .suggestion-list > li {
       padding: 2px 6px; }
-      /* line 90, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+      /* line 98, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
       .sf-FlatTaxonField .suggestion-list > li > em {
         font-weight: 700;
         font-style: normal; }
-      /* line 95, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+      /* line 103, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
       .sf-FlatTaxonField .suggestion-list > li:hover, .sf-FlatTaxonField .suggestion-list > li.selected {
         background: #428BCA;
         color: #fff;
