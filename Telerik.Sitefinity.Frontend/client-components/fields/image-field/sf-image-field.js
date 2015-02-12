@@ -32,7 +32,7 @@
                     };
                     
                     scope.changeImage = function () {
-                        angular.element("#imageSelectorModal").scope().$openModalDialog()
+                        angular.element(".imageSelectorModal").scope().$openModalDialog()
                             .then(function (selectedImageIds) {
                                 if (selectedImageIds.length) {
                                     scope.sfModel = selectedImageIds[0];
