@@ -554,7 +554,7 @@
 
             var fileName = $scope.model.file.name;
             $scope.uploadInfo = {};
-            $scope.uploadInfo.fileName = $scope.model.file.name;
+            $scope.uploadInfo.fileName = fileName;
 
             $scope.model.title = fileName.slice(0, fileName.lastIndexOf('.'))
 
