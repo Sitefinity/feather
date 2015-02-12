@@ -565,9 +565,13 @@
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
                         scope.isInUploadMode = false;
-                        if (data && data.IsFolder === true) {
-                            scope.filters.basic.selected = null;
-                            scope.filterObject.set.parent.to(data.Id);
+                        if (data) {
+                            if (data.IsFolder === true) {
+                                scope.filters.basic.selected = null;
+                                scope.filterObject.set.parent.to(data.Id);
+                            } else {
+                                scope.selectedItems.push(data.Id);
+                            }
                         }
                     });
 
