@@ -543,15 +543,15 @@
                     */
 
                     (function initializeWindow() {
-                        // initial open populates dialog with all root libraries
-                        scope.filterObject.set.basic.allLibraries();
-
                         // initial filter dropdown option
                         scope.selectedFilterOption = 1;
 
                         filtersLogic.loadTagTaxons(false);
 
                         scope.filterObject.attachEvent(refresh);
+
+                        // initial open populates dialog with recent images
+                        scope.filters.basic.select(constants.filters.basicRecentItemsValue);
                     }());
                 }
             };
