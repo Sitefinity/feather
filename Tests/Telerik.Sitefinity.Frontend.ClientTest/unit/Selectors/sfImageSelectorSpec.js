@@ -324,7 +324,7 @@
             
             suppressedDataTransferDroppedFunc(s);
 
-            expect(s.model.ParentId).toEqual(5);
+            expect(s.model.parentId).toEqual(5);
         });
 
         it('[dzhenko] / should populate tag property on uploaded image when dropped in tag filter mode.', function () {
@@ -337,7 +337,7 @@
 
             suppressedDataTransferDroppedFunc(s);
 
-            expect(s.model.Tags[0]).toEqual('tag1');
+            expect(s.model.tags[0]).toEqual('tag1');
         });
 
         it('[dzhenko] / should populate category property on uploaded image when dropped in category filter mode.', function () {
@@ -350,7 +350,7 @@
 
             suppressedDataTransferDroppedFunc(s);
 
-            expect(s.model.Categories[0]).toEqual('cat1');
+            expect(s.model.categories[0]).toEqual('cat1');
         });
     }());
 });

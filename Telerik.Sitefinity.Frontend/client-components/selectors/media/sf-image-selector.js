@@ -553,7 +553,6 @@
             $scope.model.file.textSize = Math.round($scope.model.file.size / 1000) + " KB";
 
             $scope.uploadInfo = {};
-            $scope.uploadInfo.percentage = 99;
             $scope.uploadInfo.fileName = $scope.model.file.name;
 
             var successAction = function (data) {
