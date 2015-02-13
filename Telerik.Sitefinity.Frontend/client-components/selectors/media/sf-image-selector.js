@@ -2,7 +2,7 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfDragDrop'])
+    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfDragDrop', 'expander'])
         .directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
         function (sfMediaService, sfMediaFilter, serverContext, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
             var helpers = {
@@ -49,12 +49,12 @@
                         { text: 'Last 5 years', dateValue: helpers.getDate(0, 0, 5) }
                     ],
                     tags: {
-                        pageSize: 10,
+                        pageSize: 30,
                         field: 'Tags',
                         taxonomyId: 'CB0F3A19-A211-48a7-88EC-77495C0F5374'
                     },
                     categories: {
-                        pageSize: 10, // not used by the service
+                        pageSize: 30, // not used by the service
                         field: 'Category',
                         taxonomyId: 'E5CD6D69-1543-427B-AD62-688A99F5E7D4'
                     }
@@ -305,6 +305,9 @@
                         scope.$apply(function () {
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
+                                if (!scope.isInUploadMode) {
+                                    scope.model.parentId = getLibraryId();
+                                }
 
                                 openUploadPropertiesDialog(fileInput.files[0]);
                             }
@@ -446,7 +449,7 @@
 
                             default:
                                 scope.filters.basic.select(scope.filters.basic.selected || constants.filters.basicRecentItemsValue);
-                            }
+                        }
                     };
 
                     // load more images
@@ -496,7 +499,7 @@
                     */
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
-                        if(newVal !== oldVal) {
+                        if (newVal !== oldVal) {
                             if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
                                 // In recent items we reorder the items on client side
                                 reorderItems(newVal);
@@ -526,7 +529,7 @@
                     });
 
                     scope.$watch('filters.tag.query', function (newVal, oldVal) {
-                        if(newVal !== oldVal) {
+                        if (newVal !== oldVal) {
                             filtersLogic.loadTagTaxons(false);
                         }
                     });
@@ -541,8 +544,8 @@
                     });
 
                     scope.$watch('filters.category.query', function (newVal, oldVal) {
-                        if(newVal !== oldVal) {
-                            filtersLogic.getCategoryTaxons().then(function(items) {
+                        if (newVal !== oldVal) {
+                            filtersLogic.getCategoryTaxons().then(function (items) {
                                 scope.filters.category.filtered = items;
                             });
                         }

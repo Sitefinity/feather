@@ -544,6 +544,8 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-media-markup-service.js" />
     <EmbeddedResource Include="client-components\fields\drag-drop\sf-drag-drop.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-properties.html" />
+    <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.html" />
+    <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
