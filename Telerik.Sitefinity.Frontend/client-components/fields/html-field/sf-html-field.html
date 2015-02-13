@@ -30,4 +30,14 @@
 </textarea>
 
 <sf-link-selector-modal id="linkSelectorModal"></sf-link-selector-modal>
-<sf-image-selector-modal id="imageSelectorModal"></sf-image-selector-modal>
+
+<div class="imagePropertiesModal"
+     template-url="{{imagePropertiesDialog}}"
+     modal
+     size="normal"
+     existing-scope="true"
+     window-class="sf-designer-dlg sf-timespan-selector-dlg"
+     dialog-controller="sfImagePropertiesController">
+</div>
+
+
