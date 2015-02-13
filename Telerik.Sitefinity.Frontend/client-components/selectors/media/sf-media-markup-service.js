@@ -5,7 +5,16 @@
             var ImageProperties = function () {
                 this.item = { Id: null }; //MediaItem view model
                 this.provider = null; //Name of the data provider
-                this.displayMode = null; //Original size, Thumbnail...
+                this.displayMode = null; //Original, Thumbnail, Custom
+
+                this.customSize = {  // Keep the names of those properties as they are in order to support old HTML field.
+                    MaxWidth: null,
+                    MaxHeight: null,
+                    ScaleUp: false,
+                    Quality: null, // High, Medium, Low
+                    Method: null // ResizeFitToAreaArguments, CropCropArguments
+                };
+
                 this.thumbnail = {
                     url: null,
                     name: null
@@ -21,7 +30,7 @@
                     right: null
                 };
 
-                this.openOriginalImageOnClick = null;
+                this.openOriginalImageOnClick = false;
             };
 
             var getSfrefAttribute = function (mediaType, id, provider, thumbnailName) {
@@ -84,7 +93,7 @@
             };
 
             var resolveThumbnailUrl = function (tmbDefaultUrl, tmbName, librarySettings) {
-                librarySettings = librarySettings || 'tmb-';
+                librarySettings = librarySettings || { ThumbnailExtensionPrefix: 'tmb-' };
 
                 if (tmbName) {
                     var parts = tmbDefaultUrl.split('.');
