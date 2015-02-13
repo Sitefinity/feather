@@ -1,11 +1,12 @@
 ﻿<div>
     <div class="modal-header">
-        Image
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h3 class="modal-title">Image</h3>
     </div>
 
     <div class="modal-body">
         <div class="container">
-            <sf-image-field sf-model="imageId" sf-image="model.item"></sf-image-field>
+            <sf-image-field sf-model="model.item.Id" sf-image="model.item"></sf-image-field>
         </div>
         <form name="imageProperties">
             <div class="form-group">
@@ -107,7 +108,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" ng-disabled="imageProperties.title.$error.required" class="btn btn-primary pull-left" ng-click="uploadImage()">Upload</button>
-        <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">Cancel</button>
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()">Done</button>
+        <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
     </div>
 </div>

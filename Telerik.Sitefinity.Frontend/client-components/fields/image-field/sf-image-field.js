@@ -54,7 +54,11 @@
                     };
 
                     scope.cancel = function () {
-                        scope.$modalInstance.close();
+                        // cancels the image properties if no image is selected
+                        if (scope.sfModel === undefined) {
+                            scope.sfModel = null;
+                        }
+                        scope.$modalInstance.dismiss();
                     };
 
                     scope.changeImage = function () {
@@ -68,6 +72,12 @@
                     else {
                         scope.changeImage();
                     }
+
+                    scope.$on('sf-image-selector-image-uploaded', function (event, uploadedImageId) {
+                        scope.sfModel = uploadedImageId;
+                        getImage();
+                        scope.$modalInstance.dismiss();
+                    });
                 }
             };
         }]);

@@ -332,8 +332,7 @@
                             .then(function (uploadedImageId) {
                                 if (uploadedImageId) {
                                     scope.selectedItems.push(uploadedImageId);
-                                    scope.isInUploadMode = false;
-                                    scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                                    scope.$emit('sf-image-selector-image-uploaded', uploadedImageId);
                                 }
 
                                 restoreFileModel();
@@ -626,7 +625,7 @@
 
             var errorAction = function (err) {
                 console.log(err);
-                $modalInstance.close();
+                $modalInstance.dismiss();
             };
 
             $scope.uploadImage = function () {
@@ -634,7 +633,7 @@
             };
 
             $scope.cancelUpload = function () {
-                $modalInstance.close();
+                $modalInstance.dismiss();
             };
         }]);
 })();
