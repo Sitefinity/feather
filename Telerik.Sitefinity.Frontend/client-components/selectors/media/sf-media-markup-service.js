@@ -5,7 +5,16 @@
             var ImageProperties = function () {
                 this.item = { Id: null }; //MediaItem view model
                 this.provider = null; //Name of the data provider
-                this.displayMode = null; //Original size, Thumbnail...
+                this.displayMode = null; //Original, Thumbnail, Custom
+
+                this.customSize = {  // Keep the names of those properties as they are in order to support old HTML field.
+                    MaxWidth: null,
+                    MaxHeight: null,
+                    ScaleUp: false,
+                    Quality: null, // High, Medium, Low
+                    Method: null // ResizeFitToAreaArguments, CropCropArguments
+                };
+
                 this.thumbnail = {
                     url: null,
                     name: null
@@ -21,7 +30,9 @@
                     right: null
                 };
 
-                this.openOriginalImageOnClick = null;
+                this.cssClass = null;
+
+                this.openOriginalImageOnClick = false;
             };
 
             var getSfrefAttribute = function (mediaType, id, provider, thumbnailName) {
@@ -65,9 +76,7 @@
                 return null;
             };
 
-            var getThumbnailNameFromSfrefAttr = function (sfref, librarySettings) {
-                librarySettings = librarySettings || 'tmb:';
-
+            var getThumbnailNameFromSfrefAttr = function (sfref) {
                 if (sfref) {
                     var startIdx = sfref.indexOf("[");
                     var endIdx = sfref.indexOf("]");
@@ -75,7 +84,7 @@
                         var parts = sfref.substring(startIdx + 1, endIdx).split("|");
                         if (parts.length > 1) {
                             for (var i = 1; i < parts.length; i++) {
-                                var indx = parts[i].indexOf(librarySettings.ThumbnailExtensionPrefix);
+                                var indx = parts[i].indexOf('tmb:');
                                 if (indx === 0)
                                     return parts[i].substring(indx + 4);
                             }
@@ -86,7 +95,7 @@
             };
 
             var resolveThumbnailUrl = function (tmbDefaultUrl, tmbName, librarySettings) {
-                librarySettings = librarySettings || 'tmb:';
+                librarySettings = librarySettings || { ThumbnailExtensionPrefix: 'tmb-' };
 
                 if (tmbName) {
                     var parts = tmbDefaultUrl.split('.');
@@ -136,6 +145,7 @@
                     jElementToInsert.attr('src', src);
 
                     jElementToInsert.attr('alt', properties.alternativeText);
+                    jElementToInsert.attr('class', properties.cssClass);
                     if (properties.title) {
                         jElementToInsert.attr('title', properties.title);
                     }
@@ -189,7 +199,7 @@
                     return jElementToInsert[0].outerHTML;
                 },
 
-                properties: function (markup, librarySettings) {
+                properties: function (markup) {
                     var jMarkup = $(markup);
                     var sfref = jMarkup.attr('sfref') ? jMarkup.attr('sfref') : jMarkup.children().attr('sfref');
                     
@@ -199,7 +209,7 @@
                     var result = new ImageProperties();
                     result.item.Id = getIdFromSfrefAttr(sfref);
                     result.provider = getProviderFromSfrefAttr(sfref);
-                    result.thumbnail.name = getThumbnailNameFromSfrefAttr(sfref, librarySettings);
+                    result.thumbnail.name = getThumbnailNameFromSfrefAttr(sfref);
                     result.displayMode = jMarkup.attr('displayMode');
 
                     if (result.displayMode === 'Thumbnail') {
@@ -211,6 +221,7 @@
 
                     result.title = jMarkup.attr('title');
                     result.alternativeText = jMarkup.attr('alt');
+                    result.cssClass = jMarkup.attr('class') || null;
 
                     if (jMarkup.css('vertical-align') === 'middle') {
                         result.alignment = 'Center';

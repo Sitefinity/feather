@@ -19,15 +19,15 @@
                 <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)" sf-clear-search-string="clearSearch"> </sf-search-box>
             </div>
 
-            <div ng-if="!items.length" class="Media-upload-text">
+            <div ng-hide="items.length" class="Media-upload-text">
                 <div class="text-center lead">NO IMAGES ICON</div>
                 <div class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
                 <div class="text-center">or simply drag &amp; drop here</div>
             </div>
 
-            <div ng-if="items.length"
+            <div ng-show="items.length"
                 sf-collection sf-data="items"
-                sf-model="selectedItem"
+                sf-model="selectedItems"
                 sf-template-url="client-components/selectors/media/sf-image-collection.html"
                 ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
             </div>
