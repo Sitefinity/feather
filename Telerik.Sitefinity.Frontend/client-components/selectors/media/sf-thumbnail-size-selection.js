@@ -26,7 +26,10 @@
                 }
                 else {
                     // open custom size dialog and then set model
-                    openModalDialog();
+
+                    openModalDialog().then(function (model) {
+                        $scope.model.customSize = model;
+                    });
                 }
             });
 
@@ -46,7 +49,7 @@
             });
 
             var openModalDialog = function () {
-                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: function () { return scope.model; } });
+                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: $scope.model.customSize });
             };
 
             var populateOptions = function () {
@@ -100,26 +103,37 @@
                         type: displayMode.custom,
                         title: 'Custom size...',
                         thumbnail: null,
-                        customSize: null,
+                        customSize: $scope.model.customSize,
                         openDialog: true
                     });
                 }
             };
         }])
-        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-            $scope.constants = {
-                generationMethod: {
-                    resize: 'ResizeFitToAreaArguments',
-                    crop: 'CropCropArguments'
-                },
-                quality: ['High', 'Medium', 'Low']
-            }
+        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$modalInstance', 'model', function ($scope, $modalInstance, model) {
+            $scope.quality = ['High', 'Medium', 'Low'];
 
-            $scope.generateThumbnail = function () {
+            $scope.methodOptions = [{
+                value: 'ResizeFitToAreaArguments',
+                title: 'Resize to area'
+            }, {
+                value: 'CropCropArguments',
+                title: 'Crop to area'
+            }];
+
+            $scope.model = model || {  // Keep the names of those properties as they are in order to support old HTML field.
+                MaxWidth: null,
+                MaxHeight: null,
+                ScaleUp: false,
+                Quality: $scope.quality[0],
+                Method: $scope.methodOptions[0].value
+            };
+
+            $scope.done = function () {
+                $modalInstance.close($scope.model);
             };
 
             $scope.cancelResizing = function () {
-                $modalInstance.close();
+                $modalInstance.dismiss();
             };
         }]);
 })();
