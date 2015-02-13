@@ -28,17 +28,10 @@
                         });
                     };
 
-                    if (scope.sfModel) {
-                        getImage();
-                    }
-                    else {
-                        scope.changeImage();
-                    }
-
                     scope.selectedItemIds = [];
 
                     scope.changeImage = function () {
-                        angular.element('.uploadPropertiesModal').scope().$openModalDialog();
+                        angular.element('.imageSelectorModal').scope().$openModalDialog();
                     };
 
                     scope.editAllProperties = function () {
@@ -46,7 +39,7 @@
                     };
 
                     scope.done = function () {
-                        angular.element('.uploadPropertiesModal').scope().$modalInstance.close();
+                        angular.element('.imageSelectorModal').scope().$modalInstance.close();
 
                         if (scope.selectedItemIds.length) {
                             scope.sfModel = scope.selectedItemIds[0];
@@ -55,8 +48,18 @@
                     };
 
                     scope.cancel = function () {
+                        angular.element('.imageSelectorModal').scope().$modalInstance.close();
+
                         scope.selectedItemIds = [];
                     };
+
+                    // Initialize
+                    if (scope.sfModel) {
+                        getImage();
+                    }
+                    else {
+                        scope.changeImage();
+                    }
                 }
             };
         }]);
