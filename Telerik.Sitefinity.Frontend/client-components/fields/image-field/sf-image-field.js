@@ -8,6 +8,7 @@
                 restrict: "AE",
                 scope: {
                     sfModel: '=',
+                    sfImage: '=',
                     sfProvider: '@'
                 },
                 templateUrl: function (elem, attrs) {
@@ -29,20 +30,32 @@
 
                     if (scope.sfModel) {
                         getImage();
-                    };
-                    
+                    }
+                    else {
+                        scope.changeImage();
+                    }
+
+                    scope.selectedItemIds = [];
+
                     scope.changeImage = function () {
-                        angular.element(".imageSelectorModal").scope().$openModalDialog()
-                            .then(function (selectedImageIds) {
-                                if (selectedImageIds.length) {
-                                    scope.sfModel = selectedImageIds[0];
-                                    getImage();
-                                }
-                            });
+                        angular.element('.uploadPropertiesModal').scope().$openModalDialog();
                     };
 
                     scope.editAllProperties = function () {
                         alert('TODO');
+                    };
+
+                    scope.done = function () {
+                        angular.element('.uploadPropertiesModal').scope().$modalInstance.close();
+
+                        if (scope.selectedItemIds.length) {
+                            scope.sfModel = scope.selectedItemIds[0];
+                            getImage();
+                        }
+                    };
+
+                    scope.cancel = function () {
+                        scope.selectedItemIds = [];
                     };
                 }
             };

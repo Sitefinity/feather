@@ -15,4 +15,19 @@
     </div>
 </div>
 
-<sf-image-selector-modal class="imageSelectorModal"></sf-image-selector-modal>
+<div class="imageSelectorModal" template-url="sf-image-selector-modal-template" modal size="normal" window-class="modal-fluid" existing-scope="true">
+</div>
+
+<script type="text/ng-template" id="sf-image-selector-modal-template">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h3 class="modal-title">Select image</h3>
+    </div>
+    <div class="modal-body">
+        <sf-image-selector sf-model="selectedItemIds"></sf-image-selector>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItemIds.length">Done</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
