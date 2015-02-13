@@ -8,8 +8,9 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-xs-8">
-                        <label for="title">Title</label>
-                        <input class="form-control" id="title" name="title" type="text" ng-model="model.title" ng-required="true" />
+                        <label>Title
+                            <input class="form-control" name="title" type="text" ng-model="model.title" ng-required="true" />
+                        </label>
                         <span ng-class="{'error': model.title.length>35}">{{model.title.length}}</span>
                         <span>Less than 35 characters are recommended</span>
                         <span ng-show="imageProperties.title.$error.required">Title is required</span>
@@ -17,8 +18,9 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-8">
-                        <label for="alternativeText">Alternative text</label>
-                        <input class="form-control" id="alternativeText" name="alternativeText" type="text" ng-model="model.alternativeText" />
+                        <label for="alternativeText">Alternative text
+                            <input class="form-control" name="alternativeText" type="text" ng-model="model.alternativeText" />
+                        </label>
                         <span ng-class="{'error': model.alternativeText.length>35}">{{model.alternativeText.length}}</span>
                         <span>Less than 35 characters are recommended</span>
                     </div>
@@ -86,8 +88,10 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-8">
-                            <label for="cssClasses">CSS classes</label>
-                            <input class="form-control" id="cssClasses" type="text" ng-model="model.cssClass" />
+                            <label>
+								CSS classes
+								<input class="form-control" type="text" ng-model="model.cssClass" />
+							</label>
                         </div>
                     </div>
                 </expander>
