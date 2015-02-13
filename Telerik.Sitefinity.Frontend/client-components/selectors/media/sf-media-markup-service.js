@@ -65,9 +65,7 @@
                 return null;
             };
 
-            var getThumbnailNameFromSfrefAttr = function (sfref, librarySettings) {
-                librarySettings = librarySettings || 'tmb:';
-
+            var getThumbnailNameFromSfrefAttr = function (sfref) {
                 if (sfref) {
                     var startIdx = sfref.indexOf("[");
                     var endIdx = sfref.indexOf("]");
@@ -75,7 +73,7 @@
                         var parts = sfref.substring(startIdx + 1, endIdx).split("|");
                         if (parts.length > 1) {
                             for (var i = 1; i < parts.length; i++) {
-                                var indx = parts[i].indexOf(librarySettings.ThumbnailExtensionPrefix);
+                                var indx = parts[i].indexOf('tmb:');
                                 if (indx === 0)
                                     return parts[i].substring(indx + 4);
                             }
@@ -86,7 +84,7 @@
             };
 
             var resolveThumbnailUrl = function (tmbDefaultUrl, tmbName, librarySettings) {
-                librarySettings = librarySettings || 'tmb:';
+                librarySettings = librarySettings || 'tmb-';
 
                 if (tmbName) {
                     var parts = tmbDefaultUrl.split('.');
@@ -189,7 +187,7 @@
                     return jElementToInsert[0].outerHTML;
                 },
 
-                properties: function (markup, librarySettings) {
+                properties: function (markup) {
                     var jMarkup = $(markup);
                     var sfref = jMarkup.attr('sfref') ? jMarkup.attr('sfref') : jMarkup.children().attr('sfref');
                     
@@ -199,7 +197,7 @@
                     var result = new ImageProperties();
                     result.item.Id = getIdFromSfrefAttr(sfref);
                     result.provider = getProviderFromSfrefAttr(sfref);
-                    result.thumbnail.name = getThumbnailNameFromSfrefAttr(sfref, librarySettings);
+                    result.thumbnail.name = getThumbnailNameFromSfrefAttr(sfref);
                     result.displayMode = jMarkup.attr('displayMode');
 
                     if (result.displayMode === 'Thumbnail') {
