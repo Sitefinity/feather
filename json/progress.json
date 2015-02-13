@@ -354,6 +354,40 @@
             },
             {
                "expectedBy" : "",
+               "longDescription" : "Library selector.",
+               "name" : "Library selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-library-selector",
+                     "commitHash" : "194bdb30dd4247319979a5cd13299627b2017f8f",
+                     "date" : "02-13-2015 18:00 +0200",
+                     "name" : "Library selector implementation",
+                     "tag" : "v1.1.80.1"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "Flat taxon field.",
+               "name" : "Flat taxon field",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-flat-taxon-field",
+                     "commitHash" : "194bdb30dd4247319979a5cd13299627b2017f8f",
+                     "date" : "02-13-2015 18:00 +0200",
+                     "name" : "Flat taxon field implementation",
+                     "tag" : "v1.1.80.1"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
                "longDescription" : "Image Selector development is in progress.",
                "name" : "Image selector",
                "progress" : 60,
@@ -1169,7 +1203,7 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Client components",
-               "progress" : 40,
+               "progress" : 45,
                "releases" : [
                   {
                      "article" : "Use-a-generic-collection-directive",
@@ -1205,6 +1239,13 @@
                      "date" : "02-06-2015 18:15 +0200",
                      "name" : "Infinite scroll directive",
                      "tag" : "v1.1.70.1"
+                  },		
+                  {
+                     "article" : "Use-a-drag-and-drop-directive",
+                     "commitHash" : "194bdb30dd4247319979a5cd13299627b2017f8f",
+                     "date" : "02-13-2015 18:00 +0200",
+                     "name" : "Drag and drop directive",
+                     "tag" : "v1.1.80.1"
                   }
                ],
                "shortDescription" : "In progress",
