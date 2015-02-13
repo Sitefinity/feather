@@ -9,7 +9,8 @@
                 createImageUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}')
             },
             uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
-            librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/')
+            librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/'),
+            thumbnailService: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/thumbnail-profiles/')
         };
 
         var getById = function (id, provider, itemType, serviceUrl) {
@@ -150,6 +151,10 @@
             });
         };
 
+        var thumbnailProfiles = function (libraryType) {
+            return serviceHelper.getResource(constants.thumbnailService).get({ libraryType: libraryType }).$promise;
+        };
+
         var imagesObj = {
             getById: function (id, provider) {
                 return getById(id, provider, constants.images.itemType, constants.images.imagesServiceUrl);
@@ -248,6 +253,9 @@
                     file: model.file
                 };
                 return uploadImage(settings);
+            },
+            thumbnailProfiles: function () {
+                return thumbnailProfiles(constants.images.albumItemType);
             }
         };
 
