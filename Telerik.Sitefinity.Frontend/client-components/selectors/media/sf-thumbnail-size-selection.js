@@ -103,25 +103,19 @@
             };
 
             var updateSelection = function () {
-                if ($scope.sizeOptions.length == 0)
+                if ($scope.sizeOptions.length === 0)
                     return;
 
                 for (var i = 0; i < $scope.sizeOptions.length; i++) {
                     var option = $scope.sizeOptions[i];
 
-                    if (option.type === $scope.model.displayMode && option.type === displayMode.original) {
-                        $scope.sizeSelection = option;
-                        return;
-                    }
-
-                    if (option.type === $scope.model.displayMode && option.type === displayMode.thumbnail && option.thumbnail.name === $scope.model.thumbnail.name) {
-                        $scope.sizeSelection = option;
-                        return;
-                    }
-
-                    if (option.type === $scope.model.displayMode && option.type === displayMode.custom && !option.openDialog) {
-                        $scope.sizeSelection = option;
-                        return;
+                    if (option.type === $scope.model.displayMode) {
+                        if (option.type === displayMode.original ||
+                            (option.type === displayMode.thumbnail && option.thumbnail.name === $scope.model.thumbnail.name) ||
+                            (option.type === displayMode.custom && !option.openDialog)) {
+                            $scope.sizeSelection = option;
+                            return;
+                        }
                     }
                 }
 
