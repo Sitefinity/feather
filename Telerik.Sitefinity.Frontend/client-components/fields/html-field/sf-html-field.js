@@ -2,7 +2,7 @@
     var sfFields = angular.module('sfFields');
     sfFields.requires.push('sfHtmlField');
 
-    angular.module('sfHtmlField', ['kendo.directives', 'sfServices'])
+    angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField'])
         .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
             return {
                 restrict: "E",
@@ -62,42 +62,28 @@
                         });
                     };
 
+                    scope.imagePropertiesDialog =
+                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-image-properties.html');
+
                     scope.openImageSelector = function () {
+
                         var range = editor.getRange();
                         var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
 
-                        var properties;
+                        var properties = null;
 
                         var imageWrapper = $(nodes).closest('span.sfImageWrapper');
                         if (imageWrapper.length) {
-                            properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML);
+                            properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML, settings);
                         }
                         else if ($(nodes).is('img')) {
-                            properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML);
-                        }
-                        else {
-                            // Default data for testing. Remove after integration with properties dialog.
-                            properties = {
-                                item: null,
-                                title: 'Test image title',
-                                alternativeText: 'Test image alt',
-                                margin: {
-                                    top: null,
-                                    left: null,
-                                    bottom: null,
-                                    right: null
-                                }
-                            };
+                            properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML, settings);
                         }
 
-                        angular.element("#imageSelectorModal").scope().$openModalDialog()
-                            .then(function (selectedImageId) {
-                                return mediaService.images.getById(selectedImageId);
-                            })
+                        angular.element(".imagePropertiesModal").scope()
+                            .$openModalDialog({ sfModel: function () { return properties; } })
                             .then(function (data) {
-                                properties.item = data.Item;
-
-                                // TODO: Pass the properties to the properties dialog and then exec insertHtml.
+                                properties = data;
 
                                 return mediaService.getLibrarySettings();
                             })
@@ -195,5 +181,5 @@
                 };
 
                 $scope.cancel = $modalInstance.close;
-            }]);;
+            }]);
 })(jQuery);
