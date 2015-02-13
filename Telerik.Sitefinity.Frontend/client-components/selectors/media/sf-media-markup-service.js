@@ -29,6 +29,7 @@
                     bottom: null,
                     right: null
                 };
+
                 this.cssClass = null;
 
                 this.openOriginalImageOnClick = false;
@@ -220,7 +221,7 @@
 
                     result.title = jMarkup.attr('title');
                     result.alternativeText = jMarkup.attr('alt');
-                    result.cssClass = jMarkup.attr('class');
+                    result.cssClass = jMarkup.attr('class') || null;
 
                     if (jMarkup.css('vertical-align') === 'middle') {
                         result.alignment = 'Center';
