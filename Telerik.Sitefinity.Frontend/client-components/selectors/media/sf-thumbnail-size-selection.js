@@ -57,7 +57,7 @@
                 $scope.sizeOptions.push({
                     index: $scope.sizeOptions.length,
                     type: displayMode.original,
-                    title: 'Original size: ' + $scope.model.item.Width + 'x' + $scope.model.item.Height + 'px',
+                    title: 'Original size: ' + $scope.model.item.Width + 'x' + $scope.model.item.Height + ' px',
                     thumbnail: null,
                     customSize: null,
                     openDialog: false
@@ -82,7 +82,7 @@
                     $scope.sizeOptions.push({
                         index: $scope.sizeOptions.length,
                         type: displayMode.custom,
-                        title: 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + 'px',
+                        title: 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px',
                         thumbnail: null,
                         customSize: $scope.model.customSize,
                         openDialog: false
@@ -107,6 +107,28 @@
                         openDialog: true
                     });
                 }
+
+                updateSelection();
+            };
+
+            var updateSelection = function () {
+                if ($scope.sizeOptions.length === 0)
+                    return;
+
+                for (var i = 0; i < $scope.sizeOptions.length; i++) {
+                    var option = $scope.sizeOptions[i];
+
+                    if (option.type === $scope.model.displayMode) {
+                        if (option.type === displayMode.original ||
+                            (option.type === displayMode.thumbnail && option.thumbnail.name === $scope.model.thumbnail.name) ||
+                            (option.type === displayMode.custom && !option.openDialog)) {
+                            $scope.sizeSelection = option;
+                            return;
+                        }
+                    }
+                }
+
+                $scope.sizeSelection = $scope.sizeOptions[0];
             };
         }])
         .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$modalInstance', 'model', function ($scope, $modalInstance, model) {
