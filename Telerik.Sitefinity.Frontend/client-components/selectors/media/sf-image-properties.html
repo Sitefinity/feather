@@ -4,6 +4,9 @@
     </div>
 
     <div class="modal-body">
+        <div class="container">
+            <sf-image-field sf-model="imageID" sf-image="image"></sf-image-field>
+        </div>
         <form name="imageProperties">
             <div class="form-group">
                 <div class="row">
@@ -14,6 +17,7 @@
                         <span ng-class="{'error': model.title.length>35}">{{model.title.length}}</span>
                         <span>Less than 35 characters are recommended</span>
                         <span ng-show="imageProperties.title.$error.required">Title is required</span>
+
                     </div>
                 </div>
                 <div class="row">
