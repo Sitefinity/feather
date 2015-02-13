@@ -3,7 +3,7 @@
     sfFields.requires.push('sfHtmlField');
     var module = angular.module('sfHtmlField', ['kendo.directives', 'sfServices']);
 
-    module.directive('sfHtmlField', ['serverContext', '$compile', function (serverContext, $compile) {
+    module.directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
         return {
             restrict: "E",
             scope: {
