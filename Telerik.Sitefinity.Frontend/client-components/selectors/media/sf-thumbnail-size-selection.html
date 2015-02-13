@@ -1,6 +1,6 @@
 ﻿
-<div ng-controller="sfMediaSizeSelectionCtrl">
-    <select ng-model="sizeSelection"></select>
+<div ng-controller="sfThumbnailSizeSelectionCtrl">
+    <select ng-model="sizeSelection" ng-options="item as item.title for item in sizeOptions track by item.index"></select>
 </div>
 <div template-url="{{customThumbnailSizeTemplateUrl}}"
     class="thumbnailSizeModal"
