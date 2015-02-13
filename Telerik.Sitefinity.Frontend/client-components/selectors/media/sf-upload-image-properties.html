@@ -26,14 +26,14 @@
         <label>Where to store the uploaded image?</label>
         <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.parentId' />
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error' : !model.title }">
         <div class="row">
             <div class="col-xs-8">
                 <label>Title</label>
                 <input class="form-control" type="text" ng-model="model.title" />
-                <div  ng-show="!model.title" class="alert alert-danger" role="alert">
-				    Title is required!
-				</div>
+                <div ng-show="!model.title" class="text-danger">
+                    Title is required!
+                </div>
             </div>
         </div>
     </div>
