@@ -18,7 +18,7 @@
 
                 var selection = newVal;
 
-                if (selection.type !== displayMode.custom || selection.customSize !== null) {
+                if (!selection.openDialog) {
                     $scope.model.displayMode = selection.type;
                     $scope.model.thumbnail = selection.thumbnail;
                     $scope.model.customSize = selection.customSize;
@@ -50,7 +50,8 @@
                     type: displayMode.original,
                     title: 'Original size: ' + $scope.model.item.Width + 'x' + $scope.model.item.Height + 'px',
                     thumbnail: null,
-                    customSize: null
+                    customSize: null,
+                    openDialog: false
                 });
 
                 for (var i = 0; i < thumbnailProfiles.length; i++) {
@@ -63,7 +64,8 @@
                             url: null,
                             name: profile.Id
                         },
-                        customSize: null
+                        customSize: null,
+                        openDialog: false
                     });
                 }
 
@@ -73,17 +75,29 @@
                         type: displayMode.custom,
                         title: 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + 'px',
                         thumbnail: null,
-                        customSize: $scope.model.customSize
+                        customSize: $scope.model.customSize,
+                        openDialog: false
+                    });
+
+                    $scope.sizeOptions.push({
+                        index: $scope.sizeOptions.length,
+                        type: displayMode.custom,
+                        title: 'Edit custom size...',
+                        thumbnail: null,
+                        customSize: $scope.model.customSize,
+                        openDialog: true
                     });
                 }
-
-                $scope.sizeOptions.push({
-                    index: $scope.sizeOptions.length,
-                    type: displayMode.custom,
-                    title: 'Custom size...',
-                    thumbnail: null,
-                    customSize: null
-                });
+                else {
+                    $scope.sizeOptions.push({
+                        index: $scope.sizeOptions.length,
+                        type: displayMode.custom,
+                        title: 'Custom size...',
+                        thumbnail: null,
+                        customSize: null,
+                        openDialog: true
+                    });
+                }
             };
         }]);
 })();
