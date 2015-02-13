@@ -2,7 +2,7 @@
     var sfFields = angular.module('sfFields');
     sfFields.requires.push('sfHtmlField');
 
-    angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField'])
+    angular.module('sfHtmlField', ['kendo.directives', 'sfServices'])
         .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
             return {
                 restrict: "E",
@@ -62,59 +62,50 @@
                         });
                     };
 
-                    scope.imagePropertiesDialog =
-                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-image-properties.html');
-
                     scope.openImageSelector = function () {
-
                         var range = editor.getRange();
                         var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
 
-                        mediaService.getLibrarySettings().then(function (settings) {
-                            var properties;
+                        var properties;
 
-                            var imageWrapper = $(nodes).closest('span.sfImageWrapper');
-                            if (imageWrapper.length) {
-                                properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML, settings);
-                            }
-                            else if ($(nodes).is('img')) {
-                                properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML, settings);
-                            }
-                            else {
-                                // Default data for testing. Remove after integration with properties dialog.
-                                properties = {
-                                    item: null,
-                                    title: 'Test image title',
-                                    alternativeText: 'Test image alt',
-                                    margin: {
-                                        top: null,
-                                        left: null,
-                                        bottom: null,
-                                        right: null
-                                    }
-                                };
-                            }
+                        var imageWrapper = $(nodes).closest('span.sfImageWrapper');
+                        if (imageWrapper.length) {
+                            properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML);
+                        }
+                        else if ($(nodes).is('img')) {
+                            properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML);
+                        }
+                        else {
+                            // Default data for testing. Remove after integration with properties dialog.
+                            properties = {
+                                item: null,
+                                title: 'Test image title',
+                                alternativeText: 'Test image alt',
+                                margin: {
+                                    top: null,
+                                    left: null,
+                                    bottom: null,
+                                    right: null
+                                }
+                            };
+                        }
 
-                            angular.element(".imagePropertiesModal").scope()
-                                .$openModalDialog({ sfModel: function () { return properties; } })
-                                .then(function (properties) {
-                                    if (properties && selectedImageId.Item) {
-                                        return mediaService.images.getById(selectedImageId.Item.Id);
-                                    }
-                                })
-                                .then(function (data) {
-                                    if (!data) {
-                                        return;
-                                    }
-                                    properties.item = data.Item;
+                        angular.element("#imageSelectorModal").scope().$openModalDialog()
+                            .then(function (selectedImageId) {
+                                return mediaService.images.getById(selectedImageId);
+                            })
+                            .then(function (data) {
+                                properties.item = data.Item;
 
-                                    // TODO: Pass the properties to the properties dialog and then exec insertHtml.
+                                // TODO: Pass the properties to the properties dialog and then exec insertHtml.
 
-                                    var wrapIt = true;
-                                    var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
-                                    editor.exec("insertHtml", { html: markup, split: true });
-                                });
-                        });
+                                return mediaService.getLibrarySettings();
+                            })
+                            .then(function (settings) {
+                                var wrapIt = true;
+                                var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
+                                editor.exec("insertHtml", { html: markup, split: true });
+                            });
                     };
 
                     scope.toggleHtmlView = function () {
@@ -204,5 +195,5 @@
                 };
 
                 $scope.cancel = $modalInstance.close;
-            }]);
+            }]);;
 })(jQuery);
