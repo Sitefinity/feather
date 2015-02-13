@@ -305,6 +305,9 @@
                         scope.$apply(function () {
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
+                                if (!scope.isInUploadMode) {
+                                    scope.model.parentId = getLibraryId();
+                                }
 
                                 openUploadPropertiesDialog(fileInput.files[0]);
                             }
@@ -446,7 +449,7 @@
 
                             default:
                                 scope.filters.basic.select(scope.filters.basic.selected || constants.filters.basicRecentItemsValue);
-                            }
+                        }
                     };
 
                     // load more images
@@ -496,7 +499,7 @@
                     */
 
                     scope.$watch('sortExpression', function (newVal, oldVal) {
-                        if(newVal !== oldVal) {
+                        if (newVal !== oldVal) {
                             if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
                                 // In recent items we reorder the items on client side
                                 reorderItems(newVal);
@@ -526,7 +529,7 @@
                     });
 
                     scope.$watch('filters.tag.query', function (newVal, oldVal) {
-                        if(newVal !== oldVal) {
+                        if (newVal !== oldVal) {
                             filtersLogic.loadTagTaxons(false);
                         }
                     });
@@ -541,8 +544,8 @@
                     });
 
                     scope.$watch('filters.category.query', function (newVal, oldVal) {
-                        if(newVal !== oldVal) {
-                            filtersLogic.getCategoryTaxons().then(function(items) {
+                        if (newVal !== oldVal) {
+                            filtersLogic.getCategoryTaxons().then(function (items) {
                                 scope.filters.category.filtered = items;
                             });
                         }
