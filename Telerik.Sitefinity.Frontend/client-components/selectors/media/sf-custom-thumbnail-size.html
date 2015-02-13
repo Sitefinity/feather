@@ -1,41 +1,41 @@
 ﻿<div class="modal-header">
-    <button type="button" class="close">&times;</button>
+    <button type="button" class="close" ng-click="cancelResizing()">&times;</button>
     <h3 class="modal-title">Custom thumbnail size</h3>
 </div>
 
 <div class="modal-body">
     <div class="form-group">
         <label>Resize image
-            <select ng-model="model.generationMethod">
+            <select ng-model="model.Method">
                 <option ng-value="constants.generationMethod.resize">Resize to area</option>
                 <option ng-value="constants.generationMethod.crop">Crop to area</option>
             </select>
         </label>
     </div>
-    <div class="form-group" ng-show="model.generationMethod==constants.generationMethod.resize">
+    <div class="form-group" ng-show="model.Method==constants.generationMethod.resize">
         <label>Max width
-            <input class="form-control" type="text" ng-model="model.maxWidth" />
+            <input class="form-control" type="text" ng-model="model.MaxWidth" />
             <span>px</span>
         </label>
         <label>Max height
-            <input class="form-control" type="text" ng-model="model.maxHeight" />
+            <input class="form-control" type="text" ng-model="model.MaxHeight" />
             <span>px</span>
         </label>
     </div>
-    <div class="form-group" ng-show="model.generationMethod==constants.generationMethod.crop">
+    <div class="form-group" ng-show="model.Method==constants.generationMethod.crop">
         <label<Width
-            <input class="form-control" type="text" ng-model="model.width" />
+            <input class="form-control" type="text" ng-model="model.Width" />
             <span>px</span>
         </label>
         <label>Height
-            <input class="form-control" type="text" ng-model="model.height" />
+            <input class="form-control" type="text" ng-model="model.Height" />
             <span>px</span>
         </label>
     </div>
     <div class="form-group">
         <div class="row">
             <label>
-                <input type="checkbox" ng-model="model.resizeToBigger" />
+                <input type="checkbox" ng-model="model.ScaleUp" />
                 Resize smaller images to bigger dimensions
             </label>
         </div>
@@ -43,16 +43,13 @@
     <div class="form-group">
         <div class="row">
             <label>Quality</label>
-            <select ng-model="model.quality">
-                <option>High</option>
-                <option>Medium</option>
-                <option>Low</option>
+            <select ng-model="model.Quality" ng-options="constants.quality">
             </select>
         </div>
     </div>
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left">Done</button>
-    <button type="button" class="btn btn-link  pull-left">Cancel</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="generateThumbnail()">Done</button>
+    <button type="button" class="btn btn-link  pull-left" ng-click="cancelResizing()">Cancel</button>
 </div>

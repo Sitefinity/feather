@@ -2,3 +2,9 @@
 <div ng-controller="sfMediaSizeSelectionCtrl">
     <select ng-model="sizeSelection"></select>
 </div>
+<div template-url="{{customThumbnailSizeTemplateUrl}}"
+    class="thumbnailSizeModal"
+    modal
+    size="normal"
+    dialog-controller="sfCustomThumbnailSizeCtrl">
+</div>
