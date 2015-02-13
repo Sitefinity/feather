@@ -4,7 +4,7 @@
             images: {
                 itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
                 albumItemType: 'Telerik.Sitefinity.Libraries.Model.Album',
-                albumsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/folders/'),
+                albumsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/'),
                 imagesServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/'),
                 createImageUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}')
             },
@@ -221,7 +221,7 @@
                     return;
                 }
                 var options = {
-                    parent: 'predecessors/' + id,
+                    parent: 'folders/predecessors/' + id,
                     excludeNeighbours: true
                 };
                 return getFolders(options, constants.images.albumsServiceUrl)
