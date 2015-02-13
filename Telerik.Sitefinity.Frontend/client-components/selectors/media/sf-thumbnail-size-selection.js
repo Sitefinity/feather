@@ -45,7 +45,7 @@
                 }
             });
 
-            var openDialog = function () {
+            var openModalDialog = function () {
                 return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: function () { return scope.model; } });
             };
 
