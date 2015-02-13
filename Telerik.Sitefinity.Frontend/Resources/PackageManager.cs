@@ -208,7 +208,12 @@ namespace Telerik.Sitefinity.Frontend.Resources
             }
             else
             {
-                var currentNode = SiteMapBase.GetActualCurrentNode();
+                var requestContext = context.Request.RequestContext;
+                var currentNode = requestContext.RouteData.DataTokens["SiteMapNode"] as PageSiteNode;
+
+                if (currentNode == null)
+                    currentNode = SiteMapBase.GetActualCurrentNode();
+
                 packageName = currentNode != null ? this.GetPackageFromNodeId(currentNode.Id.ToString()) : null;
             }
 
