@@ -572,8 +572,6 @@
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.parent.to(data.Id);
                         }
-
-                        console.log(scope.selectedItems);
                     });
 
                     scope.$on('sf-tree-item-selected', function (event, data) {
