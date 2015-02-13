@@ -102,7 +102,7 @@ describe('sfMediaService', function () {
             itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
             parentType: 'Telerik.Sitefinity.Libraries.Model.Album',
             itemsServicePath: appPath + '/Sitefinity/Services/Content/ImageService.svc/',
-            albumsServicePath: appPath + '/Sitefinity/Services/Content/AlbumService.svc/folders/',
+            albumsServicePath: appPath + '/Sitefinity/Services/Content/AlbumService.svc/',
             callbacks: {
                 testedObject: 'images',
                 folders: 'getFolders',

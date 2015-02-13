@@ -18,6 +18,14 @@
             name: 'Special thumbnail'
         };
 
+        this.customSize = {  // Keep the names of those properties as they are in order to support old HTML field.
+            MaxWidth: null,
+            MaxHeight: null,
+            ScaleUp: false,
+            Quality: null, // High, Medium, Low
+            Method: null // ResizeFitToAreaArguments, CropCropArguments
+        };
+
         this.title = 'Test iamge title';
         this.alternativeText = 'Test alternative title';
         this.alignment = 'Center';
@@ -27,6 +35,8 @@
             bottom: '300',
             right: '400'
         };
+
+        this.cssClass = null;
 
         this.openOriginalImageOnClick = false;
     };

@@ -4,6 +4,7 @@
 	.tags
 		overflow: hidden
 		padding: 3px 3px 1px
+		min-height: 35px
 		border: 1px solid $input-border
 		border-radius: $input-border-radius
 		background: #fff
@@ -76,13 +77,17 @@
 		border: 0
 		outline: 0
 		margin: 2px
-		padding: 0 0 4px 5px
+		padding: 1px 0 4px 5px
 		float: left
 		line-height: 1.7em
 		font-size: 86%
 
-	// Autocomplete
+	// Auto complete
+	.autocomplete
+		position: relative
+
 	.suggestion-list
+		overflow: hidden
 		position: absolute
 		background: #fff
 		width: 100%
