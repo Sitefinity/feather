@@ -1,10 +1,10 @@
 ﻿﻿<div class="Media">
-    <div class="Media-content"  sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)">
+    <div class="Media-content" sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)">
         <!--Upload image-->
+        <input type="file" accept=".jpg, .jpeg, .png, .gif, .bmp" class="file-upload-chooser-input" style="display: none !important" />
         <div ng-show="isInUploadMode" class="Media-upload-text">
             <div class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
-            <input type="file" accept=".jpg, .jpeg, .png, .gif, .bmp" class="file-upload-chooser-input" style="display:none !important" />
-            <div class="text-center">or simply implement drag &amp; drop here</div>
+            <div class="text-center">or simply drag &amp; drop here</div>
         </div>
 
         <!--Select image-->
@@ -19,7 +19,18 @@
                 <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)" sf-clear-search-string="clearSearch"> </sf-search-box>
             </div>
 
-            <div sf-collection sf-data="items" sf-model="selectedItems" sf-template-url="client-components/selectors/media/sf-image-collection.html" ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }"></div>
+            <div ng-if="!items.length" class="Media-upload-text">
+                <div class="text-center lead">NO IMAGES ICON</div>
+                <div class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
+                <div class="text-center">or simply drag &amp; drop here</div>
+            </div>
+
+            <div ng-if="items.length"
+                sf-collection sf-data="items"
+                sf-model="selectedItem"
+                sf-template-url="client-components/selectors/media/sf-image-collection.html"
+                ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
+            </div>
 
             <div class="Media-settings Media-settings--bottom">
                 <button type="button" class="btn btn-link btn-sm" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">Sorting and view</button>
@@ -50,7 +61,7 @@
             <ul class="nav nav-pills nav-stacked nav-sm">
                 <li ng-repeat="basicFilter in filters.basic.all"
                     ng-class="{ 'active': filters.basic.selected === basicFilter.value}">
-                    <a ng-click="filters.basic.select(basicFilter.value)" >{{basicFilter.title}}</a>
+                    <a ng-click="filters.basic.select(basicFilter.value)">{{basicFilter.title}}</a>
                 </li>
             </ul>
 
@@ -62,7 +73,8 @@
                 <div sf-tree
                     sf-model="filters.library.selected"
                     sf-request-children="filters.library.getChildren(parent)"
-                    sf-has-children-field="HasChildren"></div>
+                    sf-has-children-field="HasChildren">
+                </div>
             </div>
 
             <!--Tags Filter-->
@@ -71,10 +83,11 @@
                 <p class="m-bottom-xs">
                     <input class="form-control form-control-sm" type="text" placeholder="Narrow by typing..." ng-model="filters.tag.query"></input>
                 </p>
-                <span sf-collection
+                <div sf-collection
+                    class="sf-Tree-tags-infinite"
                     sf-model="filters.tag.selected"
                     sf-data="filters.tag.all"
-                    sf-template-url="client-components/selectors/media/sf-media-tag-taxon-items.html"></span>
+                    sf-template-url="client-components/selectors/media/sf-media-tag-taxon-items.html"></div>
             </span>
 
             <!--Categories Filter-->
@@ -121,10 +134,10 @@
     </div>
 </div>
 
-<div class="uploadPropertiesModal" 
-    template-url="{{uploadPropertiesTemplateUrl}}" 
-    modal 
-    size="normal" 
-    window-class="sf-designer-dlg sf-timespan-selector-dlg" 
+<div class="uploadPropertiesModal"
+    template-url="{{uploadPropertiesTemplateUrl}}"
+    modal
+    size="normal"
+    window-class="sf-designer-dlg sf-timespan-selector-dlg"
     dialog-controller="SfImageSelectorUploadPropertiesCtrl">
 </div>

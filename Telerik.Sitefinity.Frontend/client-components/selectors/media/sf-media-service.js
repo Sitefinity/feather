@@ -25,6 +25,7 @@
 
         var getItems = function (options, excludeFolders, serviceUrl, itemType) {
             options = options || {};
+            excludeFolders = excludeFolders ? excludeFolders : options.excludeFolders;
 
             var url = options.parent ? serviceUrl + 'parent/' + options.parent + "/" : serviceUrl;
 
@@ -197,6 +198,21 @@
                     .then(function (settings) {
                         var allLanguageSearch = settings.EnableAllLanguagesSearch.toLowerCase() === 'true';
                         options.filter = filterObject.composeExpression(allLanguageSearch);
+                       
+                        var selectedFolderSearch = settings.EnableSelectedFolderSearch.toLowerCase() === 'true';
+                        if (filterObject.query) {
+                            if (selectedFolderSearch) {
+                                options.parent = filterObject.parent;
+                                options.recursive = true;
+                                options.excludeFolders = true;
+                            }
+                            else {
+                                options.parent = null;
+                                options.recursive = false;
+                                options.excludeFolders = false;
+                            }
+                        }
+
                         return callback(options);
                     });
             },

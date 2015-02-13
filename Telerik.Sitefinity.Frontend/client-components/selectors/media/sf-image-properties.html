@@ -1,0 +1,101 @@
+﻿<div>
+    <div class="modal-header">
+        Image
+    </div>
+
+    <div class="modal-body">
+        <form name="imageProperties">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <label for="title">Title</label>
+                        <input class="form-control" id="title" name="title" type="text" ng-model="model.title" ng-required="true" />
+                        <span ng-class="{'error': model.title.length>35}">{{model.title.length}}</span>
+                        <span>Less than 35 characters are recommended</span>
+                        <span ng-show="imageProperties.title.$error.required">Title is required</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <label for="alternativeText">Alternative text</label>
+                        <input class="form-control" id="alternativeText" name="alternativeText" type="text" ng-model="model.alternativeText" />
+                        <span ng-class="{'error': model.alternativeText.length>35}">{{model.alternativeText.length}}</span>
+                        <span>Less than 35 characters are recommended</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <p>Alignment</p>
+                    <ul>
+                        <li>
+                            <label>
+                                <input type="radio" ng-model="model.alignment" value="None" />
+                                None
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" ng-model="model.alignment" value="Left" />
+                                Left
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" ng-model="model.alignment" value="Cemter" />
+                                Center
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" ng-model="model.alignment" value="Right" />
+                                Right
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <expander expander-title='More options'>
+                    <div class="row">
+                        <p>Margins</p>
+                        <ul>
+                            <li>
+                                <label>
+                                    Top
+                                    <input type="number" ng-model="model.margin.top" class="form-control"/>
+                                </label>
+                            </li>
+                            <li>
+                                <label>Right
+                                    <input type="number" ng-model="model.margin.right" class="form-control"/>
+                                </label>
+                            </li>
+                            <li>
+                                <label>Bottom
+                                    <input type="number" ng-model="model.margin.bottom" class="form-control"/>
+                                </label>
+                            </li>
+                            <li>
+                                <label>Left
+                                    <input type="number" ng-model="model.margin.left" class="form-control" />
+                                </label>
+                            </li>
+                        </ul>
+                        <span>px</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <label for="cssClasses">CSS classes</label>
+                            <input class="form-control" id="cssClasses" type="text" ng-model="model.cssClasses" />
+                        </div>
+                    </div>
+                </expander>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ng-show="!imageProperties.title.$error.required" class="btn btn-primary pull-left" ng-click="uploadImage()">Upload</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">Cancel</button>
+    </div>
+</div>

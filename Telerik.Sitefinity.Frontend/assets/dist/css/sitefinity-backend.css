@@ -8892,29 +8892,32 @@ tab {
   width: 100%;
   height: 48px;
   padding: 10px 20px;
+  border-bottom: 1px solid #e5e5e5;
   position: absolute;
   top: 0;
   left: 0;
   right: 0; }
-  /* line 199, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 200, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-settings .breadcrumb {
     padding: 2px 0 0; }
 
-/* line 202, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 203, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-settings--bottom {
   top: auto;
-  bottom: 0; }
+  bottom: 0;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: none; }
 
-/* line 207, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 210, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-settings-sort > span {
   font-size: 20px;
   cursor: pointer;
   color: #999; }
-  /* line 212, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 215, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-settings-sort > span.is-selected {
     color: #596C9B; }
 
-/* line 215, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 218, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-upload-text {
   position: absolute;
   top: 50%;
@@ -8922,63 +8925,78 @@ tab {
   right: 0;
   margin-top: -50px; }
 
-/* line 224, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 227, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .nav-sm > li > a {
   padding: 6px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-/* line 228, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 231, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .nav-pills {
   font-size: 13px; }
 
-/* line 232, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 235, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .nav-stacked strong {
   padding: 6px;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
-/* line 237, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 240, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .nav-stacked a {
   color: #000; }
-/* line 242, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 245, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .nav-stacked li.active > a, .nav-stacked li.active > a:hover {
   background-color: #bdbdbd; }
 
-/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+/* line 2, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+.sf-Tree-tags-infinite > .sf-Tree {
+  position: absolute;
+  top: 261px;
+  bottom: 38px;
+  left: 25px;
+  right: 20px;
+  overflow-y: auto; }
+
+/* line 10, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
 .sf-Tree {
   list-style: none;
   padding: 0; }
-  /* line 5, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+  /* line 14, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
   .sf-Tree .sf-Tree {
     margin: 0;
     padding-left: 10px;
     transition: opacity 0.2s ease 0.1s, max-height 1s ease;
     opacity: 1;
     max-height: 400px; }
-    /* line 12, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+    /* line 21, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
     .sf-Tree .sf-Tree.is-collapsed {
       max-height: 0;
       opacity: 0;
       transition: opacity 0, max-height 0.1s ease; }
 
-/* line 18, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
-.sf-Tree-item span {
-  padding: 5px;
-  display: block;
-  cursor: pointer;
-  border-radius: 4px; }
-  /* line 25, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
-  .sf-Tree-item span:hover, .sf-Tree-item span:focus {
-    background-color: #eee; }
-  /* line 28, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
-  .sf-Tree-item span.is-selected {
-    background-color: #bdbdbd;
-    color: #fff; }
+/* line 26, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+.sf-Tree-item {
+  width: 100%; }
+  /* line 29, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+  .sf-Tree-item span {
+    padding: 5px;
+    display: block;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden; }
+    /* line 41, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+    .sf-Tree-item span:hover, .sf-Tree-item span:focus {
+      background-color: #eee; }
+    /* line 44, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+    .sf-Tree-item span.is-selected {
+      background-color: #bdbdbd;
+      color: #fff; }
 
-/* line 32, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+/* line 48, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
 .sf-Tree-expander {
   height: 0;
   width: 0;
@@ -8990,14 +9008,14 @@ tab {
   transition: transform 0.2s ease;
   transform-origin: 20% 60%;
   transform: rotateZ(0); }
-  /* line 44, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+  /* line 60, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
   .sf-Tree-expander:before {
     content: "";
     display: block;
     margin: -10px 0 0 -10px;
     width: 20px;
     height: 20px; }
-  /* line 51, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
+  /* line 67, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
   .sf-Tree-expander.is-expanded {
     transform: rotateZ(90deg); }
 
@@ -9038,7 +9056,7 @@ tab {
   /* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .tags {
     overflow: hidden;
-    padding: 6px 6px 1px;
+    padding: 3px 3px 1px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background: #fff;
@@ -9055,7 +9073,6 @@ tab {
       box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6); }
     /* line 16, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
     .sf-FlatTaxonField .tags.focused {
-      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
       box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
   /* line 19, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .tag-list {
@@ -9064,7 +9081,7 @@ tab {
     list-style-type: none; }
   /* line 24, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .tag-item {
-    padding: 0.2em 0.6em 0.3em;
+    padding: 0.1em 0.6em 0.2em;
     float: left;
     background-color: #e4e4e4;
     color: #000;
@@ -9073,24 +9090,29 @@ tab {
     line-height: 1.7em;
     font-size: 86%;
     border-radius: 0.25em;
-    margin-right: 0.5em;
-    margin-bottom: 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 2px;
     position: relative;
     max-width: 33%;
     text-overflow: ellipsis;
-    overflow: hidden; }
-    /* line 41, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    overflow: hidden;
+    border: 1px solid transparent; }
+    /* line 42, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
     .sf-FlatTaxonField .tag-item:first-child {
       margin-left: 0; }
-    /* line 45, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
-    .sf-FlatTaxonField .tag-item:hover .remove-button {
+    /* line 47, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    .sf-FlatTaxonField .tag-item:hover .remove-button, .sf-FlatTaxonField .tag-item.selected .remove-button {
       display: block; }
-  /* line 48, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    /* line 50, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    .sf-FlatTaxonField .tag-item.selected {
+      background: #f2dede;
+      border: 1px solid #ebccd1; }
+  /* line 54, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .remove-button {
     display: none;
     position: absolute;
     right: 4px;
-    top: 5px;
+    top: 4px;
     color: #fff;
     border-radius: 50%;
     background: #ED2C2C;
@@ -9101,11 +9123,11 @@ tab {
     vertical-align: middle;
     font-weight: 700;
     line-height: 18px; }
-    /* line 65, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    /* line 71, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
     .sf-FlatTaxonField .remove-button:focus, .sf-FlatTaxonField .remove-button:hover {
       text-decoration: none;
       background-color: #9E0C0C; }
-  /* line 69, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+  /* line 75, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .input {
     border: 0;
     outline: 0;
@@ -9114,7 +9136,7 @@ tab {
     float: left;
     line-height: 1.7em;
     font-size: 86%; }
-  /* line 78, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+  /* line 84, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
   .sf-FlatTaxonField .suggestion-list {
     position: absolute;
     background: #fff;
@@ -9122,15 +9144,17 @@ tab {
     border: 1px solid #ccc;
     border-radius: 4px;
     padding-top: 10px;
-    margin-top: -10px; }
-    /* line 87, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+    padding-left: 0;
+    margin-top: -10px;
+    list-style: none; }
+    /* line 95, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
     .sf-FlatTaxonField .suggestion-list > li {
       padding: 2px 6px; }
-      /* line 90, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+      /* line 98, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
       .sf-FlatTaxonField .suggestion-list > li > em {
         font-weight: 700;
         font-style: normal; }
-      /* line 95, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
+      /* line 103, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field */
       .sf-FlatTaxonField .suggestion-list > li:hover, .sf-FlatTaxonField .suggestion-list > li.selected {
         background: #428BCA;
         color: #fff;
