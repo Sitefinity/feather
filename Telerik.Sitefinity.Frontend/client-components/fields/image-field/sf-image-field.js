@@ -29,7 +29,7 @@
 
                     if (scope.sfModel) {
                         getImage();
-                    };
+                    }
                     
                     scope.changeImage = function () {
                         angular.element(".imageSelectorModal").scope().$openModalDialog()
