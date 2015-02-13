@@ -32,7 +32,7 @@
                                     type: data.Item.Extension,
                                     size: Math.ceil(data.Item.TotalSize / 1000) + " KB",
                                     uploaded: getDateFromString(data.Item.DateCreated)
-                                }
+                                };
                             }
                         });
                     };
