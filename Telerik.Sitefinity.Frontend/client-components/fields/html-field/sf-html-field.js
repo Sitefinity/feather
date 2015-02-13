@@ -2,7 +2,7 @@
     var sfFields = angular.module('sfFields');
     sfFields.requires.push('sfHtmlField');
 
-    angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField'])
+    angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField', 'sfThumbnailSizeSelection'])
         .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
             return {
                 restrict: "E",
@@ -169,16 +169,18 @@
                 }
             };
         }])
-        .controller('sfImagePropertiesController', ['$scope', '$modalInstance', 'sfModel', function ($scope, $modalInstance, sfModel) {
-            $scope.model = sfModel;
+        .controller('sfImagePropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
+            function ($scope, $modalInstance, serverContext, sfModel) {
+                $scope.model = sfModel;
 
-            $scope.imageId = null;
-            $scope.image = null;
+                $scope.imageId = null;
 
-            $scope.done = function () {
-                $modalInstance.close($scope.model);
-            };
+                $scope.done = function () {
+                    $modalInstance.close($scope.model);
+                };
 
-            $scope.cancel = $modalInstance.close;
-        }]);
+                $scope.cancel = $modalInstance.dismiss;
+
+                $scope.thumbnailSizeTempalteUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-thumbnail-size-selection.html');
+            }]);
 })(jQuery);

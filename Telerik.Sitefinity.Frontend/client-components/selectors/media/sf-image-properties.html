@@ -5,7 +5,7 @@
 
     <div class="modal-body">
         <div class="container">
-            <sf-image-field sf-model="imageID" sf-image="image"></sf-image-field>
+            <sf-image-field sf-model="imageId" sf-image="model.item"></sf-image-field>
         </div>
         <form name="imageProperties">
             <div class="form-group">
@@ -63,7 +63,7 @@
             </div>
             <div>
                 <p>Image thumbnail</p>
-                <!--<div ng-include="thumbnailSizeTempalteUrl"></div>-->
+                <div ng-include="thumbnailSizeTempalteUrl"></div>
             </div>
             <div>
                 <expander expander-title='More options'>
