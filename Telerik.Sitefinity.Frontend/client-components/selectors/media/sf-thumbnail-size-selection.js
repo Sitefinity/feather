@@ -1,0 +1,89 @@
+﻿(function () {
+    var displayMode = {
+        original: 'Original',
+        thumbnail: 'Thumbnail',
+        custom: 'Custom'
+    };
+
+    angular.module('sfThumbnailSizeSelection', ['sfServices'])
+        .controller('sfThumbnailSizeSelectionCtrl', ['$scope', 'sfMediaService', function ($scope, mediaService) {
+            $scope.sizeSelection = null;
+            $scope.sizeOptions = [];
+
+            var thumbnailProfiles = [];
+
+            $scope.$watch('sizeSelection', function (newVal, oldVal) {
+                if (!newVal || !$scope.model)
+                    return;
+
+                var selection = newVal;
+
+                if (selection.type !== displayMode.custom || selection.customSize !== null) {
+                    $scope.model.displayMode = selection.type;
+                    $scope.model.thumbnail = selection.thumbnail;
+                    $scope.model.customSize = selection.customSize;
+                }
+                else {
+                    // open custom size dialog and then set model
+                }
+            });
+
+            $scope.$watch('[model.item.Width, model.item.Height]', function (newVal, oldVal) {
+                if (thumbnailProfiles && thumbnailProfiles.length > 0) {
+                    populateOptions();
+                }
+            }, true);
+
+            mediaService.images.thumbnailProfiles().then(function (data) {
+                if (data && data.Items) {
+                    thumbnailProfiles = data.Items;
+                    if ($scope.model && $scope.model.item && $scope.model.item.Width && $scope.model.item.Height) {
+                        populateOptions();
+                    }
+                }
+            });
+
+            var populateOptions = function () {
+                $scope.sizeOptions = [];
+                $scope.sizeOptions.push({
+                    index: $scope.sizeOptions.length,
+                    type: displayMode.original,
+                    title: 'Original size: ' + $scope.model.item.Width + 'x' + $scope.model.item.Height + 'px',
+                    thumbnail: null,
+                    customSize: null
+                });
+
+                for (var i = 0; i < thumbnailProfiles.length; i++) {
+                    var profile = thumbnailProfiles[i];
+                    $scope.sizeOptions.push({
+                        index: $scope.sizeOptions.length,
+                        type: displayMode.thumbnail,
+                        title: profile.Title,
+                        thumbnail: {
+                            url: null,
+                            name: profile.Id
+                        },
+                        customSize: null
+                    });
+                }
+
+                if ($scope.model.customSize && $scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
+                    $scope.sizeOptions.push({
+                        index: $scope.sizeOptions.length,
+                        type: displayMode.custom,
+                        title: 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + 'px',
+                        thumbnail: null,
+                        customSize: $scope.model.customSize
+                    });
+                }
+
+                $scope.sizeOptions.push({
+                    index: $scope.sizeOptions.length,
+                    type: displayMode.custom,
+                    title: 'Custom size...',
+                    thumbnail: null,
+                    customSize: null
+                });
+            };
+        }]);
+})();
