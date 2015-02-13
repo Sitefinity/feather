@@ -95,7 +95,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" ng-show="!imageProperties.title.$error.required" class="btn btn-primary pull-left" ng-click="uploadImage()">Upload</button>
+        <button type="button" ng-disabled="imageProperties.title.$error.required" class="btn btn-primary pull-left" ng-click="uploadImage()">Upload</button>
         <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">Cancel</button>
     </div>
 </div>
