@@ -29,6 +29,7 @@
                     bottom: null,
                     right: null
                 };
+                this.cssClass = null;
 
                 this.openOriginalImageOnClick = false;
             };
@@ -143,6 +144,7 @@
                     jElementToInsert.attr('src', src);
 
                     jElementToInsert.attr('alt', properties.alternativeText);
+                    jElementToInsert.attr('class', properties.cssClass);
                     if (properties.title) {
                         jElementToInsert.attr('title', properties.title);
                     }
@@ -218,6 +220,7 @@
 
                     result.title = jMarkup.attr('title');
                     result.alternativeText = jMarkup.attr('alt');
+                    result.cssClass = jMarkup.attr('class');
 
                     if (jMarkup.css('vertical-align') === 'middle') {
                         result.alignment = 'Center';
