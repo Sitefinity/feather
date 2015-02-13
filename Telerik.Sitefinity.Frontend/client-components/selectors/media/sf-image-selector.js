@@ -71,7 +71,7 @@
             return {
                 restrict: 'E',
                 scope: {
-                    selectedItems: '=?sfModel'
+                    selectedItems: '=sfModel'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -572,8 +572,6 @@
                             scope.filters.basic.selected = null;
                             scope.filterObject.set.parent.to(data.Id);
                         }
-
-                        console.log(scope.selectedItems);
                     });
 
                     scope.$on('sf-tree-item-selected', function (event, data) {
@@ -609,7 +607,7 @@
         .controller('SfImageSelectorUploadPropertiesCtrl', ['$scope', '$modalInstance', 'sfMediaService', 'sfFileModel', function myfunction($scope, $modalInstance, sfMediaService, sfFileModel) {
             $scope.model = sfFileModel;
 
-            $scope.model.file.textSize = Math.round($scope.model.file.size / 1000) + " KB";
+            $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1000) + " KB";
 
             var fileName = $scope.model.file.name;
             $scope.uploadInfo = {};

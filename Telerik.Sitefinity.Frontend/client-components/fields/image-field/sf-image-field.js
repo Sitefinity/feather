@@ -17,40 +17,48 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
+                    var getDateFromString = function (dateStr) {
+                        return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')'))))).toGMTString();
+                    };
+
                     var getImage = function () {
                         sfMediaService.images.getById(scope.sfModel, scope.sfProvider).then(function (data) {
-                            console.log(data);
-
                             if (data && data.Item) {
                                 scope.sfModel = data.Item.Id;
-                                scope.image = data.Item;
+                                scope.sfImage = data.Item;
+                                scope.info = {
+                                    url: data.Item.ThumbnailUrl,
+                                    title: data.Item.Title.Value,
+                                    type: data.Item.Extension,
+                                    size: Math.ceil(data.Item.TotalSize / 1000) + " KB",
+                                    uploaded: getDateFromString(data.Item.DateCreated)
+                                }
                             }
                         });
                     };
 
-                    scope.selectedItemIds = [];
-
-                    scope.changeImage = function () {
-                        angular.element('.imageSelectorModal').scope().$openModalDialog();
+                    scope.model = {
+                        selectedItemIds: null
                     };
 
                     scope.editAllProperties = function () {
-                        alert('TODO');
                     };
 
                     scope.done = function () {
-                        angular.element('.imageSelectorModal').scope().$modalInstance.close();
+                        scope.$modalInstance.close();
 
-                        if (scope.selectedItemIds.length) {
-                            scope.sfModel = scope.selectedItemIds[0];
+                        if (scope.model.selectedItemIds && scope.model.selectedItemIds.length) {
+                            scope.sfModel = scope.model.selectedItemIds[0];
                             getImage();
                         }
                     };
 
                     scope.cancel = function () {
-                        angular.element('.imageSelectorModal').scope().$modalInstance.close();
+                        scope.$modalInstance.close();
+                    };
 
-                        scope.selectedItemIds = [];
+                    scope.changeImage = function () {
+                        scope.$openModalDialog();
                     };
 
                     // Initialize

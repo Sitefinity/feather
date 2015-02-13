@@ -4,6 +4,9 @@
     </div>
 
     <div class="modal-body">
+        <div class="container">
+            <sf-image-field sf-model="imageID" sf-image="image"></sf-image-field>
+        </div>
         <form name="imageProperties">
             <div class="form-group">
                 <div class="row">
@@ -100,12 +103,7 @@
         </form>
     </div>
     <div class="modal-footer">
-<<<<<<< HEAD
-        <button type="button" class="btn btn-primary pull-left" ng-click="save()">Done</button>
-        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
-=======
         <button type="button" ng-disabled="imageProperties.title.$error.required" class="btn btn-primary pull-left" ng-click="uploadImage()">Upload</button>
         <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">Cancel</button>
->>>>>>> origin/image-selector
     </div>
 </div>
