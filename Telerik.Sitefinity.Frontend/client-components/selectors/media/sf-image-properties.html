@@ -12,6 +12,36 @@
                         <p>Title</p>
                     </div>
 
+                    <div>
+                        <p>Alignment</p>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="radio" ng-model="model.alignment" value="None" />
+                                    None
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" ng-model="model.alignment" value="Left" />
+                                    Left
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" ng-model="model.alignment" value="Cemter" />
+                                    Center
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" ng-model="model.alignment" value="Right" />
+                                    Right
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
                     <expander expander-title='More options'>
 
                     </expander>
@@ -21,8 +51,8 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()">Upload</button>
-        <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">Cancel</button>
+        <button type="button" class="btn btn-primary pull-left" ng-click="save()">Done</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
     </div>
 
 </div>
