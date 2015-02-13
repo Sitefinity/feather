@@ -169,17 +169,16 @@
                 }
             };
         }])
-        .controller('sfImagePropertiesController', ['$scope', '$modalInstance', 'sfModel',
-            function ($scope, $modalInstance, sfModel) {
-                $scope.model = sfModel;
+        .controller('sfImagePropertiesController', ['$scope', '$modalInstance', 'sfModel', function ($scope, $modalInstance, sfModel) {
+            $scope.model = sfModel;
 
-                $scope.imageId = null;
-                $scope.image = null;
+            $scope.imageId = null;
+            $scope.image = null;
 
-                $scope.done = function () {
-                    $modalInstance.close($scope.model);
-                };
+            $scope.done = function () {
+                $modalInstance.close($scope.model);
+            };
 
-                $scope.cancel = $modalInstance.close;
-            }]);
+            $scope.cancel = $modalInstance.close;
+        }]);
 })(jQuery);
