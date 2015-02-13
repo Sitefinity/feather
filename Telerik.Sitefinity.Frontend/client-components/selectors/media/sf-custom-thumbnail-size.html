@@ -6,19 +6,29 @@
 <div class="modal-body">
     <div class="form-group">
         <label>Resize image
-            <select>
-                <option>Resize to area</option>
-                <option>Crop to area</option>
+            <select ng-model="model.generationMethod">
+                <option ng-value="constants.generationMethod.resize">Resize to area</option>
+                <option ng-value="constants.generationMethod.crop">Crop to area</option>
             </select>
         </label>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-show="model.generationMethod==constants.generationMethod.resize">
         <label>Max width
             <input class="form-control" type="text" ng-model="model.maxWidth" />
             <span>px</span>
         </label>
         <label>Max height
             <input class="form-control" type="text" ng-model="model.maxHeight" />
+            <span>px</span>
+        </label>
+    </div>
+    <div class="form-group" ng-show="model.generationMethod==constants.generationMethod.crop">
+        <label<Width
+            <input class="form-control" type="text" ng-model="model.width" />
+            <span>px</span>
+        </label>
+        <label>Height
+            <input class="form-control" type="text" ng-model="model.height" />
             <span>px</span>
         </label>
     </div>
