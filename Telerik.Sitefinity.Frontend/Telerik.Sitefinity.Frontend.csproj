@@ -430,6 +430,7 @@
     <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-98a850f5da55483dd11b21851a40c70b.ttf" />
     <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-98a850f5da55483dd11b21851a40c70b.woff" />
     <None Include="assets\feather-icons.json" />
+    <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="assets\jshint.json" />
     <None Include="assets\package.json" />
     <None Include="assets\src\sass\bootstrap\_alerts.sass" />
@@ -539,13 +540,15 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-media-tag-taxon-items.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-filter.js" />
     <EmbeddedResource Include="client-components\fields\sf-fields.js" />
-    <EmbeddedResource Include="client-components\selectors\media\sf-image-selector-modal.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector-modal.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-markup-service.js" />
     <EmbeddedResource Include="client-components\fields\drag-drop\sf-drag-drop.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-properties.html" />
     <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.html" />
     <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-custom-thumbnail-size.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-thumbnail-size-selection.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-thumbnail-size-selection.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
