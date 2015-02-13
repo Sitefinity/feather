@@ -169,17 +169,18 @@
                 }
             };
         }])
-        .controller('sfImagePropertiesController', ['$scope', '$modalInstance', 'sfModel',
-            function ($scope, $modalInstance, sfModel) {
+        .controller('sfImagePropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
+            function ($scope, $modalInstance, serverContext, sfModel) {
                 $scope.model = sfModel;
 
                 $scope.imageId = null;
-                $scope.image = null;
 
                 $scope.done = function () {
                     $modalInstance.close($scope.model);
                 };
 
-                $scope.cancel = $modalInstance.close;
+                $scope.cancel = $modalInstance.dismiss;
+
+                $scope.thumbnailSizeTempalteUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-thumbnail-size-selection.html');
             }]);
 })(jQuery);
