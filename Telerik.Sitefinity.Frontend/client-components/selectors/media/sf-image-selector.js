@@ -25,6 +25,9 @@
                 }
             };
 
+            var IMAGE_REGEX = /^image\/(jpg|jpeg|png|gif|bmp)$/g;
+            var NOT_IMAGE_ERROR = 'This file type is not allowed to upload. Only files with the following extensions are allowed: jpg, jpeg, png, gif, bmp';
+
             var constants = {
                 initialLoadedItemsCount: 50,
                 infiniteScrollLoadedItemsCount: 20,
@@ -277,7 +280,16 @@
                     // drag-drop logic
                     scope.dataTransferDropped = function (dataTransferObject) {
                         // using only the first file
+
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
+                            var file = dataTransferObject.files[0];
+                            if (!file.type.match(IMAGE_REGEX)) {
+                                scope.error = {
+                                    show: true,
+                                    message: NOT_IMAGE_ERROR
+                                };
+                                return;
+                            }
                             if (!scope.isInUploadMode) {
                                 if (scope.selectedFilterOption == 1) {
                                     // set library id or null if in default library
@@ -329,11 +341,17 @@
                         scope.model.file = file;
 
                         angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: function () { return scope.model; } })
-                            .then(function (uploadedImageId) {
-                                if (uploadedImageId) {
-                                    scope.selectedItems.push(uploadedImageId);
+                            .then(function (uploadedImage) {
+                                if (uploadedImage && uploadedImage.ContentId) {
+                                    scope.selectedItems.push(uploadedImage.ContentId);
                                     scope.isInUploadMode = false;
                                     scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                                }
+                                else if (uploadedImage.ErrorMessage) {
+                                    scope.error = {
+                                        show: true,
+                                        message: uploadedImage.ErrorMessage
+                                    };
                                 }
 
                                 restoreFileModel();
@@ -492,6 +510,7 @@
                         scope.filters.date.selected = [];
                         scope.filters.tag.selected = [];
                         scope.filters.category.selected = [];
+                        scope.error = null;
                     };
 
                     /*
@@ -617,7 +636,7 @@
 
             var successAction = function (data) {
                 var firstItem = data[0] || {};
-                $modalInstance.close(firstItem.ContentId);
+                $modalInstance.close(firstItem);
             };
 
             var progressAction = function (progress) {
