@@ -546,6 +546,7 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-image-properties.html" />
     <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.html" />
     <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-custom-thumbnail-size.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-thumbnail-size-selection.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-thumbnail-size-selection.js" />
     <Content Include="Mvc\assets\mvc.css" />
