@@ -2,7 +2,7 @@
     var sfFields = angular.module('sfFields');
     sfFields.requires.push('sfHtmlField');
 
-    angular.module('sfHtmlField', ['kendo.directives', 'sfServices'])
+    angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField'])
         .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
             return {
                 restrict: "E",
@@ -196,17 +196,10 @@
             function ($scope, $modalInstance, sfModel) {
                 $scope.model = sfModel
 
-                $scope.save = function () {
+                $scope.done = function () {
                     $modalInstance.close($scope.model);
                 };
 
                 $scope.cancel = $modalInstance.close;
-
-                if (!sfModel.item) {
-                    angular.element(".imageSelectorModal")
-                           .scope()
-                           .$openModalDialog()
-                           .then($modalInstance.close);
-                }
             }]);
 })(jQuery);
