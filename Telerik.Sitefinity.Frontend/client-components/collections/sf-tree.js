@@ -16,7 +16,7 @@
                 }
                 else if (item.Id) {
                     for (i = 0; i < itemsArray.length; i++) {
-                        if (itemsArray[i] === item.Id) {
+                        if (itemsArray[i].Id === item.Id) {
                             return i;
                         }
                     }
