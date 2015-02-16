@@ -10,6 +10,8 @@
                 this.customSize = {  // Keep the names of those properties as they are in order to support old HTML field.
                     MaxWidth: null,
                     MaxHeight: null,
+                    Width: null,
+                    Height: null,
                     ScaleUp: false,
                     Quality: null, // High, Medium, Low
                     Method: null // ResizeFitToAreaArguments, CropCropArguments

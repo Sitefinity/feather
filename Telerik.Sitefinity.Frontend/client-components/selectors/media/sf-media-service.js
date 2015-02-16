@@ -10,7 +10,7 @@
             },
             uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/'),
-            thumbnailService: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/thumbnail-profiles/')
+            thumbnailServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/')
         };
 
         var getById = function (id, provider, itemType, serviceUrl) {
@@ -152,7 +152,18 @@
         };
 
         var thumbnailProfiles = function (libraryType) {
-            return serviceHelper.getResource(constants.thumbnailService).get({ libraryType: libraryType }).$promise;
+            var thumbnailProfilesServiceUrl = constants.thumbnailServiceUrl + 'thumbnail-profiles/';
+            return serviceHelper.getResource(thumbnailProfilesServiceUrl).get({ libraryType: libraryType }).$promise;
+        };
+
+        var checkCustomThumbnailParams = function (methodName, params) {
+            var checkThumbnailParamsServiceUrl = constants.thumbnailServiceUrl + 'custom-image-thumbnail/checkParameters';
+            return serviceHelper.getResource(checkThumbnailParamsServiceUrl).get({ methodName: methodName, parameters: params }).$promise;
+        };
+
+        var getCustomThumbnailUrl = function (imageId, customUrlParams, libraryProvider) {
+            var customThumbnailUrlService = constants.thumbnailServiceUrl + 'custom-image-thumbnail/url';
+            return serviceHelper.getResource(customThumbnailUrlService).get({ imageId: imageId, customUrlParameter: customUrlParams, libraryProvider: libraryProvider }).$promise;
         };
 
         var imagesObj = {

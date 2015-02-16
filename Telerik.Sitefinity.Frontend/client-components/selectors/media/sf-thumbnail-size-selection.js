@@ -25,9 +25,9 @@
                     $scope.model.customSize = selection.customSize;
                 }
                 else {
-                    // open custom size dialog and then set model
-
                     openModalDialog().then(function (model) {
+                        $scope.model.displayMode = selection.type;
+                        $scope.model.thumbnail = selection.thumbnail;
                         $scope.model.customSize = model;
                     });
                 }
@@ -97,6 +97,25 @@
                         openDialog: true
                     });
                 }
+                else if ($scope.model.customSize && $scope.model.customSize.Width && $scope.model.customSize.Height) {
+                    $scope.sizeOptions.push({
+                        index: $scope.sizeOptions.length,
+                        type: displayMode.custom,
+                        title: 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px',
+                        thumbnail: null,
+                        customSize: $scope.model.customSize,
+                        openDialog: false
+                    });
+
+                    $scope.sizeOptions.push({
+                        index: $scope.sizeOptions.length,
+                        type: displayMode.custom,
+                        title: 'Edit custom size...',
+                        thumbnail: null,
+                        customSize: $scope.model.customSize,
+                        openDialog: true
+                    });
+                }
                 else {
                     $scope.sizeOptions.push({
                         index: $scope.sizeOptions.length,
@@ -145,6 +164,8 @@
             $scope.model = model || {  // Keep the names of those properties as they are in order to support old HTML field.
                 MaxWidth: null,
                 MaxHeight: null,
+                Width: null,
+                Height: null,
                 ScaleUp: false,
                 Quality: $scope.quality[0],
                 Method: $scope.methodOptions[0].value
