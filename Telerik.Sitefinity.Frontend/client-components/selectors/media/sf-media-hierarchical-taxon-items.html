@@ -1,0 +1,7 @@
+<ul class="sf-Tree">
+    <li class="sf-Tree-item" ng-repeat="item in items">
+        <span ng-bind="::item.Title"
+            ng-click="select(item)"
+            ng-class="{'is-selected' : isSelected(item) === true}"></span>
+    </li>
+</ul>

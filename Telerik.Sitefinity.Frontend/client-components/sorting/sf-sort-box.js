@@ -19,10 +19,10 @@
                     */
                     scope.sfSortOptions = [
                     {
-                        title: 'New-uploaded first',
+                        title: 'Last created first',
                         value: 'DateCreated DESC'
                     }, {
-                        title: 'New-modified first',
+                        title: 'Last modified first',
                         value: 'LastModified DESC'
                     }, {
                         title: 'Title (A-Z)',

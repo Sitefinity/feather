@@ -6,7 +6,7 @@
  * this directive is not to provide eye-candy features, such as loaders
  * etc.
  */
-(function () {
+; (function () {
 
     angular.module('sfInfiniteScroll', []).directive('sfInfiniteScroll', [function () {
 
@@ -24,7 +24,7 @@
         var link = function ($scope, element, attributes) {
 
             // set overflow of the element to scroll
-            $(element).css('overflow-y', 'scroll');
+            $(element).css('overflow-y', 'auto');
 
             element.off('scroll');
             element.on('scroll', function () {

@@ -9,6 +9,13 @@
         templateCache = $templateCache;
     }));
 
+    afterEach(function () {
+        //Tear down.
+        var leftOver = $('.testDiv');
+        leftOver.empty();
+        leftOver.remove();
+    });
+
     it('[Boyko-Karadzhov] / should render all items.', function () {
         var scope = rootScope.$new();
         templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/reder-all-items.html', '<li ng-repeat="item in items" class="sfCollectionItem"><div><span>Id:</span><span ng-bind="item.id"></span></div><div ng-bind="item.title"></div></li>');
@@ -26,7 +33,7 @@
 
         expect($('.sfCollectionItem').length).toEqual(5);
 
-        for (var i = 1; i <= 5; i++)
+        for (i = 1; i <= 5; i++)
             expect($('.sfCollectionItem span:contains(' + i + ')').length).toEqual(1);
     });
 
@@ -94,30 +101,6 @@
         expect(scope.selectedItems.length).toEqual(2);
         expect(scope.selectedItems[0]).toEqual(2);
         expect(scope.selectedItems[1]).toEqual(4);
-    });
-
-    it('[Boyko-Karadzhov] / should set sf-collection-grid class by default.', function () {
-        var scope = rootScope.$new();
-        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/views.html', '<span>The collection.</span><div><a class="grid" ng-click="switchToGrid()">Grid</a><a class="list" ng-click="switchToList()">List</a></div>');
-
-        var directiveMarkup = '<div sf-collection sf-template-url="sf-collection/views.html"></div>';
-        var element = commonMethods.compileDirective(directiveMarkup, scope);
-
-        expect($(element).is('.sf-collection-grid')).toBe(true);
-        expect($(element).is('.sf-collection-list')).toBe(false);
-    });
-
-    it('[Boyko-Karadzhov] / should set sf-collection-list class when switchToList is clicked.', function () {
-        var scope = rootScope.$new();
-        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-collection/views.html', '<span>The collection.</span><div><a class="grid" ng-click="switchToGrid()">Grid</a><a class="list" ng-click="switchToList()">List</a></div>');
-
-        var directiveMarkup = '<div sf-collection sf-template-url="sf-collection/views.html"></div>';
-        var element = commonMethods.compileDirective(directiveMarkup, scope);
-        $(element).find('.list').click();
-        scope.$digest();
-
-        expect($(element).is('.sf-collection-grid')).toBe(false);
-        expect($(element).is('.sf-collection-list')).toBe(true);
     });
 
     it('[dzhenko] / should have the only selected item if clicked twice and sf-deselectable and sf-multiselect are NOT present (by default deselecting is not allowed).', function () {

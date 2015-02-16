@@ -1,0 +1,8 @@
+﻿<ul class="sf-Tree" sf-infinite-scroll="$parent.filters.tag.loadMore()">
+    <li class="sf-Tree-item" ng-repeat="item in items" ng-click="select(item)">
+        <span ng-class="{ 'is-selected': isSelected(item) }">{{item.Title}}</span>
+    </li>
+    <li class="text-center">
+		<sf-loading ng-show="$parent.filters.tag.isLoading"></sf-loading>
+	</li>
+</ul>

@@ -1,0 +1,114 @@
+.sf-FlatTaxonField
+	position: relative
+
+	.tags
+		overflow: hidden
+		padding: 3px 3px 1px
+		min-height: 35px
+		border: 1px solid $input-border
+		border-radius: $input-border-radius
+		background: #fff
+		position: relative
+		z-index: 1
+		@include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s)
+		@include form-control-focus
+
+
+		&.focused
+			box-shadow: inset 0 1px 1px rgba(0,0,0,.075)
+
+	.tag-list
+		margin: 0
+		padding: 0
+		list-style-type: none
+
+	.tag-item
+		padding: 0.1em .6em 0.2em
+		float: left
+		background-color: #e4e4e4
+		color: #000
+		font-weight: 400
+		vertical-align: top
+		line-height: 1.7em
+		font-size: 86%
+		border-radius: .25em
+		margin-right: 0.2em
+		margin-bottom: 2px
+		position: relative
+		max-width: 33%
+		text-overflow: ellipsis
+		overflow: hidden
+		border: 1px solid transparent
+
+		&:first-child
+			margin-left: 0
+
+		&:hover,
+		&.selected
+			.remove-button
+				display: block
+
+		&.selected
+			background: #f2dede
+			border: 1px solid #ebccd1
+
+	.remove-button
+		display: none
+		position: absolute
+		right: 4px
+		top: 4px
+		color: #fff
+		border-radius: 50%
+		background: #ED2C2C
+		width: 16px
+		text-indent: 3px
+		height: 16px
+		font-size: 16px
+		vertical-align: middle
+		font-weight: 700
+		line-height: 18px
+
+		&:focus,
+		&:hover
+			text-decoration: none
+			background-color: #9E0C0C
+
+	.input
+		border: 0
+		outline: 0
+		margin: 2px
+		padding: 1px 0 4px 5px
+		float: left
+		line-height: 1.7em
+		font-size: 86%
+
+	// Auto complete
+	.autocomplete
+		position: relative
+
+	.suggestion-list
+		overflow: hidden
+		position: absolute
+		background: #fff
+		width: 100%
+		border: 1px solid $input-border
+		border-radius: $input-border-radius
+		padding-top: 10px
+		padding-left: 0
+		margin-top: -10px
+		list-style: none
+
+		> li
+			padding: 2px 6px
+
+			> em
+				font-weight: 700
+				font-style: normal
+
+			&:hover,
+			&.selected
+				background: #428BCA
+				color: #fff
+				cursor: pointer
+
+

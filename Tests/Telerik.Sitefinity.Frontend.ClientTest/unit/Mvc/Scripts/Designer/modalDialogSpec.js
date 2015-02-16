@@ -19,7 +19,7 @@ describe('modal directive', function () {
         scope.test = 'test prop';
         scope.open = function () {
             this.$openModalDialog();
-        }
+        };
 
         dialogsService = _dialogsService_;
 
@@ -49,7 +49,7 @@ describe('modal directive', function () {
         if (!skipClean) {
             $modal.open.reset();
         }
-    }
+    };
 
     var assertOpenWithScope = function () {
         var mostRecent = $modal.open.mostRecentCall;
@@ -65,7 +65,7 @@ describe('modal directive', function () {
         expect(args.controller).toBeUndefined();
 
         $modal.open.reset();
-    }
+    };
 
     it('[GMateev] / should open dialog on page load with given controller.]', function () {
         var template =
@@ -74,7 +74,7 @@ describe('modal directive', function () {
                 '<div class="modal-body">' +
                     '<h2>Body</h2>' +
                 '</div>'+
-            '</script>'
+            '</script>'+
         '</div>';
 
         commonMethods.compileDirective(template, scope);

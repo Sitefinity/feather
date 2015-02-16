@@ -12,7 +12,8 @@ module.exports = function (grunt) {
 					'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
-					'Telerik.Sitefinity.Frontend/client-components/**/*.js'
+					'Telerik.Sitefinity.Frontend/client-components/**/*.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/**/*.js'
 			]
 		},
 		
@@ -23,14 +24,12 @@ module.exports = function (grunt) {
 				'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
 				'Telerik.Sitefinity.Frontend/MVC/Scripts/Designer/*.js',
 				'Telerik.Sitefinity.Frontend/MVC/Scripts/*.js',
-				'Telerik.Sitefinity.Frontend/client-components/fields/**/*.js',
-				'Telerik.Sitefinity.Frontend/client-components/search/**/*.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-services.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selectors.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.js',
 				'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.js',
                 'Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.js',
-				'Telerik.Sitefinity.Frontend/client-components/selectors/**/*.js',
+				'Telerik.Sitefinity.Frontend/client-components/fields/sf-fields.js',
 				'Telerik.Sitefinity.Frontend/client-components/**/*.js',
 				'!Telerik.Sitefinity.Frontend/Designers/Scripts/page-editor.js',
 				'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
@@ -45,7 +44,8 @@ module.exports = function (grunt) {
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/common-methods.js',
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/jasmine-matchers.js',
 					'Telerik.Sitefinity.Frontend/MVC/Scripts/Bootstrap/js/*.js',
-					'!Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/**'
+					'!Telerik.Sitefinity.Frontend/Mvc/Scripts/Angular/**',
+					'Telerik.Sitefinity.Frontend/MVC/Scripts/ng-tags-input.min/ng-tags-input.min.js'
 					],
 					specs: ['Tests/Telerik.Sitefinity.Frontend.ClientTest/unit/**/*.js'],
 					junit: {

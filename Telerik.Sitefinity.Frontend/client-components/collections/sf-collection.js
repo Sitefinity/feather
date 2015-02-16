@@ -4,12 +4,14 @@
             return {
                 restrict: 'AE',
                 scope: {
+                    items: '=sfData',
+                    selectedItemIds: '=?sfModel',
                     sfMultiselect: '@',
                     sfDeselectable: '@',
-                    items: '=sfData',
-                    sfIdentifier: '@',
-                    selectedItemIds: '=?sfModel'
+                    sfIdentifier: '@'
                 },
+
+
                 templateUrl: function (elem, attrs) {
                     if (!attrs.sfTemplateUrl) {
                         throw { message: "You must provide template url." };
@@ -19,15 +21,9 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, attrs.sfTemplateUrl);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    var classes = {
-                        grid: 'sf-collection-grid',
-                        list: 'sf-collection-list'
-                    };
-
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.selectedItemIds = scope.selectedItemIds || [];
-                    
-                    element.addClass(classes.grid);
+
                     scope.isSelected = function (item) {
                         if (scope.selectedItemIds === undefined) {
                             return false;
@@ -63,16 +59,6 @@
                         }
 
                         scope.$emit('sf-collection-item-selected', item);
-                    };
-
-                    scope.switchToGrid = function () {
-                        element.removeClass(classes.list);
-                        element.addClass(classes.grid);
-                    };
-
-                    scope.switchToList = function () {
-                        element.removeClass(classes.grid);
-                        element.addClass(classes.list);
                     };
                 }
             };
