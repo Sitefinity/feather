@@ -142,6 +142,10 @@
                         src = properties.item.MediaUrl;
                     }
 
+                    if (properties.displayMode === 'Custom') {
+                        src = properties.thumbnail.url;
+                    }
+
                     var jElementToInsert = $('<img />');
                     jElementToInsert.attr('sfref', sfref);
                     jElementToInsert.attr('src', src);
@@ -221,6 +225,12 @@
                     }
                     else {
                         result.item.MediaUrl = jMarkup.attr('src');
+                    }
+
+                    if (result.displayMode === 'Custom') {
+                        result.thumbnail.url = jMarkup.attr('src');
+                        result.customSize = JSON.parse(jMarkup.attr('customsizemethodproperties'));
+                        result.customSize.Method = jMarkup.attr('method');
                     }
 
                     result.title = jMarkup.attr('title');
