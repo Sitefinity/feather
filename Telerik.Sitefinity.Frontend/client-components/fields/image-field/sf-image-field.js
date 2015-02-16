@@ -3,7 +3,7 @@
     sfFields.requires.push('sfImageField');
 
     angular.module('sfImageField', ['sfServices', 'sfImageSelector'])
-        .directive('sfImageField', ['serverContext', 'sfMediaService', function (serverContext, sfMediaService) {
+        .directive('sfImageField', ['serverContext', 'sfMediaService', 'sfMediaFilter', function (serverContext, sfMediaService, sfMediaFilter) {
             return {
                 restrict: "AE",
                 scope: {
@@ -38,7 +38,8 @@
                     };
 
                     scope.model = {
-                        selectedItemIds: null
+                        selectedItemIds: null,
+                        filterObject: null
                     };
 
                     scope.editAllProperties = function () {
@@ -58,10 +59,16 @@
                         if (scope.sfModel === undefined) {
                             scope.sfModel = null;
                         }
+
                         scope.$modalInstance.dismiss();
                     };
 
                     scope.changeImage = function () {
+                        if (scope.sfImage) {
+                            scope.model.filterObject = sfMediaFilter.newFilter();
+                            scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
+                        }
+
                         scope.$openModalDialog();
                     };
 
