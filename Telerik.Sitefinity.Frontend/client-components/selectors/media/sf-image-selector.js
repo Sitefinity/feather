@@ -2,8 +2,8 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfDragDrop', 'expander'])
-        .directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
+    var sfImageSelector = angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfDragDrop', 'expander']);
+    sfImageSelector.directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
         function (sfMediaService, sfMediaFilter, serverContext, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
             var helpers = {
                 getDate: function (daysToSubstract, monthsToSubstract, yearsToSubstract) {
@@ -640,5 +640,23 @@
             $scope.cancelUpload = function () {
                 $modalInstance.dismiss();
             };
+        }]);
+
+    // The out-of-the-box bootstrap's popover directive is not supporting html in the popover's content.
+    // The following directive overrides the popover with a template that supports html.
+    // Should be removed when bootstrap release the html feature.
+    sfImageSelector.requires.push('sfBootstrapPopover');    
+    angular.module( 'sfBootstrapPopover', [ 'ui.bootstrap.tooltip' ] )
+        .directive( 'sfPopoverHtmlPopup', function () {
+            return {
+                restrict: 'EA',
+                replace: true,
+                scope: { title: '@', content: '@', placement: '@', animation: '&', isOpen: '&' },
+                templateUrl: 'popover.html'
+            };
+        })
+        .directive( 'sfPopoverHtml', [ '$compile', '$timeout', '$parse', '$window', '$tooltip',
+            function ( $compile, $timeout, $parse, $window, $tooltip ) {
+                return $tooltip( 'sfPopoverHtml', 'popover', 'click' );
         }]);
 })();
