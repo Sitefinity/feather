@@ -29,7 +29,8 @@
                     };
 
                     var refreshScopeInfo = function (item) {
-                        scope.sfModel = item;
+                        scope.sfModel = item.Id;
+                        scope.image = item;
 
                         scope.imageSize = Math.ceil(item.TotalSize / 1000) + " KB";
                         scope.uploaded = getDateFromString(item.DateCreated);
@@ -81,14 +82,7 @@
 
                     // Initialize
                     if (scope.sfModel) {
-                        if (scope.sfModel.Id && scope.sfModel.ThumbnailUrl) {
-                            // image is passed -> set it to model
-                            refreshScopeInfo(scope.sfModel);
-                        }
-                        else {
-                            // Id is passed -> get image
-                            getImage(scope.sfModel);
-                        }
+                        getImage(scope.sfModel);
                     }
                     else {
                         scope.changeImage();
