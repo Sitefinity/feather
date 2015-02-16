@@ -49,7 +49,7 @@
             });
 
             var openModalDialog = function () {
-                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: $scope.model.customSize });
+                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: function () { return $scope.model.customSize; } });
             };
 
             var populateOptions = function () {
@@ -83,7 +83,7 @@
                         index: $scope.sizeOptions.length,
                         type: displayMode.custom,
                         title: 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px',
-                        thumbnail: null,
+                        thumbnail: $scope.model.thumbnail,
                         customSize: $scope.model.customSize,
                         openDialog: false
                     });
@@ -102,7 +102,7 @@
                         index: $scope.sizeOptions.length,
                         type: displayMode.custom,
                         title: 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px',
-                        thumbnail: null,
+                        thumbnail: $scope.model.thumbnail,
                         customSize: $scope.model.customSize,
                         openDialog: false
                     });

@@ -96,7 +96,13 @@
 
                             })
                             .then(function (errorMessage) {
-                                if (properties.customSize) {
+                                if (properties.thumbnail && properties.thumbnail.url)
+                                {
+                                    var deferred = $q.defer();
+                                    deferred.resolve(properties.thumbnail.url);
+                                    return deferred.promise;
+                                }
+                                else if (properties.customSize) {
                                     return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
                                 }
                                 else {
