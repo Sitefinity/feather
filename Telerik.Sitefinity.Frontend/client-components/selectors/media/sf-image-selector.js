@@ -656,5 +656,17 @@
             $scope.cancelUpload = function () {
                 $modalInstance.dismiss();
             };
+        }])
+
+        .directive('sfScrollIfSelected', [function () {
+            return {
+                link: function (scope, element) {
+                    if (scope.isSelected(scope.item)) {
+                        setTimeout(function () {
+                            element[0].scrollIntoView();
+                        }, 0);
+                    }
+                }
+            };
         }]);
 })();

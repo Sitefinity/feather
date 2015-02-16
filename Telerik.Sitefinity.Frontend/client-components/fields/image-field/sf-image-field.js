@@ -30,6 +30,7 @@
                     };
 
                     var refreshScopeInfo = function (item) {
+                        scope.model.selectedItems = [item];
                         scope.sfImage = item;
 
                         scope.imageSize = Math.ceil(item.TotalSize / 1000) + " KB";
