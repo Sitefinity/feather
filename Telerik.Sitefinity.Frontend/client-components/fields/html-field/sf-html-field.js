@@ -74,10 +74,10 @@
 
                         var imageWrapper = $(nodes).closest('span.sfImageWrapper');
                         if (imageWrapper.length) {
-                            properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML, settings);
+                            properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML);
                         }
                         else if ($(nodes).is('img')) {
-                            properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML, settings);
+                            properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML);
                         }
 
                         angular.element(".imagePropertiesModal").scope()

@@ -163,7 +163,7 @@
 
         var getCustomThumbnailUrl = function (imageId, customUrlParams, libraryProvider) {
             params = JSON.stringify(customUrlParams);
-            var customThumbnailUrlService = String.format('{0}custom-image-thumbnail/url?imageId={1}&customUrlParameters={2}&libraryProvider={3}', constants.thumbnailServiceUrl, imageId, params, 'OpenAccessDataProvider');
+            var customThumbnailUrlService = String.format('{0}custom-image-thumbnail/url?imageId={1}&customUrlParameters={2}&libraryProvider={3}', constants.thumbnailServiceUrl, imageId, params, libraryProvider);
             var deferred = $q.defer();
             jQuery.ajax({
                 type: 'GET',
@@ -247,13 +247,14 @@
                         return callback(options);
                     });
             },
-            getPredecessorsFolders: function (id) {
+            getPredecessorsFolders: function (id, provider) {
                 if (!id) {
                     return;
                 }
                 var options = {
                     parent: 'folders/predecessors/' + id,
-                    excludeNeighbours: true
+                    excludeNeighbours: true,
+                    provider: provider
                 };
                 return getFolders(options, constants.images.albumsServiceUrl)
                           .then(function (data) {
