@@ -212,7 +212,7 @@
                             var itemsLength = scope.items ? scope.items.length : 0;
 
                             if (!scope.filterObject.query && !scope.filterObject.basic) {
-                                var getPromise = sfMediaService.images.getPredecessorsFolders(scope.filterObject.parent);
+                                var getPromise = sfMediaService.images.getPredecessorsFolders(scope.filterObject.parent, scope.provider);
                                 if (getPromise) {
                                     getPromise.then(function (items) {
                                         scope.breadcrumbs = items;

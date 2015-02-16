@@ -9,7 +9,7 @@
                 scope: {
                     sfModel: '=',
                     sfImage: '=',
-                    sfProvider: '@'
+                    sfProvider: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -50,6 +50,7 @@
                         scope.$modalInstance.close();
 
                         if (scope.model.selectedItemIds && scope.model.selectedItemIds.length) {
+                            scope.sfProvider = scope.model.provider;
                             scope.sfModel = scope.model.selectedItemIds[0];
                             getImage();
                         }
