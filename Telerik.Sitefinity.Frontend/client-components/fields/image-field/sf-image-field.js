@@ -30,10 +30,7 @@
                     };
 
                     var refreshScopeInfo = function (item) {
-                        scope.sfModel = item.Id;
                         scope.sfImage = item;
-
-                        scope.image = item;
 
                         scope.imageSize = Math.ceil(item.TotalSize / 1000) + " KB";
                         scope.uploaded = getDateFromString(item.DateCreated);
@@ -77,7 +74,7 @@
                     scope.changeImage = function () {
                         if (scope.sfImage) {
                             scope.model.filterObject = sfMediaFilter.newFilter();
-                            scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
+                            scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.ParentId || scope.sfImage.Album.Id);
                         }
 
                         scope.$openModalDialog();
@@ -94,6 +91,10 @@
                     scope.$on('sf-image-selector-image-uploaded', function (event, uploadedImageInfo) {
                         getImage(uploadedImageInfo.ContentId);
                         scope.$modalInstance.dismiss();
+                    });
+
+                    scope.$watch('sfImage.Id', function (newVal) {
+                        scope.sfModel = newVal;
                     });
                 }
             };
