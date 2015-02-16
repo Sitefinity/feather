@@ -1,11 +1,11 @@
 ﻿<div class="container">
     <div class="row">
         <div class="col-md-3">
-            <img ng-src="{{image.ThumbnailUrl}}" src="" width="200" height="150" alt="{{image.Title.Value}}" />
+            <img ng-src="{{sfImage.ThumbnailUrl}}" src="" width="200" height="150" alt="{{sfImage.Title.Value}}" />
         </div>
 
         <div class="col-md-3">
-            <p><label>Type</label><span ng-bind="image.Extension"></span></p>
+            <p><label>Type</label><span ng-bind="sfImage.Extension"></span></p>
             <p><label>File size</label><span ng-bind="imageSize"></span></p>
             <p><label>Uploaded</label><span ng-bind="uploaded"></span></p>
             <br />
