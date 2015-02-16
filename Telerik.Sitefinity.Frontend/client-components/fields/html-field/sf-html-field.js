@@ -96,9 +96,10 @@
 
                             })
                             .then(function (errorMessage) {
+                                var deferred;
                                 if (properties.thumbnail && properties.thumbnail.url)
                                 {
-                                    var deferred = $q.defer();
+                                    deferred = $q.defer();
                                     deferred.resolve(properties.thumbnail.url);
                                     return deferred.promise;
                                 }
@@ -106,7 +107,7 @@
                                     return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
                                 }
                                 else {
-                                    var deferred = $q.defer();
+                                    deferred = $q.defer();
                                     deferred.resolve('');
                                     return deferred.promise;
                                 }
