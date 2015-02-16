@@ -341,11 +341,10 @@
                         scope.model.file = file;
 
                         angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: function () { return scope.model; } })
-                            .then(function (uploadedImage) {
-                                if (uploadedImage && uploadedImage.ContentId) {
-                                    scope.selectedItems.push(uploadedImage.ContentId);
-                                    scope.isInUploadMode = false;
-                                    scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                            .then(function (uploadedImageId) {
+                                if (uploadedImageId) {
+                                    scope.selectedItems.push(uploadedImageId);
+                                    scope.$emit('sf-image-selector-image-uploaded', uploadedImageId);
                                 }
                                 else if (uploadedImage.ErrorMessage) {
                                     scope.error = {
@@ -645,7 +644,7 @@
 
             var errorAction = function (err) {
                 console.log(err);
-                $modalInstance.close();
+                $modalInstance.dismiss();
             };
 
             $scope.uploadImage = function () {
@@ -653,7 +652,7 @@
             };
 
             $scope.cancelUpload = function () {
-                $modalInstance.close();
+                $modalInstance.dismiss();
             };
         }]);
 })();

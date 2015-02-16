@@ -6,9 +6,10 @@
     };
 
     angular.module('sfThumbnailSizeSelection', ['sfServices'])
-        .controller('sfThumbnailSizeSelectionCtrl', ['$scope', 'sfMediaService', function ($scope, mediaService) {
+        .controller('sfThumbnailSizeSelectionCtrl', ['$scope', 'sfMediaService', 'serverContext', function ($scope, mediaService, serverContext) {
             $scope.sizeSelection = null;
             $scope.sizeOptions = [];
+            $scope.customThumbnailSizeTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-custom-thumbnail-size.html');
 
             var thumbnailProfiles = [];
 
@@ -25,6 +26,10 @@
                 }
                 else {
                     // open custom size dialog and then set model
+
+                    openModalDialog().then(function (model) {
+                        $scope.model.customSize = model;
+                    });
                 }
             });
 
@@ -42,6 +47,10 @@
                     }
                 }
             });
+
+            var openModalDialog = function () {
+                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: $scope.model.customSize });
+            };
 
             var populateOptions = function () {
                 $scope.sizeOptions = [];
@@ -94,7 +103,7 @@
                         type: displayMode.custom,
                         title: 'Custom size...',
                         thumbnail: null,
-                        customSize: null,
+                        customSize: $scope.model.customSize,
                         openDialog: true
                     });
                 }
@@ -120,6 +129,33 @@
                 }
 
                 $scope.sizeSelection = $scope.sizeOptions[0];
+            };
+        }])
+        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$modalInstance', 'model', function ($scope, $modalInstance, model) {
+            $scope.quality = ['High', 'Medium', 'Low'];
+
+            $scope.methodOptions = [{
+                value: 'ResizeFitToAreaArguments',
+                title: 'Resize to area'
+            }, {
+                value: 'CropCropArguments',
+                title: 'Crop to area'
+            }];
+
+            $scope.model = model || {  // Keep the names of those properties as they are in order to support old HTML field.
+                MaxWidth: null,
+                MaxHeight: null,
+                ScaleUp: false,
+                Quality: $scope.quality[0],
+                Method: $scope.methodOptions[0].value
+            };
+
+            $scope.done = function () {
+                $modalInstance.close($scope.model);
+            };
+
+            $scope.cancelResizing = function () {
+                $modalInstance.dismiss();
             };
         }]);
 })();

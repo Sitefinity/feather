@@ -63,7 +63,7 @@
                     };
 
                     scope.imagePropertiesDialog =
-                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-image-properties.html');
+                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-image-properties-content-block.html');
 
                     scope.openImageSelector = function () {
 
@@ -171,15 +171,22 @@
         }])
         .controller('sfImagePropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
             function ($scope, $modalInstance, serverContext, sfModel) {
-                $scope.model = sfModel;
+                // undefined, because the image-field sets it to null if cancel is pressed and the watch is triggered
+                $scope.model = sfModel || { item: undefined };
 
-                $scope.imageId = null;
+                $scope.$watch('model.item.Id', function (newVal) {
+                    if (newVal === null) {
+                        $scope.cancel();
+                    }
+                });
 
                 $scope.done = function () {
                     $modalInstance.close($scope.model);
                 };
 
-                $scope.cancel = $modalInstance.dismiss;
+                $scope.cancel = function () {
+                    $modalInstance.dismiss();
+                };
 
                 $scope.thumbnailSizeTempalteUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-thumbnail-size-selection.html');
             }]);
