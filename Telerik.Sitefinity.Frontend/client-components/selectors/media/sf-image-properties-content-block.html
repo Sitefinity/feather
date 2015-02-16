@@ -6,7 +6,7 @@
 
     <div class="modal-body">
         <div class="container">
-            <sf-image-field sf-model="model.item.Id" sf-image="model.item"></sf-image-field>
+            <sf-image-field sf-model="model.item.Id" sf-image="model.item" sf-provider="model.provider"></sf-image-field>
         </div>
         <form name="imageProperties">
             <div class="form-group">
@@ -98,9 +98,9 @@
                     <div class="row">
                         <div class="col-xs-8">
                             <label>
-								CSS classes
-								<input class="form-control" type="text" ng-model="model.cssClass" />
-							</label>
+                                CSS classes
+                                <input class="form-control" type="text" ng-model="model.cssClass" />
+                            </label>
                         </div>
                     </div>
                 </expander>

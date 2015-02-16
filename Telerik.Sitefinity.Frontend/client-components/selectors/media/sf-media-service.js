@@ -222,13 +222,14 @@
                         return callback(options);
                     });
             },
-            getPredecessorsFolders: function (id) {
+            getPredecessorsFolders: function (id, provider) {
                 if (!id) {
                     return;
                 }
                 var options = {
                     parent: 'folders/predecessors/' + id,
-                    excludeNeighbours: true
+                    excludeNeighbours: true,
+                    provider: provider
                 };
                 return getFolders(options, constants.images.albumsServiceUrl)
                           .then(function (data) {

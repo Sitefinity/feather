@@ -27,6 +27,11 @@
                         <a>{{::item.Title}}</a>
                     </li>
                 </ol>
+
+                <sf-provider-selector sf-manager-type="Telerik.Sitefinity.Modules.Libraries.LibrariesManager"
+                    ng-model="provider">
+                </sf-provider-selector>
+
                 <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)" sf-clear-search-string="clearSearch"> </sf-search-box>
             </div>
 
@@ -37,10 +42,11 @@
             </div>
 
             <div ng-show="items.length"
-                 sf-collection sf-data="items"
-                 sf-model="selectedItems"
-                 sf-template-url="client-components/selectors/media/sf-image-collection.html"
-                 ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
+                sf-collection 
+                sf-data="items"
+                sf-model="selectedItems"
+                sf-template-url="client-components/selectors/media/sf-image-collection.html"
+                ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
             </div>
 
             <div class="Media-settings Media-settings--bottom">
@@ -81,7 +87,8 @@
             <!--Library Filter-->
             <div ng-show="selectedFilterOption == 1">
                 <strong class="m-bottom-xs m-left-xs">Libraries</strong>
-                <div sf-tree
+                <div class="library-filter" sf-tree
+                     sf-identifier="Id"
                      sf-model="filters.library.selected"
                      sf-request-children="filters.library.getChildren(parent)"
                      sf-has-children-field="HasChildren">
@@ -95,6 +102,7 @@
                     <input class="form-control form-control-sm" type="text" placeholder="Narrow by typing..." ng-model="filters.tag.query"></input>
                 </p>
                 <div sf-collection
+                     sf-identifier="Id"
                      class="sf-Tree-tags-infinite"
                      sf-model="filters.tag.selected"
                      sf-data="filters.tag.all"
@@ -108,12 +116,14 @@
                     <input class="form-control form-control-sm" type="text" placeholder="Narrow by typing..." ng-model="filters.category.query">
                 </p>
                 <span sf-tree
+                      sf-identifier="Id"
                       ng-hide="filters.category.query"
                       sf-model="filters.category.selected"
                       sf-request-children="filters.category.getChildren(parent)"
                       sf-has-children-field="HasChildren"></span>
 
                 <span sf-collection
+                      sf-identifier="Id"
                       ng-show="filters.category.query"
                       sf-template-url="client-components/selectors/media/sf-media-hierarchical-taxon-items.html"
                       sf-data="filters.category.filtered"

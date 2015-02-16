@@ -71,7 +71,9 @@
             return {
                 restrict: 'E',
                 scope: {
-                    selectedItems: '=?sfModel'
+                    selectedItems: '=?sfModel',
+                    filterObject: '=?sfFilter',
+                    provider: '=?sfProvider'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -88,7 +90,7 @@
                         // Library filter
                         loadLibraryChildren: function (parent) {
                             parent = parent || {};
-                            return sfMediaService.images.getFolders({ parent: parent.Id }).then(function (response) {
+                            return sfMediaService.images.getFolders({ parent: parent.Id, provider: scope.provider }).then(function (response) {
                                 if (response) {
                                     return response.Items;
                                 }
@@ -192,7 +194,8 @@
 
                         var options = {
                             parent: scope.filterObject.parent,
-                            sort: scope.sortExpression
+                            sort: scope.sortExpression,
+                            provider: scope.provider
                         };
 
                         if (appendItems) {
@@ -209,7 +212,7 @@
                             var itemsLength = scope.items ? scope.items.length : 0;
 
                             if (!scope.filterObject.query && !scope.filterObject.basic) {
-                                var getPromise = sfMediaService.images.getPredecessorsFolders(scope.filterObject.parent);
+                                var getPromise = sfMediaService.images.getPredecessorsFolders(scope.filterObject.parent, scope.provider);
                                 if (getPromise) {
                                     getPromise.then(function (items) {
                                         scope.breadcrumbs = items;
@@ -348,15 +351,14 @@
                         scope.model.file = file;
 
                         angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: function () { return scope.model; } })
-                            .then(function (item) {
-                                if (item && item.ContentId) {
-                                    scope.selectedItems.push(item.ContentId);
-                                    scope.$emit('sf-image-selector-image-uploaded', item.ContentId);
+                            .then(function (uploadedImageInfo) {
+                                if (uploadedImageInfo && !uploadedImageInfo.ErrorMessage) {
+                                    scope.$emit('sf-image-selector-image-uploaded', uploadedImageInfo);
                                 }
-                                else if (item.ErrorMessage) {
+                                else if (uploadedImageInfo && uploadedImageInfo.ErrorMessage) {
                                     scope.error = {
                                         show: true,
-                                        message: item.ErrorMessage
+                                        message: uploadedImageInfo.ErrorMessage
                                     };
                                 }
                                 restoreFileModel();
@@ -382,7 +384,6 @@
                     * Scope properties
                     */
 
-                    scope.filterObject = sfMediaFilter.newFilter();
                     scope.sortExpression = null;
                     scope.items = [];
                     scope.isLoading = false;
@@ -419,7 +420,7 @@
                         },
                         library: {
                             index: 1,
-                            selected: [],
+                            selected: scope.filterObject && scope.filterObject.parent ? [scope.filterObject.parent] : [],
                             getChildren: filtersLogic.loadLibraryChildren
                         },
                         tag: {
@@ -593,6 +594,20 @@
                         }
                     });
 
+                    scope.$watch('provider', function (newVal, oldVal) {
+                        if (newVal === oldVal || !oldVal)
+                            return;
+
+                        if (scope.filterObject.parent) {
+                            scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                        }
+                        else {
+                            refresh();
+                        }
+
+                        element.find('div.library-filter ul').scope().bind();
+                    });
+
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
                         scope.isInUploadMode = false;
@@ -619,10 +634,16 @@
 
                         filtersLogic.loadTagTaxons(false);
 
-                        scope.filterObject.attachEvent(refresh);
+                        if (!scope.filterObject) {
+                            scope.filterObject = sfMediaFilter.newFilter();
+                            scope.filterObject.attachEvent(refresh);
 
-                        // initial open populates dialog with recent images
-                        scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                            // initial open populates dialog with recent images
+                            scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                        }
+                        else {
+                            scope.filterObject.attachEvent(refresh);
+                        }
                     }());
                 }
             };
@@ -644,8 +665,8 @@
             $scope.model.title = fileName.slice(0, fileName.lastIndexOf('.'));
 
             var successAction = function (data) {
-                var firstItem = data[0] || {};
-                $modalInstance.close(firstItem);
+                data = data || {};
+                $modalInstance.close(data[0]);
             };
 
             var progressAction = function (progress) {
