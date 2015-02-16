@@ -72,7 +72,8 @@
                 restrict: 'E',
                 scope: {
                     selectedItems: '=?sfModel',
-                    filterObject: '=?sfFilter'
+                    filterObject: '=?sfFilter',
+                    provider: '=?sfProvider'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -193,7 +194,8 @@
 
                         var options = {
                             parent: scope.filterObject.parent,
-                            sort: scope.sortExpression
+                            sort: scope.sortExpression,
+                            provider: scope.provider
                         };
 
                         if (appendItems) {
@@ -562,6 +564,17 @@
 
                             scope.clearSearch = !scope.clearSearch;
                         }
+                    });
+
+                    scope.$watch('provider', function (newVal, oldVal) {
+                        if (newVal === oldVal)
+                            return;
+
+                        if (scope.filterObject.parent) {
+                            scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                        }
+
+                        refresh();
                     });
 
                     // Reacts when a folder is clicked.

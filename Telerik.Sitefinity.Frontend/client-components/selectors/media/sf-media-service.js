@@ -18,7 +18,7 @@
 
             return serviceHelper.getResource(url).get(
                 {
-                    provider: provider,
+                    providerName: provider,
                     itemType: itemType,
                     published: true
                 }).$promise;
@@ -34,7 +34,7 @@
                 {
                     itemType: itemType,
                     filter: options.filter,
-                    provider: options.provider,
+                    providerName: options.provider,
                     skip: options.skip,
                     take: options.take,
                     sortExpression: options.sort,
@@ -50,7 +50,7 @@
             return serviceHelper.getResource(url).get(
                 {
                     filter: options.filter,
-                    provider: options.provider,
+                    providerName: options.provider,
                     skip: options.skip,
                     take: options.take,
                     sortExpression: options.sort,

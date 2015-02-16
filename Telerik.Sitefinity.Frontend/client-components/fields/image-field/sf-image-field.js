@@ -22,7 +22,7 @@
                     };
 
                     var getImage = function () {
-                        sfMediaService.images.getById(scope.sfModel, scope.sfProvider).then(function (data) {
+                        sfMediaService.images.getById(scope.sfModel, scope.model.provider).then(function (data) {
                             if (data && data.Item) {
                                 scope.sfModel = data.Item.Id;
                                 scope.sfImage = data.Item;
@@ -39,7 +39,8 @@
 
                     scope.model = {
                         selectedItemIds: null,
-                        filterObject: null
+                        filterObject: null,
+                        provider: scope.sfProvider
                     };
 
                     scope.editAllProperties = function () {
