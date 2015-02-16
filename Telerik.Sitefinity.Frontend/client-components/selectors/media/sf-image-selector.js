@@ -329,10 +329,9 @@
                         scope.model.file = file;
 
                         angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: function () { return scope.model; } })
-                            .then(function (uploadedImageId) {
-                                if (uploadedImageId) {
-                                    scope.selectedItems.push(uploadedImageId);
-                                    scope.$emit('sf-image-selector-image-uploaded', uploadedImageId);
+                            .then(function (uploadedImageInfo) {
+                                if (uploadedImageInfo) {
+                                    scope.$emit('sf-image-selector-image-uploaded', uploadedImageInfo);
                                 }
 
                                 restoreFileModel();
@@ -615,8 +614,8 @@
             $scope.model.title = fileName.slice(0, fileName.lastIndexOf('.'));
 
             var successAction = function (data) {
-                var firstItem = data[0] || {};
-                $modalInstance.close(firstItem.ContentId);
+                data = data || {};
+                $modalInstance.close(data[0]);
             };
 
             var progressAction = function (progress) {
