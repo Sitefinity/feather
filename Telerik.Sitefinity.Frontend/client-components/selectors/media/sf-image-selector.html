@@ -1,5 +1,16 @@
 ﻿﻿<div class="Media">
     <div class="Media-content" sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)">
+
+        <alert type="danger" ng-show="error.show">
+            <div>
+                <span style="font-size:15px">
+                    {{error.message}}
+                </span>
+
+                <span ng-click="error.show = false" style="cursor:pointer; float:right">X</span>
+            </div>
+        </alert>
+
         <!--Upload image-->
         <input type="file" accept=".jpg, .jpeg, .png, .gif, .bmp" class="file-upload-chooser-input" style="display: none !important" />
         <div ng-show="isInUploadMode" class="Media-upload-text">
@@ -76,12 +87,11 @@
             <!--Library Filter-->
             <div ng-show="selectedFilterOption == 1">
                 <strong class="m-bottom-xs m-left-xs">Libraries</strong>
-
                 <div class="library-filter" sf-tree
-                    sf-identifier="Id"
-                    sf-model="filters.library.selected"
-                    sf-request-children="filters.library.getChildren(parent)"
-                    sf-has-children-field="HasChildren">
+                     sf-identifier="Id"
+                     sf-model="filters.library.selected"
+                     sf-request-children="filters.library.getChildren(parent)"
+                     sf-has-children-field="HasChildren">
                 </div>
             </div>
 
@@ -92,11 +102,11 @@
                     <input class="form-control form-control-sm" type="text" placeholder="Narrow by typing..." ng-model="filters.tag.query"></input>
                 </p>
                 <div sf-collection
-                    sf-identifier="Id"
-                    class="sf-Tree-tags-infinite"
-                    sf-model="filters.tag.selected"
-                    sf-data="filters.tag.all"
-                    sf-template-url="client-components/selectors/media/sf-media-tag-taxon-items.html"></div>
+                     sf-identifier="Id"
+                     class="sf-Tree-tags-infinite"
+                     sf-model="filters.tag.selected"
+                     sf-data="filters.tag.all"
+                     sf-template-url="client-components/selectors/media/sf-media-tag-taxon-items.html"></div>
             </span>
 
             <!--Categories Filter-->
@@ -106,28 +116,28 @@
                     <input class="form-control form-control-sm" type="text" placeholder="Narrow by typing..." ng-model="filters.category.query">
                 </p>
                 <span sf-tree
-                    sf-identifier="Id"
-                    ng-hide="filters.category.query"
-                    sf-model="filters.category.selected"
-                    sf-request-children="filters.category.getChildren(parent)"
-                    sf-has-children-field="HasChildren"></span>
+                      sf-identifier="Id"
+                      ng-hide="filters.category.query"
+                      sf-model="filters.category.selected"
+                      sf-request-children="filters.category.getChildren(parent)"
+                      sf-has-children-field="HasChildren"></span>
 
                 <span sf-collection
-                    sf-identifier="Id"
-                    ng-show="filters.category.query"
-                    sf-template-url="client-components/selectors/media/sf-media-hierarchical-taxon-items.html"
-                    sf-data="filters.category.filtered"
-                    sf-model="filters.category.selected"></span>
+                      sf-identifier="Id"
+                      ng-show="filters.category.query"
+                      sf-template-url="client-components/selectors/media/sf-media-hierarchical-taxon-items.html"
+                      sf-data="filters.category.filtered"
+                      sf-model="filters.category.selected"></span>
             </span>
 
             <!--Date Filter-->
             <span ng-show="selectedFilterOption == 4">
                 <div class="m-bottom-xs m-left-xs"><strong>Dates</strong></div>
                 <span sf-collection
-                    sf-model="filters.date.selected"
-                    sf-identifier="dateValue"
-                    sf-data="filters.date.all"
-                    sf-template-url="client-components/selectors/media/sf-media-date-items.html"></span>
+                      sf-model="filters.date.selected"
+                      sf-identifier="dateValue"
+                      sf-data="filters.date.all"
+                      sf-template-url="client-components/selectors/media/sf-media-date-items.html"></span>
             </span>
         </div>
 
@@ -146,9 +156,9 @@
 </div>
 
 <div class="uploadPropertiesModal"
-    template-url="{{uploadPropertiesTemplateUrl}}"
-    modal
-    size="normal"
-    window-class="sf-designer-dlg sf-timespan-selector-dlg"
-    dialog-controller="SfImageSelectorUploadPropertiesCtrl">
+     template-url="{{uploadPropertiesTemplateUrl}}"
+     modal
+     size="normal"
+     window-class="sf-designer-dlg sf-timespan-selector-dlg"
+     dialog-controller="SfImageSelectorUploadPropertiesCtrl">
 </div>
