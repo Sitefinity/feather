@@ -92,6 +92,36 @@
             expect(requestedParent.Id).toEqual('2');
     });
 
+    it('[dzhenko] / should select item if identifier attribute is not present and item has Id property.', function () {
+        var scope = $rootScope.$new();
+
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand-item.html', '<span ng-class="{ \'selected\': isSelected(node) }" ng-click="select(node)">{{node.item.Id}}</span><ul><li ng-repeat="node in node.children" ng-include src="itemTemplateUrl"></li></ul>');
+        templateCache.put('/Frontend-Assembly/Telerik.Sitefinity.Frontend/sf-tree/expand.html', '<ul><li ng-repeat="node in hierarchy" ng-include src="itemTemplateUrl"></li></ul>');
+
+        scope.requestChildren = function (parent) {
+            var result = $q.defer();
+
+            if (!parent) {
+                result.resolve([{ Id: '1' }, { Id: '2' }]);
+            }
+            else {
+                result.resolve([]);
+            }
+
+            return result.promise;
+        };
+
+        var directiveMarkup = '<div sf-tree sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/expand-item.html" sf-request-children="requestChildren(parent)"></div>';
+        commonMethods.compileDirective(directiveMarkup, scope);
+
+        expect($('span:contains("2")').is('.selected')).toBe(false);
+
+        $('ul li span:contains("2")').click();
+        scope.$digest();
+
+        expect($('span:contains("2")').is('.selected')).toBe(true);
+    });
+
     it('[Boyko-Karadzhov] / should mark preselected item bound by sf-model as selected.', function () {
         var scope = $rootScope.$new();
         scope.selectedIds = ['3'];
