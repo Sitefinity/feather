@@ -72,7 +72,8 @@
                 restrict: 'E',
                 scope: {
                     selectedItems: '=?sfModel',
-                    filterObject: '=?sfFilter'
+                    filterObject: '=?sfFilter',
+                    provider: '=?sfProvider'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -89,7 +90,7 @@
                         // Library filter
                         loadLibraryChildren: function (parent) {
                             parent = parent || {};
-                            return sfMediaService.images.getFolders({ parent: parent.Id }).then(function (response) {
+                            return sfMediaService.images.getFolders({ parent: parent.Id, provider: scope.provider }).then(function (response) {
                                 if (response) {
                                     return response.Items;
                                 }
@@ -193,7 +194,8 @@
 
                         var options = {
                             parent: scope.filterObject.parent,
-                            sort: scope.sortExpression
+                            sort: scope.sortExpression,
+                            provider: scope.provider
                         };
 
                         if (appendItems) {
@@ -210,7 +212,7 @@
                             var itemsLength = scope.items ? scope.items.length : 0;
 
                             if (!scope.filterObject.query && !scope.filterObject.basic) {
-                                var getPromise = sfMediaService.images.getPredecessorsFolders(scope.filterObject.parent);
+                                var getPromise = sfMediaService.images.getPredecessorsFolders(scope.filterObject.parent, scope.provider);
                                 if (getPromise) {
                                     getPromise.then(function (items) {
                                         scope.breadcrumbs = items;
@@ -561,6 +563,20 @@
 
                             scope.clearSearch = !scope.clearSearch;
                         }
+                    });
+
+                    scope.$watch('provider', function (newVal, oldVal) {
+                        if (newVal === oldVal || !oldVal)
+                            return;
+
+                        if (scope.filterObject.parent) {
+                            scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                        }
+                        else {
+                            refresh();
+                        }
+
+                        element.find('div.library-filter ul').scope().bind();
                     });
 
                     // Reacts when a folder is clicked.

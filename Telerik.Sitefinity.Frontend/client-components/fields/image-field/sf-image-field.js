@@ -8,7 +8,7 @@
                 restrict: "AE",
                 scope: {
                     sfModel: '=',
-                    sfProvider: '@'
+                    sfProvider: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -21,7 +21,7 @@
                     };
 
                     var getImage = function (id) {
-                        sfMediaService.images.getById(id, scope.sfProvider).then(function (data) {
+                        sfMediaService.images.getById(id, scope.model.provider).then(function (data) {
                             if (data && data.Item) {
                                 refreshScopeInfo(data.Item);
                             }
@@ -37,7 +37,8 @@
 
                     scope.model = {
                         selectedItems: [],
-                        filterObject: null
+                        filterObject: null,
+                        provider: scope.sfProvider
                     };
 
                     scope.editAllProperties = function () {
@@ -47,6 +48,8 @@
                         scope.$modalInstance.close();
 
                         if (scope.model.selectedItems && scope.model.selectedItems.length) {
+                            scope.sfProvider = scope.model.provider;
+
                             if (scope.model.selectedItems[0].Id && scope.model.selectedItems[0].ThumbnailUrl) {
                                 // image is passed -> set it to model
                                 refreshScopeInfo(scope.model.selectedItems[0]);

@@ -29,7 +29,7 @@
         <h3 class="modal-title">Select image</h3>
     </div>
     <div class="modal-body">
-        <sf-image-selector sf-model="model.selectedItems" sf-filter="model.filterObject"></sf-image-selector>
+        <sf-image-selector sf-model="model.selectedItems" sf-filter="model.filterObject" sf-provider="model.provider"></sf-image-selector>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">Done</button>
