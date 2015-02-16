@@ -1,6 +1,37 @@
 ﻿; (function ($) {
     angular.module('sfTree', ['sfServices'])
         .directive('sfTree', ['serverContext', '$q', function (serverContext, $q) {
+            var getItemIndex = function (itemsArray, item, propName) {
+                if (!itemsArray || !itemsArray.length) {
+                    return -1;
+                }
+
+                var i;
+                if (propName) {
+                    for (i = 0; i < itemsArray.length; i++) {
+                        if (itemsArray[i] === item[propName]) {
+                            return i;
+                        }
+                    }
+                }
+                else if (item.Id) {
+                    for (i = 0; i < itemsArray.length; i++) {
+                        if (itemsArray[i].Id === item.Id) {
+                            return i;
+                        }
+                    }
+                }
+                else {
+                    for (i = 0; i < itemsArray.length; i++) {
+                        if (itemsArray[i] === item) {
+                            return i;
+                        }
+                    }
+                }
+
+                return -1;
+            };
+
             var TreeNode = function (item) {
                 this.item = item;
                 this.children = null;
@@ -10,7 +41,7 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    selectedItemIds: '=?sfModel',
+                    selectedItems: '=?sfModel',
                     sfMultiselect: '@',
                     sfIdentifier: '@',
                     sfHasChildrenField: '@',
@@ -30,8 +61,7 @@
                     var itemUrl = scope.sfItemTemplateUrl || 'client-components/collections/sf-tree-item.html';
                     scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(itemAssembly, itemUrl);
 
-                    scope.sfIdentifier = scope.sfIdentifier || 'Id';
-                    scope.selectedItemIds = scope.selectedItemIds || [];
+                    scope.selectedItems = scope.selectedItems || [];
                     scope.hierarchy = {};
 
                     // In case no function for getting children is provided, a default one returning empty array is provided.
@@ -53,43 +83,44 @@
                     };
 
                     scope.isSelected = function (node) {
-                        if (scope.selectedItemIds === undefined) {
-                            return false;
-                        }
-
-                        return scope.selectedItemIds.indexOf(node.item[scope.sfIdentifier]) >= 0;
+                        return getItemIndex(scope.selectedItems, node.item, scope.sfIdentifier) >= 0;
                     };
 
                     scope.select = function (node) {
-                        if (scope.selectedItemIds === undefined) {
-                            return;
-                        }
+                        var isMultiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.toLowerCase() !== 'false';
+                        var isDeselectable = scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false';
+                        var isExpandOnSelect = scope.sfExpandOnSelect !== undefined && scope.sfExpandOnSelect.toLowerCase() !== 'false';
 
-                        var multiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.toLowerCase() !== 'false';
-                        var deselectable = scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false';
+                        var itemIndex = getItemIndex(scope.selectedItems, node.item, scope.sfIdentifier);
 
-                        var itemIndex = scope.selectedItemIds.indexOf(node.item[scope.sfIdentifier]);
-
-                        if (!multiselect) {
+                        if (!isMultiselect) {
                             if (itemIndex < 0) {
-                                scope.selectedItemIds = [node.item[scope.sfIdentifier]];
+                                if (scope.sfIdentifier) {
+                                    scope.selectedItems = [node.item[scope.sfIdentifier]];
+                                }
+                                else {
+                                    scope.selectedItems = [node.item];
+                                }
                             }
-                            else if (deselectable) {
-                                // item is deselected
-                                scope.selectedItemIds = [];
+                            else if (isDeselectable) {
+                                scope.selectedItems = [];
                             }
                         }
                         else {
                             if (itemIndex < 0) {
-                                scope.selectedItemIds.push(node.item[scope.sfIdentifier]);
+                                if (scope.sfIdentifier) {
+                                    scope.selectedItems.push(node.item[scope.sfIdentifier]);
+                                }
+                                else {
+                                    scope.selectedItems.push(node.item);
+                                }
                             }
-                            else if (deselectable) {
-                                // item is deselected
-                                scope.selectedItemIds.splice(itemIndex, 1);
+                            else if (isDeselectable) {
+                                scope.selectedItems.splice(itemIndex, 1);
                             }
                         }
 
-                        if (scope.sfExpandOnSelect !== undefined) {
+                        if (isExpandOnSelect) {
                             scope.toggle(node);
                         }
 
@@ -113,7 +144,15 @@
                                     }
                                     else {
                                         items.forEach(function (item) {
-                                            parentNode.children[item[scope.sfIdentifier]] = new TreeNode(item);
+                                            if (scope.sfIdentifier) {
+                                                parentNode.children[item[scope.sfIdentifier]] = new TreeNode(item);
+                                            }
+                                            else if (item.Id) {
+                                                parentNode.children[item.Id] = new TreeNode(item);
+                                            }
+                                            else {
+                                                parentNode.children[item] = new TreeNode(item);
+                                            }
                                         });
                                     }
                                 }
@@ -127,7 +166,15 @@
                     scope.sfRequestChildren({ parent: null }).then(function (items) {
                         if (items && items instanceof Array) {
                             items.forEach(function (item) {
-                                scope.hierarchy[item[scope.sfIdentifier]] = new TreeNode(item);
+                                if (scope.sfIdentifier) {
+                                    scope.hierarchy[item[scope.sfIdentifier]] = new TreeNode(item);
+                                }
+                                else if (item.Id) {
+                                    scope.hierarchy[item.Id] = new TreeNode(item);
+                                }
+                                else {
+                                    scope.hierarchy[item] = new TreeNode(item);
+                                }
                             });
                         }
                     });
