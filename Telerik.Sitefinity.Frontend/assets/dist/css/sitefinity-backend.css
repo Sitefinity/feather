@@ -8407,6 +8407,16 @@ tab {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
+/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_popovers */
+.popover {
+  z-index: 9999; }
+
+/* line 4, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_popovers */
+.popover-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
 @font-face {
   font-family: "sf-icon-font";
   src: url("../fonts/sf-icon-font-98a850f5da55483dd11b21851a40c70b.eot");

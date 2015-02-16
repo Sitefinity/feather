@@ -24,7 +24,19 @@
 		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}">
 			<div class="Media-file-wrapper">
 
-				<div class="Media-file-thumb">
+
+				<div class="Media-file-thumb"
+					popover-popup-delay="1000"
+					popover-placement="top"
+					popover-trigger="mouseenter"
+					popover-append-to-body="true"
+					popover-title="{{item.Title}}"
+					popover="
+						Library: {{item.LibraryTitle}};
+						Dimensions: {{item.Width + 'x' + item.Height}};
+						Type: {{item.Extension.toUpperCase()}}
+					"
+				>
 					<div class="Media-file-thumb-holder">
 						<img ng-if="item.IsFolder === false" ng-src="{{item.ThumbnailUrl}}" src="" alt="{{item.Title}}" />
 					</div>
