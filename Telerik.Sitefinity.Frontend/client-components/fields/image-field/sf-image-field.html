@@ -1,13 +1,13 @@
 ﻿<div class="container">
     <div class="row">
         <div class="col-md-3">
-            <img ng-src="{{info.url}}" src="" width="200" height="150" alt="{{info.title}}" />
+            <img ng-src="{{sfModel.ThumbnailUrl}}" src="" width="200" height="150" alt="{{sfModel.Title.Value}}" />
         </div>
 
         <div class="col-md-3">
-            <p><label>Type</label><span ng-bind="info.type"></span></p>
-            <p><label>File size</label><span ng-bind="info.size"></span></p>
-            <p><label>Uploaded</label><span ng-bind="info.uploaded"></span></p>
+            <p><label>Type</label><span ng-bind="sfModel.Extension"></span></p>
+            <p><label>File size</label><span ng-bind="imageSize"></span></p>
+            <p><label>Uploaded</label><span ng-bind="uploaded"></span></p>
             <br />
             <button class="btn btn-sm" ng-click="changeImage()">Change image</button>
             <button class="btn btn-sm" ng-click="editAllProperties()">Edit all properties</button>
@@ -29,10 +29,10 @@
         <h3 class="modal-title">Select image</h3>
     </div>
     <div class="modal-body">
-        <sf-image-selector sf-model="model.selectedItemIds" sf-filter="model.filterObject" sf-provider="model.provider"></sf-image-selector>
+        <sf-image-selector sf-model="model.selectedItems" sf-filter="model.filterObject" sf-provider="model.provider"></sf-image-selector>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItemIds.length">Done</button>
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">Done</button>
         <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
     </div>
 </script>
