@@ -90,7 +90,7 @@
                         // Library filter
                         loadLibraryChildren: function (parent) {
                             parent = parent || {};
-                            return sfMediaService.images.getFolders({ parent: parent.Id }).then(function (response) {
+                            return sfMediaService.images.getFolders({ parent: parent.Id, provider: scope.provider }).then(function (response) {
                                 if (response) {
                                     return response.Items;
                                 }
@@ -567,14 +567,17 @@
                     });
 
                     scope.$watch('provider', function (newVal, oldVal) {
-                        if (newVal === oldVal)
+                        if (newVal === oldVal || !oldVal)
                             return;
 
                         if (scope.filterObject.parent) {
                             scope.filters.basic.select(constants.filters.basicRecentItemsValue);
                         }
+                        else {
+                            refresh();
+                        }
 
-                        refresh();
+                        element.find('div.library-filter ul').scope().bind();
                     });
 
                     // Reacts when a folder is clicked.

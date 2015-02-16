@@ -32,7 +32,6 @@
 
                     scope.sfIdentifier = scope.sfIdentifier || 'Id';
                     scope.selectedItemIds = scope.selectedItemIds || [];
-                    scope.hierarchy = {};
 
                     // In case no function for getting children is provided, a default one returning empty array is provided.
                     scope.sfRequestChildren = scope.sfRequestChildren || function () { var r = $q.defer(); r.resolve([]); return r.$promise; };
@@ -123,14 +122,19 @@
                         parentNode.collapsed = !parentNode.collapsed;
                     };
 
-                    // Initial load of root elements
-                    scope.sfRequestChildren({ parent: null }).then(function (items) {
-                        if (items && items instanceof Array) {
-                            items.forEach(function (item) {
-                                scope.hierarchy[item[scope.sfIdentifier]] = new TreeNode(item);
-                            });
-                        }
-                    });
+                    scope.bind = function () {
+                        scope.hierarchy = {};
+                        // Initial load of root elements
+                        scope.sfRequestChildren({ parent: null }).then(function (items) {
+                            if (items && items instanceof Array) {
+                                items.forEach(function (item) {
+                                    scope.hierarchy[item[scope.sfIdentifier]] = new TreeNode(item);
+                                });
+                            }
+                        });
+                    };
+
+                    scope.bind();
                 }
             };
         }]);
