@@ -78,54 +78,39 @@
                     });
                 }
 
-                if ($scope.model.customSize && $scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
-                    $scope.sizeOptions.push({
-                        index: $scope.sizeOptions.length,
-                        type: displayMode.custom,
-                        title: 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px',
-                        thumbnail: $scope.model.thumbnail,
-                        customSize: $scope.model.customSize,
-                        openDialog: false
-                    });
-
-                    $scope.sizeOptions.push({
-                        index: $scope.sizeOptions.length,
-                        type: displayMode.custom,
-                        title: 'Edit custom size...',
-                        thumbnail: null,
-                        customSize: $scope.model.customSize,
-                        openDialog: true
-                    });
-                }
-                else if ($scope.model.customSize && $scope.model.customSize.Width && $scope.model.customSize.Height) {
-                    $scope.sizeOptions.push({
-                        index: $scope.sizeOptions.length,
-                        type: displayMode.custom,
-                        title: 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px',
-                        thumbnail: $scope.model.thumbnail,
-                        customSize: $scope.model.customSize,
-                        openDialog: false
-                    });
-
-                    $scope.sizeOptions.push({
-                        index: $scope.sizeOptions.length,
-                        type: displayMode.custom,
-                        title: 'Edit custom size...',
-                        thumbnail: null,
-                        customSize: $scope.model.customSize,
-                        openDialog: true
-                    });
+                var newCustomSizeTitle, existingCustomSizeTitle;
+                if ($scope.model.customSize) {
+                    newCustomSizeTitle = 'Edit custom size...';
+                    if ($scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
+                        existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
+                    }
+                    else if ($scope.model.customSize.Width && $scope.model.customSize.Height) {
+                        existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
+                    }
                 }
                 else {
+                    newCustomSizeTitle = 'Custom size...';
+                }
+
+                if (existingCustomSizeTitle) {
                     $scope.sizeOptions.push({
                         index: $scope.sizeOptions.length,
                         type: displayMode.custom,
-                        title: 'Custom size...',
-                        thumbnail: null,
+                        title: existingCustomSizeTitle,
+                        thumbnail: $scope.model.thumbnail,
                         customSize: $scope.model.customSize,
-                        openDialog: true
+                        openDialog: false
                     });
                 }
+
+                $scope.sizeOptions.push({
+                    index: $scope.sizeOptions.length,
+                    type: displayMode.custom,
+                    title: newCustomSizeTitle,
+                    thumbnail: null,
+                    customSize: $scope.model.customSize,
+                    openDialog: true
+                });
 
                 updateSelection();
             };
