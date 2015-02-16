@@ -142,12 +142,15 @@
                         src = properties.item.MediaUrl;
                     }
 
-                    if (properties.displayMode === 'Custom') {
-                        src = properties.thumbnail.url;
-                    }
-
                     var jElementToInsert = $('<img />');
                     jElementToInsert.attr('sfref', sfref);
+
+                    if (properties.displayMode === 'Custom') {
+                        src = properties.thumbnail.url;
+                        jElementToInsert.attr('method', properties.customSize.Method);
+                        jElementToInsert.attr('customsizemethodproperties', JSON.stringify(properties.customSize));
+                    }
+
                     jElementToInsert.attr('src', src);
 
                     jElementToInsert.attr('alt', properties.alternativeText);
