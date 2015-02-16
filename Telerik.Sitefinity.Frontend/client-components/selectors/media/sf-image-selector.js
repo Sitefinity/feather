@@ -71,7 +71,8 @@
             return {
                 restrict: 'E',
                 scope: {
-                    selectedItems: '=?sfModel'
+                    selectedItems: '=?sfModel',
+                    filterObject: '=?sfFilter'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -358,7 +359,6 @@
                     * Scope properties
                     */
 
-                    scope.filterObject = sfMediaFilter.newFilter();
                     scope.sortExpression = null;
                     scope.items = [];
                     scope.isLoading = false;
@@ -590,10 +590,16 @@
 
                         filtersLogic.loadTagTaxons(false);
 
-                        scope.filterObject.attachEvent(refresh);
+                        if (!scope.filterObject) {
+                            scope.filterObject = sfMediaFilter.newFilter();
+                            scope.filterObject.attachEvent(refresh);
 
-                        // initial open populates dialog with recent images
-                        scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                            // initial open populates dialog with recent images
+                            scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                        }
+                        else {
+                            scope.filterObject.attachEvent(refresh);
+                        }
                     }());
                 }
             };

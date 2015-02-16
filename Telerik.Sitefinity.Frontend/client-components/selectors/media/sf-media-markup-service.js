@@ -175,6 +175,8 @@
                             break;
                     }
 
+                    properties.margin = properties.margin || {};
+
                     jElementToInsert[0].style.margin = '';
                     if (properties.margin.top !== null)
                         jElementToInsert[0].style.marginTop = properties.margin.top + 'px';
