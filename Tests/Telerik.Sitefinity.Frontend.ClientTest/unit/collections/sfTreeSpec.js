@@ -50,7 +50,7 @@
             return result.promise;
         };
         
-        var directiveMarkup = '<div sf-tree sf-template-url="sf-tree/dummy.html" sf-request-children="requestChildren(parent)"></div>';
+        var directiveMarkup = '<div sf-tree sf-identifier="Id" sf-template-url="sf-tree/dummy.html" sf-request-children="requestChildren(parent)"></div>';
         commonMethods.compileDirective(directiveMarkup, scope);
 
         expect(childrenRequestedCount).toEqual(1);
@@ -80,7 +80,7 @@
             return result.promise;
         };
 
-        var directiveMarkup = '<div sf-tree sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/expand-item.html" sf-request-children="requestChildren(parent)"></div>';
+        var directiveMarkup = '<div sf-tree sf-identifier="Id" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/expand-item.html" sf-request-children="requestChildren(parent)"></div>';
         commonMethods.compileDirective(directiveMarkup, scope);
 
         $('ul li span:contains("2")').click();
@@ -121,7 +121,7 @@
             return result.promise;
         };
 
-        var directiveMarkup = '<div class="initialMarkCollapsed" sf-tree sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/expand-item.html" sf-request-children="requestChildren(parent)"></div>';
+        var directiveMarkup = '<div class="initialMarkCollapsed" sf-tree sf-identifier="Id" sf-template-url="sf-tree/expand.html" sf-item-template-url="sf-tree/expand-item.html" sf-request-children="requestChildren(parent)"></div>';
         commonMethods.compileDirective(directiveMarkup, scope);
         scope.$digest();
 
