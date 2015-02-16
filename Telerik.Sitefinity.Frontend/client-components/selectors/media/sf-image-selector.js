@@ -25,9 +25,6 @@
                 }
             };
 
-            var IMAGE_REGEX = /^image\/(jpg|jpeg|png|gif|bmp)$/g;
-            var NOT_IMAGE_ERROR = 'This file type is not allowed to upload. Only files with the following extensions are allowed: jpg, jpeg, png, gif, bmp';
-
             var constants = {
                 initialLoadedItemsCount: 50,
                 infiniteScrollLoadedItemsCount: 20,
@@ -283,31 +280,32 @@
 
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
                             var file = dataTransferObject.files[0];
-                            if (!file.type.match(IMAGE_REGEX)) {
-                                scope.error = {
-                                    show: true,
-                                    message: NOT_IMAGE_ERROR
-                                };
-                                return;
-                            }
-                            if (!scope.isInUploadMode) {
-                                if (scope.selectedFilterOption == 1) {
-                                    // set library id or null if in default library
-                                    scope.model.parentId = getLibraryId();
+                            sfMediaService.getImagesSettings().then(function (settings) {
+                                if (!file.type.match(settings.AllowedExensionsRegex)) {
+                                    scope.error = {
+                                        show: true,
+                                        message: 'This file type is not allowed to upload. Only files with the following extensions are allowed: ' + settings.AllowedExensionsSettings
+                                    };
+                                    return;
                                 }
-                                else if (scope.selectedFilterOption == 2) {
-                                    if (scope.filters.tag.selected[0]) {
-                                        scope.model.tags.push(scope.filters.tag.selected[0]);
+                                if (!scope.isInUploadMode) {
+                                    if (scope.selectedFilterOption == 1) {
+                                        // set library id or null if in default library
+                                        scope.model.parentId = getLibraryId();
+                                    }
+                                    else if (scope.selectedFilterOption == 2) {
+                                        if (scope.filters.tag.selected[0]) {
+                                            scope.model.tags.push(scope.filters.tag.selected[0]);
+                                        }
+                                    }
+                                    else if (scope.selectedFilterOption == 3) {
+                                        if (scope.filters.category.selected[0]) {
+                                            scope.model.categories.push(scope.filters.category.selected[0]);
+                                        }
                                     }
                                 }
-                                else if (scope.selectedFilterOption == 3) {
-                                    if (scope.filters.category.selected[0]) {
-                                        scope.model.categories.push(scope.filters.category.selected[0]);
-                                    }
-                                }
-                            }
-
-                            openUploadPropertiesDialog(dataTransferObject.files[0]);
+                                openUploadPropertiesDialog(file);
+                            });
                         }
                     };
 
@@ -317,11 +315,20 @@
                         scope.$apply(function () {
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
-                                if (!scope.isInUploadMode) {
-                                    scope.model.parentId = getLibraryId();
-                                }
-
-                                openUploadPropertiesDialog(fileInput.files[0]);
+                                var file = fileInput.files[0];
+                                sfMediaService.getImagesSettings().then(function (settings) {
+                                    if (!file.type.match(settings.AllowedExensionsRegex)) {
+                                        scope.error = {
+                                            show: true,
+                                            message: 'This file type is not allowed to upload. Only files with the following extensions are allowed: ' + settings.AllowedExensionsSettings
+                                        };
+                                        return;
+                                    }
+                                    if (!scope.isInUploadMode) {
+                                        scope.model.parentId = getLibraryId();
+                                    }
+                                    openUploadPropertiesDialog(file);
+                                });
                             }
                         });
                     });
@@ -341,18 +348,17 @@
                         scope.model.file = file;
 
                         angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: function () { return scope.model; } })
-                            .then(function (uploadedImageId) {
-                                if (uploadedImageId) {
-                                    scope.selectedItems.push(uploadedImageId);
-                                    scope.$emit('sf-image-selector-image-uploaded', uploadedImageId);
+                            .then(function (item) {
+                                if (item && item.ContentId) {
+                                    scope.selectedItems.push(item.ContentId);
+                                    scope.$emit('sf-image-selector-image-uploaded', item.ContentId);
                                 }
-                                else if (uploadedImage.ErrorMessage) {
+                                else if (item.ErrorMessage) {
                                     scope.error = {
                                         show: true,
-                                        message: uploadedImage.ErrorMessage
+                                        message: item.ErrorMessage
                                     };
                                 }
-
                                 restoreFileModel();
                             });
                     };
@@ -510,6 +516,10 @@
                         scope.filters.tag.selected = [];
                         scope.filters.category.selected = [];
                         scope.error = null;
+
+                        if (scope.isInUploadMode) {
+                            sfMediaService.getImagesSettings();
+                        }
                     };
 
                     /*
