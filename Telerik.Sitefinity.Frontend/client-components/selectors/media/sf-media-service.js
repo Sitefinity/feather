@@ -100,6 +100,7 @@
         };
 
         var uploadFile = function (url, formData) {
+            
             var deferred = $q.defer();
             var xhr = new $window.XMLHttpRequest();
             xhr.onload = function (e) {
@@ -286,9 +287,40 @@
             }
         };
 
+        var imagesSettings = null;
+        var getImagesSettings = function () {
+            if (imagesSettings === null) {
+                var url = constants.librarySettingsServiceUrl;
+                return serviceHelper.getResource(url).get(
+                    {
+                        nodeName: 'Images_0,librariesConfig_0',
+                        mode: 'Form'
+                    })
+                    .$promise
+                    .then(function (data) {
+                        imagesSettings = {};
+                        for (var i = 0; i < data.Items.length; i++) {
+                            imagesSettings[data.Items[i].Key] = data.Items[i].Value;
+                        }
+                        if (imagesSettings.AllowedExensionsSettings) {
+                            var imagesExt = imagesSettings.AllowedExensionsSettings.replace(/,/g, '|').replace(/ |\./g, '');
+                            var regExp = '^image\/(' + imagesExt + ')$';
+                            imagesSettings.AllowedExensionsRegex = new RegExp(regExp, 'i');
+                        }
+                        return imagesSettings;
+                    });
+            }
+            else {
+                var deferred = $q.defer();
+                deferred.resolve(imagesSettings);
+                return deferred.promise;
+            }
+        };
+
         return {
             images: imagesObj,
-            getLibrarySettings: getLibrarySettings
+            getLibrarySettings: getLibrarySettings,
+            getImagesSettings: getImagesSettings
         };
     }]);
 })();
