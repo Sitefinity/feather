@@ -108,7 +108,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" ng-click="done()">Done</button>
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.title">Done</button>
         <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
     </div>
 </div>

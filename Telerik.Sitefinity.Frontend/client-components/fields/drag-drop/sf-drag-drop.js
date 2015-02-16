@@ -57,8 +57,9 @@
                             if (e.originalEvent.dataTransfer.files[0]) {
                                 e.preventDefault();
                                 e.stopPropagation();
-
-                                scope.sfDataTransferCallback({ dataTransferObject: e.originalEvent.dataTransfer });
+                                scope.$apply(function () {
+                                    scope.sfDataTransferCallback({ dataTransferObject: e.originalEvent.dataTransfer });
+                                });
                             }
                         }
                     });
