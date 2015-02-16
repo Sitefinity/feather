@@ -2,7 +2,17 @@
 	<div>
 		<div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder" ng-click="select(item)">
 			<div ng-if="item.IsFolder === true">
-				<div class="Media-file-thumb">
+				<div class="Media-file-thumb"
+					popover-popup-delay="1000"
+					popover-placement="top"
+					popover-trigger="mouseenter"
+					popover-append-to-body="true"
+					popover-title="{{item.Title}}"
+					popover="
+						{{item.LibrariesCount + ' folders'}};
+						{{item.ImagesCount + (item.ImagesCount == 1 ? ' image' : ' images')}}
+					"
+				>
 					<i class="glyphicon glyphicon-folder-close"></i>
 					<strong>{{item.Title}}</strong>
 				</div>
@@ -14,7 +24,6 @@
 				<div class="Media-item-meta">
 					<span ng-show="item.LibrariesCount">{{item.LibrariesCount + " folders"}}</span><br />
 					<span ng-show="item.ImagesCount">{{item.ImagesCount + (item.ImagesCount == 1 ? " image" : " images")}}</span>
-                    <span ng-show="item.ItemsCount">{{item.ItemsCount + (item.ItemsCount == 1 ? " image" : " images")}}</span>
 				</div>
 			</div>
 		</div>
