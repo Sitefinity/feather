@@ -134,7 +134,7 @@
                     var src = '';
                     if (properties.displayMode === 'Thumbnail') {
                         sfref = getSfrefAttribute('images', properties.item.Id, properties.provider, properties.thumbnail.name);
-                        src = resolveThumbnailUrl(properties.thumbnail.url, properties.thumbnail.name, librarySettings);
+                        src = resolveThumbnailUrl(properties.thumbnail.url || properties.item.ThumbnailUrl, properties.thumbnail.name, librarySettings);
                     } else {
                         sfref = getSfrefAttribute('images', properties.item.Id, properties.provider);
                         src = properties.item.MediaUrl;
@@ -172,6 +172,8 @@
                         default:
                             break;
                     }
+
+                    properties.margin = properties.margin || {};
 
                     jElementToInsert[0].style.margin = '';
                     if (properties.margin.top !== null)
