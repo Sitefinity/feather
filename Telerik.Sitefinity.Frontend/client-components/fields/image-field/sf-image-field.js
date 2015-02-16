@@ -8,6 +8,7 @@
                 restrict: "AE",
                 scope: {
                     sfModel: '=',
+                    sfImage: '=?',
                     sfProvider: '=?'
                 },
                 templateUrl: function (elem, attrs) {
@@ -30,6 +31,8 @@
 
                     var refreshScopeInfo = function (item) {
                         scope.sfModel = item.Id;
+                        scope.sfImage = item;
+
                         scope.image = item;
 
                         scope.imageSize = Math.ceil(item.TotalSize / 1000) + " KB";
