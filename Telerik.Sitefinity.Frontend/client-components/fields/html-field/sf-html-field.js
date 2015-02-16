@@ -3,7 +3,7 @@
     sfFields.requires.push('sfHtmlField');
 
     angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField', 'sfThumbnailSizeSelection'])
-        .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
+        .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', '$q', function (serverContext, $compile, mediaService, mediaMarkupService, $q) {
             return {
                 restrict: "E",
                 scope: {
@@ -84,6 +84,32 @@
                             .$openModalDialog({ sfModel: function () { return properties; } })
                             .then(function (data) {
                                 properties = data;
+
+                                if (data.customSize) {
+                                    return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize);
+                                }
+                                else {
+                                    var deferred = $q.defer();
+                                    deferred.resolve('');
+                                    return deferred.promise;
+                                }
+
+                            })
+                            .then(function (errorMessage) {
+                                if (properties.customSize) {
+                                    return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
+                                }
+                                else {
+                                    var deferred = $q.defer();
+                                    deferred.resolve('');
+                                    return deferred.promise;
+                                }
+                            })
+                            .then(function (thumbnailUrl) {
+                                if (thumbnailUrl) {
+                                    properties.thumbnail = properties.thumbnail || {};
+                                    properties.thumbnail.url = thumbnailUrl;
+                                }
 
                                 return mediaService.getLibrarySettings();
                             })

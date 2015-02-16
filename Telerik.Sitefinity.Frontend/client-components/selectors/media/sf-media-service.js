@@ -162,8 +162,23 @@
         };
 
         var getCustomThumbnailUrl = function (imageId, customUrlParams, libraryProvider) {
-            var customThumbnailUrlService = constants.thumbnailServiceUrl + 'custom-image-thumbnail/url';
-            return serviceHelper.getResource(customThumbnailUrlService).get({ imageId: imageId, customUrlParameter: customUrlParams, libraryProvider: libraryProvider }).$promise;
+            params = JSON.stringify(customUrlParams);
+            var customThumbnailUrlService = String.format('{0}custom-image-thumbnail/url?imageId={1}&customUrlParameters={2}&libraryProvider={3}', constants.thumbnailServiceUrl, imageId, params, 'OpenAccessDataProvider');
+            var deferred = $q.defer();
+            jQuery.ajax({
+                type: 'GET',
+                url: customThumbnailUrlService,
+                processData: false,
+                contentType: "application/json",
+                success: function (thumbnailUrl) {
+                    deferred.resolve(thumbnailUrl);
+                },
+                error: function (error) {
+                    deferred.resolve('');
+                }
+            });
+
+            return deferred.promise;
         };
 
         var imagesObj = {
@@ -214,7 +229,7 @@
                     .then(function (settings) {
                         var allLanguageSearch = settings.EnableAllLanguagesSearch.toLowerCase() === 'true';
                         options.filter = filterObject.composeExpression(allLanguageSearch);
-                       
+
                         var selectedFolderSearch = settings.EnableSelectedFolderSearch.toLowerCase() === 'true';
                         if (filterObject.query) {
                             if (selectedFolderSearch) {
@@ -298,7 +313,10 @@
 
         return {
             images: imagesObj,
-            getLibrarySettings: getLibrarySettings
+            getLibrarySettings: getLibrarySettings,
+            checkCustomThumbnailParams: checkCustomThumbnailParams,
+            getCustomThumbnailUrl: getCustomThumbnailUrl
+
         };
     }]);
 })();
