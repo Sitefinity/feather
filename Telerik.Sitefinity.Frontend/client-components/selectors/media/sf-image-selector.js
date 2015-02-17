@@ -287,6 +287,7 @@
 
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
                             var file = dataTransferObject.files[0];
+
                             sfMediaService.getImagesSettings().then(function (settings) {
                                 if (!file.type.match(settings.AllowedExensionsRegex)) {
                                     scope.error = {
@@ -310,7 +311,7 @@
 
                                             // if other files were dropped when category/tag were selected they should be cleaned
                                             scope.model.parentId = null;
-                                            scope.model.categories =[];
+                                            scope.model.categories = [];
                                         }
                                     }
                                     else if (scope.selectedFilterOption == 3) {
@@ -347,8 +348,8 @@
                                         scope.model.parentId = getLibraryId();
 
                                         // if other files were dropped when category/tag were selected they should be cleaned
-                                        scope.model.tags =[];
-                                        scope.model.categories =[];
+                                        scope.model.tags = [];
+                                        scope.model.categories = [];
                                     }
                                     openUploadPropertiesDialog(file);
                                 });
@@ -439,7 +440,7 @@
                                 scope.filters.date.selected = [];
                                 scope.filters.tag.selected = [];
                                 scope.filters.category.selected = [];
-
+                                scope.error = null;
                                 scope.clearSearch = !scope.clearSearch;
                             },
                         },
@@ -542,10 +543,6 @@
                         scope.filters.tag.selected = [];
                         scope.filters.category.selected = [];
                         scope.error = null;
-
-                        if (scope.isInUploadMode) {
-                            sfMediaService.getImagesSettings();
-                        }
                     };
 
                     /*
@@ -630,20 +627,30 @@
                             refresh();
                         }
 
-                        element.find('div.library-filter ul').scope().bind();
+                        var libraryFilterScope = element.find('div.library-filter ul').scope();
+                        if (libraryFilterScope) {
+                            libraryFilterScope.bind();
+                        }
                     });
 
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
+                        var item = data.item;
                         scope.isInUploadMode = false;
-                        if (data && data.IsFolder === true) {
+                        if (item && item.IsFolder === true) {
+                            data.cancel = true;
                             scope.filters.basic.selected = null;
-                            scope.filterObject.set.parent.to(data.Id);
+                            scope.filterObject.set.parent.to(item.Id);
                         }
                     });
 
                     scope.$on('sf-tree-item-selected', function (event, data) {
                         scope.isInUploadMode = false;
+                        scope.error = null;
+                    });
+
+                    scope.$watch('selectedFilterOption', function (event, data) {
+                        scope.error = null;
                     });
 
                     /*
@@ -669,6 +676,7 @@
                         else {
                             scope.filterObject.attachEvent(refresh);
                         }
+                        sfMediaService.getImagesSettings();
                     }());
                 }
             };
@@ -680,6 +688,7 @@
 
         .controller('SfImageSelectorUploadPropertiesCtrl', ['$scope', '$modalInstance', 'sfMediaService', 'sfFileModel', 'sfProvider', function myfunction($scope, $modalInstance, sfMediaService, sfFileModel, sfProvider) {
             $scope.model = sfFileModel;
+            $scope.provider = sfProvider;
 
             $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1000) + " KB";
 
