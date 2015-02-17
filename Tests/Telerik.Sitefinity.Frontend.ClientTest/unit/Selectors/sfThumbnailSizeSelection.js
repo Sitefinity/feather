@@ -22,12 +22,24 @@ describe("image thumbnail size selector", function () {
         "Width": 400
     };
 
-    var customSize = {
+    var resizeToAreaCustomSize = {
         "MaxWidth": "200",
         "MaxHeight": "300",
+        "Width": null,
+        "Height": null,
         "ScaleUp": false,
         "Quality": "Medium",
         "Method": "ResizeFitToAreaArguments"
+    };
+
+    var cropToAreaCustomSize = {
+        "MaxWidth": null,
+        "MaxHeight": null,
+        "Width": "200",
+        "Height": "300",
+        "ScaleUp": false,
+        "Quality": "Medium",
+        "Method": "CropCropArguments"
     };
 
     var thumbnail = {
@@ -70,22 +82,12 @@ describe("image thumbnail size selector", function () {
     //Load the module under test.
     beforeEach(module('sfThumbnailSizeSelection'));
 
-    //beforeEach(inject(function (serverContext) {
-    //    serverContext.getEmbeddedResourceUrl = function (assemblyName, url) { {
-    //        return 
-    //    };
-    //}));
-
     describe('sfThumbnailSizeSelectionCtrl tests', function () {
-        var $rootScope, $scope, createController;
+        var $rootScope, createController;
 
         beforeEach(inject(function ($injector) {
-            //// Set up the mock http service responses
-            //$httpBackend = $injector.get('$httpBackend');
-
             // Get hold of a scope (i.e. the root scope)
             $rootScope = $injector.get('$rootScope');
-            $scope = $rootScope.$new();
 
             $q = $injector.get('$q');
 
@@ -130,22 +132,14 @@ describe("image thumbnail size selector", function () {
             expect(options[index].type).toBe('Custom');
             expect(options[index].title).toBe('Custom size: 200x300 px');
             expect(options[index].thumbnail).toBe(null);
-            expect(options[index].customSize.MaxWidth).toBe(customSize.MaxWidth);
-            expect(options[index].customSize.MaxHeight).toBe(customSize.MaxHeight);
-            expect(options[index].customSize.ScaleUp).toBe(customSize.ScaleUp);
-            expect(options[index].customSize.Quality).toBe(customSize.Quality);
-            expect(options[index].customSize.Method).toBe(customSize.Method);
+            expect(options[index].customSize).toBe(customSize);
             expect(options[index].openDialog).toBeFalsy();
 
             index = options.length - 1;
             expect(options[index].type).toBe('Custom');
             expect(options[index].title).toBe('Edit custom size...');
             expect(options[index].thumbnail).toBe(null);
-            expect(options[index].customSize.MaxWidth).toBe(customSize.MaxWidth);
-            expect(options[index].customSize.MaxHeight).toBe(customSize.MaxHeight);
-            expect(options[index].customSize.ScaleUp).toBe(customSize.ScaleUp);
-            expect(options[index].customSize.Quality).toBe(customSize.Quality);
-            expect(options[index].customSize.Method).toBe(customSize.Method);
+            expect(options[index].customSize).toBe(customSize);
             expect(options[index].openDialog).toBe(true);
         };
 
@@ -156,6 +150,26 @@ describe("image thumbnail size selector", function () {
             expect(options[index].thumbnail).toBe(null);
             expect(options[index].customSize).not.toBeDefined();
             expect(options[index].openDialog).toBe(true);
+        };
+
+        var testWithCustomSizeOption = function (customSize) {
+            createController();
+            $rootScope.model = {
+                item: dataItem,
+                customSize: customSize,
+                thumbnail: null,
+                displayMode: 'Custom'
+            };
+            $rootScope.$digest();
+
+            expect($rootScope.sizeOptions).toBeDefined();
+            expect($rootScope.sizeOptions.length).toBe(THUMBNAILS_ITEMS_COUNT + 3);
+            vefiryCorrectThumbnailOptionsArePopulated($rootScope.sizeOptions, customSize);
+
+            expect($rootScope.sizeSelection).toBe($rootScope.sizeOptions[$rootScope.sizeOptions.length - 2]);
+            expect($rootScope.model.displayMode).toBe('Custom');
+            expect($rootScope.model.thumbnail).toBe(null);
+            expect($rootScope.model.customSize).toBe(customSize);
         };
 
         it('[NPetrova] / Should populate correct size options and should set original size option as default.', function () {
@@ -176,25 +190,12 @@ describe("image thumbnail size selector", function () {
             expect($rootScope.model.customSize).toBe(null);
         });
 
-        it('[NPetrova] / Should initialize correct option when custom size is set', function () {
-            createController();
-            $rootScope.$digest();
+        it('[NPetrova] / Should initialize correct option when custom resize to area option is set', function () {
+            testWithCustomSizeOption(resizeToAreaCustomSize);
+        });
 
-            $rootScope.model = {
-                item: dataItem,
-                customSize: customSize,
-                displayMode: 'Custom'
-            };
-            $rootScope.$digest();
-
-            expect($rootScope.sizeOptions).toBeDefined();
-            expect($rootScope.sizeOptions.length).toBe(THUMBNAILS_ITEMS_COUNT + 3);
-            vefiryCorrectThumbnailOptionsArePopulated($rootScope.sizeOptions, customSize);
-
-            expect($rootScope.sizeSelection).toBe($rootScope.sizeOptions[$rootScope.sizeOptions.length - 2]);
-            expect($rootScope.model.displayMode).toBe('Custom');
-            expect($rootScope.model.thumbnail).toBe(null);
-            expect($rootScope.model.customSize).toBe(customSize);
+        it('[NPetrova] / Should initialize correct option when custom crop to area option is set', function () {
+            testWithCustomSizeOption(cropToAreaCustomSize);
         });
 
         it('[NPetrova] / Should initialize correct option when thumbnail size is set', function () {
@@ -216,6 +217,72 @@ describe("image thumbnail size selector", function () {
             expect($rootScope.model.displayMode).toBe('Thumbnail');
             expect($rootScope.model.thumbnail.name).toBe(thumbnail.name);
             expect($rootScope.model.customSize).toBe(null);
+        });
+    });
+
+    describe('sfCustomThumbnailSizeCtrl tests', function () {
+        var $rootScope, createController;
+
+        beforeEach(inject(function ($injector) {
+            // Get hold of a scope (i.e. the root scope)
+            $rootScope = $injector.get('$rootScope');
+
+            // The $controller service is used to create instances of controllers
+            var $controller = $injector.get('$controller');
+
+            createController = function (modalInstance, model) {
+                return $controller('sfCustomThumbnailSizeCtrl', {
+                    '$scope': $rootScope, '$modalInstance': modalInstance, 'model': model
+                });
+            };
+        }));
+
+        it('[NPetrova] / Should initialize default model if no model is passed.', function () {
+            //mock the call to the modal service.
+            modalInstance = {
+                close: function (model) {
+                    expect(model.MaxWidth).toBe(200);
+                    expect(model.MaxHeight).toBe(300);
+                    expect(model.Width).toBe(null);
+                    expect(model.Height).toBe(null);
+                    expect(model.ScaleUp).toBe(true);
+                    expect(model.Quality).toBe('Medium');
+                    expect(model.Method).toBe('CropCropArguments');
+                }
+            };
+
+            createController(modalInstance);
+            $rootScope.$digest();
+
+            expect($rootScope.model.MaxWidth).toBe(null);
+            expect($rootScope.model.MaxHeight).toBe(null);
+            expect($rootScope.model.Width).toBe(null);
+            expect($rootScope.model.Height).toBe(null);
+            expect($rootScope.model.ScaleUp).toBeFalsy();
+            expect($rootScope.model.Quality).toBe('High');
+            expect($rootScope.model.Method).toBe('ResizeFitToAreaArguments');
+
+            $rootScope.model.Method = $rootScope.methodOptions[1].value;
+            $rootScope.model.MaxWidth = 200;
+            $rootScope.model.MaxHeight = 300;
+            $rootScope.model.ScaleUp = true;
+            $rootScope.model.Quality = $rootScope.quality[1];
+
+            $rootScope.done();
+        });
+
+        it('[NPetrova] / Should populate correct model.', function () {
+            //mock the call to the modal service.
+            modalInstance = {
+                close: function (model) {
+                    expect(model).toBe(resizeToAreaCustomSize);
+                }
+            };
+
+            createController(modalInstance, resizeToAreaCustomSize);
+            $rootScope.$digest();
+
+            $rootScope.done();
         });
     });
 });
