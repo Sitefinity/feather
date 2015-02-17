@@ -58,39 +58,42 @@
                     };
 
                     scope.select = function (item) {
-                        var isMultiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.toLowerCase() !== 'false';
-                        var isDeselectable = scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false';
+                        var event = { item: item, cancel: false };
+                        scope.$emit('sf-collection-item-selected', event);
 
-                        var itemIndex = getItemIndex(scope.selectedItems, item, scope.sfIdentifier);
+                        if (event.cancel === false) {
+                            var isMultiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.toLowerCase() !== 'false';
+                            var isDeselectable = scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false';
 
-                        if (!isMultiselect) {
-                            if (itemIndex < 0) {
-                                if (scope.sfIdentifier) {
-                                    scope.selectedItems = [item[scope.sfIdentifier]];
+                            var itemIndex = getItemIndex(scope.selectedItems, item, scope.sfIdentifier);
+
+                            if (!isMultiselect) {
+                                if (itemIndex < 0) {
+                                    if (scope.sfIdentifier) {
+                                        scope.selectedItems = [item[scope.sfIdentifier]];
+                                    }
+                                    else {
+                                        scope.selectedItems = [item];
+                                    }
                                 }
-                                else {
-                                    scope.selectedItems = [item];
+                                else if (isDeselectable) {
+                                    scope.selectedItems = [];
                                 }
                             }
-                            else if (isDeselectable) {
-                                scope.selectedItems = [];
+                            else {
+                                if (itemIndex < 0) {
+                                    if (scope.sfIdentifier) {
+                                        scope.selectedItems.push(item[scope.sfIdentifier]);
+                                    }
+                                    else {
+                                        scope.selectedItems.push(item);
+                                    }
+                                }
+                                else if (isDeselectable) {
+                                    scope.selectedItems.splice(itemIndex, 1);
+                                }
                             }
                         }
-                        else {
-                            if (itemIndex < 0) {
-                                if (scope.sfIdentifier) {
-                                    scope.selectedItems.push(item[scope.sfIdentifier]);
-                                }
-                                else {
-                                    scope.selectedItems.push(item);
-                                }
-                            }
-                            else if (isDeselectable) {
-                                scope.selectedItems.splice(itemIndex, 1);
-                            }
-                        }
-
-                        scope.$emit('sf-collection-item-selected', item);
                     };
                 }
             };

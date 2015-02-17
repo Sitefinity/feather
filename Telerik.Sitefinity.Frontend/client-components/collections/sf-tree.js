@@ -86,6 +86,9 @@
                     };
 
                     scope.select = function (node) {
+                        var event = { item: node.item, cancel: false };
+                        scope.$emit('sf-tree-item-selected', event);
+
                         var isMultiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.toLowerCase() !== 'false';
                         var isDeselectable = scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false';
                         var isExpandOnSelect = scope.sfExpandOnSelect !== undefined && scope.sfExpandOnSelect.toLowerCase() !== 'false';
@@ -122,8 +125,6 @@
                         if (isExpandOnSelect) {
                             scope.toggle(node);
                         }
-
-                        scope.$emit('sf-tree-item-selected', node.item);
                     };
 
                     scope.toggle = function (parentNode) {
