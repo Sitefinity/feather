@@ -18,7 +18,7 @@
                 },
                 link: function (scope, element, attrs, ctrl) {
                     var getDateFromString = function (dateStr) {
-                        return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')'))))).toGMTString();
+                        return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')')))));
                     };
 
                     var getImage = function (id) {
