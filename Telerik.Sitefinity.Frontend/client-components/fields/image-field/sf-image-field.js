@@ -45,7 +45,42 @@
                         provider: scope.sfProvider
                     };
 
+                    var editAllPropertiesUrl = serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=ImagesBackend&ViewName=ImagesBackendEdit&IsInlineEditingMode=true');
                     scope.editAllProperties = function () {
+                        if (window) {
+                            var parentId = scope.sfImage.FolderId || scope.sfImage.ParentId || scope.sfImage.Album.Id;
+                            editAllPropertiesUrl += ('&parentId=' + parentId);
+
+                            var itemsList = new Object();
+                            itemsList.getBinder = function () {
+                                var binder = new Object();
+                                binder.get_provider = function () {
+                                    return scope.sfProvider;
+                                }
+                                return binder;
+                            };
+                            var dialogContext = {
+                                commandName: "edit",
+                                itemsList: itemsList,
+                                dataItem: {
+                                    Id: scope.sfImage.Id,
+                                    ProviderName: scope.sfProvider
+                                },
+                                params: {
+                                    IsEditable: true,
+                                    parentId: parentId
+                                },
+                                key: { Id: scope.sfImage.Id },
+                                commandArgument: { languageMode: "edit"}
+                            };
+
+                            var editWindow = window.radopen(editAllPropertiesUrl);
+                            var dialogManager = window.top.GetDialogManager();
+                            var dialogName = editWindow.get_name();
+                            var dialog = dialogManager.getDialogByName(dialogName)
+                            dialog.setUrl(editAllPropertiesUrl);
+                            dialogManager.openDialog(dialogName, null, dialogContext)
+                        }
                     };
 
                     scope.done = function () {
@@ -76,7 +111,7 @@
                             scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
                         }
 
-                        scope.$openModalDialog();
+                        angular.element('.imageSelectorModal').scope().$openModalDialog();
                     };
 
                     // Initialize
