@@ -287,48 +287,37 @@ describe("image thumbnail size selector", function () {
 
         it('[NPetrova] / Should validate custom size options.', function () {
             createController();
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
 
             $rootScope.model.MaxHeight = 'invalid';
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
 
             $rootScope.model.MaxHeight = 'invalid';
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
 
             $rootScope.model.MaxHeight = '234';
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
 
             $rootScope.model.MaxWidth = 'invalid';
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
 
             $rootScope.model.MaxWidth = '235';
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBe(true);
 
             $rootScope.model.Method = $rootScope.methodOptions[1].value;
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
 
             $rootScope.model.Width = 9999999999;
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
 
             $rootScope.model.Width = 9999;
             $rootScope.model.Height = 'invalid';
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
 
             $rootScope.model.Height = 1;
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBe(true);
 
             $rootScope.model.Method = $rootScope.methodOptions[0].value;
-            $rootScope.$digest();
             expect($rootScope.areCustomSizeOptionsValid()).toBe(true);
         });
     });
