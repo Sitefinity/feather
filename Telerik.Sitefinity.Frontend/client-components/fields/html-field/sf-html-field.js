@@ -201,7 +201,7 @@
                     if (newVal === null) {
                         $scope.cancel();
                     }
-                    else if ($scope.model.item) {
+                    else if ($scope.model.item && $scope.model.item.Title) {
                         var imageItem = $scope.model.item;
                         $scope.model.title = imageItem.Title.Value;
                         $scope.model.alternativeText = imageItem.AlternativeText ? imageItem.AlternativeText.Value : '';
