@@ -84,6 +84,11 @@ describe('libraries breadcrumb in image selector', function () {
             getPredecessorsFolders: function (options) {
                 return itemsPromiseTransform(genericGet());
             }
+        },
+        getImagesSettings: function () {
+            var defer = $q.defer();
+            defer.resolve({ AllowedExensionsRegex: /^image\/(png)$/g });
+            return defer.promise;
         }
     };
 
