@@ -15,7 +15,7 @@
                 <span ng-bind="imageSize"></span><br />
 
                 <strong>Uploaded: </strong>
-                <span>{{uploaded : 'MM/dd/yyyy HH:mm'}}</span>
+                <span ng-bind="uploaded | date : 'MM/dd/yyyy HH:mm'"></span>
             </p>
 
             <br />
