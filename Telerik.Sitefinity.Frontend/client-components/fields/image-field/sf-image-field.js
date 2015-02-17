@@ -111,7 +111,10 @@
                             scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
                         }
 
-                        angular.element('.imageSelectorModal').scope().$openModalDialog();
+                        var imageSelectorModalScope = angular.element('.imageSelectorModal').scope();
+
+                        if (imageSelectorModalScope)
+                            imageSelectorModalScope.$openModalDialog();
                     };
 
                     // Initialize
