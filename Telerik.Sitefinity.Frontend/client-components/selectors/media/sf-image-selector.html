@@ -38,12 +38,12 @@
             <div ng-hide="items.length" class="Media-upload-text">
                 <div class="text-center lead">NO IMAGES ICON</div>
 
-                <div ng-hide="searchQuery" class="Media-upload-text">
+                <div ng-hide="filterObject.query" class="Media-upload-text">
                     <div class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
                     <div class="text-center">or simply drag &amp; drop here</div>
                 </div>
 
-                <div ng-show="searchQuery" class="Media-upload-text">
+                <div ng-show="filterObject.query" class="Media-upload-text">
                     <div class="text-center lead">NO Items found</div>
                 </div>
             </div>
