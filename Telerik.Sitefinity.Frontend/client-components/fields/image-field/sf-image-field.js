@@ -17,8 +17,10 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
+                    var oldProvider;
+
                     var getDateFromString = function (dateStr) {
-                        return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')'))))).toGMTString();
+                        return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')')))));
                     };
 
                     var getImage = function (id) {
@@ -48,6 +50,7 @@
 
                     scope.done = function () {
                         scope.$modalInstance.close();
+                        oldProvider = scope.model.provider;
 
                         if (scope.model.selectedItems && scope.model.selectedItems.length) {
                             scope.sfProvider = scope.model.provider;
@@ -63,6 +66,7 @@
                             scope.sfModel = null;
                         }
 
+                        scope.model.provider = oldProvider;
                         scope.$modalInstance.dismiss();
                     };
 

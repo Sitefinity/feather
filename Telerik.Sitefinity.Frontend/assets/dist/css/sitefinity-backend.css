@@ -8067,6 +8067,27 @@ h4, .h4 {
 :-ms-input-placeholder {
   color: #a9a9a9; }
 
+/* line 9, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
+.dl-half {
+  overflow: hidden;
+  min-width: 280px;
+  margin: 0;
+  padding: 0; }
+  /* line 16, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
+  .dl-half dt, .dl-half dd {
+    float: left;
+    padding: 0;
+    margin: 0; }
+  /* line 21, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
+  .dl-half dt {
+    width: 35%;
+    color: #666;
+    clear: both;
+    font-weight: 400; }
+  /* line 27, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
+  .dl-half dd {
+    width: 65%; }
+
 /* line 5, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_grid */
 .row-none {
   margin-right: -0px;
@@ -8136,12 +8157,20 @@ h4, .h4 {
 .btn-primary {
   min-width: 90px; }
 
-/* line 2, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
-.alert-warning, .alert-danger {
+/* line 3, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
+.modal-body .alert-warning, .modal-body .alert-danger {
   margin: -21px -20px 24px;
   font-size: 13px;
   padding: 10px 20px;
   border-radius: 0; }
+
+/* line 12, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
+.modal-body .Media .alert-danger {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  top: 21px;
+  padding: 13px 20px 12px; }
 
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_utilities */
 .full-width {
@@ -8413,6 +8442,17 @@ tab {
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_badges */
 .badge {
   max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+/* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_popovers */
+.popover {
+  z-index: 9999;
+  min-height: 90px; }
+
+/* line 5, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_popovers */
+.popover-title {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
