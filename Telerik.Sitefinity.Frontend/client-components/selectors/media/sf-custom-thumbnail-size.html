@@ -11,7 +11,30 @@
             <select class="form-control" ng-model="model.Method" ng-options="method.value as method.title for method in methodOptions"></select>
         </div>
         <div class="col-xs-4 m-top-xs">
-            <a href="#">What's this?</a>
+            <a href="#"
+                popover-placement="bottom"
+                popover-trigger="focus"
+                popover-append-to-body="true"
+                popover-title="Resize image"
+                sf-popover-html="
+                    <div class='row'>
+                        <div class='col-xs-6'>
+                            <strong>Resize to area</strong>
+                            <div class='small m-bottom-sm'>Generated image will be resized to desired area</div>
+
+                            <img src='/Frontend-Assembly/Telerik.Sitefinity.Frontend.ContentBlock/assets/dist/img/resize-to-area.png' alt='resize to area example' />
+                        </div>
+
+                        <div class='col-xs-6'>
+                            <strong>Crop to area</strong>
+                            <div class='small m-bottom-sm'>Generated image will be resized and cropped to desired area</div>
+                            <img src='/Frontend-Assembly/Telerik.Sitefinity.Frontend.ContentBlock/assets/dist/img/crop-to-area.png' alt='crop to area example' />
+                        </div>
+                    </div>
+                "
+            >
+                What's this?
+            </a>
         </div>
     </div>
 </div>
