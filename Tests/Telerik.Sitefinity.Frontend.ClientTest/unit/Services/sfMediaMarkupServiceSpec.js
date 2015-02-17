@@ -33,10 +33,10 @@
         this.alternativeText = 'Test alternative title';
         this.alignment = 'Center';
         this.margin = {
-            top: '100',
-            left: '200',
-            bottom: '300',
-            right: '400'
+            top: 100,
+            left: 200,
+            bottom: 300,
+            right: 400
         };
 
         this.cssClass = null;
