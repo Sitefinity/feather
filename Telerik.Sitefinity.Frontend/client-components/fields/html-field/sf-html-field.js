@@ -92,8 +92,7 @@
 
                             })
                             .then(function (errorMessage) {
-                                if (properties.thumbnail && properties.thumbnail.url)
-                                {
+                                if (properties.thumbnail && properties.thumbnail.url) {
                                     return properties.thumbnail.url;
                                 }
                                 else if (properties.customSize) {
@@ -201,6 +200,9 @@
                 $scope.$watch('model.item.Id', function (newVal) {
                     if (newVal === null) {
                         $scope.cancel();
+                    }
+                    else if ($scope.model && $scope.model.item && !$scope.model.title) {
+                        $scope.model.title = $scope.model.item.Title.Value;
                     }
                 });
 
