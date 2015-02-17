@@ -680,6 +680,7 @@
 
         .controller('SfImageSelectorUploadPropertiesCtrl', ['$scope', '$modalInstance', 'sfMediaService', 'sfFileModel', 'sfProvider', function myfunction($scope, $modalInstance, sfMediaService, sfFileModel, sfProvider) {
             $scope.model = sfFileModel;
+            $scope.provider = sfProvider;
 
             $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1000) + " KB";
 
