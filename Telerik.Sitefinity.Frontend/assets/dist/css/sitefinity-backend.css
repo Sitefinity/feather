@@ -8157,12 +8157,20 @@ h4, .h4 {
 .btn-primary {
   min-width: 90px; }
 
-/* line 2, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
-.alert-warning, .alert-danger {
+/* line 3, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
+.modal-body .alert-warning, .modal-body .alert-danger {
   margin: -21px -20px 24px;
   font-size: 13px;
   padding: 10px 20px;
   border-radius: 0; }
+
+/* line 12, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
+.modal-body .Media .alert-danger {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  top: 21px;
+  padding: 13px 20px 12px; }
 
 /* line 1, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_utilities */
 .full-width {
