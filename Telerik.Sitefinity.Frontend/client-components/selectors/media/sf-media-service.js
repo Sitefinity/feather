@@ -238,7 +238,7 @@
                               return data.Items;
                           });
             },
-            upload: function (model) {
+            upload: function (model, provider) {
 
                 var defaultLibraryId = '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb';
                 var libraryId = model.parentId || defaultLibraryId;
@@ -248,7 +248,7 @@
                     newParentId: libraryId,
                     itemId: serviceHelper.emptyGuid(),
                     itemType: constants.images.itemType,
-                    provider: model.provider,
+                    provider: provider,
                     parentItemType: constants.images.albumItemType,
                     title: model.title || model.file.name,
                     alternativeText: model.alternativeText,

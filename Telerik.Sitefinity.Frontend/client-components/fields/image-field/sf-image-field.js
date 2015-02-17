@@ -90,6 +90,7 @@
                     }
 
                     scope.$on('sf-image-selector-image-uploaded', function (event, uploadedImageInfo) {
+                        scope.sfProvider = scope.model.provider;
                         getImage(uploadedImageInfo.ContentId);
                         scope.$modalInstance.dismiss();
                     });

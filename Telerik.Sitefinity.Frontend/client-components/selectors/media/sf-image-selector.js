@@ -349,8 +349,11 @@
                     // Upload properties logic
                     var openUploadPropertiesDialog = function (file) {
                         scope.model.file = file;
+                        
+                        var fileModelResolver = function () { return scope.model; };
+                        var providerResolver = function () { return scope.provider; };
 
-                        angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: function () { return scope.model; } })
+                        angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: fileModelResolver, sfProvider: providerResolver })
                             .then(function (uploadedImageInfo) {
                                 if (uploadedImageInfo && !uploadedImageInfo.ErrorMessage) {
                                     scope.$emit('sf-image-selector-image-uploaded', uploadedImageInfo);
@@ -653,7 +656,7 @@
         * Upload properties controller
         */
 
-        .controller('SfImageSelectorUploadPropertiesCtrl', ['$scope', '$modalInstance', 'sfMediaService', 'sfFileModel', function myfunction($scope, $modalInstance, sfMediaService, sfFileModel) {
+        .controller('SfImageSelectorUploadPropertiesCtrl', ['$scope', '$modalInstance', 'sfMediaService', 'sfFileModel', 'sfProvider', function myfunction($scope, $modalInstance, sfMediaService, sfFileModel, sfProvider) {
             $scope.model = sfFileModel;
 
             $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1000) + " KB";
@@ -679,7 +682,7 @@
             };
 
             $scope.uploadImage = function () {
-                sfMediaService.images.upload($scope.model).then(successAction, errorAction, progressAction);
+                sfMediaService.images.upload($scope.model, sfProvider).then(successAction, errorAction, progressAction);
             };
 
             $scope.cancelUpload = function () {
