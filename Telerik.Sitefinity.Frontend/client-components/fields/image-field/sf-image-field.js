@@ -46,11 +46,7 @@
                     };
 
                     var editAllPropertiesUrl = serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=ImagesBackend&ViewName=ImagesBackendEdit&IsInlineEditingMode=true');
-
-                    if (window && window.radopen)
-                        scope.showEditPropertiesButton = true;
-                    else
-                        scope.showEditPropertiesButton = false;
+                    scope.showEditPropertiesButton = (window && window.radopen);
 
                     scope.editAllProperties = function () {
                         var parentId = scope.sfImage.FolderId || scope.sfImage.ParentId || scope.sfImage.Album.Id;
