@@ -155,7 +155,7 @@ describe('sfMediaService', function () {
         /* Common */
         (function () {
             it('[dzhenko] / passing no options object to folders should return all objects', function () {
-                var subpath = '?hierarchyMode=true';
+                var subpath = 'folders/?hierarchyMode=true';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -182,7 +182,7 @@ describe('sfMediaService', function () {
         /* Errors */
         (function () {
             it('[dzhenko] / should return error on folders', function () {
-                var subpath = '?hierarchyMode=true';
+                var subpath = 'folders/?hierarchyMode=true';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(500, errorResponse);
 
@@ -210,7 +210,7 @@ describe('sfMediaService', function () {
         (function () {
             // Root folders
             it('[dzhenko] / should return only root folders', function () {
-                var subpath = '?hierarchyMode=true';
+                var subpath = 'folders/?hierarchyMode=true';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -218,7 +218,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should return only 1 root folder', function () {
-                var subpath = '?hierarchyMode=true&take=1';
+                var subpath = 'folders/?hierarchyMode=true&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -226,7 +226,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should skip 1 root folder', function () {
-                var subpath = '?hierarchyMode=true&skip=1';
+                var subpath = 'folders/?hierarchyMode=true&skip=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -234,7 +234,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should skip 1 and return only 1 root folder', function () {
-                var subpath = '?hierarchyMode=true&skip=1&take=1';
+                var subpath = 'folders/?hierarchyMode=true&skip=1&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -242,7 +242,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use custom provider with root folders', function () {
-                var subpath = '?hierarchyMode=true&provider=FakeDataProvider';
+                var subpath = 'folders/?hierarchyMode=true&provider=FakeDataProvider';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -250,7 +250,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use filter with root folders', function () {
-                var subpath = '?filter=FakeFilterExpression&hierarchyMode=true';
+                var subpath = 'folders/?filter=FakeFilterExpression&hierarchyMode=true';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -258,7 +258,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use sort expression with root folders', function () {
-                var subpath = '?hierarchyMode=true&sortExpression=FakeSortExpression';
+                var subpath = 'folders/?hierarchyMode=true&sortExpression=FakeSortExpression';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -266,7 +266,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use sort and filter expression with root folders', function () {
-                var subpath = '?filter=FakeFilterExpression&hierarchyMode=true&sortExpression=FakeSortExpression';
+                var subpath = 'folders/?filter=FakeFilterExpression&hierarchyMode=true&sortExpression=FakeSortExpression';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -274,7 +274,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use skip, take and provider with root folders', function () {
-                var subpath = '?hierarchyMode=true&provider=FakeDataProvider&skip=1&take=1';
+                var subpath = 'folders/?hierarchyMode=true&provider=FakeDataProvider&skip=1&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -282,7 +282,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use all options with root folders', function () {
-                var subpath = '?filter=FakeFilterExpression&hierarchyMode=true&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
+                var subpath = 'folders/?filter=FakeFilterExpression&hierarchyMode=true&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -291,13 +291,13 @@ describe('sfMediaService', function () {
 
             // All folders
             it('[dzhenko] / should return all existing folders', function () {
-                $httpBackend.expectGET(albumsServicePath).respond(dataItems);
+                $httpBackend.expectGET(albumsServicePath + 'folders/').respond(dataItems);
 
                 assertFolders({ parent: null, recursive: true });
             });
 
             it('[dzhenko] / should return only 1 folder', function () {
-                var subpath = '?take=1';
+                var subpath = 'folders/?take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -305,7 +305,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should skip 1 folder', function () {
-                var subpath = '?skip=1';
+                var subpath = 'folders/?skip=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -313,7 +313,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should skip 1 and return only 1  folder', function () {
-                var subpath = '?skip=1&take=1';
+                var subpath = 'folders/?skip=1&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -321,7 +321,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use custom provider with all folders', function () {
-                var subpath = '?provider=FakeDataProvider';
+                var subpath = 'folders/?provider=FakeDataProvider';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -329,7 +329,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use filter with all folders', function () {
-                var subpath = '?filter=FakeFilterExpression';
+                var subpath = 'folders/?filter=FakeFilterExpression';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -337,7 +337,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use sort expression with all folders', function () {
-                var subpath = '?sortExpression=FakeSortExpression';
+                var subpath = 'folders/?sortExpression=FakeSortExpression';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -345,7 +345,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use sort and filter expression with all folders', function () {
-                var subpath = '?filter=FakeFilterExpression&sortExpression=FakeSortExpression';
+                var subpath = 'folders/?filter=FakeFilterExpression&sortExpression=FakeSortExpression';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -353,7 +353,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use skip, take and provider with all folders', function () {
-                var subpath = '?provider=FakeDataProvider&skip=1&take=1';
+                var subpath = 'folders/?provider=FakeDataProvider&skip=1&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -361,7 +361,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use all options with all folders', function () {
-                var subpath = '?filter=FakeFilterExpression&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
+                var subpath = 'folders/?filter=FakeFilterExpression&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -370,7 +370,7 @@ describe('sfMediaService', function () {
 
             // Child folders
             it('[dzhenko] / should return only child folders', function () {
-                var subpath = sampleGuid + '/?hierarchyMode=true';
+                var subpath = 'folders/' + sampleGuid + '/?hierarchyMode=true';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -378,7 +378,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should return only 1 child folder', function () {
-                var subpath = sampleGuid + '/?hierarchyMode=true&take=1';
+                var subpath = 'folders/' + sampleGuid + '/?hierarchyMode=true&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -386,7 +386,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should skip 1 child folder', function () {
-                var subpath = sampleGuid + '/?hierarchyMode=true&skip=1';
+                var subpath = 'folders/' + sampleGuid + '/?hierarchyMode=true&skip=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -394,7 +394,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should skip 1 and return only 1 child folder', function () {
-                var subpath = sampleGuid + '/?hierarchyMode=true&skip=1&take=1';
+                var subpath = 'folders/' + sampleGuid + '/?hierarchyMode=true&skip=1&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -402,7 +402,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use custom provider with child folders', function () {
-                var subpath = sampleGuid + '/?hierarchyMode=true&provider=FakeDataProvider';
+                var subpath = 'folders/' + sampleGuid + '/?hierarchyMode=true&provider=FakeDataProvider';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -410,7 +410,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use filter with child folders', function () {
-                var subpath = sampleGuid + '/?filter=FakeFilterExpression&hierarchyMode=true';
+                var subpath = 'folders/' + sampleGuid + '/?filter=FakeFilterExpression&hierarchyMode=true';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -418,7 +418,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use sort expression with child folders', function () {
-                var subpath = sampleGuid + '/?hierarchyMode=true&sortExpression=FakeSortExpression';
+                var subpath = 'folders/' + sampleGuid + '/?hierarchyMode=true&sortExpression=FakeSortExpression';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -426,7 +426,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use sort and filter expression with child folders', function () {
-                var subpath = sampleGuid + '/?filter=FakeFilterExpression&hierarchyMode=true&sortExpression=FakeSortExpression';
+                var subpath = 'folders/' + sampleGuid + '/?filter=FakeFilterExpression&hierarchyMode=true&sortExpression=FakeSortExpression';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -434,7 +434,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use skip, take and provider with child folders', function () {
-                var subpath = sampleGuid + '/?hierarchyMode=true&provider=FakeDataProvider&skip=1&take=1';
+                var subpath = 'folders/' + sampleGuid + '/?hierarchyMode=true&provider=FakeDataProvider&skip=1&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
@@ -442,7 +442,7 @@ describe('sfMediaService', function () {
             });
 
             it('[dzhenko] / should use all options with child folders', function () {
-                var subpath = sampleGuid + '/?filter=FakeFilterExpression&hierarchyMode=true&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
+                var subpath = 'folders/' + sampleGuid + '/?filter=FakeFilterExpression&hierarchyMode=true&provider=FakeDataProvider&skip=1&sortExpression=FakeSortExpression&take=1';
 
                 $httpBackend.expectGET(albumsServicePath + subpath).respond(dataItems);
 
