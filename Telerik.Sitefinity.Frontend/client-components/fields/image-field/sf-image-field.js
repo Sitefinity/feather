@@ -18,7 +18,7 @@
                 },
                 link: function (scope, element, attrs, ctrl) {
                     var getDateFromString = function (dateStr) {
-                        return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')'))))).toGMTString();
+                        return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')')))));
                     };
 
                     var getImage = function (id) {
@@ -52,14 +52,8 @@
                         if (scope.model.selectedItems && scope.model.selectedItems.length) {
                             scope.sfProvider = scope.model.provider;
 
-                            if (scope.model.selectedItems[0].Id && scope.model.selectedItems[0].ThumbnailUrl) {
-                                // image is passed -> set it to model
-                                refreshScopeInfo(scope.model.selectedItems[0]);
-                            }
-                            else {
-                                // Id is passed -> get image
-                                getImage(scope.model.selectedItems[0]);
-                            }
+                            // Id is passed -> get image
+                            getImage(scope.model.selectedItems[0].Id || scope.model.selectedItems[0]);
                         }
                     };
 
@@ -75,7 +69,7 @@
                     scope.changeImage = function () {
                         if (scope.sfImage) {
                             scope.model.filterObject = sfMediaFilter.newFilter();
-                            scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.ParentId || scope.sfImage.Album.Id);
+                            scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
                         }
 
                         scope.$openModalDialog();

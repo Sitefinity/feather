@@ -1,9 +1,6 @@
 ﻿(function () {
     angular.module('sfServices')
         .factory('sfProviderService', ['$http', '$q', 'serverData', function ($http, $q, serverData) {
-            var defaultProviderName = serverData.get('defaultProviderName'),
-                defaulltProvider;
-
             var getCookie = function (cname) {
                 var name = cname + '=';
                 var ca = document.cookie.split(';');
@@ -14,6 +11,22 @@
                 }
                 return '';
             };
+
+            var defaultProviderName = serverData.get('defaultProviderName');
+            if (!defaultProviderName) {
+                var url = 'Sitefinity/Services/Multisite/Multisite.svc/' + getCookie('sf_site') + '/Telerik.Sitefinity.Modules.Libraries.LibrariesManager/availablelinks/';
+                $http.get(sitefinity.getRootedUrl(url), { cache: false })
+                    .success(function (data) {
+                        if (data && data.Items) {
+                            data.Items.forEach(function (item) {
+                                if (item.Link && item.Link.IsDefault === true) {
+                                    defaultProviderName = item.Link.ProviderName;
+                                    return;
+                                }
+                            });
+                        }
+                    });
+            }
 
             //returns an array of available providers
             var getAll = function (managerName) {
