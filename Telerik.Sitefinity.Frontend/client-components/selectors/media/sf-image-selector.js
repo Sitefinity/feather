@@ -461,6 +461,8 @@
                     };
 
                     scope.narrowResults = function (query) {
+                        scope.searchQuery = query;
+
                         if (query) {
                             scope.filterObject.set.query.to(query);
                             return;
