@@ -370,7 +370,6 @@
     <EmbeddedResource Include="Mvc\Views\Designer\Designer.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="assets\dist\img\" />
     <Folder Include="assets\dist\js\" />
     <Folder Include="assets\src\js\" />
   </ItemGroup>
@@ -507,6 +506,8 @@
     <EmbeddedResource Include="assets\dist\css\html-field.css" />
     <EmbeddedResource Include="assets\dist\css\html-field.min.css" />
     <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-16f0b1413c8f72903a772ef776b8c079.svg" />
+    <EmbeddedResource Include="assets\dist\img\crop-to-area.png" />
+    <EmbeddedResource Include="assets\dist\img\resize-to-area.png" />
     <Content Include="assets\feather-icons.css" />
     <Content Include="assets\gruntfile.js" />
     <EmbeddedResource Include="Modules\ControlTemplates\Web\Scripts\MvcControlTemplateEditor.js" />
