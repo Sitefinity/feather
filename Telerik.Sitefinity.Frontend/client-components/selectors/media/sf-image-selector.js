@@ -72,7 +72,8 @@
                 restrict: 'E',
                 scope: {
                     selectedItems: '=?sfModel',
-                    filterObject: '=?sfFilter'
+                    filterObject: '=?sfFilter',
+                    provider: '=?sfProvider'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -89,7 +90,7 @@
                         // Library filter
                         loadLibraryChildren: function (parent) {
                             parent = parent || {};
-                            return sfMediaService.images.getFolders({ parent: parent.Id }).then(function (response) {
+                            return sfMediaService.images.getFolders({ parent: parent.Id, provider: scope.provider }).then(function (response) {
                                 if (response) {
                                     return response.Items;
                                 }
@@ -193,7 +194,8 @@
 
                         var options = {
                             parent: scope.filterObject.parent,
-                            sort: scope.sortExpression
+                            sort: scope.sortExpression,
+                            provider: scope.provider
                         };
 
                         if (appendItems) {
@@ -210,7 +212,7 @@
                             var itemsLength = scope.items ? scope.items.length : 0;
 
                             if (!scope.filterObject.query && !scope.filterObject.basic) {
-                                var getPromise = sfMediaService.images.getPredecessorsFolders(scope.filterObject.parent);
+                                var getPromise = sfMediaService.images.getPredecessorsFolders(scope.filterObject.parent, scope.provider);
                                 if (getPromise) {
                                     getPromise.then(function (items) {
                                         scope.breadcrumbs = items;
@@ -278,25 +280,35 @@
                     // drag-drop logic
                     scope.dataTransferDropped = function (dataTransferObject) {
                         // using only the first file
-                        if (dataTransferObject.files && dataTransferObject.files[0]) {
-                            if (!scope.isInUploadMode) {
-                                if (scope.selectedFilterOption == 1) {
-                                    // set library id or null if in default library
-                                    scope.model.parentId = getLibraryId();
-                                }
-                                else if (scope.selectedFilterOption == 2) {
-                                    if (scope.filters.tag.selected[0]) {
-                                        scope.model.tags.push(scope.filters.tag.selected[0]);
-                                    }
-                                }
-                                else if (scope.selectedFilterOption == 3) {
-                                    if (scope.filters.category.selected[0]) {
-                                        scope.model.categories.push(scope.filters.category.selected[0]);
-                                    }
-                                }
-                            }
 
-                            openUploadPropertiesDialog(dataTransferObject.files[0]);
+                        if (dataTransferObject.files && dataTransferObject.files[0]) {
+                            var file = dataTransferObject.files[0];
+                            sfMediaService.getImagesSettings().then(function (settings) {
+                                if (!file.type.match(settings.AllowedExensionsRegex)) {
+                                    scope.error = {
+                                        show: true,
+                                        message: 'This file type is not allowed to upload. Only files with the following extensions are allowed: ' + settings.AllowedExensionsSettings
+                                    };
+                                    return;
+                                }
+                                if (!scope.isInUploadMode) {
+                                    if (scope.selectedFilterOption == 1) {
+                                        // set library id or null if in default library
+                                        scope.model.parentId = getLibraryId();
+                                    }
+                                    else if (scope.selectedFilterOption == 2) {
+                                        if (scope.filters.tag.selected[0]) {
+                                            scope.model.tags.push(scope.filters.tag.selected[0]);
+                                        }
+                                    }
+                                    else if (scope.selectedFilterOption == 3) {
+                                        if (scope.filters.category.selected[0]) {
+                                            scope.model.categories.push(scope.filters.category.selected[0]);
+                                        }
+                                    }
+                                }
+                                openUploadPropertiesDialog(file);
+                            });
                         }
                     };
 
@@ -306,11 +318,20 @@
                         scope.$apply(function () {
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
-                                if (!scope.isInUploadMode) {
-                                    scope.model.parentId = getLibraryId();
-                                }
-
-                                openUploadPropertiesDialog(fileInput.files[0]);
+                                var file = fileInput.files[0];
+                                sfMediaService.getImagesSettings().then(function (settings) {
+                                    if (!file.type.match(settings.AllowedExensionsRegex)) {
+                                        scope.error = {
+                                            show: true,
+                                            message: 'This file type is not allowed to upload. Only files with the following extensions are allowed: ' + settings.AllowedExensionsSettings
+                                        };
+                                        return;
+                                    }
+                                    if (!scope.isInUploadMode) {
+                                        scope.model.parentId = getLibraryId();
+                                    }
+                                    openUploadPropertiesDialog(file);
+                                });
                             }
                         });
                     });
@@ -330,12 +351,16 @@
                         scope.model.file = file;
 
                         angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: function () { return scope.model; } })
-                            .then(function (uploadedImageId) {
-                                if (uploadedImageId) {
-                                    scope.selectedItems.push(uploadedImageId);
-                                    scope.$emit('sf-image-selector-image-uploaded', uploadedImageId);
+                            .then(function (uploadedImageInfo) {
+                                if (uploadedImageInfo && !uploadedImageInfo.ErrorMessage) {
+                                    scope.$emit('sf-image-selector-image-uploaded', uploadedImageInfo);
                                 }
-
+                                else if (uploadedImageInfo && uploadedImageInfo.ErrorMessage) {
+                                    scope.error = {
+                                        show: true,
+                                        message: uploadedImageInfo.ErrorMessage
+                                    };
+                                }
                                 restoreFileModel();
                             });
                     };
@@ -395,7 +420,7 @@
                         },
                         library: {
                             index: 1,
-                            selected: [],
+                            selected: scope.filterObject && scope.filterObject.parent ? [scope.filterObject.parent] : [],
                             getChildren: filtersLogic.loadLibraryChildren
                         },
                         tag: {
@@ -491,6 +516,11 @@
                         scope.filters.date.selected = [];
                         scope.filters.tag.selected = [];
                         scope.filters.category.selected = [];
+                        scope.error = null;
+
+                        if (scope.isInUploadMode) {
+                            sfMediaService.getImagesSettings();
+                        }
                     };
 
                     /*
@@ -564,6 +594,20 @@
                         }
                     });
 
+                    scope.$watch('provider', function (newVal, oldVal) {
+                        if (newVal === oldVal || !oldVal)
+                            return;
+
+                        if (scope.filterObject.parent) {
+                            scope.filters.basic.select(constants.filters.basicRecentItemsValue);
+                        }
+                        else {
+                            refresh();
+                        }
+
+                        element.find('div.library-filter ul').scope().bind();
+                    });
+
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
                         scope.isInUploadMode = false;
@@ -621,8 +665,8 @@
             $scope.model.title = fileName.slice(0, fileName.lastIndexOf('.'));
 
             var successAction = function (data) {
-                var firstItem = data[0] || {};
-                $modalInstance.close(firstItem.ContentId);
+                data = data || {};
+                $modalInstance.close(data[0]);
             };
 
             var progressAction = function (progress) {
@@ -640,6 +684,18 @@
 
             $scope.cancelUpload = function () {
                 $modalInstance.dismiss();
+            };
+        }])
+
+        .directive('sfScrollIfSelected', [function () {
+            return {
+                link: function (scope, element) {
+                    if (scope.isSelected(scope.item)) {
+                        setTimeout(function () {
+                            element[0].scrollIntoView();
+                        }, 0);
+                    }
+                }
             };
         }]);
 })();

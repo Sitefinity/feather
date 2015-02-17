@@ -1,25 +1,35 @@
-﻿<div class="container">
+﻿<div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
-            <img ng-src="{{info.url}}" src="" width="200" height="150" alt="{{info.title}}" />
+        <div class="col-md-5 text-center">
+            <div class="sf-Media--info-image">
+                <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
+            </div>
         </div>
 
-        <div class="col-md-3">
-            <p><label>Type</label><span ng-bind="info.type"></span></p>
-            <p><label>File size</label><span ng-bind="info.size"></span></p>
-            <p><label>Uploaded</label><span ng-bind="info.uploaded"></span></p>
+        <div class="col-md-7">
+            <p>
+                <strong>Type: </strong>
+                <span ng-bind="sfImage.Extension"></span><br />
+
+                <strong>File size: </strong>
+                <span ng-bind="imageSize"></span><br />
+
+                <strong>Uploaded: </strong>
+                <span ng-bind="uploaded"></span>
+            </p>
+
             <br />
-            <button class="btn btn-sm" ng-click="changeImage()">Change image</button>
-            <button class="btn btn-sm" ng-click="editAllProperties()">Edit all properties</button>
+            <button class="btn btn-xs btn-default" ng-click="changeImage()">Change image</button>
+            <button class="btn btn-xs btn-default" ng-click="editAllProperties()">Edit all properties</button>
         </div>
     </div>
 </div>
 
-<div class="imageSelectorModal" 
-    template-url="sf-image-selector-modal-template" 
-    modal 
-    size="normal" 
-    window-class="modal-fluid" 
+<div class="imageSelectorModal"
+    template-url="sf-image-selector-modal-template"
+    modal
+    size="normal"
+    window-class="modal-fluid"
     existing-scope="true">
 </div>
 
@@ -29,10 +39,10 @@
         <h3 class="modal-title">Select image</h3>
     </div>
     <div class="modal-body">
-        <sf-image-selector sf-model="model.selectedItemIds" sf-filter="model.filterObject"></sf-image-selector>
+        <sf-image-selector sf-model="model.selectedItems" sf-filter="model.filterObject" sf-provider="model.provider"></sf-image-selector>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItemIds.length">Done</button>
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">Done</button>
         <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
     </div>
 </script>
