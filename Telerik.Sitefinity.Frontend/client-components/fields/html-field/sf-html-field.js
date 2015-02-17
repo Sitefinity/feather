@@ -85,6 +85,29 @@
                             .then(function (data) {
                                 properties = data;
 
+                                if (data.customSize)
+                                    return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize);
+                                else
+                                    return '';
+
+                            })
+                            .then(function (errorMessage) {
+                                if (properties.thumbnail && properties.thumbnail.url) {
+                                    return properties.thumbnail.url;
+                                }
+                                else if (properties.customSize) {
+                                    return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
+                                }
+                                else {
+                                    return '';
+                                }
+                            })
+                            .then(function (thumbnailUrl) {
+                                if (thumbnailUrl) {
+                                    properties.thumbnail = properties.thumbnail || {};
+                                    properties.thumbnail.url = thumbnailUrl;
+                                }
+
                                 return mediaService.getLibrarySettings();
                             })
                             .then(function (settings) {
@@ -171,16 +194,15 @@
         }])
         .controller('sfImagePropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
             function ($scope, $modalInstance, serverContext, sfModel) {
-                debugger;
                 // undefined, because the image-field sets it to null if cancel is pressed and the watch is triggered
                 $scope.model = sfModel || { item: undefined };
-                
+
                 $scope.$watch('model.item.Id', function (newVal) {
                     if (newVal === null) {
                         $scope.cancel();
                     }
-                    else if ($scope.model.item) {
-                        $scope.model.title = $scope.model.title || $scope.model.item.Title;
+                    else if ($scope.model && $scope.model.item && !$scope.model.title) {
+                        $scope.model.title = $scope.model.item.Title.Value;
                     }
                 });
 

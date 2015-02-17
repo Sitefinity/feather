@@ -10,6 +10,8 @@
                 this.customSize = {  // Keep the names of those properties as they are in order to support old HTML field.
                     MaxWidth: null,
                     MaxHeight: null,
+                    Width: null,
+                    Height: null,
                     ScaleUp: false,
                     Quality: null, // High, Medium, Low
                     Method: null // ResizeFitToAreaArguments, CropCropArguments
@@ -142,6 +144,13 @@
 
                     var jElementToInsert = $('<img />');
                     jElementToInsert.attr('sfref', sfref);
+
+                    if (properties.displayMode === 'Custom') {
+                        src = properties.thumbnail.url;
+                        jElementToInsert.attr('method', properties.customSize.Method);
+                        jElementToInsert.attr('customsizemethodproperties', JSON.stringify(properties.customSize));
+                    }
+
                     jElementToInsert.attr('src', src);
 
                     jElementToInsert.attr('alt', properties.alternativeText);
@@ -221,6 +230,12 @@
                         result.item.MediaUrl = jMarkup.attr('src');
                     }
 
+                    if (result.displayMode === 'Custom') {
+                        result.thumbnail.url = jMarkup.attr('src');
+                        result.customSize = JSON.parse(jMarkup.attr('customsizemethodproperties'));
+                        result.customSize.Method = jMarkup.attr('method');
+                    }
+
                     result.title = jMarkup.attr('title');
                     result.alternativeText = jMarkup.attr('alt');
                     result.cssClass = jMarkup.attr('class') || null;
@@ -242,10 +257,10 @@
                         }
                     }
 
-                    result.margin.top = stripPxFromStyle(jMarkup[0].style.marginTop);
-                    result.margin.left = stripPxFromStyle(jMarkup[0].style.marginLeft);
-                    result.margin.bottom = stripPxFromStyle(jMarkup[0].style.marginBottom);
-                    result.margin.right = stripPxFromStyle(jMarkup[0].style.marginRight);
+                    result.margin.top = parseInt(stripPxFromStyle(jMarkup[0].style.marginTop));
+                    result.margin.left = parseInt(stripPxFromStyle(jMarkup[0].style.marginLeft));
+                    result.margin.bottom = parseInt(stripPxFromStyle(jMarkup[0].style.marginBottom));
+                    result.margin.right = parseInt(stripPxFromStyle(jMarkup[0].style.marginRight));
 
                     result.openOriginalImageOnClick = jMarkup.attr('openOriginalImageOnClick') == 'true';
 

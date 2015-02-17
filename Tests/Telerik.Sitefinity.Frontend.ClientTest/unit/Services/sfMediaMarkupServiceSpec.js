@@ -13,27 +13,30 @@
         this.item = { Id: 'eb0b99c8-2d30-4967-bf6f-ff11b3702b16', MediaUrl: 'http://full.media.url/image.jpg' };
         this.provider = 'DefaultProvider';
         this.displayMode = 'Thumbnail';
-        this.thumbnail = {
-            url: 'http://thumbnail.url/thumb.jpg',
-            name: 'Special thumbnail'
-        };
 
         this.customSize = {  // Keep the names of those properties as they are in order to support old HTML field.
             MaxWidth: null,
             MaxHeight: null,
+            Width: null,
+            Height: null,
             ScaleUp: false,
             Quality: null, // High, Medium, Low
             Method: null // ResizeFitToAreaArguments, CropCropArguments
+        };
+
+        this.thumbnail = {
+            url: 'http://thumbnail.url/thumb.jpg',
+            name: 'Special thumbnail'
         };
 
         this.title = 'Test iamge title';
         this.alternativeText = 'Test alternative title';
         this.alignment = 'Center';
         this.margin = {
-            top: '100',
-            left: '200',
-            bottom: '300',
-            right: '400'
+            top: 100,
+            left: 200,
+            bottom: 300,
+            right: 400
         };
 
         this.cssClass = null;
