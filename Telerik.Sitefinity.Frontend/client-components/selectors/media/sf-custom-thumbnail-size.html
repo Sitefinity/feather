@@ -17,80 +17,106 @@
 </div>
 
 <div class="modal-body">
-    <div ng-show="model.Method==methodOptions[0].value">
-        <div class="form-group">
-            <label>Max width</label>
-            <div class="row row-xs">
-                <div class="col-xs-2">
-                    <input class="form-control" type="text" ng-model="model.MaxWidth" />
+    <form name="customSizeProperties">
+        <div ng-show="model.Method==methodOptions[0].value">
+            <div class="form-group" ng-class="{ 'has-error' : !model.MaxWidth }">
+                <label for="maxWidth">Max width</label>
+                <div class="row row-xs">
+                    <div class="col-xs-2">
+                        <input class="form-control" type="number" name="maxWidth" min="1" max="9999" ng-model="model.MaxWidth" ng-required="true" />
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="m-top-xs">px</div>
+                    </div>
                 </div>
+
+                <p class="text-danger" ng-show="customSizeProperties.maxWidth.$error.required">Max width is required</p>
+                <p class="text-danger" ng-show="customSizeProperties.maxWidth.$error.number || 
+                    customSizeProperties.maxWidth.$error.max || customSizeProperties.maxWidth.$error.min">
+                    Value must be an integer between 1 and 9999 inclusive.
+                </p>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error' : !model.MaxHeight }">
+                <label for="maxHeight">Max height</label>
+
+                <div class="row row-xs">
+                    <div class="col-xs-2">
+                        <input class="form-control" type="number" name="maxHeight" min="1" max="9999" ng-model="model.MaxHeight" ng-required="true" />
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="m-top-xs">px</div>
+                    </div>
+                </div>
+
+                <p class="text-danger" ng-show="customSizeProperties.maxHeight.$error.required">Max height is required</p>
+                <p class="text-danger" ng-show="customSizeProperties.maxHeight.$error.number || 
+                    customSizeProperties.maxHeight.$error.max || customSizeProperties.maxHeight.$error.min">
+                    Value must be an integer between 1 and 9999 inclusive.
+                </p>
+            </div>
+        </div>
+
+        <div ng-show="model.Method==methodOptions[1].value">
+            <div class="form-group" ng-class="{ 'has-error' : !model.Width }">
+                <label for="width">Width</label>
+                <div class="row row-xs">
+                    <div class="col-xs-2">
+                        <input class="form-control" type="number" name="width" min="1" max="9999" ng-model="model.Width" ng-required="true" />
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="m-top-xs">px</div>
+                    </div>
+                </div>
+
+                <p class="text-danger" ng-show="customSizeProperties.width.$error.required">Width is required</p>
+                <p class="text-danger" ng-show="customSizeProperties.width.$error.number || 
+                    customSizeProperties.width.$error.max || customSizeProperties.width.$error.min">
+                    Value must be an integer between 1 and 9999 inclusive.
+                </p>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error' : !model.Height }">
+                <label for="height">Height</label>
+                <div class="row row-xs">
+                    <div class="col-xs-2">
+                        <input class="form-control" type="number" name="height" min="1" max="9999" ng-model="model.Height" ng-required="true" />
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="m-top-xs">px</div>
+                    </div>
+                </div>
+
+                <p class="text-danger" ng-show="customSizeProperties.height.$error.required">Height is required</p>
+                <p class="text-danger" ng-show="customSizeProperties.height.$error.number || 
+                    customSizeProperties.height.$error.max || customSizeProperties.height.$error.min">
+                    Value must be an integer between 1 and 9999 inclusive.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="model.ScaleUp" />
+                    Resize smaller images to bigger dimensions
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row row-xs">
                 <div class="col-xs-4">
-                    <div class="m-top-xs">px</div>
+                    <label>Quality</label>
+                    <select class="form-control" ng-model="model.Quality" ng-options="text for text in quality">
+                    </select>
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <label>Max height</label>
-
-            <div class="row row-xs">
-                <div class="col-xs-2">
-                    <input class="form-control" type="text" ng-model="model.MaxHeight" />
-                </div>
-                <div class="col-xs-4">
-                    <div class="m-top-xs">px</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div ng-show="model.Method==methodOptions[1].value">
-        <div class="form-group">
-            <label>Width</label>
-            <div class="row row-xs">
-                <div class="col-xs-2">
-                    <input class="form-control" type="text" ng-model="model.Width" />
-                </div>
-                <div class="col-xs-2">
-                    <div class="m-top-xs">px</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Height</label>
-            <div class="row row-xs">
-                <div class="col-xs-2">
-                    <input class="form-control" type="text" ng-model="model.Height" />
-                </div>
-                <div class="col-xs-2">
-                    <div class="m-top-xs">px</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-model="model.ScaleUp" />
-                Resize smaller images to bigger dimensions
-            </label>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="row row-xs">
-            <div class="col-xs-4">
-                <label>Quality</label>
-                <select class="form-control" ng-model="model.Quality" ng-options="text for text in quality">
-                </select>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left" ng-click="done()">Done</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="isDoneButtonDisabled()">Done</button>
     <button type="button" class="btn btn-link  pull-left" ng-click="cancelResizing()">Cancel</button>
 </div>
