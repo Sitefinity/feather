@@ -130,6 +130,20 @@
                 }
             };
 
+            var escapeDoubleQuote = function (str) {
+                if (str)
+                    return str.replace(/"/g, "\'");
+
+                return str;
+            };
+
+            var unescapeDoubleQuote = function (str) {
+                if (str)
+                    return str.replace(/'/g, '"');
+
+                return str;
+            };
+
             var image = {
                 markup: function (properties, librarySettings, wrapIt) {
                     var sfref = '';
@@ -148,7 +162,7 @@
                     if (properties.displayMode === 'Custom') {
                         src = properties.thumbnail.url;
                         jElementToInsert.attr('method', properties.customSize.Method);
-                        jElementToInsert.attr('customsizemethodproperties', JSON.stringify(properties.customSize));
+                        jElementToInsert.attr('customsizemethodproperties', escapeDoubleQuote(JSON.stringify(properties.customSize)));
                     }
 
                     jElementToInsert.attr('src', src);
@@ -232,7 +246,7 @@
 
                     if (result.displayMode === 'Custom') {
                         result.thumbnail.url = jMarkup.attr('src');
-                        result.customSize = JSON.parse(jMarkup.attr('customsizemethodproperties'));
+                        result.customSize = JSON.parse(unescapeDoubleQuote(jMarkup.attr('customsizemethodproperties')));
                         result.customSize.Method = jMarkup.attr('method');
                     }
 

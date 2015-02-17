@@ -201,8 +201,10 @@
                     if (newVal === null) {
                         $scope.cancel();
                     }
-                    else if ($scope.model && $scope.model.item && !$scope.model.title) {
-                        $scope.model.title = $scope.model.item.Title.Value;
+                    else if ($scope.model.item) {
+                        var imageItem = $scope.model.item;
+                        $scope.model.title = imageItem.Title.Value;
+                        $scope.model.alternativeText = imageItem.AlternativeText ? imageItem.AlternativeText.Value : '';
                     }
                 });
 
