@@ -283,7 +283,7 @@
 
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
                             var file = dataTransferObject.files[0];
-                            
+
                             sfMediaService.getImagesSettings().then(function (settings) {
                                 if (!file.type.match(settings.AllowedExensionsRegex)) {
                                     scope.error = {
@@ -433,7 +433,7 @@
                                 scope.filters.date.selected = [];
                                 scope.filters.tag.selected = [];
                                 scope.filters.category.selected = [];
-
+                                scope.error = null;
                                 scope.clearSearch = !scope.clearSearch;
                             },
                         },
@@ -634,6 +634,11 @@
 
                     scope.$on('sf-tree-item-selected', function (event, data) {
                         scope.isInUploadMode = false;
+                        scope.error = null;
+                    });
+
+                    scope.$watch('selectedFilterOption', function (event, data) {
+                        scope.error = null;
                     });
 
                     /*
