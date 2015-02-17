@@ -29,6 +29,7 @@
                         $scope.model.displayMode = selection.type;
                         $scope.model.thumbnail = selection.thumbnail;
                         $scope.model.customSize = model;
+                        populateOptions();
                     });
                 }
             });
@@ -80,21 +81,21 @@
                     });
                 }
 
-                var newCustomSizeTitle, existingCustomSizeTitle;
+                var existingCustomSizeTitle;
                 if ($scope.model.customSize) {
-                    newCustomSizeTitle = 'Edit custom size...';
-                    if ($scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
+                    if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments') {
                         existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
                     }
-                    else if ($scope.model.customSize.Width && $scope.model.customSize.Height) {
+                    else if ($scope.model.customSize.Method === 'CropCropArguments') {
                         existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
                     }
                 }
-                else {
-                    newCustomSizeTitle = 'Custom size...';
-                }
+
+                var newCustomSizeTitle = 'Custom size...';
 
                 if (existingCustomSizeTitle) {
+                    newCustomSizeTitle = 'Edit custom size...';
+
                     $scope.sizeOptions.push({
                         index: $scope.sizeOptions.length,
                         type: displayMode.custom,
