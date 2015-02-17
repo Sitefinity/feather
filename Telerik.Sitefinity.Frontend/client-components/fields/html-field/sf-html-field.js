@@ -85,6 +85,30 @@
                             .then(function (data) {
                                 properties = data;
 
+                                if (data.customSize)
+                                    return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize);
+                                else
+                                    return '';
+
+                            })
+                            .then(function (errorMessage) {
+                                if (properties.thumbnail && properties.thumbnail.url)
+                                {
+                                    return properties.thumbnail.url;
+                                }
+                                else if (properties.customSize) {
+                                    return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
+                                }
+                                else {
+                                    return '';
+                                }
+                            })
+                            .then(function (thumbnailUrl) {
+                                if (thumbnailUrl) {
+                                    properties.thumbnail = properties.thumbnail || {};
+                                    properties.thumbnail.url = thumbnailUrl;
+                                }
+
                                 return mediaService.getLibrarySettings();
                             })
                             .then(function (settings) {

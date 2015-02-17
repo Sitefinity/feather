@@ -295,15 +295,27 @@
                                     if (scope.selectedFilterOption == 1) {
                                         // set library id or null if in default library
                                         scope.model.parentId = getLibraryId();
+
+                                        // if other files were dropped when category/tag were selected they should be cleaned
+                                        scope.model.tags = [];
+                                        scope.model.categories = [];
                                     }
                                     else if (scope.selectedFilterOption == 2) {
                                         if (scope.filters.tag.selected[0]) {
                                             scope.model.tags.push(scope.filters.tag.selected[0]);
+
+                                            // if other files were dropped when category/tag were selected they should be cleaned
+                                            scope.model.parentId = null;
+                                            scope.model.categories =[];
                                         }
                                     }
                                     else if (scope.selectedFilterOption == 3) {
                                         if (scope.filters.category.selected[0]) {
                                             scope.model.categories.push(scope.filters.category.selected[0]);
+
+                                            // if other files were dropped when category/tag were selected they should be cleaned
+                                            scope.model.parentId = null;
+                                            scope.model.tags = [];
                                         }
                                     }
                                 }
@@ -329,6 +341,10 @@
                                     }
                                     if (!scope.isInUploadMode) {
                                         scope.model.parentId = getLibraryId();
+
+                                        // if other files were dropped when category/tag were selected they should be cleaned
+                                        scope.model.tags =[];
+                                        scope.model.categories =[];
                                     }
                                     openUploadPropertiesDialog(file);
                                 });
