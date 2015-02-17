@@ -14,7 +14,7 @@
                                                       .getFilter();
 
                             var options = {
-                                parent: "folders",
+                                parent: null,
                                 skip: skip,
                                 take: take,
                                 filter: filter,
@@ -32,7 +32,7 @@
                                                       .getFilter();
 
                             var options = {
-                                parent: "folders/" + parentId,
+                                parent: parentId,
                                 provider: ctrl.$scope.sfProvider,
                                 filter: filter,
                                 sort: "Title ASC"
@@ -47,7 +47,7 @@
                                                       .getFilter();
 
                             var options = {
-                                parent: "folders",
+                                parent: null,
                                 skip: 0,
                                 take: 100,
                                 provider: ctrl.$scope.sfProvider,
