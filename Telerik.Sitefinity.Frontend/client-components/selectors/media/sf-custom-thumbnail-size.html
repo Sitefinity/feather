@@ -3,46 +3,89 @@
     <h3 class="modal-title">Custom thumbnail size</h3>
 </div>
 
+<div class="modal-settings">
+    <label>Resize image</label>
+
+    <div class="row row-xs">
+        <div class="col-xs-4">
+            <select class="form-control" ng-model="model.Method" ng-options="method.value as method.title for method in methodOptions"></select>
+        </div>
+        <div class="col-xs-4 m-top-xs">
+            <a href="#">What's this?</a>
+        </div>
+    </div>
+</div>
+
 <div class="modal-body">
+    <div ng-show="model.Method==methodOptions[0].value">
+        <div class="form-group">
+            <label>Max width</label>
+            <div class="row row-xs">
+                <div class="col-xs-2">
+                    <input class="form-control" type="text" ng-model="model.MaxWidth" />
+                </div>
+                <div class="col-xs-4">
+                    <div class="m-top-xs">px</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Max height</label>
+
+            <div class="row row-xs">
+                <div class="col-xs-2">
+                    <input class="form-control" type="text" ng-model="model.MaxHeight" />
+                </div>
+                <div class="col-xs-4">
+                    <div class="m-top-xs">px</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="model.Method==methodOptions[1].value">
+        <div class="form-group">
+            <label>Width</label>
+            <div class="row row-xs">
+                <div class="col-xs-2">
+                    <input class="form-control" type="text" ng-model="model.Width" />
+                </div>
+                <div class="col-xs-2">
+                    <div class="m-top-xs">px</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Height</label>
+            <div class="row row-xs">
+                <div class="col-xs-2">
+                    <input class="form-control" type="text" ng-model="model.Height" />
+                </div>
+                <div class="col-xs-2">
+                    <div class="m-top-xs">px</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="form-group">
-        <label>Resize image
-            <select ng-model="model.Method" ng-options="method.value as method.title for method in methodOptions">
-            </select>
-        </label>
-    </div>
-    <div class="form-group" ng-show="model.Method==methodOptions[0].value">
-        <label>Max width
-            <input class="form-control" type="text" ng-model="model.MaxWidth" />
-            <span>px</span>
-        </label>
-        <label>Max height
-            <input class="form-control" type="text" ng-model="model.MaxHeight" />
-            <span>px</span>
-        </label>
-    </div>
-    <div class="form-group" ng-show="model.Method==methodOptions[1].value">
-        <label>Width
-            <input class="form-control" type="text" ng-model="model.Width" />
-            <span>px</span>
-        </label>
-        <label>Height
-            <input class="form-control" type="text" ng-model="model.Height" />
-            <span>px</span>
-        </label>
-    </div>
-    <div class="form-group">
-        <div class="row">
+        <div class="checkbox">
             <label>
                 <input type="checkbox" ng-model="model.ScaleUp" />
                 Resize smaller images to bigger dimensions
             </label>
         </div>
     </div>
+
     <div class="form-group">
-        <div class="row">
-            <label>Quality</label>
-            <select ng-model="model.Quality" ng-options="text for text in quality">
-            </select>
+        <div class="row row-xs">
+            <div class="col-xs-4">
+                <label>Quality</label>
+                <select class="form-control" ng-model="model.Quality" ng-options="text for text in quality">
+                </select>
+            </div>
         </div>
     </div>
 </div>
