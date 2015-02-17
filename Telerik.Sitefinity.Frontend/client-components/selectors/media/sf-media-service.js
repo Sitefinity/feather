@@ -176,8 +176,8 @@
                 success: function (thumbnailUrl) {
                     deferred.resolve(thumbnailUrl);
                 },
-                error: function (error) {
-                    deferred.resolve('');
+                error: function (e) {
+                    deferred.reject(e);
                 }
             });
 

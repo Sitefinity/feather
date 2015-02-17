@@ -3,7 +3,7 @@
     sfFields.requires.push('sfHtmlField');
 
     angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField', 'sfThumbnailSizeSelection'])
-        .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', '$q', function (serverContext, $compile, mediaService, mediaMarkupService, $q) {
+        .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
             return {
                 restrict: "E",
                 scope: {
@@ -85,31 +85,22 @@
                             .then(function (data) {
                                 properties = data;
 
-                                if (data.customSize) {
+                                if (data.customSize)
                                     return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize);
-                                }
-                                else {
-                                    var deferred = $q.defer();
-                                    deferred.resolve('');
-                                    return deferred.promise;
-                                }
+                                else
+                                    return '';
 
                             })
                             .then(function (errorMessage) {
-                                var deferred;
                                 if (properties.thumbnail && properties.thumbnail.url)
                                 {
-                                    deferred = $q.defer();
-                                    deferred.resolve(properties.thumbnail.url);
-                                    return deferred.promise;
+                                    return properties.thumbnail.url;
                                 }
                                 else if (properties.customSize) {
                                     return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
                                 }
                                 else {
-                                    deferred = $q.defer();
-                                    deferred.resolve('');
-                                    return deferred.promise;
+                                    return '';
                                 }
                             })
                             .then(function (thumbnailUrl) {
