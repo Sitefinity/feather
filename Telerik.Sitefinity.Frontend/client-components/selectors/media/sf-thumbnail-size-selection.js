@@ -34,8 +34,10 @@
             });
 
             $scope.$watch('[model.item.Width, model.item.Height]', function (newVal, oldVal) {
-                if (thumbnailProfiles && thumbnailProfiles.length > 0) {
-                    populateOptions();
+                if (newVal[0] && newVal[1]) {
+                    if (thumbnailProfiles && thumbnailProfiles.length > 0) {
+                        populateOptions();
+                    }
                 }
             }, true);
 

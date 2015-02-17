@@ -30,6 +30,10 @@ describe("image thumbnail size selector", function () {
         "Method": "ResizeFitToAreaArguments"
     };
 
+    var thumbnail = {
+        name: 'thumb160'
+    };
+
     var serviceResult;
     var $q;
     var provide;
@@ -98,20 +102,20 @@ describe("image thumbnail size selector", function () {
         var vefiryCorrectThumbnailOptionsArePopulated = function (options, customSize) {
             expect(options[0].type).toBe('Original');
             expect(options[0].title).toBe('Original size: 400x550 px');
-            expect(options[0].thumbnail).not.toBe();
-            expect(options[0].customSize).not.toBe();
+            expect(options[0].thumbnail).toBe(null);
+            expect(options[0].customSize).toBe(null);
             expect(options[0].openDialog).toBeFalsy();
 
             expect(options[1].type).toBe('Thumbnail');
             expect(options[1].title).toBe(thumbnailDataItems[0].Title);
             expect(options[1].thumbnail.name).toBe(thumbnailDataItems[0].Id);
-            expect(options[1].customSize).not.toBe();
+            expect(options[1].customSize).toBe(null);
             expect(options[1].openDialog).toBeFalsy();
 
             expect(options[2].type).toBe('Thumbnail');
             expect(options[2].title).toBe(thumbnailDataItems[1].Title);
             expect(options[2].thumbnail.name).toBe(thumbnailDataItems[1].Id);
-            expect(options[2].customSize).not.toBe();
+            expect(options[2].customSize).toBe(null);
             expect(options[2].openDialog).toBeFalsy();
 
             if (customSize) {
@@ -125,14 +129,18 @@ describe("image thumbnail size selector", function () {
             var index = options.length - 2;
             expect(options[index].type).toBe('Custom');
             expect(options[index].title).toBe('Custom size: 200x300 px');
-            expect(options[index].thumbnail).not.toBe();
-            expect(options[index].customSize).not.toBe();
+            expect(options[index].thumbnail).toBe(null);
+            expect(options[index].customSize.MaxWidth).toBe(customSize.MaxWidth);
+            expect(options[index].customSize.MaxHeight).toBe(customSize.MaxHeight);
+            expect(options[index].customSize.ScaleUp).toBe(customSize.ScaleUp);
+            expect(options[index].customSize.Quality).toBe(customSize.Quality);
+            expect(options[index].customSize.Method).toBe(customSize.Method);
             expect(options[index].openDialog).toBeFalsy();
 
             index = options.length - 1;
             expect(options[index].type).toBe('Custom');
             expect(options[index].title).toBe('Edit custom size...');
-            expect(options[index].thumbnail).not.toBe();
+            expect(options[index].thumbnail).toBe(null);
             expect(options[index].customSize.MaxWidth).toBe(customSize.MaxWidth);
             expect(options[index].customSize.MaxHeight).toBe(customSize.MaxHeight);
             expect(options[index].customSize.ScaleUp).toBe(customSize.ScaleUp);
@@ -145,17 +153,16 @@ describe("image thumbnail size selector", function () {
             var index = options.length - 1;
             expect(options[index].type).toBe('Custom');
             expect(options[index].title).toBe('Custom size...');
-            expect(options[index].thumbnail).not.toBe();
-            expect(options[index].customSize).not.toBe();
+            expect(options[index].thumbnail).toBe(null);
+            expect(options[index].customSize).not.toBeDefined();
             expect(options[index].openDialog).toBe(true);
         };
 
         it('[NPetrova] / Should populate correct size options and should set original size option as default.', function () {
             createController();
-            $rootScope.model = {
-                item: dataItem
-            };
+            $rootScope.$digest();
 
+            $rootScope.model = { item: dataItem };
             $rootScope.$digest();
 
             // the correct size options are populated
@@ -165,22 +172,50 @@ describe("image thumbnail size selector", function () {
 
             // the original size option is set as default
             expect($rootScope.model.displayMode).toBe('Original');
-            expect($rootScope.model.thumbnail).not.toBe();
-            expect($rootScope.model.customSize).not.toBe();
+            expect($rootScope.model.thumbnail).toBe(null);
+            expect($rootScope.model.customSize).toBe(null);
         });
 
         it('[NPetrova] / Should initialize correct option when custom size is set', function () {
             createController();
+            $rootScope.$digest();
+
             $rootScope.model = {
                 item: dataItem,
-                customSize: customSize
+                customSize: customSize,
+                displayMode: 'Custom'
             };
-
             $rootScope.$digest();
 
             expect($rootScope.sizeOptions).toBeDefined();
             expect($rootScope.sizeOptions.length).toBe(THUMBNAILS_ITEMS_COUNT + 3);
             vefiryCorrectThumbnailOptionsArePopulated($rootScope.sizeOptions, customSize);
+
+            expect($rootScope.sizeSelection).toBe($rootScope.sizeOptions[$rootScope.sizeOptions.length - 2]);
+            expect($rootScope.model.displayMode).toBe('Custom');
+            expect($rootScope.model.thumbnail).toBe(null);
+            expect($rootScope.model.customSize).toBe(customSize);
+        });
+
+        it('[NPetrova] / Should initialize correct option when thumbnail size is set', function () {
+            createController();
+            $rootScope.$digest();
+
+            $rootScope.model = {
+                item: dataItem,
+                thumbnail: thumbnail,
+                displayMode: 'Thumbnail'
+            };
+            $rootScope.$digest();
+
+            expect($rootScope.sizeOptions).toBeDefined();
+            expect($rootScope.sizeOptions.length).toBe(THUMBNAILS_ITEMS_COUNT + 2);
+            vefiryCorrectThumbnailOptionsArePopulated($rootScope.sizeOptions);
+
+            expect($rootScope.sizeSelection).toBe($rootScope.sizeOptions[$rootScope.sizeOptions.length - 2]);
+            expect($rootScope.model.displayMode).toBe('Thumbnail');
+            expect($rootScope.model.thumbnail.name).toBe(thumbnail.name);
+            expect($rootScope.model.customSize).toBe(null);
         });
     });
 });
