@@ -620,6 +620,9 @@
                         if (newVal === oldVal || !oldVal)
                             return;
 
+                        // changing the provider should clear all selected images from the previous provider
+                        scope.selectedItems = [];
+
                         if (scope.filterObject.parent) {
                             scope.filters.basic.select(constants.filters.basicRecentItemsValue);
                         }
