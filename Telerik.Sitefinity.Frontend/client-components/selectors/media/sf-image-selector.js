@@ -283,6 +283,7 @@
 
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
                             var file = dataTransferObject.files[0];
+                            
                             sfMediaService.getImagesSettings().then(function (settings) {
                                 if (!file.type.match(settings.AllowedExensionsRegex)) {
                                     scope.error = {
@@ -306,7 +307,7 @@
 
                                             // if other files were dropped when category/tag were selected they should be cleaned
                                             scope.model.parentId = null;
-                                            scope.model.categories =[];
+                                            scope.model.categories = [];
                                         }
                                     }
                                     else if (scope.selectedFilterOption == 3) {
@@ -343,8 +344,8 @@
                                         scope.model.parentId = getLibraryId();
 
                                         // if other files were dropped when category/tag were selected they should be cleaned
-                                        scope.model.tags =[];
-                                        scope.model.categories =[];
+                                        scope.model.tags = [];
+                                        scope.model.categories = [];
                                     }
                                     openUploadPropertiesDialog(file);
                                 });
@@ -376,7 +377,7 @@
                                         show: true,
                                         message: uploadedImageInfo.ErrorMessage
                                     };
-                                }                                
+                                }
                             })
                             .finally(function () {
                                 restoreFileModel();
@@ -535,10 +536,6 @@
                         scope.filters.tag.selected = [];
                         scope.filters.category.selected = [];
                         scope.error = null;
-
-                        if (scope.isInUploadMode) {
-                            sfMediaService.getImagesSettings();
-                        }
                     };
 
                     /*
@@ -662,6 +659,7 @@
                         else {
                             scope.filterObject.attachEvent(refresh);
                         }
+                        sfMediaService.getImagesSettings();
                     }());
                 }
             };

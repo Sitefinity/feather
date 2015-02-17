@@ -1,15 +1,15 @@
 ﻿﻿<div class="Media">
+    <alert type="danger" ng-show="error.show">
+        <div>
+            <span style="font-size:15px">
+                {{error.message}}
+            </span>
+
+            <span ng-click="error.show = false" style="cursor:pointer; float:right">X</span>
+        </div>
+    </alert>
+
     <div class="Media-content" sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)">
-
-        <alert type="danger" ng-show="error.show">
-            <div>
-                <span style="font-size:15px">
-                    {{error.message}}
-                </span>
-
-                <span ng-click="error.show = false" style="cursor:pointer; float:right">X</span>
-            </div>
-        </alert>
 
         <!--Upload image-->
         <input type="file" accept=".jpg, .jpeg, .png, .gif, .bmp" class="file-upload-chooser-input" style="display: none !important" />
@@ -29,7 +29,7 @@
                 </ol>
 
                 <sf-provider-selector sf-manager-type="Telerik.Sitefinity.Modules.Libraries.LibrariesManager"
-                    ng-model="provider">
+                                      ng-model="provider">
                 </sf-provider-selector>
 
                 <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)" sf-clear-search-string="clearSearch"> </sf-search-box>
@@ -42,11 +42,11 @@
             </div>
 
             <div ng-show="items.length"
-                sf-collection 
-                sf-data="items"
-                sf-model="selectedItems"
-                sf-template-url="client-components/selectors/media/sf-image-collection.html"
-                ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
+                 sf-collection
+                 sf-data="items"
+                 sf-model="selectedItems"
+                 sf-template-url="client-components/selectors/media/sf-image-collection.html"
+                 ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
             </div>
 
             <div class="Media-settings Media-settings--bottom">
