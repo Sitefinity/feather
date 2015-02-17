@@ -51,12 +51,12 @@
                             var parentId = scope.sfImage.FolderId || scope.sfImage.ParentId || scope.sfImage.Album.Id;
                             editAllPropertiesUrl += ('&parentId=' + parentId);
 
-                            var itemsList = new Object();
+                            var itemsList = {};
                             itemsList.getBinder = function () {
-                                var binder = new Object();
+                                var binder = {};
                                 binder.get_provider = function () {
                                     return scope.sfProvider;
-                                }
+                                };
                                 return binder;
                             };
                             var dialogContext = {
@@ -71,15 +71,15 @@
                                     parentId: parentId
                                 },
                                 key: { Id: scope.sfImage.Id },
-                                commandArgument: { languageMode: "edit"}
+                                commandArgument: { languageMode: "edit" }
                             };
 
                             var editWindow = window.radopen(editAllPropertiesUrl);
                             var dialogManager = window.top.GetDialogManager();
                             var dialogName = editWindow.get_name();
-                            var dialog = dialogManager.getDialogByName(dialogName)
+                            var dialog = dialogManager.getDialogByName(dialogName);
                             dialog.setUrl(editAllPropertiesUrl);
-                            dialogManager.openDialog(dialogName, null, dialogContext)
+                            dialogManager.openDialog(dialogName, null, dialogContext);
                         }
                     };
 
