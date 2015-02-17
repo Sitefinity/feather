@@ -1,11 +1,11 @@
-﻿ <script type="text/ng-template" id="popover.html">
+﻿<script type="text/ng-template" id="popover.html">
 	<div class="popover {{placement}}" ng-class="{ in: isOpen(), fade: animation() }">
-	  <div class="arrow"></div>
+		<div class="arrow"></div>
 
-	  <div class="popover-inner">
-	      <h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
-	      <div class="popover-content" bind-html-unsafe="content"></div>
-	  </div>
+		<div class="popover-inner">
+			<h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
+			<div class="popover-content" bind-html-unsafe="content"></div>
+		</div>
 	</div>
 </script>
 
@@ -13,18 +13,25 @@
 	<div>
 		<div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder" ng-click="select(item)">
 			<div ng-if="item.IsFolder === true">
+				<div class="Media-file-thumb">
+
+<!--		Popups for folders are removed
+				until we have images and libraries count
+				info in the model.
+
+				Uncomment this after the SF 8.0 release!
 				<div class="Media-file-thumb"
 					popover-popup-delay="1000"
-					popover-placement="top"
+					popover-placement="right"
 					popover-trigger="mouseenter"
 					popover-append-to-body="true"
 					popover-title="{{item.Title}}"
 					sf-popover-html="
-						<h1>html</h1>
-						{{item.LibrariesCount + ' folders'}};
-						{{item.ImagesCount + (item.ImagesCount == 1 ? ' image' : ' images')}}
+						<div>{{item.LibrariesCount}}</div>
+						{{item.ImagesCount}}
 					"
-				>
+				> -->
+
 					<i class="glyphicon glyphicon-folder-close"></i>
 					<strong>{{item.Title}}</strong>
 				</div>
@@ -34,7 +41,7 @@
 				</div>
 
 				<div class="Media-item-meta">
-					<span ng-show="item.ImagesCount">{{item.ImagesCount + (item.ImagesCount == 1 ? " image" : " images")}}</span>
+					{{item.ImagesCount}}
 				</div>
 			</div>
 		</div>
@@ -44,17 +51,26 @@
 		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected>
 			<div class="Media-file-wrapper">
 
-
 				<div class="Media-file-thumb"
 					popover-popup-delay="1000"
-					popover-placement="top"
+					popover-placement="right"
 					popover-trigger="mouseenter"
 					popover-append-to-body="true"
 					popover-title="{{item.Title}}"
-					popover="
-						Library: {{item.LibraryTitle}};
-						Dimensions: {{item.Width + 'x' + item.Height}};
-						Type: {{item.Extension.toUpperCase()}}
+					sf-popover-html="
+						<dl class='dl-half'>
+							<dt>Library:</dt>
+							<dd>{{item.LibraryTitle}}</dd>
+
+							<dt>Dimensions:</dt>
+							<dd>{{item.Width + 'x' + item.Height}}</dd>
+
+							<dt>Type:</dt>
+							<dd>{{item.Extension.toUpperCase()}}</dd>
+
+							<dt>Date modified:</dt>
+							<dd>{{item.LastModified | date : 'MM/dd/yyyy HH:mm'}}</dd>
+						</dl>
 					"
 				>
 					<div class="Media-file-thumb-holder">

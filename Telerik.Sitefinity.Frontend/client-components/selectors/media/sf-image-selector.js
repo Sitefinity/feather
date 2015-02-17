@@ -235,10 +235,14 @@
                                                 item.LastModified = removeNonNumeric(item.LastModified);
                                             }
                                             if (item.ImagesCount) {
-                                                item.ImagesCount = removeNonNumeric(item.ImagesCount);
+                                                item.ImagesCount = removeNonNumeric(item.ImagesCount) + (item.ImagesCount == 1 ? " image" : " images");
+                                            } else {
+                                                item.ImagesCount = "No images";
                                             }
+
                                             if (item.LibrariesCount) {
                                                 item.LibrariesCount = removeNonNumeric(item.LibrariesCount);
+                                                item.LibrariesCount = item.LibrariesCount + (item.LibrariesCount == 1 ? " folder" : " folders");
                                             }
                                         }
 
@@ -365,7 +369,7 @@
                     // Upload properties logic
                     var openUploadPropertiesDialog = function (file) {
                         scope.model.file = file;
-                        
+
                         var fileModelResolver = function () { return scope.model; };
                         var providerResolver = function () { return scope.provider; };
 
@@ -379,7 +383,7 @@
                                         show: true,
                                         message: uploadedImageInfo.ErrorMessage
                                     };
-                                }                                
+                                }
                             })
                             .finally(function () {
                                 restoreFileModel();
@@ -723,7 +727,7 @@
     // The out-of-the-box bootstrap's popover directive is not supporting html in the popover's content.
     // The following directive overrides the popover with a template that supports html.
     // Should be removed when bootstrap release the html feature.
-    sfImageSelector.requires.push('sfBootstrapPopover');    
+    sfImageSelector.requires.push('sfBootstrapPopover');
     angular.module( 'sfBootstrapPopover', [ 'ui.bootstrap.tooltip' ] )
         .directive( 'sfPopoverHtmlPopup', function () {
             return {
