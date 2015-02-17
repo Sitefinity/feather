@@ -434,9 +434,7 @@
                                     scope.sortExpression = constants.sorting.defaultValue;
                                 }
 
-                                if (basicFilter) {
-                                    scope.filterObject.set.basic[basicFilter]();
-                                }
+                                scope.filterObject.set.basic[basicFilter]();
 
                                 scope.filters.library.selected = [];
                                 scope.filters.date.selected = [];
@@ -536,6 +534,24 @@
                         }
                     };
 
+                    var clearNonSelectedFilters = function (filterName) {
+                        if (filterName !== 'library') {
+                            scope.filters.library.selected = [];
+                        }
+
+                        if (filterName !== 'tag') {
+                            scope.filters.tag.selected = [];
+                        }
+
+                        if (filterName !== 'category') {
+                            scope.filters.category.selected = [];
+                        }
+
+                        if (filterName !== 'date') {
+                            scope.filters.date.selected = [];
+                        }
+                    };
+
                     scope.switchToUploadMode = function () {
                         scope.isInUploadMode = !scope.isInUploadMode;
                         // clear filter selection
@@ -565,15 +581,21 @@
 
                     scope.$watch('filters.library.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
-                            scope.filters.basic.select(null);
+                            scope.filters.basic.selected = null;
+                            clearNonSelectedFilters('library');
                             scope.filterObject.set.parent.to(newVal[0]);
+
+                            scope.clearSearch = !scope.clearSearch;
                         }
                     });
 
                     scope.$watch('filters.tag.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
-                            scope.filters.basic.select(null);
+                            scope.filters.basic.selected = null;
+                            clearNonSelectedFilters('tag');
                             scope.filterObject.set.taxon.to(newVal[0], constants.filters.tags.field);
+
+                            scope.clearSearch = !scope.clearSearch;
                         }
                     });
 
@@ -585,8 +607,11 @@
 
                     scope.$watch('filters.category.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal && newVal[0]) {
-                            scope.filters.basic.select(null);
+                            scope.filters.basic.selected = null;
+                            clearNonSelectedFilters('category');
                             scope.filterObject.set.taxon.to(newVal[0], constants.filters.categories.field);
+
+                            scope.clearSearch = !scope.clearSearch;
                         }
                     });
 
@@ -600,13 +625,16 @@
 
                     scope.$watch('filters.date.selected', function (newVal, oldVal) {
                         if (newVal !== oldVal && newVal[0]) {
-                            scope.filters.basic.select(null);
+                            scope.filters.basic.selected = null;
+                            clearNonSelectedFilters('date');
                             if (newVal[0] === constants.filters.anyDateValue) {
                                 scope.filterObject.set.date.all();
                             }
                             else {
                                 scope.filterObject.set.date.to(newVal[0]);
                             }
+
+                            scope.clearSearch = !scope.clearSearch;
                         }
                     });
 
