@@ -171,12 +171,16 @@
         }])
         .controller('sfImagePropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
             function ($scope, $modalInstance, serverContext, sfModel) {
+                debugger;
                 // undefined, because the image-field sets it to null if cancel is pressed and the watch is triggered
                 $scope.model = sfModel || { item: undefined };
-
+                
                 $scope.$watch('model.item.Id', function (newVal) {
                     if (newVal === null) {
                         $scope.cancel();
+                    }
+                    else if ($scope.model.item) {
+                        $scope.model.title = $scope.model.title || $scope.model.item.Title;
                     }
                 });
 
