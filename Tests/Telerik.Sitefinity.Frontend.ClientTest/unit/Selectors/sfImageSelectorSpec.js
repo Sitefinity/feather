@@ -2,7 +2,7 @@
     var rootScope;
     var $q;
     var provide;
-    var directiveMarkup = '<sf-image-selector/>';
+    var directiveMarkup = '<sf-image-selector modal></sf-image-selector>';
 
     beforeEach(module('templates'));
     beforeEach(module('sfImageSelector'));
@@ -56,6 +56,11 @@
             get: function () { return itemsPromiseTransform(genericGet()); },
             getFolders: function () { return itemsPromiseTransform(genericGet()); },
             getPredecessorsFolders: function () { return itemsPromiseTransform(genericGet()); }
+        },
+        getImagesSettings: function () {
+            var defer = $q.defer();
+            defer.resolve({ AllowedExensionsRegex: /^image\/(png)$/g });
+            return defer.promise;
         }
     };
 
@@ -159,7 +164,7 @@
 
         $('span ul li span:contains("Taxon 5")').click();
         scope.$digest();
-        
+
         expect(s.filters.category.selected).not.toBe(null);
         expect(s.filters.category.selected[0]).not.toBeUndefined();
         expect(s.filters.category.selected[0]).toEqual(5);
@@ -279,7 +284,7 @@
 
             it('[Boyko-Karadzhov] / should set is-grid class by default.', function () {
                 var scope = rootScope.$new();
-                
+
                 var element = commonMethods.compileDirective(directiveMarkup, scope);
 
                 expect($(element.find('[sf-collection]')[0]).is('.is-grid')).toBe(true);
@@ -288,7 +293,7 @@
 
             it('[Boyko-Karadzhov] / should set is-list class when switchToList is clicked.', function () {
                 var scope = rootScope.$new();
-                
+
                 var element = commonMethods.compileDirective(directiveMarkup, scope);
 
                 scope.$$childTail.switchToList();
@@ -308,7 +313,7 @@
     (function () {
         var suppressedDataTransferDroppedFunc = function (s) {
             try {
-                s.dataTransferDropped({ files: ['fake'] });
+                s.dataTransferDropped({ files: [{ type: 'image/png' }] });
                 s.$digest();
             } catch (e) {
                 // no actual angular bootstrap window to open - suppres warning
@@ -319,9 +324,8 @@
             var scope = rootScope.$new();
             var el = commonMethods.compileDirective(directiveMarkup, scope);
             var s = scope.$$childHead;
-
             s.breadcrumbs = [{ Id: 1 }, { Id: 2 }, { Id: 3 }, { Id: 4 }, { Id: 5 }];
-            
+
             suppressedDataTransferDroppedFunc(s);
 
             expect(s.model.parentId).toEqual(5);
@@ -351,6 +355,30 @@
             suppressedDataTransferDroppedFunc(s);
 
             expect(s.model.categories[0]).toEqual('cat1');
+        });
+
+        it('[dzhenko] / should populate only library property on uploaded image when dropped in library filter mode and previously dropped on other fields.', function () {
+            var scope = rootScope.$new();
+            var el = commonMethods.compileDirective(directiveMarkup, scope);
+            var s = scope.$$childHead;
+
+            s.breadcrumbs = [{ Id: 1 }, { Id: 2 }, { Id: 3 }, { Id: 4 }, { Id: 5 }];
+            s.filters.tag.selected = ['tag1'];
+            s.filters.category.selected = ['cat1'];
+
+            s.selectedFilterOption = 1;
+            suppressedDataTransferDroppedFunc(s);
+            s.selectedFilterOption = 2;
+            suppressedDataTransferDroppedFunc(s);
+            s.selectedFilterOption = 3;
+            suppressedDataTransferDroppedFunc(s);
+            s.selectedFilterOption = 1;
+            suppressedDataTransferDroppedFunc(s);
+
+            expect(s.model.parentId).toEqual(5);
+
+            expect(s.model.categories).toEqual([]);
+            expect(s.model.tags).toEqual([]);
         });
     }());
 });
