@@ -284,5 +284,41 @@ describe("image thumbnail size selector", function () {
 
             $rootScope.done();
         });
+
+        it('[NPetrova] / Should validate custom size options.', function () {
+            createController();
+            expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
+
+            $rootScope.model.MaxHeight = 'invalid';
+            expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
+
+            $rootScope.model.MaxHeight = 'invalid';
+            expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
+
+            $rootScope.model.MaxHeight = '234';
+            expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
+
+            $rootScope.model.MaxWidth = 'invalid';
+            expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
+
+            $rootScope.model.MaxWidth = '235';
+            expect($rootScope.areCustomSizeOptionsValid()).toBe(true);
+
+            $rootScope.model.Method = $rootScope.methodOptions[1].value;
+            expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
+
+            $rootScope.model.Width = 9999999999;
+            expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
+
+            $rootScope.model.Width = 9999;
+            $rootScope.model.Height = 'invalid';
+            expect($rootScope.areCustomSizeOptionsValid()).toBeFalsy();
+
+            $rootScope.model.Height = 1;
+            expect($rootScope.areCustomSizeOptionsValid()).toBe(true);
+
+            $rootScope.model.Method = $rootScope.methodOptions[0].value;
+            expect($rootScope.areCustomSizeOptionsValid()).toBe(true);
+        });
     });
 });

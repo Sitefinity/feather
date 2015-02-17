@@ -158,6 +158,17 @@
                 Method: $scope.methodOptions[0].value
             };
 
+            $scope.areCustomSizeOptionsValid = function () {
+                if ($scope.model.Method === $scope.methodOptions[0].value) {
+                    return $scope.model.MaxHeight && $scope.model.MaxWidth &&
+                        parseInt($scope.model.MaxHeight) && parseInt($scope.model.MaxWidth) ? true : false;
+                }
+                else {
+                    return $scope.model.Height && $scope.model.Width &&
+                        parseInt($scope.model.Height) && parseInt($scope.model.Width) ? true : false;
+                }
+            };
+
             $scope.done = function () {
                 $modalInstance.close($scope.model);
             };
