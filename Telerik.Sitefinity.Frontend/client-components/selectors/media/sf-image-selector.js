@@ -376,7 +376,9 @@
                                         show: true,
                                         message: uploadedImageInfo.ErrorMessage
                                     };
-                                }
+                                }                                
+                            })
+                            .finally(function () {
                                 restoreFileModel();
                             });
                     };
