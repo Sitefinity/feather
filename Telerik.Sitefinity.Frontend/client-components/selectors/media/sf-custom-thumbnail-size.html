@@ -117,6 +117,6 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="isDoneButtonDisabled()">Done</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!areCustomSizeOptionsValid()">Done</button>
     <button type="button" class="btn btn-link  pull-left" ng-click="cancelResizing()">Cancel</button>
 </div>
