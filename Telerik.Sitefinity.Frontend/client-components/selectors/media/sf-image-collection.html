@@ -12,6 +12,7 @@
 				</div>
 
 				<div class="Media-item-meta">
+                    <span ng-show="item.LibrariesCount">{{item.LibrariesCount + (item.LibrariesCount == 1 ? " folder" : " folders")}}</span><br />
 					<span ng-show="item.ImagesCount">{{item.ImagesCount + (item.ImagesCount == 1 ? " image" : " images")}}</span>
                     <span ng-show="item.ItemsCount">{{item.ItemsCount + (item.ItemsCount == 1 ? " image" : " images")}}</span>
 				</div>
