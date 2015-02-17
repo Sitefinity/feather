@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <label>Where to store the uploaded image?</label>
-        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.parentId' />
+        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.parentId' sf-provider="provider" />
     </div>
     <div class="form-group" ng-class="{ 'has-error' : !model.title }">
         <div class="row">
@@ -51,8 +51,7 @@
             <sf-list-selector sf-hierarchical-taxon-selector
                               sf-dialog-header="Select Category"
                               sf-multiselect="true"
-                              sf-selected-ids="model.categories"
-                              sf-provider="sfProvider">
+                              sf-selected-ids="model.categories">
             </sf-list-selector>
         </div>
 
