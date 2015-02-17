@@ -10,7 +10,7 @@
             },
             uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/'),
-            thumbnailService: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/thumbnail-profiles/')
+            thumbnailServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/')
         };
 
         var getById = function (id, provider, itemType, serviceUrl) {
@@ -46,7 +46,9 @@
         var getFolders = function (options, serviceUrl) {
             options = options || {};
 
-            var url = options.parent ? serviceUrl + options.parent + "/" : serviceUrl;
+			var foldersUrl = serviceUrl + "folders/";
+            var url = options.parent ? foldersUrl + options.parent + "/" : foldersUrl;
+
             return serviceHelper.getResource(url).get(
                 {
                     filter: options.filter,
@@ -100,6 +102,7 @@
         };
 
         var uploadFile = function (url, formData) {
+            
             var deferred = $q.defer();
             var xhr = new $window.XMLHttpRequest();
             xhr.onload = function (e) {
@@ -152,7 +155,33 @@
         };
 
         var thumbnailProfiles = function (libraryType) {
-            return serviceHelper.getResource(constants.thumbnailService).get({ libraryType: libraryType }).$promise;
+            var thumbnailProfilesServiceUrl = constants.thumbnailServiceUrl + 'thumbnail-profiles/';
+            return serviceHelper.getResource(thumbnailProfilesServiceUrl).get({ libraryType: libraryType }).$promise;
+        };
+
+        var checkCustomThumbnailParams = function (methodName, params) {
+            var checkThumbnailParamsServiceUrl = constants.thumbnailServiceUrl + 'custom-image-thumbnail/checkParameters';
+            return serviceHelper.getResource(checkThumbnailParamsServiceUrl).get({ methodName: methodName, parameters: params }).$promise;
+        };
+
+        var getCustomThumbnailUrl = function (imageId, customUrlParams, libraryProvider) {
+            params = JSON.stringify(customUrlParams);
+            var customThumbnailUrlService = String.format('{0}custom-image-thumbnail/url?imageId={1}&customUrlParameters={2}&libraryProvider={3}', constants.thumbnailServiceUrl, imageId, params, libraryProvider);
+            var deferred = $q.defer();
+            jQuery.ajax({
+                type: 'GET',
+                url: customThumbnailUrlService,
+                processData: false,
+                contentType: "application/json",
+                success: function (thumbnailUrl) {
+                    deferred.resolve(thumbnailUrl);
+                },
+                error: function (e) {
+                    deferred.reject(e);
+                }
+            });
+
+            return deferred.promise;
         };
 
         var imagesObj = {
@@ -203,7 +232,7 @@
                     .then(function (settings) {
                         var allLanguageSearch = settings.EnableAllLanguagesSearch.toLowerCase() === 'true';
                         options.filter = filterObject.composeExpression(allLanguageSearch);
-                       
+
                         var selectedFolderSearch = settings.EnableSelectedFolderSearch.toLowerCase() === 'true';
                         if (filterObject.query) {
                             if (selectedFolderSearch) {
@@ -221,20 +250,21 @@
                         return callback(options);
                     });
             },
-            getPredecessorsFolders: function (id) {
+            getPredecessorsFolders: function (id, provider) {
                 if (!id) {
                     return;
                 }
                 var options = {
-                    parent: 'folders/predecessors/' + id,
-                    excludeNeighbours: true
+                    parent: 'predecessors/' + id,
+                    excludeNeighbours: true,
+                    provider: provider
                 };
                 return getFolders(options, constants.images.albumsServiceUrl)
                           .then(function (data) {
                               return data.Items;
                           });
             },
-            upload: function (model) {
+            upload: function (model, provider) {
 
                 var defaultLibraryId = '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb';
                 var libraryId = model.parentId || defaultLibraryId;
@@ -244,7 +274,7 @@
                     newParentId: libraryId,
                     itemId: serviceHelper.emptyGuid(),
                     itemType: constants.images.itemType,
-                    provider: model.provider,
+                    provider: provider,
                     parentItemType: constants.images.albumItemType,
                     title: model.title || model.file.name,
                     alternativeText: model.alternativeText,
@@ -285,9 +315,42 @@
             }
         };
 
+        var imagesSettings = null;
+        var getImagesSettings = function () {
+            if (imagesSettings === null) {
+                var url = constants.librarySettingsServiceUrl;
+                return serviceHelper.getResource(url).get(
+                    {
+                        nodeName: 'Images_0,librariesConfig_0',
+                        mode: 'Form'
+                    })
+                    .$promise
+                    .then(function (data) {
+                        imagesSettings = {};
+                        for (var i = 0; i < data.Items.length; i++) {
+                            imagesSettings[data.Items[i].Key] = data.Items[i].Value;
+                        }
+                        if (imagesSettings.AllowedExensionsSettings) {
+                            var imagesExt = imagesSettings.AllowedExensionsSettings.replace(/,/g, '|').replace(/ |\./g, '');
+                            var regExp = '^image\/(' + imagesExt + ')$';
+                            imagesSettings.AllowedExensionsRegex = new RegExp(regExp, 'i');
+                        }
+                        return imagesSettings;
+                    });
+            }
+            else {
+                var deferred = $q.defer();
+                deferred.resolve(imagesSettings);
+                return deferred.promise;
+            }
+        };
+
         return {
             images: imagesObj,
-            getLibrarySettings: getLibrarySettings
+            getLibrarySettings: getLibrarySettings,
+            checkCustomThumbnailParams: checkCustomThumbnailParams,
+            getCustomThumbnailUrl: getCustomThumbnailUrl,
+            getImagesSettings: getImagesSettings
         };
     }]);
 })();

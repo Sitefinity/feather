@@ -74,16 +74,40 @@
 
                         var imageWrapper = $(nodes).closest('span.sfImageWrapper');
                         if (imageWrapper.length) {
-                            properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML, settings);
+                            properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML);
                         }
                         else if ($(nodes).is('img')) {
-                            properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML, settings);
+                            properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML);
                         }
 
                         angular.element(".imagePropertiesModal").scope()
                             .$openModalDialog({ sfModel: function () { return properties; } })
                             .then(function (data) {
                                 properties = data;
+
+                                if (data.customSize)
+                                    return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize);
+                                else
+                                    return '';
+
+                            })
+                            .then(function (errorMessage) {
+                                if (properties.thumbnail && properties.thumbnail.url)
+                                {
+                                    return properties.thumbnail.url;
+                                }
+                                else if (properties.customSize) {
+                                    return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
+                                }
+                                else {
+                                    return '';
+                                }
+                            })
+                            .then(function (thumbnailUrl) {
+                                if (thumbnailUrl) {
+                                    properties.thumbnail = properties.thumbnail || {};
+                                    properties.thumbnail.url = thumbnailUrl;
+                                }
 
                                 return mediaService.getLibrarySettings();
                             })

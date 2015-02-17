@@ -54,11 +54,11 @@
 /* Based on https://github.com/endtwist/fontcustom/blob/master/lib/fontcustom/templates/fontcustom.css */
 @font-face {
   font-family: "sf-icon-font";
-  src: url("../../../dist/fonts/sf-icon-font-98a850f5da55483dd11b21851a40c70b.eot");
-  src: url("../../../dist/fonts/sf-icon-font-98a850f5da55483dd11b21851a40c70b.eot?#iefix") format("embedded-opentype"),
-		url("../../../dist/fonts/sf-icon-font-98a850f5da55483dd11b21851a40c70b.svg?#sf-icon-font") format("svg"),
-		url("../../../dist/fonts/sf-icon-font-98a850f5da55483dd11b21851a40c70b.woff") format("woff"),
-		url("../../../dist/fonts/sf-icon-font-98a850f5da55483dd11b21851a40c70b.ttf") format("truetype");
+  src: url("../../../dist/fonts/sf-icon-font-16f0b1413c8f72903a772ef776b8c079.eot");
+  src: url("../../../dist/fonts/sf-icon-font-16f0b1413c8f72903a772ef776b8c079.eot?#iefix") format("embedded-opentype"),
+		url("../../../dist/fonts/sf-icon-font-16f0b1413c8f72903a772ef776b8c079.svg?#sf-icon-font") format("svg"),
+		url("../../../dist/fonts/sf-icon-font-16f0b1413c8f72903a772ef776b8c079.woff") format("woff"),
+		url("../../../dist/fonts/sf-icon-font-16f0b1413c8f72903a772ef776b8c079.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -86,30 +86,54 @@
 
 
 /* Icons */
-.icon-bin-single {content:"\b1";}
-.icon-draft-single {content:"\b2";}
-.icon-file-single {content:"\b3";}
-.icon-homepage-single {content:"\b4";}
-.icon-locked-single {content:"\b5";}
-.icon-published-single {content:"\b6";}
-.icon-scheduled-single {content:"\b7";}
-.icon-settings-single {content:"\b8";}
-.icon-support-tickets-single {content:"\b9";}
-.icon-unpublished-single {content:"\ba";}
+.icon-align-center-single {content:"\b1";}
+.icon-align-left-single {content:"\b2";}
+.icon-align-none-single {content:"\b3";}
+.icon-align-right-single {content:"\b4";}
+.icon-bin-single {content:"\b5";}
+.icon-draft-single {content:"\b6";}
+.icon-file-single {content:"\b7";}
+.icon-homepage-single {content:"\b8";}
+.icon-locked-single {content:"\b9";}
+.icon-published-single {content:"\ba";}
+.icon-scheduled-single {content:"\bb";}
+.icon-settings-single {content:"\bc";}
+.icon-support-tickets-single {content:"\bd";}
+.icon-unpublished-single {content:"\be";}
 
 /* Icons */
-.icon-bin:before {content:"\b1";}
-.icon-draft:before {content:"\b2";}
-.icon-file:before {content:"\b3";}
-.icon-homepage:before {content:"\b4";}
-.icon-locked:before {content:"\b5";}
-.icon-published:before {content:"\b6";}
-.icon-scheduled:before {content:"\b7";}
-.icon-settings:before {content:"\b8";}
-.icon-support-tickets:before {content:"\b9";}
-.icon-unpublished:before {content:"\ba";}
+.icon-align-center:before {content:"\b1";}
+.icon-align-left:before {content:"\b2";}
+.icon-align-none:before {content:"\b3";}
+.icon-align-right:before {content:"\b4";}
+.icon-bin:before {content:"\b5";}
+.icon-draft:before {content:"\b6";}
+.icon-file:before {content:"\b7";}
+.icon-homepage:before {content:"\b8";}
+.icon-locked:before {content:"\b9";}
+.icon-published:before {content:"\ba";}
+.icon-scheduled:before {content:"\bb";}
+.icon-settings:before {content:"\bc";}
+.icon-support-tickets:before {content:"\bd";}
+.icon-unpublished:before {content:"\be";}
 
 
+
+.icon-item-align-center:after {
+  @extend .icon-align-center-single
+}
+
+.icon-item-align-left:after {
+  @extend .icon-align-left-single
+}
+
+.icon-item-align-none:after {
+  @extend .icon-align-none-single
+}
+
+.icon-item-align-right:after {
+  @extend .icon-align-right-single
+}
 
 .icon-item-bin:after {
   @extend .icon-bin-single
@@ -158,6 +182,14 @@
 		<h1>sf-icon-font</h1>
 
 		<div class="icons" id="icons">
+			
+				<div class="icons__item" data-name="align-center"><i class=" icon-align-center"></i> icon-align-center</div>
+			
+				<div class="icons__item" data-name="align-left"><i class=" icon-align-left"></i> icon-align-left</div>
+			
+				<div class="icons__item" data-name="align-none"><i class=" icon-align-none"></i> icon-align-none</div>
+			
+				<div class="icons__item" data-name="align-right"><i class=" icon-align-right"></i> icon-align-right</div>
 			
 				<div class="icons__item" data-name="bin"><i class=" icon-bin"></i> icon-bin</div>
 			

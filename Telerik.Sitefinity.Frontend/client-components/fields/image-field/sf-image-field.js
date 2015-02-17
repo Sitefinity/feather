@@ -8,7 +8,8 @@
                 restrict: "AE",
                 scope: {
                     sfModel: '=',
-                    sfProvider: '@'
+                    sfImage: '=?',
+                    sfProvider: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -21,7 +22,7 @@
                     };
 
                     var getImage = function (id) {
-                        sfMediaService.images.getById(id, scope.sfProvider).then(function (data) {
+                        sfMediaService.images.getById(id, scope.model.provider).then(function (data) {
                             if (data && data.Item) {
                                 refreshScopeInfo(data.Item);
                             }
@@ -29,7 +30,8 @@
                     };
 
                     var refreshScopeInfo = function (item) {
-                        scope.sfModel = item;
+                        scope.model.selectedItems = [item];
+                        scope.sfImage = item;
 
                         scope.imageSize = Math.ceil(item.TotalSize / 1000) + " KB";
                         scope.uploaded = getDateFromString(item.DateCreated);
@@ -37,7 +39,8 @@
 
                     scope.model = {
                         selectedItems: [],
-                        filterObject: null
+                        filterObject: null,
+                        provider: scope.sfProvider
                     };
 
                     scope.editAllProperties = function () {
@@ -47,6 +50,8 @@
                         scope.$modalInstance.close();
 
                         if (scope.model.selectedItems && scope.model.selectedItems.length) {
+                            scope.sfProvider = scope.model.provider;
+
                             if (scope.model.selectedItems[0].Id && scope.model.selectedItems[0].ThumbnailUrl) {
                                 // image is passed -> set it to model
                                 refreshScopeInfo(scope.model.selectedItems[0]);
@@ -70,7 +75,7 @@
                     scope.changeImage = function () {
                         if (scope.sfImage) {
                             scope.model.filterObject = sfMediaFilter.newFilter();
-                            scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
+                            scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.ParentId || scope.sfImage.Album.Id);
                         }
 
                         scope.$openModalDialog();
@@ -78,22 +83,20 @@
 
                     // Initialize
                     if (scope.sfModel) {
-                        if (scope.sfModel.Id && scope.sfModel.ThumbnailUrl) {
-                            // image is passed -> set it to model
-                            refreshScopeInfo(scope.sfModel);
-                        }
-                        else {
-                            // Id is passed -> get image
-                            getImage(scope.sfModel);
-                        }
+                        getImage(scope.sfModel);
                     }
                     else {
                         scope.changeImage();
                     }
 
                     scope.$on('sf-image-selector-image-uploaded', function (event, uploadedImageInfo) {
+                        scope.sfProvider = scope.model.provider;
                         getImage(uploadedImageInfo.ContentId);
                         scope.$modalInstance.dismiss();
+                    });
+
+                    scope.$watch('sfImage.Id', function (newVal) {
+                        scope.sfModel = newVal;
                     });
                 }
             };

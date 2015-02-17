@@ -1,114 +1,114 @@
-﻿<div>
-    <div class="modal-header">
-        <button type="button" class="close" ng-click="cancel()">&times;</button>
-        <h3 class="modal-title">Image</h3>
-    </div>
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title">Image</h3>
+</div>
 
-    <div class="modal-body">
-        <div class="container">
-            <sf-image-field sf-model="model.item.Id" sf-image="model.item"></sf-image-field>
-        </div>
-        <form name="imageProperties">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-xs-8">
-                        <label>Title
-                            <input class="form-control" name="title" type="text" ng-model="model.title" ng-required="true" />
-                        </label>
-                        <span ng-class="{'error': model.title.length>35}">{{model.title.length}}</span>
-                        <span>Less than 35 characters are recommended</span>
-                        <span ng-show="imageProperties.title.$error.required">Title is required</span>
+<sf-image-field class="sf-Media--info modal-settings" sf-model="model.item.Id" sf-image="model.item" sf-provider="model.provider"></sf-image-field>
 
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-8">
-                        <label for="alternativeText">Alternative text
-                            <input class="form-control" name="alternativeText" type="text" ng-model="model.alternativeText" />
-                        </label>
-                        <span ng-class="{'error': model.alternativeText.length>35}">{{model.alternativeText.length}}</span>
-                        <span>Less than 35 characters are recommended</span>
-                    </div>
-                </div>
-            </div>
+<div class="modal-body">
+    <form name="imageProperties">
+        <div class="form-group" ng-class="{ 'has-error' : !model.title }">
+            <label for="title">Title</label>
+
             <div class="row">
                 <div class="col-xs-8">
-                    <p>Alignment</p>
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="radio" ng-model="model.alignment" value="None" />
-                                None
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" ng-model="model.alignment" value="Left" />
-                                Left
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" ng-model="model.alignment" value="Cemter" />
-                                Center
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" ng-model="model.alignment" value="Right" />
-                                Right
-                            </label>
-                        </li>
-                    </ul>
+                    <input class="form-control" name="title" type="text" ng-model="model.title" ng-required="true" />
+                </div>
+
+                <div class="m-top-xs" ng-class="{'text-danger': model.title.length > 35}">{{model.title.length}}</div>
+            </div>
+
+            <div class="text-muted">Less than 35 characters are recommended</div>
+
+            <p class="text-danger" ng-show="imageProperties.title.$error.required">Title is required</p>
+        </div>
+        <div class="form-group">
+            <label for="alternativeText">Alternative text</label>
+            <div class="row">
+                <div class="col-xs-8">
+                    <input class="form-control" name="alternativeText" type="text" ng-model="model.alternativeText" />
+                </div>
+                <div class="m-top-xs" ng-class="{'text-danger': model.alternativeText.length>35}">{{model.alternativeText.length}}</div>
+            </div>
+
+            <div class="text-muted">Less than 35 characters are recommended</div>
+        </div>
+
+        <div class="form-group">
+            <label>Alignment</label><br />
+            <label class="radio-inline">
+                <input type="radio" ng-model="model.alignment" value="None" checked="checked" />
+                <span class="icon-align icon-align-none"></span>
+                None
+            </label>
+            <label class="radio-inline">
+                <input type="radio" ng-model="model.alignment" value="Left" />
+                <span class="icon-align icon-align-left"></span>
+                Left
+            </label>
+            <label class="radio-inline">
+                <input type="radio" ng-model="model.alignment" value="Center" />
+                <span class="icon-align icon-align-center"></span>
+                Center
+            </label>
+            <label class="radio-inline">
+                <input type="radio" ng-model="model.alignment" value="Right" />
+                <span class="icon-align icon-align-right"></span>
+                Right
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>Image thumbnail</label>
+            <div ng-include="thumbnailSizeTempalteUrl"></div>
+        </div>
+
+        <expander expander-title='More options'>
+            <p>Margins</p>
+            <div class="row row-xs">
+                <div class="col-xs-2">
+                    <label for="top">Top</label>
+                </div>
+                <div class="col-xs-2">
+                    <label for="right">Right</label>
+                </div>
+                <div class="col-xs-2">
+                    <label for="bottom">Bottom</label>
+                </div>
+                <div class="col-xs-2">
+                    <label for="left">Left</label>
                 </div>
             </div>
-            <div>
-                <p>Image thumbnail</p>
-                <div ng-include="thumbnailSizeTempalteUrl"></div>
+
+            <div class="row row-xs form-group">
+                <div class="col-xs-2">
+                    <input name="top" type="number" ng-model="model.margin.top" class="form-control"/>
+                </div>
+                <div class="col-xs-2">
+                    <input name="right" type="number" ng-model="model.margin.right" class="form-control"/>
+                </div>
+                <div class="col-xs-2">
+                    <input name="bottom" type="number" ng-model="model.margin.bottom" class="form-control"/>
+                </div>
+                <div class="col-xs-2">
+                    <input name="left" type="number" ng-model="model.margin.left" class="form-control" />
+                </div>
+                <div class="col-xs-2">
+                    <div class="m-top-xs">px</div>
+                </div>
             </div>
-            <div>
-                <expander expander-title='More options'>
-                    <div class="row">
-                        <p>Margins</p>
-                        <ul>
-                            <li>
-                                <label>
-                                    Top
-                                    <input type="number" ng-model="model.margin.top" class="form-control"/>
-                                </label>
-                            </li>
-                            <li>
-                                <label>Right
-                                    <input type="number" ng-model="model.margin.right" class="form-control"/>
-                                </label>
-                            </li>
-                            <li>
-                                <label>Bottom
-                                    <input type="number" ng-model="model.margin.bottom" class="form-control"/>
-                                </label>
-                            </li>
-                            <li>
-                                <label>Left
-                                    <input type="number" ng-model="model.margin.left" class="form-control" />
-                                </label>
-                            </li>
-                        </ul>
-                        <span>px</span>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-8">
-                            <label>
-								CSS classes
-								<input class="form-control" type="text" ng-model="model.cssClass" />
-							</label>
-                        </div>
-                    </div>
-                </expander>
+
+
+            <div class="row">
+                <div class="col-xs-9">
+                    <label>CSS classes</label>
+                    <input class="form-control" type="text" ng-model="model.cssClass" />
+                </div>
             </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" ng-click="done()">Done</button>
-        <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
-    </div>
+        </expander>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.title">Done</button>
+    <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
 </div>

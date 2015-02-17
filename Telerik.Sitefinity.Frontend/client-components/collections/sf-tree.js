@@ -62,7 +62,6 @@
                     scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(itemAssembly, itemUrl);
 
                     scope.selectedItems = scope.selectedItems || [];
-                    scope.hierarchy = {};
 
                     // In case no function for getting children is provided, a default one returning empty array is provided.
                     scope.sfRequestChildren = scope.sfRequestChildren || function () { var r = $q.defer(); r.resolve([]); return r.$promise; };
@@ -162,22 +161,28 @@
                         parentNode.collapsed = !parentNode.collapsed;
                     };
 
-                    // Initial load of root elements
-                    scope.sfRequestChildren({ parent: null }).then(function (items) {
-                        if (items && items instanceof Array) {
-                            items.forEach(function (item) {
-                                if (scope.sfIdentifier) {
-                                    scope.hierarchy[item[scope.sfIdentifier]] = new TreeNode(item);
-                                }
-                                else if (item.Id) {
-                                    scope.hierarchy[item.Id] = new TreeNode(item);
-                                }
-                                else {
-                                    scope.hierarchy[item] = new TreeNode(item);
-                                }
-                            });
-                        }
-                    });
+                    scope.bind = function () {
+                        scope.hierarchy = {};
+                        // Initial load of root elements
+                        // Initial load of root elements
+                        scope.sfRequestChildren({ parent: null }).then(function (items) {
+                            if (items && items instanceof Array) {
+                                items.forEach(function (item) {
+                                    if (scope.sfIdentifier) {
+                                        scope.hierarchy[item[scope.sfIdentifier]] = new TreeNode(item);
+                                    }
+                                    else if (item.Id) {
+                                        scope.hierarchy[item.Id] = new TreeNode(item);
+                                    }
+                                    else {
+                                        scope.hierarchy[item] = new TreeNode(item);
+                                    }
+                                });
+                            }
+                        });
+                    };
+
+                    scope.bind();
                 }
             };
         }]);

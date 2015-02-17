@@ -34,7 +34,6 @@
 				</div>
 
 				<div class="Media-item-meta">
-					<span ng-show="item.LibrariesCount">{{item.LibrariesCount + " folders"}}</span><br />
 					<span ng-show="item.ImagesCount">{{item.ImagesCount + (item.ImagesCount == 1 ? " image" : " images")}}</span>
 				</div>
 			</div>
@@ -42,7 +41,7 @@
 	</div>
 
 	<div>
-		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}">
+		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected>
 			<div class="Media-file-wrapper">
 
 
