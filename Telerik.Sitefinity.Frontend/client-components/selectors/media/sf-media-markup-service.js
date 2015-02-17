@@ -242,10 +242,10 @@
                         }
                     }
 
-                    result.margin.top = stripPxFromStyle(jMarkup[0].style.marginTop);
-                    result.margin.left = stripPxFromStyle(jMarkup[0].style.marginLeft);
-                    result.margin.bottom = stripPxFromStyle(jMarkup[0].style.marginBottom);
-                    result.margin.right = stripPxFromStyle(jMarkup[0].style.marginRight);
+                    result.margin.top = parseInt(stripPxFromStyle(jMarkup[0].style.marginTop));
+                    result.margin.left = parseInt(stripPxFromStyle(jMarkup[0].style.marginLeft));
+                    result.margin.bottom = parseInt(stripPxFromStyle(jMarkup[0].style.marginBottom));
+                    result.margin.right = parseInt(stripPxFromStyle(jMarkup[0].style.marginRight));
 
                     result.openOriginalImageOnClick = jMarkup.attr('openOriginalImageOnClick') == 'true';
 
