@@ -25,9 +25,9 @@
                     $scope.model.customSize = selection.customSize;
                 }
                 else {
-                    // open custom size dialog and then set model
-
                     openModalDialog().then(function (model) {
+                        $scope.model.displayMode = selection.type;
+                        $scope.model.thumbnail = selection.thumbnail;
                         $scope.model.customSize = model;
                     });
                 }
@@ -49,7 +49,7 @@
             });
 
             var openModalDialog = function () {
-                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: $scope.model.customSize });
+                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: function () { return $scope.model.customSize; } });
             };
 
             var populateOptions = function () {
@@ -78,35 +78,39 @@
                     });
                 }
 
-                if ($scope.model.customSize && $scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
+                var newCustomSizeTitle, existingCustomSizeTitle;
+                if ($scope.model.customSize) {
+                    newCustomSizeTitle = 'Edit custom size...';
+                    if ($scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
+                        existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
+                    }
+                    else if ($scope.model.customSize.Width && $scope.model.customSize.Height) {
+                        existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
+                    }
+                }
+                else {
+                    newCustomSizeTitle = 'Custom size...';
+                }
+
+                if (existingCustomSizeTitle) {
                     $scope.sizeOptions.push({
                         index: $scope.sizeOptions.length,
                         type: displayMode.custom,
-                        title: 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px',
-                        thumbnail: null,
+                        title: existingCustomSizeTitle,
+                        thumbnail: $scope.model.thumbnail,
                         customSize: $scope.model.customSize,
                         openDialog: false
                     });
+                }
 
-                    $scope.sizeOptions.push({
-                        index: $scope.sizeOptions.length,
-                        type: displayMode.custom,
-                        title: 'Edit custom size...',
-                        thumbnail: null,
-                        customSize: $scope.model.customSize,
-                        openDialog: true
-                    });
-                }
-                else {
-                    $scope.sizeOptions.push({
-                        index: $scope.sizeOptions.length,
-                        type: displayMode.custom,
-                        title: 'Custom size...',
-                        thumbnail: null,
-                        customSize: $scope.model.customSize,
-                        openDialog: true
-                    });
-                }
+                $scope.sizeOptions.push({
+                    index: $scope.sizeOptions.length,
+                    type: displayMode.custom,
+                    title: newCustomSizeTitle,
+                    thumbnail: null,
+                    customSize: $scope.model.customSize,
+                    openDialog: true
+                });
 
                 updateSelection();
             };
@@ -145,6 +149,8 @@
             $scope.model = model || {  // Keep the names of those properties as they are in order to support old HTML field.
                 MaxWidth: null,
                 MaxHeight: null,
+                Width: null,
+                Height: null,
                 ScaleUp: false,
                 Quality: $scope.quality[0],
                 Method: $scope.methodOptions[0].value
