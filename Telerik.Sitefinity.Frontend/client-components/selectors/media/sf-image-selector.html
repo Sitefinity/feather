@@ -18,16 +18,17 @@
         <!--Select image-->
         <div ng-hide="isInUploadMode">
             <div class="Media-settings">
+                <sf-provider-selector sf-manager-type="Telerik.Sitefinity.Modules.Libraries.LibrariesManager"
+                                      ng-model="provider"
+                                      class="pull-left m-right-md">
+                </sf-provider-selector>
+
                 <ol class="pull-left breadcrumb" ng-show="breadcrumbs && breadcrumbs.length > 0">
                     <li ng-click="onBreadcrumbItemClick()"><a>All libraries</a></li>
                     <li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
                         <a>{{::item.Title}}</a>
                     </li>
                 </ol>
-
-                <sf-provider-selector sf-manager-type="Telerik.Sitefinity.Modules.Libraries.LibrariesManager"
-                                      ng-model="provider">
-                </sf-provider-selector>
 
                 <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)" sf-clear-search-string="clearSearch"> </sf-search-box>
             </div>
