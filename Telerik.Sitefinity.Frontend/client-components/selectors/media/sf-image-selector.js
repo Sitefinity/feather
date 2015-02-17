@@ -627,7 +627,10 @@
                             refresh();
                         }
 
-                        element.find('div.library-filter ul').scope().bind();
+                        var libraryFilterScope = element.find('div.library-filter ul').scope();
+                        if (libraryFilterScope) {
+                            libraryFilterScope.bind();
+                        }
                     });
 
                     // Reacts when a folder is clicked.
