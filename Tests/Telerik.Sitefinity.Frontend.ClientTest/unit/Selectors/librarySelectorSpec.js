@@ -171,7 +171,7 @@ describe("library selector", function () {
             expect(args[0]).toBeDefined();
 
             //parent
-            expect(args[0].parent).toBe("folders");
+            expect(args[0].parent).toBe(null);
 
             //sort
             expect(args[0].sort).toBe('Title ASC');
@@ -200,7 +200,7 @@ describe("library selector", function () {
             expect(args[0]).toBeDefined();
 
             //parent
-            expect(args[0].parent).toBe("folders/4c003fb0-2a77-61ec-be54-ff00007864f4");
+            expect(args[0].parent).toBe("4c003fb0-2a77-61ec-be54-ff00007864f4");
 
             //provider
             expect(args[0].provider).toBe('OpenAccessDataProvider');
@@ -303,7 +303,7 @@ describe("library selector", function () {
             expect(args[0]).toBeDefined();
 
             //parent
-            expect(args[0].parent).toBe("folders");
+            expect(args[0].parent).toBe(null);
 
             //sort
             expect(args[0].sort).toBe('Title ASC');

@@ -46,7 +46,9 @@
         var getFolders = function (options, serviceUrl) {
             options = options || {};
 
-            var url = options.parent ? serviceUrl + options.parent + "/" : serviceUrl;
+            var foldersUrl = serviceUrl + "folders/";
+            var url = options.parent ? foldersUrl + options.parent + "/" : foldersUrl;
+
             return serviceHelper.getResource(url).get(
                 {
                     filter: options.filter,
@@ -226,7 +228,7 @@
                     return;
                 }
                 var options = {
-                    parent: 'folders/predecessors/' + id,
+                    parent: 'predecessors/' + id,
                     excludeNeighbours: true
                 };
                 return getFolders(options, constants.images.albumsServiceUrl)
