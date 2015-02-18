@@ -179,23 +179,6 @@
                     if (properties.displayMode)
                         jElementToInsert.attr('displayMode', properties.displayMode);
 
-                    jElementToInsert.css('float', '');
-                    jElementToInsert.css('vertical-align', '');
-
-                    switch (properties.alignment) {
-                        case 'Left':
-                            jElementToInsert.css('float', 'left');
-                            break;
-                        case 'Right':
-                            jElementToInsert.css('float', 'right');
-                            break;
-                        case 'Center':
-                            jElementToInsert.css('vertical-align', 'middle');
-                            break;
-                        default:
-                            break;
-                    }
-
                     properties.margin = properties.margin || {};
 
                     jElementToInsert[0].style.margin = '';
@@ -208,6 +191,21 @@
                     if (properties.margin.right !== null)
                         jElementToInsert[0].style.marginRight = properties.margin.right + 'px';
 
+                    switch (properties.alignment) {
+                        case 'Left':
+                            jElementToInsert.css('float', 'left');
+                            break;
+                        case 'Right':
+                            jElementToInsert.css('float', 'right');
+                            break;
+                        case 'Center':
+                            jElementToInsert.css({'display' : 'block', 'margin-left' : 'auto', 'margin-right' : 'auto'});
+
+                            break;
+                        default:
+                            break;
+                    }
+
                     if (properties.openOriginalImageOnClick) {
                         jElementToInsert.attr('openOriginalImageOnClick', 'true');
                         jElementToInsert.wrap('<a></a>');
@@ -216,7 +214,7 @@
                     }
 
                     if (wrapIt) {
-                        var jSpanWrapper = $('<span />').attr('data-sfref', sfref).addClass('sfImageWrapper');
+                        var jSpanWrapper = $('<span />').attr('data-sfref', sfref).addClass('sf-Image-wrapper');
                         jSpanWrapper.append(jElementToInsert);
                         jElementToInsert = jSpanWrapper;
                     }
@@ -227,7 +225,7 @@
                 properties: function (markup) {
                     var jMarkup = $(markup);
                     var sfref = jMarkup.attr('sfref') ? jMarkup.attr('sfref') : jMarkup.children().attr('sfref');
-                    
+
                     if (!jMarkup.is('img'))
                         jMarkup = jMarkup.find('img');
 

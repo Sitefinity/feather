@@ -72,7 +72,7 @@
 
                         var properties = null;
 
-                        var imageWrapper = $(nodes).closest('span.sfImageWrapper');
+                        var imageWrapper = $(nodes).closest('span.sf-Image-wrapper');
                         if (imageWrapper.length) {
                             properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML);
                         }
