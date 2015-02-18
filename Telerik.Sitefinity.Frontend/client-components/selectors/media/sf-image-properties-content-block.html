@@ -7,15 +7,15 @@
 
 <div class="modal-body">
     <form name="imageProperties">
-        <div class="form-group" ng-class="{ 'has-error' : !model.title }">
+        <div class="form-group" ng-class="{ 'has-error' : !model.item.Title.Value }">
             <label for="title">Title</label>
 
             <div class="row">
                 <div class="col-xs-8">
-                    <input class="form-control" name="title" type="text" ng-model="model.title" ng-required="true" />
+                    <input class="form-control" name="title" type="text" ng-model="model.item.Title.Value" ng-required="true" />
                 </div>
 
-                <div class="m-top-xs" ng-class="{'text-danger': model.title.length > 35}">{{model.title.length}}</div>
+                <div class="m-top-xs" ng-class="{'text-danger': model.item.Title.Value.length > 35}">{{model.item.Title.Value.length}}</div>
             </div>
 
             <div class="text-muted">Less than 35 characters are recommended</div>
@@ -26,9 +26,9 @@
             <label for="alternativeText">Alternative text</label>
             <div class="row">
                 <div class="col-xs-8">
-                    <input class="form-control" name="alternativeText" type="text" ng-model="model.alternativeText" />
+                    <input class="form-control" name="alternativeText" type="text" ng-model="model.item.AlternativeText.Value" />
                 </div>
-                <div class="m-top-xs" ng-class="{'text-danger': model.alternativeText.length>35}">{{model.alternativeText.length}}</div>
+                <div class="m-top-xs" ng-class="{'text-danger': model.item.AlternativeText.Value.length>35}">{{model.item.AlternativeText.Value.length}}</div>
             </div>
 
             <div class="text-muted">Less than 35 characters are recommended</div>
@@ -109,6 +109,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.title">Done</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.item.Title.Value">Done</button>
     <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
 </div>

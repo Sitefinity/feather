@@ -39,6 +39,12 @@
                     var editAllPropertiesUrl = serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=ImagesBackend&ViewName=ImagesBackendEdit&IsInlineEditingMode=true');
                     scope.showEditPropertiesButton = (window && window.radopen);
 
+                    var closeEditAllProperties = function (sender, args) {
+                        if (args && args.get_argument() && args.get_argument() == "rebind") {
+                            getImage(scope.sfModel);
+                        }
+                    };
+
                     scope.editAllProperties = function () {
                         var parentId = scope.sfImage.FolderId || scope.sfImage.ParentId || scope.sfImage.Album.Id;
                         editAllPropertiesUrl += ('&parentId=' + parentId);
@@ -57,6 +63,7 @@
                         var dialogName = editWindow.get_name();
                         var dialog = dialogManager.getDialogByName(dialogName);
                         dialog.setUrl(editAllPropertiesUrl);
+                        dialog.add_close(closeEditAllProperties);
 
                         var dialogContext = {
                             commandName: "edit",
