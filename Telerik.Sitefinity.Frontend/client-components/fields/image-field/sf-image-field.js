@@ -51,6 +51,13 @@
                             };
                             return binder;
                         };
+
+                        var editWindow = window.radopen(editAllPropertiesUrl);
+                        var dialogManager = window.top.GetDialogManager();
+                        var dialogName = editWindow.get_name();
+                        var dialog = dialogManager.getDialogByName(dialogName);
+                        dialog.setUrl(editAllPropertiesUrl);
+
                         var dialogContext = {
                             commandName: "edit",
                             itemsList: itemsList,
@@ -58,6 +65,7 @@
                                 Id: scope.sfImage.Id,
                                 ProviderName: scope.sfProvider
                             },
+                            dialog: dialog,
                             params: {
                                 IsEditable: true,
                                 parentId: parentId
@@ -66,11 +74,6 @@
                             commandArgument: { languageMode: "edit" }
                         };
 
-                        var editWindow = window.radopen(editAllPropertiesUrl);
-                        var dialogManager = window.top.GetDialogManager();
-                        var dialogName = editWindow.get_name();
-                        var dialog = dialogManager.getDialogByName(dialogName);
-                        dialog.setUrl(editAllPropertiesUrl);
                         dialogManager.openDialog(dialogName, null, dialogContext);
                     };
 
