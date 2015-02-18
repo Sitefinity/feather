@@ -17,14 +17,12 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    var oldProvider;
-
                     var getDateFromString = function (dateStr) {
                         return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')')))));
                     };
 
                     var getImage = function (id) {
-                        sfMediaService.images.getById(id, scope.model.provider).then(function (data) {
+                        sfMediaService.images.getById(id, scope.sfProvider).then(function (data) {
                             if (data && data.Item) {
                                 refreshScopeInfo(data.Item);
                             }
@@ -32,17 +30,10 @@
                     };
 
                     var refreshScopeInfo = function (item) {
-                        scope.model.selectedItems = [item];
                         scope.sfImage = item;
 
                         scope.imageSize = Math.ceil(item.TotalSize / 1024) + " KB";
                         scope.uploaded = getDateFromString(item.DateCreated);
-                    };
-
-                    scope.model = {
-                        selectedItems: [],
-                        filterObject: null,
-                        provider: scope.sfProvider
                     };
 
                     var editAllPropertiesUrl = serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=ImagesBackend&ViewName=ImagesBackendEdit&IsInlineEditingMode=true');
@@ -85,7 +76,6 @@
 
                     scope.done = function () {
                         scope.$modalInstance.close();
-                        oldProvider = scope.model.provider;
 
                         if (scope.model.selectedItems && scope.model.selectedItems.length) {
                             scope.sfProvider = scope.model.provider;
@@ -101,12 +91,18 @@
                             scope.sfModel = null;
                         }
 
-                        scope.model.provider = oldProvider;
                         scope.$modalInstance.dismiss();
                     };
 
                     scope.changeImage = function () {
+                        scope.model = {
+                            selectedItems: [],
+                            filterObject: null,
+                            provider: scope.sfProvider
+                        };
+
                         if (scope.sfImage) {
+                            scope.model.selectedItems.push(scope.sfImage);
                             scope.model.filterObject = sfMediaFilter.newFilter();
                             scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
                         }
