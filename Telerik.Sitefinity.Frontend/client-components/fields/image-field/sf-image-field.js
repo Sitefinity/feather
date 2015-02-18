@@ -71,7 +71,7 @@
                                 parentId: parentId
                             },
                             key: { Id: scope.sfImage.Id },
-                            commandArgument: { languageMode: "edit" }
+                            commandArgument: { languageMode: "edit", language: serverContext.getUICulture() }
                         };
 
                         dialogManager.openDialog(dialogName, null, dialogContext);
