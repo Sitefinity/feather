@@ -63,6 +63,6 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()" ng-disabled="!model.title">Upload</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()" ng-disabled="!model.title || !model.parentId">Upload</button>
     <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">Cancel</button>
 </div>

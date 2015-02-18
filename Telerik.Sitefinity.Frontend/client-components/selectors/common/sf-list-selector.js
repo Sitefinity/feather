@@ -141,7 +141,7 @@
                     var shouldFetch = function () {
                         if (!$scope.sfSelectedItems)
                             return true;
-                        
+
                         if (currentSelectedIds.length !== $scope.sfSelectedItems.length)
                             return true;
 
@@ -172,7 +172,7 @@
                                 });
                         }
                         else {
-                            this.updateSelection($scope.sfSelectedItems);
+                            this.onSelectedItemsLoadedSuccess({ Items: $scope.sfSelectedItems });
                         }
                     };
                 },
@@ -485,7 +485,7 @@
                             return scope.selectedItemsInTheDialog.length;
                         };
 
-                        scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == "true") ? true : false;
+                        scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() === "true") ? true : false;
 
                         scope.selectButtonText = attrs.sfSelectButtonText ? attrs.sfSelectButtonText : defaultSelectButtonText;
                         scope.changeButtonText = attrs.sfChangeButtonText ? attrs.sfChangeButtonText : defaultChangeButtonText;
