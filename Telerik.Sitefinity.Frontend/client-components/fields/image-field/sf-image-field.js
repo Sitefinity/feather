@@ -40,7 +40,7 @@
                     scope.showEditPropertiesButton = (window && window.radopen);
 
                     scope.editAllProperties = function () {
-                        var parentId = scope.sfImage.FolderId || scope.sfImage.ParentId || scope.sfImage.Album.Id;
+                        var parentId = scope.sfImage.ParentId || scope.sfImage.Album.Id;
                         editAllPropertiesUrl += ('&parentId=' + parentId);
 
                         var itemsList = {};
