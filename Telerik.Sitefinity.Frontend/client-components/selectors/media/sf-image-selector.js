@@ -718,7 +718,7 @@
             $scope.model = sfFileModel;
             $scope.provider = sfProvider;
 
-            $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1000) + " KB";
+            $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1024) + " KB";
 
             var fileName = $scope.model.file.name;
             $scope.uploadInfo = {};

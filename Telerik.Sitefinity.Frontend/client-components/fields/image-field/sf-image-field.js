@@ -32,7 +32,7 @@
                     var refreshScopeInfo = function (item) {
                         scope.sfImage = item;
 
-                        scope.imageSize = Math.ceil(item.TotalSize / 1000) + " KB";
+                        scope.imageSize = Math.ceil(item.TotalSize / 1024) + " KB";
                         scope.uploaded = getDateFromString(item.DateCreated);
                     };
 
@@ -40,7 +40,7 @@
                     scope.showEditPropertiesButton = (window && window.radopen);
 
                     scope.editAllProperties = function () {
-                        var parentId = scope.sfImage.FolderId || scope.sfImage.ParentId || scope.sfImage.Album.Id;
+                        var parentId = scope.sfImage.ParentId || scope.sfImage.Album.Id;
                         editAllPropertiesUrl += ('&parentId=' + parentId);
 
                         var itemsList = {};
@@ -51,6 +51,13 @@
                             };
                             return binder;
                         };
+
+                        var editWindow = window.radopen(editAllPropertiesUrl);
+                        var dialogManager = window.top.GetDialogManager();
+                        var dialogName = editWindow.get_name();
+                        var dialog = dialogManager.getDialogByName(dialogName);
+                        dialog.setUrl(editAllPropertiesUrl);
+
                         var dialogContext = {
                             commandName: "edit",
                             itemsList: itemsList,
@@ -58,19 +65,15 @@
                                 Id: scope.sfImage.Id,
                                 ProviderName: scope.sfProvider
                             },
+                            dialog: dialog,
                             params: {
                                 IsEditable: true,
                                 parentId: parentId
                             },
                             key: { Id: scope.sfImage.Id },
-                            commandArgument: { languageMode: "edit" }
+                            commandArgument: { languageMode: "edit", language: serverContext.getUICulture() }
                         };
 
-                        var editWindow = window.radopen(editAllPropertiesUrl);
-                        var dialogManager = window.top.GetDialogManager();
-                        var dialogName = editWindow.get_name();
-                        var dialog = dialogManager.getDialogByName(dialogName);
-                        dialog.setUrl(editAllPropertiesUrl);
                         dialogManager.openDialog(dialogName, null, dialogContext);
                     };
 
