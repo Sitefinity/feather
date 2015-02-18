@@ -164,8 +164,11 @@
                         }
 
                         scope.filterObject.parent = parent;
-                        if (!scope.filterObject.parent) {
+                        scope.filters.library.selected = parent ? [parent] : [];
+
+                        if (!scope.filterObject.parent) {                            
                             scope.filterObject.set.basic.allLibraries();
+                            scope.filters.basic.selected = 'allLibraries';
                         }
                         refresh();
                     };
@@ -446,7 +449,7 @@
                         },
                         library: {
                             index: 1,
-                            selected: scope.filterObject && scope.filterObject.parent ? [scope.filterObject.parent] : [],
+                            selected: [],
                             getChildren: filtersLogic.loadLibraryChildren
                         },
                         tag: {
