@@ -22,7 +22,7 @@
                     };
 
                     var getImage = function (id) {
-                        sfMediaService.images.getById(id, scope.model.provider).then(function (data) {
+                        sfMediaService.images.getById(id, scope.sfProvider).then(function (data) {
                             if (data && data.Item) {
                                 refreshScopeInfo(data.Item);
                             }
@@ -30,7 +30,6 @@
                     };
 
                     var refreshScopeInfo = function (item) {
-                        scope.model.selectedItems = [item];
                         scope.sfImage = item;
 
                         scope.imageSize = Math.ceil(item.TotalSize / 1000) + " KB";
