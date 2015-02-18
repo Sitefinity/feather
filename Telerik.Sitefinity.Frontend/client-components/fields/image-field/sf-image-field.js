@@ -32,7 +32,7 @@
                     var refreshScopeInfo = function (item) {
                         scope.sfImage = item;
 
-                        scope.imageSize = Math.ceil(item.TotalSize / 1000) + " KB";
+                        scope.imageSize = Math.ceil(item.TotalSize / 1024) + " KB";
                         scope.uploaded = getDateFromString(item.DateCreated);
                     };
 
@@ -46,7 +46,7 @@
                     };
 
                     scope.editAllProperties = function () {
-                        var parentId = scope.sfImage.FolderId || scope.sfImage.ParentId || scope.sfImage.Album.Id;
+                        var parentId = scope.sfImage.ParentId || scope.sfImage.Album.Id;
                         editAllPropertiesUrl += ('&parentId=' + parentId);
 
                         var itemsList = {};
