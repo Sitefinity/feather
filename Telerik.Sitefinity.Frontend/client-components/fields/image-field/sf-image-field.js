@@ -32,7 +32,7 @@
                     var refreshScopeInfo = function (item) {
                         scope.sfImage = item;
 
-                        scope.imageSize = Math.ceil(item.TotalSize / 1000) + " KB";
+                        scope.imageSize = Math.ceil(item.TotalSize / 1024) + " KB";
                         scope.uploaded = getDateFromString(item.DateCreated);
                     };
 

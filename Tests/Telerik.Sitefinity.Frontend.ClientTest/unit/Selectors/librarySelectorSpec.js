@@ -12,6 +12,14 @@ describe("library selector", function () {
         Title: 'Dummy'
     };
 
+    var defaultLibrary = {
+        Id: 'DEFAULT-LIBRARY-ID',
+        ParentId: null,
+        HasChildren: false,
+        Path: null,
+        Title: 'Default library'
+    };
+
     var childDataItem = {
         Id: '4c003fb0-2a77-61ec-be54-ff00007864f5',
         ParentId: '4c003fb0-2a77-61ec-be54-ff00007864f4',
@@ -59,6 +67,12 @@ describe("library selector", function () {
             if (options.filter) {
                 serviceResult.resolve({
                     Items: [dataItem2],
+                    TotalCount: 1
+                });
+            }
+            else if (options.take === 1 && options.sort === 'DateCreated ASC') {
+                serviceResult.resolve({
+                    Items: [defaultLibrary],
                     TotalCount: 1
                 });
             }
@@ -132,6 +146,8 @@ describe("library selector", function () {
         childDataItem.Breadcrumb = null;
         childDataItem.RootPath = null;
         childDataItem.TitlesPath = null;
+
+        mediaService.images.getFolders.calls = [];
 
         //Sets default mediaService mock.
         provide.value('sfMediaService', mediaService);
@@ -255,8 +271,8 @@ describe("library selector", function () {
             //mock the call to the modal service.
             s.$modalInstance = { close: function () { } };
 
-            expect(s.sfSelectedItem).toBeFalsy();
-            expect(s.sfSelectedItemId).toBeFalsy();
+            expect(s.sfSelectedItem).toBeDefined();
+            expect(s.sfSelectedItemId).toEqual(defaultLibrary.Id);
 
             expect(s.items).toBeDefined();
             expect(s.items[0].Id).toEqual(dataItem.Id);
@@ -265,8 +281,8 @@ describe("library selector", function () {
             //Select item in the selector
             s.itemClicked(0, s.items[0]);
 
-            expect(s.sfSelectedItem).toBeFalsy();
-            expect(s.sfSelectedItemId).toBeFalsy();
+            expect(s.sfSelectedItem).toBeDefined();
+            expect(s.sfSelectedItemId).toEqual(defaultLibrary.Id);
 
             //Close the dialog (Done button clicked)
             s.doneSelecting();
