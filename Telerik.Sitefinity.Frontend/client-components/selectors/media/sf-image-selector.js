@@ -31,9 +31,9 @@
                 recentImagesLastDaysCount: 7,
                 filters: {
                     basic: [
-                        { title: 'Recent Images', value: 'recentItems' },
-                        { title: 'My Images', value: 'ownItems' },
-                        { title: 'All Libraries', value: 'allLibraries' }
+                        { title: 'Recent Images', value: 'RecentItems' },
+                        { title: 'My Images', value: 'OwnItems' },
+                        { title: 'All Libraries', value: 'AllLibraries' }
                     ],
                     basicRecentItemsValue: 'recentItems',
                     anyDateValue: 'AnyTime',
@@ -164,8 +164,11 @@
                         }
 
                         scope.filterObject.parent = parent;
-                        if (!scope.filterObject.parent) {
+                        scope.filters.library.selected = parent ? [parent] : [];
+
+                        if (!scope.filterObject.parent) {                            
                             scope.filterObject.set.basic.allLibraries();
+                            scope.filters.basic.selected = scope.filterObject.constants.basic.allLibraries;
                         }
                         refresh();
                     };
@@ -446,7 +449,7 @@
                         },
                         library: {
                             index: 1,
-                            selected: scope.filterObject && scope.filterObject.parent ? [scope.filterObject.parent] : [],
+                            selected: [],
                             getChildren: filtersLogic.loadLibraryChildren
                         },
                         tag: {
