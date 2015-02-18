@@ -63,7 +63,7 @@
                     };
 
                     scope.imagePropertiesDialog =
-                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-image-properties-content-block.html');
+                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.html');
 
                     scope.openImageSelector = function () {
 
@@ -201,6 +201,16 @@
                     if (newVal === null) {
                         $scope.cancel();
                     }
+                });
+
+                $scope.$watch('model.item.Title.Value', function (newVal, oldVal) {
+                    if ($scope.model.item && $scope.model.item.Title && (oldVal === $scope.model.title || !$scope.model.title))
+                        $scope.model.title = $scope.model.item.Title.Value;
+                });
+
+                $scope.$watch('model.item.AlternativeText.Value', function (newVal, oldVal) {
+                    if ($scope.model.item && $scope.model.item.AlternativeText && (oldVal === $scope.model.alternativeText || !$scope.model.alternativeText))
+                        $scope.model.alternativeText = $scope.model.item.AlternativeText.Value;
                 });
 
                 $scope.done = function () {
