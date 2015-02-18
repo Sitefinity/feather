@@ -36,19 +36,21 @@
                         scope.uploaded = getDateFromString(item.DateCreated);
                     };
 
-                    var editAllPropertiesUrl = serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=ImagesBackend&ViewName=ImagesBackendEdit&IsInlineEditingMode=true');
                     scope.showEditPropertiesButton = (window && window.radopen);
 
-                    var closeEditAllProperties = function (sender, args) {
-                        if (args && args.get_argument() && args.get_argument() == "rebind") {
-                            getImage(scope.sfModel);
-                        }
+                    var editDialog;
+                    var editAllPropertiesUrl = serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=ImagesBackend&ViewName=ImagesBackendEdit&IsInlineEditingMode=true');
+
+                    var createDialog = function (dialogManager) {
+                        editWindow = window.radopen(editAllPropertiesUrl);
+                        var dialogName = editWindow.get_name();
+                        var dialog = dialogManager.getDialogByName(dialogName);
+                        dialog.add_close(closeEditAllProperties);
+
+                        return dialog;
                     };
 
-                    scope.editAllProperties = function () {
-                        var parentId = scope.sfImage.ParentId || scope.sfImage.Album.Id;
-                        editAllPropertiesUrl += ('&parentId=' + parentId);
-
+                    var getDialogContext = function (dialog, parentId) {
                         var itemsList = {};
                         itemsList.getBinder = function () {
                             var binder = {};
@@ -58,15 +60,8 @@
                             return binder;
                         };
 
-                        var editWindow = window.radopen(editAllPropertiesUrl);
-                        var dialogManager = window.top.GetDialogManager();
-                        var dialogName = editWindow.get_name();
-                        var dialog = dialogManager.getDialogByName(dialogName);
-                        dialog.setUrl(editAllPropertiesUrl);
-                        dialog.add_close(closeEditAllProperties);
-
                         var dialogContext = {
-                            commandName: "edit",
+                            commandName: 'edit',
                             itemsList: itemsList,
                             dataItem: {
                                 Id: scope.sfImage.Id,
@@ -78,8 +73,28 @@
                                 parentId: parentId
                             },
                             key: { Id: scope.sfImage.Id },
-                            commandArgument: { languageMode: "edit", language: serverContext.getUICulture() }
+                            commandArgument: { languageMode: 'edit', language: serverContext.getUICulture() }
                         };
+
+                        return dialogContext;
+                    };
+
+                    var closeEditAllProperties = function (sender, args) {
+                        if (args && args.get_argument() && args.get_argument() == "rebind") {
+                            getImage(scope.sfModel);
+                        }
+                    };
+
+                    scope.editAllProperties = function () {
+                        var parentId = scope.sfImage.ParentId || scope.sfImage.Album.Id;
+                        fullEditAllPropertiesUrl = editAllPropertiesUrl+ ('&parentId=' + parentId);
+
+                        var dialogManager = window.top.GetDialogManager();
+                        editDialog = editDialog || createDialog(dialogManager);
+                        editDialog.setUrl(fullEditAllPropertiesUrl);
+
+                        var dialogName = editDialog.get_name();
+                        var dialogContext = getDialogContext(editDialog, parentId);
 
                         dialogManager.openDialog(dialogName, null, dialogContext);
                     };
