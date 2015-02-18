@@ -100,7 +100,7 @@
 
                             mediaService[mediaType].getFolders(options).then(function (data) {
                                 if (!ctrl.$scope.sfSelectedItemId)
-                                    ctrl.updateSelection(data.Items);
+                                    ctrl.onSelectedItemsLoadedSuccess(data);
                             });
                         }
                     }
