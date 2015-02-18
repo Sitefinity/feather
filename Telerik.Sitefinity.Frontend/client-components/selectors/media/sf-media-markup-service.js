@@ -181,9 +181,6 @@
                     if (properties.title) {
                         jElementToInsert.attr('title', properties.title);
                     }
-                    else if (properties.item.Title) {
-                        jElementToInsert.attr('title', properties.item.Title);
-                    }
 
                     if (properties.displayMode)
                         jElementToInsert.attr('displayMode', properties.displayMode);
