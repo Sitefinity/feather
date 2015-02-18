@@ -485,7 +485,7 @@
                             return scope.selectedItemsInTheDialog.length;
                         };
 
-                        scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() === "true") ? true : false;
+                        scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == "true") ? true : false;
 
                         scope.selectButtonText = attrs.sfSelectButtonText ? attrs.sfSelectButtonText : defaultSelectButtonText;
                         scope.changeButtonText = attrs.sfChangeButtonText ? attrs.sfChangeButtonText : defaultChangeButtonText;
