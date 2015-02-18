@@ -476,32 +476,40 @@
                             scope.filterObject.set.query.to(query);
                             return;
                         }
+                        var handled = false;
                         switch (scope.selectedFilterOption) {
                             case '1':
-                                if (scope.filters.library.selected)
+                                if (scope.filters.library.selected.length > 0) {
                                     scope.filterObject.set.parent.to(scope.filters.library.selected[0], true);
+                                    handled = true;
+                                }
                                 break;
                             case '2':
-                                if (scope.filters.tag.selected)
+                                if (scope.filters.tag.selected.length > 0) {
                                     scope.filterObject.set.taxon.to(scope.filters.tag.selected[0], constants.filters.tags.field);
+                                    handled = true;
+                                }
                                 break;
                             case '3':
-                                if (scope.filters.category.selected)
+                                if (scope.filters.category.selected.length > 0) {
                                     scope.filterObject.set.taxon.to(scope.filters.category.selected[0], constants.filters.categories.field);
+                                    handled = true;
+                                }
                                 break;
                             case '4':
-                                if (scope.filters.date.selected) {
+                                if (scope.filters.date.selected.length > 0) {
                                     if (scope.filters.date.selected[0] === constants.filters.anyDateValue) {
                                         scope.filterObject.set.date.all();
                                     }
                                     else {
                                         scope.filterObject.set.date.to(scope.filters.date.selected[0]);
                                     }
+                                    handled = true;
                                 }
                                 break;
-
-                            default:
-                                scope.filters.basic.select(scope.filters.basic.selected || constants.filters.basicRecentItemsValue);
+                        }
+                        if (!handled) {
+                            scope.filters.basic.select(scope.filters.basic.selected || constants.filters.basicRecentItemsValue);
                         }
                     };
 
@@ -765,8 +773,8 @@
     // The following directive overrides the popover with a template that supports html.
     // Should be removed when bootstrap release the html feature.
     sfImageSelector.requires.push('sfBootstrapPopover');
-    angular.module( 'sfBootstrapPopover', [ 'ui.bootstrap.tooltip' ] )
-        .directive( 'sfPopoverHtmlPopup', function () {
+    angular.module('sfBootstrapPopover', ['ui.bootstrap.tooltip'])
+        .directive('sfPopoverHtmlPopup', function () {
             return {
                 restrict: 'EA',
                 replace: true,
@@ -774,8 +782,8 @@
                 templateUrl: 'popover.html'
             };
         })
-        .directive( 'sfPopoverHtml', [ '$compile', '$timeout', '$parse', '$window', '$tooltip',
-            function ( $compile, $timeout, $parse, $window, $tooltip ) {
-                return $tooltip( 'sfPopoverHtml', 'popover', 'click' );
-        }]);
+        .directive('sfPopoverHtml', ['$compile', '$timeout', '$parse', '$window', '$tooltip',
+            function ($compile, $timeout, $parse, $window, $tooltip) {
+                return $tooltip('sfPopoverHtml', 'popover', 'click');
+            }]);
 })();
