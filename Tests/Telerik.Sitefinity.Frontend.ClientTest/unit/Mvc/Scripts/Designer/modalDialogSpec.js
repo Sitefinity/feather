@@ -137,7 +137,7 @@ describe('modal directive', function () {
         commonMethods.compileDirective(template, scope);        
 
         expect($modal.open.callCount).toBe(1);
-        expect(dialogsService.getOpenedDialogsCount()).toBe(1);
+        expect(dialogsService.count()).toBe(1);
 
         assertOpenWithController("outside-dialog-template", true);
 
@@ -146,7 +146,7 @@ describe('modal directive', function () {
         $('#openSelectorBtn').click();
 
         expect($modal.open.callCount).toBe(2);
-        expect(dialogsService.getOpenedDialogsCount()).toBe(2);
+        expect(dialogsService.count()).toBe(2);
 
         assertOpenWithScope();
     });

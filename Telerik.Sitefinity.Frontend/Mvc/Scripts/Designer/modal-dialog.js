@@ -1,19 +1,28 @@
 ﻿/* global angular */
-(function () {
+(function ($) {
     var modalDialogModule = angular.module('modalDialog', ['ui.bootstrap']);
 
     //Keeps track of the number of opened modal dialogs.
     modalDialogModule.factory('dialogsService', function () {
-        var openedDialogsCount = 0;
+        var dialogSelectors = [];
         return {
-            increaseDialogsCount: function () {
-                openedDialogsCount++;
+            pushSelector: function (selector) {
+                dialogSelectors.push(selector);
             },
-            decreaseDialogsCount: function () {
-                openedDialogsCount--;
+            pop: function () {
+                if (dialogSelectors.length)
+                    return $(dialogSelectors.pop());
+                else
+                    return $();
             },
-            getOpenedDialogsCount: function () {
-                return openedDialogsCount;
+            peek: function () {
+                if (dialogSelectors.length)
+                    return $(dialogSelectors[dialogSelectors.length - 1]);
+                else
+                    return $();
+            },
+            count: function () {
+                return dialogSelectors.length;
             }
         };
     });
@@ -28,39 +37,36 @@
             return attrs.dialogController;
         };
 
-        var modalDialogClass = '.modal-dialog';
+        var modalDialogClass = 'modal-dialog-';
         var backdropClass = 'div.modal-backdrop';
 
         var open = function (scope, attrs, resolve) {
-            //Hide already opened dialogs.
-            $(modalDialogClass).hide();
+            dialogsService.peek().hide();
 
+            var uniqueClass = modalDialogClass + dialogsService.count();
+            var windowClass = attrs.windowClass ? attrs.windowClass + ' ' + uniqueClass : uniqueClass;
             var modalInstance = $modal.open({
                 backdrop: 'static',
                 scope: attrs.existingScope && scope,
                 templateUrl: attrs.templateUrl,
                 controller: resolveControllerName(attrs),
-                windowClass: attrs.windowClass,
+                windowClass: windowClass,
                 resolve: resolve
             });
 
             scope.$modalInstance = modalInstance;
 
-            dialogsService.increaseDialogsCount();
+            dialogsService.pushSelector('.' + uniqueClass);
 
             return scope.$modalInstance.result.finally(function () {
-                dialogsService.decreaseDialogsCount();
+                dialogsService.pop().remove();
 
-                $('.' + attrs.windowClass).remove();
-
-                if (dialogsService.getOpenedDialogsCount() > 0) {
-                    //There is another dialog except this one. Show it and keep the backdrop.
-                    $(modalDialogClass).show();
+                if (dialogsService.count() > 0) {
+                    dialogsService.peek().show();
                 }
                 else {
                     $(backdropClass).remove();
                 }
-
             });
         };
 
@@ -72,10 +78,10 @@
                 }
                 else {
                     scope.$openModalDialog = function (resolve) {
-						return open(scope, attrs, resolve);
+                        return open(scope, attrs, resolve);
                     };
                 }
             }
         };
     }]);
-})();
+})(jQuery);
