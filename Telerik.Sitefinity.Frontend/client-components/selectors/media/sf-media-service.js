@@ -38,7 +38,7 @@
                     skip: options.skip,
                     take: options.take,
                     sortExpression: options.sort,
-                    includeSubFolderItems: options.recursive ? 'true' : null,
+                    includeSubFoldersItems: options.recursive ? 'true' : null,
                     excludeFolders: excludeFolders
                 }).$promise;
         };
