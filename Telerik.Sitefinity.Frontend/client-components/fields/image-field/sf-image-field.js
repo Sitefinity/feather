@@ -80,7 +80,7 @@
                     };
 
                     var closeEditAllProperties = function (sender, args) {
-                        if (args && args.get_argument() && args.get_argument() == "rebind") {
+                        if (args && args.get_argument() && args.get_argument() == 'rebind') {
                             getImage(scope.sfModel);
                         }
                     };
