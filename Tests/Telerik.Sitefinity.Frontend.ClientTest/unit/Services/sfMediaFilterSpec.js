@@ -82,19 +82,19 @@ describe('sfMediaFilter', function () {
     });
 
     it('[dzhenko] / attaching a function should call it when changing basic to all libraries and set properties correctly', function () {
-        var filter = assertFilterSetCallsFunction('basic', 'AllLibraries');
+        var filter = assertFilterSetCallsFunction('basic', 'allLibraries');
         assertAllButOnePropertyAreNull(filter, 'basic');
         expect(filter.basic).toEqual(filter.constants.basic.allLibraries);
     });
 
     it('[dzhenko] / attaching a function should call it when changing basic to own items and set properties correctly', function () {
-        var filter = assertFilterSetCallsFunction('basic', 'OwnItems');
+        var filter = assertFilterSetCallsFunction('basic', 'ownItems');
         assertAllButOnePropertyAreNull(filter, 'basic');
         expect(filter.basic).toEqual(filter.constants.basic.ownItems);
     });
 
     it('[dzhenko] / attaching a function should call it when changing basic to recent items and set properties correctly', function () {
-        var filter = assertFilterSetCallsFunction('basic', 'RecentItems');
+        var filter = assertFilterSetCallsFunction('basic', 'recentItems');
         assertAllButOnePropertyAreNull(filter, 'basic');
         expect(filter.basic).toEqual(filter.constants.basic.recentItems);
     });

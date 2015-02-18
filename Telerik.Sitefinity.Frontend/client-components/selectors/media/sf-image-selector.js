@@ -35,7 +35,7 @@
                         { title: 'My Images', value: 'OwnItems' },
                         { title: 'All Libraries', value: 'AllLibraries' }
                     ],
-                    basicRecentItemsValue: 'RecentItems',
+                    basicRecentItemsValue: 'recentItems',
                     anyDateValue: 'AnyTime',
                     dates: [
                         { text: 'Any time', dateValue: 'AnyTime' },
