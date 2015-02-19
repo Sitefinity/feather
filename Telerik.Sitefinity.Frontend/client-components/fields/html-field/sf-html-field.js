@@ -57,7 +57,7 @@
                         }
 
                         var container;
-                        if (range.startContainer && range.startContainer === range.endContainer && range.startContainer.tagName.toLowerCase() !== 'a') {
+                        if (range.startContainer && range.startContainer === range.endContainer && range.startContainer.tagName && range.startContainer.tagName.toLowerCase() !== 'a' && range.startContainer.hasChildNodes()) {
                             container = $(range.startContainer.outerHTML);
                         }
                         else {
@@ -67,7 +67,7 @@
                         angular.element("#linkSelectorModal").scope().$openModalDialog().then(function (data) {
                             scope.selectedHtml = data;
                             var result = data.outerHTML;
-                            if (container) {
+                            if (container && container.length === 1) {
                                 container.html(result);
                                 result = container[0].outerHTML;
                             }
@@ -95,7 +95,7 @@
                         }
 
                         var container;
-                        if (range.startContainer && range.startContainer === range.endContainer && range.startContainer.tagName.toLowerCase() !== 'img') {
+                        if (range.startContainer && range.startContainer === range.endContainer && range.startContainer.tagName && range.startContainer.tagName.toLowerCase() !== 'img' && range.startContainer.hasChildNodes()) {
                             container = $(range.startContainer.outerHTML);
                         }
                         else {
@@ -136,7 +136,7 @@
                                 var wrapIt = true;
                                 var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
 
-                                if (container) {
+                                if (container && container.length === 1) {
                                     container.html(markup);
                                     markup = container[0].outerHTML;
                                 }
