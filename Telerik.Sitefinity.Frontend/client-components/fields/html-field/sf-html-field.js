@@ -56,23 +56,9 @@
                             scope.selectedHtml = editor.selectedHtml();
                         }
 
-                        var container;
-                        if (range.startContainer && range.startContainer === range.endContainer && range.startContainer.tagName.toLowerCase() !== 'a') {
-                            container = $(range.startContainer.outerHTML);
-                        }
-                        else {
-                            container = null;
-                        }
-
                         angular.element("#linkSelectorModal").scope().$openModalDialog().then(function (data) {
                             scope.selectedHtml = data;
-                            var result = data.outerHTML;
-                            if (container) {
-                                container.html(result);
-                                result = container[0].outerHTML;
-                            }
-
-                            editor.exec("insertHtml", { html: result, split: true });
+                            editor.exec("insertHtml", { html: data.outerHTML, split: true });
                         });
                     };
 
@@ -94,15 +80,7 @@
                             properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML);
                         }
 
-                        var container;
-                        if (range.startContainer && range.startContainer === range.endContainer && range.startContainer.tagName.toLowerCase() !== 'img') {
-                            container = $(range.startContainer.outerHTML);
-                        }
-                        else {
-                            container = null;
-                        }
-
-                        angular.element('.imagePropertiesModal').scope()
+                        angular.element(".imagePropertiesModal").scope()
                             .$openModalDialog({ sfModel: function () { return properties; } })
                             .then(function (data) {
                                 properties = data;
@@ -135,13 +113,7 @@
                             .then(function (settings) {
                                 var wrapIt = true;
                                 var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
-
-                                if (container) {
-                                    container.html(markup);
-                                    markup = container[0].outerHTML;
-                                }
-
-                                editor.exec('insertHtml', { html: markup, split: true });
+                                editor.exec("insertHtml", { html: markup, split: true });
                             });
                     };
 
@@ -158,18 +130,18 @@
                             content.hide();
 
                             if (!fullToolbar) {
-                                fullToolbar = $('.k-editor-toolbar');
+                                fullToolbar = $(".k-editor-toolbar");
                             }
 
                             if (!customButtons) {
                                 customButtons = fullToolbar.children().filter(function (child) {
-                                    return $(this).children('.js-custom-tool').length > 0;
+                                    return $(this).children(".js-custom-tool").length > 0;
                                 });
                             }
 
                             if (!shortToolbar) {
                                 shortToolbar = fullToolbar.clone(true);
-                                shortToolbar.html('');
+                                shortToolbar.html("");
                                 fullToolbar.after(shortToolbar);
                             }
 
@@ -196,22 +168,22 @@
                             return;
                         }
 
-                        fullScreenIcon = $('.js-fullScreen');
+                        fullScreenIcon = $(".js-fullScreen");
 
-                        var modalHeaderAndFooter = $('.modal-dialog > .modal-content > .modal-header, .modal-dialog > .modal-content > .modal-footer');
+                        var modalHeaderAndFooter = $(".modal-dialog > .modal-content > .modal-header, .modal-dialog > .modal-content > .modal-footer");
 
-                        var mainDialog = $('.modal-dialog');
+                        var mainDialog = $(".modal-dialog");
 
                         if (isFullScreen === false) {
-                            mainDialog.addClass('modal-full-screen');
-                            fullScreenIcon.removeClass('glyphicon-resize-full');
-                            fullScreenIcon.addClass('glyphicon-resize-small');
+                            mainDialog.addClass("modal-full-screen");
+                            fullScreenIcon.removeClass("glyphicon-resize-full");
+                            fullScreenIcon.addClass("glyphicon-resize-small");
                         }
                         else {
-                            mainDialog.removeClass('modal-full-screen');
+                            mainDialog.removeClass("modal-full-screen");
 
-                            fullScreenIcon.removeClass('glyphicon-resize-small');
-                            fullScreenIcon.addClass('glyphicon-resize-full');
+                            fullScreenIcon.removeClass("glyphicon-resize-small");
+                            fullScreenIcon.addClass("glyphicon-resize-full");
                         }
 
                         modalHeaderAndFooter.toggle();
