@@ -126,7 +126,7 @@
                             provider: scope.sfProvider
                         };
 
-                        if (scope.sfImage) {
+                        if (scope.sfImage && scope.sfImage.Id) {
                             scope.model.selectedItems.push(scope.sfImage);
                             scope.model.filterObject = sfMediaFilter.newFilter();
                             scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
