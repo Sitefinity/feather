@@ -30,7 +30,8 @@
                     </li>
                 </ol>
 
-                <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)" sf-clear-search-string="clearSearch"> </sf-search-box>
+                <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)" 
+                    sf-clear-search-string="clearSearch" sf-timeout-ms="500"> </sf-search-box>
             </div>
 
             <div ng-hide="items.length">
