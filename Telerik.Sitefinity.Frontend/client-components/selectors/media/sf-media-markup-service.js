@@ -229,13 +229,14 @@
 
                 properties: function (markup) {
                     var jMarkup = $(markup);
-                    var sfref = jMarkup.attr('sfref') ? jMarkup.attr('sfref') : jMarkup.children().attr('sfref');
 
                     if (!jMarkup.is('img'))
                         jMarkup = jMarkup.find('img');
 
+                    var sfref = jMarkup.attr('sfref') ? jMarkup.attr('sfref') : jMarkup.attr('data-sfref');
+
                     var result = new ImageProperties();
-                    result.item.Id = getIdFromSfrefAttr(sfref);
+                    result.item.Id = getIdFromSfrefAttr(sfref) || undefined;
                     result.provider = getProviderFromSfrefAttr(sfref);
                     result.thumbnail.name = getThumbnailNameFromSfrefAttr(sfref);
                     result.displayMode = jMarkup.attr('displayMode');
