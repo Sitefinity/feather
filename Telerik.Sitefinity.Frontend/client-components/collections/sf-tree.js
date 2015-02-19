@@ -163,21 +163,12 @@
                     };
 
                     scope.bind = function () {
-                        scope.hierarchy = {};
-                        // Initial load of root elements
+                        scope.hierarchy = [];
                         // Initial load of root elements
                         scope.sfRequestChildren({ parent: null }).then(function (items) {
                             if (items && items instanceof Array) {
                                 items.forEach(function (item) {
-                                    if (scope.sfIdentifier) {
-                                        scope.hierarchy[item[scope.sfIdentifier]] = new TreeNode(item);
-                                    }
-                                    else if (item.Id) {
-                                        scope.hierarchy[item.Id] = new TreeNode(item);
-                                    }
-                                    else {
-                                        scope.hierarchy[item] = new TreeNode(item);
-                                    }
+                                    scope.hierarchy.push(new TreeNode(item));
                                 });
                             }
                         });
