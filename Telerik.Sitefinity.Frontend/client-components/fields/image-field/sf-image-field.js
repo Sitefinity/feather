@@ -83,14 +83,15 @@
                         if (args && args.get_argument() && args.get_argument() == 'rebind') {
                             getImage(scope.sfModel);
                         }
+                        sender.remove_close(closeEditAllProperties);
                     };
 
                     scope.editAllProperties = function () {
                         var parentId = scope.sfImage.ParentId || scope.sfImage.Album.Id;
-                        fullEditAllPropertiesUrl = editAllPropertiesUrl+ ('&parentId=' + parentId);
+                        var fullEditAllPropertiesUrl = editAllPropertiesUrl+ ('&parentId=' + parentId);
 
                         var dialogManager = window.top.GetDialogManager();
-                        editDialog = editDialog || createDialog(dialogManager);
+                        editDialog = createDialog(dialogManager);
                         editDialog.setUrl(fullEditAllPropertiesUrl);
 
                         var dialogName = editDialog.get_name();
