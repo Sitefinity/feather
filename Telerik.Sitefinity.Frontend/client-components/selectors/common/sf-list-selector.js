@@ -138,21 +138,6 @@
                         $scope.errorMessage = errorMessage;
                     };
 
-                    var shouldFetch = function () {
-                        if (!$scope.sfSelectedItems)
-                            return true;
-
-                        if (currentSelectedIds.length !== $scope.sfSelectedItems.length)
-                            return true;
-
-                        for (var i = 0; i < $scope.sfSelectedItems.length; i++) {
-                            if (currentSelectedIds[i] !== $scope.sfSelectedItems[i].Id)
-                                return true;
-                        }
-
-                        return false;
-                    };
-
                     this.fetchSelectedItems = function () {
                         var ids = $scope.getSelectedIds();
                         currentSelectedIds = ids;
@@ -160,20 +145,15 @@
                         if (ids.length === 0)
                             return;
 
-                        if (shouldFetch()) {
-                            var that = this;
-                            $scope.showLoadingIndicator = true;
-                            return this.getSpecificItems(ids)
-                                .then(function (data) {
-                                    that.onSelectedItemsLoadedSuccess(data);
-                                }, that.onError)
-                                .finally(function () {
-                                    $scope.showLoadingIndicator = false;
-                                });
-                        }
-                        else {
-                            this.onSelectedItemsLoadedSuccess({ Items: $scope.sfSelectedItems });
-                        }
+                        var that = this;
+                        $scope.showLoadingIndicator = true;
+                        return this.getSpecificItems(ids)
+                            .then(function (data) {
+                                that.onSelectedItemsLoadedSuccess(data);
+                            }, that.onError)
+                            .finally(function () {
+                                $scope.showLoadingIndicator = false;
+                            });
                     };
                 },
                 templateUrl: function (elem, attrs) {
