@@ -141,7 +141,7 @@
                     var shouldFetch = function () {
                         if (!$scope.sfSelectedItems)
                             return true;
-                        
+
                         if (currentSelectedIds.length !== $scope.sfSelectedItems.length)
                             return true;
 
@@ -172,7 +172,7 @@
                                 });
                         }
                         else {
-                            this.updateSelection($scope.sfSelectedItems);
+                            this.onSelectedItemsLoadedSuccess({ Items: $scope.sfSelectedItems });
                         }
                     };
                 },
