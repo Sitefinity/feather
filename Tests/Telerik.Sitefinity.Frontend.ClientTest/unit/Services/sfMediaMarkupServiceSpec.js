@@ -31,7 +31,7 @@
 
         this.title = 'Test iamge title';
         this.alternativeText = 'Test alternative title';
-        this.alignment = 'Center';
+        this.alignment = 'Left';
         this.margin = {
             top: 100,
             left: 200,
@@ -56,7 +56,7 @@
         expect(jMarkup.attr('alt')).toEqual('Test alternative title');
         expect(jMarkup.attr('title')).toEqual('Test iamge title');
         expect(jMarkup.attr('displayMode')).toEqual('Original');
-        expect(jMarkup.css('vertical-align')).toEqual('middle');
+        expect(jMarkup.css('float')).toEqual('left');
         expect(jMarkup[0].style.marginTop).toEqual('100px');
         expect(jMarkup[0].style.marginLeft).toEqual('200px');
         expect(jMarkup[0].style.marginBottom).toEqual('300px');
@@ -74,7 +74,7 @@
         expect(jMarkup.attr('alt')).toEqual('Test alternative title');
         expect(jMarkup.attr('title')).toEqual('Test iamge title');
         expect(jMarkup.attr('displayMode')).toEqual('Thumbnail');
-        expect(jMarkup.css('vertical-align')).toEqual('middle');
+        expect(jMarkup.css('float')).toEqual('left');
         expect(jMarkup[0].style.marginTop).toEqual('100px');
         expect(jMarkup[0].style.marginLeft).toEqual('200px');
         expect(jMarkup[0].style.marginBottom).toEqual('300px');
@@ -84,6 +84,9 @@
     it('[Boyko-Karadzhov] / should preserve properties on render and properties extraction.', function () {
         var expectedProperties = new TestImageProperties();
         expectedProperties.displayMode = 'Original';
+        expectedProperties.alignment = 'Center';
+        expectedProperties.margin.left = null;
+        expectedProperties.margin.right = null;
         expectedProperties.thumbnail = { url: null, name: null };
 
         var markup = mediaMarkupService.image.markup(expectedProperties);

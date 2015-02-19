@@ -63,7 +63,7 @@
                     };
 
                     scope.imagePropertiesDialog =
-                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-image-properties-content-block.html');
+                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.html');
 
                     scope.openImageSelector = function () {
 
@@ -72,7 +72,7 @@
 
                         var properties = null;
 
-                        var imageWrapper = $(nodes).closest('span.sfImageWrapper');
+                        var imageWrapper = $(nodes).closest('span.sf-Image-wrapper');
                         if (imageWrapper.length) {
                             properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML);
                         }
@@ -201,11 +201,16 @@
                     if (newVal === null) {
                         $scope.cancel();
                     }
-                    else if ($scope.model.item && $scope.model.item.Title) {
-                        var imageItem = $scope.model.item;
-                        $scope.model.title = imageItem.Title.Value;
-                        $scope.model.alternativeText = imageItem.AlternativeText ? imageItem.AlternativeText.Value : '';
-                    }
+                });
+
+                $scope.$watch('model.item.Title.Value', function (newVal, oldVal) {
+                    if ($scope.model.item && $scope.model.item.Title && (oldVal === $scope.model.title || !$scope.model.title))
+                        $scope.model.title = $scope.model.item.Title.Value;
+                });
+
+                $scope.$watch('model.item.AlternativeText.Value', function (newVal, oldVal) {
+                    if ($scope.model.item && $scope.model.item.AlternativeText && (oldVal === $scope.model.alternativeText || !$scope.model.alternativeText))
+                        $scope.model.alternativeText = $scope.model.item.AlternativeText.Value;
                 });
 
                 $scope.done = function () {

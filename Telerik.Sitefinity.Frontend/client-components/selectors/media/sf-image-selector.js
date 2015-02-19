@@ -164,8 +164,11 @@
                         }
 
                         scope.filterObject.parent = parent;
+                        scope.filters.library.selected = parent ? [parent] : [];
+
                         if (!scope.filterObject.parent) {
                             scope.filterObject.set.basic.allLibraries();
+                            scope.filters.basic.selected = 'allLibraries';
                         }
                         refresh();
                     };
@@ -473,31 +476,39 @@
                             scope.filterObject.set.query.to(query);
                             return;
                         }
+                        var handled = false;
                         switch (scope.selectedFilterOption) {
                             case '1':
-                                if (scope.filters.library.selected)
+                                if (scope.filters.library.selected.length > 0) {
                                     scope.filterObject.set.parent.to(scope.filters.library.selected[0], true);
+                                    handled = true;
+                                }
                                 break;
                             case '2':
-                                if (scope.filters.tag.selected)
+                                if (scope.filters.tag.selected.length > 0) {
                                     scope.filterObject.set.taxon.to(scope.filters.tag.selected[0], constants.filters.tags.field);
+                                    handled = true;
+                                }
                                 break;
                             case '3':
-                                if (scope.filters.category.selected)
+                                if (scope.filters.category.selected.length > 0) {
                                     scope.filterObject.set.taxon.to(scope.filters.category.selected[0], constants.filters.categories.field);
+                                    handled = true;
+                                }
                                 break;
                             case '4':
-                                if (scope.filters.date.selected) {
+                                if (scope.filters.date.selected.length > 0) {
                                     if (scope.filters.date.selected[0] === constants.filters.anyDateValue) {
                                         scope.filterObject.set.date.all();
                                     }
                                     else {
                                         scope.filterObject.set.date.to(scope.filters.date.selected[0]);
                                     }
+                                    handled = true;
                                 }
                                 break;
-
-                            default:
+                        }
+                        if (!handled) {
                                 scope.filters.basic.select(scope.filters.basic.selected || constants.filters.basicRecentItemsValue);
                         }
                     };
@@ -715,7 +726,7 @@
             $scope.model = sfFileModel;
             $scope.provider = sfProvider;
 
-            $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1000) + " KB";
+            $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1024) + " KB";
 
             var fileName = $scope.model.file.name;
             $scope.uploadInfo = {};

@@ -10,9 +10,9 @@
 
         <!--Upload image-->
         <input type="file" accept=".jpg, .jpeg, .png, .gif, .bmp" class="file-upload-chooser-input" style="display: none !important" />
-        <div ng-show="isInUploadMode" class="Media-upload-text">
-            <div class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
-            <div class="text-center">or simply drag &amp; drop here</div>
+        <div ng-show="isInUploadMode" class="Media-upload-text text-center">
+            <div class="lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
+            <div>or simply drag &amp; drop here</div>
         </div>
 
         <!--Select image-->
@@ -33,16 +33,18 @@
                 <sf-search-box class="pull-right" sf-placeholder="Search by title..." sf-action="narrowResults(query)" sf-clear-search-string="clearSearch"> </sf-search-box>
             </div>
 
-            <div ng-hide="items.length" class="Media-upload-text">
-                <div class="text-center lead">TODO: NO IMAGES ICON</div>
+            <div ng-hide="items.length">
 
-                <div ng-hide="filterObject.query || selectedFilterOption != 1" class="Media-upload-text">
-                    <div class="text-center lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
-                    <div class="text-center">or simply drag &amp; drop here</div>
+                <div ng-hide="filterObject.query || selectedFilterOption != 1" class="Media-upload-text text-center">
+                    <div class="icon-no-image"></div>
+                    <p class="text-muted">No images</p>
+
+                    <div class="lead"><a ng-click="openSelectFileDialog()">Select image from your computer</a></div>
+                    <div class="">or simply drag &amp; drop here</div>
                 </div>
 
-                <div ng-show="filterObject.query || selectedFilterOption != 1" class="Media-upload-text">
-                    <div class="text-center lead"><em>No items found</em></div>
+                <div ng-show="filterObject.query || selectedFilterOption != 1" class="text-muted Media-no-results">
+                    No items found
                 </div>
             </div>
 

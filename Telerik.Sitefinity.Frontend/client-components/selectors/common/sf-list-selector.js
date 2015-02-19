@@ -142,14 +142,13 @@
                         var ids = $scope.getSelectedIds();
                         currentSelectedIds = ids;
 
-                        if (ids.length === 0) {
+                        if (ids.length === 0)
                             return;
-                        }
 
                         var that = this;
+                        $scope.showLoadingIndicator = true;
                         return this.getSpecificItems(ids)
                             .then(function (data) {
-                                ////ctrl.updateSelection(data.Items);
                                 that.onSelectedItemsLoadedSuccess(data);
                             }, that.onError)
                             .finally(function () {
