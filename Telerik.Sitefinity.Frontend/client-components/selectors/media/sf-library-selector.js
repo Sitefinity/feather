@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfLibrarySelector', ['serviceHelper', 'sfMediaService', function (serviceHelper, mediaService) {
+        .directive('sfLibrarySelector', ['serviceHelper', 'sfMediaService', '$q', function (serviceHelper, mediaService, $q) {
             return {
                 require: '^sfListSelector',
                 restrict: 'A',
@@ -41,21 +41,43 @@
                             return mediaService[mediaType].getFolders(options).then(function (data) { return data.Items; });
                         };
 
+                        var shouldFetch = function (ids) {
+                            if (!ctrl.$scope.sfSelectedItems)
+                                return true;
+
+                            if (ids.length !== ctrl.$scope.sfSelectedItems.length)
+                                return true;
+
+                            for (var i = 0; i < ctrl.$scope.sfSelectedItems.length; i++) {
+                                if (ids[i] !== ctrl.$scope.sfSelectedItems[i].Id)
+                                    return true;
+                            }
+
+                            return false;
+                        };
+
                         ctrl.getSpecificItems = function (ids) {
-                            var filter = serviceHelper.filterBuilder()
-                                                      .specificItemsFilter(ids)
-                                                      .getFilter();
+                            if (shouldFetch(ids)) {
+                                var filter = serviceHelper.filterBuilder()
+                                                          .specificItemsFilter(ids)
+                                                          .getFilter();
 
-                            var options = {
-                                parent: null,
-                                skip: 0,
-                                take: 100,
-                                provider: ctrl.$scope.sfProvider,
-                                recursive: true,
-                                filter: filter
-                            };
+                                var options = {
+                                    parent: null,
+                                    skip: 0,
+                                    take: 100,
+                                    provider: ctrl.$scope.sfProvider,
+                                    recursive: true,
+                                    filter: filter
+                                };
 
-                            return mediaService[mediaType].getFolders(options);
+                                return mediaService[mediaType].getFolders(options);
+                            }
+                            else {
+                                var defer = $q.defer();
+                                defer.resolve({ Items: ctrl.$scope.sfSelectedItems });
+                                return defer.promise;
+                            }
                         };
 
                         ctrl.onSelectedItemsLoadedSuccess = function (data) {
