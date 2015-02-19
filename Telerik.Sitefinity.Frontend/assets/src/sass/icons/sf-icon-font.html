@@ -54,11 +54,11 @@
 /* Based on https://github.com/endtwist/fontcustom/blob/master/lib/fontcustom/templates/fontcustom.css */
 @font-face {
   font-family: "sf-icon-font";
-  src: url("../../../dist/fonts/sf-icon-font-16f0b1413c8f72903a772ef776b8c079.eot");
-  src: url("../../../dist/fonts/sf-icon-font-16f0b1413c8f72903a772ef776b8c079.eot?#iefix") format("embedded-opentype"),
-		url("../../../dist/fonts/sf-icon-font-16f0b1413c8f72903a772ef776b8c079.svg?#sf-icon-font") format("svg"),
-		url("../../../dist/fonts/sf-icon-font-16f0b1413c8f72903a772ef776b8c079.woff") format("woff"),
-		url("../../../dist/fonts/sf-icon-font-16f0b1413c8f72903a772ef776b8c079.ttf") format("truetype");
+  src: url("../../../dist/fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.eot");
+  src: url("../../../dist/fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.eot?#iefix") format("embedded-opentype"),
+		url("../../../dist/fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.svg?#sf-icon-font") format("svg"),
+		url("../../../dist/fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.woff") format("woff"),
+		url("../../../dist/fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -95,10 +95,10 @@
 .icon-file-single {content:"\b7";}
 .icon-homepage-single {content:"\b8";}
 .icon-locked-single {content:"\b9";}
-.icon-published-single {content:"\ba";}
-.icon-scheduled-single {content:"\bb";}
-.icon-settings-single {content:"\bc";}
-.icon-support-tickets-single {content:"\bd";}
+.icon-no-image-single {content:"\ba";}
+.icon-published-single {content:"\bb";}
+.icon-scheduled-single {content:"\bc";}
+.icon-settings-single {content:"\bd";}
 .icon-unpublished-single {content:"\be";}
 
 /* Icons */
@@ -111,10 +111,10 @@
 .icon-file:before {content:"\b7";}
 .icon-homepage:before {content:"\b8";}
 .icon-locked:before {content:"\b9";}
-.icon-published:before {content:"\ba";}
-.icon-scheduled:before {content:"\bb";}
-.icon-settings:before {content:"\bc";}
-.icon-support-tickets:before {content:"\bd";}
+.icon-no-image:before {content:"\ba";}
+.icon-published:before {content:"\bb";}
+.icon-scheduled:before {content:"\bc";}
+.icon-settings:before {content:"\bd";}
 .icon-unpublished:before {content:"\be";}
 
 
@@ -155,6 +155,10 @@
   @extend .icon-locked-single
 }
 
+.icon-item-no-image:after {
+  @extend .icon-no-image-single
+}
+
 .icon-item-published:after {
   @extend .icon-published-single
 }
@@ -165,10 +169,6 @@
 
 .icon-item-settings:after {
   @extend .icon-settings-single
-}
-
-.icon-item-support-tickets:after {
-  @extend .icon-support-tickets-single
 }
 
 .icon-item-unpublished:after {
@@ -201,13 +201,13 @@
 			
 				<div class="icons__item" data-name="locked"><i class=" icon-locked"></i> icon-locked</div>
 			
+				<div class="icons__item" data-name="no-image"><i class=" icon-no-image"></i> icon-no-image</div>
+			
 				<div class="icons__item" data-name="published"><i class=" icon-published"></i> icon-published</div>
 			
 				<div class="icons__item" data-name="scheduled"><i class=" icon-scheduled"></i> icon-scheduled</div>
 			
 				<div class="icons__item" data-name="settings"><i class=" icon-settings"></i> icon-settings</div>
-			
-				<div class="icons__item" data-name="support-tickets"><i class=" icon-support-tickets"></i> icon-support-tickets</div>
 			
 				<div class="icons__item" data-name="unpublished"><i class=" icon-unpublished"></i> icon-unpublished</div>
 			

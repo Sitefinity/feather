@@ -1,7 +1,15 @@
 ﻿; (function ($) {
+    var parseMargin = function (val) {
+        if (val !== null && val !== undefined && val !== 'auto') {
+            return parseInt(val);
+        }
+        else {
+            return null;
+        }
+    };
+
     angular.module('sfServices')
         .factory('sfMediaMarkupService', [function () {
-            // TODO: This class is currently not used. For now it is here just for clarity. Remove if not needed after full integration.
             var ImageProperties = function () {
                 this.item = { Id: null }; //MediaItem view model
                 this.provider = null; //Name of the data provider
@@ -172,9 +180,6 @@
                     if (properties.title) {
                         jElementToInsert.attr('title', properties.title);
                     }
-                    else if (properties.item.Title) {
-                        jElementToInsert.attr('title', properties.item.Title);
-                    }
 
                     if (properties.displayMode)
                         jElementToInsert.attr('displayMode', properties.displayMode);
@@ -252,7 +257,7 @@
                     result.alternativeText = jMarkup.attr('alt');
                     result.cssClass = jMarkup.attr('class') || null;
 
-                    if (jMarkup.css('vertical-align') === 'middle') {
+                    if (jMarkup.css('display') === 'block' && jMarkup[0].style.marginLeft === 'auto' && jMarkup[0].style.marginRight === 'auto') {
                         result.alignment = 'Center';
                     }
                     else {
@@ -270,13 +275,13 @@
                     }
 
                     if (jMarkup && jMarkup[0] && jMarkup[0].style) {
-                        result.margin.top = parseInt(stripPxFromStyle(jMarkup[0].style.marginTop));
-                        result.margin.left = parseInt(stripPxFromStyle(jMarkup[0].style.marginLeft));
-                        result.margin.bottom = parseInt(stripPxFromStyle(jMarkup[0].style.marginBottom));
-                        result.margin.right = parseInt(stripPxFromStyle(jMarkup[0].style.marginRight));
+                        result.margin.top = parseMargin(stripPxFromStyle(jMarkup[0].style.marginTop));
+                        result.margin.left = parseMargin(stripPxFromStyle(jMarkup[0].style.marginLeft));
+                        result.margin.bottom = parseMargin(stripPxFromStyle(jMarkup[0].style.marginBottom));
+                        result.margin.right = parseMargin(stripPxFromStyle(jMarkup[0].style.marginRight));
                     }
 
-                    result.openOriginalImageOnClick = jMarkup.attr('openOriginalImageOnClick') == 'true';
+                    result.openOriginalImageOnClick = jMarkup.attr('openOriginalImageOnClick') === 'true';
 
                     return result;
                 }

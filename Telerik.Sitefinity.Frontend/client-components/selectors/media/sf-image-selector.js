@@ -449,7 +449,7 @@
                         },
                         library: {
                             index: 1,
-                            selected: [],
+                            selected: scope.filterObject && scope.filterObject.parent ? [scope.filterObject.parent] : [],
                             getChildren: filtersLogic.loadLibraryChildren
                         },
                         tag: {
