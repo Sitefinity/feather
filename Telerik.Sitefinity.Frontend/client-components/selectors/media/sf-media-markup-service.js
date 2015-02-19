@@ -199,7 +199,7 @@
                             jElementToInsert.css('float', 'right');
                             break;
                         case 'Center':
-                            jElementToInsert.css({'display' : 'block', 'margin-left' : 'auto', 'margin-right' : 'auto'});
+                            jElementToInsert.css({ 'display': 'block', 'margin-left': 'auto', 'margin-right': 'auto' });
 
                             break;
                         default:
@@ -269,10 +269,12 @@
                         }
                     }
 
-                    result.margin.top = parseInt(stripPxFromStyle(jMarkup[0].style.marginTop));
-                    result.margin.left = parseInt(stripPxFromStyle(jMarkup[0].style.marginLeft));
-                    result.margin.bottom = parseInt(stripPxFromStyle(jMarkup[0].style.marginBottom));
-                    result.margin.right = parseInt(stripPxFromStyle(jMarkup[0].style.marginRight));
+                    if (jMarkup && jMarkup[0] && jMarkup[0].style) {
+                        result.margin.top = parseInt(stripPxFromStyle(jMarkup[0].style.marginTop));
+                        result.margin.left = parseInt(stripPxFromStyle(jMarkup[0].style.marginLeft));
+                        result.margin.bottom = parseInt(stripPxFromStyle(jMarkup[0].style.marginBottom));
+                        result.margin.right = parseInt(stripPxFromStyle(jMarkup[0].style.marginRight));
+                    }
 
                     result.openOriginalImageOnClick = jMarkup.attr('openOriginalImageOnClick') == 'true';
 
