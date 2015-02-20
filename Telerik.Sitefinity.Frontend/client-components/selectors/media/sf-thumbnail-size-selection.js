@@ -138,7 +138,7 @@
                 $scope.sizeSelection = $scope.sizeOptions[0];
             };
         }])
-        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$modalInstance', 'model', function ($scope, $modalInstance, model) {
+        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$modalInstance', 'model', 'serverContext', function ($scope, $modalInstance, model, serverContext) {
             $scope.quality = ['High', 'Medium', 'Low'];
 
             $scope.methodOptions = [{
@@ -158,6 +158,9 @@
                 Quality: $scope.quality[0],
                 Method: $scope.methodOptions[0].value
             };
+
+            $scope.resizeToAreaUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/img/resize-to-area.png');
+            $scope.cropToAreaUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/img/crop-to-area.png');
 
             $scope.areCustomSizeOptionsValid = function () {
                 if ($scope.model.Method === $scope.methodOptions[0].value) {
