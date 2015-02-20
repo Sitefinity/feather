@@ -25,7 +25,7 @@ This repository contains the core infrastructure related to [Project Feather](ht
 
 [What's new](https://github.com/Sitefinity/feather/wiki/What's-new) - See what's new in Feather  
 
-[Documenatation Home](https://github.com/Sitefinity/feather/wiki) - See full project Feather documentation in the wiki  
+[Documentation Home](https://github.com/Sitefinity/feather/wiki) - See full project Feather documentation in the wiki  
 
 # License Information
 

@@ -56,23 +56,9 @@
                             scope.selectedHtml = editor.selectedHtml();
                         }
 
-                        var container;
-                        if (range.startContainer && range.startContainer === range.endContainer && range.startContainer.tagName && range.startContainer.tagName.toLowerCase() !== 'a' && range.startContainer.hasChildNodes()) {
-                            container = $(range.startContainer.outerHTML);
-                        }
-                        else {
-                            container = null;
-                        }
-
                         angular.element("#linkSelectorModal").scope().$openModalDialog().then(function (data) {
                             scope.selectedHtml = data;
-                            var result = data.outerHTML;
-                            if (container && container.length === 1) {
-                                container.html(result);
-                                result = container[0].outerHTML;
-                            }
-
-                            editor.exec("insertHtml", { html: result, split: true });
+                            editor.exec("insertHtml", { html: data.outerHTML, split: true });
                         });
                     };
 
@@ -92,14 +78,6 @@
                         }
                         else if ($(nodes).is('img')) {
                             properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML);
-                        }
-
-                        var container;
-                        if (range.startContainer && range.startContainer === range.endContainer && range.startContainer.tagName && range.startContainer.tagName.toLowerCase() !== 'img' && range.startContainer.hasChildNodes()) {
-                            container = $(range.startContainer.outerHTML);
-                        }
-                        else {
-                            container = null;
                         }
 
                         angular.element('.imagePropertiesModal').scope()
@@ -135,12 +113,6 @@
                             .then(function (settings) {
                                 var wrapIt = true;
                                 var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
-
-                                if (container && container.length === 1) {
-                                    container.html(markup);
-                                    markup = container[0].outerHTML;
-                                }
-
                                 editor.exec('insertHtml', { html: markup, split: true });
                             });
                     };

@@ -3,44 +3,44 @@
     <h3 class="modal-title">Custom thumbnail size</h3>
 </div>
 
-<div class="modal-settings">
-    <label>Resize image</label>
+<div class="modal-body">
+    <div class="modal-settings">
+        <label>Resize image</label>
 
-    <div class="row row-xs">
-        <div class="col-xs-4">
-            <select class="form-control" ng-model="model.Method" ng-options="method.value as method.title for method in methodOptions"></select>
-        </div>
-        <div class="col-xs-4 m-top-xs">
-            <a href="" 
-                sf-popover-html
-                sf-popover-placement="bottom" 
-                sf-popover-trigger="focus" 
-                sf-popover-content="
-                    <div ng-show='model.Method === methodOptions[0].value'>
-                        <div class='small m-bottom-sm'>Generated image will be resized to desired area</div>
-                        <img ng-src='{{resizeToAreaUrl}}' alt='resize to area example' />
-                    </div>
-                    <div ng-show='model.Method === methodOptions[1].value'>
-                        <div class='small m-bottom-sm'>Generated image will be resized and cropped to desired area</div>
-                        <img ng-src='{{cropToAreaUrl}}' alt='crop to area example' />
-                    </div>
-                "
-                sf-popover-title="
-                    <div ng-show='model.Method === methodOptions[0].value'>
-                        <strong>Resize to area</strong>
-                    </div>
-                    <div ng-show='model.Method === methodOptions[1].value'>
-                        <strong>Crop to area</strong>
-                    </div>
-                "
-            >
-                What's this?
-            </a>
+        <div class="row row-xs">
+            <div class="col-xs-4">
+                <select class="form-control" ng-model="model.Method" ng-options="method.value as method.title for method in methodOptions"></select>
+            </div>
+            <div class="col-xs-4 m-top-xs">
+                <a href="" 
+                    sf-popover-html
+                    sf-popover-placement="bottom" 
+                    sf-popover-trigger="focus" 
+                    sf-popover-content="
+                        <div ng-show='model.Method === methodOptions[0].value'>
+                                <div class='small m-bottom-sm'>Generated image will be resized to desired area</div>
+                            <img ng-src='{{resizeToAreaUrl}}' alt='resize to area example' />
+                            </div>
+                        <div ng-show='model.Method === methodOptions[1].value'>
+                                <div class='small m-bottom-sm'>Generated image will be resized and cropped to desired area</div>
+                            <img ng-src='{{cropToAreaUrl}}' alt='crop to area example' />
+                        </div>
+                    "
+                    sf-popover-title="
+                        <div ng-show='model.Method === methodOptions[0].value'>
+                            <strong>Resize to area</strong>
+                            </div>
+                        <div ng-show='model.Method === methodOptions[1].value'>
+                            <strong>Crop to area</strong>
+                        </div>
+                    "
+                >
+                    What's this?
+                </a>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="modal-body">
     <form name="customSizeProperties">
         <div ng-show="model.Method==methodOptions[0].value">
             <div class="form-group" ng-class="{ 'has-error' : !model.MaxWidth }">

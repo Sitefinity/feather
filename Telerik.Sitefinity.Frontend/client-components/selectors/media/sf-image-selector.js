@@ -92,7 +92,7 @@
                         // Library filter
                         loadLibraryChildren: function (parent) {
                             parent = parent || {};
-                            return sfMediaService.images.getFolders({ parent: parent.Id, provider: scope.provider }).then(function (response) {
+                            return sfMediaService.images.getFolders({ parent: parent.Id, provider: scope.provider, sort: 'Title ASC' }).then(function (response) {
                                 if (response) {
                                     return response.Items;
                                 }
@@ -804,6 +804,6 @@
                         });
                     }
                 }
-            }
+            };
         }]);
 })();

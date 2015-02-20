@@ -8232,6 +8232,7 @@ h4, .h4 {
 /* line 56, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_modals */
 .modal-settings {
   display: block;
+  margin: -20px -20px 20px -20px;
   padding: 20px;
   background: #f2f2f2; }
 

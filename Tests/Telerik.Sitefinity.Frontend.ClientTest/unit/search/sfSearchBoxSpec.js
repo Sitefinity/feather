@@ -101,8 +101,9 @@
         var childScope = scope.$$childHead;
 
         childScope.sfModel = "text";
-        childScope.sfSearchCallback();
-        expect(childScope.showSuggestions).toBe(false);
+        childScope.sfSearchCallback().then(function () {
+            expect(childScope.showSuggestions).toBe(false);
+        });
     });
 
     it('[NPetrova] / should show suggestions if suggestions are enabled', function () {
@@ -124,14 +125,14 @@
         var childScope = scope.$$childHead;
 
         childScope.sfModel = "text";
-        childScope.sfSearchCallback();
-        childScope.$digest();
+        childScope.sfSearchCallback().then(function () {
+            expect(childScope.showSuggestions).toBe(true);
+            expect(childScope.suggestions).toBeDefined();
+            expect(childScope.suggestions.length).toBe(2);
+            expect(childScope.suggestions[0]).toBe('suggestion1');
+            expect(childScope.suggestions[1]).toBe('suggestion2');
 
-        expect(childScope.showSuggestions).toBe(true);
-        expect(childScope.suggestions).toBeDefined();
-        expect(childScope.suggestions.length).toBe(2);
-        expect(childScope.suggestions[0]).toBe('suggestion1');
-        expect(childScope.suggestions[1]).toBe('suggestion2');
+        });
     });
 
     it('[pivanova] / should set sfClearSearchString', function () {
