@@ -129,7 +129,7 @@
                             provider: scope.sfProvider
                         };
 
-                        if (scope.sfImage && scope.sfImage.Id) {
+                        if (scope.sfImage && scope.sfImage.Id && scope.sfImage.Id !== emptyGuid) {
                             scope.model.selectedItems.push(scope.sfImage);
                             scope.model.filterObject = sfMediaFilter.newFilter();
                             scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
