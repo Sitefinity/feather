@@ -16,7 +16,9 @@
                     var url = attrs.sfTemplateUrl || 'client-components/fields/image-field/sf-image-field.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
-                link: function (scope, element, attrs, ctrl) {
+                    link: function (scope, element, attrs, ctrl) {
+                    var emptyGuid = '00000000-0000-0000-0000-000000000000';
+
                     var getDateFromString = function (dateStr) {
                         return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')')))));
                     };
@@ -127,7 +129,7 @@
                             provider: scope.sfProvider
                         };
 
-                        if (scope.sfImage && scope.sfImage.Id) {
+                        if (scope.sfImage && scope.sfImage.Id && scope.sfImage.Id !== emptyGuid) {
                             scope.model.selectedItems.push(scope.sfImage);
                             scope.model.filterObject = sfMediaFilter.newFilter();
                             scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
@@ -140,7 +142,7 @@
                     };
 
                     // Initialize
-                    if (scope.sfModel) {
+                    if (scope.sfModel && scope.sfModel !== emptyGuid) {
                         getImage(scope.sfModel);
                     }
                     else {

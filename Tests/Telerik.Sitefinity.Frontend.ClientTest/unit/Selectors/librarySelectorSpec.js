@@ -194,12 +194,6 @@ describe("library selector", function () {
 
             //Provider
             expect(args[0].provider).toBe('OpenAccessDataProvider');
-
-            //Skip
-            expect(args[0].skip).toBe(0);
-
-            //Take
-            expect(args[0].take).toBe(20);
         });
 
         it('[EGaneva] / should retrieve child image libraries from the service when the parent is expanded.', function () {
