@@ -779,16 +779,31 @@
     // Should be removed when bootstrap release the html feature.
     sfImageSelector.requires.push('sfBootstrapPopover');
     angular.module('sfBootstrapPopover', ['ui.bootstrap.tooltip'])
-        .directive('sfPopoverHtmlPopup', function () {
+        .directive('sfPopoverHtml', ['$compile', function ($compile) {
             return {
-                restrict: 'EA',
-                replace: true,
-                scope: { title: '@', content: '@', placement: '@', animation: '&', isOpen: '&' },
-                templateUrl: 'popover.html'
-            };
-        })
-        .directive('sfPopoverHtml', ['$compile', '$timeout', '$parse', '$window', '$tooltip',
-            function ($compile, $timeout, $parse, $window, $tooltip) {
-                return $tooltip('sfPopoverHtml', 'popover', 'click');
-            }]);
+                scope: {
+                    sfPopoverPopupDelay: '@',
+                    sfPopoverPlacement: '@',
+                    sfPopoverTrigger: '@',
+                    sfPopoverAppendToBody: '@',
+                    sfPopoverContent: '@',
+                    sfPopoverTitle: '@'
+                },
+                link: {
+                    post: function (scope, element, attrs) {
+                        var title = $compile(scope.sfPopoverTitle)(scope.$parent);
+
+                        $(element).popover({
+                            html: true,
+                            delay: parseInt(scope.sfPopoverPopupDelay),
+                            placement: scope.sfPopoverPlacement,
+                            trigger: scope.sfPopoverTrigger,
+                            container: scope.sfPopoverAppendToBody && scope.sfPopoverAppendToBody.toLowerCase() === 'true' ? 'body' : false,
+                            content: $compile(scope.sfPopoverContent)(scope.$parent),
+                            title: title.length > 0 ? title : scope.sfPopoverTitle
+                        });
+                    }
+                }
+            }
+        }]);
 })();
