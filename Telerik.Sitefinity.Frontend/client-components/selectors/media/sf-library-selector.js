@@ -15,8 +15,6 @@
 
                             var options = {
                                 parent: null,
-                                skip: skip,
-                                take: take,
                                 filter: filter,
                                 provider: ctrl.$scope.sfProvider,
                                 recursive: search ? true : null,
