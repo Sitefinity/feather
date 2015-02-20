@@ -12,25 +12,26 @@
                 <select class="form-control" ng-model="model.Method" ng-options="method.value as method.title for method in methodOptions"></select>
             </div>
             <div class="col-xs-4 m-top-xs">
-                <a href="#"
-                    popover-placement="bottom"
-                    popover-trigger="focus"
-                    popover-append-to-body="true"
-                    popover-title="Resize image"
-                    sf-popover-html="
-                        <div class='row'>
-                            <div class='col-xs-6'>
-                                <strong>Resize to area</strong>
+                <a href="" 
+                    sf-popover-html
+                    sf-popover-placement="bottom" 
+                    sf-popover-trigger="focus" 
+                    sf-popover-content="
+                        <div ng-show='model.Method === methodOptions[0].value'>
                                 <div class='small m-bottom-sm'>Generated image will be resized to desired area</div>
-
-                                <img src='/Frontend-Assembly/Telerik.Sitefinity.Frontend.ContentBlock/assets/dist/img/resize-to-area.png' alt='resize to area example' />
+                            <img ng-src='{{resizeToAreaUrl}}' alt='resize to area example' />
                             </div>
-
-                            <div class='col-xs-6'>
-                                <strong>Crop to area</strong>
+                        <div ng-show='model.Method === methodOptions[1].value'>
                                 <div class='small m-bottom-sm'>Generated image will be resized and cropped to desired area</div>
-                                <img src='/Frontend-Assembly/Telerik.Sitefinity.Frontend.ContentBlock/assets/dist/img/crop-to-area.png' alt='crop to area example' />
+                            <img ng-src='{{cropToAreaUrl}}' alt='crop to area example' />
+                        </div>
+                    "
+                    sf-popover-title="
+                        <div ng-show='model.Method === methodOptions[0].value'>
+                            <strong>Resize to area</strong>
                             </div>
+                        <div ng-show='model.Method === methodOptions[1].value'>
+                            <strong>Crop to area</strong>
                         </div>
                     "
                 >
@@ -54,7 +55,7 @@
                 </div>
 
                 <p class="text-danger" ng-show="customSizeProperties.maxWidth.$error.required">Max width is required</p>
-                <p class="text-danger" ng-show="customSizeProperties.maxWidth.$error.number ||
+                <p class="text-danger" ng-show="customSizeProperties.maxWidth.$error.number || 
                     customSizeProperties.maxWidth.$error.max || customSizeProperties.maxWidth.$error.min">
                     Value must be an integer between 1 and 9999 inclusive.
                 </p>
@@ -73,7 +74,7 @@
                 </div>
 
                 <p class="text-danger" ng-show="customSizeProperties.maxHeight.$error.required">Max height is required</p>
-                <p class="text-danger" ng-show="customSizeProperties.maxHeight.$error.number ||
+                <p class="text-danger" ng-show="customSizeProperties.maxHeight.$error.number || 
                     customSizeProperties.maxHeight.$error.max || customSizeProperties.maxHeight.$error.min">
                     Value must be an integer between 1 and 9999 inclusive.
                 </p>
@@ -93,7 +94,7 @@
                 </div>
 
                 <p class="text-danger" ng-show="customSizeProperties.width.$error.required">Width is required</p>
-                <p class="text-danger" ng-show="customSizeProperties.width.$error.number ||
+                <p class="text-danger" ng-show="customSizeProperties.width.$error.number || 
                     customSizeProperties.width.$error.max || customSizeProperties.width.$error.min">
                     Value must be an integer between 1 and 9999 inclusive.
                 </p>
@@ -111,7 +112,7 @@
                 </div>
 
                 <p class="text-danger" ng-show="customSizeProperties.height.$error.required">Height is required</p>
-                <p class="text-danger" ng-show="customSizeProperties.height.$error.number ||
+                <p class="text-danger" ng-show="customSizeProperties.height.$error.number || 
                     customSizeProperties.height.$error.max || customSizeProperties.height.$error.min">
                     Value must be an integer between 1 and 9999 inclusive.
                 </p>
