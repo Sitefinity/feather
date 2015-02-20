@@ -791,8 +791,6 @@
                 },
                 link: {
                     post: function (scope, element, attrs) {
-                        var title = $compile(scope.sfPopoverTitle)(scope.$parent);
-
                         $(element).popover({
                             html: true,
                             delay: parseInt(scope.sfPopoverPopupDelay),
@@ -800,7 +798,7 @@
                             trigger: scope.sfPopoverTrigger,
                             container: scope.sfPopoverAppendToBody && scope.sfPopoverAppendToBody.toLowerCase() === 'true' ? 'body' : false,
                             content: $compile(scope.sfPopoverContent)(scope.$parent),
-                            title: title.length > 0 ? title : scope.sfPopoverTitle
+                            title: $compile('<span>' + scope.sfPopoverTitle + '</span>')(scope.$parent)
                         });
                     }
                 }
