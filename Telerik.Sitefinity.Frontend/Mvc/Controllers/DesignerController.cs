@@ -51,7 +51,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             var viewName = DesignerController.DesignerViewTemplate.Arrange(viewType);
 
             var model = this.GetViewModel();
+
+            // Passing the DesignerModel to the view model
+            var controlIdParam = this.GetControlIdParam();
+            if (controlIdParam.HasValue)
+            {
+                ViewBag.DesignerModel = this.GetModel(widgetName, controlIdParam.Value);
+            }
+
             return this.PartialView(viewName, model);
+        }
+
+        private Guid? GetControlIdParam()
+        {
+            if (this.Request == null)
+                return null;
+
+            var controlIdParam = this.Request["controlId"];
+            if (controlIdParam == null)
+                return null;
+
+            Guid controlIdParamAsGuid;
+            if (!Guid.TryParse(controlIdParam.ToString(), out controlIdParamAsGuid))
+                return null;
+
+            return controlIdParamAsGuid;
         }
 
         /// <summary>
@@ -73,14 +97,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 
         private Control GetViewModel()
         {
-            if (this.Request == null)
+            var controlIdParam = this.GetControlIdParam();
+            if (!controlIdParam.HasValue)
                 return null;
 
-            var controlIdParam = this.Request["controlId"];
-            if (controlIdParam == null)
-                return null;
-
-            var controlId = Guid.Parse(controlIdParam);
+            var controlId = controlIdParam.Value;
             var manager = PageManager.GetManager();
             var viewModel = manager.LoadControl(manager.GetControl<ObjectData>(controlId));
 
