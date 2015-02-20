@@ -17,8 +17,6 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                     link: function (scope, element, attrs, ctrl) {
-                    var emptyGuid = '00000000-0000-0000-0000-000000000000';
-
                     var getDateFromString = function (dateStr) {
                         return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')')))));
                     };
@@ -142,7 +140,7 @@
                     };
 
                     // Initialize
-                    if (scope.sfModel && scope.sfModel !== emptyGuid) {
+                    if (scope.sfModel) {
                         getImage(scope.sfModel);
                     }
                     else {
