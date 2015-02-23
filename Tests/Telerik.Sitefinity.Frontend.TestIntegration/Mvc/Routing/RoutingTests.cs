@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Web.Mvc;
-
 using MbUnit.Framework;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Mvc.Proxy;
 using Telerik.Sitefinity.News.Model;
 using Telerik.Sitefinity.TestIntegration.Data.Content;
@@ -20,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Routing
         /// Ensures that when two MVC widgets are on the page the page can be requested successfully when the second widget does not resolve the URL.
         /// </summary>
         [Test]
-        [Author("Boyko-Karadzhov")]
+        [Author(FeatherTeams.Team2)]
         [Description("Ensures that when two MVC widgets are on the page the page can be requested successfully when the second widget does not resolve the URL.")]
         public void RequestDetailsPage_WithNewsWidgetAndContentBlock_ResponseOk()
         {

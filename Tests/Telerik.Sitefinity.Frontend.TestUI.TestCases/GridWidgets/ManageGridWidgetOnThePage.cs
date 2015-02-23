@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ArtOfTest.WebAii.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Wrappers.Backend.PageEditor;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
@@ -20,8 +21,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// UI test ManageGridWidgetOnThePage
         /// </summary>
         [TestMethod,
-       Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Feather team"),
-       TestCategory(FeatherTestCategories.PagesAndContent)]
+        Owner(FeatherTeams.Team2),
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void ManageGridWidgetOnThePage()
         {
             BAT.Macros().NavigateTo().Pages();

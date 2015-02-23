@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Linq;
-
 using MbUnit.Framework;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Models;
 using Telerik.Sitefinity.News.Model;
 using Telerik.Sitefinity.Taxonomies;
@@ -43,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Models
         /// Ensures that the ContentModelBase retrieves the correct data when second page of filtered by taxon items are requested.
         /// </summary>
         [Test]
-        [Author("Boyko-Karadzhov")]
+        [Author(FeatherTeams.Team2)]
         [Description("Ensures that the ContentModelBase retrieves the correct data when second page of filtered by taxon items are requested.")]
         public void CreateListViewModel_SecondPageTaxonFilteredNews_ContainsCorrectData()
         {

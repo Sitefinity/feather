@@ -1,5 +1,6 @@
 ﻿using MbUnit.Framework;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Mvc.Proxy;
@@ -21,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Infrastructure
         /// Checks whether error message is rendered when a controller throws exception.
         /// </summary>
         [Test]
-        [Author("Boyko-Karadzhov")]
+        [Author(FeatherTeams.Team2)]
         [Description("Checks whether error message is rendered when a controller throws exception.")]
         public void CreatePageWithFailingWidget_RenderPage_ResponseContainsErrorMessage()
         {
