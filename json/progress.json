@@ -354,6 +354,41 @@
             },
             {
                "expectedBy" : "",
+               "longDescription" : "Library selector.",
+               "name" : "Library selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-library-selector",
+                     "commitHash" : "194bdb30dd4247319979a5cd13299627b2017f8f",
+                     "date" : "02-13-2015 18:00 +0200",
+                     "name" : "Library selector implementation",
+                     "tag" : "v1.1.80.1"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "Flat taxon field.",
+               "name" : "Flat taxon field",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-flat-taxon-field",
+                     "commitHash" : "194bdb30dd4247319979a5cd13299627b2017f8f",
+                     "date" : "02-13-2015 18:00 +0200",
+                     "name" : "Flat taxon field implementation",
+                     "tag" : "v1.1.80.1"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "Image Selector development is in progress.",
                "longDescription" : "",
                "name" : "Image selector",
                "progress" : 100,
