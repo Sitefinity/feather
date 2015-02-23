@@ -11,6 +11,9 @@
 	list-style: none
 	padding: 0
 
+	li
+		position: relative
+
 	.sf-Tree
 		margin: 0
 		padding-left: 10px
@@ -24,8 +27,6 @@
 			transition: opacity 0, max-height .1s ease
 
 .sf-Tree-item
-	width: 100%
-
 	span
 		padding: 5px
 		display: block
@@ -34,8 +35,6 @@
 		width: 100%
 		text-overflow: ellipsis
 		overflow: hidden
-
-
 
 		&:hover,
 		&:focus
@@ -46,13 +45,15 @@
 			color: #fff
 
 .sf-Tree-expander
+	position: absolute
+	top: 8px
+	left: -12px
 	height: 0
 	width: 0
 	float: left
 	background: none
 	border: 6px solid transparent
 	border-left-color: #666
-	margin: 8px 0 0 -12px
 	transition: transform .2s ease
 	transform-origin: 20% 60%
 	transform: rotateZ(0)
