@@ -1226,7 +1226,7 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Client components",
-               "progress" : 90,
+               "progress" : 75,
                "releases" : [
                   {
                      "article" : "Use-a-generic-collection-directive",
