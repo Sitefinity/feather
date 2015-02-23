@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 {
@@ -18,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// UI test MvcWidgetUseViewFromLayoutFolderAndPackage.
         /// </summary>
         [TestMethod,
-        Owner("Feather team"),
+        Owner(FeatherTeams.Team2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcWidgetUseViewFromLayoutFolderAndPackage()
         {

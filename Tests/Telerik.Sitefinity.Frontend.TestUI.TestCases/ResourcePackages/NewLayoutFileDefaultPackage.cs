@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
 {
@@ -18,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         /// UI test AddNewLayoutFileToDefaultPackage.
         /// </summary>
         [TestMethod,
-        Owner("Feather team"),
+        Owner(FeatherTeams.Team2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void AddNewLayoutFileToDefaultPackage()
         {

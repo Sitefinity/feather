@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using MbUnit.Framework;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations.ActionFilters;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
@@ -44,7 +45,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         /// Ensures that a JavaScript is registered only in ScriptManager for hybrid pages.
         /// </summary>
         [Test]
-        [Author("EGaneva")]
+        [Author(FeatherTeams.Team2)]
         [Description("Ensures that a JavaScript is registered only in ScriptManager for hybrid pages.")]
         public void RegisterScript_HybridPage_AddedInScriptManagerOnly()
         {
@@ -74,7 +75,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         /// Ensures that a JavaScript is registered only in ScriptManager for pure MVC pages.
         /// </summary>
         [Test]
-        [Author("EGaneva")]
+        [Author(FeatherTeams.Team2)]
         [Description("Ensures that a JavaScript is registered only in ScriptManager for pure MVC pages.")]
         public void RegisterScript_PureMvcPage_AddedOnce()
         {
