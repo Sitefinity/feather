@@ -106,6 +106,7 @@
 
 // File
 .Media-file
+	position: relative
 	overflow: hidden
 	border-radius: 3px
 	transition: color .2s ease, background-color .2s ease
@@ -190,6 +191,34 @@
 
 .Media-item-date
 	color: #999
+
+.Media-item-info
+	position: absolute
+	bottom: 5px
+	right: 5px
+	background: #000000
+	border-radius: 50%
+	z-index: 9999
+	width: 16px
+	height: 16px
+	line-height: 16px
+	color: #fff
+	font-family: Georgia
+	font-size: 12px
+	text-align: center
+	opacity: 0
+	transition: opacity .3s ease
+	font-weight: 700
+
+	.Media-file:hover &
+			opacity: .6
+
+	&:hover
+		opacity: 1 !important
+
+.is-list .Media-item-info
+	display: none !important
+
 
 // Settings
 .Media-settings
