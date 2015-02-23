@@ -354,10 +354,19 @@
             },
             {
                "expectedBy" : "",
-               "longDescription" : "Image Selector development is in progress.",
+               "longDescription" : "",
                "name" : "Image selector",
-               "progress" : 60,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-an-image-selector",
+                     "commitHash" : "272aca940ec3d6f42217ec653f6880cfcb81ce08",
+                     "date" : "02-20-2015 20:30 +0200",
+                     "name" : "Image selector implementation",
+                     "tag" : "v1.1.90.2"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -530,7 +539,7 @@
                "expectedBy" : "mid Mar '15",
                "longDescription" : "",
                "name" : "Content block",
-               "progress" : 60,
+               "progress" : 75,
                "releases" : [
                   {
                      "article" : "Content-Block-Widget",
@@ -561,7 +570,11 @@
                      "tag" : "v1.1.60.2"
                   },
                   {
-                     "name" : "Image Manager"
+                     "article" : "",
+                     "commitHash" : "272aca940ec3d6f42217ec653f6880cfcb81ce08",
+                     "date" : "02-20-2015 20:30 +0200",
+                     "name" : "Image Manager",
+                     "tag" : "v1.1.90.2"
                   },
                   {
                      "name" : "Media Manager"
@@ -577,8 +590,17 @@
                "expectedBy" : "mid Mar '15",
                "longDescription" : "",
                "name" : "Image",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "",
+                     "commitHash" : "272aca940ec3d6f42217ec653f6880cfcb81ce08",
+                     "date" : "02-20-2015 20:30 +0200",
+                     "name" : "Image Widget",
+                     "tag" : "v1.1.90.2"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -1169,7 +1191,7 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Client components",
-               "progress" : 40,
+               "progress" : 90,
                "releases" : [
                   {
                      "article" : "Use-a-generic-collection-directive",
@@ -1205,6 +1227,20 @@
                      "date" : "02-06-2015 18:15 +0200",
                      "name" : "Infinite scroll directive",
                      "tag" : "v1.1.70.1"
+                  },
+                  {
+                     "article" : "Use-a-drag-and-drop-directive",
+                     "commitHash" : "194bdb30dd4247319979a5cd13299627b2017f8f",
+                     "date" : "02-13-2015 17:16 +0200",
+                     "name" : "Drag and drop directive",
+                     "tag" : "v1.1.80.1"
+                  },
+                  {
+                     "article" : "Use-an-image-field-directive",
+                     "commitHash" : "272aca940ec3d6f42217ec653f6880cfcb81ce08",
+                     "date" : "02-20-2015 20:30 +0200",
+                     "name" : "Image field directive",
+                     "tag" : "v1.1.90.2"
                   }
                ],
                "shortDescription" : "In progress",
