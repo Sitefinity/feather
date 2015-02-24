@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ArtOfTest.WebAii.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 {
@@ -20,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// UI test MVCWidgetDefaultFeatherDesigner.
         /// </summary>
         [TestMethod,
-        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
+        Owner(FeatherTeams.Team7),
         TestCategory(FeatherTestCategories.Selectors)]
         public void MvcSelectorTest()
         {

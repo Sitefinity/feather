@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 {
@@ -18,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// Verifies selected tab in multiple selector and ordering in all tab of selected items.
         /// </summary>
         [TestMethod,
-        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
+        Owner(FeatherTeams.Team7),
         TestCategory(FeatherTestCategories.Selectors)]
         public void MultipleTagsSelectorVerifySelectedTabAndOrderingInAllTab()
         {
@@ -48,7 +49,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// Verifies items selection after switching to Advanced settings.
         /// </summary>
         [TestMethod,
-        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
+        Owner(FeatherTeams.Team7),
         TestCategory(FeatherTestCategories.Selectors)]
         public void MultipleTagsSelectorVerifySelectionAfterSwitchingToAdvancedSettings()
         {
@@ -73,7 +74,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// Verifies selected items reordering from top to bottom for tag items.
         /// </summary>
         [TestMethod,
-        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
+        Owner(FeatherTeams.Team7),
         TestCategory(FeatherTestCategories.Selectors)]
         public void MultipleTagsSelectorVerifySelectedItemsNoReordering()
         {
@@ -105,7 +106,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// Verifies search in Selected tab.
         /// </summary>
         [TestMethod,
-        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
+        Owner(FeatherTeams.Team7),
         TestCategory(FeatherTestCategories.Selectors)]
         public void MultipleTagsSelectorVerifySearchInSelectedTab()
         {
@@ -124,12 +125,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(countOfSelectedItems);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyReorderingIconVisibility(SelectedTagItemsCount, false);
 
-            //// filter selected results and verify correct span css class is applied
+            // filter selected results and verify correct span css class is applied
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText(SearchText);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(1);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyReorderingIconVisibility(FilteredTagItemsCount, true);
 
-            //// clear search and verify that correct span css class is applied
+            // clear search and verify that correct span css class is applied
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText(string.Empty);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyReorderingIconVisibility(SelectedTagItemsCount, false);
 

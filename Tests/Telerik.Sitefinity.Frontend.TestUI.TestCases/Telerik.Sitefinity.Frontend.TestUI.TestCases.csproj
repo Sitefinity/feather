@@ -54,6 +54,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Telerik.Sitefinity.Frontend.TestUtilities">
+      <HintPath>..\Telerik.Sitefinity.Frontend.TestUtilities\bin\Release\Telerik.Sitefinity.Frontend.TestUtilities.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Sitefinity.MS.TestUI.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Telerik.Sitefinity.MS.TestUI.Framework.1.0.4\lib\net45\Telerik.Sitefinity.MS.TestUI.Framework.dll</HintPath>

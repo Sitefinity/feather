@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ArtOfTest.WebAii.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 {
@@ -20,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// UI test MVCWidgetDefaultFeatherDesigner.
         /// </summary>
         [TestMethod,
-        Microsoft.VisualStudio.TestTools.UnitTesting.Owner("Sitefinity Team 7"),
+        Owner(FeatherTeams.Team7),
         TestCategory(FeatherTestCategories.Selectors)]
         public void MvcDynamicSelectorTest()
         {
@@ -54,7 +55,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("dynamicItemsSingleSelector");
 
-            //// Commented because of Bug 276501
+            // Commented because of Bug 276501
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(3);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedName2);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();

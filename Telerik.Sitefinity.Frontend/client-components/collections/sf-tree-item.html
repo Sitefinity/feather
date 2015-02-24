@@ -3,5 +3,5 @@
 <span ng-click="select(node)" ng-class="{'is-selected' : isSelected(node) === true}" ng-bind="node.item.Title"></span>
 
 <ul class="sf-Tree" ng-if="hasChildren(node)" ng-class="{'is-collapsed' : node.collapsed === true}">
-    <li ng-repeat="node in node.children" ng-include src="itemTemplateUrl" />
+	<li ng-repeat="node in node.children" ng-include src="itemTemplateUrl"></li>
 </ul>

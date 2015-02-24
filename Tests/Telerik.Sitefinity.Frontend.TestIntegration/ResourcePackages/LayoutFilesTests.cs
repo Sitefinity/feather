@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using MbUnit.Framework;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
@@ -22,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
     {
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author("Petya Rachina")]
+        [Author(FeatherTeams.Team2)]
         [Description("Adds new layout file to existing resource package, verifies the automatically generated page template and creates a page based on the template in order to verify the content.")]
         public void FoundationResourcePackage_AddNewLayoutFile_VerifyGeneratedTemplateAndCreatedPageContent()
         {
@@ -59,7 +60,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author("Petya Rachina")]
+        [Author(FeatherTeams.Team2)]
         [Description("Adds a resource package with layout files, renames one of the layout files and verify that new template is generated.")]
         public void ResourcePackageLayoutFiles_RenameLayoutFile_VerifyGeneratedTemplate()
         {
@@ -100,7 +101,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author("Petya Rachina")]
+        [Author(FeatherTeams.Team2)]
         [Description("Adds a resource package with layout files, delete one of the layout files and verify that the template is no longer based on it.")]
         [Ignore("It will work if the page is republished but this is would not be a valid test. We need cache dependency in the page resolver to its master page.")]
         public void ResourcePackageLayoutFiles_DeleteLayoutFile_VerifyTemplateAndPageNotBasedToLayout()
@@ -155,7 +156,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author("Petya Rachina")]
+        [Author(FeatherTeams.Team2)]
         [Description("Adds a resource package with layout files, edits one of the layout files and verifies that the template and page are updated.")]
         public void ResourcePackageLayoutFiles_EditLayoutFile_VerifyTemplateAndPageBasedOnTheLayoutFile()
         {
@@ -209,7 +210,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author("Petya Rachina")]
+        [Author(FeatherTeams.Team2)]
         [Description("Adds a resource package with layout files, deletes a page template based on the layout file and verifies the layout file still exists and no new template is generated.")]
         public void ResourcePackageLayoutFiles_DeleteTemplateBasedOnLayoutFile_VerifyLayoutFileExistsAndNoTemplateGenerated()
         {
@@ -240,7 +241,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling"), Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author("Petya Rachina")]
+        [Author(FeatherTeams.Team2)]
         [Description("Adds a resource package with layout files, renames a page template based on one of the layout file and verifies the template and page based on it.")]
         [Ignore("Failing because of bug ID: 145083")]
         public void ResourcePackageLayoutFiles_RenameTemplateBasedOnLayoutFile_VerifyTemplateAndPage()
@@ -295,7 +296,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author("Petya Rachina")]
+        [Author(FeatherTeams.Team2)]
         [Description("Adds a resource package with layout files, replaces a layout file from the package and verifies the template and page based on it.")]
         public void ResourcePackageLayoutFiles_ReplaceLayoutFile_VerifyTemplateAndPage()
         {
@@ -360,7 +361,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author("Petya Rachina")]
+        [Author(FeatherTeams.Team2)]
         [Description("Adds a resource package, creates a template in Sitefinity and then adds new layout file in the package; verifies the public page before and after")]
         public void ResourcePackageLayoutFiles_CreateTemplateAndAddLayoutFile_VerifyPublicPage()
         {

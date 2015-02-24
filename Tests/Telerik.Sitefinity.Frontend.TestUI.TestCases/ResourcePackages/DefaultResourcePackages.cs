@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
+using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Framework.Wrappers.Backend.PageTemplates;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
@@ -19,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         /// UI test MVCWidgetDefaultFeatherDesigner.
         /// </summary>
         [TestMethod,
-        Owner("Feather team"),
+        Owner(FeatherTeams.Team2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void VerifyGeneratedTemplatesDefaultResourcePackages()
         {
