@@ -1,0 +1,179 @@
+<!doctype html>
+<html ng-app="ui.bootstrap.demo">
+<head>
+  <link href="/ResourcePackages/Bootstrap/assets/dist/css/styles.min.css?package=Bootstrap" rel="stylesheet" />
+  <link href="/Frontend-Assembly/Telerik.Sitefinity.Frontend.Media/assets/dist/css/sitefinity-backend.min.css" rel="stylesheet" />
+
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+</head>
+<body class="modal-open">
+  <div class="modal-backdrop fade in" style="z-index: 1040;"></div>
+
+  <div class="modal fade in" style="z-index: 1050; display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel($event)">×</button>
+            <h3 class="modal-title">Modal title!</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-danger">
+                <a class="close" data-dismiss="alert" ng-click="hideError()">×</a>
+                <strong>Error message!</strong> Should be put as the first element of <code>.modal-body</code>
+            </div>
+            <!-- .alert-danger -->
+
+            <div class="modal-settings">
+                <label>Grey area. Placed at the top of <code>.modal-body</code>.<br />
+                Used for important settings or navigation</label>
+            </div>
+            <!-- .modal-settings -->
+
+            <h1><code>h1</code> Headline</h1>
+            <h2><code>h2</code> Headline</h2>
+            <h3><code>h3</code> Headline</h3>
+            <h4><code>h4</code> Headline</h4>
+            <h5><code>h5</code> Headline</h5>
+            <h6><code>h6</code> Headline</h6>
+
+            <p><code>p</code>Paragraph text is a bit smaller in modal dialogs</p>
+
+            <br />
+
+            <div class="form-group">
+                <label for="title">Form element (<code>label</code> + <code>input</code>)</label>
+
+                <div class="row">
+                    <div class="col-xs-8">
+                        <input class="form-control" name="title" type="text" />
+                    </div>
+
+                    <div class="m-top-xs">7</div>
+                </div>
+
+                <div class="text-muted">The width of the input is controlled via Bootstrap's grid classes</div>
+            </div>
+            <!-- .form-group -->
+
+            <div class="form-group has-error">
+                <label for="title">Form element with failed validation</label>
+
+                <div class="row">
+                    <div class="col-xs-8">
+                        <input class="form-control" name="title" type="text" ng-disabled="true" ng-model="properties.Title.PropertyValue" ng-required="true" required="required">
+                    </div>
+
+                    <div class="m-top-xs ng-binding" ng-class="{'text-danger': properties.Title.PropertyValue.length > 35}"></div>
+                </div>
+
+                <p class="text-danger">Title is required</p>
+            </div>
+            <!-- .form-group -->
+
+            <div class="form-group">
+                <label>Form with select dropdown</label>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <select class="form-control ng-valid ng-valid-parse ng-touched ng-pristine" ng-model="sizeSelection" ng-options="item as item.title for item in sizeOptions track by item.index">
+                            <option value="0" selected="selected" label="Width is controlled with Bootstrap's grid classes">Width is controlled with Bootstrap's grid classes</option>
+                            <option value="1" label="Thumbnail: 120x120 px cropped">Thumbnail: 120x120 px cropped</option>
+                            <option value="2" label="Small: 240 px width">Small: 240 px width</option>
+                            <option value="3" label="Medium: 240x300 px resized">Medium: 240x300 px resized</option>
+                            <option value="4" label="Thumbnail: 200x200 px">Thumbnail: 200x200 px</option>
+                            <option value="5" label="Thumbnail: 80x80 px">Thumbnail: 80x80 px</option>
+                            <option value="6" label="Thumbnail: 36x36 px">Thumbnail: 36x36 px</option>
+                            <option value="7" label="Custom size...">Custom size...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- .form-group -->
+
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox">Checkbox
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        <input type="radio">Radio button
+                    </label>
+                </div>
+
+                <div class="label-content">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" />Nested radio button
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" />Nested checkbox button
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+            <!-- .form-group -->
+
+            <div class="form-group">
+                <div class="radio">
+                    <label for="usePaging">
+                        <input type="radio" />
+
+                        <strong>More advanced radio button</strong>
+                        <br>
+                        <span>
+                            with explanatory text and an input <input type="text" style="width: 40px"> in it
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <!-- .form-group -->
+
+            <hr />
+
+            <h4>Loading</h4>
+            <div class="sf-loading"><span></span></div>
+            <div>
+              <code>&lt;sf-loading ng-show="$scope.isLoading"&gt;&lt;/sf-loading&gt;</code>
+            </div>
+
+            <!-- Loading -->
+
+            <div class="Options" expander-title="More options">
+                <span class="Options-toggler text-muted">
+                    <span class="glyphicon glyphicon-triangle-right"></span>
+                    More options
+                </span>
+                <div>
+                    <div class="form-group">
+                        <label for="searchCssClass">CSS classes</label>
+                        <input type="text" id="searchCssClass" class="form-control">
+                    </div>
+                </div>
+                <code>
+                    &lt;expander expander-title='More options'&gt;<br />
+                    &nbsp;&nbsp;Expander content<br />
+                    &lt;/expander&gt;
+                </code>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary pull-left">Save</button>
+          <a class="btn btn-link pull-left">Cancel</a>
+          <a class="btn btn-default btn-xs m-top-xs">Advanced</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
