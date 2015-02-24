@@ -502,7 +502,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="totalCount">The total count.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "3#")]
-        protected IQueryable<IDataItem> UpdateExpression(IQueryable<IDataItem> query, int? skip, int? take, ref int? totalCount)
+        protected virtual IQueryable<IDataItem> UpdateExpression(IQueryable<IDataItem> query, int? skip, int? take, ref int? totalCount)
         {
             var compiledFilterExpression = this.CompileFilterExpression();
             compiledFilterExpression = this.AddLiveFilterExpression(compiledFilterExpression);
