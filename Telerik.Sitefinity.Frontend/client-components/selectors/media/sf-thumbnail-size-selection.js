@@ -6,6 +6,19 @@
     };
 
     angular.module('sfThumbnailSizeSelection', ['sfServices'])
+        .directive('sfThumbnailSizeSelection', ['serverContext', function (serverContext) {
+            return {
+                restrict: 'AE',
+                scope: {
+                    model: '=sfModel'
+                },
+                templateUrl: function (elem, attrs) {
+                    var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/media/sf-thumbnail-size-selection.html';
+                    return serverContext.getEmbeddedResourceUrl(assembly, url);
+                }
+            };
+        }])
         .controller('sfThumbnailSizeSelectionCtrl', ['$scope', 'sfMediaService', 'serverContext', function ($scope, mediaService, serverContext) {
             $scope.sizeSelection = null;
             $scope.sizeOptions = [];
@@ -45,7 +58,7 @@
             mediaService.images.thumbnailProfiles().then(function (data) {
                 if (data && data.Items) {
                     thumbnailProfiles = data.Items;
-                    if ($scope.model && $scope.model.item && $scope.model.item.Width && $scope.model.item.Height) {
+                    if ($scope.model) {
                         populateOptions();
                     }
                 }
@@ -57,10 +70,17 @@
 
             var populateOptions = function () {
                 $scope.sizeOptions = [];
+                var originalSizeTitle = 'Original size';
+                if ($scope.model.item &&
+                    $scope.model.item.Width &&
+                    $scope.model.item.Height) {
+                    originalSizeTitle = 'Original size: ' + $scope.model.item.Width + 'x' + $scope.model.item.Height + ' px';
+                }
+
                 $scope.sizeOptions.push({
                     index: $scope.sizeOptions.length,
                     type: displayMode.original,
-                    title: 'Original size: ' + $scope.model.item.Width + 'x' + $scope.model.item.Height + ' px',
+                    title: originalSizeTitle,
                     thumbnail: null,
                     customSize: null,
                     openDialog: false
