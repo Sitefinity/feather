@@ -379,19 +379,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             int? totalCount = 0;
             int? take = this.DisplayMode == ListDisplayMode.All ? null : this.ItemsPerPage;
 
-            var compiledFilterExpression = this.CompileFilterExpression();
-            compiledFilterExpression = this.AddLiveFilterExpression(compiledFilterExpression);
-            compiledFilterExpression = this.AdaptMultilingualFilterExpression(compiledFilterExpression);
-
             IList<ItemViewModel> result = new List<ItemViewModel>();
 
-            var queryResult = this.SetExpression(
-                query,
-                compiledFilterExpression,
-                this.SortExpression,
-                itemsToSkip,
-                take,
-                ref totalCount);
+            query = this.UpdateExpression(query, itemsToSkip, take, ref totalCount);
+
+            var queryResult = query.ToArray<dynamic>();
+
             foreach (var item in queryResult)
             {
                 result.Add(new ItemViewModel(item));
@@ -500,6 +493,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return ManagerBase.GetMappedManager(this.ContentType, this.ProviderName);
         }
 
+         /// <summary>
+        /// Updates the expression.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="skip">The skip.</param>
+        /// <param name="take">The take.</param>
+        /// <param name="totalCount">The total count.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "3#")]
+        protected IQueryable<IDataItem> UpdateExpression(IQueryable<IDataItem> query, int? skip, int? take, ref int? totalCount)
+        {
+            var compiledFilterExpression = this.CompileFilterExpression();
+            compiledFilterExpression = this.AddLiveFilterExpression(compiledFilterExpression);
+            compiledFilterExpression = this.AdaptMultilingualFilterExpression(compiledFilterExpression);
+
+            query = this.SetExpression(
+                query,
+                compiledFilterExpression,
+                this.SortExpression,
+                skip,
+                take,
+                ref totalCount);
+
+            return query;
+        }
         #endregion
 
         #region Private methods
@@ -581,7 +599,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return relatedItems;
         }
 
-        private dynamic[] SetExpression(IQueryable<IDataItem> query, string filterExpression, string sortExpr, int? itemsToSkip, int? itemsToTake, ref int? totalCount)
+        private IQueryable<IDataItem> SetExpression(IQueryable<IDataItem> query, string filterExpression, string sortExpr, int? itemsToSkip, int? itemsToTake, ref int? totalCount)
         {
             if (sortExpr == "AsSetManually")
             {
@@ -639,7 +657,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 }
             }
 
-            return query.ToArray<dynamic>();
+            return query;
         }
         #endregion
 
