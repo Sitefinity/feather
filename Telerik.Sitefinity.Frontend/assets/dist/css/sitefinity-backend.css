@@ -8159,7 +8159,7 @@ h4, .h4 {
 
 /* line 3, d:/repos/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
 .modal-body .alert-warning, .modal-body .alert-danger {
-  margin: -21px -20px 24px;
+  margin: -21px -20px 20px;
   font-size: 13px;
   padding: 10px 20px;
   border-radius: 0; }
