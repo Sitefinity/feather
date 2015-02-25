@@ -512,7 +512,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="totalCount">The total count.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "3#")]
-        protected IQueryable<IDataItem> UpdateExpression(IQueryable<IDataItem> query, int? skip, int? take, ref int? totalCount)
+        protected virtual IQueryable<IDataItem> UpdateExpression(IQueryable<IDataItem> query, int? skip, int? take, ref int? totalCount)
         {
             var compiledFilterExpression = this.CompileFilterExpression();
             compiledFilterExpression = this.AddLiveFilterExpression(compiledFilterExpression);
@@ -528,19 +528,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             return query;
         }
-        #endregion
 
-        #region Private methods
-
-        private string ExpectedTaxonFieldName(ITaxon taxon)
-        {
-            if (taxon.Taxonomy.Name == "Categories")
-                return taxon.Taxonomy.TaxonName;
-
-            return taxon.Taxonomy.Name;
-        }
-
-        private string AddLiveFilterExpression(string filterExpression)
+        /// <summary>
+        /// Appends the lifecycle conditions to the filter expression in order to get only live items.
+        /// </summary>
+        /// <param name="filterExpression">The filter expression.</param>
+        /// <returns>Filter expression for live items.</returns>
+        protected virtual string AddLiveFilterExpression(string filterExpression)
         {
             if (filterExpression.IsNullOrEmpty())
             {
@@ -559,7 +553,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="filterExpression">The filter expression.</param>
         /// <returns>Multilingual filter expression.</returns>
-        private string AdaptMultilingualFilterExpression(string filterExpression)
+        protected virtual string AdaptMultilingualFilterExpression(string filterExpression)
         {
             CultureInfo uiCulture;
             if (SystemManager.CurrentContext.AppSettings.Multilingual)
@@ -575,41 +569,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return ContentHelper.AdaptMultilingualFilterExpressionRaw(filterExpression, uiCulture);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1002:AvoidToListOnIEnumerable")]
-        private string GetSelectedItemsFilterExpression()
-        {
-            var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
-            var masterIds = this.GetItemsQuery()
-                .OfType<ILifecycleDataItemGeneric>()
-                .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
-                .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id)
-                .Distinct();
-
-            var selectedItemConditions = masterIds.Select(id => "Id = {0} OR OriginalContentId = {0}".Arrange(id.ToString("D")));
-            var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
-
-            return selectedItemsFilterExpression;
-        }
-
-        private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
-        {
-            var manager = this.GetManager();
-            var relatedDataSource = manager.Provider as IRelatedDataSource;
-
-            if (relatedDataSource == null)
-                return Enumerable.Empty<IDataItem>().AsQueryable();
-
-            //// Тhe filter is adapted to the implementation of ILifecycleDataItemGeneric, so the culture is taken in advance when filtering published items.
-            var filterExpression = ContentHelper.AdaptMultilingualFilterExpression(this.FilterExpression);
-            int? skip = (page - 1) * this.ItemsPerPage;
-
-            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay)
-                .OfType<IDataItem>();
-
-            return relatedItems;
-        }
-
-        private IQueryable<IDataItem> SetExpression(IQueryable<IDataItem> query, string filterExpression, string sortExpr, int? itemsToSkip, int? itemsToTake, ref int? totalCount)
+        /// <summary>
+        /// Modifies the given query with the given filter, sort expression and paging.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="filterExpression">The filter expression.</param>
+        /// <param name="sortExpr">The sort expression.</param>
+        /// <param name="itemsToSkip">The items to skip.</param>
+        /// <param name="itemsToTake">The items to take.</param>
+        /// <param name="totalCount">The total count.</param>
+        /// <returns>Resulting filtered query.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Expr"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "5#")]
+        protected virtual IQueryable<TItem> SetExpression<TItem>(IQueryable<TItem> query, string filterExpression, string sortExpr, int? itemsToSkip, int? itemsToTake, ref int? totalCount)
+            where TItem : IDataItem
         {
             if (sortExpr == "AsSetManually")
             {
@@ -625,12 +597,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     .Select(x => new
                     {
                         item = x,
-                        orderIndex = this.selectedItemsIds.IndexOf(x.OriginalContentId.ToString()) >= 0 ? 
-                                        this.selectedItemsIds.IndexOf(x.OriginalContentId.ToString()) : 
+                        orderIndex = this.selectedItemsIds.IndexOf(x.OriginalContentId.ToString()) >= 0 ?
+                                        this.selectedItemsIds.IndexOf(x.OriginalContentId.ToString()) :
                                         this.selectedItemsIds.IndexOf(x.Id.ToString())
                     })
                     .OrderBy(x => x.orderIndex)
-                    .Select(x => x.item);
+                    .Select(x => x.item)
+                    .OfType<TItem>();
 
                 if (itemsToSkip.HasValue && itemsToSkip.Value > 0)
                 {
@@ -668,6 +641,51 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             return query;
+        }
+        #endregion
+
+        #region Private methods
+
+        private string ExpectedTaxonFieldName(ITaxon taxon)
+        {
+            if (taxon.Taxonomy.Name == "Categories")
+                return taxon.Taxonomy.TaxonName;
+
+            return taxon.Taxonomy.Name;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1002:AvoidToListOnIEnumerable")]
+        private string GetSelectedItemsFilterExpression()
+        {
+            var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
+            var masterIds = this.GetItemsQuery()
+                .OfType<ILifecycleDataItemGeneric>()
+                .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
+                .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id)
+                .Distinct();
+
+            var selectedItemConditions = masterIds.Select(id => "Id = {0} OR OriginalContentId = {0}".Arrange(id.ToString("D")));
+            var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
+
+            return selectedItemsFilterExpression;
+        }
+
+        private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
+        {
+            var manager = this.GetManager();
+            var relatedDataSource = manager.Provider as IRelatedDataSource;
+
+            if (relatedDataSource == null)
+                return Enumerable.Empty<IDataItem>().AsQueryable();
+
+            //// Тhe filter is adapted to the implementation of ILifecycleDataItemGeneric, so the culture is taken in advance when filtering published items.
+            var filterExpression = ContentHelper.AdaptMultilingualFilterExpression(this.FilterExpression);
+            int? skip = (page - 1) * this.ItemsPerPage;
+
+            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay)
+                .OfType<IDataItem>();
+
+            return relatedItems;
         }
         #endregion
 

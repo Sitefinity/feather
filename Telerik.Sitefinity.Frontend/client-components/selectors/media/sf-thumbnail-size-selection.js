@@ -20,7 +20,7 @@
                 link: function (scope, element, attrs) {
                     attrs.$observe('sfDisableCustomSizeSelection', function () {
                         scope.disableCustomSizeSelection = scope.$eval(attrs.sfDisableCustomSizeSelection);
-                    })
+                    });
                 }
             };
         }])
