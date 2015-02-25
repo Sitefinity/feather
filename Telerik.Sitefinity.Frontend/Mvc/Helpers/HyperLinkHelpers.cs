@@ -50,5 +50,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return url;
         }
+
+        /// <summary>
+        /// Gets the detail page URL for master/detail widgets.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="detailsPageId">The details page identifier.</param>
+        /// <param name="openInSamePage">if set to <c>true</c> [open in same page].</param>
+        /// <param name="itemIndex">Index of the item in collection.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
+        public static string GetDetailPageUrl(ItemViewModel item, Guid detailsPageId, bool openInSamePage, int itemIndex)
+        {
+            string url;
+            if (openInSamePage)
+            {
+                var appRelativeUrl = DataResolver.Resolve(item.DataItem, "URL");
+                appRelativeUrl = appRelativeUrl + "?itemIndex=" + itemIndex;
+                url = UrlPath.ResolveUrl(appRelativeUrl, true);
+            }
+            else
+            {
+                url = HyperLinkHelpers.GetDetailPageUrl(item.DataItem, detailsPageId) + "?itemIndex=" + itemIndex;
+            }
+
+            return url;
+        }
     }
 }
