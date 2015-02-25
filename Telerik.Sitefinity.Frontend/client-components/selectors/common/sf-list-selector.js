@@ -320,7 +320,9 @@
 
                         scope.$watch('sfProvider', function (newProvider, oldProvider) {
                             if (newProvider !== oldProvider) {
-                                if (ctrl.selectorType === 'NewsSelector' || ctrl.selectorType === 'DynamicItemsSelector') {
+                                if (ctrl.selectorType === 'NewsSelector' ||
+                                    ctrl.selectorType === 'DynamicItemsSelector' ||
+                                    ctrl.selectorType === 'LibrarySelector') {
                                     scope.sfSelectedItems = null;
                                     scope.sfSelectedIds = null;
                                 }
