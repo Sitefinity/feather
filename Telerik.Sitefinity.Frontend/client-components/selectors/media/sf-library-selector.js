@@ -98,6 +98,23 @@
                             });
                         };
 
+                        ctrl.selectDefaultLibrary = function () {
+                            if (!ctrl.$scope.sfSelectedIds || ctrl.$scope.sfSelectedIds.length == 0) {
+                                var options = {
+                                    parent: null,
+                                    skip: 0,
+                                    take: 1,
+                                    provider: ctrl.$scope.sfProvider,
+                                    sort: "DateCreated ASC"
+                                };
+
+                                mediaService[mediaType].getFolders(options).then(function (data) {
+                                    if (!ctrl.$scope.sfSelectedIds || ctrl.$scope.sfSelectedIds.length == 0)
+                                        ctrl.onSelectedItemsLoadedSuccess(data);
+                                });
+                            }
+                        };
+
                         ctrl.selectorType = 'LibrarySelector';
                         ctrl.dialogTemplateUrl = 'client-components/selectors/media/sf-library-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-library-selector';
@@ -109,20 +126,7 @@
                         ctrl.$scope.sfIdentifierField = "Breadcrumb";
                         ctrl.$scope.searchIdentifierField = "Title";
 
-                        if (!ctrl.$scope.sfSelectedItemId) {
-                            var options = {
-                                parent: null,
-                                skip: 0,
-                                take: 1,
-                                provider: ctrl.$scope.sfProvider,
-                                sort: "DateCreated ASC"
-                            };
-
-                            mediaService[mediaType].getFolders(options).then(function (data) {
-                                if (!ctrl.$scope.sfSelectedItemId)
-                                    ctrl.onSelectedItemsLoadedSuccess(data);
-                            });
-                        }
+                        ctrl.selectDefaultLibrary();
                     }
                 }
             };
