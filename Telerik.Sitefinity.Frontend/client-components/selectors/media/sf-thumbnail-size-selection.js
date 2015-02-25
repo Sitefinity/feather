@@ -16,6 +16,11 @@
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
                     var url = attrs.sfTemplateUrl || 'client-components/selectors/media/sf-thumbnail-size-selection.html';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
+                },
+                link: function (scope, element, attrs) {
+                    attrs.$observe('sfDisableCustomSizeSelection', function () {
+                        scope.disableCustomSizeSelection = scope.$eval(attrs.sfDisableCustomSizeSelection);
+                    })
                 }
             };
         }])
@@ -101,39 +106,41 @@
                     });
                 }
 
-                var existingCustomSizeTitle;
-                if ($scope.model.customSize) {
-                    if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments') {
-                        existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
+                if(!$scope.disableCustomSizeSelection) {
+                    var existingCustomSizeTitle;
+                    if ($scope.model.customSize) {
+                        if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments') {
+                            existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
+                        }
+                        else if ($scope.model.customSize.Method === 'CropCropArguments') {
+                            existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
+                        }
                     }
-                    else if ($scope.model.customSize.Method === 'CropCropArguments') {
-                        existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
+                
+                    var newCustomSizeTitle = 'Custom size...';
+
+                    if (existingCustomSizeTitle) {
+                        newCustomSizeTitle = 'Edit custom size...';
+
+                        $scope.sizeOptions.push({
+                            index: $scope.sizeOptions.length,
+                            type: displayMode.custom,
+                            title: existingCustomSizeTitle,
+                            thumbnail: $scope.model.thumbnail,
+                            customSize: $scope.model.customSize,
+                            openDialog: false
+                        });
                     }
-                }
-
-                var newCustomSizeTitle = 'Custom size...';
-
-                if (existingCustomSizeTitle) {
-                    newCustomSizeTitle = 'Edit custom size...';
 
                     $scope.sizeOptions.push({
                         index: $scope.sizeOptions.length,
                         type: displayMode.custom,
-                        title: existingCustomSizeTitle,
-                        thumbnail: $scope.model.thumbnail,
+                        title: newCustomSizeTitle,
+                        thumbnail: null,
                         customSize: $scope.model.customSize,
-                        openDialog: false
+                        openDialog: true
                     });
                 }
-
-                $scope.sizeOptions.push({
-                    index: $scope.sizeOptions.length,
-                    type: displayMode.custom,
-                    title: newCustomSizeTitle,
-                    thumbnail: null,
-                    customSize: $scope.model.customSize,
-                    openDialog: true
-                });
 
                 updateSelection();
             };
