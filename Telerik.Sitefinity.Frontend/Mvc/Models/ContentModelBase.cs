@@ -265,7 +265,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             var viewModel = this.CreateListViewModelInstance();
 
-            viewModel.Items = query.ToArray().Select(item => new ItemViewModel(item)).ToArray();
+            viewModel.Items = query.ToArray().Select(item => this.CreateItemViewModelInstance(item)).ToArray();
 
             if (this.ItemsPerPage != 0)
                 viewModel.TotalPagesCount = totalCount / this.ItemsPerPage;
@@ -289,7 +289,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var viewModel = this.CreateDetailsViewModelInstance();
 
             viewModel.CssClass = this.DetailCssClass;
-            viewModel.Item = new ItemViewModel(item);
+            viewModel.Item = this.CreateItemViewModelInstance(item);
             viewModel.ContentType = this.ContentType;
             viewModel.ProviderName = this.ProviderName;
             viewModel.EnableSocialSharing = this.EnableSocialSharing;
@@ -383,11 +383,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             query = this.UpdateExpression(query, itemsToSkip, take, ref totalCount);
 
-            var queryResult = query.ToArray<dynamic>();
+            var queryResult = query.ToArray<IDataItem>();
 
             foreach (var item in queryResult)
             {
-                result.Add(new ItemViewModel(item));
+                result.Add(this.CreateItemViewModelInstance(item));
             }
 
             totalPages = (int)Math.Ceiling(totalCount.Value / (double)this.ItemsPerPage.Value);
@@ -412,6 +412,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         protected virtual ContentDetailsViewModel CreateDetailsViewModelInstance()
         {
             return new ContentDetailsViewModel();
+        }
+
+        /// <summary>
+        /// Creates an instance of the item view model by given data item.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
+        protected virtual ItemViewModel CreateItemViewModelInstance(IDataItem item)
+        {
+            return new ItemViewModel(item);
         }
 
         /// <summary>
