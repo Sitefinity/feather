@@ -102,14 +102,19 @@
                         ctrl.dialogTemplateUrl = 'client-components/selectors/media/sf-library-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-library-selector';
                         ctrl.$scope.sfDialogHeader = 'Select a library';
-                        ctrl.closedDialogTemplateUrl = attrs.sfMultiselect ? 'client-components/selectors/common/sf-list-group-selection.html' :
+                        ctrl.closedDialogTemplateUrl = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == 'true') ? 'client-components/selectors/common/sf-list-group-selection.html' :
                             'client-components/selectors/common/sf-bubbles-selection.html';
+
+                        ctrl.$scope.$watch('multiselect', function () {
+                            ctrl.closedDialogTemplateUrl = ctrl.$scope.multiselect ? 'client-components/selectors/common/sf-list-group-selection.html' :
+                                'client-components/selectors/common/sf-bubbles-selection.html';
+                        });
 
                         ctrl.$scope.hierarchical = true;
                         ctrl.$scope.sfIdentifierField = "Breadcrumb";
                         ctrl.$scope.searchIdentifierField = "Title";
 
-                        if (!ctrl.$scope.sfSelectedItemId) {
+                        if (!ctrl.$scope.sfSelectedItemId && (!ctrl.$scope.sfSelectedIds || !ctrl.$scope.sfSelectedIds.length)) {
                             var options = {
                                 parent: null,
                                 skip: 0,

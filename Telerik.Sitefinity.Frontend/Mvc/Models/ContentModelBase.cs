@@ -522,15 +522,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         #region Private methods
 
-        private string ExpectedTaxonFieldName(ITaxon taxon)
-        {
-            if (taxon.Taxonomy.Name == "Categories")
-                return taxon.Taxonomy.TaxonName;
-
-            return taxon.Taxonomy.Name;
-        }
-
-        private string AddLiveFilterExpression(string filterExpression)
+        /// <summary>
+        /// Appends the lifecycle conditions to the filter expression in order to get only live items.
+        /// </summary>
+        /// <param name="filterExpression">The filter expression.</param>
+        /// <returns>Filter expression for live items.</returns>
+        protected virtual string AddLiveFilterExpression(string filterExpression)
         {
             if (filterExpression.IsNullOrEmpty())
             {
@@ -549,7 +546,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="filterExpression">The filter expression.</param>
         /// <returns>Multilingual filter expression.</returns>
-        private string AdaptMultilingualFilterExpression(string filterExpression)
+        protected virtual string AdaptMultilingualFilterExpression(string filterExpression)
         {
             CultureInfo uiCulture;
             if (SystemManager.CurrentContext.AppSettings.Multilingual)
@@ -563,6 +560,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             // the filter is adapted to the implementation of ILifecycleDataItemGeneric, so the culture is taken in advance when filtering published items.
             return ContentHelper.AdaptMultilingualFilterExpressionRaw(filterExpression, uiCulture);
+        }
+
+        private string ExpectedTaxonFieldName(ITaxon taxon)
+        {
+            if (taxon.Taxonomy.Name == "Categories")
+                return taxon.Taxonomy.TaxonName;
+
+            return taxon.Taxonomy.Name;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1002:AvoidToListOnIEnumerable")]
