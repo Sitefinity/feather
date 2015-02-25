@@ -528,9 +528,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             return query;
         }
-        #endregion
-
-        #region Private methods
 
         /// <summary>
         /// Appends the lifecycle conditions to the filter expression in order to get only live items.
@@ -572,6 +569,83 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return ContentHelper.AdaptMultilingualFilterExpressionRaw(filterExpression, uiCulture);
         }
 
+        /// <summary>
+        /// Modifies the given query with the given filter, sort expression and paging.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="filterExpression">The filter expression.</param>
+        /// <param name="sortExpr">The sort expression.</param>
+        /// <param name="itemsToSkip">The items to skip.</param>
+        /// <param name="itemsToTake">The items to take.</param>
+        /// <param name="totalCount">The total count.</param>
+        /// <returns>Resulting filtered query.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Expr"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "5#")]
+        protected virtual IQueryable<TItem> SetExpression<TItem>(IQueryable<TItem> query, string filterExpression, string sortExpr, int? itemsToSkip, int? itemsToTake, ref int? totalCount)
+            where TItem : IDataItem
+        {
+            if (sortExpr == "AsSetManually")
+            {
+                query = DataProviderBase.SetExpressions(
+                                                  query,
+                                                  filterExpression,
+                                                  string.Empty,
+                                                  null,
+                                                  null,
+                                                  ref totalCount);
+
+                query = query.OfType<ILifecycleDataItemGeneric>()
+                    .Select(x => new
+                    {
+                        item = x,
+                        orderIndex = this.selectedItemsIds.IndexOf(x.OriginalContentId.ToString()) >= 0 ?
+                                        this.selectedItemsIds.IndexOf(x.OriginalContentId.ToString()) :
+                                        this.selectedItemsIds.IndexOf(x.Id.ToString())
+                    })
+                    .OrderBy(x => x.orderIndex)
+                    .Select(x => x.item)
+                    .OfType<TItem>();
+
+                if (itemsToSkip.HasValue && itemsToSkip.Value > 0)
+                {
+                    query = query.Skip(itemsToSkip.Value);
+                }
+
+                if (itemsToTake.HasValue && itemsToTake.Value > 0)
+                {
+                    query = query.Take(itemsToTake.Value);
+                }
+            }
+            else
+            {
+                try
+                {
+                    query = DataProviderBase.SetExpressions(
+                                                      query,
+                                                      filterExpression,
+                                                      sortExpr,
+                                                      itemsToSkip,
+                                                      itemsToTake,
+                                                      ref totalCount);
+                }
+                catch (MemberAccessException)
+                {
+                    this.SortExpression = DefaultSortExpression;
+                    query = DataProviderBase.SetExpressions(
+                                                      query,
+                                                      filterExpression,
+                                                      this.SortExpression,
+                                                      itemsToSkip,
+                                                      itemsToTake,
+                                                      ref totalCount);
+                }
+            }
+
+            return query;
+        }
+        #endregion
+
+        #region Private methods
+
         private string ExpectedTaxonFieldName(ITaxon taxon)
         {
             if (taxon.Taxonomy.Name == "Categories")
@@ -612,67 +686,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 .OfType<IDataItem>();
 
             return relatedItems;
-        }
-
-        private IQueryable<IDataItem> SetExpression(IQueryable<IDataItem> query, string filterExpression, string sortExpr, int? itemsToSkip, int? itemsToTake, ref int? totalCount)
-        {
-            if (sortExpr == "AsSetManually")
-            {
-                query = DataProviderBase.SetExpressions(
-                                                  query,
-                                                  filterExpression,
-                                                  string.Empty,
-                                                  null,
-                                                  null,
-                                                  ref totalCount);
-
-                query = query.OfType<ILifecycleDataItemGeneric>()
-                    .Select(x => new
-                    {
-                        item = x,
-                        orderIndex = this.selectedItemsIds.IndexOf(x.OriginalContentId.ToString()) >= 0 ? 
-                                        this.selectedItemsIds.IndexOf(x.OriginalContentId.ToString()) : 
-                                        this.selectedItemsIds.IndexOf(x.Id.ToString())
-                    })
-                    .OrderBy(x => x.orderIndex)
-                    .Select(x => x.item);
-
-                if (itemsToSkip.HasValue && itemsToSkip.Value > 0)
-                {
-                    query = query.Skip(itemsToSkip.Value);
-                }
-
-                if (itemsToTake.HasValue && itemsToTake.Value > 0)
-                {
-                    query = query.Take(itemsToTake.Value);
-                }
-            }
-            else
-            {
-                try
-                {
-                    query = DataProviderBase.SetExpressions(
-                                                      query,
-                                                      filterExpression,
-                                                      sortExpr,
-                                                      itemsToSkip,
-                                                      itemsToTake,
-                                                      ref totalCount);
-                }
-                catch (MemberAccessException)
-                {
-                    this.SortExpression = DefaultSortExpression;
-                    query = DataProviderBase.SetExpressions(
-                                                      query,
-                                                      filterExpression,
-                                                      this.SortExpression,
-                                                      itemsToSkip,
-                                                      itemsToTake,
-                                                      ref totalCount);
-                }
-            }
-
-            return query;
         }
         #endregion
 
