@@ -467,7 +467,17 @@
                             return scope.selectedItemsInTheDialog.length;
                         };
 
-                        scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == "true") ? true : false;
+                        attrs.$observe('sfMultiselect', function () {
+                            scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == 'true') ? true : false;
+
+                            if (!scope.multiselect && scope.sfSelectedItems && scope.sfSelectedItems.length > 1) {
+                                ctrl.updateSelection([scope.sfSelectedItems[0]]);
+                            }
+                        });
+
+                        scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == 'true') ? true : false;
+                        if (!scope.sfSelectedItemId && scope.sfSelectedIds && scope.sfSelectedIds.length)
+                            scope.sfSelectedItemId = scope.sfSelectedIds[0];
 
                         scope.selectButtonText = attrs.sfSelectButtonText ? attrs.sfSelectButtonText : defaultSelectButtonText;
                         scope.changeButtonText = attrs.sfChangeButtonText ? attrs.sfChangeButtonText : defaultChangeButtonText;
