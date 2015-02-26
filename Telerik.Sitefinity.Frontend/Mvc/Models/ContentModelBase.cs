@@ -469,8 +469,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="viewModel">The view model.</param>
         protected virtual void PopulateListViewModel(int page, IQueryable<IDataItem> query, ContentListViewModel viewModel)
         {
-            viewModel.CurrentPage = page;
-
             int? totalPages = null;
             if (this.SelectionMode == Models.SelectionMode.SelectedItems && this.selectedItemsIds.Count == 0)
             {
@@ -479,9 +477,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             else
             {
                 viewModel.Items = this.ApplyListSettings(page, query, out totalPages);
-                viewModel.TotalPagesCount = totalPages; 
             }
 
+            this.SetViewModelProperties(viewModel, page, totalPages);
+        }
+  
+        /// <summary>
+        /// Sets the view model properties.
+        /// </summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="totalPages">The total pages.</param>
+        protected virtual void SetViewModelProperties(ContentListViewModel viewModel, int page, int? totalPages)
+        {
+            viewModel.CurrentPage = page;
             viewModel.TotalPagesCount = totalPages;
             viewModel.ProviderName = this.ProviderName;
             viewModel.ContentType = this.ContentType;
