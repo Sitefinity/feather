@@ -388,7 +388,6 @@
             },
             {
                "expectedBy" : "",
-               "longDescription" : "Image Selector development is in progress.",
                "longDescription" : "",
                "name" : "Image selector",
                "progress" : 100,
@@ -544,7 +543,7 @@
          "name" : "Content widgets",
          "widgets" : [
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "News widget with inline editing and custom designer that is highly customizable.",
                "name" : "News",
                "progress" : 90,
@@ -571,7 +570,7 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Content block",
                "progress" : 75,
@@ -622,7 +621,7 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Image",
                "progress" : 100,
@@ -639,7 +638,7 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Image Gallery",
                "progress" : 0,
@@ -647,7 +646,7 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Video",
                "progress" : 0,
@@ -655,7 +654,7 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Video gallery",
                "progress" : 0,
@@ -663,7 +662,7 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Document link",
                "progress" : 0,
@@ -671,7 +670,7 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Download list",
                "progress" : 0,
@@ -681,15 +680,31 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Form",
+               "name" : "List",
                "progress" : 0,
                "shortDescription" : "Not started",
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
-               "name" : "List",
+               "name" : "Blog posts",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Blog lists",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Form",
                "progress" : 0,
                "shortDescription" : "Not started",
                "unstable" : false
@@ -717,6 +732,14 @@
                "progress" : 0,
                "shortDescription" : "Not started",
                "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Events",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
             }
          ]
       },
@@ -725,7 +748,7 @@
          "name" : "Navigation widgets",
          "widgets" : [
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "See release notes for special instructions how to upgrade from 1.1.50 to 1.1.60.",
                "name" : "Navigation",
                "progress" : 100,
@@ -831,7 +854,7 @@
          "name" : "Login widgets",
          "widgets" : [
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Login form",
                "progress" : 0,
@@ -839,23 +862,29 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Login/out button",
+               "name" : "Login/Logout button",
                "progress" : 0,
                "shortDescription" : "Not started",
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Change password",
                "progress" : 0,
                "shortDescription" : "Not started",
                "unstable" : false
-            },
+            }
+         ]
+      },
+      {
+         "description" : "",
+         "name" : "User account widgets",
+         "widgets" : [
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Registration",
                "progress" : 0,
@@ -863,7 +892,7 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Profile",
                "progress" : 0,
@@ -871,7 +900,15 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Account activation",
+               "progress" : 0,
+               "shortDescription" : "Not started",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Users list",
                "progress" : 0,
@@ -885,7 +922,7 @@
          "name" : "Social widgets",
          "widgets" : [
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "Share the page on social networks",
                "name" : "Social share",
                "progress" : 100,
@@ -940,7 +977,7 @@
          "name" : "Search widgets",
          "widgets" : [
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Search",
                "progress" : 100,
@@ -957,7 +994,7 @@
                "unstable" : false
             },
             {
-               "expectedBy" : "mid Mar '15",
+               "expectedBy" : "",
                "longDescription" : "",
                "name" : "Search results",
                "progress" : 100,
