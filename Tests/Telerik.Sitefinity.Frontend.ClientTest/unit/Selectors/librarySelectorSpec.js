@@ -265,8 +265,7 @@ describe("library selector", function () {
             //mock the call to the modal service.
             s.$modalInstance = { close: function () { } };
 
-            expect(s.sfSelectedItem).toBeDefined();
-            expect(s.sfSelectedItemId).toEqual(defaultLibrary.Id);
+            expect(s.sfSelectedItem).not.toBeDefined();
 
             expect(s.items).toBeDefined();
             expect(s.items[0].Id).toEqual(dataItem.Id);
@@ -275,8 +274,7 @@ describe("library selector", function () {
             //Select item in the selector
             s.itemClicked(0, s.items[0]);
 
-            expect(s.sfSelectedItem).toBeDefined();
-            expect(s.sfSelectedItemId).toEqual(defaultLibrary.Id);
+            expect(s.sfSelectedItem).not.toBeDefined();
 
             //Close the dialog (Done button clicked)
             s.doneSelecting();
