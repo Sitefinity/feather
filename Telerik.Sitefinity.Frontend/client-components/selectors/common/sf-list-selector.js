@@ -331,6 +331,10 @@
                                     scope.sfSelectedItems = null;
                                     scope.sfSelectedIds = null;
                                 }
+
+                                if (ctrl.selectorType === 'LibrarySelector') {
+                                    ctrl.selectDefaultLibrary();
+                                }
                             }
                         });
 
