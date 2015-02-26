@@ -13,6 +13,8 @@
                     sfSelectedItems: '=?',
                     sfSelectedIds: '=?',
 
+                    sfMissingSelectedItems: "=?",
+
                     sfProvider: '=?',
                     sfChange: '=',
                     sfSortable: '=?',
@@ -149,6 +151,9 @@
                         $scope.showLoadingIndicator = true;
                         return this.getSpecificItems(ids)
                             .then(function (data) {
+                                // Some of the items were not found.
+                                $scope.sfMissingSelectedItems = data.Items.length < ids.length;
+
                                 that.onSelectedItemsLoadedSuccess(data);
                             }, that.onError)
                             .finally(function () {
