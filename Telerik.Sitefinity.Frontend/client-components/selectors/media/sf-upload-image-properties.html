@@ -22,9 +22,12 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error' : !model.parentId }">
         <label>Where to store the uploaded image?</label>
-        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.parentId' sf-provider="provider" />
+        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.parentId' sf-provider="provider"></sf-list-selector>
+        <div ng-show="!model.parentId" class="text-danger">
+            You must select the library in which the files ought to be uploaded.
+        </div>
     </div>
     <div class="form-group" ng-class="{ 'has-error' : !model.title }">
         <div class="row">
