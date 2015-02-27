@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
+using System.Web;
 using System.Web.Mvc;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
+using Telerik.Sitefinity.Localization.UrlLocalizationStrategies;
 using Telerik.Sitefinity.Model;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.DataResolving;
 
@@ -75,6 +80,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return url;
+        }
+
+        /// <summary>
+        /// Gets the full page URL.
+        /// </summary>
+        /// <param name="pageId">The page identifier.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
+        public static string GetFullPageUrl(Guid pageId)
+        {
+            if (pageId != Guid.Empty)
+            {
+                var siteMap = SitefinitySiteMap.GetCurrentProvider();
+
+                SiteMapNode node;
+                var sitefinitySiteMap = siteMap as SiteMapBase;
+                if (sitefinitySiteMap != null)
+                {
+                    node = sitefinitySiteMap.FindSiteMapNodeFromKey(pageId.ToString(), false);
+                }
+                else
+                {
+                    node = siteMap.FindSiteMapNodeFromKey(pageId.ToString());
+                }
+
+                if (node != null)
+                {
+                    return UrlPath.ResolveUrl(node.Url, true);
+                }
+            }
+
+            return null;
         }
     }
 }
