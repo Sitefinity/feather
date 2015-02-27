@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using System.Web;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
@@ -91,15 +92,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             if (pageId != Guid.Empty)
             {
-                var currentLanguage = Thread.CurrentThread.CurrentUICulture;
-                var s = ObjectFactory.Resolve<UrlLocalizationService>();
-                var pageManager = PageManager.GetManager();
-                var node = pageManager.GetPageNode(pageId);
+                var siteMap = SitefinitySiteMap.GetCurrentProvider();
+
+                SiteMapNode node;
+                var sitefinitySiteMap = siteMap as SiteMapBase;
+                if (sitefinitySiteMap != null)
+                {
+                    node = sitefinitySiteMap.FindSiteMapNodeFromKey(pageId.ToString(), false);
+                }
+                else
+                {
+                    node = siteMap.FindSiteMapNodeFromKey(pageId.ToString());
+                }
+
                 if (node != null)
                 {
-                    var relativeUrl = node.GetFullUrl();
-                    var localizedUrl = s.ResolveUrl(relativeUrl, currentLanguage);
-                    return UrlPath.ResolveUrl(localizedUrl, true);
+                    return UrlPath.ResolveUrl(node.Url, true);
                 }
             }
 
