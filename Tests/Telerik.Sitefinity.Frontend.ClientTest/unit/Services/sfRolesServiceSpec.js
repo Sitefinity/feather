@@ -51,6 +51,23 @@
         expect(data).toEqualData(dataItems);
     };
 
+    var asserProviders = function (params) {
+        var data;
+        service.getRoleProviders.apply(service, params).then(function (res) {
+            data = res;
+        });
+
+        expect(data).toBeUndefined();
+
+        $httpBackend.flush();
+
+        expect(data).toEqualArrayOfObjects({
+            Items: [{
+                RoleProviderName: 'user'
+            }]
+        }, 'RoleProviderName');
+    };
+
     var asserSpecificItems = function (params) {
         var data;
         service.getSpecificRoles.apply(service, params).then(function (res) {
@@ -167,6 +184,17 @@
         $httpBackend.expectGET(url).respond(500, errorResponse);
     };
 
+    var expectGetRoleProvidersServiceCall = function (abilities) {
+        var servicePathPattern = '/GetRoleProviders/?abilities={0}';
+        var url = serviceBaseUrl + servicePathPattern.format(abilities);
+
+        $httpBackend.expectGET(url).respond({
+            Items: [{
+                RoleProviderName: 'user'
+            }]
+        });
+    };
+
     /* Tests */
     it('[GeorgiMateev] / should retrieve roles without filter and paging.', function () {
         var params = [null, 0, 20, null, null];
@@ -230,5 +258,13 @@
         expectGetSpecificItemsServiceCall.apply(this, params);
 
         asserSpecificItems(params);
+    });
+
+    it('[GeorgiMateev] / should return providers for roles.', function () {
+        var params = ['create,edit'];
+
+        expectGetRoleProvidersServiceCall.apply(this, params);
+
+        asserProviders(params);
     });
 });

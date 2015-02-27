@@ -46,9 +46,20 @@
             .$promise;
         }
 
+        function getRoleProviders (commaSeperatedAbilities) {
+            var endpoint = 'GetRoleProviders';
+            var url = serviceUrl + endpoint + '/';
+
+            return serviceHelper.getResource(url).get({
+                abilities: commaSeperatedAbilities
+            })
+            .$promise;
+        }
+
         return {
             getRoles: getRoles,
             getRole: getRole,
-            getSpecificRoles: getSpecificRoles
+            getSpecificRoles: getSpecificRoles,
+            getRoleProviders: getRoleProviders
         };
 }]);
