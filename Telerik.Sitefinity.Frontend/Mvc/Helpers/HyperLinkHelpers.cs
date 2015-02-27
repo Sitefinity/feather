@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Web.Mvc;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
+using Telerik.Sitefinity.Localization.UrlLocalizationStrategies;
 using Telerik.Sitefinity.Model;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.DataResolving;
 
@@ -75,6 +79,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return url;
+        }
+
+        /// <summary>
+        /// Gets the full page URL.
+        /// </summary>
+        /// <param name="pageId">The page identifier.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
+        public static string GetFullPageUrl(Guid pageId)
+        {
+            if (pageId != Guid.Empty)
+            {
+                var currentLanguage = Thread.CurrentThread.CurrentUICulture;
+                var s = ObjectFactory.Resolve<UrlLocalizationService>();
+                var pageManager = PageManager.GetManager();
+                var node = pageManager.GetPageNode(pageId);
+                if (node != null)
+                {
+                    var relativeUrl = node.GetFullUrl();
+                    var localizedUrl = s.ResolveUrl(relativeUrl, currentLanguage);
+                    return UrlPath.ResolveUrl(localizedUrl, true);
+                }
+            }
+
+            return null;
         }
     }
 }
