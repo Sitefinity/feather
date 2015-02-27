@@ -278,7 +278,7 @@
                      "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
                      "date" : "01-30-2015 18:30 +0200",
                      "name" : "Select external URLs",
-                     "tag" : "v1.1.60.2"
+                     "tag" : "v.1.1.60.2"
                   }
                ],
                "shortDescription" : "Done",
@@ -295,7 +295,7 @@
                      "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
                      "date" : "01-30-2015 18:30 +0200",
                      "name" : "Multi-site page selector ",
-                     "tag" : "v1.1.60.2"
+                     "tag" : "v.1.1.60.2"
                   }
                ],
                "shortDescription" : "Done",
@@ -312,7 +312,7 @@
                      "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
                      "date" : "01-30-2015 18:30 +0200",
                      "name" : "Site selector implementation for multi-site installations.",
-                     "tag" : "v1.1.60.2"
+                     "tag" : "v.1.1.60.2"
                   }
                ],
                "shortDescription" : "Done",
@@ -329,7 +329,7 @@
                      "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
                      "date" : "01-30-2015 18:30 +0200",
                      "name" : "Language selector implementation",
-                     "tag" : "v1.1.60.2"
+                     "tag" : "v.1.1.60.2"
                   }
                ],
                "shortDescription" : "Done",
@@ -346,7 +346,7 @@
                      "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
                      "date" : "01-30-2015 18:30 +0200",
                      "name" : "Link selector implementation",
-                     "tag" : "v1.1.60.2"
+                     "tag" : "v.1.1.60.2"
                   }
                ],
                "shortDescription" : "Done",
@@ -363,7 +363,7 @@
                      "commitHash" : "194bdb30dd4247319979a5cd13299627b2017f8f",
                      "date" : "02-13-2015 18:00 +0200",
                      "name" : "Library selector implementation",
-                     "tag" : "v1.1.80.1"
+                     "tag" : "v.1.1.80.1"
                   }
                ],
                "shortDescription" : "Done",
@@ -380,7 +380,7 @@
                      "commitHash" : "194bdb30dd4247319979a5cd13299627b2017f8f",
                      "date" : "02-13-2015 18:00 +0200",
                      "name" : "Flat taxon field implementation",
-                     "tag" : "v1.1.80.1"
+                     "tag" : "v.1.1.80.1"
                   }
                ],
                "shortDescription" : "Done",
@@ -397,7 +397,7 @@
                      "commitHash" : "272aca940ec3d6f42217ec653f6880cfcb81ce08",
                      "date" : "02-20-2015 20:30 +0200",
                      "name" : "Image selector implementation",
-                     "tag" : "v1.1.90.2"
+                     "tag" : "v.1.1.90.2"
                   }
                ],
                "shortDescription" : "Done",
@@ -571,7 +571,7 @@
             },
             {
                "expectedBy" : "",
-               "longDescription" : "",
+               "longDescription" : "Use this widget to enter content directly using the text editor and its features. ",
                "name" : "Content block",
                "progress" : 75,
                "releases" : [
@@ -601,14 +601,14 @@
                      "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
                      "date" : "01-30-2015 18:30 +0200",
                      "name" : "Hyperlink Manager",
-                     "tag" : "v1.1.60.2"
+                     "tag" : "v.1.1.60.2"
                   },
                   {
                      "article" : "",
                      "commitHash" : "272aca940ec3d6f42217ec653f6880cfcb81ce08",
                      "date" : "02-20-2015 20:30 +0200",
                      "name" : "Image Manager",
-                     "tag" : "v1.1.90.2"
+                     "tag" : "v.1.1.90.2"
                   },
                   {
                      "name" : "Media Manager"
@@ -622,7 +622,7 @@
             },
             {
                "expectedBy" : "",
-               "longDescription" : "",
+               "longDescription" : "Use this widget to display a single image on your page. ",
                "name" : "Image",
                "progress" : 100,
                "releases" : [
@@ -631,7 +631,7 @@
                      "commitHash" : "272aca940ec3d6f42217ec653f6880cfcb81ce08",
                      "date" : "02-20-2015 20:30 +0200",
                      "name" : "Image Widget",
-                     "tag" : "v1.1.90.2"
+                     "tag" : "v.1.1.90.2"
                   }
                ],
                "shortDescription" : "Done",
@@ -639,10 +639,19 @@
             },
             {
                "expectedBy" : "",
-               "longDescription" : "",
+               "longDescription" : "Use this widget to display a gallery of image thumbnails, where each image can be opened individually. ",
                "name" : "Image Gallery",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "",
+                     "commitHash" : "9bb63c5e3a67ccaef648504f1d4deaa22a15c961",
+                     "date" : "02-27-2015 15:30 +0200",
+                     "name" : "Image Gallery widget implementation",
+                     "tag" : "v.1.1.100.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -779,7 +788,7 @@
                      "commitHash" : "915718e89904522b019f4fae47a0dcaf509b5add",
                      "date" : "01-30-2015 18:30 +0200",
                      "name" : "Select External URLs",
-                     "tag" : "v1.1.60.2"
+                     "tag" : "v.1.1.60.2"
                   }
                ],
                "shortDescription" : "Done",
@@ -855,17 +864,17 @@
          "widgets" : [
             {
                "expectedBy" : "",
-               "longDescription" : "",
+               "longDescription" : "Widget development is in progress; not released yet.",
                "name" : "Login form",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "progress" : 50,
+               "shortDescription" : "In progress",
                "unstable" : false
             },
             {
                "expectedBy" : "",
-               "longDescription" : "",
+               "longDescription" : "Widget development is in progress; not released yet.",
                "name" : "Login/Logout button",
-               "progress" : 0,
+               "progress" : 50,
                "shortDescription" : "Not started",
                "unstable" : false
             },
@@ -885,17 +894,17 @@
          "widgets" : [
             {
                "expectedBy" : "",
-               "longDescription" : "",
+               "longDescription" : "Widget development is in progress; not released yet.",
                "name" : "Registration",
-               "progress" : 0,
+               "progress" : 50,
                "shortDescription" : "Not started",
                "unstable" : false
             },
             {
                "expectedBy" : "",
-               "longDescription" : "",
+               "longDescription" : "Widget development is in progress; not released yet.",
                "name" : "Profile",
-               "progress" : 0,
+               "progress" : 50,
                "shortDescription" : "Not started",
                "unstable" : false
             },
@@ -1270,49 +1279,49 @@
                      "commitHash" : "3a8f44fa4a12a72622c0bb7c539c94f6f1f736fe",
                      "date" : "02-06-2015 18:15 +0200",
                      "name" : "Collection directive",
-                     "tag" : "v1.1.70.1"
+                     "tag" : "v.1.1.70.1"
                   },
                   {
                      "article" : "Use-a-generic-tree-directive",
                      "commitHash" : "3a8f44fa4a12a72622c0bb7c539c94f6f1f736fe",
                      "date" : "02-06-2015 18:15 +0200",
                      "name" : "Tree directive",
-                     "tag" : "v1.1.70.1"
+                     "tag" : "v.1.1.70.1"
                   },
                   {
                      "article" : "Use-a-sort-box-directive",
                      "commitHash" : "3a8f44fa4a12a72622c0bb7c539c94f6f1f736fe",
                      "date" : "02-06-2015 18:15 +0200",
                      "name" : "Sort box directive",
-                     "tag" : "v1.1.70.1"
+                     "tag" : "v.1.1.70.1"
                   },
                   {
                      "article" : "Use-a-search-box-directive",
                      "commitHash" : "3a8f44fa4a12a72622c0bb7c539c94f6f1f736fe",
                      "date" : "02-06-2015 18:15 +0200",
                      "name" : "Search box directive",
-                     "tag" : "v1.1.70.1"
+                     "tag" : "v.1.1.70.1"
                   },
                   {
                      "article" : "Use-an-infinite-scroll-directive",
                      "commitHash" : "3a8f44fa4a12a72622c0bb7c539c94f6f1f736fe",
                      "date" : "02-06-2015 18:15 +0200",
                      "name" : "Infinite scroll directive",
-                     "tag" : "v1.1.70.1"
+                     "tag" : "v.1.1.70.1"
                   },
                   {
                      "article" : "Use-a-drag-and-drop-directive",
                      "commitHash" : "194bdb30dd4247319979a5cd13299627b2017f8f",
                      "date" : "02-13-2015 17:16 +0200",
                      "name" : "Drag and drop directive",
-                     "tag" : "v1.1.80.1"
+                     "tag" : "v.1.1.80.1"
                   },
                   {
                      "article" : "Use-an-image-field-directive",
                      "commitHash" : "272aca940ec3d6f42217ec653f6880cfcb81ce08",
                      "date" : "02-20-2015 20:30 +0200",
                      "name" : "Image field directive",
-                     "tag" : "v1.1.90.2"
+                     "tag" : "v.1.1.90.2"
                   }
                ],
                "shortDescription" : "In progress",
