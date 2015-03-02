@@ -62,7 +62,7 @@
 
                         ctrl.dialogTemplateUrl = 'client-components/selectors/identity/sf-role-selector.html';
                         ctrl.$scope.dialogTemplateId = 'sf-role-selector-template';
-                        ctrl.$scope.sfIdentifierField = "Name";
+                        ctrl.setIdentifierField("Name");
                         ctrl.$scope.searchIdentifierField = "Name";
 
                         var closedDialogTemplate = attrs.sfMultiselect ?
