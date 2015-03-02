@@ -31,7 +31,7 @@
 
                     this.bindIdentifierField = function (item) {
                         if (item) {
-                             var identifierField = $scope.sfIdentifierField || this.defaultIdentifierField
+                            var identifierField = $scope.sfIdentifierField || this.defaultIdentifierField;
 
                             var mainField = item[identifierField];
                             var valueProp = 'Value';

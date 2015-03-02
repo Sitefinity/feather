@@ -99,7 +99,7 @@
             differFilter: function (items, identifier) {
                 var itemsFilterArray = [];
 
-                if (items.length === 0) return this.trimOperator();
+                if (!items || items.length === 0) return this.trimOperator();
 
                 itemsFilterArray.push(identifier + '!="' + items[0] + '"');
 

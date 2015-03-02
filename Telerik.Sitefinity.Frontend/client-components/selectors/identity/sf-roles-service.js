@@ -15,9 +15,9 @@
 
         function getRoles (provider, skip, take, search, rolesToHide) {
             var filter = serviceHelper.filterBuilder()
-                    .differFilter(rolesToHide, identifierField)
-                    .and()
                     .searchFilter(search, null, identifierField)
+                    .and()
+                    .differFilter(rolesToHide, identifierField)
                     .getFilter();
 
             return getResource().get({
