@@ -38,7 +38,7 @@
     }));
 
     /* Helper methods */
-    var asserItems = function (params) {
+    var assertItems = function (params) {
         var data;
         service.getRoles.apply(service, params).then(function (res) {
             data = res;
@@ -51,7 +51,7 @@
         expect(data).toEqualData(dataItems);
     };
 
-    var asserProviders = function (params) {
+    var assertProviders = function (params) {
         var data;
         service.getRoleProviders.apply(service, params).then(function (res) {
             data = res;
@@ -68,7 +68,7 @@
         }, 'RoleProviderName');
     };
 
-    var asserSpecificItems = function (params) {
+    var assertSpecificItems = function (params) {
         var data;
         service.getSpecificRoles.apply(service, params).then(function (res) {
             data = res;
@@ -81,7 +81,7 @@
         expect(data).toEqualArrayOfObjects(dataItems, 'Id');
     };
 
-    var asserItem = function (params) {
+    var assertItem = function (params) {
         var data;
         service.getRole.apply(service, params).then(function (res) {
             data = res;
@@ -134,10 +134,7 @@
     var expectGetItemsServiceCall = function (provider, skip, take, search, searchField) {
         var filter = getFilter(search, searchField);
 
-        var filterParam = "";
-        //if (filter) {
-            filterParam = "filter=" + filter + "&";
-        //}
+        var filterParam = "filter=" + filter + "&";
 
         var providerParam = "";
         if (provider) {
@@ -201,7 +198,7 @@
 
         expectGetItemsServiceCall.apply(this, params);
 
-        asserItems(params);
+        assertItems(params);
     });
 
     it('[GeorgiMateev] / should retrieve roles with paging.', function () {
@@ -209,7 +206,7 @@
 
         expectGetItemsServiceCall.apply(this, params);
 
-        asserItems(params);
+        assertItems(params);
     });
 
     it('[GeorgiMateev] / should retrieve roles with provider.', function () {
@@ -217,7 +214,7 @@
 
         expectGetItemsServiceCall.apply(this, params);
 
-        asserItems(params);
+        assertItems(params);
     });
 
     it('[GeorgiMateev] / should retrieve items with filter.', function () {
@@ -225,7 +222,7 @@
 
         expectGetItemsServiceCall.apply(this, params);
 
-        asserItems(params);
+        assertItems(params);
     });
 
     it('[GeorgiMateev] / should return single role.', function () {
@@ -235,7 +232,7 @@
 
         expectGetItemServiceCall.apply(this, params);
 
-        asserItem(params);
+        assertItem(params);
     });
 
     it('[GeorgiMateev] / should return error.', function () {
@@ -257,7 +254,7 @@
 
         expectGetSpecificItemsServiceCall.apply(this, params);
 
-        asserSpecificItems(params);
+        assertSpecificItems(params);
     });
 
     it('[GeorgiMateev] / should return providers for roles.', function () {
@@ -265,6 +262,6 @@
 
         expectGetRoleProvidersServiceCall.apply(this, params);
 
-        asserProviders(params);
+        assertProviders(params);
     });
 });
