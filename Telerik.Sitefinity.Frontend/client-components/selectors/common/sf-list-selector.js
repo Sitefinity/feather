@@ -29,11 +29,11 @@
                 controller: function ($scope) {
                     this.defaultIdentifierField = 'Title';
 
-                    this.identifierField = $scope.sfIdentifierField || this.defaultIdentifierField;
-
                     this.bindIdentifierField = function (item) {
                         if (item) {
-                            var mainField = item[this.identifierField];
+                             var identifierField = $scope.sfIdentifierField || this.defaultIdentifierField
+
+                            var mainField = item[identifierField];
                             var valueProp = 'Value';
 
                             if (!mainField) {
@@ -98,6 +98,9 @@
                     this.onPostLinkComleted = function () {
                     };
 
+                    this.onResetItems = function () {
+                    };
+
                     this.resetItems = function () {
                         $scope.paging.skip = 0;
                         $scope.paging.areAllItemsLoaded = false;
@@ -106,6 +109,10 @@
                         $scope.items = [];
                         $scope.selectedItemsInTheDialog = [];
                         $scope.selectedItemsViewData = [];
+
+                        if (this.onResetItems) {
+                            this.onResetItems();
+                        }
                     };
 
                     this.OnItemsFiltering = function (items) {
@@ -348,7 +355,7 @@
                             timeoutMs: 500,
                             search: function (keyword) {
                                 scope.paging.areAllItemsLoaded = false;
-                                var endlessScroll = angular.element($("[endless-scroll]"))[0];
+                                var endlessScroll = angular.element($("[sf-endless-scroll]"))[0];
                                 if (endlessScroll) {
                                     endlessScroll.scrollTop = 0;
                                 }

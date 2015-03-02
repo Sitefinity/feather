@@ -96,6 +96,23 @@
 
                 return this;
             },
+            differFilter: function (items, identifier) {
+                var itemsFilterArray = [];
+
+                if (items.length === 0) return this.trimOperator();
+
+                itemsFilterArray.push(identifier + '!="' + items[0] + '"');
+
+                if (items.length > 1) {
+                    for (var i = 1; i < items.length; i++) {
+                        itemsFilterArray.push(' AND ' + identifier + '!="' + items[i] + '"');
+                    }
+                }
+
+                this.filter += '(' + itemsFilterArray.join('') + ')';
+
+                return this;
+            },
             specificItemsFilter: function (ids) {
                 var itemsFilterArray = [];
 

@@ -13,8 +13,10 @@
             return serviceHelper.getResource(url);
         }
 
-        function getRoles (provider, skip, take, search) {
+        function getRoles (provider, skip, take, search, rolesToHide) {
             var filter = serviceHelper.filterBuilder()
+                    .differFilter(rolesToHide, identifierField)
+                    .and()
                     .searchFilter(search, null, identifierField)
                     .getFilter();
 
