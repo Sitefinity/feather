@@ -113,5 +113,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return null;
         }
+
+        /// <summary>
+        /// Gets the full page URL.
+        /// </summary>
+        /// <param name="pageId">The page identifier.</param>
+        /// <returns>
+        /// The full page url or the current one if null is passed.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
+        public static string GetFullPageUrl(Guid? pageId)
+        {
+            if (!pageId.HasValue)
+            {
+                pageId = SiteMapBase.GetActualCurrentNode().Id;
+            }
+
+            return GetFullPageUrl(pageId.Value);
+        }
     }
 }
