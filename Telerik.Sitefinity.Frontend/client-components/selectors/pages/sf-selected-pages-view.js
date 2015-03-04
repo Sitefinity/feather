@@ -7,11 +7,10 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         var baseScope = scope.$$childTail;
-                        ctrl.isItemSelected = function (id, externalPageId) {
+                        ctrl.isItemSelected = function (id) {
                             if (baseScope.sfSelectedItems) {
                                 for (var i = 0; i < baseScope.sfSelectedItems.length; i++) {
-                                    if ((id && baseScope.sfSelectedItems[i].Id === id) ||
-                                        (externalPageId && baseScope.sfSelectedItems[i].ExternalPageId === externalPageId)) {
+                                    if (id && baseScope.sfSelectedItems[i].Id === id) {
                                         return true;
                                     }
                                 }
@@ -28,8 +27,7 @@
                             var selectedItemIndex;
                             var alreadySelected = false;
                             for (var i = 0; i < baseScope.sfSelectedItems.length; i++) {
-                                if ((item.Id && baseScope.sfSelectedItems[i].Id === item.Id) ||
-                                    (!item.Id && baseScope.sfSelectedItems[i].ExternalPageId === item.ExternalPageId)) {
+                                if (item.Id && baseScope.sfSelectedItems[i].Id === item.Id) {
                                     selectedItemIndex = i;
                                     alreadySelected = true;
                                     break;
