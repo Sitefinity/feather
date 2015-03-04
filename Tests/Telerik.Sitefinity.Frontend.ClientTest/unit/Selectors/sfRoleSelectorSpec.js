@@ -51,8 +51,8 @@
                             },
                             {
                                 "NumOfRoles": 10,
-                                "RoleProviderName": "provider1",
-                                "RoleProviderTitle": "provder 1"
+                                "RoleProviderName": "provider2",
+                                "RoleProviderTitle": "provder 2"
                             }]
                 });
 
@@ -82,12 +82,6 @@
     beforeEach(function () {
         commonMethods.mockServerContextToEnableTemplateCache();
     });
-
-    beforeEach(inject(function (serverContext) {
-        serverContext.getFrontendLanguages = function () {
-           return ['en', 'de'];
-        };
-    }));
 
     afterEach(function () {
         //Tear down.
