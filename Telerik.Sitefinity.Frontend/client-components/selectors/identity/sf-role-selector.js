@@ -8,10 +8,13 @@
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search) {
                             var provider = ctrl.$scope.selectedRoleProvider;
-                            var rolesToHide = attrs.sfHideRoles.split(',').
-                                map(function (item) {
-                                    return  item.trim();
-                                });
+                            var rolesToHide;
+                            if (attrs.sfHideRoles) {
+                                rolesToHide = attrs.sfHideRoles.split(',')
+                                    .map(function (item) {
+                                        return  item.trim();
+                                    });
+                            }
 
                             return rolesService.getRoles(provider, skip, take, search, rolesToHide);
                         };

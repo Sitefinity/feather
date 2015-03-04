@@ -114,13 +114,12 @@ describe("news selector", function () {
         provide = $provide;
     }));
 
-    beforeEach(inject(function ($rootScope, $httpBackend, _$q_, $templateCache, _$timeout_) {
+    beforeEach(inject(function ($rootScope, _$q_) {
         //Build the scope with whom the directive will be compiled.
         scope = $rootScope.$new();
         scope.provider = 'OpenAccessDataProvider';
 
         $q = _$q_;
-        $timeout = _$timeout_;
 
         serviceResult = _$q_.defer();
     }));
