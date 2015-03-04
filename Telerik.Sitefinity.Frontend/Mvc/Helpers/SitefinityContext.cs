@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Web;
 using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels;
 using Telerik.Sitefinity.Modules.Pages;
@@ -7,6 +10,7 @@ using Telerik.Sitefinity.Security.Claims;
 using Telerik.Sitefinity.Security.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.Events;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -71,6 +75,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
         }
 
+        /// <summary>
+        /// Gets the frontend login URL for the current site as configured in the backend.
+        /// </summary>
+        /// <value>
+        /// The frontend login URL.
+        /// </value>
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
+        public static string FrontendLoginUrl
+        {
+            get
+            {
+                return SitefinityContext.GetFrontendLoginUrl();
+            }
+        }
+
         #endregion
 
         #region Private Members
@@ -122,6 +142,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return new ProfileViewModel();
+        }
+
+        private static string GetFrontendLoginUrl()
+        {
+            var redirectStrategy = RedirectStrategyType.None;
+            var wrapper = new HttpContextWrapper(HttpContext.Current);
+            var methodInfo = typeof(RouteHelper).GetMethod(
+                "GetFrontEndLogin",
+                BindingFlags.NonPublic | BindingFlags.Static,
+                Type.DefaultBinder,
+                new[] { typeof(HttpContextBase), typeof(RedirectStrategyType).MakeByRefType(), typeof(SiteMapProvider) },
+                null);
+
+            var inputParameters = new object[] { wrapper, redirectStrategy, null };
+            var pageUrl = (string)methodInfo.Invoke(null, inputParameters);
+
+            return pageUrl;
         }
 
         #endregion

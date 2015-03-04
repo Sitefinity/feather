@@ -558,6 +558,9 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-thumbnail-size-selection.js" />
     <EmbeddedResource Include="assets\src\img\crop-to-area.png" />
     <EmbeddedResource Include="assets\src\img\resize-to-area.png" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-roles-service.js" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-role-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-role-selector.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

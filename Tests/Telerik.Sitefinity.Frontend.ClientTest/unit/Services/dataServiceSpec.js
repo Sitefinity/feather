@@ -38,7 +38,7 @@ describe('sfDataService', function () {
     }));
 
     /* Helper methods */
-    var asserItems = function (params) {
+    var assertItems = function (params) {
         var data;
         dataService.getLiveItems.apply(dataService, params).then(function (res) {
             data = res;
@@ -51,7 +51,7 @@ describe('sfDataService', function () {
         expect(data).toEqualData(dataItems);
     };
 
-    var asserItem = function (params) {
+    var assertItem = function (params) {
         var data;
         dataService.getItem.apply(dataService, params).then(function (res) {
             data = res;
@@ -94,10 +94,7 @@ describe('sfDataService', function () {
 
         var filter = getFilter(search, searchField);
 
-        var filterParam = "";
-        //if (filter) {
-            filterParam = "filter=" + filter + "&";
-        //}
+        var filterParam = "filter=" + filter + "&";
 
         var providerParam = "";
         if (provider) {
@@ -142,7 +139,7 @@ describe('sfDataService', function () {
 
         expectGetItemsServiceCall.apply(this, params);
 
-        asserItems(params);
+        assertItems(params);
     });
 
     it('[GMateev] / should retrieve items with paging.', function () {
@@ -150,7 +147,7 @@ describe('sfDataService', function () {
 
         expectGetItemsServiceCall.apply(this, params);
 
-        asserItems(params);
+        assertItems(params);
     });
 
     it('[GMateev] / should retrieve items with provider.', function () {
@@ -158,7 +155,7 @@ describe('sfDataService', function () {
 
         expectGetItemsServiceCall.apply(this, params);
 
-        asserItems(params);
+        assertItems(params);
     });
 
     it('[GMateev] / should retrieve items with filter.', function () {
@@ -166,7 +163,7 @@ describe('sfDataService', function () {
 
         expectGetItemsServiceCall.apply(this, params);
 
-        asserItems(params);
+        assertItems(params);
     });
 
     it('[GMateev] / should return single item.', function () {
@@ -176,7 +173,7 @@ describe('sfDataService', function () {
 
         expectGetItemServiceCall.apply(this, params);
 
-        asserItem(params);
+        assertItem(params);
     });
 
     it('[GMateev] / should return error.', function () {
