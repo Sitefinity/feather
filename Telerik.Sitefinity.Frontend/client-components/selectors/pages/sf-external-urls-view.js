@@ -33,7 +33,7 @@
 
                             if (scope.sfSelectedItems) {
                                 for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                    if (scope.sfSelectedItems[i].ExternalPageId === externalPageId) {
+                                    if (scope.sfSelectedItems[i].Id === externalPageId) {
                                         return true;
                                     }
                                 }
@@ -43,7 +43,7 @@
                         };
 
                         scope.addItem = function () {
-                            scope.sfExternalPages.push({ ExternalPageId: kendo.guid(), TitlesPath: '', Url: '', Status: 'new' });
+                            scope.sfExternalPages.push({ Id: kendo.guid(), IsExternal: true, TitlesPath: '', Url: '', Status: 'new' });
                         };
 
                         scope.removeItem = function (index, item) {
@@ -62,7 +62,7 @@
                             }
 
                             for (var i = 0; i < scope.sfSelectedItems.length; i++) {
-                                if (scope.sfSelectedItems[i].ExternalPageId === item.ExternalPageId) {
+                                if (scope.sfSelectedItems[i].Id === item.Id) {
                                     return i;
                                 }
                             }
