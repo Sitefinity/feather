@@ -7,7 +7,7 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search) {
-                            var provider = ctrl.$scope.selectedRoleProvider;
+                            var provider = ctrl.$scope.sfProvider;
                             var rolesToHide;
                             if (attrs.sfHideRoles) {
                                 rolesToHide = attrs.sfHideRoles.split(',')
@@ -24,7 +24,7 @@
                         };
 
                         ctrl.$scope.providerChanged = function (provider) {
-                            ctrl.$scope.selectedRoleProvider = provider;
+                            ctrl.$scope.sfProvider = provider;
                             ctrl.$scope.paging.skip = 0;
                             ctrl.$scope.paging.areAllItemsLoaded = false;
 
@@ -38,12 +38,12 @@
                         };
 
                         ctrl.onResetItems = function () {
-                            ctrl.$scope.selectedRoleProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
+                            ctrl.$scope.sfProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
                         };
 
                         ctrl.canPushSelectedItemFirst = function () {
-                            return !ctrl.$scope.selectedRoleProvider ||
-                                    ctrl.$scope.selectedRoleProvider === ctrl.$scope.selectedItemsInTheDialog[0].ProviderName;
+                            return !ctrl.$scope.sfProvider ||
+                                    ctrl.$scope.sfProvider === ctrl.$scope.selectedItemsInTheDialog[0].ProviderName;
                         };
 
                         var onItemsLoadedSuccess = function (data) {
@@ -67,7 +67,7 @@
                         var loadRolesProviders = function () {
                             rolesService.getRoleProviders().then(function (data) {
                                 ctrl.$scope.rolesProviders = data.Items;
-                                ctrl.$scope.selectedRoleProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
+                                ctrl.$scope.sfProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
 
                                 // TODO: remove this when the new endpoint (returns all roles providers) is added
                                 var appRolesProvider = {
