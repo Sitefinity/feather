@@ -5,22 +5,59 @@
     //Will be returned from the service mock.
     var dataItem = {
         Id: '4c003fb0-2a77-61ec-be54-ff00007864f4',
-        Name: 'user'
+        Name: 'user role',
+        ProviderName: 'provider1'
     };
 
     var dataItem2 = {
         Id: '4c003fb0-2a77-61ec-be54-ff11117864f4',
-        Name: 'admin'
+        Name: 'admin',
+        ProviderName: 'provider2'
     };
 
-    var dataItems =  [dataItem, dataItem2];
+    var dataItem3 = {
+        Id: '4c003fb0-2a77-61ec-1254-ff11117864f4',
+        Name: 'designer role',
+        ProviderName: 'provider2'
+    };
+
+    var providers = [{
+            "NumOfRoles": 3,
+            "RoleProviderName": "",
+            "RoleProviderTitle": "All roles"
+        },
+        {
+            "NumOfRoles": 1,
+            "RoleProviderName": "provider1",
+            "RoleProviderTitle": "provder 1"
+        },
+        {
+            "NumOfRoles": 2,
+            "RoleProviderName": "provider2",
+            "RoleProviderTitle": "provder 2"
+        }];
+
+    var dataItems =  [dataItem, dataItem2, dataItem3];
 
     var rolesService = {
         getRoles: jasmine.createSpy('sfRolesService').andCallFake(
             function (provider, skip, take, search, rolesToHide) {
                 var deferred = $q.defer();
+                
+                var items = dataItems;
+                if (provider) {
+                    items = items.filter(function (item) {
+                        return item.ProviderName === provider;
+                    });
+                }
+                if (search) {
+                    items = items.filter(function (item) {
+                        return item.Name.indexOf(search) >= 0;
+                    });
+                }
+
                 deferred.resolve({
-                    Items: dataItems,
+                    Items: items,
                     TotalCount: dataItems.length
                 });
 
@@ -29,7 +66,7 @@
         getSpecificRoles: jasmine.createSpy('sfRolesServie.getSpecificRoles').andCallFake(
             function (ids, provider) {
                 var deferred = $q.defer();
-                var items = [dataItem, dataItem2].filter(function (item) {
+                var items = [dataItem, dataItem2, dataItem3].filter(function (item) {
                     return ids.indexOf(item.Id) >= 0;
                 });
 
@@ -44,16 +81,7 @@
             function (commaSeperatedAbilities) {
                 var deferred = $q.defer();
                 deferred.resolve({
-                    Items: [{
-                                "NumOfRoles": 10,
-                                "RoleProviderName": "provider1",
-                                "RoleProviderTitle": "provder 1"
-                            },
-                            {
-                                "NumOfRoles": 10,
-                                "RoleProviderName": "provider2",
-                                "RoleProviderTitle": "provder 2"
-                            }]
+                    Items: providers
                 });
 
                 return deferred.promise;
@@ -82,6 +110,12 @@
     beforeEach(function () {
         commonMethods.mockServerContextToEnableTemplateCache();
     });
+
+    beforeEach(inject(function (serverContext) {
+        serverContext.getFrontendLanguages = function () {
+            return [];
+        };
+    }));
 
     afterEach(function () {
         //Tear down.
@@ -117,7 +151,7 @@
         var args = getRolesServiceGetRolesArgs();
 
         //Provider
-        expect(args[0]).toBe('provider1');
+        expect(args[0]).toBe('');
 
         //Skip
         expect(args[1]).toBe(0);
@@ -173,7 +207,7 @@
             var args = getRolesServiceGetRolesArgs();
 
             //Provider
-            expect(args[0]).toBe('provider1');
+            expect(args[0]).toBe('');
 
             //Skip
             expect(args[1]).toBe(0);
@@ -311,6 +345,111 @@
             expect(s.selectedItemsInTheDialog).toBeDefined();
             expect(s.selectedItemsInTheDialog.length).toEqual(1);
             expect(s.selectedItemsInTheDialog).toEqualArrayOfObjects([dataItem2], ['Id', 'Title']);
+        });
+    });
+
+    describe('in single selection mode', function () {
+        it('[NPetrova] / should load selected item on the top when the provider is changed if the selected item is from this provider', function () {
+            var template = "<sf-list-selector sf-role-selector />";
+            var scope = $rootScope.$new();
+
+            commonMethods.compileDirective(template, scope);
+
+            $('.openSelectorBtn').click();
+
+            var s = scope.$$childHead;
+
+            expect(s.sfProvider).toBe(providers[0].RoleProviderName);
+
+            //Select 'designer' role in the selector
+            s.itemClicked(2, s.items[2]);
+
+            s.providerChanged(providers[2].RoleProviderName);
+            s.$digest();
+
+            //The selected item must be on the top when provider2 is selected
+            expect(s.sfProvider).toBe(providers[2].RoleProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(2);
+            expect(s.items[0].Name).toBe(dataItem3.Name);
+            expect(s.items[1].Name).toBe(dataItem2.Name);
+
+            s.providerChanged(providers[1].RoleProviderName);
+            s.$digest();
+
+            //The selected item must not be on the top when provider1 is selected
+            expect(s.sfProvider).toBe(providers[1].RoleProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(1);
+            expect(s.items[0].Name).toBe(dataItem.Name);
+
+            s.providerChanged(providers[0].RoleProviderName);
+            s.$digest();
+
+            //The selected item must be on the top when 'All roles' provider is selected
+            expect(s.sfProvider).toBe(providers[0].RoleProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(3);
+            expect(s.items[0].Name).toBe(dataItem3.Name);
+            expect(s.items[1].Name).toBe(dataItem.Name);
+            expect(s.items[2].Name).toBe(dataItem2.Name);
+        });
+
+        it('[NPetrova] / should load items correctly when search is applied.', function () {
+            var template = "<sf-list-selector sf-role-selector sf-selected-item-id='selectedItemId' />";
+            var scope = $rootScope.$new();
+            scope.selectedItemId = dataItem3.Id;
+
+            commonMethods.compileDirective(template, scope);
+
+            $('.openSelectorBtn').click();
+
+            var s = scope.$$childHead;
+
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(3);
+            expect(s.items[0].Name).toBe(dataItem3.Name);
+            expect(s.items[1].Name).toBe(dataItem.Name);
+            expect(s.items[2].Name).toBe(dataItem2.Name);
+
+            //search for 'role'
+            s.filter.searchString = 'role';
+            s.filter.search(s.filter.searchString);
+            s.$digest();
+
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(2);
+            expect(s.items[0].Name).toBe(dataItem.Name);
+            expect(s.items[1].Name).toBe(dataItem3.Name);
+
+            //change provider to provider1 (the selected item is not from this provider) while still search string is applied
+            s.providerChanged(providers[1].RoleProviderName);
+            s.$digest();
+
+            expect(s.sfProvider).toBe(providers[1].RoleProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(1);
+            expect(s.items[0].Name).toBe(dataItem.Name);
+
+            //change provider to provider2 (the selected item is from this provider) while still search string is applied
+            s.providerChanged(providers[2].RoleProviderName);
+            s.$digest();
+
+            expect(s.sfProvider).toBe(providers[2].RoleProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(1);
+            expect(s.items[0].Name).toBe(dataItem3.Name);
+
+            //remove search string
+            s.filter.searchString = '';
+            s.filter.search(s.filter.searchString);
+            s.$digest();
+
+            expect(s.sfProvider).toBe(providers[2].RoleProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(2);
+            expect(s.items[0].Name).toBe(dataItem3.Name);
+            expect(s.items[1].Name).toBe(dataItem2.Name);
         });
     });
 });
