@@ -8362,6 +8362,10 @@ tab {
 .modal-dialog p {
   font-size: 12px; }
 
+/* line 21, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
+.sf-FlatTaxonField .suggestion-list {
+  margin-left: 0; }
+
 /* line 7, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_tooltip */
 .Tooltip {
   position: relative;
