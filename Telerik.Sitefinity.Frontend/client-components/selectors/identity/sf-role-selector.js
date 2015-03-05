@@ -38,9 +38,27 @@
                             ctrl.$scope.selectedRoleProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
                         };
 
+                        ctrl.canPushSelectedItemFirst = function () {
+                            return !ctrl.$scope.selectedRoleProvider ||
+                                    ctrl.$scope.selectedRoleProvider === ctrl.$scope.selectedItemsInTheDialog[0].ProviderName;
+                        };
+
                         var onItemsLoadedSuccess = function (data) {
                             ctrl.$scope.paging.skip += data.Items.length;
-                            ctrl.$scope.items = data.Items;
+                            ctrl.$scope.items.length = 0;
+
+                            ctrl.$scope.sfSelectedItems = [ctrl.$scope.selectedItemsInTheDialog[0]];
+                            ctrl.$scope.sfSelectedItem = ctrl.$scope.selectedItemsInTheDialog[0];
+
+                            if (!ctrl.$scope.multiselect && !ctrl.$scope.filter.searchString && ctrl.canPushSelectedItemFirst()) {
+                                ctrl.pushSelectedItemToTheTop(data.Items);
+                                ctrl.pushNotSelectedItems(data.Items);
+                            }
+                            else {
+                                ctrl.$scope.items = data.Items;
+                            }
+
+                            return ctrl.$scope.items;
                         };
 
                         var loadRolesProviders = function () {
