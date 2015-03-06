@@ -189,7 +189,7 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
-    <Compile Include="Mvc\Helpers\EmailTemplateSelectorHelper.cs" />
+    <Compile Include="Notifications\EmailTemplateHelper.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerMetadataAttribute.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
     <Compile Include="Mvc\Helpers\CustomFieldsHelpers.cs" />
