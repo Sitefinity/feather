@@ -6,21 +6,19 @@ using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 
-namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
+namespace Telerik.Sitefinity.Frontend.Notifications
 {
     /// <summary>
     /// This class contains helpers for working with email templates.
     /// </summary>
-    public static class EmailTemplateSelectorHelper
+    public static class EmailTemplateHelper
     {
         /// <summary>
         /// Gets the email templates.
         /// </summary>
-        /// <param name="helper">The helper.</param>
         /// <param name="filterExpression">The filter expression.</param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "helper")]
-        public static IDictionary<Guid, string> GetEmailTemplates(this HtmlHelper helper, string filterExpression)
+        public static IDictionary<Guid, string> GetEmailTemplates(string filterExpression)
         {
             var pageManager = PageManager.GetManager();
             IQueryable<ControlPresentation> allTemplates;
