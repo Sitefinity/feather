@@ -76,6 +76,10 @@
 
                     this.$scope = $scope;
 
+                    this.canPushSelectedItemFirst = function () {
+                        return true;
+                    };
+
                     this.onSelectedItemsLoadedSuccess = function (data) {
                         this.updateSelection(data.Items);
                     };
@@ -91,6 +95,30 @@
                         $scope.sfSelectedIds = selectedItems.map(function (item) {
                             return item.Id;
                         });
+                    };
+
+                    this.pushSelectedItemToTheTop = function (items) {
+                        if ($scope.items.length === 0 && $scope.sfSelectedItems && $scope.sfSelectedItems.length > 0) {
+                            $scope.items.push($scope.sfSelectedItems[0]);
+                        }
+                        else {
+                            var ids = $scope.getSelectedIds();
+                            if ($scope.items.length === 0 && ids && ids.length > 0) {
+                                Array.prototype.push.apply($scope.items,
+                                               items.filter(function (item) {
+                                                   return ids.indexOf(item.Id) === 0;
+                                               }));
+                            }
+                        }
+                    };
+
+                    this.pushNotSelectedItems = function (items) {
+                        var ids = $scope.getSelectedIds();
+
+                        Array.prototype.push.apply($scope.items,
+                            items.filter(function (item) {
+                                return ids.indexOf(item.Id) < 0;
+                            }));
                     };
 
                     this.onFilterItemSucceeded = function (items) {
@@ -195,8 +223,8 @@
                                 Array.prototype.push.apply(scope.items, data.Items);
                             }
                             else {
-                                pushSelectedItemToTheTop(data.Items);
-                                pushNotSelectedItems(data.Items);
+                                ctrl.pushSelectedItemToTheTop(data.Items);
+                                ctrl.pushNotSelectedItems(data.Items);
                             }
                             return scope.items;
                         };
@@ -204,10 +232,10 @@
                         var onItemsFilteredSuccess = function (data) {
                             scope.paging.skip += data.Items.length;
 
-                            if (!scope.multiselect && !scope.filter.searchString) {
+                            if (!scope.multiselect && !scope.filter.searchString && ctrl.canPushSelectedItemFirst()) {
                                 scope.items = [];
-                                pushSelectedItemToTheTop();
-                                pushNotSelectedItems(data.Items);
+                                ctrl.pushSelectedItemToTheTop();
+                                ctrl.pushNotSelectedItems(data.Items);
                             }
                             else {
                                 scope.items = ctrl.OnItemsFiltering(data.Items);
@@ -227,31 +255,6 @@
                         var defaultChangeButtonText = 'Change';
 
                         var currentSelectedIds;
-
-                        var pushSelectedItemToTheTop = function (items) {
-
-                            if (scope.items.length === 0 && scope.sfSelectedItems && scope.sfSelectedItems.length > 0) {
-                                scope.items.push(scope.sfSelectedItems[0]);
-                            }
-                            else {
-                                var ids = scope.getSelectedIds();
-                                if (scope.items.length === 0 && ids && ids.length > 0) {
-                                    Array.prototype.push.apply(scope.items,
-                                                   items.filter(function (item) {
-                                                       return ids.indexOf(item.Id) === 0;
-                                                   }));
-                                }
-                            }
-                        };
-
-                        var pushNotSelectedItems = function (items) {
-                            var ids = scope.getSelectedIds();
-
-                            Array.prototype.push.apply(scope.items,
-                                items.filter(function (item) {
-                                    return ids.indexOf(item.Id) < 0;
-                                }));
-                        };
 
                         var updateSelectedItems = function () {
                             ctrl.removeUnselectedItems();
@@ -385,7 +388,7 @@
 
                             pageLoaded: function (items) {
                                 if (!scope.multiselect && !scope.filter.searchString) {
-                                    pushNotSelectedItems(items);
+                                    ctrl.pushNotSelectedItems(items);
                                 }
                                 else {
                                     Array.prototype.push.apply(scope.items, items);
