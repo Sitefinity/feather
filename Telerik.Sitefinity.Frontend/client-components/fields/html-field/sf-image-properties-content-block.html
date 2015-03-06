@@ -37,7 +37,7 @@
         <div class="form-group">
             <label>Alignment</label><br />
             <label class="radio-inline">
-                <input type="radio" ng-model="model.alignment" value="None" checked="checked" />
+                <input type="radio" ng-model="model.alignment" value="None" ng-checked="!model.alignment || model.alignment==='None'" />
                 <span class="icon-align icon-align-none"></span>
                 None
             </label>
