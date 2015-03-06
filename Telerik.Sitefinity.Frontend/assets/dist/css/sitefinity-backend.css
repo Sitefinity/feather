@@ -7806,6 +7806,10 @@ html .km-pane-wrapper .km-widget, .k-ie .km-pane-wrapper .k-widget, .k-ie .km-pa
 .k-checkbox {
   display: inline-block; }
 
+/* line 3, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/_widget.sass */
+div.k-widget, div.k-widget *, div.k-widget *:before {
+  box-sizing: border-box; }
+
 /* line 8, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_utility-classes */
 .m-top-none {
   margin-top: 0px; }
@@ -8058,6 +8062,11 @@ textarea {
     transform: scaleY(1);
     -webkit-transform: scaleY(1);
     background-color: #105ab5; } }
+
+/* line 1, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_typography */
+.description-note {
+  margin-top: -6px;
+  color: #777; }
 
 /* line 1, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
 h4, .h4 {

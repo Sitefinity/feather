@@ -21,8 +21,13 @@
                     <sf-items-filter sf-filter='filter'></sf-items-filter>
                 </div>
 
-                <select ng-model="sfProvider" ng-change="providerChanged(sfProvider)" ng-options="provider.RoleProviderName as provider.RoleProviderTitle for provider in rolesProviders">
-                </select>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <select class="form-control m-bottom-sm" ng-model="sfProvider" ng-change="providerChanged(sfProvider)" ng-options="provider.RoleProviderName as provider.RoleProviderTitle for provider in rolesProviders">
+                        </select>
+                    </div>
+                </div>
+
 
                 <div sf-endless-scroll sf-paging='paging' class="list-group list-group-endless">
                     <div ng-repeat="item in items"

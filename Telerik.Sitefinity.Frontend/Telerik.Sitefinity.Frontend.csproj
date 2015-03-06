@@ -442,11 +442,23 @@
     <None Include="assets\src\sass\bootstrap\_modals.sass" />
     <None Include="assets\src\sass\bootstrap\_navs.sass" />
     <None Include="assets\src\sass\bootstrap\_utilities.sass" />
+    <None Include="assets\src\sass\html-field.sass" />
+    <None Include="assets\src\sass\kendo\_checkbox.sass" />
     <None Include="assets\src\sass\kendo\_editor.sass" />
     <None Include="assets\src\sass\kendo\_kendo-ui.bootstrap.scss" />
     <None Include="assets\src\sass\kendo\_tabstrip.sass" />
+    <None Include="assets\src\sass\kendo\_treeview.sass" />
+    <None Include="assets\src\sass\modules\_options.sass" />
+    <None Include="assets\src\sass\modules\_sf-drag.sass" />
+    <None Include="assets\src\sass\modules\_sf-flat-taxon-field.sass" />
+    <None Include="assets\src\sass\modules\_sf-media-selector.sass" />
+    <None Include="assets\src\sass\modules\_sf-Progress.sass" />
+    <None Include="assets\src\sass\modules\_sf-tree.sass" />
     <None Include="assets\src\sass\modules\_tooltip.sass" />
     <None Include="assets\src\sass\sitefinity-backend.sass" />
+    <None Include="assets\src\sass\_foundation-overwrites.sass" />
+    <None Include="assets\src\sass\_global.sass" />
+    <None Include="assets\src\sass\_loading.sass" />
     <None Include="assets\src\sass\_utility-classes.sass" />
     <None Include="assets\src\sass\_variables.sass" />
     <None Include="OpenAccessNuGet.targets" />
@@ -581,7 +593,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
