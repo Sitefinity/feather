@@ -7994,6 +7994,11 @@ ul, ol, dl, textarea {
 textarea {
   line-height: 1.5; }
 
+/* line 11, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_global */
+fieldset {
+  padding: 0;
+  border: 0; }
+
 /* line 1, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_loading */
 .sf-loading:before, .sf-loading:after, .sf-loading > span {
   background-color: #9cc5f7;
