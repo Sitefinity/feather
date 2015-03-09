@@ -71,13 +71,13 @@
                                 ctrl.$scope.rolesProviders = data.Items;
                                 ctrl.$scope.sfProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
 
-                                // TODO: remove this when the new endpoint (returns all roles providers) is added
-                                var appRolesProvider = {
-                                    "NumOfRoles": 10,
-                                    "RoleProviderName": "AppRoles",
-                                    "RoleProviderTitle": "AppRoles"
-                                };
-                                ctrl.$scope.rolesProviders.push(appRolesProvider);
+                                //// Consider using this logic if we want to support backward compatibility.
+                                //var appRolesProvider = {
+                                //    "NumOfRoles": 10,
+                                //    "RoleProviderName": "AppRoles",
+                                //    "RoleProviderTitle": "AppRoles"
+                                //};
+                                //ctrl.$scope.rolesProviders.push(appRolesProvider);
                             });
                         };
 

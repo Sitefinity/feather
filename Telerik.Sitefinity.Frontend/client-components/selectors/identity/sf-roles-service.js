@@ -53,7 +53,8 @@
             var url = serviceUrl + endpoint + '/';
 
             return serviceHelper.getResource(url).get({
-                abilities: commaSeperatedAbilities
+                abilities: commaSeperatedAbilities,
+                addAppRoles: true
             })
             .$promise;
         }
