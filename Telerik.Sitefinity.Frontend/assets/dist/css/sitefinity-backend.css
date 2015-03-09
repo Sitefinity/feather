@@ -8401,7 +8401,7 @@ tab {
 
 /* line 2, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .form-group-list .form-group + .form-group {
-  margin-bottom: 0; }
+  margin-top: 0; }
 
 /* line 5, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .form-group + .form-group {
