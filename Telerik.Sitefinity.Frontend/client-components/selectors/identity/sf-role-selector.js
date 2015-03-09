@@ -88,9 +88,7 @@
                         ctrl.setIdentifierField("Name");
                         ctrl.$scope.searchIdentifierField = "Name";
 
-                        var closedDialogTemplate = attrs.sfMultiselect ?
-                            'client-components/selectors/common/sf-list-group-selection.html' :
-                            'client-components/selectors/common/sf-bubbles-selection.html';
+                        var closedDialogTemplate = 'client-components/selectors/common/sf-bubbles-selection.html';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
 
