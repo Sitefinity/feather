@@ -50,8 +50,10 @@
                             ctrl.$scope.paging.skip += data.Items.length;
                             ctrl.$scope.items.length = 0;
 
-                            ctrl.$scope.sfSelectedItems = [ctrl.$scope.selectedItemsInTheDialog[0]];
-                            ctrl.$scope.sfSelectedItem = ctrl.$scope.selectedItemsInTheDialog[0];
+                            if (ctrl.$scope.selectedItemsInTheDialog.length > 0) {
+                                ctrl.$scope.sfSelectedItems = [ctrl.$scope.selectedItemsInTheDialog[0]];
+                                ctrl.$scope.sfSelectedItem = ctrl.$scope.selectedItemsInTheDialog[0];
+                            }
 
                             if (!ctrl.$scope.multiselect && !ctrl.$scope.filter.searchString && ctrl.canPushSelectedItemFirst()) {
                                 ctrl.pushSelectedItemToTheTop(data.Items);
