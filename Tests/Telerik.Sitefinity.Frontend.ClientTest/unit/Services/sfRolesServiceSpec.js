@@ -202,7 +202,7 @@
     };
 
     var expectGetRoleProvidersServiceCall = function (abilities) {
-        var servicePathPattern = '/GetRoleProviders/?abilities={0}';
+        var servicePathPattern = '/GetRoleProviders/?abilities={0}&addAppRoles=true';
         var url = serviceBaseUrl + servicePathPattern.format(abilities);
 
         $httpBackend.expectGET(url).respond({
