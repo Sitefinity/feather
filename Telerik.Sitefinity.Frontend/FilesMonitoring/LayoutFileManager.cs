@@ -194,8 +194,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var prevSite = SystemManager.CurrentContext.CurrentSite;
             if (multisiteContext != null)
             {
-                var id = Config.Get<ProjectConfig>().DefaultSite.Id;
-                multisiteContext.ChangeCurrentSite(multisiteContext.GetSiteById(id));
+                var defaultSite = multisiteContext.GetSites().Single(s => s.IsDefault);
+                multisiteContext.ChangeCurrentSite(defaultSite);
             }
 
             try
