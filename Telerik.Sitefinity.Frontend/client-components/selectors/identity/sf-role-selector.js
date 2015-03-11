@@ -38,19 +38,22 @@
                         };
 
                         ctrl.onResetItems = function () {
-                            ctrl.$scope.sfProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
+                            if (ctrl.$scope.rolesProviders && ctrl.$scope.rolesProviders.length > 0) {
+                                ctrl.$scope.sfProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
+                            }
                         };
 
                         ctrl.canPushSelectedItemFirst = function () {
                             return !ctrl.$scope.sfProvider ||
-                                    ctrl.$scope.sfProvider === ctrl.$scope.selectedItemsInTheDialog[0].ProviderName;
+                                    (ctrl.$scope.selectedItemsInTheDialog && ctrl.$scope.selectedItemsInTheDialog.length > 0 &&
+                                    ctrl.$scope.sfProvider === ctrl.$scope.selectedItemsInTheDialog[0].ProviderName);
                         };
 
                         var onItemsLoadedSuccess = function (data) {
                             ctrl.$scope.paging.skip += data.Items.length;
                             ctrl.$scope.items.length = 0;
 
-                            if (ctrl.$scope.selectedItemsInTheDialog.length > 0) {
+                            if (ctrl.$scope.selectedItemsInTheDialog && ctrl.$scope.selectedItemsInTheDialog.length > 0) {
                                 ctrl.$scope.sfSelectedItems = [ctrl.$scope.selectedItemsInTheDialog[0]];
                                 ctrl.$scope.sfSelectedItem = ctrl.$scope.selectedItemsInTheDialog[0];
                             }
@@ -69,15 +72,10 @@
                         var loadRolesProviders = function () {
                             rolesService.getRoleProviders().then(function (data) {
                                 ctrl.$scope.rolesProviders = data.Items;
-                                ctrl.$scope.sfProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
 
-                                //// Consider using this logic if we want to support backward compatibility.
-                                //var appRolesProvider = {
-                                //    "NumOfRoles": 10,
-                                //    "RoleProviderName": "AppRoles",
-                                //    "RoleProviderTitle": "AppRoles"
-                                //};
-                                //ctrl.$scope.rolesProviders.push(appRolesProvider);
+                                if (ctrl.$scope.rolesProviders && ctrl.$scope.rolesProviders.length > 0) {
+                                    ctrl.$scope.sfProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
+                                }
                             });
                         };
 
