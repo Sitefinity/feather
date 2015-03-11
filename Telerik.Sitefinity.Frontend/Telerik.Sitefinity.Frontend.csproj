@@ -16,7 +16,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2014.3.1209.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
+    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2015.1.225.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <JSLintSkip>\Mvc\Scripts\Angular\angular.min.js|\Mvc\Scripts\Angular\angular-route.min.js|\Mvc\Scripts\Angular\|\Mvc\Scripts\Bootstrap\|\Mvc\Scripts\Kendo\</JSLintSkip>
@@ -59,19 +59,19 @@
     </Reference>
     <Reference Include="ServiceStack">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ServiceStack.Signed.4.0.33\lib\net40\ServiceStack.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Signed.4.0.36\lib\net40\ServiceStack.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Client">
-      <HintPath>..\packages\ServiceStack.Client.Signed.4.0.33\lib\net40\ServiceStack.Client.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Client.Signed.4.0.36\lib\net40\ServiceStack.Client.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common">
-      <HintPath>..\packages\ServiceStack.Common.Signed.4.0.33\lib\net40\ServiceStack.Common.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Common.Signed.4.0.36\lib\net40\ServiceStack.Common.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\packages\ServiceStack.Interfaces.4.0.33\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid\ServiceStack.Interfaces.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Interfaces.4.0.36\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text">
-      <HintPath>..\packages\ServiceStack.Text.Signed.4.0.33\lib\net40\ServiceStack.Text.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Text.Signed.4.0.36\lib\net40\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -82,27 +82,27 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -111,67 +111,67 @@
     <Reference Include="System.Xml" />
     <Reference Include="Telerik.OpenAccess">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1209.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.OpenAccess.35.Extensions">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1209.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.OpenAccess.40.Extensions">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1209.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.OpenAccess.Runtime">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2014.3.1209.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Model">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Resources">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Resources.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Resources.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Search">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Documents">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Events">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Statistics">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
-      <HintPath>..\packages\Telerik.Sitefinity.TestUtilities.7.3.5600.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.TestUtilities.8.0.5700.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.7.3.5600.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.Design">
-      <HintPath>..\packages\Telerik.Web.UI.2014.3.1209.40\lib\net40\Telerik.Web.Design.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2015.1.225.40\lib\net40\Telerik.Web.Design.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Web.UI.2014.3.1209.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2015.1.225.40\lib\net40\Telerik.Web.UI.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI.Skins">
-      <HintPath>..\packages\Telerik.Web.UI.2014.3.1209.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2015.1.225.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +189,7 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Notifications\EmailTemplateHelper.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerMetadataAttribute.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
     <Compile Include="Mvc\Helpers\CustomFieldsHelpers.cs" />
@@ -442,11 +443,23 @@
     <None Include="assets\src\sass\bootstrap\_modals.sass" />
     <None Include="assets\src\sass\bootstrap\_navs.sass" />
     <None Include="assets\src\sass\bootstrap\_utilities.sass" />
+    <None Include="assets\src\sass\html-field.sass" />
+    <None Include="assets\src\sass\kendo\_checkbox.sass" />
     <None Include="assets\src\sass\kendo\_editor.sass" />
     <None Include="assets\src\sass\kendo\_kendo-ui.bootstrap.scss" />
     <None Include="assets\src\sass\kendo\_tabstrip.sass" />
+    <None Include="assets\src\sass\kendo\_treeview.sass" />
+    <None Include="assets\src\sass\modules\_options.sass" />
+    <None Include="assets\src\sass\modules\_sf-drag.sass" />
+    <None Include="assets\src\sass\modules\_sf-flat-taxon-field.sass" />
+    <None Include="assets\src\sass\modules\_sf-media-selector.sass" />
+    <None Include="assets\src\sass\modules\_sf-Progress.sass" />
+    <None Include="assets\src\sass\modules\_sf-tree.sass" />
     <None Include="assets\src\sass\modules\_tooltip.sass" />
     <None Include="assets\src\sass\sitefinity-backend.sass" />
+    <None Include="assets\src\sass\_foundation-overwrites.sass" />
+    <None Include="assets\src\sass\_global.sass" />
+    <None Include="assets\src\sass\_loading.sass" />
     <None Include="assets\src\sass\_utility-classes.sass" />
     <None Include="assets\src\sass\_variables.sass" />
     <None Include="OpenAccessNuGet.targets" />

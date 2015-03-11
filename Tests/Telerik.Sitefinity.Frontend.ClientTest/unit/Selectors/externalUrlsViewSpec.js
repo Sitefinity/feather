@@ -3,10 +3,10 @@ describe("external urls view", function () {
     var scope;
 
     var sfExternalPages = [
-            { TitlesPath: "title 1", ExternalPageId: "4c003fb0-2a77-61ec-be54-ff00007864f4", Url: "url 1" },
-            { TitlesPath: "title 2", ExternalPageId: "4c003fb0-2a77-61ec-be54-ff00007864f3", Url: "url 2" },
-            { TitlesPath: "title 3", ExternalPageId: "4c003fb0-2a77-61ec-be54-ff10007864f5", Url: "url 3" },
-            { TitlesPath: "title 4", ExternalPageId: "4c003fb0-2a77-61ec-be54-ff10007864f6", Url: "url 4" }
+            { TitlesPath: "title 1", Id: "4c003fb0-2a77-61ec-be54-ff00007864f4", Url: "url 1", IsExternal: true },
+            { TitlesPath: "title 2", Id: "4c003fb0-2a77-61ec-be54-ff00007864f3", Url: "url 2", IsExternal: true },
+            { TitlesPath: "title 3", Id: "4c003fb0-2a77-61ec-be54-ff10007864f5", Url: "url 3", IsExternal: true },
+            { TitlesPath: "title 4", Id: "4c003fb0-2a77-61ec-be54-ff10007864f6", Url: "url 4", IsExternal: true }
     ];
 
     //Load the module under test.
@@ -29,10 +29,10 @@ describe("external urls view", function () {
 
         //the collection is changed after reordering
         sfExternalPages = [
-            { TitlesPath: "title 1", ExternalPageId: "4c003fb0-2a77-61ec-be54-ff00007864f4", Url: "url 1" },
-            { TitlesPath: "title 2", ExternalPageId: "4c003fb0-2a77-61ec-be54-ff00007864f3", Url: "url 2" },
-            { TitlesPath: "title 3", ExternalPageId: "4c003fb0-2a77-61ec-be54-ff10007864f5", Url: "url 3" },
-            { TitlesPath: "title 4", ExternalPageId: "4c003fb0-2a77-61ec-be54-ff10007864f6", Url: "url 4" }
+            { TitlesPath: "title 1", Id: "4c003fb0-2a77-61ec-be54-ff00007864f4", Url: "url 1", IsExternal: true },
+            { TitlesPath: "title 2", Id: "4c003fb0-2a77-61ec-be54-ff00007864f3", Url: "url 2", IsExternal: true },
+            { TitlesPath: "title 3", Id: "4c003fb0-2a77-61ec-be54-ff10007864f5", Url: "url 3", IsExternal: true },
+            { TitlesPath: "title 4", Id: "4c003fb0-2a77-61ec-be54-ff10007864f6", Url: "url 4", IsExternal: true }
         ];
     });
 
@@ -51,13 +51,13 @@ describe("external urls view", function () {
 
         expect(s.sfSelectedItems).toBeDefined();
         expect(s.sfSelectedItems.length).toBe(1);
-        expect(s.isItemSelected(item.ExternalPageId, item.Status)).toBe(true);
+        expect(s.isItemSelected(item.Id, item.Status)).toBe(true);
 
         s.itemClicked(item);
 
         expect(s.sfSelectedItems).toBeDefined();
         expect(s.sfSelectedItems.length).toBe(0);
-        expect(s.isItemSelected(item.ExternalPageId, item.Status)).toBe(false);
+        expect(s.isItemSelected(item.Id, item.Status)).toBe(false);
     });
 
     it('[EGaneva] / should select item on item click if no items are selected.', function () {
@@ -70,13 +70,13 @@ describe("external urls view", function () {
         var item = scope.sfExternalPages[1];
 
         expect(s.sfSelectedItems).not.toBeDefined();
-        expect(s.isItemSelected(item.ExternalPageId, item.Status)).toBe(false);
+        expect(s.isItemSelected(item.Id, item.Status)).toBe(false);
 
         s.itemClicked(item);
 
         expect(s.sfSelectedItems).toBeDefined();
         expect(s.sfSelectedItems.length).toBe(1);
-        expect(s.isItemSelected(item.ExternalPageId, item.Status)).toBe(true);
+        expect(s.isItemSelected(item.Id, item.Status)).toBe(true);
     });
 
     it('[EGaneva] / should select unselected item if the item is clicked.', function () {
@@ -95,15 +95,15 @@ describe("external urls view", function () {
 
         expect(s.sfSelectedItems).toBeDefined();
         expect(s.sfSelectedItems.length).toBe(1);
-        expect(s.isItemSelected(selectedItem.ExternalPageId, selectedItem.Status)).toBe(true);
-        expect(s.isItemSelected(unselectedItem.ExternalPageId, unselectedItem.Status)).toBe(false);
+        expect(s.isItemSelected(selectedItem.Id, selectedItem.Status)).toBe(true);
+        expect(s.isItemSelected(unselectedItem.Id, unselectedItem.Status)).toBe(false);
 
         s.itemClicked(unselectedItem);
 
         expect(s.sfSelectedItems).toBeDefined();
         expect(s.sfSelectedItems.length).toBe(2);
-        expect(s.isItemSelected(selectedItem.ExternalPageId, selectedItem.Status)).toBe(true);
-        expect(s.isItemSelected(unselectedItem.ExternalPageId, unselectedItem.Status)).toBe(true);
+        expect(s.isItemSelected(selectedItem.Id, selectedItem.Status)).toBe(true);
+        expect(s.isItemSelected(unselectedItem.Id, unselectedItem.Status)).toBe(true);
     });
 
     it('[EGaneva] / newly added item should look selected, but should not be added to selected item collection and should not be persisted.', function () {
@@ -123,7 +123,7 @@ describe("external urls view", function () {
 
         var newlyAddedItem = s.sfExternalPages[4];
 
-        expect(s.isItemSelected(newlyAddedItem.ExternalPageId, newlyAddedItem.Status)).toBe(true);
+        expect(s.isItemSelected(newlyAddedItem.Id, newlyAddedItem.Status)).toBe(true);
         expect(s.sfSelectedItems).toBeDefined();
         expect(s.sfSelectedItems.length).toBe(0);
     });
@@ -141,15 +141,15 @@ describe("external urls view", function () {
         s.addItem();
         var newlyAddedItem = s.sfExternalPages[4];
 
-        expect(s.isItemSelected(newlyAddedItem.ExternalPageId, newlyAddedItem.Status)).toBe(true);
+        expect(s.isItemSelected(newlyAddedItem.Id, newlyAddedItem.Status)).toBe(true);
         expect(s.sfSelectedItems.length).toBe(0);
 
         newlyAddedItem.TitlesPath = "newly added title";
         s.itemChanged(newlyAddedItem);
         s.$apply();
-        expect(s.isItemSelected(newlyAddedItem.ExternalPageId, newlyAddedItem.Status)).toBe(true);
+        expect(s.isItemSelected(newlyAddedItem.Id, newlyAddedItem.Status)).toBe(true);
         expect(s.sfSelectedItems.length).toBe(1);
-        expect(s.sfSelectedItems[0].ExternalPageId).toBe(newlyAddedItem.ExternalPageId);
+        expect(s.sfSelectedItems[0].Id).toBe(newlyAddedItem.Id);
         expect(s.sfSelectedItems[0].TitlesPath).toBe(newlyAddedItem.TitlesPath);
         expect(s.sfExternalPages.length).toBe(5);
 
@@ -171,7 +171,7 @@ describe("external urls view", function () {
 
         var itemToEdit = s.sfExternalPages[3];
 
-        expect(s.isItemSelected(itemToEdit.ExternalPageId, itemToEdit.Status)).toBe(true);
+        expect(s.isItemSelected(itemToEdit.Id, itemToEdit.Status)).toBe(true);
         expect(s.sfSelectedItems.length).toBe(1);
 
         itemToEdit.TitlesPath = "";
@@ -179,7 +179,7 @@ describe("external urls view", function () {
         s.itemChanged(itemToEdit);
         s.$apply();
         expect(itemToEdit.Status).toBe('new');
-        expect(s.isItemSelected(itemToEdit.ExternalPageId, itemToEdit.Status)).toBe(true);
+        expect(s.isItemSelected(itemToEdit.Id, itemToEdit.Status)).toBe(true);
         expect(s.sfSelectedItems.length).toBe(0);
         expect(s.sfExternalPages.length).toBe(4);
     });
@@ -197,7 +197,7 @@ describe("external urls view", function () {
 
         var itemToRemove = s.sfExternalPages[3];
 
-        expect(s.isItemSelected(itemToRemove.ExternalPageId, itemToRemove.Status)).toBe(true);
+        expect(s.isItemSelected(itemToRemove.Id, itemToRemove.Status)).toBe(true);
         expect(s.sfSelectedItems.length).toBe(1);
         expect(s.sfExternalPages.length).toBe(4);
 

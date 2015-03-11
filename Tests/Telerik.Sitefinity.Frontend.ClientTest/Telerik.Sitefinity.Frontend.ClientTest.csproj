@@ -63,6 +63,7 @@
     <Content Include="unit\selectors\multi-site\sfSiteSelectorSpec.js" />
     <Content Include="unit\collections\sfCollectionSpec.js" />
     <Content Include="unit\selectors\sfHierarchicalTaxonSelector.js" />
+    <EmbeddedResource Include="unit\selectors\sfRoleSelectorSpec.js" />
     <Content Include="unit\selectors\sfThumbnailSizeSelection.js" />
     <Content Include="unit\services\languageServiceSpec.js" />
     <Content Include="unit\services\multisiteSpec.js" />

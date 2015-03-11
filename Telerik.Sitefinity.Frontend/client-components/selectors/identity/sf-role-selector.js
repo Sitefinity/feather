@@ -7,11 +7,14 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search) {
-                            var provider = ctrl.$scope.selectedRoleProvider;
-                            var rolesToHide = attrs.sfHideRoles.split(',').
-                                map(function (item) {
-                                    return  item.trim();
-                                });
+                            var provider = ctrl.$scope.sfProvider;
+                            var rolesToHide;
+                            if (attrs.sfHideRoles) {
+                                rolesToHide = attrs.sfHideRoles.split(',')
+                                    .map(function (item) {
+                                        return  item.trim();
+                                    });
+                            }
 
                             return rolesService.getRoles(provider, skip, take, search, rolesToHide);
                         };
@@ -21,7 +24,7 @@
                         };
 
                         ctrl.$scope.providerChanged = function (provider) {
-                            ctrl.$scope.selectedRoleProvider = provider;
+                            ctrl.$scope.sfProvider = provider;
                             ctrl.$scope.paging.skip = 0;
                             ctrl.$scope.paging.areAllItemsLoaded = false;
 
@@ -35,26 +38,52 @@
                         };
 
                         ctrl.onResetItems = function () {
-                            ctrl.$scope.selectedRoleProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
+                            if (ctrl.$scope.rolesProviders && ctrl.$scope.rolesProviders.length > 0) {
+                                ctrl.$scope.sfProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
+                            }
+                        };
+
+                        ctrl.canPushSelectedItemFirst = function () {
+                            return !ctrl.$scope.sfProvider ||
+                                    (ctrl.$scope.selectedItemsInTheDialog && ctrl.$scope.selectedItemsInTheDialog.length > 0 &&
+                                    ctrl.$scope.sfProvider === ctrl.$scope.selectedItemsInTheDialog[0].ProviderName);
                         };
 
                         var onItemsLoadedSuccess = function (data) {
                             ctrl.$scope.paging.skip += data.Items.length;
-                            ctrl.$scope.items = data.Items;
+                            ctrl.$scope.items.length = 0;
+
+                            if (ctrl.$scope.selectedItemsInTheDialog && ctrl.$scope.selectedItemsInTheDialog.length > 0) {
+                                ctrl.$scope.sfSelectedItems = [ctrl.$scope.selectedItemsInTheDialog[0]];
+                                ctrl.$scope.sfSelectedItem = ctrl.$scope.selectedItemsInTheDialog[0];
+                            }
+
+                            if (!ctrl.$scope.multiselect && !ctrl.$scope.filter.searchString && ctrl.canPushSelectedItemFirst()) {
+                                ctrl.pushSelectedItemToTheTop(data.Items);
+                                ctrl.pushNotSelectedItems(data.Items);
+                            }
+                            else {
+                                ctrl.$scope.items = data.Items;
+                            }
+
+                            return ctrl.$scope.items;
                         };
 
                         var loadRolesProviders = function () {
                             rolesService.getRoleProviders().then(function (data) {
                                 ctrl.$scope.rolesProviders = data.Items;
-                                ctrl.$scope.selectedRoleProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
 
-                                // TODO: remove this when the new endpoint (returns all roles providers) is added
-                                var appRolesProvider = {
-                                    "NumOfRoles": 10,
-                                    "RoleProviderName": "AppRoles",
-                                    "RoleProviderTitle": "AppRoles"
-                                };
-                                ctrl.$scope.rolesProviders.push(appRolesProvider);
+                                //// Consider using this logic if we want to support backward compatibility.
+                                //var appRolesProvider = {
+                                //    "NumOfRoles": 10,
+                                //    "RoleProviderName": "AppRoles",
+                                //    "RoleProviderTitle": "AppRoles"
+                                //};
+                                //ctrl.$scope.rolesProviders.push(appRolesProvider);
+
+                                if (ctrl.$scope.rolesProviders && ctrl.$scope.rolesProviders.length > 0) {
+                                    ctrl.$scope.sfProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
+                                }
                             });
                         };
 
@@ -65,9 +94,7 @@
                         ctrl.setIdentifierField("Name");
                         ctrl.$scope.searchIdentifierField = "Name";
 
-                        var closedDialogTemplate = attrs.sfMultiselect ?
-                            'client-components/selectors/common/sf-list-group-selection.html' :
-                            'client-components/selectors/common/sf-bubbles-selection.html';
+                        var closedDialogTemplate = 'client-components/selectors/common/sf-bubbles-selection.html';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
 

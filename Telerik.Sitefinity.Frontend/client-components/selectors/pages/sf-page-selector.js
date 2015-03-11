@@ -151,8 +151,7 @@
                                 if (ctrl.$scope.selectedItemsViewData && ctrl.$scope.selectedItemsViewData.length > 0) {
                                     for (var i = 0; i < ctrl.$scope.selectedItemsViewData.length; i++) {
                                         for (var j = 0; j < ctrl.$scope.selectedItemsInTheDialog.length; j++) {
-                                            if ((ctrl.$scope.selectedItemsInTheDialog[j].Id && ctrl.$scope.selectedItemsInTheDialog[j].Id === ctrl.$scope.selectedItemsViewData[i].Id) ||
-                                                (ctrl.$scope.selectedItemsInTheDialog[j].ExternalPageId && ctrl.$scope.selectedItemsInTheDialog[j].ExternalPageId === ctrl.$scope.selectedItemsViewData[i].ExternalPageId)) {
+                                            if (ctrl.$scope.selectedItemsInTheDialog[j].Id && ctrl.$scope.selectedItemsInTheDialog[j].Id === ctrl.$scope.selectedItemsViewData[i].Id) {
                                                 reoderedItems.push(ctrl.$scope.selectedItemsInTheDialog[j]);
                                                 break;
                                             }
@@ -170,7 +169,7 @@
                             var externalPages = [];
                             if (ctrl.$scope.multiselect && ctrl.$scope.sfSelectedItems) {
                                 Array.prototype.push.apply(externalPages, ctrl.$scope.sfSelectedItems.filter(function (page) {
-                                    if (page.ExternalPageId) {
+                                    if (page.IsExternal) {
                                         return page;
                                     }
                                 }));

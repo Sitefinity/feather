@@ -87,7 +87,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             get
             {
-                return SitefinityContext.GetFrontendLoginUrl();
+                var redirectStrategy = RedirectStrategyType.None;
+                var wrapper = new HttpContextWrapper(HttpContext.Current);
+                var pageUrl = RouteHelper.GetFrontEndLogin(wrapper, out redirectStrategy);
+
+                return pageUrl;
             }
         }
 
@@ -142,23 +146,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return new ProfileViewModel();
-        }
-
-        private static string GetFrontendLoginUrl()
-        {
-            var redirectStrategy = RedirectStrategyType.None;
-            var wrapper = new HttpContextWrapper(HttpContext.Current);
-            var methodInfo = typeof(RouteHelper).GetMethod(
-                "GetFrontEndLogin",
-                BindingFlags.NonPublic | BindingFlags.Static,
-                Type.DefaultBinder,
-                new[] { typeof(HttpContextBase), typeof(RedirectStrategyType).MakeByRefType(), typeof(SiteMapProvider) },
-                null);
-
-            var inputParameters = new object[] { wrapper, redirectStrategy, null };
-            var pageUrl = (string)methodInfo.Invoke(null, inputParameters);
-
-            return pageUrl;
         }
 
         #endregion

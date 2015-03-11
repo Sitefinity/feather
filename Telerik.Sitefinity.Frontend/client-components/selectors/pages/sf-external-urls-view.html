@@ -2,8 +2,8 @@
 
 <div class="list-group list-group-external list-group-endless" ng-hide="isListEmpty()">
     <div class="list-group-item list-group-item-multiselect"
-        ng-repeat="item in sfExternalPages track by item.ExternalPageId">
-        <input type="checkbox" ng-checked="isItemSelected(item.ExternalPageId, item.Status)" ng-click="itemClicked(item)" />
+        ng-repeat="item in sfExternalPages track by item.Id">
+        <input type="checkbox" ng-checked="isItemSelected(item.Id, item.Status)" ng-click="itemClicked(item)" />
         <section class="row row-xs">
             <a class="pull-right" ng-click="removeItem($index, item)"><i class="glyphicon glyphicon-remove-circle"></i></a>
             <div class="col-md-5">
