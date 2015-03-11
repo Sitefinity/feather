@@ -18,6 +18,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Attributes
         /// Initializes a new instance of the <see cref="RequiredIfExistAttribute"/> class.
         /// </summary>
         public RequiredIfExistAttribute(string dependentPropertyName)
+            : base()
         {
             this.innerAttribute = new RequiredAttribute();
             this.dependentPropertyName = dependentPropertyName;
@@ -41,7 +42,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Attributes
 
             return ValidationResult.Success;
         }
-                
+                        
         private string dependentPropertyName;
         private RequiredAttribute innerAttribute;
     }
