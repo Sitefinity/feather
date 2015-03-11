@@ -73,6 +73,14 @@
                             rolesService.getRoleProviders().then(function (data) {
                                 ctrl.$scope.rolesProviders = data.Items;
 
+                                //// Consider using this logic if we want to support backward compatibility.
+                                //var appRolesProvider = {
+                                //    "NumOfRoles": 10,
+                                //    "RoleProviderName": "AppRoles",
+                                //    "RoleProviderTitle": "AppRoles"
+                                //};
+                                //ctrl.$scope.rolesProviders.push(appRolesProvider);
+
                                 if (ctrl.$scope.rolesProviders && ctrl.$scope.rolesProviders.length > 0) {
                                     ctrl.$scope.sfProvider = ctrl.$scope.rolesProviders[0].RoleProviderName;
                                 }
