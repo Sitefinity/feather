@@ -17,6 +17,13 @@
 	"components" : []
 },
 
+"sf-style-dropdown" : {
+	"scripts" : [
+		"Mvc/Scripts/style-dropdown.js"
+	],
+	"components" : []
+},
+
 
 "__________COLLECTIONS__________" : "__________COLLECTIONS__________",
 
@@ -93,6 +100,7 @@
 "sf-html-field" : {
 	"scripts" : [
 		"Mvc/Scripts/ContentBlock/shared-content-services.js",
+		"client-components/selectors/media/sf-media-markup-service.js",
 		"client-components/fields/html-field/sf-html-field.js"
 	],
 	"components" : ["sf-services", "sf-fields", "sf-link-selector-modal", "sf-expander", "sf-image-field", "sf-thumbnail-size-selection"]
@@ -102,8 +110,6 @@
 	"scripts" : [
 		"client-components/selectors/media/sf-media-service.js",
 		"client-components/selectors/media/sf-media-filter.js",
-		"client-components/selectors/pages/sf-page-service.js",
-		"client-components/selectors/pages/sf-page-selector.js",
 		"client-components/fields/image-field/sf-image-field.js"
 	],
 	"components" : ["sf-services", "sf-fields", "sf-image-selector"]
@@ -288,6 +294,7 @@
 
 "sf-thumbnail-size-selection" : {
 	"scripts" : [
+		"client-components/selectors/media/sf-media-service.js",
 		"client-components/selectors/media/sf-thumbnail-size-selection.js"
 	],
 	"components" : ["sf-services", "sf-image-selector"]
