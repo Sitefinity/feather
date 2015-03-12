@@ -189,6 +189,7 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Mvc\Models\ComponentsDefinitionsConfigModel.cs" />
     <Compile Include="Notifications\EmailTemplateHelper.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerMetadataAttribute.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
@@ -258,7 +259,7 @@
     <Compile Include="Mvc\Infrastructure\Routing\TaxonParamResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlParamsMapperBase.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlSegmentInfo.cs" />
-    <Compile Include="Mvc\Models\ComponentScripts.cs" />
+    <Compile Include="Mvc\Models\ComponentsDefinitions.cs" />
     <Compile Include="Mvc\Models\ContentDetailsViewModel.cs" />
     <Compile Include="Mvc\Models\ContentListViewModel.cs" />
     <Compile Include="Mvc\Models\ContentModelBase.cs" />
@@ -462,7 +463,7 @@
     <None Include="assets\src\sass\_loading.sass" />
     <None Include="assets\src\sass\_utility-classes.sass" />
     <None Include="assets\src\sass\_variables.sass" />
-    <None Include="client-components\components-definitions.json" />
+    <EmbeddedResource Include="client-components\components-definitions.json" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

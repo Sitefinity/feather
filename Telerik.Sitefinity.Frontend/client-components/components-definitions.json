@@ -1,6 +1,6 @@
 ﻿{
 
-"__________MVC__________" : "__________MVC__________",
+"__________MVC__________" : {"scripts" : [], "components" : []},
 
 
 "sf-loading" : {
@@ -25,7 +25,7 @@
 },
 
 
-"__________COLLECTIONS__________" : "__________COLLECTIONS__________",
+"__________COLLECTIONS__________" : {"scripts" : [], "components" : []},
 
 
 "sf-collection" : {
@@ -51,7 +51,7 @@
 
 
 
-"__________SEARCH__________" : "__________SEARCH__________",
+"__________SEARCH__________" : {"scripts" : [], "components" : []},
 
 
 
@@ -64,7 +64,7 @@
 
 
 
-"__________SORT__________" : "__________SORT__________",
+"__________SORT__________" : {"scripts" : [], "components" : []},
 
 
 
@@ -77,7 +77,7 @@
 
 
 
-"__________FIELDS__________" : "__________FIELDS__________",
+"__________FIELDS__________" : {"scripts" : [], "components" : []},
 
 
 
@@ -129,11 +129,11 @@
 	"components" : []
 },
 
-"__________SELECTORS__________" : "__________SELECTORS__________",
+"__________SELECTORS__________" : {"scripts" : [], "components" : []},
 
 
 
-"_____COMMON_____" : "_____COMMON_____",
+"_____COMMON_____" : {"scripts" : [], "components" : []},
 
 
 "sf-filter-selector" : { 
@@ -208,7 +208,7 @@
 	"components" : []
 },
 
-"_____DATETIME_____" : "_____DATETIME_____",
+"_____DATETIME_____" : {"scripts" : [], "components" : []},
 
 
 "sf-date-filter" : {
@@ -233,7 +233,7 @@
 },
 
 
-"_____DYNAMICMODULES_____" : "_____DYNAMICMODULES_____",
+"_____DYNAMICMODULES_____" : {"scripts" : [], "components" : []},
 
 
 "sf-dynamic-items-selector" : {
@@ -245,7 +245,7 @@
 },
 
 
-"_____IDENTITY_____" : "_____IDENTITY_____",
+"_____IDENTITY_____" : {"scripts" : [], "components" : []},
 
 
 "sf-role-selector" : {
@@ -257,7 +257,7 @@
 },
 
 
-"_____LOCALIZATION_____" : "_____LOCALIZATION_____",
+"_____LOCALIZATION_____" : {"scripts" : [], "components" : []},
 
 
 "sf-language-selector" : {
@@ -269,7 +269,7 @@
 },
 
 
-"_____MEDIA_____" : "_____MEDIA_____",
+"_____MEDIA_____" : {"scripts" : [], "components" : []},
 
 "sf-image-selector" : {
 	"scripts" : [
@@ -300,7 +300,7 @@
 	"components" : ["sf-services", "sf-image-selector"]
 },
 
-"_____MULTISITE_____" : "_____MULTISITE_____",
+"_____MULTISITE_____" : {"scripts" : [], "components" : []},
 
 "sf-multisite-page-selector" : {
 	"scripts" : [
@@ -319,7 +319,7 @@
 },
 
 
-"_____NEWS_____" : "_____NEWS_____",
+"_____NEWS_____" : {"scripts" : [], "components" : []},
 
 
 "sf-news-selector" : {
@@ -331,7 +331,7 @@
 },
 
 
-"_____PAGES_____" : "_____PAGES_____",
+"_____PAGES_____" : {"scripts" : [], "components" : []},
 
 
 "sf-external-urls-view" : {
@@ -358,7 +358,7 @@
 },
 
 
-"_____TAXONOMIES_____" : "_____TAXONOMIES_____",
+"_____TAXONOMIES_____" : {"scripts" : [], "components" : []},
 
 
 "sf-hierarchical-taxon-selector" : {
@@ -386,7 +386,7 @@
 	"components" : ["sf-services", "sf-selectors", "sf-items-filter", "sf-endless-scroll", "sf-loading", "sf-selected-items-view", "sf-list-selector"]
 },
 
-"_____TOOLS_____" : "_____TOOLS_____",
+"_____TOOLS_____" : {"scripts" : [], "components" : []},
 
 "sf-link-selector-modal" : {
 	"scripts" : [

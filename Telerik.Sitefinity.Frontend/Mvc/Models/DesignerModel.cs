@@ -220,23 +220,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     designerViewConfigModel.Scripts = new List<string>();
                 }
 
-                foreach (var component in designerViewConfigModel.Components)
+                var componentsScripts = ComponentsDefinitions.GetScripts(designerViewConfigModel.Components);
+
+                foreach (var script in componentsScripts)
                 {
-                    var componentScripts = this.GetComponentScripts(component);
-                    if (componentScripts != null)
-                    {
-                        foreach (var componentScript in componentScripts)
-                        {
-                            designerViewConfigModel.Scripts.Add(componentScript);
-                        }
-                    }
+                    designerViewConfigModel.Scripts.Add(script);
                 }
             }
-        }
-
-        private IEnumerable<string> GetComponentScripts(string component)
-        {
-            return ComponentScripts.Get(component);
         }
 
         private string GetScriptReferencePath(string widgetName, string scriptFileName)
