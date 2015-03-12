@@ -34,7 +34,7 @@
                     <div ng-repeat="item in items"
                          ng-class="{'list-group-item': true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect' : multiselect }"
                          ng-click="itemClicked($index, item)"
-                         ng-hide="showLoadingIndicator">
+                         ng-hide="showLoadingIndicator || !rolesProviders || rolesProviders.length == 0">
 
                         <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
 
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
-                <sf-loading ng-show="showLoadingIndicator"></sf-loading>
+                <sf-loading ng-show="showLoadingIndicator || !rolesProviders || rolesProviders.length == 0"></sf-loading>
             </div>
         </div>
         <div>

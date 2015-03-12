@@ -8,6 +8,9 @@
                     pre: function (scope, element, attrs, ctrl) {
                         var rolesRequest;
                         var specificItemsRequest;
+                        var rolesProviderRequest;
+
+                        ctrl.$scope.rolesProviders = [];
 
                         ctrl.getItems = function (skip, take, search) {
                             cancelRequest(rolesRequest);
@@ -57,15 +60,19 @@
                         ctrl.onCancel = function () {
                             cancelRequest(rolesRequest);
                             cancelRequest(specificItemsRequest);
+                            cancelRequest(rolesProviderRequest);
                         };
 
                         ctrl.onDoneSelecting = function () {
                             cancelRequest(rolesRequest);
                             cancelRequest(specificItemsRequest);
+                            cancelRequest(rolesProviderRequest);
                         };
 
                         ctrl.onOpen = function () {
-                            loadRolesProviders();
+                            if (!ctrl.$scope.rolesProviders || ctrl.$scope.rolesProviders.length === 0) {
+                                loadRolesProviders();
+                            }
                         };
 
                         ctrl.canPushSelectedItemFirst = function () {
@@ -103,7 +110,8 @@
                         };
 
                         var loadRolesProviders = function () {
-                            rolesService.getRoleProviders().then(function (data) {
+                            rolesProviderRequest = rolesService.getRoleProviders();
+                            rolesProviderRequest.promise.then(function (data) {
                                 ctrl.$scope.rolesProviders = data.Items;
 
                                 //// Consider using this logic if we want to support backward compatibility.

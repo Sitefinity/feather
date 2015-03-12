@@ -98,15 +98,40 @@
             };
         }
 
-        function getRoleProviders (commaSeperatedAbilities) {
+        function getRoleProviders(commaSeperatedAbilities) {
+            var canceller = $q.defer();
+
+            var cancel = function (reason) {
+                canceller.resolve(reason);
+            };
+
             var endpoint = 'GetRoleProviders';
             var url = serviceUrl + endpoint + '/';
 
-            return serviceHelper.getResource(url).get({
-                abilities: commaSeperatedAbilities,
-                addAppRoles: true
+            var deferred = $q.defer();
+
+            $http({
+                url: url,
+                method: "GET",
+                params: {
+                    abilities: commaSeperatedAbilities,
+                    addAppRoles: true
+                },
+                timeout: canceller.promise
             })
-            .$promise;
+            .success(function (result) {
+                deferred.resolve(result);
+            })
+            .error(function (error, status, headers, config) {
+                deferred.reject({
+                    statusText: config.timeout.$$state.value
+                });
+            });
+
+            return {
+                promise: deferred.promise,
+                cancel: cancel
+            };
         }
 
         return {
