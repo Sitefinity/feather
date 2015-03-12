@@ -102,6 +102,8 @@
 	"scripts" : [
 		"client-components/selectors/media/sf-media-service.js",
 		"client-components/selectors/media/sf-media-filter.js",
+		"client-components/selectors/pages/sf-page-service.js",
+		"client-components/selectors/pages/sf-page-selector.js",
 		"client-components/fields/image-field/sf-image-field.js"
 	],
 	"components" : ["sf-services", "sf-fields", "sf-image-selector"]
@@ -298,7 +300,7 @@
 		"client-components/selectors/multi-site/sf-multi-site-service.js",
 		"client-components/selectors/multi-site/sf-multisite-page-selector.js"
 	],
-	"components" : ["sf-services", "sf-selectors", "sf-list-selector", "sf-items-tree.js", "sf-site-selector", "sf-language-selector", "sf-page-selector"]
+	"components" : ["sf-services", "sf-selectors", "sf-list-selector", "sf-items-tree", "sf-site-selector", "sf-language-selector", "sf-page-selector"]
 },
 
 "sf-site-selector" : {
