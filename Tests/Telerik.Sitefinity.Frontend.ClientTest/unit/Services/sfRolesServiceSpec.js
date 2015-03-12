@@ -40,7 +40,7 @@
     /* Helper methods */
     var assertItems = function (params) {
         var data;
-        service.getRoles.apply(service, params).then(function (res) {
+        service.getRoles.apply(service, params).promise.then(function (res) {
             data = res;
         });
 
@@ -70,7 +70,7 @@
 
     var assertSpecificItems = function (params) {
         var data;
-        service.getSpecificRoles.apply(service, params).then(function (res) {
+        service.getSpecificRoles.apply(service, params).promise.then(function (res) {
             data = res;
         });
 
