@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    angular.module('sfSelectors')
+    angular.module('sfSelectors', ['sfServices'])
         .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'sfHierarchicalTaxonService', function (serviceHelper, hierarchicalTaxonService) {
             var _applyBreadcrumbPath = function (result) {
                 var taxa = result.Items;

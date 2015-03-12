@@ -462,6 +462,7 @@
     <None Include="assets\src\sass\_loading.sass" />
     <None Include="assets\src\sass\_utility-classes.sass" />
     <None Include="assets\src\sass\_variables.sass" />
+    <None Include="client-components\components-definitions.json" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -560,7 +561,6 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-media-tag-taxon-items.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-filter.js" />
     <EmbeddedResource Include="client-components\fields\sf-fields.js" />
-    <EmbeddedResource Include="client-components\selectors\media\sf-image-selector-modal.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-markup-service.js" />
     <EmbeddedResource Include="client-components\fields\drag-drop\sf-drag-drop.js" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-image-properties-content-block.html" />
@@ -594,7 +594,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
