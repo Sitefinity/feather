@@ -465,15 +465,15 @@
                         };
 
                         scope.open = function () {
+                            if (ctrl.onOpen) {
+                                ctrl.onOpen();
+                            }
+
                             if (scope.$openModalDialog) {
                                 scope.$openModalDialog();
                             }
 
                             ctrl.beginLoadingItems();
-
-                            if (ctrl.onOpen) {
-                                ctrl.onOpen();
-                            }
                         };
 
                         scope.getDialogTemplate = function () {
