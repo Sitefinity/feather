@@ -53,7 +53,7 @@
 
     var assertProviders = function (params) {
         var data;
-        service.getRoleProviders.apply(service, params).then(function (res) {
+        service.getRoleProviders.apply(service, params).promise.then(function (res) {
             data = res;
         });
 

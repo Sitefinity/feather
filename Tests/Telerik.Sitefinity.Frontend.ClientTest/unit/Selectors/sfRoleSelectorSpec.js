@@ -88,7 +88,9 @@
                     Items: providers
                 });
 
-                return deferred.promise;
+                return {
+                    promise: deferred.promise,
+                };
             })
     };
 
