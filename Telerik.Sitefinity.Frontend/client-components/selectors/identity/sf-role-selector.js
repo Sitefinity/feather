@@ -6,7 +6,12 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
+                        var rolesRequest;
+                        var specificItemsRequest;
+
                         ctrl.getItems = function (skip, take, search) {
+                            cancelRequest(rolesRequest);
+
                             var provider = ctrl.$scope.sfProvider;
                             var rolesToHide;
                             if (attrs.sfHideRoles) {
@@ -16,14 +21,20 @@
                                     });
                             }
 
-                            return rolesService.getRoles(provider, skip, take, search, rolesToHide);
+                            rolesRequest = rolesService.getRoles(provider, skip, take, search, rolesToHide);
+                            return rolesRequest.promise;
                         };
 
                         ctrl.getSpecificItems = function (ids) {
-                            return rolesService.getSpecificRoles(ids);
+                            cancelRequest(specificItemsRequest);
+
+                            specificItemsRequest = rolesService.getSpecificRoles(ids);
+                            return specificItemsRequest.promise;
                         };
 
                         ctrl.$scope.providerChanged = function (provider) {
+                            cancelRequest(rolesRequest);
+                            ctrl.$scope.showLoadingIndicator = true;
                             ctrl.$scope.sfProvider = provider;
                             ctrl.$scope.paging.skip = 0;
                             ctrl.$scope.paging.areAllItemsLoaded = false;
@@ -43,10 +54,30 @@
                             }
                         };
 
+                        ctrl.onCancel = function () {
+                            cancelRequest(rolesRequest);
+                            cancelRequest(specificItemsRequest);
+                        };
+
+                        ctrl.onDoneSelecting = function () {
+                            cancelRequest(rolesRequest);
+                            cancelRequest(specificItemsRequest);
+                        };
+
+                        ctrl.onOpen = function () {
+                            loadRolesProviders();
+                        };
+
                         ctrl.canPushSelectedItemFirst = function () {
                             return !ctrl.$scope.sfProvider ||
                                     (ctrl.$scope.selectedItemsInTheDialog && ctrl.$scope.selectedItemsInTheDialog.length > 0 &&
                                     ctrl.$scope.sfProvider === ctrl.$scope.selectedItemsInTheDialog[0].ProviderName);
+                        };
+
+                        var cancelRequest = function (request) {
+                            if (request && request.cancel) {
+                                request.cancel('canceled');
+                            }
                         };
 
                         var onItemsLoadedSuccess = function (data) {
@@ -65,6 +96,8 @@
                             else {
                                 ctrl.$scope.items = data.Items;
                             }
+
+                            ctrl.$scope.showLoadingIndicator = false;
 
                             return ctrl.$scope.items;
                         };
@@ -99,8 +132,6 @@
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
 
                         ctrl.$scope.sfDialogHeader = 'Select a role';
-
-                        loadRolesProviders();
                     }
                 }
             };

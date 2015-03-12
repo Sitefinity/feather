@@ -133,6 +133,15 @@
                     this.onResetItems = function () {
                     };
 
+                    this.onCancel = function () {
+                    };
+
+                    this.onDoneSelecting = function () {
+                    };
+
+                    this.onOpen = function () {
+                    };
+
                     this.resetItems = function () {
                         $scope.paging.skip = 0;
                         $scope.paging.areAllItemsLoaded = false;
@@ -172,6 +181,9 @@
                             errorMessage = error.data.ResponseStatus.Message;
                         }
                         else if (error && error.statusText) {
+                            if (error.statusText === 'canceled') {
+                                return;
+                            }
                             errorMessage = error.statusText;
                         }
 
@@ -187,17 +199,13 @@
                             return;
 
                         var that = this;
-                        $scope.showLoadingIndicator = true;
                         return this.getSpecificItems(ids)
                             .then(function (data) {
                                 // Some of the items were not found.
                                 $scope.sfMissingSelectedItems = data.Items.length < ids.length;
 
                                 that.onSelectedItemsLoadedSuccess(data);
-                            }, that.onError)
-                            .finally(function () {
-                                $scope.showLoadingIndicator = false;
-                            });
+                            }, that.onError);
                     };
                 },
                 templateUrl: function (elem, attrs) {
@@ -438,11 +446,21 @@
                             updateSelectedItems();
 
                             ctrl.resetItems();
+
+                            if (ctrl.onDoneSelecting) {
+                                ctrl.onDoneSelecting();
+                            }
+
                             scope.$modalInstance.close();
                         };
 
                         scope.cancel = function () {
                             ctrl.resetItems();
+
+                            if (ctrl.onCancel) {
+                                ctrl.onCancel();
+                            }
+
                             scope.$modalInstance.close();
                         };
 
@@ -452,6 +470,10 @@
                             }
 
                             ctrl.beginLoadingItems();
+
+                            if (ctrl.onOpen) {
+                                ctrl.onOpen();
+                            }
                         };
 
                         scope.getDialogTemplate = function () {

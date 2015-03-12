@@ -1,6 +1,6 @@
 ﻿angular.module('sfServices')
-    .factory('sfRolesService', ['serviceHelper', 'serverContext',
-    function (serviceHelper, serverContext) {
+    .factory('sfRolesService', ['serviceHelper', 'serverContext', '$http', '$q',
+    function (serviceHelper, serverContext, $http, $q) {
         var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Security/Roles.svc/');
         var identifierField = 'Name';
 
@@ -13,20 +13,45 @@
             return serviceHelper.getResource(url);
         }
 
-        function getRoles (provider, skip, take, search, rolesToHide) {
+        function getRoles(provider, skip, take, search, rolesToHide) {
+            var canceller = $q.defer();
+
+            var cancel = function (reason) {
+                canceller.resolve(reason);
+            };
+
             var filter = serviceHelper.filterBuilder()
                     .searchFilter(search, null, identifierField)
                     .and()
                     .differFilter(rolesToHide, identifierField)
                     .getFilter();
 
-            return getResource().get({
-                provider: provider,
-                skip: skip,
-                take: take,
-                filter: filter
+            var deferred = $q.defer();
+
+            $http({
+                url: serviceUrl,
+                method: "GET",
+                params: {
+                    provider: provider,
+                    skip: skip,
+                    take: take,
+                    filter: filter
+                },
+                timeout: canceller.promise
             })
-            .$promise;
+            .success(function (result) {
+                deferred.resolve(result);
+            })
+            .error(function (error, status, headers, config) {
+                deferred.reject({
+                    statusText: config.timeout.$$state.value
+                });
+            });
+
+            return {
+                promise: deferred.promise,
+                cancel: cancel
+            };
         }
 
         function getRole (id, provider) {
@@ -36,16 +61,41 @@
             .$promise;
         }
 
-        function getSpecificRoles (ids, provider) {
+        function getSpecificRoles(ids, provider) {
+            var canceller = $q.defer();
+
+            var cancel = function (reason) {
+                canceller.resolve(reason);
+            };
+
             var filter = serviceHelper.filterBuilder()
                     .specificItemsFilter(ids)
                     .getFilter();
 
-            return getResource().get({
-                provider: provider,
-                filter: filter
+            var deferred = $q.defer();
+
+            $http({
+                url: serviceUrl,
+                method: "GET",
+                params: {
+                    provider: provider,
+                    filter: filter
+                },
+                timeout: canceller.promise
             })
-            .$promise;
+            .success(function (result) {
+                deferred.resolve(result);
+            })
+            .error(function (error, status, headers, config) {
+                deferred.reject({
+                    statusText: config.timeout.$$state.value
+                });
+            });
+
+            return {
+                promise: deferred.promise,
+                cancel: cancel
+            };
         }
 
         function getRoleProviders (commaSeperatedAbilities) {
