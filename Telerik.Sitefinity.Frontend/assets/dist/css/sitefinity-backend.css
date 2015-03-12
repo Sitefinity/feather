@@ -7999,6 +7999,10 @@ fieldset {
   padding: 0;
   border: 0; }
 
+/* line 15, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_global */
+fieldset[disabled="disabled"] {
+  opacity: 0.4; }
+
 /* line 1, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_loading */
 .sf-loading:before, .sf-loading:after, .sf-loading > span {
   background-color: #9cc5f7;
@@ -8404,9 +8408,10 @@ tab {
   margin-top: 0; }
 /* line 6, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .sf-designer-dlg .form-group + .form-group {
-  margin-top: 30px; }
+  margin-top: 30px;
+  margin-bottom: 0; }
 
-/* line 9, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+/* line 10, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .form-control-highlight[type=text] {
   width: 100%;
   min-height: 28px;
@@ -8416,10 +8421,10 @@ tab {
   padding: 0 4px;
   cursor: pointer;
   font-size: 14px; }
-  /* line 19, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+  /* line 20, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
   .form-control-highlight[type=text]:hover {
     background: #ffc; }
-  /* line 22, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+  /* line 23, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
   .form-control-highlight[type=text]:focus {
     cursor: text;
     background: transparent;
@@ -8427,11 +8432,11 @@ tab {
     border-color: #66afe9;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 4px rgba(102, 175, 233, 0.6); }
 
-/* line 33, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+/* line 34, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .sf-filter-selector .sf-taxon-filter + .sf-date-filter > .checkbox {
   margin-top: -5px; }
 
-/* line 37, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+/* line 38, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .modal-dialog .form-control-sm {
   height: 27px !important;
   padding: 0 7px !important; }
