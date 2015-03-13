@@ -61,7 +61,9 @@
                     TotalCount: dataItems.length
                 });
 
-                return deferred.promise;
+                return {
+                    promise: deferred.promise,
+                };
             }),
         getSpecificRoles: jasmine.createSpy('sfRolesServie.getSpecificRoles').andCallFake(
             function (ids, provider) {
@@ -75,7 +77,9 @@
                     TotalCount: items.length
                 });
 
-                return deferred.promise;
+                return {
+                    promise: deferred.promise,
+                };
             }),
         getRoleProviders: jasmine.createSpy('sfRolesService.getRoleProviders').andCallFake(
             function (commaSeperatedAbilities) {
@@ -84,7 +88,9 @@
                     Items: providers
                 });
 
-                return deferred.promise;
+                return {
+                    promise: deferred.promise,
+                };
             })
     };
 
@@ -151,7 +157,7 @@
         var args = getRolesServiceGetRolesArgs();
 
         //Provider
-        expect(args[0]).toBe('');
+        expect(args[0]).toBeFalsy();
 
         //Skip
         expect(args[1]).toBe(0);
@@ -207,7 +213,7 @@
             var args = getRolesServiceGetRolesArgs();
 
             //Provider
-            expect(args[0]).toBe('');
+            expect(args[0]).toBeFalsy();
 
             //Skip
             expect(args[1]).toBe(0);
