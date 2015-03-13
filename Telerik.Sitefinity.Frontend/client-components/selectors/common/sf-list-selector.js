@@ -314,6 +314,7 @@
 
                         var updateSelectionInTheDialog = function () {
                             if (scope.sfSelectedItems) {
+                                scope.selectedItemsInTheDialog = [];
                                 Array.prototype.push.apply(scope.selectedItemsInTheDialog, scope.sfSelectedItems);
                             }
                         };

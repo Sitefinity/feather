@@ -13,6 +13,25 @@
             return serviceHelper.getResource(url);
         }
 
+        function getError (error, status, headers, config) {
+            var result;
+            if (config && config.timeout && config.timeout.$$state && config.timeout.$$state.value) {
+                result = {
+                    statusText: config.timeout.$$state.value
+                };
+            }
+            else {
+                result = {
+                    error: error,
+                    status: status,
+                    headers: headers,
+                    config: config
+                };
+            }
+
+            return result;
+        }
+
         function getRoles(provider, skip, take, search, rolesToHide) {
             var canceller = $q.defer();
 
@@ -43,9 +62,7 @@
                 deferred.resolve(result);
             })
             .error(function (error, status, headers, config) {
-                deferred.reject({
-                    statusText: config.timeout.$$state.value
-                });
+                deferred.reject(getError(error, status, headers, config));
             });
 
             return {
@@ -87,9 +104,7 @@
                 deferred.resolve(result);
             })
             .error(function (error, status, headers, config) {
-                deferred.reject({
-                    statusText: config.timeout.$$state.value
-                });
+                deferred.reject(getError(error, status, headers, config));
             });
 
             return {
@@ -123,9 +138,7 @@
                 deferred.resolve(result);
             })
             .error(function (error, status, headers, config) {
-                deferred.reject({
-                    statusText: config.timeout.$$state.value
-                });
+                deferred.reject(getError(error, status, headers, config));
             });
 
             return {
