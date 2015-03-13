@@ -220,7 +220,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     designerViewConfigModel.Scripts = new List<string>();
                 }
 
-                designerViewConfigModel.Scripts = ComponentsDefinitions.GetScripts(designerViewConfigModel.Components, designerViewConfigModel.Scripts);
+                designerViewConfigModel.Scripts = ScriptDependencyResolver.GetScripts(designerViewConfigModel.Components, designerViewConfigModel.Scripts);
             }
         }
 
