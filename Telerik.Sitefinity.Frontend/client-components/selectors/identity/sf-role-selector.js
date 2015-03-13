@@ -6,7 +6,15 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
+                        var rolesRequest;
+                        var specificItemsRequest;
+                        var rolesProviderRequest;
+
+                        ctrl.$scope.rolesProviders = [];
+
                         ctrl.getItems = function (skip, take, search) {
+                            cancelRequest(rolesRequest);
+
                             var provider = ctrl.$scope.sfProvider;
                             var rolesToHide;
                             if (attrs.sfHideRoles) {
@@ -16,14 +24,20 @@
                                     });
                             }
 
-                            return rolesService.getRoles(provider, skip, take, search, rolesToHide);
+                            rolesRequest = rolesService.getRoles(provider, skip, take, search, rolesToHide);
+                            return rolesRequest.promise;
                         };
 
                         ctrl.getSpecificItems = function (ids) {
-                            return rolesService.getSpecificRoles(ids);
+                            cancelRequest(specificItemsRequest);
+
+                            specificItemsRequest = rolesService.getSpecificRoles(ids);
+                            return specificItemsRequest.promise;
                         };
 
                         ctrl.$scope.providerChanged = function (provider) {
+                            cancelRequest(rolesRequest);
+                            ctrl.$scope.showLoadingIndicator = true;
                             ctrl.$scope.sfProvider = provider;
                             ctrl.$scope.paging.skip = 0;
                             ctrl.$scope.paging.areAllItemsLoaded = false;
@@ -43,10 +57,34 @@
                             }
                         };
 
+                        ctrl.onCancel = function () {
+                            cancelRequest(rolesRequest);
+                            cancelRequest(specificItemsRequest);
+                            cancelRequest(rolesProviderRequest);
+                        };
+
+                        ctrl.onDoneSelecting = function () {
+                            cancelRequest(rolesRequest);
+                            cancelRequest(specificItemsRequest);
+                            cancelRequest(rolesProviderRequest);
+                        };
+
+                        ctrl.onOpen = function () {
+                            if (!ctrl.$scope.rolesProviders || ctrl.$scope.rolesProviders.length === 0) {
+                                loadRolesProviders();
+                            }
+                        };
+
                         ctrl.canPushSelectedItemFirst = function () {
                             return !ctrl.$scope.sfProvider ||
                                     (ctrl.$scope.selectedItemsInTheDialog && ctrl.$scope.selectedItemsInTheDialog.length > 0 &&
                                     ctrl.$scope.sfProvider === ctrl.$scope.selectedItemsInTheDialog[0].ProviderName);
+                        };
+
+                        var cancelRequest = function (request) {
+                            if (request && request.cancel) {
+                                request.cancel('canceled');
+                            }
                         };
 
                         var onItemsLoadedSuccess = function (data) {
@@ -66,11 +104,14 @@
                                 ctrl.$scope.items = data.Items;
                             }
 
+                            ctrl.$scope.showLoadingIndicator = false;
+
                             return ctrl.$scope.items;
                         };
 
                         var loadRolesProviders = function () {
-                            rolesService.getRoleProviders().then(function (data) {
+                            rolesProviderRequest = rolesService.getRoleProviders();
+                            rolesProviderRequest.promise.then(function (data) {
                                 ctrl.$scope.rolesProviders = data.Items;
 
                                 //// Consider using this logic if we want to support backward compatibility.
@@ -99,8 +140,6 @@
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
 
                         ctrl.$scope.sfDialogHeader = 'Select a role';
-
-                        loadRolesProviders();
                     }
                 }
             };

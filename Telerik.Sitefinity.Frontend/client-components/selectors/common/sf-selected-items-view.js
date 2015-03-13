@@ -58,6 +58,7 @@
 
                         // The view is binded to this collection
                         scope.currentItems = [];
+                        scope.showLoadingIndicator = true && scope.sfSelectedItems && scope.sfSelectedItems.length > 0;
 
                         scope.$watch('sfItems.length', function (newValue, oldValue) {
                             if (newValue && newValue !== 0) {
@@ -67,6 +68,8 @@
                                 if (scope.filter.searchString && scope.filter.searchString !== "") {
                                     scope.filter.search(scope.filter.searchString);
                                 }
+
+                                scope.showLoadingIndicator = false;
                             }
                             else {
                                 scope.currentItems = [];
@@ -74,7 +77,7 @@
                         });
 
                         scope.isListEmpty = function () {
-                            return scope.sfItems && scope.sfItems.length === 0;
+                            return !scope.showLoadingIndicator && scope.sfItems && scope.sfItems.length === 0;
                         };
 
                         scope.bindIdentifierField = function (item) {

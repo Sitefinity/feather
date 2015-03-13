@@ -21,5 +21,6 @@
             <div><span sf-shrinked-breadcrumb="{{bindIdentifierField(item)}}" sf-max-length="60"></span></div>
         </div>
     </div>
-    <div ng-hide="currentItems.length"><i>No items found</i></div>
+    <div ng-hide="currentItems.length || showLoadingIndicator"><i>No items found</i></div>
+    <sf-loading ng-show="showLoadingIndicator"></sf-loading>
 </div>

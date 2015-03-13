@@ -14,9 +14,10 @@
             <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
             <div ng-hide="noItemsExist || showError" style="margin-top:-10px;">
-                <div class="row">
+                <div class="row" ng-show="rolesProviders.length">
                     <div class="col-xs-5">
                         <select class="form-control m-bottom-sm" ng-model="sfProvider" ng-change="providerChanged(sfProvider)" ng-options="provider.RoleProviderName as provider.RoleProviderTitle for provider in rolesProviders">
+                            <option style="display:none" value="">select a type</option>
                         </select>
                     </div>
                 </div>
@@ -32,7 +33,8 @@
                 <div sf-endless-scroll sf-paging='paging' class="list-group list-group-endless">
                     <div ng-repeat="item in items"
                          ng-class="{'list-group-item': true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect' : multiselect }"
-                         ng-click="itemClicked($index, item)">
+                         ng-click="itemClicked($index, item)"
+                         ng-hide="showLoadingIndicator || !rolesProviders || rolesProviders.length == 0">
 
                         <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
 
@@ -40,12 +42,12 @@
                     </div>
                 </div>
                 <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
-                <sf-loading ng-show="showLoadingIndicator"></sf-loading>
+                <sf-loading ng-show="showLoadingIndicator || !rolesProviders || rolesProviders.length == 0"></sf-loading>
             </div>
         </div>
         <div>
             <sf-selected-items-view sf-items='selectedItemsViewData' 
-                                    sf-selected-items='selectedItemsInTheDialog' 
+                                    sf-selected-items='selectedItemsInTheDialog && selectedItemsInTheDialog.length > 0 ? selectedItemsInTheDialog : sfSelectedItems' 
                                     sf-search-identifier-field='searchIdentifierField'
                                     sf-identifier-field='sfIdentifierField' 
                                     sf-sortable='{{sfSortable}}'>
