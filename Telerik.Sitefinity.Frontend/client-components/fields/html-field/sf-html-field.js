@@ -65,6 +65,9 @@
                     scope.imagePropertiesDialog =
                         serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.html');
 
+                    scope.htmlFieldCssUrl =
+                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/css/html-field.min.css');
+
                     scope.openImageSelector = function () {
 
                         var range = editor.getRange();
