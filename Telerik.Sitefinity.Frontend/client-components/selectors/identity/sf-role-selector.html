@@ -13,19 +13,19 @@
 
             <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
-            <div ng-hide="noItemsExist || showError">
-                <div class="input-group m-bottom-sm">
-                    <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </span>
-                    <sf-items-filter sf-filter='filter'></sf-items-filter>
-                </div>
-
+            <div ng-hide="noItemsExist || showError" style="margin-top:-10px;">
                 <div class="row">
                     <div class="col-xs-5">
                         <select class="form-control m-bottom-sm" ng-model="sfProvider" ng-change="providerChanged(sfProvider)" ng-options="provider.RoleProviderName as provider.RoleProviderTitle for provider in rolesProviders">
                         </select>
                     </div>
+                </div>
+
+                <div class="input-group m-bottom-sm">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
+                    <sf-items-filter sf-filter='filter'></sf-items-filter>
                 </div>
 
 

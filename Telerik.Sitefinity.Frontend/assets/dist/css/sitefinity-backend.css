@@ -7999,6 +7999,10 @@ fieldset {
   padding: 0;
   border: 0; }
 
+/* line 15, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_global */
+fieldset[disabled="disabled"] {
+  opacity: 0.4; }
+
 /* line 1, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/_loading */
 .sf-loading:before, .sf-loading:after, .sf-loading > span {
   background-color: #9cc5f7;
@@ -8081,24 +8085,31 @@ h4, .h4 {
 :-ms-input-placeholder {
   color: #a9a9a9; }
 
-/* line 9, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
+/* line 7, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
+h5, .h5 {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 16px; }
+
+/* line 13, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
 .dl-half {
   overflow: hidden;
   min-width: 280px;
   margin: 0;
   padding: 0; }
-  /* line 16, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
+  /* line 20, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
   .dl-half dt, .dl-half dd {
     float: left;
     padding: 0;
     margin: 0; }
-  /* line 21, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
+  /* line 25, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
   .dl-half dt {
     width: 35%;
     color: #666;
     clear: both;
     font-weight: 400; }
-  /* line 27, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
+  /* line 31, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_type */
   .dl-half dd {
     width: 65%; }
 
@@ -8392,11 +8403,18 @@ h4, .h4 {
 tab {
   display: none; }
 
-/* line 1, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
-.form-group + .form-group {
-  margin-top: 30px; }
+/* line 3, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+.sf-designer-dlg .form-group-list .form-group + .form-group {
+  margin-top: 0; }
+/* line 6, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+.sf-designer-dlg .form-group + .form-group {
+  margin-top: 30px;
+  margin-bottom: 0; }
+/* line 10, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+.sf-designer-dlg .form-group strong + .radio {
+  margin-top: 0; }
 
-/* line 4, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+/* line 14, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .form-control-highlight[type=text] {
   width: 100%;
   min-height: 28px;
@@ -8406,10 +8424,10 @@ tab {
   padding: 0 4px;
   cursor: pointer;
   font-size: 14px; }
-  /* line 14, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+  /* line 24, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
   .form-control-highlight[type=text]:hover {
     background: #ffc; }
-  /* line 17, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+  /* line 27, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
   .form-control-highlight[type=text]:focus {
     cursor: text;
     background: transparent;
@@ -8417,11 +8435,11 @@ tab {
     border-color: #66afe9;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 4px rgba(102, 175, 233, 0.6); }
 
-/* line 28, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+/* line 38, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .sf-filter-selector .sf-taxon-filter + .sf-date-filter > .checkbox {
   margin-top: -5px; }
 
-/* line 32, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
+/* line 42, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .modal-dialog .form-control-sm {
   height: 27px !important;
   padding: 0 7px !important; }

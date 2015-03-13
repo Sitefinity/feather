@@ -44,6 +44,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         private static IList<string> OrderScripts(IList<string> dependencyScripts, IEnumerable<string> originalScripts)
         {
             var scripts = dependencyScripts.Concat(originalScripts).Distinct().ToList();
+            return scripts;
 
             if (scripts.Any(x => x.Contains("sf-list-selector")))
             {
