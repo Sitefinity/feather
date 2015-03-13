@@ -1,0 +1,408 @@
+﻿{
+
+"__________MVC__________" : {"scripts" : [], "components" : []},
+
+
+"sf-loading" : {
+	"scripts" : [
+		"Mvc/Scripts/sf-loading.js"
+	],
+	"components" : []
+},
+
+"sf-expander" : {
+	"scripts" : [
+		"Mvc/Scripts/expander.js"
+	],
+	"components" : []
+},
+
+"sf-style-dropdown" : {
+	"scripts" : [
+		"Mvc/Scripts/style-dropdown.js"
+	],
+	"components" : []
+},
+
+
+"__________COLLECTIONS__________" : {"scripts" : [], "components" : []},
+
+
+"sf-collection" : {
+	"scripts" : [
+		"client-components/collections/sf-collection.js"
+	],
+	"components" : ["sf-services"]
+},
+
+"sf-tree" : {
+	"scripts" : [
+		"client-components/collections/sf-tree.js"
+	],
+	"components" : ["sf-services"]
+},
+
+"sf-infinite-scroll" : {
+	"scripts" : [
+		"client-components/collections/sf-infinite-scroll.js"
+	],
+	"components" : []
+},
+
+
+
+"__________SEARCH__________" : {"scripts" : [], "components" : []},
+
+
+
+"sf-search-box" : { 
+	"scripts" : [
+		"client-components/search/sf-search-box.js"
+	],
+	"components" : ["sf-services"]
+},
+
+
+
+"__________SORT__________" : {"scripts" : [], "components" : []},
+
+
+
+"sf-sort-box" : { 
+	"scripts" : [
+		"client-components/sorting/sf-sort-box.js"
+	],
+	"components" : ["sf-services"]
+},
+
+
+
+"__________FIELDS__________" : {"scripts" : [], "components" : []},
+
+
+
+"sf-drag-drop" : {
+	"scripts" : [
+        "client-components/fields/drag-drop/sf-drag-drop.js"
+	],
+	"components" : ["sf-selectors"]
+},
+
+"sf-flat-taxon-field" : {
+	"scripts" : [
+		"Mvc/Scripts/ng-tags-input.min/ng-tags-input.min.js",
+		"client-components/selectors/taxonomies/sf-flat-taxon-service.js",
+		"client-components/fields/flat-taxon-field/sf-flat-taxon-field.js"
+	],
+	"components" : ["sf-services", "sf-fields"]
+},
+
+"sf-html-field" : {
+	"scripts" : [
+		"Mvc/Scripts/ContentBlock/shared-content-services.js",
+		"client-components/selectors/media/sf-media-markup-service.js",
+		"client-components/fields/html-field/sf-html-field.js"
+	],
+	"components" : ["sf-services", "sf-fields", "sf-link-selector-modal", "sf-expander", "sf-image-field", "sf-thumbnail-size-selection"]
+},
+
+"sf-image-field" : {
+	"scripts" : [
+		"client-components/selectors/media/sf-media-service.js",
+		"client-components/selectors/media/sf-media-filter.js",
+		"client-components/fields/image-field/sf-image-field.js"
+	],
+	"components" : ["sf-services", "sf-fields", "sf-image-selector"]
+},
+
+"sf-editable" : { 
+	"scripts" : [
+		"client-components/fields/sf-editable.js"
+	],
+	"components" : ["sf-services", "sf-fields"]
+},
+
+"sf-fields" : { 
+	"scripts" : [
+		"client-components/fields/sf-fields.js"
+	],
+	"components" : []
+},
+
+"__________SELECTORS__________" : {"scripts" : [], "components" : []},
+
+
+
+"_____COMMON_____" : {"scripts" : [], "components" : []},
+
+
+"sf-filter-selector" : { 
+	"scripts" : [
+		"client-components/selectors/common/sf-filter-selector.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-taxon-filter", "sf-date-filter"]
+},
+
+"sf-items-tree" : {
+	"scripts" : [
+		"client-components/selectors/common/sf-items-tree.js"
+	],
+	"components" : ["sf-services", "sf-selectors"]
+},
+
+"sf-list-selector" : {
+	"scripts" : [
+		"client-components/selectors/common/sf-list-selector.js"
+	],
+	"components" : ["sf-services", "sf-selectors"]
+},
+
+"sf-provider-selector" : {
+	"scripts" : [
+		"client-components/selectors/common/sf-provider-selector.js",
+		"client-components/selectors/common/sf-provider-service.js"
+	],
+	"components" : ["sf-services", "sf-selectors"]
+},
+
+"sf-selected-items-view" : {
+	"scripts" : [
+		"client-components/selectors/common/sf-selected-items-view.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-shrinked-breadcrumb"]
+},
+
+"sf-selectors" : {
+	"scripts" : [
+		"client-components/selectors/common/sf-selectors.js"
+	],
+	"components" : ["sf-services"]
+},
+
+"sf-items-filter" : {
+	"scripts" : [
+		"client-components/selectors/common/sf-selectors.js"
+	],
+	"components" : ["sf-services"]
+},
+
+"sf-endless-scroll" : {
+	"scripts" : [
+		"client-components/selectors/common/sf-selectors.js"
+	],
+	"components" : ["sf-services"]
+},
+
+"sf-shrinked-breadcrumb" : {
+	"scripts" : [
+		"client-components/selectors/common/sf-selectors.js"
+	],
+	"components" : ["sf-services"]
+},
+
+"sf-services" : {
+	"scripts" : [
+		"Mvc/Scripts/Angular/angular-resource.min.js",
+		"client-components/selectors/common/sf-services.js"
+	],
+	"components" : []
+},
+
+"_____DATETIME_____" : {"scripts" : [], "components" : []},
+
+
+"sf-date-filter" : {
+	"scripts" : [
+		"client-components/selectors/date-time/sf-date-filter.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-timespan-selector"]
+},
+
+"sf-date-time-picker" : {
+	"scripts" : [
+		"client-components/selectors/date-time/sf-date-time-picker.js"
+	],
+	"components" : ["sf-services", "sf-selectors"]
+},
+
+"sf-timespan-selector" : {
+	"scripts" : [
+		"client-components/selectors/date-time/sf-timespan-selector.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-date-time-picker"]
+},
+
+
+"_____DYNAMICMODULES_____" : {"scripts" : [], "components" : []},
+
+
+"sf-dynamic-items-selector" : {
+	"scripts" : [
+		"client-components/selectors/dynamic-modules/sf-data-service.js",
+		"client-components/selectors/dynamic-modules/sf-dynamic-items-selector.js"
+	],
+	"components" : ["sf-services", "sf-endless-scroll", "sf-list-selector", "sf-selected-items-view", "sf-items-filter"]
+},
+
+
+"_____IDENTITY_____" : {"scripts" : [], "components" : []},
+
+
+"sf-role-selector" : {
+	"scripts" : [
+		"client-components/selectors/identity/sf-role-selector.js",
+		"client-components/selectors/identity/sf-roles-service.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-list-selector", "sf-endless-scroll", "sf-selected-items-view", "sf-loading"]
+},
+
+
+"_____LOCALIZATION_____" : {"scripts" : [], "components" : []},
+
+
+"sf-language-selector" : {
+	"scripts" : [
+		"client-components/selectors/localization/sf-language-selector.js",
+		"client-components/selectors/localization/sf-language-service.js"
+	],
+	"components" : ["sf-services", "sf-selectors"]
+},
+
+
+"_____MEDIA_____" : {"scripts" : [], "components" : []},
+
+"sf-image-selector" : {
+	"scripts" : [
+		"client-components/selectors/media/sf-image-selector.js",
+		"client-components/selectors/media/sf-media-service.js",
+  		"client-components/selectors/media/sf-media-filter.js",
+		"client-components/selectors/taxonomies/sf-flat-taxon-service.js",
+		"client-components/selectors/taxonomies/sf-hierarchical-taxon-service.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
+					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
+					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector"]
+},
+
+"sf-library-selector" : {
+	"scripts" : [
+		"client-components/selectors/media/sf-library-selector.js",
+		"client-components/selectors/media/sf-media-service.js"
+	],
+	"components" : ["sf-services", "sf-shrinked-breadcrumb", "sf-items-filter", "sf-items-tree", "sf-selected-items-view", "sf-list-selector"]
+},
+
+"sf-thumbnail-size-selection" : {
+	"scripts" : [
+		"client-components/selectors/media/sf-media-service.js",
+		"client-components/selectors/media/sf-thumbnail-size-selection.js"
+	],
+	"components" : ["sf-services", "sf-image-selector"]
+},
+
+"_____MULTISITE_____" : {"scripts" : [], "components" : []},
+
+"sf-multisite-page-selector" : {
+	"scripts" : [
+		"client-components/selectors/multi-site/sf-multi-site-service.js",
+		"client-components/selectors/multi-site/sf-multisite-page-selector.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-list-selector", "sf-items-tree", "sf-site-selector", "sf-language-selector", "sf-page-selector"]
+},
+
+"sf-site-selector" : {
+	"scripts" : [
+		"client-components/selectors/multi-site/sf-multi-site-service.js",
+		"client-components/selectors/multi-site/sf-site-selector.js"
+	],
+	"components" : ["sf-services", "sf-selectors"]
+},
+
+
+"_____NEWS_____" : {"scripts" : [], "components" : []},
+
+
+"sf-news-selector" : {
+	"scripts" : [
+		"client-components/selectors/news/sf-news-item-service.js",
+		"client-components/selectors/news/sf-news-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
+
+"_____PAGES_____" : {"scripts" : [], "components" : []},
+
+
+"sf-external-urls-view" : {
+	"scripts" : [
+		"client-components/selectors/pages/sf-external-urls-view.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-fields", "sf-editable"]
+},
+
+"sf-page-selector" : {
+	"scripts" : [
+		"client-components/selectors/pages/sf-page-service.js",
+		"client-components/selectors/pages/sf-page-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-shrinked-breadcrumb", "sf-items-tree", "sf-list-selector", 
+					"sf-loading", "sf-external-urls-view", "sf-selected-items-view", "sf-selected-pages-view"]
+},
+
+"sf-selected-pages-view" : {
+	"scripts" : [
+		"client-components/selectors/pages/sf-selected-pages-view.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-shrinked-breadcrumb"]
+},
+
+
+"_____TAXONOMIES_____" : {"scripts" : [], "components" : []},
+
+
+"sf-hierarchical-taxon-selector" : {
+	"scripts" : [
+		"client-components/selectors/taxonomies/sf-hierarchical-taxon-service.js",
+		"client-components/selectors/taxonomies/sf-hierarchical-taxon-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-shrinked-breadcrumb", "sf-items-tree", "sf-selected-items-view", "sf-list-selector"]
+},
+
+
+"sf-taxon-filter" : {
+	"scripts" : [
+		"client-components/selectors/taxonomies/sf-taxon-filter.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-list-selector", "sf-taxon-selector", "sf-hierarchical-taxon-selector"]
+},
+
+
+"sf-taxon-selector" : {
+	"scripts" : [
+		"client-components/selectors/taxonomies/sf-flat-taxon-service.js",
+		"client-components/selectors/taxonomies/sf-taxon-selector.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-items-filter", "sf-endless-scroll", "sf-loading", "sf-selected-items-view", "sf-list-selector"]
+},
+
+"_____TOOLS_____" : {"scripts" : [], "components" : []},
+
+"sf-link-selector-modal" : {
+	"scripts" : [
+		"client-components/selectors/tools/sf-link-service.js",
+		"client-components/selectors/tools/sf-link-selector-modal.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-link-selector"]
+},
+
+"sf-link-selector" : {
+	"scripts" : [
+		"client-components/selectors/multi-site/sf-multi-site-service.js",
+		"client-components/selectors/pages/sf-page-service.js",
+		"client-components/selectors/tools/sf-link-service.js",
+		"client-components/selectors/tools/sf-link-selector.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-multisite-page-selector" ]
+}
+}

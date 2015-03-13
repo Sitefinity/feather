@@ -35,5 +35,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </value>
         [DataMember(Name = "scripts")]
         public IList<string> Scripts { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the components.
+        /// </summary>
+        /// <value>
+        /// The components.
+        /// </value>
+        [DataMember(Name = "components")]
+        public IList<string> Components { get; set; }
     }
 }
