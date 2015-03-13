@@ -68,6 +68,10 @@
                     scope.htmlFieldCssUrl =
                         serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/css/html-field.min.css');
 
+                    scope.getPackageResourceUrl = function (resourcePath) {
+                        return serverContext.getRootedUrl(resourcePath);
+                    };
+
                     scope.openImageSelector = function () {
 
                         var range = editor.getRange();
