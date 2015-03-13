@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    angular.module('sfSelectors', ['sfServices'])
+    angular.module('sfSelectors')
         .directive('sfLibrarySelector', ['serviceHelper', 'sfMediaService', '$q', function (serviceHelper, mediaService, $q) {
             return {
                 require: '^sfListSelector',

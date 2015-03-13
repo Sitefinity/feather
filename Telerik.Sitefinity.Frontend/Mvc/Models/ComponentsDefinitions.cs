@@ -20,9 +20,60 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <summary>
         /// Gets the scripts.
         /// </summary>
-        /// <param name="component">The component.</param>
+        /// <param name="components">The components.</param>
         /// <returns></returns>
-        public static IEnumerable<string> GetScripts(string component)
+        public static IList<string> GetScripts(IEnumerable<string> components, IEnumerable<string> scripts)
+        {
+            var originalScripts = scripts.ToList();
+
+            if (components == null || !components.Any())
+            {
+                return originalScripts;
+            }
+
+            var dependencyScripts = new List<string>();
+
+            foreach (var comp in components)
+            {
+                dependencyScripts.AddRange(ComponentsDefinitions.GetComponentScripts(comp));
+            }
+
+            return ComponentsDefinitions.OrderScripts(dependencyScripts, originalScripts);
+        }
+
+        private static IList<string> OrderScripts(IList<string> dependencyScripts, IEnumerable<string> originalScripts)
+        {
+            var scripts = dependencyScripts.Concat(originalScripts).Distinct().ToList();
+
+            if (scripts.Any(x => x.Contains("sf-list-selector")))
+            {
+                scripts.Insert(0, "client-components/selectors/common/sf-list-selector.js");
+            }
+
+            scripts.Insert(0, "client-components/selectors/common/sf-selectors.js");
+            scripts.Insert(0, "client-components/selectors/common/sf-services.js");
+
+            if (scripts.Any(x => x.Contains("sf-fields")))
+            {
+                scripts.Insert(0, "client-components/fields/sf-fields.js");
+            }
+
+            var mvcScripts = scripts.Where(x => x.IndexOf("Mvc/Scripts/", 0, StringComparison.Ordinal) >= 0).ToList();
+            foreach (var mvcScript in mvcScripts)
+            {
+                scripts.Insert(0, mvcScript);
+            }
+
+            var angularScripts = scripts.Where(x => x.IndexOf("angular", 0, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            foreach (var angularScript in angularScripts)
+            {
+                scripts.Insert(0, angularScript);
+            }
+
+            return scripts.Distinct().ToList();
+        }
+
+        private static IEnumerable<string> GetComponentScripts(string component)
         {
             if (!string.IsNullOrEmpty(component) && ComponentsDefinitions.ComponentsDefinitionsDictionary.Value.ContainsKey(component))
             {
@@ -39,7 +90,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 {
                     foreach (var comp in componentDefinitionObject.Components)
                     {
-                        allScripts.AddRange(ComponentsDefinitions.GetScripts(comp));
+                        allScripts.AddRange(ComponentsDefinitions.GetComponentScripts(comp));
                     }
                 }
 
@@ -49,32 +100,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return null;
         }
 
-        /// <summary>
-        /// Gets the scripts.
-        /// </summary>
-        /// <param name="components">The components.</param>
-        /// <returns></returns>
-        public static IEnumerable<string> GetScripts(IEnumerable<string> components)
-        {
-            var allScripts = new List<string>();
-
-            if (components != null)
-            {
-                foreach (var comp in components)
-                {
-                    allScripts.AddRange(ComponentsDefinitions.GetScripts(comp));
-                }
-            }
-
-            return allScripts.Distinct();
-        }
-
         private static Dictionary<string, ComponentsDefinitionsConfigModel> Initialize()
         {
             var assemblyPath = FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(ComponentsDefinitions).Assembly);
             var filename = "client-components/components-definitions.json";
 
-            var fileStream = VirtualPathManager.OpenFile(assemblyPath + filename);
+            var fileStream = VirtualPathManager.OpenFile("~/" + assemblyPath + filename);
 
             using (var streamReader = new StreamReader(fileStream))
             {
