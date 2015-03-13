@@ -8178,8 +8178,8 @@ h5, .h5 {
     [datepicker-popup] + ul .btn.active > span {
       color: #fff; }
 
-/* line 1, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_buttons */
-.btn-primary {
+/* line 2, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_buttons */
+.sf-designer-dlg .btn-primary {
   min-width: 90px; }
 
 /* line 3, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts */
@@ -8412,7 +8412,7 @@ tab {
   margin-bottom: 0; }
 /* line 10, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .sf-designer-dlg .form-group strong + .radio {
-  margin-top: 0; }
+  margin-top: 5px; }
 
 /* line 14, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_forms */
 .form-control-highlight[type=text] {
