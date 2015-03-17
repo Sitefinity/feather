@@ -8,7 +8,8 @@
                 serviceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/'),
                 createItemUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}'),
                 settingsNodeName: 'Images_0,librariesConfig_0',
-                extensionsRegExPrefix: 'image'
+                extensionsRegExPrefix: 'image',
+                fileFormField: 'ImageFile'
             },
             documents: {
                 itemType: 'Telerik.Sitefinity.Libraries.Model.Document',
@@ -17,7 +18,8 @@
                 serviceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/DocumentService.svc/'),
                 createItemUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/DocumentService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}'),
                 settingsNodeName: 'Documents_0,librariesConfig_0',
-                extensionsRegExPrefix: 'document'
+                extensionsRegExPrefix: 'document',
+                fileFormField: 'DocumentFile'
             },
             uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/'),
@@ -87,10 +89,10 @@
             return '/Date(' + date.getTime() + '-0000)/';
         };
 
-        var createImage = function (settings) {
+        var createItem = function (settings, mediaType) {
             var nowToWcfDate = toWcfDate(new Date()),
-                url = $interpolate(constants.images.createItemUrl)(settings),
-                image = {
+                url = $interpolate(constants[mediaType].createItemUrl)(settings),
+                item = {
                     Item: {
                         Title: {
                             PersistedValue: settings.title,
@@ -106,10 +108,10 @@
                         Tags: settings.tags,
                         Category: settings.categories
                     },
-                    ItemType: constants.images.itemType
+                    ItemType: constants[mediaType].itemType
                 };
 
-            return serviceHelper.getResource(url).put(image).$promise;
+            return serviceHelper.getResource(url).put(item).$promise;
         };
 
         var uploadFile = function (url, formData) {
@@ -141,11 +143,11 @@
             return deferred.promise;
         };
 
-        var uploadImage = function (settings) {
-            return createImage(settings)
+        var uploadItem = function (settings, mediaType) {
+            return createItem(settings, mediaType)
             .then(function (data) {
                 var formData = new FormData();
-                formData.append('ContentType', constants.images.itemType);
+                formData.append('ContentType', constants[mediaType].itemType);
                 formData.append('LibraryId', settings.libraryId);
                 formData.append('ContentId', data.Item.Id);
                 formData.append('Workflow', 'Upload');
@@ -156,7 +158,7 @@
                     formData.append('Culture', serverContext.getUICulture());
                 }
 
-                formData.append('ImageFile', settings.file);
+                formData.append(constants[mediaType].fileFormField, settings.file);
 
                 return uploadFile(constants.uploadHandlerUrl, formData);
             })
@@ -296,7 +298,7 @@
                         tags: model.tags,
                         file: model.file
                     };
-                    return uploadImage(settings);
+                    return uploadItem(settings, mediaType);
                 },
                 thumbnailProfiles: function () {
                     return thumbnailProfiles(constants[mediaType].parentItemType);
