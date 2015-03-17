@@ -55,12 +55,12 @@
         images: {
             get: function () { return itemsPromiseTransform(genericGet()); },
             getFolders: function () { return itemsPromiseTransform(genericGet()); },
-            getPredecessorsFolders: function () { return itemsPromiseTransform(genericGet()); }
-        },
-        getImagesSettings: function () {
-            var defer = $q.defer();
-            defer.resolve({ AllowedExensionsRegex: /^image\/(png)$/g });
-            return defer.promise;
+            getPredecessorsFolders: function () { return itemsPromiseTransform(genericGet()); },
+            getSettings: function () {
+                var defer = $q.defer();
+                defer.resolve({ AllowedExensionsRegex: /^image\/(png)$/g });
+                return defer.promise;
+            }
         }
     };
 

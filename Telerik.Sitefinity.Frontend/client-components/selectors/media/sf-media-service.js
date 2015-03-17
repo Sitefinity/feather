@@ -6,14 +6,18 @@
                 parentItemType: 'Telerik.Sitefinity.Libraries.Model.Album',
                 parentServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/'),
                 serviceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/'),
-                createItemUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}')
+                createItemUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}'),
+                settingsNodeName: 'Images_0,librariesConfig_0',
+                extensionsRegExPrefix: 'image'
             },
             documents: {
                 itemType: 'Telerik.Sitefinity.Libraries.Model.Document',
                 parentItemType: 'Telerik.Sitefinity.Libraries.Model.DocumentLibrary',
                 parentServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/DocumentLibraryService.svc/'),
                 serviceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/DocumentService.svc/'),
-                createItemUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/DocumentService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}')
+                createItemUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/DocumentService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}'),
+                settingsNodeName: 'Documents_0,librariesConfig_0',
+                extensionsRegExPrefix: 'document'
             },
             uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/'),
@@ -192,6 +196,8 @@
         };
 
         var createMediaApi = function  (mediaType) {
+            var mediaSettings = null;
+
             return {
                 getById: function (id, provider) {
                     return getById(id, provider, constants[mediaType].itemType, constants[mediaType].serviceUrl);
@@ -294,6 +300,34 @@
                 },
                 thumbnailProfiles: function () {
                     return thumbnailProfiles(constants[mediaType].parentItemType);
+                },
+                getSettings: function () {
+                    if (mediaSettings === null) {
+                        var url = constants.librarySettingsServiceUrl;
+                        return serviceHelper.getResource(url).get(
+                            {
+                                nodeName: constants[mediaType].settingsNodeName,
+                                mode: 'Form'
+                            })
+                            .$promise
+                            .then(function (data) {
+                                mediaSettings = {};
+                                for (var i = 0; i < data.Items.length; i++) {
+                                    mediaSettings[data.Items[i].Key] = data.Items[i].Value;
+                                }
+                                if (mediaSettings.AllowedExensionsSettings) {
+                                    var mediaExt = mediaSettings.AllowedExensionsSettings.replace(/,/g, '|').replace(/ |\./g, '');
+                                    var regExp = '^' + constants[mediaType].extensionsRegExPrefix + '\/(' + mediaExt + ')$';
+                                    mediaSettings.AllowedExensionsRegex = new RegExp(regExp, 'i');
+                                }
+                                return mediaSettings;
+                            });
+                    }
+                    else {
+                        var deferred = $q.defer();
+                        deferred.resolve(mediaSettings);
+                        return deferred.promise;
+                    }
                 }
             };
         };
@@ -324,43 +358,12 @@
             }
         };
 
-        var imagesSettings = null;
-        var getImagesSettings = function () {
-            if (imagesSettings === null) {
-                var url = constants.librarySettingsServiceUrl;
-                return serviceHelper.getResource(url).get(
-                    {
-                        nodeName: 'Images_0,librariesConfig_0',
-                        mode: 'Form'
-                    })
-                    .$promise
-                    .then(function (data) {
-                        imagesSettings = {};
-                        for (var i = 0; i < data.Items.length; i++) {
-                            imagesSettings[data.Items[i].Key] = data.Items[i].Value;
-                        }
-                        if (imagesSettings.AllowedExensionsSettings) {
-                            var imagesExt = imagesSettings.AllowedExensionsSettings.replace(/,/g, '|').replace(/ |\./g, '');
-                            var regExp = '^image\/(' + imagesExt + ')$';
-                            imagesSettings.AllowedExensionsRegex = new RegExp(regExp, 'i');
-                        }
-                        return imagesSettings;
-                    });
-            }
-            else {
-                var deferred = $q.defer();
-                deferred.resolve(imagesSettings);
-                return deferred.promise;
-            }
-        };
-
         return {
             images: createMediaApi('images'),
             documents: createMediaApi('documents'),
             getLibrarySettings: getLibrarySettings,
             checkCustomThumbnailParams: checkCustomThumbnailParams,
-            getCustomThumbnailUrl: getCustomThumbnailUrl,
-            getImagesSettings: getImagesSettings
+            getCustomThumbnailUrl: getCustomThumbnailUrl
         };
     }]);
 })();
