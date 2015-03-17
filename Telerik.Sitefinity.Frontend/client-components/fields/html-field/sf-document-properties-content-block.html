@@ -1,0 +1,43 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title">Document link</h3>
+</div>
+
+<div class="modal-body">
+    <sf-document-field class="sf-Media--info modal-settings" 
+        sf-auto-open-selector
+        sf-model="model.item.Id" 
+        sf-image="model.item" 
+        sf-provider="model.provider"></sf-document-field>
+
+    <form name="documentProperties">
+        <div class="form-group" ng-class="{ 'has-error' : !model.title }">
+            <label for="title">Title</label>
+
+            <div class="row">
+                <div class="col-xs-8">
+                    <input class="form-control" name="title" type="text" ng-model="model.title" ng-required="true" />
+                </div>
+
+                <div class="m-top-xs" ng-class="{'text-danger': model.title.length > 35}">{{model.title.length}}</div>
+            </div>
+
+            <div class="text-muted">Less than 35 characters are recommended</div>
+
+            <p class="text-danger" ng-show="imageProperties.title.$error.required">Title is required</p>
+        </div>
+
+        <expander expander-title='More options'>
+            <div class="row">
+                <div class="col-xs-9">
+                    <label>CSS classes</label>
+                    <input class="form-control" type="text" ng-model="model.cssClass" />
+                </div>
+            </div>
+        </expander>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.item.Title.Value">Done</button>
+    <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
+</div>
