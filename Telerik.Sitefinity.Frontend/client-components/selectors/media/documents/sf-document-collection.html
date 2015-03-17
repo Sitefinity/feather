@@ -1,0 +1,89 @@
+﻿<div class="Media-items" sf-infinite-scroll="$parent.loadMore()">
+	<div>
+		<div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder" ng-click="select(item)">
+			<div ng-if="item.IsFolder === true">
+				<div class="Media-file-thumb">
+
+<!--		Popups for folders are removed
+				until we have images and libraries count
+				info in the model.
+				Uncomment this after the SF 8.0 release!
+				<div class="Media-file-thumb"
+					popover-popup-delay="1000"
+					popover-placement="right"
+					popover-trigger="mouseenter"
+					popover-append-to-body="true"
+					popover-title="{{item.Title}}"
+					sf-popover-html="
+						<div>{{item.LibrariesCount}}</div>
+						{{item.ImagesCount}}
+					"
+				> -->
+
+					<i class="glyphicon glyphicon-folder-close"></i>
+					<strong>{{item.Title}}</strong>
+				</div>
+
+				<div class="Media-folder-title">
+					{{item.Title}}
+				</div>
+
+				<div class="Media-item-meta">
+					<div>{{item.ImagesCount}}</div>
+					{{item.LibrariesCount}}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected>
+			<span class="Media-item-info"
+						sf-popover-html
+						sf-popover-placement="right"
+						sf-popover-trigger="hover"
+						sf-popover-append-to-body="true"
+						sf-popover-title="{{item.Title}}"
+						sf-popover-content="
+							<dl class='dl-half'>
+								<dt>Library:</dt>
+								<dd>{{item.FolderTitle || item.LibraryTitle}}</dd>
+								<dt>Dimensions:</dt>
+								<dd>{{item.Width + 'x' + item.Height}}</dd>
+								<dt>Type:</dt>
+								<dd>{{item.Extension.toUpperCase()}}</dd>
+								<dt>Date modified:</dt>
+								<dd>{{item.LastModified | date : 'MM/dd/yyyy HH:mm'}}</dd>
+							</dl>
+						">
+				i
+			</span>
+
+			<div class="Media-file-wrapper">
+
+				<div class="sf{{item.Extension.substring(1).toLowerCase()}} sfext">
+                    <!-- File extension icon -->
+				</div>
+
+				<div class="Media-item-title">
+					{{item.Title}}
+				</div>
+
+				<div class="Media-item-meta">
+					{{item.Extension.toUpperCase().replace(".", "")}}<br />
+					{{item.TotalSize + "KB"}}<br />
+				</div>
+
+				<div class="Media-item-date">
+					{{item.LastModified | date : 'MM/dd/yyyy HH:mm'}}<br />
+					{{"by " + item.Author}}
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="text-center">
+		<sf-loading ng-show="$parent.isLoading"></sf-loading>
+	</div>
+</div>
