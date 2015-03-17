@@ -463,8 +463,8 @@ describe('sfMediaService', function () {
             });
         });
 
-        /* Images */
-        describe('images', function () {
+        /* Media items */
+        describe('media items', function () {
 
             var getXmlHttpRequestMock = function (window) {
                 window.XMLHttpRequest = angular.noop;
