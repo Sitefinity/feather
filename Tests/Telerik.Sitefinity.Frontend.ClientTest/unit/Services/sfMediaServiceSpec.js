@@ -110,6 +110,19 @@ describe('sfMediaService', function () {
                 content: 'getContent',
                 upload: 'upload'
             }
+        },
+        {
+            itemType: 'Telerik.Sitefinity.Libraries.Model.Document',
+            parentType: 'Telerik.Sitefinity.Libraries.Model.DocumentLibrary',
+            itemsServicePath: appPath + '/Sitefinity/Services/Content/DocumentService.svc/',
+            albumsServicePath: appPath + '/Sitefinity/Services/Content/DocumentLibraryService.svc/',
+            callbacks: {
+                testedObject: 'documents',
+                folders: 'getFolders',
+                items: 'getMedia',
+                content: 'getContent',
+                upload: 'upload'
+            }
         }
     ];
 
@@ -153,7 +166,7 @@ describe('sfMediaService', function () {
         /* Tests */
 
         /* Common */
-        (function () {
+        describe('common', function () {
             it('[dzhenko] / passing no options object to folders should return all objects', function () {
                 var subpath = 'folders/?hierarchyMode=true';
 
@@ -177,10 +190,10 @@ describe('sfMediaService', function () {
 
                 assertContent();
             });
-        }());
+        });
 
         /* Errors */
-        (function () {
+        describe('errors', function () {
             it('[dzhenko] / should return error on folders', function () {
                 var subpath = 'folders/?hierarchyMode=true';
 
@@ -204,10 +217,10 @@ describe('sfMediaService', function () {
 
                 assertError(null, 'getContent');
             });
-        }());
+        });
 
         /* Folders */
-        (function () {
+        describe('folders', function () {
             // Root folders
             it('[dzhenko] / should return only root folders', function () {
                 var subpath = 'folders/?hierarchyMode=true';
@@ -448,10 +461,10 @@ describe('sfMediaService', function () {
 
                 assertFolders({ parent: sampleGuid, recursive: false, filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
             });
-        }());
+        });
 
         /* Images */
-        (function () {
+        describe('images', function () {
 
             var getXmlHttpRequestMock = function (window) {
                 window.XMLHttpRequest = angular.noop;
@@ -613,10 +626,10 @@ describe('sfMediaService', function () {
                 expect(xhrObj.send).toHaveBeenCalled();
                 expect(data).toEqualData(item);
             });
-        }());
+        });
 
         /* Content */
-        (function () {
+        describe('content', function () {
             it('[dzhenko] / should return all content', function () {
                 var subpath = '?itemType=' + itemType;
 
@@ -712,7 +725,7 @@ describe('sfMediaService', function () {
 
                 assertContent({ filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
             });
-        }());
+        });
     };
 
     /* Test Running */
