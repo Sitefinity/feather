@@ -580,6 +580,7 @@
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-selector.html" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-document-properties-content-block.html" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.html" />
+    <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-collection.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
