@@ -262,11 +262,6 @@
                         $scope.model.title = $scope.model.item.Title.Value;
                 });
 
-                $scope.$watch('model.item.AlternativeText.Value', function (newVal, oldVal) {
-                    if ($scope.model.item && $scope.model.item.AlternativeText && (oldVal === $scope.model.alternativeText || !$scope.model.alternativeText))
-                        $scope.model.alternativeText = $scope.model.item.AlternativeText.Value;
-                });
-
                 $scope.done = function () {
                     $modalInstance.close($scope.model);
                 };
