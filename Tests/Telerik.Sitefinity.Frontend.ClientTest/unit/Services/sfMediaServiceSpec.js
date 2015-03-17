@@ -12,6 +12,38 @@ describe('sfMediaService', function () {
         TotalCount: 1
     };
 
+    var mediaSectionSettings = {"Items": [
+        {
+            Key: "UrlRoot",
+            Value: "images"
+        },
+        {
+            Key: "AllowedExensionsSettings",
+            Value: ".gif, .jpg, .jpeg, .png, .bmp"
+        },
+        {
+            Key: "AllowDynamicResizing",
+            Value: "True"
+        },
+        {
+            Key: "StoreDynamicResizedImagesAsThumbnails",
+            Value: "True"
+        },
+        {
+            Key: "EnableImageUrlSignature",
+            Value: "True"
+        },
+        {
+            Key: "ImageUrlSignatureHashAlgorithm",
+            Value: "SHA1"
+        },
+        {
+            Key: "DynamicResizingThreadsCount",
+            Value: "16"
+        }],
+        TotalCount: 7
+    };
+
     var errorResponse = {
         Detail: 'Error'
     };
@@ -96,6 +128,24 @@ describe('sfMediaService', function () {
         expect(data.data).toEqualData(errorResponse);
     };
 
+    var baseAssertSettings = function (mediaType, callback) {
+        var data;
+        callback().then(function (res) {
+            data = res;
+        });
+
+        expect(data).toBeUndefined();
+
+        $httpBackend.flush();
+
+        var expectedRegex = new RegExp('^' + mediaType + '\/(gif|jpg|jpeg|png|bmp)$', 'i');
+        expect(data.AllowedExensionsRegex).toEqual(expectedRegex);
+
+        delete data.AllowedExensionsRegex;
+
+        expect(data).toEqualArrayOfObjects(mediaSectionSettings, ['Key', 'Value']);
+    };
+
     /* Tested Services */
     var allTestObjectsSettings = [
         {
@@ -103,12 +153,15 @@ describe('sfMediaService', function () {
             parentType: 'Telerik.Sitefinity.Libraries.Model.Album',
             itemsServicePath: appPath + '/Sitefinity/Services/Content/ImageService.svc/',
             albumsServicePath: appPath + '/Sitefinity/Services/Content/AlbumService.svc/',
+            settingsNodeName: 'Images_0,librariesConfig_0',
+            extensionsRegExPrefix: 'image',
             callbacks: {
                 testedObject: 'images',
                 folders: 'getFolders',
                 items: 'getMedia',
                 content: 'getContent',
-                upload: 'upload'
+                upload: 'upload',
+                settings: 'getSettings'
             }
         },
         {
@@ -116,12 +169,15 @@ describe('sfMediaService', function () {
             parentType: 'Telerik.Sitefinity.Libraries.Model.DocumentLibrary',
             itemsServicePath: appPath + '/Sitefinity/Services/Content/DocumentService.svc/',
             albumsServicePath: appPath + '/Sitefinity/Services/Content/DocumentLibraryService.svc/',
+            settingsNodeName: 'Documents_0,librariesConfig_0',
+            extensionsRegExPrefix: 'document',
             callbacks: {
                 testedObject: 'documents',
                 folders: 'getFolders',
                 items: 'getMedia',
                 content: 'getContent',
-                upload: 'upload'
+                upload: 'upload',
+                settings: 'getSettings'
             }
         }
     ];
@@ -133,6 +189,7 @@ describe('sfMediaService', function () {
         var itemsServicePath = testObjSettings.itemsServicePath;
         var itemType = testObjSettings.itemType;
         var parentType = testObjSettings.parentType;
+        var settingsNodeName = testObjSettings.settingsNodeName;
         var assertFolders,
             assertItems,
             assertContent,
@@ -157,6 +214,11 @@ describe('sfMediaService', function () {
 
             assertError = function (params, methodName) {
                 baseAssertError(params, mediaService[testObjSettings.callbacks.testedObject][methodName]);
+            };
+
+            assertSettings = function (testObjSettings) {
+                baseAssertSettings(testObjSettings.extensionsRegExPrefix,
+                    mediaService[testObjSettings.callbacks.testedObject][testObjSettings.callbacks.settings]);
             };
 
             $window = _$window_;
@@ -724,6 +786,16 @@ describe('sfMediaService', function () {
                 $httpBackend.expectGET(itemsServicePath + subpath).respond(dataItems);
 
                 assertContent({ filter: 'FakeFilterExpression', sort: 'FakeSortExpression', provider: 'FakeDataProvider', skip: 1, take: 1 });
+            });
+        });
+
+        describe('media section settings', function () {
+            var configSectionService = appPath + '/Sitefinity/Services/Configuration/ConfigSectionItems.svc/?mode=Form&nodeName={0}';
+            it('[GeorgiMateev] / should construct correct regex for allowed file extensions.', function () {
+                var url = configSectionService.format(settingsNodeName);
+                $httpBackend.expectGET(url).respond(mediaSectionSettings);
+
+                assertSettings(testObjSettings);
             });
         });
     };
