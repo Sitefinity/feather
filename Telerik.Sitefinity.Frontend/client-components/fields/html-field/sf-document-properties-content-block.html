@@ -1,14 +1,14 @@
 ﻿<div class="modal-header">
     <button type="button" class="close" ng-click="cancel()">&times;</button>
-    <h3 class="modal-title">Document link</h3>
+    <h3 class="modal-title">Insert a document link</h3>
 </div>
 
 <div class="modal-body">
-    <sf-document-field class="sf-Media--info modal-settings" 
-        sf-auto-open-selector
-        sf-model="model.item.Id" 
-        sf-image="model.item" 
-        sf-provider="model.provider"></sf-document-field>
+    <sf-media-field class="sf-Media--info modal-settings"
+                    sf-auto-open-selector
+                    sf-model="model.item.Id"
+                    sf-media="model.item"
+                    sf-provider="model.provider"></sf-media-field>
 
     <form name="documentProperties">
         <div class="form-group" ng-class="{ 'has-error' : !model.title }">
@@ -24,7 +24,7 @@
 
             <div class="text-muted">Less than 35 characters are recommended</div>
 
-            <p class="text-danger" ng-show="imageProperties.title.$error.required">Title is required</p>
+            <p class="text-danger" ng-show="mediaProperties.title.$error.required">Title is required</p>
         </div>
 
         <expander expander-title='More options'>

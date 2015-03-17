@@ -1,0 +1,48 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5 text-center">
+            <div class="sf-Media--info-image">
+                <img ng-src="{{sfMedia.ThumbnailUrl}}" src="" alt="{{sfMedia.Title.Value}}" />
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <p>
+                <strong>Type: </strong>
+                <span ng-bind="sfMedia.Extension"></span><br />
+
+                <strong>File size: </strong>
+                <span ng-bind="mediaSize"></span><br />
+
+                <strong>Uploaded: </strong>
+                <span ng-bind="uploaded | date : 'MM/dd/yyyy HH:mm'"></span>
+            </p>
+
+            <br />
+            <button class="btn btn-xs btn-default" ng-click="changeMedia()">Change document</button>
+            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties()">Edit all properties</button>
+        </div>
+    </div>
+</div>
+
+<div class="mediaSelectorModal"
+     template-url="sf-media-selector-modal-template"
+     modal
+     size="normal"
+     window-class="modal-fluid"
+     existing-scope="true">
+</div>
+
+<script type="text/ng-template" id="sf-media-selector-modal-template">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h3 class="modal-title">Select document</h3>
+    </div>
+    <div class="modal-body">
+        <sf-document-selector sf-model="model.selectedItems" sf-filter="model.filterObject" sf-provider="model.provider"></sf-document-selector>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">Done</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
