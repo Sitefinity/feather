@@ -293,7 +293,7 @@
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
                             var file = dataTransferObject.files[0];
 
-                            sfMediaService.getImagesSettings().then(function (settings) {
+                            sfMediaService.images.getSettings().then(function (settings) {
                                 if (!file.type.match(settings.AllowedExensionsRegex)) {
                                     scope.error = {
                                         show: true,
@@ -341,7 +341,7 @@
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
                                 var file = fileInput.files[0];
-                                sfMediaService.getImagesSettings().then(function (settings) {
+                                sfMediaService.images.getSettings().then(function (settings) {
                                     if (!file.type.match(settings.AllowedExensionsRegex)) {
                                         scope.error = {
                                             show: true,
@@ -717,7 +717,7 @@
                         else {
                             scope.filterObject.attachEvent(refresh);
                         }
-                        sfMediaService.getImagesSettings();
+                        sfMediaService.images.getSettings();
                     }());
                 }
             };
