@@ -3,10 +3,17 @@
         var constants = {
             images: {
                 itemType: 'Telerik.Sitefinity.Libraries.Model.Image',
-                albumItemType: 'Telerik.Sitefinity.Libraries.Model.Album',
-                albumsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/'),
-                imagesServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/'),
-                createImageUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}')
+                parentItemType: 'Telerik.Sitefinity.Libraries.Model.Album',
+                parentServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/AlbumService.svc/'),
+                serviceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/'),
+                createItemUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/ImageService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}')
+            },
+            documents: {
+                itemType: 'Telerik.Sitefinity.Libraries.Model.Document',
+                parentItemType: 'Telerik.Sitefinity.Libraries.Model.DocumentLibrary',
+                parentServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/DocumentLibraryService.svc/'),
+                serviceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/DocumentService.svc/'),
+                createItemUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/DocumentService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}')
             },
             uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/'),
@@ -78,7 +85,7 @@
 
         var createImage = function (settings) {
             var nowToWcfDate = toWcfDate(new Date()),
-                url = $interpolate(constants.images.createImageUrl)(settings),
+                url = $interpolate(constants.images.createItemUrl)(settings),
                 image = {
                     Item: {
                         Title: {
@@ -184,109 +191,111 @@
             return deferred.promise;
         };
 
-        var imagesObj = {
-            getById: function (id, provider) {
-                return getById(id, provider, constants.images.itemType, constants.images.imagesServiceUrl);
-            },
-            getFolders: function (options) {
-                return getFolders(options, constants.images.albumsServiceUrl);
-            },
-            getMedia: function (options) {
-                return getItems(options, 'true', constants.images.imagesServiceUrl, constants.images.itemType);
-            },
-            getContent: function (options) {
-                return getItems(options, null, constants.images.imagesServiceUrl, constants.images.itemType);
-            },
-            get: function (options, filterObject, appendItems) {
-                var callback;
-                if (filterObject.query) {
-                    callback = imagesObj.getContent;
-                }
-                else if (filterObject.basic) {
-                    // Defaul filter is used (Recent / My / All)
-                    if (filterObject.basic === filterObject.constants.basic.recentItems) {
-                        // When the filter is Recent items, the number of displayed items is fixed and we should not append more.
-                        if (appendItems) {
-                            callback = getEmptyArray;
-                        }
-                        else {
-                            callback = imagesObj.getMedia;
-                        }
+        var createMediaApi = function  (mediaType) {
+            return {
+                getById: function (id, provider) {
+                    return getById(id, provider, constants[mediaType].itemType, constants[mediaType].serviceUrl);
+                },
+                getFolders: function (options) {
+                    return getFolders(options, constants[mediaType].parentServiceUrl);
+                },
+                getMedia: function (options) {
+                    return getItems(options, 'true', constants[mediaType].serviceUrl, constants[mediaType].itemType);
+                },
+                getContent: function (options) {
+                    return getItems(options, null, constants[mediaType].serviceUrl, constants[mediaType].itemType);
+                },
+                get: function (options, filterObject, appendItems) {
+                    var callback;
+                    if (filterObject.query) {
+                        callback = this.getContent;
                     }
-                    else if (filterObject.basic === filterObject.constants.basic.ownItems) {
-                        callback = imagesObj.getMedia;
-                    }
-                    else if (filterObject.basic === filterObject.constants.basic.allLibraries) {
-                        callback = imagesObj.getFolders;
-                    }
-                    else {
-                        throw { message: 'Unknown basic filter object option.' };
-                    }
-                }
-                else {
-                    // custom filter is used (Libraries / Taxons / Dates)
-                    callback = imagesObj.getContent;
-                }
-
-                return getLibrarySettings()
-                    .then(function (settings) {
-                        var allLanguageSearch = settings.EnableAllLanguagesSearch.toLowerCase() === 'true';
-                        options.filter = filterObject.composeExpression(allLanguageSearch);
-
-                        var selectedFolderSearch = settings.EnableSelectedFolderSearch.toLowerCase() === 'true';
-                        if (filterObject.query) {
-                            if (selectedFolderSearch) {
-                                options.parent = filterObject.parent;
-                                options.recursive = true;
-                                options.excludeFolders = true;
+                    else if (filterObject.basic) {
+                        // Defaul filter is used (Recent / My / All)
+                        if (filterObject.basic === filterObject.constants.basic.recentItems) {
+                            // When the filter is Recent items, the number of displayed items is fixed and we should not append more.
+                            if (appendItems) {
+                                callback = getEmptyArray;
                             }
                             else {
-                                options.parent = null;
-                                options.recursive = false;
-                                options.excludeFolders = false;
+                                callback = this.getMedia;
                             }
                         }
+                        else if (filterObject.basic === filterObject.constants.basic.ownItems) {
+                            callback = this.getMedia;
+                        }
+                        else if (filterObject.basic === filterObject.constants.basic.allLibraries) {
+                            callback = this.getFolders;
+                        }
+                        else {
+                            throw { message: 'Unknown basic filter object option.' };
+                        }
+                    }
+                    else {
+                        // custom filter is used (Libraries / Taxons / Dates)
+                        callback = this.getContent;
+                    }
 
-                        return callback(options);
-                    });
-            },
-            getPredecessorsFolders: function (id, provider) {
-                if (!id) {
-                    return;
+                    return getLibrarySettings()
+                        .then(function (settings) {
+                            var allLanguageSearch = settings.EnableAllLanguagesSearch.toLowerCase() === 'true';
+                            options.filter = filterObject.composeExpression(allLanguageSearch);
+
+                            var selectedFolderSearch = settings.EnableSelectedFolderSearch.toLowerCase() === 'true';
+                            if (filterObject.query) {
+                                if (selectedFolderSearch) {
+                                    options.parent = filterObject.parent;
+                                    options.recursive = true;
+                                    options.excludeFolders = true;
+                                }
+                                else {
+                                    options.parent = null;
+                                    options.recursive = false;
+                                    options.excludeFolders = false;
+                                }
+                            }
+
+                            return callback(options);
+                        });
+                },
+                getPredecessorsFolders: function (id, provider) {
+                    if (!id) {
+                        return;
+                    }
+                    var options = {
+                        parent: 'predecessors/' + id,
+                        excludeNeighbours: true,
+                        provider: provider
+                    };
+                    return getFolders(options, constants[mediaType].parentServiceUrl)
+                              .then(function (data) {
+                                  return data.Items;
+                              });
+                },
+                upload: function (model, provider) {
+
+                    var defaultLibraryId = '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb';
+                    var libraryId = model.parentId || defaultLibraryId;
+
+                    var settings = {
+                        libraryId: libraryId,
+                        newParentId: libraryId,
+                        itemId: serviceHelper.emptyGuid(),
+                        itemType: constants[mediaType].itemType,
+                        provider: provider,
+                        parentItemType: constants[mediaType].parentItemType,
+                        title: model.title || model.file.name,
+                        alternativeText: model.alternativeText,
+                        categories: model.categories,
+                        tags: model.tags,
+                        file: model.file
+                    };
+                    return uploadImage(settings);
+                },
+                thumbnailProfiles: function () {
+                    return thumbnailProfiles(constants[mediaType].parentItemType);
                 }
-                var options = {
-                    parent: 'predecessors/' + id,
-                    excludeNeighbours: true,
-                    provider: provider
-                };
-                return getFolders(options, constants.images.albumsServiceUrl)
-                          .then(function (data) {
-                              return data.Items;
-                          });
-            },
-            upload: function (model, provider) {
-
-                var defaultLibraryId = '4ba7ad46-f29b-4e65-be17-9bf7ce5ba1fb';
-                var libraryId = model.parentId || defaultLibraryId;
-
-                var settings = {
-                    libraryId: libraryId,
-                    newParentId: libraryId,
-                    itemId: serviceHelper.emptyGuid(),
-                    itemType: constants.images.itemType,
-                    provider: provider,
-                    parentItemType: constants.images.albumItemType,
-                    title: model.title || model.file.name,
-                    alternativeText: model.alternativeText,
-                    categories: model.categories,
-                    tags: model.tags,
-                    file: model.file
-                };
-                return uploadImage(settings);
-            },
-            thumbnailProfiles: function () {
-                return thumbnailProfiles(constants.images.albumItemType);
-            }
+            };
         };
 
         var librarySettings = null;
@@ -346,7 +355,8 @@
         };
 
         return {
-            images: imagesObj,
+            images: createMediaApi('images'),
+            documents: createMediaApi('documents'),
             getLibrarySettings: getLibrarySettings,
             checkCustomThumbnailParams: checkCustomThumbnailParams,
             getCustomThumbnailUrl: getCustomThumbnailUrl,
