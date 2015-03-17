@@ -389,6 +389,23 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
+               "name" : "Role selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-role-selector",
+                     "commitHash" : "a27d5440f16199acac05354341882fa3a9872963",
+                     "date" : "2015-03-17 10:00 +0200",
+                     "name" : "Role selector implementation",
+                     "tag" : "v.1.2.120.0"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
                "name" : "Image selector",
                "progress" : 100,
                "releases" : [
@@ -859,61 +876,115 @@
          ]
       },
       {
-         "description" : "",
+         "description" : "Login widgets require Sitefinity 8.0.5700.0 or higher.",
          "name" : "Login widgets",
          "widgets" : [
             {
                "expectedBy" : "",
-               "longDescription" : "Widget development is in progress; not released yet.",
+               "longDescription" : "",
                "name" : "Login form",
-               "progress" : 50,
-               "shortDescription" : "In progress",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Login-Form-Widget",
+                     "commitHash" : "a27d5440f16199acac05354341882fa3a9872963",
+                     "date" : "2015-03-17 10:00 +0200",
+                     "name" : "Login form widget implementation",
+                     "tag" : "v.1.2.120.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
-               "longDescription" : "Widget development is in progress; not released yet.",
+               "longDescription" : "",
                "name" : "Login/Logout button",
-               "progress" : 50,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "LoginLogout-button-widget",
+                     "commitHash" : "a27d5440f16199acac05354341882fa3a9872963",
+                     "date" : "2015-03-17 10:00 +0200",
+                     "name" : "Login/Logout button widget implementation",
+                     "tag" : "v.1.2.120.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Change password",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Change-password-widget",
+                     "commitHash" : "a27d5440f16199acac05354341882fa3a9872963",
+                     "date" : "2015-03-17 10:00 +0200",
+                     "name" : "Change password widget implementation",
+                     "tag" : "v.1.2.120.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             }
          ]
       },
       {
-         "description" : "",
+         "description" : "User account widgets require Sitefinity 8.0.5700.0 or higher.",
          "name" : "User account widgets",
          "widgets" : [
             {
                "expectedBy" : "",
-               "longDescription" : "Widget development is in progress; not released yet.",
+               "longDescription" : "",
                "name" : "Registration",
-               "progress" : 50,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Registration-Widget",
+                     "commitHash" : "a27d5440f16199acac05354341882fa3a9872963",
+                     "date" : "2015-03-17 10:00 +0200",
+                     "name" : "Registration widget implementation",
+                     "tag" : "v.1.2.120.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
-               "longDescription" : "Widget development is in progress; not released yet.",
+               "longDescription" : "",
                "name" : "Profile",
-               "progress" : 50,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Profile-widget",
+                     "commitHash" : "a27d5440f16199acac05354341882fa3a9872963",
+                     "date" : "2015-03-17 10:00 +0200",
+                     "name" : "Profile widget implementation",
+                     "tag" : "v.1.2.120.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Account activation",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Account-activation-widget",
+                     "commitHash" : "a27d5440f16199acac05354341882fa3a9872963",
+                     "date" : "2015-03-17 10:00 +0200",
+                     "name" : "Account activation widget implementation",
+                     "tag" : "v.1.2.120.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
