@@ -62,9 +62,6 @@
                         });
                     };
 
-                    scope.imagePropertiesDialog =
-                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.html');
-
                     scope.htmlFieldCssUrl =
                         serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/css/html-field.min.css');
 
@@ -72,7 +69,24 @@
                         return serverContext.getRootedUrl(resourcePath);
                     };
 
+                    scope.openDocumentSelector = function () {
+                        scope.mediaPropertiesDialog =
+                                serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-document-properties-content-block.html');
+                        scope.sfMediaPropertiesController = "sfDocumentPropertiesController";
+
+                        var properties = null;
+
+                        setTimeout(function () {
+                            angular.element('.mediaPropertiesModal')
+                                   .scope()
+                                   .$openModalDialog({ sfModel: function () { return properties; } });
+                        }, 0);
+                    };
+
                     scope.openImageSelector = function () {
+                        scope.mediaPropertiesDialog =
+                           serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.html');
+                        scope.sfMediaPropertiesController = "sfImagePropertiesController";
 
                         var range = editor.getRange();
                         var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
@@ -87,41 +101,43 @@
                             properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML);
                         }
 
-                        angular.element('.imagePropertiesModal').scope()
-                            .$openModalDialog({ sfModel: function () { return properties; } })
-                            .then(function (data) {
-                                properties = data;
+                        setTimeout(function () {
+                            angular.element('.mediaPropertiesModal').scope()
+                                .$openModalDialog({ sfModel: function () { return properties; } })
+                                .then(function (data) {
+                                    properties = data;
 
-                                if (data.customSize)
-                                    return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize);
-                                else
-                                    return '';
+                                    if (data.customSize)
+                                        return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize);
+                                    else
+                                        return '';
 
-                            })
-                            .then(function (errorMessage) {
-                                if (properties.thumbnail && properties.thumbnail.url) {
-                                    return properties.thumbnail.url;
-                                }
-                                else if (properties.customSize) {
-                                    return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
-                                }
-                                else {
-                                    return '';
-                                }
-                            })
-                            .then(function (thumbnailUrl) {
-                                if (thumbnailUrl) {
-                                    properties.thumbnail = properties.thumbnail || {};
-                                    properties.thumbnail.url = thumbnailUrl;
-                                }
+                                })
+                                .then(function (errorMessage) {
+                                    if (properties.thumbnail && properties.thumbnail.url) {
+                                        return properties.thumbnail.url;
+                                    }
+                                    else if (properties.customSize) {
+                                        return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
+                                    }
+                                    else {
+                                        return '';
+                                    }
+                                })
+                                .then(function (thumbnailUrl) {
+                                    if (thumbnailUrl) {
+                                        properties.thumbnail = properties.thumbnail || {};
+                                        properties.thumbnail.url = thumbnailUrl;
+                                    }
 
-                                return mediaService.getLibrarySettings();
-                            })
-                            .then(function (settings) {
-                                var wrapIt = true;
-                                var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
-                                editor.exec('insertHtml', { html: markup, split: true });
-                            });
+                                    return mediaService.getLibrarySettings();
+                                })
+                                .then(function (settings) {
+                                    var wrapIt = true;
+                                    var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
+                                    editor.exec('insertHtml', { html: markup, split: true });
+                                });
+                        }, 0);
                     };
 
                     scope.toggleHtmlView = function () {
@@ -229,5 +245,29 @@
                 };
 
                 $scope.thumbnailSizeTempalteUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-thumbnail-size-selection.html');
+            }])
+        .controller('sfDocumentPropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
+            function ($scope, $modalInstance, serverContext, sfModel) {
+                
+                $scope.model = sfModel || { item: undefined };
+
+                $scope.$watch('model.item.Id', function (newVal) {
+                    if (newVal === null) {
+                        $scope.cancel();
+                    }
+                });
+
+                $scope.$watch('model.item.Title.Value', function (newVal, oldVal) {
+                    if ($scope.model.item && $scope.model.item.Title && (oldVal === $scope.model.title || !$scope.model.title))
+                        $scope.model.title = $scope.model.item.Title.Value;
+                });
+
+                $scope.done = function () {
+                    $modalInstance.close($scope.model);
+                };
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss();
+                };
             }]);
 })(jQuery);

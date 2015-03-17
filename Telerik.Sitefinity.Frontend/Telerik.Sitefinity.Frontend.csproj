@@ -578,6 +578,8 @@
     <EmbeddedResource Include="client-components\selectors\identity\sf-role-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-selector.html" />
+    <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.html" />
+    <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.js" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-document-properties-content-block.html" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.html" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-collection.html" />
