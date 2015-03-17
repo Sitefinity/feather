@@ -10,7 +10,7 @@
                     sfModel: '=',
                     sfImage: '=?',
                     sfProvider: '=?',
-                    sfAllowNoImage: '@',
+                    sfAutoOpenSelector: '@',
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -18,7 +18,7 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    var allowsNoImage = attrs.sfAllowNoImage !== undefined && attrs.sfAllowNoImage.toLowerCase() !== 'false';
+                    var autoOpenSelector = attrs.sfAutoOpenSelector !== undefined && attrs.sfAutoOpenSelector.toLowerCase() !== 'false';
 
                     var getDateFromString = function (dateStr) {
                         return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')')))));
@@ -146,7 +146,7 @@
                     if (scope.sfModel) {
                         getImage(scope.sfModel);
                     }
-                    else if (!allowsNoImage) {
+                    else if (autoOpenSelector) {
                         scope.changeImage();
                     }
 
