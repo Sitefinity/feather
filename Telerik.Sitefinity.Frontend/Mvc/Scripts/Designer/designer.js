@@ -6,6 +6,10 @@
         });
     }
 
+    function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    };
+
     var resolveDefaultView = function (serverData) {
         return serverData.get('defaultView');
     };
@@ -22,7 +26,7 @@
 
     var designerModule = angular.module('designer', ['pageEditorServices', 'ngRoute', 'modalDialog', 'serverDataModule']);
 
-    designerModule.config(['$routeProvider', 'serverDataProvider', function ($routeProvider, serverDataProvider) {
+    designerModule.config(['$routeProvider', '$httpProvider', 'serverDataProvider', function ($routeProvider, $httpProvider, serverDataProvider) {
         // Removes the angularjs route params from the URL.
         if (!!window.location.hash) {
             history.pushState('', document.title, window.location.pathname + window.location.search);
@@ -40,6 +44,18 @@
             .otherwise({
                 redirectTo: '/' + resolveDefaultView(serverData)
             });
+
+        $httpProvider.interceptors.push(function () {
+            return {
+                'request': function (config) {
+                    if (config && config.method === 'GET' && config.headers && config.headers.SF_UI_CULTURE === undefined && config.url && endsWith(config.url, '.sf-cshtml')) {
+                        config.headers.SF_UI_CULTURE = serverData.get('culture');
+                    }
+
+                    return config;
+                }
+            };
+        });
     }]);
 
     designerModule.run(['$rootScope', 'dialogFeedbackService', function ($rootScope, dialogFeedbackService) {

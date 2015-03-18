@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.UI;
+using Telerik.Sitefinity.Localization;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {
@@ -32,28 +34,20 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             if (this.FileExists(context.Request.Url.AbsolutePath))
             {
-                using (var fileStream = this.OpenFile(context.Request.Url.AbsolutePath))
+                var fileName = VirtualPathUtility.GetFileName(context.Request.Url.AbsolutePath);
+                if (!(fileName.EndsWith(".sf-cshtml", StringComparison.OrdinalIgnoreCase) && this.IsWhitelisted(context.Request.Url.AbsolutePath)))
                 {
-                    var fileName = VirtualPathUtility.GetFileName(context.Request.Url.AbsolutePath);
-                    var buffer = new byte[fileStream.Length];
-                    fileStream.Read(buffer, 0, (int)fileStream.Length);
-                    context.Response.ContentType = ResourceHttpHandler.GetMimeMapping(fileName);
-#if !DEBUG
-                    if (fileName.EndsWith("css", StringComparison.OrdinalIgnoreCase) ||
-                        fileName.EndsWith("js", StringComparison.OrdinalIgnoreCase) ||
-                        fileName.EndsWith("html", StringComparison.OrdinalIgnoreCase) ||
-                        fileName.EndsWith("htm", StringComparison.OrdinalIgnoreCase))
+                    using (var fileStream = this.OpenFile(context.Request.Url.AbsolutePath))
                     {
-                        var cache = context.Response.Cache;
-                        cache.SetCacheability(HttpCacheability.Public);
-                        cache.SetExpires(DateTime.Now + TimeSpan.FromDays(7));
-                        cache.SetValidUntilExpires(true);
-
-                        var lastWriteTime = ResourceHttpHandler.GetAssemblyLastWriteTime();
-                        cache.SetLastModified(lastWriteTime);
+                        this.SendStaticResource(context, fileStream, fileName);
                     }
-#endif
-                    this.WriteToOutput(context, buffer);
+                }
+                else
+                {
+                    using (new CultureRegion(context.Request.Headers["SF_UI_CULTURE"]))
+                    {
+                        this.SendParsedTemplate(context);
+                    }
                 }
             }
             else
@@ -95,6 +89,21 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
+        /// Determines whether the specified path is whitelisted for executing server code.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>Whether the specified path is whitelisted for execution server code.</returns>
+        protected virtual bool IsWhitelisted(string path)
+        {
+            var resolvedPath = RouteHelper.ResolveUrl(path, UrlResolveOptions.Rooted);
+            var clientComponents = RouteHelper.ResolveUrl("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/client-components/", UrlResolveOptions.Rooted);
+            var mvcScripts = RouteHelper.ResolveUrl("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/Mvc/Scripts/", UrlResolveOptions.Rooted);
+
+            return resolvedPath.StartsWith(clientComponents, StringComparison.OrdinalIgnoreCase) ||
+                resolvedPath.StartsWith(mvcScripts, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
         /// Gets the mime type of the file.
         /// </summary>
         /// <param name="filename">The filename.</param>
@@ -113,5 +122,40 @@ namespace Telerik.Sitefinity.Frontend.Resources
             AssemblyName name = assembly.GetName();
             return File.GetLastWriteTime((new Uri(name.CodeBase)).LocalPath);
         }
+
+        private void SendStaticResource(HttpContext context, Stream fileStream, string fileName)
+        {
+            var buffer = new byte[fileStream.Length];
+            fileStream.Read(buffer, 0, (int)fileStream.Length);
+            context.Response.ContentType = ResourceHttpHandler.GetMimeMapping(fileName);
+
+#if !DEBUG
+            if (fileName.EndsWith(".css", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".js", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".html", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".htm", StringComparison.OrdinalIgnoreCase))
+            {
+                var cache = context.Response.Cache;
+                cache.SetCacheability(HttpCacheability.Public);
+                cache.SetExpires(DateTime.Now + TimeSpan.FromDays(7));
+                cache.SetValidUntilExpires(true);
+
+                var lastWriteTime = ResourceHttpHandler.GetAssemblyLastWriteTime();
+                cache.SetLastModified(lastWriteTime);
+            }
+#endif
+
+            this.WriteToOutput(context, buffer);
+        }
+
+        private void SendParsedTemplate(HttpContext context)
+        {
+            context.Response.ContentType = "text/html";
+            var output = this.razorParser.Run(context.Request.Url.AbsolutePath, model: null);
+
+            context.Response.Output.Write(output);
+        }
+
+        private RazorTemplateProcessor razorParser = new RazorTemplateProcessor();
     }
 }
