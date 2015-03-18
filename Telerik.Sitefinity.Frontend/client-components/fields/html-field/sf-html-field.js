@@ -27,6 +27,35 @@
                     var customButtons = null;
                     var fullScreenIcon = null;
 
+                    function getPropertiesFromTag(type, wrapperClass, tag) {
+                        var range = editor.getRange();
+                        var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
+
+                        var properties = null;
+                        var wrapper = $(nodes).closest(wrapperClass);
+                        if (wrapper.length) {
+                            properties = mediaMarkupService[type].properties(wrapper[0].outerHTML);
+                        }
+                        else if ($(nodes).is(tag)) {
+                            properties = mediaMarkupService[type].properties($(nodes)[0].outerHTML);
+                        }
+                        return properties;
+                    }
+
+                    function getAnchorElement () {
+                        var range = editor.getRange();
+                        var command = editor.toolbar.tools.createLink.command({ range: range });
+
+                        var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
+                        var aTag = nodes.length ? command.formatter.finder.findSuitable(nodes[0]) : null;
+
+                        if (jQuery.browser.msie && !aTag) {
+                            aTag = nodes.length >= 2 ? command.formatter.finder.findSuitable(nodes[1]) : null;
+                        }
+
+                        return aTag;
+                    }
+
                     scope.$on('kendoWidgetCreated', function (event, widget) {
                         if (widget.wrapper && widget.wrapper.is('.k-editor')) {
                             widget.focus();
@@ -39,15 +68,7 @@
                     });
 
                     scope.openLinkSelector = function () {
-                        var range = editor.getRange();
-                        var command = editor.toolbar.tools.createLink.command({ range: range });
-
-                        var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
-                        var aTag = nodes.length ? command.formatter.finder.findSuitable(nodes[0]) : null;
-
-                        if (jQuery.browser.msie && !aTag) {
-                            aTag = nodes.length >= 2 ? command.formatter.finder.findSuitable(nodes[1]) : null;
-                        }
+                       var aTag = getAnchorElement();
 
                         if (aTag) {
                             scope.selectedHtml = aTag;
@@ -74,12 +95,21 @@
                                 serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-document-properties-content-block.html');
                         scope.sfMediaPropertiesController = "sfDocumentPropertiesController";
 
-                        var properties = null;
+                        var aTag = getAnchorElement();
+                        var properties = aTag ? mediaMarkupService.document.properties(aTag.outerHTML) : null;
 
                         setTimeout(function () {
                             angular.element('.mediaPropertiesModal')
-                                   .scope()
-                                   .$openModalDialog({ sfModel: function () { return properties; } });
+                                .scope()
+                                .$openModalDialog({ sfModel: function () { return properties; } })
+                                .then(function (data) {
+                                     properties = data;
+                                     return mediaService.getLibrarySettings();
+                                 })
+                                .then(function (settings) {
+                                     var markup = mediaMarkupService.document.markup(properties, settings);
+                                     editor.exec('insertHtml', { html: markup, split: true });
+                                 });
                         }, 0);
                     };
 
@@ -88,18 +118,7 @@
                            serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.html');
                         scope.sfMediaPropertiesController = "sfImagePropertiesController";
 
-                        var range = editor.getRange();
-                        var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
-
-                        var properties = null;
-
-                        var imageWrapper = $(nodes).closest('span.sf-Image-wrapper');
-                        if (imageWrapper.length) {
-                            properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML);
-                        }
-                        else if ($(nodes).is('img')) {
-                            properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML);
-                        }
+                        var properties = getPropertiesFromTag('image', 'span.sf-Image-wrapper', 'img');
 
                         setTimeout(function () {
                             angular.element('.mediaPropertiesModal').scope()
