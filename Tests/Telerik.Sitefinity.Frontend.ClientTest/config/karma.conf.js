@@ -3,7 +3,7 @@ module.exports = function (config) {
         basePath: '../',
 
         files: [
-	              'helpers/jquery-1.8.3.min.js',
+	              'helpers/jquery.min.js',
 	              'helpers/angular.js',
                   'helpers/angular-route.js',
                   'helpers/angular-resource.js',
