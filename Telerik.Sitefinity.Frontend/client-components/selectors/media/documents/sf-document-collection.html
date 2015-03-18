@@ -48,12 +48,12 @@
 							<dl class='dl-half'>
 								<dt>Library:</dt>
 								<dd>{{item.FolderTitle || item.LibraryTitle}}</dd>
-								<dt>Dimensions:</dt>
-								<dd>{{item.Width + 'x' + item.Height}}</dd>
+								<dt>Size:</dt>
+								<dd>{{item.TotalSize}} KB</dd>
 								<dt>Type:</dt>
 								<dd>{{item.Extension.toUpperCase()}}</dd>
-								<dt>Date modified:</dt>
-								<dd>{{item.LastModified | date : 'MM/dd/yyyy HH:mm'}}</dd>
+								<dt>Created on:</dt>
+								<dd>{{$parent.$parent.getDateCreated(item) | date : 'MM/dd/yyyy HH:mm'}}</dd>
 							</dl>
 						">
 				i
