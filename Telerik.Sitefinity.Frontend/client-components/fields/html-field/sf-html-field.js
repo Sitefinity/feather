@@ -48,7 +48,7 @@
 
                         var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
                         var aTag = nodes.length ? command.formatter.finder.findSuitable(nodes[0]) : null;
-                        var msie = /msie/.test(navigator.userAgent.toLowerCase())
+                        var msie = /msie/.test(navigator.userAgent.toLowerCase());
 
                         if (msie && !aTag) {
                             aTag = nodes.length >= 2 ? command.formatter.finder.findSuitable(nodes[1]) : null;
