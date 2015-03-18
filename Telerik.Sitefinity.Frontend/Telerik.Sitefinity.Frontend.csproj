@@ -470,6 +470,7 @@
     <None Include="assets\src\sass\_utility-classes.sass" />
     <None Include="assets\src\sass\_variables.sass" />
     <EmbeddedResource Include="client-components\components-definitions.json" />
+    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -496,9 +497,6 @@
     <EmbeddedResource Include="Mvc\Scripts\expander.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\ui-bootstrap-tpls-0.11.0.min.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Designer\designerview-propertygrid.js" />
   </ItemGroup>
   <ItemGroup>
@@ -516,6 +514,7 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\ui-bootstrap-tpls.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\bootstrap.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.bootstrap.min.css" />
     <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.min.css" />
@@ -583,8 +582,11 @@
     <EmbeddedResource Include="client-components\selectors\identity\sf-role-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-selector.html" />
-    <EmbeddedResource Include="client-components\selectors\media\sf-media-selector.js" />
+    <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.html" />
+    <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.js" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-document-properties-content-block.html" />
+    <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.html" />
+    <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-collection.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -31,7 +33,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var context = helper.ViewContext.HttpContext;
 
-            return ResourceHelper.RegisterResource(context, scriptPath, scriptPath, throwException);
+            var scriptTag = ResourceHelper.RegisterResource(context, scriptPath, scriptPath, throwException);
+            return scriptTag.IsNullOrEmpty() ? MvcHtmlString.Empty : MvcHtmlString.Create(scriptTag);
         }
 
         /// <summary>
@@ -50,14 +53,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (ResourceHelper.TryConfigureScriptManager(scriptReference))
                 return System.Web.Mvc.MvcHtmlString.Empty;
 
-            var resourceKey = scriptReference.ToString();
             var context = helper.ViewContext.HttpContext;
-            var resourceUrl = ResourceHelper.GetWebResourceUrl(scriptReference);
+            var sb = new StringBuilder();
 
-            if (string.IsNullOrEmpty(resourceUrl))
-                return System.Web.Mvc.MvcHtmlString.Empty;
+            var references = PageManager.GetScriptReferences(scriptReference).Select(r => new MvcScriptReference(r));
+            foreach (var script in references)
+            {
+                var resourceUrl = script.GetResourceUrl();
+                var scriptTag = ResourceHelper.RegisterResource(context, resourceUrl, resourceUrl, throwException);
+                if (!scriptTag.IsNullOrEmpty())
+                    sb.Append(scriptTag);
+            }
 
-            return ResourceHelper.RegisterResource(context, resourceKey, resourceUrl, throwException);
+            return MvcHtmlString.Create(sb.ToString());
         }
 
         /// <summary>
@@ -81,7 +89,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                     TypeResolutionService.ResolveType(type),
                     embeddedScriptPath);
 
-            return ResourceHelper.RegisterResource(context, resourceUrl, resourceUrl, throwException);
+            return MvcHtmlString.Create(ResourceHelper.RegisterResource(context, resourceUrl, resourceUrl, throwException));
         }
 
         /// <summary>
@@ -141,7 +149,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="scriptPath">The script path.</param>
         /// <param name="throwException">if set to <c>true</c> throws exception.</param>
         /// <returns></returns>
-        private static System.Web.Mvc.MvcHtmlString RegisterResource(HttpContextBase context, string scriptKey, string scriptPath, bool throwException)
+        private static string RegisterResource(HttpContextBase context, string scriptKey, string scriptPath, bool throwException)
         {
             var attributes = new KeyValuePair<string, string>[2];
             attributes[0] = new KeyValuePair<string, string>("src", scriptPath);
@@ -161,28 +169,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="tagName">Name of the tag.</param>
         /// <param name="attribbutes">The attribbutes.</param>
         /// <returns></returns>
-        private static System.Web.Mvc.MvcHtmlString RegisterResource(ResourceRegister register, string resourceKey, bool throwException, string tagName, KeyValuePair<string, string>[] attribbutes)
+        private static string RegisterResource(ResourceRegister register, string resourceKey, bool throwException, string tagName, KeyValuePair<string, string>[] attribbutes)
         {
             string output;
-            System.Web.Mvc.MvcHtmlString result;
 
             if (throwException)
             {
                 register.RegisterResource(resourceKey);
                 output = ResourceHelper.GenerateTag(tagName, attribbutes);
-                result = new System.Web.Mvc.MvcHtmlString(output);
             }
             else if (register.TryRegisterResource(resourceKey))
             {
                 output = ResourceHelper.GenerateTag(tagName, attribbutes);
-                result = new System.Web.Mvc.MvcHtmlString(output);
             }
             else
             {
-                result = System.Web.Mvc.MvcHtmlString.Empty;
+                output = string.Empty;
             }
 
-            return result;
+            return output;
         }
 
         /// <summary>
@@ -205,5 +210,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         private const string JsRegisterName = "JsRegister";
+
+        private class MvcScriptReference : ScriptReference
+        {
+            public MvcScriptReference(ScriptReference reference)
+            {
+                if (reference == null)
+                    throw new ArgumentNullException("reference");
+
+                this.Path = reference.Path;
+                this.Assembly = reference.Assembly;
+                this.Name = reference.Name;
+            }
+
+            public string GetResourceUrl()
+            {
+                return this.GetUrl(new ScriptManager(), zip: false);
+            }
+        }
     }
 }

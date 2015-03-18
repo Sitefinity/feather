@@ -48,6 +48,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="helpers\common-methods.js" />
+    <Content Include="helpers\jquery.min.js" />
     <Content Include="unit\collections\sfInfiniteScrollSpec.js" />
     <Content Include="unit\collections\sfTreeSpec.js" />
     <Content Include="unit\fields\sfDragDropSpec.js" />
@@ -91,7 +92,6 @@
     <Content Include="helpers\angular-resource.js" />
     <Content Include="helpers\angular-route.js" />
     <Content Include="helpers\angular.js" />
-    <Content Include="helpers\jquery-1.8.3.min.js" />
     <Content Include="helpers\mocks\microsoftAjaxMock.js" />
     <Content Include="helpers\mocks\modalInstanceMock.js" />
     <Content Include="helpers\mocks\propertyServiceMock.js" />
