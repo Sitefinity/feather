@@ -52,7 +52,7 @@
                         if (scope.providers) {
                             for (var i = 0; i < scope.providers.length; i++) {
                                 if (scope.providers[i].Name == ngModelCtrl.$viewValue) {
-                                    scope.selectedProvider = scope.providers[i];
+                                    scope.selectedProvider = scope.providers[i].Name;
                                     break;
                                 }
                             }
