@@ -532,6 +532,14 @@
                         refresh(true);
                     };
 
+                    scope.getDateCreated = function (item) {
+                        var date = item.DateCreated;
+                        var startIndex = date.indexOf('(');
+                        var endIndex = date.indexOf(')');
+                        var dateCreated = date.substring(startIndex + 1, endIndex);
+                        return dateCreated;
+                    };
+
                     var extractDate = function (dateString) {
                         return parseInt(dateString.substring(dateString.indexOf('Date') + 'Date('.length, dateString.indexOf(')')));
                     };
