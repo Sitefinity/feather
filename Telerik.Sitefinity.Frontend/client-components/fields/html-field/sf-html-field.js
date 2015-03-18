@@ -42,8 +42,7 @@
                         return properties;
                     }
 
-                    function getAnchorElement () {
-                        var range = editor.getRange();
+                    function getAnchorElement (range) {
                         var command = editor.toolbar.tools.createLink.command({ range: range });
 
                         var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
@@ -69,7 +68,8 @@
                     });
 
                     scope.openLinkSelector = function () {
-                       var aTag = getAnchorElement();
+                       var range = editor.getRange();
+                       var aTag = getAnchorElement(range);
 
                         if (aTag) {
                             scope.selectedHtml = aTag;
@@ -80,7 +80,7 @@
 
                         angular.element("#linkSelectorModal").scope().$openModalDialog().then(function (data) {
                             scope.selectedHtml = data;
-                            editor.exec("insertHtml", { html: data.outerHTML, split: true });
+                            editor.exec("insertHtml", { html: data.outerHTML, split: true, range: range });
                         });
                     };
 
@@ -96,7 +96,8 @@
                                 serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-document-properties-content-block.html');
                         scope.sfMediaPropertiesController = "sfDocumentPropertiesController";
 
-                        var aTag = getAnchorElement();
+                        var range = editor.getRange();
+                        var aTag = getAnchorElement(range);
                         var properties = aTag ? mediaMarkupService.document.properties(aTag.outerHTML) : null;
 
                         setTimeout(function () {
@@ -109,7 +110,7 @@
                                  })
                                 .then(function (settings) {
                                      var markup = mediaMarkupService.document.markup(properties, settings);
-                                     editor.exec('insertHtml', { html: markup, split: true });
+                                     editor.exec('insertHtml', { html: markup, split: true, range: range });
                                  });
                         }, 0);
                     };
