@@ -82,6 +82,32 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             }
         }
 
+        [TestMethod]
+        [Owner("Boyko-Karadzhov")]
+        [Description("Checks whether a whitelisted sf-cshtml file will be parsed.")]
+        public void ProcessRequest_WhitelistedRazorTemplated_Parsed()
+        {
+            // Arrange
+            bool isParsed = false;
+
+            var response = new HttpResponse(new StringWriter(System.Globalization.CultureInfo.InvariantCulture));
+            var context = new HttpContext(new HttpRequest(null, "http://tempuri.org/template.sf-cshtml", null), response);
+
+            var handler = new DummyResourceHttpHandler();
+            handler.FileExistsMock = p => true;
+            handler.IsWhitelistedMock = p => true;
+            handler.SendParsedTemplateMock = ctx =>
+            {
+                isParsed = true;
+            };
+
+            // Act
+            handler.ProcessRequest(context);
+
+            // Assert
+            Assert.IsTrue(isParsed, "The template was not parsed.");
+        }
+
         #endregion
     }
 }

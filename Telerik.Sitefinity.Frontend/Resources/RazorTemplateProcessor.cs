@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// Initializes a new instance of the <see cref="RazorTemplateProcessor"/> class.
         /// </summary>
         public RazorTemplateProcessor()
-            : this(new TemplateService())
+            : this(new TemplateService(), HostingEnvironment.VirtualPathProvider)
         {
         }
 
@@ -27,9 +27,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// Initializes a new instance of the <see cref="RazorTemplateProcessor"/> class.
         /// </summary>
         /// <param name="templateService">The template service.</param>
-        public RazorTemplateProcessor(ITemplateService templateService)
+        public RazorTemplateProcessor(ITemplateService templateService, VirtualPathProvider virtualPathProvider)
         {
             this.service = templateService;
+            this.virtualPathProvider = virtualPathProvider;
         }
 
         /// <summary>
@@ -78,27 +79,17 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Gets the cache dependency for the given path.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns>A cache dependency.</returns>
-        protected virtual CacheDependency GetCacheDependency(string path)
-        {
-            return HostingEnvironment.VirtualPathProvider.GetCacheDependency(path, null, DateTime.UtcNow);
-        }
-
-        /// <summary>
         /// Gets the template from a file at the specified path as string.
         /// </summary>
         /// <param name="path">The path.</param>
         /// <returns>The template as string.</returns>
-        protected virtual string GetTemplate(string path)
+        private string GetTemplate(string path)
         {
             var templateText = string.Empty;
 
-            if (HostingEnvironment.VirtualPathProvider.FileExists(path))
+            if (this.virtualPathProvider.FileExists(path))
             {
-                var fileStream = VirtualPathProvider.OpenFile(path);
+                var fileStream = this.virtualPathProvider.GetFile(path).Open();
 
                 using (var streamReader = new StreamReader(fileStream))
                 {
@@ -126,13 +117,18 @@ namespace Telerik.Sitefinity.Frontend.Resources
                         var markup = this.GetTemplate(templatePath);
                         this.service.Compile(markup, null, templatePath);
 
-                        this.templateDependencies[templatePath] = this.GetCacheDependency(templatePath);
+                        var dependency = this.virtualPathProvider.GetCacheDependency(templatePath, null, DateTime.UtcNow);
+                        if (dependency != null)
+                        {
+                            this.templateDependencies[templatePath] = dependency;
+                        }
                     }
                 }
             }
         }
 
         private readonly ITemplateService service;
+        private readonly VirtualPathProvider virtualPathProvider;
         private readonly Dictionary<string, CacheDependency> templateDependencies = new Dictionary<string, CacheDependency>();
     }
 }

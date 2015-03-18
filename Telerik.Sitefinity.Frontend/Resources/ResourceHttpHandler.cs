@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.UI;
@@ -104,26 +105,12 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Gets the mime type of the file.
+        /// Writes the contents of a static resource to the response.
         /// </summary>
-        /// <param name="filename">The filename.</param>
-        /// <returns></returns>
-        private static string GetMimeMapping(string filename)
-        {
-            var mimeMappingType = Assembly.GetAssembly(typeof(HttpRuntime)).GetType("System.Web.MimeMapping");
-            var getMimeMappingMethodInfo = mimeMappingType.GetMethod("GetMimeMapping", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-            return (string)getMimeMappingMethodInfo.Invoke(null, new object[] { filename });
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        private static DateTime GetAssemblyLastWriteTime()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            AssemblyName name = assembly.GetName();
-            return File.GetLastWriteTime((new Uri(name.CodeBase)).LocalPath);
-        }
-
-        private void SendStaticResource(HttpContext context, Stream fileStream, string fileName)
+        /// <param name="context">The context.</param>
+        /// <param name="fileStream">The file stream.</param>
+        /// <param name="fileName">Name of the file.</param>
+        protected virtual void SendStaticResource(HttpContext context, Stream fileStream, string fileName)
         {
             var buffer = new byte[fileStream.Length];
             fileStream.Read(buffer, 0, (int)fileStream.Length);
@@ -148,12 +135,36 @@ namespace Telerik.Sitefinity.Frontend.Resources
             this.WriteToOutput(context, buffer);
         }
 
-        private void SendParsedTemplate(HttpContext context)
+        /// <summary>
+        /// Sends a parsed template that is processed with the Razor engine.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        protected virtual void SendParsedTemplate(HttpContext context)
         {
             context.Response.ContentType = "text/html";
             var output = this.razorParser.Run(context.Request.Url.AbsolutePath, model: null);
 
-            context.Response.Output.Write(output);
+            this.WriteToOutput(context, context.Response.ContentEncoding.GetBytes(output));
+        }
+
+        /// <summary>
+        /// Gets the mime type of the file.
+        /// </summary>
+        /// <param name="filename">The filename.</param>
+        /// <returns></returns>
+        private static string GetMimeMapping(string filename)
+        {
+            var mimeMappingType = Assembly.GetAssembly(typeof(HttpRuntime)).GetType("System.Web.MimeMapping");
+            var getMimeMappingMethodInfo = mimeMappingType.GetMethod("GetMimeMapping", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            return (string)getMimeMappingMethodInfo.Invoke(null, new object[] { filename });
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        private static DateTime GetAssemblyLastWriteTime()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            AssemblyName name = assembly.GetName();
+            return File.GetLastWriteTime((new Uri(name.CodeBase)).LocalPath);
         }
 
         private RazorTemplateProcessor razorParser = new RazorTemplateProcessor();
