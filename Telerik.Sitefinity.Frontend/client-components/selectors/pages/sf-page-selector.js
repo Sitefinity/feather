@@ -169,7 +169,7 @@
                             var externalPages = [];
                             if (ctrl.$scope.multiselect && ctrl.$scope.sfSelectedItems) {
                                 Array.prototype.push.apply(externalPages, ctrl.$scope.sfSelectedItems.filter(function (page) {
-                                    if (page.IsExternal) {
+                                    if (page.IsExternal && !page.NodeType) {
                                         return page;
                                     }
                                 }));
