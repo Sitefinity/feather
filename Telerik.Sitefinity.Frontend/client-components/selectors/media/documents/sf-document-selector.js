@@ -294,7 +294,7 @@
                             var file = dataTransferObject.files[0];
 
                             sfMediaService.documents.getSettings().then(function (settings) {
-                                if (!file.type.match(settings.AllowedExensionsRegex)) {
+                                if (shouldFilterByExtensions(settings) && !file.type.match(settings.AllowedExensionsRegex)) {
                                     scope.error = {
                                         show: true,
                                         message: 'This file type is not allowed to upload. Only files with the following extensions are allowed: ' + settings.AllowedExensionsSettings
@@ -342,7 +342,7 @@
                             if (fileInput.files && fileInput.files[0]) {
                                 var file = fileInput.files[0];
                                 sfMediaService.documents.getSettings().then(function (settings) {
-                                    if (!file.type.match(settings.AllowedExensionsRegex)) {
+                                    if (shouldFilterByExtensions(settings) && !file.type.match(settings.AllowedExensionsRegex)) {
                                         scope.error = {
                                             show: true,
                                             message: 'This file type is not allowed to upload. Only files with the following extensions are allowed: ' + settings.AllowedExensionsSettings
@@ -361,6 +361,15 @@
                             }
                         });
                     });
+
+                    var shouldFilterByExtensions = function (settings) {
+                        if(settings.hasOwnProperty('AllowedExensions')) {
+                            return scope.$eval(settings.AllowedExensions.toLowerCase());
+                        }
+                        else {
+                            return true;
+                        }
+                    };
 
                     // called when 'select from your computer' link is clicked
                     scope.openSelectFileDialog = function () {
@@ -523,6 +532,14 @@
                         refresh(true);
                     };
 
+                    scope.getDateCreated = function (item) {
+                        var date = item.DateCreated;
+                        var startIndex = date.indexOf('(');
+                        var endIndex = date.indexOf(')');
+                        var dateCreated = date.substring(startIndex + 1, endIndex);
+                        return dateCreated;
+                    };
+
                     var extractDate = function (dateString) {
                         return parseInt(dateString.substring(dateString.indexOf('Date') + 'Date('.length, dateString.indexOf(')')));
                     };
@@ -582,7 +599,6 @@
                     /*
                     * Watches.
                     */
-
                     scope.$watch('sortExpression', function (newVal, oldVal) {
                         if (newVal !== oldVal) {
                             if (scope.filterObject.basic === scope.filterObject.constants.basic.recentItems) {
