@@ -6,7 +6,7 @@ using System.Web.UI;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Resources;
-using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web.UI;
 
