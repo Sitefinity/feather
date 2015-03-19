@@ -308,6 +308,7 @@
 
                     if (properties.title) {
                         jElementToInsert.attr('title', properties.title);
+                        jElementToInsert.text(properties.title);
                     }
 
                     return jElementToInsert[0].outerHTML;
