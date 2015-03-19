@@ -234,13 +234,14 @@
                                         };
 
                                         // Remove unnecessary (non-numeric) characters from LastModified string
-                                        for (var key in response.Items) {
-                                            var item = response.Items[key];
+                                        for (var i = 0; i < response.Items.length; i++) {
+                                            var item = response.Items[i];
                                             if (item.LastModified) {
                                                 item.LastModified = removeNonNumeric(item.LastModified);
                                             }
                                             if (item.DocumentsCount) {
-                                                item.DocumentsCount = removeNonNumeric(item.DocumentsCount) + (item.DocumentsCount == 1 ? " document" : " documents");
+                                                var countStr = removeNonNumeric(item.DocumentsCount);
+                                                item.DocumentsCount = countStr + (countStr === '1' ? " document" : " documents");
                                             } else {
                                                 item.DocumentsCount = "No documents";
                                             }
