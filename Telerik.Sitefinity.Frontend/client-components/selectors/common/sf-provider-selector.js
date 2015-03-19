@@ -40,7 +40,7 @@
                         scope.isOpen = false;
                         scope.selectedProvider = provider;
                         if (provider) {
-                            ngModelCtrl.$setViewValue(provider.Name);
+                            ngModelCtrl.$setViewValue(provider);
                         }
                     };
 
