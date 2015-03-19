@@ -65,24 +65,25 @@
   font-size: 70px
   color: #ddd
 
-//Icons with text
-
 .icon-txt
-  display: inline-block
   position: relative
+  display: inline-block
+
+  &.icon-file
+    color: #999
 
   [class^="icon-txt-"]
     position: absolute
-    top: 46%
-    left: 28%
-    padding:0 0.5em
-    line-height: 2em
-    height: 2em
-    font-size: 0.2em
+    top: 45%
+    right: -11%
+    padding:0 0.4em
+    line-height: 1.6em
+    height: 1.6em
+    font-size: 0.25em
     font-style: normal
     font-weight: bold
     text-transform: uppercase
-    background-color: #596c9b
+    background-color: #333
     color: #fff
 
   .icon-txt-xlsx
@@ -97,4 +98,7 @@
 
   .icon-txt-pdf
     background-color: #ff4848
+
+  .icon-txt-zip
+    background-color: #596c9b
 

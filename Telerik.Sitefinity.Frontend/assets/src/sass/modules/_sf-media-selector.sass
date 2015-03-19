@@ -270,9 +270,20 @@
 	img
 		max-width: 100%
 
+	h4
+		@include text-overflow()
+
 .sf-Media--info-image
 	border: 1px solid #ccc
 
+.sf-Media--info-doc
+	border: 1px solid #ccc
+	height: 160px
+	line-height: 160px
+	background-color: #fff
+
+	.icon-txt
+		font-size: 48px
 
 // Nav styles for sidebar links
 // Should be moved to another .sass file
@@ -303,14 +314,20 @@
 .Media-file--doc
 	border: 1px solid #d7d7d7
 
+	&.is-selected
+		.icon-file
+			.is-list &
+				color: #fff
+
 	.Media-file-wrapper
 		border: 10px solid transparent
 
 	.Media-file-thumb-holder
-		background: transparent
+		background: #fff
 
 		.is-list &
 			border: 0
+			background: transparent
 
 		.Media-item-title
 			display: inline-block
@@ -319,15 +336,16 @@
 			width: 130px
 			overflow: hidden
 			text-overflow: ellipsis
+			white-space: nowrap
 
 			.is-list &
 				display: none
 
-		.icon-txt
-			font-size: 48px
+	.icon-txt
+		font-size: 48px
 
-			.is-list &
-				font-size: 38px
+		.is-list &
+			font-size: 38px
 
-		.icon-file
-			color: #999
+	.icon-file
+		color: #999
