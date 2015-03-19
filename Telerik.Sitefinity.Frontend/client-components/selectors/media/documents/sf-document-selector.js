@@ -239,6 +239,12 @@
                                             if (item.LastModified) {
                                                 item.LastModified = removeNonNumeric(item.LastModified);
                                             }
+
+                                            // The folder objects don't have these properties, so the tooltip is not needed.
+                                            if (item.hasOwnProperty('DocumentsCount') && item.hasOwnProperty('LibrariesCount')){
+                                                item.showInfoTooltip = true;
+                                            }
+
                                             if (item.DocumentsCount) {
                                                 var countStr = removeNonNumeric(item.DocumentsCount);
                                                 item.DocumentsCount = countStr + (countStr === '1' ? " document" : " documents");
@@ -534,6 +540,8 @@
                     };
 
                     scope.getDateCreated = function (item) {
+                        if (!item.DateCreated) return;
+
                         var date = item.DateCreated;
                         var startIndex = date.indexOf('(');
                         var endIndex = date.indexOf(')');
