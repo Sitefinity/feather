@@ -41,6 +41,10 @@
 .icon-draft-single
   color: #596C9B
 
+.icon-txt-pdf
+  background-color: #ff4848
+  color: #fff
+
 
 // Icon with text
 .icon--text:before
@@ -60,3 +64,42 @@
 .icon-no-image
   font-size: 70px
   color: #ddd
+
+.icon-txt
+  position: relative
+  display: inline-block
+
+  &.icon-file
+    color: #999
+
+  [class^="icon-txt-"]
+    position: absolute
+    top: 45%
+    right: -11%
+    padding:0 0.4em
+    line-height: 1.6em
+    height: 1.6em
+    font-size: 0.25em
+    font-style: normal
+    font-weight: bold
+    text-transform: uppercase
+    background-color: #333
+    color: #fff
+
+  .icon-txt-xlsx
+    background-color: #38ab63
+
+  .icon-txt-doc,
+  .icon-txt-docx
+    background-color: #1a8cff
+
+  .icon-txt-ppt,
+  .icon-txt-pptx
+    background-color: #ed8527
+
+  .icon-txt-pdf
+    background-color: #ff4848
+
+  .icon-txt-zip
+    background-color: #596c9b
+
