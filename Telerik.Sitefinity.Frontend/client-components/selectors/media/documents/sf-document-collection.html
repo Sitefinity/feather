@@ -3,7 +3,7 @@
         <div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder" ng-click="select(item)">
             <div ng-if="item.IsFolder === true">
                 <span class="Media-item-info"
-                        ng-show="item.showInfoTooltip"
+                        ng-show="item.metricsAvailable"
                         sf-popover-html
                         sf-popover-placement="right"
                         sf-popover-trigger="hover"
@@ -26,7 +26,7 @@
                     {{item.Title}}
                 </div>
 
-                <div class="Media-item-meta">
+                <div class="Media-item-meta" ng-show="item.metricsAvailable">
                     <div>{{item.DocumentsCount}}</div>
                     {{item.LibrariesCount}}
                 </div>

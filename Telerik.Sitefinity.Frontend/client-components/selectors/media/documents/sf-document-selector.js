@@ -240,9 +240,9 @@
                                                 item.LastModified = removeNonNumeric(item.LastModified);
                                             }
 
-                                            // The folder objects don't have these properties, so the tooltip is not needed.
+                                            // We can't retrive these properties for root libraries
                                             if (item.hasOwnProperty('DocumentsCount') && item.hasOwnProperty('LibrariesCount')){
-                                                item.showInfoTooltip = true;
+                                                item.metricsAvailable = true;
                                             }
 
                                             if (item.DocumentsCount) {
