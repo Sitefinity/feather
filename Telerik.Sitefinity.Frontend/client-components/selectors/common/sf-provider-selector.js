@@ -17,7 +17,7 @@
                             refreshSelectedProvider();
                         }
                         else {
-                            var defaultProvider = providerService.getDefault(data.Items)
+                            var defaultProvider = providerService.getDefault(data.Items);
                             scope.selectedProvider = defaultProvider.Name;
                             ngModelCtrl.$setViewValue(scope.selectedProvider);
                         }
