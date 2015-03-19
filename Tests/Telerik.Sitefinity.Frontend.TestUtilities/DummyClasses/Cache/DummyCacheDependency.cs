@@ -1,4 +1,5 @@
-﻿using System.Web.Caching;
+﻿using System;
+using System.Web.Caching;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Cache
 {
@@ -18,5 +19,13 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Cache
         /// Gets or sets the key that is used to identify the current cache dependency.
         /// </summary>
         public string Key { get; set; }
+
+        /// <summary>
+        /// Notifies the dependency of a change.
+        /// </summary>
+        public void Change()
+        {
+            this.NotifyDependencyChanged(this, new EventArgs());
+        }
     }
 }

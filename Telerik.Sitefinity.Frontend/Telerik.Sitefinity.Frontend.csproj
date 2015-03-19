@@ -57,6 +57,9 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\Sitefinity.RazorEngine.3.0.8.0\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ServiceStack.Signed.4.0.36\lib\net40\ServiceStack.dll</HintPath>
@@ -273,6 +276,7 @@
     <Compile Include="Mvc\Models\ListDisplayMode.cs" />
     <Compile Include="Mvc\Models\SelectionMode.cs" />
     <Compile Include="Mvc\StringResources\DesignerResources.cs" />
+    <Compile Include="Resources\RazorTemplateProcessor.cs" />
     <Compile Include="Resources\ResourceRegister.cs" />
     <Compile Include="Resources\PackageManager.cs" />
     <Compile Include="FrontendManager.cs" />
@@ -603,7 +607,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
