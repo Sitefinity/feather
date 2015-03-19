@@ -1,13 +1,10 @@
-﻿<div class="dropdown" ng-show="isProviderSelectorVisible" is-open="isOpen">
-    <a class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-        {{selectedProvider.Title}} <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-        <li class="dropdown-header">
-            {{providerLabel}}
-        </li>
-        <li ng-repeat="provider in providers">
-            <a href="" ng-click="selectProvider(provider);">{{provider.Title}}</a>
-        </li>
-    </ul>
+﻿<div class="row" ng-show="isProviderSelectorVisible" is-open="isOpen">
+
+    <div class="col-xs-6">
+        <select class="m-bottom-sm m-bottom-sm form-control" ng-model="selectedProvider" ng-change="selectProvider(selectedProvider)"
+            ng-options="provider.Name as provider.Title for provider in providers">
+            <option disabled value="">{{providerLabel}}</option>
+        </select>
+    </div>
+
 </div>
