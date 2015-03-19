@@ -8718,13 +8718,13 @@ tab {
   /* line 91, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/icons/_icons */
   .icon-txt .icon-txt-doc, .icon-txt .icon-txt-docx {
     background-color: #1a8cff; }
-  /* line 94, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/icons/_icons */
-  .icon-txt .icon-txt-ppt {
+  /* line 95, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/icons/_icons */
+  .icon-txt .icon-txt-ppt, .icon-txt .icon-txt-pptx {
     background-color: #ed8527; }
-  /* line 97, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/icons/_icons */
+  /* line 98, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/icons/_icons */
   .icon-txt .icon-txt-pdf {
     background-color: #ff4848; }
-  /* line 100, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/icons/_icons */
+  /* line 101, D:/Repositories/feather/Telerik.Sitefinity.Frontend/assets/src/sass/icons/_icons */
   .icon-txt .icon-txt-zip {
     background-color: #596c9b; }
 
