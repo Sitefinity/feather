@@ -1,4 +1,5 @@
 ﻿<div class="Media-items" sf-infinite-scroll="$parent.loadMore()">
+
     <div>
         <div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder" ng-click="select(item)">
             <div ng-if="item.IsFolder === true">
@@ -19,8 +20,10 @@
 
                 <div class="Media-file-wrapper">
                     <div class="Media-file-thumb">
-                        <i class="glyphicon glyphicon-folder-close"></i>
-                        <strong>{{item.Title}}</strong>
+                        <div class="Media-file-thumb-holder">
+                            <div><i class="glyphicon glyphicon-folder-close"></i></div>
+                            <strong>{{item.Title}}</strong>
+                        </div>
                     </div>
 
                     <div class="Media-folder-title">
@@ -64,9 +67,12 @@
 
 				<div class="Media-file-thumb">
                     <div class="Media-file-thumb-holder">
-                        <i class="icon-file icon-txt">
-                            <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
-                        </i>
+                        <div>
+                            <i class="icon-file icon-txt">
+                                <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
+                            </i>
+                        </div>
+
                         <div class="Media-item-title">{{item.Title}}</div>
                     </div>
 				</div>

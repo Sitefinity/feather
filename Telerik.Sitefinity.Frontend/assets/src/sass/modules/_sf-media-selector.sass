@@ -68,6 +68,10 @@
 
 // Folder
 .Media-folder
+	position: relative
+	border-radius: 3px
+	border: 1px solid transparent
+
 	i
 		color: #bfbfbf
 		font-size: 90px
@@ -79,12 +83,17 @@
 			font-size: 48px
 
 	&:hover
+		border-color: #d7d7d7
 		i
 			color: #9B9B9B
 
 	strong
-		display: block
+		display: inline-block
 		color: #337cb7
+		overflow: hidden
+		text-overflow: ellipsis
+		white-space: nowrap
+		width: 130px
 
 		.is-list &
 			display: none
@@ -93,6 +102,12 @@
 		width: 100%
 		display: table
 		table-layout: fixed
+
+	.Media-file-wrapper
+		border: 10px solid transparent
+
+	.Media-file-thumb-holder
+		background: #fff
 
 .Media-folder-title
 	width: 50%
@@ -210,7 +225,8 @@
 	transition: opacity .3s ease
 	font-weight: 700
 
-	.Media-file:hover &
+	.Media-file:hover &,
+	.Media-folder:hover &
 			opacity: .6
 
 	&:hover
@@ -349,3 +365,4 @@
 
 	.icon-file
 		color: #999
+
