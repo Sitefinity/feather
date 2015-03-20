@@ -17,19 +17,22 @@
                     i
                 </span>
 
-                <div class="Media-file-thumb">
-                    <i class="glyphicon glyphicon-folder-close"></i>
-                    <strong>{{item.Title}}</strong>
+                <div class="Media-file-wrapper">
+                    <div class="Media-file-thumb">
+                        <i class="glyphicon glyphicon-folder-close"></i>
+                        <strong>{{item.Title}}</strong>
+                    </div>
+
+                    <div class="Media-folder-title">
+                        {{item.Title}}
+                    </div>
+
+                    <div class="Media-item-meta" ng-show="item.metricsAvailable">
+                        <div>{{item.DocumentsCount}}</div>
+                        {{item.LibrariesCount}}
+                    </div>
                 </div>
 
-                <div class="Media-folder-title">
-                    {{item.Title}}
-                </div>
-
-                <div class="Media-item-meta" ng-show="item.metricsAvailable">
-                    <div>{{item.DocumentsCount}}</div>
-                    {{item.LibrariesCount}}
-                </div>
             </div>
         </div>
     </div>
