@@ -422,16 +422,25 @@
             },
             {
                "expectedBy" : "",
-               "longDescription" : "Video selector with multiple image libraries support, filtering and sorting options and image tagging during upload.",
-               "name" : "Video selector",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "longDescription" : "",
+               "name" : "Document selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-document-selector",
+                     "commitHash" : "ddc6928eb3aad7c1038066a68203a631770b1079",
+                     "date" : "03-20-2015 14:54 +0200",
+                     "name" : "Document selector implementation",
+                     "tag" : "v.1.2.130.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
-               "longDescription" : "Document selector with multiple image libraries support, filtering and sorting options and image tagging during upload.",
-               "name" : "Document selector",
+               "longDescription" : "Video selector with multiple image libraries support, filtering and sorting options and image tagging during upload.",
+               "name" : "Video selector",
                "progress" : 0,
                "shortDescription" : "Not started",
                "unstable" : false
@@ -1393,6 +1402,13 @@
                      "date" : "02-20-2015 20:30 +0200",
                      "name" : "Image field directive",
                      "tag" : "v.1.1.90.2"
+                  },
+                  {
+                     "article" : "Use-a-media-field-directive",
+                     "commitHash" : "ddc6928eb3aad7c1038066a68203a631770b1079",
+                     "date" : "03-20-2015 14:54 +0200",
+                     "name" : "Media field directive",
+                     "tag" : "v.1.2.130.0"
                   }
                ],
                "shortDescription" : "In progress",
