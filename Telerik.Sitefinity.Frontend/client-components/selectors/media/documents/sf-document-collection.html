@@ -37,35 +37,39 @@
         </div>
     </div>
 
-    <div>
-        <div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected>
-            <span class="Media-item-info"
-                        sf-popover-html
-                        sf-popover-placement="right"
-                        sf-popover-trigger="hover"
-                        sf-popover-append-to-body="true"
-                        sf-popover-title="{{item.Title}}"
-                        sf-popover-content="
-                            <dl class='dl-half'>
-                                <dt>Library:</dt>
-                                <dd>{{item.FolderTitle || item.LibraryTitle}}</dd>
-                                <dt>Size:</dt>
-                                <dd>{{item.TotalSize}} KB</dd>
-                                <dt>Type:</dt>
-                                <dd>{{item.Extension.toUpperCase()}}</dd>
-                                <dt>Created on:</dt>
-                                <dd>{{$parent.$parent.getDateCreated(item) | date : 'MM/dd/yyyy HH:mm'}}</dd>
-                            </dl>
-                        ">
-                i
-            </span>
+	<div>
+		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file Media-file--doc" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected>
+			<span class="Media-item-info"
+						sf-popover-html
+						sf-popover-placement="right"
+						sf-popover-trigger="hover"
+						sf-popover-append-to-body="true"
+						sf-popover-title="{{item.Title}}"
+						sf-popover-content="
+							<dl class='dl-half'>
+								<dt>Library:</dt>
+								<dd>{{item.FolderTitle || item.LibraryTitle}}</dd>
+								<dt>Size:</dt>
+								<dd>{{item.TotalSize}} KB</dd>
+								<dt>Type:</dt>
+								<dd>{{item.Extension.toUpperCase()}}</dd>
+								<dt>Created on:</dt>
+								<dd>{{$parent.$parent.getDateCreated(item) | date : 'M/d/yyyy h:mm'}}</dd>
+							</dl>
+						">
+				i
+			</span>
 
             <div class="Media-file-wrapper">
 
-                <div class="sf{{item.Extension.substring(1).toLowerCase()}} sfext">
-                    <!-- File extension icon -->
-                    {{item.Title}}
-                </div>
+				<div class="Media-file-thumb">
+                    <div class="Media-file-thumb-holder">
+                        <i class="icon-file icon-txt">
+                            <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
+                        </i>
+                        <div class="Media-item-title">{{item.Title}}</div>
+                    </div>
+				</div>
 
                 <div class="Media-item-title">
                     {{item.Title}}
@@ -76,10 +80,10 @@
                     {{item.TotalSize + "KB"}}<br />
                 </div>
 
-                <div class="Media-item-date">
-                    {{item.LastModified | date : 'MM/dd/yyyy HH:mm'}}<br />
-                    {{"by " + item.Author}}
-                </div>
+				<div class="Media-item-date">
+					{{item.LastModified | date : 'M/dd/yyyy h:mm'}}<br />
+					{{"by " + item.Author}}
+				</div>
 
             </div>
         </div>
