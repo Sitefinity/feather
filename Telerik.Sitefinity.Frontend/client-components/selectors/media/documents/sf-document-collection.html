@@ -53,7 +53,7 @@
 								<dt>Type:</dt>
 								<dd>{{item.Extension.toUpperCase()}}</dd>
 								<dt>Created on:</dt>
-								<dd>{{$parent.$parent.getDateCreated(item) | date : 'MM/dd/yyyy HH:mm'}}</dd>
+								<dd>{{$parent.$parent.getDateCreated(item) | date : 'M/d/yyyy h:mm'}}</dd>
 							</dl>
 						">
 				i
@@ -76,7 +76,7 @@
 				</div>
 
 				<div class="Media-item-date">
-					{{item.LastModified | date : 'MM/dd/yyyy HH:mm'}}<br />
+					{{item.LastModified | date : 'M/dd/yyyy h:mm'}}<br />
 					{{"by " + item.Author}}
 				</div>
 
