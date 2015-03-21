@@ -59,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Test.Helpers
 
         #region Fields
 
-        private readonly string placeHolderHtmlFormatString = "<div class='sfPublicWrapper' id='PublicWrapper' runat='server'><asp:contentplaceholder id='{0}' runat='server' /></div>";
+        private readonly string placeHolderHtmlFormatString = "<asp:contentplaceholder ID='{0}' runat='server' />";
 
         #endregion
     }
