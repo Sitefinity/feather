@@ -1,10 +1,8 @@
-﻿<div class="row" ng-show="isProviderSelectorVisible" is-open="isOpen">
+﻿<div ng-show="isProviderSelectorVisible" is-open="isOpen">
 
-    <div class="col-xs-6">
-        <select class="m-bottom-sm m-bottom-sm form-control" ng-model="selectedProvider" ng-change="selectProvider(selectedProvider)"
-            ng-options="provider.Name as provider.Title for provider in providers">
-            <option disabled value="">{{providerLabel}}</option>
-        </select>
-    </div>
+    <select class="m-bottom-sm m-bottom-sm form-control" ng-model="selectedProvider" ng-change="selectProvider(selectedProvider)"
+        ng-options="provider.Name as provider.Title for provider in providers">
+        <option disabled value="">{{providerLabel}}</option>
+    </select>
 
 </div>

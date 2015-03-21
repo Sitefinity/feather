@@ -1,15 +1,18 @@
 ﻿<div class="container-fluid">
     <div class="row">
         <div class="col-md-5 text-center">
-            <div class="sf-Media--info-image">
-                <img ng-src="{{sfMedia.ThumbnailUrl}}" src="" alt="{{sfMedia.Title.Value}}" />
+            <div class="sf-Media--info-doc">
+
+                <i class="icon-file icon-txt">
+                    <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension}}</span>
+                </i>
             </div>
         </div>
 
         <div class="col-md-7">
             <p>
                 <h4>
-                    <a ng-href="{{sfMedia.MediaUrl}}" target="_blank">{{sfMedia.Title.Value}}</a>
+                    <a title="{{sfMedia.Title.Value}}" ng-href="{{sfMedia.MediaUrl}}" target="_blank">{{sfMedia.Title.Value}}</a>
                 </h4>
 
                 <strong>Type: </strong>
@@ -19,7 +22,7 @@
                 <span ng-bind="mediaSize"></span><br />
 
                 <strong>Uploaded: </strong>
-                <span ng-bind="uploaded | date : 'MM/dd/yyyy HH:mm'"></span>
+                <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
             </p>
 
             <br />

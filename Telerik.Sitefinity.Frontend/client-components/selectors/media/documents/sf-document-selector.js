@@ -234,13 +234,20 @@
                                         };
 
                                         // Remove unnecessary (non-numeric) characters from LastModified string
-                                        for (var key in response.Items) {
-                                            var item = response.Items[key];
+                                        for (var i = 0; i < response.Items.length; i++) {
+                                            var item = response.Items[i];
                                             if (item.LastModified) {
                                                 item.LastModified = removeNonNumeric(item.LastModified);
                                             }
+
+                                            // We can't retrive these properties for root libraries
+                                            if (item.hasOwnProperty('DocumentsCount') && item.hasOwnProperty('LibrariesCount')){
+                                                item.metricsAvailable = true;
+                                            }
+
                                             if (item.DocumentsCount) {
-                                                item.DocumentsCount = removeNonNumeric(item.DocumentsCount) + (item.DocumentsCount == 1 ? " document" : " documents");
+                                                var countStr = removeNonNumeric(item.DocumentsCount);
+                                                item.DocumentsCount = countStr + (countStr === '1' ? " document" : " documents");
                                             } else {
                                                 item.DocumentsCount = "No documents";
                                             }
@@ -294,7 +301,7 @@
                             var file = dataTransferObject.files[0];
 
                             sfMediaService.documents.getSettings().then(function (settings) {
-                                if (shouldFilterByExtensions(settings) && !file.type.match(settings.AllowedExensionsRegex)) {
+                                if (isNotAllowedExtension(settings, file)) {
                                     scope.error = {
                                         show: true,
                                         message: 'This file type is not allowed to upload. Only files with the following extensions are allowed: ' + settings.AllowedExensionsSettings
@@ -342,7 +349,7 @@
                             if (fileInput.files && fileInput.files[0]) {
                                 var file = fileInput.files[0];
                                 sfMediaService.documents.getSettings().then(function (settings) {
-                                    if (shouldFilterByExtensions(settings) && !file.type.match(settings.AllowedExensionsRegex)) {
+                                    if (isNotAllowedExtension(settings, file)) {
                                         scope.error = {
                                             show: true,
                                             message: 'This file type is not allowed to upload. Only files with the following extensions are allowed: ' + settings.AllowedExensionsSettings
@@ -362,13 +369,25 @@
                         });
                     });
 
-                    var shouldFilterByExtensions = function (settings) {
+                    var isNotAllowedExtension = function (settings, file) {
+                        var allowedExensions = settings.AllowedExensionsSettings ? settings.AllowedExensionsSettings.toLowerCase() : settings.AllowedExensionsSettings;
+                        var enableExtensionFiltering = true;
+
                         if(settings.hasOwnProperty('AllowedExensions')) {
-                            return scope.$eval(settings.AllowedExensions.toLowerCase());
+                            enableExtensionFiltering = scope.$eval(settings.AllowedExensions.toLowerCase());
                         }
-                        else {
-                            return true;
+
+                        return enableExtensionFiltering && allowedExensions && allowedExensions.search(getExtension(file.name)) == -1;
+                    };
+
+                    var getExtension = function (file) {
+                        var idx = file.lastIndexOf(".");
+                        var extension = "";
+
+                        if (idx > -1) {
+                            extension = file.substring(idx + 1);
                         }
+                        return extension.toLowerCase();
                     };
 
                     // called when 'select from your computer' link is clicked
@@ -533,6 +552,8 @@
                     };
 
                     scope.getDateCreated = function (item) {
+                        if (!item.DateCreated) return;
+
                         var date = item.DateCreated;
                         var startIndex = date.indexOf('(');
                         var endIndex = date.indexOf(')');
@@ -757,6 +778,7 @@
 
             var successAction = function (data) {
                 data = data || {};
+                $scope.model.uploadInProgress = false;
                 $modalInstance.close(data[0]);
             };
 
@@ -770,6 +792,7 @@
             };
 
             $scope.uploadDocument = function () {
+                $scope.model.uploadInProgress = true;
                 sfMediaService.documents.upload($scope.model, sfProvider).then(successAction, errorAction, progressAction);
             };
 
