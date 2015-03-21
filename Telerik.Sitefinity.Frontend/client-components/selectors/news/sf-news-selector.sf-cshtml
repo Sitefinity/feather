@@ -9,7 +9,7 @@
             </li>
         </ul>
         <div>
-            <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
+            <div ng-show="noItemsExist" class="alert alert-info">@(Res.Get<ClientComponentsResources>().NoItemsCreated)</div>
 
             <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 

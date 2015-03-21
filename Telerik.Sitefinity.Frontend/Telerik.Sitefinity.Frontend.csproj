@@ -195,6 +195,7 @@
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
     <Compile Include="Mvc\Models\ScriptDependencyConfigModel.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\RequiredIfExistAttribute.cs" />
+    <Compile Include="Mvc\StringResources\ClientComponentsResources.cs" />
     <Compile Include="Notifications\EmailTemplateHelper.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerMetadataAttribute.cs" />
     <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
@@ -350,7 +351,7 @@
     <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.html" />
     <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.js" />
     <EmbeddedResource Include="client-components\selectors\news\sf-news-item-service.js" />
-    <EmbeddedResource Include="client-components\selectors\news\sf-news-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\news\sf-news-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\news\sf-news-selector.js" />
     <EmbeddedResource Include="client-components\selectors\pages\sf-external-urls-view.html" />
     <EmbeddedResource Include="client-components\selectors\pages\sf-external-urls-view.js" />
