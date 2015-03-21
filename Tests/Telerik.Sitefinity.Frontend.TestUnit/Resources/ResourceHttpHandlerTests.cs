@@ -26,7 +26,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var response = new HttpResponse(new StringWriter(System.Globalization.CultureInfo.InvariantCulture));
             var context = new HttpContext(new HttpRequest(null, "http://tempuri.org/test-style.css", null), response);
 
-            var handler = new DummyResourceHttpHandler();
+            var handler = new DummyResourceHttpHandler(string.Empty);
             handler.FileExistsMock = p => true;
             handler.OpenFileMock = p =>
                 {
@@ -66,7 +66,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
                 new HttpRequest(null, "http://tempuri.org/test-image.jpg", null), 
                 new HttpResponse(null));
 
-            var handler = new DummyResourceHttpHandler();
+            var handler = new DummyResourceHttpHandler(string.Empty);
             handler.FileExistsMock = p => false;
 
             try
@@ -93,7 +93,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var response = new HttpResponse(new StringWriter(System.Globalization.CultureInfo.InvariantCulture));
             var context = new HttpContext(new HttpRequest(null, "http://tempuri.org/template.sf-cshtml", null), response);
 
-            var handler = new DummyResourceHttpHandler();
+            var handler = new DummyResourceHttpHandler(string.Empty);
             handler.FileExistsMock = p => true;
             handler.IsWhitelistedMock = p => true;
             handler.SendParsedTemplateMock = ctx =>
