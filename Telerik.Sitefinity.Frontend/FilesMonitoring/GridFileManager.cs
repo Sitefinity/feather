@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         #region Properties
 
         /// <summary>
-        /// Gets the required folder path structure. Only layout files placed inside the specified folder structure will trigger automatic creation of the templates.
+        /// Gets the required folder path structure. Only grid files placed inside the specified folder structure will trigger automatic creation of the templates.
         /// </summary>
         /// <value>
         /// The folder path structure.
