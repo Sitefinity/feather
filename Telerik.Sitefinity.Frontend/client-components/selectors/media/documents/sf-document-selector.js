@@ -770,6 +770,7 @@
 
             var successAction = function (data) {
                 data = data || {};
+                $scope.model.uploadInProgress = false;
                 $modalInstance.close(data[0]);
             };
 
@@ -783,6 +784,7 @@
             };
 
             $scope.uploadDocument = function () {
+                $scope.model.uploadInProgress = true;
                 sfMediaService.documents.upload($scope.model, sfProvider).then(successAction, errorAction, progressAction);
             };
 

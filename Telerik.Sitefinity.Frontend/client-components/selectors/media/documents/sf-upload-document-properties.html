@@ -1,5 +1,5 @@
 ﻿<div class="modal-header">
-    <button type="button" class="close" ng-click="cancelUpload()">&times;</button>
+    <button type="button" class="close" ng-click="cancelUpload()" ng-disabled="model.uploadInProgress">&times;</button>
     <h3 class="modal-title">Upload document</h3>
 </div>
 
@@ -10,7 +10,7 @@
         <div class="sf-Progress">
             <p class="sf-Progress-file">
                 <span ng-bind="model.file.name"></span>
-                <a type="button" class="sf-Progress-close pull-right" ng-click="cancelUpload()">×</a>
+                <a type="button" class="sf-Progress-close pull-right" ng-hide="model.uploadInProgress" ng-click="cancelUpload()">×</a>
                 <span class="pull-right" ng-bind="model.file.textSize"></span>
             </p>
             <div class="sf-Progress-bar progress-bar"
@@ -58,6 +58,6 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left" ng-click="uploadDocument()" ng-disabled="!model.title || !model.parentId">Upload</button>
-    <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">Cancel</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="uploadDocument()" ng-disabled="!model.title || !model.parentId || model.uploadInProgress">Upload</button>
+    <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()" ng-disabled="model.uploadInProgress">Cancel</button>
 </div>
