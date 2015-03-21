@@ -15,6 +15,20 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// </summary>
     internal class ResourceHttpHandler : IHttpHandler
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceHttpHandler"/> class.
+        /// </summary>
+        public ResourceHttpHandler(string path)
+        {
+            this.rootPath = path;
+
+            var templateService = new RazorEngine.Templating.TemplateService();
+            templateService.AddNamespace("Telerik.Sitefinity.Localization");
+            templateService.AddNamespace("Telerik.Sitefinity.Frontend.Mvc.StringResources");
+
+            this.razorParser = new RazorTemplateProcessor(templateService, HostingEnvironment.VirtualPathProvider);
+        }
+
         #region IHttpHandler
 
         /// <summary>
@@ -167,6 +181,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return File.GetLastWriteTime((new Uri(name.CodeBase)).LocalPath);
         }
 
-        private RazorTemplateProcessor razorParser = new RazorTemplateProcessor();
+        private readonly RazorTemplateProcessor razorParser;
+        private readonly string rootPath;
     }
 }
