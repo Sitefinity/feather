@@ -104,7 +104,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
-        private GridControlData CreateLayoutControlsData(string fileName)
+        protected GridControlData CreateLayoutControlsData(string fileName)
         {
             var baseTemplatePath = string.Format(
                 System.Globalization.CultureInfo.InvariantCulture,
