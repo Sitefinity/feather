@@ -27,8 +27,8 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 var sectionTitle = packageName + GridWidgetRegistrator.GridSectionTitleSuffix;
                 var htmlLayoutsSection = this.GetOrCreateToolBoxSection(toolboxConfig, sectionName, sectionTitle);
 
-                var layoutControl = this.CreateLayoutControlsData(fileName);
-                this.AddOrRenameLayoutControl(htmlLayoutsSection.Tools, layoutControl, oldFileName);
+                var layoutControl = this.CreateGridControlsData(fileName);
+                this.AddOrRenameGridControl(htmlLayoutsSection.Tools, layoutControl, oldFileName);
 
                 configManager.SaveSection(toolboxConfig);
             }
@@ -61,13 +61,13 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         }
 
         /// <summary>
-        /// Adds or renames the layout control.
+        /// Adds or renames the grid control.
         /// </summary>
         /// <param name="parent">The parent.</param>
         /// <param name="data">The data.</param>
         /// <param name="oldFileName">Old name of the file.</param>
         /// <exception cref="System.ArgumentNullException">data</exception>
-        protected virtual void AddOrRenameLayoutControl(ConfigElementList<ToolboxItem> parent, GridControlData data, string oldFileName = "")
+        protected virtual void AddOrRenameGridControl(ConfigElementList<ToolboxItem> parent, GridControlData data, string oldFileName = "")
         {
             if (data == null)
                 throw new ArgumentNullException("data");
@@ -100,11 +100,11 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         }
 
         /// <summary>
-        /// Creates the layout controls data.
+        /// Creates the grid controls data.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
-        protected GridControlData CreateLayoutControlsData(string fileName)
+        protected GridControlData CreateGridControlsData(string fileName)
         {
             var baseTemplatePath = string.Format(
                 System.Globalization.CultureInfo.InvariantCulture,

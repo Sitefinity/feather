@@ -20,15 +20,15 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.GridSystem
         }
 
         /// <inheritdoc />
-        public void PublicAddLayoutControl(ConfigElementList<ToolboxItem> parent, GridControlData data, string oldFileName = "")
+        public void PublicAddGridControl(ConfigElementList<ToolboxItem> parent, GridControlData data, string oldFileName = "")
         {
-            this.AddOrRenameLayoutControl(parent, data, oldFileName);
+            this.AddOrRenameGridControl(parent, data, oldFileName);
         }
 
         /// <inheritdoc />
-        public GridControlData PublicCreateLayoutControlsData(string fileName)
+        public GridControlData PublicCreateGridControlsData(string fileName)
         {
-            return this.CreateLayoutControlsData(fileName);
+            return this.CreateGridControlsData(fileName);
         }
     }
 }

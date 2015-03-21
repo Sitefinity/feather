@@ -28,7 +28,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.GridSystem
             // Arrange: Initialize the GridWidgetRegistrator, ToolboxesConfig and add a PageLayouts section, create a layouts section, create a dummy grid controls 
             var initializer = new DummyGridWidgetRegistrator();
             var fakeTemplatePath = "~/GridSystem/Templates/grid1.html";
-            var dummyData = initializer.PublicCreateLayoutControlsData(fakeTemplatePath);
+            var dummyData = initializer.PublicCreateGridControlsData(fakeTemplatePath);
             var toolboxesConfig = new DummyToolboxesConfig();
             var pageControlsMock = new Toolbox(toolboxesConfig.Toolboxes);
             pageControlsMock.Name = "PageLayouts";
@@ -37,7 +37,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.GridSystem
             ConfigElementList<ToolboxItem> parentToolboxItem = htmlLayoutsSection.Tools;
 
             // Act: add the grid controls to the toolbox
-            initializer.PublicAddLayoutControl(parentToolboxItem, dummyData);
+            initializer.PublicAddGridControl(parentToolboxItem, dummyData);
 
             // Assert: Verify the newly created controls are properly created
             Assert.AreEqual(1, parentToolboxItem.Count, "The grid controls were added to the toolbox.");
