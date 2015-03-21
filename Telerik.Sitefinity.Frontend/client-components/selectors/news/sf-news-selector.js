@@ -18,7 +18,7 @@
 
                         ctrl.selectorType = 'NewsSelector';
 
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/news/sf-news-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/news/sf-news-selector.sf-cshtml';
                         ctrl.$scope.dialogTemplateId = 'sf-news-selector-template';
 
                         var closedDialogTemplate = attrs.sfMultiselect ?

@@ -15,6 +15,15 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// </summary>
     internal class ResourceHttpHandler : IHttpHandler
     {
+        public ResourceHttpHandler()
+        {
+            var templateService = new RazorEngine.Templating.TemplateService();
+            templateService.AddNamespace("Telerik.Sitefinity.Localization");
+            templateService.AddNamespace("Telerik.Sitefinity.Frontend.Mvc.StringResources");
+
+            this.razorParser = new RazorTemplateProcessor(templateService);
+        }
+
         #region IHttpHandler
 
         /// <summary>
@@ -167,6 +176,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return File.GetLastWriteTime((new Uri(name.CodeBase)).LocalPath);
         }
 
-        private RazorTemplateProcessor razorParser = new RazorTemplateProcessor();
+        private RazorTemplateProcessor razorParser;
     }
 }
