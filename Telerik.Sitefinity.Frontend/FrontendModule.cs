@@ -91,9 +91,6 @@ namespace Telerik.Sitefinity.Frontend
                 var layoutsInitializer = new LayoutInitializer();
                 layoutsInitializer.Initialize();
 
-                var gridSystemInitializer = new GridSystemInitializer();
-                gridSystemInitializer.Initialize();
-
                 var designerInitializer = new DesignerInitializer();
                 designerInitializer.Initialize();
             }

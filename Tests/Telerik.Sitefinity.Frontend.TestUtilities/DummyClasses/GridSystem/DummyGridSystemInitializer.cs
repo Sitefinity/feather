@@ -9,26 +9,26 @@ using Telerik.Sitefinity.Modules.Pages.Configuration;
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.GridSystem
 {
     /// <summary>
-    /// This class is used to fake the functionality of <see cref="Telerik.Sitefinity.Frontend.GridSystem.GridSystemInitializer"/> class to expose its protected methods for testing purposes.
+    /// This class is used to fake the functionality of <see cref="Telerik.Sitefinity.Frontend.GridSystem.GridWidgetRegistrator"/> class to expose its protected methods for testing purposes.
     /// </summary>
-    internal class DummyGridSystemInitializer : GridSystemInitializer
+    internal class DummyGridWidgetRegistrator : GridWidgetRegistrator
     {
         /// <inheritdoc />
-        public ToolboxSection PublicCreateToolBoxSection(ToolboxesConfig toolboxConfig)
+        public ToolboxSection PublicCreateToolBoxSection(ToolboxesConfig toolboxConfig, string sectionName, string sectionTitle)
         {
-            return this.GetOrCreateToolBoxSection(toolboxConfig);
+            return this.GetOrCreateToolBoxSection(toolboxConfig, sectionName, sectionTitle);
         }
 
         /// <inheritdoc />
-        public void PublicAddLayoutControl(ConfigElementList<ToolboxItem> parent, GridControlData data)
+        public void PublicAddGridControl(ConfigElementList<ToolboxItem> parent, GridControlData data, string oldFileName = "")
         {
-            this.AddLayoutControl(parent, data);
+            this.AddOrRenameGridControl(parent, data, oldFileName);
         }
 
         /// <inheritdoc />
-        public ICollection<GridControlData> PublicCreateLayoutControlsData(string baseTemplatePath)
+        public GridControlData PublicCreateGridControlsData(string fileName)
         {
-            return this.CreateLayoutControlsData(baseTemplatePath);
+            return this.CreateGridControlsData(fileName);
         }
     }
 }
