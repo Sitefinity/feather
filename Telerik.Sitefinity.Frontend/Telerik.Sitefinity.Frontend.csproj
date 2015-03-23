@@ -550,7 +550,7 @@
     <Content Include="assets\src\icons\settings.svg" />
     <Content Include="assets\src\icons\unpublished.svg" />
     <EmbeddedResource Include="GridSystem\Templates\container.html" />
-    <EmbeddedResource Include="client-components\search\sf-search-box.html" />
+    <EmbeddedResource Include="client-components\search\sf-search-box.sf-cshtml" />
     <EmbeddedResource Include="client-components\search\sf-search-box.js" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.html" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.js" />

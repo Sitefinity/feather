@@ -58,6 +58,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// phrase: sfAction attribute is required!
+        /// </summary>
+        [ResourceEntry("SfActionAttrRequired",
+            Value = "sfAction attribute is required!",
+            Description = "phrase: sfAction attribute is required!",
+            LastModified = "2015/03/23")]
+        public string SfActionAttrRequired
+        {
+            get
+            {
+                return this["SfActionAttrRequired"];
+            }
+        }
+        
+        /// <summary>
         /// No items have been created yet.
         /// phrase: No items have been created yet.
         /// </summary>
