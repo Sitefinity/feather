@@ -15,8 +15,12 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// </summary>
     internal class ResourceHttpHandler : IHttpHandler
     {
-        public ResourceHttpHandler()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceHttpHandler"/> class.
+        /// </summary>
+        public ResourceHttpHandler(string path)
         {
+            this.rootPath = path;
             var templateService = new RazorEngine.Templating.TemplateService();
             templateService.AddNamespace("Telerik.Sitefinity.Localization");
             templateService.AddNamespace("Telerik.Sitefinity.Frontend.Mvc.StringResources");
@@ -105,12 +109,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns>Whether the specified path is whitelisted for execution server code.</returns>
         protected virtual bool IsWhitelisted(string path)
         {
-            var resolvedPath = RouteHelper.ResolveUrl(path, UrlResolveOptions.Rooted);
-            var clientComponents = RouteHelper.ResolveUrl("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/client-components/", UrlResolveOptions.Rooted);
-            var mvcScripts = RouteHelper.ResolveUrl("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/Mvc/Scripts/", UrlResolveOptions.Rooted);
-
-            return resolvedPath.StartsWith(clientComponents, StringComparison.OrdinalIgnoreCase) ||
-                resolvedPath.StartsWith(mvcScripts, StringComparison.OrdinalIgnoreCase);
+            var resolvedRoot = RouteHelper.ResolveUrl("~/" + this.rootPath, UrlResolveOptions.Rooted | UrlResolveOptions.AppendTrailingSlash);
+            
+            return path.StartsWith(resolvedRoot + "client-components/", StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith(resolvedRoot + "Mvc/Scripts/", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -176,6 +178,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return File.GetLastWriteTime((new Uri(name.CodeBase)).LocalPath);
         }
 
-        private RazorTemplateProcessor razorParser;
+        private readonly RazorTemplateProcessor razorParser;
+        private readonly string rootPath;
     }
 }

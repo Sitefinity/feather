@@ -10,6 +10,11 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
     /// </summary>
     internal class DummyResourceHttpHandler : ResourceHttpHandler
     {
+        public DummyResourceHttpHandler(string path)
+            : base(path)
+        {
+        }
+
         #region Fields
 
         /// <summary>

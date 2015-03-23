@@ -285,7 +285,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                                         assemblyName.Name, 
                                         new Route(
                                                   virtualPath + "{*Params}", 
-                                                  new RouteHandler<ResourceHttpHandler>()),
+                                                  new GenericRouteHandler<ResourceHttpHandler>(() => new ResourceHttpHandler(virtualPath))),
                                                   assemblyName.Name, 
                                                   requireBasicAuthentication: false);
         }

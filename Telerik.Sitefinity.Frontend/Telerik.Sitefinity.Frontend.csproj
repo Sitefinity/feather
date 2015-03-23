@@ -277,6 +277,7 @@
     <Compile Include="Mvc\Models\ListDisplayMode.cs" />
     <Compile Include="Mvc\Models\SelectionMode.cs" />
     <Compile Include="Mvc\StringResources\DesignerResources.cs" />
+    <Compile Include="Resources\GenericRouteHandler.cs" />
     <Compile Include="Resources\RazorTemplateProcessor.cs" />
     <Compile Include="Resources\ResourceRegister.cs" />
     <Compile Include="Resources\PackageManager.cs" />
