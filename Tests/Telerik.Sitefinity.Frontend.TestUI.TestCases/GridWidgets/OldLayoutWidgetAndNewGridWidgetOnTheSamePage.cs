@@ -69,7 +69,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
 
         private const string PageName = "GridPage";
         private const string OldLayoutCaption = "25% + 75%";
-        private const string LayoutCaption = "3 + 9";
+        private const string LayoutCaption = "grid-3+9";
         private const string LayouClass1 = "sf_colsOut sf_2cols_1_25";
         private const string LayouClass2 = "sf_colsOut sf_2cols_2_75";
         private const string LayouClass3 = "col-md-3";
