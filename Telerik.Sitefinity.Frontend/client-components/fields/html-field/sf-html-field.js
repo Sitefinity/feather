@@ -93,7 +93,7 @@
 
                     scope.openDocumentSelector = function () {
                         scope.mediaPropertiesDialog =
-                                serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-document-properties-content-block.html');
+                                serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-document-properties-content-block.sf-cshtml');
                         scope.sfMediaPropertiesController = "sfDocumentPropertiesController";
 
                         var range = editor.getRange();

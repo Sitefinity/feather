@@ -17,7 +17,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         [ResourceEntry("InsertHyperlink",
             Value = "Insert hyperlink",
-            Description = "Insert hyperlink",
+            Description = "phrase: Insert hyperlink",
             LastModified = "2015/03/21")]
         public string InsertHyperlink
         {
@@ -32,7 +32,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         [ResourceEntry("InsertImage",
             Value = "Insert image",
-            Description = "Insert image",
+            Description = "phrase: Insert image",
             LastModified = "2015/03/21")]
         public string InsertImage
         {
@@ -47,7 +47,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         [ResourceEntry("InsertFile",
             Value = "Insert file",
-            Description = "Insert file",
+            Description = "phrase: Insert file",
             LastModified = "2015/03/21")]
         public string InsertFile
         {
@@ -71,7 +71,97 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["SfActionAttrRequired"];
             }
         }
-        
+
+        /// <summary>
+        /// phrase: Insert a document link
+        /// </summary>
+        [ResourceEntry("InsertDocumentLink",
+            Value = "Insert a document link",
+            Description = "phrase: Insert a document link",
+            LastModified = "2015/03/23")]
+        public string InsertDocumentLink
+        {
+            get
+            {
+                return this["InsertDocumentLink"];
+            }
+        }
+
+        /// <summary>
+        /// word: Title
+        /// </summary>
+        [ResourceEntry("Title",
+            Value = "Title",
+            Description = "word: Title",
+            LastModified = "2015/03/23")]
+        public string Title
+        {
+            get
+            {
+                return this["Title"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Less than 35 characters are recommended
+        /// </summary>
+        [ResourceEntry("RecommendedCharacters",
+            Value = "Less than 35 characters are recommended",
+            Description = "phrase: Less than 35 characters are recommended",
+            LastModified = "2015/03/23")]
+        public string RecommendedCharacters
+        {
+            get
+            {
+                return this["RecommendedCharacters"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Title is required
+        /// </summary>
+        [ResourceEntry("TitleRequired",
+            Value = "Title is required",
+            Description = "phrase: Title is required",
+            LastModified = "2015/03/23")]
+        public string TitleRequired
+        {
+            get
+            {
+                return this["TitleRequired"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: CSS classes
+        /// </summary>
+        [ResourceEntry("CssClasses",
+            Value = "CSS classes",
+            Description = "phrase: CSS classes",
+            LastModified = "2015/03/23")]
+        public string CssClasses
+        {
+            get
+            {
+                return this["CssClasses"];
+            }
+        }
+
+        /// <summary>
+        /// word: Done
+        /// </summary>
+        [ResourceEntry("Done",
+            Value = "Done [from res]",
+            Description = "word: Done",
+            LastModified = "2015/03/23")]
+        public string Done
+        {
+            get
+            {
+                return this["Done"];
+            }
+        }
+
         /// <summary>
         /// No items have been created yet.
         /// </summary>
