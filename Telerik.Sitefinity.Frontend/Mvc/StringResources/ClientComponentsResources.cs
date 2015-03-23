@@ -151,7 +151,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// word: Done
         /// </summary>
         [ResourceEntry("Done",
-            Value = "Done [from res]",
+            Value = "Done",
             Description = "word: Done",
             LastModified = "2015/03/23")]
         public string Done
