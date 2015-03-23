@@ -55,7 +55,7 @@ angular.module('sfSelectors').directive('sfLinkSelectorModal', function ($inject
         restrict: 'E',
         templateUrl: function (elem, attrs) {
             var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-            var url = attrs.sfTemplateUrl || 'client-components/selectors/tools/sf-link-selector-modal.html';
+            var url = attrs.sfTemplateUrl || 'client-components/selectors/tools/sf-link-selector-modal.sf-cshtml';
             return serverContext.getEmbeddedResourceUrl(assembly, url);
         },
         scope: true,

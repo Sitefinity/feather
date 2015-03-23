@@ -19,9 +19,15 @@
     <div ng-include="getDialogTemplate()" />
     
     <div class="modal-footer">
-        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary pull-left" ng-click="doneSelecting()">Done selecting</button>
-        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
-        <button type="button" ng-show="noItemsExist" class="btn btn-primary pull-left" ng-click="cancel()">Close</button>
+        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary pull-left" ng-click="doneSelecting()">
+            @(Res.Get<ClientComponentsResources>().DoneSelecting)
+        </button>
+        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-link pull-left" ng-click="cancel()">
+            @(Res.Get<ClientComponentsResources>().Cancel)
+        </button>
+        <button type="button" ng-show="noItemsExist" class="btn btn-primary pull-left" ng-click="cancel()">
+            @(Res.Get<ClientComponentsResources>().Close)
+        </button>
     </div>
 
 </script>

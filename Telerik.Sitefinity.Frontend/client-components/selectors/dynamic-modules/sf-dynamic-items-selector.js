@@ -26,7 +26,7 @@
 
                         ctrl.selectorType = 'DynamicItemsSelector';
 
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/dynamic-modules/sf-dynamic-items-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/dynamic-modules/sf-dynamic-items-selector.sf-cshtml';
                         ctrl.$scope.dialogTemplateId = 'sf-dynamic-items-selector-template';
 
                         var closedDialogTemplate = attrs.sfMultiselect ?

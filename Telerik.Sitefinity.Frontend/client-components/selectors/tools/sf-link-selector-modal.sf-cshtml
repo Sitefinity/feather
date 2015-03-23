@@ -4,7 +4,7 @@
 <script type="text/ng-template" id="sf-link-selector-template">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancel()">&times;</button>
-        <h3 class="modal-title">Insert a link</h3>
+        <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().InsertLinkHeader)</h3>
     </div>
     <div class="modal-body">
         <sf-link-selector id="linkSelector" sf-link-html="selectedHtml" sf-selected-item="selectedItem" sf-editor-content="sfModel"></sf-link-selector>
@@ -14,7 +14,7 @@
             type="button"
             class="btn btn-primary pull-left"
             ng-disabled="isDisabled(selectedItem)"
-            ng-click="insertLink()">Insert link</button>
-        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
+            ng-click="insertLink()">@(Res.Get<ClientComponentsResources>().InsertLinkButton)</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
     </div>
 </script>

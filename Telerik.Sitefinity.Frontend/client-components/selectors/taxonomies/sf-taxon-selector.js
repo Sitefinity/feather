@@ -24,7 +24,7 @@
                         };
 
                         ctrl.selectorType = 'TaxonSelector';
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/taxonomies/sf-taxon-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/taxonomies/sf-taxon-selector.sf-cshtml';
                         ctrl.closedDialogTemplateUrl = 'client-components/selectors/common/sf-bubbles-selection.html';
                         ctrl.$scope.dialogTemplateId = 'sf-taxon-selector-template';
                     }

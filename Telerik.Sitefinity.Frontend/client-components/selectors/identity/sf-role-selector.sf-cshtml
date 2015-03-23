@@ -2,14 +2,14 @@
     <div kendo-tab-strip k-animation="false" class="k-tabstrip--selection">
         <ul ng-show="multiselect">
             <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
-                All
+              @(Res.Get<ClientComponentsResources>().All)
             </li>
             <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
-                Selected <span class="badge">{{getSelectedItemsCount()}}</span>
+              @(Res.Get<ClientComponentsResources>().Selected) <span class="badge">{{getSelectedItemsCount()}}</span>
             </li>
         </ul>
         <div>
-            <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
+            <div ng-show="noItemsExist" class="alert alert-info">@(Res.Get<ClientComponentsResources>().NoItemsCreated)</div>
 
             <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
@@ -17,7 +17,7 @@
                 <div class="row" ng-show="rolesProviders.length">
                     <div class="col-xs-5">
                         <select class="form-control m-bottom-sm" ng-model="sfProvider" ng-change="providerChanged(sfProvider)" ng-options="provider.RoleProviderName as provider.RoleProviderTitle for provider in rolesProviders">
-                            <option style="display:none" value="">select a type</option>
+                            <option style="display:none" value=""></option>
                         </select>
                     </div>
                 </div>

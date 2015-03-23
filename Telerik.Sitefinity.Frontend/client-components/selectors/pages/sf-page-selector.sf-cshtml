@@ -2,17 +2,17 @@
     <div kendo-tab-strip class="k-tabstrip--selection">
         <ul ng-show="multiselect">
             <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
-                All
+              @(Res.Get<ClientComponentsResources>().All)
             </li>
             <li ng-click="removeUnselectedItems()">
-                External URLs
+              @(Res.Get<ClientComponentsResources>().ExternalUrls)
             </li>
             <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
-                Selected <span class="badge">{{getSelectedItemsCount()}}</span>
+              @(Res.Get<ClientComponentsResources>().Selected) <span class="badge">{{getSelectedItemsCount()}}</span>
             </li>
         </ul>
         <div>
-            <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
+            <div ng-show="noItemsExist" class="alert alert-info">@(Res.Get<ClientComponentsResources>().NoItemsCreated)</div>
 
             <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
@@ -57,7 +57,7 @@
                                 </span>
                             </span>
 
-                            <div ng-show="itemDisabled(item)">(not translated)</div>
+                            <div ng-show="itemDisabled(item)">(@(Res.Get<ClientComponentsResources>().NotTranslated))</div>
                         </div>
 
 
@@ -73,7 +73,7 @@
             </sf-external-urls-view>
         </div>
         <div>
-            <sf-selected-items-view sf-selected-pages-view sf-template-url="client-components/selectors/pages/sf-selected-pages-view.html" sf-items='selectedItemsViewData' sf-selected-items='selectedItemsInTheDialog' sf-search-identifier-field='searchIdentifierField'
+            <sf-selected-items-view sf-selected-pages-view sf-template-url="client-components/selectors/pages/sf-selected-pages-view.sf-cshtml" sf-items='selectedItemsViewData' sf-selected-items='selectedItemsInTheDialog' sf-search-identifier-field='searchIdentifierField'
                                     sf-identifier-field='sfIdentifierField' sf-sortable='{{sfSortable}}'>
             </sf-selected-items-view>
         </div>
