@@ -130,7 +130,7 @@
 
                         ctrl.selectorType = 'RoleSelector';
 
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/identity/sf-role-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/identity/sf-role-selector.sf-cshtml';
                         ctrl.$scope.dialogTemplateId = 'sf-role-selector-template';
                         ctrl.setIdentifierField("Name");
                         ctrl.$scope.searchIdentifierField = "Name";

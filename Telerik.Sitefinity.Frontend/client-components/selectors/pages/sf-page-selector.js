@@ -226,7 +226,7 @@
 
                         ctrl.selectorType = 'PageSelector';
 
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.sf-cshtml';
                         ctrl.$scope.dialogTemplateId = 'sf-page-selector-template';
 
                         var closedDialogTemplate = attrs.sfMultiselect ?

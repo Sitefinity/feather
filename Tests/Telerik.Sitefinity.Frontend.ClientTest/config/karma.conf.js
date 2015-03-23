@@ -26,11 +26,11 @@ module.exports = function (config) {
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-bubbles-selection.html',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-group-selection.html',
 	              '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.js',
-                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.sf-cshtml',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.html',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.js',
-                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.sf-cshtml',
 				  '../../Telerik.Sitefinity.Frontend/client-components/selectors/**/*.html',
 				  '../../Telerik.Sitefinity.Frontend/client-components/selectors/**/*.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/**/*.js',
@@ -58,7 +58,7 @@ module.exports = function (config) {
             // from all the files, so you can load them all with module('template')
             moduleName: 'templates',
 
-            // Returns the id of the template in $templateCache. To get a template in a test use id like 'client-components/selectors/common/sf-list-selector.html'
+            // Returns the id of the template in $templateCache. To get a template in a test use id like 'client-components/selectors/common/sf-list-selector.sf-cshtml'
             cacheIdFromPath: function (filepath) {
                 // filepath is the path to the template on the disc 
                 return filepath.split('Telerik.Sitefinity.Frontend/')[1];

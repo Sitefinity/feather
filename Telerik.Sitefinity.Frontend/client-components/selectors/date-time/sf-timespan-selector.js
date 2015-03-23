@@ -14,7 +14,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/selectors/date-time/sf-timespan-selector.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/date-time/sf-timespan-selector.sf-cshtml';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {

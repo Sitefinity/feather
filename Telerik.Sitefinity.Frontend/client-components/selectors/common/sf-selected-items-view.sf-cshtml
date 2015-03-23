@@ -1,4 +1,4 @@
-﻿<div ng-show="isListEmpty()" class="alert alert-info">No items have been selected yet.</div>
+﻿<div ng-show="isListEmpty()" class="alert alert-info">@(Res.Get<ClientComponentsResources>().NoItemsSelected)</div>
 
 <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
@@ -21,5 +21,6 @@
             <div><span sf-shrinked-breadcrumb="{{bindIdentifierField(item)}}" sf-max-length="60"></span></div>
         </div>
     </div>
-    <div ng-hide="currentItems.length"><i>No items found</i></div>
+    <div ng-hide="currentItems.length || showLoadingIndicator"><i>@(Res.Get<ClientComponentsResources>().NoItemsFound)</i></div>
+    <sf-loading ng-show="showLoadingIndicator"></sf-loading>
 </div>
