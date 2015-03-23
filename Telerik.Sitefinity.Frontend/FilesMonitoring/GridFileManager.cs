@@ -95,7 +95,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// Called on file deletion
         /// </summary>
         /// <param name="filePath">The file path.</param>
-        public void FileDeleted(string filePath)
+        /// <param name="packageName">Name of the package.</param>
+        public void FileDeleted(string filePath, string packageName)
         {
             var fileData = this.FileMonitorManager.GetFilesData().Where(file => file.FilePath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
 
@@ -104,6 +105,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 this.FileMonitorManager.Delete(fileData);
                 this.FileMonitorManager.SaveChanges();
             }
+
+            this.WidgetRegistrator.UnregisterToolboxItem(this.GetFileName(filePath), packageName);
         }
 
         /// <summary>
@@ -119,6 +122,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var fileData = this.FileMonitorManager.GetFilesData().Where(file => file.FilePath.Equals(oldFilePath, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
 
             this.AddToToolboxAndFileData(newFileName, newFilePath, packageName, fileData, oldFileName);
+
+            this.WidgetRegistrator.UpdateControlData(newFileName, oldFileName);
         }
 
         #endregion
@@ -130,7 +135,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             if (!this.IsFileValid(newFileName, newFilePath, packageName))
                 return;
 
-            this.WidgetRegistrator.RegisterInToolbox(newFileName, packageName, oldFileName);
+            this.WidgetRegistrator.RegisterToolboxItem(newFileName, packageName, oldFileName);
             this.CreateOrUpdateFileData(newFileName, newFilePath, packageName, fileData);
         }
 
@@ -200,6 +205,18 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             fileData.PackageName = packageName;
 
             this.FileMonitorManager.SaveChanges();
+        }
+
+        /// <summary>
+        /// Gets the name of the file.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <returns></returns>
+        private string GetFileName(string filePath)
+        {
+            var fileName = filePath.Substring(filePath.LastIndexOf('/') + 1);
+
+            return fileName;
         }
 
         #endregion

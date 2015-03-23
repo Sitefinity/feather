@@ -62,8 +62,9 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <summary>
         /// Called on file deletion
         /// </summary>
-        /// <param name="path">The file path.</param>
-        public void FileDeleted(string filePath)
+        /// <param name="filePath">The file path.</param>
+        /// <param name="packageName">Name of the package.</param>
+        public void FileDeleted(string filePath, string packageName)
         {
             var fileMonitorDataManager = FileMonitorDataManager.GetManager();
 

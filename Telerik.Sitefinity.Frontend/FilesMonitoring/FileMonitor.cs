@@ -466,7 +466,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                         case FileChangeType.Deleted:
                             {
-                                resourceFilesManager.FileDeleted(args.FilePath);
+                                resourceFilesManager.FileDeleted(args.FilePath, args.PackageName);
                                 break;
                             }
 
