@@ -15,15 +15,15 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
     /// This is test class for grid widget on page and page template.
     /// </summary>
     [TestClass]
-    public class AddGridWidgetToToolboxForPage_ : FeatherTestCase
+    public class AutoGenerateGridWidgetToToolboxForPage_ : FeatherTestCase
     {
         /// <summary>
-        /// UI test AddGridWidgetToToolboxForPage
+        /// UI test AutoGenerateGridWidgetToToolboxForPage
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void AddGridWidgetToToolboxForPage()
+        public void AutoGenerateGridWidgetToToolboxForPage()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);

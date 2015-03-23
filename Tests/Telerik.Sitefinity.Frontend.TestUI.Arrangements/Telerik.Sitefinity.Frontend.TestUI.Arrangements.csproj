@@ -119,8 +119,8 @@
     <Compile Include="..\..\AssemblyInfoShare\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="GridWidgets\AddGridWidgetToToolboxForPage.cs" />
-    <Compile Include="GridWidgets\AddGridWidgetToToolboxForPageTemplate.cs" />
+    <Compile Include="GridWidgets\AutoGenerateGridWidgetToToolboxForPage.cs" />
+    <Compile Include="GridWidgets\AutoGenerateGridWidgetToToolboxForPageTemplate.cs" />
     <Compile Include="GridWidgets\ManagaGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
     <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
