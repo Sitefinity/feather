@@ -117,7 +117,7 @@
 
                     scope.openImageSelector = function () {
                         scope.mediaPropertiesDialog =
-                           serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.html');
+                           serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.sf-cshtml');
                         scope.sfMediaPropertiesController = "sfImagePropertiesController";
 
                         var properties = getPropertiesFromTag('image', 'span.sf-Image-wrapper', 'img');

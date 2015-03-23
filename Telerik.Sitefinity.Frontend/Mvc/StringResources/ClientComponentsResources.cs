@@ -163,6 +163,171 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// word: Image
+        /// </summary>
+        [ResourceEntry("Image",
+            Value = "Image",
+            Description = "word: Image",
+            LastModified = "2015/03/23")]
+        public string Image
+        {
+            get
+            {
+                return this["Image"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Alternative text
+        /// </summary>
+        [ResourceEntry("AlternativeText",
+            Value = "Alternative text",
+            Description = "phrase: Alternative text",
+            LastModified = "2015/03/23")]
+        public string AlternativeText
+        {
+            get
+            {
+                return this["AlternativeText"];
+            }
+        }
+
+        /// <summary>
+        /// word: Alignment
+        /// </summary>
+        [ResourceEntry("Alignment",
+            Value = "Alignment",
+            Description = "word: Alignment",
+            LastModified = "2015/03/23")]
+        public string Alignment
+        {
+            get
+            {
+                return this["Alignment"];
+            }
+        }
+
+        /// <summary>
+        /// word: None
+        /// </summary>
+        [ResourceEntry("None",
+            Value = "None",
+            Description = "word: None",
+            LastModified = "2015/03/23")]
+        public string None
+        {
+            get
+            {
+                return this["None"];
+            }
+        }
+
+        /// <summary>
+        /// word: Left
+        /// </summary>
+        [ResourceEntry("Left",
+            Value = "Left",
+            Description = "word: Left",
+            LastModified = "2015/03/23")]
+        public string Left
+        {
+            get
+            {
+                return this["Left"];
+            }
+        }
+
+        /// <summary>
+        /// word: Center
+        /// </summary>
+        [ResourceEntry("Center",
+            Value = "Center",
+            Description = "word: Center",
+            LastModified = "2015/03/23")]
+        public string Center
+        {
+            get
+            {
+                return this["Center"];
+            }
+        }
+
+        /// <summary>
+        /// word: Right
+        /// </summary>
+        [ResourceEntry("Right",
+            Value = "Right",
+            Description = "word: Right",
+            LastModified = "2015/03/23")]
+        public string Right
+        {
+            get
+            {
+                return this["Right"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Image thumbnail
+        /// </summary>
+        [ResourceEntry("ImageThumbnail",
+            Value = "Image thumbnail",
+            Description = "phrase: Image thumbnail",
+            LastModified = "2015/03/23")]
+        public string ImageThumbnail
+        {
+            get
+            {
+                return this["ImageThumbnail"];
+            }
+        }
+
+        /// <summary>
+        /// word: Margins
+        /// </summary>
+        [ResourceEntry("Margins",
+            Value = "Margins",
+            Description = "word: Margins",
+            LastModified = "2015/03/23")]
+        public string Margins
+        {
+            get
+            {
+                return this["Margins"];
+            }
+        }
+
+        /// <summary>
+        /// word: Top
+        /// </summary>
+        [ResourceEntry("Top",
+            Value = "Top",
+            Description = "word: Top",
+            LastModified = "2015/03/23")]
+        public string Top
+        {
+            get
+            {
+                return this["Top"];
+            }
+        }
+
+        /// <summary>
+        /// word: Bottom
+        /// </summary>
+        [ResourceEntry("Bottom",
+            Value = "Bottom",
+            Description = "word: Bottom",
+            LastModified = "2015/03/23")]
+        public string Bottom
+        {
+            get
+            {
+                return this["Bottom"];
+            }
+        }
+
+        /// <summary>
         /// No items have been created yet.
         /// phrase: No items have been created yet.
         /// </summary>
