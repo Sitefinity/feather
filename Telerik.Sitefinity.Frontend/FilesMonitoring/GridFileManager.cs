@@ -122,6 +122,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var fileData = this.FileMonitorManager.GetFilesData().Where(file => file.FilePath.Equals(oldFilePath, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
 
             this.AddToToolboxAndFileData(newFileName, newFilePath, packageName, fileData, oldFileName);
+
+            this.WidgetRegistrator.UpdateControlData(newFileName, oldFileName);
         }
 
         #endregion

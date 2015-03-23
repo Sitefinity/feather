@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
+using Telerik.Sitefinity.Pages.Model;
 
 namespace Telerik.Sitefinity.Frontend.GridSystem
 {
@@ -65,6 +68,31 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             }
 
             configurationManager.SaveSection(toolboxesConfig);
+        }
+
+        /// <summary>
+        /// Updates the control data.
+        /// </summary>
+        /// <param name="newFileName">New name of the file.</param>
+        /// <param name="oldFileName">Old name of the file.</param>
+        public void UpdateControlData(string newFileName, string oldFileName)
+        {
+            var pageManger = PageManager.GetManager();
+
+            var baseTemplatePath = string.Format(
+            CultureInfo.InvariantCulture,
+            GridWidgetRegistrator.GridFolderPathStringTemplate,
+            FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendService).Assembly));
+
+            var properties = pageManger.GetProperties().Where(prop => prop.Name == "Layout" && prop.Value == baseTemplatePath + oldFileName).ToList();
+            var newCaption = this.GetFileNameWithoutExtension(newFileName);
+            foreach (var property in properties)
+            {
+                property.Value = baseTemplatePath + newFileName;
+                ((ControlData)property.Control).Caption = newCaption;
+            }
+
+            pageManger.SaveChanges();
         }
 
         #endregion
