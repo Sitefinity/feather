@@ -85,7 +85,7 @@
 
         var directiveScope = scope.$$childHead;
 
-        expect(directiveScope.changeButtonText).toBe('Change');
+        expect(directiveScope.changeButtonText).not.toBeDefined();
         expect(directiveScope.searchIdentifierField).toBe('Title');
         expect(directiveScope.sfIdentifierField).toBe('Breadcrumb');
         expect(directiveScope.hierarchical).toBe(true);

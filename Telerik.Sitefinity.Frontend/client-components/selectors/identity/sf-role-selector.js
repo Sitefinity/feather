@@ -135,7 +135,7 @@
                         ctrl.setIdentifierField("Name");
                         ctrl.$scope.searchIdentifierField = "Name";
 
-                        var closedDialogTemplate = 'client-components/selectors/common/sf-bubbles-selection.html';
+                        var closedDialogTemplate = 'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
                     }

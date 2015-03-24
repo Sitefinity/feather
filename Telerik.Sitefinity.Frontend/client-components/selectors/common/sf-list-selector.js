@@ -259,8 +259,6 @@
                         // ------------------------------------------------------------------------
 
                         var emptyGuid = '00000000-0000-0000-0000-000000000000';
-                        var defaultSelectButtonText = 'Select';
-                        var defaultChangeButtonText = 'Change';
 
                         var currentSelectedIds;
 
@@ -521,8 +519,8 @@
                         if (!scope.sfSelectedItemId && scope.sfSelectedIds && scope.sfSelectedIds.length)
                             scope.sfSelectedItemId = scope.sfSelectedIds[0];
 
-                        scope.selectButtonText = attrs.sfSelectButtonText ? attrs.sfSelectButtonText : defaultSelectButtonText;
-                        scope.changeButtonText = attrs.sfChangeButtonText ? attrs.sfChangeButtonText : defaultChangeButtonText;
+                        scope.selectButtonText = attrs.sfSelectButtonText;
+                        scope.changeButtonText = attrs.sfChangeButtonText;
 
                         scope.selectedItemsInTheDialog = [];
 
