@@ -328,6 +328,96 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// word: Type:
+        /// </summary>
+        [ResourceEntry("Type",
+            Value = "Type:",
+            Description = "word: Type",
+            LastModified = "2015/03/23")]
+        public string Type
+        {
+            get
+            {
+                return this["Type"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: File size:
+        /// </summary>
+        [ResourceEntry("FileSize",
+            Value = "File size:",
+            Description = "phrase: File size",
+            LastModified = "2015/03/23")]
+        public string FileSize
+        {
+            get
+            {
+                return this["FileSize"];
+            }
+        }
+
+        /// <summary>
+        /// word: Uploaded:
+        /// </summary>
+        [ResourceEntry("Uploaded",
+            Value = "Uploaded:",
+            Description = "word: Uploaded",
+            LastModified = "2015/03/23")]
+        public string Uploaded
+        {
+            get
+            {
+                return this["Uploaded"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Change image
+        /// </summary>
+        [ResourceEntry("ChangeImage",
+            Value = "Change image",
+            Description = "phrase: Change image",
+            LastModified = "2015/03/23")]
+        public string ChangeImage
+        {
+            get
+            {
+                return this["ChangeImage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Edit all properties
+        /// </summary>
+        [ResourceEntry("EditAllProperties",
+            Value = "Edit all properties",
+            Description = "phrase: Edit all properties",
+            LastModified = "2015/03/23")]
+        public string EditAllProperties
+        {
+            get
+            {
+                return this["EditAllProperties"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select image
+        /// </summary>
+        [ResourceEntry("SelectImage",
+            Value = "Select image",
+            Description = "phrase: Select image",
+            LastModified = "2015/03/23")]
+        public string SelectImage
+        {
+            get
+            {
+                return this["SelectImage"];
+            }
+        }
+        
+        /// <summary>
         /// No items have been created yet.
         /// phrase: No items have been created yet.
         /// </summary>
