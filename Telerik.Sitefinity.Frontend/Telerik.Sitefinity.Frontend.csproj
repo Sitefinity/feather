@@ -182,17 +182,24 @@
     <Compile Include="..\AssemblyInfoShare\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="FilesMonitoring\GridFileManager.cs" />
     <Compile Include="FilesMonitoring\FileChangeType.cs" />
     <Compile Include="FilesMonitoring\FileMonitoringInitializer.cs" />
     <Compile Include="FilesMonitoring\MonitoredDirectory.cs" />
     <Compile Include="FrontendModule.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="GridSystem\GridSystemInitializer.cs" />
+    <Compile Include="GridSystem\GridWidgetRegistrator.cs" />
     <Compile Include="GridSystem\GridControlData.cs" />
     <Compile Include="InlineEditing\HtmlProcessor.cs" />
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mvc\Infrastructure\PageInitializer.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcPageEditorRouteHandler.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcPageRouteHandler.cs" />
     <Compile Include="Mvc\Models\ScriptDependencyConfigModel.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\RequiredIfExistAttribute.cs" />
     <Compile Include="Mvc\StringResources\ClientComponentsResources.cs" />
@@ -231,7 +238,6 @@
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\IRouteMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\MvcWidgetProxy.cs" />
-    <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\InfrastructureResources.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutMvcPageResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
@@ -388,36 +394,6 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\css\bootstrap.min.css" />
     <EmbeddedResource Include="Mvc\Scripts\breadcrumb.js" />
-    <EmbeddedResource Include="GridSystem\Templates\grid-3+9.html">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GridSystem\Templates\grid-12.html">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GridSystem\Templates\grid-4+8.html">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GridSystem\Templates\grid-6+6.html">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GridSystem\Templates\grid-8+4.html">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GridSystem\Templates\grid-9+3.html">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GridSystem\Templates\grid-4+4+4.html">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GridSystem\Templates\grid-3+6+3.html">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GridSystem\Templates\grid-3+3+3+3.html">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GridSystem\Templates\grid-2+3+2+3+2.html">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Mvc\Scripts\Kendo\angular-kendo.js" />
   </ItemGroup>
   <ItemGroup>
@@ -549,7 +525,6 @@
     <Content Include="assets\src\icons\scheduled.svg" />
     <Content Include="assets\src\icons\settings.svg" />
     <Content Include="assets\src\icons\unpublished.svg" />
-    <EmbeddedResource Include="GridSystem\Templates\container.html" />
     <EmbeddedResource Include="client-components\search\sf-search-box.sf-cshtml" />
     <EmbeddedResource Include="client-components\search\sf-search-box.js" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.html" />

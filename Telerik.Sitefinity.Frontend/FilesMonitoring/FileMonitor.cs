@@ -144,7 +144,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         if (resourceDirectoryTree.Length >= 2)
                         {
                             string resourceFolder = resourceDirectoryTree[resourceDirectoryTree.Length - 2];
-                            IFileManager resourceFilesManager = this.GetResourceFileManager(resourceFolder);
+                            IFileManager resourceFilesManager = this.GetResourceFileManager(resourceFolder, filePath);
                             resourceFilesManager.FileDeleted(filePath);
                         }
                     }
@@ -159,10 +159,10 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         /// <param name="resourceType">Type of the resource.</param>
         /// <returns>FileManager</returns>
-        protected virtual IFileManager GetResourceFileManager(string resourceFolder)
+        protected virtual IFileManager GetResourceFileManager(string resourceFolder, string resourcePath)
         {
             IFileManager resourceFilesManager = null;
-            var resourceType = this.GetResourceType(resourceFolder);
+            var resourceType = this.GetResourceType(resourceFolder, resourcePath);
 
             // the resource folder must follow the convention and the folder name must corresponds to a resource type
             if (resourceType != null)
@@ -179,8 +179,11 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         /// <param name="resourceFolder">The resource folder.</param>
         /// <returns></returns>
-        protected virtual ResourceType? GetResourceType(string resourceFolder)
+        protected virtual ResourceType? GetResourceType(string resourceFolder, string resourcePath)
         {
+            if (resourcePath.Contains("/GridSystem/Templates/"))
+                return ResourceType.Grid;
+
             ResourceType resourceType;
             if (Enum.TryParse<ResourceType>(resourceFolder, true, out resourceType))
                 return resourceType;
@@ -449,7 +452,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             return (p) =>
             {
                 // get the resource file manager depending on its type
-                IFileManager resourceFilesManager = this.GetResourceFileManager(args.ResourceFolder);
+                IFileManager resourceFilesManager = this.GetResourceFileManager(args.ResourceFolder, args.FilePath);
 
                 if (resourceFilesManager != null)
                 {
@@ -463,7 +466,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                         case FileChangeType.Deleted:
                             {
-                                resourceFilesManager.FileDeleted(args.FilePath);
+                                resourceFilesManager.FileDeleted(args.FilePath, args.PackageName);
                                 break;
                             }
 

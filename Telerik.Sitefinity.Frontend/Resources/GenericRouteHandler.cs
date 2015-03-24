@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// Instances of this class should instantiate HTTP handlers of a specified type.
     /// </summary>
     /// <typeparam name="THttpHandler">The type of the HTTP handler.</typeparam>
-    internal class GenericRouteHandler<THttpHandler> : IRouteHandler 
+    internal class GenericRouteHandler<THttpHandler> : IRouteHandler
         where THttpHandler : IHttpHandler
     {
         /// <summary>
@@ -33,9 +33,21 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// </returns>
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            return this.createHandler();
+            if (this.handlerInstance != null)
+            {
+                return this.handlerInstance;
+            }
+
+            var handler = this.createHandler();
+            if (handler.IsReusable)
+            {
+                this.handlerInstance = handler;
+            }
+
+            return handler;
         }
 
         private readonly Func<THttpHandler> createHandler;
+        private IHttpHandler handlerInstance;
     }
 }

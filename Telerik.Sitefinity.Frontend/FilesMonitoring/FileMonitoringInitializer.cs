@@ -25,6 +25,11 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 ObjectFactory.Container.RegisterType<IFileManager, LayoutFileManager>(ResourceType.Layouts.ToString(), new ContainerControlledLifetimeManager());
             }
 
+            if (!ObjectFactory.Container.IsRegistered(typeof(IFileManager), ResourceType.Grid.ToString()))
+            {
+                ObjectFactory.Container.RegisterType<IFileManager, GridFileManager>(ResourceType.Grid.ToString(), new ContainerControlledLifetimeManager());
+            }
+
             this.RegisterFileObservers();
         }
 

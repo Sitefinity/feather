@@ -90,7 +90,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
         /// </summary>
         /// <param name="resourceFolder"></param>
         /// <returns></returns>
-        protected override IFileManager GetResourceFileManager(string resourceFolder)
+        protected override IFileManager GetResourceFileManager(string resourceFolder, string filePath)
         {
             return this.ResourceFileManager;
         }
