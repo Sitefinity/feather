@@ -194,6 +194,11 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mvc\Infrastructure\Layouts\MvcPageEditorRouteHandler.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\MvcPageRouteHandler.cs" />
     <Compile Include="Mvc\Models\ScriptDependencyConfigModel.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\RequiredIfExistAttribute.cs" />
     <Compile Include="Notifications\EmailTemplateHelper.cs" />
@@ -231,7 +236,6 @@
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\IRouteMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\MvcWidgetProxy.cs" />
-    <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\InfrastructureResources.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutMvcPageResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
