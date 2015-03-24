@@ -72,7 +72,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["SfActionAttrRequired"];
             }
         }
-        
+
         /// <summary>
         /// phrase: Insert a document link
         /// </summary>
@@ -648,7 +648,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         [ResourceEntry("Select",
             Value = "Select",
             Description = "word: Select",
-            LastModified = "2015/03/21")]
+            LastModified = "2015/03/24")]
         public string Select
         {
             get
@@ -1230,6 +1230,102 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["EmailTextToDisplayExample"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select news
+        /// </summary>
+        /// <value>Select news</value>
+        [ResourceEntry("NewsSelectorHeader",
+            Value = "Select news",
+            Description = "phrase: Select news",
+            LastModified = "2015/03/24")]
+        public string NewsSelectorHeader
+        {
+            get
+            {
+                return this["NewsSelectorHeader"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select content
+        /// </summary>
+        /// <value>Select content</value>
+        [ResourceEntry("DynamicItemsSelectorHeader",
+            Value = "Select content",
+            Description = "phrase: Select content",
+            LastModified = "2015/03/24")]
+        public string DynamicItemsSelectorHeader
+        {
+            get
+            {
+                return this["DynamicItemsSelectorHeader"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select a role
+        /// </summary>
+        /// <value>Select a role</value>
+        [ResourceEntry("RoleSelectorHeader",
+            Value = "Select a role",
+            Description = "phrase: Select a role",
+            LastModified = "2015/03/24")]
+        public string RoleSelectorHeader
+        {
+            get
+            {
+                return this["RoleSelectorHeader"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select a library
+        /// </summary>
+        /// <value>Select a library</value>
+        [ResourceEntry("LibrarySelectorHeader",
+            Value = "Select a library",
+            Description = "phrase: Select a library",
+            LastModified = "2015/03/24")]
+        public string LibrarySelectorHeader
+        {
+            get
+            {
+                return this["LibrarySelectorHeader"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select a page
+        /// </summary>
+        /// <value>Select a page</value>
+        [ResourceEntry("PageSelectorHeader",
+            Value = "Select a page",
+            Description = "phrase: Select a page",
+            LastModified = "2015/03/24")]
+        public string PageSelectorHeader
+        {
+            get
+            {
+                return this["PageSelectorHeader"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select categories
+        /// </summary>
+        /// <value>Select categories</value>
+        [ResourceEntry("CategorySelectorHeader",
+            Value = "Select categories",
+            Description = "phrase: Select categories",
+            LastModified = "2015/03/24")]
+        public string CategorySelectorHeader
+        {
+            get
+            {
+                return this["CategorySelectorHeader"];
             }
         }
     }

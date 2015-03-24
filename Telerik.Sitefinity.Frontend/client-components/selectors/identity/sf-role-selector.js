@@ -138,8 +138,6 @@
                         var closedDialogTemplate = 'client-components/selectors/common/sf-bubbles-selection.html';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
-
-                        ctrl.$scope.sfDialogHeader = 'Select a role';
                     }
                 }
             };

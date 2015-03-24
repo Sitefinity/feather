@@ -1,4 +1,9 @@
-﻿<div class="modal-body">
+﻿<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h3 class="modal-title" ng-show="sfDialogHeader">{{sfDialogHeader}}</h3>
+  <h3 class="modal-title" ng-hide="sfDialogHeader">@(Res.Get<ClientComponentsResources>().Select)</h3>
+</div>
+<div class="modal-body">
     <div kendo-tab-strip class="k-tabstrip--selection">
         <ul ng-show="multiselect">
             <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
@@ -65,5 +70,14 @@
         </div>
     </div>
 </div>
-
-
+<div class="modal-footer">
+  <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary pull-left" ng-click="doneSelecting()">
+    @(Res.Get<ClientComponentsResources>().DoneSelecting)
+        </button>
+  <button type="button" ng-hide="noItemsExist || showError" class="btn btn-link pull-left" ng-click="cancel()">
+    @(Res.Get<ClientComponentsResources>().Cancel)
+        </button>
+  <button type="button" ng-show="noItemsExist" class="btn btn-primary pull-left" ng-click="cancel()">
+    @(Res.Get<ClientComponentsResources>().Close)
+        </button>
+</div>

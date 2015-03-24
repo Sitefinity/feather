@@ -238,7 +238,6 @@
                         ctrl.$scope.expandSelection = true;
                         ctrl.$scope.sfIdentifierField = "TitlesPath";
                         ctrl.$scope.searchIdentifierField = "Title";
-                        ctrl.$scope.sfDialogHeader = 'Select a page';
                         ctrl.$scope.externalPagesInTheDialog = jQuery.extend(true, [], ctrl.$scope.sfExternalPages);
 
                         var templateHtml = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}\" >" +

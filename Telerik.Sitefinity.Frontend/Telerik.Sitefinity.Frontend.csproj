@@ -363,7 +363,7 @@
     <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-selector.js" />
     <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-service.js" />
-    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-filter.html" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-filter.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-filter.js" />
     <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-selector.js" />
@@ -554,10 +554,10 @@
     <EmbeddedResource Include="client-components\search\sf-search-box.js" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.html" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.js" />
-    <EmbeddedResource Include="client-components\selectors\media\sf-upload-image-properties.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-upload-image-properties.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\flat-taxon-field\sf-flat-taxon-field.html" />
     <EmbeddedResource Include="client-components\fields\flat-taxon-field\sf-flat-taxon-field.js" />
-    <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-collection.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.html" />
@@ -586,7 +586,7 @@
     <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.js" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-document-properties-content-block.sf-cshtml" />
-    <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.html" />
+    <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-collection.html" />
     <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.sf-cshtml" />
     <Content Include="Mvc\Controllers\assets\mvc.css" />
@@ -609,7 +609,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
