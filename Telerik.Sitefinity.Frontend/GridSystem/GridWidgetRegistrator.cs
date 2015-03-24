@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
+using Telerik.Sitefinity.Pages.Model;
 
 namespace Telerik.Sitefinity.Frontend.GridSystem
 {
@@ -11,13 +14,15 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
     /// </summary>
     internal class GridWidgetRegistrator
     {
+        #region Public methods
+
         /// <summary>
         /// Registers the grid widget in toolbox.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <param name="packageName">Name of the package.</param>
         /// <param name="oldFileName">Old name of the file.</param>
-        public void RegisterInToolbox(string fileName, string packageName, string oldFileName = "")
+        public void RegisterToolboxItem(string fileName, string packageName, string oldFileName = "")
         {
             var configManager = ConfigManager.GetManager();
             using (new ElevatedConfigModeRegion())
@@ -33,6 +38,66 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 configManager.SaveSection(toolboxConfig);
             }
         }
+
+        /// <summary>
+        /// Unregisters the toolbox item.
+        /// </summary>
+        /// <param name="contentTypeName">Name of the content type.</param>
+        public virtual void UnregisterToolboxItem(string fileName, string packageName)
+        {
+            var configurationManager = ConfigManager.GetManager();
+            var toolboxesConfig = configurationManager.GetSection<ToolboxesConfig>();
+            var pageControls = toolboxesConfig.Toolboxes["PageLayouts"];
+            var sectionName = packageName + GridWidgetRegistrator.GridSectionNameSuffix;
+
+            var section = pageControls.Sections.Where<ToolboxSection>(e => e.Name == sectionName).FirstOrDefault();
+            if (section != null)
+            {
+                var fileNameWithoutExtension = this.GetFileNameWithoutExtension(fileName);
+                var itemToDelete = section.Tools.FirstOrDefault<ToolboxItem>(e => e.Name == fileNameWithoutExtension);
+
+                if (itemToDelete != null)
+                {
+                    section.Tools.Remove(itemToDelete);
+                }
+
+                if (!section.Tools.Any<ToolboxItem>())
+                {
+                    pageControls.Sections.Remove(section);
+                }
+            }
+
+            configurationManager.SaveSection(toolboxesConfig);
+        }
+
+        /// <summary>
+        /// Updates the control data.
+        /// </summary>
+        /// <param name="newFileName">New name of the file.</param>
+        /// <param name="oldFileName">Old name of the file.</param>
+        public void UpdateControlData(string newFileName, string oldFileName)
+        {
+            var pageManger = PageManager.GetManager();
+
+            var baseTemplatePath = string.Format(
+            CultureInfo.InvariantCulture,
+            GridWidgetRegistrator.GridFolderPathStringTemplate,
+            FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendService).Assembly));
+
+            var properties = pageManger.GetProperties().Where(prop => prop.Name == "Layout" && prop.Value == baseTemplatePath + oldFileName).ToList();
+            var newCaption = this.GetFileNameWithoutExtension(newFileName);
+            foreach (var property in properties)
+            {
+                property.Value = baseTemplatePath + newFileName;
+                ((ControlData)property.Control).Caption = newCaption;
+            }
+
+            pageManger.SaveChanges();
+        }
+
+        #endregion
+
+        #region Protected methods
 
         /// <summary>
         /// Gets existing or create a tool box section for the grid controls.
@@ -79,8 +144,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             }
             else
             {
-                var extension = oldFileName.Split('.').LastOrDefault();
-                var oldFileNameWithoutExtension = oldFileName.Substring(0, oldFileName.Length - (extension.Length + 1));
+                var oldFileNameWithoutExtension = this.GetFileNameWithoutExtension(oldFileName);
                 toolboxItemName = oldFileNameWithoutExtension;
             }
 
@@ -111,13 +175,33 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 GridWidgetRegistrator.GridFolderPathStringTemplate,
                 FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendService).Assembly));
 
-            var extension = fileName.Split('.').LastOrDefault();
-            var fileNameWithoutExtension = fileName.Substring(0, fileName.Length - (extension.Length + 1));
+            var fileNameWithoutExtension = this.GetFileNameWithoutExtension(fileName);
 
             var layoutData = new GridControlData() { Name = fileNameWithoutExtension, Title = fileNameWithoutExtension, LayoutTemplatePath = baseTemplatePath + fileName };
 
             return layoutData;
         }
+
+        #endregion
+
+        #region Private methods
+
+        /// <summary>
+        /// Gets the file name without extension.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns></returns>
+        private string GetFileNameWithoutExtension(string fileName)
+        {
+            var extension = fileName.Split('.').LastOrDefault();
+            var fileNameWithoutExtension = fileName.Substring(0, fileName.Length - (extension.Length + 1));
+
+            return fileNameWithoutExtension;
+        }
+
+        #endregion
+
+        #region Constants
 
         /// <summary>
         /// The grid folder path string template
@@ -133,5 +217,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// The grid section title suffix
         /// </summary>
         public const string GridSectionTitleSuffix = " grid widgets";
+
+        #endregion
     }
 }

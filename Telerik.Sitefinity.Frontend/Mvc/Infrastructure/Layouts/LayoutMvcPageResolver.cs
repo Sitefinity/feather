@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Web;
 using System.Web.Routing;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Mvc.Rendering;
 using Telerik.Sitefinity.Services;
 
@@ -56,6 +58,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             else
             {
                 base.BuildWithMasterPage(virtualPath, context, output, placeHolders, directives);
+            }
+        }
+
+        /// <summary>
+        /// Appends the layout.
+        /// </summary>
+        /// <remarks>
+        /// If the layout is not found error message will be rendered instead.
+        /// </remarks>
+        /// <param name="layoutTemplate">The layout template.</param>
+        /// <param name="assemblyInfo">The assembly information.</param>
+        /// <param name="parentPlaceHolder">The parent place holder.</param>
+        /// <param name="placeHolders">The place holders.</param>
+        /// <param name="layoutId">The layout identifier.</param>
+        /// <param name="directives">The directives.</param>
+        protected override void AppendLayout(string layoutTemplate, string assemblyInfo, PlaceHolderCursor parentPlaceHolder, CursorCollection placeHolders, string layoutId, DirectiveCollection directives)
+        {
+            try
+            {
+                base.AppendLayout(layoutTemplate, assemblyInfo, parentPlaceHolder, placeHolders, layoutId, directives);
+            }
+            catch (FileNotFoundException)
+            {
+                parentPlaceHolder.Output.Append(Res.Get<ErrorMessages>("CannotFindTemplate", layoutTemplate));
             }
         }
     }

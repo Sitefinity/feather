@@ -18,6 +18,8 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
+                    var emptyGuid = '00000000-0000-0000-0000-000000000000';
+
                     var autoOpenSelector = attrs.sfAutoOpenSelector !== undefined && attrs.sfAutoOpenSelector.toLowerCase() !== 'false';
 
                     var getDateFromString = function (dateStr) {
@@ -141,7 +143,7 @@
                     };
 
                     // Initialize
-                    if (scope.sfModel) {
+                    if (scope.sfModel && scope.sfModel !== emptyGuid) {
                         getMedia(scope.sfModel);
                     }
                     else if (autoOpenSelector) {
