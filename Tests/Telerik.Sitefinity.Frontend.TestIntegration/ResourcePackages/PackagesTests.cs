@@ -86,10 +86,10 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
             try
             {
-                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageResource);
+                FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageResource2);
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 3);
 
-                string[] templateTitles = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3 };
+                string[] templateTitles = new string[] { Constants.TemplateTestLayout12, Constants.TemplateTestLayout22, Constants.TemplateTestLayout32 };
 
                 foreach (var title in templateTitles)
                 {
@@ -97,7 +97,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                     Assert.IsNotNull(template, "Template was not found");
                 }
 
-                FeatherServerOperations.ResourcePackages().RenamePackageFolder(Constants.TestPackageName, Constants.NewTestPackageName);
+                FeatherServerOperations.ResourcePackages().RenamePackageFolder(Constants.TestPackageName2, Constants.NewTestPackageName);
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 6);
 
                 string[] newTemplateTitles = new string[] { Constants.NewTemplateTestLayout1, Constants.NewTemplateTestLayout2, Constants.NewTemplateTestLayout3 };
