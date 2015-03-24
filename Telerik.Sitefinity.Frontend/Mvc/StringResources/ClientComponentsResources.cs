@@ -57,7 +57,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr")]
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
@@ -331,7 +330,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Type:
         /// </summary>
-        [ResourceEntry("Type",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods"), ResourceEntry("Type",
             Value = "Type:",
             Description = "word: Type",
             LastModified = "2015/03/23")]

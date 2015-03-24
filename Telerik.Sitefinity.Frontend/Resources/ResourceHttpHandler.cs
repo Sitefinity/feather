@@ -49,6 +49,9 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (this.FileExists(context.Request.Url.AbsolutePath))
             {
                 var fileName = VirtualPathUtility.GetFileName(context.Request.Url.AbsolutePath);
+
+                this.SetResponseClientCache(context, fileName);
+
                 if (!(fileName.EndsWith(".sf-cshtml", StringComparison.OrdinalIgnoreCase) && this.IsWhitelisted(context.Request.Url.AbsolutePath)))
                 {
                     using (var fileStream = this.OpenFile(context.Request.Url.AbsolutePath))
@@ -127,22 +130,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
             fileStream.Read(buffer, 0, (int)fileStream.Length);
             context.Response.ContentType = ResourceHttpHandler.GetMimeMapping(fileName);
 
-#if !DEBUG
-            if (fileName.EndsWith(".css", StringComparison.OrdinalIgnoreCase) ||
-                fileName.EndsWith(".js", StringComparison.OrdinalIgnoreCase) ||
-                fileName.EndsWith(".html", StringComparison.OrdinalIgnoreCase) ||
-                fileName.EndsWith(".htm", StringComparison.OrdinalIgnoreCase))
-            {
-                var cache = context.Response.Cache;
-                cache.SetCacheability(HttpCacheability.Public);
-                cache.SetExpires(DateTime.Now + TimeSpan.FromDays(7));
-                cache.SetValidUntilExpires(true);
-
-                var lastWriteTime = ResourceHttpHandler.GetAssemblyLastWriteTime();
-                cache.SetLastModified(lastWriteTime);
-            }
-#endif
-
             this.WriteToOutput(context, buffer);
         }
 
@@ -156,6 +143,30 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var output = this.razorParser.Run(context.Request.Url.AbsolutePath, model: null);
 
             this.WriteToOutput(context, context.Response.ContentEncoding.GetBytes(output));
+        }
+
+        /// <summary>
+        /// Sets client cache for the requested resource. In debug mode this caching is disabled.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="fileName">Name of the file.</param>
+        protected virtual void SetResponseClientCache(HttpContext context, string fileName)
+        {
+#if !DEBUG
+            if (fileName.EndsWith(".css", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".js", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".html", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".htm", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".sf-cshtml", StringComparison.OrdinalIgnoreCase))
+            {
+                var cache = context.Response.Cache;
+                cache.SetCacheability(HttpCacheability.Public);
+                cache.SetExpires(DateTime.Now + TimeSpan.FromDays(7));
+                cache.SetValidUntilExpires(true);
+                var lastWriteTime = ResourceHttpHandler.GetAssemblyLastWriteTime();
+                cache.SetLastModified(lastWriteTime);
+            }
+#endif
         }
 
         /// <summary>
