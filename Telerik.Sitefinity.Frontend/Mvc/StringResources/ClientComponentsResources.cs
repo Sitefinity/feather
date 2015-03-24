@@ -416,7 +416,37 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["SelectImage"];
             }
         }
-        
+
+        /// <summary>
+        /// phrase: Change document
+        /// </summary>
+        [ResourceEntry("ChangeDocument",
+            Value = "Change document",
+            Description = "phrase: Change document",
+            LastModified = "2015/03/23")]
+        public string ChangeDocument
+        {
+            get
+            {
+                return this["ChangeDocument"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select document
+        /// </summary>
+        [ResourceEntry("SelectDocument",
+            Value = "Select document",
+            Description = "phrase: Select document",
+            LastModified = "2015/03/23")]
+        public string SelectDocument
+        {
+            get
+            {
+                return this["SelectDocument"];
+            }
+        }
+
         /// <summary>
         /// No items have been created yet.
         /// phrase: No items have been created yet.

@@ -14,7 +14,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/fields/media-field/sf-media-field.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/fields/media-field/sf-media-field.sf-cshtml';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
