@@ -428,7 +428,7 @@
                     scope.isMultiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.toLowerCase() !== 'false';
                     scope.isDeselectable = scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false';
 
-                    scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-upload-image-properties.html');
+                    scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-upload-image-properties.sf-cshtml');
 
                     scope.filters = {
                         basic: {

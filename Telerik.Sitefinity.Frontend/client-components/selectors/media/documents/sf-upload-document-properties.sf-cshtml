@@ -44,7 +44,7 @@
         <div class="form-group">
             <label>Categories</label>
             <sf-list-selector sf-hierarchical-taxon-selector
-                              sf-dialog-header="Select Category"
+                              sf-dialog-header="@(Res.Get<ClientComponentsResources>().CategorySelectorHeader)"
                               sf-multiselect="true"
                               sf-selected-ids="model.categories">
             </sf-list-selector>

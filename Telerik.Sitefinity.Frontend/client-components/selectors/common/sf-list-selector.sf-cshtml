@@ -10,25 +10,6 @@
 </div>
 
 <script type="text/ng-template" id="mainTemplate">
-
-    <div class="modal-header">
-        <button type="button" class="close" ng-click="cancel()">&times;</button>
-        <h3 class="modal-title">{{sfDialogHeader}}</h3>
-    </div>
-
     <div ng-include="getDialogTemplate()" />
-    
-    <div class="modal-footer">
-        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary pull-left" ng-click="doneSelecting()">
-            @(Res.Get<ClientComponentsResources>().DoneSelecting)
-        </button>
-        <button type="button" ng-hide="noItemsExist || showError" class="btn btn-link pull-left" ng-click="cancel()">
-            @(Res.Get<ClientComponentsResources>().Cancel)
-        </button>
-        <button type="button" ng-show="noItemsExist" class="btn btn-primary pull-left" ng-click="cancel()">
-            @(Res.Get<ClientComponentsResources>().Close)
-        </button>
-    </div>
-
 </script>
 

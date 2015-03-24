@@ -99,9 +99,8 @@
                         };
 
                         ctrl.selectorType = 'LibrarySelector';
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/media/sf-library-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/media/sf-library-selector.sf-cshtml';
                         ctrl.$scope.dialogTemplateId = 'sf-library-selector';
-                        ctrl.$scope.sfDialogHeader = 'Select a library';
                         ctrl.closedDialogTemplateUrl = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == 'true') ? 'client-components/selectors/common/sf-list-group-selection.html' :
                              'client-components/selectors/common/sf-bubbles-selection.html';
 
