@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.Routing;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Mvc.Rendering;
@@ -17,6 +18,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// </summary>
     internal class LayoutMvcPageResolver : PureMvcPageResolver
     {
+        /// <summary>
+        /// Determines whether the specified virtual path is path of a layout file.
+        /// </summary>
+        /// <param name="virtualPath">The virtual path.</param>
+        /// <returns>True if the specified virtual path is path of a layout file.</returns>
+        public static bool IsLayoutPath(string virtualPath)
+        {
+            if (virtualPath.IsNullOrEmpty())
+                return false;
+
+            string resolverPath;
+            if (virtualPath.StartsWith("~/", StringComparison.OrdinalIgnoreCase))
+                resolverPath = string.Format(CultureInfo.InvariantCulture, "~/{0}", LayoutVirtualFileResolver.ResolverPath);
+            else if (virtualPath.StartsWith("/", StringComparison.OrdinalIgnoreCase))
+                resolverPath = string.Format(CultureInfo.InvariantCulture, "/{0}", LayoutVirtualFileResolver.ResolverPath);
+            else
+                resolverPath = LayoutVirtualFileResolver.ResolverPath;
+
+            return virtualPath.StartsWith(resolverPath, StringComparison.OrdinalIgnoreCase);
+        }
+
         /// <summary>
         /// Appends markup to the virtual page file depending on the current master page.
         /// </summary>
@@ -61,11 +83,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             {
                 parentPlaceHolder.Output.Append(Res.Get<ErrorMessages>("CannotFindTemplate", layoutTemplate));
             }
-        }
-
-        private static bool IsLayoutPath(string virtualPath)
-        {
-            return virtualPath != null && virtualPath.StartsWith(string.Format(CultureInfo.InvariantCulture, "~/{0}", LayoutVirtualFileResolver.ResolverPath), StringComparison.Ordinal);
         }
     }
 }
