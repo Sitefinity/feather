@@ -60,7 +60,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
-        [ResourceEntry("SfActionAttrRequired",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr"), ResourceEntry("SfActionAttrRequired",
             Value = "sfAction attribute is required!",
             Description = "phrase: sfAction attribute is required!",
             LastModified = "2015/03/23")]
