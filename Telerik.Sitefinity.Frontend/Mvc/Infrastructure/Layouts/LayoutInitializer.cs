@@ -1,6 +1,7 @@
 ﻿using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts

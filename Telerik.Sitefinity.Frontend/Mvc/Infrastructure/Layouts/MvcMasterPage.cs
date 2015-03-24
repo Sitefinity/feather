@@ -12,8 +12,15 @@ using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 {
+    /// <summary>
+    /// A MasterPage that is dynamically constructed from the MasterPageFile without compilation.
+    /// </summary>
     public class MvcMasterPage : MasterPage
     {
+        /// <summary>
+        /// Applies the master to the specified page.
+        /// </summary>
+        /// <param name="page">The page.</param>
         public void ApplyToPage(Page page)
         {
             this.SetMasterInternals(page);
@@ -34,6 +41,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 ResolverName = typeof(LayoutVirtualFileResolver).FullName
             };
 
+            //// Do not use the VirtualPathProvider chain. It may cause unexpected behavior on concurrent requests.
             string result;
             var resolver = new LayoutVirtualFileResolver();
             using (var streamReader = new StreamReader(resolver.Open(pathDefinition, path)))
