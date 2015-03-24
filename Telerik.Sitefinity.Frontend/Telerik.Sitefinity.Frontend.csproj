@@ -570,8 +570,8 @@
     <EmbeddedResource Include="client-components\fields\sf-fields.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-markup-service.js" />
     <EmbeddedResource Include="client-components\fields\drag-drop\sf-drag-drop.js" />
-    <EmbeddedResource Include="client-components\fields\html-field\sf-image-properties-content-block.html" />
-    <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.html" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-image-properties-content-block.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-custom-thumbnail-size.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-thumbnail-size-selection.html" />
@@ -583,9 +583,9 @@
     <EmbeddedResource Include="client-components\selectors\identity\sf-role-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-selector.html" />
-    <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.html" />
+    <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.js" />
-    <EmbeddedResource Include="client-components\fields\html-field\sf-document-properties-content-block.html" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-document-properties-content-block.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.html" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-collection.html" />
     <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.sf-cshtml" />

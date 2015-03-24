@@ -1,6 +1,6 @@
 ﻿<div class="modal-header">
     <button type="button" class="close" ng-click="cancel()">&times;</button>
-    <h3 class="modal-title">Insert a document link</h3>
+    <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().InsertDocumentLink)</h3>
 </div>
 
 <div class="modal-body">
@@ -12,7 +12,7 @@
 
     <form name="documentProperties">
         <div class="form-group" ng-class="{ 'has-error' : !model.title }">
-            <label for="title">Title</label>
+            <label for="title">@(Res.Get<ClientComponentsResources>().Title)</label>
 
             <div class="row">
                 <div class="col-xs-8">
@@ -22,20 +22,20 @@
                 <div class="m-top-xs" ng-class="{'text-danger': model.title.length > 35}">{{model.title.length}}</div>
             </div>
 
-            <div class="text-muted">Less than 35 characters are recommended</div>
+            <div class="text-muted">@(Res.Get<ClientComponentsResources>().RecommendedCharacters)</div>
 
-            <p class="text-danger" ng-show="mediaProperties.title.$error.required">Title is required</p>
+            <p class="text-danger" ng-show="mediaProperties.title.$error.required">@(Res.Get<ClientComponentsResources>().TitleRequired)</p>
         </div>
 
         <expander expander-title='More options'>
 
-            <label>CSS classes</label>
+            <label>@(Res.Get<ClientComponentsResources>().CssClasses)</label>
             <input class="form-control" type="text" ng-model="model.cssClass" />
 
         </expander>
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.item.Title.Value">Done</button>
-    <button type="button" class="btn btn-link pull-left" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.item.Title.Value">@(Res.Get<ClientComponentsResources>().Done)</button>
+    <button type="button" class="btn btn-link pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
 </div>
