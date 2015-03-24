@@ -194,6 +194,12 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mvc\Infrastructure\PageInitializer.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcPageEditorRouteHandler.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcPageRouteHandler.cs" />
     <Compile Include="Mvc\Models\ScriptDependencyConfigModel.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\RequiredIfExistAttribute.cs" />
     <Compile Include="Notifications\EmailTemplateHelper.cs" />
@@ -231,7 +237,6 @@
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\IRouteMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\MvcWidgetProxy.cs" />
-    <Compile Include="Mvc\Infrastructure\Controllers\VoidViewLocationCache.cs" />
     <Compile Include="Mvc\Infrastructure\InfrastructureResources.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutMvcPageResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
@@ -577,7 +582,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
