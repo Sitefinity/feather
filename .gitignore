@@ -122,8 +122,6 @@ bower_components
 
 Feather.jmconfig
 
-ReferenceAssemblies
-
 Tests/Telerik.Sitefinity.Frontend.ClientTest/lib
 
 .nuget/NuGet.exe
