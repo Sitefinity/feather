@@ -1327,5 +1327,85 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["CategorySelectorHeader"];
             }
         }
+
+        /// <summary>
+        /// phrase: No external URLs have been added.
+        /// </summary>
+        /// <value>No external URLs have been added.</value>
+        [ResourceEntry("NoExternalUrlsAdded",
+            Value = "No external URLs have been added.",
+            Description = "phrase: No external URLs have been added.",
+            LastModified = "2015/03/24")]
+        public string NoExternalUrlsAdded
+        {
+            get
+            {
+                return this["NoExternalUrlsAdded"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Enter Title
+        /// </summary>
+        /// <value>Enter Title</value>
+        [ResourceEntry("EnterTitle",
+            Value = "Enter Title",
+            Description = "phrase: Enter Title",
+            LastModified = "2015/03/24")]
+        public string EnterTitle
+        {
+            get
+            {
+                return this["EnterTitle"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Enter URL
+        /// </summary>
+        /// <value>Enter URL</value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings"), ResourceEntry("EnterUrl",
+            Value = "Enter URL",
+            Description = "phrase: Enter URL",
+            LastModified = "2015/03/24")]
+        public string EnterUrl
+        {
+            get
+            {
+                return this["EnterUrl"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Open external URLs in new tab/window
+        /// </summary>
+        /// <value>Open external URLs in new tab/window</value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings"), ResourceEntry("OpenExternalUrlInNewWindow",
+            Value = "Open external URLs in new tab/window",
+            Description = "phrase: Open external URLs in new tab/window",
+            LastModified = "2015/03/24")]
+        public string OpenExternalUrlInNewWindow
+        {
+            get
+            {
+                return this["OpenExternalUrlInNewWindow"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Add external URL
+        /// </summary>
+        /// <value>Add external URL</value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings"), ResourceEntry("AddExternalUrl",
+            Value = "Add external URL",
+            Description = "phrase: Add external URL",
+            LastModified = "2015/03/24")]
+        public string AddExternalUrl
+        {
+            get
+            {
+                return this["AddExternalUrl"];
+            }
+        }
     }
 }
