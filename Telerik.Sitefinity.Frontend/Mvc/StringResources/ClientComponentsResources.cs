@@ -57,6 +57,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr")]
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
@@ -71,7 +72,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["SfActionAttrRequired"];
             }
         }
-
+        
         /// <summary>
         /// phrase: Insert a document link
         /// </summary>
@@ -324,6 +325,126 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["Bottom"];
+            }
+        }
+
+        /// <summary>
+        /// word: Type:
+        /// </summary>
+        [ResourceEntry("Type",
+            Value = "Type:",
+            Description = "word: Type",
+            LastModified = "2015/03/23")]
+        public string Type
+        {
+            get
+            {
+                return this["Type"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: File size:
+        /// </summary>
+        [ResourceEntry("FileSize",
+            Value = "File size:",
+            Description = "phrase: File size",
+            LastModified = "2015/03/23")]
+        public string FileSize
+        {
+            get
+            {
+                return this["FileSize"];
+            }
+        }
+
+        /// <summary>
+        /// word: Uploaded:
+        /// </summary>
+        [ResourceEntry("Uploaded",
+            Value = "Uploaded:",
+            Description = "word: Uploaded",
+            LastModified = "2015/03/23")]
+        public string Uploaded
+        {
+            get
+            {
+                return this["Uploaded"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Change image
+        /// </summary>
+        [ResourceEntry("ChangeImage",
+            Value = "Change image",
+            Description = "phrase: Change image",
+            LastModified = "2015/03/23")]
+        public string ChangeImage
+        {
+            get
+            {
+                return this["ChangeImage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Edit all properties
+        /// </summary>
+        [ResourceEntry("EditAllProperties",
+            Value = "Edit all properties",
+            Description = "phrase: Edit all properties",
+            LastModified = "2015/03/23")]
+        public string EditAllProperties
+        {
+            get
+            {
+                return this["EditAllProperties"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select image
+        /// </summary>
+        [ResourceEntry("SelectImage",
+            Value = "Select image",
+            Description = "phrase: Select image",
+            LastModified = "2015/03/23")]
+        public string SelectImage
+        {
+            get
+            {
+                return this["SelectImage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Change document
+        /// </summary>
+        [ResourceEntry("ChangeDocument",
+            Value = "Change document",
+            Description = "phrase: Change document",
+            LastModified = "2015/03/23")]
+        public string ChangeDocument
+        {
+            get
+            {
+                return this["ChangeDocument"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select document
+        /// </summary>
+        [ResourceEntry("SelectDocument",
+            Value = "Select document",
+            Description = "phrase: Select document",
+            LastModified = "2015/03/23")]
+        public string SelectDocument
+        {
+            get
+            {
+                return this["SelectDocument"];
             }
         }
 
@@ -841,18 +962,274 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// phrase: Example: <em>http://weather.com</em>
+        /// phrase: Link to
         /// </summary>
-        /// <value>Example: <em>http://weather.com</em></value>
-        [ResourceEntry("WebAddressExample",
-            Value = "Example: <em>http://weather.com</em>",
-            Description = "phrase: Example: <em>http://weather.com</em>",
+        /// <value>Link to</value>
+        [ResourceEntry("LinkTo",
+            Value = "Link to",
+            Description = "phrase: Link to",
             LastModified = "2015/03/23")]
-        public string WebAddressExample
+        public string LinkTo
         {
             get
             {
-                return this["WebAddressExample"];
+                return this["LinkTo"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Web address
+        /// </summary>
+        /// <value>Web address</value>
+        [ResourceEntry("WebAddress",
+            Value = "Web address",
+            Description = "phrase: Web address",
+            LastModified = "2015/03/23")]
+        public string WebAddress
+        {
+            get
+            {
+                return this["WebAddress"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Page from this site
+        /// </summary>
+        /// <value>Page from this site</value>
+        [ResourceEntry("PageFromThisSite",
+            Value = "Page from this site",
+            Description = "phrase: Page from this site",
+            LastModified = "2015/03/23")]
+        public string PageFromThisSite
+        {
+            get
+            {
+                return this["PageFromThisSite"];
+            }
+        }
+
+        /// <summary>
+        /// word: Anchor
+        /// </summary>
+        /// <value>Anchor</value>
+        [ResourceEntry("Anchor",
+            Value = "Anchor",
+            Description = "word: Anchor",
+            LastModified = "2015/03/23")]
+        public string Anchor
+        {
+            get
+            {
+                return this["Anchor"];
+            }
+        }
+
+        /// <summary>
+        /// word: Email
+        /// </summary>
+        /// <value>Email</value>
+        [ResourceEntry("Email",
+            Value = "Email",
+            Description = "word: Email",
+            LastModified = "2015/03/23")]
+        public string Email
+        {
+            get
+            {
+                return this["Email"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Weather forecast
+        /// </summary>
+        /// <value>Weather forecast</value>
+        [ResourceEntry("WebAddressTextToDisplayExample",
+            Value = "Weather forecast",
+            Description = "phrase: Weather forecast",
+            LastModified = "2015/03/24")]
+        public string WebAddressTextToDisplayExample
+        {
+            get
+            {
+                return this["WebAddressTextToDisplayExample"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Open this link in a new window
+        /// </summary>
+        /// <value>Open this link in a new window</value>
+        [ResourceEntry("OpenInNewWindow",
+            Value = "Open this link in a new window",
+            Description = "phrase: Open this link in a new window",
+            LastModified = "2015/03/23")]
+        public string OpenInNewWindow
+        {
+            get
+            {
+                return this["OpenInNewWindow"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Test this link:
+        /// </summary>
+        /// <value>Test this link:</value>
+        [ResourceEntry("TestThisLink",
+            Value = "Test this link:",
+            Description = "phrase: Test this link:",
+            LastModified = "2015/03/23")]
+        public string TestThisLink
+        {
+            get
+            {
+                return this["TestThisLink"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: - Select -
+        /// </summary>
+        /// <value>- Select -</value>
+        [ResourceEntry("SelectOption",
+            Value = "- Select -",
+            Description = "phrase: - Select -",
+            LastModified = "2015/03/23")]
+        public string SelectOption
+        {
+            get
+            {
+                return this["SelectOption"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Example:
+        /// </summary>
+        /// <value>Example:</value>
+        [ResourceEntry("Example",
+            Value = "Example:",
+            Description = "phrase: Example:",
+            LastModified = "2015/03/24")]
+        public string Example
+        {
+            get
+            {
+                return this["Example"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: A list of anchors already inserted in the text.
+        /// </summary>
+        /// <value>A list of anchors already inserted in the text.</value>
+        [ResourceEntry("AnchorDescription",
+            Value = "A list of anchors already inserted in the text.",
+            Description = "phrase: A list of anchors already inserted in the text.",
+            LastModified = "2015/03/24")]
+        public string AnchorDescription
+        {
+            get
+            {
+                return this["AnchorDescription"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: How to insert an anchor?
+        /// </summary>
+        /// <value>How to insert an anchor?</value>
+        [ResourceEntry("HowToInsertAnchor",
+            Value = "How to insert an anchor?",
+            Description = "phrase: How to insert an anchor?",
+            LastModified = "2015/03/24")]
+        public string HowToInsertAnchor
+        {
+            get
+            {
+                return this["HowToInsertAnchor"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: FAQ list
+        /// </summary>
+        /// <value>FAQ list</value>
+        [ResourceEntry("AnchorTextToDisplayExample",
+            Value = "FAQ list",
+            Description = "phrase: FAQ list",
+            LastModified = "2015/03/24")]
+        public string AnchorTextToDisplayExample
+        {
+            get
+            {
+                return this["AnchorTextToDisplayExample"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: No anchors have been inserted in the text.
+        /// </summary>
+        /// <value>No anchors have been inserted in the text.</value>
+        [ResourceEntry("NoAnchorsSelected",
+            Value = "No anchors have been inserted in the text.",
+            Description = "phrase: No anchors have been inserted in the text.",
+            LastModified = "2015/03/24")]
+        public string NoAnchorsSelected
+        {
+            get
+            {
+                return this["NoAnchorsSelected"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Email address
+        /// </summary>
+        /// <value>Email address</value>
+        [ResourceEntry("EmailAddress",
+            Value = "Email address",
+            Description = "phrase: Email address",
+            LastModified = "2015/03/24")]
+        public string EmailAddress
+        {
+            get
+            {
+                return this["EmailAddress"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: You have entered an invalid email address
+        /// </summary>
+        /// <value>You have entered an invalid email address</value>
+        [ResourceEntry("InvalidEmailMessage",
+            Value = "You have entered an invalid email address",
+            Description = "phrase: You have entered an invalid email address",
+            LastModified = "2015/03/24")]
+        public string InvalidEmailMessage
+        {
+            get
+            {
+                return this["InvalidEmailMessage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Send email to John
+        /// </summary>
+        /// <value>Send email to John</value>
+        [ResourceEntry("EmailTextToDisplayExample",
+            Value = "Send email to John",
+            Description = "phrase: Send email to John",
+            LastModified = "2015/03/24")]
+        public string EmailTextToDisplayExample
+        {
+            get
+            {
+                return this["EmailTextToDisplayExample"];
             }
         }
     }

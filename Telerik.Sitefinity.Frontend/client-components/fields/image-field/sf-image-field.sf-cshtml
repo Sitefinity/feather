@@ -8,19 +8,19 @@
 
         <div class="col-md-7">
             <p>
-                <strong>Type: </strong>
+                <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
                 <span ng-bind="sfImage.Extension"></span><br />
 
-                <strong>File size: </strong>
+                <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
                 <span ng-bind="imageSize"></span><br />
 
-                <strong>Uploaded: </strong>
+                <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
                 <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
             </p>
 
             <br />
-            <button class="btn btn-xs btn-default" ng-click="changeImage()">Change image</button>
-            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">Edit all properties</button>
+            <button class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
+            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
         </div>
     </div>
 </div>
@@ -36,13 +36,13 @@
 <script type="text/ng-template" id="sf-image-selector-modal-template">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancel()">&times;</button>
-        <h3 class="modal-title">Select image</h3>
+        <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().SelectImage)</h3>
     </div>
     <div class="modal-body">
         <sf-image-selector sf-model="model.selectedItems" sf-filter="model.filterObject" sf-provider="model.provider"></sf-image-selector>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">Done</button>
-        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">Cancel</button>
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">@(Res.Get<ClientComponentsResources>().Done)</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
     </div>
 </script>
