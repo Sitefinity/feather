@@ -80,7 +80,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         private const string PageTemplateName = "Bootstrap.defaultNew";
         private const string DuplicateOperation = "Duplicate";
         private const string DeleteOperation = "Delete";
-        private const string LayoutCaption = "3 + 9";
+        private const string LayoutCaption = "grid-3+9";
         private const int GridCount1 = 1;
         private const int GridCount2 = 2;
     }

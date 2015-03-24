@@ -16,9 +16,9 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// AddGridWidgetToToolboxForPageTemplate arragement.
+    /// AutoGenerateGridWidgetToToolboxForPageTemplate arragement.
     /// </summary>
-    public class AddGridWidgetToToolboxForPageTemplate : ITestArrangement
+    public class AutoGenerateGridWidgetToToolboxForPageTemplate : ITestArrangement
     {
         /// <summary>
         /// Server side set up. 
@@ -44,7 +44,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             source.Close();
             destination.Close();
 
-            FeatherServerOperations.GridWidgets().AddGridControlToToolboxesConfig(GridTitle, GridCss, GridVirtualPath);
             Guid templateId = ServerOperations.Templates().GetTemplateIdByTitle(PageTemplateName);
             ServerOperations.Pages().CreatePage(PageName, templateId);
         }
@@ -67,7 +66,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         }
 
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Data.grid-grid.html";
-        private const string GridVirtualPath = "~/ResourcePackages/Bootstrap/GridSystem/Templates/grid-grid.html";
         private const string GridFileName = "grid-grid.html";
         private const string GridTitle = "grid-grid";
         private const string GridCss = "sfL25_75";
