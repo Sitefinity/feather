@@ -232,7 +232,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             catch (IOException)
             {
                 Thread.Sleep(500);
-                Directory.Delete(path, true);
+                DeleteNotEmptyDirectory(path);
             }
             catch (UnauthorizedAccessException)
             {
@@ -324,6 +324,25 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             ds.RemoveAccessRule(fsa);
 
             Directory.SetAccessControl(folderPath, ds);
+        }
+
+        private static void DeleteNotEmptyDirectory(string target_dir)
+        {
+            string[] files = Directory.GetFiles(target_dir);
+            string[] dirs = Directory.GetDirectories(target_dir);
+
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs)
+            {
+                DeleteNotEmptyDirectory(dir);
+            }
+
+            Directory.Delete(target_dir, true);
         }
 
         /// <summary>
