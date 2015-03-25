@@ -66,10 +66,10 @@
                 </label>
 
                 <div class="label-content" ng-show="selectedItemInTheDialog.periodType=='customRange'">
-                    <strong>@(Res.Get<ClientComponentsResources>().From)</strong>
+                  <strong id="fromLabel">@(Res.Get<ClientComponentsResources>().From)</strong>
                     <sf-date-time-picker ng-model="selectedItemInTheDialog.fromDate" sf-show-meridian="true"></sf-date-time-picker >
 
-                    <strong>@(Res.Get<ClientComponentsResources>().To)</strong>
+                    <strong id="toLabel">@(Res.Get<ClientComponentsResources>().To)</strong>
                     <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate" sf-show-meridian="true"></sf-date-time-picker >
                 </div>
 

@@ -1407,5 +1407,37 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["AddExternalUrl"];
             }
         }
+
+        /// <summary>
+        /// phrase: - Hour -
+        /// </summary>
+        /// <value>- Hour -</value>
+        [ResourceEntry("HourOption",
+            Value = "- Hour -",
+            Description = "phrase: - Hour -",
+            LastModified = "2015/03/25")]
+        public string HourOption
+        {
+            get
+            {
+                return this["HourOption"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: - Minute -
+        /// </summary>
+        /// <value>- Minute -</value>
+        [ResourceEntry("MinuteOption",
+            Value = "- Minute -",
+            Description = "phrase: - Minute -",
+            LastModified = "2015/03/25")]
+        public string MinuteOption
+        {
+            get
+            {
+                return this["MinuteOption"];
+            }
+        }
     }
 }

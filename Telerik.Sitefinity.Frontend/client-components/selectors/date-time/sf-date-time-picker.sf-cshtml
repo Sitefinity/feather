@@ -16,12 +16,16 @@
     <div class="col-xs-3">
         <a class="btn btn-link btn-sm" ng-show="!showMinutesField" ng-click="updateHours(0)">@(Res.Get<ClientComponentsResources>().AddHour)</a>
 
-        <select class="form-control input-sm" ng-model="hstep" ng-change="updateHours(hstep)" ng-options="opt.value as opt.label for opt in hsteps" ng-show="showMinutesField"></select>
+        <select class="form-control input-sm" ng-model="hstep" ng-change="updateHours(hstep)" ng-options="opt.value as opt.label for opt in hsteps" ng-show="showMinutesField">
+          <option value="">@(Res.Get<ClientComponentsResources>().HourOption)</option>
+        </select>
     </div>
 
     <div class="col-xs-3">
         <a class="btn btn-link btn-sm" ng-show="!showMinutesDropdown && showMinutesField"  ng-click="updateMinutes(0)">@(Res.Get<ClientComponentsResources>().AddMinutes)</a>
 
-        <select class="form-control input-sm" ng-model="mstep" ng-change="updateMinutes(mstep)" ng-options="opt.value as opt.label for opt in msteps" ng-show="showMinutesDropdown && showMinutesField"></select>
+        <select class="form-control input-sm" ng-model="mstep" ng-change="updateMinutes(mstep)" ng-options="opt.value as opt.label for opt in msteps" ng-show="showMinutesDropdown && showMinutesField">
+          <option value="">@(Res.Get<ClientComponentsResources>().MinuteOption)</option>
+        </select>
     </div>
 </div>
