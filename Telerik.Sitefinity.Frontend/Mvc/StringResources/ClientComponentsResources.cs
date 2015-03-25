@@ -57,11 +57,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr")]
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
-        [ResourceEntry("SfActionAttrRequired",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr"), ResourceEntry("SfActionAttrRequired",
             Value = "sfAction attribute is required!",
             Description = "phrase: sfAction attribute is required!",
             LastModified = "2015/03/23")]
@@ -328,11 +327,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         /// <summary>
-        /// word: Type:
+        /// word: Type
         /// </summary>
-        [ResourceEntry("Type",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods"), ResourceEntry("Type",
             Value = "Type:",
             Description = "word: Type",
             LastModified = "2015/03/23")]
@@ -1647,12 +1645,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Enter URL
         /// </summary>
-        /// <value>Enter URL</value>
-        [ResourceEntry("EnterUrl",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings"), ResourceEntry("EnterUrl",
             Value = "Enter URL",
             Description = "phrase: Enter URL",
             LastModified = "2015/03/24")]
@@ -1664,12 +1660,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Open external URLs in new tab/window
         /// </summary>
-        /// <value>Open external URLs in new tab/window</value>
-        [ResourceEntry("OpenExternalUrlInNewWindow",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings"), ResourceEntry("OpenExternalUrlInNewWindow",
             Value = "Open external URLs in new tab/window",
             Description = "phrase: Open external URLs in new tab/window",
             LastModified = "2015/03/24")]
@@ -1681,12 +1675,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Add external URL
         /// </summary>
-        /// <value>Add external URL</value>
-        [ResourceEntry("AddExternalUrl",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings"), ResourceEntry("AddExternalUrl",
             Value = "Add external URL",
             Description = "phrase: Add external URL",
             LastModified = "2015/03/24")]
@@ -1791,38 +1783,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["SelectLibraryErrorMessage"];
-            }
-        }
-
-        /// <summary>
-        /// word: Categories
-        /// </summary>
-        /// <value>Categories</value>
-        [ResourceEntry("Categories",
-            Value = "Categories",
-            Description = "word: Categories",
-            LastModified = "2015/03/25")]
-        public string Categories
-        {
-            get
-            {
-                return this["Categories"];
-            }
-        }
-
-        /// <summary>
-        /// word: Tags
-        /// </summary>
-        /// <value>Tags</value>
-        [ResourceEntry("Tags",
-            Value = "Tags",
-            Description = "word: Tags",
-            LastModified = "2015/03/25")]
-        public string Tags
-        {
-            get
-            {
-                return this["Tags"];
             }
         }
 
