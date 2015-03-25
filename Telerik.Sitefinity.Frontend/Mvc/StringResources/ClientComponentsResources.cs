@@ -15,6 +15,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// Insert hyperlink
         /// </summary>
+        /// <value>Insert hyperlink</value>
         [ResourceEntry("InsertHyperlink",
             Value = "Insert hyperlink",
             Description = "phrase: Insert hyperlink",
@@ -30,6 +31,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// Insert image
         /// </summary>
+        /// <value>Insert image</value>
         [ResourceEntry("InsertImage",
             Value = "Insert image",
             Description = "phrase: Insert image",
@@ -45,6 +47,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// Insert file
         /// </summary>
+        /// <value>Insert file</value>
         [ResourceEntry("InsertFile",
             Value = "Insert file",
             Description = "phrase: Insert file",
@@ -60,6 +63,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
+        /// <value>sfAction attribute is required</value>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr")]
         [ResourceEntry("SfActionAttrRequired",
             Value = "sfAction attribute is required!",
@@ -76,6 +80,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Insert a document link
         /// </summary>
+        /// <value>Insert a document link</value>
         [ResourceEntry("InsertDocumentLink",
             Value = "Insert a document link",
             Description = "phrase: Insert a document link",
@@ -91,6 +96,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Title
         /// </summary>
+        /// <value>Title</value>
         [ResourceEntry("Title",
             Value = "Title",
             Description = "word: Title",
@@ -106,6 +112,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Less than 35 characters are recommended
         /// </summary>
+        /// <value>Less than 35 characters are recommended</value>
         [ResourceEntry("RecommendedCharacters",
             Value = "Less than 35 characters are recommended",
             Description = "phrase: Less than 35 characters are recommended",
@@ -121,6 +128,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Title is required
         /// </summary>
+        /// <value>Title is required</value>
         [ResourceEntry("TitleRequired",
             Value = "Title is required",
             Description = "phrase: Title is required",
@@ -136,6 +144,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: CSS classes
         /// </summary>
+        /// <value>CSS classes</value>
         [ResourceEntry("CssClasses",
             Value = "CSS classes",
             Description = "phrase: CSS classes",
@@ -151,6 +160,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Done
         /// </summary>
+        /// <value>Done</value>
         [ResourceEntry("Done",
             Value = "Done",
             Description = "word: Done",
@@ -166,6 +176,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Image
         /// </summary>
+        /// <value>Image</value>
         [ResourceEntry("Image",
             Value = "Image",
             Description = "word: Image",
@@ -181,6 +192,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Alternative text
         /// </summary>
+        /// <value>Alternative text</value>
         [ResourceEntry("AlternativeText",
             Value = "Alternative text",
             Description = "phrase: Alternative text",
@@ -196,6 +208,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Alignment
         /// </summary>
+        /// <value>Alignment</value>
         [ResourceEntry("Alignment",
             Value = "Alignment",
             Description = "word: Alignment",
@@ -211,6 +224,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: None
         /// </summary>
+        /// <value>None</value>
         [ResourceEntry("None",
             Value = "None",
             Description = "word: None",
@@ -226,6 +240,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Left
         /// </summary>
+        /// <value>Left</value>
         [ResourceEntry("Left",
             Value = "Left",
             Description = "word: Left",
@@ -241,6 +256,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Center
         /// </summary>
+        /// <value>Center</value>
         [ResourceEntry("Center",
             Value = "Center",
             Description = "word: Center",
@@ -256,6 +272,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Right
         /// </summary>
+        /// <value>Right</value>
         [ResourceEntry("Right",
             Value = "Right",
             Description = "word: Right",
@@ -271,6 +288,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Image thumbnail
         /// </summary>
+        /// <value>Image thumbnail</value>
         [ResourceEntry("ImageThumbnail",
             Value = "Image thumbnail",
             Description = "phrase: Image thumbnail",
@@ -286,6 +304,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Margins
         /// </summary>
+        /// <value>Margins</value>
         [ResourceEntry("Margins",
             Value = "Margins",
             Description = "word: Margins",
@@ -301,6 +320,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Top
         /// </summary>
+        /// <value>Top</value>
         [ResourceEntry("Top",
             Value = "Top",
             Description = "word: Top",
@@ -316,6 +336,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Bottom
         /// </summary>
+        /// <value>Bottom</value>
         [ResourceEntry("Bottom",
             Value = "Bottom",
             Description = "word: Bottom",
@@ -331,6 +352,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Type
         /// </summary>
+        /// <value>Type</value>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         [ResourceEntry("Type",
             Value = "Type:",
@@ -347,6 +369,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: File size:
         /// </summary>
+        /// <value>File size:</value>
         [ResourceEntry("FileSize",
             Value = "File size:",
             Description = "phrase: File size",
@@ -362,6 +385,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Uploaded:
         /// </summary>
+        /// <value>Uploaded:</value>
         [ResourceEntry("Uploaded",
             Value = "Uploaded:",
             Description = "word: Uploaded",
@@ -377,6 +401,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Change image
         /// </summary>
+        /// <value>Change image</value>
         [ResourceEntry("ChangeImage",
             Value = "Change image",
             Description = "phrase: Change image",
@@ -392,6 +417,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Edit all properties
         /// </summary>
+        /// <value>Edit all properties</value>
         [ResourceEntry("EditAllProperties",
             Value = "Edit all properties",
             Description = "phrase: Edit all properties",
@@ -407,6 +433,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Select image
         /// </summary>
+        /// <value>Select image</value>
         [ResourceEntry("SelectImage",
             Value = "Select image",
             Description = "phrase: Select image",
@@ -422,6 +449,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Change document
         /// </summary>
+        /// <value>Change document</value>
         [ResourceEntry("ChangeDocument",
             Value = "Change document",
             Description = "phrase: Change document",
@@ -437,6 +465,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Select document
         /// </summary>
+        /// <value>Select document</value>
         [ResourceEntry("SelectDocument",
             Value = "Select document",
             Description = "phrase: Select document",
@@ -452,6 +481,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: The document has been deleted or unpublished
         /// </summary>
+        /// <value>The document has been deleted or unpublished</value>
         [ResourceEntry("DocumentHasBeenDeleted",
             Value = "The document has been deleted or unpublished",
             Description = "phrase: The document has been deleted or unpublished",
@@ -467,6 +497,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Created on:
         /// </summary>
+        /// <value>Created on:</value>
         [ResourceEntry("CreatedOn",
             Value = "Created on:",
             Description = "phrase: Created on:",
@@ -482,6 +513,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Library:
         /// </summary>
+        /// <value>Library:</value>
         [ResourceEntry("Library",
             Value = "Library:",
             Description = "word: Library:",
@@ -497,6 +529,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Size:
         /// </summary>
+        /// <value>Size:</value>
         [ResourceEntry("Size",
             Value = "Size:",
             Description = "word: Size:",
@@ -510,11 +543,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// word: By
+        /// word: by
         /// </summary>
+        /// <value>by</value>
         [ResourceEntry("By",
             Value = "by",
-            Description = "word: By",
+            Description = "word: by",
             LastModified = "2015/03/23")]
         public string By
         {
@@ -527,6 +561,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Select document from your computer
         /// </summary>
+        /// <value>Select document from your computer</value>
         [ResourceEntry("SelectDocumentFromComputer",
             Value = "Select document from your computer",
             Description = "phrase: Select document from your computer",
@@ -542,6 +577,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: or simply drag & drop it here
         /// </summary>
+        /// <value>or simply drag & drop it here</value>
         [ResourceEntry("SimplyDragAndDrop",
             Value = "or simply drag & drop it here",
             Description = "phrase: or simply drag & drop it here",
@@ -557,6 +593,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Search by title...
         /// </summary>
+        /// <value>Search by title...</value>
         [ResourceEntry("SearchByTitle",
             Value = "Search by title...",
             Description = "phrase: Search by title...",
@@ -572,6 +609,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: All libraries
         /// </summary>
+        /// <value>All libraries</value>
         [ResourceEntry("AllLibraries",
             Value = "All libraries",
             Description = "phrase: All libraries",
@@ -587,6 +625,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: No documents
         /// </summary>
+        /// <value>No documents</value>
         [ResourceEntry("NoDocuments",
             Value = "No documents",
             Description = "phrase: No documents",
@@ -602,6 +641,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Sorting and view
         /// </summary>
+        /// <value>Sorting and view</value>
         [ResourceEntry("SortingAndView",
             Value = "Sorting and view",
             Description = "phrase: Sorting and view",
@@ -617,6 +657,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Upload document
         /// </summary>
+        /// <value>Upload document</value>
         [ResourceEntry("UploadDocument",
             Value = "Upload document",
             Description = "phrase: Upload document",
@@ -632,6 +673,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Already uploaded documents
         /// </summary>
+        /// <value>Already uploaded documents</value>
         [ResourceEntry("AlreadyUploadedDocuments",
             Value = "Already uploaded documents",
             Description = "phrase: Already uploaded documents",
@@ -647,6 +689,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Libraries
         /// </summary>
+        /// <value>Libraries</value>
         [ResourceEntry("Libraries",
             Value = "Libraries",
             Description = "word: Libraries",
@@ -662,6 +705,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Tags
         /// </summary>
+        /// <value>Tags</value>
         [ResourceEntry("Tags",
             Value = "Tags",
             Description = "word: Tags",
@@ -677,6 +721,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Categories
         /// </summary>
+        /// <value>Categories</value>
         [ResourceEntry("Categories",
             Value = "Categories",
             Description = "word: Categories",
@@ -692,6 +737,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Dates
         /// </summary>
+        /// <value>Dates</value>
         [ResourceEntry("Dates",
             Value = "Dates",
             Description = "word: Dates",
@@ -707,6 +753,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Other filter options
         /// </summary>
+        /// <value>Other filter options</value>
         [ResourceEntry("OtherFilterOptions",
             Value = "Other filter options",
             Description = "phrase: Other filter options",
@@ -722,6 +769,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Narrow by typing...
         /// </summary>
+        /// <value>Narrow by typing...</value>
         [ResourceEntry("NarrowByTyping",
             Value = "Narrow by typing...",
             Description = "phrase: Narrow by typing...",
@@ -731,6 +779,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["NarrowByTyping"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Document to upload
+        /// </summary>
+        /// <value>Document to upload</value>
+        [ResourceEntry("DocumentToUpload",
+            Value = "Document to upload",
+            Description = "phrase: Document to upload",
+            LastModified = "2015/03/23")]
+        public string DocumentToUpload
+        {
+            get
+            {
+                return this["DocumentToUpload"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Where to store the uploaded document?
+        /// </summary>
+        /// <value>Where to store the uploaded document?</value>
+        [ResourceEntry("WhereToStoreDocument",
+            Value = "Where to store the uploaded document?",
+            Description = "phrase: Where to store the uploaded document?",
+            LastModified = "2015/03/23")]
+        public string WhereToStoreDocument
+        {
+            get
+            {
+                return this["WhereToStoreDocument"];
             }
         }
 
@@ -2188,6 +2268,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["ModifiedOn"];
+            }
+        }
+
+        /// <summary>
+        /// word: Style
+        /// </summary>
+        /// <value>Style</value>
+        [ResourceEntry("Style",
+            Value = "Style",
+            Description = "word: Style",
+            LastModified = "2015/03/25")]
+        public string Style
+        {
+            get
+            {
+                return this["Style"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: - Select -
+        /// </summary>
+        /// <value>- Select -</value>
+        [ResourceEntry("SelectStyle",
+            Value = "- Select -",
+            Description = "phrase: - Select -",
+            LastModified = "2015/03/25")]
+        public string SelectStyle
+        {
+            get
+            {
+                return this["SelectStyle"];
             }
         }
 

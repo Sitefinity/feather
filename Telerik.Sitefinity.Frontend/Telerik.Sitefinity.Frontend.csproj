@@ -489,7 +489,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\style-dropdown.js" />
-    <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.html" />
+    <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\ui-bootstrap-tpls.min.js" />
