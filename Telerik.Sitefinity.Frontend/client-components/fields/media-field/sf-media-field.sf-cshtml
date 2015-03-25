@@ -8,7 +8,7 @@
                 </i>
             </div>
             <div ng-show="!sfMedia">
-                <span>The document has been deleted or unpublished</span>
+                <span>@(Res.Get<ClientComponentsResources>().DocumentHasBeenDeleted)</span>
             </div>
         </div>
 

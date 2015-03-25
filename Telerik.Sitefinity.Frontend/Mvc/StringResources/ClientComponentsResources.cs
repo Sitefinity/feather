@@ -448,6 +448,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// phrase: The document has been deleted or unpublished
+        /// </summary>
+        [ResourceEntry("DocumentHasBeenDeleted",
+            Value = "The document has been deleted or unpublished",
+            Description = "phrase: The document has been deleted or unpublished",
+            LastModified = "2015/03/23")]
+        public string DocumentHasBeenDeleted
+        {
+            get
+            {
+                return this["DocumentHasBeenDeleted"];
+            }
+        }
+
+        /// <summary>
         /// No items have been created yet.
         /// phrase: No items have been created yet.
         /// </summary>
