@@ -20,7 +20,7 @@
                 }).$promise;
             };
 
-            var getItem = function (id, provider) {
+            var getSpecificItems = function (id, provider) {
                 return getResource(id).get({
                     provider: provider
                 }).$promise;
