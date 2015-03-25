@@ -733,6 +733,36 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// phrase: Document to upload
+        /// </summary>
+        [ResourceEntry("DocumentToUpload",
+            Value = "Document to upload",
+            Description = "phrase: Document to upload",
+            LastModified = "2015/03/23")]
+        public string DocumentToUpload
+        {
+            get
+            {
+                return this["DocumentToUpload"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Where to store the uploaded document?
+        /// </summary>
+        [ResourceEntry("WhereToStoreDocument",
+            Value = "Where to store the uploaded document?",
+            Description = "phrase: Where to store the uploaded document?",
+            LastModified = "2015/03/23")]
+        public string WhereToStoreDocument
+        {
+            get
+            {
+                return this["WhereToStoreDocument"];
+            }
+        }
+
+        /// <summary>
         /// No items have been created yet.
         /// phrase: No items have been created yet.
         /// </summary>
