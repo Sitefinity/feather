@@ -41,7 +41,7 @@
                                    sf-get-children="getChildren(parentId)"
                                    sf-identifier-field-value="bindPageIdentifierField(dataItem)"
                                    sf-status-field-value="getStatusField(dataItem)"
-                                   sf-single-item-template-html="{{singleItemTemplateHtml}}"
+                                   sf-item-template-id="sfTreeItemTemplate.html"
                                    class="k-treeview--list-group"></sf-items-tree>
 
                     <div ng-repeat="item in items"
@@ -94,3 +94,20 @@
     @(Res.Get<ClientComponentsResources>().Close)
         </button>
 </div>
+
+<script type="text/ng-template" id="sfTreeItemTemplate.html">
+  <a ng-click="sfSelectItem({ dataItem: dataItem })"
+   ng-class="{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}" >
+    <i class='pull-left icon-item-{{dataItem.Status.toLowerCase()}}'></i>
+    <span>
+      <span ng-class="{'text-muted': sfItemDisabled({dataItem: dataItem})}"
+          ng-bind="sfIdentifierFieldValue({dataItem: dataItem})"></span>
+
+      <em ng-show='sfItemDisabled({dataItem: dataItem})'
+          class='m-left-md'>
+        (@(Res.Get<ClientComponentsResources>().NotTranslated))</em>
+
+      <span class='small text-muted' ng-bind='dataItem.Status'></span>
+    </span>
+  </a>
+</script>

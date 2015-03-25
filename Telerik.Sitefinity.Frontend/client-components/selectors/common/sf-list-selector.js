@@ -498,6 +498,8 @@
                         };
 
                         scope.isItemSelectedInDialog = function (item) {
+                            if (!item) return false;
+
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
                                     return true;

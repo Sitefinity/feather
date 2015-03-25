@@ -240,15 +240,6 @@
                         ctrl.$scope.searchIdentifierField = "Title";
                         ctrl.$scope.externalPagesInTheDialog = jQuery.extend(true, [], ctrl.$scope.sfExternalPages);
 
-                        var templateHtml = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}\" >" +
-                                                  "<i class='pull-left icon-item-{{dataItem.Status.toLowerCase()}}'></i>" +
-                                                  "<span>" +
-                                                      "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\" ng-bind=\"sfIdentifierFieldValue({dataItem: dataItem})\"></span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class='m-left-md'>(not translated)</em>" +
-                                                      "<span class='small text-muted' ng-bind='dataItem.Status'></span>" +
-                                                  "</span>" +
-                                            "</a>";
-                        ctrl.$scope.singleItemTemplateHtml = templateHtml;
-
                         ctrl.onPostLinkComleted = function () {
                             var bindOnLoad = scope.$eval(attrs.sfBindOnLoad);
                             if (!bindOnLoad) return;
