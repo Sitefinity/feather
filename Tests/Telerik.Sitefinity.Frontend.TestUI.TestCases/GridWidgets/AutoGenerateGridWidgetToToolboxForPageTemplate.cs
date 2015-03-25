@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ArtOfTest.WebAii.Core;
+using System.Net.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
@@ -15,37 +11,50 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
     /// This is test class for grid widget on page and page template.
     /// </summary>
     [TestClass]
-    public class AutoGenerateGridWidgetToToolboxForPageTemplate_ : FeatherTestCase
+    public class AutoGenerateGridWidgetToToolboxForPageTemplate : FeatherTestCase
     {
         /// <summary>
-        /// UI test AutoGenerateGridWidgetToToolboxForPageTemplate
+        /// UI test AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void AutoGenerateGridWidgetToToolboxForPageTemplate()
+        public void AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox()
         {
             BAT.Macros().NavigateTo().Design().PageTemplates();
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
             BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropLayoutWidget(LayoutCaption);
-            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount1);
+            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption);
             BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().PublishTemplate();
-            this.VerifyGridWidgetOnTheFrontend();
-        }
-
-        /// <summary>
-        /// Verify grid widget on the frontend
-        /// </summary>
-        public void VerifyGridWidgetOnTheFrontend()
-        {
-            string[] layouts = new string[] { LayouClass1, LayouClass2 };
 
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
-            ActiveBrowser.WaitUntilReady();
+            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyNewGridWidgetOnTheFrontend(this.layouts);
 
-            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyNewGridWidgetOnTheFrontend(layouts);
+            BAT.Arrange(this.TestName).ExecuteArrangement("RenameGridWidgetFromFileSystem");
+
+            BAT.Macros().NavigateTo().Design().PageTemplates();
+            BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
+            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
+            BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
+            Assert.IsFalse(
+                BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().IsLayoutWidgetPresentInToolbox(LayoutCaption),
+                "Layout widget is found in the toolbox");
+
+            Assert.IsTrue(
+                BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().IsLayoutWidgetPresentInToolbox(LayoutRenamed),
+                "Layout widget is NOT found in the toolbox");
+
+            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetNotPresentPageEditor(LayoutCaption);
+            BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutRenamed);
+
+            BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().PublishTemplate();
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
+
+            HttpResponseMessage response = new HttpResponseMessage();
+            Assert.AreEqual(200, (int)response.StatusCode);
+            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyNewGridWidgetOnTheFrontend(this.layouts);
         }
 
         /// <summary>
@@ -68,8 +77,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         private const string PageTemplateName = "Bootstrap.defaultNew";
         private const string PageName = "GridPage";
         private const string LayoutCaption = "grid-grid";
-        private const string LayouClass1 = "col-md-3";
-        private const string LayouClass2 = "col-md-9";
-        private const int GridCount1 = 1;
+        private const string LayoutRenamed = "renamed-grid";
+        private readonly string[] layouts = new string[] { "col-md-3", "col-md-9" };
     }
 }

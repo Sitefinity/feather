@@ -16,9 +16,9 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
-    /// AutoGenerateGridWidgetToToolboxForPageTemplate arragement.
+    /// AutoGenerateGridWidgetToToolboxForPage arragement.
     /// </summary>
-    public class AutoGenerateGridWidgetToToolboxForPageTemplate : ITestArrangement
+    public class AddAndDeleteGridWidgetFromFileSystemVerifyPageToolbox : ITestArrangement
     {
         /// <summary>
         /// Server side set up. 
@@ -26,14 +26,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
-            string templateFileOriginal = FileInjectHelper.GetDestinationFilePath(this.layoutTemplatePath);
-            string templateFileCopy = FileInjectHelper.GetDestinationFilePath(this.newLayoutTemplatePath);
-
-            PageManager pageManager = PageManager.GetManager();
-            int templatesCount = pageManager.GetTemplates().Count();
-            File.Copy(templateFileOriginal, templateFileCopy);
-            FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
-
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             Stream destination = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -49,30 +41,32 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         }
 
         /// <summary>
+        /// Removes the grid widget file from the file system.
+        /// </summary>
+        [ServerArrangement]
+        public void DeleteGridWidgetFromFileSystem()
+        {
+            string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
+            File.Delete(filePath);
+        }
+
+        /// <summary>
         /// Tears down.
         /// </summary>
         [ServerTearDown]
         public void TearDown()
         {
             ServerOperations.Pages().DeleteAllPages();
-
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
-            string templateFileCopy = FileInjectHelper.GetDestinationFilePath(this.newLayoutTemplatePath);
             File.Delete(filePath);
-            File.Delete(templateFileCopy);
-
-            ServerOperations.Templates().DeletePageTemplate(PageTemplateName);
             FeatherServerOperations.GridWidgets().RemoveGridControlFromToolboxesConfig(GridTitle);
         }
 
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Data.grid-grid.html";
         private const string GridFileName = "grid-grid.html";
         private const string GridTitle = "grid-grid";
-        private const string GridCss = "sfL25_75";
         private const string PageName = "GridPage";
-        private const string PageTemplateName = "Bootstrap.defaultNew";
-        private string layoutTemplatePath = Path.Combine("ResourcePackages", "Bootstrap", "MVC", "Views", "Layouts", "default.cshtml");
-        private string newLayoutTemplatePath = Path.Combine("ResourcePackages", "Bootstrap", "MVC", "Views", "Layouts", "defaultNew.cshtml");
+        private const string PageTemplateName = "Bootstrap.default";
         private string gridPath = Path.Combine("ResourcePackages", "Bootstrap", "GridSystem", "Templates", GridFileName);
     }
 }
