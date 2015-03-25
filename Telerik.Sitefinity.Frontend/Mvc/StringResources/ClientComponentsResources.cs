@@ -60,7 +60,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr"), ResourceEntry("SfActionAttrRequired",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr")]
+        [ResourceEntry("SfActionAttrRequired",
             Value = "sfAction attribute is required!",
             Description = "phrase: sfAction attribute is required!",
             LastModified = "2015/03/23")]
@@ -328,9 +329,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// word: Type:
+        /// word: Type
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods"), ResourceEntry("Type",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
+        [ResourceEntry("Type",
             Value = "Type:",
             Description = "word: Type",
             LastModified = "2015/03/23")]
@@ -444,6 +446,291 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["SelectDocument"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: The document has been deleted or unpublished
+        /// </summary>
+        [ResourceEntry("DocumentHasBeenDeleted",
+            Value = "The document has been deleted or unpublished",
+            Description = "phrase: The document has been deleted or unpublished",
+            LastModified = "2015/03/23")]
+        public string DocumentHasBeenDeleted
+        {
+            get
+            {
+                return this["DocumentHasBeenDeleted"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Created on:
+        /// </summary>
+        [ResourceEntry("CreatedOn",
+            Value = "Created on:",
+            Description = "phrase: Created on:",
+            LastModified = "2015/03/23")]
+        public string CreatedOn
+        {
+            get
+            {
+                return this["CreatedOn"];
+            }
+        }
+
+        /// <summary>
+        /// word: Library:
+        /// </summary>
+        [ResourceEntry("Library",
+            Value = "Library:",
+            Description = "word: Library:",
+            LastModified = "2015/03/23")]
+        public string Library
+        {
+            get
+            {
+                return this["Library"];
+            }
+        }
+
+        /// <summary>
+        /// word: Size:
+        /// </summary>
+        [ResourceEntry("Size",
+            Value = "Size:",
+            Description = "word: Size:",
+            LastModified = "2015/03/23")]
+        public string Size
+        {
+            get
+            {
+                return this["Size"];
+            }
+        }
+
+        /// <summary>
+        /// word: By
+        /// </summary>
+        [ResourceEntry("By",
+            Value = "by",
+            Description = "word: By",
+            LastModified = "2015/03/23")]
+        public string By
+        {
+            get
+            {
+                return this["By"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select document from your computer
+        /// </summary>
+        [ResourceEntry("SelectDocumentFromComputer",
+            Value = "Select document from your computer",
+            Description = "phrase: Select document from your computer",
+            LastModified = "2015/03/23")]
+        public string SelectDocumentFromComputer
+        {
+            get
+            {
+                return this["SelectDocumentFromComputer"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: or simply drag & drop it here
+        /// </summary>
+        [ResourceEntry("SimplyDragAndDrop",
+            Value = "or simply drag & drop it here",
+            Description = "phrase: or simply drag & drop it here",
+            LastModified = "2015/03/23")]
+        public string SimplyDragAndDrop
+        {
+            get
+            {
+                return this["SimplyDragAndDrop"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Search by title...
+        /// </summary>
+        [ResourceEntry("SearchByTitle",
+            Value = "Search by title...",
+            Description = "phrase: Search by title...",
+            LastModified = "2015/03/23")]
+        public string SearchByTitle
+        {
+            get
+            {
+                return this["SearchByTitle"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: All libraries
+        /// </summary>
+        [ResourceEntry("AllLibraries",
+            Value = "All libraries",
+            Description = "phrase: All libraries",
+            LastModified = "2015/03/23")]
+        public string AllLibraries
+        {
+            get
+            {
+                return this["AllLibraries"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: No documents
+        /// </summary>
+        [ResourceEntry("NoDocuments",
+            Value = "No documents",
+            Description = "phrase: No documents",
+            LastModified = "2015/03/23")]
+        public string NoDocuments
+        {
+            get
+            {
+                return this["NoDocuments"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Sorting and view
+        /// </summary>
+        [ResourceEntry("SortingAndView",
+            Value = "Sorting and view",
+            Description = "phrase: Sorting and view",
+            LastModified = "2015/03/23")]
+        public string SortingAndView
+        {
+            get
+            {
+                return this["SortingAndView"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Upload document
+        /// </summary>
+        [ResourceEntry("UploadDocument",
+            Value = "Upload document",
+            Description = "phrase: Upload document",
+            LastModified = "2015/03/23")]
+        public string UploadDocument
+        {
+            get
+            {
+                return this["UploadDocument"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Already uploaded documents
+        /// </summary>
+        [ResourceEntry("AlreadyUploadedDocuments",
+            Value = "Already uploaded documents",
+            Description = "phrase: Already uploaded documents",
+            LastModified = "2015/03/23")]
+        public string AlreadyUploadedDocuments
+        {
+            get
+            {
+                return this["AlreadyUploadedDocuments"];
+            }
+        }
+
+        /// <summary>
+        /// word: Libraries
+        /// </summary>
+        [ResourceEntry("Libraries",
+            Value = "Libraries",
+            Description = "word: Libraries",
+            LastModified = "2015/03/23")]
+        public string Libraries
+        {
+            get
+            {
+                return this["Libraries"];
+            }
+        }
+
+        /// <summary>
+        /// word: Tags
+        /// </summary>
+        [ResourceEntry("Tags",
+            Value = "Tags",
+            Description = "word: Tags",
+            LastModified = "2015/03/23")]
+        public string Tags
+        {
+            get
+            {
+                return this["Tags"];
+            }
+        }
+
+        /// <summary>
+        /// word: Categories
+        /// </summary>
+        [ResourceEntry("Categories",
+            Value = "Categories",
+            Description = "word: Categories",
+            LastModified = "2015/03/23")]
+        public string Categories
+        {
+            get
+            {
+                return this["Categories"];
+            }
+        }
+
+        /// <summary>
+        /// word: Dates
+        /// </summary>
+        [ResourceEntry("Dates",
+            Value = "Dates",
+            Description = "word: Dates",
+            LastModified = "2015/03/23")]
+        public string Dates
+        {
+            get
+            {
+                return this["Dates"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Other filter options
+        /// </summary>
+        [ResourceEntry("OtherFilterOptions",
+            Value = "Other filter options",
+            Description = "phrase: Other filter options",
+            LastModified = "2015/03/23")]
+        public string OtherFilterOptions
+        {
+            get
+            {
+                return this["OtherFilterOptions"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Narrow by typing...
+        /// </summary>
+        [ResourceEntry("NarrowByTyping",
+            Value = "Narrow by typing...",
+            Description = "phrase: Narrow by typing...",
+            LastModified = "2015/03/23")]
+        public string NarrowByTyping
+        {
+            get
+            {
+                return this["NarrowByTyping"];
             }
         }
 
@@ -1325,6 +1612,550 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["CategorySelectorHeader"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: No external URLs have been added.
+        /// </summary>
+        /// <value>No external URLs have been added.</value>
+        [ResourceEntry("NoExternalUrlsAdded",
+            Value = "No external URLs have been added.",
+            Description = "phrase: No external URLs have been added.",
+            LastModified = "2015/03/24")]
+        public string NoExternalUrlsAdded
+        {
+            get
+            {
+                return this["NoExternalUrlsAdded"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Enter Title
+        /// </summary>
+        /// <value>Enter Title</value>
+        [ResourceEntry("EnterTitle",
+            Value = "Enter Title",
+            Description = "phrase: Enter Title",
+            LastModified = "2015/03/24")]
+        public string EnterTitle
+        {
+            get
+            {
+                return this["EnterTitle"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Enter URL
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
+        [ResourceEntry("EnterUrl",
+            Value = "Enter URL",
+            Description = "phrase: Enter URL",
+            LastModified = "2015/03/24")]
+        public string EnterUrl
+        {
+            get
+            {
+                return this["EnterUrl"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Open external URLs in new tab/window
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
+        [ResourceEntry("OpenExternalUrlInNewWindow",
+            Value = "Open external URLs in new tab/window",
+            Description = "phrase: Open external URLs in new tab/window",
+            LastModified = "2015/03/24")]
+        public string OpenExternalUrlInNewWindow
+        {
+            get
+            {
+                return this["OpenExternalUrlInNewWindow"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Add external URL
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
+        [ResourceEntry("AddExternalUrl",
+            Value = "Add external URL",
+            Description = "phrase: Add external URL",
+            LastModified = "2015/03/24")]
+        public string AddExternalUrl
+        {
+            get
+            {
+                return this["AddExternalUrl"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: - Hour -
+        /// </summary>
+        /// <value>- Hour -</value>
+        [ResourceEntry("HourOption",
+            Value = "- Hour -",
+            Description = "phrase: - Hour -",
+            LastModified = "2015/03/25")]
+        public string HourOption
+        {
+            get
+            {
+                return this["HourOption"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: - Minute -
+        /// </summary>
+        /// <value>- Minute -</value>
+        [ResourceEntry("MinuteOption",
+            Value = "- Minute -",
+            Description = "phrase: - Minute -",
+            LastModified = "2015/03/25")]
+        public string MinuteOption
+        {
+            get
+            {
+                return this["MinuteOption"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Upload image
+        /// </summary>
+        /// <value>Upload image</value>
+        [ResourceEntry("UploadImage",
+            Value = "Upload image",
+            Description = "phrase: Upload image",
+            LastModified = "2015/03/25")]
+        public string UploadImage
+        {
+            get
+            {
+                return this["UploadImage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Image to upload
+        /// </summary>
+        /// <value>Image to upload</value>
+        [ResourceEntry("ImageToUpload",
+            Value = "Image to upload",
+            Description = "phrase: Image to upload",
+            LastModified = "2015/03/25")]
+        public string ImageToUpload
+        {
+            get
+            {
+                return this["ImageToUpload"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Where to store the uploaded image?
+        /// </summary>
+        /// <value>Where to store the uploaded image?</value>
+        [ResourceEntry("WhereToStoreImage",
+            Value = "Where to store the uploaded image?",
+            Description = "phrase: Where to store the uploaded image?",
+            LastModified = "2015/03/25")]
+        public string WhereToStoreImage
+        {
+            get
+            {
+                return this["WhereToStoreImage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: You must select the library in which the files ought to be uploaded.
+        /// </summary>
+        /// <value>You must select the library in which the files ought to be uploaded.</value>
+        [ResourceEntry("SelectLibraryErrorMessage",
+            Value = "You must select the library in which the files ought to be uploaded.",
+            Description = "phrase: You must select the library in which the files ought to be uploaded.",
+            LastModified = "2015/03/25")]
+        public string SelectLibraryErrorMessage
+        {
+            get
+            {
+                return this["SelectLibraryErrorMessage"];
+            }
+        }
+
+        /// <summary>
+        /// word: Upload
+        /// </summary>
+        /// <value>Upload</value>
+        [ResourceEntry("Upload",
+            Value = "Upload",
+            Description = "word: Upload",
+            LastModified = "2015/03/25")]
+        public string Upload
+        {
+            get
+            {
+                return this["Upload"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Categories and tags
+        /// </summary>
+        /// <value>Categories and tags</value>
+        [ResourceEntry("CategoriesAndTags",
+            Value = "Categories and tags",
+            Description = "phrase: Categories and tags",
+            LastModified = "2015/03/25")]
+        public string CategoriesAndTags
+        {
+            get
+            {
+                return this["CategoriesAndTags"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Custom thumbnail size
+        /// </summary>
+        /// <value>Custom thumbnail size</value>
+        [ResourceEntry("CustomThumbnailSize",
+            Value = "Custom thumbnail size",
+            Description = "phrase: Custom thumbnail size",
+            LastModified = "2015/03/25")]
+        public string CustomThumbnailSize
+        {
+            get
+            {
+                return this["CustomThumbnailSize"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Resize image
+        /// </summary>
+        /// <value>Resize image</value>
+        [ResourceEntry("ResizeImage",
+            Value = "Resize image",
+            Description = "phrase: Resize image",
+            LastModified = "2015/03/25")]
+        public string ResizeImage
+        {
+            get
+            {
+                return this["ResizeImage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Generated image will be resized to desired area
+        /// </summary>
+        /// <value>Generated image will be resized to desired area</value>
+        [ResourceEntry("ResizeToAreaDescription",
+            Value = "Generated image will be resized to desired area",
+            Description = "phrase: Generated image will be resized to desired area",
+            LastModified = "2015/03/25")]
+        public string ResizeToAreaDescription
+        {
+            get
+            {
+                return this["ResizeToAreaDescription"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: resize to area example
+        /// </summary>
+        /// <value>resize to area example</value>
+        [ResourceEntry("ResizeToAreaExample",
+            Value = "resize to area example",
+            Description = "phrase: resize to area example",
+            LastModified = "2015/03/25")]
+        public string ResizeToAreaExample
+        {
+            get
+            {
+                return this["ResizeToAreaExample"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Generated image will be resized and cropped to desired area
+        /// </summary>
+        /// <value>Generated image will be resized and cropped to desired area</value>
+        [ResourceEntry("CropToAreaDescription",
+            Value = "Generated image will be resized and cropped to desired area",
+            Description = "phrase: Generated image will be resized and cropped to desired area",
+            LastModified = "2015/03/25")]
+        public string CropToAreaDescription
+        {
+            get
+            {
+                return this["CropToAreaDescription"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: crop to area example
+        /// </summary>
+        /// <value>crop to area example</value>
+        [ResourceEntry("CropToAreaExample",
+            Value = "crop to area example",
+            Description = "phrase: crop to area example",
+            LastModified = "2015/03/25")]
+        public string CropToAreaExample
+        {
+            get
+            {
+                return this["CropToAreaExample"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Resize to area
+        /// </summary>
+        /// <value>Resize to area</value>
+        [ResourceEntry("ResizeToArea",
+            Value = "Resize to area",
+            Description = "phrase: Resize to area",
+            LastModified = "2015/03/25")]
+        public string ResizeToArea
+        {
+            get
+            {
+                return this["ResizeToArea"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Crop to area
+        /// </summary>
+        /// <value>Crop to area</value>
+        [ResourceEntry("CropToArea",
+            Value = "Crop to area",
+            Description = "phrase: Crop to area",
+            LastModified = "2015/03/25")]
+        public string CropToArea
+        {
+            get
+            {
+                return this["CropToArea"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: What's this?
+        /// </summary>
+        /// <value>What's this?</value>
+        [ResourceEntry("WhatIsThisLink",
+            Value = "What's this?",
+            Description = "phrase: What's this?",
+            LastModified = "2015/03/25")]
+        public string WhatIsThisLink
+        {
+            get
+            {
+                return this["WhatIsThisLink"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Max width
+        /// </summary>
+        /// <value>Max width</value>
+        [ResourceEntry("MaxWidth",
+            Value = "Max width",
+            Description = "phrase: Max width",
+            LastModified = "2015/03/25")]
+        public string MaxWidth
+        {
+            get
+            {
+                return this["MaxWidth"];
+            }
+        }
+
+        /// <summary>
+        /// word: px
+        /// </summary>
+        /// <value>px</value>
+        [ResourceEntry("PX",
+            Value = "px",
+            Description = "word: px",
+            LastModified = "2015/03/25")]
+        public string PX
+        {
+            get
+            {
+                return this["PX"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Value must be an integer between 1 and 9999 inclusive.
+        /// </summary>
+        /// <value>Value must be an integer between 1 and 9999 inclusive.</value>
+        [ResourceEntry("WidthHeightErrorMessage",
+            Value = "Value must be an integer between 1 and 9999 inclusive.",
+            Description = "phrase: Value must be an integer between 1 and 9999 inclusive.",
+            LastModified = "2015/03/25")]
+        public string WidthHeightErrorMessage
+        {
+            get
+            {
+                return this["WidthHeightErrorMessage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Max height
+        /// </summary>
+        /// <value>Max height</value>
+        [ResourceEntry("MaxHeight",
+            Value = "Max height",
+            Description = "phrase: Max height",
+            LastModified = "2015/03/25")]
+        public string MaxHeight
+        {
+            get
+            {
+                return this["MaxHeight"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Max width is required
+        /// </summary>
+        /// <value>Max width is required</value>
+        [ResourceEntry("MaxWidthRequired",
+            Value = "Max width is required",
+            Description = "phrase: Max width is required",
+            LastModified = "2015/03/25")]
+        public string MaxWidthRequired
+        {
+            get
+            {
+                return this["MaxWidthRequired"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Max height is required
+        /// </summary>
+        /// <value>Max height is required</value>
+        [ResourceEntry("MaxHeightRequired",
+            Value = "Max height is required",
+            Description = "phrase: Max height is required",
+            LastModified = "2015/03/25")]
+        public string MaxHeightRequired
+        {
+            get
+            {
+                return this["MaxHeightRequired"];
+            }
+        }
+
+        /// <summary>
+        /// word: Width
+        /// </summary>
+        /// <value>Width</value>
+        [ResourceEntry("Width",
+            Value = "Width",
+            Description = "word: Width",
+            LastModified = "2015/03/25")]
+        public string Width
+        {
+            get
+            {
+                return this["Width"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Width is required
+        /// </summary>
+        /// <value>Width is required</value>
+        [ResourceEntry("WidthRequired",
+            Value = "Width is required",
+            Description = "phrase: Width is required",
+            LastModified = "2015/03/25")]
+        public string WidthRequired
+        {
+            get
+            {
+                return this["WidthRequired"];
+            }
+        }
+
+        /// <summary>
+        /// word: Height
+        /// </summary>
+        /// <value>Height</value>
+        [ResourceEntry("Height",
+            Value = "Height",
+            Description = "word: Height",
+            LastModified = "2015/03/25")]
+        public string Height
+        {
+            get
+            {
+                return this["Height"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Height is required
+        /// </summary>
+        /// <value>Height is required</value>
+        [ResourceEntry("HeightRequired",
+            Value = "Height is required",
+            Description = "phrase: Height is required",
+            LastModified = "2015/03/25")]
+        public string HeightRequired
+        {
+            get
+            {
+                return this["HeightRequired"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Resize smaller images to bigger dimensions
+        /// </summary>
+        /// <value>Resize smaller images to bigger dimensions</value>
+        [ResourceEntry("ResizeSmallerToBigger",
+            Value = "Resize smaller images to bigger dimensions",
+            Description = "phrase: Resize smaller images to bigger dimensions",
+            LastModified = "2015/03/25")]
+        public string ResizeSmallerToBigger
+        {
+            get
+            {
+                return this["ResizeSmallerToBigger"];
+            }
+        }
+
+        /// <summary>
+        /// word: Quality
+        /// </summary>
+        /// <value>Quality</value>
+        [ResourceEntry("Quality",
+            Value = "Quality",
+            Description = "word: Quality",
+            LastModified = "2015/03/25")]
+        public string Quality
+        {
+            get
+            {
+                return this["Quality"];
             }
         }
     }

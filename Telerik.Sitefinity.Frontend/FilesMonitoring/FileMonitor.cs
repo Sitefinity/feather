@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Hosting;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
@@ -132,7 +133,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                 // finds all records containing file paths which no longer exists
                 var nonExistingFilesData = fileMonitorDataManager.GetFilesData().Select(fd => fd.FilePath).ToArray()
-                    .Where(f => !File.Exists(f));
+                    .Where(f => !HostingEnvironment.VirtualPathProvider.FileExists(f));
 
                 if (nonExistingFilesData != null && nonExistingFilesData.Any())
                 {
@@ -143,9 +144,11 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                         if (resourceDirectoryTree.Length >= 2)
                         {
+                            var packageFolderIdx = Array.IndexOf(resourceDirectoryTree, PackageManager.PackagesFolder);
+                            string packageName = packageFolderIdx > 0 && packageFolderIdx + 1 < resourceDirectoryTree.Length ? resourceDirectoryTree[packageFolderIdx + 1] : string.Empty;
                             string resourceFolder = resourceDirectoryTree[resourceDirectoryTree.Length - 2];
                             IFileManager resourceFilesManager = this.GetResourceFileManager(resourceFolder, filePath);
-                            resourceFilesManager.FileDeleted(filePath);
+                            resourceFilesManager.FileDeleted(filePath, packageName);
                         }
                     }
                 }
