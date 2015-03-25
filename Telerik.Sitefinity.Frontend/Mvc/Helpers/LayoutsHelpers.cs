@@ -20,5 +20,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return new System.Web.Mvc.MvcHtmlString(htmlString);
         }
+
+        /// <summary>
+        /// Html helper which renders all script tags.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "helper")]
+        public static System.Web.Mvc.MvcHtmlString SfScriptRenderer(this HtmlHelper helper)
+        {
+            var htmlString = "<feather-script-renderer></feather-script-renderer>";
+
+            return new System.Web.Mvc.MvcHtmlString(htmlString);
+        }
     }
 }

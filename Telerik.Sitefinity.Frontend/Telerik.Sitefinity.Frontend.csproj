@@ -197,6 +197,7 @@
     <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Mvc\Infrastructure\Layouts\ScriptRenderer.cs" />
     <Compile Include="Mvc\Infrastructure\PageInitializer.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageEditorRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageRouteHandler.cs" />
@@ -582,7 +583,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

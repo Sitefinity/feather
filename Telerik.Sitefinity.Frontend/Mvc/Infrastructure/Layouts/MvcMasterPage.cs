@@ -128,6 +128,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                     this.InstantiateControls(placeHolder);
                 }
             }
+            else if (chunk.TagName.Equals("feather-script-renderer", StringComparison.OrdinalIgnoreCase) 
+                || chunk.Html.Equals("<feather-script-renderer>", StringComparison.OrdinalIgnoreCase))
+            {
+                var scriptRenderer = new ScriptRenderer();
+                container.Peek().Controls.Add(scriptRenderer);
+            }
             else if (chunk.TagName.Equals("form", StringComparison.OrdinalIgnoreCase) && chunk.HasAttribute("runat"))
             {
                 this.AddIfNotEmpty(currentLiteralText.ToString(), container.Peek());
@@ -180,6 +186,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 }
             }
             else if (chunk.TagName.Equals("asp:ContentPlaceHolder", StringComparison.OrdinalIgnoreCase))
+            {
+                //// Ignore
+            }
+            else if (chunk.TagName.Equals("feather-script-renderer", StringComparison.OrdinalIgnoreCase)
+                || chunk.Html.Equals("</feather-script-renderer>", StringComparison.OrdinalIgnoreCase))
             {
                 //// Ignore
             }
