@@ -105,7 +105,7 @@
                             if (!scope.ngModel)
                                 scope.ngModel = new Date();
 
-                            if (!hstep && hstep != 0) {
+                            if (!hstep && hstep !== 0) {
                                 setHours(0, false);
                                 setMinutes(0, false);
                             }
@@ -118,7 +118,7 @@
                             if (!scope.ngModel)
                                 scope.ngModel = new Date();
 
-                            if (!mstep && mstep != 0)
+                            if (!mstep && mstep !== 0)
                                 setMinutes(0, false);
                             else
                                 setMinutes(mstep, true);
