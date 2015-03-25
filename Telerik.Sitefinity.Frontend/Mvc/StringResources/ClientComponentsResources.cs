@@ -57,10 +57,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr")]
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr"), ResourceEntry("SfActionAttrRequired",
+        [ResourceEntry("SfActionAttrRequired",
             Value = "sfAction attribute is required!",
             Description = "phrase: sfAction attribute is required!",
             LastModified = "2015/03/23")]
@@ -327,10 +328,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         /// <summary>
         /// word: Type:
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods"), ResourceEntry("Type",
+        [ResourceEntry("Type",
             Value = "Type:",
             Description = "word: Type",
             LastModified = "2015/03/23")]
@@ -1645,11 +1647,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Enter URL
         /// </summary>
         /// <value>Enter URL</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings"), ResourceEntry("EnterUrl",
+        [ResourceEntry("EnterUrl",
             Value = "Enter URL",
             Description = "phrase: Enter URL",
             LastModified = "2015/03/24")]
@@ -1661,11 +1664,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Open external URLs in new tab/window
         /// </summary>
         /// <value>Open external URLs in new tab/window</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings"), ResourceEntry("OpenExternalUrlInNewWindow",
+        [ResourceEntry("OpenExternalUrlInNewWindow",
             Value = "Open external URLs in new tab/window",
             Description = "phrase: Open external URLs in new tab/window",
             LastModified = "2015/03/24")]
@@ -1677,11 +1681,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Add external URL
         /// </summary>
         /// <value>Add external URL</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings"), ResourceEntry("AddExternalUrl",
+        [ResourceEntry("AddExternalUrl",
             Value = "Add external URL",
             Description = "phrase: Add external URL",
             LastModified = "2015/03/24")]
@@ -1690,6 +1695,166 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["AddExternalUrl"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: - Hour -
+        /// </summary>
+        /// <value>- Hour -</value>
+        [ResourceEntry("HourOption",
+            Value = "- Hour -",
+            Description = "phrase: - Hour -",
+            LastModified = "2015/03/25")]
+        public string HourOption
+        {
+            get
+            {
+                return this["HourOption"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: - Minute -
+        /// </summary>
+        /// <value>- Minute -</value>
+        [ResourceEntry("MinuteOption",
+            Value = "- Minute -",
+            Description = "phrase: - Minute -",
+            LastModified = "2015/03/25")]
+        public string MinuteOption
+        {
+            get
+            {
+                return this["MinuteOption"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Upload image
+        /// </summary>
+        /// <value>Upload image</value>
+        [ResourceEntry("UploadImage",
+            Value = "Upload image",
+            Description = "phrase: Upload image",
+            LastModified = "2015/03/25")]
+        public string UploadImage
+        {
+            get
+            {
+                return this["UploadImage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Image to upload
+        /// </summary>
+        /// <value>Image to upload 1</value>
+        [ResourceEntry("ImageToUpload",
+            Value = "Image to upload 1",
+            Description = "phrase: Image to upload",
+            LastModified = "2015/03/25")]
+        public string ImageToUpload
+        {
+            get
+            {
+                return this["ImageToUpload"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Where to store the uploaded image?
+        /// </summary>
+        /// <value>Where to store the uploaded image? 1</value>
+        [ResourceEntry("WhereToStoreImage",
+            Value = "Where to store the uploaded image? 1",
+            Description = "phrase: Where to store the uploaded image?",
+            LastModified = "2015/03/25")]
+        public string WhereToStoreImage
+        {
+            get
+            {
+                return this["WhereToStoreImage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: You must select the library in which the files ought to be uploaded.
+        /// </summary>
+        /// <value>You must select the library in which the files ought to be uploaded. 1</value>
+        [ResourceEntry("SelectLibraryErrorMessage",
+            Value = "You must select the library in which the files ought to be uploaded. 1",
+            Description = "phrase: You must select the library in which the files ought to be uploaded.",
+            LastModified = "2015/03/25")]
+        public string SelectLibraryErrorMessage
+        {
+            get
+            {
+                return this["SelectLibraryErrorMessage"];
+            }
+        }
+
+        /// <summary>
+        /// word: Categories
+        /// </summary>
+        /// <value>Categories 1</value>
+        [ResourceEntry("Categories",
+            Value = "Categories 1",
+            Description = "word: Categories",
+            LastModified = "2015/03/25")]
+        public string Categories
+        {
+            get
+            {
+                return this["Categories"];
+            }
+        }
+
+        /// <summary>
+        /// word: Tags
+        /// </summary>
+        /// <value>Tags 1</value>
+        [ResourceEntry("Tags",
+            Value = "Tags 1",
+            Description = "word: Tags",
+            LastModified = "2015/03/25")]
+        public string Tags
+        {
+            get
+            {
+                return this["Tags"];
+            }
+        }
+
+        /// <summary>
+        /// word: Upload
+        /// </summary>
+        /// <value>Upload 1</value>
+        [ResourceEntry("Upload",
+            Value = "Upload 1",
+            Description = "word: Upload",
+            LastModified = "2015/03/25")]
+        public string Upload
+        {
+            get
+            {
+                return this["Upload"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Categories and tags
+        /// </summary>
+        /// <value>Categories and tags 1</value>
+        [ResourceEntry("CategoriesAndTags",
+            Value = "Categories and tags 1",
+            Description = "phrase: Categories and tags",
+            LastModified = "2015/03/25")]
+        public string CategoriesAndTags
+        {
+            get
+            {
+                return this["CategoriesAndTags"];
             }
         }
     }
