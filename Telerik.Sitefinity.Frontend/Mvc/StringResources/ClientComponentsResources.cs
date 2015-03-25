@@ -523,6 +523,216 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// phrase: Select document from your computer
+        /// </summary>
+        [ResourceEntry("SelectDocumentFromComputer",
+            Value = "Select document from your computer",
+            Description = "phrase: Select document from your computer",
+            LastModified = "2015/03/23")]
+        public string SelectDocumentFromComputer
+        {
+            get
+            {
+                return this["SelectDocumentFromComputer"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: or simply drag & drop it here
+        /// </summary>
+        [ResourceEntry("SimplyDragAndDrop",
+            Value = "or simply drag & drop it here",
+            Description = "phrase: or simply drag & drop it here",
+            LastModified = "2015/03/23")]
+        public string SimplyDragAndDrop
+        {
+            get
+            {
+                return this["SimplyDragAndDrop"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Search by title...
+        /// </summary>
+        [ResourceEntry("SearchByTitle",
+            Value = "Search by title...",
+            Description = "phrase: Search by title...",
+            LastModified = "2015/03/23")]
+        public string SearchByTitle
+        {
+            get
+            {
+                return this["SearchByTitle"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: All libraries
+        /// </summary>
+        [ResourceEntry("AllLibraries",
+            Value = "All libraries",
+            Description = "phrase: All libraries",
+            LastModified = "2015/03/23")]
+        public string AllLibraries
+        {
+            get
+            {
+                return this["AllLibraries"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: No documents
+        /// </summary>
+        [ResourceEntry("NoDocuments",
+            Value = "No documents",
+            Description = "phrase: No documents",
+            LastModified = "2015/03/23")]
+        public string NoDocuments
+        {
+            get
+            {
+                return this["NoDocuments"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Sorting and view
+        /// </summary>
+        [ResourceEntry("SortingAndView",
+            Value = "Sorting and view",
+            Description = "phrase: Sorting and view",
+            LastModified = "2015/03/23")]
+        public string SortingAndView
+        {
+            get
+            {
+                return this["SortingAndView"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Upload document
+        /// </summary>
+        [ResourceEntry("UploadDocument",
+            Value = "Upload document",
+            Description = "phrase: Upload document",
+            LastModified = "2015/03/23")]
+        public string UploadDocument
+        {
+            get
+            {
+                return this["UploadDocument"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Already uploaded documents
+        /// </summary>
+        [ResourceEntry("AlreadyUploadedDocuments",
+            Value = "Already uploaded documents",
+            Description = "phrase: Already uploaded documents",
+            LastModified = "2015/03/23")]
+        public string AlreadyUploadedDocuments
+        {
+            get
+            {
+                return this["AlreadyUploadedDocuments"];
+            }
+        }
+
+        /// <summary>
+        /// word: Libraries
+        /// </summary>
+        [ResourceEntry("Libraries",
+            Value = "Libraries",
+            Description = "word: Libraries",
+            LastModified = "2015/03/23")]
+        public string Libraries
+        {
+            get
+            {
+                return this["Libraries"];
+            }
+        }
+
+        /// <summary>
+        /// word: Tags
+        /// </summary>
+        [ResourceEntry("Tags",
+            Value = "Tags",
+            Description = "word: Tags",
+            LastModified = "2015/03/23")]
+        public string Tags
+        {
+            get
+            {
+                return this["Tags"];
+            }
+        }
+
+        /// <summary>
+        /// word: Categories
+        /// </summary>
+        [ResourceEntry("Categories",
+            Value = "Categories",
+            Description = "word: Categories",
+            LastModified = "2015/03/23")]
+        public string Categories
+        {
+            get
+            {
+                return this["Categories"];
+            }
+        }
+
+        /// <summary>
+        /// word: Dates
+        /// </summary>
+        [ResourceEntry("Dates",
+            Value = "Dates",
+            Description = "word: Dates",
+            LastModified = "2015/03/23")]
+        public string Dates
+        {
+            get
+            {
+                return this["Dates"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Other filter options
+        /// </summary>
+        [ResourceEntry("OtherFilterOptions",
+            Value = "Other filter options",
+            Description = "phrase: Other filter options",
+            LastModified = "2015/03/23")]
+        public string OtherFilterOptions
+        {
+            get
+            {
+                return this["OtherFilterOptions"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Narrow by typing...
+        /// </summary>
+        [ResourceEntry("NarrowByTyping",
+            Value = "Narrow by typing...",
+            Description = "phrase: Narrow by typing...",
+            LastModified = "2015/03/23")]
+        public string NarrowByTyping
+        {
+            get
+            {
+                return this["NarrowByTyping"];
+            }
+        }
+
+        /// <summary>
         /// No items have been created yet.
         /// phrase: No items have been created yet.
         /// </summary>
