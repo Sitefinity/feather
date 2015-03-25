@@ -221,6 +221,17 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// <param name="path">The directory path.</param>
         public void DeleteDirectory(string path)
         {
+            foreach (string directory in Directory.GetDirectories(path))
+            {
+                foreach (var file in Directory.GetFiles(directory))
+                {
+                    File.SetAttributes(file, FileAttributes.Normal);
+                    File.Delete(file);
+                }
+
+                this.DeleteDirectory(directory);
+            }
+
             try
             {
                 Directory.Delete(path, true);
@@ -232,7 +243,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             catch (IOException)
             {
                 Thread.Sleep(500);
-                DeleteNotEmptyDirectory(path);
+                Directory.Delete(path, true);
             }
             catch (UnauthorizedAccessException)
             {
@@ -324,25 +335,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             ds.RemoveAccessRule(fsa);
 
             Directory.SetAccessControl(folderPath, ds);
-        }
-
-        private static void DeleteNotEmptyDirectory(string target_dir)
-        {
-            string[] files = Directory.GetFiles(target_dir);
-            string[] dirs = Directory.GetDirectories(target_dir);
-
-            foreach (string file in files)
-            {
-                File.SetAttributes(file, FileAttributes.Normal);
-                File.Delete(file);
-            }
-
-            foreach (string dir in dirs)
-            {
-                DeleteNotEmptyDirectory(dir);
-            }
-
-            Directory.Delete(target_dir, true);
         }
 
         /// <summary>
