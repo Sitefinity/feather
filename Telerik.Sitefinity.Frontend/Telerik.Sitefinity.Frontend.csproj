@@ -388,7 +388,6 @@
   <ItemGroup>
     <Folder Include="assets\dist\js\" />
     <Folder Include="assets\src\js\" />
-    <Folder Include="client-components\selectors\taxonomies\search\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Designer\designer.js" />
@@ -450,9 +449,6 @@
     <EmbeddedResource Include="client-components\components-definitions.json" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.sf-cshtml" />
-    <EmbeddedResource Include="client-components\selectors\pages\sf-page-item-template.sf-cshtml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -569,7 +565,7 @@
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-collection.html" />
     <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.sf-cshtml" />
-    <Content Include="client-components\selectors\search\sf-search-service.js" />
+    <EmbeddedResource Include="client-components\selectors\search\sf-search-service.js" />
     <Content Include="Mvc\Controllers\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
