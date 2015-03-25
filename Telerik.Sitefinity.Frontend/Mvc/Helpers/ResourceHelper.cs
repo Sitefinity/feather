@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         public static string RenderAllScripts(HttpContextBase context)
         {
             var scriptRegister = new ResourceRegister(ResourceHelper.JsRegisterName, context);
-            var scriptMarkup = ResourceHelper.BuildHtmlScriptMarkup(scriptRegister.Container);
+            var scriptMarkup = ResourceHelper.BuildHtmlResourcesMarkup(scriptRegister, ResourceType.Js);
 
             return scriptMarkup;
         }
@@ -40,7 +40,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         public static string RenderAllStylesheets(HttpContextBase context)
         {
             var stylesheetRegister = new ResourceRegister(ResourceHelper.CssRegisterName, context);
-            var stylesheetMarkup = ResourceHelper.BuildHtmlStyleSheetMarkup(stylesheetRegister.Container);
+            var stylesheetMarkup = ResourceHelper.BuildHtmlResourcesMarkup(stylesheetRegister, ResourceType.Css);
 
             return stylesheetMarkup;
         }
@@ -51,6 +51,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="helper">The helper.</param>
         /// <param name="scriptPath">The path to the JavaScript file.</param>
         /// <param name="throwException">OPTIONAL: Indicates whether to throw an exception if the JavaScript is already registered. By default the value is set to <value>false</value>.</param>
+        /// <param name="preserveLocation">if set to <c>true</c> the script should be added to the same location where referenced; else will be added at the end of the file</param>
         /// <returns>
         /// MvcHtmlString
         /// </returns>
@@ -58,11 +59,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// This method uses directly the resource from the <see cref="scriptPath" />.
         /// In case you want to use embedded scripts from Sitefinity check <see cref="ResourceHelper.Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)" />.
         /// </remarks>
-        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, string scriptPath, bool throwException = false)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
+        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, string scriptPath, bool throwException = false, bool preserveLocation = false)
         {
             var context = helper.ViewContext.HttpContext;
             var registerName = ResourceHelper.JsRegisterName;
+            var register = new ResourceRegister(registerName, context);
             ResourceHelper.RegisterResource(context, scriptPath, registerName, throwException);
+
+            if (preserveLocation)
+                return MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(register, scriptPath));
 
             return MvcHtmlString.Empty;
         }
@@ -76,24 +82,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="helper">The helper.</param>
         /// <param name="scriptReference">The script reference.</param>
         /// <param name="throwException">if set to <c>true</c> throw exception.</param>
+        /// <param name="preserveLocation">if set to <c>true</c> the script should be added to the same location where referenced; else will be added at the end of the file</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)
+        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false, bool preserveLocation = false)
         {
             if (ResourceHelper.TryConfigureScriptManager(scriptReference))
                 return System.Web.Mvc.MvcHtmlString.Empty;
 
             var context = helper.ViewContext.HttpContext;
             var registerName = ResourceHelper.JsRegisterName;
+            var register = new ResourceRegister(registerName, context);
 
             var references = PageManager.GetScriptReferences(scriptReference).Select(r => new MvcScriptReference(r));
+            StringBuilder outputMarkup = new StringBuilder();
             foreach (var script in references)
             {
                 var resourceUrl = script.GetResourceUrl();
                 ResourceHelper.RegisterResource(context, resourceUrl, registerName, throwException);
+
+                if (preserveLocation)
+                    outputMarkup.Append(MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(register, resourceUrl)));
             }
 
-            return System.Web.Mvc.MvcHtmlString.Empty;
+            return System.Web.Mvc.MvcHtmlString.Create(outputMarkup.ToString());
         }
 
         /// <summary>
@@ -106,12 +118,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="type">The type.</param>
         /// <param name="embeddedScriptPath">The embedded script path.</param>
         /// <param name="throwException">if set to <c>true</c> throws exception.</param>
+        /// <param name="preserveLocation">if set to <c>true</c> the script should be added to the same location where referenced; else will be added at the end of the file</param>
         /// <returns>MvcHtmlString</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, bool throwException = false)
+        public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, bool throwException = false, bool preserveLocation = false)
         {
             var context = helper.ViewContext.HttpContext;
             var registerName = ResourceHelper.JsRegisterName;
+            var register = new ResourceRegister(registerName, context);
             var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
 
             var resourceUrl = page.ClientScript.GetWebResourceUrl(
@@ -119,6 +133,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                     embeddedScriptPath);
 
             ResourceHelper.RegisterResource(context, resourceUrl, registerName, throwException);
+            if (preserveLocation)
+                return MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(register, resourceUrl));
 
             return System.Web.Mvc.MvcHtmlString.Empty;
         }
@@ -129,15 +145,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="helper">The helper.</param>
         /// <param name="resourcePath">The path to the CSS file.</param>
         /// <param name="throwException">OPTIONAL: Indicates whether to throw an exception if the CSS is already registered. By default the value is set to <value>false</value>.</param>
+        /// <param name="preserveLocation">if set to <c>true</c> the resource should be added to the same location where referenced; else will be added at the end of the file</param>
         /// <returns>
         /// MvcHtmlString
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static System.Web.Mvc.MvcHtmlString StyleSheet(this HtmlHelper helper, string resourcePath, bool throwException = false)
+        public static System.Web.Mvc.MvcHtmlString StyleSheet(this HtmlHelper helper, string resourcePath, bool throwException = false, bool preserveLocation = false)
         {
             var context = helper.ViewContext.HttpContext;
             var registerName = ResourceHelper.CssRegisterName;
+            var register = new ResourceRegister(registerName, context);
             ResourceHelper.RegisterResource(context, resourcePath, registerName, throwException);
+
+            if (preserveLocation)
+                return MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(register, resourcePath));
 
             return MvcHtmlString.Empty;
         }
@@ -191,37 +212,55 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 return true;
         }
 
-        private static string BuildHtmlScriptMarkup(HashSet<string> scriptPaths)
+        private static string BuildHtmlResourcesMarkup(ResourceRegister resourceRegister, ResourceType resourceType)
         {
             StringBuilder output = new StringBuilder();
 
-            foreach (var scriptPath in scriptPaths)
+            for (int i = 0; i < resourceRegister.Container.Count; i++)
             {
-                var attributes = new KeyValuePair<string, string>[2];
-                attributes[0] = new KeyValuePair<string, string>("src", scriptPath);
-                attributes[1] = new KeyValuePair<string, string>("type", "text/javascript");
+                var resourceInfo = resourceRegister.Container.ElementAt(i);
 
-                output.Append(ResourceHelper.GenerateTag("script", attributes));
+                if (resourceType == ResourceType.Js)
+                    output.Append(ResourceHelper.BuildScriptMarkup(resourceRegister, resourceInfo.Key));
+                else if (resourceType == ResourceType.Css)
+                    output.Append(ResourceHelper.BuildStyleSheetMarkup(resourceRegister, resourceInfo.Key));
             }
 
             return output.ToString();
         }
 
-        private static string BuildHtmlStyleSheetMarkup(HashSet<string> resourcePaths)
+        private static string BuildScriptMarkup(ResourceRegister resourceRegister, string resourceKey)
         {
-            StringBuilder output = new StringBuilder();
+            var resourceHtml = string.Empty;
+            if (!resourceRegister.Container[resourceKey])
+            {
+                var attributes = new KeyValuePair<string, string>[2];
+                attributes[0] = new KeyValuePair<string, string>("src", resourceKey);
+                attributes[1] = new KeyValuePair<string, string>("type", "text/javascript");
 
-            foreach (var resourcePath in resourcePaths)
+                resourceHtml = ResourceHelper.GenerateTag("script", attributes);
+                resourceRegister.Container[resourceKey] = true;
+            }
+
+            return resourceHtml;
+        }
+
+        private static string BuildStyleSheetMarkup(ResourceRegister resourceRegister, string resourceKey)
+        {
+            var resourceHtml = string.Empty;
+
+            if (!resourceRegister.Container[resourceKey])
             {
                 var attributes = new KeyValuePair<string, string>[3];
                 attributes[0] = new KeyValuePair<string, string>("rel", "stylesheet");
-                attributes[1] = new KeyValuePair<string, string>("href", resourcePath);
+                attributes[1] = new KeyValuePair<string, string>("href", resourceKey);
                 attributes[2] = new KeyValuePair<string, string>("type", "text/css");
 
-                output.Append(ResourceHelper.GenerateTag("link", attributes));
+                resourceHtml = ResourceHelper.GenerateTag("link", attributes);
+                resourceRegister.Container[resourceKey] = true;
             }
 
-            return output.ToString();
+            return resourceHtml;
         }
 
         /// <summary>
@@ -282,6 +321,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             {
                 return this.GetUrl(new ScriptManager(), zip: false);
             }
+        }
+
+        /// <summary>
+        /// This enum represents supported resource types.
+        /// </summary>
+        private enum ResourceType
+        {
+            Js,
+            Css
         }
     }
 }

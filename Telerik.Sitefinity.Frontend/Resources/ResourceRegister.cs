@@ -12,9 +12,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
         #region Constructors
 
         /// <summary>
-        /// Constructs a new instances of the <see cref="ResourceRegister"/> class.
+        /// Constructs a new instances of the <see cref="ResourceRegister" /> class.
         /// </summary>
         /// <param name="name">The name of the register.</param>
+        /// <param name="httpContext">The HTTP context.</param>
         public ResourceRegister(string name, System.Web.HttpContextBase httpContext)
         {
             this.name = name;
@@ -28,17 +29,17 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <summary>
         /// Gets the current container that contains the registered resources.
         /// </summary>
-        protected internal virtual HashSet<string> Container
+        protected internal virtual Dictionary<string, bool> Container
         {
             get
             {
                 if (this.Context.Items.Contains(this.name))
                 {
-                    this.container = (HashSet<string>)this.Context.Items[this.name];
+                    this.container = (Dictionary<string, bool>)this.Context.Items[this.name];
                 }
                 else
                 {
-                    this.container = new HashSet<string>();
+                    this.container = new Dictionary<string, bool>();
                     this.Context.Items.Add(this.name, this.container);
                 }
 
@@ -100,12 +101,12 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
         private bool IsRegistered(string resourceKey)
         {
-            return this.Container.Contains(resourceKey);
+            return this.Container.ContainsKey(resourceKey);
         }
 
         private void Register(string resourceKey)
         {
-            this.Container.Add(resourceKey);
+            this.Container.Add(resourceKey, false);
         }
 
         #endregion
@@ -113,7 +114,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         #region Fields
 
         private HttpContextBase context;
-        private HashSet<string> container;
+        private Dictionary<string, bool> container;
         private string name;
 
         #endregion

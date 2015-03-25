@@ -135,18 +135,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                     this.InstantiateControls(placeHolder);
                 }
             }
-            else if (chunk.TagName.Equals("feather-script-renderer", StringComparison.OrdinalIgnoreCase) 
-                || chunk.Html.Equals("<feather-script-renderer>", StringComparison.OrdinalIgnoreCase))
-            {
-                var scriptRenderer = new ScriptRenderer();
-                container.Peek().Controls.Add(scriptRenderer);
-            }
-            else if (chunk.TagName.Equals("feather-stylesheet-renderer", StringComparison.OrdinalIgnoreCase)
-            || chunk.Html.Equals("<feather-stylesheet-renderer>", StringComparison.OrdinalIgnoreCase))
-            {
-                var scriptRenderer = new StyleSheetRenderer();
-                container.Peek().Controls.Add(scriptRenderer);
-            }
             else if (chunk.TagName.Equals("form", StringComparison.OrdinalIgnoreCase) && chunk.HasAttribute("runat"))
             {
                 this.AddIfNotEmpty(currentLiteralText.ToString(), container.Peek());
@@ -190,6 +178,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             {
                 this.AddIfNotEmpty(currentLiteralText.ToString(), container.Pop());
                 currentLiteralText.Clear();
+
+                var scriptRenderer = new StyleSheetRenderer();
+                container.Peek().Controls.Add(scriptRenderer);
             }
             else if (chunk.TagName.Equals("form", StringComparison.OrdinalIgnoreCase))
             {
@@ -207,15 +198,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             {
                 //// Ignore
             }
-            else if (chunk.TagName.Equals("feather-script-renderer", StringComparison.OrdinalIgnoreCase)
-                || chunk.Html.Equals("</feather-script-renderer>", StringComparison.OrdinalIgnoreCase))
+            else if (chunk.TagName.Equals("body", StringComparison.OrdinalIgnoreCase))
             {
-                //// Ignore
-            }
-            else if (chunk.TagName.Equals("feather-stylesheet-renderer", StringComparison.OrdinalIgnoreCase)
-            || chunk.Html.Equals("</feather-stylesheet-renderer>", StringComparison.OrdinalIgnoreCase))
-            {
-                //// Ignore
+                var scriptRenderer = new ScriptRenderer();
+                container.Peek().Controls.Add(scriptRenderer);
             }
             else
             {
