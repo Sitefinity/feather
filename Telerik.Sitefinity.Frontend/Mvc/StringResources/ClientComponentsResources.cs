@@ -2158,5 +2158,37 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["Quality"];
             }
         }
+
+        /// <summary>
+        /// phrase: Dimensions:
+        /// </summary>
+        /// <value>Dimensions:</value>
+        [ResourceEntry("Dimensions",
+            Value = "Dimensions:",
+            Description = "phrase: Dimensions:",
+            LastModified = "2015/03/25")]
+        public string Dimensions
+        {
+            get
+            {
+                return this["Dimensions"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Date modified:
+        /// </summary>
+        /// <value>Date modified:</value>
+        [ResourceEntry("ModifiedOn",
+            Value = "Date modified:",
+            Description = "phrase: Date modified:",
+            LastModified = "2015/03/25")]
+        public string ModifiedOn
+        {
+            get
+            {
+                return this["ModifiedOn"];
+            }
+        }
     }
 }
