@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Web.Hosting;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -54,6 +55,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
         private void SetMasterInternals(Page page)
         {
+            var templateControlVirtualPathProperty = typeof(TemplateControl).GetProperty("TemplateControlVirtualPath", BindingFlags.NonPublic | BindingFlags.Instance);
+            var masterPageFileVp = typeof(Page).GetField("_masterPageFile", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(page);
+            var pageVirtualPath = templateControlVirtualPathProperty.GetValue(page, null);
+            var templateControlVp = typeof(VirtualPathProvider).GetMethod("CombineVirtualPathsInternal", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, new object[] { pageVirtualPath, masterPageFileVp });
+            templateControlVirtualPathProperty.SetValue(this, templateControlVp, null);
+
             typeof(Page).GetField("_master", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(page, this);
             typeof(MasterPage).GetField("_ownerControl", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(this, page);
 
@@ -146,6 +153,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 currentLiteralText.Clear();
 
                 var form = new HtmlForm();
+                if (chunk.HasAttribute("id"))
+                    form.ID = chunk.AttributesMap["id"] as string;
+                else
+                    form.ID = "aspnetForm";
+
                 container.Peek().Controls.Add(form);
                 container.Push(form);
             }
