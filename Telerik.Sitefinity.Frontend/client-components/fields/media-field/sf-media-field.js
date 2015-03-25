@@ -28,7 +28,7 @@
 
                     var getMedia = function (id) {
                         sfMediaService.documents.getById(id, scope.sfProvider).then(function (data) {
-                            if (data && data.Item) {
+                            if (data && data.Item && data.Item.Visible) {
                                 refreshScopeInfo(data.Item);
                             }
                         });
