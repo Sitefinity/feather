@@ -1539,9 +1539,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Image to upload
         /// </summary>
-        /// <value>Image to upload 1</value>
+        /// <value>Image to upload</value>
         [ResourceEntry("ImageToUpload",
-            Value = "Image to upload 1",
+            Value = "Image to upload",
             Description = "phrase: Image to upload",
             LastModified = "2015/03/25")]
         public string ImageToUpload
@@ -1555,9 +1555,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Where to store the uploaded image?
         /// </summary>
-        /// <value>Where to store the uploaded image? 1</value>
+        /// <value>Where to store the uploaded image?</value>
         [ResourceEntry("WhereToStoreImage",
-            Value = "Where to store the uploaded image? 1",
+            Value = "Where to store the uploaded image?",
             Description = "phrase: Where to store the uploaded image?",
             LastModified = "2015/03/25")]
         public string WhereToStoreImage
@@ -1571,9 +1571,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: You must select the library in which the files ought to be uploaded.
         /// </summary>
-        /// <value>You must select the library in which the files ought to be uploaded. 1</value>
+        /// <value>You must select the library in which the files ought to be uploaded.</value>
         [ResourceEntry("SelectLibraryErrorMessage",
-            Value = "You must select the library in which the files ought to be uploaded. 1",
+            Value = "You must select the library in which the files ought to be uploaded.",
             Description = "phrase: You must select the library in which the files ought to be uploaded.",
             LastModified = "2015/03/25")]
         public string SelectLibraryErrorMessage
@@ -1587,9 +1587,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Categories
         /// </summary>
-        /// <value>Categories 1</value>
+        /// <value>Categories</value>
         [ResourceEntry("Categories",
-            Value = "Categories 1",
+            Value = "Categories",
             Description = "word: Categories",
             LastModified = "2015/03/25")]
         public string Categories
@@ -1603,9 +1603,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Tags
         /// </summary>
-        /// <value>Tags 1</value>
+        /// <value>Tags</value>
         [ResourceEntry("Tags",
-            Value = "Tags 1",
+            Value = "Tags",
             Description = "word: Tags",
             LastModified = "2015/03/25")]
         public string Tags
@@ -1619,9 +1619,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// word: Upload
         /// </summary>
-        /// <value>Upload 1</value>
+        /// <value>Upload</value>
         [ResourceEntry("Upload",
-            Value = "Upload 1",
+            Value = "Upload",
             Description = "word: Upload",
             LastModified = "2015/03/25")]
         public string Upload
@@ -1635,9 +1635,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// phrase: Categories and tags
         /// </summary>
-        /// <value>Categories and tags 1</value>
+        /// <value>Categories and tags</value>
         [ResourceEntry("CategoriesAndTags",
-            Value = "Categories and tags 1",
+            Value = "Categories and tags",
             Description = "phrase: Categories and tags",
             LastModified = "2015/03/25")]
         public string CategoriesAndTags
