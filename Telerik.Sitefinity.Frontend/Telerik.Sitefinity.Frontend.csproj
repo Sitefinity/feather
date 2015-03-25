@@ -194,6 +194,7 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\StyleSheetRenderer.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

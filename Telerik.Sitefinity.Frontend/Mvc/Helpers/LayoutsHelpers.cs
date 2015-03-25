@@ -33,5 +33,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return new System.Web.Mvc.MvcHtmlString(htmlString);
         }
+
+        /// <summary>
+        /// Html helper which renders all stylesheet tags.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "helper")]
+        public static System.Web.Mvc.MvcHtmlString SfStyleSheetRenderer(this HtmlHelper helper)
+        {
+            var htmlString = "<feather-stylesheet-renderer></feather-stylesheet-renderer>";
+
+            return new System.Web.Mvc.MvcHtmlString(htmlString);
+        }
     }
 }
