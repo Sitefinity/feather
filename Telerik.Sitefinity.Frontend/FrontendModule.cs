@@ -62,6 +62,11 @@ namespace Telerik.Sitefinity.Frontend
             Bootstrapper.Initialized += this.Bootstrapper_Initialized;
         }
 
+        /// <summary>
+        /// Upgrades this module from the specified version.
+        /// </summary>
+        /// <param name="initializer">The Site Initializer. A helper class for installing Sitefinity modules.</param>
+        /// <param name="upgradeFrom">The version this module us upgrading from.</param>
         public override void Upgrade(SiteInitializer initializer, Version upgradeFrom)
         {
             base.Upgrade(initializer, upgradeFrom);
