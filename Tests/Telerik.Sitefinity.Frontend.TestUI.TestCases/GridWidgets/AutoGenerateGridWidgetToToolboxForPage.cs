@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ArtOfTest.WebAii.Core;
+using System.Net.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
@@ -15,15 +11,15 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
     /// This is test class for grid widget on page and page template.
     /// </summary>
     [TestClass]
-    public class AutoGenerateGridWidgetToToolboxForPage_ : FeatherTestCase
+    public class AutoGenerateGridWidgetToToolboxForPage : FeatherTestCase
     {
         /// <summary>
-        /// UI test AutoGenerateGridWidgetToToolboxForPage
+        /// UI test AddAndDeleteGridWidgetFromFileSystemVerifyPageToolbox
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
-        public void AutoGenerateGridWidgetToToolboxForPage()
+        public void AddAndDeleteGridWidgetFromFileSystemVerifyPageToolbox()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
@@ -31,21 +27,27 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
             BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropLayoutWidget(LayoutCaption);
             BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount1);
-            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
-            this.VerifyGridWidgetOnTheFrontend();
-        }
-
-        /// <summary>
-        /// Verify grid widget on the frontend
-        /// </summary>
-        public void VerifyGridWidgetOnTheFrontend()
-        {
-            string[] layouts = new string[] { LayouClass1, LayouClass2 };
+            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();           
 
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
-            ActiveBrowser.WaitUntilReady();
+            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyNewGridWidgetOnTheFrontend(this.layouts);
 
-            BATFrontend.Wrappers().Frontend().Widgets().GridWidgets().VerifyNewGridWidgetOnTheFrontend(layouts);
+            BAT.Arrange(this.TestName).ExecuteArrangement("DeleteGridWidgetFromFileSystem");
+
+            BAT.Macros().NavigateTo().Pages();
+            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
+            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
+            BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
+            Assert.IsFalse(
+                BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().IsLayoutWidgetPresentInToolbox(LayoutCaption),
+                "Layout widget is found in the toolbox");
+
+            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage(); 
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
+
+            // Asserts that the page is not throwing an error 500 on the frontend
+            HttpResponseMessage response = new HttpResponseMessage();
+            Assert.AreEqual(200, (int)response.StatusCode);
         }
 
         /// <summary>
@@ -67,8 +69,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
 
         private const string PageName = "GridPage";
         private const string LayoutCaption = "grid-grid";
-        private const string LayouClass1 = "col-md-3";
-        private const string LayouClass2 = "col-md-9";
         private const int GridCount1 = 1;
+        private readonly string[] layouts = new string[] { "col-md-3", "col-md-9" };
     }
 }
