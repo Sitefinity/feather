@@ -1,16 +1,19 @@
 ﻿<div class="container-fluid">
     <div class="row">
         <div class="col-md-5 text-center">
-            <div class="sf-Media--info-doc">
+            <div class="sf-Media--info-doc" ng-show="sfMedia">
 
                 <i class="icon-file icon-txt">
                     <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension}}</span>
                 </i>
             </div>
+            <div ng-show="!sfMedia">
+                <span>@(Res.Get<ClientComponentsResources>().DocumentHasBeenDeleted)</span>
+            </div>
         </div>
 
         <div class="col-md-7">
-            <p>
+            <div ng-show="sfMedia">
                 <h4>
                     <a title="{{sfMedia.Title.Value}}" ng-href="{{sfMedia.MediaUrl}}" target="_blank">{{sfMedia.Title.Value}}</a>
                 </h4>
@@ -23,7 +26,7 @@
 
                 <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
                 <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
-            </p>
+            </div>
 
             <br />
             <button class="btn btn-xs btn-default" ng-click="changeMedia()">@(Res.Get<ClientComponentsResources>().ChangeDocument)</button>

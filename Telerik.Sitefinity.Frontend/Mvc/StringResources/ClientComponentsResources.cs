@@ -448,6 +448,81 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// phrase: The document has been deleted or unpublished
+        /// </summary>
+        [ResourceEntry("DocumentHasBeenDeleted",
+            Value = "The document has been deleted or unpublished",
+            Description = "phrase: The document has been deleted or unpublished",
+            LastModified = "2015/03/23")]
+        public string DocumentHasBeenDeleted
+        {
+            get
+            {
+                return this["DocumentHasBeenDeleted"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Created on:
+        /// </summary>
+        [ResourceEntry("CreatedOn",
+            Value = "Created on:",
+            Description = "phrase: Created on:",
+            LastModified = "2015/03/23")]
+        public string CreatedOn
+        {
+            get
+            {
+                return this["CreatedOn"];
+            }
+        }
+
+        /// <summary>
+        /// word: Library:
+        /// </summary>
+        [ResourceEntry("Library",
+            Value = "Library:",
+            Description = "word: Library:",
+            LastModified = "2015/03/23")]
+        public string Library
+        {
+            get
+            {
+                return this["Library"];
+            }
+        }
+
+        /// <summary>
+        /// word: Size:
+        /// </summary>
+        [ResourceEntry("Size",
+            Value = "Size:",
+            Description = "word: Size:",
+            LastModified = "2015/03/23")]
+        public string Size
+        {
+            get
+            {
+                return this["Size"];
+            }
+        }
+
+        /// <summary>
+        /// word: By
+        /// </summary>
+        [ResourceEntry("By",
+            Value = "by",
+            Description = "word: By",
+            LastModified = "2015/03/23")]
+        public string By
+        {
+            get
+            {
+                return this["By"];
+            }
+        }
+
+        /// <summary>
         /// No items have been created yet.
         /// phrase: No items have been created yet.
         /// </summary>
