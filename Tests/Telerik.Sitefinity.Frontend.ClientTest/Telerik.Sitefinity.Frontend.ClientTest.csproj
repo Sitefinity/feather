@@ -32,8 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArtOfTest.WebAii, Version=2014.2.618.0, Culture=neutral, PublicKeyToken=4fd5f65be123776c, processorArchitecture=MSIL" />
-    <Reference Include="ArtOfTest.WebAii.Design, Version=2014.2.618.0, Culture=neutral, PublicKeyToken=4fc62bbc3827ab1d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
