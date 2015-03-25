@@ -7,7 +7,7 @@
 		            selectedClass: '=',
 		            viewName: '='
 		        },
-		        templateUrl: sitefinity.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'Mvc/Scripts/Templates/style-dropdown.html'),
+		        templateUrl: sitefinity.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'Mvc/Scripts/Templates/style-dropdown.sf-cshtml'),
 		        link: function (scope, element, attrs) {
 		            scope.cssClasses = [];
 		            var allCssClasses;
