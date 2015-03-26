@@ -53,6 +53,7 @@
     <Content Include="unit\fields\sfFlatTaxonFieldSpecs.js" />
     <Content Include="unit\search\sfSearchBoxSpec.js" />
     <Content Include="unit\selectors\librarySelectorSpec.js" />
+    <Content Include="unit\selectors\listsSelectorSpec.js" />
     <Content Include="unit\selectors\sfLibrariesBreadcrumbSpec.js" />
     <Content Include="unit\selectors\sfImageSelectorSpec.js" />
     <Content Include="unit\selectors\externalUrlsViewSpec.js" />
@@ -66,6 +67,7 @@
     <Content Include="unit\selectors\sfThumbnailSizeSelection.js" />
     <Content Include="unit\services\languageServiceSpec.js" />
     <Content Include="unit\services\multisiteSpec.js" />
+    <Content Include="unit\services\listsServiceSpec.js" />
     <Content Include="unit\services\sfLinkServiceSpec.js" />
     <Content Include="unit\services\sfMediaFilterSpec.js" />
     <Content Include="unit\services\sfMediaMarkupServiceSpec.js" />
