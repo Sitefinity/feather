@@ -292,6 +292,7 @@
     <Compile Include="FilesMonitoring\ResourceType.cs" />
     <Compile Include="Resources\ResourceHttpHandler.cs" />
     <Compile Include="Resources\ResourcesInitiliazer.cs" />
+    <Compile Include="Resources\ResourceTemplateProcessor.cs" />
     <Compile Include="Resources\ServerContextHandler.cs" />
     <Compile Include="Resources\UrlTransformations.cs" />
     <Compile Include="Security\AuthenticationEvaluator.cs" />
@@ -586,7 +587,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

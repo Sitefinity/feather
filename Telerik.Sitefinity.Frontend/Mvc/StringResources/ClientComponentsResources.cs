@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
     /// <summary>
     /// Localizable strings for the client components.
     /// </summary>
-    [ObjectInfo(typeof(ClientComponentsResources), Title = "ClientComponentsResourcesTitle", Description = "ClientComponentsResourcesDescription")]
+    [ObjectInfo(typeof(ClientComponentsResources), ResourceClassId = "ClientComponentsResources", Title = "ClientComponentsResourcesTitle", Description = "ClientComponentsResourcesDescription")]
     public class ClientComponentsResources : Resource
     {
         /// <summary>

@@ -21,11 +21,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public ResourceHttpHandler(string path)
         {
             this.rootPath = path;
-            var templateService = new RazorEngine.Templating.TemplateService();
-            templateService.AddNamespace("Telerik.Sitefinity.Localization");
-            templateService.AddNamespace("Telerik.Sitefinity.Frontend.Mvc.StringResources");
-
-            this.razorParser = new RazorTemplateProcessor(templateService);
+            this.parser = new ResourceTemplateProcessor();
         }
 
         #region IHttpHandler
@@ -140,7 +136,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         protected virtual void SendParsedTemplate(HttpContext context)
         {
             context.Response.ContentType = "text/html";
-            var output = this.razorParser.Run(context.Request.Url.AbsolutePath, model: null);
+            var output = this.parser.Process(context.Request.Url.AbsolutePath);
 
             this.WriteToOutput(context, context.Response.ContentEncoding.GetBytes(output));
         }
@@ -189,7 +185,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return File.GetLastWriteTime((new Uri(name.CodeBase)).LocalPath);
         }
 
-        private readonly RazorTemplateProcessor razorParser;
+        private readonly ResourceTemplateProcessor parser;
         private readonly string rootPath;
     }
 }
