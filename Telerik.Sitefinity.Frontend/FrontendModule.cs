@@ -5,10 +5,10 @@ using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.Designers;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
-using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Frontend.Services.ListsService;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
@@ -60,6 +60,8 @@ namespace Telerik.Sitefinity.Frontend
 
             Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
             Bootstrapper.Initialized += this.Bootstrapper_Initialized;
+
+            SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
         }
 
         /// <summary>
