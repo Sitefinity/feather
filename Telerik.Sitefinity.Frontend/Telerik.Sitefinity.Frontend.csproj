@@ -54,6 +54,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
@@ -131,6 +135,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Sitefinity.ContentModules">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.8.0.5700.0\lib\net40\Telerik.Sitefinity.ContentModules.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Sitefinity.Model">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
@@ -195,6 +203,7 @@
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\StyleSheetRenderer.cs" />
+    <Compile Include="Mvc\Infrastructure\Attributes\EmailAddressAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -313,6 +322,9 @@
     <Compile Include="Resources\Resolvers\ResourceResolverStrategy.cs" />
     <Compile Include="Resources\VirtualPathBuilder.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerContainerInitializer.cs" />
+    <Compile Include="Services\DTO\SpecificListsGetRequest.cs" />
+    <Compile Include="Services\ListsService\ListsServiceStackPlugin.cs" />
+    <Compile Include="Services\ListsService\ListsWebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="client-components\collections\sf-collection.js" />
@@ -564,6 +576,9 @@
     <EmbeddedResource Include="client-components\fields\html-field\sf-document-properties-content-block.html" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.html" />
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-collection.html" />
+    <EmbeddedResource Include="client-components\selectors\list\sf-lists-service.js" />
+    <Content Include="client-components\selectors\list\sf-lists-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\list\sf-lists-selector.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

@@ -5,10 +5,10 @@ using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.Designers;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
-using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Frontend.Services.ListsService;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
@@ -60,6 +60,8 @@ namespace Telerik.Sitefinity.Frontend
 
             Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
             Bootstrapper.Initialized += this.Bootstrapper_Initialized;
+
+            SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
         }
 
         /// <summary>
@@ -74,6 +76,7 @@ namespace Telerik.Sitefinity.Frontend
             if (upgradeFrom < new Version(1, 2, 140, 0))
             {
                 this.DeleteOldGridSection();
+                this.UpdateContentBlockTitle();
             }
         }
 
@@ -205,6 +208,29 @@ namespace Telerik.Sitefinity.Frontend
                     {
                         layoutsToolbox.Sections.Remove(htmlLayoutsSection);
                         configManager.SaveSection(toolboxConfig);
+                    }
+                }
+            }
+        }
+
+        private void UpdateContentBlockTitle()
+        {
+            var configManager = ConfigManager.GetManager();
+            using (new ElevatedConfigModeRegion())
+            {
+                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
+                var controlsToolbox = toolboxConfig.Toolboxes["PageControls"];
+                if (controlsToolbox != null)
+                {
+                    var mvcWidgetsSection = controlsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
+                    if (mvcWidgetsSection != null)
+                    {
+                        var contentBlockTool = mvcWidgetsSection.Tools.FirstOrDefault<ToolboxItem>(t => t.Name == "ContentBlock");
+                        if (contentBlockTool != null)
+                        {
+                            contentBlockTool.Title = "Content Block";
+                            configManager.SaveSection(toolboxConfig);
+                        }
                     }
                 }
             }
