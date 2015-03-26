@@ -18,7 +18,7 @@
 
                         ctrl.selectorType = 'ListsSelector';
 
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/list/sf-lists-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/lists/sf-lists-selector.html';
 
                         var closedDialogTemplate = attrs.sfMultiselect ?
                             'client-components/selectors/common/sf-list-group-selection.html' :
