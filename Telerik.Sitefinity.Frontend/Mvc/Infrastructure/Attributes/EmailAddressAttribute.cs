@@ -15,27 +15,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Attributes
     public class EmailAddressAttribute : ValidationAttribute, IClientValidatable
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmailAddressAttribute"/> class with a custom error message and a custom regex pattern matcher.
+        /// Initializes a new instance of the <see cref="EmailAddressAttribute"/> class with a custom regex pattern matcher.
         /// </summary>
-        public EmailAddressAttribute(string errorMessage, string regexPattern)
+        public EmailAddressAttribute(string regexPattern)
         {
-            this.ErrorMessage = errorMessage;
             this.regex = new Regex(regexPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmailAddressAttribute"/> class with a default error message and the default regex pattern matcher.
+        /// Initializes a new instance of the <see cref="EmailAddressAttribute"/> class the default regex pattern matcher.
         /// </summary>
         public EmailAddressAttribute()
-            : this("Invalid Email", EmailAddressAttribute.DefaultRegexPattern)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmailAddressAttribute"/> class with a custom error message and the default regex pattern matcher.
-        /// </summary>
-        public EmailAddressAttribute(string errorMessage)
-            : this(errorMessage, EmailAddressAttribute.DefaultRegexPattern)
+            : this(EmailAddressAttribute.DefaultRegexPattern)
         {
         }
 
