@@ -74,6 +74,7 @@ namespace Telerik.Sitefinity.Frontend
             if (upgradeFrom < new Version(1, 2, 140, 0))
             {
                 this.DeleteOldGridSection();
+                this.UpdateContentBlockTitle();
             }
         }
 
@@ -205,6 +206,29 @@ namespace Telerik.Sitefinity.Frontend
                     {
                         layoutsToolbox.Sections.Remove(htmlLayoutsSection);
                         configManager.SaveSection(toolboxConfig);
+                    }
+                }
+            }
+        }
+
+        private void UpdateContentBlockTitle()
+        {
+            var configManager = ConfigManager.GetManager();
+            using (new ElevatedConfigModeRegion())
+            {
+                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
+                var controlsToolbox = toolboxConfig.Toolboxes["PageControls"];
+                if (controlsToolbox != null)
+                {
+                    var mvcWidgetsSection = controlsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
+                    if (mvcWidgetsSection != null)
+                    {
+                        var contentBlockTool = mvcWidgetsSection.Tools.FirstOrDefault<ToolboxItem>(t => t.Name == "ContentBlock");
+                        if (contentBlockTool != null)
+                        {
+                            contentBlockTool.Title = "Content Block";
+                            configManager.SaveSection(toolboxConfig);
+                        }
                     }
                 }
             }
