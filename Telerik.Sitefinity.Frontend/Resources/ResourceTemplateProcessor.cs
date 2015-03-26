@@ -69,7 +69,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                         }
                         catch (Exception ex)
                         {
-                            Log.Write(string.Format("Error when localizing a template with path {0}. Exception: {1}", templatePath, ex.Message));
+                            Log.Write(string.Format("Error when localizing a template with path {0}. Exception: {1}", templatePath, ex.ToString()));
                             return ex.Message;
                         }
                     }
