@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Caching;
 using System.Web.Hosting;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Localization;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -27,7 +28,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RazorTemplateProcessor"/> class.
+        /// Initializes a new instance of the <see cref="ResourceTemplateProcessor" /> class.
         /// </summary>
         /// <param name="virtualPathProvider">The virtual path provider for retrieving files.</param>
         public ResourceTemplateProcessor(VirtualPathProvider virtualPathProvider)
@@ -37,6 +38,11 @@ namespace Telerik.Sitefinity.Frontend.Resources
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Localizes the template at the specified path.
+        /// </summary>
+        /// <param name="templatePath">The template path.</param>
+        /// <returns>The localized template.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public string Process(string templatePath)
         {
@@ -52,19 +58,18 @@ namespace Telerik.Sitefinity.Frontend.Resources
                             var processedTemplate = this.ReplaceResources(markup);
 
                             var dependency = this.virtualPathProvider.GetCacheDependency(templatePath, null, DateTime.UtcNow);
-                            if (dependency != null)
+
+                            this.cachedTemplates[templatePath] = new CachedTemplate()
                             {
-                                this.cachedTemplates[templatePath] = new CachedTemplate()
-                                {
-                                    Dependency = dependency,
-                                    Template = processedTemplate
-                                };
-                            }
+                                Dependency = dependency,
+                                Template = processedTemplate
+                            };
 
                             return processedTemplate;
                         }
                         catch (Exception ex)
                         {
+                            Log.Write(string.Format("Error when localizing a template with path {0}. Exception: {1}", templatePath, ex.Message));
                             return ex.Message;
                         }
                     }
@@ -79,6 +84,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 return this.cachedTemplates[templatePath].Template;
             }
         }
+
         #endregion
 
         #region Private methods
@@ -129,7 +135,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns></returns>
         private bool ShouldProcessTemplate(string templatePath)
         {
-            return !this.cachedTemplates.ContainsKey(templatePath) || this.cachedTemplates[templatePath].Dependency.HasChanged;
+            return !this.cachedTemplates.ContainsKey(templatePath) ||
+                (this.cachedTemplates[templatePath].Dependency != null && this.cachedTemplates[templatePath].Dependency.HasChanged);
         }
 
         #endregion
