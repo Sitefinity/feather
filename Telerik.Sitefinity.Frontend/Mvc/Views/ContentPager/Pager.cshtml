@@ -1,21 +1,34 @@
 @model Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels.PagerViewModel
 
 <ul class="pagination">
-    <li><a href="@String.Format(Model.RedirectUrlTemplate, 1)">«</a></li>
-    @for (int i = 1; i <= Model.TotalPagesCount; i++)
+    @if (Model.PreviousNode != null){
+    <li>
+        <a href="@String.Format(Model.RedirectUrlTemplate, Model.PreviousNode.PageNumber)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>
+    }
+    @foreach (var page in Model.PagerNodes.OrderBy(x => x.PageNumber))
     {
-        if(Model.CurrentPage == i)
+        if (Model.CurrentPage == page.PageNumber)
         {
             <li class="active">
-                <a href="@String.Format(Model.RedirectUrlTemplate, i)">@i.ToString() <span class="sr-only">(current)</span></a>
+                <a href="@String.Format(Model.RedirectUrlTemplate, page.PageNumber)">@page.PageNumber <span class="sr-only">(current)</span></a>
             </li>
         }
         else
         {
             <li>
-                <a href="@String.Format(Model.RedirectUrlTemplate, i)">@i.ToString()</a>
+                <a href="@String.Format(Model.RedirectUrlTemplate, page.PageNumber)">@page.PageNumber</a>
             </li>
         }
     }
-    <li><a href="@String.Format(Model.RedirectUrlTemplate, Model.TotalPagesCount)">»</a></li>
+    @if (Model.NextNode != null)
+    {
+    <li>
+        <a href="@String.Format(Model.RedirectUrlTemplate, Model.NextNode.PageNumber)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+    }
 </ul>
