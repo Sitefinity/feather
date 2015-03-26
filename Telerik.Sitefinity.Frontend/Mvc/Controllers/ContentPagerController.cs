@@ -28,42 +28,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             var model = new PagerViewModel(currentPage, totalPagesCount, redirectUrlTemplate);
 
             // Build the pager
-            int num = 1;
+            int startIndex = 1;
             if (model.CurrentPage > model.DisplayCount)
             {
                 if (model.CurrentPage <= 0)
                     model.CurrentPage = 1;
 
-                num = ((int)Math.Floor(Convert.ToDecimal(model.CurrentPage - 1) / model.DisplayCount) * model.DisplayCount) + 1;
+                startIndex = ((int)Math.Floor((double)(model.CurrentPage - 1) / model.DisplayCount) * model.DisplayCount) + 1;
             }
 
-            int num1 = Math.Min(model.TotalPagesCount, (num + model.DisplayCount) - 1);
+            int endIndex = Math.Min(model.TotalPagesCount, (startIndex + model.DisplayCount) - 1);
 
             // Check to see if we need a Previous Button Node
-            if (num > model.DisplayCount)
+            if (startIndex > model.DisplayCount)
             {
-                model.PreviousNode = new Pager.PagerNumericItem(Math.Max(num - 1, 1));
+                model.PreviousNode = new Pager.PagerNumericItem(Math.Max(startIndex - 1, 1));
             }
             else
             {
                 model.PreviousNode = null;
             }
 
-            int num2 = num;
-            int num3 = num1;
-
-            while (num2 <= num3)
+            for (int i = startIndex; i <= endIndex; i++)
             {
-                string str = string.Format(model.RedirectUrlTemplate, num2);
-                Pager.PagerNumericItem pagerNumericItem1 = new Pager.PagerNumericItem(num2, str);
-                model.PagerNodes.Add(pagerNumericItem1);
-                num2++;
+                var text = string.Format(model.RedirectUrlTemplate, i);
+                Pager.PagerNumericItem pagerNumericItem = new Pager.PagerNumericItem(i, text);
+                model.PagerNodes.Add(pagerNumericItem);
             }
 
             // Check to see if we need a Next Button Node
-            if (num1 < model.TotalPagesCount)
+            if (endIndex < model.TotalPagesCount)
             {
-                model.NextNode = new Pager.PagerNumericItem(num1 + 1);
+                model.NextNode = new Pager.PagerNumericItem(endIndex + 1);
             }
             else
             {

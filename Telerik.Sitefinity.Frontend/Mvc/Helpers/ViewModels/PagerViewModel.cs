@@ -11,8 +11,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels
     /// </summary>
     public class PagerViewModel
     {
-        private IList<Pager.PagerNumericItem> pagerNodes;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PagerViewModel"/> class.
         /// </summary>
@@ -20,11 +18,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels
         /// <param name="totalPagesCount">The total pages count.</param>
         /// <param name="redirectUrlTemplate">The redirect URL template.</param>
         public PagerViewModel(int currentPage, int totalPagesCount, string redirectUrlTemplate)
+            : this(currentPage, totalPagesCount, redirectUrlTemplate, 10)
         {
-            this.CurrentPage = currentPage;
-            this.TotalPagesCount = totalPagesCount;
-            this.RedirectUrlTemplate = redirectUrlTemplate;
-            this.DisplayCount = 5;
         }
 
         /// <summary>
@@ -106,5 +101,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels
         /// The next page
         /// </value>
         public Pager.PagerNumericItem NextNode { get; set; }
+
+        private IList<Pager.PagerNumericItem> pagerNodes;
     }
 }
