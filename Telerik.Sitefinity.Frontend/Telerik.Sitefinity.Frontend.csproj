@@ -536,7 +536,7 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-collection.sf-cshtml" />
-    <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-date-items.html" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-hierarchical-taxon-items.html" />

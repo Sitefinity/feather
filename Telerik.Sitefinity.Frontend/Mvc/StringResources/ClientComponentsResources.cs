@@ -2302,5 +2302,53 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["SelectStyle"];
             }
         }
+
+        /// <summary>
+        /// phrase: Select image from your computer
+        /// </summary>
+        /// <value>Select image from your computer</value>
+        [ResourceEntry("SelectImageFromComputer",
+            Value = "Select image from your computer",
+            Description = "phrase: Select image from your computer",
+            LastModified = "2015/03/25")]
+        public string SelectImageFromComputer
+        {
+            get
+            {
+                return this["SelectImageFromComputer"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: No images
+        /// </summary>
+        /// <value>No images</value>
+        [ResourceEntry("NoImages",
+            Value = "No images",
+            Description = "phrase: No images",
+            LastModified = "2015/03/25")]
+        public string NoImages
+        {
+            get
+            {
+                return this["NoImages"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Already uploaded images
+        /// </summary>
+        /// <value>Already uploaded images</value>
+        [ResourceEntry("AlreadyUploadedImages",
+            Value = "Already uploaded images",
+            Description = "phrase: Already uploaded images",
+            LastModified = "2015/03/25")]
+        public string AlreadyUploadedImages
+        {
+            get
+            {
+                return this["AlreadyUploadedImages"];
+            }
+        }
     }
 }
