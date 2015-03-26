@@ -1,7 +1,7 @@
 ﻿<textarea id="editor" style="height: 340px;"
     kendo-editor ng-model="sfModel"
     k-encoded="false"
-    k-stylesheets='["/Frontend-Assembly/Telerik.Sitefinity.Frontend/assets/dist/css/html-field.min.css"]',
+    k-stylesheets='["{{htmlFieldCssUrl}}"]',
     k-tools='[
     "formatting",
     "bold", "italic", "underline", "trikethrough",
@@ -15,6 +15,10 @@
     {
         name: "insertImage",
         template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openImageSelector()\" title=\"Select image\"><span class=\"k-tool-icon k-insertImage\">Select image</span></a>"
+    },
+    {
+        name: "insertFile",
+        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openDocumentSelector()\" title=\"Select document\"><span class=\"k-tool-icon k-insertFile\">Select document</span></a>"
     },
     "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn",
     "cleanFormatting",
@@ -31,13 +35,14 @@
 
 <sf-link-selector-modal id="linkSelectorModal"></sf-link-selector-modal>
 
-<div class="imagePropertiesModal"
-     template-url="{{imagePropertiesDialog}}"
+<div class="mediaPropertiesModal"
+     template-url="{{mediaPropertiesDialog}}"
      modal
      size="normal"
      existing-scope="true"
      window-class="sf-designer-dlg sf-timespan-selector-dlg"
-     dialog-controller="sfImagePropertiesController">
+     dialog-controller="{{sfMediaPropertiesController}}">
 </div>
+
 
 

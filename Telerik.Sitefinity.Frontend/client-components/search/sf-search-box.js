@@ -1,5 +1,5 @@
 ﻿; (function ($) {
-    angular.module('sfSearchBox', [])
+    angular.module('sfSearchBox', ['sfServices'])
         .directive('sfSearchBox', ['serverContext', '$timeout', function (serverContext, $timeout) {
             return {
                 restrict: 'AE',

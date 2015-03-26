@@ -27,6 +27,35 @@
                     var customButtons = null;
                     var fullScreenIcon = null;
 
+                    function getPropertiesFromTag(type, wrapperClass, tag) {
+                        var range = editor.getRange();
+                        var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
+
+                        var properties = null;
+                        var wrapper = $(nodes).closest(wrapperClass);
+                        if (wrapper.length) {
+                            properties = mediaMarkupService[type].properties(wrapper[0].outerHTML);
+                        }
+                        else if ($(nodes).is(tag)) {
+                            properties = mediaMarkupService[type].properties($(nodes)[0].outerHTML);
+                        }
+                        return properties;
+                    }
+
+                    function getAnchorElement (range) {
+                        var command = editor.toolbar.tools.createLink.command({ range: range });
+
+                        var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
+                        var aTag = nodes.length ? command.formatter.finder.findSuitable(nodes[0]) : null;
+                        var msie = /msie/.test(navigator.userAgent.toLowerCase());
+
+                        if (msie && !aTag) {
+                            aTag = nodes.length >= 2 ? command.formatter.finder.findSuitable(nodes[1]) : null;
+                        }
+
+                        return aTag;
+                    }
+
                     scope.$on('kendoWidgetCreated', function (event, widget) {
                         if (widget.wrapper && widget.wrapper.is('.k-editor')) {
                             widget.focus();
@@ -39,15 +68,8 @@
                     });
 
                     scope.openLinkSelector = function () {
-                        var range = editor.getRange();
-                        var command = editor.toolbar.tools.createLink.command({ range: range });
-
-                        var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
-                        var aTag = nodes.length ? command.formatter.finder.findSuitable(nodes[0]) : null;
-
-                        if (jQuery.browser.msie && !aTag) {
-                            aTag = nodes.length >= 2 ? command.formatter.finder.findSuitable(nodes[1]) : null;
-                        }
+                       var range = editor.getRange();
+                       var aTag = getAnchorElement(range);
 
                         if (aTag) {
                             scope.selectedHtml = aTag;
@@ -58,63 +80,85 @@
 
                         angular.element("#linkSelectorModal").scope().$openModalDialog().then(function (data) {
                             scope.selectedHtml = data;
-                            editor.exec("insertHtml", { html: data.outerHTML, split: true });
+                            editor.exec("insertHtml", { html: data.outerHTML, split: true, range: range });
                         });
                     };
 
-                    scope.imagePropertiesDialog =
-                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.html');
+                    scope.htmlFieldCssUrl =
+                        serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/css/html-field.min.css');
 
-                    scope.openImageSelector = function () {
+                    scope.getPackageResourceUrl = function (resourcePath) {
+                        return serverContext.getRootedUrl(resourcePath);
+                    };
+
+                    scope.openDocumentSelector = function () {
+                        scope.mediaPropertiesDialog =
+                                serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-document-properties-content-block.html');
+                        scope.sfMediaPropertiesController = "sfDocumentPropertiesController";
 
                         var range = editor.getRange();
-                        var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
+                        var aTag = getAnchorElement(range);
+                        var properties = aTag ? mediaMarkupService.document.properties(aTag.outerHTML) : null;
 
-                        var properties = null;
+                        setTimeout(function () {
+                            angular.element('.mediaPropertiesModal')
+                                .scope()
+                                .$openModalDialog({ sfModel: function () { return properties; } })
+                                .then(function (data) {
+                                     properties = data;
+                                     return mediaService.getLibrarySettings();
+                                 })
+                                .then(function (settings) {
+                                     var markup = mediaMarkupService.document.markup(properties, settings);
+                                     editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                 });
+                        }, 0);
+                    };
 
-                        var imageWrapper = $(nodes).closest('span.sf-Image-wrapper');
-                        if (imageWrapper.length) {
-                            properties = mediaMarkupService.image.properties(imageWrapper[0].outerHTML);
-                        }
-                        else if ($(nodes).is('img')) {
-                            properties = mediaMarkupService.image.properties($(nodes)[0].outerHTML);
-                        }
+                    scope.openImageSelector = function () {
+                        scope.mediaPropertiesDialog =
+                           serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.html');
+                        scope.sfMediaPropertiesController = "sfImagePropertiesController";
 
-                        angular.element('.imagePropertiesModal').scope()
-                            .$openModalDialog({ sfModel: function () { return properties; } })
-                            .then(function (data) {
-                                properties = data;
+                        var properties = getPropertiesFromTag('image', 'span.sf-Image-wrapper', 'img');
 
-                                if (data.customSize)
-                                    return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize);
-                                else
-                                    return '';
+                        setTimeout(function () {
+                            angular.element('.mediaPropertiesModal').scope()
+                                .$openModalDialog({ sfModel: function () { return properties; } })
+                                .then(function (data) {
+                                    properties = data;
 
-                            })
-                            .then(function (errorMessage) {
-                                if (properties.thumbnail && properties.thumbnail.url) {
-                                    return properties.thumbnail.url;
-                                }
-                                else if (properties.customSize) {
-                                    return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
-                                }
-                                else {
-                                    return '';
-                                }
-                            })
-                            .then(function (thumbnailUrl) {
-                                if (thumbnailUrl) {
-                                    properties.thumbnail = properties.thumbnail || {};
-                                    properties.thumbnail.url = thumbnailUrl;
-                                }
+                                    if (data.customSize)
+                                        return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize);
+                                    else
+                                        return '';
 
-                                return mediaService.getLibrarySettings();
-                            })
-                            .then(function (settings) {
-                                var wrapIt = true;
-                                var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
-                                editor.exec('insertHtml', { html: markup, split: true });
-                            });
+                                })
+                                .then(function (errorMessage) {
+                                    if (properties.thumbnail && properties.thumbnail.url) {
+                                        return properties.thumbnail.url;
+                                    }
+                                    else if (properties.customSize) {
+                                        return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
+                                    }
+                                    else {
+                                        return '';
+                                    }
+                                })
+                                .then(function (thumbnailUrl) {
+                                    if (thumbnailUrl) {
+                                        properties.thumbnail = properties.thumbnail || {};
+                                        properties.thumbnail.url = thumbnailUrl;
+                                    }
+
+                                    return mediaService.getLibrarySettings();
+                                })
+                                .then(function (settings) {
+                                    var wrapIt = true;
+                                    var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
+                                    editor.exec('insertHtml', { html: markup, split: true });
+                                });
+                        }, 0);
                     };
 
                     scope.toggleHtmlView = function () {
@@ -222,5 +266,29 @@
                 };
 
                 $scope.thumbnailSizeTempalteUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-thumbnail-size-selection.html');
+            }])
+        .controller('sfDocumentPropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
+            function ($scope, $modalInstance, serverContext, sfModel) {
+                
+                $scope.model = sfModel || { item: undefined };
+
+                $scope.$watch('model.item.Id', function (newVal) {
+                    if (newVal === null) {
+                        $scope.cancel();
+                    }
+                });
+
+                $scope.$watch('model.item.Title.Value', function (newVal, oldVal) {
+                    if ($scope.model.item && $scope.model.item.Title && (oldVal === $scope.model.title || !$scope.model.title))
+                        $scope.model.title = $scope.model.item.Title.Value;
+                });
+
+                $scope.done = function () {
+                    $modalInstance.close($scope.model);
+                };
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss();
+                };
             }]);
 })(jQuery);

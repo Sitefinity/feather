@@ -50,6 +50,10 @@
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine, Version=3.0.8.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Sitefinity.RazorEngine.3.0.8.0\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack">
       <HintPath>..\..\packages\ServiceStack.Signed.4.0.36\lib\net40\ServiceStack.dll</HintPath>
     </Reference>
@@ -137,7 +141,7 @@
     <Compile Include="Designers\DesignerModelTests.cs" />
     <Compile Include="FileMonitoring\FileMonitorTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="GridSystem\GridSystemInitializerTests.cs" />
+    <Compile Include="GridSystem\GridWidgetRegistratorTests.cs" />
     <Compile Include="InlineEditing\InlineEditingTests.cs" />
     <Compile Include="Mvc\Helpers\LayoutsHelpersTests.cs" />
     <Compile Include="Mvc\Helpers\LocalizationHelpersTests.cs" />
@@ -158,6 +162,7 @@
     <Compile Include="Mvc\Infrastructure\Controllers\FrontendControllerFactoryTests.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\DynamicUrlParamActionInvokerTests.cs" />
     <Compile Include="Resources\PackageManagerTests.cs" />
+    <Compile Include="Resources\RazorTemplateProcessorTests.cs" />
     <Compile Include="Resources\Resolvers\ResourceResolverNodeTests.cs" />
     <Compile Include="Resources\Resolvers\ResourceResolverStrategyMock.cs" />
     <Compile Include="Resources\Resolvers\ResourceResolverStrategyTests.cs" />

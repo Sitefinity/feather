@@ -45,6 +45,13 @@
                 this.openOriginalImageOnClick = false;
             };
 
+            var DocumentProperties = function () {
+                this.item = { Id: null }; //MediaItem view model
+                this.provider = null; //Name of the data provider              
+                this.title = null;
+                this.cssClass = null;
+            };
+
             var getSfrefAttribute = function (mediaType, id, provider, thumbnailName) {
                 var sfref = '[' + mediaType;
                 if (provider) {
@@ -287,8 +294,48 @@
                 }
             };
 
+            var document = {
+                markup: function (properties, librarySettings) {
+                    var sfref = '';
+                    var href = '';
+                    sfref = getSfrefAttribute('documents', properties.item.Id, properties.provider);
+                    href = properties.item.MediaUrl;
+
+                    var jElementToInsert = jQuery('<a />');
+                    jElementToInsert.attr('sfref', sfref);
+                    jElementToInsert.attr('href', href);
+                    jElementToInsert.attr('class', properties.cssClass);
+
+                    if (properties.title) {
+                        jElementToInsert.attr('title', properties.title);
+                        jElementToInsert.text(properties.title);
+                    }
+
+                    return jElementToInsert[0].outerHTML;
+                },
+
+                properties: function (markup) {
+                    var jMarkup = jQuery(markup);
+                    var sfref = jMarkup.attr('sfref') ? jMarkup.attr('sfref') : jMarkup.children().attr('sfref');
+
+                    if (!jMarkup.is('a'))
+                        jMarkup = jMarkup.find('a');
+
+                    var result = new DocumentProperties();
+
+                    result.item.Id = getIdFromSfrefAttr(sfref);
+                    result.provider = getProviderFromSfrefAttr(sfref);
+                    result.item.MediaUrl = jMarkup.attr('href');
+                    result.title = jMarkup.attr('title');
+                    result.cssClass = jMarkup.attr('class') || null;
+
+                    return result;
+                }
+            };
+
             return {
-                image: image
+                image: image,
+                document: document
             };
         }]);
 })(jQuery);

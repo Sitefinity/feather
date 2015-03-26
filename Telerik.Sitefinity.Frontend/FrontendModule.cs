@@ -63,6 +63,21 @@ namespace Telerik.Sitefinity.Frontend
         }
 
         /// <summary>
+        /// Upgrades this module from the specified version.
+        /// </summary>
+        /// <param name="initializer">The Site Initializer. A helper class for installing Sitefinity modules.</param>
+        /// <param name="upgradeFrom">The version this module us upgrading from.</param>
+        public override void Upgrade(SiteInitializer initializer, Version upgradeFrom)
+        {
+            base.Upgrade(initializer, upgradeFrom);
+
+            if (upgradeFrom < new Version(1, 2, 140, 0))
+            {
+                this.DeleteOldGridSection();
+            }
+        }
+
+        /// <summary>
         /// Gets the module configuration.
         /// </summary>
         protected override ConfigSection GetModuleConfig()
@@ -90,9 +105,6 @@ namespace Telerik.Sitefinity.Frontend
 
                 var layoutsInitializer = new LayoutInitializer();
                 layoutsInitializer.Initialize();
-
-                var gridSystemInitializer = new GridSystemInitializer();
-                gridSystemInitializer.Initialize();
 
                 var designerInitializer = new DesignerInitializer();
                 designerInitializer.Initialize();
@@ -177,6 +189,25 @@ namespace Telerik.Sitefinity.Frontend
         {
             var systemConfig = Config.Get<SystemConfig>();
             return systemConfig.SystemServices.ContainsKey(FrontendModule.FrontendServiceName);
+        }
+
+        private void DeleteOldGridSection()
+        {
+            var configManager = ConfigManager.GetManager();
+            using (new ElevatedConfigModeRegion())
+            {
+                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
+                var layoutsToolbox = toolboxConfig.Toolboxes["PageLayouts"];
+                if (layoutsToolbox != null)
+                {
+                    var htmlLayoutsSection = layoutsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "HtmlLayouts");
+                    if (htmlLayoutsSection != null)
+                    {
+                        layoutsToolbox.Sections.Remove(htmlLayoutsSection);
+                        configManager.SaveSection(toolboxConfig);
+                    }
+                }
+            }
         }
 
         private const string FrontendServiceName = "Telerik.Sitefinity.Frontend";

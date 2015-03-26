@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Web;
 using System.Web.Routing;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Mvc.Rendering;
 using Telerik.Sitefinity.Services;
 
@@ -15,6 +18,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// </summary>
     internal class LayoutMvcPageResolver : PureMvcPageResolver
     {
+        /// <summary>
+        /// Determines whether the specified virtual path is path of a layout file.
+        /// </summary>
+        /// <param name="virtualPath">The virtual path.</param>
+        /// <returns>True if the specified virtual path is path of a layout file.</returns>
+        public static bool IsLayoutPath(string virtualPath)
+        {
+            if (virtualPath.IsNullOrEmpty())
+                return false;
+
+            string resolverPath;
+            if (virtualPath.StartsWith("~/", StringComparison.OrdinalIgnoreCase))
+                resolverPath = string.Format(CultureInfo.InvariantCulture, "~/{0}", LayoutVirtualFileResolver.ResolverPath);
+            else if (virtualPath.StartsWith("/", StringComparison.OrdinalIgnoreCase))
+                resolverPath = string.Format(CultureInfo.InvariantCulture, "/{0}", LayoutVirtualFileResolver.ResolverPath);
+            else
+                resolverPath = LayoutVirtualFileResolver.ResolverPath;
+
+            return virtualPath.StartsWith(resolverPath, StringComparison.OrdinalIgnoreCase);
+        }
+
         /// <summary>
         /// Appends markup to the virtual page file depending on the current master page.
         /// </summary>
@@ -37,9 +61,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             }
         }
 
-        private static bool IsLayoutPath(string virtualPath)
+        /// <summary>
+        /// Appends the layout.
+        /// </summary>
+        /// <remarks>
+        /// If the layout is not found error message will be rendered instead.
+        /// </remarks>
+        /// <param name="layoutTemplate">The layout template.</param>
+        /// <param name="assemblyInfo">The assembly information.</param>
+        /// <param name="parentPlaceHolder">The parent place holder.</param>
+        /// <param name="placeHolders">The place holders.</param>
+        /// <param name="layoutId">The layout identifier.</param>
+        /// <param name="directives">The directives.</param>
+        protected override void AppendLayout(string layoutTemplate, string assemblyInfo, PlaceHolderCursor parentPlaceHolder, CursorCollection placeHolders, string layoutId, DirectiveCollection directives)
         {
-            return virtualPath != null && virtualPath.StartsWith(string.Format(CultureInfo.InvariantCulture, "~/{0}", LayoutVirtualFileResolver.ResolverPath), StringComparison.Ordinal);
+            try
+            {
+                base.AppendLayout(layoutTemplate, assemblyInfo, parentPlaceHolder, placeHolders, layoutId, directives);
+            }
+            catch (FileNotFoundException)
+            {
+                parentPlaceHolder.Output.Append(Res.Get<ErrorMessages>("CannotFindTemplate", layoutTemplate));
+            }
         }
     }
 }

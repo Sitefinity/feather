@@ -49,21 +49,22 @@
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.Sitefinity.Frontend.TestUtilities">
-      <HintPath>..\Telerik.Sitefinity.Frontend.TestUtilities\bin\Release\Telerik.Sitefinity.Frontend.TestUtilities.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Sitefinity.MS.TestUI.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Sitefinity.Frontend.TestUtilities, Version=1.2.130.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Telerik.Sitefinity.MS.TestUI.Framework.1.0.4\lib\net45\Telerik.Sitefinity.MS.TestUI.Framework.dll</HintPath>
+      <HintPath>ReferenceAssemblies\Telerik.Sitefinity.Frontend.TestUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.MS.TestUI.Framework">
+      <HintPath>packages\Telerik.Sitefinity.MS.TestUI.Framework.1.0.5\lib\net45\Telerik.Sitefinity.MS.TestUI.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Telerik.Sitefinity.TestUI.Core.1.0.4\lib\net45\Telerik.Sitefinity.TestUI.Core.dll</HintPath>
+      <HintPath>packages\Telerik.Sitefinity.TestUI.Core.1.0.5\lib\net45\Telerik.Sitefinity.TestUI.Core.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -72,7 +73,8 @@
     <Reference Include="Telerik.Sitefinity.TestUI.UIArrangement">
       <HintPath>.\packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.0\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.TestUtilities">
+    <Reference Include="Telerik.Sitefinity.TestUtilities, Version=8.0.5700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Telerik.Sitefinity.TestUtilities.8.0.5700.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.TestUI.Core, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -100,8 +102,8 @@
     <Compile Include="..\..\AssemblyInfoShare\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="GridWidgets\AddGridWidgetToToolboxForPage.cs" />
-    <Compile Include="GridWidgets\AddGridWidgetToToolboxForPageTemplate.cs" />
+    <Compile Include="GridWidgets\AutoGenerateGridWidgetToToolboxForPage.cs" />
+    <Compile Include="GridWidgets\AutoGenerateGridWidgetToToolboxForPageTemplate.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
     <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />
@@ -139,7 +141,9 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ReferenceAssemblies\Telerik.Sitefinity.Frontend.TestUtilities.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

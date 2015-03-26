@@ -43,6 +43,10 @@
     <Reference Include="Microsoft.Http">
       <HintPath>..\..\packages\Microsoft.Http.1.0.0.0\lib\Microsoft.Http.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine, Version=3.0.8.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Sitefinity.RazorEngine.3.0.8.0\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -228,10 +232,12 @@
     <Compile Include="DummyClasses\ResourceResolvers\DummyResourceResolverNode.cs" />
     <Compile Include="DummyClasses\Configs\DummyToolboxesConfig.cs" />
     <Compile Include="DummyClasses\Mvc\DummyView.cs" />
+    <Compile Include="DummyClasses\ResourceResolvers\DummyTemplateService.cs" />
     <Compile Include="DummyClasses\ResourceResolvers\DummyVirtualFileResolver.cs" />
     <Compile Include="DummyClasses\Models\DummyWidgetModel.cs" />
     <Compile Include="DummyClasses\Mvc\DummyControllerContainerInitializer.cs" />
     <Compile Include="DummyClasses\ResourceResolvers\DummyResourceHttpHandler.cs" />
+    <Compile Include="DummyClasses\ResourceResolvers\DummyVirtualPathProvider.cs" />
     <Compile Include="DummyClasses\Routing\DynamicUrlParamActionInvokerMock.cs" />
     <Compile Include="FeatherTeams.cs" />
     <Compile Include="FileInjectHelper.cs" />
@@ -258,6 +264,7 @@
     <EmbeddedResource Include="Data\DuplicateRelatedDataModule.zip" />
     <EmbeddedResource Include="Data\ReplaceTest\Package1.zip" />
     <EmbeddedResource Include="Data\LayoutFileReplace\Package1.zip" />
+    <EmbeddedResource Include="Data\TestPackage2.zip" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
