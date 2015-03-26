@@ -61,5 +61,27 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().AddWidgetToDropZone(layout, layoutAcceptor);
         }
+
+        /// <summary>
+        /// Verifies whether a layout widget is present in the layout toolbox section.
+        /// </summary>
+        /// <param name="layoutCaption">The name of the layout widget.</param>
+        /// <returns>true or false depending on the widget presence in the toolbox.</returns>
+        public bool IsLayoutWidgetPresentInToolbox(string layoutCaption)
+        {
+            ActiveBrowser.RefreshDomTree();
+
+            HtmlDiv layoutWidgetsContainer = ActiveBrowser.WaitForElementEndsWithID("LayoutToolboxContainer").As<HtmlDiv>();
+            Assert.IsNotNull(layoutWidgetsContainer, "The widget container wasn't found on the page");
+
+            if (layoutWidgetsContainer.InnerText.Contains(layoutCaption))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

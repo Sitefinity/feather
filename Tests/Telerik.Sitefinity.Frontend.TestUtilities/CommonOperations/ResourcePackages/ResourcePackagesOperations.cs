@@ -221,6 +221,17 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// <param name="path">The directory path.</param>
         public void DeleteDirectory(string path)
         {
+            foreach (string directory in Directory.GetDirectories(path))
+            {
+                foreach (var file in Directory.GetFiles(directory))
+                {
+                    File.SetAttributes(file, FileAttributes.Normal);
+                    File.Delete(file);
+                }
+
+                this.DeleteDirectory(directory);
+            }
+
             try
             {
                 Directory.Delete(path, true);

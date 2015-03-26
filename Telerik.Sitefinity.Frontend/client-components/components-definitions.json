@@ -166,6 +166,14 @@
 	"components" : ["sf-services", "sf-selectors"]
 },
 
+"sf-lists-selector" : {
+	"scripts" : [
+        "client-components/selectors/list/sf-lists-selector.js",
+        "client-components/selectors/list/sf-lists-service.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
 "sf-provider-selector" : {
 	"scripts" : [
 		"client-components/selectors/common/sf-provider-selector.js",
@@ -265,6 +273,16 @@
 	"components" : ["sf-services", "sf-items-filter", "sf-list-selector", "sf-endless-scroll", "sf-selected-items-view", "sf-loading"]
 },
 
+
+"_____LISTS_____": { "scripts": [ ], "components": [ ] },
+
+"sf-lists-selector" : {
+	"scripts" : [
+        "client-components/selectors/list/sf-lists-selector.js",
+        "client-components/selectors/list/sf-lists-service.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
 
 "_____LOCALIZATION_____" : {"scripts" : [], "components" : []},
 
