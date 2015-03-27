@@ -2350,5 +2350,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["AlreadyUploadedImages"];
             }
         }
+
+        /// <summary>
+        /// phrase: Select lists
+        /// </summary>
+        /// <value>Select lists</value>
+        [ResourceEntry("ListSelectorHeader",
+            Value = "Select lists",
+            Description = "phrase: Select lists",
+            LastModified = "2015/03/25")]
+        public string ListSelectorHeader
+        {
+            get
+            {
+                return this["ListSelectorHeader"];
+            }
+        }
     }
 }

@@ -18,15 +18,13 @@
 
                         ctrl.selectorType = 'ListsSelector';
 
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/lists/sf-lists-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/lists/sf-lists-selector.sf-cshtml';
 
                         var closedDialogTemplate = attrs.sfMultiselect ?
-                            'client-components/selectors/common/sf-list-group-selection.html' :
-                            'client-components/selectors/common/sf-bubbles-selection.html';
+                            'client-components/selectors/common/sf-list-group-selection.sf-cshtml' :
+                            'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
-
-                        ctrl.$scope.sfDialogHeader = 'Select lists';
                     }
                 }
             };

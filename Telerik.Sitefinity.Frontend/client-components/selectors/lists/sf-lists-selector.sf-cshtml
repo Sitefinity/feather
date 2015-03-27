@@ -1,15 +1,19 @@
-﻿<div class="modal-body">
+﻿<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().ListSelectorHeader)</h3>
+</div>
+<div class="modal-body">
     <div kendo-tab-strip k-animation="false" class="k-tabstrip--selection">
         <ul ng-show="multiselect">
             <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
-                All
+                @(Res.Get<ClientComponentsResources>().All)
             </li>
             <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
-                Selected <span class="badge">{{getSelectedItemsCount()}}</span>
+                @(Res.Get<ClientComponentsResources>().Selected) <span class="badge">{{getSelectedItemsCount()}}</span>
             </li>
         </ul>
         <div>
-            <div ng-show="noItemsExist" class="alert alert-info">No items have been created yet.</div>
+            <div ng-show="noItemsExist" class="alert alert-info">@(Res.Get<ClientComponentsResources>().NoItemsCreated)</div>
 
             <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
@@ -30,7 +34,7 @@
                         <div ng-bind="bindIdentifierField(item)"></div>
                     </div>
                 </div>
-                <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
+                <div ng-hide="items.length || showLoadingIndicator"><i>@(Res.Get<ClientComponentsResources>().NoItemsFound)</i></div>
                 <sf-loading ng-show="showLoadingIndicator"></sf-loading>
             </div>
         </div>
@@ -44,4 +48,14 @@
         </div>
     </div>
 </div>
-
+<div class="modal-footer">
+  <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary pull-left" ng-click="doneSelecting()">
+    @(Res.Get<ClientComponentsResources>().DoneSelecting)
+        </button>
+  <button type="button" ng-hide="noItemsExist || showError" class="btn btn-link pull-left" ng-click="cancel()">
+    @(Res.Get<ClientComponentsResources>().Cancel)
+        </button>
+  <button type="button" ng-show="noItemsExist" class="btn btn-primary pull-left" ng-click="cancel()">
+    @(Res.Get<ClientComponentsResources>().Close)
+        </button>
+</div>
