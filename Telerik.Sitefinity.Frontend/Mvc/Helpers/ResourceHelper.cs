@@ -158,7 +158,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             ResourceHelper.RegisterResource(context, resourcePath, registerName, throwException);
 
             if (preserveLocation)
-                return MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(register, resourcePath));
+                return MvcHtmlString.Create(ResourceHelper.BuildStyleSheetMarkup(register, resourcePath));
 
             return MvcHtmlString.Empty;
         }
