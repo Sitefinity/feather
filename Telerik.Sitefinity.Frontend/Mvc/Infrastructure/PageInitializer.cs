@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
@@ -35,6 +36,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             if (page != null)
             {
                 page.PreInit += this.PreInitHandler;
+                page.Init += this.InitHandler;
+            }
+        }
+
+        private void InitHandler(object sender, EventArgs e)
+        {
+            var page = (Page)sender;
+
+            if (page.Header != null)
+            {
+                var scriptRenderer = new StyleSheetRenderer();
+                page.Header.Controls.Add(scriptRenderer);
             }
         }
 

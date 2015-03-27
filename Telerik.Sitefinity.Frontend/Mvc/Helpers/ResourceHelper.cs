@@ -62,6 +62,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         public static System.Web.Mvc.MvcHtmlString Script(this HtmlHelper helper, string scriptPath, bool throwException = false, bool preserveLocation = false)
         {
+            if (ResourceHelper.TryConfigureScriptManager(scriptPath))
+                return MvcHtmlString.Empty;
+
             var context = helper.ViewContext.HttpContext;
             var registerName = ResourceHelper.JsRegisterName;
             var register = new ResourceRegister(registerName, context);
@@ -210,6 +213,32 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 return false;
             else
                 return true;
+        }
+
+        /// <summary>
+        /// Tries the configure script manager.
+        /// </summary>
+        /// <param name="scriptReference">The script reference.</param>
+        /// <returns></returns>
+        private static bool TryConfigureScriptManager(string scriptReference)
+        {
+            var page = HttpContext.Current.Handler as Page;
+            ScriptManager scriptManager = null;
+
+            if (page != null)
+            {
+                scriptManager = ScriptManager.GetCurrent(page);
+            }
+
+            if (scriptManager != null)
+            {
+                scriptManager.Scripts.Add(new ScriptReference(scriptReference));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private static string BuildHtmlResourcesMarkup(ResourceRegister resourceRegister, ResourceType resourceType)

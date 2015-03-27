@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Utilities.HtmlParsing;
 using Telerik.Sitefinity.Web;
 
@@ -149,6 +150,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 container.Peek().Controls.Add(form);
                 container.Push(form);
             }
+            else if (chunk.TagName.Equals("body", StringComparison.OrdinalIgnoreCase))
+            {
+                this.AddIfNotEmpty(currentLiteralText.ToString(), container.Peek());
+                currentLiteralText.Clear();
+
+                var bodyCtrl = new HtmlGenericControl("body");
+                container.Peek().Controls.Add(bodyCtrl);
+                container.Push(bodyCtrl);
+            }
+            else if (chunk.TagName.Equals(LayoutsHelpers.ScriptRendererTag, StringComparison.OrdinalIgnoreCase))
+            {
+                this.AddIfNotEmpty(currentLiteralText.ToString(), container.Peek());
+                currentLiteralText.Clear();
+
+                var scriptRenderer = new ScriptRenderer();
+                container.Peek().Controls.Add(scriptRenderer);
+            }
             else if (chunk.TagName == "%@")
             {
                 //// Ignore
@@ -178,9 +196,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             {
                 this.AddIfNotEmpty(currentLiteralText.ToString(), container.Pop());
                 currentLiteralText.Clear();
-
-                var scriptRenderer = new StyleSheetRenderer();
-                container.Peek().Controls.Add(scriptRenderer);
             }
             else if (chunk.TagName.Equals("form", StringComparison.OrdinalIgnoreCase))
             {
@@ -200,8 +215,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             }
             else if (chunk.TagName.Equals("body", StringComparison.OrdinalIgnoreCase))
             {
-                var scriptRenderer = new ScriptRenderer();
-                container.Peek().Controls.Add(scriptRenderer);
+                this.AddIfNotEmpty(currentLiteralText.ToString(), container.Pop());
+                currentLiteralText.Clear();
+            }
+            else if (chunk.TagName.Equals(LayoutsHelpers.ScriptRendererTag, StringComparison.OrdinalIgnoreCase))
+            {
+                //// Ignore
             }
             else
             {

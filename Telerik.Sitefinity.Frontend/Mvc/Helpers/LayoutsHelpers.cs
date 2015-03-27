@@ -29,9 +29,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "helper")]
         public static System.Web.Mvc.MvcHtmlString SfScriptRenderer(this HtmlHelper helper)
         {
-            var htmlString = "<feather-script-renderer></feather-script-renderer>";
-
-            return new System.Web.Mvc.MvcHtmlString(htmlString);
+            return new System.Web.Mvc.MvcHtmlString(LayoutsHelpers.ScriptRendererHtml);
         }
 
         /// <summary>
@@ -46,5 +44,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return new System.Web.Mvc.MvcHtmlString(htmlString);
         }
+
+        /// <summary>
+        /// The script renderer tag name.
+        /// </summary>
+        internal const string ScriptRendererTag = "FeatherScriptRenderer";
+
+        /// <summary>
+        /// The script renderer HTML markup.
+        /// </summary>
+        internal const string ScriptRendererHtml = "<" + LayoutsHelpers.ScriptRendererTag + "></" + LayoutsHelpers.ScriptRendererTag + ">";
     }
 }
