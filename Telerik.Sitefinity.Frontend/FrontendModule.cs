@@ -74,7 +74,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             base.Upgrade(initializer, upgradeFrom);
 
-            if (upgradeFrom < new Version(1, 2, 160, 0))
+            if (upgradeFrom < new Version(1, 2, 140, 0))
             {
                 this.DeleteOldGridSection();
                 this.UpdateContentBlockTitle();
