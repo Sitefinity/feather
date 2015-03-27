@@ -462,6 +462,7 @@
     <EmbeddedResource Include="client-components\components-definitions.json" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector-view.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

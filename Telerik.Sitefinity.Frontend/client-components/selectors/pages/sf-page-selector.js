@@ -8,6 +8,10 @@
                     pre: function (scope, element, attrs, ctrl) {
                         var rootPage = serverContext.getCurrentFrontendRootNodeId();
 
+                        var itemAssembly = ctrl.$scope.sfItemTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                        var itemUrl = ctrl.$scope.sfItemTemplateUrl || 'client-components/selectors/pages/sf-page-selector-view.sf-cshtml';
+                        ctrl.$scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(itemAssembly, itemUrl);
+
                         // <------- Begin: Helper methods ------
                         var getSiteMapRootNodeId = function () {
                             var selectedSite = scope.$eval(attrs.sfPageSelector);
