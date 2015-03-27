@@ -9,6 +9,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Services.ListsService;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
@@ -213,6 +214,7 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Telerik.Sitefinity.Pages.Model.ControlData.set_Caption(System.String)")]
         private void UpdateContentBlockTitle()
         {
             var configManager = ConfigManager.GetManager();
@@ -233,6 +235,18 @@ namespace Telerik.Sitefinity.Frontend
                         }
                     }
                 }
+            }
+
+            var pageManager = PageManager.GetManager();
+            using (new ElevatedModeRegion(pageManager))
+            {
+                var contentBlocks = pageManager.GetControls<ControlData>().Where(c => c.ObjectType == "Telerik.Sitefinity.Mvc.Proxy.MvcControllerProxy" && c.Caption == "ContentBlock").ToArray();
+                foreach (var contentBlock in contentBlocks)
+                {
+                    contentBlock.Caption = "Content Block";
+                }
+
+                pageManager.SaveChanges();
             }
         }
 

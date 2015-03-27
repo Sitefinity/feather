@@ -580,9 +580,9 @@
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-collection.sf-cshtml" />
 	<EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.sf-cshtml" />
 	<EmbeddedResource Include="client-components\selectors\search\sf-search-service.js" />
-    <EmbeddedResource Include="client-components\selectors\list\sf-lists-service.js" />
-    <Content Include="client-components\selectors\list\sf-lists-selector.js" />
-    <EmbeddedResource Include="client-components\selectors\list\sf-lists-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\lists\sf-lists-service.js" />
+    <EmbeddedResource Include="client-components\selectors\lists\sf-lists-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\lists\sf-lists-selector.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
