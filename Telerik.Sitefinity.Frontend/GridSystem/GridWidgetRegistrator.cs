@@ -176,8 +176,15 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendService).Assembly));
 
             var fileNameWithoutExtension = this.GetFileNameWithoutExtension(fileName);
+            var cssClass = this.GetInferredCssClass(fileNameWithoutExtension);
 
-            var layoutData = new GridControlData() { Name = fileNameWithoutExtension, Title = fileNameWithoutExtension, LayoutTemplatePath = baseTemplatePath + fileName };
+            var layoutData = new GridControlData() 
+            {
+                Name = fileNameWithoutExtension, 
+                Title = fileNameWithoutExtension, 
+                LayoutTemplatePath = baseTemplatePath + fileName,
+                CssClass = cssClass
+            };
 
             return layoutData;
         }
@@ -198,6 +205,33 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
 
             return fileNameWithoutExtension;
         }
+
+        private string GetInferredCssClass(string fileNameWithoutExtension)
+        {
+            if (this.cssClassMapping.ContainsKey(fileNameWithoutExtension))
+            {
+                return this.cssClassMapping[fileNameWithoutExtension];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private readonly Dictionary<string, string> cssClassMapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "grid-12", "sfL100" },
+            { "grid-3+9", "sfL25_75" },
+            { "grid-4+8", "sfL33_67" },
+            { "grid-6+6", "sfL50_50" },
+            { "grid-8+4", "sfL67_33" },
+            { "grid-9+3", "sfL75_25" },
+            { "grid-4+4+4", "sfL33_34_33" },
+            { "grid-3+6+3", "sfL25_50_25" },
+            { "grid-3+3+3+3", "sfL25_25_25_25" },
+            { "grid-2+3+2+3+2", "sfL20_20_20_20_20" },
+            { "container", "sfL100" }
+        };
 
         #endregion
 
