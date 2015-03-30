@@ -21,6 +21,16 @@
                 extensionsRegExPrefix: 'document',
                 fileFormField: 'DocumentFile'
             },
+            videos: {
+                itemType: 'Telerik.Sitefinity.Libraries.Model.Video',
+                parentItemType: 'Telerik.Sitefinity.Libraries.Model.VideoLibrary',
+                parentServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/VideoLibraryService.svc/'),
+                serviceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/VideoService.svc/'),
+                createItemUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/VideoService.svc/parent/{{libraryId}}/{{itemId}}/?itemType={{itemType}}&provider={{provider}}&parentItemType={{parentItemType}}&newParentId={{newParentId}}'),
+                settingsNodeName: 'Videos_2,librariesConfig_0',
+                extensionsRegExPrefix: 'video',
+                fileFormField: 'VideoFile'
+            },
             uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/'),
             thumbnailServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/')
