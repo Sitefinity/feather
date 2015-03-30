@@ -68,7 +68,13 @@
                     lastModifiedDesc: 'LastModified DESC',
                     titleAsc: 'Title ASC',
                     titleDesc: 'Title DESC'
-                }
+                },
+                itemsMetricsField : {
+                    images: 'ImagesCount',
+                    documents: 'DocumentsCount',
+                    videos: 'VideosCount'
+                },
+                librariesMetricsField: 'LibrariesCount' 
             };
 
             return {
@@ -243,36 +249,8 @@
                             sfMediaService[scope.sfMediaType].get(options, scope.filterObject, appendItems)
                                 .then(function (response) {
                                     if (response && response.Items) {
-
-                                        var removeNonNumeric = function (item) {
-                                            return item.replace(/\D/g, "");
-                                        };
-
-                                        // Remove unnecessary (non-numeric) characters from LastModified string
-                                        for (var i = 0; i < response.Items.length; i++) {
-                                            var item = response.Items[i];
-                                            if (item.LastModified) {
-                                                item.LastModified = removeNonNumeric(item.LastModified);
-                                            }
-
-                                            // We can't retrive these properties for root libraries
-                                            if (item.hasOwnProperty('DocumentsCount') && item.hasOwnProperty('LibrariesCount')){
-                                                item.metricsAvailable = true;
-                                            }
-
-                                            if (item.DocumentsCount) {
-                                                var countStr = removeNonNumeric(item.DocumentsCount);
-                                                item.DocumentsCount = countStr + (countStr === '1' ? " document" : " documents");
-                                            } else {
-                                                item.DocumentsCount = "No documents";
-                                            }
-
-                                            if (item.LibrariesCount) {
-                                                item.LibrariesCount = removeNonNumeric(item.LibrariesCount);
-                                                item.LibrariesCount = item.LibrariesCount + (item.LibrariesCount == 1 ? " folder" : " folders");
-                                            }
-                                        }
-
+                                        mutateItemsWithMediaMetrics(response.Items);
+                                        
                                         if (appendItems) {
                                             if (scope.items && scope.items.length === itemsLength) {
                                                 scope.items = scope.items.concat(response.Items);
@@ -291,6 +269,47 @@
                                         element.find('.Media-items').scrollTop(0);
                                     }
                                 });
+                        }
+                    };
+
+                    // Remove unnecessary (non-numeric) characters
+                    var removeNonNumericCharacters = function (item) {
+                        return item.replace(/\D/g, "");
+                    };
+
+                    var mutateItemsWithMediaMetrics = function (items) {
+                        for (var i = 0; i < items.length; i++) {
+                            var item = items[i];
+                            if (item.LastModified) {
+                                item.LastModified = removeNonNumericCharacters(item.LastModified);
+                            }
+
+                            var itemsMetricsField = constants.itemsMetricsField[scope.sfMediaType];
+                            var librariesMetricsField = constants.librariesMetricsField;
+
+                            // We can't retrive these properties for root libraries
+                            if (item.hasOwnProperty(itemsMetricsField) && item.hasOwnProperty(librariesMetricsField)){
+                                item.metricsAvailable = true;
+                            }
+
+                            // We are assigning the metrics in a neutral fields in order to unify the pesentation.
+                            if (item[itemsMetricsField]) {
+                                var countStr = removeNonNumericCharacters(item[itemsMetricsField]);
+                                item.ItemsCount = countStr + 
+                                    (countStr === '1' ? 
+                                        (" " + scope.sfLabels.mediaTypeNameSingular.toLowerCase()) :
+                                        (" " + scope.sfLabels.mediaTypeNamePlural.toLowerCase()));
+                            } else {
+                                item.ItemsCount = scope.sfLabels.noItems;
+                            }
+
+                            if (item[librariesMetricsField]) {
+                                var librariesCount = removeNonNumericCharacters(item[librariesMetricsField]);
+                                item.FoldersCount = librariesCount +
+                                    (librariesCount == 1 ?
+                                        (" " + scope.sfLabels.libraryNameSingular.toLowerCase()) :
+                                        (" " + scope.sfLabels.libraryNamePlural.toLowerCase()));
+                            }
                         }
                     };
 

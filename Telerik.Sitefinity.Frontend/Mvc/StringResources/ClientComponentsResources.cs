@@ -59,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["InsertFile"];
             }
         }
-        
+
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
@@ -2415,6 +2415,86 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["AlreadyUploadedVideos"];
             }
         }
+
+        /// <summary>
+        /// word: Video
+        /// </summary>
+        /// <value>Video</value>
+        [ResourceEntry("VideoSingular",
+            Value = "Video",
+            Description = "word: Video",
+            LastModified = "2015/03/30")]
+        public string VideoSingular
+        {
+            get
+            {
+                return this["VideoSingular"];
+            }
+        }
+
+        /// <summary>
+        /// word: Videos
+        /// </summary>
+        /// <value>Videos</value>
+        [ResourceEntry("VideoPlural",
+            Value = "Videos",
+            Description = "word: Videos",
+            LastModified = "2015/03/30")]
+        public string VideoPlural
+        {
+            get
+            {
+                return this["VideoPlural"];
+            }
+        }
+
+        /// <summary>
+        /// word: Select video from your computer
+        /// </summary>
+        /// <value>Select video from your computer</value>
+        [ResourceEntry("SelectVideoFromComputer",
+            Value = "Select video from your computer",
+            Description = "word: Select video from your computer",
+            LastModified = "2015/03/30")]
+        public string SelectVideoFromComputer
+        {
+            get
+            {
+                return this["SelectVideoFromComputer"];
+            }
+        }
         #endregion
+
+        /// <summary>
+        /// word: Folder
+        /// </summary>
+        /// <value>Folder</value>
+        [ResourceEntry("FolderSingular",
+            Value = "Folder",
+            Description = "word: Folder",
+            LastModified = "2015/03/30")]
+        public string FolderSingular
+        {
+            get
+            {
+                return this["FolderSingular"];
+            }
+        }
+
+        /// <summary>
+        /// word: Folders
+        /// </summary>
+        /// <value>Folders</value>
+        [ResourceEntry("FolderPlural",
+            Value = "Folders",
+            Description = "word: Folders",
+            LastModified = "2015/03/30")]
+        public string FolderPlural
+        {
+            get
+            {
+                return this["FolderPlural"];
+            }
+        }
     }
 }
