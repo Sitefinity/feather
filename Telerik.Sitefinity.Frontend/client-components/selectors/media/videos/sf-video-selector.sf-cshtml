@@ -1,0 +1,7 @@
+<sf-media-selector
+    sf-model="selectedItems"
+    sf-filter-object="sfFilter"
+    sf-provider="provider"
+    sf-multiselect="{{sfMultiselect}}"
+    sf-deselectable="{{sfDeselectable}}"
+    sf-media-type="videos"></sf-media-selector>

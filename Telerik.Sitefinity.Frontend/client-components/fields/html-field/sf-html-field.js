@@ -161,6 +161,10 @@
                         }, 0);
                     };
 
+                    scope.openVideoSelector = function () {
+                        
+                    }
+
                     scope.toggleHtmlView = function () {
                         if (editor === null)
                             return;
