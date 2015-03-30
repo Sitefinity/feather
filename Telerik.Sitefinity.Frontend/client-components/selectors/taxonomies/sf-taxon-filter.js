@@ -12,7 +12,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/selectors/taxonomies/sf-taxon-filter.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/taxonomies/sf-taxon-filter.sf-cshtml';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {

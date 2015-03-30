@@ -14,7 +14,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/selectors/date-time/sf-timespan-selector.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/date-time/sf-timespan-selector.sf-cshtml';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -26,19 +26,25 @@
                             if (!item)
                                 return;
 
-                            if (item.periodType == 'periodToNow')
-                                item.displayText = 'Last ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
+                            if (item.periodType == 'periodToNow') {
+                                var label = $('#periodToNow').parent().text().trim();
+                                item.displayText = label + ' ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
+                            }
                             else if (item.periodType == 'customRange') {
+                                var fromLabel = $('#fromLabel').text();
+                                var toLabel = $('#toLabel').text();
+
 
                                 if (item.fromDate && item.toDate)
-                                    item.displayText = 'From ' + _getFormatedDate(item.fromDate) + ' to ' + _getFormatedDate(item.toDate);
+                                    item.displayText = fromLabel + ' ' + _getFormatedDate(item.fromDate) + ' ' + toLabel.toLowerCase() + ' ' + _getFormatedDate(item.toDate);
                                 else if (item.fromDate)
-                                    item.displayText = 'From ' + _getFormatedDate(item.fromDate);
+                                    item.displayText = fromLabel + ' ' + _getFormatedDate(item.fromDate);
                                 else if (item.toDate)
-                                    item.displayText = 'To ' + _getFormatedDate(item.toDate);
+                                    item.displayText = toLabel + ' ' + _getFormatedDate(item.toDate);
                             }
-                            else
-                                item.displayText = 'Any time';
+                            else {
+                                item.displayText = $('#anyTime').parent().text().trim();
+                            }
                         };
 
                         _getFormatedDate = function (date) {

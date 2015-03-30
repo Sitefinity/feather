@@ -1,0 +1,58 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5 text-center">
+            <div class="sf-Media--info-doc" ng-show="sfMedia">
+
+                <i class="icon-file icon-txt">
+                    <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension}}</span>
+                </i>
+            </div>
+            <div ng-show="!sfMedia">
+                <span>@(Res.Get<ClientComponentsResources>().DocumentHasBeenDeleted)</span>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div ng-show="sfMedia">
+                <h4>
+                    <a title="{{sfMedia.Title.Value}}" ng-href="{{sfMedia.MediaUrl}}" target="_blank">{{sfMedia.Title.Value}}</a>
+                </h4>
+
+                <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
+                <span ng-bind="sfMedia.Extension"></span><br />
+
+                <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
+                <span ng-bind="mediaSize"></span><br />
+
+                <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
+                <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
+            </div>
+
+            <br />
+            <button class="btn btn-xs btn-default" ng-click="changeMedia()">@(Res.Get<ClientComponentsResources>().ChangeDocument)</button>
+            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
+        </div>
+    </div>
+</div>
+
+<div class="mediaSelectorModal"
+     template-url="sf-media-selector-modal-template"
+     modal
+     size="normal"
+     window-class="modal-fluid"
+     existing-scope="true">
+</div>
+
+<script type="text/ng-template" id="sf-media-selector-modal-template">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().SelectDocument)</h3>
+    </div>
+    <div class="modal-body">
+        <sf-document-selector sf-model="model.selectedItems" sf-filter="model.filterObject" sf-provider="model.provider"></sf-document-selector>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">@(Res.Get<ClientComponentsResources>().Done)</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
+    </div>
+</script>

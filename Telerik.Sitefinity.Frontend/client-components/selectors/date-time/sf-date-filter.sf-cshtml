@@ -1,0 +1,13 @@
+﻿<div class="checkbox" >
+    <label for="dateInput">
+        <input id="dateInput" type="checkbox"
+            ng-click="toggleDateSelection(sfQueryFieldName)"
+            ng-checked="selectedDateFilters.hasOwnProperty(sfQueryFieldName)"  />
+
+            @(Res.Get<ClientComponentsResources>().Date)
+    </label>
+
+    <sf-timespan-selector class="label-content" sf-change="change" sf-selected-item="selectedDateFilters[sfQueryFieldName]"
+    ng-show="selectedDateFilters.hasOwnProperty(sfQueryFieldName)"></sf-timespan-selector>
+</div>
+

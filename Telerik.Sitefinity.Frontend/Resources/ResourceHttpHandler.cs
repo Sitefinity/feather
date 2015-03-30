@@ -15,6 +15,15 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// </summary>
     internal class ResourceHttpHandler : IHttpHandler
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceHttpHandler"/> class.
+        /// </summary>
+        public ResourceHttpHandler(string path)
+        {
+            this.rootPath = path;
+            this.parser = new ResourceTemplateProcessor();
+        }
+
         #region IHttpHandler
 
         /// <summary>
@@ -36,6 +45,9 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (this.FileExists(context.Request.Url.AbsolutePath))
             {
                 var fileName = VirtualPathUtility.GetFileName(context.Request.Url.AbsolutePath);
+
+                this.SetResponseClientCache(context, fileName);
+
                 if (!(fileName.EndsWith(".sf-cshtml", StringComparison.OrdinalIgnoreCase) && this.IsWhitelisted(context.Request.Url.AbsolutePath)))
                 {
                     using (var fileStream = this.OpenFile(context.Request.Url.AbsolutePath))
@@ -96,12 +108,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns>Whether the specified path is whitelisted for execution server code.</returns>
         protected virtual bool IsWhitelisted(string path)
         {
-            var resolvedPath = RouteHelper.ResolveUrl(path, UrlResolveOptions.Rooted);
-            var clientComponents = RouteHelper.ResolveUrl("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/client-components/", UrlResolveOptions.Rooted);
-            var mvcScripts = RouteHelper.ResolveUrl("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/Mvc/Scripts/", UrlResolveOptions.Rooted);
-
-            return resolvedPath.StartsWith(clientComponents, StringComparison.OrdinalIgnoreCase) ||
-                resolvedPath.StartsWith(mvcScripts, StringComparison.OrdinalIgnoreCase);
+            var resolvedRoot = RouteHelper.ResolveUrl("~/" + this.rootPath, UrlResolveOptions.Rooted | UrlResolveOptions.AppendTrailingSlash);
+            
+            return path.StartsWith(resolvedRoot + "client-components/", StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith(resolvedRoot + "Mvc/Scripts/", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -116,22 +126,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
             fileStream.Read(buffer, 0, (int)fileStream.Length);
             context.Response.ContentType = ResourceHttpHandler.GetMimeMapping(fileName);
 
-#if !DEBUG
-            if (fileName.EndsWith(".css", StringComparison.OrdinalIgnoreCase) ||
-                fileName.EndsWith(".js", StringComparison.OrdinalIgnoreCase) ||
-                fileName.EndsWith(".html", StringComparison.OrdinalIgnoreCase) ||
-                fileName.EndsWith(".htm", StringComparison.OrdinalIgnoreCase))
-            {
-                var cache = context.Response.Cache;
-                cache.SetCacheability(HttpCacheability.Public);
-                cache.SetExpires(DateTime.Now + TimeSpan.FromDays(7));
-                cache.SetValidUntilExpires(true);
-
-                var lastWriteTime = ResourceHttpHandler.GetAssemblyLastWriteTime();
-                cache.SetLastModified(lastWriteTime);
-            }
-#endif
-
             this.WriteToOutput(context, buffer);
         }
 
@@ -142,9 +136,33 @@ namespace Telerik.Sitefinity.Frontend.Resources
         protected virtual void SendParsedTemplate(HttpContext context)
         {
             context.Response.ContentType = "text/html";
-            var output = this.razorParser.Run(context.Request.Url.AbsolutePath, model: null);
+            var output = this.parser.Process(context.Request.Url.AbsolutePath);
 
             this.WriteToOutput(context, context.Response.ContentEncoding.GetBytes(output));
+        }
+
+        /// <summary>
+        /// Sets client cache for the requested resource. In debug mode this caching is disabled.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="fileName">Name of the file.</param>
+        protected virtual void SetResponseClientCache(HttpContext context, string fileName)
+        {
+#if !DEBUG
+            if (fileName.EndsWith(".css", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".js", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".html", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".htm", StringComparison.OrdinalIgnoreCase) ||
+                fileName.EndsWith(".sf-cshtml", StringComparison.OrdinalIgnoreCase))
+            {
+                var cache = context.Response.Cache;
+                cache.SetCacheability(HttpCacheability.Public);
+                cache.SetExpires(DateTime.Now + TimeSpan.FromDays(7));
+                cache.SetValidUntilExpires(true);
+                var lastWriteTime = ResourceHttpHandler.GetAssemblyLastWriteTime();
+                cache.SetLastModified(lastWriteTime);
+            }
+#endif
         }
 
         /// <summary>
@@ -167,6 +185,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return File.GetLastWriteTime((new Uri(name.CodeBase)).LocalPath);
         }
 
-        private RazorTemplateProcessor razorParser = new RazorTemplateProcessor();
+        private readonly ResourceTemplateProcessor parser;
+        private readonly string rootPath;
     }
 }

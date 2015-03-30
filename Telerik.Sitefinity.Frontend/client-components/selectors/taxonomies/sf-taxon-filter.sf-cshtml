@@ -1,0 +1,30 @@
+﻿<div class="checkbox" ng-repeat="taxonomy in sfTaxonomyFields">
+    <label for="{{taxonomy.Name}}" class="full-width">
+        <input id="{{taxonomy.Name}}" type="checkbox"
+               ng-click="toggleTaxonomySelection(taxonomy.Name)" value="{{taxonomy.Name}}"
+               ng-checked="selectedTaxonomies.hasOwnProperty(taxonomy.Name)" />
+        {{taxonomy.Title}}...
+    </label>
+
+    <sf-list-selector class="label-content"
+                      sf-taxon-selector
+                      sf-dialog-header="@(Res.Get<ClientComponentsResources>().Select) {{taxonomy.Title|lowercase}}"
+                      ng-if="selectedTaxonomies.hasOwnProperty(taxonomy.Name) && taxonomy.TaxonomyType === 0"
+                      sf-multiselect="true"
+                      sf-selected-ids="selectedTaxonomies[taxonomy.Name]"
+                      sf-provider="sfProvider"
+                      sf-taxonomy-id="{{taxonomy.Id}}"
+                      sf-change="change"></sf-list-selector>
+
+    <sf-list-selector class="label-content"
+                      sf-hierarchical-taxon-selector
+                      sf-dialog-header="@(Res.Get<ClientComponentsResources>().Select) {{taxonomy.Title|lowercase}}"
+                      ng-if="selectedTaxonomies.hasOwnProperty(taxonomy.Name) && taxonomy.TaxonomyType === 1"
+                      sf-multiselect="true"
+                      sf-selected-ids="selectedTaxonomies[taxonomy.Name]"
+                      sf-provider="sfProvider"
+                      sf-taxonomy-id="{{taxonomy.Id}}"
+                      sf-change="change">
+    </sf-list-selector>
+
+</div>

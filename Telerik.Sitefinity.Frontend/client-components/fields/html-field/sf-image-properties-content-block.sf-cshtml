@@ -1,0 +1,118 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().Image)</h3>
+</div>
+
+<div class="modal-body">
+    <sf-image-field class="sf-Media--info modal-settings" 
+        sf-auto-open-selector
+        sf-model="model.item.Id" 
+        sf-image="model.item" 
+        sf-provider="model.provider"></sf-image-field>
+
+    <form name="imageProperties">
+        <div class="form-group" ng-class="{ 'has-error' : !model.title }">
+            <label for="title">@(Res.Get<ClientComponentsResources>().Title)</label>
+
+            <div class="row">
+                <div class="col-xs-8">
+                    <input class="form-control" name="title" type="text" ng-model="model.title" ng-required="true" />
+                </div>
+
+                <div class="m-top-xs" ng-class="{'text-danger': model.title.length > 35}">{{model.title.length}}</div>
+            </div>
+
+            <div class="text-muted">@(Res.Get<ClientComponentsResources>().RecommendedCharacters)</div>
+
+            <p class="text-danger" ng-show="imageProperties.title.$error.required">@(Res.Get<ClientComponentsResources>().TitleRequired)</p>
+        </div>
+        <div class="form-group">
+            <label for="alternativeText">@(Res.Get<ClientComponentsResources>().AlternativeText)</label>
+            <div class="row">
+                <div class="col-xs-8">
+                    <input class="form-control" name="alternativeText" type="text" ng-model="model.alternativeText" />
+                </div>
+                <div class="m-top-xs" ng-class="{'text-danger': model.alternativeText.length>35}">{{model.alternativeText.length}}</div>
+            </div>
+
+            <div class="text-muted">@(Res.Get<ClientComponentsResources>().RecommendedCharacters)</div>
+        </div>
+
+        <div class="form-group">
+            <label>@(Res.Get<ClientComponentsResources>().Alignment)</label><br />
+            <label class="radio-inline">
+                <input type="radio" ng-model="model.alignment" value="None" ng-checked="!model.alignment || model.alignment==='None'" />
+                <span class="icon-align icon-align-none"></span>
+                @(Res.Get<ClientComponentsResources>().None)
+            </label>
+            <label class="radio-inline">
+                <input type="radio" ng-model="model.alignment" value="Left" />
+                <span class="icon-align icon-align-left"></span>
+                @(Res.Get<ClientComponentsResources>().Left)
+            </label>
+            <label class="radio-inline">
+                <input type="radio" ng-model="model.alignment" value="Center" />
+                <span class="icon-align icon-align-center"></span>
+                @(Res.Get<ClientComponentsResources>().Center)
+            </label>
+            <label class="radio-inline">
+                <input type="radio" ng-model="model.alignment" value="Right" />
+                <span class="icon-align icon-align-right"></span>
+                @(Res.Get<ClientComponentsResources>().Right)
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>@(Res.Get<ClientComponentsResources>().ImageThumbnail)</label>
+            <div sf-thumbnail-size-selection sf-model="model"></div>
+        </div>
+
+        <expander expander-title='More options'>
+            <p>@(Res.Get<ClientComponentsResources>().Margins)</p>
+            <div class="row row-xs">
+                <div class="col-xs-2">
+                    <label for="top">@(Res.Get<ClientComponentsResources>().Top)</label>
+                </div>
+                <div class="col-xs-2">
+                    <label for="right">@(Res.Get<ClientComponentsResources>().Right)</label>
+                </div>
+                <div class="col-xs-2">
+                    <label for="bottom">@(Res.Get<ClientComponentsResources>().Bottom)</label>
+                </div>
+                <div class="col-xs-2">
+                    <label for="left">@(Res.Get<ClientComponentsResources>().Left)</label>
+                </div>
+            </div>
+
+            <div class="row row-xs form-group">
+                <div class="col-xs-2">
+                    <input name="top" type="number" ng-model="model.margin.top" class="form-control"/>
+                </div>
+                <div class="col-xs-2">
+                    <input name="right" type="number" ng-model="model.margin.right" class="form-control"/>
+                </div>
+                <div class="col-xs-2">
+                    <input name="bottom" type="number" ng-model="model.margin.bottom" class="form-control"/>
+                </div>
+                <div class="col-xs-2">
+                    <input name="left" type="number" ng-model="model.margin.left" class="form-control" />
+                </div>
+                <div class="col-xs-2">
+                    <div class="m-top-xs">px</div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xs-9">
+                    <label>@(Res.Get<ClientComponentsResources>().CssClasses)</label>
+                    <input class="form-control" type="text" ng-model="model.cssClass" />
+                </div>
+            </div>
+        </expander>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.item.Title.Value">@(Res.Get<ClientComponentsResources>().Done)</button>
+    <button type="button" class="btn btn-link pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
+</div>

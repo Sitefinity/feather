@@ -210,7 +210,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/selectors/common/sf-list-selector.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/common/sf-list-selector.sf-cshtml';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -259,8 +259,6 @@
                         // ------------------------------------------------------------------------
 
                         var emptyGuid = '00000000-0000-0000-0000-000000000000';
-                        var defaultSelectButtonText = 'Select';
-                        var defaultChangeButtonText = 'Change';
 
                         var currentSelectedIds;
 
@@ -498,6 +496,8 @@
                         };
 
                         scope.isItemSelectedInDialog = function (item) {
+                            if (!item) return false;
+
                             for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
                                 if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
                                     return true;
@@ -521,8 +521,8 @@
                         if (!scope.sfSelectedItemId && scope.sfSelectedIds && scope.sfSelectedIds.length)
                             scope.sfSelectedItemId = scope.sfSelectedIds[0];
 
-                        scope.selectButtonText = attrs.sfSelectButtonText ? attrs.sfSelectButtonText : defaultSelectButtonText;
-                        scope.changeButtonText = attrs.sfChangeButtonText ? attrs.sfChangeButtonText : defaultChangeButtonText;
+                        scope.selectButtonText = attrs.sfSelectButtonText;
+                        scope.changeButtonText = attrs.sfChangeButtonText;
 
                         scope.selectedItemsInTheDialog = [];
 
