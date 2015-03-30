@@ -55,7 +55,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// Gets Description for the Client Components resources class.
         /// </summary>
         [ResourceEntry("ClientComponentsResourcesDescription",
-            Value = "Localizable strings for the Client Components",
+            Value = "Localizable strings for the Client Components.",
             Description = "Description for the Client Components resources class.",
             LastModified = "2015/03/30")]
         public string ClientComponentsResourcesDescription
