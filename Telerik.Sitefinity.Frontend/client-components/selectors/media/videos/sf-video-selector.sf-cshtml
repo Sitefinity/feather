@@ -4,4 +4,11 @@
     sf-provider="provider"
     sf-multiselect="{{sfMultiselect}}"
     sf-deselectable="{{sfDeselectable}}"
-    sf-media-type="videos"></sf-media-selector>
+    sf-media-type="videos"
+    sf-labels="labels"></sf-media-selector>
+
+<server-data
+    select-item-from-computer="(Res.Get<ClientComponentsResources>().SelectVideoFromComputer)"
+    no-items="@(Res.Get<ClientComponentsResources>().NoVideos)"
+    upload-item="@(Res.Get<ClientComponentsResources>().UploadVideo)"
+    already-uploaded-item="@(Res.Get<ClientComponentsResources>().AlreadyUploadedVideos)"></server-data>

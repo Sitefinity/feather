@@ -11,7 +11,7 @@
         <!--Upload document-->
         <input type="file" class="file-upload-chooser-input" style="display: none !important" />
         <div ng-show="isInUploadMode" class="Media-upload-text text-center">
-            <div class="lead"><a ng-click="openSelectFileDialog()">@(Res.Get<ClientComponentsResources>().SelectDocumentFromComputer)</a></div>
+            <div class="lead"><a ng-click="openSelectFileDialog()" ng-bind="sfLabels.selectItemFromComputer"></a></div>
             <div>@(Res.Get<ClientComponentsResources>().SimplyDragAndDrop)</div>
         </div>
 
@@ -38,9 +38,9 @@
 
                 <div ng-hide="filterObject.query || selectedFilterOption != 1" class="Media-upload-text text-center">
                     <div class="icon-no-image"></div>
-                    <p class="text-muted">@(Res.Get<ClientComponentsResources>().NoDocuments)</p>
+                    <p class="text-muted" ng-bind="sfLabels.noItems"></p>
 
-                    <div class="lead"><a ng-click="openSelectFileDialog()">@(Res.Get<ClientComponentsResources>().SelectDocumentFromComputer)</a></div>
+                    <div class="lead"><a ng-click="openSelectFileDialog()" ng-bind="sfLabels.selectItemFromComputer"></a></div>
                     <div class="">@(Res.Get<ClientComponentsResources>().SimplyDragAndDrop)</div>
                 </div>
 
@@ -77,13 +77,13 @@
     <div class="Media-sidebar">
         <div class="Media-sidebar-content">
             <ul class="nav nav-pills nav-stacked nav-sm">
-                <li ng-class="{ 'active' : isInUploadMode }"><a ng-click="switchToUploadMode()">@(Res.Get<ClientComponentsResources>().UploadDocument)</a></li>
+                <li ng-class="{ 'active' : isInUploadMode }"><a ng-click="switchToUploadMode()" ng-bind="sfLabels.uploadItem"></a></li>
             </ul>
 
             <br />
 
             <!--Basic Filter-->
-            <div class="m-bottom-xs m-left-xs"><strong>@(Res.Get<ClientComponentsResources>().AlreadyUploadedDocuments)</strong></div>
+            <div class="m-bottom-xs m-left-xs"><strong ng-bind="sfLabels.alreadyUploadedItem"></strong></div>
 
             <ul class="nav nav-pills nav-stacked nav-sm">
                 <li ng-repeat="basicFilter in filters.basic.all"

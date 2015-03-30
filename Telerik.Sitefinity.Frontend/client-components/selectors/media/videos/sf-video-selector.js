@@ -1,11 +1,11 @@
 var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfVideoSelector');
 
-var sfVideoSelector = angular.module('sfVideoSelector', ['sfMediaSelector']);
+var sfVideoSelector = angular.module('sfVideoSelector', ['sfMediaSelector', 'serverDataModule']);
 
 sfVideoSelector.directive('sfVideoSelector',
-    ['serverContext',
-    function (serverContext) {
+    ['serverContext', 'serverData',
+    function (serverContext, serverData) {
     return {
         restrict: 'E',
         scope: {
@@ -21,6 +21,8 @@ sfVideoSelector.directive('sfVideoSelector',
             return serverContext.getEmbeddedResourceUrl(assembly, url);
         },
         link: function (scope, element, attrs) {
+            serverData.refresh();
+            scope.labels = serverData.getAll();
         }
     };
 }]);

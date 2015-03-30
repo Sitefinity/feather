@@ -59,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["InsertFile"];
             }
         }
-
+        
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
@@ -348,7 +348,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["Bottom"];
             }
         }
-
+        
         /// <summary>
         /// word: Type
         /// </summary>
@@ -1726,7 +1726,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["EnterTitle"];
             }
         }
-
+        
         /// <summary>
         /// phrase: Enter URL
         /// </summary>
@@ -1742,7 +1742,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["EnterUrl"];
             }
         }
-
+        
         /// <summary>
         /// phrase: Open external URLs in new tab/window
         /// </summary>
@@ -1758,7 +1758,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["OpenExternalUrlInNewWindow"];
             }
         }
-
+        
         /// <summary>
         /// phrase: Add external URL
         /// </summary>
@@ -2366,5 +2366,55 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["ListSelectorHeader"];
             }
         }
+
+        #region Videos
+        /// <summary>
+        /// phrase: No videos
+        /// </summary>
+        /// <value>No videos</value>
+        [ResourceEntry("NoVideos",
+            Value = "No videos",
+            Description = "phrase: No videos",
+            LastModified = "2015/03/30")]
+        public string NoVideos
+        {
+            get
+            {
+                return this["NoVideos"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Upload video
+        /// </summary>
+        /// <value>Upload video</value>
+        [ResourceEntry("UploadVideo",
+            Value = "Upload video",
+            Description = "phrase: Upload video",
+            LastModified = "2015/03/30")]
+        public string UploadVideo
+        {
+            get
+            {
+                return this["UploadVideo"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Already uploaded videos
+        /// </summary>
+        /// <value>Already uploaded videos</value>
+        [ResourceEntry("AlreadyUploadedVideos",
+            Value = "Already uploaded videos",
+            Description = "phrase: Already uploaded videos",
+            LastModified = "2015/03/30")]
+        public string AlreadyUploadedVideos
+        {
+            get
+            {
+                return this["AlreadyUploadedVideos"];
+            }
+        }
+        #endregion
     }
 }

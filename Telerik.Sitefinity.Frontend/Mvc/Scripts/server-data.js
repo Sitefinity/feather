@@ -15,6 +15,10 @@
         };
 
         var serverDataService = {
+            getAll: function () {
+                return serverData;    
+            },
+
             get: function (key) {
                 return serverData[key];
             },
