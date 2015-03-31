@@ -67,7 +67,7 @@
             <div sf-thumbnail-size-selection sf-model="model"></div>
         </div>
 
-        <expander expander-title='More options'>
+        <expander expander-title='@(Res.Get<ClientComponentsResources>().MoreOptions)'>
             <p>@(Res.Get<ClientComponentsResources>().Margins)</p>
             <div class="row row-xs">
                 <div class="col-xs-2">

@@ -2422,5 +2422,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["ListSelectorHeader"];
             }
         }
+
+        /// <summary>
+        /// phrase: More options
+        /// </summary>
+        /// <value>More options</value>
+        [ResourceEntry("MoreOptions",
+            Value = "More options",
+            Description = "phrase: More options",
+            LastModified = "2015/03/31")]
+        public string MoreOptions
+        {
+            get
+            {
+                return this["MoreOptions"];
+            }
+        }
     }
 }
