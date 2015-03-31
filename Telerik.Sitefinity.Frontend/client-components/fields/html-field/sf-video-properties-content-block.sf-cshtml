@@ -1,6 +1,6 @@
 ﻿<div class="modal-header">
     <button type="button" class="close" ng-click="cancel()">&times;</button>
-    <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().InsertDocumentLink)</h3>
+    <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().InsertVideoLink)</h3>
 </div>
 
 <div class="modal-body">
@@ -10,21 +10,37 @@
                     sf-media="model.item"
                     sf-provider="model.provider"></sf-media-field>
 
-    <form name="documentProperties">
+    <form>
         <div class="form-group" ng-class="{ 'has-error' : !model.title }">
-            <label for="title">@(Res.Get<ClientComponentsResources>().Title)</label>
+            <label>@(Res.Get<ClientComponentsResources>().AspectRatio)</label>
 
             <div class="row">
                 <div class="col-xs-8">
-                    <input class="form-control" name="title" type="text" ng-model="model.title" ng-required="true" />
+                    <select ng-model="model.aspectRatio">
+                        <option value="auto">@(Res.Get<ClientComponentsResources>().Auto)</option>
+                        <option value="4x3">@(Res.Get<ClientComponentsResources>().Ratio4x3)</option>
+                        <option value="16x9">@(Res.Get<ClientComponentsResources>().Ratio16x9)</option>
+                        <option value="custom">@(Res.Get<ClientComponentsResources>().Custom)</option>
+                    </select>
                 </div>
-
-                <div class="m-top-xs" ng-class="{'text-danger': model.title.length > 35}">{{model.title.length}}</div>
             </div>
-
-            <div class="text-muted">@(Res.Get<ClientComponentsResources>().RecommendedCharacters)</div>
-
-            <p class="text-danger" ng-show="mediaProperties.title.$error.required">@(Res.Get<ClientComponentsResources>().TitleRequired)</p>
+            
+            <div ng-hide="model.aspectRatio === 'auto'">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <label>@(Res.Get<ClientComponentsResources>().Width)</label><br />
+                        <input type="number" ng-model="model.width" ng-change="updateHeight()">
+                        <label>@(Res.Get<ClientComponentsResources>().PixelShort)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <label>@(Res.Get<ClientComponentsResources>().Height)</label><br />
+                        <input type="number" ng-model="model.height" ng-change="updateWidth()">
+                        <label>@(Res.Get<ClientComponentsResources>().PixelShort)</label>
+                    </div>
+                </div>
+            </div>             
         </div>
 
         <expander expander-title='More options'>

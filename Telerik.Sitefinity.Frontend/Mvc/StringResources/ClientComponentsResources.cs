@@ -14,7 +14,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
     public class ClientComponentsResources : Resource
     {
         #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientComponentsResources"/> class. 
         /// Initializes new instance of <see cref="ClientComponentsResources"/> class with the default <see cref="ResourceDataProvider"/>.
@@ -31,11 +30,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             : base(dataProvider)
         {
         }
-
         #endregion
 
         #region Class Description
-
         /// <summary>
         /// Gets Title for the Client Components resources class.
         /// </summary>
@@ -65,7 +62,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["ClientComponentsResourcesDescription"];
             }
         }
-
         #endregion
 
         /// <summary>
@@ -116,11 +112,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr")]
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
         /// <value>sfAction attribute is required</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr")]
         [ResourceEntry("SfActionAttrRequired",
             Value = "sfAction attribute is required!",
             Description = "phrase: sfAction attribute is required!",
@@ -405,11 +401,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         /// <summary>
         /// word: Type
         /// </summary>
         /// <value>Type</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         [ResourceEntry("Type",
             Value = "Type:",
             Description = "word: Type",
@@ -1783,10 +1779,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Enter URL
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         [ResourceEntry("EnterUrl",
             Value = "Enter URL",
             Description = "phrase: Enter URL",
@@ -1799,10 +1795,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Open external URLs in new tab/window
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         [ResourceEntry("OpenExternalUrlInNewWindow",
             Value = "Open external URLs in new tab/window",
             Description = "phrase: Open external URLs in new tab/window",
@@ -1815,10 +1811,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Add external URL
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         [ResourceEntry("AddExternalUrl",
             Value = "Add external URL",
             Description = "phrase: Add external URL",
@@ -2503,6 +2499,86 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["SelectVideoFromComputer"];
             }
         }
+
+        /// <summary>
+        /// phrase: Insert a video
+        /// </summary>
+        /// <value>Insert a video</value>
+        [ResourceEntry("InsertVideoLink",
+            Value = "Insert a video",
+            Description = "phrase: Insert a video",
+            LastModified = "2015/03/31")]
+        public string InsertVideoLink
+        {
+            get
+            {
+                return this["InsertVideoLink"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Aspect ratio
+        /// </summary>
+        /// <value>Aspect ratio</value>
+        [ResourceEntry("AspectRatio",
+            Value = "Aspect ratio",
+            Description = "phrase: Aspect ratio",
+            LastModified = "2015/03/31")]
+        public string AspectRatio
+        {
+            get
+            {
+                return this["AspectRatio"];
+            }
+        }
+
+        /// <summary>
+        /// word: Auto
+        /// </summary>
+        /// <value>Auto</value>
+        [ResourceEntry("Auto",
+            Value = "Auto",
+            Description = "word: Auto",
+            LastModified = "2015/03/31")]
+        public string Auto
+        {
+            get
+            {
+                return this["Auto"];
+            }
+        }
+
+        /// <summary>
+        /// word: 4x3
+        /// </summary>
+        /// <value>4x3</value>
+        [ResourceEntry("Ratio4x3",
+            Value = "4x3",
+            Description = "word: 4x3",
+            LastModified = "2015/03/31")]
+        public string Ratio4x3
+        {
+            get
+            {
+                return this["Ratio4x3"];
+            }
+        }
+
+        /// <summary>
+        /// word: 16x9
+        /// </summary>
+        /// <value>16x9</value>
+        [ResourceEntry("Ratio16x9",
+            Value = "16x9",
+            Description = "word: 16x9",
+            LastModified = "2015/03/31")]
+        public string Ratio16x9
+        {
+            get
+            {
+                return this["Ratio16x9"];
+            }
+        }
         #endregion
 
         /// <summary>
@@ -2550,6 +2626,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["MoreOptions"];
+            }
+        }
+
+        /// <summary>
+        /// word: Custom
+        /// </summary>
+        /// <value>Custom</value>
+        [ResourceEntry("Custom",
+            Value = "Custom",
+            Description = "word: Custom",
+            LastModified = "2015/03/31")]
+        public string Custom
+        {
+            get
+            {
+                return this["Custom"];
+            }
+        }
+
+        /// <summary>
+        /// word: px
+        /// </summary>
+        /// <value>px</value>
+        [ResourceEntry("PixelShort",
+            Value = "px",
+            Description = "word: px",
+            LastModified = "2015/03/31")]
+        public string PixelShort
+        {
+            get
+            {
+                return this["PixelShort"];
             }
         }
     }
