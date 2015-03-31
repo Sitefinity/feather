@@ -66,7 +66,18 @@
                      "tag" : "v1.0.0.0"
                   },
                   {
-                     "name" : "Auto-registration of grid widgets"
+                     "article" : "Add-customizable-grid-controls-based-on-simple-HTML",
+                     "commitHash" : "b0bfe35ea1beacd6e4ea281a60db8ef338629c63",
+                     "date" : "03-27-2015 16:54 +0200",
+                     "name" : "Auto-registration of grid widgets",
+                     "tag" : "v.1.2.140.2"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Customize class names from the UI",
+                     "tag" : ""
                   }
                ],
                "shortDescription" : "In progress",
@@ -1312,6 +1323,13 @@
                      "tag" : "v1.0.0.0"
                   },
                   {
+                     "article" : "Create-a-layout-file",
+                     "commitHash" : "b0bfe35ea1beacd6e4ea281a60db8ef338629c63",
+                     "date" : "03-27-2015 16:54 +0200",
+                     "name" : "Multiple placeholders in layout files",
+                     "tag" : "v.1.2.140.2"
+                  },
+                  {
                      "name" : "Custom routes for MVC widgets"
                   },
                   {
@@ -1347,6 +1365,13 @@
                      "date" : "09-24-2014",
                      "name" : "Get localized data",
                      "tag" : "v1.0.0.0"
+                  },
+                  {
+                     "article" : "Refer-to-resources-inside-MVC-views",
+                     "commitHash" : "",
+                     "date" : "03-27-2015 18:00 +0200",
+                     "name" : "Get localized data",
+                     "tag" : "v.1.2.140.0"
                   }
                ],
                "shortDescription" : "In progress",
