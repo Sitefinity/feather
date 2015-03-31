@@ -162,7 +162,29 @@
                     };
 
                     scope.openVideoSelector = function () {
-                        
+                        scope.mediaPropertiesDialog =
+                                serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-video-properties-content-block.sf-cshtml');
+                        scope.sfMediaPropertiesController = "sfDocumentPropertiesController";
+
+                        var range = editor.getRange();
+                        //TODO: mediaMarkupService shouild return video tag
+                        // var aTag = getAnchorElement(range);
+                        var properties = null;
+                        // var properties = aTag ? mediaMarkupService.document.properties(aTag.outerHTML) : null;
+
+                        setTimeout(function () {
+                            angular.element('.mediaPropertiesModal')
+                                .scope()
+                                .$openModalDialog({ sfModel: function () { return properties; } })
+                                .then(function (data) {
+                                     properties = data;
+                                     return mediaService.getLibrarySettings();
+                                 });
+                                // .then(function (settings) {
+                                //      var markup = mediaMarkupService.document.markup(properties, settings);
+                                //      editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                //  });
+                        }, 0);
                     }
 
                     scope.toggleHtmlView = function () {

@@ -465,6 +465,7 @@
     <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector-view.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\videos\sf-video-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-video-properties-content-block.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
