@@ -354,6 +354,21 @@
                     jElementToInsert.attr('class', properties.cssClass);
                     jElementToInsert.attr('width', properties.width);
                     jElementToInsert.attr('height', properties.height);
+
+                    if(properties.margin) {
+                        if(properties.margin.left)
+                            jElementToInsert.css('margin-left', properties.margin.left + 'px');
+
+                        if(properties.margin.right)
+                            jElementToInsert.css('margin-right', properties.margin.right + 'px');
+
+                        if(properties.margin.top)
+                            jElementToInsert.css('margin-top', properties.margin.top + 'px');
+
+                        if(properties.margin.bottom)
+                            jElementToInsert.css('margin-bottom', properties.margin.bottom + 'px');
+                    }
+
                     jElementToInsert.attr('controls', true);
 
                     return jElementToInsert[0].outerHTML;
@@ -370,6 +385,13 @@
                     result.item.MediaUrl = jMarkup.attr('href');
                     result.title = jMarkup.attr('title');
                     result.cssClass = jMarkup.attr('class') || null;
+
+                    result.margin = {
+                        left: jMarkup.css('margin-left'),
+                        right: jMarkup.css('margin-right'),
+                        top: jMarkup.css('margin-top'),
+                        bottom: jMarkup.css('margin-bottom')
+                    };
 
                     return result;
                 }

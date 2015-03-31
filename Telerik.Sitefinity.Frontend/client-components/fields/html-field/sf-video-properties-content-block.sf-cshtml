@@ -10,7 +10,6 @@
                     sf-media="model.item"
                     sf-provider="model.provider"></sf-media-field>
 
-    <form>
         <div class="form-group" ng-class="{ 'has-error' : !model.title }">
             <label>@(Res.Get<ClientComponentsResources>().AspectRatio)</label>
 
@@ -44,12 +43,33 @@
         </div>
 
         <expander expander-title='More options'>
+            <div class="row">
+                <h3>@(Res.Get<ClientComponentsResources>().Margins)</h3>
+                <div class="col-xs-2">
+                    <label>@(Res.Get<ClientComponentsResources>().Top)</label><br />
+                    <input type="number" ng-model="model.margin.top" style="width: 50px">
+                </div>
+                
+                <div class="col-xs-2">
+                    <label>@(Res.Get<ClientComponentsResources>().Right)</label><br />
+                    <input type="number" ng-model="model.margin.right" style="width: 50px">
+                </div>
+
+                <div class="col-xs-2">
+                    <label>@(Res.Get<ClientComponentsResources>().Bottom)</label><br />
+                    <input type="number" ng-model="model.margin.bottom" style="width: 50px">
+                </div>
+
+                <div class="col-xs-2">
+                    <label>@(Res.Get<ClientComponentsResources>().Left)</label><br />
+                    <input type="number" ng-model="model.margin.left" style="width: 50px">                    
+                </div>
+                <label>@(Res.Get<ClientComponentsResources>().PixelShort)</label>
+            </div>
 
             <label>@(Res.Get<ClientComponentsResources>().CssClasses)</label>
             <input class="form-control" type="text" ng-model="model.cssClass" />
-
         </expander>
-    </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.item.Title.Value">@(Res.Get<ClientComponentsResources>().Done)</button>
