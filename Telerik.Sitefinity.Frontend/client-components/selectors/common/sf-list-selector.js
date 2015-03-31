@@ -348,7 +348,8 @@
                             if (newProvider !== oldProvider) {
                                 if (ctrl.selectorType === 'NewsSelector' ||
                                     ctrl.selectorType === 'DynamicItemsSelector' ||
-                                    ctrl.selectorType === 'LibrarySelector') {
+                                    ctrl.selectorType === 'LibrarySelector' ||
+                                    ctrl.selectorType === 'ListsSelector') {
                                     scope.sfSelectedItems = null;
                                     scope.sfSelectedIds = null;
                                 }

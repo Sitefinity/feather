@@ -27,7 +27,7 @@
             <p class="text-danger" ng-show="mediaProperties.title.$error.required">@(Res.Get<ClientComponentsResources>().TitleRequired)</p>
         </div>
 
-        <expander expander-title='More options'>
+        <expander expander-title='@(Res.Get<ClientComponentsResources>().MoreOptions)'>
 
             <label>@(Res.Get<ClientComponentsResources>().CssClasses)</label>
             <input class="form-control" type="text" ng-model="model.cssClass" />

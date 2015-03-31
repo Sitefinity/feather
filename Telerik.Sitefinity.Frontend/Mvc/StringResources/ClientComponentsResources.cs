@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Telerik.Sitefinity.Localization;
+using Telerik.Sitefinity.Localization.Data;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
 {
@@ -12,6 +13,61 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
     [ObjectInfo(typeof(ClientComponentsResources), ResourceClassId = "ClientComponentsResources", Title = "ClientComponentsResourcesTitle", Description = "ClientComponentsResourcesDescription")]
     public class ClientComponentsResources : Resource
     {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientComponentsResources"/> class. 
+        /// Initializes new instance of <see cref="ClientComponentsResources"/> class with the default <see cref="ResourceDataProvider"/>.
+        /// </summary>
+        public ClientComponentsResources()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientComponentsResources"/> class.
+        /// </summary>
+        /// <param name="dataProvider">The data provider.</param>
+        public ClientComponentsResources(ResourceDataProvider dataProvider)
+            : base(dataProvider)
+        {
+        }
+
+        #endregion
+
+        #region Class Description
+
+        /// <summary>
+        /// Gets Title for the Client Components resources class.
+        /// </summary>
+        [ResourceEntry("ClientComponentsResourcesTitle",
+            Value = "Client Components resources",
+            Description = "Title for the Client Components resources class.",
+            LastModified = "2015/03/30")]
+        public string ClientComponentsResourcesTitle
+        {
+            get
+            {
+                return this["ClientComponentsResourcesTitle"];
+            }
+        }
+
+        /// <summary>
+        /// Gets Description for the Client Components resources class.
+        /// </summary>
+        [ResourceEntry("ClientComponentsResourcesDescription",
+            Value = "Localizable strings for the Client Components.",
+            Description = "Description for the Client Components resources class.",
+            LastModified = "2015/03/30")]
+        public string ClientComponentsResourcesDescription
+        {
+            get
+            {
+                return this["ClientComponentsResourcesDescription"];
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Insert hyperlink
         /// </summary>
@@ -2064,22 +2120,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// word: px
-        /// </summary>
-        /// <value>px</value>
-        [ResourceEntry("PX",
-            Value = "px",
-            Description = "word: px",
-            LastModified = "2015/03/25")]
-        public string PX
-        {
-            get
-            {
-                return this["PX"];
-            }
-        }
-
-        /// <summary>
         /// phrase: Value must be an integer between 1 and 9999 inclusive.
         /// </summary>
         /// <value>Value must be an integer between 1 and 9999 inclusive.</value>
@@ -2364,6 +2404,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["ListSelectorHeader"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: More options
+        /// </summary>
+        /// <value>More options</value>
+        [ResourceEntry("MoreOptions",
+            Value = "More options",
+            Description = "phrase: More options",
+            LastModified = "2015/03/31")]
+        public string MoreOptions
+        {
+            get
+            {
+                return this["MoreOptions"];
             }
         }
     }
