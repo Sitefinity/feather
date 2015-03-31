@@ -167,10 +167,7 @@
                         scope.sfMediaPropertiesController = "sfDocumentPropertiesController";
 
                         var range = editor.getRange();
-                        //TODO: mediaMarkupService shouild return video tag
-                        // var aTag = getAnchorElement(range);
-                        var properties = null;
-                        // var properties = aTag ? mediaMarkupService.document.properties(aTag.outerHTML) : null;
+                        var properties = getPropertiesFromTag('video', null, 'video');
 
                         setTimeout(function () {
                             angular.element('.mediaPropertiesModal')
@@ -179,11 +176,11 @@
                                 .then(function (data) {
                                      properties = data;
                                      return mediaService.getLibrarySettings();
+                                 })
+                                .then(function (settings) {
+                                     var markup = mediaMarkupService.video.markup(properties, settings);
+                                     editor.exec('insertHtml', { html: markup, split: true, range: range });
                                  });
-                                // .then(function (settings) {
-                                //      var markup = mediaMarkupService.document.markup(properties, settings);
-                                //      editor.exec('insertHtml', { html: markup, split: true, range: range });
-                                //  });
                         }, 0);
                     }
 

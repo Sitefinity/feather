@@ -47,10 +47,18 @@
 
             var DocumentProperties = function () {
                 this.item = { Id: null }; //MediaItem view model
-                this.provider = null; //Name of the data provider              
+                this.provider = null; //Name of the data provider
                 this.title = null;
                 this.cssClass = null;
             };
+
+            var VideoProperties = function () {
+                this.item = { Id: null }; //MediaItem view model
+                this.provider = null; //Name of the data provider
+                this.width = null;
+                this.height = null;
+                this.cssClass = null;
+            }
 
             var getSfrefAttribute = function (mediaType, id, provider, thumbnailName) {
                 var sfref = '[' + mediaType;
@@ -333,9 +341,44 @@
                 }
             };
 
+            var video = {
+                markup: function (properties, librarySettings) {
+                    var sfref = '';
+                    var src = '';
+                    sfref = getSfrefAttribute('videos', properties.item.Id, properties.provider);
+                    src = properties.item.MediaUrl;
+
+                    var jElementToInsert = jQuery('<video />');
+                    jElementToInsert.attr('sfref', sfref);
+                    jElementToInsert.attr('src', src);
+                    jElementToInsert.attr('class', properties.cssClass);
+                    jElementToInsert.attr('width', properties.width);
+                    jElementToInsert.attr('height', properties.height);
+                    jElementToInsert.attr('controls', true);
+
+                    return jElementToInsert[0].outerHTML;
+                },
+
+                properties: function (markup) {
+                    var jMarkup = jQuery(markup);
+                    var sfref = jMarkup.attr('sfref') ? jMarkup.attr('sfref') : jMarkup.children().attr('sfref');
+
+                    var result = new VideoProperties();
+
+                    result.item.Id = getIdFromSfrefAttr(sfref);
+                    result.provider = getProviderFromSfrefAttr(sfref);
+                    result.item.MediaUrl = jMarkup.attr('href');
+                    result.title = jMarkup.attr('title');
+                    result.cssClass = jMarkup.attr('class') || null;
+
+                    return result;
+                }
+            };
+
             return {
                 image: image,
-                document: document
+                document: document,
+                video: video
             };
         }]);
 })(jQuery);

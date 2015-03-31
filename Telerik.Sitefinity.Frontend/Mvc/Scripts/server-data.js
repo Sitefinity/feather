@@ -16,7 +16,7 @@
 
         var serverDataService = {
             getAll: function () {
-                return serverData;    
+                return serverData;
             },
 
             get: function (key) {
