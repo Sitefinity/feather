@@ -271,8 +271,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <returns></returns>
         private string ResourceRegistrations()
         {
-            var pageProxy = new PageProxy(string.Empty);
-            
             StringBuilder sb = new StringBuilder();
 
             string appPath = System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
@@ -280,19 +278,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (!appPath.EndsWith("/", StringComparison.Ordinal))
                 appPath = string.Concat(appPath, "/");
 
-            sb.Append(string.Concat("\t<script type=\"text/javascript\">var sf_appPath='", appPath, "';</script>"));
-            
-            if (!SystemManager.IsDesignMode)
-            {
-                IModule module = SystemManager.GetModule("Personalization");
-                if (module != null && SystemManager.CurrentContext.CurrentSite.IsModuleAccessible(module))
-                {
-                    // add the scripts for personalization in the page
-                    sb.Append("\t<script src=\"");
-                    sb.Append(pageProxy.ClientScript.GetWebResourceUrl(typeof(PageStatisticsJSClient), "Telerik.Sitefinity.Clients.JS.StatsClient.min.js"));
-                    sb.Append("\" type=\"text/javascript\"></script>");
-                }
-            }
+            sb.Append(string.Concat("\t<script type=\"text/javascript\">var sf_appPath='", HttpUtility.HtmlEncode(appPath), "';</script>"));
 
             return sb.ToString();
         }
