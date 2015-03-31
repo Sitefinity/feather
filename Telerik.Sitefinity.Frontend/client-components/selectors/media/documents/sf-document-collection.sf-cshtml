@@ -67,11 +67,10 @@
 
 				<div class="Media-file-thumb">
                     <div class="Media-file-thumb-holder">
-                        <div>
-                            <i class="icon-file icon-txt">
-                                <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
-                            </i>
-                        </div>
+                        
+                          <i ng-class="{ 'icon-lg' : $parent.$parent.isGrid, 'icon-md' : $parent.$parent.isList }" class="icon-file icon-txt">
+                              <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
+                          </i>
 
                         <div class="Media-item-title">{{item.Title}}</div>
                     </div>
