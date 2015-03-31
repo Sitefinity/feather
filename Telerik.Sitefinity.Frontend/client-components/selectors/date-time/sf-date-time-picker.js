@@ -13,7 +13,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/selectors/date-time/sf-date-time-picker.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/date-time/sf-date-time-picker.sf-cshtml';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
@@ -24,7 +24,6 @@
 
                         var populateHoursArray = function () {
                             scope.hsteps = [];
-                            scope.hsteps.push({ 'label': '- Hour -', 'value': 'none' });
 
                             if (!scope.sfHourStep) {
                                 scope.sfHourStep = 1;
@@ -60,7 +59,6 @@
 
                         var populateMinutesArray = function () {
                             scope.msteps = [];
-                            scope.msteps.push({ 'label': '- Minute -', 'value': 'none' });
 
                             if (!scope.sfMinuteStep) {
                                 scope.sfMinuteStep = 10;
@@ -107,7 +105,7 @@
                             if (!scope.ngModel)
                                 scope.ngModel = new Date();
 
-                            if (hstep == 'none') {
+                            if (!hstep && hstep !== 0) {
                                 setHours(0, false);
                                 setMinutes(0, false);
                             }
@@ -120,7 +118,7 @@
                             if (!scope.ngModel)
                                 scope.ngModel = new Date();
 
-                            if (mstep == 'none')
+                            if (!mstep && mstep !== 0)
                                 setMinutes(0, false);
                             else
                                 setMinutes(mstep, true);

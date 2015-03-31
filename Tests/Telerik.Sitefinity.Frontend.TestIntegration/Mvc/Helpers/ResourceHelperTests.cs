@@ -67,7 +67,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
 
                 var httpContext = ActionExecutionRegister.ExecutedActionInfos[i].CurrentHttpContext;
                 var scriptManagerScripts = System.Web.UI.ScriptManager.GetCurrent(httpContext.Handler as System.Web.UI.Page).Scripts;
-                Assert.AreEqual(2, scriptManagerScripts.Count(), "The script is not added correctly");
+                Assert.AreEqual(3, scriptManagerScripts.Count(), "The script is not added correctly");
             }          
         }
 

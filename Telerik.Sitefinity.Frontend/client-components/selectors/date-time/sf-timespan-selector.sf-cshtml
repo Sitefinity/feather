@@ -1,0 +1,84 @@
+﻿<div>
+    <div id="selectedItemsPlaceholder">
+        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+
+        <div ng-hide="showError">
+            <span class="label label-taxon label-full" ng-bind="sfSelectedItem.displayText"></span>
+            <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
+                <span ng-hide="isItemSelected()">@(Res.Get<ClientComponentsResources>().Select)</span>
+                <span ng-show="isItemSelected()">@(Res.Get<ClientComponentsResources>().Change)</span>
+            </button>
+        </div>
+    </div>
+    <div class="contentSelector" template-url ="timespan-selector-content" modal window-class="sf-designer-dlg sf-timespan-selector-dlg" existing-scope="true">
+
+    </div>
+</div>
+
+<script type="text/ng-template" id="timespan-selector-content">
+    <div class="modal-header">
+        <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().SelectDates)</h3>
+    </div>
+    <div class="modal-body">
+
+
+        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+
+        <h4>@(Res.Get<ClientComponentsResources>().DisplayPublishedItems)</h4>
+        <form name="periodSelection">
+            <div class="radio">
+                <label for="anyTime">
+                    <input id="anyTime" type="radio" value="anyTime" ng-model="selectedItemInTheDialog.periodType" />
+                    @(Res.Get<ClientComponentsResources>().AnyTime)
+                </label>
+            </div>
+            <div class="radio form-inline">
+                <label for="periodToNow">
+                    <input id="periodToNow" type="radio" value="periodToNow" ng-model="selectedItemInTheDialog.periodType"/>
+                    @(Res.Get<ClientComponentsResources>().Last)
+                </label>
+
+                <input type="number" min="1" ng-model="selectedItemInTheDialog.timeSpanValue"
+                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'"
+                        style="width: 70px" class="form-control input-sm" />
+
+                <select ng-model="selectedItemInTheDialog.timeSpanInterval"
+                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'"
+                        class="form-control input-sm">
+                    <option value="days">
+                        @(Res.Get<ClientComponentsResources>().Day)@(Res.Get<ClientComponentsResources>().Plural)
+                    </option>
+                    <option value="weeks">
+                        @(Res.Get<ClientComponentsResources>().Week)@(Res.Get<ClientComponentsResources>().Plural)
+                    </option>
+                    <option value="months">
+                        @(Res.Get<ClientComponentsResources>().Month)@(Res.Get<ClientComponentsResources>().Plural)
+                    </option>
+                    <option value="years">
+                        @(Res.Get<ClientComponentsResources>().Year)@(Res.Get<ClientComponentsResources>().Plural)
+                    </option>
+                </select>
+            </div>
+            <div class="radio">
+                <label for="customRange">
+                    <input id="customRange" type="radio" value="customRange" ng-model="selectedItemInTheDialog.periodType" />
+                    @(Res.Get<ClientComponentsResources>().CustomRange)
+                </label>
+
+                <div class="label-content" ng-show="selectedItemInTheDialog.periodType=='customRange'">
+                  <strong id="fromLabel">@(Res.Get<ClientComponentsResources>().From)</strong>
+                    <sf-date-time-picker ng-model="selectedItemInTheDialog.fromDate" sf-show-meridian="true"></sf-date-time-picker >
+
+                    <strong id="toLabel">@(Res.Get<ClientComponentsResources>().To)</strong>
+                    <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate" sf-show-meridian="true"></sf-date-time-picker >
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left" ng-click="selectItem()">@(Res.Get<ClientComponentsResources>().DoneSelecting)</button>
+        <button type="button" class="btn btn-link pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
+    </div>
+</script>
+

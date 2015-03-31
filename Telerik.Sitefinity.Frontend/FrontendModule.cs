@@ -5,10 +5,11 @@ using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.Designers;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
-using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Frontend.Services.ListsService;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
@@ -60,6 +61,24 @@ namespace Telerik.Sitefinity.Frontend
 
             Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
             Bootstrapper.Initialized += this.Bootstrapper_Initialized;
+
+            SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
+        }
+
+        /// <summary>
+        /// Upgrades this module from the specified version.
+        /// </summary>
+        /// <param name="initializer">The Site Initializer. A helper class for installing Sitefinity modules.</param>
+        /// <param name="upgradeFrom">The version this module us upgrading from.</param>
+        public override void Upgrade(SiteInitializer initializer, Version upgradeFrom)
+        {
+            base.Upgrade(initializer, upgradeFrom);
+
+            if (upgradeFrom < new Version(1, 2, 140, 0))
+            {
+                this.DeleteOldGridSection();
+                this.UpdateContentBlockTitle();
+            }
         }
 
         /// <summary>
@@ -90,9 +109,6 @@ namespace Telerik.Sitefinity.Frontend
 
                 var layoutsInitializer = new LayoutInitializer();
                 layoutsInitializer.Initialize();
-
-                var gridSystemInitializer = new GridSystemInitializer();
-                gridSystemInitializer.Initialize();
 
                 var designerInitializer = new DesignerInitializer();
                 designerInitializer.Initialize();
@@ -177,6 +193,61 @@ namespace Telerik.Sitefinity.Frontend
         {
             var systemConfig = Config.Get<SystemConfig>();
             return systemConfig.SystemServices.ContainsKey(FrontendModule.FrontendServiceName);
+        }
+
+        private void DeleteOldGridSection()
+        {
+            var configManager = ConfigManager.GetManager();
+            using (new ElevatedConfigModeRegion())
+            {
+                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
+                var layoutsToolbox = toolboxConfig.Toolboxes["PageLayouts"];
+                if (layoutsToolbox != null)
+                {
+                    var htmlLayoutsSection = layoutsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "HtmlLayouts");
+                    if (htmlLayoutsSection != null)
+                    {
+                        layoutsToolbox.Sections.Remove(htmlLayoutsSection);
+                        configManager.SaveSection(toolboxConfig);
+                    }
+                }
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Telerik.Sitefinity.Pages.Model.ControlData.set_Caption(System.String)")]
+        private void UpdateContentBlockTitle()
+        {
+            var configManager = ConfigManager.GetManager();
+            using (new ElevatedConfigModeRegion())
+            {
+                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
+                var controlsToolbox = toolboxConfig.Toolboxes["PageControls"];
+                if (controlsToolbox != null)
+                {
+                    var mvcWidgetsSection = controlsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
+                    if (mvcWidgetsSection != null)
+                    {
+                        var contentBlockTool = mvcWidgetsSection.Tools.FirstOrDefault<ToolboxItem>(t => t.Name == "ContentBlock");
+                        if (contentBlockTool != null)
+                        {
+                            contentBlockTool.Title = "Content Block";
+                            configManager.SaveSection(toolboxConfig);
+                        }
+                    }
+                }
+            }
+
+            var pageManager = PageManager.GetManager();
+            using (new ElevatedModeRegion(pageManager))
+            {
+                var contentBlocks = pageManager.GetControls<ControlData>().Where(c => c.ObjectType == "Telerik.Sitefinity.Mvc.Proxy.MvcControllerProxy" && c.Caption == "ContentBlock").ToArray();
+                foreach (var contentBlock in contentBlocks)
+                {
+                    contentBlock.Caption = "Content Block";
+                }
+
+                pageManager.SaveChanges();
+            }
         }
 
         private const string FrontendServiceName = "Telerik.Sitefinity.Frontend";

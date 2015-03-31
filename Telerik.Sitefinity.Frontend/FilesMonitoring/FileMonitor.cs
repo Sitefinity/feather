@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Hosting;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
@@ -132,7 +133,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                 // finds all records containing file paths which no longer exists
                 var nonExistingFilesData = fileMonitorDataManager.GetFilesData().Select(fd => fd.FilePath).ToArray()
-                    .Where(f => !File.Exists(f));
+                    .Where(f => !HostingEnvironment.VirtualPathProvider.FileExists(f));
 
                 if (nonExistingFilesData != null && nonExistingFilesData.Any())
                 {
@@ -143,9 +144,11 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                         if (resourceDirectoryTree.Length >= 2)
                         {
+                            var packageFolderIdx = Array.IndexOf(resourceDirectoryTree, PackageManager.PackagesFolder);
+                            string packageName = packageFolderIdx > 0 && packageFolderIdx + 1 < resourceDirectoryTree.Length ? resourceDirectoryTree[packageFolderIdx + 1] : string.Empty;
                             string resourceFolder = resourceDirectoryTree[resourceDirectoryTree.Length - 2];
-                            IFileManager resourceFilesManager = this.GetResourceFileManager(resourceFolder);
-                            resourceFilesManager.FileDeleted(filePath);
+                            IFileManager resourceFilesManager = this.GetResourceFileManager(resourceFolder, filePath);
+                            resourceFilesManager.FileDeleted(filePath, packageName);
                         }
                     }
                 }
@@ -159,10 +162,10 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         /// <param name="resourceType">Type of the resource.</param>
         /// <returns>FileManager</returns>
-        protected virtual IFileManager GetResourceFileManager(string resourceFolder)
+        protected virtual IFileManager GetResourceFileManager(string resourceFolder, string resourcePath)
         {
             IFileManager resourceFilesManager = null;
-            var resourceType = this.GetResourceType(resourceFolder);
+            var resourceType = this.GetResourceType(resourceFolder, resourcePath);
 
             // the resource folder must follow the convention and the folder name must corresponds to a resource type
             if (resourceType != null)
@@ -179,8 +182,11 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         /// <param name="resourceFolder">The resource folder.</param>
         /// <returns></returns>
-        protected virtual ResourceType? GetResourceType(string resourceFolder)
+        protected virtual ResourceType? GetResourceType(string resourceFolder, string resourcePath)
         {
+            if (resourcePath.Contains("/GridSystem/Templates/"))
+                return ResourceType.Grid;
+
             ResourceType resourceType;
             if (Enum.TryParse<ResourceType>(resourceFolder, true, out resourceType))
                 return resourceType;
@@ -449,7 +455,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             return (p) =>
             {
                 // get the resource file manager depending on its type
-                IFileManager resourceFilesManager = this.GetResourceFileManager(args.ResourceFolder);
+                IFileManager resourceFilesManager = this.GetResourceFileManager(args.ResourceFolder, args.FilePath);
 
                 if (resourceFilesManager != null)
                 {
@@ -463,7 +469,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                         case FileChangeType.Deleted:
                             {
-                                resourceFilesManager.FileDeleted(args.FilePath);
+                                resourceFilesManager.FileDeleted(args.FilePath, args.PackageName);
                                 break;
                             }
 

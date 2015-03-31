@@ -1,0 +1,146 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancelResizing()">&times;</button>
+    <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().CustomThumbnailSize)</h3>
+</div>
+
+<div class="modal-body">
+    <div class="modal-settings">
+        <label>@(Res.Get<ClientComponentsResources>().ResizeImage)</label>
+
+        <div class="row row-xs">
+            <div class="col-xs-4">
+                <select class="form-control" ng-model="model.Method" ng-options="method.value as method.title for method in methodOptions"></select>
+            </div>
+            <div class="col-xs-4 m-top-xs">
+                <a href="" 
+                    sf-popover-html
+                    sf-popover-placement="bottom" 
+                    sf-popover-trigger="focus" 
+                    sf-popover-content="
+                        <div ng-show='model.Method === methodOptions[0].value'>
+                                <div class='small m-bottom-sm'>@(Res.Get<ClientComponentsResources>().ResizeToAreaDescription)</div>
+                                    <img ng-src='{{resizeToAreaUrl}}' alt='@(Res.Get<ClientComponentsResources>().ResizeToAreaExample)' />
+                            </div>
+                        <div ng-show='model.Method === methodOptions[1].value'>
+                                <div class='small m-bottom-sm'>@(Res.Get<ClientComponentsResources>().CropToAreaDescription)</div>
+                            <img ng-src='{{cropToAreaUrl}}' alt='@(Res.Get<ClientComponentsResources>().CropToAreaExample)' />
+                        </div>
+                    "
+                    sf-popover-title="
+                        <div ng-show='model.Method === methodOptions[0].value'>
+                            <strong>@(Res.Get<ClientComponentsResources>().ResizeToArea)</strong>
+                            </div>
+                        <div ng-show='model.Method === methodOptions[1].value'>
+                            <strong>@(Res.Get<ClientComponentsResources>().CropToArea)</strong>
+                        </div>
+                    "
+                >
+                    @(Res.Get<ClientComponentsResources>().WhatIsThisLink)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <form name="customSizeProperties">
+        <div ng-show="model.Method==methodOptions[0].value">
+            <div class="form-group" ng-class="{ 'has-error' : !model.MaxWidth }">
+                <label for="maxWidth">@(Res.Get<ClientComponentsResources>().MaxWidth)</label>
+                <div class="row row-xs">
+                    <div class="col-xs-2">
+                        <input class="form-control" type="number" name="maxWidth" min="1" max="9999" ng-model="model.MaxWidth" ng-required="true" />
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="m-top-xs">px</div>
+                    </div>
+                </div>
+
+                <p class="text-danger" ng-show="customSizeProperties.maxWidth.$error.required">@(Res.Get<ClientComponentsResources>().MaxWidthRequired)</p>
+                <p class="text-danger" ng-show="customSizeProperties.maxWidth.$error.number || 
+                    customSizeProperties.maxWidth.$error.max || customSizeProperties.maxWidth.$error.min">
+                  @(Res.Get<ClientComponentsResources>().WidthHeightErrorMessage)
+                </p>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error' : !model.MaxHeight }">
+                <label for="maxHeight">@(Res.Get<ClientComponentsResources>().MaxHeight)</label>
+
+                <div class="row row-xs">
+                    <div class="col-xs-2">
+                        <input class="form-control" type="number" name="maxHeight" min="1" max="9999" ng-model="model.MaxHeight" ng-required="true" />
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="m-top-xs">px</div>
+                    </div>
+                </div>
+
+                <p class="text-danger" ng-show="customSizeProperties.maxHeight.$error.required">@(Res.Get<ClientComponentsResources>().MaxHeightRequired)</p>
+                <p class="text-danger" ng-show="customSizeProperties.maxHeight.$error.number || 
+                    customSizeProperties.maxHeight.$error.max || customSizeProperties.maxHeight.$error.min">
+                  @(Res.Get<ClientComponentsResources>().WidthHeightErrorMessage)
+                </p>
+            </div>
+        </div>
+
+        <div ng-show="model.Method==methodOptions[1].value">
+            <div class="form-group" ng-class="{ 'has-error' : !model.Width }">
+                <label for="width">@(Res.Get<ClientComponentsResources>().Width)</label>
+                <div class="row row-xs">
+                    <div class="col-xs-2">
+                        <input class="form-control" type="number" name="width" min="1" max="9999" ng-model="model.Width" ng-required="true" />
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="m-top-xs">px</div>
+                    </div>
+                </div>
+
+                <p class="text-danger" ng-show="customSizeProperties.width.$error.required">@(Res.Get<ClientComponentsResources>().WidthRequired)</p>
+                <p class="text-danger" ng-show="customSizeProperties.width.$error.number || 
+                    customSizeProperties.width.$error.max || customSizeProperties.width.$error.min">
+                  @(Res.Get<ClientComponentsResources>().WidthHeightErrorMessage)
+                </p>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error' : !model.Height }">
+                <label for="height">@(Res.Get<ClientComponentsResources>().Height)</label>
+                <div class="row row-xs">
+                    <div class="col-xs-2">
+                        <input class="form-control" type="number" name="height" min="1" max="9999" ng-model="model.Height" ng-required="true" />
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="m-top-xs">px</div>
+                    </div>
+                </div>
+
+                <p class="text-danger" ng-show="customSizeProperties.height.$error.required">@(Res.Get<ClientComponentsResources>().HeightRequired)</p>
+                <p class="text-danger" ng-show="customSizeProperties.height.$error.number || 
+                    customSizeProperties.height.$error.max || customSizeProperties.height.$error.min">
+                  @(Res.Get<ClientComponentsResources>().WidthHeightErrorMessage)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="model.ScaleUp" />
+                  @(Res.Get<ClientComponentsResources>().ResizeSmallerToBigger)
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row row-xs">
+                <div class="col-xs-4">
+                    <label>@(Res.Get<ClientComponentsResources>().Quality)</label>
+                    <select class="form-control" ng-model="model.Quality" ng-options="text for text in quality">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!areCustomSizeOptionsValid()">@(Res.Get<ClientComponentsResources>().Done)</button>
+    <button type="button" class="btn btn-link  pull-left" ng-click="cancelResizing()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
+</div>

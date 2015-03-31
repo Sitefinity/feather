@@ -26,7 +26,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var response = new HttpResponse(new StringWriter(System.Globalization.CultureInfo.InvariantCulture));
             var context = new HttpContext(new HttpRequest(null, "http://tempuri.org/test-style.css", null), response);
 
-            var handler = new DummyResourceHttpHandler();
+            var handler = new DummyResourceHttpHandler(string.Empty);
             handler.FileExistsMock = p => true;
             handler.OpenFileMock = p =>
                 {
@@ -66,7 +66,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
                 new HttpRequest(null, "http://tempuri.org/test-image.jpg", null), 
                 new HttpResponse(null));
 
-            var handler = new DummyResourceHttpHandler();
+            var handler = new DummyResourceHttpHandler(string.Empty);
             handler.FileExistsMock = p => false;
 
             try
@@ -80,6 +80,32 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
                 Assert.AreEqual(404, exception.GetHttpCode(), "Http code is not 404");
                 throw;
             }
+        }
+
+        [TestMethod]
+        [Owner("Boyko-Karadzhov")]
+        [Description("Checks whether a whitelisted sf-cshtml file will be parsed.")]
+        public void ProcessRequest_WhitelistedRazorTemplated_Parsed()
+        {
+            // Arrange
+            bool isParsed = false;
+
+            var response = new HttpResponse(new StringWriter(System.Globalization.CultureInfo.InvariantCulture));
+            var context = new HttpContext(new HttpRequest(null, "http://tempuri.org/template.sf-cshtml", null), response);
+
+            var handler = new DummyResourceHttpHandler(string.Empty);
+            handler.FileExistsMock = p => true;
+            handler.IsWhitelistedMock = p => true;
+            handler.SendParsedTemplateMock = ctx =>
+            {
+                isParsed = true;
+            };
+
+            // Act
+            handler.ProcessRequest(context);
+
+            // Assert
+            Assert.IsTrue(isParsed, "The template was not parsed.");
         }
 
         #endregion

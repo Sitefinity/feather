@@ -199,12 +199,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     using (var streamReader = new StreamReader(fileStream))
                     {
                         var text = streamReader.ReadToEnd();
-                        return new JavaScriptSerializer().Deserialize<DesignerViewConfigModel>(text);
+                        var designerViewConfigModel = new JavaScriptSerializer().Deserialize<DesignerViewConfigModel>(text);
+
+                        this.PopulateComponentsScriptReferences(designerViewConfigModel);
+
+                        return designerViewConfigModel;
                     }
                 }
             }
 
             return null;
+        }
+
+        private void PopulateComponentsScriptReferences(DesignerViewConfigModel designerViewConfigModel)
+        {
+            if (designerViewConfigModel.Components != null && designerViewConfigModel.Components.Count > 0)
+            {
+                if (designerViewConfigModel.Scripts == null)
+                {
+                    designerViewConfigModel.Scripts = new List<string>();
+                }
+
+                designerViewConfigModel.Scripts = ScriptDependencyResolver.GetScripts(designerViewConfigModel.Components, designerViewConfigModel.Scripts);
+            }
         }
 
         private string GetScriptReferencePath(string widgetName, string scriptFileName)

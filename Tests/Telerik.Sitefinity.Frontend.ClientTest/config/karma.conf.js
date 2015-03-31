@@ -3,7 +3,7 @@ module.exports = function (config) {
         basePath: '../',
 
         files: [
-	              'helpers/jquery-1.8.3.min.js',
+	              'helpers/jquery.min.js',
 	              'helpers/angular.js',
                   'helpers/angular-route.js',
                   'helpers/angular-resource.js',
@@ -11,7 +11,7 @@ module.exports = function (config) {
                   'helpers/kendo.all.min.js',
                   'helpers/common-methods.js',
                   'helpers/jasmine-matchers.js',
-                  '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls-0.11.0.min.js',
+                  '../../Telerik.Sitefinity.Frontend/Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls.min.js',
 
 				  '../../Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js',
                   '../../Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
@@ -23,14 +23,14 @@ module.exports = function (config) {
 				  '../../Telerik.Sitefinity.Frontend/client-components/fields/sf-fields.js',
 				  '../../Telerik.Sitefinity.Frontend/client-components/fields/**/*.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/search/**/*.js',
-                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-bubbles-selection.html',
-                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-group-selection.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-bubbles-selection.sf-cshtml',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-group-selection.sf-cshtml',
 	              '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.js',
-                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-list-selector.sf-cshtml',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-items-tree.html',
                   '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.js',
-                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.html',
+                  '../../Telerik.Sitefinity.Frontend/client-components/selectors/common/sf-selected-items-view.sf-cshtml',
 				  '../../Telerik.Sitefinity.Frontend/client-components/selectors/**/*.html',
 				  '../../Telerik.Sitefinity.Frontend/client-components/selectors/**/*.js',
                   '../../Telerik.Sitefinity.Frontend/client-components/**/*.js',
@@ -58,7 +58,7 @@ module.exports = function (config) {
             // from all the files, so you can load them all with module('template')
             moduleName: 'templates',
 
-            // Returns the id of the template in $templateCache. To get a template in a test use id like 'client-components/selectors/common/sf-list-selector.html'
+            // Returns the id of the template in $templateCache. To get a template in a test use id like 'client-components/selectors/common/sf-list-selector.sf-cshtml'
             cacheIdFromPath: function (filepath) {
                 // filepath is the path to the template on the disc 
                 return filepath.split('Telerik.Sitefinity.Frontend/')[1];

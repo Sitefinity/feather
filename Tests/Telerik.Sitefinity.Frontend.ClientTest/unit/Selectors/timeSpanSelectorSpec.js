@@ -16,7 +16,7 @@ describe("timeSpan selector", function () {
     };
 
     //This is the id of the cached templates in $templateCache. The external templates are cached by a karma/grunt preprocessor.
-    var timespanSelectorTemplatePath = 'client-components/selectors/date-time/sf-timespan-selector.html';
+    var timespanSelectorTemplatePath = 'client-components/selectors/date-time/sf-timespan-selector.sf-cshtml';
 
     //Load the module responsible for the modal dialog
     beforeEach(module('modalDialog'));
@@ -59,7 +59,7 @@ describe("timeSpan selector", function () {
 
         commonMethods.compileDirective(template, scope);
 
-        expect(scope.selectedItem.displayText).toBe("Last 2 months");
+        expect(scope.selectedItem.displayText.indexOf(" 2 months")).toBeGreaterThan(-1);
     });
 
     it('[EGaneva] / should format the timespan item with custom range.', function () {
@@ -99,13 +99,13 @@ describe("timeSpan selector", function () {
     it('[EGaneva] / should fire "change" event with correct arguments.', function () {
         scope.change = function (args) {
             expect(args.newSelectedItem).toBeDefined();
-            expect(args.newSelectedItem.displayText).toBe('Last 3 weeks');
+            expect(args.newSelectedItem.displayText.indexOf(' 3 weeks')).toBeGreaterThan(-1);
             expect(args.newSelectedItem.periodType).toBe('periodToNow');
             expect(args.newSelectedItem.timeSpanValue).toBe(3);
             expect(args.newSelectedItem.timeSpanInterval).toBe("weeks");
 
             expect(args.oldSelectedItem).toBeDefined();
-            expect(args.oldSelectedItem.displayText).toBe('Any time');
+            expect(args.oldSelectedItem.displayText).toBe('');
             expect(args.oldSelectedItem.periodType).toBe('anyTime');
             expect(args.oldSelectedItem.timeSpanValue).toBeFalsy();
             expect(args.oldSelectedItem.timeSpanInterval).toBe("days");
@@ -129,6 +129,6 @@ describe("timeSpan selector", function () {
         //Close the dialog (Done button clicked)
         s.selectItem();
 
-        expect(s.sfSelectedItem.displayText).toBe('Last 3 weeks');
+        expect(s.sfSelectedItem.displayText.indexOf(' 3 weeks')).toBeGreaterThan(-1);
     });   
 });

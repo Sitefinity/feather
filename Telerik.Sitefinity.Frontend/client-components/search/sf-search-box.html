@@ -1,7 +1,0 @@
-﻿<div ng-show="!showError">
-    <input class="form-control form-control-sm" ng-model="sfModel" ng-change="sfSearchCallback()" placeholder="{{sfPlaceholder}}" />
-    <ul ng-if="sfEnableSuggestions" ng-show="showSuggestions">
-        <li ng-repeat="item in suggestions">{{item}}</li>
-    </ul>
-</div>
-<span ng-show="showError">sfAction attribute is required!</span>

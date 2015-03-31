@@ -1,0 +1,8 @@
+﻿<alert type="danger" ng-show="showError">{{::errorMessage}}</alert>
+
+<div ng-show="sfSites && sfSites.length > 1">
+    <label>@(Res.Get<ClientComponentsResources>().Site)</label>
+	<select class="form-control" ng-options="site as site.Name for site in sfSites track by site.SiteMapRootNodeId"
+            ng-model="sfSite"></select>
+
+</div>

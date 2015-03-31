@@ -10,6 +10,11 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
     /// </summary>
     internal class DummyResourceHttpHandler : ResourceHttpHandler
     {
+        public DummyResourceHttpHandler(string path)
+            : base(path)
+        {
+        }
+
         #region Fields
 
         /// <summary>
@@ -26,6 +31,16 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
         /// A function that will be called through <see cref="WriteToOutput" /> method.
         /// </summary>
         public Action<System.Web.HttpContext, byte[]> WriteToOutputMock { get; set; }
+
+        /// <summary>
+        /// A function that will be called through <see cref="IsWhitelisted" /> method.
+        /// </summary>
+        public Func<string, bool> IsWhitelistedMock { get; set; }
+
+        /// <summary>
+        /// A function that will be called through <see cref="SendParsedTemplate" /> method.
+        /// </summary>
+        public Action<System.Web.HttpContext> SendParsedTemplateMock { get; set; }
 
         #endregion
 
@@ -63,6 +78,32 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
             else
             {
                 base.WriteToOutput(context, buffer);
+            }
+        }
+
+        /// <inheritdoc />
+        protected override bool IsWhitelisted(string path)
+        {
+            if (this.IsWhitelistedMock != null)
+            {
+                return this.IsWhitelistedMock(path);
+            }
+            else
+            {
+                return base.IsWhitelisted(path);
+            }
+        }
+
+        /// <inheritdoc />
+        protected override void SendParsedTemplate(System.Web.HttpContext context)
+        {
+            if (this.SendParsedTemplateMock != null)
+            {
+                this.SendParsedTemplateMock(context);
+            }
+            else
+            {
+                base.SendParsedTemplate(context);
             }
         }
 

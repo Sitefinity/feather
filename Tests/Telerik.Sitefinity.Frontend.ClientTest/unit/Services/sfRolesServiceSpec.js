@@ -40,7 +40,7 @@
     /* Helper methods */
     var assertItems = function (params) {
         var data;
-        service.getRoles.apply(service, params).then(function (res) {
+        service.getRoles.apply(service, params).promise.then(function (res) {
             data = res;
         });
 
@@ -53,7 +53,7 @@
 
     var assertProviders = function (params) {
         var data;
-        service.getRoleProviders.apply(service, params).then(function (res) {
+        service.getRoleProviders.apply(service, params).promise.then(function (res) {
             data = res;
         });
 
@@ -70,7 +70,7 @@
 
     var assertSpecificItems = function (params) {
         var data;
-        service.getSpecificRoles.apply(service, params).then(function (res) {
+        service.getSpecificRoles.apply(service, params).promise.then(function (res) {
             data = res;
         });
 
@@ -109,14 +109,25 @@
         expect(data.data).toEqualData(errorResponse);
     };
 
-    var getFilter = function (search, searchField) {
-        searchField = searchField || 'Title';
+    var getFilter = function (search) {
+        searchField = 'Name';
 
         if (search) {
             return "(" + searchField + ".ToUpper().Contains(%22" + search + "%22.ToUpper()))";
         }
 
         return "";
+    };
+
+    var getRolesToHideFilter = function (rolesToHide) {
+        roleField = 'Name';
+        var filter = roleField + '!="' + rolesToHide[0] + '"';
+
+        for (var i = 1; i < rolesToHide.length; i++) {
+            filter = filter + ' AND ' + roleField + '!="' + rolesToHide[i] + '"';
+        }
+
+        return '(' + filter + ')';
     };
 
     var constructGetItemServiceUrl = function (itemId, provider) {
@@ -131,10 +142,19 @@
         return url;
     };
 
-    var expectGetItemsServiceCall = function (provider, skip, take, search, searchField) {
-        var filter = getFilter(search, searchField);
+    var expectGetItemsServiceCall = function (provider, skip, take, search, rolesToHide) {
+        var filter = getFilter(search);
+        var filterParam = "filter=" + filter;
 
-        var filterParam = "filter=" + filter + "&";
+        if (rolesToHide && rolesToHide.length > 0) {
+            var rolesToHideFilter = getRolesToHideFilter(rolesToHide);
+            if (filter) {
+                rolesToHideFilter = " AND " + rolesToHideFilter;
+            }
+            filterParam = filterParam + encodeURIComponent(rolesToHideFilter).replace(/%20/g, '+');
+        }
+
+        filterParam = filterParam + "&";
 
         var providerParam = "";
         if (provider) {
@@ -182,7 +202,7 @@
     };
 
     var expectGetRoleProvidersServiceCall = function (abilities) {
-        var servicePathPattern = '/GetRoleProviders/?abilities={0}';
+        var servicePathPattern = '/GetRoleProviders/?abilities={0}&addAppRoles=true';
         var url = serviceBaseUrl + servicePathPattern.format(abilities);
 
         $httpBackend.expectGET(url).respond({
@@ -217,8 +237,24 @@
         assertItems(params);
     });
 
-    it('[GeorgiMateev] / should retrieve items with filter.', function () {
-        var params = [null, 0, 20, 'keyword', 'Name'];
+    it('[GeorgiMateev] / should retrieve items with search filter.', function () {
+        var params = [null, 0, 20, 'keyword', null];
+
+        expectGetItemsServiceCall.apply(this, params);
+
+        assertItems(params);
+    });
+
+    it('[NPetrova] / should retrieve items with roles to hide filter.', function () {
+        var params = [null, 0, 20, null, ['Owner', 'Anonymous']];
+
+        expectGetItemsServiceCall.apply(this, params);
+
+        assertItems(params);
+    });
+
+    it('[NPetrova] / should retrieve items with roles to hide filter and search filter.', function () {
+        var params = [null, 0, 20, 'keyword', ['Owner', 'Anonymous']];
 
         expectGetItemsServiceCall.apply(this, params);
 

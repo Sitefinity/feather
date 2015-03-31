@@ -28,9 +28,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.FileMonitoring
         }
 
         /// <inheritdoc />
-        public void FileDeleted(string filePath)
+        public void FileDeleted(string filePath, string packageName)
         {
-            this.DummyFileInfos.Add(new DummyFileInfo(string.Empty, filePath, FileChangeType.Deleted));
+            this.DummyFileInfos.Add(new DummyFileInfo(string.Empty, filePath, FileChangeType.Deleted, packageName: packageName));
         }
 
         /// <inheritdoc />

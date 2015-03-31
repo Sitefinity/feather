@@ -9,14 +9,17 @@
                 scope: {
                     sfModel: '=',
                     sfImage: '=?',
-                    sfProvider: '=?'
+                    sfProvider: '=?',
+                    sfAutoOpenSelector: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/fields/image-field/sf-image-field.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/fields/image-field/sf-image-field.sf-cshtml';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
-                    link: function (scope, element, attrs, ctrl) {
+                link: function (scope, element, attrs, ctrl) {
+                    var autoOpenSelector = attrs.sfAutoOpenSelector !== undefined && attrs.sfAutoOpenSelector.toLowerCase() !== 'false';
+
                     var getDateFromString = function (dateStr) {
                         return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')')))));
                     };
@@ -88,7 +91,7 @@
 
                     scope.editAllProperties = function () {
                         var parentId = scope.sfImage.ParentId || scope.sfImage.Album.Id;
-                        var fullEditAllPropertiesUrl = editAllPropertiesUrl+ ('&parentId=' + parentId);
+                        var fullEditAllPropertiesUrl = editAllPropertiesUrl + ('&parentId=' + parentId);
 
                         var dialogManager = window.top.GetDialogManager();
                         editDialog = createDialog(dialogManager);
@@ -133,7 +136,7 @@
                             scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
                         }
 
-                        var imageSelectorModalScope = angular.element('.imageSelectorModal').scope();
+                        var imageSelectorModalScope = element.find('.imageSelectorModal').scope();
 
                         if (imageSelectorModalScope)
                             imageSelectorModalScope.$openModalDialog();
@@ -143,7 +146,7 @@
                     if (scope.sfModel) {
                         getImage(scope.sfModel);
                     }
-                    else {
+                    else if (autoOpenSelector) {
                         scope.changeImage();
                     }
 

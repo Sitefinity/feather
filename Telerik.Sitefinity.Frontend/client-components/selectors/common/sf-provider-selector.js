@@ -17,8 +17,9 @@
                             refreshSelectedProvider();
                         }
                         else {
-                            scope.selectedProvider = providerService.getDefault(data.Items);
-                            ngModelCtrl.$setViewValue(scope.selectedProvider.Name);
+                            var defaultProvider = providerService.getDefault(data.Items);
+                            scope.selectedProvider = defaultProvider.Name;
+                            ngModelCtrl.$setViewValue(scope.selectedProvider);
                         }
 
                         scope.isProviderSelectorVisible = data && data.Items && data.Items.length >= 2;
@@ -39,7 +40,7 @@
                         scope.isOpen = false;
                         scope.selectedProvider = provider;
                         if (provider) {
-                            ngModelCtrl.$setViewValue(provider.Name);
+                            ngModelCtrl.$setViewValue(provider);
                         }
                     };
 
@@ -51,7 +52,7 @@
                         if (scope.providers) {
                             for (var i = 0; i < scope.providers.length; i++) {
                                 if (scope.providers[i].Name == ngModelCtrl.$viewValue) {
-                                    scope.selectedProvider = scope.providers[i];
+                                    scope.selectedProvider = scope.providers[i].Name;
                                     break;
                                 }
                             }

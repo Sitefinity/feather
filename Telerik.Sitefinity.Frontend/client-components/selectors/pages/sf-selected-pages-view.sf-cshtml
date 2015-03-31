@@ -1,0 +1,25 @@
+﻿<div ng-show="isListEmpty()" class="alert alert-info">@(Res.Get<ClientComponentsResources>().NoItemsSelected)</div>
+
+<alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+
+<div ng-hide="isListEmpty() || showError">
+    <div class="input-group m-bottom-sm">
+        <span class="input-group-addon">
+            <i class="glyphicon glyphicon-search"></i>
+        </span>
+        <sf-items-filter sf-filter='filter'></sf-items-filter>
+    </div>
+    <div class="list-group list-group-endless" kendo-sortable k-options="sortableOptions" k-on-change="sortItems(kendoEvent)">
+        <div class="list-group-item list-group-item-multiselect list-group-item-draggable"
+            ng-click="itemClicked(item)"
+            ng-repeat="item in currentItems track by item.Id">
+
+            <span class="handler list-group-item-drag" ng-hide="!!filter.searchString || !sfSortable"></span>
+
+            <input type="checkbox" ng-checked="isItemSelected(item.Id)">
+
+            <div><span sf-shrinked-breadcrumb="{{bindIdentifierField(item)}}" sf-max-length="60"></span></div>
+        </div>
+    </div>
+    <div ng-hide="currentItems.length"><i>@(Res.Get<ClientComponentsResources>().NoItemsFound)</i></div>
+</div>

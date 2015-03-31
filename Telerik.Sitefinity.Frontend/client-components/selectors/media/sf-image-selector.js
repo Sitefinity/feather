@@ -79,7 +79,7 @@
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/selectors/media/sf-image-selector.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/media/sf-image-selector.sf-cshtml';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
@@ -293,7 +293,7 @@
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
                             var file = dataTransferObject.files[0];
 
-                            sfMediaService.getImagesSettings().then(function (settings) {
+                            sfMediaService.images.getSettings().then(function (settings) {
                                 if (!file.type.match(settings.AllowedExensionsRegex)) {
                                     scope.error = {
                                         show: true,
@@ -341,7 +341,7 @@
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
                                 var file = fileInput.files[0];
-                                sfMediaService.getImagesSettings().then(function (settings) {
+                                sfMediaService.images.getSettings().then(function (settings) {
                                     if (!file.type.match(settings.AllowedExensionsRegex)) {
                                         scope.error = {
                                             show: true,
@@ -428,7 +428,7 @@
                     scope.isMultiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.toLowerCase() !== 'false';
                     scope.isDeselectable = scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false';
 
-                    scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-upload-image-properties.html');
+                    scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-upload-image-properties.sf-cshtml');
 
                     scope.filters = {
                         basic: {
@@ -717,7 +717,7 @@
                         else {
                             scope.filterObject.attachEvent(refresh);
                         }
-                        sfMediaService.getImagesSettings();
+                        sfMediaService.images.getSettings();
                     }());
                 }
             };

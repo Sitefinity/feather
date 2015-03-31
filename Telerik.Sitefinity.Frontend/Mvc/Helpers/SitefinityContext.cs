@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Web;
 using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels;
 using Telerik.Sitefinity.Modules.Pages;
@@ -7,6 +10,7 @@ using Telerik.Sitefinity.Security.Claims;
 using Telerik.Sitefinity.Security.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.Events;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -68,6 +72,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             get
             {
                 return ControlExtensions.IsBackend();
+            }
+        }
+
+        /// <summary>
+        /// Gets the frontend login URL for the current site as configured in the backend.
+        /// </summary>
+        /// <value>
+        /// The frontend login URL.
+        /// </value>
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
+        public static string FrontendLoginUrl
+        {
+            get
+            {
+                var redirectStrategy = RedirectStrategyType.None;
+                var wrapper = new HttpContextWrapper(HttpContext.Current);
+                var pageUrl = RouteHelper.GetFrontEndLogin(wrapper, out redirectStrategy);
+
+                return pageUrl;
             }
         }
 

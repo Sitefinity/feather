@@ -6,6 +6,7 @@ using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data.Events;
 using Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
+using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Modules.ControlTemplates.Web.UI;
@@ -43,6 +44,13 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (!ObjectFactory.Container.IsRegistered(resourceClass, resourceClassId))
             {
                 Res.RegisterResource(resourceClass);
+            }
+
+            var clientComponentsResourcesClass = typeof(ClientComponentsResources);
+            var clientComponentsResourcesClassId = Res.GetResourceClassId(clientComponentsResourcesClass);
+            if (!ObjectFactory.Container.IsRegistered(clientComponentsResourcesClass, clientComponentsResourcesClassId))
+            {
+                Res.RegisterResource(clientComponentsResourcesClass);
             }
         }
 

@@ -1,0 +1,18 @@
+﻿<div ng-repeat="item in sfSelectedItems | limitTo:5" class="label label-taxon label-full">
+    <span data-index="{{$index}}"
+          sf-shrinked-breadcrumb="{{hierarchical ? item.TitlesPath : bindIdentifierField(item)}}" sf-max-length="45">
+    </span>
+</div>
+
+<a class="small" ng-click="open()" ng-show="sfSelectedItems.length > 5">and {{sfSelectedItems.length - 5}} more</a>
+
+<button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
+    <span ng-hide="isItemSelected()">
+        <span ng-show="selectButtonText">{{selectButtonText}}</span>
+        <span ng-hide="selectButtonText">@(Res.Get<ClientComponentsResources>().Select)</span>
+    </span>
+    <span ng-show="isItemSelected()">
+        <span ng-show="changeButtonText">{{changeButtonText}}</span>
+        <span ng-hide="changeButtonText">@(Res.Get<ClientComponentsResources>().Change)</span>
+    </span>
+</button>

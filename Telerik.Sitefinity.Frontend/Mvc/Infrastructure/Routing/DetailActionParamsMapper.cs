@@ -149,6 +149,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 var isPublished = !this.IsPreviewRequested() ||
                     this.ResolveRequestedItemStatus() == ContentLifecycleStatus.Live;
                 item = contentManager.GetItemFromUrl(this.ItemType, url, isPublished, out redirectUrl);
+
+                if (item != null && !item.GetType().Equals(this.ItemType))
+                {
+                    item = null;
+                }
             }
             else
             {

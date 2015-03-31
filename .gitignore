@@ -122,8 +122,6 @@ bower_components
 
 Feather.jmconfig
 
-ReferenceAssemblies
-
 Tests/Telerik.Sitefinity.Frontend.ClientTest/lib
 
 .nuget/NuGet.exe
@@ -138,3 +136,4 @@ Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js
 /.JustCode
 
 Tests/Telerik.Sitefinity.Frontend.ClientTest/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+FeatherWidgets.sln.GhostDoc.xml

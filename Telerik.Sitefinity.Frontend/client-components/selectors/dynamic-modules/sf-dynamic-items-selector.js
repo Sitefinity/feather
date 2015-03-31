@@ -26,16 +26,14 @@
 
                         ctrl.selectorType = 'DynamicItemsSelector';
 
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/dynamic-modules/sf-dynamic-items-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/dynamic-modules/sf-dynamic-items-selector.sf-cshtml';
                         ctrl.$scope.dialogTemplateId = 'sf-dynamic-items-selector-template';
 
                         var closedDialogTemplate = attrs.sfMultiselect ?
-                            'client-components/selectors/common/sf-list-group-selection.html' :
-                            'client-components/selectors/common/sf-bubbles-selection.html';
+                            'client-components/selectors/common/sf-list-group-selection.sf-cshtml' :
+                            'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
-
-                        ctrl.$scope.sfDialogHeader = 'Select content';
                     }
                 }
             };

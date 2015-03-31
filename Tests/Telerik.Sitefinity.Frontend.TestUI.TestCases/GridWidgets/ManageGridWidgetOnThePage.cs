@@ -92,7 +92,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         }
 
         private const string PageName = "GridPage";
-        private const string LayoutCaption = "3 + 9";
+        private const string LayoutCaption = "grid-3+9";
         private const string LayouClass1 = "col-md-3";
         private const string LayouClass2 = "col-md-9";
         private const string DuplicateOperation = "Duplicate";

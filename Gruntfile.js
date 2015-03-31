@@ -35,7 +35,7 @@ module.exports = function (grunt) {
 				'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/mocks/*.js'],
 				options: {
 					vendor:[
-					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/jquery-1.8.3.min.js',
+					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/jquery.min.js',
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular.js',
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-resource.js',
 					'Tests/Telerik.Sitefinity.Frontend.ClientTest/helpers/angular-route.js',
@@ -72,7 +72,7 @@ module.exports = function (grunt) {
 			  base: 'Telerik.Sitefinity.Frontend'
 			},
 			main: {
-			  src: ['Telerik.Sitefinity.Frontend/client-components/**/*.html'],
+			  src: ['Telerik.Sitefinity.Frontend/client-components/**/*.html', 'Telerik.Sitefinity.Frontend/client-components/**/*.sf-cshtml'],
 			  dest: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js'
 			},
 		},
