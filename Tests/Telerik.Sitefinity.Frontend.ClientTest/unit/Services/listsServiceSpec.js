@@ -64,7 +64,7 @@ describe('sfListsService', function () {
 
     /* Tests */
     it('[Manev] / should retrieve items.', function () {
-        $httpBackend.expectGET('http://mysite.com:9999/myapp/Sitefinity/Services/Lists/ListService.svc/')
+        $httpBackend.expectGET('http://mysite.com:9999/myapp/Sitefinity/Services/Lists/ListService.svc/?filter=&skip=0&sortExpression=DateCreated+DESC&take=20')
         .respond(dataItems);
         
         assertItems([null, 0, 20, null]);

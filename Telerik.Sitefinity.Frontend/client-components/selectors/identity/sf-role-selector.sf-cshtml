@@ -45,7 +45,7 @@
                         <div ng-bind="bindIdentifierField(item)"></div>
                     </div>
                 </div>
-                <div ng-hide="items.length || showLoadingIndicator"><i>No items found</i></div>
+                <div ng-hide="items.length || showLoadingIndicator"><i>@(Res.Get<ClientComponentsResources>().NoItemsFound)</i></div>
                 <sf-loading ng-show="showLoadingIndicator || !rolesProviders || rolesProviders.length == 0"></sf-loading>
             </div>
         </div>

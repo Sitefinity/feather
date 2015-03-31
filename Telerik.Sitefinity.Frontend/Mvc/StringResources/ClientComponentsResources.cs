@@ -404,7 +404,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["Bottom"];
             }
         }
-        
+
         /// <summary>
         /// word: Type
         /// </summary>
@@ -1782,7 +1782,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["EnterTitle"];
             }
         }
-        
+
         /// <summary>
         /// phrase: Enter URL
         /// </summary>
@@ -1798,7 +1798,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["EnterUrl"];
             }
         }
-        
+
         /// <summary>
         /// phrase: Open external URLs in new tab/window
         /// </summary>
@@ -1814,7 +1814,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["OpenExternalUrlInNewWindow"];
             }
         }
-        
+
         /// <summary>
         /// phrase: Add external URL
         /// </summary>
@@ -2116,22 +2116,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["MaxWidth"];
-            }
-        }
-
-        /// <summary>
-        /// word: px
-        /// </summary>
-        /// <value>px</value>
-        [ResourceEntry("PX",
-            Value = "px",
-            Description = "word: px",
-            LastModified = "2015/03/25")]
-        public string PX
-        {
-            get
-            {
-                return this["PX"];
             }
         }
 
@@ -2550,6 +2534,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["FolderPlural"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: More options
+        /// </summary>
+        /// <value>More options</value>
+        [ResourceEntry("MoreOptions",
+            Value = "More options",
+            Description = "phrase: More options",
+            LastModified = "2015/03/31")]
+        public string MoreOptions
+        {
+            get
+            {
+                return this["MoreOptions"];
             }
         }
     }
