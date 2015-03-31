@@ -2120,22 +2120,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// word: px
-        /// </summary>
-        /// <value>px</value>
-        [ResourceEntry("PX",
-            Value = "px",
-            Description = "word: px",
-            LastModified = "2015/03/25")]
-        public string PX
-        {
-            get
-            {
-                return this["PX"];
-            }
-        }
-
-        /// <summary>
         /// phrase: Value must be an integer between 1 and 9999 inclusive.
         /// </summary>
         /// <value>Value must be an integer between 1 and 9999 inclusive.</value>

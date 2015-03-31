@@ -50,7 +50,7 @@
                         <input class="form-control" type="number" name="maxWidth" min="1" max="9999" ng-model="model.MaxWidth" ng-required="true" />
                     </div>
                     <div class="col-xs-4">
-                        <div class="m-top-xs">@(Res.Get<ClientComponentsResources>().PX)</div>
+                        <div class="m-top-xs">px</div>
                     </div>
                 </div>
 
@@ -69,7 +69,7 @@
                         <input class="form-control" type="number" name="maxHeight" min="1" max="9999" ng-model="model.MaxHeight" ng-required="true" />
                     </div>
                     <div class="col-xs-4">
-                        <div class="m-top-xs">@(Res.Get<ClientComponentsResources>().PX)</div>
+                        <div class="m-top-xs">px</div>
                     </div>
                 </div>
 
@@ -89,7 +89,7 @@
                         <input class="form-control" type="number" name="width" min="1" max="9999" ng-model="model.Width" ng-required="true" />
                     </div>
                     <div class="col-xs-2">
-                        <div class="m-top-xs">@(Res.Get<ClientComponentsResources>().PX)</div>
+                        <div class="m-top-xs">px</div>
                     </div>
                 </div>
 
@@ -107,7 +107,7 @@
                         <input class="form-control" type="number" name="height" min="1" max="9999" ng-model="model.Height" ng-required="true" />
                     </div>
                     <div class="col-xs-2">
-                        <div class="m-top-xs">@(Res.Get<ClientComponentsResources>().PX)</div>
+                        <div class="m-top-xs">px</div>
                     </div>
                 </div>
 
