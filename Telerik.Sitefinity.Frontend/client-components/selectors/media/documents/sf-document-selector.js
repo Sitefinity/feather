@@ -769,12 +769,14 @@
             $scope.provider = sfProvider;
 
             $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1024) + " KB";
+            
 
             var fileName = $scope.model.file.name;
             $scope.uploadInfo = {};
             $scope.uploadInfo.fileName = fileName;
 
             $scope.model.title = fileName.slice(0, fileName.lastIndexOf('.'));
+            $scope.model.file.extension = fileName.split('.').pop();
 
             var successAction = function (data) {
                 data = data || {};

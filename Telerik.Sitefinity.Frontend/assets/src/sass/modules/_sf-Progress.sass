@@ -10,7 +10,18 @@
 		margin: 0
 		position: relative
 		z-index: 1
+		height: 25px
+		line-height: 25px
 
+	.sf-Progress-title
+		display: inline-block
+		margin-left: 10px
+		max-width: 400px
+		@include text-overflow()
+
+	i
+		display: inline-block
+		vertical-align: top
 
 .sf-Progress-bar
 	position: absolute
@@ -27,7 +38,7 @@
 		text-align: center
 		height: 17px
 		font-size: 18px
-		margin: 0 -2px -1px 10px
+		margin: -6px -2px -1px 10px
 		vertical-align: middle
 		font-weight: 700
 		line-height: 1
