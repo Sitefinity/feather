@@ -41,17 +41,10 @@
 .icon-draft-single
   color: #596C9B
 
-.icon-txt-pdf
-  background-color: #ff4848
-  color: #fff
-
-
 // Icon with text
 .icon--text:before
   vertical-align: baseline
   margin-right: 0.3em
-
-
 
 .icon-align
   position: relative
@@ -60,7 +53,6 @@
   font-size: 19px
   color: #3390CF
 
-
 .icon-no-image
   font-size: 70px
   color: #ddd
@@ -68,18 +60,19 @@
 .icon-txt
   position: relative
   display: inline-block
+  line-height: normal
 
   &.icon-file
     color: #999
 
   [class^="icon-txt-"]
     position: absolute
-    top: 45%
-    right: -11%
-    padding:0 0.4em
-    line-height: 1.6em
-    height: 1.6em
+    top: 47%
+    right: -3%
+    padding:0.2em 0.4em
     font-size: 0.25em
+    line-height: normal
+    height: auto
     font-style: normal
     font-weight: bold
     text-transform: uppercase
@@ -103,3 +96,19 @@
   .icon-txt-zip
     background-color: #596c9b
 
+//Icon sizes
+.icon-sm
+  font-size: 22px
+
+  [class^=icon-txt-]
+    top: 43%
+    right: -20%
+    padding: .1em .3em
+    font-size: .35em;
+
+
+.icon-md
+  font-size: 38px
+
+.icon-lg
+  font-size: 48px

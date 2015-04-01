@@ -3,8 +3,8 @@
         <div class="col-md-5 text-center">
             <div class="sf-Media--info-doc" ng-show="sfMedia">
 
-                <i class="icon-file icon-txt">
-                    <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension}}</span>
+                <i class="icon-file icon-txt icon-lg">
+                    <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension.substring(1)}}</span>
                 </i>
             </div>
             <div ng-show="!sfMedia">
