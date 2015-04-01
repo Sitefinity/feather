@@ -1,22 +1,26 @@
 ﻿<div class="container-fluid">
     <div class="row">
-        <div class="col-md-5 text-center">
-            <div class="sf-Media--info-doc" ng-show="sfMedia">
 
-                <i class="icon-file icon-txt">
-                    <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension}}</span>
-                </i>
-            </div>
-            <div ng-show="!sfMedia">
-                <span>{{labels.mediaDeletedLabel}}</span>
-            </div>
+      <div ng-show="showVideo" class="row-md-1">
+        <video controls="controls" width="520px" ng-src="{{sfMedia.MediaUrl}}">
+        </video>
+      </div>
+
+      <div class="col-md-5 text-center" ng-init="showVideo = false">
+          <div class="sf-Media--info-image" ng-show="sfMedia" ng-hide="showVideo" ng-click="showVideo = true">
+            <img ng-src="{{sfMedia.ThumbnailUrl}}" src="" alt="{{sfMedia.Title.Value}}" />
+          </div>
+
+          <div ng-show="!sfMedia">
+            <span>{{labels.mediaDeletedLabel}}</span>
+          </div>
         </div>
 
-        <div class="col-md-7">
+        <div ng-class="{'row-md-7': showVideo, 'row': !showVideo}">
             <div ng-show="sfMedia">
-                <h4>
-                    <a title="{{sfMedia.Title.Value}}" ng-href="{{sfMedia.MediaUrl}}" target="_blank">{{sfMedia.Title.Value}}</a>
-                </h4>
+                <strong>@(Res.Get<ClientComponentsResources>().Title) </strong>
+                <span ng-bind="sfMedia.Title.Value"></span>
+                <br />
                 <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
                 <span ng-bind="sfMedia.Extension"></span><br />
 

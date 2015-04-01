@@ -2532,6 +2532,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        /// phrase: The video has been deleted or unpublished
+        /// </summary>
+        /// <value>The video has been deleted or unpublished</value>
+        [ResourceEntry("VideoHasBeenDeleted",
+            Value = "The video has been deleted or unpublished",
+            Description = "phrase: The video has been deleted or unpublished",
+            LastModified = "2015/03/23")]
+        public string VideoHasBeenDeleted
+        {
+            get
+            {
+                return this["VideoHasBeenDeleted"];
+            }
+        }
+
         /// <summary>
         /// word: Auto
         /// </summary>
@@ -2548,11 +2563,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        /// phrase: Change video
+        /// </summary>
+        /// <value>Change video</value>
+        [ResourceEntry("ChangeVideo",
+            Value = "Change video",
+            Description = "phrase: Change video",
+            LastModified = "2015/03/23")]
+        public string ChangeVideo
+        {
+            get
+            {
+                return this["ChangeVideo"];
+            }
+        }
+
         /// <summary>
         /// word: 4x3
         /// </summary>
         /// <value>4x3</value>
-        [ResourceEntry("Ratio4x3",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "x"), ResourceEntry("Ratio4x3",
             Value = "4x3",
             Description = "word: 4x3",
             LastModified = "2015/03/31")]
@@ -2564,11 +2594,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        /// phrase: Select video
+        /// </summary>
+        /// <value>Select video</value>
+        [ResourceEntry("SelectVideo",
+            Value = "Select video",
+            Description = "phrase: Select video",
+            LastModified = "2015/03/23")]
+        public string SelectVideo
+        {
+            get
+            {
+                return this["SelectVideo"];
+            }
+        }
+
         /// <summary>
         /// word: 16x9
         /// </summary>
         /// <value>16x9</value>
-        [ResourceEntry("Ratio16x9",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "x"), ResourceEntry("Ratio16x9",
             Value = "16x9",
             Description = "word: 16x9",
             LastModified = "2015/03/31")]
