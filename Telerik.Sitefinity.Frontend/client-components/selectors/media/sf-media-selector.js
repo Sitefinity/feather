@@ -69,12 +69,12 @@
                     titleAsc: 'Title ASC',
                     titleDesc: 'Title DESC'
                 },
-                itemsMetricsField : {
+                itemsMetricsField: {
                     images: 'ImagesCount',
                     documents: 'DocumentsCount',
                     videos: 'VideosCount'
                 },
-                librariesMetricsField: 'LibrariesCount' 
+                librariesMetricsField: 'LibrariesCount'
             };
 
             return {
@@ -104,7 +104,7 @@
                         loadLibraryChildren: function (parent) {
                             parent = parent || {};
                             return sfMediaService[scope.sfMediaType].getFolders(
-                                { 
+                                {
                                     parent: parent.Id,
                                     provider: scope.provider,
                                     sort: 'Title ASC'
@@ -250,7 +250,7 @@
                                 .then(function (response) {
                                     if (response && response.Items) {
                                         mutateItemsWithMediaMetrics(response.Items);
-                                        
+
                                         if (appendItems) {
                                             if (scope.items && scope.items.length === itemsLength) {
                                                 scope.items = scope.items.concat(response.Items);
@@ -288,15 +288,15 @@
                             var librariesMetricsField = constants.librariesMetricsField;
 
                             // We can't retrive these properties for root libraries
-                            if (item.hasOwnProperty(itemsMetricsField) && item.hasOwnProperty(librariesMetricsField)){
+                            if (item.hasOwnProperty(itemsMetricsField) && item.hasOwnProperty(librariesMetricsField)) {
                                 item.metricsAvailable = true;
                             }
 
                             // We are assigning the metrics in a neutral fields in order to unify the pesentation.
                             if (item[itemsMetricsField]) {
                                 var countStr = removeNonNumericCharacters(item[itemsMetricsField]);
-                                item.ItemsCount = countStr + 
-                                    (countStr === '1' ? 
+                                item.ItemsCount = countStr +
+                                    (countStr === '1' ?
                                         (" " + scope.sfLabels.mediaTypeNameSingular.toLowerCase()) :
                                         (" " + scope.sfLabels.mediaTypeNamePlural.toLowerCase()));
                             } else {
@@ -410,7 +410,7 @@
 
                         var enableExtensionFiltering = true;
 
-                        if(settings.hasOwnProperty('AllowedExensions')) {
+                        if (settings.hasOwnProperty('AllowedExensions')) {
                             enableExtensionFiltering = scope.$eval(settings.AllowedExensions.toLowerCase());
                         }
 
@@ -497,8 +497,8 @@
                     if (!scope.selectedItems || !angular.isArray(scope.selectedItems)) {
                         scope.selectedItems = [];
                     }
-
-                    scope.isMultiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.toLowerCase() !== 'false';
+                    
+                    scope.isMultiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.length > 0 && scope.sfMultiselect.toLowerCase() !== 'false';
                     scope.isDeselectable = scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false';
 
                     scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-upload-media-properties.sf-cshtml');

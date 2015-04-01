@@ -1,26 +1,26 @@
 ﻿<div class="container-fluid">
     <div class="row">
 
-      <div ng-show="showVideo" class="row-md-1">
-        <video controls="controls" width="520px" ng-src="{{sfMedia.MediaUrl}}">
-        </video>
-      </div>
-
-      <div class="col-md-5 text-center" ng-init="showVideo = false">
-          <div class="sf-Media--info-image" ng-show="sfMedia" ng-hide="showVideo" ng-click="showVideo = true">
-            <img ng-src="{{sfMedia.ThumbnailUrl}}" src="" alt="{{sfMedia.Title.Value}}" />
-          </div>
-
-          <div ng-show="!sfMedia">
-            <span>{{labels.mediaDeletedLabel}}</span>
-          </div>
+        <div ng-show="showVideo" class="row-md-1">
+            <video controls="controls" width="520" ng-src="{{sfMedia.MediaUrl}}"></video>
         </div>
 
-        <div ng-class="{'row-md-7': showVideo, 'row': !showVideo}">
+        <div class="col-md-5 text-center" ng-init="showVideo = false">
+            <div class="sf-Media--info-image" ng-show="sfMedia && !showVideo" ng-click="showVideo = true">
+                <img ng-src="{{sfMedia.ThumbnailUrl}}" src="" alt="{{sfMedia.Title.Value}}" />
+            </div>
+
+            <div ng-show="!sfMedia">
+                <span>{{labels.mediaDeletedLabel}}</span>
+            </div>
+        </div>
+
+        <div ng-class="{'col-md-7': !showVideo}">
+
             <div ng-show="sfMedia">
                 <strong>@(Res.Get<ClientComponentsResources>().Title) </strong>
-                <span ng-bind="sfMedia.Title.Value"></span>
-                <br />
+                <span ng-bind="sfMedia.Title.Value"></span><br />
+
                 <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
                 <span ng-bind="sfMedia.Extension"></span><br />
 
@@ -32,8 +32,8 @@
             </div>
 
             <br />
-            <button class="btn btn-xs btn-default" ng-click="changeMedia()">{{labels.mediaChangeLabel}}</button>
-            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
+            <button class="btn btn-xs btn-default" ng-click="changeMedia(); showVideo=false">{{labels.mediaChangeLabel}}</button>
+            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties(); showVideo=false">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
         </div>
     </div>
 </div>

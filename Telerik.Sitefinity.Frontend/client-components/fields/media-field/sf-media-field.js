@@ -23,12 +23,26 @@
                     return serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=VideosBackend&ViewName=VideosBackendEdit&IsInlineEditingMode=true');
                 };
                 this.getMediaUploadedEvent = function () {
-                    return 'sf-video-selector-video-uploaded';
+                    return 'sf-media-selector-item-uploaded';
                 };
                 this.service = sfMediaService.videos;
 
                 this.getParentId = function (video) {
                     return video.FolderId || video.Library.Id;
+                };
+            };
+
+            var Images = function () {
+                this.getEditAllPropertiesUrl = function () {
+                    return serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=ImagesBackend&ViewName=ImagesBackendEdit&IsInlineEditingMode=true');
+                };
+                this.getMediaUploadedEvent = function () {
+                    return 'sf-image-selector-image-uploaded';
+                };
+                this.service = sfMediaService.images;
+
+                this.getParentId = function (image) {
+                    return image.FolderId || image.Album.Id;
                 };
             };
 
@@ -39,6 +53,7 @@
                 if (mediaType === "videos") {
                     return new Videos();
                 }
+                return new Images();
             };
         }])
         .directive('sfMediaField', ['serverContext', 'sfMediaService', 'sfMediaFilter', 'sfMediaTypeResolver', 'serverData',
@@ -60,7 +75,7 @@
                 },
                 link: function (scope, element, attrs, ctrl) {
                     var emptyGuid = '00000000-0000-0000-0000-000000000000';
-                   
+
                     serverData.refresh();
 
                     scope.labels = serverData.getAll();
@@ -202,12 +217,6 @@
                         getMedia(uploadedMediaInfo.ContentId);
                         scope.$modalInstance.dismiss();
                     });
-
-                    //scope.$on('sf-media-selector-item-uploaded', function (event, uploadedItemInfo) {
-                    //    scope.sfProvider = scope.model.provider;
-                    //    getMedia(uploadedItemInfo.ContentId);
-                    //    scope.$modalInstance.dismiss();
-                    //});
 
                     scope.$watch('sfMedia.Id', function (newVal) {
                         scope.sfModel = newVal;
