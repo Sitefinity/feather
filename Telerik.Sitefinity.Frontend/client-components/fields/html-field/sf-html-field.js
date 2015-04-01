@@ -42,7 +42,7 @@
                         return properties;
                     }
 
-                    function getAnchorElement (range) {
+                    function getAnchorElement(range) {
                         var command = editor.toolbar.tools.createLink.command({ range: range });
 
                         var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
@@ -68,8 +68,8 @@
                     });
 
                     scope.openLinkSelector = function () {
-                       var range = editor.getRange();
-                       var aTag = getAnchorElement(range);
+                        var range = editor.getRange();
+                        var aTag = getAnchorElement(range);
 
                         if (aTag) {
                             scope.selectedHtml = aTag;
@@ -105,13 +105,13 @@
                                 .scope()
                                 .$openModalDialog({ sfModel: function () { return properties; } })
                                 .then(function (data) {
-                                     properties = data;
-                                     return mediaService.getLibrarySettings();
-                                 })
+                                    properties = data;
+                                    return mediaService.getLibrarySettings();
+                                })
                                 .then(function (settings) {
-                                     var markup = mediaMarkupService.document.markup(properties, settings);
-                                     editor.exec('insertHtml', { html: markup, split: true, range: range });
-                                 });
+                                    var markup = mediaMarkupService.document.markup(properties, settings);
+                                    editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                });
                         }, 0);
                     };
 
@@ -174,15 +174,15 @@
                                 .scope()
                                 .$openModalDialog({ sfModel: function () { return properties; } })
                                 .then(function (data) {
-                                     properties = data;
-                                     return mediaService.getLibrarySettings();
-                                 })
+                                    properties = data;
+                                    return mediaService.getLibrarySettings();
+                                })
                                 .then(function (settings) {
-                                     var markup = mediaMarkupService.video.markup(properties, settings);
-                                     editor.exec('insertHtml', { html: markup, split: true, range: range });
-                                 });
+                                    var markup = mediaMarkupService.video.markup(properties, settings);
+                                    editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                });
                         }, 0);
-                    }
+                    };
 
                     scope.toggleHtmlView = function () {
                         if (editor === null)
@@ -292,7 +292,7 @@
             }])
         .controller('sfDocumentPropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
             function ($scope, $modalInstance, serverContext, sfModel) {
-                
+
                 $scope.model = sfModel || { item: undefined };
 
                 $scope.$watch('model.item.Id', function (newVal) {
@@ -316,7 +316,7 @@
             }])
         .controller('sfVideoPropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
             function ($scope, $modalInstance, serverContext, sfModel) {
-                
+
                 $scope.model = sfModel || { item: undefined };
 
                 $scope.model.aspectRatio = 'auto';
@@ -331,19 +331,19 @@
                     if (newVal === '4x3') {
                         $scope.model.width = 600;
                         $scope.model.height = 450;
-                        $scope.model.aspectRatioCoefficient = 4/3;
+                        $scope.model.aspectRatioCoefficient = 4 / 3;
                     }
-                    else if(newVal === '16x9') {
+                    else if (newVal === '16x9') {
                         $scope.model.width = 600;
                         $scope.model.height = 338;
-                        $scope.model.aspectRatioCoefficient = 16/9;
+                        $scope.model.aspectRatioCoefficient = 16 / 9;
                     }
                     else if (newVal === 'auto') {
                         if (!$scope.item) return;
                         $scope.model.width = $scope.item.Width;
                         $scope.model.height = $scope.item.Height;
-                    };
-                });      
+                    }
+                });
 
                 $scope.updateWidth = function () {
                     if ($scope.model.aspectRatio != '16x9' && $scope.model.aspectRatio != '4x3') return;
@@ -355,7 +355,7 @@
                     if ($scope.model.aspectRatio != '16x9' && $scope.model.aspectRatio != '4x3') return;
 
                     $scope.model.height = Math.round($scope.model.width / $scope.model.aspectRatioCoefficient);
-                }
+                };
 
                 $scope.done = function () {
                     $modalInstance.close($scope.model);

@@ -58,7 +58,7 @@
                 this.width = null;
                 this.height = null;
                 this.cssClass = null;
-            }
+            };
 
             var getSfrefAttribute = function (mediaType, id, provider, thumbnailName) {
                 var sfref = '[' + mediaType;
@@ -355,17 +355,17 @@
                     jElementToInsert.attr('width', properties.width);
                     jElementToInsert.attr('height', properties.height);
 
-                    if(properties.margin) {
-                        if(properties.margin.left)
+                    if (properties.margin) {
+                        if (properties.margin.left)
                             jElementToInsert.css('margin-left', properties.margin.left + 'px');
 
-                        if(properties.margin.right)
+                        if (properties.margin.right)
                             jElementToInsert.css('margin-right', properties.margin.right + 'px');
 
-                        if(properties.margin.top)
+                        if (properties.margin.top)
                             jElementToInsert.css('margin-top', properties.margin.top + 'px');
 
-                        if(properties.margin.bottom)
+                        if (properties.margin.bottom)
                             jElementToInsert.css('margin-bottom', properties.margin.bottom + 'px');
                     }
 
