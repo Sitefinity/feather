@@ -170,5 +170,5 @@
      modal
      size="normal"
      window-class="sf-designer-dlg sf-timespan-selector-dlg"
-     dialog-controller="SfDocumentSelectorUploadPropertiesCtrl">
+     dialog-controller="SfMediaSelectorUploadPropertiesCtrl">
 </div>

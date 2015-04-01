@@ -1,17 +1,20 @@
 ﻿<div class="modal-header">
-    <button type="button" class="close" ng-click="cancelUpload()">&times;</button>
-    <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().UploadImage)</h3>
+    <button type="button" class="close" ng-click="cancelUpload()" ng-disabled="model.uploadInProgress">&times;</button>
+    <h3 class="modal-title" ng-bind="sfLabels.uploadItem"></h3>
 </div>
 
 <div class="modal-body">
     <div class="form-group">
-        <label>@(Res.Get<ClientComponentsResources>().ImageToUpload)</label>
+        <label ng-bind="sfLabels.itemToUpload"></label>
 
         <div class="sf-Progress">
             <div class="sf-Progress-file">
-                <span ng-bind="model.file.name"></span>
+                <i class="icon-file icon-txt icon-sm">
+                  <span class="icon-txt-{{model.file.extension}}">{{model.file.extension}}</span>
+                </i>
+                <span class="sf-Progress-title" ng-bind="model.file.name"></span>
                 <div class="pull-right">
-                  <a type="button" class="sf-Progress-close" ng-click="cancelUpload()">×</a>
+                  <a type="button" class="sf-Progress-close" ng-hide="model.uploadInProgress" ng-click="cancelUpload()">×</a>
                 </div>
                 <span class="pull-right" ng-bind="model.file.textSize"></span>
             </div>
@@ -25,8 +28,8 @@
         </div>
     </div>
     <div class="form-group" ng-class="{ 'has-error' : !model.parentId }">
-        <label>@(Res.Get<ClientComponentsResources>().WhereToStoreImage)</label>
-        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.parentId' sf-provider="provider"></sf-list-selector>
+        <label ng-bind="sfLabels.whereToStoreVideo"></label>
+        <sf-list-selector sf-library-selector sf-media-type='{{model.mediaType}}' sf-selected-item-id='model.parentId' sf-provider="provider"></sf-list-selector>
         <div ng-show="!model.parentId" class="text-danger">
           @(Res.Get<ClientComponentsResources>().SelectLibraryErrorMessage)
         </div>
@@ -38,12 +41,6 @@
           <div ng-show="!model.title" class="text-danger">
             @(Res.Get<ClientComponentsResources>().TitleRequired)
           </div>
-
-    </div>
-    <div class="form-group">
-
-          <label>@(Res.Get<ClientComponentsResources>().AlternativeText)</label>
-          <input class="form-control" type="text" ng-model="model.alternativeText" />
 
     </div>
     <expander expander-title='@(Res.Get<ClientComponentsResources>().CategoriesAndTags)'>
@@ -64,6 +61,6 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()" ng-disabled="!model.title || !model.parentId">@(Res.Get<ClientComponentsResources>().Upload)</button>
-    <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="upload()" ng-disabled="!model.title || !model.parentId || model.uploadInProgress">@(Res.Get<ClientComponentsResources>().Upload)</button>
+    <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()" ng-disabled="model.uploadInProgress">@(Res.Get<ClientComponentsResources>().Cancel)</button>
 </div>

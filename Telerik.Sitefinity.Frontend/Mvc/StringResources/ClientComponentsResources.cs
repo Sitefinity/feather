@@ -112,11 +112,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Attr")]
         /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
-        /// <value>sfAction attribute is required</value>
         [ResourceEntry("SfActionAttrRequired",
             Value = "sfAction attribute is required!",
             Description = "phrase: sfAction attribute is required!",
@@ -401,11 +399,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         /// <summary>
         /// word: Type
         /// </summary>
-        /// <value>Type</value>
         [ResourceEntry("Type",
             Value = "Type:",
             Description = "word: Type",
@@ -1779,7 +1775,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Enter URL
         /// </summary>
@@ -1795,7 +1790,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Open external URLs in new tab/window
         /// </summary>
@@ -1811,7 +1805,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         /// <summary>
         /// phrase: Add external URL
         /// </summary>
@@ -2582,15 +2575,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// word: 4x3
         /// </summary>
         /// <value>4x3</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "x"), ResourceEntry("Ratio4x3",
+        [ResourceEntry("Ratio4X3",
             Value = "4x3",
             Description = "word: 4x3",
-            LastModified = "2015/03/31")]
-        public string Ratio4x3
+            LastModified = "2015/04/01")]
+        public string Ratio4X3
         {
             get
             {
-                return this["Ratio4x3"];
+                return this["Ratio4X3"];
             }
         }
 
@@ -2613,15 +2606,47 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// word: 16x9
         /// </summary>
         /// <value>16x9</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "x"), ResourceEntry("Ratio16x9",
+        [ResourceEntry("Ratio16X9",
             Value = "16x9",
             Description = "word: 16x9",
-            LastModified = "2015/03/31")]
-        public string Ratio16x9
+            LastModified = "2015/04/01")]
+        public string Ratio16X9
         {
             get
             {
-                return this["Ratio16x9"];
+                return this["Ratio16X9"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Video to upload
+        /// </summary>
+        /// <value>Video to upload</value>
+        [ResourceEntry("VideoToUpload",
+            Value = "Video to upload",
+            Description = "phrase: Video to upload",
+            LastModified = "2015/04/01")]
+        public string VideoToUpload
+        {
+            get
+            {
+                return this["VideoToUpload"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Where to store video
+        /// </summary>
+        /// <value>Where to store video</value>
+        [ResourceEntry("WhereToStoreVideo",
+            Value = "Where to store video",
+            Description = "phrase: Where to store video",
+            LastModified = "2015/04/01")]
+        public string WhereToStoreVideo
+        {
+            get
+            {
+                return this["WhereToStoreVideo"];
             }
         }
         #endregion

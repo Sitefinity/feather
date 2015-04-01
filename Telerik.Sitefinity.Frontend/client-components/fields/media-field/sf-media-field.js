@@ -203,6 +203,12 @@
                         scope.$modalInstance.dismiss();
                     });
 
+                    //scope.$on('sf-media-selector-item-uploaded', function (event, uploadedItemInfo) {
+                    //    scope.sfProvider = scope.model.provider;
+                    //    getMedia(uploadedItemInfo.ContentId);
+                    //    scope.$modalInstance.dismiss();
+                    //});
+
                     scope.$watch('sfMedia.Id', function (newVal) {
                         scope.sfModel = newVal;
                     });
