@@ -97,13 +97,6 @@
                 </li>
             </ul>
 
-            <ul class="nav nav-pills nav-stacked nav-sm">
-                <li ng-repeat="basicFilter in filters.basic.all"
-                    ng-class="{ 'active': filters.basic.selected === basicFilter.value}">
-                    <a ng-click="filters.basic.select(basicFilter.value)">{{basicFilter.title}}</a>
-                </li>
-            </ul>
-
             <br />
 
             <!--Library Filter-->
