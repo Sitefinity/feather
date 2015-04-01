@@ -2604,6 +2604,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["WhereToStoreVideo"];
             }
         }
+
+        /// <summary>
+        /// phrase: Recent videos
+        /// </summary>
+        /// <value>Recent videos</value>
+        [ResourceEntry("RecentVideos",
+            Value = "Recent videos",
+            Description = "phrase: Recent videos",
+            LastModified = "2015/04/01")]
+        public string RecentVideos
+        {
+            get
+            {
+                return this["RecentVideos"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: My videos
+        /// </summary>
+        /// <value>My videos</value>
+        [ResourceEntry("MyVideos",
+            Value = "My videos",
+            Description = "phrase: My videos",
+            LastModified = "2015/04/01")]
+        public string MyVideos
+        {
+            get
+            {
+                return this["MyVideos"];
+            }
+        }
         #endregion
 
         /// <summary>

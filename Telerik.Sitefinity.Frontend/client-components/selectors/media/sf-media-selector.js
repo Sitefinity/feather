@@ -33,11 +33,6 @@
                 infiniteScrollLoadedItemsCount: 20,
                 recentDocumentsLastDaysCount: 7,
                 filters: {
-                    basic: [
-                        { title: 'Recent Documents', value: 'recentItems' },
-                        { title: 'My Documents', value: 'ownItems' },
-                        { title: 'All Libraries', value: 'allLibraries' }
-                    ],
                     basicRecentItemsValue: 'recentItems',
                     anyDateValue: 'AnyTime',
                     dates: [
@@ -511,7 +506,7 @@
                                 scope.isInUploadMode = false;
                                 scope.filters.basic.selected = basicFilter;
 
-                                if (basicFilter === constants.filters.basic[0].value) {
+                                if (basicFilter === constants.filters.basicRecentItemsValue) {
                                     scope.sortExpression = constants.sorting.defaultValue;
                                 }
 
