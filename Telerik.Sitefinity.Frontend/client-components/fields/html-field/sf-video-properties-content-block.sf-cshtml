@@ -17,8 +17,8 @@
                 <div class="col-xs-8">
                     <select ng-model="model.aspectRatio">
                         <option value="auto">@(Res.Get<ClientComponentsResources>().Auto)</option>
-                        <option value="4x3">@(Res.Get<ClientComponentsResources>().Ratio4x3)</option>
-                        <option value="16x9">@(Res.Get<ClientComponentsResources>().Ratio16x9)</option>
+                        <option value="4x3">@(Res.Get<ClientComponentsResources>().Ratio4X3)</option>
+                        <option value="16x9">@(Res.Get<ClientComponentsResources>().Ratio16X9)</option>
                         <option value="custom">@(Res.Get<ClientComponentsResources>().Custom)</option>
                     </select>
                 </div>

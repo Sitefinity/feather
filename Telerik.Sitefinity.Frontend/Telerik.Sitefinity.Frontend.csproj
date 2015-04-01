@@ -390,7 +390,9 @@
     <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxonomy-service.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.js" />
-    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-service.js" />
     <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.cshtml" />
@@ -466,6 +468,8 @@
     <EmbeddedResource Include="client-components\selectors\media\videos\sf-video-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-video-properties-content-block.sf-cshtml" />
+    <None Include="client-components\selectors\media\sf-media-collection.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-upload-media-properties.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -608,7 +612,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

@@ -15,4 +15,6 @@
     media-type-name-singular="@(Res.Get<ClientComponentsResources>().VideoSingular)"
     media-type-name-plural="@(Res.Get<ClientComponentsResources>().VideoPlural)"
     library-name-singular="@(Res.Get<ClientComponentsResources>().FolderSingular)"
-    library-name-plural="@(Res.Get<ClientComponentsResources>().FolderPlural)"></server-data>
+    library-name-plural="@(Res.Get<ClientComponentsResources>().FolderPlural)"
+    item-to-upload="@(Res.Get<ClientComponentsResources>().VideoToUpload)"
+    where-to-store-video="@(Res.Get<ClientComponentsResources>().WhereToStoreVideo)"></server-data>

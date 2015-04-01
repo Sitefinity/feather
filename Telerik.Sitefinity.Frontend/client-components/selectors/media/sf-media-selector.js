@@ -440,25 +440,33 @@
                     // Upload properties logic
                     var openUploadPropertiesDialog = function (file) {
                         scope.model.file = file;
+                        scope.model.mediaType = scope.sfMediaType;
 
                         var fileModelResolver = function () { return scope.model; };
                         var providerResolver = function () { return scope.provider; };
+                        var labelsResolver = function () { return scope.sfLabels; };
 
-                        angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: fileModelResolver, sfProvider: providerResolver })
-                            .then(function (uploadedDocumentInfo) {
-                                if (uploadedDocumentInfo && !uploadedDocumentInfo.ErrorMessage) {
-                                    scope.$emit('sf-document-selector-document-uploaded', uploadedDocumentInfo);
-                                }
-                                else if (uploadedDocumentInfo && uploadedDocumentInfo.ErrorMessage) {
-                                    scope.error = {
-                                        show: true,
-                                        message: uploadedDocumentInfo.ErrorMessage
-                                    };
-                                }
-                            })
-                            .finally(function () {
-                                restoreFileModel();
-                            });
+                        angular.element('.uploadPropertiesModal')
+                        .scope()
+                        .$openModalDialog({
+                            sfFileModel: fileModelResolver,
+                            sfProvider: providerResolver,
+                            sfLabels: labelsResolver
+                        })
+                        .then(function (uploadedItemInfo) {
+                            if (uploadedItemInfo && !uploadedItemInfo.ErrorMessage) {
+                                scope.$emit('sf-media-selector-item-uploaded', uploadedItemInfo);
+                            }
+                            else if (uploadedItemInfo && uploadedItemInfo.ErrorMessage) {
+                                scope.error = {
+                                    show: true,
+                                    message: uploadedItemInfo.ErrorMessage
+                                };
+                            }
+                        })
+                        .finally(function () {
+                            restoreFileModel();
+                        });
                     };
 
                     // cleares both scope model and html input
@@ -493,7 +501,7 @@
                     scope.isMultiselect = scope.sfMultiselect !== undefined && scope.sfMultiselect.toLowerCase() !== 'false';
                     scope.isDeselectable = scope.sfDeselectable !== undefined && scope.sfDeselectable.toLowerCase() !== 'false';
 
-                    scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/documents/sf-upload-document-properties.sf-cshtml');
+                    scope.uploadPropertiesTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-upload-media-properties.sf-cshtml');
 
                     scope.filters = {
                         basic: {
@@ -801,9 +809,11 @@
         * Upload properties controller
         */
 
-        .controller('SfDocumentSelectorUploadPropertiesCtrl', ['$scope', '$modalInstance', 'sfMediaService', 'sfFileModel', 'sfProvider', function myfunction($scope, $modalInstance, sfMediaService, sfFileModel, sfProvider) {
+        .controller('SfMediaSelectorUploadPropertiesCtrl', ['$scope', '$modalInstance', 'sfMediaService', 'sfFileModel', 'sfProvider', 'sfLabels',
+        function myfunction($scope, $modalInstance, sfMediaService, sfFileModel, sfProvider, sfLabels) {
             $scope.model = sfFileModel;
             $scope.provider = sfProvider;
+            $scope.sfLabels = sfLabels;
 
             $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1024) + " KB";
 
@@ -812,6 +822,7 @@
             $scope.uploadInfo.fileName = fileName;
 
             $scope.model.title = fileName.slice(0, fileName.lastIndexOf('.'));
+            $scope.model.file.extension = fileName.split('.').pop();
 
             var successAction = function (data) {
                 data = data || {};
@@ -828,9 +839,9 @@
                 $modalInstance.dismiss();
             };
 
-            $scope.uploadDocument = function () {
+            $scope.upload = function () {
                 $scope.model.uploadInProgress = true;
-                sfMediaService[scope.sfMediaType].upload($scope.model, sfProvider).then(successAction, errorAction, progressAction);
+                sfMediaService[$scope.model.mediaType].upload($scope.model, sfProvider).then(successAction, errorAction, progressAction);
             };
 
             $scope.cancelUpload = function () {
@@ -851,7 +862,7 @@
         }]);
 
     // The out-of-the-box bootstrap's popover directive is not supporting html in the popover's content.
-    // The following directive overrides the popover with a template that supports html.
+    // This directive wraps the popover.
     // Should be removed when bootstrap release the html feature.
     sfMediaSelector.requires.push('sfBootstrapPopover');
     angular.module('sfBootstrapPopover', ['ui.bootstrap.tooltip'])
