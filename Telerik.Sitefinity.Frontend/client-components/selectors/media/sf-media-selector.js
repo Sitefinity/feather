@@ -33,24 +33,8 @@
                 infiniteScrollLoadedItemsCount: 20,
                 recentDocumentsLastDaysCount: 7,
                 filters: {
-                    basic: [
-                        { title: 'Recent Documents', value: 'recentItems' },
-                        { title: 'My Documents', value: 'ownItems' },
-                        { title: 'All Libraries', value: 'allLibraries' }
-                    ],
                     basicRecentItemsValue: 'recentItems',
                     anyDateValue: 'AnyTime',
-                    dates: [
-                        { text: 'Any time', dateValue: 'AnyTime' },
-                        { text: 'Last 1 day', dateValue: helpers.getDate(1) },
-                        { text: 'Last 3 days', dateValue: helpers.getDate(3) },
-                        { text: 'Last 1 week', dateValue: helpers.getDate(7) },
-                        { text: 'Last 1 month', dateValue: helpers.getDate(0, 1) },
-                        { text: 'Last 6 months', dateValue: helpers.getDate(0, 6) },
-                        { text: 'Last 1 year', dateValue: helpers.getDate(0, 0, 1) },
-                        { text: 'Last 2 years', dateValue: helpers.getDate(0, 0, 2) },
-                        { text: 'Last 5 years', dateValue: helpers.getDate(0, 0, 5) }
-                    ],
                     tags: {
                         pageSize: 30,
                         field: 'Tags',
@@ -505,20 +489,19 @@
 
                     scope.filters = {
                         basic: {
-                            all: constants.filters.basic,
                             selected: null,
                             select: function (basicFilter) {
                                 scope.isInUploadMode = false;
                                 scope.filters.basic.selected = basicFilter;
 
-                                if (basicFilter === constants.filters.basic[0].value) {
+                                if (basicFilter === constants.filters.basicRecentItemsValue) {
                                     scope.sortExpression = constants.sorting.defaultValue;
                                 }
 
                                 scope.filterObject.set.basic[basicFilter]();
 
                                 scope.filters.library.selected = [];
-                                scope.filters.date.selected = [];
+                                scope.filters.date.selectedKey = null;
                                 scope.filters.tag.selected = [];
                                 scope.filters.category.selected = [];
                                 scope.error = null;
@@ -544,8 +527,22 @@
                             getChildren: filtersLogic.loadCategoryChildren
                         },
                         date: {
-                            all: constants.filters.dates,
-                            selected: []
+                            selectedKey: null,
+                            values: {},
+                            select: function (dateKey) {
+                                scope.filters.date.selectedKey = dateKey;
+
+                                var cachedValues = scope.filters.date.values;
+
+                                if (cachedValues[dateKey]) return;
+
+                                if (dateKey === constants.filters.anyDateValue) {
+                                    cachedValues[dateKey] = dateKey;
+                                }
+                                else {
+                                    cachedValues[dateKey] = helpers.getDate.apply(helpers, dateKey.split('-'));
+                                }
+                            }
                         }
                     };
 
@@ -575,15 +572,14 @@
                                 }
                                 break;
                             case '4':
-                                if (scope.filters.date.selected.length > 0) {
-                                    if (scope.filters.date.selected[0] === constants.filters.anyDateValue) {
-                                        scope.filterObject.set.date.all();
-                                    }
-                                    else {
-                                        scope.filterObject.set.date.to(scope.filters.date.selected[0]);
-                                    }
-                                    handled = true;
+                                var selectedKey = scope.filters.date.selectedKey;
+                                if (selectedKey === constants.filters.anyDateValue) {
+                                    scope.filterObject.set.date.all();
                                 }
+                                else {
+                                    scope.filterObject.set.date.to(scope.filters.date.values[selectedKey]);
+                                }
+                                handled = true;
                                 break;
                         }
                         if (!handled) {
@@ -647,7 +643,7 @@
                         }
 
                         if (filterName !== 'date') {
-                            scope.filters.date.selected = [];
+                            scope.filters.date.selectedKey = null;
                         }
                     };
 
@@ -656,7 +652,7 @@
                         // clear filter selection
                         scope.filters.basic.selected = null;
                         scope.filters.library.selected = [];
-                        scope.filters.date.selected = [];
+                        scope.filters.date.selectedKey = null;
                         scope.filters.tag.selected = [];
                         scope.filters.category.selected = [];
                         scope.error = null;
@@ -721,15 +717,18 @@
                         }
                     });
 
-                    scope.$watch('filters.date.selected', function (newVal, oldVal) {
-                        if (newVal !== oldVal && newVal[0]) {
+                    scope.$watch('filters.date.selectedKey', function (newVal, oldVal) {
+                        if (newVal !== oldVal && newVal) {
                             scope.filters.basic.selected = null;
                             clearNonSelectedFilters('date');
-                            if (newVal[0] === constants.filters.anyDateValue) {
+
+                            var dateFilterValue = scope.filters.date.values[newVal];
+
+                            if (dateFilterValue === constants.filters.anyDateValue) {
                                 scope.filterObject.set.date.all();
                             }
                             else {
-                                scope.filterObject.set.date.to(newVal[0]);
+                                scope.filterObject.set.date.to(dateFilterValue);
                             }
 
                             scope.clearSearch = !scope.clearSearch;

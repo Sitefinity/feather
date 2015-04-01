@@ -17,4 +17,7 @@
     library-name-singular="@(Res.Get<ClientComponentsResources>().FolderSingular)"
     library-name-plural="@(Res.Get<ClientComponentsResources>().FolderPlural)"
     item-to-upload="@(Res.Get<ClientComponentsResources>().VideoToUpload)"
-    where-to-store-video="@(Res.Get<ClientComponentsResources>().WhereToStoreVideo)"></server-data>
+    where-to-store-video="@(Res.Get<ClientComponentsResources>().WhereToStoreVideo)"
+    recent-videos="@(Res.Get<ClientComponentsResources>().RecentVideos)"
+    my-videos="@(Res.Get<ClientComponentsResources>().MyVideos)"
+    all-libraries="@(Res.Get<ClientComponentsResources>().AllLibraries)"></server-data>

@@ -2649,6 +2649,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["WhereToStoreVideo"];
             }
         }
+
+        /// <summary>
+        /// phrase: Recent videos
+        /// </summary>
+        /// <value>Recent videos</value>
+        [ResourceEntry("RecentVideos",
+            Value = "Recent videos",
+            Description = "phrase: Recent videos",
+            LastModified = "2015/04/01")]
+        public string RecentVideos
+        {
+            get
+            {
+                return this["RecentVideos"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: My videos
+        /// </summary>
+        /// <value>My videos</value>
+        [ResourceEntry("MyVideos",
+            Value = "My videos",
+            Description = "phrase: My videos",
+            LastModified = "2015/04/01")]
+        public string MyVideos
+        {
+            get
+            {
+                return this["MyVideos"];
+            }
+        }
         #endregion
 
         /// <summary>
@@ -2728,6 +2760,134 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["PixelShort"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Last 1 day
+        /// </summary>
+        /// <value>Last 1 day</value>
+        [ResourceEntry("Last1Day",
+            Value = "Last 1 day",
+            Description = "phrase: Last 1 day",
+            LastModified = "2015/04/01")]
+        public string Last1Day
+        {
+            get
+            {
+                return this["Last1Day"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Last 3 days
+        /// </summary>
+        /// <value>Last 3 days</value>
+        [ResourceEntry("Last3Days",
+            Value = "Last 3 days",
+            Description = "phrase: Last 3 days",
+            LastModified = "2015/04/01")]
+        public string Last3Days
+        {
+            get
+            {
+                return this["Last3Days"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Last 1 week
+        /// </summary>
+        /// <value>Last 1 week</value>
+        [ResourceEntry("Last1Week",
+            Value = "Last 1 week",
+            Description = "phrase: Last 1 week",
+            LastModified = "2015/04/01")]
+        public string Last1Week
+        {
+            get
+            {
+                return this["Last1Week"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Last 1 month
+        /// </summary>
+        /// <value>Last 1 month</value>
+        [ResourceEntry("Last1Month",
+            Value = "Last 1 month",
+            Description = "phrase: Last 1 month",
+            LastModified = "2015/04/01")]
+        public string Last1Month
+        {
+            get
+            {
+                return this["Last1Month"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Last 6 months
+        /// </summary>
+        /// <value>Last 6 months</value>
+        [ResourceEntry("Last6Months",
+            Value = "Last 6 months",
+            Description = "phrase: Last 6 months",
+            LastModified = "2015/04/01")]
+        public string Last6Months
+        {
+            get
+            {
+                return this["Last6Months"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Last 1 year
+        /// </summary>
+        /// <value>Last 1 year</value>
+        [ResourceEntry("Last1Year",
+            Value = "Last 1 year",
+            Description = "phrase: Last 1 year",
+            LastModified = "2015/04/01")]
+        public string Last1Year
+        {
+            get
+            {
+                return this["Last1Year"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Last 2 years
+        /// </summary>
+        /// <value>Last 2 years</value>
+        [ResourceEntry("Last2Years",
+            Value = "Last 2 years",
+            Description = "phrase: Last 2 years",
+            LastModified = "2015/04/01")]
+        public string Last2Years
+        {
+            get
+            {
+                return this["Last2Years"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Last 5 years
+        /// </summary>
+        /// <value>Last 5 years</value>
+        [ResourceEntry("Last5Years",
+            Value = "Last 5 years",
+            Description = "phrase: Last 5 years",
+            LastModified = "2015/04/01")]
+        public string Last5Years
+        {
+            get
+            {
+                return this["Last5Years"];
             }
         }
     }
