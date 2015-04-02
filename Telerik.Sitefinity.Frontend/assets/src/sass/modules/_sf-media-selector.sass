@@ -109,6 +109,14 @@
 	.Media-file-thumb-holder
 		background: #fff
 
+		.is-list &
+			border: 0
+			background: transparent
+
+	.Media-item-info
+		bottom: 14px
+		right: 14px
+
 .Media-folder-title
 	width: 50%
 	display: none
@@ -118,6 +126,9 @@
 	.is-list &
 		display: table-cell
 		font-weight: 700
+
+	&.Media-folder-title--wa
+		width: auto
 
 // File
 .Media-file
@@ -293,10 +304,15 @@
 	border: 1px solid #ccc
 
 .sf-Media--info-doc
-	border: 1px solid #ccc
+	display: table
 	height: 160px
-	line-height: 160px
+	width: 100%
 	background-color: #fff
+	border: 1px solid #ccc
+
+	.sf-Media--info-doc-holder
+		display: table-cell
+		vertical-align: middle
 
 // Nav styles for sidebar links
 // Should be moved to another .sass file
@@ -361,3 +377,6 @@
 	.icon-file
 		color: #999
 
+	.Media-item-info
+		bottom: 14px
+		right: 14px
