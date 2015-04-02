@@ -11,7 +11,7 @@
             </div>
 
             <div ng-show="!sfMedia">
-                <span>{{labels.mediaDeletedLabel}}</span>
+                <span>@(Res.Get<ClientComponentsResources>().VideoHasBeenDeleted)</span>
             </div>
         </div>
 
@@ -32,7 +32,7 @@
             </div>
 
             <br />
-            <button class="btn btn-xs btn-default" ng-click="changeMedia(); showVideo=false">{{labels.mediaChangeLabel}}</button>
+            <button class="btn btn-xs btn-default" ng-click="changeMedia(); showVideo=false">@(Res.Get<ClientComponentsResources>().ChangeVideo)</button>
             <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties(); showVideo=false">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
         </div>
     </div>

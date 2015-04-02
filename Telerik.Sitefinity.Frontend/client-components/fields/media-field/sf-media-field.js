@@ -1,6 +1,7 @@
 ﻿(function ($) {
     var sfFields = angular.module('sfFields');
     sfFields.requires.push('sfMediaField');
+    sfFields.requires.push('serverDataModule');
 
     angular.module('sfMediaField', ['sfServices'])
         .service("sfMediaTypeResolver", ['sfMediaService', 'serverContext', function (sfMediaService, serverContext) {
@@ -16,6 +17,14 @@
                 this.getParentId = function (document) {
                     return document.FolderId || document.Library.Id;
                 };
+
+                this.getDefaultSelectorTemplateUrl = function () {
+                    return serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/document-field/sf-document-modal-template.sf-cshtml');
+                };
+
+                this.getDefaultTemplateUrl = function () {
+                    return serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/document-field/sf-document-field.sf-cshtml');
+                };
             };
 
             var Videos = function () {
@@ -30,6 +39,14 @@
                 this.getParentId = function (video) {
                     return video.FolderId || video.Library.Id;
                 };
+
+                this.getDefaultSelectorTemplateUrl = function () {
+                    return serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/video-field/sf-video-modal-template.sf-cshtml');
+                };
+
+                this.getDefaultTemplateUrl = function () {
+                    return serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/video-field/sf-video-field.sf-cshtml');
+                };
             };
 
             var Images = function () {
@@ -43,6 +60,14 @@
 
                 this.getParentId = function (image) {
                     return image.FolderId || image.Album.Id;
+                };
+
+                this.getDefaultSelectorTemplateUrl = function () {
+                    return '';
+                };
+
+                this.getDefaultTemplateUrl = function () {
+                    return '';
                 };
             };
 
@@ -68,7 +93,17 @@
                     sfMediaType: '@',
                     sfSelectorModelTemplate: '@',
                 },
+                controller: function ($scope) {
+                    if (!$scope.sfSelectorModelTemplate) {
+                        var mediaType = sfMediaTypeResolver.get($scope.sfMediaType);
+                        $scope.sfSelectorModelTemplate = mediaType.getDefaultSelectorTemplateUrl();
+                    }
+                },
                 templateUrl: function (elem, attrs) {
+                    if (attrs.sfMediaType && !attrs.sfTemplateUrl) {
+                        var mediaType = sfMediaTypeResolver.get(attrs.sfMediaType);
+                        return mediaType.getDefaultTemplateUrl();
+                    }
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
                     var url = attrs.sfTemplateUrl || 'client-components/fields/media-field/sf-media-field.sf-cshtml';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
@@ -77,7 +112,6 @@
                     var emptyGuid = '00000000-0000-0000-0000-000000000000';
 
                     serverData.refresh();
-
                     scope.labels = serverData.getAll();
 
                     var autoOpenSelector = attrs.sfAutoOpenSelector !== undefined && attrs.sfAutoOpenSelector.toLowerCase() !== 'false';
