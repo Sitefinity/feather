@@ -9035,51 +9035,54 @@ tab {
   .is-list .Media-folder-title {
     display: table-cell;
     font-weight: 700; }
+  /* line 125, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  .Media-folder-title.Media-folder-title--wa {
+    width: auto; }
 
-/* line 125, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 128, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-file {
   position: relative;
   overflow: hidden;
   border-radius: 3px;
   transition: color 0.2s ease, background-color 0.2s ease; }
-  /* line 131, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 134, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-file img {
     max-width: 100%;
     max-height: 100%; }
-  /* line 136, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 139, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-file:hover, .Media-file:focus {
     background: rgba(66, 139, 202, 0.2); }
-  /* line 139, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 142, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-file.is-selected {
     background-color: #428BCA; }
-  /* line 142, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 145, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file {
     border-radius: 0; }
-    /* line 146, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+    /* line 149, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-file:hover, .is-list .Media-file:focus {
       background: #F2F2F2; }
-    /* line 149, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+    /* line 152, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-file.is-selected {
       background-color: #428BCA;
       color: #fff; }
-      /* line 155, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+      /* line 158, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
       .is-list .Media-file.is-selected .Media-item-title, .is-list .Media-file.is-selected .Media-item-meta, .is-list .Media-file.is-selected .Media-item-date {
         color: #fff; }
 
-/* line 158, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 161, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-file-wrapper {
   display: table; }
-  /* line 161, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 164, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file-wrapper {
     width: 100%;
     height: 50px;
     table-layout: fixed; }
 
-/* line 167, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 170, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-file-thumb {
   display: table-cell;
   vertical-align: middle; }
-  /* line 171, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 174, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file-thumb {
     vertical-align: top;
     width: 50px;
@@ -9087,7 +9090,7 @@ tab {
     overflow: hidden;
     padding: 0 !important; }
 
-/* line 178, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 181, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-file-thumb-holder {
   width: 140px;
   height: 140px;
@@ -9095,36 +9098,36 @@ tab {
   display: table-cell;
   vertical-align: middle;
   background: #efefef; }
-  /* line 186, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 189, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file-thumb-holder {
     width: 48px;
     height: 48px;
     text-align: center;
     border: 1px solid #D7D7D7; }
 
-/* line 194, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 197, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-item-title, .Media-item-meta, .Media-item-date {
   display: none;
   font-size: 13px;
   color: #666; }
-  /* line 199, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 202, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-item-title, .is-list .Media-item-meta, .is-list .Media-item-date {
     display: table-cell;
     padding: 0 10px; }
 
-/* line 203, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 206, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-item-title {
   width: 50%; }
 
-/* line 206, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 209, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-item-meta {
   line-height: 1.3; }
 
-/* line 209, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 212, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-item-date {
   color: #999; }
 
-/* line 212, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 215, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-item-info {
   position: absolute;
   bottom: 5px;
@@ -9142,18 +9145,18 @@ tab {
   opacity: 0;
   transition: opacity 0.3s ease;
   font-weight: 700; }
-  /* line 231, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 234, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-file:hover .Media-item-info, .Media-folder:hover .Media-item-info {
     opacity: 0.6; }
-  /* line 234, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 237, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-item-info:hover {
     opacity: 1 !important; }
 
-/* line 237, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 240, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .is-list .Media-item-info {
   display: none !important; }
 
-/* line 241, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 244, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-settings {
   background: #f2f2f2;
   width: 100%;
@@ -9164,112 +9167,112 @@ tab {
   top: 0;
   left: 0;
   right: 0; }
-  /* line 253, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 256, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-settings .breadcrumb {
     padding: 2px 0 0; }
 
-/* line 256, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 259, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-settings--bottom {
   top: auto;
   bottom: 0;
   border-top: 1px solid #e5e5e5;
   border-bottom: none; }
 
-/* line 263, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 266, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-settings-sort > span {
   font-size: 20px;
   cursor: pointer;
   color: #999; }
-  /* line 268, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 271, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-settings-sort > span.is-selected {
     color: #596C9B; }
 
-/* line 271, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 274, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-upload-text {
   position: absolute;
   top: 50%;
   left: 0;
   right: 0;
   margin-top: -100px; }
-  /* line 278, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 281, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-upload-text .lead {
     margin-bottom: 0; }
 
-/* line 281, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 284, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-no-results {
   margin-top: 45px; }
 
-/* line 285, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 288, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .sf-Media--info img {
   max-width: 100%; }
-/* line 288, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 291, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .sf-Media--info h4 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-/* line 291, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 294, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .sf-Media--info-image {
   border: 1px solid #ccc; }
 
-/* line 294, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 297, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .sf-Media--info-doc {
   display: table;
   height: 160px;
   width: 100%;
   background-color: #fff;
   border: 1px solid #ccc; }
-  /* line 301, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 304, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .sf-Media--info-doc .sf-Media--info-doc-holder {
     display: table-cell;
     vertical-align: middle; }
 
-/* line 307, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 310, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .nav-sm > li > a {
   padding: 6px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-/* line 311, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 314, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .nav-pills {
   font-size: 13px; }
 
-/* line 315, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 318, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .nav-stacked strong {
   padding: 6px;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
-/* line 320, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 323, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .nav-stacked a {
   color: #000; }
-/* line 325, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 328, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .nav-stacked li.active > a, .nav-stacked li.active > a:hover {
   background-color: #bdbdbd; }
 
-/* line 328, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+/* line 331, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
 .Media-file--doc {
   border: 1px solid #d7d7d7; }
-  /* line 333, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 336, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file--doc.is-selected .icon-file, .is-list .Media-file--doc.is-selected [class^="icon-item-"]:before, .is-list .Media-file--doc.is-selected [class*=" icon-item-"]:before {
     color: #fff; }
-  /* line 336, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 339, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-file--doc .Media-file-wrapper {
     border: 10px solid transparent; }
-  /* line 339, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 342, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-file--doc .Media-file-thumb {
     overflow: visible; }
-  /* line 342, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 345, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-file--doc .Media-file-thumb-holder {
     background: #fff;
     overflow: visible; }
-    /* line 346, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+    /* line 349, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-file--doc .Media-file-thumb-holder {
       border: 0;
       background: transparent; }
-    /* line 350, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+    /* line 353, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
     .Media-file--doc .Media-file-thumb-holder .Media-item-title {
       display: inline-block;
       width: auto;
@@ -9278,13 +9281,13 @@ tab {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap; }
-      /* line 359, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+      /* line 362, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
       .is-list .Media-file--doc .Media-file-thumb-holder .Media-item-title {
         display: none; }
-  /* line 362, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 365, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-file--doc .icon-file, .Media-file--doc [class^="icon-item-"]:before, .Media-file--doc [class*=" icon-item-"]:before {
     color: #999; }
-  /* line 365, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  /* line 368, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-file--doc .Media-item-info {
     bottom: 14px;
     right: 14px; }
