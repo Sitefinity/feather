@@ -2,10 +2,11 @@
     <div class="row">
         <div class="col-md-5 text-center">
             <div class="sf-Media--info-doc" ng-show="sfMedia">
-
+              <div class="sf-Media--info-doc-holder">
                 <i class="icon-file icon-txt icon-lg">
-                    <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension.substring(1)}}</span>
+                  <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension.substring(1)}}</span>
                 </i>
+              </div>
             </div>
             <div ng-show="!sfMedia">
                 <span>@(Res.Get<ClientComponentsResources>().DocumentHasBeenDeleted)</span>
