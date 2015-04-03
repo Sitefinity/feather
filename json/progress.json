@@ -715,24 +715,51 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Document link",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Document-link",
+                     "commitHash" : "251de687223ff373a67416ba3bb6784a3a286972",
+                     "date" : "04-03-2015 15:42 +0300",
+                     "name" : "Document link widget implementation",
+                     "tag" : "v.1.2.150.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Download list",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "name" : "Documents list",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Documents-list-widget",
+                     "commitHash" : "251de687223ff373a67416ba3bb6784a3a286972",
+                     "date" : "04-03-2015 15:42 +0300",
+                     "name" : "Documents list widget implementation",
+                     "tag" : "v.1.2.150.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "List",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "List-Widget",
+                     "commitHash" : "251de687223ff373a67416ba3bb6784a3a286972",
+                     "date" : "04-03-2015 15:42 +0300",
+                     "name" : "List widget implementation",
+                     "tag" : "v.1.2.150.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -1438,6 +1465,13 @@
                      "date" : "03-20-2015 14:54 +0200",
                      "name" : "Media field directive",
                      "tag" : "v.1.2.130.0"
+                  },
+                  {
+                     "article" : "Localize-labels-of-client-components",
+                     "commitHash" : "251de687223ff373a67416ba3bb6784a3a286972",
+                     "date" : "04-03-2015 15:42 +0300",
+                     "name" : "Localizable labels of client components",
+                     "tag" : "v.1.2.150.0"
                   }
                ],
                "shortDescription" : "In progress",
