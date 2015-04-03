@@ -47,8 +47,16 @@
 
             var DocumentProperties = function () {
                 this.item = { Id: null }; //MediaItem view model
-                this.provider = null; //Name of the data provider              
+                this.provider = null; //Name of the data provider
                 this.title = null;
+                this.cssClass = null;
+            };
+
+            var VideoProperties = function () {
+                this.item = { Id: null }; //MediaItem view model
+                this.provider = null; //Name of the data provider
+                this.width = null;
+                this.height = null;
                 this.cssClass = null;
             };
 
@@ -333,9 +341,66 @@
                 }
             };
 
+            var video = {
+                markup: function (properties, librarySettings) {
+                    var sfref = '';
+                    var src = '';
+                    sfref = getSfrefAttribute('videos', properties.item.Id, properties.provider);
+                    src = properties.item.MediaUrl;
+
+                    var jElementToInsert = jQuery('<video />');
+                    jElementToInsert.attr('sfref', sfref);
+                    jElementToInsert.attr('src', src);
+                    jElementToInsert.attr('class', properties.cssClass);
+                    jElementToInsert.attr('width', properties.width);
+                    jElementToInsert.attr('height', properties.height);
+
+                    if (properties.margin) {
+                        if (properties.margin.left)
+                            jElementToInsert.css('margin-left', properties.margin.left + 'px');
+
+                        if (properties.margin.right)
+                            jElementToInsert.css('margin-right', properties.margin.right + 'px');
+
+                        if (properties.margin.top)
+                            jElementToInsert.css('margin-top', properties.margin.top + 'px');
+
+                        if (properties.margin.bottom)
+                            jElementToInsert.css('margin-bottom', properties.margin.bottom + 'px');
+                    }
+
+                    jElementToInsert.attr('controls', true);
+
+                    return jElementToInsert[0].outerHTML;
+                },
+
+                properties: function (markup) {
+                    var jMarkup = jQuery(markup);
+                    var sfref = jMarkup.attr('sfref') ? jMarkup.attr('sfref') : jMarkup.children().attr('sfref');
+
+                    var result = new VideoProperties();
+
+                    result.item.Id = getIdFromSfrefAttr(sfref);
+                    result.provider = getProviderFromSfrefAttr(sfref);
+                    result.item.MediaUrl = jMarkup.attr('href');
+                    result.title = jMarkup.attr('title');
+                    result.cssClass = jMarkup.attr('class') || null;
+
+                    result.margin = {
+                        left: jMarkup.css('margin-left'),
+                        right: jMarkup.css('margin-right'),
+                        top: jMarkup.css('margin-top'),
+                        bottom: jMarkup.css('margin-bottom')
+                    };
+
+                    return result;
+                }
+            };
+
             return {
                 image: image,
-                document: document
+                document: document,
+                video: video
             };
         }]);
 })(jQuery);

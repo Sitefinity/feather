@@ -373,6 +373,7 @@
         return {
             images: createMediaApi('images'),
             documents: createMediaApi('documents'),
+            videos: createMediaApi('videos'),
             getLibrarySettings: getLibrarySettings,
             checkCustomThumbnailParams: checkCustomThumbnailParams,
             getCustomThumbnailUrl: getCustomThumbnailUrl

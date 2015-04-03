@@ -8,6 +8,7 @@
                     sf-auto-open-selector
                     sf-model="model.item.Id"
                     sf-media="model.item"
+                    sf-media-type="documents"
                     sf-provider="model.provider"></sf-media-field>
 
     <form name="documentProperties">

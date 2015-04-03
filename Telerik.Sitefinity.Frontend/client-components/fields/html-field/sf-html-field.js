@@ -42,7 +42,7 @@
                         return properties;
                     }
 
-                    function getAnchorElement (range) {
+                    function getAnchorElement(range) {
                         var command = editor.toolbar.tools.createLink.command({ range: range });
 
                         var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
@@ -68,8 +68,8 @@
                     });
 
                     scope.openLinkSelector = function () {
-                       var range = editor.getRange();
-                       var aTag = getAnchorElement(range);
+                        var range = editor.getRange();
+                        var aTag = getAnchorElement(range);
 
                         if (aTag) {
                             scope.selectedHtml = aTag;
@@ -105,13 +105,13 @@
                                 .scope()
                                 .$openModalDialog({ sfModel: function () { return properties; } })
                                 .then(function (data) {
-                                     properties = data;
-                                     return mediaService.getLibrarySettings();
-                                 })
+                                    properties = data;
+                                    return mediaService.getLibrarySettings();
+                                })
                                 .then(function (settings) {
-                                     var markup = mediaMarkupService.document.markup(properties, settings);
-                                     editor.exec('insertHtml', { html: markup, split: true, range: range });
-                                 });
+                                    var markup = mediaMarkupService.document.markup(properties, settings);
+                                    editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                });
                         }, 0);
                     };
 
@@ -157,6 +157,29 @@
                                     var wrapIt = true;
                                     var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
                                     editor.exec('insertHtml', { html: markup, split: true });
+                                });
+                        }, 0);
+                    };
+
+                    scope.openVideoSelector = function () {
+                        scope.mediaPropertiesDialog =
+                                serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-video-properties-content-block.sf-cshtml');
+                        scope.sfMediaPropertiesController = "sfVideoPropertiesController";
+
+                        var range = editor.getRange();
+                        var properties = getPropertiesFromTag('video', null, 'video');
+
+                        setTimeout(function () {
+                            angular.element('.mediaPropertiesModal')
+                                .scope()
+                                .$openModalDialog({ sfModel: function () { return properties; } })
+                                .then(function (data) {
+                                    properties = data;
+                                    return mediaService.getLibrarySettings();
+                                })
+                                .then(function (settings) {
+                                    var markup = mediaMarkupService.video.markup(properties, settings);
+                                    editor.exec('insertHtml', { html: markup, split: true, range: range });
                                 });
                         }, 0);
                     };
@@ -269,7 +292,7 @@
             }])
         .controller('sfDocumentPropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
             function ($scope, $modalInstance, serverContext, sfModel) {
-                
+
                 $scope.model = sfModel || { item: undefined };
 
                 $scope.$watch('model.item.Id', function (newVal) {
@@ -282,6 +305,57 @@
                     if ($scope.model.item && $scope.model.item.Title && (oldVal === $scope.model.title || !$scope.model.title))
                         $scope.model.title = $scope.model.item.Title.Value;
                 });
+
+                $scope.done = function () {
+                    $modalInstance.close($scope.model);
+                };
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss();
+                };
+            }])
+        .controller('sfVideoPropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
+            function ($scope, $modalInstance, serverContext, sfModel) {
+
+                $scope.model = sfModel || { item: undefined };
+
+                $scope.model.aspectRatio = 'auto';
+
+                $scope.$watch('model.item.Id', function (newVal) {
+                    if (newVal === null) {
+                        $scope.cancel();
+                    }
+                });
+
+                $scope.$watch('model.aspectRatio', function (newVal) {
+                    if (newVal === '4x3') {
+                        $scope.model.width = 600;
+                        $scope.model.height = 450;
+                        $scope.model.aspectRatioCoefficient = 4 / 3;
+                    }
+                    else if (newVal === '16x9') {
+                        $scope.model.width = 600;
+                        $scope.model.height = 338;
+                        $scope.model.aspectRatioCoefficient = 16 / 9;
+                    }
+                    else if (newVal === 'auto') {
+                        if (!$scope.item) return;
+                        $scope.model.width = $scope.item.Width;
+                        $scope.model.height = $scope.item.Height;
+                    }
+                });
+
+                $scope.updateWidth = function () {
+                    if ($scope.model.aspectRatio != '16x9' && $scope.model.aspectRatio != '4x3') return;
+
+                    $scope.model.width = Math.round($scope.model.height * $scope.model.aspectRatioCoefficient);
+                };
+
+                $scope.updateHeight = function () {
+                    if ($scope.model.aspectRatio != '16x9' && $scope.model.aspectRatio != '4x3') return;
+
+                    $scope.model.height = Math.round($scope.model.width / $scope.model.aspectRatioCoefficient);
+                };
 
                 $scope.done = function () {
                     $modalInstance.close($scope.model);

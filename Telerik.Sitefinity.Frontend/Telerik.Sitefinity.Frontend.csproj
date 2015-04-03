@@ -390,7 +390,9 @@
     <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxonomy-service.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.js" />
-    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.js" />
     <EmbeddedResource Include="client-components\selectors\tools\sf-link-service.js" />
     <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.cshtml" />
@@ -463,6 +465,15 @@
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector-view.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\videos\sf-video-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-video-properties-content-block.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\video-field\sf-video-field.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\video-field\sf-video-modal-template.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\document-field\sf-document-modal-template.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\document-field\sf-document-field.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-collection.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-upload-media-properties.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -583,6 +594,8 @@
     <EmbeddedResource Include="client-components\selectors\lists\sf-lists-service.js" />
     <EmbeddedResource Include="client-components\selectors\lists\sf-lists-selector.js" />
     <EmbeddedResource Include="client-components\selectors\lists\sf-lists-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\media\videos\sf-video-selector.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

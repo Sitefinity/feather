@@ -1,0 +1,80 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">&times;</button>
+    <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().InsertVideoLink)</h3>
+</div>
+
+<div class="modal-body">
+    <sf-media-field class="sf-Media--info modal-settings"
+                    sf-auto-open-selector
+                    sf-model="model.item.Id"
+                    sf-media="model.item"
+                    sf-media-type="videos"
+                    sf-provider="model.provider"></sf-media-field>
+
+        <div class="form-group" ng-class="{ 'has-error' : !model.title }">
+            <label>@(Res.Get<ClientComponentsResources>().AspectRatio)</label>
+
+            <div class="row">
+                <div class="col-xs-8">
+                    <select ng-model="model.aspectRatio">
+                        <option value="auto">@(Res.Get<ClientComponentsResources>().Auto)</option>
+                        <option value="4x3">@(Res.Get<ClientComponentsResources>().Ratio4X3)</option>
+                        <option value="16x9">@(Res.Get<ClientComponentsResources>().Ratio16X9)</option>
+                        <option value="custom">@(Res.Get<ClientComponentsResources>().Custom)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div ng-hide="model.aspectRatio === 'auto'">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <label>@(Res.Get<ClientComponentsResources>().Width)</label><br />
+                        <input type="number" ng-model="model.width" ng-change="updateHeight()">
+                        <label>@(Res.Get<ClientComponentsResources>().PixelShort)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <label>@(Res.Get<ClientComponentsResources>().Height)</label><br />
+                        <input type="number" ng-model="model.height" ng-change="updateWidth()">
+                        <label>@(Res.Get<ClientComponentsResources>().PixelShort)</label>
+                    </div>
+                </div>
+            </div>             
+        </div>
+
+        <expander expander-title='More options'>
+            <div class="row">
+                <h3>@(Res.Get<ClientComponentsResources>().Margins)</h3>
+                <div class="col-xs-2">
+                    <label>@(Res.Get<ClientComponentsResources>().Top)</label><br />
+                    <input type="number" ng-model="model.margin.top" style="width: 50px">
+                </div>
+                
+                <div class="col-xs-2">
+                    <label>@(Res.Get<ClientComponentsResources>().Right)</label><br />
+                    <input type="number" ng-model="model.margin.right" style="width: 50px">
+                </div>
+
+                <div class="col-xs-2">
+                    <label>@(Res.Get<ClientComponentsResources>().Bottom)</label><br />
+                    <input type="number" ng-model="model.margin.bottom" style="width: 50px">
+                </div>
+
+                <div class="col-xs-2">
+                    <label>@(Res.Get<ClientComponentsResources>().Left)</label><br />
+                    <input type="number" ng-model="model.margin.left" style="width: 50px">                    
+                </div>
+                <label>@(Res.Get<ClientComponentsResources>().PixelShort)</label>
+            </div>
+
+            <label>@(Res.Get<ClientComponentsResources>().CssClasses)</label>
+            <input class="form-control" type="text" ng-model="model.cssClass" />
+        </expander>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.item.Title.Value">@(Res.Get<ClientComponentsResources>().Done)</button>
+    <button type="button" class="btn btn-link pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
+</div>
+
+

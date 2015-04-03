@@ -1,0 +1,221 @@
+﻿﻿<div class="Media">
+    <div class="Media-content" sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)">
+        <alert type="danger" ng-show="error.show">
+            <div>
+                {{error.message}}
+
+                <button class="close" ng-click="error.show = false">&times;</button>
+            </div>
+        </alert>
+
+        <!--Upload document-->
+        <input type="file" class="file-upload-chooser-input" style="display: none !important" />
+        <div ng-show="isInUploadMode" class="Media-upload-text text-center">
+            <div class="lead"><a ng-click="openSelectFileDialog()" ng-bind="sfLabels.selectItemFromComputer"></a></div>
+            <div>@(Res.Get<ClientComponentsResources>().SimplyDragAndDrop)</div>
+        </div>
+
+        <!--Select document-->
+        <div ng-hide="isInUploadMode">
+            <div class="Media-settings">
+                <sf-provider-selector sf-manager-type="Telerik.Sitefinity.Modules.Libraries.LibrariesManager"
+                                      ng-model="provider"
+                                      class="pull-left m-right-md">
+                </sf-provider-selector>
+
+                <ol class="pull-left breadcrumb" ng-show="breadcrumbs && breadcrumbs.length > 0">
+                    <li ng-click="onBreadcrumbItemClick()"><a>@(Res.Get<ClientComponentsResources>().AllLibraries)</a></li>
+                    <li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
+                        <a>{{::item.Title}}</a>
+                    </li>
+                </ol>
+
+                <sf-search-box class="pull-right" sf-placeholder="@(Res.Get<ClientComponentsResources>().SearchByTitle)" sf-action="narrowResults(query)" 
+                    sf-clear-search-string="clearSearch" sf-timeout-ms="500"> </sf-search-box>
+            </div>
+
+            <div ng-hide="items.length">
+
+                <div ng-hide="filterObject.query || selectedFilterOption != 1" class="Media-upload-text text-center">
+                    <div class="icon-no-image"></div>
+                    <p class="text-muted" ng-bind="sfLabels.noItems"></p>
+
+                    <div class="lead"><a ng-click="openSelectFileDialog()" ng-bind="sfLabels.selectItemFromComputer"></a></div>
+                    <div class="">@(Res.Get<ClientComponentsResources>().SimplyDragAndDrop)</div>
+                </div>
+
+                <div ng-show="filterObject.query || selectedFilterOption != 1" class="text-muted Media-no-results">
+                    @(Res.Get<ClientComponentsResources>().NoItemsFound)
+                </div>
+            </div>
+
+            <div ng-show="items.length"
+                 sf-collection
+                 sf-data="items"
+                 sf-deselectable="{{isDeselectable}}"
+                 sf-multiselect="{{isMultiselect}}"
+                 sf-model="selectedItems"
+                 sf-template-url="client-components/selectors/media/sf-media-collection.sf-cshtml"
+                 ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
+            </div>
+
+            <div class="Media-settings Media-settings--bottom">
+                <button type="button" class="btn btn-link btn-sm" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">@(Res.Get<ClientComponentsResources>().SortingAndView)</button>
+                <div ng-show="showSortingAndView" class="row">
+
+                    <sf-sort-box class="col-xs-3" sf-model="sortExpression"></sf-sort-box>
+
+                    <div class="Media-settings-sort col-xs-9">
+                        <span ng-click="switchToGrid()" ng-class="{ 'is-selected' : isGrid }"><span class="glyphicon glyphicon-th"></span></span>
+                        <span ng-click="switchToList()" ng-class="{ 'is-selected' : isList }"><span class="glyphicon glyphicon-th-list"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="Media-sidebar">
+        <div class="Media-sidebar-content">
+            <ul class="nav nav-pills nav-stacked nav-sm">
+                <li ng-class="{ 'active' : isInUploadMode }"><a ng-click="switchToUploadMode()" ng-bind="sfLabels.uploadItem"></a></li>
+            </ul>
+
+            <br />
+
+            <!--Basic Filter-->
+            <div class="m-bottom-xs m-left-xs"><strong ng-bind="sfLabels.alreadyUploadedItem"></strong></div>
+
+            <ul class="nav nav-pills nav-stacked nav-sm">
+                <li ng-class="{ 'active': filters.basic.selected === 'recentItems'}">
+                    <a ng-click="filters.basic.select('recentItems')" ng-bind="sfLabels.recentVideos"></a>
+                </li>
+                <li ng-class="{ 'active': filters.basic.selected === 'ownItems'}">
+                    <a ng-click="filters.basic.select('ownItems')" ng-bind="sfLabels.myVideos"></a>
+                </li>
+                <li ng-class="{ 'active': filters.basic.selected === 'allLibraries'}">
+                    <a ng-click="filters.basic.select('allLibraries')" ng-bind="sfLabels.allLibraries"></a>
+                </li>
+            </ul>
+
+            <br />
+
+            <!--Library Filter-->
+            <div ng-show="selectedFilterOption == 1">
+                <strong class="m-bottom-xs m-left-xs">@(Res.Get<ClientComponentsResources>().Libraries)</strong>
+                <div class="library-filter" sf-tree
+                     sf-identifier="Id"
+                     sf-model="filters.library.selected"
+                     sf-request-children="filters.library.getChildren(parent)"
+                     sf-has-children-field="HasChildren">
+                </div>
+            </div>
+
+            <!--Tags Filter-->
+            <span ng-show="selectedFilterOption == 2">
+                <div class="m-bottom-xs m-left-xs"><strong>@(Res.Get<ClientComponentsResources>().Tags)</strong></div>
+                <p class="m-bottom-xs">
+                    <input class="form-control form-control-sm" type="text" placeholder="@(Res.Get<ClientComponentsResources>().NarrowByTyping)" ng-model="filters.tag.query"></input>
+                </p>
+                <div sf-collection
+                     sf-identifier="Id"
+                     class="sf-Tree-tags-infinite"
+                     sf-model="filters.tag.selected"
+                     sf-data="filters.tag.all"
+                     sf-template-url="client-components/selectors/media/sf-media-tag-taxon-items.html"></div>
+            </span>
+
+            <!--Categories Filter-->
+            <span ng-show="selectedFilterOption == 3">
+                <div class="m-bottom-xs m-left-xs"><strong>@(Res.Get<ClientComponentsResources>().Categories)</strong></div>
+                <p class="m-bottom-xs">
+                    <input class="form-control form-control-sm" type="text" placeholder="@(Res.Get<ClientComponentsResources>().NarrowByTyping)" ng-model="filters.category.query">
+                </p>
+                <span sf-tree
+                      sf-identifier="Id"
+                      ng-hide="filters.category.query"
+                      sf-model="filters.category.selected"
+                      sf-request-children="filters.category.getChildren(parent)"
+                      sf-has-children-field="HasChildren"></span>
+
+                <span sf-collection
+                      sf-identifier="Id"
+                      ng-show="filters.category.query"
+                      sf-template-url="client-components/selectors/media/sf-media-hierarchical-taxon-items.html"
+                      sf-data="filters.category.filtered"
+                      sf-model="filters.category.selected"></span>
+            </span>
+
+            <!--Date Filter-->
+            <span ng-show="selectedFilterOption == 4">
+                <div class="m-bottom-xs m-left-xs"><strong>@(Res.Get<ClientComponentsResources>().Dates)</strong></div>
+                <ul class="sf-Tree">
+                  <li class="sf-Tree-item" ng-click="filters.date.select('AnyTime')">
+                      <span ng-class="{ 'is-selected': filters.date.selectedKey === 'AnyTime'}">
+                        @(Res.Get<ClientComponentsResources>().AnyTime)
+                      </span>
+                  </li>
+                  <li class="sf-Tree-item" ng-click="filters.date.select('1-0-0')">
+                      <span ng-class="{ 'is-selected': filters.date.selectedKey === '1-0-0'}">
+                        @(Res.Get<ClientComponentsResources>().Last1Day)
+                      </span>
+                  </li>
+                  <li class="sf-Tree-item" ng-click="filters.date.select('3-0-0')">
+                      <span ng-class="{ 'is-selected': filters.date.selectedKey === '3-0-0'}">
+                        @(Res.Get<ClientComponentsResources>().Last3Days)
+                      </span>
+                  </li>
+                  <li class="sf-Tree-item" ng-click="filters.date.select('7-0-0')">
+                      <span ng-class="{ 'is-selected': filters.date.selectedKey === '7-0-0'}">
+                        @(Res.Get<ClientComponentsResources>().Last1Week)
+                      </span>
+                  </li>
+                  <li class="sf-Tree-item" ng-click="filters.date.select('0-1-0')">
+                      <span ng-class="{ 'is-selected': filters.date.selectedKey === '0-1-0'}">
+                        @(Res.Get<ClientComponentsResources>().Last1Month)
+                      </span>
+                  </li>
+                  <li class="sf-Tree-item" ng-click="filters.date.select('0-6-0')">
+                      <span ng-class="{ 'is-selected': filters.date.selectedKey === '0-6-0'}">
+                        @(Res.Get<ClientComponentsResources>().Last6Months)
+                      </span>
+                  </li>
+                  <li class="sf-Tree-item" ng-click="filters.date.select('0-0-1')">
+                      <span ng-class="{ 'is-selected': filters.date.selectedKey === '0-0-1'}">
+                        @(Res.Get<ClientComponentsResources>().Last1Year)
+                      </span>
+                  </li>
+                  <li class="sf-Tree-item" ng-click="filters.date.select('0-0-2')">
+                      <span ng-class="{ 'is-selected': filters.date.selectedKey === '0-0-2'}">
+                        @(Res.Get<ClientComponentsResources>().Last2Years)
+                      </span>
+                  </li>
+                  <li class="sf-Tree-item" ng-click="filters.date.select('0-0-5')">
+                      <span ng-class="{ 'is-selected': filters.date.selectedKey === '0-0-5'}">
+                        @(Res.Get<ClientComponentsResources>().Last5Years)
+                      </span>
+                  </li>
+                </ul>
+            </span>
+        </div>
+
+        <!--Filter dropdown-->
+        <div class="Media-settings Media-settings--bottom">
+            <button type="button" class="btn btn-link btn-sm" ng-show="!showOtherFilterOptions" ng-click="showOtherFilterOptions = true">@(Res.Get<ClientComponentsResources>().OtherFilterOptions)</button>
+
+            <select ng-show="showOtherFilterOptions" class="form-control form-control-sm" ng-model="selectedFilterOption">
+                <option value="1" selected="selected">@(Res.Get<ClientComponentsResources>().Libraries)</option>
+                <option value="2">@(Res.Get<ClientComponentsResources>().Tags)</option>
+                <option value="3">@(Res.Get<ClientComponentsResources>().Categories)</option>
+                <option value="4">@(Res.Get<ClientComponentsResources>().Dates)</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="uploadPropertiesModal"
+     template-url="{{uploadPropertiesTemplateUrl}}"
+     modal
+     size="normal"
+     window-class="sf-designer-dlg sf-timespan-selector-dlg"
+     dialog-controller="SfMediaSelectorUploadPropertiesCtrl">
+</div>
