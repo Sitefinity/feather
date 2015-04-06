@@ -333,7 +333,7 @@
     <EmbeddedResource Include="client-components\collections\sf-tree-item.html" />
     <EmbeddedResource Include="client-components\collections\sf-tree.html" />
     <EmbeddedResource Include="client-components\collections\sf-tree.js" />
-    <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.html" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.js" />
     <EmbeddedResource Include="client-components\fields\sf-editable.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-bubbles-selection.sf-cshtml" />
@@ -616,7 +616,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

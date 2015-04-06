@@ -113,6 +113,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// Insert video
+        /// </summary>
+        /// <value>Insert video</value>
+        [ResourceEntry("InsertVideo",
+            Value = "Insert video",
+            Description = "phrase: Insert video",
+            LastModified = "2015/04/06")]
+        public string InsertVideo
+        {
+            get
+            {
+                return this["InsertVideo"];
+            }
+        }
+
+        /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
         [ResourceEntry("SfActionAttrRequired",
