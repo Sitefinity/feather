@@ -5,12 +5,12 @@
             <video controls="controls" width="520" ng-src="{{sfMedia.MediaUrl}}"></video>
         </div>
 
-        <div class="col-md-5 text-center" ng-init="showVideo = false">
+        <div class="col-md-5 text-center" ng-init="showVideo = false" ng-hide="showVideo">
             <div class="sf-Media--info-image" ng-show="sfMedia && !showVideo" ng-click="showVideo = true">
                 <img ng-src="{{sfMedia.ThumbnailUrl}}" src="" alt="{{sfMedia.Title.Value}}" />
             </div>
 
-            <div ng-show="!sfMedia">
+            <div ng-hide="sfMedia">
                 <span>@(Res.Get<ClientComponentsResources>().VideoHasBeenDeleted)</span>
             </div>
         </div>
@@ -18,7 +18,7 @@
         <div ng-class="{'col-md-7': !showVideo}">
 
             <div ng-show="sfMedia">
-                <strong>@(Res.Get<ClientComponentsResources>().Title) </strong>
+                <strong>@(Res.Get<ClientComponentsResources>().Title): </strong>
                 <span ng-bind="sfMedia.Title.Value"></span><br />
 
                 <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
