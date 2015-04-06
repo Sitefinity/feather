@@ -14,7 +14,7 @@
     "unlink",
     {
         name: "insertImage",
-        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openImageSelector()\"><span class=\"k-tool-icon k-insertImage\"></span></a>"
+        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-fclick=\"openImageSelector()\"><span class=\"k-tool-icon k-insertImage\"></span></a>"
     },
     {
         name: "insertFile",
@@ -22,7 +22,7 @@
     },
     {
         name: "insertVideo",
-        template: "<a href=\"\" class=\"k-tool k-group-start\" title=\"@(Res.Get<ClientComponentsResources>().InsertVideo)\" ng-click=\"openVideoSelector()\"><span class=\"k-tool-icon k-insertVideo\"></span></a>"
+        template: "<a href=\"\" class=\"k-button custom-tool\" title=\"@(Res.Get<ClientComponentsResources>().InsertVideo)\" ng-click=\"openVideoSelector()\"><span class=\"glyphicon glyphicon-facetime-video\"></span></a>"
     },
     "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn",
     "cleanFormatting",

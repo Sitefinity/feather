@@ -7832,6 +7832,14 @@ html .km-pane-wrapper .km-widget, .k-ie .km-pane-wrapper .k-widget, .k-ie .km-pa
 div.k-widget, div.k-widget *, div.k-widget *:before {
   box-sizing: border-box; }
 
+/* line 2, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/button.sass */
+.custom-tool.k-button {
+  color: #515967; }
+/* line 6, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/button.sass */
+.custom-tool.k-button.k-state-active:hover, .custom-tool.k-button:active:hover {
+  background-color: #b6bdca;
+  border-color: #dbdbde; }
+
 /* line 8, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/_utility-classes */
 .m-top-none {
   margin-top: 0px; }
