@@ -41,7 +41,7 @@
     </div>
 
 	<div>
-		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file Media-file--doc" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected>
+		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected>
 			<span class="Media-item-info"
 						sf-popover-html
 						sf-popover-placement="right"
