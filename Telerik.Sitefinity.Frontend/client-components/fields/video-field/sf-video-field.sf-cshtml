@@ -1,13 +1,14 @@
 ﻿<div class="container-fluid">
     <div class="row">
 
-        <div ng-show="showVideo" class="row-md-1">
-            <video controls="controls" width="520" ng-src="{{sfMedia.MediaUrl}}"></video>
+        <div ng-show="showVideo" class="text-center col-md-12">
+            <video controls="controls" ng-src="{{sfMedia.MediaUrl}}"></video>
         </div>
 
         <div class="col-md-5 text-center" ng-init="showVideo = false" ng-hide="showVideo">
-            <div class="sf-Media--info-image" ng-show="sfMedia && !showVideo" ng-click="showVideo = true">
+            <div class="sf-Media--info-video sf-Media--info" ng-show="sfMedia && !showVideo" ng-click="showVideo = true">
                 <img ng-src="{{sfMedia.ThumbnailUrl}}" src="" alt="{{sfMedia.Title.Value}}" />
+                <div class="sf-Media-play-button glyphicon glyphicon-play"></div>
             </div>
 
             <div ng-hide="sfMedia">
@@ -15,7 +16,7 @@
             </div>
         </div>
 
-        <div ng-class="{'col-md-7': !showVideo}">
+        <div ng-class="{'col-md-7': !showVideo, 'col-md-12 m-top-md': showVideo}">
 
             <div ng-show="sfMedia">
                 <strong>@(Res.Get<ClientComponentsResources>().Title): </strong>
