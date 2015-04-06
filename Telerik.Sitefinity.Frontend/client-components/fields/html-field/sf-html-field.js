@@ -343,6 +343,10 @@
                         $scope.model.width = $scope.item.Width;
                         $scope.model.height = $scope.item.Height;
                     }
+                    else if (newVal === 'custom') {
+                        $scope.model.width = "";
+                        $scope.model.height = "";
+                    }
                 });
 
                 $scope.updateWidth = function () {
