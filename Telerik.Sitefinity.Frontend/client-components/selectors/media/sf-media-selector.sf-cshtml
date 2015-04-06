@@ -8,14 +8,14 @@
             </div>
         </alert>
 
-        <!--Upload document-->
+        <!--Upload media item-->
         <input type="file" class="file-upload-chooser-input" style="display: none !important" />
         <div ng-show="isInUploadMode" class="Media-upload-text text-center">
             <div class="lead"><a ng-click="openSelectFileDialog()" ng-bind="sfLabels.selectItemFromComputer"></a></div>
             <div>@(Res.Get<ClientComponentsResources>().SimplyDragAndDrop)</div>
         </div>
 
-        <!--Select document-->
+        <!--Select media item-->
         <div ng-hide="isInUploadMode">
             <div class="Media-settings">
                 <sf-provider-selector sf-manager-type="Telerik.Sitefinity.Modules.Libraries.LibrariesManager"
@@ -49,15 +49,37 @@
                 </div>
             </div>
 
-            <div ng-show="items.length"
-                 sf-collection
-                 sf-data="items"
-                 sf-deselectable="{{isDeselectable}}"
-                 sf-multiselect="{{isMultiselect}}"
-                 sf-model="selectedItems"
-                 sf-template-url="client-components/selectors/media/sf-media-collection.sf-cshtml"
-                 ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
-            </div>
+			<div ng-show="items.length" ng-switch on="sfMediaType">
+				<div ng-switch-when="videos"
+						sf-collection
+						sf-data="items"
+						sf-deselectable="{{isDeselectable}}"
+						sf-multiselect="{{isMultiselect}}"
+						sf-model="$parent.selectedItems"
+						sf-template-url="client-components/selectors/media/videos/sf-video-collection.sf-cshtml"
+						ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
+				</div>
+
+				<div ng-switch-when="documents"
+						sf-collection
+						sf-data="items"
+						sf-deselectable="{{isDeselectable}}"
+						sf-multiselect="{{isMultiselect}}"
+						sf-model="$parent.selectedItems"
+						sf-template-url="client-components/selectors/media/documents/sf-document-collection.sf-cshtml"
+						ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
+				</div>
+
+				<div ng-switch-default
+						sf-collection
+						sf-data="items"
+						sf-deselectable="{{isDeselectable}}"
+						sf-multiselect="{{isMultiselect}}"
+						sf-model="$parent.selectedItems"
+						sf-template-url="client-components/selectors/media/sf-media-collection.sf-cshtml"
+						ng-class="{ 'is-grid' : isGrid, 'is-list' : isList }">
+				</div>
+			</div>
 
             <div class="Media-settings Media-settings--bottom">
                 <button type="button" class="btn btn-link btn-sm" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">@(Res.Get<ClientComponentsResources>().SortingAndView)</button>
