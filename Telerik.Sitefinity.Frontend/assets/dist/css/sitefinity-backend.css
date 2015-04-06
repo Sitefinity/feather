@@ -7835,8 +7835,9 @@ div.k-widget, div.k-widget *, div.k-widget *:before {
 /* line 2, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/button.sass */
 .custom-tool.k-button {
   color: #515967; }
-/* line 6, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/button.sass */
-.custom-tool.k-button.k-state-active:hover, .custom-tool.k-button:active:hover {
+/* line 12, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/kendo/button.sass */
+.custom-tool.k-button.k-state-active:hover, .custom-tool.k-button:active:hover, .custom-tool.k-button.k-state-active, .custom-tool.k-button:active, .custom-tool.k-button.k-state-hover, .custom-tool.k-button:hover, .custom-tool.k-button:focus, .custom-tool.k-button.k-state-focused {
+  color: #fff;
   background-color: #b6bdca;
   border-color: #dbdbde; }
 
