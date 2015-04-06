@@ -8,14 +8,14 @@
             </div>
         </alert>
 
-        <!--Upload document-->
+        <!--Upload media item-->
         <input type="file" class="file-upload-chooser-input" style="display: none !important" />
         <div ng-show="isInUploadMode" class="Media-upload-text text-center">
             <div class="lead"><a ng-click="openSelectFileDialog()" ng-bind="sfLabels.selectItemFromComputer"></a></div>
             <div>@(Res.Get<ClientComponentsResources>().SimplyDragAndDrop)</div>
         </div>
 
-        <!--Select document-->
+        <!--Select media item-->
         <div ng-hide="isInUploadMode">
             <div class="Media-settings">
                 <sf-provider-selector sf-manager-type="Telerik.Sitefinity.Modules.Libraries.LibrariesManager"
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div ng-show="items.length"
+			<div ng-show="items.length"
                  sf-collection
                  sf-data="items"
                  sf-deselectable="{{isDeselectable}}"
