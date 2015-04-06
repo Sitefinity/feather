@@ -63,39 +63,45 @@
 				i
 			</span>
 
-            <div class="Media-file-wrapper">
+      <div class="Media-file-wrapper">
 
-				<div class="Media-file-thumb">
-                    <div class="Media-file-thumb-holder">
-                        <div>
-                            <i class="icon-file icon-txt">
-                                <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
-                            </i>
-                        </div>
-
-                        <div class="Media-item-title">{{item.Title}}</div>
-                    </div>
-				</div>
-
-                <div class="Media-item-title">
-                    {{item.Title}}
+			  <div class="Media-file-thumb">
+            <div class="Media-file-thumb-holder" ng-switch on="$parent.$parent.sfMediaType">
+              <div ng-switch-when="documents">
+                <div>
+                    <i class="icon-file icon-txt">
+                        <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
+                    </i>
                 </div>
 
-                <div class="Media-item-meta">
-                    {{item.Extension.toUpperCase().replace(".", "")}}<br />
-                    {{item.TotalSize + "KB"}}<br />
-                </div>
+                <div class="Media-item-title">{{item.Title}}</div>
+              </div>
 
-				<div class="Media-item-date">
-					{{item.LastModified | date : 'M/dd/yyyy h:mm'}}<br />
-          @(Res.Get<ClientComponentsResources>().By) {{item.Author}}
-				</div>
-
+              <div ng-switch-when="videos">
+                <img ng-if="item.IsFolder === false" ng-src="{{item.SnapshotUrl}}" src="" alt="{{item.Title}}" />
+              </div>
             </div>
-        </div>
-    </div>
+			  </div>
 
-    <div class="text-center">
-        <sf-loading ng-show="$parent.isLoading"></sf-loading>
+        <div class="Media-item-title">
+            {{item.Title}}
+        </div>
+
+        <div class="Media-item-meta">
+            {{item.Extension.toUpperCase().replace(".", "")}}<br />
+            {{item.TotalSize + "KB"}}<br />
+        </div>
+
+			  <div class="Media-item-date">
+				  {{item.LastModified | date : 'M/dd/yyyy h:mm'}}<br />
+          @(Res.Get<ClientComponentsResources>().By) {{item.Author}}
+			  </div>
+
+      </div>
     </div>
+  </div>
+
+  <div class="text-center">
+      <sf-loading ng-show="$parent.isLoading"></sf-loading>
+  </div>
 </div>
