@@ -317,6 +317,8 @@
 .sf-Media--info-video
 	position: relative
 	border: 1px solid #ccc
+	video
+		max-width: 100%
 
 .sf-Media-play-button
 	position: absolute
@@ -365,43 +367,53 @@
 			background-color: #bdbdbd
 
 //Document selector
-.Media-file--doc
-	border: 1px solid #d7d7d7
+.Media-file
+	&.Media-file--doc
+		border: 1px solid #d7d7d7
 
-	&.is-selected
+		&.is-selected
+			.icon-file
+				.is-list &
+					color: #fff
+
+		.Media-file-wrapper
+			border: 10px solid transparent
+
+		.Media-file-thumb
+			overflow: visible
+
+		.Media-file-thumb-holder
+			background: #fff
+			overflow: visible
+
+			.is-list &
+				border: 0
+				background: transparent
+
+			.Media-item-title
+				display: inline-block
+				width: auto
+				color: #000
+				width: 130px
+				overflow: hidden
+				text-overflow: ellipsis
+				white-space: nowrap
+
+				.is-list &
+					display: none
+
 		.icon-file
-			.is-list &
-				color: #fff
+			color: #999
 
-	.Media-file-wrapper
-		border: 10px solid transparent
+		.Media-item-info
+			bottom: 14px
+			right: 14px
 
-	.Media-file-thumb
-		overflow: visible
+	//Video selector
 
-	.Media-file-thumb-holder
-		background: #fff
-		overflow: visible
+	&.Media-file--video
+		width: 180px
 
-		.is-list &
-			border: 0
-			background: transparent
+		.Media-file-thumb-holder
+			width: 160px
 
-		.Media-item-title
-			display: inline-block
-			width: auto
-			color: #000
-			width: 130px
-			overflow: hidden
-			text-overflow: ellipsis
-			white-space: nowrap
-
-			.is-list &
-				display: none
-
-	.icon-file
-		color: #999
-
-	.Media-item-info
-		bottom: 14px
-		right: 14px
