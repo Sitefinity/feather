@@ -1,12 +1,12 @@
-﻿<div class="container-fluid">
+﻿<div class="container-fluid" ng-controller="VideoFieldCtrl">
     <div class="row">
 
         <div ng-show="showVideo" class="text-center col-md-12">
-            <video controls="controls" ng-src="{{sfMedia.MediaUrl}}"></video>
+            <video id="sfVideoPlayer" controls="controls" ng-src="{{sfMedia.MediaUrl}}"></video>
         </div>
 
-        <div class="col-md-5 text-center" ng-init="showVideo = false" ng-hide="showVideo">
-            <div class="sf-Media--info-video sf-Media--info" ng-show="sfMedia && !showVideo" ng-click="showVideo = true">
+        <div class="col-md-5 text-center" ng-hide="showVideo">
+            <div class="sf-Media--info-video sf-Media--info" ng-show="sfMedia && !showVideo" ng-click="playVideo('#sfVideoPlayer')">
                 <img ng-src="{{sfMedia.ThumbnailUrl}}" src="" alt="{{sfMedia.Title.Value}}" />
                 <div class="sf-Media-play-button glyphicon glyphicon-play"></div>
             </div>
@@ -33,8 +33,8 @@
             </div>
 
             <br />
-            <button class="btn btn-xs btn-default" ng-click="changeMedia(); showVideo=false">@(Res.Get<ClientComponentsResources>().ChangeVideo)</button>
-            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties(); showVideo=false">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
+            <button class="btn btn-xs btn-default" ng-click="changeMedia(); pauseVideo('#sfVideoPlayer')">@(Res.Get<ClientComponentsResources>().ChangeVideo)</button>
+            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties(); pauseVideo('#sfVideoPlayer')">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
         </div>
     </div>
 </div>
