@@ -1,4 +1,4 @@
-﻿<div class="container-fluid" ng-controller="VideoFieldCtrl">
+﻿<div class="container-fluid" ng-controller="SfVideoFieldCtrl">
     <div class="row">
 
         <div ng-show="showVideo" class="text-center col-md-12">

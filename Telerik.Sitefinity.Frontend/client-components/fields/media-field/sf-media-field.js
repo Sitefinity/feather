@@ -258,7 +258,7 @@
                 }
             };
         }])
-        .controller('VideoFieldCtrl', ['$scope', function ($scope) {
+        .controller('SfVideoFieldCtrl', ['$scope', function ($scope) {
             $scope.showVideo = false;
 
             $scope.playVideo = function (elementSelector) {
