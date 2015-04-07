@@ -9,6 +9,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 {
@@ -28,6 +29,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <param name="widgetName">The name of the widget.</param>
         public virtual ActionResult Master(string widgetName)
         {
+            this.HttpContext.Items[SystemManager.IsBackendRequestKey] = true;
+
             var controlId = this.Request != null ? this.Request["controlId"] ?? Guid.Empty.ToString() : Guid.Empty.ToString();
 
             this.ViewBag.ControlName = widgetName;
@@ -48,6 +51,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <exception cref="System.InvalidOperationException">View cannot be found on the searched locations.</exception>
         public new virtual ActionResult View(string widgetName, string viewType)
         {
+            this.HttpContext.Items[SystemManager.IsBackendRequestKey] = true;
+
             var viewName = DesignerController.DesignerViewTemplate.Arrange(viewType);
 
             var model = this.GetViewModel();
