@@ -9,6 +9,7 @@ using Telerik.Sitefinity.Frontend.Security;
 using Telerik.Sitefinity.Frontend.Test.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Authentication;
+using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
 {
