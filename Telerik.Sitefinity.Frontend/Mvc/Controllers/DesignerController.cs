@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.UI;
@@ -29,7 +30,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <param name="widgetName">The name of the widget.</param>
         public virtual ActionResult Master(string widgetName)
         {
-            this.HttpContext.Items[SystemManager.IsBackendRequestKey] = true;
+            this.GetHttpContext().Items[SystemManager.IsBackendRequestKey] = true;
 
             var controlId = this.Request != null ? this.Request["controlId"] ?? Guid.Empty.ToString() : Guid.Empty.ToString();
 
@@ -51,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <exception cref="System.InvalidOperationException">View cannot be found on the searched locations.</exception>
         public new virtual ActionResult View(string widgetName, string viewType)
         {
-            this.HttpContext.Items[SystemManager.IsBackendRequestKey] = true;
+            this.GetHttpContext().Items[SystemManager.IsBackendRequestKey] = true;
 
             var viewName = DesignerController.DesignerViewTemplate.Arrange(viewType);
 
@@ -65,6 +66,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             } 
 
             return this.PartialView(viewName, model);
+        }
+
+        /// <summary>
+        /// Gets the HTTP context.
+        /// </summary>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        protected virtual HttpContextBase GetHttpContext()
+        {
+            return this.HttpContext;
         }
 
         private Guid? GetControlIdParam() 	 	
