@@ -1,7 +1,7 @@
 ﻿<div class="container-fluid">
     <div class="row">
         <div class="col-md-5 text-center">
-            <div class="sf-Media--info-doc" ng-show="sfMedia">
+            <div class="sf-Media--info-doc sf-Media--info" ng-show="sfMedia">
               <div class="sf-Media--info-doc-holder">
                 <i class="icon-file icon-txt icon-lg">
                   <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension.substring(1)}}</span>

@@ -65,7 +65,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 {
                     var widgetResClass = LocalizationHelpers.FindResourceStringClassType(widget);
                     string res;
-                    if (widgetResClass != null && Res.TryGet(widgetResClass.Name, key, out res))
+                    if (widgetResClass != null && Res.TryGet(widgetResClass.Name, key, null, out res))
                     {
                         return res;
                     }
@@ -73,7 +73,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             string result;
-            if (Res.TryGet(resClass.Name, key, out result))
+            if (Res.TryGet(resClass.Name, key, null, out result))
             {
                 return result;
             }
