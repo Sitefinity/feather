@@ -1,8 +1,8 @@
 ﻿<div class="container-fluid">
     <div class="row">
 
-        <div ng-show="showVideo" class="text-center col-md-12">
-            <video controls="controls" ng-src="{{sfMedia.MediaUrl}}"></video>
+        <div ng-show="showVideo" class="text-center col-md-12 sf-Media--info-video">
+            <video icontrols="controls" ng-src="{{sfMedia.MediaUrl}}"></video>
         </div>
 
         <div class="col-md-5 text-center" ng-init="showVideo = false" ng-hide="showVideo">
@@ -32,7 +32,6 @@
                 <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
             </div>
 
-            <br />
             <button class="btn btn-xs btn-default" ng-click="changeMedia(); showVideo=false">@(Res.Get<ClientComponentsResources>().ChangeVideo)</button>
             <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties(); showVideo=false">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
         </div>
