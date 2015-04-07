@@ -264,11 +264,11 @@
             $scope.playVideo = function (elementSelector) {
                 $scope.showVideo = true;
                 angular.element(elementSelector)[0].play();
-            }
+            };
 
             $scope.pauseVideo = function (elementSelector) {
                 $scope.showVideo = false;
                 angular.element(elementSelector)[0].pause();
-            }
+            };
         }]);
 })(jQuery);
