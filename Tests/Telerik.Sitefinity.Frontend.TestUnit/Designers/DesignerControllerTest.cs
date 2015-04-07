@@ -65,7 +65,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
 
             FrontendManager.AuthenticationEvaluator = new DummyAuthenticationEvaluator { IsBackendUser = true };
 
-            this.designerController = new DesignerController();
+            this.designerController = new DummyDesignerController();
         }
 
         /// <summary>
