@@ -78,8 +78,7 @@
                             ctrl.selectorType = 'HierarchicalTaxonSelector';
                             ctrl.dialogTemplateUrl = 'client-components/selectors/taxonomies/sf-hierarchical-taxon-selector.sf-cshtml';
                             ctrl.$scope.dialogTemplateId = 'sf-hierarchical-taxon-selector';
-                            ctrl.closedDialogTemplateUrl = attrs.sfMultiselect ? 'client-components/selectors/common/sf-list-group-selection.sf-cshtml' :
-                                'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
+                            ctrl.closedDialogTemplateUrl = 'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
 
                             ctrl.$scope.hierarchical = true;
                             ctrl.$scope.sfIdentifierField = "Breadcrumb";
