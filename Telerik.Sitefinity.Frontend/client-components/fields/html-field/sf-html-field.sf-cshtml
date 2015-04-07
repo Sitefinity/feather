@@ -22,7 +22,7 @@
     },
     {
         name: "insertVideo",
-        template: "<a href=\"\" class=\"k-tool k-group-start\" title=\"@(Res.Get<ClientComponentsResources>().InsertVideo)\" ng-click=\"openVideoSelector()\"><span class=\"k-tool-icon k-insertVideo\"></span></a>"
+        template: "<a href=\"\" class=\"k-button custom-tool\" title=\"@(Res.Get<ClientComponentsResources>().InsertVideo)\" ng-click=\"openVideoSelector()\"><span class=\"glyphicon glyphicon-facetime-video\"></span></a>"
     },
     "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn",
     "cleanFormatting",
@@ -32,7 +32,7 @@
     },
     {
         name: "htmlView",
-        template: "<button class=\"k-button pull-right js-custom-tool\" ng-click=\"toggleHtmlView()\">\{\{htmlViewLabel\}\}</button>"
+        template: "<button class=\"custom-tool k-button pull-right js-custom-tool\" ng-click=\"toggleHtmlView()\">\{\{htmlViewLabel\}\}</button>"
     }
     ]'>
 </textarea>

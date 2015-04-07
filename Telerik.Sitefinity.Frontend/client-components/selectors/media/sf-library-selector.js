@@ -101,8 +101,7 @@
                         ctrl.selectorType = 'LibrarySelector';
                         ctrl.dialogTemplateUrl = 'client-components/selectors/media/sf-library-selector.sf-cshtml';
                         ctrl.$scope.dialogTemplateId = 'sf-library-selector';
-                        ctrl.closedDialogTemplateUrl = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == 'true') ? 'client-components/selectors/common/sf-list-group-selection.sf-cshtml' :
-                             'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
+                        ctrl.closedDialogTemplateUrl = 'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
 
                         ctrl.$scope.hierarchical = true;
                         ctrl.$scope.sfIdentifierField = "Breadcrumb";
