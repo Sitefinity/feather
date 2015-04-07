@@ -71,7 +71,7 @@
             }
         },
         documents: this.images,
-        videos: this.videos
+        videos: this.images
     };
 
     var fakeFlatTaxonService = {
