@@ -9336,6 +9336,9 @@ tab {
   /* line 404, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
   .Media-file.Media-file--video .Media-file-thumb-holder {
     width: 160px; }
+  /* line 407, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-media-selector */
+  .is-list .Media-file.Media-file--video {
+    width: 100%; }
 
 /* line 2, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-tree */
 .sf-Tree-tags-infinite > .sf-Tree {
