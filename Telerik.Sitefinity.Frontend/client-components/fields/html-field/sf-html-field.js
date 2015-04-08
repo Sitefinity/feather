@@ -56,6 +56,19 @@
                         return aTag;
                     }
 
+                    // If an anchor is in the range, preserve it and insert the given markup in it.
+                    function preserveWrapperATag (newMarkup) {
+                        var range = editor.getRange();
+                        var anchor = getAnchorElement(range);
+                        if (anchor) {
+                            $(anchor).html(newMarkup);
+                            return anchor.outerHTML;
+                        }
+                        else {
+                            return newMarkup;
+                        }
+                    }
+
                     scope.$on('kendoWidgetCreated', function (event, widget) {
                         if (widget.wrapper && widget.wrapper.is('.k-editor')) {
                             widget.focus();
@@ -156,6 +169,11 @@
                                 .then(function (settings) {
                                     var wrapIt = true;
                                     var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
+
+                                    // If the image is wrapped in a link, insertHtml will override the link with the image,
+                                    // so we have to preserve the anchor and put the image inside it.
+                                    markup = preserveWrapperATag(markup);
+
                                     editor.exec('insertHtml', { html: markup, split: true });
                                 });
                         }, 0);
