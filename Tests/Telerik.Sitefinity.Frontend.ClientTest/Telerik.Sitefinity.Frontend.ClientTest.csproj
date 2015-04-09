@@ -75,6 +75,7 @@
     <Content Include="unit\services\sfMediaMarkupServiceSpec.js" />
     <Content Include="unit\services\sfMediaServiceSpec.js" />
     <Content Include="unit\services\sfRolesServiceSpec.js" />
+    <Content Include="unit\services\sfUsersServiceSpec.js" />
     <Content Include="unit\sorting\sfSortBoxSpec.js" />
     <EmbeddedResource Include="helpers\kendo.all.min.js" />
     <Content Include="unit\selectors\itemsTreeSpec.js" />
