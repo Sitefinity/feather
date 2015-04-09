@@ -3,11 +3,11 @@ angular.module('sfServices')
 function (serviceHelper, sfGenericItemsService) {
     var itemType = 'Telerik.Sitefinity.Security.Model.User';
     var itemSurrogateType = 'Telerik.Sitefinity.Security.Web.Services.WcfMembershipUser';
-    var sortExpression = 'UserName';
+    var identifier = 'UserName';
 
     function getUsers (ignoreAdminUsers, provider, allProviders, skip, take, search) {
         var filter = serviceHelper.filterBuilder()
-            .searchFilter(search)
+            .searchFilter(search, null, identifier)
             .getFilter();
 
         var options = {
@@ -15,7 +15,7 @@ function (serviceHelper, sfGenericItemsService) {
             itemSurrogateType: itemSurrogateType,
             skip: skip,
             take: take,
-            sortExpression: sortExpression,
+            identifier: identifier,
             providerName: provider,
             allProviders: allProviders,
             ignoreAdminUsers: ignoreAdminUsers,
@@ -33,7 +33,7 @@ function (serviceHelper, sfGenericItemsService) {
         var options = {
             itemType: itemType,
             itemSurrogateType: itemSurrogateType,
-            sortExpression: sortExpression,
+            identifier: identifier,
             providerName: provider,
             allProviders: allProviders,
             ignoreAdminUsers: ignoreAdminUsers,

@@ -273,6 +273,15 @@
 	"components" : ["sf-services", "sf-items-filter", "sf-list-selector", "sf-endless-scroll", "sf-selected-items-view", "sf-loading"]
 },
 
+"sf-user-selector" : {
+	"scripts" : [
+		"client-components/selectors/common/sf-generic-items-service.js",
+		"client-components/selectors/identity/sf-users-service.js",
+		"client-components/selectors/identity/sf-user-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
 
 "_____LISTS_____": { "scripts": [ ], "components": [ ] },
 

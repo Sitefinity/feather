@@ -2541,9 +2541,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        /// <summary>
         /// phrase: The video has been deleted or unpublished
         /// </summary>
-        /// <value>The video has been deleted or unpublished</value>
         [ResourceEntry("VideoHasBeenDeleted",
             Value = "The video has been deleted or unpublished",
             Description = "phrase: The video has been deleted or unpublished",
@@ -2572,9 +2572,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        /// <summary>
         /// phrase: Change video
         /// </summary>
-        /// <value>Change video</value>
         [ResourceEntry("ChangeVideo",
             Value = "Change video",
             Description = "phrase: Change video",
@@ -2603,9 +2603,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             }
         }
 
+        /// <summary>
         /// phrase: Select video
         /// </summary>
-        /// <value>Select video</value>
         [ResourceEntry("SelectVideo",
             Value = "Select video",
             Description = "phrase: Select video",
@@ -2904,6 +2904,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["Last5Years"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select a user
+        /// </summary>
+        /// <value>Select a user</value>
+        [ResourceEntry("UserSelectorHeader",
+            Value = "Select a user",
+            Description = "phrase: Select a user",
+            LastModified = "2015/04/09")]
+        public string UserSelectorHeader
+        {
+            get
+            {
+                return this["UserSelectorHeader"];
             }
         }
     }
