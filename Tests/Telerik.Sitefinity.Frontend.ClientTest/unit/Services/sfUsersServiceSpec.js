@@ -3,7 +3,7 @@ describe('tests for sfUsersService', function () {
 
     var itemType = 'Telerik.Sitefinity.Security.Model.User';
     var itemSurrogateType = 'Telerik.Sitefinity.Security.Web.Services.WcfMembershipUser';
-    var sortExpression = 'UserName';
+    var identifier = 'UserName';
 
     var dataService;
     var $q;
@@ -116,7 +116,7 @@ describe('tests for sfUsersService', function () {
         var args = getMockServiceGetItemsArgs();
         var options = args[0];
 
-        expect(options.sortExpression).toBe(sortExpression);
+        expect(options.identifier).toBe(identifier);
     });
 
     it('[GeorgiMateev] / should call generic items service with filter.', function () {
@@ -127,7 +127,7 @@ describe('tests for sfUsersService', function () {
         var args = getMockServiceGetItemsArgs();
         var options = args[0];
 
-        var expectedFilter = getFilter('someFilter');
+        var expectedFilter = getFilter('someFilter', identifier);
         expect(options.filter).toBe(expectedFilter);
     });
 
