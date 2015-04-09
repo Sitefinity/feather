@@ -417,6 +417,14 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
+               "name" : "User selector",
+               "progress" : 0,
+               "shortDescription" : "Not done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
                "name" : "Image selector",
                "progress" : 100,
                "releases" : [
@@ -452,8 +460,17 @@
                "expectedBy" : "",
                "longDescription" : "Video selector with multiple image libraries support, filtering and sorting options and image tagging during upload.",
                "name" : "Video selector",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-video-selector",
+                     "commitHash" : "83c44f26b5ff6b09a0c578633b4175664fd43ea0",
+                     "date" : "04-08-2015 18:50 +0300",
+                     "name" : "Video selector implementation",
+                     "tag" : "v.1.2.160.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             }
          ]
@@ -610,7 +627,7 @@
                "expectedBy" : "",
                "longDescription" : "Use this widget to enter content directly using the text editor and its features. ",
                "name" : "Content block",
-               "progress" : 85,
+               "progress" : 100,
                "releases" : [
                   {
                      "article" : "Content-Block-Widget",
@@ -655,7 +672,11 @@
                      "tag" : "v.1.2.130.0"
                   },
                   {
-                     "name" : "Media Manager"
+                     "article" : "",
+                     "commitHash" : "83c44f26b5ff6b09a0c578633b4175664fd43ea0",
+                     "date" : "04-08-2015 18:50 +0300",
+                     "name" : "Video manager",
+                     "tag" : "v.1.2.160.0"
                   }
                ],
                "shortDescription" : "In progress",
