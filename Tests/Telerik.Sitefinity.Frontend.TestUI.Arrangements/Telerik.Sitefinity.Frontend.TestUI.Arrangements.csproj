@@ -123,6 +123,7 @@
     <Compile Include="GridWidgets\AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox.cs" />
     <Compile Include="GridWidgets\ManagaGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
+    <Compile Include="LayoutTemplates\AddWidgetToPageBasedOnLayoutWithMultiplePlaceholders.cs" />
     <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
     <Compile Include="MvcWidgets\MvcReorderSelectedNewsItems.cs" />
     <Compile Include="MvcWidgets\MvcSelectManyDynamicItems.cs" />
@@ -139,7 +140,6 @@
     <Compile Include="Pages\DeletePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcePackages\AddNewLayoutFileToDefaultPackage.cs" />
-    <Compile Include="ResourcePackages\AddWidgetToPageBasedOnLayoutWithMultiplePlaceholders.cs" />
     <Compile Include="ResourcePackages\ApplyTwoDifferentTemplatesFromDifferentPackagesToPages.cs" />
     <Compile Include="ResourcePackages\EditLayoutFileFromPackageCacheInvalidation.cs" />
   </ItemGroup>

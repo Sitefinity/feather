@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 
-namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
+namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
 {
     /// <summary>
     /// This is a test class with tests related to layout templates with multiple placeholders
@@ -23,8 +23,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         public void AddWidgetToPageBasedOnLayoutWithMultiplePlaceholders()
         {
             BAT.Macros().NavigateTo().Pages();
-            BAT.Wrappers()
-            
+            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageTitle);            
         }
 
         /// <summary>
@@ -32,6 +31,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         /// </summary>
         protected override void ServerSetup()
         {
+            BAT.Macros().User().EnsureAdminLoggedIn();
             BAT.Arrange(this.TestName).ExecuteSetUp();
         }
 
@@ -43,6 +43,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
             BAT.Arrange(this.TestName).ExecuteTearDown();
         }
 
-        private const string PageTitle = "FeatherPage";
+        private const string PageTitle = "FeatherTestPage";
     }
 }

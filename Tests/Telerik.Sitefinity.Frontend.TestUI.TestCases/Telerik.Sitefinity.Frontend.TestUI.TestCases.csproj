@@ -106,6 +106,7 @@
     <Compile Include="GridWidgets\ManageGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
     <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />
+    <Compile Include="LayoutTemplates\LayoutTemplateWithMultiplePlaceholders.cs" />
     <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
     <Compile Include="MvcWidgets\MvcReorderSelectedNewsItems.cs" />
     <Compile Include="MvcWidgets\MvcSelectManyDynamicItems.cs" />

@@ -13,10 +13,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     public class AddWidgetToPageBasedOnLayoutWithMultiplePlaceholders : ITestArrangement
     {
-        [ServerArrangement]
-        public void AddNewLayoutFile()
+        [ServerSetUp]
+        public void SetUp()
         {
             this.CreateLayoutFolderAndCopyLayoutFile();
+
+            var templateId = ServerOperations.Templates().GetTemplateIdByTitle(TemplateTitle);
+            ServerOperations.Pages().CreatePage(PageTitle, templateId);
         }
 
         [ServerTearDown]
@@ -56,5 +59,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayoutTwoPlaceholders.cshtml";
         private const string LayoutFileName = "TestLayoutTwoPlaceholders.cshtml";
         private const string TemplateTitle = "TestLayoutTwoPlaceholders";
+        private const string PageTitle = "FeatherTestPage";
     }
 }
