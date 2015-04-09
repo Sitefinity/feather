@@ -11,49 +11,44 @@
                     sf-media-type="videos"
                     sf-provider="model.provider"></sf-media-field>
 
-        <div ng-class="{ 'has-error' : !model.title }">
+        <div class="form-group">
+          <div class="row">
+              <div class="col-xs-6">
+                <label>@(Res.Get<ClientComponentsResources>().AspectRatio)</label>
+                  <select class="form-control" ng-model="model.aspectRatio">
+                      <option value="auto">@(Res.Get<ClientComponentsResources>().Auto)</option>
+                      <option value="4x3">@(Res.Get<ClientComponentsResources>().Ratio4X3)</option>
+                      <option value="16x9">@(Res.Get<ClientComponentsResources>().Ratio16X9)</option>
+                      <option value="custom">@(Res.Get<ClientComponentsResources>().Custom)</option>
+                  </select>
+              </div>
+          </div>
+        </div>
 
-            <div class="form-group">
-              <div class="row">
-                  <div class="col-xs-6">
-                    <label>@(Res.Get<ClientComponentsResources>().AspectRatio)</label>
-                      <select class="form-control" ng-model="model.aspectRatio">
-                          <option value="auto">@(Res.Get<ClientComponentsResources>().Auto)</option>
-                          <option value="4x3">@(Res.Get<ClientComponentsResources>().Ratio4X3)</option>
-                          <option value="16x9">@(Res.Get<ClientComponentsResources>().Ratio16X9)</option>
-                          <option value="custom">@(Res.Get<ClientComponentsResources>().Custom)</option>
-                      </select>
-                  </div>
+        <div ng-hide="model.aspectRatio === 'auto'" class="form-group-list">
+          <div class="form-group">
+            <label>@(Res.Get<ClientComponentsResources>().Width)</label>
+            <div class="row row-xs">
+                <div class="col-xs-4">
+                    <input class="form-control" type="number" ng-model="model.width" ng-change="updateHeight()"/>
+                </div>
+                <div class="col-xs-1">
+                  <span>@(Res.Get<ClientComponentsResources>().PixelShort)</span>
+                </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>@(Res.Get<ClientComponentsResources>().Height)</label>
+            <div class="row row-xs">
+              <div class="col-xs-4">
+                <input class="form-control" type="number" ng-model="model.height" ng-change="updateWidth()"/>
+              </div>
+              <div class="col-xs-1">
+                <span>@(Res.Get<ClientComponentsResources>().PixelShort)</span>
               </div>
             </div>
-            
-            <div ng-hide="model.aspectRatio === 'auto'" class="form-group-list">
-              
-              <div class="form-group">
-                <label>@(Res.Get<ClientComponentsResources>().Width)</label>
-                <div class="row row-xs">
-                    <div class="col-xs-4">
-                        <input class="form-control" type="number" ng-model="model.width" ng-change="updateHeight()"/>
-                    </div>
-                    <div class="col-xs-1">
-                      <span>@(Res.Get<ClientComponentsResources>().PixelShort)</span>
-                    </div>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label>@(Res.Get<ClientComponentsResources>().Height)</label>
-                <div class="row row-xs">
-                  <div class="col-xs-4">
-                    <input class="form-control" type="number" ng-model="model.height" ng-change="updateWidth()"/>
-                  </div>
-                  <div class="col-xs-1">
-                    <span>@(Res.Get<ClientComponentsResources>().PixelShort)</span>
-                  </div>
-                </div>
-              </div>
-            </div> 
-          
+          </div>
         </div>
 
         <expander expander-title='More options'>
