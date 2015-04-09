@@ -91,8 +91,50 @@ describe('sfGenericItemsService', function () {
             take: 20,
             itemType: dummyItemType,
             itemSurrogateType: dummyItemType,
-            ignoreAdminUsers: true,
             allProviders: true
+        };
+
+        expectGetItemsServiceCall(params);
+
+        assertItems(params);
+    });
+
+    it('[GeorgiMateev] / should retrieve items with provider.', function () {
+        var params = {
+            skip: 20,
+            take: 20,
+            itemType: dummyItemType,
+            itemSurrogateType: dummyItemType,
+            provider: 'OpenAccess'
+        };
+
+        expectGetItemsServiceCall(params);
+
+        assertItems(params);
+    });
+
+    it('[GeorgiMateev] / should retrieve items without admin users.', function () {
+        var params = {
+            skip: 20,
+            take: 20,
+            itemType: dummyItemType,
+            itemSurrogateType: dummyItemType,
+            ignoreAdminUsers: true,
+            allProviders: true,
+        };
+
+        expectGetItemsServiceCall(params);
+
+        assertItems(params);
+    });
+
+    it('[GeorgiMateev] / should retrieve items with filter.', function () {
+        var params = {
+            skip: 20,
+            take: 20,
+            itemType: dummyItemType,
+            itemSurrogateType: dummyItemType,
+            filter: 'someFilter'
         };
 
         expectGetItemsServiceCall(params);
