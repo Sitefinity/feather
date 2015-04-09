@@ -400,31 +400,6 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Role selector",
-               "progress" : 100,
-               "releases" : [
-                  {
-                     "article" : "Use-a-role-selector",
-                     "commitHash" : "a27d5440f16199acac05354341882fa3a9872963",
-                     "date" : "2015-03-17 10:00 +0200",
-                     "name" : "Role selector implementation",
-                     "tag" : "v.1.2.120.0"
-                  }
-               ],
-               "shortDescription" : "Done",
-               "unstable" : false
-            },
-            {
-               "expectedBy" : "",
-               "longDescription" : "",
-               "name" : "User selector",
-               "progress" : 0,
-               "shortDescription" : "Not done",
-               "unstable" : false
-            },
-            {
-               "expectedBy" : "",
-               "longDescription" : "",
                "name" : "Image selector",
                "progress" : 100,
                "releases" : [
@@ -471,6 +446,47 @@
                   }
                ],
                "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Role selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-role-selector",
+                     "commitHash" : "a27d5440f16199acac05354341882fa3a9872963",
+                     "date" : "2015-03-17 10:00 +0200",
+                     "name" : "Role selector implementation",
+                     "tag" : "v.1.2.120.0"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "User selector",
+               "progress" : 0,
+               "shortDescription" : "Not done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Blog selector",
+               "progress" : 0,
+               "shortDescription" : "Not done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Blog post selector",
+               "progress" : 0,
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
