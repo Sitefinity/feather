@@ -52,6 +52,7 @@
     <Content Include="unit\fields\sfDragDropSpec.js" />
     <Content Include="unit\fields\sfFlatTaxonFieldSpecs.js" />
     <Content Include="unit\search\sfSearchBoxSpec.js" />
+    <Content Include="unit\selectors\sfUserSelectorSpec.js" />
     <Content Include="unit\selectors\librarySelectorSpec.js" />
     <Content Include="unit\selectors\listsSelectorSpec.js" />
     <Content Include="unit\selectors\media\sfMediaSelectorSpec.js" />
