@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Web;
 
@@ -29,17 +30,17 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <summary>
         /// Gets the current container that contains the registered resources.
         /// </summary>
-        protected internal virtual Dictionary<string, bool> Container
+        protected internal virtual Dictionary<string, List<string>> Container
         {
             get
             {
                 if (this.Context.Items.Contains(this.name))
                 {
-                    this.container = (Dictionary<string, bool>)this.Context.Items[this.name];
+                    this.container = (Dictionary<string, List<string>>)this.Context.Items[this.name];
                 }
                 else
                 {
-                    this.container = new Dictionary<string, bool>();
+                    this.container = new Dictionary<string, List<string>>();
                     this.Context.Items.Add(this.name, this.container);
                 }
 
@@ -63,50 +64,53 @@ namespace Telerik.Sitefinity.Frontend.Resources
         #region Public Methods
 
         /// <summary>
-        /// Registers a client resource.
+        /// Registers a client resource. A return value indicates whether the registration succeeded.
         /// </summary>
         /// <param name="resourceKey">The attributes associated with the resource.</param>
-        public void RegisterResource(string resourceKey)
+        /// <param name="sectionName">The section name in which the resource should be rendered.</param>
+        /// <param name="throwException">The section name in which the resource should be rendered.</param>
+        /// <returns>
+        /// <value>true</value> if s was registered successfully; otherwise, <value>false</value>.
+        /// </returns>
+        public bool RegisterResource(string resourceKey, string sectionName = null, bool throwException = false)
         {
-            if (this.IsRegistered(resourceKey))
-                throw new ArgumentException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} is already registered!", resourceKey));
+            if (string.IsNullOrEmpty(sectionName))
+                sectionName = ResourceRegister.DefaultSectionNameKey;
 
-            this.Register(resourceKey);
+            bool successfullyRegistered = true;
+
+            if (this.Container.ContainsKey(sectionName))
+            {
+                if (this.Container[sectionName].Contains(resourceKey))
+                    successfullyRegistered = false;
+                else
+                    this.Container[sectionName].Add(resourceKey);
+            }
+            else
+                this.Container.Add(sectionName, new List<string>() { resourceKey });
+
+            if (throwException && !successfullyRegistered)
+            {
+                throw new ArgumentException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} is already registered {1}!", resourceKey, string.IsNullOrEmpty(sectionName) ? "inline" : string.Format("in the {0} section", sectionName)));
+            }
+
+            return successfullyRegistered;
         }
 
         /// <summary>
-        /// Registers a client resource. A return value indicates whether the registration succeeded.
+        /// Checks if a client resource is registered for a section.
         /// </summary>
-        /// <returns><value>true</value> if s was registered successfully; otherwise, <value>false</value>.</returns>
-        public bool TryRegisterResource(string resourceKey)
+        /// <param name="resourceKey">The attributes associated with the resource.</param>
+        /// <param name="sectionName">The section name in which the resource should be rendered.</param>
+        /// <returns>
+        /// <value>true</value> if s was registered; otherwise, <value>false</value>.
+        /// </returns>
+        public bool IsResourceRegistered(string resourceKey, string sectionName = null)
         {
-            bool result;
+            if (string.IsNullOrEmpty(sectionName))
+                sectionName = ResourceRegister.DefaultSectionNameKey;
 
-            if (!this.IsRegistered(resourceKey))
-            {
-                this.Register(resourceKey);
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-
-            return result;
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private bool IsRegistered(string resourceKey)
-        {
-            return this.Container.ContainsKey(resourceKey);
-        }
-
-        private void Register(string resourceKey)
-        {
-            this.Container.Add(resourceKey, false);
+            return this.Container.ContainsKey(sectionName) && this.Container[sectionName].Contains(resourceKey);
         }
 
         #endregion
@@ -114,8 +118,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
         #region Fields
 
         private HttpContextBase context;
-        private Dictionary<string, bool> container;
+        private Dictionary<string, List<string>> container;
         private string name;
+
+        internal const string DefaultSectionNameKey = "InternalResourceRegisterInlineResourceSectionName";
 
         #endregion
     }

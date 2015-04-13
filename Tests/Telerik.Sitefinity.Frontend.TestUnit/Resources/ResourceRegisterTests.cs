@@ -74,7 +74,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
 
             // Act
-            bool result = register.TryRegisterResource(fakeResourceKey);
+            bool result = register.RegisterResource(fakeResourceKey);
 
             // Assert
             Assert.IsFalse(result);
@@ -95,7 +95,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 0);
 
             // Act
-            bool result = register.TryRegisterResource(fakeResourceKey);
+            bool result = register.RegisterResource(fakeResourceKey);
 
             // Assert
             Assert.IsTrue(result);
