@@ -65,7 +65,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (ResourceHelper.TryConfigureScriptManager(scriptPath))
                 return MvcHtmlString.Empty;
 
-            return ResourceHelper.InnerRegisterResource(helper.ViewContext.HttpContext, scriptPath, ResourceType.Js, throwException, sectionName);
+            return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, scriptPath, ResourceType.Js, throwException, sectionName);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             foreach (var script in references)
             {
                 var resourceUrl = script.GetResourceUrl();
-                outputMarkup.Append(ResourceHelper.InnerRegisterResource(helper.ViewContext.HttpContext, resourceUrl, ResourceType.Js, throwException, sectionName));
+                outputMarkup.Append(ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourceUrl, ResourceType.Js, throwException, sectionName));
             }
 
             return MvcHtmlString.Create(outputMarkup.ToString());
@@ -123,7 +123,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (ResourceHelper.TryConfigureScriptManager(resourceUrl))
                 return MvcHtmlString.Empty;
 
-            return ResourceHelper.InnerRegisterResource(helper.ViewContext.HttpContext, resourceUrl, ResourceType.Js, throwException, sectionName);
+            return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourceUrl, ResourceType.Js, throwException, sectionName);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         public static MvcHtmlString StyleSheet(this HtmlHelper helper, string resourcePath, bool throwException = false, string sectionName = null)
         {
-            return ResourceHelper.InnerRegisterResource(helper.ViewContext.HttpContext, resourcePath, ResourceType.Css, throwException, sectionName);
+            return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourcePath, ResourceType.Css, throwException, sectionName);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return resourceUrl;
         }
 
-        private static MvcHtmlString InnerRegisterResource(HttpContextBase httpContext, string resourcePath, ResourceType resourceType, bool throwException, string sectionName)
+        private static MvcHtmlString RegisterResource(HttpContextBase httpContext, string resourcePath, ResourceType resourceType, bool throwException, string sectionName)
         {
             var registerName = string.Empty;
             if (resourceType == ResourceType.Js)

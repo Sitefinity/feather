@@ -121,7 +121,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         private Dictionary<string, List<string>> container;
         private string name;
 
-        internal const string DefaultSectionNameKey = "InternalResourceRegisterInlineResourceSectionName";
+        private const string DefaultSectionNameKey = "InternalResourceRegisterInlineResourceSectionName";
 
         #endregion
     }
