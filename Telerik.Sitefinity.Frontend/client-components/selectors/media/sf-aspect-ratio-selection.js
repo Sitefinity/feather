@@ -4,7 +4,9 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    model: '=sfModel'
+                    sfRatio: '=',
+                    sfHeight: "=",
+                    sfWidth: "="
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -13,45 +15,46 @@
                 },
                 link: function (scope, element, attrs) {
 
-                    scope.model.aspectRatio = 'auto';
+                    scope.sfRatio = 'auto';
+                    var aspectRatioCoefficient = 1;
 
-                    scope.$watch('model.aspectRatio', function (newVal, oldVal) {
-
+                    scope.$watch('sfRatio', function (newVal, oldVal) {
+                        
                         if (!newVal || newVal === oldVal) {
                             return;
                         }
 
                         if (newVal === '4x3') {
-                            scope.model.width = 600;
-                            scope.model.height = 450;
-                            scope.model.aspectRatioCoefficient = 4 / 3;
+                            scope.sfWidth = 600;
+                            scope.sfHeight = 450;
+                            aspectRatioCoefficient = 4 / 3;
                         }
                         else if (newVal === '16x9') {
-                            scope.model.width = 600;
-                            scope.model.height = 338;
-                            scope.model.aspectRatioCoefficient = 16 / 9;
+                            scope.sfWidth = 600;
+                            scope.sfHeight = 338;
+                            aspectRatioCoefficient = 16 / 9;
                         }
                         else if (newVal === 'auto') {
                             if (!scope.item) return;
-                            scope.model.width = scope.item.Width;
-                            scope.model.height = scope.item.Height;
+                            scope.sfWidth = scope.item.Width;
+                            scope.sfHeight = scope.item.Height;
                         }
                         else if (newVal === 'custom') {
-                            scope.model.width = "";
-                            scope.model.height = "";
+                            scope.sfWidth = "";
+                            scope.sfHeight = "";
                         }
                     });
 
                     scope.updateWidth = function () {
-                        if (scope.model.aspectRatio != '16x9' && scope.model.aspectRatio != '4x3') return;
+                        if (scope.sfRatio != '16x9' && scope.sfRatio != '4x3') return;
 
-                        scope.model.width = Math.round(scope.model.height * scope.model.aspectRatioCoefficient);
+                        scope.sfWidth = Math.round(scope.sfHeight * aspectRatioCoefficient);
                     };
 
                     scope.updateHeight = function () {
-                        if (scope.model.aspectRatio != '16x9' && scope.model.aspectRatio != '4x3') return;
+                        if (scope.sfRatio != '16x9' && scope.sfRatio != '4x3') return;
 
-                        scope.model.height = Math.round(scope.model.width / scope.model.aspectRatioCoefficient);
+                        scope.sfHeight = Math.round(scope.sfWidth / aspectRatioCoefficient);
                     };
                 }
             };

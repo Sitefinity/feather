@@ -12,7 +12,7 @@
                     sf-provider="model.provider"></sf-media-field>
 
 
-<div sf-aspect-ratio-selection sf-model="model"></div>
+  <div sf-aspect-ratio-selection sf-ratio="model.aspectRatio" sf-width="model.width" sf-height="model.height"></div>
        
         <expander expander-title='More options'>
             <label>@(Res.Get<ClientComponentsResources>().Margins)</label>
