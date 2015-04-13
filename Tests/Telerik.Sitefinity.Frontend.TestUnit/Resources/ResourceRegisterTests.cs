@@ -29,11 +29,11 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var register = new ResourceRegister(registerName, context);
 
             string fakeResourceKey = "test-resource";
-            register.RegisterResource(fakeResourceKey);
+            register.Register(fakeResourceKey);
             Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
 
             // Act
-            register.RegisterResource(fakeResourceKey);
+            register.Register(fakeResourceKey);
 
             // Assert
             Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
@@ -53,7 +53,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 0);
 
             // Act
-            register.RegisterResource(fakeResourceKey);
+            register.Register(fakeResourceKey);
 
             // Assert
             Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
@@ -70,11 +70,11 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var register = new ResourceRegister(registerName, context);
 
             string fakeResourceKey = "test-resource";
-            register.RegisterResource(fakeResourceKey);
+            register.Register(fakeResourceKey);
             Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
 
             // Act
-            bool result = register.RegisterResource(fakeResourceKey);
+            bool result = register.Register(fakeResourceKey);
 
             // Assert
             Assert.IsFalse(result);
@@ -95,7 +95,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 0);
 
             // Act
-            bool result = register.RegisterResource(fakeResourceKey);
+            bool result = register.Register(fakeResourceKey);
 
             // Assert
             Assert.IsTrue(result);

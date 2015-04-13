@@ -20,32 +20,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
     public static class ResourceHelper
     {
         /// <summary>
-        /// Renders all scripts.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
-        public static string RenderAllScripts(HttpContextBase context)
-        {
-            var scriptRegister = new ResourceRegister(ResourceHelper.JsRegisterName, context);
-            var scriptMarkup = ResourceHelper.BuildHtmlResourcesMarkup(scriptRegister, ResourceType.Js);
-
-            return scriptMarkup;
-        }
-
-        /// <summary>
-        /// Renders all stylesheets.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
-        public static string RenderAllStylesheets(HttpContextBase context)
-        {
-            var stylesheetRegister = new ResourceRegister(ResourceHelper.CssRegisterName, context);
-            var stylesheetMarkup = ResourceHelper.BuildHtmlResourcesMarkup(stylesheetRegister, ResourceType.Css);
-
-            return stylesheetMarkup;
-        }
-
-        /// <summary>
         /// Registers JavaScript reference and ensures that it loads maximum once for a page.
         /// </summary>
         /// <param name="helper">The helper.</param>
@@ -170,6 +144,34 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return resourceUrl;
         }
 
+        /// <summary>
+        /// Renders all scripts.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="sectionName">The section name.</param>
+        /// <returns></returns>
+        internal static string RenderAllScripts(HttpContextBase context, string sectionName)
+        {
+            var scriptRegister = new ResourceRegister(ResourceHelper.JsRegisterName, context);
+            var scriptMarkup = ResourceHelper.BuildHtmlResourcesMarkup(scriptRegister, sectionName, ResourceType.Js);
+
+            return scriptMarkup;
+        }
+
+        /// <summary>
+        /// Renders all stylesheets.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="sectionName">The section name.</param>
+        /// <returns></returns>
+        internal static string RenderAllStylesheets(HttpContextBase context, string sectionName)
+        {
+            var stylesheetRegister = new ResourceRegister(ResourceHelper.CssRegisterName, context);
+            var stylesheetMarkup = ResourceHelper.BuildHtmlResourcesMarkup(stylesheetRegister, sectionName, ResourceType.Css);
+
+            return stylesheetMarkup;
+        }
+
         private static MvcHtmlString RegisterResource(HttpContextBase httpContext, string resourcePath, ResourceType resourceType, bool throwException, string sectionName)
         {
             var registerName = string.Empty;
@@ -185,14 +187,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             // No section name renders the script inline if it hasn't been rendered
             if (string.IsNullOrEmpty(sectionName))
             {
-                if (!register.IsResourceRegistered(resourcePath, sectionName: null))
+                if (!register.IsRegistered(resourcePath, sectionName: null))
                 {
-                    result = MvcHtmlString.Create(ResourceHelper.BuildResourceMarkup(register, resourcePath, resourceType));
+                    result = MvcHtmlString.Create(ResourceHelper.BuildSingleResourceMarkup(resourcePath, resourceType));
                 }
             }
 
             // Register the resource even if it had to be rendered inline (avoid repetitions).
-            register.RegisterResource(resourcePath, sectionName, throwException);
+            register.Register(resourcePath, sectionName, throwException);
 
             return result;
         }
@@ -244,62 +246,54 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
         }
 
-        private static string BuildHtmlResourcesMarkup(ResourceRegister resourceRegister, ResourceType resourceType)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "sectionName")]
+        private static string BuildHtmlResourcesMarkup(ResourceRegister resourceRegister, string sectionName, ResourceType resourceType)
         {
             StringBuilder output = new StringBuilder();
 
             foreach (var resourceInfo in resourceRegister.Container)
             {
-                output.Append(ResourceHelper.BuildResourceMarkup(resourceRegister, resourceInfo.Key, resourceType));
+                if (!resourceRegister.IsRendered(resourceInfo.Key))
+                {
+                    output.Append(ResourceHelper.BuildSingleResourceMarkup(resourceInfo.Key, resourceType));
+                    resourceRegister.MarkAsRendered(resourceInfo.Key);
+                }
             }
 
             return output.ToString();
         }
 
-        private static string BuildResourceMarkup(ResourceRegister resourceRegister, string resourceKey, ResourceType resourceType)
+        private static string BuildSingleResourceMarkup(string resourceKey, ResourceType resourceType)
         {
-            string result = string.Empty;
+            string result;
 
             if (resourceType == ResourceType.Js)
-                result = BuildScriptMarkup(resourceRegister, resourceKey);
+                result = ResourceHelper.BuildScriptMarkup(resourceKey);
             else if (resourceType == ResourceType.Css)
-                result = BuildStyleSheetMarkup(resourceRegister, resourceKey);
+                result = ResourceHelper.BuildStyleSheetMarkup(resourceKey);
+            else
+                result = string.Empty;
 
             return result;
         }
 
-        private static string BuildScriptMarkup(ResourceRegister resourceRegister, string resourceKey)
+        private static string BuildScriptMarkup(string resourceKey)
         {
-            var resourceHtml = string.Empty;
-            if (resourceRegister.Container[resourceKey] != null)
-            {
-                var attributes = new KeyValuePair<string, string>[2];
-                attributes[0] = new KeyValuePair<string, string>("src", resourceKey);
-                attributes[1] = new KeyValuePair<string, string>("type", "text/javascript");
+            var attributes = new KeyValuePair<string, string>[2];
+            attributes[0] = new KeyValuePair<string, string>("src", resourceKey);
+            attributes[1] = new KeyValuePair<string, string>("type", "text/javascript");
 
-                resourceHtml = ResourceHelper.GenerateTag("script", attributes);
-                // resourceRegister.Container[resourceKey] = true;
-            }
-
-            return resourceHtml;
+            return ResourceHelper.GenerateTag("script", attributes);
         }
 
-        private static string BuildStyleSheetMarkup(ResourceRegister resourceRegister, string resourceKey)
+        private static string BuildStyleSheetMarkup(string resourceKey)
         {
-            var resourceHtml = string.Empty;
+            var attributes = new KeyValuePair<string, string>[3];
+            attributes[0] = new KeyValuePair<string, string>("rel", "stylesheet");
+            attributes[1] = new KeyValuePair<string, string>("href", resourceKey);
+            attributes[2] = new KeyValuePair<string, string>("type", "text/css");
 
-            if (resourceRegister.Container[resourceKey] != null)
-            {
-                var attributes = new KeyValuePair<string, string>[3];
-                attributes[0] = new KeyValuePair<string, string>("rel", "stylesheet");
-                attributes[1] = new KeyValuePair<string, string>("href", resourceKey);
-                attributes[2] = new KeyValuePair<string, string>("type", "text/css");
-
-                resourceHtml = ResourceHelper.GenerateTag("link", attributes);
-                // resourceRegister.Container[resourceKey] = true;
-            }
-
-            return resourceHtml;
+            return ResourceHelper.GenerateTag("link", attributes);
         }
 
         /// <summary>

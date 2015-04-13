@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -17,7 +17,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// </summary>
         /// <param name="name">The name of the register.</param>
         /// <param name="httpContext">The HTTP context.</param>
-        public ResourceRegister(string name, System.Web.HttpContextBase httpContext)
+        public ResourceRegister(string name, HttpContextBase httpContext)
         {
             this.name = name;
             this.context = httpContext;
@@ -30,7 +30,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <summary>
         /// Gets the current container that contains the registered resources.
         /// </summary>
-        protected internal virtual Dictionary<string, List<string>> Container
+        public virtual Dictionary<string, List<string>> Container
         {
             get
             {
@@ -45,6 +45,27 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 }
 
                 return this.container;
+            }
+        }
+
+        /// <summary>
+        /// Gets a set of already rendered resources.
+        /// </summary>
+        protected virtual HashSet<string> Rendered
+        {
+            get
+            {
+                if (this.Context.Items.Contains(this.name + "-rendered"))
+                {
+                    this.renderedRes = (HashSet<string>)this.Context.Items[this.name + "-rendered"];
+                }
+                else
+                {
+                    this.renderedRes = new HashSet<string>();
+                    this.Context.Items.Add(this.name + "-rendered", this.renderedRes);
+                }
+
+                return this.renderedRes;
             }
         }
 
@@ -72,7 +93,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns>
         /// <value>true</value> if s was registered successfully; otherwise, <value>false</value>.
         /// </returns>
-        public bool RegisterResource(string resourceKey, string sectionName = null, bool throwException = false)
+        public bool Register(string resourceKey, string sectionName = null, bool throwException = false)
         {
             if (string.IsNullOrEmpty(sectionName))
                 sectionName = ResourceRegister.DefaultSectionNameKey;
@@ -105,12 +126,31 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns>
         /// <value>true</value> if s was registered; otherwise, <value>false</value>.
         /// </returns>
-        public bool IsResourceRegistered(string resourceKey, string sectionName = null)
+        public bool IsRegistered(string resourceKey, string sectionName = null)
         {
             if (string.IsNullOrEmpty(sectionName))
                 sectionName = ResourceRegister.DefaultSectionNameKey;
 
             return this.Container.ContainsKey(sectionName) && this.Container[sectionName].Contains(resourceKey);
+        }
+
+        /// <summary>
+        /// Determines whether the specified resource is already rendered.
+        /// </summary>
+        /// <param name="resourceKey">The resource key.</param>
+        /// <returns>Whether the specified resource is already rendered.</returns>
+        public bool IsRendered(string resourceKey)
+        {
+            return this.Rendered.Contains(resourceKey);
+        }
+
+        /// <summary>
+        /// Marks the resource as rendered.
+        /// </summary>
+        /// <param name="resourceKey">The resource key.</param>
+        public void MarkAsRendered(string resourceKey)
+        {
+            this.Rendered.Add(resourceKey);
         }
 
         #endregion
@@ -119,9 +159,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
         private HttpContextBase context;
         private Dictionary<string, List<string>> container;
+        private HashSet<string> renderedRes;
         private string name;
 
-        private const string DefaultSectionNameKey = "InternalResourceRegisterInlineResourceSectionName";
+        private const string DefaultSectionNameKey = "ResourceRegisterInlineResourceSectionName";
 
         #endregion
     }

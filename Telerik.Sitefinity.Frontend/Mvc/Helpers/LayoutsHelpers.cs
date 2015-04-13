@@ -25,34 +25,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Html helper which renders all script tags.
         /// </summary>
         /// <param name="helper">The helper.</param>
+        /// <param name="name">The name of the section.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "helper")]
-        public static System.Web.Mvc.MvcHtmlString SfScriptRenderer(this HtmlHelper helper)
+        public static System.Web.Mvc.MvcHtmlString Section(this HtmlHelper helper, string name)
         {
-            return new System.Web.Mvc.MvcHtmlString(LayoutsHelpers.ScriptRendererHtml);
+            return new System.Web.Mvc.MvcHtmlString(LayoutsHelpers.SectionHtml.Arrange(name));
         }
 
         /// <summary>
-        /// Html helper which renders all stylesheet tags.
+        /// The section tag name.
         /// </summary>
-        /// <param name="helper">The helper.</param>
-        /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "helper")]
-        public static System.Web.Mvc.MvcHtmlString SfStyleSheetRenderer(this HtmlHelper helper)
-        {
-            var htmlString = "<feather-stylesheet-renderer></feather-stylesheet-renderer>";
-
-            return new System.Web.Mvc.MvcHtmlString(htmlString);
-        }
+        internal const string SectionTag = "FeatherSection";
 
         /// <summary>
-        /// The script renderer tag name.
+        /// The section HTML markup.
         /// </summary>
-        internal const string ScriptRendererTag = "FeatherScriptRenderer";
-
-        /// <summary>
-        /// The script renderer HTML markup.
-        /// </summary>
-        internal const string ScriptRendererHtml = "<" + LayoutsHelpers.ScriptRendererTag + "></" + LayoutsHelpers.ScriptRendererTag + ">";
+        internal const string SectionHtml = "<" + LayoutsHelpers.SectionTag + " name=\"{0}\"></" + LayoutsHelpers.SectionTag + ">";
     }
 }

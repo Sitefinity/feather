@@ -159,13 +159,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 container.Peek().Controls.Add(bodyCtrl);
                 container.Push(bodyCtrl);
             }
-            else if (chunk.TagName.Equals(LayoutsHelpers.ScriptRendererTag, StringComparison.OrdinalIgnoreCase))
+            else if (chunk.TagName.Equals(LayoutsHelpers.SectionTag, StringComparison.OrdinalIgnoreCase))
             {
                 this.AddIfNotEmpty(currentLiteralText.ToString(), container.Peek());
                 currentLiteralText.Clear();
 
-                var scriptRenderer = new ScriptRenderer();
-                container.Peek().Controls.Add(scriptRenderer);
+                var sectionRenderer = new SectionRenderer();
+                if (chunk.HasAttribute("name"))
+                {
+                    sectionRenderer.Name = chunk.AttributesMap["name"].ToString();
+                }
+
+                container.Peek().Controls.Add(sectionRenderer);
             }
             else if (chunk.TagName == "%@")
             {
@@ -218,7 +223,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 this.AddIfNotEmpty(currentLiteralText.ToString(), container.Pop());
                 currentLiteralText.Clear();
             }
-            else if (chunk.TagName.Equals(LayoutsHelpers.ScriptRendererTag, StringComparison.OrdinalIgnoreCase))
+            else if (chunk.TagName.Equals(LayoutsHelpers.SectionTag, StringComparison.OrdinalIgnoreCase))
             {
                 //// Ignore
             }
