@@ -398,7 +398,7 @@ describe("news selector", function () {
             expect(s.selectedItemsInTheDialog.length).toEqual(0);
         });
 
-        it('[NPetrova] / should show the default text values for the select and change buttons when no attributes are passed.', function () {
+        it('[NPetrova] / selectButtonText and changeButtonText should be undefined when no attributes are passed.', function () {
             var template = "<sf-list-selector sf-news-selector />";
 
             commonMethods.compileDirective(template, scope);
@@ -406,10 +406,8 @@ describe("news selector", function () {
             //The scope of the selector is isolated, but it's child of the scope used for compilation.
             var s = scope.$$childHead;
 
-            expect(s.selectButtonText).toBeDefined();
-            expect(s.selectButtonText).toBe('Select');
-            expect(s.changeButtonText).toBeDefined();
-            expect(s.changeButtonText).toBe('Change');
+            expect(s.selectButtonText).not.toBeDefined();
+            expect(s.changeButtonText).not.toBeDefined();
         });
 
         it('[NPetrova] / should replace the select button text with the one from the attributes.', function () {
@@ -422,8 +420,7 @@ describe("news selector", function () {
 
             expect(s.selectButtonText).toBeDefined();
             expect(s.selectButtonText).toBe('Select a news...');
-            expect(s.changeButtonText).toBeDefined();
-            expect(s.changeButtonText).toBe('Change');
+            expect(s.changeButtonText).not.toBeDefined();
         });
 
         it('[NPetrova] / should replace the select and change buttons text with the one from the attributes.', function() {

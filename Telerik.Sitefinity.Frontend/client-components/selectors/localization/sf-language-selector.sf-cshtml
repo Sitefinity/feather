@@ -1,0 +1,8 @@
+﻿<alert type="danger" ng-show="showError">{{::errorMessage}}</alert>
+
+<div ng-show="sfCultures && sfCultures.length > 1">
+<label>@(Res.Get<ClientComponentsResources>().Language)</label>
+    <select class="form-control" ng-options="c as c.DisplayName for c in sfCultures track by c.Culture"
+            ng-model="sfCulture"></select>
+
+</div>

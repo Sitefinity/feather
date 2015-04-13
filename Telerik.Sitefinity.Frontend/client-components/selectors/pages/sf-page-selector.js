@@ -8,6 +8,10 @@
                     pre: function (scope, element, attrs, ctrl) {
                         var rootPage = serverContext.getCurrentFrontendRootNodeId();
 
+                        var itemAssembly = ctrl.$scope.sfItemTemplateAssembly || 'Telerik.Sitefinity.Frontend';
+                        var itemUrl = ctrl.$scope.sfItemTemplateUrl || 'client-components/selectors/pages/sf-page-selector-view.sf-cshtml';
+                        ctrl.$scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(itemAssembly, itemUrl);
+
                         // <------- Begin: Helper methods ------
                         var getSiteMapRootNodeId = function () {
                             var selectedSite = scope.$eval(attrs.sfPageSelector);
@@ -226,29 +230,19 @@
 
                         ctrl.selectorType = 'PageSelector';
 
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/pages/sf-page-selector.sf-cshtml';
                         ctrl.$scope.dialogTemplateId = 'sf-page-selector-template';
 
                         var closedDialogTemplate = attrs.sfMultiselect ?
-                            'client-components/selectors/common/sf-list-group-selection.html' :
-                            'client-components/selectors/common/sf-bubbles-selection.html';
+                            'client-components/selectors/common/sf-list-group-selection.sf-cshtml' :
+                            'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
                         ctrl.$scope.hierarchical = true;
                         ctrl.$scope.expandSelection = true;
                         ctrl.$scope.sfIdentifierField = "TitlesPath";
                         ctrl.$scope.searchIdentifierField = "Title";
-                        ctrl.$scope.sfDialogHeader = 'Select a page';
                         ctrl.$scope.externalPagesInTheDialog = jQuery.extend(true, [], ctrl.$scope.sfExternalPages);
-
-                        var templateHtml = "<a ng-click=\"sfSelectItem({ dataItem: dataItem })\" ng-class=\"{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}\" >" +
-                                                  "<i class='pull-left icon-item-{{dataItem.Status.toLowerCase()}}'></i>" +
-                                                  "<span>" +
-                                                      "<span ng-class=\"{'text-muted': sfItemDisabled({dataItem: dataItem})}\" ng-bind=\"sfIdentifierFieldValue({dataItem: dataItem})\"></span> <em ng-show='sfItemDisabled({dataItem: dataItem})' class='m-left-md'>(not translated)</em>" +
-                                                      "<span class='small text-muted' ng-bind='dataItem.Status'></span>" +
-                                                  "</span>" +
-                                            "</a>";
-                        ctrl.$scope.singleItemTemplateHtml = templateHtml;
 
                         ctrl.onPostLinkComleted = function () {
                             var bindOnLoad = scope.$eval(attrs.sfBindOnLoad);

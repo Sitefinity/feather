@@ -1,0 +1,48 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5 text-center">
+            <div class="sf-Media--info-image">
+                <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <p>
+                <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
+                <span ng-bind="sfImage.Extension"></span><br />
+
+                <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
+                <span ng-bind="imageSize"></span><br />
+
+                <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
+                <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
+            </p>
+
+            <br />
+            <button class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
+            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
+        </div>
+    </div>
+</div>
+
+<div class="imageSelectorModal"
+    template-url="sf-image-selector-modal-template"
+    modal
+    size="normal"
+    window-class="modal-fluid"
+    existing-scope="true">
+</div>
+
+<script type="text/ng-template" id="sf-image-selector-modal-template">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().SelectImage)</h3>
+    </div>
+    <div class="modal-body">
+        <sf-image-selector sf-model="model.selectedItems" sf-filter="model.filterObject" sf-provider="model.provider"></sf-image-selector>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">@(Res.Get<ClientComponentsResources>().Done)</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
+    </div>
+</script>

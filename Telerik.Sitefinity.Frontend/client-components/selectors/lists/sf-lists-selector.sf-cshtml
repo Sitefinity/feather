@@ -1,0 +1,61 @@
+﻿<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().ListSelectorHeader)</h3>
+</div>
+<div class="modal-body">
+    <div kendo-tab-strip k-animation="false" class="k-tabstrip--selection">
+        <ul ng-show="multiselect">
+            <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
+                @(Res.Get<ClientComponentsResources>().All)
+            </li>
+            <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
+                @(Res.Get<ClientComponentsResources>().Selected) <span class="badge">{{getSelectedItemsCount()}}</span>
+            </li>
+        </ul>
+        <div>
+            <div ng-show="noItemsExist" class="alert alert-info">@(Res.Get<ClientComponentsResources>().NoItemsCreated)</div>
+
+            <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+
+            <div ng-hide="noItemsExist || showError">
+                <div class="input-group m-bottom-sm">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
+                    <sf-items-filter sf-filter='filter'></sf-items-filter>
+                </div>
+                <div sf-endless-scroll sf-paging='paging' class="list-group list-group-endless">
+                    <div ng-repeat="item in items"
+                         ng-class="{'list-group-item': true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect' : multiselect }"
+                         ng-click="itemClicked($index, item)">
+
+                        <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
+
+                        <div ng-bind="bindIdentifierField(item)"></div>
+                    </div>
+                </div>
+                <div ng-hide="items.length || showLoadingIndicator"><i>@(Res.Get<ClientComponentsResources>().NoItemsFound)</i></div>
+                <sf-loading ng-show="showLoadingIndicator"></sf-loading>
+            </div>
+        </div>
+        <div>
+            <sf-selected-items-view sf-items='selectedItemsViewData' 
+                                    sf-selected-items='selectedItemsInTheDialog' 
+                                    sf-search-identifier-field='searchIdentifierField'
+                                    sf-identifier-field='sfIdentifierField' 
+                                    sf-sortable='{{sfSortable}}'>
+            </sf-selected-items-view>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+  <button type="button" ng-hide="noItemsExist || showError" class="btn btn-primary pull-left" ng-click="doneSelecting()">
+    @(Res.Get<ClientComponentsResources>().DoneSelecting)
+        </button>
+  <button type="button" ng-hide="noItemsExist || showError" class="btn btn-link pull-left" ng-click="cancel()">
+    @(Res.Get<ClientComponentsResources>().Cancel)
+        </button>
+  <button type="button" ng-show="noItemsExist" class="btn btn-primary pull-left" ng-click="cancel()">
+    @(Res.Get<ClientComponentsResources>().Close)
+        </button>
+</div>

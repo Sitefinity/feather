@@ -232,7 +232,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         {
             if (!literal.IsNullOrEmpty())
             {
-                var control = new Literal();
+                var control = new LiteralControl();
                 control.Text = literal;
                 container.Controls.Add(control);
             }

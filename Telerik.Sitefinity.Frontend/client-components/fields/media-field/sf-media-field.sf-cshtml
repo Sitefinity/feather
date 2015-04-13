@@ -1,0 +1,44 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5 text-center">
+            <div class="sf-Media--info-doc" ng-show="sfMedia">
+              <div class="sf-Media--info-doc-holder">
+                <i class="icon-file icon-txt icon-lg">
+                  <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension.substring(1)}}</span>
+                </i>
+              </div>
+            </div>
+            <div ng-show="!sfMedia">
+                <span>{{labels.mediaDeletedLabel}}</span>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div ng-show="sfMedia">
+                <h4>
+                    <a title="{{sfMedia.Title.Value}}" ng-href="{{sfMedia.MediaUrl}}" target="_blank">{{sfMedia.Title.Value}}</a>
+                </h4>
+                <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
+                <span ng-bind="sfMedia.Extension"></span><br />
+
+                <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
+                <span ng-bind="mediaSize"></span><br />
+
+                <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
+                <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
+            </div>
+
+            <br />
+            <button class="btn btn-xs btn-default" ng-click="changeMedia()">{{labels.mediaChangeLabel}}</button>
+            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
+        </div>
+    </div>
+</div>
+
+<div class="mediaSelectorModal"
+     template-url="{{sfSelectorModelTemplate}}"
+     modal
+     size="normal"
+     window-class="modal-fluid"
+     existing-scope="true">
+</div>

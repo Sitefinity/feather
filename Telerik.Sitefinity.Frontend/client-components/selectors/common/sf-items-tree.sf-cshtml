@@ -1,0 +1,23 @@
+﻿ <div kendo-tree-view="treeView"
+     k-template="itemTemplate"
+         k-checkboxes="sfMultiselect ? checkboxes : false"
+         k-load-on-demand="true"
+         class="k-treeview--list-group">
+</div>
+
+<script type="text/ng-template" id="sfDefaultTreeItemTemplate">
+  <a ng-click="sfSelectItem({ dataItem: dataItem })" ng-class="{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}">
+      <span ng-class="{'text-muted': sfItemDisabled({dataItem: dataItem})}">{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</span> 
+    <em ng-show='sfItemDisabled({dataItem: dataItem})' class="m-left-md\">
+        (@(Res.Get<ClientComponentsResources>().NotTranslated))
+    </em>
+  </a>
+</script>
+
+<script type="text/ng-template" id="sfDefaultTreeItemCheckboxTemplate">
+    <input type="checkbox"
+        ng-click="sfSelectItem({ dataItem: dataItem })"
+        ng-checked="sfItemSelected({dataItem: dataItem})"
+        ng-hide="sfItemDisabled({dataItem: dataItem})">
+</script>
+

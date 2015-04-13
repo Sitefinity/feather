@@ -1,0 +1,23 @@
+<sf-media-selector
+    sf-model="selectedItems"
+    sf-filter-object="sfFilter"
+    sf-provider="provider"
+    sf-multiselect="{{sfMultiselect}}"
+    sf-deselectable="{{sfDeselectable}}"
+    sf-media-type="videos"
+    sf-labels="labels"></sf-media-selector>
+
+<server-data
+    select-item-from-computer="@(Res.Get<ClientComponentsResources>().SelectVideoFromComputer)"
+    no-items="@(Res.Get<ClientComponentsResources>().NoVideos)"
+    upload-item="@(Res.Get<ClientComponentsResources>().UploadVideo)"
+    already-uploaded-item="@(Res.Get<ClientComponentsResources>().AlreadyUploadedVideos)"
+    media-type-name-singular="@(Res.Get<ClientComponentsResources>().VideoSingular)"
+    media-type-name-plural="@(Res.Get<ClientComponentsResources>().VideoPlural)"
+    library-name-singular="@(Res.Get<ClientComponentsResources>().FolderSingular)"
+    library-name-plural="@(Res.Get<ClientComponentsResources>().FolderPlural)"
+    item-to-upload="@(Res.Get<ClientComponentsResources>().VideoToUpload)"
+    where-to-store-video="@(Res.Get<ClientComponentsResources>().WhereToStoreVideo)"
+    recent-videos="@(Res.Get<ClientComponentsResources>().RecentVideos)"
+    my-videos="@(Res.Get<ClientComponentsResources>().MyVideos)"
+    all-libraries="@(Res.Get<ClientComponentsResources>().AllLibraries)"></server-data>

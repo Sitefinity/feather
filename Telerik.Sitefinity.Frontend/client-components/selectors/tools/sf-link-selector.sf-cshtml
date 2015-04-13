@@ -1,0 +1,145 @@
+<div class="form-group nav-wrapper">
+	<span class="m-right-sm">@(Res.Get<ClientComponentsResources>().LinkTo)</span>
+
+	<label class="radio-inline" for="webAddressRadio">
+		<input id="webAddressRadio" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.WebAddress" />
+    @(Res.Get<ClientComponentsResources>().WebAddress)
+	</label>
+
+	<label class="radio-inline" for="pagesFromThisSiteRadio">
+		<input id="pagesFromThisSiteRadio" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.InternalPage" />
+    @(Res.Get<ClientComponentsResources>().PageFromThisSite)
+  </label>
+
+	<label class="radio-inline" for="anchorRadio">
+		<input id="anchorRadio" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.Anchor" />
+    @(Res.Get<ClientComponentsResources>().Anchor)
+	</label>
+
+	<label class="radio-inline" for="emailRadio">
+		<input id="emailRadio" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.EmailAddress" />
+    @(Res.Get<ClientComponentsResources>().Email)
+	</label>
+</div>
+
+<!-- Web address content -->
+<div ng-show="sfSelectedItem.mode==sfLinkMode.WebAddress">
+	<div class="form-group">
+		<label for="webAddress">@(Res.Get<ClientComponentsResources>().WebAddress)</label>
+		<div class="row">
+			<div class="col-xs-9">
+				<input class="form-control" type="text" id="webAddress" ng-model="sfSelectedItem.webAddress" />
+			</div>
+		</div>
+		<div class="text-muted">
+      @(Res.Get<ClientComponentsResources>().Example) <em>http://weather.com</em></div>
+	</div>
+
+	<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
+		<label for="textToDisplay1">@(Res.Get<ClientComponentsResources>().TextToDisplay)</label>
+		<div class="row">
+			<div class="col-xs-9">
+				<input class="form-control" type="text" id="textToDisplay1" ng-model="sfSelectedItem.displayText" />
+			</div>
+		</div>
+		<div class="text-muted">
+      @(Res.Get<ClientComponentsResources>().Example) <em>@(Res.Get<ClientComponentsResources>().WebAddressTextToDisplayExample)</em>
+    </div>
+	</div>
+
+	<div class="form-group checkbox">
+		<label for="openInNewWin1">
+			<input type="checkbox" id="openInNewWin1" ng-model="sfSelectedItem.openInNewWindow" />
+      @(Res.Get<ClientComponentsResources>().OpenInNewWindow)
+    </label>
+	</div>
+
+	<div class="form-group" ng-hide="isTestLinkHidden()">
+		<span class="text-muted">@(Res.Get<ClientComponentsResources>().TestThisLink)</span>
+		<a ng-href="{{sfSelectedItem.webAddress}}" target="_blank"> {{sfSelectedItem.displayText}} </a>
+	</div>
+</div>
+
+<!-- Page from this site content -->
+<div ng-show="sfSelectedItem.mode==sfLinkMode.InternalPage">
+	<div class="form-group">
+			<sf-multisite-page-selector sf-site="sfSite"
+						sf-culture="sfCulture"
+						sf-selected-item="sfSelectedItem.selectedPage"
+						sf-selected-item-id="sfSelectedItem.pageId"
+						sf-bind-on-load="true"></sf-multisite-page-selector>
+	</div>
+
+	<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
+		<label for="textToDisplay2">@(Res.Get<ClientComponentsResources>().TextToDisplay)</label>
+		<div class="row">
+			<div class="col-xs-9">
+				<input class="form-control" type="text" id="textToDisplay2" ng-model="sfSelectedItem.displayText" />
+			</div>
+		</div>
+	</div>
+	<div class="form-group checkbox">
+		<label for="openInNewWin2">
+			<input type="checkbox" id="openInNewWin2" ng-model="sfSelectedItem.openInNewWindow" />
+      @(Res.Get<ClientComponentsResources>().OpenInNewWindow)
+    </label>
+	</div>
+</div>
+
+<!-- Anchor content -->
+<div ng-show="sfSelectedItem.mode==sfLinkMode.Anchor">
+	<div ng-hide="anchors.length==0">
+		<div class="form-group">
+			<label for="anchorSelect">@(Res.Get<ClientComponentsResources>().Anchor)</label>
+			<div class="row">
+				<div class="col-xs-9">
+					<select class="form-control" id="anchorSelect" ng-model="sfSelectedItem.selectedAnchor" ng-options="a for a in anchors">
+						<option value="">@(Res.Get<ClientComponentsResources>().SelectOption)</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="text-muted">
+        @(Res.Get<ClientComponentsResources>().AnchorDescription) <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor" target="_blank">@(Res.Get<ClientComponentsResources>().HowToInsertAnchor)</a>
+      </div>
+		</div>
+
+		<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
+			<label for="textToDisplay3">@(Res.Get<ClientComponentsResources>().TextToDisplay)</label>
+			<div class="row">
+				<div class="col-xs-9">
+					<input class="form-control" type="text" id="textToDisplay3" ng-model="sfSelectedItem.displayText"/>
+				</div>
+			</div>
+			<div class="text-muted">@(Res.Get<ClientComponentsResources>().Example) <em>@(Res.Get<ClientComponentsResources>().AnchorTextToDisplayExample)</em></div>
+		</div>
+	</div>
+
+	<div ng-show="anchors.length==0" class="alert alert-info" role="alert">
+			<span>@(Res.Get<ClientComponentsResources>().NoAnchorsSelected) <a href="https://github.com/Sitefinity/feather/wiki/How-to-insert-an-anchor" target="_blank">@(Res.Get<ClientComponentsResources>().HowToInsertAnchor)</a></span>
+	</div>
+</div>
+
+<!-- Email content -->
+<div ng-show="sfSelectedItem.mode==sfLinkMode.EmailAddress" ng-form name="emailForm">
+	<div class="form-group">
+		<label for="emailAddress">@(Res.Get<ClientComponentsResources>().EmailAddress)</label>
+		<div class="row">
+			<div class="col-xs-9">
+				<input class="form-control" type="email" name="emailInput" id="emailAddress" ng-model="sfSelectedItem.emailAddress" />
+			</div>
+		</div>
+		<div class="text-muted">@(Res.Get<ClientComponentsResources>().Example) <em>johnsmith@gmail.com</em></div>
+		<span ng-show="emailForm.emailInput.$error.email">@(Res.Get<ClientComponentsResources>().InvalidEmailMessage)</span>
+	</div>
+
+	<div class="form-group" ng-hide="sfSelectedItem.linkHasChildrenElements">
+		<label for="textToDisplay4">@(Res.Get<ClientComponentsResources>().TextToDisplay)</label>
+		<div class="row">
+			<div class="col-xs-9">
+				<input class="form-control" type="text" id="textToDisplay4" ng-model="sfSelectedItem.displayText"/>
+			</div>
+		</div>
+		<div class="text-muted">@(Res.Get<ClientComponentsResources>().Example) <em>@(Res.Get<ClientComponentsResources>().EmailTextToDisplayExample)</em></div>
+	</div>
+</div>

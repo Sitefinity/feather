@@ -5,7 +5,6 @@ using System.IO;
 using System.Web.Caching;
 using System.Web.Hosting;
 
-using RazorEngine;
 using RazorEngine.Templating;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -27,6 +26,16 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// Initializes a new instance of the <see cref="RazorTemplateProcessor"/> class.
         /// </summary>
         /// <param name="templateService">The template service.</param>
+        public RazorTemplateProcessor(ITemplateService templateService)
+            : this(templateService, HostingEnvironment.VirtualPathProvider)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RazorTemplateProcessor"/> class.
+        /// </summary>
+        /// <param name="templateService">The template service.</param>
+        /// <param name="virtualPathProvider">The virtual path provider for retrieving files.</param>
         public RazorTemplateProcessor(ITemplateService templateService, VirtualPathProvider virtualPathProvider)
         {
             this.service = templateService;

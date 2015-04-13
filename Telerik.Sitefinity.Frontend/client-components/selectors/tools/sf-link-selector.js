@@ -16,7 +16,7 @@
                            },
                            templateUrl: function (elem, attrs) {
                                var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                               var url = attrs.sfTemplateUrl || 'client-components/selectors/tools/sf-link-selector.html';
+                               var url = attrs.sfTemplateUrl || 'client-components/selectors/tools/sf-link-selector.sf-cshtml';
                                return serverContext.getEmbeddedResourceUrl(assembly, url);
                            },
                            link: {

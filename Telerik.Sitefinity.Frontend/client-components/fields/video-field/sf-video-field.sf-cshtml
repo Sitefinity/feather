@@ -1,0 +1,49 @@
+﻿<div class="container-fluid" ng-controller="SfVideoFieldCtrl">
+    <div class="row">
+
+
+        <div ng-show="showVideo" class="text-center col-md-12 sf-Media--info-video">
+            <video id="sfVideoPlayer" controls="controls" ng-src="{{sfMedia.MediaUrl}}"></video>
+        </div>
+
+        <div class="col-md-5 text-center" ng-hide="showVideo">
+            <div class="sf-Media--info-video sf-Media--info" ng-show="sfMedia && !showVideo" ng-click="playVideo('#sfVideoPlayer')">
+                <img ng-src="{{sfMedia.ThumbnailUrl}}" src="" alt="{{sfMedia.Title.Value}}" />
+                <div class="sf-Media-play-button glyphicon glyphicon-play"></div>
+            </div>
+
+            <div ng-hide="sfMedia">
+                <span>@(Res.Get<ClientComponentsResources>().VideoHasBeenDeleted)</span>
+            </div>
+        </div>
+
+        <div ng-class="{'col-md-7': !showVideo, 'col-md-12 m-top-md': showVideo}">
+
+            <div ng-show="sfMedia">
+                <strong>@(Res.Get<ClientComponentsResources>().Title): </strong>
+                <span ng-bind="sfMedia.Title.Value"></span><br />
+
+                <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
+                <span ng-bind="sfMedia.Extension"></span><br />
+
+                <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
+                <span ng-bind="mediaSize"></span><br />
+
+                <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
+                <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
+            </div>
+
+            <button class="btn btn-xs btn-default" ng-click="changeMedia(); pauseVideo('#sfVideoPlayer')">@(Res.Get<ClientComponentsResources>().ChangeVideo)</button>
+            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties(); pauseVideo('#sfVideoPlayer')">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
+
+        </div>
+    </div>
+</div>
+
+<div class="mediaSelectorModal"
+     template-url="{{sfSelectorModelTemplate}}"
+     modal
+     size="normal"
+     window-class="modal-fluid"
+     existing-scope="true">
+</div>

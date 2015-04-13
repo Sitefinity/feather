@@ -380,10 +380,8 @@ describe("lists selector", function () {
             //The scope of the selector is isolated, but it's child of the scope used for compilation.
             var s = scope.$$childHead;
 
-            expect(s.selectButtonText).toBeDefined();
-            expect(s.selectButtonText).toBe('Select');
-            expect(s.changeButtonText).toBeDefined();
-            expect(s.changeButtonText).toBe('Change');
+            expect(s.selectButtonText).not.toBeDefined();
+            expect(s.changeButtonText).not.toBeDefined();
         });
 
         it('[Manev] / should replace the select button text with the one from the attributes.', function () {
@@ -396,8 +394,7 @@ describe("lists selector", function () {
 
             expect(s.selectButtonText).toBeDefined();
             expect(s.selectButtonText).toBe('Select a lists...');
-            expect(s.changeButtonText).toBeDefined();
-            expect(s.changeButtonText).toBe('Change');
+            expect(s.changeButtonText).not.toBeDefined();
         });
 
         it('[Manev] / should replace the select and change buttons text with the one from the attributes.', function () {

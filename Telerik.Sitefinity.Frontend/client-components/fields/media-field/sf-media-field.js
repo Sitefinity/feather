@@ -1,33 +1,129 @@
 ﻿(function ($) {
     var sfFields = angular.module('sfFields');
     sfFields.requires.push('sfMediaField');
+    sfFields.requires.push('serverDataModule');
 
     angular.module('sfMediaField', ['sfServices'])
-        .directive('sfMediaField', ['serverContext', 'sfMediaService', 'sfMediaFilter', function (serverContext, sfMediaService, sfMediaFilter) {
+        .service("sfMediaTypeResolver", ['sfMediaService', 'serverContext', function (sfMediaService, serverContext) {
+            var Document = function () {
+                this.getEditAllPropertiesUrl = function () {
+                    return serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=DocumentsBackend&ViewName=DocumentsBackendEdit&IsInlineEditingMode=true');
+                };
+                this.getMediaUploadedEvent = function () {
+                    return 'sf-document-selector-document-uploaded';
+                };
+                this.service = sfMediaService.documents;
+
+                this.getParentId = function (document) {
+                    return document.FolderId || document.Library.Id;
+                };
+
+                this.getDefaultSelectorTemplateUrl = function () {
+                    return serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/document-field/sf-document-modal-template.sf-cshtml');
+                };
+
+                this.getDefaultTemplateUrl = function () {
+                    return serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/document-field/sf-document-field.sf-cshtml');
+                };
+            };
+
+            var Videos = function () {
+                this.getEditAllPropertiesUrl = function () {
+                    return serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=VideosBackend&ViewName=VideosBackendEdit&IsInlineEditingMode=true');
+                };
+                this.getMediaUploadedEvent = function () {
+                    return 'sf-media-selector-item-uploaded';
+                };
+                this.service = sfMediaService.videos;
+
+                this.getParentId = function (video) {
+                    return video.FolderId || video.Library.Id;
+                };
+
+                this.getDefaultSelectorTemplateUrl = function () {
+                    return serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/video-field/sf-video-modal-template.sf-cshtml');
+                };
+
+                this.getDefaultTemplateUrl = function () {
+                    return serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/video-field/sf-video-field.sf-cshtml');
+                };
+            };
+
+            var Images = function () {
+                this.getEditAllPropertiesUrl = function () {
+                    return serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=ImagesBackend&ViewName=ImagesBackendEdit&IsInlineEditingMode=true');
+                };
+                this.getMediaUploadedEvent = function () {
+                    return 'sf-image-selector-image-uploaded';
+                };
+                this.service = sfMediaService.images;
+
+                this.getParentId = function (image) {
+                    return image.FolderId || image.Album.Id;
+                };
+
+                this.getDefaultSelectorTemplateUrl = function () {
+                    return '';
+                };
+
+                this.getDefaultTemplateUrl = function () {
+                    return '';
+                };
+            };
+
+            this.get = function (mediaType) {
+                if (mediaType === 'documents') {
+                    return new Document();
+                }
+                if (mediaType === "videos") {
+                    return new Videos();
+                }
+                return new Images();
+            };
+        }])
+        .directive('sfMediaField', ['serverContext', 'sfMediaService', 'sfMediaFilter', 'sfMediaTypeResolver', 'serverData',
+        function (serverContext, sfMediaService, sfMediaFilter, sfMediaTypeResolver, serverData) {
             return {
                 restrict: "AE",
                 scope: {
                     sfModel: '=',
                     sfMedia: '=?',
                     sfProvider: '=?',
-                    sfAutoOpenSelector: '@'
+                    sfAutoOpenSelector: '@',
+                    sfMediaType: '@',
+                    sfSelectorModelTemplate: '@',
+                },
+                controller: function ($scope) {
+                    if (!$scope.sfSelectorModelTemplate) {
+                        var mediaType = sfMediaTypeResolver.get($scope.sfMediaType);
+                        $scope.sfSelectorModelTemplate = mediaType.getDefaultSelectorTemplateUrl();
+                    }
                 },
                 templateUrl: function (elem, attrs) {
+                    if (attrs.sfMediaType && !attrs.sfTemplateUrl) {
+                        var mediaType = sfMediaTypeResolver.get(attrs.sfMediaType);
+                        return mediaType.getDefaultTemplateUrl();
+                    }
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/fields/media-field/sf-media-field.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/fields/media-field/sf-media-field.sf-cshtml';
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
                     var emptyGuid = '00000000-0000-0000-0000-000000000000';
 
+                    serverData.refresh();
+                    scope.labels = serverData.getAll();
+
                     var autoOpenSelector = attrs.sfAutoOpenSelector !== undefined && attrs.sfAutoOpenSelector.toLowerCase() !== 'false';
+
+                    var mediaType = sfMediaTypeResolver.get(scope.sfMediaType);
 
                     var getDateFromString = function (dateStr) {
                         return (new Date(parseInt(dateStr.substring(dateStr.indexOf('Date(') + 'Date('.length, dateStr.indexOf(')')))));
                     };
 
                     var getMedia = function (id) {
-                        sfMediaService.documents.getById(id, scope.sfProvider).then(function (data) {
+                        mediaType.service.getById(id, scope.sfProvider).then(function (data) {
                             if (data && data.Item && data.Item.Visible) {
                                 refreshScopeInfo(data.Item);
                             }
@@ -44,7 +140,7 @@
                     scope.showEditPropertiesButton = (window && window.radopen);
 
                     var editDialog;
-                    var editAllPropertiesUrl = serverContext.getRootedUrl('/Sitefinity/Dialog/ContentViewEditDialog?ControlDefinitionName=DocumentsBackend&ViewName=DocumentsBackendEdit&IsInlineEditingMode=true');
+                    var editAllPropertiesUrl = mediaType.getEditAllPropertiesUrl();
 
                     var createDialog = function (dialogManager) {
                         editWindow = window.radopen(editAllPropertiesUrl);
@@ -133,7 +229,7 @@
                         if (scope.sfMedia && scope.sfMedia.Id) {
                             scope.model.selectedItems.push(scope.sfMedia);
                             scope.model.filterObject = sfMediaFilter.newFilter();
-                            scope.model.filterObject.set.parent.to(scope.sfMedia.FolderId || scope.sfMedia.Library.Id);
+                            scope.model.filterObject.set.parent.to(mediaType.getParentId(scope.sfMedia));
                         }
 
                         var mediaSelectorModalScope = angular.element('.mediaSelectorModal').scope();
@@ -150,9 +246,9 @@
                         scope.changeMedia();
                     }
 
-                    scope.$on('sf-document-selector-document-uploaded', function (event, uploadedDocumentInfo) {
+                    scope.$on(mediaType.getMediaUploadedEvent(), function (event, uploadedMediaInfo) {
                         scope.sfProvider = scope.model.provider;
-                        getMedia(uploadedDocumentInfo.ContentId);
+                        getMedia(uploadedMediaInfo.ContentId);
                         scope.$modalInstance.dismiss();
                     });
 
@@ -160,6 +256,19 @@
                         scope.sfModel = newVal;
                     });
                 }
+            };
+        }])
+        .controller('SfVideoFieldCtrl', ['$scope', function ($scope) {
+            $scope.showVideo = false;
+
+            $scope.playVideo = function (elementSelector) {
+                $scope.showVideo = true;
+                angular.element(elementSelector)[0].play();
+            };
+
+            $scope.pauseVideo = function (elementSelector) {
+                $scope.showVideo = false;
+                angular.element(elementSelector)[0].pause();
             };
         }]);
 })(jQuery);

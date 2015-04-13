@@ -1,0 +1,52 @@
+﻿<textarea id="editor" style="height: 340px;"
+    kendo-editor ng-model="sfModel"
+    k-encoded="false"
+    k-stylesheets='["{{htmlFieldCssUrl}}"]',
+    k-tools='[
+    "formatting",
+    "bold", "italic", "underline", "trikethrough",
+    "justifyLeft", "justifyCenter", "justifyRight",
+    "insertUnorderedList", "insertOrderedList", "indent", "outdent",
+    {
+        name: "createLink",
+        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openLinkSelector()\"><span class=\"k-tool-icon k-createLink\"></span></a>"
+    },
+    "unlink",
+    {
+        name: "insertImage",
+        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openImageSelector()\"><span class=\"k-tool-icon k-insertImage\"></span></a>"
+    },
+    {
+        name: "insertFile",
+        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openDocumentSelector()\"><span class=\"k-tool-icon k-insertFile\"></span></a>"
+    },
+    {
+        name: "insertVideo",
+        template: "<a href=\"\" class=\"k-button custom-tool\" title=\"@(Res.Get<ClientComponentsResources>().InsertVideo)\" ng-click=\"openVideoSelector()\"><span class=\"glyphicon glyphicon-facetime-video\"></span></a>"
+    },
+    "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn",
+    "cleanFormatting",
+    {
+        name: "fullscreen",
+        template: "<a class=\"k-button js-custom-tool custom-tool\" ng-click=\"toggleFullScreen()\"><span class=\"js-fullScreen glyphicon\"></span></a>"
+    },
+    {
+        name: "htmlView",
+        template: "<button class=\"custom-tool k-button pull-right js-custom-tool\" ng-click=\"toggleHtmlView()\">\{\{htmlViewLabel\}\}</button>"
+    }
+    ]'>
+</textarea>
+
+<sf-link-selector-modal id="linkSelectorModal"></sf-link-selector-modal>
+
+<div class="mediaPropertiesModal"
+     template-url="{{mediaPropertiesDialog}}"
+     modal
+     size="normal"
+     existing-scope="true"
+     window-class="sf-designer-dlg sf-timespan-selector-dlg"
+     dialog-controller="{{sfMediaPropertiesController}}">
+</div>
+
+
+

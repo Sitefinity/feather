@@ -1,0 +1,100 @@
+﻿<div class="Media-items" sf-infinite-scroll="$parent.loadMore()">
+
+    <div>
+        <div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder">
+            <div ng-if="item.IsFolder === true">
+                <span class="Media-item-info"
+                        ng-show="item.metricsAvailable"
+                        sf-popover-html
+                        sf-popover-placement="right"
+                        sf-popover-trigger="hover"
+                        sf-popover-append-to-body="true"
+                        sf-popover-title="{{item.Title}}"
+                        sf-popover-content="
+                                <p>{{item.LibrariesCount}}</p>
+                                <p>{{item.DocumentsCount}}</p>
+                                <p>@(Res.Get<ClientComponentsResources>().CreatedOn) {{$parent.$parent.$parent.getDateCreated(item) | date : 'M/d/yyyy h:mm'}}</p>
+                        ">
+                    i
+                </span>
+
+                <div class="Media-file-wrapper" ng-click="select(item)">
+                    <div class="Media-file-thumb">
+                        <div class="Media-file-thumb-holder">
+                            <div><i class="glyphicon glyphicon-folder-close"></i></div>
+                            <strong>{{item.Title}}</strong>
+                        </div>
+                    </div>
+
+                    <div class="Media-folder-title" ng-class="{'Media-folder-title--wa' : !item.metricsAvailable}">
+                        {{item.Title}}
+                    </div>
+
+                    <div class="Media-item-meta" ng-show="item.metricsAvailable">
+                        <div>{{item.DocumentsCount}}</div>
+                        {{item.LibrariesCount}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+	<div>
+		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file Media-file--doc" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected>
+			<span class="Media-item-info"
+						sf-popover-html
+						sf-popover-placement="right"
+						sf-popover-trigger="hover"
+						sf-popover-append-to-body="true"
+						sf-popover-title="{{item.Title}}"
+						sf-popover-content="
+							<dl class='dl-half'>
+								<dt>@(Res.Get<ClientComponentsResources>().Library)</dt>
+								<dd>{{item.FolderTitle || item.LibraryTitle}}</dd>
+								<dt>@(Res.Get<ClientComponentsResources>().Size)</dt>
+								<dd>{{item.TotalSize}} KB</dd>
+								<dt>@(Res.Get<ClientComponentsResources>().Type)</dt>
+								<dd>{{item.Extension.toUpperCase()}}</dd>
+								<dt>@(Res.Get<ClientComponentsResources>().CreatedOn)</dt>
+								<dd>{{$parent.$parent.getDateCreated(item) | date : 'M/d/yyyy h:mm'}}</dd>
+							</dl>
+						">
+				i
+			</span>
+
+            <div class="Media-file-wrapper">
+
+				<div class="Media-file-thumb">
+                    <div class="Media-file-thumb-holder">
+                        
+                          <i ng-class="{ 'icon-lg' : $parent.$parent.isGrid, 'icon-md' : $parent.$parent.isList }" class="icon-file icon-txt">
+                              <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
+                          </i>
+
+                        <div class="Media-item-title">{{item.Title}}</div>
+                    </div>
+				</div>
+
+                <div class="Media-item-title">
+                    {{item.Title}}
+                </div>
+
+                <div class="Media-item-meta">
+                    {{item.Extension.toUpperCase().replace(".", "")}}<br />
+                    {{item.TotalSize + "KB"}}<br />
+                </div>
+
+				<div class="Media-item-date">
+					{{item.LastModified | date : 'M/dd/yyyy h:mm'}}<br />
+          @(Res.Get<ClientComponentsResources>().By) {{item.Author}}
+				</div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <sf-loading ng-show="$parent.isLoading"></sf-loading>
+    </div>
+</div>

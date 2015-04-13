@@ -18,16 +18,14 @@
 
                         ctrl.selectorType = 'NewsSelector';
 
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/news/sf-news-selector.html';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/news/sf-news-selector.sf-cshtml';
                         ctrl.$scope.dialogTemplateId = 'sf-news-selector-template';
 
                         var closedDialogTemplate = attrs.sfMultiselect ?
-                            'client-components/selectors/common/sf-list-group-selection.html' :
-                            'client-components/selectors/common/sf-bubbles-selection.html';
+                            'client-components/selectors/common/sf-list-group-selection.sf-cshtml' :
+                            'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
-
-                        ctrl.$scope.sfDialogHeader = 'Select news';
                     }
                 }
             };

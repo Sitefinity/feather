@@ -1,0 +1,31 @@
+﻿<div class="row row-xs">
+    <div class="col-xs-5">
+        <p class="input-group">
+            <input id="fromInput" type="text" class="form-control input-sm"
+            datepicker-popup="dd-MMMM-yyyy" show-button-bar="false" datepicker-options="{'show-weeks' : 'false', 'starting-day': '1'}"
+            ng-model="ngModel" is-open="isOpen" close-text="Close" />
+
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default btn-sm" ng-click="openDatePicker($event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+            </span>
+        </p>
+    </div>
+
+    <div class="col-xs-3">
+        <a class="btn btn-link btn-sm" ng-show="!showMinutesField" ng-click="updateHours(0)">@(Res.Get<ClientComponentsResources>().AddHour)</a>
+
+        <select class="form-control input-sm" ng-model="hstep" ng-change="updateHours(hstep)" ng-options="opt.value as opt.label for opt in hsteps" ng-show="showMinutesField">
+          <option value="">@(Res.Get<ClientComponentsResources>().HourOption)</option>
+        </select>
+    </div>
+
+    <div class="col-xs-3">
+        <a class="btn btn-link btn-sm" ng-show="!showMinutesDropdown && showMinutesField"  ng-click="updateMinutes(0)">@(Res.Get<ClientComponentsResources>().AddMinutes)</a>
+
+        <select class="form-control input-sm" ng-model="mstep" ng-change="updateMinutes(mstep)" ng-options="opt.value as opt.label for opt in msteps" ng-show="showMinutesDropdown && showMinutesField">
+          <option value="">@(Res.Get<ClientComponentsResources>().MinuteOption)</option>
+        </select>
+    </div>
+</div>

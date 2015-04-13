@@ -103,7 +103,7 @@
 		"client-components/selectors/media/sf-media-markup-service.js",
 		"client-components/fields/html-field/sf-html-field.js"
 	],
-	"components" : ["sf-services", "sf-fields", "sf-link-selector-modal", "sf-expander", "sf-image-field", "sf-media-field", "sf-thumbnail-size-selection"]
+	"components" : ["sf-services", "sf-fields", "sf-link-selector-modal", "sf-expander", "sf-image-field", "sf-document-field","sf-video-field", "sf-thumbnail-size-selection"]
 },
 
 "sf-media-field": {
@@ -112,7 +112,15 @@
        "client-components/selectors/media/sf-media-filter.js",
        "client-components/fields/media-field/sf-media-field.js"
    ],
-   "components": ["sf-services", "sf-fields", "sf-document-selector"]
+   "components": ["sf-services", "sf-fields"]
+},
+
+"sf-document-field" : {
+	"components" : ["sf-media-field", "sf-document-selector"]
+},
+
+"sf-video-field" : {
+	"components" : ["sf-media-field", "sf-video-selector"]
 },
 
 "sf-image-field" : {
@@ -306,6 +314,26 @@
 "sf-document-selector" : {
 	"scripts" : [
 		"client-components/selectors/media/documents/sf-document-selector.js",
+		"client-components/selectors/media/sf-media-service.js",
+  		"client-components/selectors/media/sf-media-filter.js",
+		"client-components/selectors/taxonomies/sf-flat-taxon-service.js",
+		"client-components/selectors/taxonomies/sf-hierarchical-taxon-service.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
+					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
+					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector"]
+},
+
+"sf-video-selector" : {
+	"scripts" : [
+		"client-components/selectors/media/videos/sf-video-selector.js"
+	],
+	"components" : ["sf-media-selector"]
+},
+
+"sf-media-selector" : {
+	"scripts" : [
+		"client-components/selectors/media/sf-media-selector.js",
 		"client-components/selectors/media/sf-media-service.js",
   		"client-components/selectors/media/sf-media-filter.js",
 		"client-components/selectors/taxonomies/sf-flat-taxon-service.js",

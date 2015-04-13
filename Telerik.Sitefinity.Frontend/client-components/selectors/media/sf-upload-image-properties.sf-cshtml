@@ -1,0 +1,69 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancelUpload()">&times;</button>
+    <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().UploadImage)</h3>
+</div>
+
+<div class="modal-body">
+    <div class="form-group">
+        <label>@(Res.Get<ClientComponentsResources>().ImageToUpload)</label>
+
+        <div class="sf-Progress">
+            <div class="sf-Progress-file">
+                <span ng-bind="model.file.name"></span>
+                <div class="pull-right">
+                  <a type="button" class="sf-Progress-close" ng-click="cancelUpload()">×</a>
+                </div>
+                <span class="pull-right" ng-bind="model.file.textSize"></span>
+            </div>
+            <div class="sf-Progress-bar progress-bar"
+                role="progressbar"
+                ng-attr-aria-valuenow="{{uploadInfo.percentage}}"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                ng-style="{width: uploadInfo.percentage + '%'}">
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error' : !model.parentId }">
+        <label>@(Res.Get<ClientComponentsResources>().WhereToStoreImage)</label>
+        <sf-list-selector sf-library-selector sf-media-type='images' sf-selected-item-id='model.parentId' sf-provider="provider"></sf-list-selector>
+        <div ng-show="!model.parentId" class="text-danger">
+          @(Res.Get<ClientComponentsResources>().SelectLibraryErrorMessage)
+        </div>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error' : !model.title }">
+
+          <label>@(Res.Get<ClientComponentsResources>().Title)</label>
+          <input class="form-control" type="text" ng-model="model.title" />
+          <div ng-show="!model.title" class="text-danger">
+            @(Res.Get<ClientComponentsResources>().TitleRequired)
+          </div>
+
+    </div>
+    <div class="form-group">
+
+          <label>@(Res.Get<ClientComponentsResources>().AlternativeText)</label>
+          <input class="form-control" type="text" ng-model="model.alternativeText" />
+
+    </div>
+    <expander expander-title='@(Res.Get<ClientComponentsResources>().CategoriesAndTags)'>
+        <div class="form-group">
+            <label>@(Res.Get<ClientComponentsResources>().Categories)</label>
+            <sf-list-selector sf-hierarchical-taxon-selector
+                              sf-dialog-header="@(Res.Get<ClientComponentsResources>().CategorySelectorHeader)"
+                              sf-multiselect="true"
+                              sf-selected-ids="model.categories">
+            </sf-list-selector>
+        </div>
+
+        <div class="form-group">
+            <label>@(Res.Get<ClientComponentsResources>().Tags)</label>
+            <sf-flat-taxon-field sf-model="model.tags" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
+        </div>
+    </expander>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()" ng-disabled="!model.title || !model.parentId">@(Res.Get<ClientComponentsResources>().Upload)</button>
+    <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
+</div>

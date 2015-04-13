@@ -19,9 +19,17 @@
                 return serviceHelper.getResource(url);
             };
 
-            var getItems = function (provider) {
+            var getItems = function (provider, skip, take, search, frontendLanguages) {
+                var filter = serviceHelper.filterBuilder()
+                    .searchFilter(search, frontendLanguages)
+                    .getFilter();
+
                 return getResource().get({
-                    provider: provider
+                    provider: provider,
+                    sortExpression: 'DateCreated DESC',
+                    skip: skip,
+                    take: take,
+                    filter: filter
                 }).$promise;
             };
 
