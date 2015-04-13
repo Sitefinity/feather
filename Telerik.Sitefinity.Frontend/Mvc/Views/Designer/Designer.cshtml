@@ -43,15 +43,15 @@
 
 <link rel="stylesheet" href='@Url.WidgetContent("assets/dist/css/sitefinity-backend.min.css")'>
 
-@Html.Script(Url.WidgetContent("~/Telerik.Sitefinity.Frontend/ServerContext.js"), preserveLocation:true)
+@Html.Script(Url.WidgetContent("~/Telerik.Sitefinity.Frontend/ServerContext.js"))
 
-@Html.Script(Url.WidgetContent("Mvc/Scripts/server-data.js"), preserveLocation:true)
-@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js"), preserveLocation:true)
-@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/designer.js"), preserveLocation:true)
-@Html.Script(Url.WidgetContent("Mvc/Scripts/sf-loading.js"), preserveLocation:true)
-@Html.Script(Url.WidgetContent("Mvc/Scripts/Bootstrap/js/bootstrap.min.js"), preserveLocation:true)
+@Html.Script(Url.WidgetContent("Mvc/Scripts/server-data.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/designer.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/sf-loading.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Bootstrap/js/bootstrap.min.js"))
 
 @foreach (var scriptPath in Model.ScriptReferences)
 {
-	@Html.Script(Url.WidgetContent(scriptPath), preserveLocation:true)
+	@Html.Script(Url.WidgetContent(scriptPath))
 }
