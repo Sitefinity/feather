@@ -251,12 +251,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             StringBuilder output = new StringBuilder();
 
-            foreach (var resourceInfo in resourceRegister.Container)
+            foreach (var resource in resourceRegister.GetResourcesForSection(sectionName))
             {
-                if (!resourceRegister.IsRendered(resourceInfo.Key))
+                if (!resourceRegister.IsRendered(resource))
                 {
-                    output.Append(ResourceHelper.BuildSingleResourceMarkup(resourceInfo.Key, resourceType));
-                    resourceRegister.MarkAsRendered(resourceInfo.Key);
+                    output.Append(ResourceHelper.BuildSingleResourceMarkup(resource, resourceType));
+                    resourceRegister.MarkAsRendered(resource);
                 }
             }
 
@@ -299,7 +299,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <summary>
         /// Creates a string representation of a tag. 
         /// </summary>
-        /// <param name="tag">The type of the HTML tag that would be generated for every registered resource.</param>
+        /// <param name="tagName">The type of the HTML tag that would be generated for every registered resource.</param>
         /// <param name="attributes">The attributes associated with the tag.</param>
         /// <returns>The string representation of a tag.</returns>
         private static string GenerateTag(string tagName, params KeyValuePair<string, string>[] attributes)

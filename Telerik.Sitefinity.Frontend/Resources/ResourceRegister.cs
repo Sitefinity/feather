@@ -28,27 +28,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
         #region Properties
 
         /// <summary>
-        /// Gets the current container that contains the registered resources.
-        /// </summary>
-        public virtual Dictionary<string, List<string>> Container
-        {
-            get
-            {
-                if (this.Context.Items.Contains(this.name))
-                {
-                    this.container = (Dictionary<string, List<string>>)this.Context.Items[this.name];
-                }
-                else
-                {
-                    this.container = new Dictionary<string, List<string>>();
-                    this.Context.Items.Add(this.name, this.container);
-                }
-
-                return this.container;
-            }
-        }
-
-        /// <summary>
         /// Gets a set of already rendered resources.
         /// </summary>
         protected virtual HashSet<string> Rendered
@@ -69,6 +48,27 @@ namespace Telerik.Sitefinity.Frontend.Resources
             }
         }
 
+        /// <summary>
+        /// Gets the current container that contains the registered resources.
+        /// </summary>
+        protected virtual Dictionary<string, List<string>> Container
+        {
+            get
+            {
+                if (this.Context.Items.Contains(this.name))
+                {
+                    this.container = (Dictionary<string, List<string>>)this.Context.Items[this.name];
+                }
+                else
+                {
+                    this.container = new Dictionary<string, List<string>>();
+                    this.Context.Items.Add(this.name, this.container);
+                }
+
+                return this.container;
+            }
+        }
+        
         /// <summary>
         /// Gets the current <see cref="HttpContextBase"/> instance.
         /// </summary>
@@ -138,7 +138,9 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// Determines whether the specified resource is already rendered.
         /// </summary>
         /// <param name="resourceKey">The resource key.</param>
-        /// <returns>Whether the specified resource is already rendered.</returns>
+        /// <returns>
+        /// Whether the specified resource is already rendered.
+        /// </returns>
         public bool IsRendered(string resourceKey)
         {
             return this.Rendered.Contains(resourceKey);
@@ -151,6 +153,34 @@ namespace Telerik.Sitefinity.Frontend.Resources
         public void MarkAsRendered(string resourceKey)
         {
             this.Rendered.Add(resourceKey);
+        }
+
+        /// <summary>
+        /// Get all resources for a section.
+        /// </summary>
+        /// <param name="sectionName">The name of the section key.</param>
+        /// <returns>
+        /// A collection of all resources for a section.
+        /// </returns>
+        public IEnumerable<string> GetResourcesForSection(string sectionName)
+        {
+            if (this.Container.ContainsKey(sectionName))
+            {
+                return this.Container[sectionName];
+            }
+
+            return new List<string>();
+        }
+
+        /// <summary>
+        /// Get all inline resources.
+        /// </summary>
+        /// <returns>
+        /// A collection of all inline resources.
+        /// </returns>
+        public IEnumerable<string> GetInlineResources()
+        {
+            return this.GetResourcesForSection(ResourceRegister.DefaultSectionNameKey);
         }
 
         #endregion

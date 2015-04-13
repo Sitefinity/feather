@@ -30,13 +30,13 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 
             string fakeResourceKey = "test-resource";
             register.Register(fakeResourceKey);
-            Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
 
             // Act
             register.Register(fakeResourceKey);
 
             // Assert
-            Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
         }
 
         [TestMethod]
@@ -50,13 +50,13 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var register = new ResourceRegister(registerName, context);
 
             string fakeResourceKey = "test-resource";
-            Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 0);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 0);
 
             // Act
             register.Register(fakeResourceKey);
 
             // Assert
-            Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
         }
 
         [TestMethod]
@@ -71,14 +71,14 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 
             string fakeResourceKey = "test-resource";
             register.Register(fakeResourceKey);
-            Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
 
             // Act
             bool result = register.Register(fakeResourceKey);
 
             // Assert
             Assert.IsFalse(result);
-            Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
         }
 
         [TestMethod]
@@ -92,14 +92,14 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var register = new ResourceRegister(registerName, context);
 
             string fakeResourceKey = "test-resource";
-            Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 0);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 0);
 
             // Act
             bool result = register.Register(fakeResourceKey);
 
             // Assert
             Assert.IsTrue(result);
-            Assert.IsTrue(register.Container.Count(i => i.Key == fakeResourceKey) == 1);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
         }
 
         #endregion
