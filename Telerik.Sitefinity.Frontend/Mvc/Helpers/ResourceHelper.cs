@@ -20,32 +20,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
     public static class ResourceHelper
     {
         /// <summary>
-        /// Renders all scripts.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
-        public static string RenderAllScripts(HttpContextBase context)
-        {
-            var scriptRegister = new ResourceRegister(ResourceHelper.JsRegisterName, context);
-            var scriptMarkup = ResourceHelper.BuildHtmlResourcesMarkup(scriptRegister, ResourceType.Js);
-
-            return scriptMarkup;
-        }
-
-        /// <summary>
-        /// Renders all stylesheets.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns></returns>
-        public static string RenderAllStylesheets(HttpContextBase context)
-        {
-            var stylesheetRegister = new ResourceRegister(ResourceHelper.CssRegisterName, context);
-            var stylesheetMarkup = ResourceHelper.BuildHtmlResourcesMarkup(stylesheetRegister, ResourceType.Css);
-
-            return stylesheetMarkup;
-        }
-
-        /// <summary>
         /// Registers JavaScript reference and ensures that it loads maximum once for a page.
         /// </summary>
         /// <param name="helper">The helper.</param>
@@ -67,11 +41,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             var context = helper.ViewContext.HttpContext;
             var registerName = ResourceHelper.JsRegisterName;
-            var register = new ResourceRegister(registerName, context);
             ResourceHelper.RegisterResource(context, scriptPath, registerName, throwException);
 
             if (preserveLocation)
-                return MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(register, scriptPath));
+                return MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(scriptPath));
 
             return MvcHtmlString.Empty;
         }
@@ -95,7 +68,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             var context = helper.ViewContext.HttpContext;
             var registerName = ResourceHelper.JsRegisterName;
-            var register = new ResourceRegister(registerName, context);
 
             var references = PageManager.GetScriptReferences(scriptReference).Select(r => new MvcScriptReference(r));
             StringBuilder outputMarkup = new StringBuilder();
@@ -105,7 +77,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 ResourceHelper.RegisterResource(context, resourceUrl, registerName, throwException);
 
                 if (preserveLocation)
-                    outputMarkup.Append(MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(register, resourceUrl)));
+                    outputMarkup.Append(MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(resourceUrl)));
             }
 
             return System.Web.Mvc.MvcHtmlString.Create(outputMarkup.ToString());
@@ -128,7 +100,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var context = helper.ViewContext.HttpContext;
             var registerName = ResourceHelper.JsRegisterName;
-            var register = new ResourceRegister(registerName, context);
             var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
 
             var resourceUrl = page.ClientScript.GetWebResourceUrl(
@@ -137,7 +108,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             ResourceHelper.RegisterResource(context, resourceUrl, registerName, throwException);
             if (preserveLocation)
-                return MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(register, resourceUrl));
+                return MvcHtmlString.Create(ResourceHelper.BuildScriptMarkup(resourceUrl));
 
             return System.Web.Mvc.MvcHtmlString.Empty;
         }
@@ -157,11 +128,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var context = helper.ViewContext.HttpContext;
             var registerName = ResourceHelper.CssRegisterName;
-            var register = new ResourceRegister(registerName, context);
             ResourceHelper.RegisterResource(context, resourcePath, registerName, throwException);
 
             if (preserveLocation)
-                return MvcHtmlString.Create(ResourceHelper.BuildStyleSheetMarkup(register, resourcePath));
+                return MvcHtmlString.Create(ResourceHelper.BuildStyleSheetMarkup(resourcePath));
 
             return MvcHtmlString.Empty;
         }
@@ -192,6 +162,34 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return resourceUrl;
+        }
+
+        /// <summary>
+        /// Renders all scripts.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="sectionName">The section name.</param>
+        /// <returns></returns>
+        internal static string RenderAllScripts(HttpContextBase context, string sectionName)
+        {
+            var scriptRegister = new ResourceRegister(ResourceHelper.JsRegisterName, context);
+            var scriptMarkup = ResourceHelper.BuildHtmlResourcesMarkup(scriptRegister, sectionName, ResourceType.Js);
+
+            return scriptMarkup;
+        }
+
+        /// <summary>
+        /// Renders all stylesheets.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="sectionName">The section name.</param>
+        /// <returns></returns>
+        internal static string RenderAllStylesheets(HttpContextBase context, string sectionName)
+        {
+            var stylesheetRegister = new ResourceRegister(ResourceHelper.CssRegisterName, context);
+            var stylesheetMarkup = ResourceHelper.BuildHtmlResourcesMarkup(stylesheetRegister, sectionName, ResourceType.Css);
+
+            return stylesheetMarkup;
         }
 
         /// <summary>
@@ -241,7 +239,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
         }
 
-        private static string BuildHtmlResourcesMarkup(ResourceRegister resourceRegister, ResourceType resourceType)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "sectionName")]
+        private static string BuildHtmlResourcesMarkup(ResourceRegister resourceRegister, string sectionName, ResourceType resourceType)
         {
             StringBuilder output = new StringBuilder();
 
@@ -249,46 +248,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             {
                 var resourceInfo = resourceRegister.Container.ElementAt(i);
 
-                if (resourceType == ResourceType.Js)
-                    output.Append(ResourceHelper.BuildScriptMarkup(resourceRegister, resourceInfo.Key));
-                else if (resourceType == ResourceType.Css)
-                    output.Append(ResourceHelper.BuildStyleSheetMarkup(resourceRegister, resourceInfo.Key));
+                if (!resourceRegister.IsRendered(resourceInfo.Key))
+                {
+                    if (resourceType == ResourceType.Js)
+                        output.Append(ResourceHelper.BuildScriptMarkup(resourceInfo.Key));
+                    else if (resourceType == ResourceType.Css)
+                        output.Append(ResourceHelper.BuildStyleSheetMarkup(resourceInfo.Key));
+                }
+
+                resourceRegister.MarkAsRendered(resourceInfo.Key);
             }
 
             return output.ToString();
         }
 
-        private static string BuildScriptMarkup(ResourceRegister resourceRegister, string resourceKey)
+        private static string BuildScriptMarkup(string resourceKey)
         {
-            var resourceHtml = string.Empty;
-            if (!resourceRegister.Container[resourceKey])
-            {
-                var attributes = new KeyValuePair<string, string>[2];
-                attributes[0] = new KeyValuePair<string, string>("src", resourceKey);
-                attributes[1] = new KeyValuePair<string, string>("type", "text/javascript");
+            var attributes = new KeyValuePair<string, string>[2];
+            attributes[0] = new KeyValuePair<string, string>("src", resourceKey);
+            attributes[1] = new KeyValuePair<string, string>("type", "text/javascript");
 
-                resourceHtml = ResourceHelper.GenerateTag("script", attributes);
-                resourceRegister.Container[resourceKey] = true;
-            }
-
+            var resourceHtml = ResourceHelper.GenerateTag("script", attributes);
             return resourceHtml;
         }
 
-        private static string BuildStyleSheetMarkup(ResourceRegister resourceRegister, string resourceKey)
+        private static string BuildStyleSheetMarkup(string resourceKey)
         {
-            var resourceHtml = string.Empty;
+            var attributes = new KeyValuePair<string, string>[3];
+            attributes[0] = new KeyValuePair<string, string>("rel", "stylesheet");
+            attributes[1] = new KeyValuePair<string, string>("href", resourceKey);
+            attributes[2] = new KeyValuePair<string, string>("type", "text/css");
 
-            if (!resourceRegister.Container[resourceKey])
-            {
-                var attributes = new KeyValuePair<string, string>[3];
-                attributes[0] = new KeyValuePair<string, string>("rel", "stylesheet");
-                attributes[1] = new KeyValuePair<string, string>("href", resourceKey);
-                attributes[2] = new KeyValuePair<string, string>("type", "text/css");
-
-                resourceHtml = ResourceHelper.GenerateTag("link", attributes);
-                resourceRegister.Container[resourceKey] = true;
-            }
-
+            var resourceHtml = ResourceHelper.GenerateTag("link", attributes);
             return resourceHtml;
         }
 

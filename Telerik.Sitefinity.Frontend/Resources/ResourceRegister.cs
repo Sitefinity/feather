@@ -58,6 +58,24 @@ namespace Telerik.Sitefinity.Frontend.Resources
             }
         }
 
+        protected virtual HashSet<string> RenderedResources
+        {
+            get
+            {
+                if (this.Context.Items.Contains(this.name + "-rendered"))
+                {
+                    this.renderedRes = (HashSet<string>)this.Context.Items[this.name + "-rendered"];
+                }
+                else
+                {
+                    this.renderedRes = new HashSet<string>();
+                    this.Context.Items.Add(this.name + "-rendered", this.renderedRes);
+                }
+
+                return this.renderedRes;
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -95,6 +113,26 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return result;
         }
 
+        /// <summary>
+        /// Determines whether the specified resource is already rendered.
+        /// </summary>
+        /// <param name="resourceKey">The resource key.</param>
+        /// <returns>Whether the specified resource is already rendered.</returns>
+        public bool IsRendered(string resourceKey)
+        {
+            return this.RenderedResources.Contains(resourceKey);
+        }
+
+        /// <summary>
+        /// Marks the resource as rendered.
+        /// </summary>
+        /// <param name="resourceKey">The resource key.</param>
+        public void MarkAsRendered(string resourceKey)
+        {
+            if (!this.RenderedResources.Contains(resourceKey))
+                this.RenderedResources.Add(resourceKey);
+        }
+
         #endregion
 
         #region Private Methods
@@ -116,6 +154,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         private HttpContextBase context;
         private Dictionary<string, bool> container;
         private string name;
+        private HashSet<string> renderedRes; 
 
         #endregion
     }

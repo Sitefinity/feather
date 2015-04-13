@@ -202,12 +202,11 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
-    <Compile Include="Mvc\Infrastructure\Layouts\StyleSheetRenderer.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\EmailAddressAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mvc\Infrastructure\Layouts\ScriptRenderer.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\SectionRenderer.cs" />
     <Compile Include="Mvc\Infrastructure\PageInitializer.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageEditorRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageRouteHandler.cs" />
