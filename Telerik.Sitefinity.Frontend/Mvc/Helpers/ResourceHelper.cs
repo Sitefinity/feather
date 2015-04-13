@@ -254,9 +254,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                         output.Append(ResourceHelper.BuildScriptMarkup(resourceInfo.Key));
                     else if (resourceType == ResourceType.Css)
                         output.Append(ResourceHelper.BuildStyleSheetMarkup(resourceInfo.Key));
-                }
 
-                resourceRegister.MarkAsRendered(resourceInfo.Key);
+                    resourceRegister.MarkAsRendered(resourceInfo.Key);
+                }
             }
 
             return output.ToString();
