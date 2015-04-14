@@ -8070,6 +8070,7 @@ fieldset[disabled="disabled"] {
 .sf-loading-wrapper {
   position: absolute;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 902;
   top: 0;
   left: 0;
   right: 0;

@@ -31,7 +31,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
 
             var htmlHelper = new System.Web.Mvc.HtmlHelper(dummyViewContext, dummyViewDataContainer);
 
-            var result = htmlHelper.Script(script, true);
+            var result = htmlHelper.Script(script, true, null);
             Assert.AreEqual(result.ToString(), string.Format(System.Globalization.CultureInfo.InvariantCulture, "<script src=\"{0}\" type=\"text/javascript\"></script>", script));
 
             result = htmlHelper.Script(script, true);
@@ -53,7 +53,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
 
             var htmlHelper = new System.Web.Mvc.HtmlHelper(dummyViewContext, dummyViewDataContainer);
 
-            System.Web.Mvc.MvcHtmlString result = htmlHelper.Script(script);
+            System.Web.Mvc.MvcHtmlString result = htmlHelper.Script(script, false, null);
             Assert.AreEqual(result.ToString(), string.Format(System.Globalization.CultureInfo.InvariantCulture, "<script src=\"{0}\" type=\"text/javascript\"></script>", script));
 
             result = htmlHelper.Script(script);
