@@ -41,17 +41,16 @@
 	</script>
 </div>
 
-<link rel="stylesheet" href='@Url.WidgetContent("assets/dist/css/sitefinity-backend.min.css")'>
+@Html.StyleSheet(Url.WidgetContent("assets/dist/css/sitefinity-backend.min.css"), sectionName: "head")
 
-@Html.Script(Url.WidgetContent("~/Telerik.Sitefinity.Frontend/ServerContext.js"))
-
-@Html.Script(Url.WidgetContent("Mvc/Scripts/server-data.js"))
-@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js"))
-@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/designer.js"))
-@Html.Script(Url.WidgetContent("Mvc/Scripts/sf-loading.js"))
-@Html.Script(Url.WidgetContent("Mvc/Scripts/Bootstrap/js/bootstrap.min.js"))
+@Html.Script(Url.WidgetContent("~/Telerik.Sitefinity.Frontend/ServerContext.js"), sectionName: "bottom")
+@Html.Script(Url.WidgetContent("Mvc/Scripts/server-data.js"), sectionName: "bottom")
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js"), sectionName: "bottom")
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/designer.js"), sectionName: "bottom")
+@Html.Script(Url.WidgetContent("Mvc/Scripts/sf-loading.js"), sectionName: "bottom")
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Bootstrap/js/bootstrap.min.js"), sectionName: "bottom")
 
 @foreach (var scriptPath in Model.ScriptReferences)
 {
-	@Html.Script(Url.WidgetContent(scriptPath))
+	@Html.Script(Url.WidgetContent(scriptPath), sectionName: "bottom")
 }

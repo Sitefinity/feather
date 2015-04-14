@@ -10,6 +10,7 @@ using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Mvc.Rendering;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 {
@@ -32,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (virtualPath.StartsWith("~/", StringComparison.OrdinalIgnoreCase))
                 resolverPath = string.Format(CultureInfo.InvariantCulture, "~/{0}", LayoutVirtualFileResolver.ResolverPath);
             else if (virtualPath.StartsWith("/", StringComparison.OrdinalIgnoreCase))
-                resolverPath = string.Format(CultureInfo.InvariantCulture, "/{0}", LayoutVirtualFileResolver.ResolverPath);
+                resolverPath = RouteHelper.ResolveUrl(string.Format(CultureInfo.InvariantCulture, "~/{0}", LayoutVirtualFileResolver.ResolverPath), UrlResolveOptions.Rooted | UrlResolveOptions.AppendTrailingSlash);
             else
                 resolverPath = LayoutVirtualFileResolver.ResolverPath;
 
