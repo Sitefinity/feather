@@ -41,7 +41,7 @@
 	</script>
 </div>
 
-@Html.StyleSheet(Url.WidgetContent("assets/dist/css/sitefinity-backend.min.css"), sectionName: "head")
+@Html.StyleSheet(Url.WidgetContent("assets/dist/css/sitefinity-backend.min.css"))
 
 @Html.Script(Url.WidgetContent("~/Telerik.Sitefinity.Frontend/ServerContext.js"))
 @Html.Script(Url.WidgetContent("Mvc/Scripts/server-data.js"))
@@ -52,5 +52,5 @@
 
 @foreach (var scriptPath in Model.ScriptReferences)
 {
-	@Html.Script(Url.WidgetContent(scriptPath), sectionName: "bottom")
+	@Html.Script(Url.WidgetContent(scriptPath))
 }
