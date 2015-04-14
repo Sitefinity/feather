@@ -24,6 +24,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
+        /// Get the resource string with the specified key from the resource files.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="key">The key</param>
+        /// <param name="className">The class to search in</param>
+        public static string Resource(this HtmlHelper helper, string key, string className)
+        {
+            string result;
+
+            if (Res.TryGet(className, key, out result))
+            {
+                return result;
+            }
+
+            return "#ResourceNotFound: {0}, {1}#".Arrange(className, key);
+        }
+
+        /// <summary>
         /// Get the label with the specified key from the resource files.
         /// </summary>
         /// <param name="key">The key.</param>
@@ -45,7 +63,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var controller = LocalizationHelpers.GetController(page);
             var resClass = LocalizationHelpers.FindResourceStringClassType(controller.GetType());
             return Res.Get(resClass, key, System.Globalization.CultureInfo.InvariantCulture);
-        }
+        } 
 
         /// <summary>
         /// Get the label with the specified key from the resource files.
