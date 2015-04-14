@@ -65,7 +65,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
 
         #endregion
 
-        #region Scripts Tests
+        #region Stylesheets Tests
 
         /// <summary>
         /// The register stylesheet_ two times_ exception is thrown.
