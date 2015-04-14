@@ -203,6 +203,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Tries the configure script manager.
         /// </summary>
         /// <param name="scriptReference">The script reference.</param>
+        /// <param name="httpHandler">The httpHandler.</param>
         /// <returns></returns>
         private static bool TryConfigureScriptManager(ScriptRef scriptReference, IHttpHandler httpHandler)
         {
@@ -225,6 +226,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Tries the configure script manager.
         /// </summary>
         /// <param name="scriptReference">The script reference.</param>
+        /// <param name="httpHandler">The httpHandler.</param>
         /// <returns></returns>
         private static bool TryConfigureScriptManager(string scriptReference, IHttpHandler httpHandler)
         {
