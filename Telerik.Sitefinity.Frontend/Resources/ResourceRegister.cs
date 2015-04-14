@@ -34,14 +34,14 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             get
             {
-                if (this.Context.Items.Contains(this.name + "-rendered"))
+                if (this.Context.Items.Contains(this.name + ResourceRegister.RenderedResourcesKeySuffix))
                 {
-                    this.renderedRes = (HashSet<string>)this.Context.Items[this.name + "-rendered"];
+                    this.renderedRes = (HashSet<string>)this.Context.Items[this.name + ResourceRegister.RenderedResourcesKeySuffix];
                 }
                 else
                 {
                     this.renderedRes = new HashSet<string>();
-                    this.Context.Items.Add(this.name + "-rendered", this.renderedRes);
+                    this.Context.Items.Add(this.name + ResourceRegister.RenderedResourcesKeySuffix, this.renderedRes);
                 }
 
                 return this.renderedRes;
@@ -193,6 +193,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         private string name;
 
         private const string DefaultSectionNameKey = "ResourceRegisterInlineResourceSectionName";
+        private const string RenderedResourcesKeySuffix = "-rendered";
 
         #endregion
     }
