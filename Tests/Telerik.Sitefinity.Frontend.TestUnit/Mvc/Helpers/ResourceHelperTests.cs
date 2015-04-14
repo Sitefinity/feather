@@ -12,7 +12,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
     [TestClass]
     public class ResourceHelperTests
     {
-        #region Public Methods and Operators
+        #region Scripts Tests
 
         /// <summary>
         /// The register script_ two times_ exception is thrown.
@@ -27,14 +27,15 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
             var dummyViewContext = new ViewContext();
             dummyViewContext.HttpContext = dummyHttpContext;
             var dummyViewDataContainer = (IViewDataContainer)new ViewPage();
-            var script = "Mvc/Scripts/Designer/modal-dialog.js";
-
             var htmlHelper = new System.Web.Mvc.HtmlHelper(dummyViewContext, dummyViewDataContainer);
 
-            var result = htmlHelper.Script(script, true, null);
-            Assert.AreEqual(result.ToString(), string.Format(System.Globalization.CultureInfo.InvariantCulture, "<script src=\"{0}\" type=\"text/javascript\"></script>", script));
+            var script = "Mvc/Scripts/Designer/modal-dialog.js";
 
-            result = htmlHelper.Script(script, true);
+            string expected = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<script src=\"{0}\" type=\"text/javascript\"></script>", script);
+            string result = htmlHelper.Script(script, throwException: true).ToString();
+            Assert.AreEqual(expected, result);
+
+            htmlHelper.Script(script, throwException: true);
         }
 
         /// <summary>
@@ -53,11 +54,66 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
 
             var htmlHelper = new System.Web.Mvc.HtmlHelper(dummyViewContext, dummyViewDataContainer);
 
-            System.Web.Mvc.MvcHtmlString result = htmlHelper.Script(script, false, null);
-            Assert.AreEqual(result.ToString(), string.Format(System.Globalization.CultureInfo.InvariantCulture, "<script src=\"{0}\" type=\"text/javascript\"></script>", script));
+            string expected1 = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<script src=\"{0}\" type=\"text/javascript\"></script>", script);
+            string result1 = htmlHelper.Script(script).ToString();
+            Assert.AreEqual(expected1, result1);
 
-            result = htmlHelper.Script(script);
-            Assert.AreEqual(result, System.Web.Mvc.MvcHtmlString.Empty);
+            MvcHtmlString expected2 = MvcHtmlString.Empty;
+            MvcHtmlString result2 = htmlHelper.Script(script);
+            Assert.AreEqual(expected2, result2);
+        }
+
+        #endregion
+
+        #region Scripts Tests
+
+        /// <summary>
+        /// The register stylesheet_ two times_ exception is thrown.
+        /// </summary>
+        [TestMethod]
+        [Owner("Dzhenko Penev")]
+        [Description("Ensures that exception is thrown when there is attempt for registering the same stylesheet twice.")]
+        [ExpectedException(typeof(ArgumentException), "ArgumentException was not thrown in the case when one tries to register a stylesheet twice.")]
+        public void RegisterStylesheet_TwoTimes_ExceptionIsThrown()
+        {
+            var dummyHttpContext = new DummyHttpContext();
+            var dummyViewContext = new ViewContext();
+            dummyViewContext.HttpContext = dummyHttpContext;
+            var dummyViewDataContainer = (IViewDataContainer)new ViewPage();
+            var htmlHelper = new System.Web.Mvc.HtmlHelper(dummyViewContext, dummyViewDataContainer);
+
+            var stylesheet = "Mvc/Styles/Designer/modal-dialog.css";
+
+            string expected = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\"></link>", stylesheet);
+            string result = htmlHelper.StyleSheet(stylesheet, throwException: true).ToString();
+            Assert.AreEqual(expected, result);
+
+            htmlHelper.StyleSheet(stylesheet, throwException: true);
+        }
+
+        /// <summary>
+        /// The register stylesheet_ two times_ no duplicate registrations.
+        /// </summary>
+        [TestMethod]
+        [Owner("Dzhenko Penev")]
+        [Description("Ensures that a stylesheet is registered only once even if the Html.StyleSheet method is invoked multiple times.")]
+        public void RegisterStylesheet_TwoTimes_NoDuplicateRegistrations()
+        {
+            var dummyHttpContext = new DummyHttpContext();
+            var dummyViewContext = new ViewContext();
+            dummyViewContext.HttpContext = dummyHttpContext;
+            var dummyViewDataContainer = (IViewDataContainer)new ViewPage();
+            var htmlHelper = new System.Web.Mvc.HtmlHelper(dummyViewContext, dummyViewDataContainer);
+
+            var stylesheet = "Mvc/Styles/Designer/modal-dialog.css";
+
+            string expected1 = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\"></link>", stylesheet);
+            string result1 = htmlHelper.StyleSheet(stylesheet).ToString();
+            Assert.AreEqual(expected1, result1);
+
+            MvcHtmlString expected2 = MvcHtmlString.Empty;
+            MvcHtmlString result2 = htmlHelper.StyleSheet(stylesheet);
+            Assert.AreEqual(expected2, result2);
         }
 
         #endregion

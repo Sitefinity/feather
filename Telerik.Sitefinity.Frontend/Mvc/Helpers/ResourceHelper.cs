@@ -36,7 +36,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, bool throwException = false, string sectionName = null)
         {
-            if (ResourceHelper.TryConfigureScriptManager(scriptPath))
+            if (ResourceHelper.TryConfigureScriptManager(scriptPath, helper.ViewContext.HttpContext.CurrentHandler))
                 return MvcHtmlString.Empty;
 
             return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, scriptPath, ResourceType.Js, throwException, sectionName);
@@ -58,7 +58,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
         public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false, string sectionName = null)
         {
-            if (ResourceHelper.TryConfigureScriptManager(scriptReference))
+            if (ResourceHelper.TryConfigureScriptManager(scriptReference, helper.ViewContext.HttpContext.CurrentHandler))
                 return System.Web.Mvc.MvcHtmlString.Empty;
 
             var references = PageManager.GetScriptReferences(scriptReference).Select(r => new MvcScriptReference(r));
@@ -94,7 +94,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
             var resourceUrl = page.ClientScript.GetWebResourceUrl(TypeResolutionService.ResolveType(type), embeddedScriptPath);
 
-            if (ResourceHelper.TryConfigureScriptManager(resourceUrl))
+            if (ResourceHelper.TryConfigureScriptManager(resourceUrl, helper.ViewContext.HttpContext.CurrentHandler))
                 return MvcHtmlString.Empty;
 
             return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourceUrl, ResourceType.Js, throwException, sectionName);
@@ -204,20 +204,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// </summary>
         /// <param name="scriptReference">The script reference.</param>
         /// <returns></returns>
-        private static bool TryConfigureScriptManager(ScriptRef scriptReference)
+        private static bool TryConfigureScriptManager(ScriptRef scriptReference, IHttpHandler httpHandler)
         {
-            var page = HttpContext.Current.Handler as Page;
-            ScriptManager scriptManager = null;
+            var page = httpHandler as Page;
 
             if (page != null)
             {
-                scriptManager = PageManager.ConfigureScriptManager(page, scriptReference, false);
+                var scriptManager = PageManager.ConfigureScriptManager(page, scriptReference, false);
+
+                if (scriptManager != null)
+                {
+                    return true;
+                }
             }
 
-            if (scriptManager == null)
-                return false;
-            else
-                return true;
+            return false;
         }
 
         /// <summary>
@@ -225,25 +226,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// </summary>
         /// <param name="scriptReference">The script reference.</param>
         /// <returns></returns>
-        private static bool TryConfigureScriptManager(string scriptReference)
+        private static bool TryConfigureScriptManager(string scriptReference, IHttpHandler httpHandler)
         {
-            var page = HttpContext.Current.Handler as Page;
-            ScriptManager scriptManager = null;
+            var page = httpHandler as Page;
 
             if (page != null)
             {
-                scriptManager = ScriptManager.GetCurrent(page);
+                var scriptManager = ScriptManager.GetCurrent(page);
+
+                if (scriptManager != null)
+                {
+                    scriptManager.Scripts.Add(new ScriptReference(scriptReference));
+                    return true;
+                }
             }
 
-            if (scriptManager != null)
-            {
-                scriptManager.Scripts.Add(new ScriptReference(scriptReference));
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "sectionName")]

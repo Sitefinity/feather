@@ -33,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
 
             // Act
-            register.Register(fakeResourceKey);
+            register.Register(fakeResourceKey, throwException: true);
 
             // Assert
             Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
