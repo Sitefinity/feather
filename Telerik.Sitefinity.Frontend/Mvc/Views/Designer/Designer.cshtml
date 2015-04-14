@@ -34,7 +34,7 @@
 			{
 				foreach (var view in Model.Views)
 				{
-					<a class="btn btn-default btn-xs m-top-xs" ng-hide="isCurrentView('@view')" href="#/@view">@Html.Resource(view, fallbackToKey: true)</a>
+					<a class="btn btn-default btn-xs m-top-xs designer-btn-@view" ng-hide="isCurrentView('@view')" href="#/@view">@Html.Resource(view, fallbackToKey: true)</a>
 				}
 			}
 		</script>
