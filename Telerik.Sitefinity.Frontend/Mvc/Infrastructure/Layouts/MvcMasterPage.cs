@@ -150,15 +150,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 container.Peek().Controls.Add(form);
                 container.Push(form);
             }
-            else if (chunk.TagName.Equals("body", StringComparison.OrdinalIgnoreCase))
-            {
-                this.AddIfNotEmpty(currentLiteralText.ToString(), container.Peek());
-                currentLiteralText.Clear();
-
-                var bodyCtrl = new HtmlGenericControl("body");
-                container.Peek().Controls.Add(bodyCtrl);
-                container.Push(bodyCtrl);
-            }
             else if (chunk.TagName.Equals(LayoutsHelpers.SectionTag, StringComparison.OrdinalIgnoreCase))
             {
                 this.AddIfNotEmpty(currentLiteralText.ToString(), container.Peek());
@@ -217,11 +208,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             else if (chunk.TagName.Equals("asp:ContentPlaceHolder", StringComparison.OrdinalIgnoreCase))
             {
                 //// Ignore
-            }
-            else if (chunk.TagName.Equals("body", StringComparison.OrdinalIgnoreCase))
-            {
-                this.AddIfNotEmpty(currentLiteralText.ToString(), container.Pop());
-                currentLiteralText.Clear();
             }
             else if (chunk.TagName.Equals(LayoutsHelpers.SectionTag, StringComparison.OrdinalIgnoreCase))
             {
