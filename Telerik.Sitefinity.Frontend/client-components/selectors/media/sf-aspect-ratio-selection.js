@@ -6,7 +6,8 @@
                 scope: {
                     sfRatio: '=',
                     sfHeight: "=",
-                    sfWidth: "="
+                    sfWidth: "=",
+                    sfItem: "="
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -36,8 +37,8 @@
                         }
                         else if (newVal === 'auto') {
                             if (!scope.item) return;
-                            scope.sfWidth = scope.item.Width;
-                            scope.sfHeight = scope.item.Height;
+                            scope.sfWidth = scope.sfItem.Width;
+                            scope.sfHeight = scope.sfItem.Height;
                         }
                         else if (newVal === 'custom') {
                             scope.sfWidth = "";
