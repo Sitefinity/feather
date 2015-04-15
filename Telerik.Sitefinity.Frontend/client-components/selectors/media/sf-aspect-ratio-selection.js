@@ -16,8 +16,31 @@
                 },
                 link: function (scope, element, attrs) {
 
+                    var recalculateSize = function (ratio) {
+                        if (ratio === '4x3') {
+                            scope.sfWidth = 600;
+                            scope.sfHeight = 450;
+                            aspectRatioCoefficient = 4 / 3;
+                        }
+                        else if (ratio === '16x9') {
+                            scope.sfWidth = 600;
+                            scope.sfHeight = 338;
+                            aspectRatioCoefficient = 16 / 9;
+                        }
+                        else if (ratio === 'auto') {
+                            if (!scope.sfItem) return;
+                            scope.sfWidth = scope.sfItem.Width;
+                            scope.sfHeight = scope.sfItem.Height;
+                        }
+                        else if (ratio === 'custom') {
+                            scope.sfWidth = "";
+                            scope.sfHeight = "";
+                        }
+                    };
+
                     scope.sfRatio = scope.sfRatio || 'auto';
                     var aspectRatioCoefficient = 1;
+                    recalculateSize(scope.sfRatio);
 
                     scope.$watch('sfRatio', function (newVal, oldVal) {
 
@@ -25,25 +48,7 @@
                             return;
                         }
 
-                        if (newVal === '4x3') {
-                            scope.sfWidth = 600;
-                            scope.sfHeight = 450;
-                            aspectRatioCoefficient = 4 / 3;
-                        }
-                        else if (newVal === '16x9') {
-                            scope.sfWidth = 600;
-                            scope.sfHeight = 338;
-                            aspectRatioCoefficient = 16 / 9;
-                        }
-                        else if (newVal === 'auto') {
-                            if (!scope.sfItem) return;
-                            scope.sfWidth = scope.sfItem.Width;
-                            scope.sfHeight = scope.sfItem.Height;
-                        }
-                        else if (newVal === 'custom') {
-                            scope.sfWidth = "";
-                            scope.sfHeight = "";
-                        }
+                        recalculateSize(newVal);
                     });
 
                     scope.updateWidth = function () {
