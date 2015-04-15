@@ -8,7 +8,7 @@
 
         <div class="col-md-5 text-center" ng-hide="showVideo">
             <div class="sf-Media--info-video sf-Media--info" ng-show="sfMedia && !showVideo" ng-click="playVideo('#sfVideoPlayer')">
-                <img ng-src="{{sfMedia.ThumbnailUrl}}" src="" alt="{{sfMedia.Title.Value}}" />
+                <video ng-src="{{sfMedia.MediaUrl}}"></video>
                 <div class="sf-Media-play-button glyphicon glyphicon-play"></div>
             </div>
 
