@@ -17,8 +17,6 @@
                 link: function (scope, element, attrs) {
 
                     scope.sfRatio = 'auto';
-                    scope.sfWidth = scope.sfItem.Width;
-                    scope.sfHeight = scope.sfItem.Height;
                     var aspectRatioCoefficient = 1;
 
                     scope.$watch('sfRatio', function (newVal, oldVal) {
