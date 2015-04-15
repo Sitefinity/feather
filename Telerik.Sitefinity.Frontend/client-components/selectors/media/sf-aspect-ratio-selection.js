@@ -20,7 +20,7 @@
                     var aspectRatioCoefficient = 1;
 
                     scope.$watch('sfRatio', function (newVal, oldVal) {
-                        
+
                         if (!newVal || newVal === oldVal) {
                             return;
                         }
@@ -59,5 +59,5 @@
                     };
                 }
             };
-        }])
+        }]);
 })();
