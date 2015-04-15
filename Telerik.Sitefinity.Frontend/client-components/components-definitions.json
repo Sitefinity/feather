@@ -103,7 +103,7 @@
 		"client-components/selectors/media/sf-media-markup-service.js",
 		"client-components/fields/html-field/sf-html-field.js"
 	],
-	"components" : ["sf-services", "sf-fields", "sf-link-selector-modal", "sf-expander", "sf-image-field", "sf-document-field","sf-video-field", "sf-thumbnail-size-selection"]
+	"components" : ["sf-services", "sf-fields", "sf-link-selector-modal", "sf-expander", "sf-image-field", "sf-document-field","sf-video-field", "sf-thumbnail-size-selection", "sf-aspect-ratio-selection"]
 },
 
 "sf-media-field": {
@@ -358,6 +358,13 @@
 		"client-components/selectors/media/sf-thumbnail-size-selection.js"
 	],
 	"components" : ["sf-services", "sf-image-selector"]
+},
+
+"sf-aspect-ratio-selection" : {
+	"scripts": [
+		"client-components/selectors/media/sf-aspect-ratio-selection.js"
+	],
+	"components" : ["sf-services"]
 },
 
 "_____MULTISITE_____" : {"scripts" : [], "components" : []},

@@ -2,7 +2,7 @@
     var sfFields = angular.module('sfFields');
     sfFields.requires.push('sfHtmlField');
 
-    angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField', 'sfThumbnailSizeSelection'])
+    angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField', 'sfThumbnailSizeSelection', 'sfAspectRatioSelection'])
         .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
             return {
                 restrict: "E",
@@ -319,48 +319,12 @@
 
                 $scope.model = sfModel || { item: undefined };
 
-                $scope.model.aspectRatio = 'auto';
-
                 $scope.$watch('model.item.Id', function (newVal) {
                     if (newVal === null) {
                         $scope.cancel();
                     }
                 });
-
-                $scope.$watch('model.aspectRatio', function (newVal) {
-                    if (newVal === '4x3') {
-                        $scope.model.width = 600;
-                        $scope.model.height = 450;
-                        $scope.model.aspectRatioCoefficient = 4 / 3;
-                    }
-                    else if (newVal === '16x9') {
-                        $scope.model.width = 600;
-                        $scope.model.height = 338;
-                        $scope.model.aspectRatioCoefficient = 16 / 9;
-                    }
-                    else if (newVal === 'auto') {
-                        if (!$scope.item) return;
-                        $scope.model.width = $scope.item.Width;
-                        $scope.model.height = $scope.item.Height;
-                    }
-                    else if (newVal === 'custom') {
-                        $scope.model.width = "";
-                        $scope.model.height = "";
-                    }
-                });
-
-                $scope.updateWidth = function () {
-                    if ($scope.model.aspectRatio != '16x9' && $scope.model.aspectRatio != '4x3') return;
-
-                    $scope.model.width = Math.round($scope.model.height * $scope.model.aspectRatioCoefficient);
-                };
-
-                $scope.updateHeight = function () {
-                    if ($scope.model.aspectRatio != '16x9' && $scope.model.aspectRatio != '4x3') return;
-
-                    $scope.model.height = Math.round($scope.model.width / $scope.model.aspectRatioCoefficient);
-                };
-
+                
                 $scope.done = function () {
                     $modalInstance.close($scope.model);
                 };
