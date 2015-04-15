@@ -16,7 +16,7 @@
                 },
                 link: function (scope, element, attrs) {
 
-                    scope.sfRatio = 'auto';
+                    scope.sfRatio = scope.sfRatio || 'auto';
                     var aspectRatioCoefficient = 1;
 
                     scope.$watch('sfRatio', function (newVal, oldVal) {
