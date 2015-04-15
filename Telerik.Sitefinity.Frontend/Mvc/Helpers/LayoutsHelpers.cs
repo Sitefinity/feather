@@ -20,5 +20,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return new System.Web.Mvc.MvcHtmlString(htmlString);
         }
+
+        /// <summary>
+        /// Html helper which renders all script tags.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="name">The name of the section.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "helper")]
+        public static System.Web.Mvc.MvcHtmlString Section(this HtmlHelper helper, string name)
+        {
+            return new System.Web.Mvc.MvcHtmlString(LayoutsHelpers.SectionHtml.Arrange(name));
+        }
+
+        /// <summary>
+        /// The section tag name.
+        /// </summary>
+        internal const string SectionTag = "FeatherSection";
+
+        /// <summary>
+        /// The section HTML markup.
+        /// </summary>
+        internal const string SectionHtml = "<" + LayoutsHelpers.SectionTag + " name=\"{0}\"></" + LayoutsHelpers.SectionTag + ">";
     }
 }
