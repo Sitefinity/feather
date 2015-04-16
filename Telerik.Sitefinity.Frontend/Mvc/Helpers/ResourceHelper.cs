@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
@@ -331,7 +332,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             MvcHtmlString result = MvcHtmlString.Empty;
 
             // No section name renders the script inline if it hasn't been rendered
-            if (string.IsNullOrEmpty(sectionName))
+            if (string.IsNullOrEmpty(sectionName) || !SectionRenderer.IsAvailable(httpContext.Handler as Page, sectionName))
             {
                 if (!register.IsRegistered(resourcePath, sectionName: null))
                 {

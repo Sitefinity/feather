@@ -27,11 +27,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <returns>True if the section is available on the page and false otherwise.</returns>
         internal static bool IsAvailable(Page page, string sectionName)
         {
-            if (page == null)
-                throw new ArgumentNullException("page");
-
             if (sectionName == null)
                 throw new ArgumentNullException("sectionName");
+
+            if (page == null)
+                return false;
 
             return page.Items.Contains(SectionRenderer.AvailableSectionsKey) && ((ISet<string>)page.Items[SectionRenderer.AvailableSectionsKey]).Contains(sectionName);
         }
