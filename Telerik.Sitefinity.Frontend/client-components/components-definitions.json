@@ -99,7 +99,6 @@
 
 "sf-html-field" : {
 	"scripts" : [
-		"Mvc/Scripts/ContentBlock/shared-content-services.js",
 		"client-components/selectors/media/sf-media-markup-service.js",
 		"client-components/fields/html-field/sf-html-field.js"
 	],
