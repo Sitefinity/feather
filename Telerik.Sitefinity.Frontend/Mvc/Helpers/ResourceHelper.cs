@@ -142,66 +142,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
-        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
-        /// </summary>
-        /// <remarks>
-        /// Use this helper to resolve embedded resource path.
-        /// </remarks>
-        /// <param name="helper">The helper.</param>
-        /// <param name="type">Full name of the type in which assembly is located the embedded resource.</param>
-        /// <param name="embeddedScriptPath">The embedded script path.</param>
-        /// <returns>
-        /// MvcHtmlString
-        /// </returns>
-        public static MvcHtmlString EmbeddedScript(this HtmlHelper helper, string type, string embeddedScriptPath)
-        {
-            return ResourceHelper.Script(helper, type, embeddedScriptPath, null, false);
-        }
-
-        /// <summary>
-        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
-        /// </summary>
-        /// <remarks>
-        /// Use this helper to resolve embedded resource path.
-        /// </remarks>
-        /// <param name="helper">The helper.</param>
-        /// <param name="type">Full name of the type in which assembly is located the embedded resource.</param>
-        /// <param name="embeddedScriptPath">The embedded script path.</param>
-        /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
-        /// <returns>
-        /// MvcHtmlString
-        /// </returns>
-        public static MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, string sectionName)
-        {
-            return ResourceHelper.Script(helper, type, embeddedScriptPath, sectionName, true);
-        }
-
-        /// <summary>
-        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
-        /// </summary>
-        /// <remarks>
-        /// Use this helper to resolve embedded resource path.
-        /// </remarks>
-        /// <param name="helper">The helper.</param>
-        /// <param name="type">Full name of the type in which assembly is located the embedded resource.</param>
-        /// <param name="embeddedScriptPath">The embedded script path.</param>
-        /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
-        /// <param name="throwException">Indicates whether to throw an exception if the specified section does not exist.</param>
-        /// <returns>
-        /// MvcHtmlString
-        /// </returns>
-        public static MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, string sectionName, bool throwException)
-        {
-            var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
-            var resourceUrl = page.ClientScript.GetWebResourceUrl(TypeResolutionService.ResolveType(type), embeddedScriptPath);
-
-            if (ResourceHelper.TryConfigureScriptManager(resourceUrl, helper.ViewContext.HttpContext.CurrentHandler))
-                return MvcHtmlString.Empty;
-
-            return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourceUrl, ResourceType.Js, sectionName, throwException);
-        }
-
-        /// <summary>
         /// Registers style sheet reference and ensures that it loads maximum once for a page.
         /// </summary>
         /// <param name="helper">The helper.</param>
@@ -253,12 +193,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         public static MvcHtmlString QueryBuilderReferences(this HtmlHelper helper)
         {
             var result = new StringBuilder();
-
-            result.Append(ResourceHelper.EmbeddedScript(helper, "Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryData.js").ToHtmlString());
-            result.Append(ResourceHelper.EmbeddedScript(helper, "Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryDataItem.js").ToHtmlString());
-            result.Append(ResourceHelper.EmbeddedScript(helper, "Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryItem.js").ToHtmlString());
-            result.Append(ResourceHelper.EmbeddedScript(helper, "Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryGroup.js").ToHtmlString());
-            result.Append(ResourceHelper.EmbeddedScript(helper, "Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryBuilder.js").ToHtmlString());
+            var urlHelper = new UrlHelper(helper.ViewContext.HttpContext.Request.RequestContext);
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource("Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryData.js")).ToHtmlString());
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource("Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryDataItem.js")).ToHtmlString());
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource("Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryItem.js")).ToHtmlString());
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource("Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryGroup.js")).ToHtmlString());
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource("Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryBuilder.js")).ToHtmlString());
 
             return MvcHtmlString.Create(result.ToString());
         }
