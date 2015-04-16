@@ -190,7 +190,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns>
         /// MvcHtmlString
         /// </returns>
-        public static MvcHtmlString QueryBuilderReferences(this HtmlHelper helper)
+        public static MvcHtmlString QueryBuilderScriptReferences(this HtmlHelper helper)
         {
             var result = new StringBuilder();
             var urlHelper = new UrlHelper(helper.ViewContext.HttpContext.Request.RequestContext);
