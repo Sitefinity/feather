@@ -5,9 +5,9 @@
                 restrict: 'AE',
                 scope: {
                     sfRatio: '=',
-                    sfHeight: "=",
-                    sfWidth: "=",
-                    sfItem: "="
+                    sfHeight: '=',
+                    sfWidth: '=',
+                    sfItem: '='
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -29,12 +29,12 @@
                         }
                         else if (ratio === 'auto') {
                             if (!scope.sfItem) return;
-                            scope.sfWidth = scope.sfItem.Width;
-                            scope.sfHeight = scope.sfItem.Height;
+                            scope.sfWidth = parseInt(scope.sfItem.Width, 10);
+                            scope.sfHeight = parseInt(scope.sfItem.Height, 10);
                         }
                         else if (ratio === 'custom') {
-                            scope.sfWidth = "";
-                            scope.sfHeight = "";
+                            scope.sfWidth = parseInt(scope.sfWidth, 10);
+                            scope.sfHeight = parseInt(scope.sfHeight, 10);
                         }
                     };
 
