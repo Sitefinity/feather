@@ -3,12 +3,12 @@
 
 
         <div ng-show="showVideo" class="text-center col-md-12 sf-Media--info-video">
-            <video id="sfVideoPlayer" controls="controls" ng-src="{{sfMedia.MediaUrl}}"></video>
+            <video preload="none" id="sfVideoPlayer" controls="controls" ng-src="{{sfMedia.MediaUrl}}"></video>
         </div>
 
         <div class="col-md-5 text-center" ng-hide="showVideo">
             <div class="sf-Media--info-video sf-Media--info" ng-show="sfMedia && !showVideo" ng-click="playVideo('#sfVideoPlayer')">
-                <video ng-src="{{sfMedia.MediaUrl}}"></video>
+                <video preload="metadata" ng-src="{{sfMedia.MediaUrl}}"></video>
                 <div class="sf-Media-play-button glyphicon glyphicon-play"></div>
             </div>
 
