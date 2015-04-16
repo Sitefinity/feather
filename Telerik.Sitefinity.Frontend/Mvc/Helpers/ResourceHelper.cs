@@ -24,7 +24,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// </summary>
         /// <param name="helper">The helper.</param>
         /// <param name="scriptPath">The path to the JavaScript file.</param>
-        /// <param name="throwException">OPTIONAL: Indicates whether to throw an exception if the JavaScript is already registered. By default the value is set to <value>false</value>.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        /// <remarks>
+        /// This method uses directly the resource from the <see cref="scriptPath" />.
+        /// In case you want to use embedded scripts from Sitefinity check <see cref="ResourceHelper.Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)" />.
+        /// </remarks>
+        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath)
+        {
+            return ResourceHelper.Script(helper, scriptPath, null, false);
+        }
+
+        /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="scriptPath">The path to the JavaScript file.</param>
         /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
         /// <returns>
         /// MvcHtmlString
@@ -33,13 +49,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// This method uses directly the resource from the <see cref="scriptPath" />.
         /// In case you want to use embedded scripts from Sitefinity check <see cref="ResourceHelper.Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)" />.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, bool throwException = false, string sectionName = null)
+        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, string sectionName)
+        {
+            return ResourceHelper.Script(helper, scriptPath, sectionName, true);
+        }
+
+        /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="scriptPath">The path to the JavaScript file.</param>
+        /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
+        /// <param name="throwException">Indicates whether to throw an exception if the specified section does not exist.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        /// <remarks>
+        /// This method uses directly the resource from the <see cref="scriptPath" />.
+        /// In case you want to use embedded scripts from Sitefinity check <see cref="ResourceHelper.Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)" />.
+        /// </remarks>
+        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, string sectionName, bool throwException)
         {
             if (ResourceHelper.TryConfigureScriptManager(scriptPath, helper.ViewContext.HttpContext.CurrentHandler))
                 return MvcHtmlString.Empty;
 
-            return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, scriptPath, ResourceType.Js, throwException, sectionName);
+            return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, scriptPath, ResourceType.Js, sectionName, throwException);
         }
 
         /// <summary>
@@ -50,13 +84,45 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// </remarks>
         /// <param name="helper">The helper.</param>
         /// <param name="scriptReference">The script reference.</param>
-        /// <param name="throwException">if set to <c>true</c> throw exception.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference)
+        {
+            return ResourceHelper.Script(helper, scriptReference, null, false);
+        }
+
+        /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <remarks>
+        /// This helper references the same resource existing in Sitefinity.
+        /// </remarks>
+        /// <param name="helper">The helper.</param>
+        /// <param name="scriptReference">The script reference.</param>
         /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
         /// <returns>
         /// MvcHtmlString
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false, string sectionName = null)
+        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, string sectionName)
+        {
+            return ResourceHelper.Script(helper, scriptReference, sectionName, true);
+        }
+
+        /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <remarks>
+        /// This helper references the same resource existing in Sitefinity.
+        /// </remarks>
+        /// <param name="helper">The helper.</param>
+        /// <param name="scriptReference">The script reference.</param>
+        /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
+        /// <param name="throwException">Indicates whether to throw an exception if the specified section does not exist.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, string sectionName, bool throwException)
         {
             if (ResourceHelper.TryConfigureScriptManager(scriptReference, helper.ViewContext.HttpContext.CurrentHandler))
                 return System.Web.Mvc.MvcHtmlString.Empty;
@@ -68,7 +134,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             foreach (var script in references)
             {
                 var resourceUrl = script.GetResourceUrl();
-                outputMarkup.Append(ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourceUrl, ResourceType.Js, throwException, sectionName));
+                outputMarkup.Append(ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourceUrl, ResourceType.Js, sectionName, throwException));
             }
 
             return MvcHtmlString.Create(outputMarkup.ToString());
@@ -81,15 +147,49 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Use this helper to resolve embedded resource path.
         /// </remarks>
         /// <param name="helper">The helper.</param>
-        /// <param name="type">The type.</param>
+        /// <param name="type">Full name of the type in which assembly is located the embedded resource.</param>
         /// <param name="embeddedScriptPath">The embedded script path.</param>
-        /// <param name="throwException">if set to <c>true</c> throws exception.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        public static MvcHtmlString EmbeddedScript(this HtmlHelper helper, string type, string embeddedScriptPath)
+        {
+            return ResourceHelper.Script(helper, type, embeddedScriptPath, null, false);
+        }
+
+        /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <remarks>
+        /// Use this helper to resolve embedded resource path.
+        /// </remarks>
+        /// <param name="helper">The helper.</param>
+        /// <param name="type">Full name of the type in which assembly is located the embedded resource.</param>
+        /// <param name="embeddedScriptPath">The embedded script path.</param>
         /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
         /// <returns>
         /// MvcHtmlString
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, bool throwException = false, string sectionName = null)
+        public static MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, string sectionName)
+        {
+            return ResourceHelper.Script(helper, type, embeddedScriptPath, sectionName, true);
+        }
+
+        /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <remarks>
+        /// Use this helper to resolve embedded resource path.
+        /// </remarks>
+        /// <param name="helper">The helper.</param>
+        /// <param name="type">Full name of the type in which assembly is located the embedded resource.</param>
+        /// <param name="embeddedScriptPath">The embedded script path.</param>
+        /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
+        /// <param name="throwException">Indicates whether to throw an exception if the specified section does not exist.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        public static MvcHtmlString Script(this HtmlHelper helper, string type, string embeddedScriptPath, string sectionName, bool throwException)
         {
             var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
             var resourceUrl = page.ClientScript.GetWebResourceUrl(TypeResolutionService.ResolveType(type), embeddedScriptPath);
@@ -97,7 +197,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (ResourceHelper.TryConfigureScriptManager(resourceUrl, helper.ViewContext.HttpContext.CurrentHandler))
                 return MvcHtmlString.Empty;
 
-            return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourceUrl, ResourceType.Js, throwException, sectionName);
+            return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourceUrl, ResourceType.Js, sectionName, throwException);
         }
 
         /// <summary>
@@ -105,15 +205,61 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// </summary>
         /// <param name="helper">The helper.</param>
         /// <param name="resourcePath">The path to the CSS file.</param>
-        /// <param name="throwException">OPTIONAL: Indicates whether to throw an exception if the CSS is already registered. By default the value is set to <value>false</value>.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        public static MvcHtmlString StyleSheet(this HtmlHelper helper, string resourcePath)
+        {
+            return ResourceHelper.StyleSheet(helper, resourcePath, null, false);
+        }
+
+        /// <summary>
+        /// Registers style sheet reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="resourcePath">The path to the CSS file.</param>
         /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
         /// <returns>
         /// MvcHtmlString
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static MvcHtmlString StyleSheet(this HtmlHelper helper, string resourcePath, bool throwException = false, string sectionName = null)
+        public static MvcHtmlString StyleSheet(this HtmlHelper helper, string resourcePath, string sectionName)
         {
-            return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourcePath, ResourceType.Css, throwException, sectionName);
+            return ResourceHelper.StyleSheet(helper, resourcePath, sectionName, true);
+        }
+
+        /// <summary>
+        /// Registers style sheet reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="resourcePath">The path to the CSS file.</param>
+        /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
+        /// <param name="throwException">Indicates whether to throw an exception if the specified section does not exist.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        public static MvcHtmlString StyleSheet(this HtmlHelper helper, string resourcePath, string sectionName, bool throwException)
+        {
+            return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, resourcePath, ResourceType.Css, sectionName, throwException);
+        }
+
+        /// <summary>
+        /// Adds script references required by the Sitefinity's QueryBuilder component.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        public static MvcHtmlString QueryBuilderReferences(this HtmlHelper helper)
+        {
+            var result = new StringBuilder();
+
+            result.Append(ResourceHelper.EmbeddedScript(helper, "Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryData.js").ToHtmlString());
+            result.Append(ResourceHelper.EmbeddedScript(helper, "Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryDataItem.js").ToHtmlString());
+            result.Append(ResourceHelper.EmbeddedScript(helper, "Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryItem.js").ToHtmlString());
+            result.Append(ResourceHelper.EmbeddedScript(helper, "Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryGroup.js").ToHtmlString());
+            result.Append(ResourceHelper.EmbeddedScript(helper, "Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryBuilder.js").ToHtmlString());
+
+            return MvcHtmlString.Create(result.ToString());
         }
 
         /// <summary>
@@ -172,7 +318,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return stylesheetMarkup;
         }
 
-        private static MvcHtmlString RegisterResource(HttpContextBase httpContext, string resourcePath, ResourceType resourceType, bool throwException, string sectionName)
+        private static MvcHtmlString RegisterResource(HttpContextBase httpContext, string resourcePath, ResourceType resourceType, string sectionName, bool throwException)
         {
             var registerName = string.Empty;
             if (resourceType == ResourceType.Js)

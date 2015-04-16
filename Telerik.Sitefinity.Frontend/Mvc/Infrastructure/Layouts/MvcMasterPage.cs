@@ -27,11 +27,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         {
             this.SetMasterInternals(page);
             this.InitializeAsUserControl(page);
-
-            var source = this.LayoutOutput(page.MasterPageFile);
-            this.InitializeControls(source);
-
             page.Controls.Add(this);
+
+            string masterFile;
+            if (page.MasterPageFile.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+                masterFile = page.MasterPageFile.Left(page.MasterPageFile.Length - ".master".Length);
+            else
+                masterFile = page.MasterPageFile;
+
+            var source = this.LayoutOutput(masterFile);
+            this.InitializeControls(source);
         }
 
         private string LayoutOutput(string path)

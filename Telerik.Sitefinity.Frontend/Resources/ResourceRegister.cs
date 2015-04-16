@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {
@@ -95,6 +96,15 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// </returns>
         public bool Register(string resourceKey, string sectionName = null, bool throwException = false)
         {
+            if (sectionName != null && throwException)
+            {
+                var page = this.Context.Handler as System.Web.UI.Page;
+                if (page == null || !SectionRenderer.IsAvailable(page, sectionName))
+                {
+                    throw new ArgumentException("A section with name \"{0}\" could not be found.".Arrange(sectionName), sectionName);
+                }
+            }
+
             if (string.IsNullOrEmpty(sectionName))
                 sectionName = ResourceRegister.DefaultSectionNameKey;
 
@@ -109,11 +119,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
             }
             else
                 this.Container.Add(sectionName, new List<string>() { resourceKey });
-
-            if (throwException && !successfullyRegistered)
-            {
-                throw new ArgumentException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} is already registered {1}!", resourceKey, string.IsNullOrEmpty(sectionName) ? "inline" : string.Format("in the {0} section", sectionName)));
-            }
 
             return successfullyRegistered;
         }
