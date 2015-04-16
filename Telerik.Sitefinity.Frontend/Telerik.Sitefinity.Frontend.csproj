@@ -203,6 +203,7 @@
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\EmailAddressAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\DuplicateSectionException.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -210,6 +211,7 @@
     <Compile Include="Mvc\Infrastructure\PageInitializer.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageEditorRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageRouteHandler.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcTemplateEditorRouteHandler.cs" />
     <Compile Include="Mvc\Models\ScriptDependencyConfigModel.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\RequiredIfExistAttribute.cs" />
     <Compile Include="Mvc\StringResources\ClientComponentsResources.cs" />

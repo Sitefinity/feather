@@ -18,6 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
         #region Public Methods and Operators
 
         [TestMethod]
+        [Ignore]
         [Owner("Tihomir Petrov")]
         [Description("Verifies that exception is thrown in case that resource can be registered successfully.")]
         [ExpectedException(typeof(ArgumentException), "There should be exception regarding the duplication of the resource registration!")]
