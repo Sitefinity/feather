@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Web.UI;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -14,9 +16,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="helper">The helper.</param>
         /// <param name="containerName">Name of the container.</param>
         /// <returns></returns>
-        public static System.Web.Mvc.MvcHtmlString SfPlaceHolder(this HtmlHelper helper, string containerName = "Body")
+        public static System.Web.Mvc.MvcHtmlString SfPlaceHolder(this HtmlHelper helper, string containerName = LayoutsHelpers.PlaceHolderDefaultName)
         {
-            var htmlString = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<asp:contentplaceholder ID='{0}' runat='server' />", containerName);
+            var htmlString = LayoutsHelpers.ContentPlaceHolderMarkup(containerName);
 
             return new System.Web.Mvc.MvcHtmlString(htmlString);
         }
@@ -30,7 +32,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "helper")]
         public static System.Web.Mvc.MvcHtmlString Section(this HtmlHelper helper, string name)
         {
+            if (helper.ViewContext.HttpContext != null)
+            {
+                SectionRenderer.MarkAvailability(helper.ViewContext.HttpContext.Handler as Page, name);
+            }
+
             return new System.Web.Mvc.MvcHtmlString(LayoutsHelpers.SectionHtml.Arrange(name));
+        }
+
+        /// <summary>
+        /// Gets the ASPX markup of a content place holder.
+        /// </summary>
+        /// <param name="placeHolderName">Name of the place holder.</param>
+        /// <returns></returns>
+        internal static string ContentPlaceHolderMarkup(string placeHolderName = LayoutsHelpers.PlaceHolderDefaultName)
+        {
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, "<asp:contentplaceholder ID='{0}' runat='server' />", placeHolderName);
         }
 
         /// <summary>
@@ -42,5 +59,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// The section HTML markup.
         /// </summary>
         internal const string SectionHtml = "<" + LayoutsHelpers.SectionTag + " name=\"{0}\"></" + LayoutsHelpers.SectionTag + ">";
+
+        /// <summary>
+        /// The content place holder default name.
+        /// </summary>
+        private const string PlaceHolderDefaultName = "Body";
     }
 }

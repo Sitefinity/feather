@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Services;
@@ -62,11 +64,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="viewPath">The view path.</param>
-        /// <param name="model">The model.</param>
-        /// <param name="isPartial">if set to <c>true</c> the view should be partial.</param>
+        /// <param name="placeholdersOnly"></param>
         /// <returns></returns>
         /// <exception cref="System.IO.FileNotFoundException">View cannot be found.</exception>
-        public virtual string RenderViewToString(ControllerContext context, string viewPath, object model = null, bool isPartial = false)
+        public virtual string RenderViewToString(ControllerContext context, string viewPath, bool placeholdersOnly = false)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -78,7 +79,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             IView view = null;
 
             // Obtaining the view engine result
-            var viewEngineResult = this.GetViewEngineResult(context, viewPath, isPartial);
+            var viewEngineResult = this.GetViewEngineResult(context, viewPath, isPartial: false);
 
             if (viewEngineResult != null)
                 view = viewEngineResult.View;
@@ -86,12 +87,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (view != null)
             {
                 // assigning the model so it can be available to the view 
-                context.Controller.ViewData.Model = model;
+                context.Controller.ViewData.Model = null;
 
+                var builtView = view as BuildManagerCompiledView;
                 using (var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture))
                 {
-                    var viewConext = new ViewContext(context, view, context.Controller.ViewData, context.Controller.TempData, writer);
-                    view.Render(viewConext, writer);
+                    if (placeholdersOnly && builtView != null)
+                    {
+                        this.RenderContentPlaceHolders(builtView.ViewPath, writer);
+                    }
+                    else
+                    {
+                        var viewConext = new ViewContext(context, view, context.Controller.ViewData, context.Controller.TempData, writer);
+                        view.Render(viewConext, writer);
+                    }
 
                     // the view must be released
                     viewEngineResult.ViewEngine.ReleaseView(context, view);
@@ -100,7 +109,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
                 // Add cache dependency on the virtual file that is used for rendering the view.
                 var httpContext = SystemManager.CurrentHttpContext;
-                var builtView = view as BuildManagerCompiledView;
                 if (httpContext != null && builtView != null)
                 {
                     var virtualPathDependency = HostingEnvironment.VirtualPathProvider != null ?
@@ -146,16 +154,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <summary>
         /// Gets the layout template.
         /// </summary>
-        /// <param name="templateName"></param>
-        /// <param name="model">The model.</param>
-        /// <param name="isPartial">if set to <c>true</c> requested view is partial.</param>
+        /// <param name="templateName">The name of the layout template to render.</param>
+        /// <param name="placeholdersOnly">When true the method returns a master page containing only content placeholders.</param>
         /// <returns></returns>
-        public virtual string GetLayoutTemplate(string templateName, object model = null, bool isPartial = false)
+        public virtual string GetLayoutTemplate(string templateName, bool placeholdersOnly = false)
         {
             var genericController = this.CreateController();
-            var layoutHtmlString = this.RenderViewToString(genericController.ControllerContext, templateName, model, isPartial);
+            var layoutHtmlString = this.RenderViewToString(genericController.ControllerContext, templateName, placeholdersOnly);
 
-            if (!layoutHtmlString.IsNullOrEmpty())
+            if (!layoutHtmlString.IsNullOrEmpty() && !placeholdersOnly)
             {
                 var htmlProcessor = new MasterPageBuilder();
                 layoutHtmlString = htmlProcessor.ProcessLayoutString(layoutHtmlString);
@@ -238,6 +245,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 });
 
             return pathTransformations;
+        }
+
+        private void RenderContentPlaceHolders(string layoutPath, StringWriter writer)
+        {
+            writer.WriteLine("<%@ Master Language=\"C#\" %>");
+
+            string layoutText;
+            using (var layoutFile = new StreamReader(HostingEnvironment.VirtualPathProvider.GetFile(layoutPath).Open()))
+            {
+                layoutText = layoutFile.ReadToEnd();
+            }
+
+            var matches = new Regex(@"@Html\.SfPlaceHolder(?:\(\""(?<placeHolder>\w*)\""\)|(?<placeHolder>\(\)))").Matches(layoutText);
+            foreach (Match match in matches)
+            {
+                var group = match.Groups["placeHolder"];
+                if (group.Success)
+                {
+                    foreach (Capture capture in group.Captures)
+                    {
+                        var placeHolderName = capture.Value != "()" ? capture.Value : null;
+                        writer.Write(LayoutsHelpers.ContentPlaceHolderMarkup(placeHolderName));
+                    }
+                }
+            }
         }
 
         #endregion
