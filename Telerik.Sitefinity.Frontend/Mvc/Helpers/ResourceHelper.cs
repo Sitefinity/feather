@@ -296,7 +296,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         private static bool TryConfigureScriptManager(ScriptRef scriptReference, IHttpHandler httpHandler)
         {
-            var page = httpHandler as Page;
+            var page = ResourceHelper.GetTopMostPageFromHandler(httpHandler);
 
             if (page != null)
             {
@@ -319,7 +319,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         private static bool TryConfigureScriptManager(string scriptReference, IHttpHandler httpHandler)
         {
-            var page = httpHandler as Page;
+            var page = ResourceHelper.GetTopMostPageFromHandler(httpHandler);
 
             if (page != null)
             {
@@ -333,6 +333,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return false;
+        }
+
+        private static Page GetTopMostPageFromHandler(IHttpHandler httpHandler)
+        {
+            var page = httpHandler as Page;
+
+            if (page != null)
+            {
+                var topMostPage = page;
+
+                while (topMostPage.PreviousPage != null)
+                {
+                    topMostPage = topMostPage.PreviousPage;
+                }
+
+                return topMostPage;
+            }
+
+            return null;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "sectionName")]
