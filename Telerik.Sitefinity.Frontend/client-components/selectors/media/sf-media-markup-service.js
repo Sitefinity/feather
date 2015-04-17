@@ -354,7 +354,6 @@
                     jElementToInsert.attr('class', properties.cssClass);
                     jElementToInsert.attr('width', properties.width);
                     jElementToInsert.attr('height', properties.height);
-                    jElementToInsert.attr('preload', 'metadata');
 
                     if (properties.margin) {
                         if (properties.margin.left)
