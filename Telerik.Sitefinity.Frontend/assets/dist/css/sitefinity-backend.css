@@ -8070,7 +8070,6 @@ fieldset[disabled="disabled"] {
 .sf-loading-wrapper {
   position: absolute;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 902;
   top: 0;
   left: 0;
   right: 0;
@@ -8796,6 +8795,11 @@ tab {
 /* line 21, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
 .sf-FlatTaxonField .suggestion-list {
   margin-left: 0; }
+
+/* line 25, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/_foundation-overwrites */
+.btn-link.btn[disabled] {
+  color: #337cb7;
+  border: 1px solid transparent; }
 
 /* line 7, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_tooltip */
 .Tooltip {
