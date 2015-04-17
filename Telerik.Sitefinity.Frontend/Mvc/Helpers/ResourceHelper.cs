@@ -261,6 +261,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
         private static MvcHtmlString RegisterResource(HttpContextBase httpContext, string resourcePath, ResourceType resourceType, string sectionName, bool throwException)
         {
+            throwException = throwException && httpContext.CurrentHandler != null;
+
             var registerName = string.Empty;
             if (resourceType == ResourceType.Js)
                 registerName = ResourceHelper.JsRegisterName;
