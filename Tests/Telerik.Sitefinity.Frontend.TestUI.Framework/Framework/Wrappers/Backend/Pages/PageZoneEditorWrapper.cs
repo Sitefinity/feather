@@ -48,18 +48,19 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
-        /// Drag and drop a layout widget element
+        /// Drag and drop a widget element to placeholder.
         /// </summary>
-        /// <param name="layoutCaption">the layout widget caption</param>
-        public void DragAndDropLayoutWidget(string layoutCaption)
+        /// <param name="layoutCaption">the widget caption.</param>
+        /// <param name="layoutCaption">the placeholder Id.</param>
+        public void DragAndDropWidgetToPlaceholder(string widgetCaption, string placeHolder = "Contentplaceholder1")
         {
-            var layout = ActiveBrowser.Find.ByContent<HtmlDiv>(layoutCaption);
-            Assert.IsNotNull(layout, "The layout was not found on the page");
+            var widget = ActiveBrowser.Find.ByContent<HtmlDiv>(widgetCaption);
+            Assert.IsNotNull(widget, "The layout was not found on the page");
 
-            var layoutAcceptor = ActiveBrowser.Find.ByExpression<HtmlDiv>("id=?RadDockZoneContentplaceholder1")
-                .AssertIsPresent<HtmlDiv>("RadDockZoneContentplaceholder1");
+            HtmlDiv radDockZone = ActiveBrowser.Find.ByExpression<HtmlDiv>("placeholderid=" + placeHolder)
+              .AssertIsPresent<HtmlDiv>(placeHolder);
 
-            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().AddWidgetToDropZone(layout, layoutAcceptor);
+            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().AddWidgetToDropZone(widget, radDockZone);
         }
 
         /// <summary>

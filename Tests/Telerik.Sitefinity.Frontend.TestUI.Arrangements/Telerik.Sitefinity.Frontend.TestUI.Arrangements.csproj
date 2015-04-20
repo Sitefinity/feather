@@ -137,6 +137,7 @@
     <Compile Include="MvcWidgets\MvcWidgetDefaultFeatherDesigner.cs" />
     <Compile Include="MvcWidgets\MvcWidgetEditViewFromPackageCacheInvalidation.cs" />
     <Compile Include="MvcWidgets\MvcWidgetUseViewFromLayoutFolderAndPackage.cs" />
+    <Compile Include="MvcWidgets\TestControllers\SimpleTextController.cs" />
     <Compile Include="Pages\DeletePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcePackages\AddNewLayoutFileToDefaultPackage.cs" />

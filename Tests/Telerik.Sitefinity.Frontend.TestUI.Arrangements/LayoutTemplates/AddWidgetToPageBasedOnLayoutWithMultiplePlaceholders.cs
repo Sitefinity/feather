@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Telerik.Sitefinity.Frontend.TestUI.Arrangements.MvcWidgets.TestControllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
@@ -20,6 +21,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 
             var templateId = ServerOperations.Templates().GetTemplateIdByTitle(TemplateTitle);
             ServerOperations.Pages().CreatePage(PageTitle, templateId);
+
+            this.CreateMvcWidget(typeof(SimpleTextController).FullName);
         }
 
         [ServerTearDown]
@@ -54,6 +57,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             string filePath = Path.Combine(folderPath, LayoutFileName);
 
             return filePath;
+        }
+
+        private void CreateMvcWidget(string controllerType)
+        {
+            var mvcWidget = new Telerik.Sitefinity.Mvc.Proxy.MvcControllerProxy();
+
+            mvcWidget.ControllerName = controllerType;
         }
 
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayoutTwoPlaceholders.cshtml";

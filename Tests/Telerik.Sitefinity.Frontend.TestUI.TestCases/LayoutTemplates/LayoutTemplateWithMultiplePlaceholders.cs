@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
@@ -23,7 +24,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
         public void AddWidgetToPageBasedOnLayoutWithMultiplePlaceholders()
         {
             BAT.Macros().NavigateTo().Pages();
-            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageTitle);            
+            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageTitle);
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropWidgetToPlaceholder(WidgetCaption, FirstPlaceHolderId);
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropWidgetToPlaceholder(WidgetCaption, SecondPlaceHolderId);
+            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
         }
 
         /// <summary>
@@ -44,5 +48,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
         }
 
         private const string PageTitle = "FeatherTestPage";
+        private const string WidgetCaption = "SimpleWidget";
+        private const string FirstPlaceHolderId = "Contentplaceholder1";
+        private const string SecondPlaceHolderId = "Contentplaceholder2";
     }
 }
