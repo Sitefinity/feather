@@ -478,7 +478,7 @@
                "longDescription" : "",
                "name" : "Blog selector",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
@@ -486,7 +486,7 @@
                "longDescription" : "",
                "name" : "Blog post selector",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             }
          ]
@@ -603,7 +603,7 @@
                "longDescription" : "Comments for dynamic content items",
                "name" : "Comments",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
@@ -736,8 +736,17 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Video",
-               "progress" : 0,
-               "shortDescription" : "Not started",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "",
+                     "commitHash" : "434166b771ae91c16d7d1d21ad3fa41add2d4b1d",
+                     "date" : "04-17-2015 18:06 +0300",
+                     "name" : "Video widget implementation",
+                     "tag" : "v.1.2.170.2"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -745,7 +754,7 @@
                "longDescription" : "",
                "name" : "Video gallery",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
@@ -804,7 +813,7 @@
                "longDescription" : "",
                "name" : "Blog posts",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
@@ -812,7 +821,7 @@
                "longDescription" : "",
                "name" : "Blog lists",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
@@ -820,7 +829,7 @@
                "longDescription" : "",
                "name" : "Form",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -828,7 +837,7 @@
                "longDescription" : "",
                "name" : "Feed",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -836,7 +845,7 @@
                "longDescription" : "",
                "name" : "Forums",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -844,7 +853,7 @@
                "longDescription" : "",
                "name" : "Comments",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -852,7 +861,7 @@
                "longDescription" : "",
                "name" : "Events",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
@@ -904,7 +913,7 @@
                "longDescription" : "",
                "name" : "Archive",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -912,7 +921,7 @@
                "longDescription" : "",
                "name" : "Language selector",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -920,7 +929,7 @@
                "longDescription" : "",
                "name" : "Breadcrumb",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -928,7 +937,7 @@
                "longDescription" : "",
                "name" : "Site selector",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
@@ -942,7 +951,7 @@
                "longDescription" : "",
                "name" : "CSS",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -950,7 +959,7 @@
                "longDescription" : "",
                "name" : "Java Script",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -958,7 +967,7 @@
                "longDescription" : "",
                "name" : "Google Analytics",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
@@ -1080,7 +1089,7 @@
                "longDescription" : "",
                "name" : "Users list",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
@@ -1111,7 +1120,7 @@
                "longDescription" : "",
                "name" : "Facebook feed",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1119,7 +1128,7 @@
                "longDescription" : "",
                "name" : "Facebook like",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1127,7 +1136,7 @@
                "longDescription" : "",
                "name" : "Twitter feed",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1135,7 +1144,7 @@
                "longDescription" : "",
                "name" : "Twitter widget",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
@@ -1189,7 +1198,7 @@
                "longDescription" : "",
                "name" : "Categories",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1197,7 +1206,7 @@
                "longDescription" : "",
                "name" : "Tags",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
@@ -1211,7 +1220,7 @@
                "longDescription" : "",
                "name" : "Subscribe form",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1219,7 +1228,7 @@
                "longDescription" : "",
                "name" : "Unsubscribe",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
@@ -1233,7 +1242,7 @@
                "longDescription" : "",
                "name" : "Product list",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1241,7 +1250,7 @@
                "longDescription" : "",
                "name" : "Shopping cart",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1249,7 +1258,7 @@
                "longDescription" : "",
                "name" : "Shopping cart summary",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1257,7 +1266,7 @@
                "longDescription" : "",
                "name" : "Checkout",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1265,7 +1274,7 @@
                "longDescription" : "",
                "name" : "Currency selector",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1273,7 +1282,7 @@
                "longDescription" : "",
                "name" : "Orders list",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1281,7 +1290,7 @@
                "longDescription" : "",
                "name" : "Order invoice",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1289,7 +1298,7 @@
                "longDescription" : "",
                "name" : "Your downloads",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1297,7 +1306,7 @@
                "longDescription" : "",
                "name" : "Departments",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1305,7 +1314,7 @@
                "longDescription" : "",
                "name" : "Buy now",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1313,7 +1322,7 @@
                "longDescription" : "",
                "name" : "Google conversion tracking",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1321,7 +1330,7 @@
                "longDescription" : "",
                "name" : "Filter products",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1329,7 +1338,7 @@
                "longDescription" : "",
                "name" : "Wish list",
                "progress" : 0,
-               "shortDescription" : "Not started",
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
@@ -1410,13 +1419,6 @@
                "progress" : 90,
                "releases" : [
                   {
-                     "article" : "Refer-to-resources-inside-MVC-views",
-                     "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
-                     "date" : "09-24-2014",
-                     "name" : "Register scripts in views",
-                     "tag" : "v1.0.0.0"
-                  },
-                  {
                      "article" : "Helper-methods-for-enabling-the-Inline-Editing-feature",
                      "commitHash" : "e0fc764eaa440b7c817c37d6afa156e405575547",
                      "date" : "09-24-2014",
@@ -1432,10 +1434,10 @@
                   },
                   {
                      "article" : "Refer-to-resources-inside-MVC-views",
-                     "commitHash" : "",
-                     "date" : "03-27-2015 18:00 +0200",
-                     "name" : "Get localized data",
-                     "tag" : "v.1.2.140.0"
+                     "commitHash" : "434166b771ae91c16d7d1d21ad3fa41add2d4b1d",
+                     "date" : "04-17-2015 18:06 +0300",
+                     "name" : "Register scripts and styles in a selected section of the page",
+                     "tag" : "v.1.2.170.2"
                   }
                ],
                "shortDescription" : "In progress",
