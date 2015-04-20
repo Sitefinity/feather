@@ -38,14 +38,14 @@
                     // Change width if selected ratio has ratio (4x3 or 16x9)
                     scope.changeWidth = function (selectedWidth) {
                         if (constants[scope.selectedRatio].ratio) {
-                            scope.model.height = Math.round(scope.model.width / constants[scope.selectedRatio].ratio)
+                            scope.model.height = Math.round(scope.model.width / constants[scope.selectedRatio].ratio);
                         }
                     };
 
                     // Change height if selected ratio has ratio (4x3 or 16x9)
                     scope.changeHeight = function (selectedHeight) {
                         if (constants[scope.selectedRatio].ratio) {
-                            scope.model.width = Math.round(scope.model.height * constants[scope.selectedRatio].ratio)
+                            scope.model.width = Math.round(scope.model.height * constants[scope.selectedRatio].ratio);
                         }
                     };
                 }
