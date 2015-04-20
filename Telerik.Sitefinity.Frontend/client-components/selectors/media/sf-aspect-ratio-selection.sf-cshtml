@@ -1,34 +1,34 @@
 ﻿<div class="form-group">
   <div class="row">
-      <div class="col-xs-6">
-        <label>@(Res.Get<ClientComponentsResources>().AspectRatio)</label>
-          <select class="form-control" ng-model="sfRatio">
-              <option value="auto">@(Res.Get<ClientComponentsResources>().Auto)</option>
-              <option value="4x3">@(Res.Get<ClientComponentsResources>().Ratio4X3)</option>
-              <option value="16x9">@(Res.Get<ClientComponentsResources>().Ratio16X9)</option>
-              <option value="custom">@(Res.Get<ClientComponentsResources>().Custom)</option>
-          </select>
-      </div>
+    <div class="col-xs-6">
+      <label>@(Res.Get<ClientComponentsResources>().AspectRatio)</label>
+      <select class="form-control" ng-model="selectedRatio" ng-change="changeRatio(selectedRatio)">
+        <option value="auto">@(Res.Get<ClientComponentsResources>().Auto)</option>
+        <option value="r4x3">@(Res.Get<ClientComponentsResources>().Ratio4X3)</option>
+        <option value="r16x9">@(Res.Get<ClientComponentsResources>().Ratio16X9)</option>
+        <option value="custom">@(Res.Get<ClientComponentsResources>().Custom)</option>
+      </select>
+    </div>
   </div>
 
-  <div ng-hide="sfRatio === 'auto'" class="form-group-list">
+  <div ng-hide="model.aspectRatio === constants.auto.value" class="form-group-list">
     <div class="form-group">
       <label>@(Res.Get<ClientComponentsResources>().Width)</label>
       <div class="row row-xs">
-          <div class="col-xs-4">
-              <input class="form-control" type="number" ng-model="sfWidth" ng-change="updateHeight()"/>
-          </div>
-          <div class="col-xs-1">
-            <span>@(Res.Get<ClientComponentsResources>().PixelShort)</span>
-          </div>
+        <div class="col-xs-4">
+          <input class="form-control" type="number" ng-model="model.width" ng-change="changeWidth(model.width)"/>
+        </div>
+        <div class="col-xs-1">
+          <span>@(Res.Get<ClientComponentsResources>().PixelShort)</span>
+        </div>
       </div>
     </div>
-          
+
     <div class="form-group">
       <label>@(Res.Get<ClientComponentsResources>().Height)</label>
       <div class="row row-xs">
         <div class="col-xs-4">
-          <input class="form-control" type="number" ng-model="sfHeight" ng-change="updateWidth()"/>
+          <input class="form-control" type="number" ng-model="model.height" ng-change="changeHeight(model.height)"/>
         </div>
         <div class="col-xs-1">
           <span>@(Res.Get<ClientComponentsResources>().PixelShort)</span>
@@ -36,5 +36,4 @@
       </div>
     </div>
   </div>
-
 </div>
