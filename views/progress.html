@@ -47,7 +47,7 @@
 							<ul class="widgets">
 								<li class="widget dropdown dropdown-toggle dropup" ng-class="{'pointer':widget.releases.length || widget.longDescription != ''}"  dropdown-toggle dropdown ng-repeat="widget in section.widgets">
 									<div class="widget-status" ng-class="{'not-started': widget.progress == 0, 'in-progress':widget.progress > 0 && widget.progress < 100, 'done':widget.progress == 100, 'unstable':widget.unstable == true}">
-										<span ng-if="widget.progress == 0">Not started</span>
+										<span ng-if="widget.progress == 0">Not done</span>
 										<span ng-if="widget.progress > 0 && widget.progress < 100">In Progress</span>
 										<span ng-if="widget.progress == 100">Done</span>
 									</div>
