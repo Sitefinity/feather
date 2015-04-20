@@ -40,8 +40,8 @@ Function DeployFeatherWebsite
 }
 
 $WebsiteSource = "\Tests\SitefinityWebApp\"
-$Agent1 = "100.75.152.108"
-$Agent2 = "100.75.144.104"
+$Agent1 = "FEATHER-CI-UI1"
+$Agent2 = "FEATHER-CI-UI2"
 Write-Output "===== Start deployment to agent $Agent1 ====="
 DeployFeatherWebsite -Computer $Agent1 -AppPollName $appPollName -DefaultWebsiteUrl $defaultWebsiteUrl -WebsiteSource $WebsiteSource
 Write-Output "===== Start deployment to agent $Agent2 ====="
