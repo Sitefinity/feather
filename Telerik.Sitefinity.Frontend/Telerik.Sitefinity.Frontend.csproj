@@ -604,8 +604,8 @@
     <EmbeddedResource Include="client-components\selectors\media\videos\sf-video-selector.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-aspect-ratio-selection.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\sf-aspect-ratio-selection.js" />
-    <Content Include="client-components\selectors\blogs\sf-blog-post-selector.js" />
-    <Content Include="client-components\selectors\blogs\sf-blog-post-service.js" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-service.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
