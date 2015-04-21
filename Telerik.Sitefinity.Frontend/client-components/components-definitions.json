@@ -470,5 +470,17 @@
 		"client-components/selectors/tools/sf-link-selector.js"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-multisite-page-selector" ]
+},
+
+
+"_____BlogPost_____" : {"scripts" : [], "components" : []},
+
+
+"sf-blog-post-selector" : {
+	"scripts" : [
+		"client-components/selectors/blogs/sf-blog-post-service.js",
+		"client-components/selectors/blogs/sf-blog-post-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 }
 }
