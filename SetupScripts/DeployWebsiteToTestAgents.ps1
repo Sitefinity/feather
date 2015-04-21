@@ -36,7 +36,7 @@ Function DeployFeatherWebsite
 	Copy-Item (Join-Path $WebsiteSource *) $DeploymentDirectory -Recurse -Force
 	
 	Write-Output "Request website"
-	Invoke-WebRequest "http://$Computer"
+	Invoke-WebRequest "http://$Computer" -TimeoutSec 300
 }
 
 $WebsiteSource = "\Tests\SitefinityWebApp\"
