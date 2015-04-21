@@ -2,16 +2,16 @@
   <div class="row">
     <div class="col-xs-6">
       <label>@(Res.Get<ClientComponentsResources>().AspectRatio)</label>
-      <select class="form-control" ng-model="selectedRatio" ng-change="changeRatio(selectedRatio)">
-        <option value="auto">@(Res.Get<ClientComponentsResources>().Auto)</option>
-        <option value="r4x3">@(Res.Get<ClientComponentsResources>().Ratio4X3)</option>
-        <option value="r16x9">@(Res.Get<ClientComponentsResources>().Ratio16X9)</option>
-        <option value="custom">@(Res.Get<ClientComponentsResources>().Custom)</option>
+      <select class="form-control" ng-model="model.aspectRatio" ng-change="changeRatio()">
+        <option value="Auto">@(Res.Get<ClientComponentsResources>().Auto)</option>
+        <option value="4x3">@(Res.Get<ClientComponentsResources>().Ratio4X3)</option>
+        <option value="16x9">@(Res.Get<ClientComponentsResources>().Ratio16X9)</option>
+        <option value="Custom">@(Res.Get<ClientComponentsResources>().Custom)</option>
       </select>
     </div>
   </div>
 
-  <div ng-hide="model.aspectRatio.toLowerCase() === constants.auto.value" class="form-group-list">
+  <div ng-hide="model.aspectRatio.toLowerCase() === 'auto'" class="form-group-list">
     <div class="form-group">
       <label>@(Res.Get<ClientComponentsResources>().Width)</label>
       <div class="row row-xs">
