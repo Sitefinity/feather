@@ -18,8 +18,8 @@
 
                         ctrl.selectorType = 'BlogPostSelector';
 
-                        ctrl.dialgoTempalteUrl = 'client-components/blogs/sf-blog-post-selector.sf-cshtml';
-                        ctrl.$scope.dialgoTempalteId = 'sf-blog-post-selector-template';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/blogs/sf-blog-post-selector.sf-cshtml';
+                        ctrl.$scope.dialogTemplateId = 'sf-blog-post-selector-template';
 
                         var closedDialogTemplate = attrs.sfMultiselect ?
                             'client-components/selectors/common/sf-list-group-selection.sf-cshtml' :

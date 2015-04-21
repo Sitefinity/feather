@@ -9,8 +9,7 @@
         @(Res.Get<ClientComponentsResources>().All)
       </li>
       <li ng-class="{true:'k-state-active', false:''}[isItemSelected() && multiselect === true]" ng-click="collectSelectedItems()">
-        @(Res.Get<ClientComponentsResources>
-          ().Selected) <span class="badge">{{getSelectedItemsCount()}}</span>
+        @(Res.Get<ClientComponentsResources>().Selected) <span class="badge">{{getSelectedItemsCount()}}</span>
       </li>
     </ul>
     
