@@ -21,7 +21,7 @@ Function DeployFeatherWebsite
 		[String]$WebsiteSource
 	)
 	
-	$DeploymentDirectory = "\\$Computer\Tests\SitefinityWebApp\"
+	$DeploymentDirectory = "\\$Computer\c$\Tests\SitefinityWebApp\"
 	
 	Write-Output "Set $Computer to trusted hosts"
 	Set-Item -Path WSMan:\localhost\Client\TrustedHosts -Value $Computer -Force
