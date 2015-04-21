@@ -8,6 +8,16 @@
                 auto: { value: 'auto' }
             };
 
+            var getConstantsKeyByVale = function (value) {
+                for (var key in constants) {
+                    if (constants.hasOwnProperty(key)) {
+                        if (constants[key].value === value) {
+                            return key;
+                        }
+                    }
+                }
+            };
+
             return {
                 restrict: 'AE',
                 scope: {
@@ -21,9 +31,8 @@
                 link: function (scope, element, attrs) {
                     scope.model = scope.model || {};
                     scope.model.aspectRatio = scope.model.aspectRatio || constants.auto.value;
-
                     scope.constants = constants;
-                    scope.selectedRatio = constants.auto.value;
+                    scope.selectedRatio = getConstantsKeyByVale(scope.model.aspectRatio);
 
                     scope.changeRatio = function (selectedRatio) {
                         scope.model.aspectRatio = constants[selectedRatio].value;
