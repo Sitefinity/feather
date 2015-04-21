@@ -2,10 +2,10 @@
     angular.module('sfAspectRatioSelection', ['sfServices'])
         .directive('sfAspectRatioSelection', ['serverContext', function (serverContext) {
             var constants = {
-                '4x3': { value: '4x3', ratio: 4 / 3, width: 600, height: 450 },
-                '16x9': { value: '16x9', ratio: 16 / 9, width: 600, height: 338 },
-                'custom': { value: 'custom' },
-                'auto': { value: 'auto' }
+                '4x3': { ratio: 4 / 3, width: 600, height: 450 },
+                '16x9': { ratio: 16 / 9, width: 600, height: 338 },
+                'Custom': {},
+                'Auto': {}
             };
 
             return {
@@ -20,31 +20,28 @@
                 },
                 link: function (scope, element, attrs) {
                     scope.model = scope.model || {};
-                    scope.model.aspectRatio = scope.model.aspectRatio || constants.auto.value;
+                    scope.model.aspectRatio = scope.model.aspectRatio || 'Auto';
                     scope.constants = constants;
-                    scope.selectedRatio = getConstantsKeyByVale(scope.model.aspectRatio);
 
-                    scope.changeRatio = function (selectedRatio) {
-                        scope.model.aspectRatio = constants[selectedRatio].value;
-
+                    scope.changeRatio = function () {
                         // Change width and height if selected ratio has ratio, width and height (check only for ratio)
-                        if (constants[selectedRatio].ratio) {
-                            scope.model.width = constants[selectedRatio].width;
-                            scope.model.height = constants[selectedRatio].height;
+                        if (constants[scope.model.aspectRatio].ratio) {
+                            scope.model.width = constants[scope.model.aspectRatio].width;
+                            scope.model.height = constants[scope.model.aspectRatio].height;
                         }
                     };
 
                     // Change width if selected ratio has ratio (4x3 or 16x9)
                     scope.changeWidth = function (selectedWidth) {
-                        if (constants[scope.selectedRatio].ratio) {
-                            scope.model.height = Math.round(scope.model.width / constants[scope.selectedRatio].ratio);
+                        if (constants[scope.model.aspectRatio].ratio) {
+                            scope.model.height = Math.round(scope.model.width / constants[scope.model.aspectRatio].ratio);
                         }
                     };
 
                     // Change height if selected ratio has ratio (4x3 or 16x9)
                     scope.changeHeight = function (selectedHeight) {
-                        if (constants[scope.selectedRatio].ratio) {
-                            scope.model.width = Math.round(scope.model.height * constants[scope.selectedRatio].ratio);
+                        if (constants[scope.model.aspectRatio].ratio) {
+                            scope.model.width = Math.round(scope.model.height * constants[scope.model.aspectRatio].ratio);
                         }
                     };
                 }
