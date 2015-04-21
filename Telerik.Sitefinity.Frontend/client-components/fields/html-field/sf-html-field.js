@@ -319,6 +319,12 @@
 
                 $scope.model = sfModel || { item: undefined };
 
+                $scope.videoModel = {
+                    aspectRatio: $scope.model.aspectRatio,
+                    width: $scope.model.width,
+                    height: $scope.model.height
+                };
+
                 $scope.$watch('model.item.Id', function (newVal) {
                     if (newVal === null) {
                         $scope.cancel();
@@ -326,6 +332,9 @@
                 });
                 
                 $scope.done = function () {
+                    $scope.model.width = $scope.videoModel.aspectRatio === 'auto' ? null : $scope.videoModel.width;
+                    $scope.model.height = $scope.videoModel.aspectRatio === 'auto' ? null : $scope.videoModel.height;
+
                     $modalInstance.close($scope.model);
                 };
 

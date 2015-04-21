@@ -1,13 +1,17 @@
 ﻿(function () {
     angular.module('sfAspectRatioSelection', ['sfServices'])
         .directive('sfAspectRatioSelection', ['serverContext', function (serverContext) {
+            var constants = {
+                '4x3': { ratio: 4 / 3, width: 600, height: 450 },
+                '16x9': { ratio: 16 / 9, width: 600, height: 338 },
+                'Custom': {},
+                'Auto': {}
+            };
+
             return {
                 restrict: 'AE',
                 scope: {
-                    sfRatio: '=',
-                    sfHeight: '=',
-                    sfWidth: '=',
-                    sfItem: '='
+                    model: '=sfModel'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -15,52 +19,30 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs) {
+                    scope.model = scope.model || {};
+                    scope.model.aspectRatio = scope.model.aspectRatio || 'Auto';
+                    scope.constants = constants;
 
-                    var recalculateSize = function (ratio) {
-                        if (ratio === '4x3') {
-                            scope.sfWidth = 600;
-                            scope.sfHeight = 450;
-                            aspectRatioCoefficient = 4 / 3;
-                        }
-                        else if (ratio === '16x9') {
-                            scope.sfWidth = 600;
-                            scope.sfHeight = 338;
-                            aspectRatioCoefficient = 16 / 9;
-                        }
-                        else if (ratio === 'auto') {
-                            if (!scope.sfItem) return;
-                            scope.sfWidth = parseInt(scope.sfItem.Width, 10);
-                            scope.sfHeight = parseInt(scope.sfItem.Height, 10);
-                        }
-                        else if (ratio === 'custom') {
-                            scope.sfWidth = parseInt(scope.sfWidth, 10);
-                            scope.sfHeight = parseInt(scope.sfHeight, 10);
+                    scope.changeRatio = function () {
+                        // Change width and height if selected ratio has ratio, width and height (check only for ratio)
+                        if (constants[scope.model.aspectRatio].ratio) {
+                            scope.model.width = constants[scope.model.aspectRatio].width;
+                            scope.model.height = constants[scope.model.aspectRatio].height;
                         }
                     };
 
-                    scope.sfRatio = scope.sfRatio || 'auto';
-                    var aspectRatioCoefficient = 1;
-                    recalculateSize(scope.sfRatio);
-
-                    scope.$watch('sfRatio', function (newVal, oldVal) {
-
-                        if (!newVal || newVal === oldVal) {
-                            return;
+                    // Change width if selected ratio has ratio (4x3 or 16x9)
+                    scope.changeWidth = function (selectedWidth) {
+                        if (constants[scope.model.aspectRatio].ratio) {
+                            scope.model.height = Math.round(scope.model.width / constants[scope.model.aspectRatio].ratio);
                         }
-
-                        recalculateSize(newVal);
-                    });
-
-                    scope.updateWidth = function () {
-                        if (scope.sfRatio != '16x9' && scope.sfRatio != '4x3') return;
-
-                        scope.sfWidth = Math.round(scope.sfHeight * aspectRatioCoefficient);
                     };
 
-                    scope.updateHeight = function () {
-                        if (scope.sfRatio != '16x9' && scope.sfRatio != '4x3') return;
-
-                        scope.sfHeight = Math.round(scope.sfWidth / aspectRatioCoefficient);
+                    // Change height if selected ratio has ratio (4x3 or 16x9)
+                    scope.changeHeight = function (selectedHeight) {
+                        if (constants[scope.model.aspectRatio].ratio) {
+                            scope.model.width = Math.round(scope.model.height * constants[scope.model.aspectRatio].ratio);
+                        }
                     };
                 }
             };
