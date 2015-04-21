@@ -96,12 +96,16 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// </returns>
         public bool Register(string resourceKey, string sectionName = null, bool throwException = false)
         {
-            if (sectionName != null && throwException)
+            if (sectionName != null)
             {
                 var page = this.Context.Handler as System.Web.UI.Page;
-                if (page == null || !SectionRenderer.IsAvailable(page, sectionName))
+                if (throwException && page != null && !SectionRenderer.IsAvailable(page, sectionName))
                 {
                     throw new ArgumentException("A section with name \"{0}\" could not be found.".Arrange(sectionName), sectionName);
+                }
+                else if (page == null)
+                {
+                    sectionName = null;
                 }
             }
 
