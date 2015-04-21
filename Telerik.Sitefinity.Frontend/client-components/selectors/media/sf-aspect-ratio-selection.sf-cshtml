@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <div ng-hide="model.aspectRatio === constants.auto.value" class="form-group-list">
+  <div ng-hide="model.aspectRatio.toLowerCase() === constants.auto.value" class="form-group-list">
     <div class="form-group">
       <label>@(Res.Get<ClientComponentsResources>().Width)</label>
       <div class="row row-xs">
