@@ -2,20 +2,10 @@
     angular.module('sfAspectRatioSelection', ['sfServices'])
         .directive('sfAspectRatioSelection', ['serverContext', function (serverContext) {
             var constants = {
-                r4x3: { value: '4x3', ratio: 4 / 3, width: 600, height: 450 },
-                r16x9: { value: '16x9', ratio: 16 / 9, width: 600, height: 338 },
-                custom: { value: 'custom' },
-                auto: { value: 'auto' }
-            };
-
-            var getConstantsKeyByVale = function (value) {
-                for (var key in constants) {
-                    if (constants.hasOwnProperty(key)) {
-                        if (constants[key].value === value) {
-                            return key;
-                        }
-                    }
-                }
+                '4x3': { value: '4x3', ratio: 4 / 3, width: 600, height: 450 },
+                '16x9': { value: '16x9', ratio: 16 / 9, width: 600, height: 338 },
+                'custom': { value: 'custom' },
+                'auto': { value: 'auto' }
             };
 
             return {
