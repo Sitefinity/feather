@@ -473,13 +473,21 @@
 },
 
 
-"_____BlogPost_____" : {"scripts" : [], "components" : []},
+"_____BLOGS_____" : {"scripts" : [], "components" : []},
 
 
 "sf-blog-post-selector" : {
 	"scripts" : [
 		"client-components/selectors/blogs/sf-blog-post-service.js",
 		"client-components/selectors/blogs/sf-blog-post-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
+"sf-blog-selector" : {
+	"scripts" : [
+		"client-components/selectors/blogs/sf-blog-service.js",
+		"client-components/selectors/blogs/sf-blog-selector.js"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 }
