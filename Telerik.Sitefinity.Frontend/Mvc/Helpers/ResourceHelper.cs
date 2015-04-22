@@ -387,40 +387,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
         private static string BuildScriptMarkup(string resourceKey)
         {
-            var attributes = new KeyValuePair<string, string>[2];
-            attributes[0] = new KeyValuePair<string, string>("src", resourceKey);
-            attributes[1] = new KeyValuePair<string, string>("type", "text/javascript");
+            var tag = new TagBuilder("script");
 
-            return ResourceHelper.GenerateTag("script", attributes);
+            tag.Attributes["src"] = resourceKey;
+            tag.Attributes["type"] = "text/javascript";
+
+            return tag.ToString(TagRenderMode.Normal);
         }
 
         private static string BuildStyleSheetMarkup(string resourceKey)
         {
-            var attributes = new KeyValuePair<string, string>[3];
-            attributes[0] = new KeyValuePair<string, string>("rel", "stylesheet");
-            attributes[1] = new KeyValuePair<string, string>("href", resourceKey);
-            attributes[2] = new KeyValuePair<string, string>("type", "text/css");
+            var tag = new TagBuilder("link");
 
-            return ResourceHelper.GenerateTag("link", attributes);
-        }
+            tag.Attributes["href"] = resourceKey;
+            tag.Attributes["rel"] = "stylesheet";
+            tag.Attributes["type"] = "text/css";
 
-        /// <summary>
-        /// Creates a string representation of a tag. 
-        /// </summary>
-        /// <param name="tagName">The type of the HTML tag that would be generated for every registered resource.</param>
-        /// <param name="attributes">The attributes associated with the tag.</param>
-        /// <returns>The string representation of a tag.</returns>
-        private static string GenerateTag(string tagName, params KeyValuePair<string, string>[] attributes)
-        {
-            var tag = new TagBuilder(tagName);
-
-            if (attributes != null)
-            {
-                foreach (var attr in attributes)
-                    tag.Attributes[attr.Key] = attr.Value;
-            }
-
-            return tag.ToString();
+            return tag.ToString(TagRenderMode.SelfClosing);
         }
 
         private const string JsRegisterName = "JsRegister";
