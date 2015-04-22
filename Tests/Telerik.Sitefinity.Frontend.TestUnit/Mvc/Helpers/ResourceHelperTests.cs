@@ -86,7 +86,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
 
             var stylesheet = "Mvc/Styles/Designer/modal-dialog.css";
 
-            string expected = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\"></link>", stylesheet);
+            string expected = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\" />", stylesheet);
             string result = htmlHelper.StyleSheet(stylesheet, null, throwException: true).ToString();
             Assert.AreEqual(expected, result);
 
@@ -109,7 +109,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
 
             var stylesheet = "Mvc/Styles/Designer/modal-dialog.css";
 
-            string expected1 = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\"></link>", stylesheet);
+            string expected1 = string.Format(System.Globalization.CultureInfo.InvariantCulture, "<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\" />", stylesheet);
             string result1 = htmlHelper.StyleSheet(stylesheet).ToString();
             Assert.AreEqual(expected1, result1);
 
