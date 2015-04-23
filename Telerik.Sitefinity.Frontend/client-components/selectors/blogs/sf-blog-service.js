@@ -16,8 +16,6 @@
 
         var getItems = function (provider, skip, take, search, frontendLanguages) {
             var filter = serviceHelper.filterBuilder()
-                .cultureFilter()
-                .and()
                 .searchFilter(search, frontendLanguages)
                 .getFilter();
 
@@ -50,8 +48,6 @@
         var getSpecificItems = function (ids, provider) {
             var filter = serviceHelper.filterBuilder()
                 .specificItemsFilter(ids)
-                .and()
-                .cultureFilter()
                 .getFilter();
 
             dataItemPromise = getResource().get(
