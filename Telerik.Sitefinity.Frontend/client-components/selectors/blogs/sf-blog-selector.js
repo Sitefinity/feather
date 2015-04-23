@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfBlogPostSelector', ['sfBlogPostService', function (blogPostService) {
+        .directive('sfBlogSelector', ['sfBlogService', function (blogService) {
             return {
                 require: '^sfListSelector',
                 restrict: 'A',
@@ -8,18 +8,18 @@
                     pre: function (scope, element, attrs, ctrl) {
                         ctrl.getItems = function (skip, take, search, frontendLanguages) {
                             var provider = ctrl.$scope.sfProvider;
-                            return blogPostService.getItems(provider, skip, take, search, frontendLanguages);
+                            return blogService.getItems(provider, skip, take, search, frontendLanguages);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
                             var provider = ctrl.$scope.sfProvider;
-                            return blogPostService.getSpecificItems(ids, provider);
+                            return blogService.getSpecificItems(ids, provider);
                         };
 
-                        ctrl.selectorType = 'BlogPostSelector';
+                        ctrl.selectorType = 'BlogSelector';
 
-                        ctrl.dialogTemplateUrl = 'client-components/selectors/blogs/sf-blog-post-selector.sf-cshtml';
-                        ctrl.$scope.dialogTemplateId = 'sf-blog-post-selector-template';
+                        ctrl.dialogTemplateUrl = 'client-components/selectors/blogs/sf-blog-selector.sf-cshtml';
+                        ctrl.$scope.dialogTemplateId = 'sf-blog-selector-template';
 
                         var closedDialogTemplate = attrs.sfMultiselect ?
                             'client-components/selectors/common/sf-list-group-selection.sf-cshtml' :

@@ -478,6 +478,7 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-media-collection.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\sf-upload-media-properties.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -606,6 +607,8 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-aspect-ratio-selection.js" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.js" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-service.js" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-service.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
@@ -626,7 +629,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
