@@ -16,6 +16,9 @@ using Telerik.Sitefinity.Project.Configuration;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 {
+    /// <summary>
+    /// This class contains test for the string resources.
+    /// </summary>
     [TestClass]
     public class StringResourcesTests
     {
@@ -24,10 +27,19 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
         [TestMethod]
         [Owner("EGaneva")]
         [Description("The test ensures that designer resources are correct.")]
-        public void ContentBlockResources_IterateTheResources_AssureResourcesAreCorrect()
+        public void DesignerResources_IterateTheResources_AssureResourcesAreCorrect()
         {
             // Act & Assert: Iterate over each resource property and verify its correctness 
             this.TestResourceType<DesignerResources>();
+        }
+
+        [TestMethod]
+        [Owner("EGaneva")]
+        [Description("The test ensures that client component resources are correct.")]
+        public void ClientComponentsResources_IterateTheResources_AssureResourcesAreCorrect()
+        {
+            // Act & Assert: Iterate over each resource property and verify its correctness 
+            this.TestResourceType<ClientComponentsResources>();
         }
 
         #endregion
