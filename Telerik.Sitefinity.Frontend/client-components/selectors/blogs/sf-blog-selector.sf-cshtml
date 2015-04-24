@@ -1,6 +1,8 @@
 ﻿<div class="modal-header">
   <button type="button" class="close" ng-click="cancel()">&times;</button>
-  <h3 class="modal-title">Blog Selector</h3>
+  <h3 class="modal-title">
+    @(Res.Get<ClientComponentsResources>().SelectBlogs)
+  </h3>
 </div>
 <div class="modal-body">
   <div kendo-tab-strip k-animation="false" class="k-tabstrip--selection">
