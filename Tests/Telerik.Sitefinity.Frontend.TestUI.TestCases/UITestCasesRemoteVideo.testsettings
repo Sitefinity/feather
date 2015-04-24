@@ -31,6 +31,15 @@
       </WebTestRunConfiguration>
     </TestTypeSpecific>
     <AgentRule name="AllAgentsDefaultRole">
+		<DataCollectors>
+			<DataCollector uri="datacollector://microsoft/VideoRecorder/1.0" assemblyQualifiedName="Microsoft.VisualStudio.TestTools.DataCollection.VideoRecorder.VideoRecorderDataCollector, Microsoft.VisualStudio.TestTools.DataCollection.VideoRecorder, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" friendlyName="Screen and Voice Recorder">
+				<Configuration>
+					<MediaRecorder sendRecordedMediaForPassedTestCase="false" xmlns="">
+					  <ScreenCaptureVideo quality="10" />
+					</MediaRecorder>
+				</Configuration>
+			</DataCollector>
+      </DataCollectors>
     </AgentRule>
   </Execution>
 </TestSettings>

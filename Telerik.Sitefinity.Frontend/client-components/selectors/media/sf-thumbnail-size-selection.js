@@ -10,7 +10,8 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    model: '=sfModel'
+                    model: '=sfModel',
+                    mediaType: '@sfMediaType'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -28,6 +29,10 @@
             $scope.sizeSelection = null;
             $scope.sizeOptions = [];
             $scope.customThumbnailSizeTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-custom-thumbnail-size.sf-cshtml');
+
+            if (typeof $scope.mediaType === 'undefined' || !$scope.mediaType) {
+                $scope.mediaType = 'images';
+            }
 
             var thumbnailProfiles = [];
 
@@ -60,7 +65,7 @@
                 }
             }, true);
 
-            mediaService.images.thumbnailProfiles().then(function (data) {
+            mediaService[$scope.mediaType].thumbnailProfiles().then(function (data) {
                 if (data && data.Items) {
                     thumbnailProfiles = data.Items;
                     if ($scope.model) {

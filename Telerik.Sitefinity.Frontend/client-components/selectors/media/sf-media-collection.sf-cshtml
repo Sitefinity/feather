@@ -26,7 +26,7 @@
                         </div>
                     </div>
 
-                    <div class="Media-folder-title">
+                    <div class="Media-folder-title" ng-class="{'Media-folder-title--wa' : !item.metricsAvailable}">
                         {{item.Title}}
                     </div>
 
@@ -65,22 +65,22 @@
 
       <div class="Media-file-wrapper">
 
-			  <div class="Media-file-thumb">
-            <div class="Media-file-thumb-holder" ng-switch on="$parent.$parent.sfMediaType">
-              <div ng-switch-when="documents">
-                <div>
-                    <i class="icon-file icon-txt">
-                        <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
-                    </i>
-                </div>
-
-                <div class="Media-item-title">{{item.Title}}</div>
+			  <div class="Media-file-thumb"  ng-switch on="$parent.$parent.sfMediaType">
+            
+            <div ng-switch-when="documents" class="Media-file-thumb-holder">
+              <div>
+                  <i class="icon-file icon-txt">
+                      <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
+                  </i>
               </div>
 
-              <div ng-switch-when="videos">
-                <img ng-if="item.IsFolder === false" ng-src="{{item.SnapshotUrl}}" src="" alt="{{item.Title}}" />
-              </div>
+              <div class="Media-item-title">{{item.Title}}</div>
             </div>
+
+            <div ng-switch-when="videos" class="Media-file-thumb-holder">
+              <img ng-if="item.IsFolder === false" ng-src="{{item.SnapshotUrl}}" src="" alt="{{item.Title}}" />
+            </div>
+            
 			  </div>
 
         <div class="Media-item-title">

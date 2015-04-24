@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Utilities.HtmlParsing;
 using Telerik.Sitefinity.Web;
 
@@ -26,11 +27,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         {
             this.SetMasterInternals(page);
             this.InitializeAsUserControl(page);
-
-            var source = this.LayoutOutput(page.MasterPageFile);
-            this.InitializeControls(source);
-
             page.Controls.Add(this);
+
+            string masterFile;
+            if (page.MasterPageFile.EndsWith(".master", StringComparison.OrdinalIgnoreCase))
+                masterFile = page.MasterPageFile.Left(page.MasterPageFile.Length - ".master".Length);
+            else
+                masterFile = page.MasterPageFile;
+
+            var source = this.LayoutOutput(masterFile);
+            this.InitializeControls(source);
         }
 
         private string LayoutOutput(string path)
@@ -149,6 +155,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 container.Peek().Controls.Add(form);
                 container.Push(form);
             }
+            else if (chunk.TagName.Equals(LayoutsHelpers.SectionTag, StringComparison.OrdinalIgnoreCase))
+            {
+                this.AddIfNotEmpty(currentLiteralText.ToString(), container.Peek());
+                currentLiteralText.Clear();
+
+                var sectionRenderer = new SectionRenderer();
+                if (chunk.HasAttribute("name"))
+                {
+                    sectionRenderer.Name = chunk.AttributesMap["name"].ToString();
+                }
+
+                container.Peek().Controls.Add(sectionRenderer);
+            }
             else if (chunk.TagName == "%@")
             {
                 //// Ignore
@@ -192,6 +211,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 }
             }
             else if (chunk.TagName.Equals("asp:ContentPlaceHolder", StringComparison.OrdinalIgnoreCase))
+            {
+                //// Ignore
+            }
+            else if (chunk.TagName.Equals(LayoutsHelpers.SectionTag, StringComparison.OrdinalIgnoreCase))
             {
                 //// Ignore
             }

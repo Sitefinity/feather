@@ -18,6 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
         #region Public Methods and Operators
 
         [TestMethod]
+        [Ignore]
         [Owner("Tihomir Petrov")]
         [Description("Verifies that exception is thrown in case that resource can be registered successfully.")]
         [ExpectedException(typeof(ArgumentException), "There should be exception regarding the duplication of the resource registration!")]
@@ -29,14 +30,14 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var register = new ResourceRegister(registerName, context);
 
             string fakeResourceKey = "test-resource";
-            register.RegisterResource(fakeResourceKey);
-            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
+            register.Register(fakeResourceKey);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
 
             // Act
-            register.RegisterResource(fakeResourceKey);
+            register.Register(fakeResourceKey, throwException: true);
 
             // Assert
-            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
         }
 
         [TestMethod]
@@ -50,13 +51,13 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var register = new ResourceRegister(registerName, context);
 
             string fakeResourceKey = "test-resource";
-            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 0);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 0);
 
             // Act
-            register.RegisterResource(fakeResourceKey);
+            register.Register(fakeResourceKey);
 
             // Assert
-            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
         }
 
         [TestMethod]
@@ -70,15 +71,15 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var register = new ResourceRegister(registerName, context);
 
             string fakeResourceKey = "test-resource";
-            register.RegisterResource(fakeResourceKey);
-            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
+            register.Register(fakeResourceKey);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
 
             // Act
-            bool result = register.TryRegisterResource(fakeResourceKey);
+            bool result = register.Register(fakeResourceKey);
 
             // Assert
             Assert.IsFalse(result);
-            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
         }
 
         [TestMethod]
@@ -92,14 +93,14 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             var register = new ResourceRegister(registerName, context);
 
             string fakeResourceKey = "test-resource";
-            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 0);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 0);
 
             // Act
-            bool result = register.TryRegisterResource(fakeResourceKey);
+            bool result = register.Register(fakeResourceKey);
 
             // Assert
             Assert.IsTrue(result);
-            Assert.IsTrue(register.Container.Count(i => i == fakeResourceKey) == 1);
+            Assert.IsTrue(register.GetInlineResources().Count(i => i == fakeResourceKey) == 1);
         }
 
         #endregion

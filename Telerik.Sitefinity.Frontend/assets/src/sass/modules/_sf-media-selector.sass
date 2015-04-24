@@ -106,6 +106,9 @@
 	.Media-file-wrapper
 		border: 10px solid transparent
 
+		.is-list &
+			border:0
+
 	.Media-file-thumb-holder
 		background: #fff
 
@@ -140,6 +143,12 @@
 	img
 		max-width: 100%
 		max-height: 100%
+
+		.is-list &
+			max-width: none
+			max-height: none
+			width: 100%
+			height: auto
 
 	&:hover,
 	&:focus
@@ -193,10 +202,13 @@
 	background: #efefef
 
 	.is-list &
+		display: inline-block
 		width: 48px
 		height: 48px
+		line-height: 48px
 		text-align: center
 		border: 1px solid #D7D7D7
+
 
 .Media-item-title,
 .Media-item-meta,
@@ -369,7 +381,9 @@
 //Document selector
 .Media-file
 	&.Media-file--doc
-		border: 1px solid #d7d7d7
+
+		.is-grid &
+			border: 1px solid #d7d7d7
 
 		&.is-selected
 			.icon-file
@@ -378,6 +392,9 @@
 
 		.Media-file-wrapper
 			border: 10px solid transparent
+
+			.is-list &
+				border: 0
 
 		.Media-file-thumb
 			overflow: visible
@@ -416,6 +433,10 @@
 
 		.Media-file-thumb-holder
 			width: 160px
+
+			.is-list &
+				width: 48px
+
 
 		.is-list &
 			width: 100%

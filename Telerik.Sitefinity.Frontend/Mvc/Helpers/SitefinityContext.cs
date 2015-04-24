@@ -76,6 +76,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
+        /// Determines whether this method is invoked from Sitefinity's preview mode.
+        /// </summary>
+        public static bool IsPreviewMode
+        {
+            get
+            {
+                return SystemManager.IsPreviewMode;
+            }
+        }
+
+        /// <summary>
         /// Gets the frontend login URL for the current site as configured in the backend.
         /// </summary>
         /// <value>

@@ -21,7 +21,7 @@ Function DeployFeatherWebsite
 		[String]$WebsiteSource
 	)
 	
-	$DeploymentDirectory = "\\$Computer\Tests\SitefinityWebApp\"
+	$DeploymentDirectory = "\\$Computer\c$\Tests\SitefinityWebApp\"
 	
 	Write-Output "Set $Computer to trusted hosts"
 	Set-Item -Path WSMan:\localhost\Client\TrustedHosts -Value $Computer -Force
@@ -36,13 +36,16 @@ Function DeployFeatherWebsite
 	Copy-Item (Join-Path $WebsiteSource *) $DeploymentDirectory -Recurse -Force
 	
 	Write-Output "Request website"
-	Invoke-WebRequest "http://$Computer"
+	Invoke-WebRequest "http://$Computer" -TimeoutSec 300
 }
 
 $WebsiteSource = "\Tests\SitefinityWebApp\"
-$Agent1 = "100.75.152.108"
-$Agent2 = "100.75.144.104"
+$Agent1 = "FEATHER-CI-UI1"
+$Agent2 = "FEATHER-CI-UI2"
+$Agent3 = "FEATHER-CI-UI3"
 Write-Output "===== Start deployment to agent $Agent1 ====="
 DeployFeatherWebsite -Computer $Agent1 -AppPollName $appPollName -DefaultWebsiteUrl $defaultWebsiteUrl -WebsiteSource $WebsiteSource
 Write-Output "===== Start deployment to agent $Agent2 ====="
 DeployFeatherWebsite -Computer $Agent2 -AppPollName $appPollName -DefaultWebsiteUrl $defaultWebsiteUrl -WebsiteSource $WebsiteSource
+Write-Output "===== Start deployment to agent $Agent3 ====="
+DeployFeatherWebsite -Computer $Agent3 -AppPollName $appPollName -DefaultWebsiteUrl $defaultWebsiteUrl -WebsiteSource $WebsiteSource

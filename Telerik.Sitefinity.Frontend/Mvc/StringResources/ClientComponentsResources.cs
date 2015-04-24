@@ -2908,6 +2908,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// phrase: Select blogs
+        /// </summary>
+        /// <value>Select blogs</value>
+        [ResourceEntry("SelectBlogs",
+            Value = "Select blogs",
+            Description = "phrase: Select blogs",
+            LastModified = "2015/04/24")]
+        public string SelectBlogs
+        {
+            get
+            {
+                return this["SelectBlogs"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select blog posts
+        /// </summary>
+        /// <value>Select blog posts</value>
+        [ResourceEntry("SelectBlogPosts",
+            Value = "Select blog posts",
+            Description = "phrase: Select blog posts",
+            LastModified = "2015/04/24")]
+        public string SelectBlogPosts
+        {
+            get
+            {
+                return this["SelectBlogPosts"];
+            }
+        }
+
+        /// <summary>
         /// phrase: Select a user
         /// </summary>
         /// <value>Select a user</value>
