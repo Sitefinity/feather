@@ -470,23 +470,41 @@
                "longDescription" : "",
                "name" : "User selector",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Blog selector",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-blog-selector",
+                     "commitHash" : "8332e80e01508c04dd2976665db317cc28a90910",
+                     "date" : "04-24-2015 17:04 +0300",
+                     "name" : "Blog selector implementation",
+                     "tag" : "v.1.2.180.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Blog post selector",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-blog-post-selector",
+                     "commitHash" : "8332e80e01508c04dd2976665db317cc28a90910",
+                     "date" : "04-24-2015 17:04 +0300",
+                     "name" : "Blog post selector implementation",
+                     "tag" : "v.1.2.180.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             }
          ]
@@ -753,8 +771,17 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Video gallery",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Video-gallery-widget",
+                     "commitHash" : "8332e80e01508c04dd2976665db317cc28a90910",
+                     "date" : "04-24-2015 17:04 +0300",
+                     "name" : "Video gallery widget implementation",
+                     "tag" : "v.1.2.180.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -812,16 +839,34 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Blog posts",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Blog-post-widget",
+                     "commitHash" : "8332e80e01508c04dd2976665db317cc28a90910",
+                     "date" : "04-24-2015 17:04 +0300",
+                     "name" : "Blog posts widget implementation",
+                     "tag" : "v.1.2.180.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Blog lists",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "name" : "Blogs",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Blogs-widget",
+                     "commitHash" : "8332e80e01508c04dd2976665db317cc28a90910",
+                     "date" : "04-24-2015 17:04 +0300",
+                     "name" : "Blogs widget implementation",
+                     "tag" : "v.1.2.180.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -951,7 +996,7 @@
                "longDescription" : "",
                "name" : "CSS",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
@@ -959,7 +1004,7 @@
                "longDescription" : "",
                "name" : "Java Script",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
@@ -967,7 +1012,7 @@
                "longDescription" : "",
                "name" : "Google Analytics",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             }
          ]
@@ -1089,7 +1134,7 @@
                "longDescription" : "",
                "name" : "Users list",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             }
          ]
