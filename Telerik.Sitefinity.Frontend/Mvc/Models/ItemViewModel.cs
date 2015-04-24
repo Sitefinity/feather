@@ -182,6 +182,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
                 result = result.Replace("#=Country#", countryName);
                 result = result.Replace("#=State#", state);
+
+                var stateCode = string.Empty;
+                if (!string.IsNullOrEmpty(fieldValue.StateCode))
+                {
+                    stateCode = fieldValue.StateCode + ",";
+                }
+
+                result = result.Replace("#=StateCode", stateCode);
             }
 
             this.cachedFieldValues[cahcedResultKey] = result;
