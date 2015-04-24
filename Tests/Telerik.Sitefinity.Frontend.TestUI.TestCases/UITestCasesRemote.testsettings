@@ -3,9 +3,10 @@
   <Description>These are default test settings for a remote test run.</Description>
   <Deployment>
     <DeploymentItem filename="Telerik.Sitefinity.Frontend.TestUI.TestCases\app.config" />
+	<DeploymentItem filename="MediaFiles\" />
   </Deployment>
   <NamingScheme baseName="TestExecution@Sitefinity_UITests" useDefault="false" />
-  <RemoteController name="100.76.0.127:6901" />
+  <RemoteController name="FEATHER-CI" />
   <Execution location="Remote">
     <Buckets size="1" />
     <Timeouts agentNotRespondingTimeout="90000" scriptTimeout="600000" />
@@ -13,6 +14,9 @@
       <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">
         <AssemblyResolution>
           <TestDirectory useLoadContext="true" />
+		  <RuntimeResolution>
+            <Directory path="%ProgramFiles(x86)%\Microsoft Visual Studio 11.0\Common7\IDE\PrivateAssemblies" includeSubDirectories="true" />
+          </RuntimeResolution>
         </AssemblyResolution>
       </UnitTestRunConfig>
       <WebTestRunConfiguration testTypeId="4e7599fa-5ecb-43e9-a887-cd63cf72d207">
