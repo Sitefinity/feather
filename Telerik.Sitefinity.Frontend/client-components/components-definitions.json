@@ -490,5 +490,12 @@
 		"client-components/selectors/blogs/sf-blog-selector.js"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
+"sf-code-area" : {
+	"scripts" : [
+		"client-components/fields/sf-code-area.js",
+		"components": ["sf-fields"]
+	]
 }
 }
