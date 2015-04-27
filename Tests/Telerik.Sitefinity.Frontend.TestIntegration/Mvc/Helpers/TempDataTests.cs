@@ -187,8 +187,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         /// <summary>
         /// This class represents a dummy MVC widget which has actions that redirect to other actions.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-        public class ActionRedirectController : Controller
+        private class ActionRedirectController : Controller
         {
             /// <summary>
             /// The temporary data value prefix used for inserting before the content returned from ShowData ActionResult.
