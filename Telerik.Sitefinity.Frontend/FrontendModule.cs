@@ -79,6 +79,11 @@ namespace Telerik.Sitefinity.Frontend
                 this.DeleteOldGridSection();
                 this.UpdateContentBlockTitle();
             }
+
+            if (upgradeFrom <= new Version(1, 2, 180, 1))
+            {
+                this.RemoveMvcWidgetToolboxItems();
+            }
         }
 
         /// <summary>
@@ -178,6 +183,27 @@ namespace Telerik.Sitefinity.Frontend
                 {
                     property.Value = "Telerik.Sitefinity.Frontend.DynamicContent.Mvc.Controllers.DynamicContentController";
                 }
+            }
+        }
+
+        private void RemoveMvcWidgetToolboxItems()
+        {
+            var configManager = ConfigManager.GetManager();
+            using (new ElevatedConfigModeRegion())
+            {
+                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
+                var pageControls = toolboxConfig.Toolboxes["PageControls"];
+                var mvcWidgetsSection = pageControls.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
+                if (mvcWidgetsSection != null)
+                {
+                    var widgets = mvcWidgetsSection.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.", StringComparison.Ordinal)).ToArray();
+                    foreach (ToolboxItem tool in widgets)
+                    {
+                        mvcWidgetsSection.Tools.Remove(tool);
+                    }
+                }
+
+                configManager.SaveSection(toolboxConfig);
             }
         }
 
