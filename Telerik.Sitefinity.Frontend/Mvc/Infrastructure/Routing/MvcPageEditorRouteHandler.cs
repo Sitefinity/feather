@@ -34,11 +34,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         private void MvcPageEditorRouteHandlerInit(object sender, System.EventArgs e)
         {
             var page = (Page)sender;
+            
+            //// TODO: Uncomment this when css is ready
+            //// page.Header.Controls.Add(new LiteralControl(this.GetInlineStyle()));
+        }
 
-            var inlineCss = @".sfMvcWidget { color : blue!important; }";
-            var literalText = string.Format(@"<style type=""text/css"">{0}</style>", inlineCss);
+        private string GetInlineStyle()
+        {
+            //// TODO: Change icon
+            var iconUrl = "client-components/temp_mvc_logo.png";
 
-            page.Header.Controls.Add(new LiteralControl(literalText));
+            var fullIconUrl = RouteHelper.ResolveUrl(string.Format("~/{0}/{1}", FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly), iconUrl), UrlResolveOptions.Rooted);
+            var inlineCss = @".sfMvcIcn { background: transparent url(" + fullIconUrl + ") no-repeat 0 !important; }";
+            return string.Format(@"<style type=""text/css"">{0}</style>", inlineCss);
         }
     }
 }
