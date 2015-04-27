@@ -494,8 +494,8 @@
 
 "sf-code-area" : {
 	"scripts" : [
-		"client-components/fields/sf-code-area.js",
-		"components": ["sf-fields"]
-	]
+		"client-components/fields/sf-code-area.js"
+	],
+	"components": ["sf-fields"]
 }
 }
