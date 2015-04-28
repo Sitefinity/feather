@@ -9,8 +9,6 @@ $variables = Join-Path $currentPath "\Variables.ps1"
 
 write-output "------- Installing Sitefinity --------"
 
-EnsureDBDeleted $databaseServer $databaseName
-
 DeleteAllSitesWithSameBinding $defaultWebsitePort
 
 write-output "Setting up Application pool..."
@@ -32,42 +30,29 @@ if (Test-Path $defaultWebsiteRootDirectory){
 
 write-output "Sitefinity deploying from $projectLocationShare..."
 
-Copy-Item -Path Microsoft.PowerShell.Core\FileSystem::$projectLocationShare $projectDeploymentDirectory -Recurse -ErrorAction stop
+Copy-Item $emptyWebsiteShare $projectDeploymentDirectory -Recurse -ErrorAction stop
 
 write-output "Sitefinity successfully deployed."
 
+$siteId = GetNextWebsiteId
+write-output "Registering $siteName website with id $siteId in IIS."
+New-WebSite -Id $siteId -Name $siteName -Port $defaultWebsitePort -HostHeader localhost -PhysicalPath $defaultWebsiteRootDirectory -ApplicationPool $appPollName -Force
+Start-WebSite -Name $siteName
 
-function CopyTestAssemblies($workingDirectory, $destinationDirectory)
-{
-   write-output "Start copying test assemblies from $workingDirectory to $destinationDirectory."
-   Get-ChildItem *Test*.dll -recurse  -path $workingDirectory | Copy-Item -destination $destinationDirectory
-}
+write-output "Setting up Sitefinity..."
 
-function InstallSitefinity()
-{
-	$siteId = GetNextWebsiteId
-	write-output "Registering $siteName website with id $siteId in IIS."
-	New-WebSite -Id $siteId -Name $siteName -Port $defaultWebsitePort -HostHeader localhost -PhysicalPath $defaultWebsiteRootDirectory -ApplicationPool $appPollName -Force
-	Start-WebSite -Name $siteName
+$installed = $false
 
-	write-output "Setting up Sitefinity..."
-
-	$installed = $false
-
-	while(!$installed){
-		try{    
-			$response = GetRequest $defaultWebsiteUrl
-			if($response.StatusCode -eq "OK"){
-				$installed = $true;
-				$response
-			}
-		}catch [Exception]{
-			Restart-WebAppPool $appPollName -ErrorAction Continue
-			write-output "$_.Exception.Message"
-			$installed = $false
+while(!$installed){
+	try{    
+		$response = GetRequest $defaultWebsiteUrl
+		if($response.StatusCode -eq "OK"){
+			$installed = $true;
+			$response
 		}
+	}catch [Exception]{
+		Restart-WebAppPool $appPollName -ErrorAction Continue
+		write-output "$_.Exception.Message"
+		$installed = $false
 	}
-
-	write-output "----- Sitefinity successfully installed ------"
 }
-
