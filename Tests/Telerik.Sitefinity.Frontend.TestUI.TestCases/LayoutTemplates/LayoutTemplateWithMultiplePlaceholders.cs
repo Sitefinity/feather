@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 
@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
     [TestClass]
     public class LayoutTemplateWithMultiplePlaceholders : FeatherTestCase
     {
-        // <summary>
+        /// <summary>
         /// UI test AddWidgetToPageBasedOnLayoutWithMultiplePlaceholders.
         /// </summary>
         [TestMethod,
@@ -27,7 +27,20 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageTitle);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropWidgetToPlaceholder(WidgetCaption, FirstPlaceHolderId);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropWidgetToPlaceholder(WidgetCaption, SecondPlaceHolderId);
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption, dropZoneIndex: 0);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetTextDummyWidget(FirstWidgetText);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
+
+            BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption, dropZoneIndex: 1);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetTextDummyWidget(SecondWidgetText);
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
+            
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
+
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageTitle.ToLower(), false);
+
+            Assert.IsTrue(ActiveBrowser.ContainsText(FirstWidgetText));
+            Assert.IsTrue(ActiveBrowser.ContainsText(SecondWidgetText));
         }
 
         /// <summary>
@@ -51,5 +64,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
         private const string WidgetCaption = "SimpleWidget";
         private const string FirstPlaceHolderId = "Contentplaceholder1";
         private const string SecondPlaceHolderId = "Contentplaceholder2";
+        private const string FirstWidgetText = "Widget1";
+        private const string SecondWidgetText = "Widget2";
     }
 }

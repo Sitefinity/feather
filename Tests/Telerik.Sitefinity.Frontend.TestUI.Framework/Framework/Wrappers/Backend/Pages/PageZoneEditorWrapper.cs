@@ -48,14 +48,29 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
+        /// Drag and drop a layout element to placeholder.
+        /// </summary>
+        /// <param name="layoutCaption">the layout caption.</param>
+        /// <param name="layoutCaption">the placeholder Id.</param>
+        public void DragAndDropLayoutWidgetToPlaceholder(string layoutCaption, string placeHolder = "Contentplaceholder1")
+        {
+            var layout = ActiveBrowser.Find.ByContent<HtmlDiv>(layoutCaption);
+            Assert.IsNotNull(layout, "The layout was not found on the page");
+
+            HtmlDiv radDockZone = ActiveBrowser.Find.ByExpression<HtmlDiv>("placeholderid=" + placeHolder)
+              .AssertIsPresent<HtmlDiv>(placeHolder);
+
+            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().AddWidgetToDropZone(layout, radDockZone);
+        }
+
+        /// <summary>
         /// Drag and drop a widget element to placeholder.
         /// </summary>
         /// <param name="layoutCaption">the widget caption.</param>
         /// <param name="layoutCaption">the placeholder Id.</param>
         public void DragAndDropWidgetToPlaceholder(string widgetCaption, string placeHolder = "Contentplaceholder1")
         {
-            var widget = ActiveBrowser.Find.ByContent<HtmlDiv>(widgetCaption);
-            Assert.IsNotNull(widget, "The layout was not found on the page");
+            var widget = this.GetWidgetByName(widgetCaption);
 
             HtmlDiv radDockZone = ActiveBrowser.Find.ByExpression<HtmlDiv>("placeholderid=" + placeHolder)
               .AssertIsPresent<HtmlDiv>(placeHolder);
@@ -83,6 +98,31 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Gets the widget by name
+        /// </summary>
+        /// <param name="widgetLabelName">The widget label name</param>
+        /// <returns>Returns the widget div</returns>
+        public HtmlDiv GetWidgetByName(string widgetLabelName)
+        {
+            ActiveBrowser.RefreshDomTree();
+            RadPanelBar toolbox = Manager.Current.ActiveBrowser.Find.ByExpression<RadPanelBar>("id=~ControlToolboxContainer");
+            foreach (var item in toolbox.AllItems)
+            {
+                var dockZone = item.Find.ByCustom<RadDockZone>(zone => zone.CssClass.Contains("RadDockZone"));
+                var widgetLabel = dockZone.Find.ByContent(widgetLabelName);
+                if (widgetLabel != null)
+                {
+                    if (!item.Expanded)
+                        item.Expand();
+                    return new HtmlDiv(widgetLabel.Parent);
+                }
+            }
+
+            Assert.IsNotNull(null, "The widget with name: " + widgetLabelName);
+            return null;
         }
     }
 }
