@@ -479,7 +479,7 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-upload-media-properties.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.sf-cshtml" />
-    <EmbeddedResource Include="client-components\fields\sf-code-area.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\sf-code-area.html" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
@@ -637,7 +637,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
