@@ -40,7 +40,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
 
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower());
-            ActiveBrowser.WaitUntilReady();
 
             var pageContent = BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().GetPageContent();
 
