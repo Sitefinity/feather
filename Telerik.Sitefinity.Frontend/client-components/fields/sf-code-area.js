@@ -1,7 +1,7 @@
 ﻿(function ($) {
     var sfFields = angular.module('sfFields');
     sfFields.requires.push('sfCodeArea');
-    var module = angular.module('sfCodeArea', ['sfServices', 'sfBootstrapPopover']);
+    var module = angular.module('sfCodeArea', ['sfServices']);
 
     module.directive('sfCodeArea', ['serverContext', function (serverContext) {
         return {

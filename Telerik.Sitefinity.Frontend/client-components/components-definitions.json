@@ -503,6 +503,6 @@
 	"scripts" : [
 		"client-components/fields/sf-code-area.js"
 	],
-	"components": ["sf-fields", "sf-services", "sf-bootstrap-popover"]
+	"components": ["sf-fields", "sf-services"]
 }
 }

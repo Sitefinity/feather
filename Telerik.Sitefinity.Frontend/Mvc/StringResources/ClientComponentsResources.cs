@@ -2938,37 +2938,5 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["SelectBlogPosts"];
             }
         }
-
-        /// <summary>
-        /// word: Tips
-        /// </summary>
-        /// <value>Tips</value>
-        [ResourceEntry("Tips",
-            Value = "Tips",
-            Description = "word: Tips",
-            LastModified = "2015/04/28")]
-        public string Tips
-        {
-            get
-            {
-                return this["Tips"];
-            }
-        }
-
-        /// <summary>
-        /// CssAreaDescription
-        /// </summary>
-        /// <value>CSS written here will be included in the HTML <head> tag.</value>
-        [ResourceEntry("CssAreaDescription",
-            Value = "CSS written here will be included in the HTML <head> tag.",
-            Description = "Description for the code area field.",
-            LastModified = "2015/04/28")]
-        public string CssAreaDescription
-        {
-            get
-            {
-                return this["CssAreaDescription"];
-            }
-        }
     }
 }
