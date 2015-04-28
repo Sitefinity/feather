@@ -615,7 +615,8 @@
     <EmbeddedResource Include="client-components\selectors\common\sf-generic-items-service.js" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-users-service.js" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.js" />
-    <EmbeddedResource Include="client-components\sf-mvc-ext.png" />
+    <EmbeddedResource Include="client-components\sf-mvc-ext.png.png" />
+    <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-service.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
