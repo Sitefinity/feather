@@ -480,6 +480,7 @@
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\sf-code-area.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -612,6 +613,10 @@
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.js" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-service.js" />
     <EmbeddedResource Include="client-components\fields\sf-code-area.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-generic-items-service.js" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-users-service.js" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.js" />
+    <EmbeddedResource Include="client-components\temp_mvc_logo.png" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

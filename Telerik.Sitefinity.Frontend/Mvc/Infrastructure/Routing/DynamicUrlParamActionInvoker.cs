@@ -71,6 +71,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         {
             try
             {
+                this.TryLoadTempData(proxyControl.Controller);
                 base.ExecuteController(proxyControl);
             }
             catch (Exception ex)
@@ -82,6 +83,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                 if (this.ShouldDisplayErrors())
                     proxyControl.Context.Response.Write(Res.Get<InfrastructureResources>().ErrorExecutingController);
+            }
+            finally
+            {
+                this.TrySaveTempData(proxyControl.Controller);
             }
         }
 
@@ -240,6 +245,52 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
 
             requestContext.RouteData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] = controllerName;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        private void TrySaveTempData(Controller controller)
+        {
+            try
+            {
+                if (controller != null && controller.ControllerContext != null && !controller.ControllerContext.IsChildAction)
+                {
+                    controller.TempData.Save(controller.ControllerContext, controller.TempDataProvider);
+                }
+            }
+            catch (Exception ex)
+            {
+                var exceptionMessage = string.Format(
+                        "Failed to Save TempData. Class: {0}, Method: {1}, Exception {2}, Stack Trace {3}",
+                        this.GetType().Name,
+                        System.Reflection.MethodInfo.GetCurrentMethod().Name,
+                        ex.Message,
+                        ex.StackTrace);
+
+                Log.Write(exceptionMessage, ConfigurationPolicy.ErrorLog);
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        private void TryLoadTempData(Controller controller)
+        {
+            try
+            {
+                if (controller != null && controller.ControllerContext != null && !controller.ControllerContext.IsChildAction)
+                {
+                    controller.TempData.Load(controller.ControllerContext, controller.TempDataProvider);
+                }
+            }
+            catch (Exception ex)
+            {
+                var exceptionMessage = string.Format(
+                    "Failed to Load TempData. Class: {0}, Method: {1}, Exception {2}, Stack Trace {3}",
+                    this.GetType().Name,
+                    System.Reflection.MethodInfo.GetCurrentMethod().Name,
+                    ex.Message,
+                    ex.StackTrace);
+
+                Log.Write(exceptionMessage, ConfigurationPolicy.ErrorLog);
+            }
         }
 
         /// <summary>
