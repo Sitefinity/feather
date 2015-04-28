@@ -5,18 +5,12 @@
 
     module.directive('sfCodeArea', ['serverContext', function (serverContext) {
         return {
-            restrict: 'E',
+            restrict: 'A',
             scope: {
-                sfModel: '=',
                 sfType: '@',
                 sfLineNumbers: '@',
                 sfMatchBrackets: '@',
                 sfTabMode: '@'
-            },
-            templateUrl: function (elem, attrs) {
-                var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                var url = attrs.sfTemplateUrl || 'client-components/fields/sf-code-area.html';
-                return serverContext.getEmbeddedResourceUrl(assembly, url);
             },
             link: function (scope, element, attrs) {
                 CodeMirror.fromTextArea(element[0], {

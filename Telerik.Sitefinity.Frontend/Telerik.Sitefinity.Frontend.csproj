@@ -479,7 +479,6 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-upload-media-properties.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.sf-cshtml" />
-    <EmbeddedResource Include="client-components\fields\sf-code-area.html" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
