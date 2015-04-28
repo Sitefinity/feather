@@ -479,6 +479,7 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-upload-media-properties.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\sf-code-area.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -522,6 +523,7 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\sf-bootstrap-popover.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\ui-bootstrap-tpls.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\bootstrap.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.bootstrap.min.css" />
