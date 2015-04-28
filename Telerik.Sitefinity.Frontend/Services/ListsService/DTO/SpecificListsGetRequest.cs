@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Telerik.Sitefinity.Frontend.Services.DTO
+namespace Telerik.Sitefinity.Frontend.Services.ListsService.DTO
 {
     /// <summary>
     /// <c>SpecificListsGetRequest</c>Represents a filter for retrieving a specific items of list objects.

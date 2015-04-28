@@ -2,8 +2,8 @@
 using System.Linq;
 using ServiceStack;
 using ServiceStack.Text;
-using Telerik.Sitefinity.Frontend.Services.DTO;
 using Telerik.Sitefinity.Modules.Lists.Web.Services.Data;
+using Telerik.Sitefinity.Frontend.Services.ListsService.DTO;
 
 namespace Telerik.Sitefinity.Frontend.Services.ListsService
 {
