@@ -28,6 +28,7 @@
                     if (codeArea.getValue() !== newVal) {
                         codeArea.setValue(newVal);
                         codeArea.refresh();
+                        codeArea.focus();
                     }
                 });
             }
