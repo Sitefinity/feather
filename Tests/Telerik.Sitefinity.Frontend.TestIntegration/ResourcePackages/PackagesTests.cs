@@ -281,7 +281,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Test]
         [Category(TestCategories.Packages)]
         [Author(FeatherTeams.Team2)]
-        [Description("Adds new package without layout file and adds new widget view to the package, renames the template, keeping the package in the title and verifies the template content")]
+        [Description("Adds new package without layout file and adds new widget view to the package, renames the template, keeping the package in the title and verifies the template content"),
+        Ignore("Not stable")]
         public void ResourcePackage_RenameTemplateAndKeepThePackageInTheTitle_VerifyTemplateAndPage()
         {
             string pageName = "FeatherPage";
