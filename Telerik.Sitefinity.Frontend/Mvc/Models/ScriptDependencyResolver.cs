@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Services;
 
@@ -21,9 +22,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public static IList<string> GetScripts(IEnumerable<string> components, IEnumerable<string> scripts)
         {
+            if (components == null)
+            {
+                components = new List<string>();
+            }
+
+            if (scripts == null)
+            {
+                scripts = new List<string>();
+            }
+
             var originalScripts = scripts.ToList();
 
-            if (components == null || !components.Any())
+            if (!components.Any())
             {
                 return originalScripts;
             }
@@ -72,10 +83,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private static IEnumerable<string> GetComponentScripts(string component)
         {
+            var allScripts = new List<string>();
+
             if (!string.IsNullOrEmpty(component) && ScriptDependencyResolver.ComponentsDefinitionsDictionary.Value.ContainsKey(component))
             {
-                var allScripts = new List<string>();
-
                 var componentDefinitionObject = ScriptDependencyResolver.ComponentsDefinitionsDictionary.Value[component];
 
                 if (componentDefinitionObject.Scripts != null)
@@ -90,11 +101,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                         allScripts.AddRange(ScriptDependencyResolver.GetComponentScripts(comp));
                     }
                 }
-
-                return allScripts.Distinct();
+            }
+            else
+            {
+                Log.Write(string.Format(System.Globalization.CultureInfo.InvariantCulture, "The component {0} could not be resolved", component));
             }
 
-            return null;
+            return allScripts.Distinct();
         }
 
         private static Dictionary<string, ScriptDependencyConfigModel> Initialize()

@@ -15,6 +15,22 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers
     public class DummyScriptController : Controller
     {
         /// <summary>
+        /// Gets or sets the referred script source.
+        /// </summary>
+        /// <value>
+        /// The script source.
+        /// </value>
+        public string ScriptSource { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the section.
+        /// </summary>
+        /// <value>
+        /// The name of the section.
+        /// </value>
+        public string SectionName { get; set; }
+
+        /// <summary>
         /// This action provides jQuery script reference.
         /// </summary>
         /// <returns></returns>
@@ -27,7 +43,15 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers
             var dummyViewDataContainer = (IViewDataContainer)new ViewPage();
 
             var htmlHelper = new System.Web.Mvc.HtmlHelper(dummyViewContext, dummyViewDataContainer);
-            return this.Content(htmlHelper.Script(ScriptRef.JQuery).ToString());
+
+            if (!this.ScriptSource.IsNullOrEmpty())
+            {
+                return this.Content(htmlHelper.Script(this.ScriptSource, throwException: false, sectionName: this.SectionName).ToString());
+            }
+            else
+            {
+                return this.Content(htmlHelper.Script(ScriptRef.JQuery).ToString());
+            }
         }
     }
 }

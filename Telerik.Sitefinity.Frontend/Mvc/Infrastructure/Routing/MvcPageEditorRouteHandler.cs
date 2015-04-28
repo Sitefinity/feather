@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Routing;
+using System.Web.UI;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Web;
 
@@ -21,7 +22,36 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var handler = base.BuildHandler(requestContext, pageData);
             new PageInitializer().Initialize(handler);
 
+            var page = handler as Page;
+            if (page != null)
+            {
+                page.Init += this.MvcPageEditorRouteHandlerInit;
+            }
+
             return handler;
+        }
+
+        private void MvcPageEditorRouteHandlerInit(object sender, System.EventArgs e)
+        {
+            var page = (Page)sender;
+            
+            page.Header.Controls.Add(new LiteralControl(this.GetInlineStyle()));
+        }
+
+        private string GetInlineStyle()
+        {
+            //// TODO: Uncomment when css ready
+
+            //// TODO: Change icon
+            //// var iconUrl = "client-components/temp_mvc_logo.png";
+
+            //// var fullIconUrl = RouteHelper.ResolveUrl(string.Format("~/{0}/{1}", FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly), iconUrl), UrlResolveOptions.Rooted);
+            //// var cssValue = @".sfMvcIcn { background: transparent url(" + fullIconUrl + ") no-repeat 0 !important; }";
+            //// var inlineCss = string.Format(@"<style type=""text/css"">{0}</style>", cssValue);
+
+            //// return inlineCss;
+            
+            return string.Empty;
         }
     }
 }

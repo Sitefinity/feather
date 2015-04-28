@@ -3,9 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+    @Html.Section("head")
 </head>
 <body>
+    <div class="top-section">@Html.Section("top")</div>
+
     <h1>Test Layout</h1>
     @Html.SfPlaceHolder("TestPlaceHolder")
+
+    <div class="bottom-section">@Html.Section("bottom")</div>
 </body>
 </html>

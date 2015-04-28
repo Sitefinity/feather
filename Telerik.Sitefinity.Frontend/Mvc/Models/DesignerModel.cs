@@ -213,6 +213,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private void PopulateComponentsScriptReferences(DesignerViewConfigModel designerViewConfigModel)
         {
+            if (designerViewConfigModel == null)
+            {
+                return;
+            }
+
             if (designerViewConfigModel.Components != null && designerViewConfigModel.Components.Count > 0)
             {
                 if (designerViewConfigModel.Scripts == null)

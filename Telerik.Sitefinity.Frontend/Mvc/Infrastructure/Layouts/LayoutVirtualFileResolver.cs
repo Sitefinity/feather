@@ -46,13 +46,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <param name="virtualPath">The virtual path of the file to open.</param>
         public virtual Stream Open(PathDefinition definition, string virtualPath)
         {
+            var placeholdersOnly = virtualPath.EndsWith(".master", StringComparison.OrdinalIgnoreCase);
             virtualPath = this.virtualPathBuilder.RemoveParams(virtualPath);
 
             MemoryStream outPutStream = null;
             virtualPath = VirtualPathUtility.ToAppRelative(virtualPath);
             var virtualBuilder = new LayoutVirtualPathBuilder();
             var viewName = virtualBuilder.GetLayoutName(definition, virtualPath);
-            var layoutHtmlString = this.RenderLayout(viewName);
+            var layoutHtmlString = this.RenderLayout(viewName, placeholdersOnly);
 
             if (!string.IsNullOrEmpty(layoutHtmlString))
             {
@@ -91,16 +92,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
         #region Private Methods
 
-        /// <summary>
-        /// Renders the layout.
-        /// </summary>
-        /// <param name="layoutFileName">Filename of the layout.</param>
-        /// <returns>Rendered layout as HTML.</returns>
-        private string RenderLayout(string pageTemplateName)
+        private string RenderLayout(string pageTemplateName, bool placeholdersOnly)
         {
             var layoutTemplateBuilder = new LayoutRenderer();
 
-            return layoutTemplateBuilder.GetLayoutTemplate(pageTemplateName);
+            return layoutTemplateBuilder.GetLayoutTemplate(pageTemplateName, placeholdersOnly);
         }
 
         #endregion

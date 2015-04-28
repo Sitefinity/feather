@@ -60,6 +60,18 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.HttpContext
             }
         }
 
+        /// <summary>
+        /// When overridden in a derived class, gets a IHttpHandler as null object (just to supress NotImplementedException).
+        /// </summary>
+        /// <returns>Null.</returns>
+        public override IHttpHandler CurrentHandler
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         private HttpRequestBase request;
         private HttpResponseBase response;
         private IDictionary items;

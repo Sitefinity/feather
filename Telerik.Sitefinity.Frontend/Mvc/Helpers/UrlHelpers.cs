@@ -3,8 +3,12 @@ using System.Globalization;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Mvc.Rendering;
+using Telerik.Sitefinity.Utilities.TypeConverters;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -97,6 +101,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var contentResolvedPath = UrlTransformations.AppendParam(resourceUrl, PackageManager.PackageUrlParameterName, packageName);
 
             return helper.Content(contentResolvedPath);
+        }
+
+        /// <summary>
+        /// Gets the URL of an embedded resource.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="type">A type from the assembly that embeds the resource.</param>
+        /// <param name="path">The resource path.</param>
+        /// <returns>The resource URL.</returns>
+        public static string EmbeddedResource(this UrlHelper helper, string type, string path)
+        {
+            var page = helper.RequestContext.HttpContext.Handler as Page ?? new PageProxy(null);
+            return page.ClientScript.GetWebResourceUrl(TypeResolutionService.ResolveType(type), path);
         }
 
         /// <summary>

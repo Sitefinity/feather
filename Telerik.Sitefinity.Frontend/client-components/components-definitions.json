@@ -99,11 +99,10 @@
 
 "sf-html-field" : {
 	"scripts" : [
-		"Mvc/Scripts/ContentBlock/shared-content-services.js",
 		"client-components/selectors/media/sf-media-markup-service.js",
 		"client-components/fields/html-field/sf-html-field.js"
 	],
-	"components" : ["sf-services", "sf-fields", "sf-link-selector-modal", "sf-expander", "sf-image-field", "sf-document-field","sf-video-field", "sf-thumbnail-size-selection"]
+	"components" : ["sf-services", "sf-fields", "sf-link-selector-modal", "sf-expander", "sf-image-field", "sf-document-field","sf-video-field", "sf-thumbnail-size-selection", "sf-aspect-ratio-selection"]
 },
 
 "sf-media-field": {
@@ -273,6 +272,15 @@
 	"components" : ["sf-services", "sf-items-filter", "sf-list-selector", "sf-endless-scroll", "sf-selected-items-view", "sf-loading"]
 },
 
+"sf-user-selector" : {
+	"scripts" : [
+		"client-components/selectors/common/sf-generic-items-service.js",
+		"client-components/selectors/identity/sf-users-service.js",
+		"client-components/selectors/identity/sf-user-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
 
 "_____LISTS_____": { "scripts": [ ], "components": [ ] },
 
@@ -358,6 +366,13 @@
 		"client-components/selectors/media/sf-thumbnail-size-selection.js"
 	],
 	"components" : ["sf-services", "sf-image-selector"]
+},
+
+"sf-aspect-ratio-selection" : {
+	"scripts": [
+		"client-components/selectors/media/sf-aspect-ratio-selection.js"
+	],
+	"components" : ["sf-services"]
 },
 
 "_____MULTISITE_____" : {"scripts" : [], "components" : []},
@@ -464,5 +479,25 @@
 		"client-components/selectors/tools/sf-link-selector.js"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-multisite-page-selector" ]
+},
+
+
+"_____BLOGS_____" : {"scripts" : [], "components" : []},
+
+
+"sf-blog-post-selector" : {
+	"scripts" : [
+		"client-components/selectors/blogs/sf-blog-post-service.js",
+		"client-components/selectors/blogs/sf-blog-post-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
+"sf-blog-selector" : {
+	"scripts" : [
+		"client-components/selectors/blogs/sf-blog-service.js",
+		"client-components/selectors/blogs/sf-blog-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 }
 }

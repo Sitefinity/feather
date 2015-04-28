@@ -2,7 +2,7 @@
     var sfFields = angular.module('sfFields');
     sfFields.requires.push('sfHtmlField');
 
-    angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField', 'sfThumbnailSizeSelection'])
+    angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField', 'sfThumbnailSizeSelection', 'sfAspectRatioSelection'])
         .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
             return {
                 restrict: "E",
@@ -54,6 +54,19 @@
                         }
 
                         return aTag;
+                    }
+
+                    // If an anchor is in the range, preserve it and insert the given markup in it.
+                    function preserveWrapperATag (newMarkup) {
+                        var range = editor.getRange();
+                        var anchor = getAnchorElement(range);
+                        if (anchor) {
+                            $(anchor).html(newMarkup);
+                            return anchor.outerHTML;
+                        }
+                        else {
+                            return newMarkup;
+                        }
                     }
 
                     scope.$on('kendoWidgetCreated', function (event, widget) {
@@ -156,6 +169,11 @@
                                 .then(function (settings) {
                                     var wrapIt = true;
                                     var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
+
+                                    // If the image is wrapped in a link, insertHtml will override the link with the image,
+                                    // so we have to preserve the anchor and put the image inside it.
+                                    markup = preserveWrapperATag(markup);
+
                                     editor.exec('insertHtml', { html: markup, split: true });
                                 });
                         }, 0);
@@ -319,49 +337,22 @@
 
                 $scope.model = sfModel || { item: undefined };
 
-                $scope.model.aspectRatio = 'auto';
+                $scope.videoModel = {
+                    aspectRatio: $scope.model.aspectRatio,
+                    width: $scope.model.width,
+                    height: $scope.model.height
+                };
 
                 $scope.$watch('model.item.Id', function (newVal) {
                     if (newVal === null) {
                         $scope.cancel();
                     }
                 });
-
-                $scope.$watch('model.aspectRatio', function (newVal) {
-                    if (newVal === '4x3') {
-                        $scope.model.width = 600;
-                        $scope.model.height = 450;
-                        $scope.model.aspectRatioCoefficient = 4 / 3;
-                    }
-                    else if (newVal === '16x9') {
-                        $scope.model.width = 600;
-                        $scope.model.height = 338;
-                        $scope.model.aspectRatioCoefficient = 16 / 9;
-                    }
-                    else if (newVal === 'auto') {
-                        if (!$scope.item) return;
-                        $scope.model.width = $scope.item.Width;
-                        $scope.model.height = $scope.item.Height;
-                    }
-                    else if (newVal === 'custom') {
-                        $scope.model.width = "";
-                        $scope.model.height = "";
-                    }
-                });
-
-                $scope.updateWidth = function () {
-                    if ($scope.model.aspectRatio != '16x9' && $scope.model.aspectRatio != '4x3') return;
-
-                    $scope.model.width = Math.round($scope.model.height * $scope.model.aspectRatioCoefficient);
-                };
-
-                $scope.updateHeight = function () {
-                    if ($scope.model.aspectRatio != '16x9' && $scope.model.aspectRatio != '4x3') return;
-
-                    $scope.model.height = Math.round($scope.model.width / $scope.model.aspectRatioCoefficient);
-                };
-
+                
                 $scope.done = function () {
+                    $scope.model.width = $scope.videoModel.aspectRatio === 'auto' ? null : $scope.videoModel.width;
+                    $scope.model.height = $scope.videoModel.aspectRatio === 'auto' ? null : $scope.videoModel.height;
+
                     $modalInstance.close($scope.model);
                 };
 

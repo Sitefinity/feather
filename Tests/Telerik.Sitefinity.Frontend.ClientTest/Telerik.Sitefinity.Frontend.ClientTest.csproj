@@ -52,8 +52,10 @@
     <Content Include="unit\fields\sfDragDropSpec.js" />
     <Content Include="unit\fields\sfFlatTaxonFieldSpecs.js" />
     <Content Include="unit\search\sfSearchBoxSpec.js" />
+    <Content Include="unit\selectors\sfUserSelectorSpec.js" />
     <Content Include="unit\selectors\librarySelectorSpec.js" />
     <Content Include="unit\selectors\listsSelectorSpec.js" />
+    <Content Include="unit\selectors\media\sfMediaSelectorSpec.js" />
     <Content Include="unit\selectors\sfLibrariesBreadcrumbSpec.js" />
     <Content Include="unit\selectors\sfImageSelectorSpec.js" />
     <Content Include="unit\selectors\externalUrlsViewSpec.js" />
@@ -68,11 +70,13 @@
     <Content Include="unit\services\languageServiceSpec.js" />
     <Content Include="unit\services\multisiteSpec.js" />
     <Content Include="unit\services\listsServiceSpec.js" />
+    <Content Include="unit\services\sfGenericItemsServiceSpec.js" />
     <Content Include="unit\services\sfLinkServiceSpec.js" />
     <Content Include="unit\services\sfMediaFilterSpec.js" />
     <Content Include="unit\services\sfMediaMarkupServiceSpec.js" />
     <Content Include="unit\services\sfMediaServiceSpec.js" />
     <Content Include="unit\services\sfRolesServiceSpec.js" />
+    <Content Include="unit\services\sfUsersServiceSpec.js" />
     <Content Include="unit\sorting\sfSortBoxSpec.js" />
     <EmbeddedResource Include="helpers\kendo.all.min.js" />
     <Content Include="unit\selectors\itemsTreeSpec.js" />
