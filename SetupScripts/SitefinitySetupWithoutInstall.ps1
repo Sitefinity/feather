@@ -15,7 +15,7 @@ if (Test-Path $defaultWebsiteRootDirectory){
 
 write-output "Sitefinity deploying from $projectLocationShare..."
 
-Copy-Item -Path Microsoft.PowerShell.Core\FileSystem::$projectLocationShare $projectDeploymentDirectory -Recurse -ErrorAction stop
+Copy-Item $emptyWebsite $projectDeploymentDirectory -Recurse -ErrorAction stop
 
 write-output "Sitefinity successfully deployed."
 
