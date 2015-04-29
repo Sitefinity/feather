@@ -24,6 +24,13 @@
 	"components" : []
 },
 
+"sf-bootstrap-popover" : {
+	"scripts" : [
+		"Mvc/Scripts/sf-bootstrap-popover.js"
+	],
+	"components" : []
+},
+
 
 "__________COLLECTIONS__________" : {"scripts" : [], "components" : []},
 
@@ -316,7 +323,7 @@
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
-					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector"]
+					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover"]
 },
 
 "sf-document-selector" : {
@@ -329,7 +336,7 @@
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
-					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector"]
+					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover"]
 },
 
 "sf-video-selector" : {
@@ -349,7 +356,7 @@
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
-					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector"]
+					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover"]
 },
 
 "sf-library-selector" : {
@@ -499,5 +506,12 @@
 		"client-components/selectors/blogs/sf-blog-selector.js"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
+"sf-code-area" : {
+	"scripts" : [
+		"client-components/fields/sf-code-area.js"
+	],
+	"components": ["sf-fields", "sf-services"]
 }
 }

@@ -14,6 +14,13 @@ $analyticsSetup = Join-Path $currentPath "\EnableAnalytics.ps1"
 $multilingualSetup = Join-Path $currentPath "\Setup_Multilingual.ps1"
 $siteSyncSetup = Join-Path $currentPath "\Setup_SiteSync.ps1"
 
+# Azure Scripts
+$azureBlobStorage = Join-Path $currentPath "\AzureBlobStorage.ps1"
+$BlobScripts = Split-Path -Path (Split-Path -Path $currentPath -Parent) -Parent
+$BlobScripts = Join-Path $BlobScripts "\Tooling\Azure\Blob"
+$CopyFilesFromAzureStorageContainer = Join-Path $BlobScripts "CopyFilesFromAzureStorageContainer.ps1"
+$BlobCommon = Join-Path $BlobScripts "Common.ps1"
+
 #Website setup properties
 
 $defaultWebsiteUrl = $doc.SelectSingleNode("//variables/defaultWebsiteUrl").InnerText
@@ -31,11 +38,21 @@ $analyticsEnabled = $doc.SelectSingleNode("//variables/analyticsEnabled").InnerT
 $multilingualEnabled = $doc.SelectSingleNode("//variables/multilingualEnabled").InnerText
 $siteSyncEnabled = $doc.SelectSingleNode("//variables/siteSyncEnabled").InnerText
 
+# Azure blob storage configuration
+$azureBlobDownloadLocation = "C:\AzureBlobStorage"
+$emptyWebsite = Join-Path $azureBlobDownloadLocation "SitefinityWebApp"
+$azureStorageContainer = "sfversions"
+$websiteBlobName = "Feather_Website.zip"
+$testRunnerBlobName = "Telerik.WebTestRunner.zip"
+$codeCoverageBlobName = "CodeCoverage.zip"
+
 $appPollName = $siteName
 $secondAppPollName = $secondSiteName
 $databaseName = $siteName
 $secondSiteDatabaseName = $secondSiteName
 $websiteBinariesDirectory = $defaultWebsiteRootDirectory + "\bin"
+
+$emptyWebsiteShare = "\\feather-ci\c$\Tests\SitefinityWebApp"
 
 #TEST AGENT
 $testAgentExe = "C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\QTAgentProcessUI.exe"

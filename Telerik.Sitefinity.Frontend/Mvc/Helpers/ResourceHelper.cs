@@ -12,6 +12,7 @@ using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc.Rendering;
 using Telerik.Sitefinity.Utilities.TypeConverters;
+using Telerik.Sitefinity.Web.Configuration;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -199,6 +200,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource("Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryItem.js")).ToHtmlString());
             result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource("Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryGroup.js")).ToHtmlString());
             result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource("Telerik.Sitefinity.Web.UI.QueryBuilder", "Telerik.Sitefinity.Web.UI.QueryBuilder.Scripts.QueryBuilder.js")).ToHtmlString());
+
+            return MvcHtmlString.Create(result.ToString());
+        }
+
+        /// <summary>
+        /// Adds script references required by the Sitefinity's CodeMirror component.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        public static MvcHtmlString CodeMirrorScriptReferences(this HtmlHelper helper)
+        {
+            var result = new StringBuilder();
+            var urlHelper = new UrlHelper(helper.ViewContext.HttpContext.Request.RequestContext);
+            result.Append(ResourceHelper.StyleSheet(helper, urlHelper.EmbeddedResource(typeof(Telerik.Sitefinity.Resources.Reference).FullName, "Telerik.Sitefinity.Resources.Scripts.CodeMirror.codemirror.css")).ToHtmlString());
+            result.Append(ResourceHelper.StyleSheet(helper, urlHelper.EmbeddedResource(typeof(Telerik.Sitefinity.Resources.Reference).FullName, "Telerik.Sitefinity.Resources.Scripts.CodeMirror.Theme.default.css")).ToHtmlString());
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource(typeof(Telerik.Sitefinity.Resources.Reference).FullName, "Telerik.Sitefinity.Resources.Scripts.CodeMirror.codemirror.js")).ToHtmlString());
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource(typeof(Telerik.Sitefinity.Resources.Reference).FullName, "Telerik.Sitefinity.Resources.Scripts.CodeMirror.Mode.htmlmixed.js")).ToHtmlString());
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource(typeof(Telerik.Sitefinity.Resources.Reference).FullName, "Telerik.Sitefinity.Resources.Scripts.CodeMirror.Mode.xml.js")).ToHtmlString());
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource(typeof(Telerik.Sitefinity.Resources.Reference).FullName, "Telerik.Sitefinity.Resources.Scripts.CodeMirror.Mode.css.js")).ToHtmlString());
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource(typeof(Telerik.Sitefinity.Resources.Reference).FullName, "Telerik.Sitefinity.Resources.Scripts.CodeMirror.Mode.javascript.js")).ToHtmlString());
 
             return MvcHtmlString.Create(result.ToString());
         }

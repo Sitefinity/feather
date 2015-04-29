@@ -523,6 +523,7 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\sf-bootstrap-popover.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\ui-bootstrap-tpls.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\bootstrap.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.bootstrap.min.css" />
@@ -610,10 +611,12 @@
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-service.js" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.js" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-service.js" />
+    <EmbeddedResource Include="client-components\fields\sf-code-area.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-generic-items-service.js" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-users-service.js" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.js" />
-    <EmbeddedResource Include="client-components\temp_mvc_logo.png" />
+    <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-service.js" />
+    <EmbeddedResource Include="client-components\sf-mvc-ext.png" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
