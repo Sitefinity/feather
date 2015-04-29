@@ -1,6 +1,6 @@
 ﻿namespace Telerik.Sitefinity.Frontend.Services.FilesService
 {
-    public static class FilesWebServiceConstants
+    internal static class FilesWebServiceConstants
     {
         public const string FileExtensionNullOrEmptyExceptionMessage = "File extension can not be null or empty.";
         public const string FileExtensionNotSupportedExceptionMessageFormat = "File extension {0} is not supported.";

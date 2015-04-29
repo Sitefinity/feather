@@ -22,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.Services.FilesService
         /// </summary>
         /// <param name="filesRequest">The files requests object from which the request parameters to be retrieved.</param>
         /// <returns>        
-        /// An enumerable of <see cref="FilesViewModel"/> objects.
+        /// An <see cref="FilesViewModel"/> object.
         /// </returns>
         [AddHeader(ContentType = MimeTypes.Json)]
         public FilesViewModel Get(FilesGetRequest filesRequest)
