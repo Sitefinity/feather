@@ -2,6 +2,14 @@
     angular.module('sfServices').factory('sfFileUrlService', ['$http', '$q', 'serverContext', function ($http, $q, serverContext) {
         var serviceUrl = serverContext.getRootedUrl('files-api');
 
+        var getExtension = function (str) {
+            var dotIdx = str.lastIndexOf('.');
+            if (dotIdx === -1)
+                return null;
+
+            return str.substr(dotIdx + 1);
+        };
+
         var getFiles = function (extension, path, skip, take) {
             if (path.charAt(path.length - 1) !== '/') {
                 path = path + '/';
@@ -25,7 +33,8 @@
                         items.push({
                             label: item.Name,
                             url: rootedPath + item.Name,
-                            isFolder: item.IsFolder
+                            isFolder: item.IsFolder,
+                            extension: getExtension(item.Name)
                         });
                     }
 
