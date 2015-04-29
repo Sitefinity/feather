@@ -1,13 +1,26 @@
 describe('tests for sfUsersService', function () {
     beforeEach(module('sfServices'));
 
-    var itemType = 'Telerik.Sitefinity.Security.Model.User';
-    var itemSurrogateType = 'Telerik.Sitefinity.Security.Web.Services.WcfMembershipUser';
+    var appPath = 'http://mysite.com:9999/myapp';
+    var serviceBaseUrl = 'http://mysite.com:9999/myapp/Sitefinity/Services/Security/Users.svc';
+
+    beforeEach(module(function ($provide) {
+        var serverContext = {
+            getRootedUrl: function (path) {
+                return appPath + '/' + path;
+            },
+            getUICulture: function () {
+                return null;
+            }
+        };
+        $provide.value('serverContext', serverContext);
+    }));
+
     var identifier = 'UserName';
 
-    var dataService;
-    var $q;
-    var $rootScope;
+    var $httpBackend;
+    var service;
+    var serviceHelper;
 
     //Will be returned from the service mock.
     var dataItem = {
@@ -26,114 +39,202 @@ describe('tests for sfUsersService', function () {
         TotalCount: 2
     };
 
-    var genericItemsServiceMock = {
-        getItems: jasmine.createSpy('sfGenericItemsService.getItems')
-            .andCallFake(function (options) {
-                var defered = $q.defer();
-
-                defered.resolve(dataItems);
-
-                return defered.promise;
-            })
+    var errorResponse = {
+        Detail: 'Error'
     };
 
-    beforeEach(module(function ($provide) {
-        $provide.value('sfGenericItemsService', genericItemsServiceMock);
+    beforeEach(inject(function ($injector) {
+        // Set up the mock http service responses
+        $httpBackend = $injector.get('$httpBackend');
+        service = $injector.get('sfUsersService');
+        serviceHelper = $injector.get('serviceHelper');
     }));
 
-    beforeEach(inject(function (sfUsersService, _$q_, _$rootScope_) {
-        dataService = sfUsersService;
-        $q = _$q_;
-        $rootScope = _$rootScope_;
-    }));
-
-    function assertItems (params) {
+    /* Helper methods */
+    var assertItems = function (params) {
         var data;
-        dataService.getUsers.apply(dataService, params).then(function (res) {
+        service.getUsers.apply(service, params).promise.then(function (res) {
             data = res;
         });
 
-        //Needed to resolve the promise.
-        $rootScope.$digest();
+        expect(data).toBeUndefined();
 
-        expect(data).toEqualData(dataItems);        
-    }
+        $httpBackend.flush();
 
-    function getMockServiceGetItemsArgs () {
-        var mostRecent = genericItemsServiceMock.getItems.mostRecentCall;
-        expect(mostRecent).toBeDefined();
-        expect(mostRecent.args).toBeDefined();
+        expect(data).toEqualData(dataItems);
+    };
 
-        return mostRecent.args;
-    }
+    var assertProviders = function () {
+        var data;
+        service.getUserProviders.apply(service).promise.then(function (res) {
+            data = res;
+        });
 
-    function getFilter (search, searchField) {
-        searchField = searchField || 'Title';
+        expect(data).toBeUndefined();
 
+        $httpBackend.flush();
+
+        expect(data).toEqualArrayOfObjects({
+            Items: [{
+                UserProviderName: 'user'
+            }]
+        }, 'UserProviderName');
+    };
+
+    var assertSpecificItems = function (params) {
+        var data;
+        service.getSpecificUsers.apply(service, params).promise.then(function (res) {
+            data = res;
+        });
+
+        expect(data).toBeUndefined();
+
+        $httpBackend.flush();
+
+        expect(data).toEqualArrayOfObjects(dataItems, 'Id');
+    };
+
+    var assertError = function (params) {
+        var data;
+        service.getUsers.apply(service, params).promise.then(function (res) {
+            data = res;
+        }, function (err) {
+            data = err;
+        });
+
+        expect(data).toBeUndefined();
+
+        $httpBackend.flush();
+
+        expect(data.error).toEqualData(errorResponse);
+    };
+
+    var getFilter = function (search) {
         if (search) {
-            return "(" + searchField + ".ToUpper().Contains(\"" + search + "\".ToUpper()))";
+            return "(" + identifier + ".ToUpper().Contains(%22" + search + "%22.ToUpper()))";
         }
 
         return "";
-    }
+    };
 
-    it('[GeorgiMateev] / should call generic items service.', function () {
-        var params = [true, 'OpenAccess', true, 0, 20];
+    var constructGetItemsServiceUrl = function (provider, skip, take, search) {
+        var filter = getFilter(search);
+        var filterParam = "filter=" + filter + "&";
 
-        dataService.getUsers.apply(dataService, params);
+        var providerParam = "";
+        if (provider) {
+            providerParam = "provider=" + provider + "&";
+        }
 
-        var args = getMockServiceGetItemsArgs();
-        var options = args[0];
+        var forAllProviders = provider ? false : true;
 
-        expect(options.ignoreAdminUsers).toBe(true);
+        var servicePathPattern = '/?{0}forAllProviders={1}&{2}skip={3}&take={4}';
+        var url = serviceBaseUrl + servicePathPattern.format(filterParam, forAllProviders, providerParam, skip, take);
 
-        expect(options.providerName).toBe('OpenAccess');
+        return url;
+    };
 
-        expect(options.allProviders).toBe(true);
+    var expectGetItemsServiceCall = function (provider, skip, take, search) {
+        var url = constructGetItemsServiceUrl(provider, skip, take, search);
 
-        expect(options.skip).toBe(0);
+        $httpBackend.expectGET(url).respond(dataItems);
+    };
 
-        expect(options.take).toBe(20);
-    });
+    var expectGetSpecificItemsServiceCall = function (ids, provider) {
+        var filter = serviceHelper.filterBuilder()
+                    .specificItemsFilter(ids)
+                    .getFilter();
 
-    it('[GeorgiMateev] / should call generic items service with the right types.', function () {
-        var params = [true, null, true, 0, 20];
+        // Achieve similar encoding as the one in the Angular's $resource.
+        var encodedFilter = encodeURIComponent(filter).replace(/%20/g, '+');
 
-        dataService.getUsers.apply(dataService, params);
+        var forAllProviders = provider ? false : true;
 
-        var args = getMockServiceGetItemsArgs();
-        var options = args[0];
+        var servicePathPattern = '/?filter={0}&forAllProviders={1}&provider={2}';
+        var url = serviceBaseUrl + servicePathPattern.format(encodedFilter, forAllProviders, provider);
 
-        expect(options.itemType).toBe(itemType);
-        expect(options.itemSurrogateType).toBe(itemSurrogateType);
-    });
+        $httpBackend.expectGET(url).respond({
+            Items: [{
+                Id: '4c003fb0-2a77-61ec-be54-ff00007864f4'
+            },
+            {
+                Id: '4c003fb0-2a77-61ec-be54-ff11117864f4'
+            }],
+            TotalCount: 2
+        });
+    };
 
-    it('[GeorgiMateev] / should call generic items service with the right sort expression.', function () {
-        var params = [true, null, true, 0, 20];
+    var expectGetItemsServiceError = function (provider, skip, take, search) {
+        var url = constructGetItemsServiceUrl(provider, skip, take, search);
 
-        dataService.getUsers.apply(dataService, params);
+        $httpBackend.expectGET(url).respond(500, errorResponse);
+    };
 
-        var args = getMockServiceGetItemsArgs();
-        var options = args[0];
+    var expectGetUserProvidersServiceCall = function () {
+        var url = serviceBaseUrl + '/GetUserProviders/';
 
-        expect(options.identifier).toBe(identifier);
-    });
+        $httpBackend.expectGET(url).respond({
+            Items: [{
+                UserProviderName: 'user'
+            }]
+        });
+    };
 
-    it('[GeorgiMateev] / should call generic items service with filter.', function () {
-        var params = [true, null, true, 0, 20, 'someFilter'];
+    /* Tests */
+    it('[GeorgiMateev] / should retrieve users without filter and paging.', function () {
+        var params = [null, 0, 20, null];
 
-        dataService.getUsers.apply(dataService, params);
-
-        var args = getMockServiceGetItemsArgs();
-        var options = args[0];
-
-        var expectedFilter = getFilter('someFilter', identifier);
-        expect(options.filter).toBe(expectedFilter);
-    });
-
-    it('[GeorgiMateev] / should return data items.', function () {
-        var params = [true, null, true, 0, 20];
+        expectGetItemsServiceCall.apply(this, params);
 
         assertItems(params);
+    });
+
+    it('[GeorgiMateev] / should retrieve users with paging.', function () {
+        var params = [null, 20, 20, null];
+
+        expectGetItemsServiceCall.apply(this, params);
+
+        assertItems(params);
+    });
+
+    it('[GeorgiMateev] / should retrieve users with provider.', function () {
+        var params = ['OpenAccessDataProvider', 0, 20, null];
+
+        expectGetItemsServiceCall.apply(this, params);
+
+        assertItems(params);
+    });
+
+    it('[GeorgiMateev] / should retrieve items with search filter.', function () {
+        var params = [null, 0, 20, 'keyword'];
+
+        expectGetItemsServiceCall.apply(this, params);
+
+        assertItems(params);
+    });
+
+    it('[GeorgiMateev] / should return error.', function () {
+        var params = [null, 0, 20, 'keyword'];
+
+        expectGetItemsServiceError.apply(this, params);
+
+        assertError(params);
+    });
+
+    it('[GeorgiMateev] / should return specific items with provider.', function () {
+        var ids = ['4c003fb0-2a77-61ec-be54-ff00007864f4', '4c003fb0-2a77-61ec-be54-ff11117864f4'];
+        var provider = 'OpenAccessDataProvider';
+
+        var params = [ids, provider];
+
+        expectGetSpecificItemsServiceCall.apply(this, params);
+
+        assertSpecificItems(params);
+    });
+
+    it('[GeorgiMateev] / should return providers for users.', function () {
+        expectGetUserProvidersServiceCall.apply(this);
+
+        assertProviders();
     });
 });
