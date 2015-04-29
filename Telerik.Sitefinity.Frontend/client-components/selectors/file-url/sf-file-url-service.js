@@ -1,6 +1,6 @@
 ﻿; (function () {
     angular.module('sfServices').factory('sfFileUrlService', ['$http', '$q', 'serverContext', function ($http, $q, serverContext) {
-        var serviceUrl = serverContext.getRootedUrl('files-api');
+        var serviceUrl = serverContext.getRootedUrl('RestApi/files-api');
 
         var getExtension = function (str) {
             var dotIdx = str.lastIndexOf('.');
@@ -11,10 +11,8 @@
         };
 
         var getFiles = function (extension, path, skip, take) {
-            if (path.charAt(path.length - 1) !== '/') {
-                path = path + '/';
-            }
-
+			path = path || '';
+			
             var url = serviceUrl + '?path=' + encodeURIComponent(path) + '&extension=' + extension;
             if (skip) {
                 url = url + '&skip=' + skip;
@@ -24,24 +22,27 @@
                 url = url + '&take=' + take;
             }
 
+			if (path.length > 0 && path.charAt(path.length - 1) !== '/') {
+                path = path + '/';
+            }
+			
             var deferred = $q.defer();
             $http.get(url).
                 success(function (data, status, headers, config) {
                     var rootedPath = '~/' + path;
                     var items = [];
-                    for (var item in data.Items) {
+                    for (var i = 0; i < data.Items.length; i++) {
+						var item = data.Items[i];
                         items.push({
                             label: item.Name,
+							path: path,
                             url: rootedPath + item.Name,
                             isFolder: item.IsFolder,
                             extension: getExtension(item.Name)
                         });
                     }
 
-                    deferred.resolve({
-                        items: items,
-                        totalCount: data.TotalCount
-                    });
+                    deferred.resolve(items);
                 }).
                 error(function (data, status, headers, config) {
                     deferred.reject(data);
