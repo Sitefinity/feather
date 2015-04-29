@@ -43,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var iconUrl = "client-components/sf-mvc-ext.png";
 
              var fullIconUrl = RouteHelper.ResolveUrl(string.Format("~/{0}{1}", FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly), iconUrl), UrlResolveOptions.Rooted);
-             var cssValue = @".sfMvcIcn { position: relative; } .sfMvcIcn:after { content: """"; background: transparent url(" + fullIconUrl + ") no-repeat; width: 26px; height: 17px;display: block; position: absolute; left: 29px; bottom: 0px;} ";
+             var cssValue = @".sfMvcIcn { position: relative; } .sfMvcIcn:after { content: """"; background: transparent url(" + fullIconUrl + ") no-repeat; width: 26px; height: 17px;display: block; position: absolute; left: 29px; bottom: 0px;} a.sfAddContentLnk.sfMvcIcn:after{ top: 22px; left: 0; width: 100%; background-position: calc(50% + 15px); }";
              var inlineCss = string.Format(@"<style type=""text/css"">{0}</style>", cssValue);
 
              return inlineCss;
