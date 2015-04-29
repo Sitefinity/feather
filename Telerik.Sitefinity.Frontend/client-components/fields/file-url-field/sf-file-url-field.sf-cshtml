@@ -21,7 +21,7 @@
         <sf-file-url-selector sf-model="selectedUrl" sf-extension="extension"></sf-file-url-selector>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">@(Res.Get<ClientComponentsResources>().Done)</button>
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!selectedUrl">@(Res.Get<ClientComponentsResources>().Done)</button>
         <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
     </div>
 </script>

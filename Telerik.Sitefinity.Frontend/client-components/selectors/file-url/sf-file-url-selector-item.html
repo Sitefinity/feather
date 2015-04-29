@@ -1,7 +1,7 @@
 ﻿<a class="sf-Tree-expander" ng-class="{'is-expanded' : node.collapsed !== true}" ng-if="hasChildren(node)" ng-click="toggle(node)"></a>
 
 <span>{{node.item.isFolder ? '[Folder]' : '[' + node.item.extension + ']'}}</span>
-<span ng-click="select(node)" ng-class="{'is-selected' : isSelected(node) === true}" ng-bind="node.item.Name"></span>
+<span ng-click="select(node)" ng-class="{'is-selected' : isSelected(node) === true}" ng-bind="node.item.label"></span>
 
 <ul class="sf-Tree" ng-if="hasChildren(node)" ng-class="{'is-collapsed' : node.collapsed === true}">
 	<li ng-repeat="node in node.children" ng-include src="itemTemplateUrl"></li>

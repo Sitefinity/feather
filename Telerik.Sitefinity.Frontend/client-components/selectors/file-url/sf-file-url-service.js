@@ -31,19 +31,18 @@
                 success(function (data, status, headers, config) {
                     var rootedPath = '~/' + path;
                     var items = [];
-                    for (var item in data.Items) {
+                    for (var i = 0; i < data.Items.length; i++) {
+						var item = data.Items[i];
                         items.push({
                             label: item.Name,
+							path: path,
                             url: rootedPath + item.Name,
                             isFolder: item.IsFolder,
                             extension: getExtension(item.Name)
                         });
                     }
 
-                    deferred.resolve({
-                        items: items,
-                        totalCount: data.TotalCount
-                    });
+                    deferred.resolve(items);
                 }).
                 error(function (data, status, headers, config) {
                     deferred.reject(data);

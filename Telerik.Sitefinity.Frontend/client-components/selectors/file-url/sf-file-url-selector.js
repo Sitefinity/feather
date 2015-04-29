@@ -8,7 +8,7 @@
             return {
                 restrict: 'E',
                 scope: {
-                    sfModel: '=?',
+                    sfModel: '=',
                     extension: '=?sfExtension'
                 },
                 templateUrl: function (elem, attrs) {
@@ -20,12 +20,17 @@
                     scope.selectedFile = null;
 
                     scope.getFiles = function (parent) {
-                        return sfFileUrlService.get(scope.extension, parent);
+						var path = null;
+						if (parent) {
+							path = parent.path;
+						}
+
+                        return sfFileUrlService.get(scope.extension, path);
                     };
 
                     scope.$watch('selectedFile', function (newVal, oldVal) {
-                        if (newVal && newVal.url)
-                            scope.sfModel = newVal.url;
+                        if (newVal && newVal.length > 0 && !newVal[0].isFolder && newVal[0].url)
+                            scope.sfModel = newVal[0].url;
                         else
                             scope.sfModel = '';
                     });
