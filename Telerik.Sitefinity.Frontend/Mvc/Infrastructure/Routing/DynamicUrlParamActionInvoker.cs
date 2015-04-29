@@ -277,7 +277,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             {
                 if (controller != null && controller.ControllerContext != null && !controller.ControllerContext.IsChildAction)
                 {
+                    var isInPureModeValue = false;
+                    var isInPureModeKey = "IsInPureMode";
+
+                    if (controller.TempData.ContainsKey(isInPureModeKey))
+                    {
+                        isInPureModeValue = (bool)controller.TempData[isInPureModeKey];
+                    }
+
                     controller.TempData.Load(controller.ControllerContext, controller.TempDataProvider);
+
+                    if (controller.TempData.ContainsKey(isInPureModeKey))
+                    {
+                        controller.TempData[isInPureModeKey] = isInPureModeValue;
+                    }
+                    else
+                    {
+                        controller.TempData.Add(isInPureModeKey, isInPureModeValue);
+                    }
                 }
             }
             catch (Exception ex)
