@@ -193,14 +193,20 @@ namespace Telerik.Sitefinity.Frontend
             {
                 var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
                 var pageControls = toolboxConfig.Toolboxes["PageControls"];
+
+                foreach (var section in pageControls.Sections)
+                {
+                    var widgets = section.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.", StringComparison.Ordinal)).ToArray();
+                    foreach (ToolboxItem tool in widgets)
+                    {
+                        section.Tools.Remove(tool);
+                    }
+                }
+
                 var mvcWidgetsSection = pageControls.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
                 if (mvcWidgetsSection != null)
                 {
-                    var widgets = mvcWidgetsSection.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.", StringComparison.Ordinal)).ToArray();
-                    foreach (ToolboxItem tool in widgets)
-                    {
-                        mvcWidgetsSection.Tools.Remove(tool);
-                    }
+                    pageControls.Sections.Remove(mvcWidgetsSection);
                 }
 
                 configManager.SaveSection(toolboxConfig);
