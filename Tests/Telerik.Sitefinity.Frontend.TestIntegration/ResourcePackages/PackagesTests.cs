@@ -413,7 +413,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Test]
         [Category(TestCategories.Packages)]
         [Author(FeatherTeams.Team2)]
-        [Description("Adds new package without layout file, replaces it with the same package with different layouts and verifies new templates are generated")]
+        [Description("Adds new package without layout file, replaces it with the same package with different layouts and verifies new templates are generated"),
+        Ignore("Unstable test")]
         public void ResourcePackage_ReplaceExistingPackage_VerifyNewTemplatesGenerated()
         {
             string packageName = "Package1";

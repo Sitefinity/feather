@@ -3,7 +3,6 @@
   <Description>These are default test settings for a remote test run.</Description>
   <Deployment>
     <DeploymentItem filename="app.config" />
-	<DeploymentItem filename="MediaFiles\" />
 	<DeploymentItem filename="..\..\SetupScripts\" />
   </Deployment>
   <NamingScheme baseName="TestExecution@Sitefinity_UITests" useDefault="false" />

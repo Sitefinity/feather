@@ -84,6 +84,7 @@ namespace Telerik.Sitefinity.Frontend
             if (upgradeFrom <= new Version(1, 2, 180, 1))
             {
                 this.RemoveMvcWidgetToolboxItems();
+                this.RenameDynamicContentMvcToolboxItems();
             }
         }
 
@@ -194,13 +195,42 @@ namespace Telerik.Sitefinity.Frontend
             {
                 var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
                 var pageControls = toolboxConfig.Toolboxes["PageControls"];
+
+                foreach (var section in pageControls.Sections)
+                {
+                    var widgets = section.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.", StringComparison.Ordinal) && !t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.DynamicContent", StringComparison.Ordinal)).ToArray();
+                    foreach (ToolboxItem tool in widgets)
+                    {
+                        section.Tools.Remove(tool);
+                    }
+                }
+
                 var mvcWidgetsSection = pageControls.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
                 if (mvcWidgetsSection != null)
                 {
-                    var widgets = mvcWidgetsSection.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.", StringComparison.Ordinal)).ToArray();
+                    pageControls.Sections.Remove(mvcWidgetsSection);
+                }
+
+                configManager.SaveSection(toolboxConfig);
+            }
+        }
+
+        private void RenameDynamicContentMvcToolboxItems()
+        {
+            var configManager = ConfigManager.GetManager();
+            using (new ElevatedConfigModeRegion())
+            {
+                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
+                var pageControls = toolboxConfig.Toolboxes["PageControls"];
+
+                foreach (var section in pageControls.Sections)
+                {
+                    var widgets = section.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.DynamicContent", StringComparison.Ordinal)).ToArray();
                     foreach (ToolboxItem tool in widgets)
                     {
-                        mvcWidgetsSection.Tools.Remove(tool);
+                        tool.CssClass = "sfNewsViewIcn sfMvcIcn";
+                        var indexOfMvcSuffix = tool.Title.LastIndexOf(" MVC", StringComparison.Ordinal);
+                        tool.Title = tool.Title.Substring(0, indexOfMvcSuffix);
                     }
                 }
 

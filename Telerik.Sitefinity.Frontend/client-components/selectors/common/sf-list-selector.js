@@ -349,8 +349,7 @@
                                 if (ctrl.selectorType === 'NewsSelector' ||
                                     ctrl.selectorType === 'DynamicItemsSelector' ||
                                     ctrl.selectorType === 'LibrarySelector' ||
-                                    ctrl.selectorType === 'ListsSelector' ||
-                                    ctrl.selectorType === 'UserSelector') {
+                                    ctrl.selectorType === 'ListsSelector') {
                                     scope.sfSelectedItems = null;
                                     scope.sfSelectedIds = null;
                                 }
