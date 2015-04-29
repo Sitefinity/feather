@@ -1,6 +1,6 @@
 ﻿; (function () {
     angular.module('sfServices').factory('sfFileUrlService', ['$http', '$q', 'serverContext', function ($http, $q, serverContext) {
-        var serviceUrl = serverContext.getRootedUrl('files-api');
+        var serviceUrl = serverContext.getRootedUrl('RestApi/files-api');
 
         var getExtension = function (str) {
             var dotIdx = str.lastIndexOf('.');
@@ -11,10 +11,8 @@
         };
 
         var getFiles = function (extension, path, skip, take) {
-            if (path.charAt(path.length - 1) !== '/') {
-                path = path + '/';
-            }
-
+			path = path || '';
+			
             var url = serviceUrl + '?path=' + encodeURIComponent(path) + '&extension=' + extension;
             if (skip) {
                 url = url + '&skip=' + skip;
@@ -24,6 +22,10 @@
                 url = url + '&take=' + take;
             }
 
+			if (path.length > 0 && path.charAt(path.length - 1) !== '/') {
+                path = path + '/';
+            }
+			
             var deferred = $q.defer();
             $http.get(url).
                 success(function (data, status, headers, config) {

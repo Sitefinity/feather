@@ -20,7 +20,7 @@
                     scope.selectedFile = null;
 
                     scope.getFiles = function (parent) {
-                        return sfFileUrlService.get(extension, parent);
+                        return sfFileUrlService.get(scope.extension, parent);
                     };
 
                     scope.$watch('selectedFile', function (newVal, oldVal) {

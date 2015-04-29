@@ -152,6 +152,13 @@
 	"components" : []
 },
 
+"sf-file-url-field" : { 
+	"scripts" : [
+		"client-components/fields/file-url-field/sf-file-url-field.js"
+	],
+	"components" : ["sf-services", "sf-file-url-selector"]
+},
+
 "__________SELECTORS__________" : {"scripts" : [], "components" : []},
 
 
