@@ -1,4 +1,6 @@
-﻿namespace Telerik.Sitefinity.Frontend.Services.FilesService.DTO
+﻿using System.Collections.Generic;
+
+namespace Telerik.Sitefinity.Frontend.Services.FilesService.DTO
 {
     /// <summary>
     /// The view model
@@ -6,19 +8,19 @@
     internal class FilesViewModel
     {
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the items.
         /// </summary>
         /// <value>
-        /// The name.
+        /// The items.
         /// </value>
-        public string Name { get; set; }
+        public IEnumerable<FilesItemViewModel> Items { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is folder.
+        /// Gets or sets the error.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is folder; otherwise, <c>false</c>.
+        /// The error.
         /// </value>
-        public bool IsFolder { get; set; }
+        public string Error { get; set; }
     }
 }

@@ -11,7 +11,7 @@
         /// <value>
         /// The parent path.
         /// </value>
-        public string ParentPath { get; set; }
+        public string Path { get; set; }
 
         /// <summary>
         /// Gets or sets the file extension.
@@ -19,7 +19,7 @@
         /// <value>
         /// The file extension.
         /// </value>
-        public string FileExtension { get; set; }
+        public string Extension { get; set; }
 
         /// <summary>
         /// Gets or sets the skip.

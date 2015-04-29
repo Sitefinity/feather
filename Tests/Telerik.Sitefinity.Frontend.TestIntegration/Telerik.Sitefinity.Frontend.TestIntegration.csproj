@@ -178,6 +178,7 @@
     <Compile Include="ResourcePackages\Constants.cs" />
     <Compile Include="ResourcePackages\LayoutFilesTests.cs" />
     <Compile Include="ResourcePackages\PackagesTests.cs" />
+    <Compile Include="Services\FilesServiceTests.cs" />
     <Compile Include="TestCategories.cs" />
   </ItemGroup>
   <ItemGroup>
