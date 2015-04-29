@@ -1,29 +1,32 @@
-﻿<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-5 text-center">
-            <div class="sf-Media--info-image">
-                <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
-            </div>
-        </div>
-
-        <div class="col-md-7">
-            <p>
-                <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
-                <span ng-bind="sfImage.Extension"></span><br />
-
-                <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
-                <span ng-bind="imageSize"></span><br />
-
-                <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
-                <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
-            </p>
-
-            <br />
-            <button class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
-            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
+﻿<div class="row">
+    <div class="col-md-5 text-center">
+        <div class="sf-Media--info-image">
+            <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
         </div>
     </div>
+
+    <div class="col-md-7">
+      <ul class="list-unstyled">
+        <li>
+          <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
+          {{sfImage.Extension}}
+        </li>
+        <li>
+          <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
+          {{imageSize}}
+        </li>
+        <li>
+          <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
+          {{uploaded | date : 'M/d/yyyy h:mm'}}
+        </li>
+      </ul>
+
+        <br />
+        <button class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
+        <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
+    </div>
 </div>
+
 
 <div class="imageSelectorModal"
     template-url="sf-image-selector-modal-template"

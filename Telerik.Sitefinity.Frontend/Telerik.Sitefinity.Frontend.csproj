@@ -616,10 +616,10 @@
     <EmbeddedResource Include="client-components\selectors\common\sf-generic-items-service.js" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-users-service.js" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.js" />
-    <EmbeddedResource Include="client-components\temp_mvc_logo.png" />
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-service.js" />
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector.js" />
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector.html" />
+    <EmbeddedResource Include="client-components\sf-mvc-ext.png" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

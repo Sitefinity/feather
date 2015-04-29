@@ -39,19 +39,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         private string GetInlineStyle()
-        {
-            //// TODO: Uncomment when css ready
+        { 
+            var iconUrl = "client-components/sf-mvc-ext.png";
 
-            //// TODO: Change icon
-            //// var iconUrl = "client-components/temp_mvc_logo.png";
+             var fullIconUrl = RouteHelper.ResolveUrl(string.Format("~/{0}{1}", FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly), iconUrl), UrlResolveOptions.Rooted);
+             var cssValue = @".sfMvcIcn { position: relative; } .sfMvcIcn:after { content: """"; background: transparent url(" + fullIconUrl + ") no-repeat; width: 26px; height: 17px;display: block; position: absolute; left: 29px; bottom: 0px;} ";
+             var inlineCss = string.Format(@"<style type=""text/css"">{0}</style>", cssValue);
 
-            //// var fullIconUrl = RouteHelper.ResolveUrl(string.Format("~/{0}/{1}", FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly), iconUrl), UrlResolveOptions.Rooted);
-            //// var cssValue = @".sfMvcIcn { background: transparent url(" + fullIconUrl + ") no-repeat 0 !important; }";
-            //// var inlineCss = string.Format(@"<style type=""text/css"">{0}</style>", cssValue);
-
-            //// return inlineCss;
-            
-            return string.Empty;
+             return inlineCss;
         }
     }
 }
