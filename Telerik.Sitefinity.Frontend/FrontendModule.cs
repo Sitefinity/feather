@@ -63,6 +63,7 @@ namespace Telerik.Sitefinity.Frontend
             Bootstrapper.Initialized += this.Bootstrapper_Initialized;
 
             SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
+            SystemManager.RegisterServiceStackPlugin(new FilesServiceStackPlugin());
         }
 
         /// <summary>

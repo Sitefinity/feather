@@ -326,7 +326,13 @@
     <Compile Include="Resources\Resolvers\ResourceResolverStrategy.cs" />
     <Compile Include="Resources\VirtualPathBuilder.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerContainerInitializer.cs" />
-    <Compile Include="Services\DTO\SpecificListsGetRequest.cs" />
+    <Compile Include="Services\FilesService\DTO\FilesItemViewModel.cs" />
+    <Compile Include="Services\FilesService\DTO\FilesViewModel.cs" />
+    <Compile Include="Services\FilesService\FilesServiceStackPlugin.cs" />
+    <Compile Include="Services\FilesService\FilesWebServiceConstants.cs" />
+    <Compile Include="Services\ListsService\DTO\SpecificListsGetRequest.cs" />
+    <Compile Include="Services\FilesService\DTO\FilesGetRequest.cs" />
+    <Compile Include="Services\FilesService\FilesWebService.cs" />
     <Compile Include="Services\ListsService\ListsServiceStackPlugin.cs" />
     <Compile Include="Services\ListsService\ListsWebService.cs" />
   </ItemGroup>

@@ -29,5 +29,10 @@
         /// Specifies the name of the category of tests related to grid widgets.
         /// </summary>
         public const string GridWidgets = "GridWidgets";
+
+        /// <summary>
+        /// Specifies the name of the category of tests related to services.
+        /// </summary>
+        public const string Services = "Services";
     }
 }
