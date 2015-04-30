@@ -6,18 +6,25 @@ describe("user selector", function () {
     //Will be returned from the service mock.
     var dataItem = {
         UserID: '4c003fb0-2a77-61ec-be54-ff00007864f4',
-        UserName: "user"
+        UserName: "user",
+        ProviderName: 'provider1'
     };
 
     var dataItem2 = {
         UserID: '4c003fb0-2a77-61ec-be54-ff11117864f4',
-        UserName: "user filtered",
-        Filter: true
+        UserName: "filtered",
+        ProviderName: 'provider2'
+    };
+
+    var dataItem3 = {
+        UserID: '4c003fb0-2a77-61ec-1254-ff11117864f4',
+        UserName: 'test user',
+        ProviderName: 'provider2'
     };
 
     var dataItems = {
-        Items: [dataItem, dataItem2],
-        TotalCount: 2
+        Items: [dataItem, dataItem2, dataItem3],
+        TotalCount: 3
     };
 
     var customDataItems = {
@@ -32,35 +39,61 @@ describe("user selector", function () {
         };
     }
 
+    var providers = [{
+            "NumOfUsers": 3,
+            "UserProviderName": "",
+            "UserProviderTitle": "All Users"
+        },
+        {
+            "NumOfUsers": 1,
+            "UserProviderName": "provider1",
+            "UserProviderTitle": "provder 1"
+        },
+        {
+            "NumOfUsers": 2,
+            "UserProviderName": "provider2",
+            "UserProviderTitle": "provder 2"
+        }];
+
     var serviceResult;
     var $q;
     var provide;
 
     //Mock users service. It returns promises.
     var usersService = {
-        getUsers: jasmine.createSpy('sfUsersService.getUsers').andCallFake(function (ignoreAdminUsers, provider, allProviders, skip, take, filter) {
+        getUsers: jasmine.createSpy('sfUsersService.getUsers').andCallFake(function (provider, skip, take, filter) {
             if ($q) {
                 serviceResult = $q.defer();
             }
+
+            var result = [dataItem, dataItem2, dataItem3];
 
             if (filter) {
-                serviceResult.resolve({
-                    Items: [dataItem2],
-                    TotalCount: 1
+                result = result.filter(function (item) {
+                    return item.UserName.indexOf(filter) >= 0;
                 });
             }
-            else {
-                serviceResult.resolve(dataItems);
+            if (provider) {
+                result = result.filter(function (item) {
+                    return item.ProviderName === provider;
+                });
             }
 
-            return serviceResult.promise;
+            serviceResult.resolve({
+                Items: result,
+                TotalCount: result.length
+            });
+
+            return {
+                promise: serviceResult.promise,
+            };
         }),
-        getSpecificUsers: jasmine.createSpy('sfUsersService.getSpecificUsers').andCallFake(function (ids, ignoreAdminUsers, provider, allProviders) {
+        getSpecificUsers: jasmine.createSpy('sfUsersService.getSpecificUsers').andCallFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
-            var items = [dataItem, dataItem2].filter(function (item) {
-                return ids.indexOf(item.Id) >= 0;
+            var items = [dataItem, dataItem2, dataItem3].filter(function (item) {
+                return ids.indexOf(item.UserID) >= 0;
             });
 
             serviceResult.resolve({
@@ -68,18 +101,33 @@ describe("user selector", function () {
                 TotalCount: items.length
             });
 
-            return serviceResult.promise;
-        })
+            return  {
+                promise: serviceResult.promise
+            };
+        }),
+        getUserProviders: jasmine.createSpy('sfUsersService.getUserProviders').andCallFake(
+            function () {
+                var deferred = $q.defer();
+                deferred.resolve({
+                    Items: providers
+                });
+
+                return {
+                    promise: deferred.promise,
+                };
+            })
     };
 
     var usersServiceMockReturnMoreThan5Items = {
-        getSpecificUsers: jasmine.createSpy('sfUsersService.getSpecificUsers').andCallFake(function (ids, ignoreAdminUsers, provider, allProviders) {
+        getSpecificUsers: jasmine.createSpy('sfUsersService.getSpecificUsers').andCallFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
             serviceResult.resolve(customDataItems);
 
-            return serviceResult.promise;
+            return {
+                promise: serviceResult.promise
+            };
         }),
     };
 
@@ -125,10 +173,6 @@ describe("user selector", function () {
         leftOver.empty();
         leftOver.remove();
 
-        //The selector mutates the selected item when it is retrieved from the service.
-        dataItem.UserName = { Value: 'Dummy' };
-        dataItem2.UserName = { Value: 'Filtered' };
-
         //Sets default usersService mock.
         provide.value('sfUsersService', usersService);
     });
@@ -159,27 +203,21 @@ describe("user selector", function () {
 
             var args = getUsersServiceGetItemsArgs();
 
-            //Ignore admin users
-            expect(args[0]).toBeFalsy();
-
             //Provider
-            expect(args[1]).toBe('OpenAccessDataProvider');
-
-            //All providers
-            expect(args[2]).toBe(true);
+            expect(args[0]).toBe('OpenAccessDataProvider');
 
             //Skip
-            expect(args[3]).toBe(0);
+            expect(args[1]).toBe(0);
 
             //Take
-            expect(args[4]).toBe(20);
+            expect(args[2]).toBe(20);
 
             //Filter
-            expect(args[5]).toBeFalsy();
+            expect(args[3]).toBeFalsy();
         });
 
         it('[GMateev] / should retrieve selected users from the service when the selector is loaded.', function () {
-            var template = "<sf-list-selector sf-user-selector sf-provider='provider' sf-selected-item-id='selectedId'/>";
+            var template = "<sf-list-selector sf-user-selector sf-selected-item-id='selectedId'/>";
 
             scope.selectedId = dataItem.UserID;
 
@@ -187,17 +225,11 @@ describe("user selector", function () {
 
             var args = getUsersServiceGetSpecificItemsArgs();
 
+            //only the ids are passed
+            expect(args.length).toBe(1);
+
             //Item id
             expect(args[0]).toEqualArrayOfValues([dataItem.UserID]);
-
-            //Ignore admin users
-            expect(args[1]).toBeFalsy();
-
-            //Provider
-            expect(args[2]).toBe('OpenAccessDataProvider');
-
-            //All providers
-            expect(args[3]).toBe(true);
         });
 
         it('[GMateev] / should assign value to "selected-item" when "selected-item-id" is provided.', function () {
@@ -245,8 +277,10 @@ describe("user selector", function () {
             expect(s.sfSelectedItemId).toBeFalsy();
 
             expect(s.items).toBeDefined();
+            expect(s.items.length).toEqual(3);
             expect(s.items[0].Id).toEqual(dataItem.UserID);
             expect(s.items[1].Id).toEqual(dataItem2.UserID);
+            expect(s.items[2].Id).toEqual(dataItem3.UserID);
 
             //Select item in the selector
             s.itemClicked(0, s.items[0]);
@@ -266,6 +300,7 @@ describe("user selector", function () {
 
         it('[GMateev] / should filter items when text is typed in the filter box.', function () {
             var template = "<sf-list-selector sf-user-selector sf-provider='provider'/>";
+            scope.provider = "";
 
             commonMethods.compileDirective(template, scope);
 
@@ -276,7 +311,6 @@ describe("user selector", function () {
 
             expect(s.items).toBeDefined();
             expect(s.items[0].Id).toEqual(dataItem.UserID);
-            expect(s.items[0].Filter).toBeFalsy();
 
             //Apply filter
             s.$apply(function () {
@@ -286,27 +320,20 @@ describe("user selector", function () {
 
             var args = getUsersServiceGetItemsArgs();
 
-            //Ignore admin users
-            expect(args[0]).toBeFalsy();
-
-            //Provider
-            expect(args[1]).toBe('OpenAccessDataProvider');
-
-            //All providers
-            expect(args[2]).toBe(true);
+            //Provider value is 'All Users' value ('') from the provider dropdown
+            expect(args[0]).toBe('');
 
             //Skip
-            expect(args[3]).toBe(0);
+            expect(args[1]).toBe(0);
 
             //Take
-            expect(args[4]).toBe(20);
+            expect(args[2]).toBe(20);
 
             //Filter
-            expect(args[5]).toBe('filter');
+            expect(args[3]).toBe('filter');
 
             expect(s.items).toBeDefined();
             expect(s.items[0].Id).toEqual(dataItem2.UserID);
-            expect(s.items[0].Filter).toBe(true);
             expect(s.filter.searchString).toBe('filter');
         });
 
@@ -323,9 +350,10 @@ describe("user selector", function () {
             var s = scope.$$childHead;
 
             expect(s.items).toBeDefined();
-            expect(s.items.length).toBe(2);
+            expect(s.items.length).toBe(3);
             expect(s.items[0].Id).toEqual(dataItem2.UserID);
             expect(s.items[1].Id).toEqual(dataItem.UserID);
+            expect(s.items[2].Id).toEqual(dataItem3.UserID);
         });
 
         it('[GMateev] / should mark item as selected when the dialog is opened.', function () {
@@ -431,11 +459,137 @@ describe("user selector", function () {
             expect(s.changeButtonText).toBeDefined();
             expect(s.changeButtonText).toBe('Change the user...');
         });
+
+        it('[NPetrova] / should load selected item on the top when the provider is changed if the selected item is from this provider', function () {
+            var template = "<sf-list-selector sf-user-selector />";
+
+            commonMethods.compileDirective(template, scope);
+
+            $('.openSelectorBtn').click();
+
+            var s = scope.$$childHead;
+
+            expect(s.sfProvider).toBe(providers[0].UserProviderName);
+
+            //Select 'test user' in the selector
+            s.itemClicked(2, s.items[2]);
+
+            s.providerChanged(providers[2].UserProviderName);
+            s.$digest();
+
+            //The selected item must be on the top when provider2 is selected
+            expect(s.sfProvider).toBe(providers[2].UserProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(2);
+            expect(s.items[0].UserName).toBe(dataItem3.UserName);
+            expect(s.items[1].UserName).toBe(dataItem2.UserName);
+
+            s.providerChanged(providers[1].UserProviderName);
+            s.$digest();
+
+            //The selected item must not be on the top when provider1 is selected
+            expect(s.sfProvider).toBe(providers[1].UserProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(1);
+            expect(s.items[0].UserName).toBe(dataItem.UserName);
+
+            s.providerChanged(providers[0].UserProviderName);
+            s.$digest();
+
+            //The selected item must be on the top when 'All Users' provider is selected
+            expect(s.sfProvider).toBe(providers[0].UserProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(3);
+            expect(s.items[0].UserName).toBe(dataItem3.UserName);
+            expect(s.items[1].UserName).toBe(dataItem.UserName);
+            expect(s.items[2].UserName).toBe(dataItem2.UserName);
+        });
+
+        it('[NPetrova] / should load items correctly when search is applied.', function () {
+            var template = "<sf-list-selector sf-user-selector sf-selected-item-id='selectedItemId' />";
+            scope.selectedItemId = dataItem3.Id;
+
+            commonMethods.compileDirective(template, scope);
+
+            $('.openSelectorBtn').click();
+
+            var s = scope.$$childHead;
+
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(3);
+            expect(s.items[0].UserName).toBe(dataItem3.UserName);
+            expect(s.items[1].UserName).toBe(dataItem.UserName);
+            expect(s.items[2].UserName).toBe(dataItem2.UserName);
+
+            //search for 'user'
+            s.filter.searchString = 'user';
+            s.filter.search(s.filter.searchString);
+            s.$digest();
+
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(2);
+            expect(s.items[0].UserName).toBe(dataItem.UserName);
+            expect(s.items[1].UserName).toBe(dataItem3.UserName);
+
+            //change provider to provider1 (the selected item is not from this provider) while still search string is applied
+            s.providerChanged(providers[1].UserProviderName);
+            s.$digest();
+
+            expect(s.sfProvider).toBe(providers[1].UserProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(1);
+            expect(s.items[0].UserName).toBe(dataItem.UserName);
+
+            //change provider to provider2 (the selected item is from this provider) while still search string is applied
+            s.providerChanged(providers[2].UserProviderName);
+            s.$digest();
+
+            expect(s.sfProvider).toBe(providers[2].UserProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(1);
+            expect(s.items[0].UserName).toBe(dataItem3.UserName);
+
+            //remove search string
+            s.filter.searchString = '';
+            s.filter.search(s.filter.searchString);
+            s.$digest();
+
+            expect(s.sfProvider).toBe(providers[2].UserProviderName);
+            expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(2);
+            expect(s.items[0].UserName).toBe(dataItem3.UserName);
+            expect(s.items[1].UserName).toBe(dataItem2.UserName);
+        });
     });
 
     describe('in multi selection mode', function () {
-        var items = [dataItem, dataItem2];
-        var ids = [dataItem.UserID, dataItem2.UserID];
+        var items = [dataItem, dataItem2, dataItem3];
+        var ids = [dataItem.UserID, dataItem2.UserID, dataItem3.UserID];
+
+        it('[GeorgiMateev] / should rebind the items when the provider is changed.', function () {
+            var template = "<sf-list-selector sf-user-selector sf-multiselect='true' />";
+
+            commonMethods.compileDirective(template, scope);
+
+            $('.openSelectorBtn').click();
+
+            var s = scope.$$childHead;
+            s.providerChanged('changedProvider');
+
+            var args = getUsersServiceGetItemsArgs();
+
+            //Provider
+            expect(args[0]).toBe('changedProvider');
+
+            //Skip
+            expect(args[1]).toBe(0);
+
+            //Take
+            expect(args[2]).toBe(20);
+
+            //Filter
+            expect(args[3]).toBeFalsy();
+        });
 
         it('[GMateev] / should retrieve user items from the service when the selector is opened.', function () {
             var template = "<sf-list-selector sf-user-selector sf-multiselect='true' sf-provider='provider'/>";
@@ -446,23 +600,17 @@ describe("user selector", function () {
 
             var args = getUsersServiceGetItemsArgs();
 
-            //Ignore admin users
-            expect(args[0]).toBeFalsy();
-
             //Provider
-            expect(args[1]).toBe('OpenAccessDataProvider');
-
-            //All providers
-            expect(args[2]).toBe(true);
+            expect(args[0]).toBe('OpenAccessDataProvider');
 
             //Skip
-            expect(args[3]).toBe(0);
+            expect(args[1]).toBe(0);
 
             //Take
-            expect(args[4]).toBe(20);
+            expect(args[2]).toBe(20);
 
             //Filter
-            expect(args[5]).toBeFalsy();
+            expect(args[3]).toBeFalsy();
         });
 
         it('[GMateev] / should retrieve selected users from the service when the selector is loaded.', function () {
@@ -475,16 +623,7 @@ describe("user selector", function () {
             var args = getUsersServiceGetSpecificItemsArgs();
 
             //Item id
-            expect(args[0]).toEqualArrayOfValues([dataItem.UserID, dataItem2.UserID]);
-
-            //Ignore admin users
-            expect(args[1]).toBeFalsy();
-
-            //Provider
-            expect(args[2]).toBe('OpenAccessDataProvider');
-
-            //All providers
-            expect(args[3]).toBe(true);
+            expect(args[0]).toEqualArrayOfValues([dataItem.UserID, dataItem2.UserID, dataItem3.UserID]);
         });
 
         it('[GMateev] / should assign value to "selected-items" when "selected-ids" are provided.', function () {
@@ -495,12 +634,12 @@ describe("user selector", function () {
             commonMethods.compileDirective(template, scope);
 
             expect(scope.selectedIds).toBeDefined();
-            expect(scope.selectedIds.length).toBe(2);
+            expect(scope.selectedIds.length).toBe(3);
             expect(scope.selectedIds).toEqualArrayOfValues(ids);
 
             expect(scope.selectedItems).toBeDefined();
-            expect(scope.selectedItems.length).toEqual(2);
-            expect(scope.selectedItems).toEqualArrayOfObjects(items, ['Id', 'UserName']);
+            expect(scope.selectedItems.length).toEqual(3);
+            expect(scope.selectedItems).toEqualArrayOfObjects(items, ['UserID', 'UserName', 'ProviderName']);
         });
 
         it('[GMateev] / should assign value to "selected-ids" when "selected-items" is provided.', function () {
@@ -511,12 +650,12 @@ describe("user selector", function () {
             commonMethods.compileDirective(template, scope);
 
             expect(scope.selectedIds).toBeDefined();
-            expect(scope.selectedIds.length).toBe(2);
+            expect(scope.selectedIds.length).toBe(3);
             expect(scope.selectedIds).toEqualArrayOfValues(ids);
 
             expect(scope.selectedItems).toBeDefined();
-            expect(scope.selectedItems.length).toEqual(2);
-            expect(scope.selectedItems).toEqualArrayOfObjects(items, ['Id', 'UserName']);
+            expect(scope.selectedItems.length).toEqual(3);
+            expect(scope.selectedItems).toEqualArrayOfObjects(items, ['UserID', 'UserName', 'ProviderName']);
         });
 
         it('[GMateev] / should select users when Done button is pressed.', function () {
@@ -536,8 +675,10 @@ describe("user selector", function () {
             expect(s.sfSelectedIds).toBeFalsy();
 
             expect(s.items).toBeDefined();
+            expect(s.items.length).toBe(3);
             expect(s.items[0].Id).toEqual(dataItem.UserID);
             expect(s.items[1].Id).toEqual(dataItem2.UserID);
+            expect(s.items[2].Id).toEqual(dataItem3.UserID);
 
             //Select item in the selector
             s.itemClicked(0, s.items[0]);
@@ -553,11 +694,11 @@ describe("user selector", function () {
 
             expect(scope.selectedIds).toBeDefined();
             expect(scope.selectedIds.length).toBe(2);
-            expect(scope.selectedIds).toEqualArrayOfValues(ids);
+            expect(scope.selectedIds).toEqualArrayOfValues([dataItem.UserID, dataItem2.UserID]);
 
             expect(scope.selectedItems).toBeDefined();
             expect(scope.selectedItems.length).toEqual(2);
-            expect(scope.selectedItems).toEqualArrayOfObjects(items, ['Id', 'UserName']);
+            expect(scope.selectedItems).toEqualArrayOfObjects([dataItem, dataItem2], ['UserID', 'UserName', 'ProviderName']);
         });
 
         it('[GMateev] / should mark items as selected when the dialog is opened.', function () {
@@ -573,8 +714,8 @@ describe("user selector", function () {
             var s = scope.$$childHead;
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
-            expect(s.selectedItemsInTheDialog.length).toEqual(2);
-            expect(s.selectedItemsInTheDialog).toEqualArrayOfObjects(items, ['Id', 'UserName']);
+            expect(s.selectedItemsInTheDialog.length).toEqual(3);
+            expect(s.selectedItemsInTheDialog).toEqualArrayOfObjects(items, ['UserID', 'UserName', 'ProviderName']);
         });
 
         it('[GMateev] / should select many items in the opened dialog.', function () {
@@ -615,15 +756,15 @@ describe("user selector", function () {
             var s = scope.$$childHead;
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
-            expect(s.selectedItemsInTheDialog.length).toEqual(2);
-            expect(s.selectedItemsInTheDialog).toEqualArrayOfObjects(items, ['Id', 'UserName']);
+            expect(s.selectedItemsInTheDialog.length).toEqual(3);
+            expect(s.selectedItemsInTheDialog).toEqualArrayOfObjects(items, ['UserID', 'UserName', 'ProviderName']);
 
             //Select item in the selector
             s.itemClicked(0, s.items[0]);
 
             expect(s.selectedItemsInTheDialog).toBeDefined();
-            expect(s.selectedItemsInTheDialog.length).toEqual(1);
-            expect(s.selectedItemsInTheDialog).toEqualArrayOfObjects([dataItem2], ['Id', 'UserName']);
+            expect(s.selectedItemsInTheDialog.length).toEqual(2);
+            expect(s.selectedItemsInTheDialog).toEqualArrayOfObjects([dataItem2, dataItem3], ['UserID', 'UserName', 'ProviderName']);
         });
     });
 
@@ -641,7 +782,7 @@ describe("user selector", function () {
 
             expect(scope.selectedItems).toBeDefined();
             expect(scope.selectedItems.length).toBe(10);
-            expect(scope.selectedItems).toEqualArrayOfObjects(customDataItems.Items, ['Id', 'UserName']);
+            expect(scope.selectedItems).toEqualArrayOfObjects(customDataItems.Items, ['UserID', 'UserName']);
 
             var moreLink = $(".small");
 
