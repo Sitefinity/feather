@@ -469,8 +469,17 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "User selector",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-user-selector",
+                     "commitHash" : "a34695c71d8fd0658d81687b3b0bc27670d1e925",
+                     "date" : "2015-03-17 14:51 +0300",
+                     "name" : "Users selector implementation",
+                     "tag" : "v.1.2.190.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -634,7 +643,7 @@
                "expectedBy" : "",
                "longDescription" : "News widget with inline editing and custom designer that is highly customizable.",
                "name" : "News",
-               "progress" : 90,
+               "progress" : 100,
                "releases" : [
                   {
                      "article" : "News-Widget",
@@ -649,9 +658,6 @@
                      "date" : "01-16-2015",
                      "name" : "Sort items manually or in advanced mode.",
                      "tag" : "v1.1.40.0"
-                  },
-                  {
-                     "name" : "Comments"
                   }
                ],
                "shortDescription" : "In progress",
@@ -872,6 +878,79 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
+               "name" : "Comments",
+               "progress" : 15,
+               "releases" : [
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Comments widget implementation in pages",
+                     "tag" : ""
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Ratings",
+                     "tag" : ""
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Comments in News",
+                     "tag" : ""
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Comments in Dynamic content types",
+                     "tag" : ""
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Comments in Images",
+                     "tag" : ""
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Comments in Blogs",
+                     "tag" : ""
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Comments in Video",
+                     "tag" : ""
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Comments in Documents",
+                     "tag" : ""
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Comments in List items",
+                     "tag" : ""
+                  }
+               ],
+               "shortDescription" : "Coming soon",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
                "name" : "Form",
                "progress" : 0,
                "shortDescription" : "Not done",
@@ -889,14 +968,6 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Forums",
-               "progress" : 0,
-               "shortDescription" : "Not done",
-               "unstable" : false
-            },
-            {
-               "expectedBy" : "",
-               "longDescription" : "",
-               "name" : "Comments",
                "progress" : 0,
                "shortDescription" : "Not done",
                "unstable" : false
@@ -956,17 +1027,9 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Archive",
-               "progress" : 0,
-               "shortDescription" : "Not done",
-               "unstable" : false
-            },
-            {
-               "expectedBy" : "",
-               "longDescription" : "",
                "name" : "Language selector",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
@@ -974,13 +1037,21 @@
                "longDescription" : "",
                "name" : "Breadcrumb",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Site selector",
+               "progress" : 0,
+               "shortDescription" : "Not done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Archive",
                "progress" : 0,
                "shortDescription" : "Not done",
                "unstable" : false
@@ -995,7 +1066,7 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "CSS",
-               "progress" : 0,
+               "progress" : 50,
                "shortDescription" : "Coming soon",
                "unstable" : false
             },
@@ -1003,16 +1074,16 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Java Script",
-               "progress" : 0,
+               "progress" : 50,
                "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Google Analytics",
+               "name" : "Embed code",
                "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "shortDescription" : "Not done",
                "unstable" : false
             }
          ]
@@ -1133,8 +1204,17 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Users list",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Users-list-widget",
+                     "commitHash" : "a34695c71d8fd0658d81687b3b0bc27670d1e925",
+                     "date" : "2015-03-17 14:51 +0300",
+                     "name" : "Users list widget implementation",
+                     "tag" : "v.1.2.190.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             }
          ]
