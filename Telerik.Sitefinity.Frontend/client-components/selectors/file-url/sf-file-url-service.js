@@ -36,7 +36,7 @@
                             var item = data.Items[i];
                             var label = item.Name;
 
-                            if (label.indexOf('\\') == 0)
+                            if (label.indexOf('\\') === 0)
                                 label = label.substring(1);
 
                             items.push({
