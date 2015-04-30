@@ -20,10 +20,16 @@
                     scope.selectedFile = null;
 
                     scope.getFiles = function (parent) {
-						var path = null;
-						if (parent) {
-							path = parent.path;
-						}
+                        var path = null;
+                        if (parent && !parent.isFolder) {
+                            path = parent.path;
+                        }
+                        else if (parent && parent.isFolder) {
+                            path = parent.url;
+
+                            if (path.indexOf('~/') === 0)
+                                path = path.substring(2);
+                        }
 
                         return sfFileUrlService.get(scope.extension, path);
                     };
