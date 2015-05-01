@@ -20,7 +20,7 @@
                     scope.open = function () {
                         element.find('[data-sf-role="modal-container"]')
                                     .scope()
-                                    .$openModalDialog({ title: function () { return scope.sfTitle; }, extension: function () { return scope.sfExtension; } })
+                                    .$openModalDialog({ title: function () { return scope.sfTitle; }, extension: function () { return scope.sfExtension; }, sfModel: function () { return scope.sfModel; } })
                                         .then(function (data) {
                                             scope.sfModel = data;
                                         });
@@ -47,8 +47,8 @@
 		        }
 		    };
 		})
-        .controller('sfFileUrlFieldDialogController', ['$scope', '$modalInstance', 'title', 'extension', function ($scope, $modalInstance, title, extension) {
-            $scope.selectedUrl = null;
+        .controller('sfFileUrlFieldDialogController', ['$scope', '$modalInstance', 'title', 'extension', 'sfModel', function ($scope, $modalInstance, title, extension, sfModel) {
+            $scope.selectedUrl = sfModel;
             $scope.title = title;
             $scope.extension = extension;
 
