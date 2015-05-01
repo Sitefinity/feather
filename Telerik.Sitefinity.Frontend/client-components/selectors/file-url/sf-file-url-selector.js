@@ -37,10 +37,15 @@
                     };
 
                     scope.$watch('selectedFile', function (newVal, oldVal) {
-                        if (newVal && newVal.length > 0 && newVal[0])
-                            scope.sfModel = newVal[0];
-                        else
+                        var extension = scope.extension;
+
+                        if (newVal && newVal.length > 0 && newVal[0] && extension) {
+                            var hasExtension = newVal[0].slice(-(extension.length + 1)) === '.' + extension;
+                            scope.sfModel = hasExtension ? newVal[0] : '';
+                        }
+                        else {
                             scope.sfModel = '';
+                        }
                     });
                 }
             };
