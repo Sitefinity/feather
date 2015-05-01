@@ -28,10 +28,29 @@
                 }
             };
         }])
+		.directive('hasExtension', function ($parse) {
+		    return {
+		        require: 'ngModel',
+		        link: function (scope, elm, attrs, ctrl) {
+		            ctrl.$validators.hasExtension = function (modelValue, viewValue) {
+		                if (ctrl.$isEmpty(modelValue)) {
+		                    return true;
+		                }
+
+		                var extension = $parse(attrs.extension)(scope);
+		                if (viewValue.slice(-(extension.length + 1)) === '.' + extension) {
+		                    return true;
+		                }
+
+		                return false;
+		            };
+		        }
+		    };
+		})
         .controller('sfFileUrlFieldDialogController', ['$scope', '$modalInstance', 'title', 'extension', function ($scope, $modalInstance, title, extension) {
             $scope.selectedUrl = null;
             $scope.title = title;
-			$scope.extension = extension;
+            $scope.extension = extension;
 
             $scope.done = function () {
                 $modalInstance.close($scope.selectedUrl);
