@@ -1,4 +1,4 @@
-﻿; (function () {
+﻿﻿; (function () {
     angular.module('sfServices').factory('sfFileUrlService', ['$http', '$q', 'serverContext', function ($http, $q, serverContext) {
         var serviceUrl = serverContext.getRootedUrl('RestApi/files-api');
 

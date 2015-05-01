@@ -1,4 +1,4 @@
-﻿; (function ($) {
+﻿﻿; (function ($) {
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfFileUrlSelector');
 
