@@ -1,4 +1,4 @@
-﻿; (function () {
+﻿﻿; (function () {
     angular.module('sfServices').factory('sfFileUrlService', ['$http', '$q', 'serverContext', function ($http, $q, serverContext) {
         var serviceUrl = serverContext.getRootedUrl('RestApi/files-api');
 
@@ -13,7 +13,12 @@
         var getFiles = function (extension, path, skip, take) {
             path = path || '';
 
-            var url = serviceUrl + '?path=' + encodeURIComponent(path) + '&extension=' + extension;
+            var url = serviceUrl + '?extension=' + extension;
+
+            if (path) {
+                url = url + '&path=' + encodeURIComponent(path);
+            }
+
             if (skip) {
                 url = url + '&skip=' + skip;
             }
