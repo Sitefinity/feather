@@ -1,4 +1,4 @@
-﻿﻿; (function ($) {
+﻿; (function ($) {
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfFileUrlSelector');
 
@@ -17,7 +17,9 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    scope.selectedFile = null;
+                    if (scope.sfModel) {
+                        scope.selectedFile = [scope.sfModel];
+                    }
 
                     scope.getFiles = function (parent) {
                         var path = null;
@@ -35,8 +37,8 @@
                     };
 
                     scope.$watch('selectedFile', function (newVal, oldVal) {
-                        if (newVal && newVal.length > 0 && !newVal[0].isFolder && newVal[0].url)
-                            scope.sfModel = newVal[0].url;
+                        if (newVal && newVal.length > 0 && newVal[0])
+                            scope.sfModel = newVal[0];
                         else
                             scope.sfModel = '';
                     });
