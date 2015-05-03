@@ -1,6 +1,11 @@
-<div class="row">
-    <input type="text" ng-model="sfModel" />
-    <button class="btn btn-xs btn-default" ng-click="open()">@(Res.Get<ClientComponentsResources>().Select)</button>
+<div class="row row-xs">
+    <div class="col-xs-10">
+      <input type="text" ng-model="sfModel" class="form-control form-control-sm"/>
+    </div>
+    <div class="col-xs-2">
+      <button class="btn btn-xs btn-default" ng-click="open()">
+        @(Res.Get<ClientComponentsResources>().Select)</button>
+    </div>
 </div>
 
 <div data-sf-role="modal-container"
