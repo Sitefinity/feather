@@ -17,22 +17,35 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    scope.selectedFile = null;
+                    if (scope.sfModel) {
+                        scope.selectedFile = [scope.sfModel];
+                    }
 
                     scope.getFiles = function (parent) {
-						var path = null;
-						if (parent) {
-							path = parent.path;
-						}
+                        var path = null;
+                        if (parent && !parent.isFolder) {
+                            path = parent.path;
+                        }
+                        else if (parent && parent.isFolder) {
+                            path = parent.url;
+
+                            if (path.indexOf('~/') === 0)
+                                path = path.substring(2);
+                        }
 
                         return sfFileUrlService.get(scope.extension, path);
                     };
 
                     scope.$watch('selectedFile', function (newVal, oldVal) {
-                        if (newVal && newVal.length > 0 && !newVal[0].isFolder && newVal[0].url)
-                            scope.sfModel = newVal[0].url;
-                        else
+                        var extension = scope.extension;
+
+                        if (newVal && newVal.length > 0 && newVal[0] && extension) {
+                            var hasExtension = newVal[0].slice(-(extension.length + 1)) === '.' + extension;
+                            scope.sfModel = hasExtension ? newVal[0] : '';
+                        }
+                        else {
                             scope.sfModel = '';
+                        }
                     });
                 }
             };

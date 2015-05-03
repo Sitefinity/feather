@@ -1,4 +1,4 @@
-﻿; (function () {
+﻿(function () {
     angular.module('sfServices').factory('sfFileUrlService', ['$http', '$q', 'serverContext', function ($http, $q, serverContext) {
         var serviceUrl = serverContext.getRootedUrl('RestApi/files-api');
 
@@ -11,9 +11,14 @@
         };
 
         var getFiles = function (extension, path, skip, take) {
-			path = path || '';
-			
-            var url = serviceUrl + '?path=' + encodeURIComponent(path) + '&extension=' + extension;
+            path = path || '';
+
+            var url = serviceUrl + '?extension=' + extension;
+
+            if (path) {
+                url = url + '&path=' + encodeURIComponent(path);
+            }
+
             if (skip) {
                 url = url + '&skip=' + skip;
             }
@@ -22,24 +27,31 @@
                 url = url + '&take=' + take;
             }
 
-			if (path.length > 0 && path.charAt(path.length - 1) !== '/') {
+            if (path.length > 0 && path.charAt(path.length - 1) !== '/') {
                 path = path + '/';
             }
-			
+
             var deferred = $q.defer();
             $http.get(url).
                 success(function (data, status, headers, config) {
                     var rootedPath = '~/' + path;
                     var items = [];
-                    for (var i = 0; i < data.Items.length; i++) {
-						var item = data.Items[i];
-                        items.push({
-                            label: item.Name,
-							path: path,
-                            url: rootedPath + item.Name,
-                            isFolder: item.IsFolder,
-                            extension: getExtension(item.Name)
-                        });
+                    if (data.Items && data.Items.length > 0) {
+                        for (var i = 0; i < data.Items.length; i++) {
+                            var item = data.Items[i];
+                            var label = item.Name;
+
+                            if (label.indexOf('\\') === 0)
+                                label = label.substring(1);
+
+                            items.push({
+                                label: label,
+                                path: path,
+                                url: rootedPath + label,
+                                isFolder: item.IsFolder,
+                                extension: getExtension(item.Name)
+                            });
+                        }
                     }
 
                     deferred.resolve(items);

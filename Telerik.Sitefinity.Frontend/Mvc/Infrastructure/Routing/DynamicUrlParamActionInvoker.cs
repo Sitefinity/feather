@@ -252,7 +252,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         {
             try
             {
-                if (controller != null && controller.ControllerContext != null && !controller.ControllerContext.IsChildAction)
+                if (controller != null && controller.ControllerContext != null && controller.Session != null && !controller.ControllerContext.IsChildAction)
                 {
                     controller.TempData.Save(controller.ControllerContext, controller.TempDataProvider);
                 }
@@ -275,7 +275,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         {
             try
             {
-                if (controller != null && controller.ControllerContext != null && !controller.ControllerContext.IsChildAction)
+                if (controller != null && controller.ControllerContext != null && controller.Session != null && !controller.ControllerContext.IsChildAction)
                 {
                     var isInPureModeValue = false;
                     var isInPureModeKey = "IsInPureMode";
