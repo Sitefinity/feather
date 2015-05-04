@@ -1,9 +1,17 @@
+
 <form name="form" novalidate="">
-  <input type="text" name="fileUrlTxt" ng-model="sfModel" has-extension="" extension="sfExtension" />
-  <button class="btn btn-xs btn-default" ng-click="open()">
-    @(Res.Get<ClientComponentsResources>().Select)</button>
-  <span ng-show="form.fileUrlTxt.$touched && form.fileUrlTxt.$error.hasExtension">Selected file extension should be .{{sfExtension}}!</span>
+  <div class="row row-xs">
+      <div class="col-xs-10">
+        <input type="text" name="fileUrlTxt" ng-model="sfModel" has-extension="" extension="sfExtension" class="form-control form-control-sm"/>
+      </div>
+      <div class="col-xs-2">
+        <button class="btn btn-xs btn-default" ng-click="open()">
+          @(Res.Get<ClientComponentsResources>().Select)</button>
+      </div>
+    <span ng-show="form.fileUrlTxt.$touched && form.fileUrlTxt.$error.hasExtension">Selected file extension should be .{{sfExtension}}!</span>
+  </div>
 </form>
+
 
 <div data-sf-role="modal-container"
     template-url="sf-file-url-selector-modal-template"
