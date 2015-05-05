@@ -49,6 +49,7 @@
                                 path: path,
                                 url: rootedPath + label,
                                 isFolder: item.IsFolder,
+                                hasChildren: item.HasChildren,
                                 extension: getExtension(item.Name)
                             });
                         }

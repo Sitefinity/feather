@@ -54,11 +54,16 @@ namespace Telerik.Sitefinity.Frontend.Services.FilesService
         {
             var parentPath = PathUtils.CombinePaths(this.GetApplicationRootPath(), filesRequest.Path);
 
-            var dirs = Directory.GetDirectories(parentPath).Select(d => new FilesItemViewModel() { IsFolder = true, Name = d.Substring(parentPath.Length) }).OrderBy(d => d.Name);
+            var dirs = Directory.GetDirectories(parentPath).Select(d => new FilesItemViewModel() { IsFolder = true, Name = d.Substring(parentPath.Length), HasChildren = !this.IsDirectoryEmpty(d, filesRequest.Extension) }).OrderBy(d => d.Name);
 
             var files = Directory.GetFiles(parentPath, string.Format("*.{0}", filesRequest.Extension)).Select(f => new FilesItemViewModel() { Name = f.Substring(parentPath.Length).TrimStart('\\') }).OrderBy(f => f.Name);
 
             return dirs.Union(files).Skip(filesRequest.Skip).Take(filesRequest.Take == 0 ? FilesWebServiceConstants.MaxItemsPerRequest : filesRequest.Take);
+        }
+
+        private bool IsDirectoryEmpty(string path, string extension)
+        {
+            return !Directory.GetDirectories(path).Any() && !Directory.GetFiles(path, string.Format("*.{0}", extension)).Any();
         }
 
         #endregion

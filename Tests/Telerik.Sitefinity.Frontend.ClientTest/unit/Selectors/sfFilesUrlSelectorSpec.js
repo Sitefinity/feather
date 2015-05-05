@@ -39,9 +39,9 @@
 
     var sampleServiceItems = {
         root: [
-            { label: 'Folder1', path: '', url: '~/Folder1', isFolder: true, extension: null },
-            { label: 'Folder2', path: '', url: '~/Folder2', isFolder: true, extension: null },
-            { label: 'Folder3', path: '', url: '~/Folder3', isFolder: true, extension: null },
+            { label: 'Folder1', path: '', url: '~/Folder1', isFolder: true, extension: null, hasChildren:true },
+            { label: 'Folder2', path: '', url: '~/Folder2', isFolder: true, extension: null, hasChildren: true },
+            { label: 'Folder3', path: '', url: '~/Folder3', isFolder: true, extension: null, hasChildren: true },
             { label: 'Item1.css', path: '', url: '~/Item1.css', isFolder: false, extension: 'css' },
             { label: 'Item2.css', path: '', url: '~/Item2.css', isFolder: false, extension: 'css' }
         ],
@@ -136,7 +136,7 @@
             scope.$digest();
 
             // In jasmine only last item is rendered. Tested in karma and manually - ok
-            // expect(el.find('span span:contains("ChildItem11.css")').length).toEqual(1);
+            expect(el.find('span span:contains("ChildItem11.css")').length).toEqual(1);
             expect(el.find('span span:contains("ChildItem12.css")').length).toEqual(1);
 
             expect(el.find('span span:contains("ChildItem21.css")').length).toEqual(0);
