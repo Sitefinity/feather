@@ -8,7 +8,7 @@
         <button class="btn btn-xs btn-default" ng-click="open()">
           @(Res.Get<ClientComponentsResources>().Select)</button>
       </div>
-    <span ng-show="form.fileUrlTxt.$touched && form.fileUrlTxt.$error.hasExtension">Selected file extension should be .{{sfExtension}}!</span>
+    <!--<span ng-show="form.fileUrlTxt.$touched && form.fileUrlTxt.$error.hasExtension">Selected file extension should be .{{sfExtension}}!</span>-->
   </div>
 </form>
 
