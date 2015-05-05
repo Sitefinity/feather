@@ -38,6 +38,10 @@
 		                }
 
 		                var extension = $parse(attrs.extension)(scope);
+		                if (ctrl.$isEmpty(extension)) {
+		                    return true;
+		                }
+
 		                if (viewValue.slice(-(extension.length + 1)) === '.' + extension) {
 		                    return true;
 		                }
