@@ -20,5 +20,13 @@
         ///   <c>true</c> if this instance is folder; otherwise, <c>false</c>.
         /// </value>
         public bool IsFolder { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item has children.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the item has children; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasChildren { get; set; }
     }
 }

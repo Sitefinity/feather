@@ -52,6 +52,7 @@
     <Content Include="unit\fields\sfDragDropSpec.js" />
     <Content Include="unit\fields\sfFlatTaxonFieldSpecs.js" />
     <Content Include="unit\search\sfSearchBoxSpec.js" />
+    <Content Include="unit\selectors\sfFilesUrlSelectorSpec.js" />
     <Content Include="unit\selectors\sfUserSelectorSpec.js" />
     <Content Include="unit\selectors\librarySelectorSpec.js" />
     <Content Include="unit\selectors\listsSelectorSpec.js" />
@@ -70,6 +71,7 @@
     <Content Include="unit\services\languageServiceSpec.js" />
     <Content Include="unit\services\multisiteSpec.js" />
     <Content Include="unit\services\listsServiceSpec.js" />
+    <Content Include="unit\services\sfFilesUrlServiceSpec.js" />
     <Content Include="unit\services\sfGenericItemsServiceSpec.js" />
     <Content Include="unit\services\sfLinkServiceSpec.js" />
     <Content Include="unit\services\sfMediaFilterSpec.js" />

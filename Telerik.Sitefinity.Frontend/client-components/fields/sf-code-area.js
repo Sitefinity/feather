@@ -23,18 +23,21 @@
                         }
                     }
                 });
-                
+
                 // forces a refresh after current $digest is finished.
-                setInterval(codeArea.refresh, 0);
+                setTimeout(codeArea.refresh, 0);
 
                 scope.$watch('sfModel', function (newVal, oldVal) {
                     if (codeArea.getValue() !== newVal) {
                         // Prevent error in the codeArea if the new value is undefined.
-                        if (!newVal) newVal = "";
+                        if (!newVal) newVal = '';
 
-                        codeArea.setValue(newVal);
-                        codeArea.refresh();
-                        codeArea.focus();
+                        // forces a refresh after current $digest is finished.
+                        setTimeout(function () {
+                            codeArea.setValue(newVal);
+                            codeArea.refresh();
+                            codeArea.focus();
+                        }, 0);
                     }
                 });
             }
