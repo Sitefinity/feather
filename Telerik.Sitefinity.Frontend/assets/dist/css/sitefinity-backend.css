@@ -9377,15 +9377,14 @@ tab {
     margin: 0;
     padding-left: 10px;
     transition: opacity 0.2s ease 0.1s, max-height 1s ease;
-    opacity: 1;
-    max-height: 400px; }
-    /* line 24, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+    opacity: 1; }
+    /* line 23, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
     .sf-Tree .sf-Tree.is-collapsed {
       max-height: 0;
       opacity: 0;
-      transition: opacity 0, max-height 0.1s ease; }
+      transition: opacity 0s, max-height 0.1s ease; }
 
-/* line 30, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+/* line 29, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
 .sf-Tree-item span {
   padding: 5px;
   display: block;
@@ -9394,15 +9393,15 @@ tab {
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden; }
-  /* line 40, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+  /* line 39, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
   .sf-Tree-item span:hover, .sf-Tree-item span:focus {
     background-color: #eee; }
-  /* line 43, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+  /* line 42, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
   .sf-Tree-item span.is-selected {
     background-color: #bdbdbd;
     color: #fff; }
 
-/* line 47, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+/* line 46, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
 .sf-Tree-expander {
   position: absolute;
   top: 8px;
@@ -9416,36 +9415,33 @@ tab {
   transition: transform 0.2s ease;
   transform-origin: 20% 60%;
   transform: rotateZ(0); }
-  /* line 61, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+  /* line 60, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
   .sf-Tree-expander:before {
     content: "";
     display: block;
     margin: -10px 0 0 -10px;
     width: 20px;
     height: 20px; }
-  /* line 68, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+  /* line 67, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
   .sf-Tree-expander.is-expanded {
     transform: rotateZ(90deg); }
 
-/* line 73, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+/* line 72, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
 .sf-Tree label {
   margin-left: 7px;
   font-weight: normal; }
-/* line 77, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+/* line 76, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
 .sf-Tree .glyphicon-folder-close {
   font-size: 20px;
   color: #d6d6d6; }
 
-/* line 82, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+/* line 81, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
 .is-selected .icon-file, .is-selected [class^="icon-item-"]:before, .is-selected [class*=" icon-item-"]:before {
   color: #fff; }
 
-/* line 87, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+/* line 86, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
 .list-group .sf-Tree {
   margin-left: 25px; }
-  /* line 90, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
-  .list-group .sf-Tree .sf-Tree {
-    max-height: none; }
 
 /* line 1, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-drag */
 .sf-Drag {
