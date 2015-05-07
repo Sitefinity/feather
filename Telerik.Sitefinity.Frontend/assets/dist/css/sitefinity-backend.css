@@ -9427,6 +9427,26 @@ tab {
   .sf-Tree-expander.is-expanded {
     transform: rotateZ(90deg); }
 
+/* line 73, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+.sf-Tree label {
+  margin-left: 7px;
+  font-weight: normal; }
+/* line 77, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+.sf-Tree .glyphicon-folder-close {
+  font-size: 20px;
+  color: #d6d6d6; }
+
+/* line 82, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+.is-selected .icon-file, .is-selected [class^="icon-item-"]:before, .is-selected [class*=" icon-item-"]:before {
+  color: #fff; }
+
+/* line 87, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+.list-group .sf-Tree {
+  margin-left: 25px; }
+  /* line 90, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-tree */
+  .list-group .sf-Tree .sf-Tree {
+    max-height: none; }
+
 /* line 1, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-drag */
 .sf-Drag {
   position: absolute;
@@ -9629,9 +9649,14 @@ tab {
     text-decoration: none;
     background-color: #555; }
 
-/* line 2, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-code */
-.sf-code .CodeMirror-scroll {
-  border: 1px solid #e5e5e5; }
-/* line 5, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-code */
-.sf-code pre {
-  overflow: visible; }
+/* line 1, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-code */
+.sf-code {
+  margin-top: -30px; }
+  /* line 5, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-code */
+  .sf-code .CodeMirror-scroll {
+    margin-left: -19px;
+    margin-right: -19px;
+    border: 1px solid #e5e5e5; }
+  /* line 10, D:/Sitefinity80/Projects/Feather/assets/src/sass/modules/_sf-code */
+  .sf-code pre {
+    overflow: visible; }
