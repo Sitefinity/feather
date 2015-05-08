@@ -515,6 +515,23 @@
                ],
                "shortDescription" : "Done",
                "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "File URL selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-file-url-selector",
+                     "commitHash" : "4cf0c38d4853343c5fa5bda19a77f3d7cf47ad9f",
+                     "date" : "05-08-2015 11:22 +0300",
+                     "name" : "File URL selector implementation",
+                     "tag" : "v.1.2.200.1"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
             }
          ]
       },
@@ -879,7 +896,7 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Comments",
-               "progress" : 15,
+               "progress" : 60,
                "releases" : [
                   {
                      "article" : "",
@@ -1028,7 +1045,7 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Language selector",
-               "progress" : 0,
+               "progress" : 75,
                "shortDescription" : "Coming soon",
                "unstable" : false
             },
@@ -1036,7 +1053,7 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Breadcrumb",
-               "progress" : 0,
+               "progress" : 75,
                "shortDescription" : "Coming soon",
                "unstable" : false
             },
@@ -1066,16 +1083,34 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "CSS",
-               "progress" : 50,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "CSS-widget",
+                     "commitHash" : "4cf0c38d4853343c5fa5bda19a77f3d7cf47ad9f",
+                     "date" : "05-08-2015 11:22 +0300",
+                     "name" : "CSS widget implementation",
+                     "tag" : "v.1.2.200.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Java Script",
-               "progress" : 50,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "JavaScript-widget",
+                     "commitHash" : "4cf0c38d4853343c5fa5bda19a77f3d7cf47ad9f",
+                     "date" : "05-08-2015 11:22 +0300",
+                     "name" : "JavaScript widget implementation",
+                     "tag" : "v.1.2.200.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -1636,6 +1671,13 @@
                      "date" : "04-03-2015 15:42 +0300",
                      "name" : "Localizable labels of client components",
                      "tag" : "v.1.2.150.0"
+                  },
+                  {
+                     "article" : "Use-a-file-url-field",
+                     "commitHash" : "4cf0c38d4853343c5fa5bda19a77f3d7cf47ad9f",
+                     "date" : "05-08-2015 11:22 +0300",
+                     "name" : "File URL field",
+                     "tag" : "v.1.2.200.1"
                   }
                ],
                "shortDescription" : "In progress",
