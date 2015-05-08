@@ -474,7 +474,7 @@
                   {
                      "article" : "Use-a-user-selector",
                      "commitHash" : "a34695c71d8fd0658d81687b3b0bc27670d1e925",
-                     "date" : "2015-03-17 14:51 +0300",
+                     "date" : "2015-04-30 14:51 +0300",
                      "name" : "Users selector implementation",
                      "tag" : "v.1.2.190.0"
                   }
@@ -1244,7 +1244,7 @@
                   {
                      "article" : "Users-list-widget",
                      "commitHash" : "a34695c71d8fd0658d81687b3b0bc27670d1e925",
-                     "date" : "2015-03-17 14:51 +0300",
+                     "date" : "2015-04-30 14:51 +0300",
                      "name" : "Users list widget implementation",
                      "tag" : "v.1.2.190.0"
                   }
