@@ -202,6 +202,7 @@
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Mvc\Helpers\CommentsHelper.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\EmailAddressAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\DuplicateSectionException.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
@@ -487,7 +488,9 @@
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector-item.html" />
-    <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -648,7 +651,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
