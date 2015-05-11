@@ -31,7 +31,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         {
             ServerOperations.Pages().DeleteAllPages();
             ServerOperations.Templates().DeletePageTemplate(Template1Title);
-            ServerOperations.Templates().DeletePageTemplate(Template1Title);
+            ServerOperations.Templates().DeletePageTemplate(Template2Title);
 
             string path1 = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Package1Name);
             FeatherServerOperations.ResourcePackages().DeleteDirectory(path1);
