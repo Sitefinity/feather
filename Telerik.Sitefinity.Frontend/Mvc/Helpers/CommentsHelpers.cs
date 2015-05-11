@@ -35,6 +35,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return result;
         }
 
+        /// <summary>
+        /// Returns the CommentsCount widget if exist, else render error message
+        /// </summary>
+        /// <param name="helper">The HTML helper.</param>
+        /// <param name="navigateUrl">The navigate URL.</param>
+        /// <param name="threadKey">The thread key.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#")]
+        public static MvcHtmlString CommentsCount(this HtmlHelper helper, string navigateUrl, string threadKey)
+        {
+            System.Web.Mvc.MvcHtmlString result;
+            try
+            {
+                result = helper.Action("Count", ControllerName, new { navigateUrl = navigateUrl, threadKey = threadKey });
+            }
+            catch (HttpException)
+            {
+                result = new System.Web.Mvc.MvcHtmlString("The Comments widget could not be found.");
+            }
+
+            return result;
+        }
+
         private const string ActionName = "Index";
         private const string ControllerName = "Comments";
     }
