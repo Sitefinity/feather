@@ -488,7 +488,9 @@
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector-item.html" />
-    <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

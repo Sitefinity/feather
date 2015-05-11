@@ -33,11 +33,9 @@
                         if (!newVal) newVal = '';
 
                         // forces a refresh after current $digest is finished.
-                        setTimeout(function () {
-                            codeArea.setValue(newVal);
-                            codeArea.refresh();
-                            codeArea.focus();
-                        }, 0);
+                        codeArea.setValue(newVal);
+                        codeArea.refresh();
+                        codeArea.focus();
                     }
                 });
             }

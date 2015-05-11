@@ -71,30 +71,30 @@
     describe('rendering', function () {
         it('[dzhenko] / initially all root items should be rendered', function () {
             var el = commonMethods.compileDirective(directiveMarkup, scope);
-            expect(el.find('span span:contains("Folder1")').length).toEqual(1);
-            expect(el.find('span span:contains("Folder2")').length).toEqual(1);
-            expect(el.find('span span:contains("Folder3")').length).toEqual(1);
-            expect(el.find('span span:contains("Item1.css")').length).toEqual(1);
-            expect(el.find('span span:contains("Item2.css")').length).toEqual(1);
+            expect(el.find('span label:contains("Folder1")').length).toEqual(1);
+            expect(el.find('span label:contains("Folder2")').length).toEqual(1);
+            expect(el.find('span label:contains("Folder3")').length).toEqual(1);
+            expect(el.find('span label:contains("Item1.css")').length).toEqual(1);
+            expect(el.find('span label:contains("Item2.css")').length).toEqual(1);
         });
 
         it('[dzhenko] / initially all non-root items should not be rendered', function () {
             var el = commonMethods.compileDirective(directiveMarkup, scope);
-            expect(el.find('span span:contains("ChildItem11.css")').length).toEqual(0);
-            expect(el.find('span span:contains("ChildItem12.css")').length).toEqual(0);
-            expect(el.find('span span:contains("ChildItem21.css")').length).toEqual(0);
-            expect(el.find('span span:contains("ChildItem22.css")').length).toEqual(0);
-            expect(el.find('span span:contains("ChildItem31.css")').length).toEqual(0);
-            expect(el.find('span span:contains("ChildItem32.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem11.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem12.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem21.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem22.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem31.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem32.css")').length).toEqual(0);
         });
 
         it('[dzhenko] / should properly set css classes', function () {
             var el = commonMethods.compileDirective(directiveMarkup, scope);
-            expect(el.find('span span:contains("Folder1")').hasClass(isFolderCssClass)).toBe(true);
-            expect(el.find('span span:contains("Folder2")').hasClass(isFolderCssClass)).toBe(true);
-            expect(el.find('span span:contains("Folder3")').hasClass(isFolderCssClass)).toBe(true);
-            expect(el.find('span span:contains("Item1.css")').hasClass(isFileCssClass)).toBe(true);
-            expect(el.find('span span:contains("Item2.css")').hasClass(isFileCssClass)).toBe(true);
+            expect(el.find('span label:contains("Folder1")').parent().hasClass(isFolderCssClass)).toBe(true);
+            expect(el.find('span label:contains("Folder2")').parent().hasClass(isFolderCssClass)).toBe(true);
+            expect(el.find('span label:contains("Folder3")').parent().hasClass(isFolderCssClass)).toBe(true);
+            expect(el.find('span label:contains("Item1.css")').parent().hasClass(isFileCssClass)).toBe(true);
+            expect(el.find('span label:contains("Item2.css")').parent().hasClass(isFileCssClass)).toBe(true);
         });
     });
          
@@ -105,7 +105,7 @@
 
             expect(s.selectedFile).toEqual([]);
 
-            el.find('span span:contains("Item1.css")').click();
+            el.find('span label:contains("Item1.css")').click();
             scope.$digest();
 
             expect(s.selectedFile).toEqual(['~/Item1.css']);
@@ -117,7 +117,7 @@
 
             expect(s.selectedFile).toEqual([]);
 
-            el.find('span span:contains("Folder1")').click();
+            el.find('span label:contains("Folder1")').click();
             scope.$digest();
 
             expect(s.selectedFile).toEqual(['~/Folder1']);
@@ -129,20 +129,20 @@
             var el = commonMethods.compileDirective(directiveMarkup, scope);
             var s = scope.$$childHead;
 
-            expect(el.find('span span:contains("ChildItem11.css")').length).toEqual(0);
-            expect(el.find('span span:contains("ChildItem12.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem11.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem12.css")').length).toEqual(0);
 
-            el.find('span span:contains("Folder1")').prev().click();
+            el.find('span label:contains("Folder1")').parent().prev().click();
             scope.$digest();
 
             // In jasmine only last item is rendered. Tested in karma and manually - ok
-            expect(el.find('span span:contains("ChildItem11.css")').length).toEqual(1);
-            expect(el.find('span span:contains("ChildItem12.css")').length).toEqual(1);
+            expect(el.find('span label:contains("ChildItem11.css")').length).toEqual(1);
+            expect(el.find('span label:contains("ChildItem12.css")').length).toEqual(1);
 
-            expect(el.find('span span:contains("ChildItem21.css")').length).toEqual(0);
-            expect(el.find('span span:contains("ChildItem22.css")').length).toEqual(0);
-            expect(el.find('span span:contains("ChildItem31.css")').length).toEqual(0);
-            expect(el.find('span span:contains("ChildItem32.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem21.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem22.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem31.css")').length).toEqual(0);
+            expect(el.find('span label:contains("ChildItem32.css")').length).toEqual(0);
         });
     });
 });
