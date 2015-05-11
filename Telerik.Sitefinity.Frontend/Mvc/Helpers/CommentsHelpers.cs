@@ -62,7 +62,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             MvcHtmlString result;
             try
             {
-                result = helper.Action(ActionName, ControllerName, routeDictionary);
+                result = helper.Action(CommentsHelpers.IndexActionName, CommentsHelpers.ControllerName, routeDictionary);
             }
             catch (HttpException)
             {
@@ -78,14 +78,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="helper">The HTML helper.</param>
         /// <param name="navigateUrl">The navigate URL.</param>
         /// <param name="threadKey">The thread key.</param>
-        /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#")]
         public static MvcHtmlString CommentsCount(this HtmlHelper helper, string navigateUrl, string threadKey)
         {
-            System.Web.Mvc.MvcHtmlString result;
+            MvcHtmlString result;
             try
             {
-                result = helper.Action("Count", ControllerName, new { navigateUrl = navigateUrl, threadKey = threadKey });
+                result = helper.Action(CommentsHelpers.CountActionName, CommentsHelpers.ControllerName, new { navigateUrl = navigateUrl, threadKey = threadKey });
             }
             catch (HttpException)
             {
@@ -95,7 +94,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return result;
         }
 
-        private const string ActionName = "Index";
+        private const string IndexActionName = "Index";
+        private const string CountActionName = "Count";
         private const string ControllerName = "Comments";
     }
 }
