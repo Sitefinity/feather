@@ -7,16 +7,25 @@ using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
+    /// <summary>
+    /// Holds helpers related to Comments widget
+    /// </summary>
     public static class CommentsHelpers
     {
+        /// <summary>
+        /// Returns the comments list.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="item">The item.</param>
         public static MvcHtmlString CommentsList(this HtmlHelper helper, IDataItem item)
         {
+            string itemType = item.GetType().FullName;
+            var itemThreadKey = ControlUtilities.GetLocalizedKey(item.Id, null, CommentsBehaviorUtilities.GetLocalizedKeySuffix(itemType));
+            
             MvcHtmlString result;
-            var itemThreadKey = ControlUtilities.GetLocalizedKey(item.Id, null, CommentsBehaviorUtilities.GetLocalizedKeySuffix(item.GetType().FullName));
-
             try
             {
-                result = helper.Action(ActionName, ControllerName, new { threadKey = itemThreadKey });
+                result = helper.Action(ActionName, ControllerName, new { threadKey = itemThreadKey, threadType = itemType });
             }
             catch (HttpException)
             {
