@@ -52,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
             catch (HttpException)
             {
-                result = new System.Web.Mvc.MvcHtmlString("The CommentsCount widget could not be found.");
+                result = new System.Web.Mvc.MvcHtmlString("The Comments widget could not be found.");
             }
 
             return result;
