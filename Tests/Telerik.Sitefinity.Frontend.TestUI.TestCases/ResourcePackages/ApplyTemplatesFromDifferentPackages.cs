@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team2),
-        TestCategory(FeatherTestCategories.PagesAndContent)]
+        TestCategory(FeatherTestCategories.PagesAndContent), Ignore]
         public void ApplyTwoDifferentTemplatesFromDifferentPackagesToPages()
         {
             BAT.Macros().NavigateTo().Design().PageTemplates();
