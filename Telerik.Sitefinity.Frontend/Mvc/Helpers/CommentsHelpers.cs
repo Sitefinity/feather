@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
     public static class CommentsHelpers
     {
         /// <summary>
-        /// Commentses the list.
+        /// Returns the Comments list if exist, else render error message
         /// </summary>
         /// <param name="helper">The helper.</param>
         /// <param name="item">The item.</param>
@@ -34,7 +34,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
-        /// Commentses the list.
+        /// Returns the Comments list if exist, else render error message
         /// </summary>
         /// <param name="helper">The helper.</param>
         /// <param name="itemId">The item identifier.</param>
