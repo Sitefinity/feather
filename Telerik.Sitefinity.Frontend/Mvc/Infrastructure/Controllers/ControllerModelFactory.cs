@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             using (var kernel = new StandardKernel())
             {
-                var assemblies = ControllerModelFactory.GetTypeHierarchyAssemblies(controllerType);
+                var assemblies = ControllerModelFactory.GetTypeHierarchyAssemblies(controllerType).Distinct();
                 kernel.Load(assemblies);
 
                 var parameters = new List<ConstructorArgument>();

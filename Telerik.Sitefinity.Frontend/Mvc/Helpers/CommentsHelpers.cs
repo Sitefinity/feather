@@ -52,10 +52,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (SystemManager.GetModule("Comments") == null)
                 return MvcHtmlString.Empty;
 
+            var controllerName = threadKey.EndsWith(ReviewsSuffix) ? CommentsHelpers.ReviewsControllerName : CommentsHelpers.CommentsControllerName;
+
             MvcHtmlString result;
             try
             {
-                result = helper.Action(CommentsHelpers.CountActionName, CommentsHelpers.ControllerName, new { NavigateUrl = navigateUrl, ThreadKey = threadKey, AllowComments = allowComments });
+                result = helper.Action(CommentsHelpers.CountActionName, controllerName, new { NavigateUrl = navigateUrl, ThreadKey = threadKey, AllowComments = allowComments });
             }
             catch (HttpException)
             {
@@ -115,10 +117,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 { "DataSource", itemProviderName }
             };
 
+            var controllerName = itemThreadKey.EndsWith(ReviewsSuffix) ? CommentsHelpers.ReviewsControllerName : CommentsHelpers.CommentsControllerName;
+
             MvcHtmlString result;
             try
             {
-                result = helper.Action(CommentsHelpers.IndexActionName, CommentsHelpers.ControllerName, routeDictionary);
+                result = helper.Action(CommentsHelpers.IndexActionName, controllerName, routeDictionary);
             }
             catch (HttpException)
             {
@@ -195,8 +199,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return allowComments;
         }
 
+        private const string ReviewsSuffix = "_reviews";
+
+        private const string CommentsControllerName = "Comments";
+        private const string ReviewsControllerName = "Reviews";
         private const string IndexActionName = "Index";
         private const string CountActionName = "Count";
-        private const string ControllerName = "Comments";
     }
 }
