@@ -2,7 +2,6 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.GenericContent.Model;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Comments;
@@ -24,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="itemManagerName">Name of the item manager.</param>
         /// <param name="itemTitle">The item title.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static MvcHtmlString CommentsList(this HtmlHelper helper, IDataItem item, string itemManagerName, string itemTitle)
+        public static MvcHtmlString CommentsList(this HtmlHelper helper, IDataItem item, string itemManagerName, string itemTitle = null)
         {
             if (item == null)
             {
@@ -32,8 +31,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             var contentItem = item as Content;
+
             bool? allowComments = contentItem != null ? contentItem.AllowComments : null;
-            return helper.CommentsList(item.Id, item.GetType().FullName, item.GetProviderName(), itemManagerName, itemTitle, allowComments);
+            string title = string.IsNullOrEmpty(itemTitle) ? (contentItem == null ? null : contentItem.Title.ToString()) : itemTitle;
+
+            return helper.CommentsList(item.Id, item.GetType().FullName, item.GetProviderName(), itemManagerName, title, allowComments);
         }
 
         /// <summary>
@@ -74,6 +76,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             {
                 result = MvcHtmlString.Empty;
             }
+            catch (NullReferenceException)
+            {
+                //// Telerik.Sitefinity.Mvc.SitefinityMvcRoute GetOrderedParameters() on line 116 controllerType.GetMethods() throws null reference exception (controllerType is null).
+                result = MvcHtmlString.Empty;
+            }
 
             return result;
         }
@@ -93,6 +100,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var contentItem = item as Content;
             bool? allowComments = contentItem != null ? contentItem.AllowComments : null;
             var threadKey = ControlUtilities.GetLocalizedKey(item.Id, null, CommentsBehaviorUtilities.GetLocalizedKeySuffix(item.GetType().FullName));
+
             return CommentsHelpers.CommentsCount(helper, navigateUrl, threadKey, allowComments);
         }
 
@@ -116,6 +124,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
             catch (HttpException)
             {
+                result = MvcHtmlString.Empty;
+            }
+            catch (NullReferenceException)
+            {
+                //// Telerik.Sitefinity.Mvc.SitefinityMvcRoute GetOrderedParameters() on line 116 controllerType.GetMethods() throws null reference exception (controllerType is null).
                 result = MvcHtmlString.Empty;
             }
 
