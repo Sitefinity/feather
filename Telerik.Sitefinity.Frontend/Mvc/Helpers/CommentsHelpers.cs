@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.DynamicModules.Builder;
+using Telerik.Sitefinity.DynamicModules.Builder.Model;
+using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.GenericContent.Model;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Comments;
@@ -15,76 +20,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
     /// </summary>
     public static class CommentsHelpers
     {
-        /// <summary>
-        /// Returns the Comments list if exist, else render error message
-        /// </summary>
-        /// <param name="helper">The helper.</param>
-        /// <param name="item">The item.</param>
-        /// <param name="itemManagerName">Name of the item manager.</param>
-        /// <param name="itemTitle">The item title.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static MvcHtmlString CommentsList(this HtmlHelper helper, IDataItem item, string itemManagerName, string itemTitle = null)
-        {
-            if (item == null)
-            {
-                return MvcHtmlString.Empty;
-            }
-
-            var contentItem = item as Content;
-
-            bool? allowComments = contentItem != null ? contentItem.AllowComments : null;
-            string title = string.IsNullOrEmpty(itemTitle) ? (contentItem == null ? null : contentItem.Title.ToString()) : itemTitle;
-
-            return helper.CommentsList(item.Id, item.GetType().FullName, item.GetProviderName(), itemManagerName, title, allowComments);
-        }
-
-        /// <summary>
-        /// Returns the Comments list if exist, else render error message
-        /// </summary>
-        /// <param name="helper">The helper.</param>
-        /// <param name="itemId">The item identifier.</param>
-        /// <param name="itemType">Type of the item.</param>
-        /// <param name="itemProviderName">Name of the item provider.</param>
-        /// <param name="itemManagerName">Name of the item manager.</param>
-        /// <param name="itemTitle">The item title.</param>
-        /// <param name="allowComments">if not null this value will override the configuration for allowing comments.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public static MvcHtmlString CommentsList(this HtmlHelper helper, Guid itemId, string itemType, string itemProviderName, string itemManagerName, string itemTitle, bool? allowComments = null)
-        {
-            if (SystemManager.GetModule("Comments") == null)
-                return MvcHtmlString.Empty;
-
-            var itemThreadKey = ControlUtilities.GetLocalizedKey(itemId, null, CommentsBehaviorUtilities.GetLocalizedKeySuffix(itemType));
-            var itemGroupKey = ControlUtilities.GetUniqueProviderKey(itemManagerName, itemProviderName);
-
-            var routeDictionary = new System.Web.Routing.RouteValueDictionary()
-            {
-                { "AllowComments", allowComments },
-                { "ThreadKey", itemThreadKey },
-                { "ThreadTitle", itemTitle },
-                { "ThreadType", itemType },
-                { "GroupKey", itemGroupKey },
-                { "DataSource", itemProviderName }
-            };
-            
-            MvcHtmlString result;
-            try
-            {
-                result = helper.Action(CommentsHelpers.IndexActionName, CommentsHelpers.ControllerName, routeDictionary);
-            }
-            catch (HttpException)
-            {
-                result = MvcHtmlString.Empty;
-            }
-            catch (NullReferenceException)
-            {
-                //// Telerik.Sitefinity.Mvc.SitefinityMvcRoute GetOrderedParameters() on line 116 controllerType.GetMethods() throws null reference exception (controllerType is null).
-                result = MvcHtmlString.Empty;
-            }
-
-            return result;
-        }
-
         /// <summary>
         /// Returns the CommentsCount widget if exist, else render error message
         /// </summary>
@@ -133,6 +68,131 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Renders comments list.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="item">The item.</param>
+        public static MvcHtmlString CommentsList(this HtmlHelper helper, IDataItem item)
+        {
+            var title = CommentsHelpers.GetTitle(item);
+            return CommentsHelpers.GetCommentsList(helper, item, title);
+        }
+
+        /// <summary>
+        /// Renders comments list.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="item">The item.</param>
+        /// <param name="title">The title.</param>
+        public static MvcHtmlString CommentsList(this HtmlHelper helper, IDataItem item, string title)
+        {
+            return CommentsHelpers.GetCommentsList(helper, item, title);
+        }
+
+        private static MvcHtmlString GetCommentsList(HtmlHelper helper, IDataItem item, string title)
+        {
+            if (SystemManager.GetModule("Comments") == null || item == null)
+            {
+                return MvcHtmlString.Empty;
+            }
+
+            var itemTypeFullName = item.GetType().FullName;
+            var itemProviderName = item.GetProviderName();
+
+            var itemThreadKey = ControlUtilities.GetLocalizedKey(item.Id, null, CommentsBehaviorUtilities.GetLocalizedKeySuffix(itemTypeFullName));
+            var itemGroupKey = ControlUtilities.GetUniqueProviderKey(GetDataSourceName(item), itemProviderName);
+
+            var routeDictionary = new System.Web.Routing.RouteValueDictionary()
+            {
+                { "AllowComments", GetAllowComments(item) },
+                { "ThreadKey", itemThreadKey },
+                { "ThreadTitle", title },
+                { "ThreadType", itemTypeFullName },
+                { "GroupKey", itemGroupKey },
+                { "DataSource", itemProviderName }
+            };
+
+            MvcHtmlString result;
+            try
+            {
+                result = helper.Action(CommentsHelpers.IndexActionName, CommentsHelpers.ControllerName, routeDictionary);
+            }
+            catch (HttpException)
+            {
+                result = MvcHtmlString.Empty;
+            }
+            catch (NullReferenceException)
+            {
+                //// Telerik.Sitefinity.Mvc.SitefinityMvcRoute GetOrderedParameters() on line 116 controllerType.GetMethods() throws null reference exception (controllerType is null).
+                result = MvcHtmlString.Empty;
+            }
+
+            return result;
+        }
+
+        private static string GetDataSourceName(IDataItem item)
+        {
+            string dataSourceName = null;
+
+            if (item != null && item is DynamicContent)
+            {
+                var moduleProvider = ModuleBuilderManager.GetManager().Provider;
+
+                var dynamicContentType = moduleProvider.GetDynamicModules()
+                    .Where(m => m.Status == DynamicModuleStatus.Active)
+                    .Join(moduleProvider.GetDynamicModuleTypes().Where(t => t.GetFullTypeName() == item.GetType().FullName), m => m.Id, t => t.ParentModuleId, (m, t) => t)
+                    .FirstOrDefault();
+
+                if (dynamicContentType != null)
+                {
+                    dataSourceName = dynamicContentType.ModuleName;
+                }
+            }
+            else if (item != null)
+            {
+                Type managerType;
+                if (ManagerBase.TryGetMappedManagerType(item.GetType(), out managerType))
+                {
+                    dataSourceName = managerType.FullName;
+                }
+            }
+
+            return dataSourceName;
+        }
+
+        private static string GetTitle(IDataItem item)
+        {
+            string title = null;
+
+            if (item != null)
+            {
+                var hasTitleItem = item as IHasTitle;
+                if (hasTitleItem != null)
+                {
+                    title = hasTitleItem.GetTitle();
+                }
+            }
+
+            return title;
+        }
+
+        private static bool? GetAllowComments(IDataItem item)
+        {
+            bool? allowComments = null;
+
+            if (item != null)
+            {
+                var contentItem = item as Content;
+                if (contentItem != null)
+                {
+                    allowComments = contentItem.AllowComments;
+                }
+            }
+
+            return allowComments;
         }
 
         private const string IndexActionName = "Index";
