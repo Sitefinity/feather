@@ -72,11 +72,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             {
                 result = helper.Action(CommentsHelpers.IndexActionName, CommentsHelpers.ControllerName, routeDictionary);
             }
-            catch (HttpException ex)
+            catch (HttpException)
             {
                 result = MvcHtmlString.Empty;
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 //// Telerik.Sitefinity.Mvc.SitefinityMvcRoute GetOrderedParameters() on line 116 controllerType.GetMethods() throws null reference exception (controllerType is null).
                 result = MvcHtmlString.Empty;
@@ -122,11 +122,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             {
                 result = helper.Action(CommentsHelpers.CountActionName, CommentsHelpers.ControllerName, new { NavigateUrl = navigateUrl, ThreadKey = threadKey, AllowComments = allowComments });
             }
-            catch (HttpException ex)
+            catch (HttpException)
             {
                 result = MvcHtmlString.Empty;
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 //// Telerik.Sitefinity.Mvc.SitefinityMvcRoute GetOrderedParameters() on line 116 controllerType.GetMethods() throws null reference exception (controllerType is null).
                 result = MvcHtmlString.Empty;
