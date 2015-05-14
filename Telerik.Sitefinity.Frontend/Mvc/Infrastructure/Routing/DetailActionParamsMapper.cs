@@ -164,6 +164,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var lifecycleManager = manager as ILifecycleManager;
             if (lifecycleItem != null && lifecycleManager != null)
             {
+                if (lifecycleItem.Status != ContentLifecycleStatus.Live)
+                {
+                    item = lifecycleManager.Lifecycle.GetLive(lifecycleItem);
+                }
+
                 object requestedItem;
                 if (ContentLocatableViewExtensions.TryGetItemWithRequestedStatus(lifecycleItem, lifecycleManager, out requestedItem))
                 {
