@@ -8,7 +8,9 @@ using Telerik.Sitefinity.Frontend.FilesMonitoring;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Frontend.Services.FilesService;
 using Telerik.Sitefinity.Frontend.Services.ListsService;
+using Telerik.Sitefinity.Frontend.Services.ReviewsService;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
@@ -64,6 +66,7 @@ namespace Telerik.Sitefinity.Frontend
 
             SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
             SystemManager.RegisterServiceStackPlugin(new FilesServiceStackPlugin());
+            SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
         }
 
         /// <summary>

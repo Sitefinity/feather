@@ -4,7 +4,7 @@ using ServiceStack;
 using Telerik.Sitefinity.Frontend.Services.FilesService;
 using Telerik.Sitefinity.Frontend.Services.FilesService.DTO;
 
-namespace Telerik.Sitefinity.Frontend.Services.ListsService
+namespace Telerik.Sitefinity.Frontend.Services.FilesService
 {
     /// <summary>
     /// Represents a ServiceStack plug-in for the Files web service.

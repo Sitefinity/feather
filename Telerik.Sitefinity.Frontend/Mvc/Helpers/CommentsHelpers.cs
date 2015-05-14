@@ -52,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (SystemManager.GetModule("Comments") == null)
                 return MvcHtmlString.Empty;
 
-            var controllerName = threadKey.EndsWith(ReviewsSuffix) ? CommentsHelpers.ReviewsControllerName : CommentsHelpers.CommentsControllerName;
+            var controllerName = threadKey.EndsWith(ReviewsSuffix, StringComparison.Ordinal) ? CommentsHelpers.ReviewsControllerName : CommentsHelpers.CommentsControllerName;
 
             MvcHtmlString result;
             try
@@ -117,7 +117,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 { "DataSource", itemProviderName }
             };
 
-            var controllerName = itemThreadKey.EndsWith(ReviewsSuffix) ? CommentsHelpers.ReviewsControllerName : CommentsHelpers.CommentsControllerName;
+            var controllerName = itemThreadKey.EndsWith(ReviewsSuffix, StringComparison.Ordinal) ? CommentsHelpers.ReviewsControllerName : CommentsHelpers.CommentsControllerName;
 
             MvcHtmlString result;
             try
@@ -199,7 +199,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return allowComments;
         }
 
-        private const string ReviewsSuffix = "_reviews";
+        private const string ReviewsSuffix = "_review";
 
         private const string CommentsControllerName = "Comments";
         private const string ReviewsControllerName = "Reviews";
