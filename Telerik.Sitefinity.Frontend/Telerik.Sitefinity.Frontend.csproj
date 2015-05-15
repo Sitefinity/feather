@@ -327,6 +327,14 @@
     <Compile Include="Resources\Resolvers\ResourceResolverStrategy.cs" />
     <Compile Include="Resources\VirtualPathBuilder.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerContainerInitializer.cs" />
+    <Compile Include="Services\ReviewsService\CommentsUtilitiesReflector.cs" />
+    <Compile Include="Services\ReviewsService\CommentsWebServiceReflector.cs" />
+    <Compile Include="Services\ReviewsService\DTO\ReviewCreateRequest.cs" />
+    <Compile Include="Services\ReviewsService\DTO\AuthorReviewedGetRequest.cs" />
+    <Compile Include="Services\ReviewsService\DTO\AuthorReviewedViewModel.cs" />
+    <Compile Include="Services\ReviewsService\DTO\ReviewViewModel.cs" />
+    <Compile Include="Services\ReviewsService\ReviewsServiceStackPlugin.cs" />
+    <Compile Include="Services\ReviewsService\ReviewsWebService.cs" />
     <Compile Include="Services\FilesService\DTO\FilesItemViewModel.cs" />
     <Compile Include="Services\FilesService\DTO\FilesViewModel.cs" />
     <Compile Include="Services\FilesService\FilesServiceStackPlugin.cs" />
