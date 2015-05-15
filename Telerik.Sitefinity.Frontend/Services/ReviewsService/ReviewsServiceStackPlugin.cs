@@ -19,7 +19,11 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
                 throw new ArgumentNullException("appHost");
 
             appHost.RegisterService<ReviewsWebService>();
-            appHost.Routes.Add<ReviewsGetRequest>("/reviews-api", ApplyTo.Get);
+            appHost.Routes
+                .Add<AuthorAlreadyReviewedGetRequest>(ReviewsServiceStackPlugin.ReviewsServiceUrl, ApplyTo.Get)
+                .Add<CreateCommentReviewPostRequest>(ReviewsServiceStackPlugin.ReviewsServiceUrl, ApplyTo.Post);
         }
+
+        private const string ReviewsServiceUrl = "/reviews-api";
     }
 }
