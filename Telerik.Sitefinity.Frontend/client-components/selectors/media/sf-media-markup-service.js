@@ -184,8 +184,8 @@
 
                     if (properties.displayMode === 'Custom') {
                         src = properties.thumbnail.url;
-                        jElementToInsert.attr('method', properties.customSize.Method);
-                        jElementToInsert.attr('customsizemethodproperties', escapeDoubleQuote(JSON.stringify(properties.customSize)));
+                        jElementToInsert.attr('data-method', properties.customSize.Method);
+                        jElementToInsert.attr('data-customsizemethodproperties', escapeDoubleQuote(JSON.stringify(properties.customSize)));
                     }
 
                     jElementToInsert.attr('src', src);
@@ -197,7 +197,7 @@
                     }
 
                     if (properties.displayMode)
-                        jElementToInsert.attr('displayMode', properties.displayMode);
+                        jElementToInsert.attr('data-displayMode', properties.displayMode);
 
                     properties.margin = properties.margin || {};
 
@@ -227,7 +227,7 @@
                     }
 
                     if (properties.openOriginalImageOnClick) {
-                        jElementToInsert.attr('openOriginalImageOnClick', 'true');
+                        jElementToInsert.attr('data-openOriginalImageOnClick', 'true');
                         jElementToInsert.wrap('<a></a>');
                         jElementToInsert = jElementToInsert.parent();
                         jElementToInsert.attr('sfref', sfref).attr('href', properties.item.MediaUrl);
@@ -253,7 +253,7 @@
                     result.item.Id = getIdFromSfrefAttr(sfref);
                     result.provider = getProviderFromSfrefAttr(sfref);
                     result.thumbnail.name = getThumbnailNameFromSfrefAttr(sfref);
-                    result.displayMode = jMarkup.attr('displayMode');
+                    result.displayMode = jMarkup.attr('data-displayMode') || jMarkup.attr('displayMode');
 
                     if (result.displayMode === 'Thumbnail') {
                         result.thumbnail.url = jMarkup.attr('src');
@@ -264,8 +264,9 @@
 
                     if (result.displayMode === 'Custom') {
                         result.thumbnail.url = jMarkup.attr('src');
-                        result.customSize = JSON.parse(unescapeDoubleQuote(jMarkup.attr('customsizemethodproperties')));
-                        result.customSize.Method = jMarkup.attr('method');
+                        var customSizeProperties = jMarkup.attr('data-customsizemethodproperties') || jMarkup.attr('customsizemethodproperties')
+                        result.customSize = JSON.parse(unescapeDoubleQuote(customSizeProperties));
+                        result.customSize.Method = jMarkup.attr('data-method') || jMarkup.attr('method');
                     }
 
                     result.title = jMarkup.attr('title');
@@ -296,7 +297,8 @@
                         result.margin.right = parseMargin(stripPxFromStyle(jMarkup[0].style.marginRight));
                     }
 
-                    result.openOriginalImageOnClick = jMarkup.attr('openOriginalImageOnClick') === 'true';
+                    var openOriginal = jMarkup.attr('data-openOriginalImageOnClick') || jMarkup.attr('openOriginalImageOnClick');
+                    result.openOriginalImageOnClick = openOriginal === 'true';
 
                     return result;
                 }
