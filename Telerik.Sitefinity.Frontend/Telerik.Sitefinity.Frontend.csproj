@@ -329,10 +329,10 @@
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerContainerInitializer.cs" />
     <Compile Include="Services\ReviewsService\CommentsUtilitiesReflector.cs" />
     <Compile Include="Services\ReviewsService\CommentsWebServiceReflector.cs" />
-    <Compile Include="Services\ReviewsService\DTO\CreateCommentReviewPostRequest.cs" />
-    <Compile Include="Services\ReviewsService\DTO\AuthorAlreadyReviewedGetRequest.cs" />
-    <Compile Include="Services\ReviewsService\DTO\AuthorAlreadyReviewedViewModel.cs" />
-    <Compile Include="Services\ReviewsService\DTO\CreateCommentReviewViewModel.cs" />
+    <Compile Include="Services\ReviewsService\DTO\ReviewCreateRequest.cs" />
+    <Compile Include="Services\ReviewsService\DTO\AuthorReviewedGetRequest.cs" />
+    <Compile Include="Services\ReviewsService\DTO\AuthorReviewedViewModel.cs" />
+    <Compile Include="Services\ReviewsService\DTO\ReviewViewModel.cs" />
     <Compile Include="Services\ReviewsService\ReviewsServiceStackPlugin.cs" />
     <Compile Include="Services\ReviewsService\ReviewsWebService.cs" />
     <Compile Include="Services\FilesService\DTO\FilesItemViewModel.cs" />

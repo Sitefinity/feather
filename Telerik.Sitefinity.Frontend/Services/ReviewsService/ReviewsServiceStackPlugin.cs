@@ -1,6 +1,7 @@
 ﻿using System;
 using ServiceStack;
 using Telerik.Sitefinity.Frontend.Services.ReviewsService.DTO;
+using Telerik.Sitefinity.Services.Comments.DTO;
 
 namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
 {
@@ -19,9 +20,8 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
                 throw new ArgumentNullException("appHost");
 
             appHost.RegisterService<ReviewsWebService>();
-            appHost.Routes
-                .Add<AuthorAlreadyReviewedGetRequest>(ReviewsServiceStackPlugin.ReviewsServiceUrl, ApplyTo.Get)
-                .Add<CreateCommentReviewPostRequest>(ReviewsServiceStackPlugin.ReviewsServiceUrl, ApplyTo.Post);
+            appHost.Routes.Add<AuthorReviewedGetRequest>(ReviewsServiceStackPlugin.ReviewsServiceUrl, ApplyTo.Get);
+            appHost.Routes.Add<ReviewCreateRequest>(ReviewsServiceStackPlugin.ReviewsServiceUrl, ApplyTo.Post);
         }
 
         private const string ReviewsServiceUrl = "/reviews-api";

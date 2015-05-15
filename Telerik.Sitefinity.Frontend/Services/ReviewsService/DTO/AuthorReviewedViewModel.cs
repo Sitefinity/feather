@@ -3,7 +3,7 @@
     /// <summary>
     /// The view model used by <see cref="ReviewsWebService"/>.
     /// </summary>
-    internal class AuthorAlreadyReviewedViewModel
+    internal class AuthorReviewedViewModel
     {
         /// <summary>
         /// Gets or sets a value indicating whether author already reviewed.

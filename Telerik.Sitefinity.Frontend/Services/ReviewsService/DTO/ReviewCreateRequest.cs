@@ -6,7 +6,7 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService.DTO
     /// <summary>
     /// <c>CommentCreateRequest</c> Represents the <see cref="IComment"/> object that should be created.
     /// </summary>
-    internal class CreateCommentReviewPostRequest
+    internal class ReviewCreateRequest
     {
         /// <summary>
         /// Gets or sets the body of the message of the <see cref="IComment"/> object.

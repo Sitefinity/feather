@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
         /// Validates the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        public static void Validate(CreateCommentReviewPostRequest request)
+        public static void Validate(CommentCreateRequest request)
         {
             CommentsWebServiceReflector.ValidateReflect(request);
         }
@@ -64,6 +64,6 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
         }
 
         private static Lazy<object> commentsWebServiceInstance = new Lazy<object>(() => commentsWebServiceType.Value.GetConstructor(Type.EmptyTypes).Invoke(new object[] { }));
-        private static Lazy<Type> commentsWebServiceType = new Lazy<Type>(() => Type.GetType("Telerik.Sitefinity.Modules.Comments.CommentWebService, Telerik.Sitefinity"));
+        private static Lazy<Type> commentsWebServiceType = new Lazy<Type>(() => Type.GetType("Telerik.Sitefinity.Services.Comments.CommentWebService, Telerik.Sitefinity"));
     }
 }

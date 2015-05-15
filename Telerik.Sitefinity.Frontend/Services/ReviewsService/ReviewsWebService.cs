@@ -5,6 +5,7 @@ using Telerik.Sitefinity.Frontend.Services.ReviewsService.DTO;
 using Telerik.Sitefinity.Security.Claims;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Comments;
+using Telerik.Sitefinity.Services.Comments.DTO;
 using Telerik.Sitefinity.Services.Comments.Proxies;
 using Telerik.Sitefinity.Web.Services;
 
@@ -22,14 +23,14 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
         /// </summary>
         /// <param name="request">The reviews get request.</param>
         /// <returns>
-        /// <see cref="AuthorAlreadyReviewedViewModel" /> object.
+        /// <see cref="AuthorReviewedViewModel" /> object.
         /// </returns>
         [AddHeader(ContentType = MimeTypes.Json)]
-        public AuthorAlreadyReviewedViewModel Get(AuthorAlreadyReviewedGetRequest request)
+        public AuthorReviewedViewModel Get(AuthorReviewedGetRequest request)
         {
-            var authorAlreadyCommented = CommentsUtilitiesReflector.GetCommentsByThreadForCurrentAuthorWithRating(request.ThreadKey);
+            var authorComments = CommentsUtilitiesReflector.GetCommentsByThreadForCurrentAuthorWithRating(request.ThreadKey);
 
-            return new AuthorAlreadyReviewedViewModel() { AuthorAlreadyReviewed = authorAlreadyCommented };
+            return new AuthorReviewedViewModel() { AuthorAlreadyReviewed = authorComments.Any() };
         }
 
         #endregion
@@ -37,18 +38,56 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
         #region Create comment/review
 
         /// <summary>
-        /// Creates a comment or review.
+        /// Posts the specified request.
         /// </summary>
-        /// <param name="request">The create comment review post request.</param>
-        /// <returns>
-        /// <see cref="CreateCommentReviewViewModel" /> object.
-        /// </returns>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// Thread is closed.
+        /// or
+        /// Comment cannot be submitted at the moment. Please refresh the page and try again.
+        /// </exception>
         [AddHeader(ContentType = MimeTypes.Json)]
-        public CreateCommentReviewViewModel Post(CreateCommentReviewPostRequest request)
+        public ReviewViewModel Post(ReviewCreateRequest request)
+        {
+            var commentCreateRequest = new CommentCreateRequest()
+            {
+                Captcha = request.Captcha,
+                CustomData = request.CustomData,
+                Email = request.Email,
+                Message = request.Message,
+                Name = request.Name,
+                Rating = request.Rating,
+                Thread = request.Thread,
+                ThreadKey = request.ThreadKey
+            };
+
+            var commentResponse = this.PostInternal(commentCreateRequest);
+
+            var result = new ReviewViewModel()
+            {
+                AuthorIpAddress = commentResponse.AuthorIpAddress,
+                CustomData = commentResponse.CustomData,
+                DateCreated = commentResponse.DateCreated,
+                Email = commentResponse.Email,
+                Key = commentResponse.Key,
+                Message = commentResponse.Message,
+                Name = commentResponse.Name,
+                ProfilePictureThumbnailUrl = commentResponse.ProfilePictureThumbnailUrl,
+                ProfilePictureUrl = commentResponse.ProfilePictureUrl,
+                Rating = commentResponse.Rating,
+                Status = commentResponse.Status,
+                ThreadKey = commentResponse.ThreadKey
+            };
+
+            return result;
+        }
+
+        private CommentResponse PostInternal(CommentCreateRequest request)
         {
             CommentsWebServiceReflector.Validate(request);
 
-            CreateCommentReviewViewModel result;
+            CommentResponse result;
             try
             {
                 var author = CommentsUtilitiesReflector.GetAuthor(request);
@@ -106,10 +145,10 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
             return result;
         }
 
-        private CreateCommentReviewViewModel SubmitCommentInternal(CreateCommentReviewPostRequest commentData, IThread thread, IAuthor author)
+        private CommentResponse SubmitCommentInternal(CommentCreateRequest commentData, IThread thread, IAuthor author)
         {
             var cs = SystemManager.GetCommentsService();
-            var currentConfig = CommentsUtilitiesReflector.GetThreadConfigByType(thread.Type);
+            var currentConfig = CommentsUtilitiesReflector.GetThreadConfigByType(thread.Type, thread.Key);
 
             if (currentConfig.RequiresAuthentication)
             {
@@ -119,14 +158,14 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
                 }
             }
 
-            if (currentConfig.EnableRatings && commentData.Rating == null)
+            if (currentConfig.EnableRatings)
             {
-                throw new InvalidOperationException("A message displayed when ratings are allowed and a comment is submitted without rating.");
-            }
+                if (commentData.Rating == null)
+                {
+                    throw new InvalidOperationException("A message displayed when ratings are allowed and a comment is submitted without rating.");
+                }
 
-            if (commentData.Rating != null)
-            {
-                if (CommentsUtilitiesReflector.GetCommentsByThreadForCurrentAuthorWithRating(thread.Key))
+                if (CommentsUtilitiesReflector.GetCommentsByThreadForCurrentAuthorWithRating(thread.Key).Any())
                 {
                     throw new InvalidOperationException("Only one comment with rating is allowed per user.");
                 }

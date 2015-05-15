@@ -3,7 +3,7 @@
     /// <summary>
     /// The DTO used by <see cref="ReviewsWebService"/>.
     /// </summary>
-    internal class AuthorAlreadyReviewedGetRequest
+    internal class AuthorReviewedGetRequest
     {
         /// <summary>
         /// Gets or sets the thread key.

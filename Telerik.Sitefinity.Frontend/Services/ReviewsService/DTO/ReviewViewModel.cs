@@ -5,7 +5,7 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService.DTO
     /// <summary>
     /// <c>CommentResponse</c>. Represents the <see cref="IComment"/> object that should be returned.
     /// </summary>
-    internal class CreateCommentReviewViewModel
+    internal class ReviewViewModel
     {
         /// <summary>
         /// Gets or sets the key of the <see cref="IComment"/> object.
