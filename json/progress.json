@@ -1045,24 +1045,42 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Language selector",
-               "progress" : 75,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "MVC-Breadcrumb-widget",
+                     "commitHash" : "e5c045ed93b05303db7a4e50b8191017b411e221",
+                     "date" : "05-15-2015 14:33 +0300",
+                     "name" : "Breadcrumb widget implementation",
+                     "tag" : "v.1.2.210.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Breadcrumb",
-               "progress" : 75,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "MVC-Language-selector-widget",
+                     "commitHash" : "e5c045ed93b05303db7a4e50b8191017b411e221",
+                     "date" : "05-15-2015 14:33 +0300",
+                     "name" : "Language selector widget implementation",
+                     "tag" : "v.1.2.210.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Site selector",
-               "progress" : 0,
-               "shortDescription" : "Not done",
+               "progress" : 50,
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
