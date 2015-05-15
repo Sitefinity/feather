@@ -264,7 +264,7 @@
 
                     if (result.displayMode === 'Custom') {
                         result.thumbnail.url = jMarkup.attr('src');
-                        var customSizeProperties = jMarkup.attr('data-customsizemethodproperties') || jMarkup.attr('customsizemethodproperties')
+                        var customSizeProperties = jMarkup.attr('data-customsizemethodproperties') || jMarkup.attr('customsizemethodproperties');
                         result.customSize = JSON.parse(unescapeDoubleQuote(customSizeProperties));
                         result.customSize.Method = jMarkup.attr('data-method') || jMarkup.attr('method');
                     }
