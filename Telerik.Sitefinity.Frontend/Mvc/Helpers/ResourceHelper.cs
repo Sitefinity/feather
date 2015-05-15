@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -12,7 +12,6 @@ using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc.Rendering;
 using Telerik.Sitefinity.Utilities.TypeConverters;
-using Telerik.Sitefinity.Web.Configuration;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -224,6 +223,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource(typeof(Telerik.Sitefinity.Resources.Reference).FullName, "Telerik.Sitefinity.Resources.Scripts.CodeMirror.Mode.javascript.js")).ToHtmlString());
 
             return MvcHtmlString.Create(result.ToString());
+        }
+
+        /// <summary>
+        /// Renders the lang attribute.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <returns></returns>
+        public static MvcHtmlString RenderLangAttribute(this HtmlHelper helper)
+        {
+            return RenderLangAttribute(helper, CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+        }
+
+        /// <summary>
+        /// Renders the lang attribute.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public static MvcHtmlString RenderLangAttribute(this HtmlHelper helper, string culture)
+        {
+            string attributeString = helper.FormatValue(culture, "lang=\"{0}\"");
+
+            return new MvcHtmlString(attributeString);
         }
 
         /// <summary>
