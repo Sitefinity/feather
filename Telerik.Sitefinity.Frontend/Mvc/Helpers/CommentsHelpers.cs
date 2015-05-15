@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
     /// <summary>
     /// Holds helpers related to Comments widget
     /// </summary>
-    internal static class CommentsHelpers
+    public static class CommentsHelpers
     {
         /// <summary>
         /// Returns the CommentsCount widget if exist, else render error message
