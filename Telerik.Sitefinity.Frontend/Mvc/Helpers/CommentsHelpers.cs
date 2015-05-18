@@ -55,6 +55,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (SystemManager.GetModule("Comments") == null)
                 return MvcHtmlString.Empty;
 
+            if (string.IsNullOrEmpty(navigateUrl))
+            {
+                navigateUrl = "#comments-" + threadKey;
+            }
+
             var controllerName = threadKey.EndsWith(ReviewsSuffix, StringComparison.Ordinal) ? CommentsHelpers.ReviewsControllerName : CommentsHelpers.CommentsControllerName;
 
             MvcHtmlString result;
