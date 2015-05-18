@@ -35,8 +35,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var contentItem = item as Content;
             bool? allowComments = contentItem != null ? contentItem.AllowComments : null;
             var threadKey = ControlUtilities.GetLocalizedKey(item.Id, null, CommentsBehaviorUtilities.GetLocalizedKeySuffix(item.GetType().FullName));
+            var itemTypeFullName = item.GetType().FullName;
 
-            return CommentsHelpers.CommentsCount(helper, navigateUrl, threadKey, allowComments);
+            return CommentsHelpers.CommentsCount(helper, navigateUrl, threadKey, itemTypeFullName, allowComments);
         }
 
         /// <summary>
@@ -45,9 +46,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="helper">The HTML helper.</param>
         /// <param name="navigateUrl">The navigate URL.</param>
         /// <param name="threadKey">The thread key.</param>
+        /// <param name="threadType">Type of the thread.</param>
         /// <param name="allowComments">if not null this value will override the configuration for allowing comments.</param>
+        /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#")]
-        public static MvcHtmlString CommentsCount(this HtmlHelper helper, string navigateUrl, string threadKey, bool? allowComments = null)
+        public static MvcHtmlString CommentsCount(this HtmlHelper helper, string navigateUrl, string threadKey, string threadType, bool? allowComments = null)
         {
             if (SystemManager.GetModule("Comments") == null)
                 return MvcHtmlString.Empty;
@@ -57,7 +60,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             MvcHtmlString result;
             try
             {
-                result = helper.Action(CommentsHelpers.CountActionName, controllerName, new { NavigateUrl = navigateUrl, ThreadKey = threadKey, AllowComments = allowComments });
+                result = helper.Action(CommentsHelpers.CountActionName, controllerName, new { NavigateUrl = navigateUrl, ThreadKey = threadKey, ThreadType = threadType, AllowComments = allowComments });
             }
             catch (HttpException)
             {
