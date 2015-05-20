@@ -10,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.Modules.Comments
     /// <summary>
     /// Notification strategy that is responsible for notifications for <see cref="IComment"/> objects..
     /// </summary>
-    public class ReviewNotificationStrategy : CommentNotificationsStrategy, ICommentNotificationsStrategy
+    internal class ReviewNotificationStrategy : CommentNotificationsStrategy, ICommentNotificationsStrategy
     {
         /// <summary>
         /// Gets the message template unique identifier for the specified <see cref="ICommentEvent"/> event.
