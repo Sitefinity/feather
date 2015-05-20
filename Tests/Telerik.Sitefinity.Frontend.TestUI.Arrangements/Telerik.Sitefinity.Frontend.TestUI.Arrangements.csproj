@@ -73,7 +73,7 @@
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.0.5777.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Mvc">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.0.5777.0\lib\net40\Telerik.Sitefinity.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.8.0.5777.0\lib\net40\Telerik.Sitefinity.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization">
       <SpecificVersion>False</SpecificVersion>
