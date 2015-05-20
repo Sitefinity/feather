@@ -40,21 +40,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <inheritdoc/>
         protected override void InitializeRouteParameters(MvcProxyBase proxyControl)
         {
-            var originalContext = proxyControl.Context.Request.RequestContext ?? proxyControl.Page.GetRequestContext();
+            var originalContext = this.Context.Request.RequestContext ?? proxyControl.Page.GetRequestContext();
 
             this.SetControllerRouteParam(proxyControl);
 
-            var paramsMapper = this.GetDefaultParamsMapper(proxyControl.Controller);
+            var controller = proxyControl.GetController();
+
+            var paramsMapper = this.GetDefaultParamsMapper(controller);
             if (paramsMapper != null)
             {
                 var originalParams = MvcRequestContextBuilder.GetRouteParams(originalContext);
                 var requestContext = proxyControl.RequestContext;
 
                 paramsMapper.ResolveUrlParams(originalParams, requestContext);
-                proxyControl.Controller.TempData.Add("IsInPureMode", proxyControl.IsInPureMode);
+                controller.TempData.Add("IsInPureMode", proxyControl.IsInPureMode);
 
                 if (!proxyControl.ContentTypeName.IsNullOrEmpty())
-                    proxyControl.Controller.RouteData.Values.Add("contentTypeName", proxyControl.ContentTypeName);
+                    controller.RouteData.Values.Add("contentTypeName", proxyControl.ContentTypeName);
             }
             else
             {
@@ -69,9 +71,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="proxyControl">The proxy control.</param>
         protected override void ExecuteController(MvcProxyBase proxyControl)
         {
+            var controller = proxyControl.GetController();
+
             try
             {
-                this.TryLoadTempData(proxyControl.Controller);
+                this.TryLoadTempData(controller);
                 base.ExecuteController(proxyControl);
             }
             catch (Exception ex)
@@ -79,14 +83,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 if (Exceptions.HandleException(ex, ExceptionPolicyName.IgnoreExceptions))
                     throw;
 
-                proxyControl.Context.Response.Clear();
+                this.Context.Response.Clear();
 
                 if (this.ShouldDisplayErrors())
-                    proxyControl.Context.Response.Write(Res.Get<InfrastructureResources>().ErrorExecutingController);
+                    this.Context.Response.Write(Res.Get<InfrastructureResources>().ErrorExecutingController);
             }
             finally
             {
-                this.TrySaveTempData(proxyControl.Controller);
+                this.TrySaveTempData(controller);
             }
         }
 
@@ -241,7 +245,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             else
             {
-                controllerName = SitefinityViewEngine.GetControllerName(proxyControl.Controller);
+                controllerName = SitefinityViewEngine.GetControllerName(proxyControl.GetController());
             }
 
             requestContext.RouteData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] = controllerName;
