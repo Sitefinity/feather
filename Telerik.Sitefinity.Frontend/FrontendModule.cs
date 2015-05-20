@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
@@ -15,6 +16,7 @@ using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Services.Comments.Notifications;
 
 namespace Telerik.Sitefinity.Frontend
 {
@@ -122,6 +124,8 @@ namespace Telerik.Sitefinity.Frontend
 
                 var designerInitializer = new DesignerInitializer();
                 designerInitializer.Initialize();
+
+                ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
             }
         }
 
