@@ -210,10 +210,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 if (actionDescriptor.GetParameters()[1].ParameterType == typeof(int?))
                 {
                     var pageParamName = actionDescriptor.GetParameters()[1].ParameterName;
-                    result = new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":category,tag}/{" + pageParamName + "}", actionName);
+                    result = new TaxonomyActionParamsMapper(controller, () => "{-in-[taxonomy]}/{[taxonomy]}/{" + taxonParamName + ":category,tag}/{" + pageParamName + "}", actionName);
                 }
 
-                result = result.SetLast(new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":category,tag}", actionName));
+                result = result.SetLast(new TaxonomyActionParamsMapper(controller, () => "{-in-[taxonomy]}/{[taxonomy]}/{" + taxonParamName + ":category,tag}", actionName));
             }
 
             return result;
