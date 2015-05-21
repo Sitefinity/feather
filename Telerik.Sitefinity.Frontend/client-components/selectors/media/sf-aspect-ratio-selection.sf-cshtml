@@ -10,30 +10,26 @@
       </select>
     </div>
   </div>
+</div>
 
-  <div ng-hide="model.aspectRatio.toLowerCase() === 'auto'" class="form-group-list">
-    <div class="form-group">
-      <label>@(Res.Get<ClientComponentsResources>().Width)</label>
-      <div class="row row-xs">
-        <div class="col-xs-4">
-          <input class="form-control" type="number" ng-model="model.width" ng-change="changeWidth(model.width)"/>
-        </div>
-        <div class="col-xs-1">
-          <span>@(Res.Get<ClientComponentsResources>().PixelShort)</span>
-        </div>
+<div ng-hide="model.aspectRatio.toLowerCase() === 'auto'" class="form-group-list">
+  <div class="form-group">
+    <label>@(Res.Get<ClientComponentsResources>().Width)</label>
+    <div class="row row-xs">
+      <div class="col-xs-2">
+        <input class="form-control" type="text" ng-model="model.width" ng-change="changeWidth(model.width)"/>
       </div>
+      <div class="m-top-xs">@(Res.Get<ClientComponentsResources>().PixelShort)</div>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label>@(Res.Get<ClientComponentsResources>().Height)</label>
-      <div class="row row-xs">
-        <div class="col-xs-4">
-          <input class="form-control" type="number" ng-model="model.height" ng-change="changeHeight(model.height)"/>
-        </div>
-        <div class="col-xs-1">
-          <span>@(Res.Get<ClientComponentsResources>().PixelShort)</span>
-        </div>
+  <div class="form-group">
+    <label>@(Res.Get<ClientComponentsResources>().Height)</label>
+    <div class="row row-xs">
+      <div class="col-xs-2">
+        <input class="form-control" type="text" ng-model="model.height" ng-change="changeHeight(model.height)"/>
       </div>
+      <div class="m-top-xs">@(Res.Get<ClientComponentsResources>().PixelShort)</div>
     </div>
   </div>
 </div>
