@@ -199,7 +199,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="ClientScripts\test.bat" />
     <None Include="ClientScripts\test.debug.bat" />
     <None Include="packages.config">

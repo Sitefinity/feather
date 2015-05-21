@@ -150,7 +150,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Data\DesignerView.Selector.cshtml" />
     <EmbeddedResource Include="Data\DesignerView.Selector.json" />
-    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
