@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
@@ -8,11 +9,14 @@ using Telerik.Sitefinity.Frontend.FilesMonitoring;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Frontend.Services.FilesService;
 using Telerik.Sitefinity.Frontend.Services.ListsService;
+using Telerik.Sitefinity.Frontend.Services.ReviewsService;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Services.Comments.Notifications;
 
 namespace Telerik.Sitefinity.Frontend
 {
@@ -63,6 +67,8 @@ namespace Telerik.Sitefinity.Frontend
             Bootstrapper.Initialized += this.Bootstrapper_Initialized;
 
             SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
+            SystemManager.RegisterServiceStackPlugin(new FilesServiceStackPlugin());
+            SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
         }
 
         /// <summary>
@@ -83,6 +89,7 @@ namespace Telerik.Sitefinity.Frontend
             if (upgradeFrom <= new Version(1, 2, 180, 1))
             {
                 this.RemoveMvcWidgetToolboxItems();
+                this.RenameDynamicContentMvcToolboxItems();
             }
         }
 
@@ -117,6 +124,8 @@ namespace Telerik.Sitefinity.Frontend
 
                 var designerInitializer = new DesignerInitializer();
                 designerInitializer.Initialize();
+
+                ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
             }
         }
 
@@ -196,7 +205,7 @@ namespace Telerik.Sitefinity.Frontend
 
                 foreach (var section in pageControls.Sections)
                 {
-                    var widgets = section.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.", StringComparison.Ordinal)).ToArray();
+                    var widgets = section.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.", StringComparison.Ordinal) && !t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.DynamicContent", StringComparison.Ordinal)).ToArray();
                     foreach (ToolboxItem tool in widgets)
                     {
                         section.Tools.Remove(tool);
@@ -207,6 +216,29 @@ namespace Telerik.Sitefinity.Frontend
                 if (mvcWidgetsSection != null)
                 {
                     pageControls.Sections.Remove(mvcWidgetsSection);
+                }
+
+                configManager.SaveSection(toolboxConfig);
+            }
+        }
+
+        private void RenameDynamicContentMvcToolboxItems()
+        {
+            var configManager = ConfigManager.GetManager();
+            using (new ElevatedConfigModeRegion())
+            {
+                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
+                var pageControls = toolboxConfig.Toolboxes["PageControls"];
+
+                foreach (var section in pageControls.Sections)
+                {
+                    var widgets = section.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.DynamicContent", StringComparison.Ordinal)).ToArray();
+                    foreach (ToolboxItem tool in widgets)
+                    {
+                        tool.CssClass = "sfNewsViewIcn sfMvcIcn";
+                        var indexOfMvcSuffix = tool.Title.LastIndexOf(" MVC", StringComparison.Ordinal);
+                        tool.Title = tool.Title.Substring(0, indexOfMvcSuffix);
+                    }
                 }
 
                 configManager.SaveSection(toolboxConfig);

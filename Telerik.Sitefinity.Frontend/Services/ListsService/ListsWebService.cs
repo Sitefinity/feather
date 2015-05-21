@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using ServiceStack;
-using Telerik.Sitefinity.Frontend.Services.DTO;
+using Telerik.Sitefinity.Frontend.Services.ListsService.DTO;
 using Telerik.Sitefinity.GenericContent.Model;
 using Telerik.Sitefinity.Lists.Model;
 using Telerik.Sitefinity.Model.Localization;

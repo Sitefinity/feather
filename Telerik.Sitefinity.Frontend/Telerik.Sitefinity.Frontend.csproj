@@ -143,30 +143,60 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Personalization">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Personalization, Version=8.0.5700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Personalization.Impl">
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Resources">
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Resources.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Search">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Sitefinity.Services.Comments">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Sitefinity.Services.Documents">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Sitefinity.Services.Events">
+    <Reference Include="Telerik.Sitefinity.Search, Version=8.0.5700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Services.Notifications">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Search.Impl">
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Search.Impl.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Services.Statistics">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Services.Comments, Version=8.0.5700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Comments.Impl">
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Documents, Version=8.0.5700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Documents.Impl">
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Documents.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Events, Version=8.0.5700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Notifications, Version=8.0.5700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Notifications.Impl">
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Notifications.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.RecycleBin">
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.RecycleBin.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.RecycleBin.Impl">
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.RecycleBin.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Statistics, Version=8.0.5700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Statistics.Impl">
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Statistics.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
       <HintPath>..\packages\Telerik.Sitefinity.TestUtilities.8.0.5700.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
@@ -201,7 +231,9 @@
     <Compile Include="InlineEditing\HtmlProcessor.cs" />
     <Compile Include="InlineEditing\HtmlRegion.cs" />
     <Compile Include="InterfaceMappings.cs" />
+    <Compile Include="Modules\Comments\ReviewNotificationStrategy.cs" />
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Mvc\Helpers\CommentsHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\EmailAddressAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\DuplicateSectionException.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
@@ -326,7 +358,21 @@
     <Compile Include="Resources\Resolvers\ResourceResolverStrategy.cs" />
     <Compile Include="Resources\VirtualPathBuilder.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerContainerInitializer.cs" />
-    <Compile Include="Services\DTO\SpecificListsGetRequest.cs" />
+    <Compile Include="Services\ReviewsService\CommentsUtilitiesReflector.cs" />
+    <Compile Include="Services\ReviewsService\CommentsWebServiceReflector.cs" />
+    <Compile Include="Services\ReviewsService\DTO\ReviewCreateRequest.cs" />
+    <Compile Include="Services\ReviewsService\DTO\AuthorReviewedGetRequest.cs" />
+    <Compile Include="Services\ReviewsService\DTO\AuthorReviewedViewModel.cs" />
+    <Compile Include="Services\ReviewsService\DTO\ReviewViewModel.cs" />
+    <Compile Include="Services\ReviewsService\ReviewsServiceStackPlugin.cs" />
+    <Compile Include="Services\ReviewsService\ReviewsWebService.cs" />
+    <Compile Include="Services\FilesService\DTO\FilesItemViewModel.cs" />
+    <Compile Include="Services\FilesService\DTO\FilesViewModel.cs" />
+    <Compile Include="Services\FilesService\FilesServiceStackPlugin.cs" />
+    <Compile Include="Services\FilesService\FilesWebServiceConstants.cs" />
+    <Compile Include="Services\ListsService\DTO\SpecificListsGetRequest.cs" />
+    <Compile Include="Services\FilesService\DTO\FilesGetRequest.cs" />
+    <Compile Include="Services\FilesService\FilesWebService.cs" />
     <Compile Include="Services\ListsService\ListsServiceStackPlugin.cs" />
     <Compile Include="Services\ListsService\ListsWebService.cs" />
   </ItemGroup>
@@ -409,20 +455,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Designer\designer.js" />
-    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js" />
-    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\css\bootstrap.min.css" />
     <EmbeddedResource Include="Mvc\Scripts\breadcrumb.js" />
     <EmbeddedResource Include="Mvc\Scripts\Kendo\angular-kendo.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js.map" />
-    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js.map" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.json" />
-    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js.map" />
     <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
     <None Include="assets\csslint.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
@@ -480,6 +521,13 @@
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector-item.html" />
+    <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js.map" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js.map" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js.map" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -491,10 +539,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Designers\Scripts\page-editor.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.js" />
-    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.svg" />
@@ -512,10 +556,6 @@
     <EmbeddedResource Include="Mvc\Scripts\server-data.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.js" />
-    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Templates\expander.html" />
   </ItemGroup>
   <ItemGroup>
@@ -523,6 +563,12 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\sf-bootstrap-popover.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\ui-bootstrap-tpls.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\bootstrap.min.js" />
@@ -540,6 +586,7 @@
     <EmbeddedResource Include="assets\dist\img\crop-to-area.png" />
     <EmbeddedResource Include="assets\dist\img\resize-to-area.png" />
     <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.svg" />
+    <EmbeddedResource Include="assets\dist\img\dummy.jpg" />
     <Content Include="assets\documentation\designer.html" />
     <Content Include="assets\feather-icons.css" />
     <Content Include="assets\gruntfile.js" />
@@ -616,7 +663,11 @@
     <EmbeddedResource Include="client-components\selectors\identity\sf-users-service.js" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.js" />
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-service.js" />
+    <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector.html" />
     <EmbeddedResource Include="client-components\sf-mvc-ext.png" />
+    <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.js" />
+    <EmbeddedResource Include="assets\src\img\dummy.jpg" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
