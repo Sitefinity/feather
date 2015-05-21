@@ -1,0 +1,39 @@
+
+<form name="form" novalidate="">
+  <div class="row row-xs">
+      <div class="col-xs-10">
+        <input type="text" name="fileUrlTxt" ng-model="sfModel" extension="sfExtension" class="form-control form-control-sm"/>
+      </div>
+      <div class="col-xs-2">
+        <button class="btn btn-xs btn-default" ng-click="open()">
+          @(Res.Get<ClientComponentsResources>().Select)</button>
+      </div>
+    <!--<span ng-show="form.fileUrlTxt.$touched && form.fileUrlTxt.$error.hasExtension">Selected file extension should be .{{sfExtension}}!</span>-->
+  </div>
+</form>
+
+
+<div data-sf-role="modal-container"
+    template-url="sf-file-url-selector-modal-template"
+    modal
+    size="normal"
+    existing-scope="true"
+    window-class="sf-designer-dlg sf-timespan-selector-dlg"
+    dialog-controller="sfFileUrlFieldDialogController">
+</div>
+
+<script type="text/ng-template" id="sf-file-url-selector-modal-template">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+      <div class="list-group list-group-endless">
+        <sf-file-url-selector sf-model="selectedUrl" sf-extension="extension"></sf-file-url-selector>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!selectedUrl">@(Res.Get<ClientComponentsResources>().DoneSelecting)</button>
+        <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
+    </div>
+</script>

@@ -29,10 +29,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
-            ServerOperations.Pages().DeletePage(Page1Title);
-            ServerOperations.Pages().DeletePage(Page2Title);
+            ServerOperations.Pages().DeleteAllPages();
             ServerOperations.Templates().DeletePageTemplate(Template1Title);
-            ServerOperations.Templates().DeletePageTemplate(Template1Title);
+            ServerOperations.Templates().DeletePageTemplate(Template2Title);
 
             string path1 = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(Package1Name);
             FeatherServerOperations.ResourcePackages().DeleteDirectory(path1);
