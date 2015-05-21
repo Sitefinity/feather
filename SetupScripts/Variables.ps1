@@ -40,7 +40,7 @@ $siteSyncEnabled = $doc.SelectSingleNode("//variables/siteSyncEnabled").InnerTex
 
 # Azure blob storage configuration
 $azureBlobDownloadLocation = "C:\AzureBlobStorage"
-$emptyWebsite = Join-Path $azureBlobDownloadLocation "SitefinityWebApp"
+$emptyWebsite = Join-Path $azureBlobDownloadLocation "SitefinityWebAppMVC"
 $azureStorageContainer = "sfversions"
 $websiteBlobName = "Feather_Website.zip"
 $testRunnerBlobName = "Telerik.WebTestRunner.zip"
@@ -52,7 +52,7 @@ $databaseName = $siteName
 $secondSiteDatabaseName = $secondSiteName
 $websiteBinariesDirectory = $defaultWebsiteRootDirectory + "\bin"
 
-$emptyWebsiteShare = "\\feather-ci\c$\Tests\SitefinityWebApp"
+$emptyWebsiteShare = "\\feather-ci\c$\Tests\SitefinityWebAppMVC"
 
 #TEST AGENT
 $testAgentExe = "C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\QTAgentProcessUI.exe"

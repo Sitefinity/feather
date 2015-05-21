@@ -22,7 +22,7 @@ Set-ItemProperty IIS:\AppPools\$appPollName managedRuntimeVersion v4.0 -Force
 #Setting application pool identity to NetworkService
 Set-ItemProperty IIS:\AppPools\$appPollName processmodel.identityType -Value 2 
 
-write-output "Deploy SitefinityWebApp to test execution machine $machineName"
+write-output "Deploy SitefinityWebAppMVC to test execution machine $machineName"
 
 if (Test-Path $defaultWebsiteRootDirectory){
 	CleanWebsiteDirectory $defaultWebsiteRootDirectory 10 $appPollName
