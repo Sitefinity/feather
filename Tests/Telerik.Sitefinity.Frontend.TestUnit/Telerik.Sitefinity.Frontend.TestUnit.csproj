@@ -121,8 +121,14 @@
     <Reference Include="Telerik.Sitefinity.Utilities">
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.0.5777.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Web.Design">
+      <HintPath>..\..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.Design.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Web.UI">
       <HintPath>..\..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.UI.Skins">
+      <HintPath>..\..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
@@ -193,6 +199,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="ClientScripts\test.bat" />
     <None Include="ClientScripts\test.debug.bat" />
     <None Include="packages.config">
