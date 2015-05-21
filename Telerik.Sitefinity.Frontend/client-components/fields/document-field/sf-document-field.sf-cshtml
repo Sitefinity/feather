@@ -1,39 +1,33 @@
-﻿<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-5 text-center">
-            <div class="sf-Media--info-doc sf-Media--info" ng-show="sfMedia">
-              <div class="sf-Media--info-doc-holder">
-                <i class="icon-file icon-txt icon-lg">
-                  <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension.substring(1)}}</span>
-                </i>
-              </div>
-            </div>
-            <div ng-show="!sfMedia">
-                <span>@(Res.Get<clientcomponentsresources>().DocumentHasBeenDeleted)</span>
-            </div>
-        </div>
-
-        <div class="col-md-7">
-            <div ng-show="sfMedia">
-                <h4>
-                    <a title="{{sfMedia.Title.Value}}" ng-href="{{sfMedia.MediaUrl}}" target="_blank">{{sfMedia.Title.Value}}</a>
-                </h4>
-                <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
-                <span ng-bind="sfMedia.Extension"></span><br />
-
-                <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
-                <span ng-bind="mediaSize"></span><br />
-
-                <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
-                <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
-            </div>
-
-            <br />
-            <button class="btn btn-xs btn-default" ng-click="changeMedia()">@(Res.Get<clientcomponentsresources>().ChangeDocument)</button>
-            <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
-        </div>
-    </div>
+﻿<div class="sf-Media--info-doc" ng-show="sfMedia">
+  <div class="sf-Media--info-doc-holder">
+    <i class="icon-file icon-txt icon-lg">
+      <span class="icon-txt-{{sfMedia.Extension.substring(1).toLowerCase()}}">{{sfMedia.Extension.substring(1)}}</span>
+    </i>
+  </div>
 </div>
+<div ng-show="!sfMedia">
+    <span>@(Res.Get<clientcomponentsresources>().DocumentHasBeenDeleted)</span>
+</div>
+
+
+<div ng-show="sfMedia">
+    <h4>
+        <a title="{{sfMedia.Title.Value}}" ng-href="{{sfMedia.MediaUrl}}" target="_blank">{{sfMedia.Title.Value}}</a>
+    </h4>
+    <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
+    <span ng-bind="sfMedia.Extension"></span><br />
+
+    <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
+    <span ng-bind="mediaSize"></span><br />
+
+    <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
+    <span ng-bind="uploaded | date : 'M/d/yyyy h:mm'"></span>
+</div>
+
+<br />
+<button class="btn btn-xs btn-default" ng-click="changeMedia()">@(Res.Get<clientcomponentsresources>().ChangeDocument)</button>
+<button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
+
 
 <div class="mediaSelectorModal"
      template-url="{{sfSelectorModelTemplate}}"
