@@ -895,36 +895,36 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Comments",
-               "progress" : 60,
+               "name" : "Comments and reviews",
+               "progress" : 70,
                "releases" : [
                   {
-                     "article" : "",
-                     "commitHash" : "",
-                     "date" : "",
-                     "name" : "Comments widget implementation in pages",
-                     "tag" : ""
+                     "article" : "Comments-widget",
+                     "commitHash" : "00682af985a416ce15dcb30855796ade2e12f016",
+                     "date" : "2015-05-22 12:24 +0300",
+                     "name" : "Comments widget implementation",
+                     "tag" : "v.1.2.220.1"
+                  },
+                  {
+                     "article" : "Reviews-widget",
+                     "commitHash" : "00682af985a416ce15dcb30855796ade2e12f016",
+                     "date" : "2015-05-22 12:24 +0300",
+                     "name" : "Reviews widget implementation",
+                     "tag" : "v.1.2.220.1"
                   },
                   {
                      "article" : "",
-                     "commitHash" : "",
-                     "date" : "",
-                     "name" : "Ratings",
-                     "tag" : ""
-                  },
-                  {
-                     "article" : "",
-                     "commitHash" : "",
-                     "date" : "",
+                     "commitHash" : "00682af985a416ce15dcb30855796ade2e12f016",
+                     "date" : "2015-05-22 12:24 +0300",
                      "name" : "Comments in News",
-                     "tag" : ""
+                     "tag" : "v.1.2.220.1"
                   },
                   {
                      "article" : "",
-                     "commitHash" : "",
-                     "date" : "",
+                     "commitHash" : "00682af985a416ce15dcb30855796ade2e12f016",
+                     "date" : "2015-05-22 12:24 +0300",
                      "name" : "Comments in Dynamic content types",
-                     "tag" : ""
+                     "tag" : "v.1.2.220.1"
                   },
                   {
                      "article" : "",
@@ -1044,23 +1044,6 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Language selector",
-               "progress" : 100,
-               "releases" : [
-                  {
-                     "article" : "MVC-Breadcrumb-widget",
-                     "commitHash" : "e5c045ed93b05303db7a4e50b8191017b411e221",
-                     "date" : "05-15-2015 14:33 +0300",
-                     "name" : "Breadcrumb widget implementation",
-                     "tag" : "v.1.2.210.0"
-                  }
-               ],
-               "shortDescription" : "Done",
-               "unstable" : false
-            },
-            {
-               "expectedBy" : "",
-               "longDescription" : "",
                "name" : "Breadcrumb",
                "progress" : 100,
                "releases" : [
@@ -1078,9 +1061,35 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
+               "name" : "Language selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "MVC-Breadcrumb-widget",
+                     "commitHash" : "e5c045ed93b05303db7a4e50b8191017b411e221",
+                     "date" : "05-15-2015 14:33 +0300",
+                     "name" : "Breadcrumb widget implementation",
+                     "tag" : "v.1.2.210.0"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
                "name" : "Site selector",
-               "progress" : 50,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "MVC-Site-selector-widget",
+                     "commitHash" : "00682af985a416ce15dcb30855796ade2e12f016",
+                     "date" : "2015-05-22 12:24 +0300",
+                     "name" : "Site selector widget implementation",
+                     "tag" : "v.1.2.220.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -1136,7 +1145,7 @@
                "longDescription" : "",
                "name" : "Embed code",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             }
          ]
@@ -1376,7 +1385,7 @@
                "longDescription" : "",
                "name" : "Categories",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
@@ -1384,7 +1393,7 @@
                "longDescription" : "",
                "name" : "Tags",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             }
          ]
