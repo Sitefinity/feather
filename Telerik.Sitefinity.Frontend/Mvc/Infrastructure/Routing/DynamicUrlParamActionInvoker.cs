@@ -281,23 +281,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             {
                 if (controller != null && controller.ControllerContext != null && controller.Session != null && !controller.ControllerContext.IsChildAction)
                 {
-                    var isInPureModeValue = false;
-                    var isInPureModeKey = "IsInPureMode";
-
-                    if (controller.TempData.ContainsKey(isInPureModeKey))
+                    // Saving the current temp data.
+                    var oldTempData = new TempDataDictionary();
+                    foreach (var kv in controller.TempData)
                     {
-                        isInPureModeValue = (bool)controller.TempData[isInPureModeKey];
+                        oldTempData.Add(kv.Key, kv.Value);
                     }
 
+                    // Loading the temp data removes all current temp data.
                     controller.TempData.Load(controller.ControllerContext, controller.TempDataProvider);
 
-                    if (controller.TempData.ContainsKey(isInPureModeKey))
+                    // Restoring the current temp data.
+                    foreach (var kv in oldTempData)
                     {
-                        controller.TempData[isInPureModeKey] = isInPureModeValue;
-                    }
-                    else
-                    {
-                        controller.TempData.Add(isInPureModeKey, isInPureModeValue);
+                        controller.TempData[kv.Key] = kv.Value;
                     }
                 }
             }
