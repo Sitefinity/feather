@@ -6,10 +6,10 @@
   <secondWebsiteUrl>http://localhost:82/</secondWebsiteUrl>
   <defaultWebsitePort>80</defaultWebsitePort>
   <secondWebsitePort>82</secondWebsitePort>
-  <projectLocationShare>C:\Installation\SitefinityWebAppMVC\</projectLocationShare>
+  <projectLocationShare>C:\Installation\SitefinityWebApp\</projectLocationShare>
   <projectDeploymentDirectory>C:\Tests\</projectDeploymentDirectory>
-  <defaultWebsiteRootDirectory>C:\Tests\SitefinityWebAppMVC</defaultWebsiteRootDirectory>
-  <secondWebsiteRootDirectory>C:\Tests\SitefinityWebAppMVC_2</secondWebsiteRootDirectory>
+  <defaultWebsiteRootDirectory>C:\Tests\SitefinityWebApp</defaultWebsiteRootDirectory>
+  <secondWebsiteRootDirectory>C:\Tests\SitefinityWebApp_2</secondWebsiteRootDirectory>
   <databaseServer>.\SQLSERVER</databaseServer>
   <analyticsEnabled>false</analyticsEnabled>
   <multilingualEnabled>false</multilingualEnabled>

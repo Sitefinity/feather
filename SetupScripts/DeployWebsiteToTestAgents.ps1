@@ -21,7 +21,7 @@ Function DeployFeatherWebsite
 		[String]$WebsiteSource
 	)
 	
-	$DeploymentDirectory = "\\$Computer\c$\Tests\SitefinityWebAppMVC\"
+	$DeploymentDirectory = "\\$Computer\c$\Tests\SitefinityWebApp\"
 	
 	Write-Output "Set $Computer to trusted hosts"
 	Set-Item -Path WSMan:\localhost\Client\TrustedHosts -Value $Computer -Force
@@ -39,7 +39,7 @@ Function DeployFeatherWebsite
 	Invoke-WebRequest "http://$Computer" -TimeoutSec 300
 }
 
-$WebsiteSource = "\Tests\SitefinityWebAppMVC\"
+$WebsiteSource = "\Tests\SitefinityWebApp\"
 $Agent1 = "FEATHER-CI-UI1"
 $Agent2 = "FEATHER-CI-UI2"
 $Agent3 = "FEATHER-CI-UI3"
