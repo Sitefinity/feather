@@ -6,7 +6,7 @@
 	<server-data default-view='@Model.DefaultView' widget-name='@ViewBag.ControlName' control-id='@ViewBag.ControlId' culture='@Telerik.Sitefinity.Localization.Res.CurrentBackendCulture'></server-data>
 
 	<script type="text/ng-template" id="dialog-template">
-		<div class="modal-header">
+		<div class="modal-header sf-widget-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel($event)">&times;</button>
 			<h3 class="modal-title">@Html.Raw(Model.Caption)</h3>
 		</div>

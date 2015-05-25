@@ -15,6 +15,9 @@
                     lineNumbers: attrs.sfLineNumbers,
                     matchBrackets: attrs.sfMatchBrackets,
                     tabMode: attrs.sfTabMode,
+                    foldGutter: true,
+                    lineWrapping: true,
+                    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                     onChange: function (instance, changeObj) {
                         var value = instance.getValue();
                         if (scope.sfModel !== value) {
