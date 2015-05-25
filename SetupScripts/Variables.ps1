@@ -42,7 +42,7 @@ $siteSyncEnabled = $doc.SelectSingleNode("//variables/siteSyncEnabled").InnerTex
 $azureBlobDownloadLocation = "C:\AzureBlobStorage"
 $emptyWebsite = Join-Path $azureBlobDownloadLocation "SitefinityWebApp"
 $azureStorageContainer = "sfversions"
-$websiteBlobName = "5700.zip"
+$websiteBlobName = "Feather_Website.zip"
 $testRunnerBlobName = "Telerik.WebTestRunner.zip"
 $codeCoverageBlobName = "CodeCoverage.zip"
 
