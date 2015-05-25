@@ -21,7 +21,9 @@ using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy;
+using Telerik.Sitefinity.Mvc.Proxy.TypeDescription;
 using Telerik.Sitefinity.Mvc.Store;
+using Telerik.Sitefinity.Pages;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 
@@ -236,6 +238,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             ObjectFactory.Container.RegisterType<IRouteParamResolver, IntParamResolver>("int");
             ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
             ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
+
+            string mvcControllerProxySettingsPropertyDescriptorName = string.Format("{0}.{1}", typeof(MvcWidgetProxy).FullName, "Settings");
+            ObjectFactory.Container.RegisterType<IControlPropertyDescriptor, ControllerSettingsPropertyDescriptor>(mvcControllerProxySettingsPropertyDescriptorName);
         }
 
         #endregion
