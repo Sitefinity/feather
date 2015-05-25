@@ -15,36 +15,44 @@
   <div sf-aspect-ratio-selection sf-model="videoModel"></div>
        
         <expander expander-title='More options'>
-            <label>@(Res.Get<ClientComponentsResources>().Margins)</label>
-            <div class="row">
+            <h5>@(Res.Get<ClientComponentsResources>().Margins)</h5>
+            <div class="row row-xs">
                 <div class="col-xs-2">
-                    <label>@(Res.Get<ClientComponentsResources>().Top)</label><br />
-                    <input type="number" ng-model="model.margin.top" style="width: 50px">
+                    <label>@(Res.Get<ClientComponentsResources>().Top)</label>
                 </div>
-                
                 <div class="col-xs-2">
-                    <label>@(Res.Get<ClientComponentsResources>().Right)</label><br />
-                    <input type="number" ng-model="model.margin.right" style="width: 50px">
+                    <label>@(Res.Get<ClientComponentsResources>().Right)</label>
                 </div>
-
                 <div class="col-xs-2">
-                    <label>@(Res.Get<ClientComponentsResources>().Bottom)</label><br />
-                    <input type="number" ng-model="model.margin.bottom" style="width: 50px">
+                    <label>@(Res.Get<ClientComponentsResources>().Bottom)</label>
                 </div>
-
                 <div class="col-xs-3">
-                    <label>@(Res.Get<ClientComponentsResources>().Left)</label><br />
-                    <input type="number" ng-model="model.margin.left" style="width: 50px">
-                    <span>@(Res.Get<ClientComponentsResources>().PixelShort)</span>
+                    <label>@(Res.Get<ClientComponentsResources>().Left)</label>
                 </div>
             </div>
-
+          
+            <div class="row row-xs form-group">
+              <div class="col-xs-2">
+                <input type="text" ng-model="model.margin.top" class="form-control">
+              </div>
+              <div class="col-xs-2">
+                <input type="text" ng-model="model.margin.right" class="form-control">
+              </div>
+              <div class="col-xs-2">
+                <input type="text" ng-model="model.margin.bottom" class="form-control">
+              </div>
+              <div class="col-xs-2">
+                <input type="text" ng-model="model.margin.left" class="form-control">
+              </div>
+              <div class="m-top-xs">@(Res.Get<ClientComponentsResources>().PixelShort)</div>
+            </div>
+          
             <label>@(Res.Get<ClientComponentsResources>().CssClasses)</label>
             <input class="form-control" type="text" ng-model="model.cssClass" />
         </expander>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.item.Title.Value">@(Res.Get<ClientComponentsResources>().Done)</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.item.Title.Value">@(Res.Get<ClientComponentsResources>().InsertThisVideo)</button>
     <button type="button" class="btn btn-link pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
 </div>
 

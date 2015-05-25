@@ -1,31 +1,27 @@
-﻿<div class="row">
-    <div class="col-md-5 text-center">
-        <div class="sf-Media--info-image">
-            <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
-        </div>
-    </div>
-
-    <div class="col-md-7">
-      <ul class="list-unstyled">
-        <li>
-          <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
-          {{sfImage.Extension}}
-        </li>
-        <li>
-          <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
-          {{imageSize}}
-        </li>
-        <li>
-          <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
-          {{uploaded | date : 'M/d/yyyy h:mm'}}
-        </li>
-      </ul>
-
-        <br />
-        <button class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
-        <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
-    </div>
+﻿<div class="sf-Media--info-image">
+    <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
 </div>
+
+<ul class="list-unstyled">
+  <li>
+    <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
+    {{sfImage.Extension}}
+  </li>
+  <li>
+    <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
+    {{imageSize}}
+  </li>
+  <li>
+    <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
+    {{uploaded | date : 'M/d/yyyy h:mm'}}
+  </li>
+</ul>
+
+<br />
+<button class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
+<button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
+
+
 
 
 <div class="imageSelectorModal"
@@ -45,7 +41,7 @@
         <sf-image-selector sf-model="model.selectedItems" sf-filter="model.filterObject" sf-provider="model.provider"></sf-image-selector>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">@(Res.Get<ClientComponentsResources>().Done)</button>
+        <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">@(Res.Get<ClientComponentsResources>().DoneSelecting)</button>
         <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
     </div>
 </script>
