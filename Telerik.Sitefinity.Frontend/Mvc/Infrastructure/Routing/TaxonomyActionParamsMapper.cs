@@ -21,15 +21,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="routeTemplateResolver">This function should return the route template that the mapper will use.</param>
         /// <param name="actionName">Name of the action.</param>
         /// <exception cref="System.ArgumentNullException">routeTemplateResolver</exception>
-        public TaxonomyActionParamsMapper(ControllerBase controller, Func<string> routeTemplateResolver, string actionName)
-            : base(controller, routeTemplateResolver, actionName)
+        public TaxonomyActionParamsMapper(ControllerBase controller, string taxonParamName, string pageParamName, string actionName)
+            : base(controller, () => TemplateResolver(taxonParamName, pageParamName), actionName)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaxonomyActionParamsMapper"/> class.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="routeTemplateResolver">This function should return the route template that the mapper will use.</param>
+        /// <param name="actionName">Name of the action.</param>
+        /// <exception cref="System.ArgumentNullException">routeTemplateResolver</exception>
+        public TaxonomyActionParamsMapper(ControllerBase controller, string taxonParamName, string actionName)
+            : base(controller, () => TemplateResolver(taxonParamName), actionName)
         {
         }
 
         /// <inheritdoc />
         protected override IList<UrlSegmentInfo> MapParams(MethodInfo actionMethod, string[] metaParams, string[] urlParams)
         {
-            if (metaParams.Length > urlParams.Length)
+            if (urlParams.Length < 3)
                 return null;
 
             string url = string.Join(@"/", urlParams);
@@ -56,18 +68,35 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     {
                         parameterInfos.Add(new UrlSegmentInfo(paramName, taxon.Taxonomy.TaxonName, taxon));
                     }
-                    else
+                    else if (urlParams.Length > i)
                     {
-                        parameterInfos.Add(new UrlSegmentInfo
-                        {
-                            ParameterName = paramName,
-                            ParameterValue = urlParams[i],
-                        });
+                        parameterInfos.Add(new UrlSegmentInfo { ParameterName = paramName, ParameterValue = urlParams[i] });
                     }
                 }
             }
 
             return parameterInfos;
+        }
+
+        /// <summary>
+        /// Templates the resolver.
+        /// </summary>
+        /// <param name="taxonParamName">Name of the taxon param.</param>
+        /// <param name="pageParamName">Name of the page param.</param>
+        /// <returns></returns>
+        private static string TemplateResolver(string taxonParamName, string pageParamName)
+        {
+            return "{taxonomyField}/{taxonomyName}/{" + taxonParamName + ":category,tag}/{" + pageParamName + "}";
+        }
+
+        /// <summary>
+        /// Templates the resolver.
+        /// </summary>
+        /// <param name="taxonParamName">Name of the taxon param.</param>
+        /// <returns></returns>
+        private static string TemplateResolver(string taxonParamName)
+        {
+            return "{taxonomyField}/{taxonomyName}/{" + taxonParamName + ":category,tag}";
         }
 
         /// <summary>
