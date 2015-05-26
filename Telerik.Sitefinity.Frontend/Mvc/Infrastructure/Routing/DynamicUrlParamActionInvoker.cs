@@ -101,6 +101,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             result = result
                 .SetLast(this.GetInferredDetailActionParamsMapper(controller))
                 .SetLast(this.GetInferredTaxonFilterMapper(controller, "ListByTaxon"))
+                .SetLast(this.GetInferredClassificationFilterMapper(controller, "ListByTaxon"))
                 .SetLast(this.GetInferredPagingMapper(controller, "Index"));
 
             // If no other mappers are added we skip the default one.
@@ -214,6 +215,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 }
 
                 result = result.SetLast(new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":category,tag}", actionName));
+            }
+
+            return result;
+        }
+
+        private IUrlParamsMapper GetInferredClassificationFilterMapper(ControllerBase controller, string actionName)
+        {
+            var actionDescriptor = new ReflectedControllerDescriptor(controller.GetType()).FindAction(controller.ControllerContext, actionName);
+
+            if (actionDescriptor == null || actionDescriptor.GetParameters().Length == 0)
+                return null;
+
+            IUrlParamsMapper result = null;
+            if (actionDescriptor.GetParameters()[0].ParameterType == typeof(ITaxon))
+            {
+                var taxonParamName = actionDescriptor.GetParameters()[0].ParameterName;
+                if (actionDescriptor.GetParameters()[1].ParameterType == typeof(int?))
+                {
+                    var pageParamName = actionDescriptor.GetParameters()[1].ParameterName;
+                    result = new TaxonomyActionParamsMapper(controller, taxonParamName, pageParamName, actionName);
+                }
+
+                result = result.SetLast(new TaxonomyActionParamsMapper(controller, taxonParamName, actionName));
             }
 
             return result;
