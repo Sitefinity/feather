@@ -55,7 +55,11 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Routing
             Assert.IsNotNull(taxonMapper, "GetDefaultParamsMapper returned less than the expected number of mappers.");
             Assert.IsInstanceOfType(taxonMapper, typeof(CustomActionParamsMapper), "GetDefaultParamsMapper did not return the mappers in the expected order.");
 
-            var pagingMapper = taxonMapper.Next;
+            var classificationMapper = taxonMapper.Next;
+            Assert.IsNotNull(classificationMapper, "GetDefaultParamsMapper returned less than the expected number of mappers.");
+            Assert.IsInstanceOfType(classificationMapper, typeof(TaxonomyUrlParamsMapper), "GetDefaultParamsMapper did not return the mappers in the expected order.");
+
+            var pagingMapper = classificationMapper.Next;
             Assert.IsNotNull(pagingMapper, "GetDefaultParamsMapper returned less than the expected number of mappers.");
             Assert.IsInstanceOfType(pagingMapper, typeof(CustomActionParamsMapper), "GetDefaultParamsMapper did not return the mappers in the expected order.");
 
