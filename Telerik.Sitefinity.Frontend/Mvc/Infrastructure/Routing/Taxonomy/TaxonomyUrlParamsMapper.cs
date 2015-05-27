@@ -39,14 +39,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 return false;
             }
 
-            this.SetControllActionParams(requestContext, taxon, pageIndex);
+            this.SetControllerActionParams(requestContext, taxon, pageIndex);
 
             RouteHelper.SetUrlParametersResolved();
 
             return true;
         }
 
-        private void SetControllActionParams(RequestContext requestContext, ITaxon taxon, int pageIndex)
+        private void SetControllerActionParams(RequestContext requestContext, ITaxon taxon, int pageIndex)
         {
             requestContext.RouteData.Values[UrlParamsMapperBase.ActionNameKey] = this.actionName;
 

@@ -4,11 +4,6 @@ using Telerik.Sitefinity.Web.UrlEvaluation;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
-    internal interface ITaxonUrlEvaluatorAdapter
-    {
-        bool TryGetTaxonFromUrl(string url, out ITaxon taxon);
-    }
-
     internal class TaxonUrlEvaluatorAdapter : ITaxonUrlEvaluatorAdapter
     {
         private readonly TaxonomyEvaluator taxonomyEvaluator;

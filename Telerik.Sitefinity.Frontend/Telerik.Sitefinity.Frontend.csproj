@@ -244,9 +244,10 @@
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageEditorRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcTemplateEditorRouteHandler.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\ITaxonEvaluatorAdapter.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\ITaxonUrlEvaluatorAdapter.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonomyUrlParamsMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlEvaluator.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlEvaluatorAdapter.cs" />
     <Compile Include="Mvc\Models\ScriptDependencyConfigModel.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\RequiredIfExistAttribute.cs" />
     <Compile Include="Mvc\StringResources\ClientComponentsResources.cs" />

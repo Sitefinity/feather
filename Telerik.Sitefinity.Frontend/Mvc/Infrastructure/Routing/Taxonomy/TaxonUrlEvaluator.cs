@@ -7,7 +7,7 @@ using Telerik.Sitefinity.Web.UrlEvaluation;
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
     /*
-     * Currently we tread the following url as valid taxon filter route:
+     * Currently we treat the following url as valid taxon filter route:
      * Pattern matching for flat taxon         - /page/-in-fieldName/taxonomyName/taxa/[page]
      * Pattern matching for hierarchical taxon - /page/-in-fieldName/taxonomyName/parent/[subParent..]/taxon
     */
