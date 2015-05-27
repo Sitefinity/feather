@@ -53,12 +53,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 return false;
             }
 
-            bool hasPageIndex = this.TryGetLastPageIndex(urlParams, out pageIndex);
-
             if (!this.IsFlatTaxon(taxon))
             {
                 return true;
             }
+
+            bool hasPageIndex = this.TryGetLastPageIndex(urlParams, out pageIndex);
 
             return this.CheckForValidFlatTaxonUrl(urlParams, hasPageIndex);
         }
