@@ -227,20 +227,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (actionDescriptor == null || actionDescriptor.GetParameters().Length == 0)
                 return null;
 
-            IUrlParamsMapper result = null;
-            if (actionDescriptor.GetParameters()[0].ParameterType == typeof(ITaxon))
-            {
-                var taxonParamName = actionDescriptor.GetParameters()[0].ParameterName;
-                if (actionDescriptor.GetParameters()[1].ParameterType == typeof(int?))
-                {
-                    var pageParamName = actionDescriptor.GetParameters()[1].ParameterName;
-                    result = new TaxonomyActionParamsMapper(controller, taxonParamName, pageParamName, actionName);
-                }
-
-                result = result.SetLast(new TaxonomyActionParamsMapper(controller, taxonParamName, actionName));
-            }
-
-            return result;
+            return new TaxonomyUrlParamsMapper(controller, new TaxonUrlMapper(new TaxonUrlEvaluatorAdapter()));
         }
 
         private IUrlParamsMapper GetInferredPagingMapper(ControllerBase controller, string actionName)
