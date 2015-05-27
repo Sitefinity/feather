@@ -28,7 +28,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 Id = p.TaxonomyId,
                 Name = p.Name, 
                 TaxonomyType = p.TaxonomyType,
-                Title = CustomFieldsHelpers.GetClassificationPluralTitle(p.TaxonomyId)
+                Title = CustomFieldsHelpers.GetClassificationPluralTitle(p.TaxonomyId, string.Empty)
             });
 
             var serialzier = new JavaScriptSerializer();
@@ -41,10 +41,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Gets the classification plural title.
         /// </summary>
         /// <param name="taxaId">The taxa identifier.</param>
+        /// <param name="providerName">Name of the provider.</param>
         /// <returns></returns>
-        public static string GetClassificationPluralTitle(Guid taxaId)
+        public static string GetClassificationPluralTitle(Guid taxaId, string providerName)
         {
-            var taxonomyManager = TaxonomyManager.GetManager();
+            var taxonomyManager = TaxonomyManager.GetManager(providerName);
             var taxa = taxonomyManager.GetTaxonomy(taxaId);
 
             return taxa.Title;
@@ -54,10 +55,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Gets the classification taxon name.
         /// </summary>
         /// <param name="taxaId">The taxa identifier.</param>
+        /// <param name="providerName">Name of the provider.</param>
         /// <returns></returns>
-        public static string GetClassificationTaxonName(Guid taxaId)
+        public static string GetClassificationTaxonName(Guid taxaId, string providerName)
         {
-            var taxonomyManager = TaxonomyManager.GetManager();
+            var taxonomyManager = TaxonomyManager.GetManager(providerName);
             var taxa = taxonomyManager.GetTaxonomy(taxaId);
 
             return taxa.TaxonName;
