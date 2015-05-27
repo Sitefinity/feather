@@ -61,18 +61,6 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.HttpContext
         }
 
         /// <summary>
-        /// When overridden in a derived class, returns an object for the current service type.
-        /// </summary>
-        /// <param name="serviceType">The type of service object to get.</param>
-        /// <returns>
-        /// Null.
-        /// </returns>
-        public override object GetService(Type serviceType)
-        {
-            return null;
-        }
-
-        /// <summary>
         /// When overridden in a derived class, gets a IHttpHandler as null object (just to supress NotImplementedException).
         /// </summary>
         /// <returns>Null.</returns>
