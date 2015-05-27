@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'sfHierarchicalTaxonService', function (serviceHelper, hierarchicalTaxonService) {
+        .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'sfHierarchicalTaxonService', 'serverContext', function (serviceHelper, hierarchicalTaxonService, serverContext) {
             var _applyBreadcrumbPath = function (result) {
                 var taxa = result.Items;
                 var taxonToAdd = null;
@@ -36,19 +36,52 @@
                         pre: function (scope, element, attrs, ctrl) {
                             var taxonomyId = attrs.sfTaxonomyId;
 
+                            var fromCurrentLanguageOnly = scope.$eval(attrs.sfFromCurrentLanguageOnly);
+
                             if (!taxonomyId || taxonomyId === serviceHelper.emptyGuid()) {
                                 taxonomyId = sitefinity.getCategoriesTaxonomyId();
                             }
 
+                            function isItemTranslated(item) {
+                                var uiCulture = serverContext.getUICulture();
+
+                                if (uiCulture && item.AvailableLanguages && item.AvailableLanguages.length > 0) {
+                                    return item.AvailableLanguages.indexOf(uiCulture) >= 0;
+                                }
+                                return true;
+                            }
+
                             ctrl.getItems = function (skip, take, search, frontendLanguages) {
-                                return hierarchicalTaxonService.getTaxons(taxonomyId, skip, take, search, frontendLanguages);
+                                var itemsPromise = hierarchicalTaxonService.getTaxons(taxonomyId, skip, take, search, frontendLanguages);
+
+                                if (fromCurrentLanguageOnly) {
+                                    return itemsPromise.then(function (data) {
+                                        data.Items = data.Items.filter(function (item) {
+                                            return isItemTranslated(item);
+                                        });
+                                        return data;
+                                    });
+                                }
+
+                                return itemsPromise;
                             };
 
                             ctrl.getChildren = function (parentId, search) {
-                                return hierarchicalTaxonService.getChildTaxons(parentId, search)
+                                var itemsPromise = hierarchicalTaxonService.getChildTaxons(parentId, search)
                                                            .then(function (data) {
                                                                    return data.Items;
-                                                               });
+                                                           });
+
+                                if (fromCurrentLanguageOnly) {
+                                    return itemsPromise.then(function (data) {
+                                        data.Items = data.Items.filter(function (item) {
+                                            return isItemTranslated(item);
+                                        });
+                                        return data;
+                                    });
+                                }
+
+                                return itemsPromise;
                             };
 
                             ctrl.getSpecificItems = function (ids) {
