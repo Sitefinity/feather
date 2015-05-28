@@ -53,6 +53,8 @@
                             <div ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
                                 <span sf-shrinked-breadcrumb="{{item.RootPath}}" sf-max-length="60"></span>
                             </div>
+
+                            <div ng-show="itemDisabled(item)">(@(Res.Get<ClientComponentsResources>().NotTranslated))</div>
                         </div>
                     </div>
 
