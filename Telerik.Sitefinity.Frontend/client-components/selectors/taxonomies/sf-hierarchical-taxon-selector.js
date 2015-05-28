@@ -58,7 +58,7 @@
                             };
 
                             ctrl.getChildren = function (parentId, search) {
-                                return itemsPromise = hierarchicalTaxonService.getChildTaxons(parentId, search)
+                                return hierarchicalTaxonService.getChildTaxons(parentId, search)
                                     .then(function (data) {
                                         return data.Items;
                                     });
