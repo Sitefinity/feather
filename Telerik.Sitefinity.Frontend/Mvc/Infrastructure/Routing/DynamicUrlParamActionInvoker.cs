@@ -46,22 +46,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             var controller = proxyControl.GetController();
 
-            var paramsMapper = this.GetDefaultParamsMapper(controller);
-            if (paramsMapper != null)
+            if (!FrontendManager.AttributeRouting.UpdateRouteData(this.Context, controller.RouteData))
             {
-                var originalParams = MvcRequestContextBuilder.GetRouteParams(originalContext);
-                var requestContext = proxyControl.RequestContext;
+                var paramsMapper = this.GetDefaultParamsMapper(controller);
+                if (paramsMapper != null)
+                {
+                    var originalParams = MvcRequestContextBuilder.GetRouteParams(originalContext);
+                    var requestContext = proxyControl.RequestContext;
 
-                paramsMapper.ResolveUrlParams(originalParams, requestContext);
-                controller.TempData.Add("IsInPureMode", proxyControl.IsInPureMode);
+                    paramsMapper.ResolveUrlParams(originalParams, requestContext);
+                    controller.TempData.Add("IsInPureMode", proxyControl.IsInPureMode);
 
-                if (!proxyControl.ContentTypeName.IsNullOrEmpty())
-                    controller.RouteData.Values.Add("contentTypeName", proxyControl.ContentTypeName);
+                    if (!proxyControl.ContentTypeName.IsNullOrEmpty())
+                        controller.RouteData.Values.Add("contentTypeName", proxyControl.ContentTypeName);
+                }
+                else
+                {
+                    proxyControl.RequestContext.RouteData.Values.Remove(DynamicUrlParamActionInvoker.ControllerNameKey);
+                    base.InitializeRouteParameters(proxyControl);
+                }
             }
             else
             {
-                proxyControl.RequestContext.RouteData.Values.Remove(DynamicUrlParamActionInvoker.ControllerNameKey);
-                base.InitializeRouteParameters(proxyControl);
+                //// Attribute routing was successful.
+                RouteHelper.SetUrlParametersResolved();
             }
         }
 
