@@ -185,7 +185,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// The name of the field.
         /// </value>
         public virtual string RelatedFieldName { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the relation type of the items that will be display - children or parent.
         /// </summary>
@@ -232,14 +232,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (query == null)
                 return this.CreateListViewModelInstance();
 
+            var viewModel = this.CreateListViewModelInstance();
             if (taxonFilter != null)
             {
                 var taxonField = this.ExpectedTaxonFieldName(taxonFilter);
-                var filter = string.Format(CultureInfo.InvariantCulture, "{0}.Contains({{{1}}})", taxonField, taxonFilter.Id);
-                query = query.Where(filter);
+
+                bool hasField = this.HasField(taxonField);
+
+                if (hasField)
+                {
+                    var filter = string.Format(CultureInfo.InvariantCulture, "{0}.Contains({{{1}}})", taxonField, taxonFilter.Id);
+                    query = query.Where(filter);
+                }
+                else
+                {
+                    viewModel.Items = Enumerable.Empty<ItemViewModel>();
+                    this.SetViewModelProperties(viewModel, page, null);
+                    return viewModel;
+                }
             }
 
-            var viewModel = this.CreateListViewModelInstance();
             this.PopulateListViewModel(page, query, viewModel);
 
             return viewModel;
@@ -481,7 +493,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             this.SetViewModelProperties(viewModel, page, totalPages);
         }
-  
+
         /// <summary>
         /// Sets the view model properties.
         /// </summary>
@@ -499,6 +511,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
+        /// Determines whether field with the specified name is available.
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
+        protected virtual bool HasField(string fieldName)
+        {
+            var propDesc = FieldHelper.GetFields(this.ContentType).FirstOrDefault(f => f.Name == fieldName);
+
+            return propDesc != null;
+        }
+
+        /// <summary>
         /// Gets a manager instance for the model.
         /// </summary>
         /// <returns>The manager.</returns>
@@ -512,7 +536,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return ManagerBase.GetMappedManager(this.ContentType, this.ProviderName);
         }
 
-         /// <summary>
+        /// <summary>
         /// Updates the expression.
         /// </summary>
         /// <param name="query">The query.</param>
