@@ -96,7 +96,7 @@
 
             <!--Library Filter-->
             <div ng-show="selectedFilterOption == 1">
-                <strong class="m-bottom-xs m-left-xs">@(Res.Get<ClientComponentsResources>().Libraries)</strong>
+                <div class="m-bottom-xs m-left-xs"><strong>@(Res.Get<ClientComponentsResources>().Libraries)</strong></div>
                 <div class="library-filter" sf-tree
                      sf-identifier="Id"
                      sf-model="filters.library.selected"
