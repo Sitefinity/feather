@@ -235,13 +235,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var viewModel = this.CreateListViewModelInstance();
             if (taxonFilter != null)
             {
-                var taxonField = this.ExpectedTaxonFieldName(taxonFilter);
+                var taxonomy = taxonFilter.Taxonomy.RootTaxonomy ?? taxonFilter.Taxonomy;
 
-                bool hasField = this.HasField(taxonField);
+                string taxonomyField;
 
-                if (hasField)
+                if (this.TryGetTaxonomyFieldName(taxonomy.Id, out taxonomyField))
                 {
-                    var filter = string.Format(CultureInfo.InvariantCulture, "{0}.Contains({{{1}}})", taxonField, taxonFilter.Id);
+                    var filter = string.Format(CultureInfo.InvariantCulture, "{0}.Contains({{{1}}})", taxonomyField, taxonFilter.Id);
                     query = query.Where(filter);
                 }
                 else
@@ -511,18 +511,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
-        /// Determines whether field with the specified name is available.
-        /// </summary>
-        /// <param name="fieldName">Name of the field.</param>
-        /// <returns></returns>
-        protected virtual bool HasField(string fieldName)
-        {
-            var propDesc = FieldHelper.GetFields(this.ContentType).FirstOrDefault(f => f.Name == fieldName);
-
-            return propDesc != null;
-        }
-
-        /// <summary>
         /// Gets a manager instance for the model.
         /// </summary>
         /// <returns>The manager.</returns>
@@ -679,12 +667,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         #region Private methods
 
-        private string ExpectedTaxonFieldName(ITaxon taxon)
+        /// <summary>
+        /// Tries to get the name of the taxonomy field.
+        /// </summary>
+        /// <param name="taxonomyId">The taxonomy id.</param>
+        /// <param name="taxonomyField">The taxonomy field.</param>
+        /// <returns></returns>
+        private bool TryGetTaxonomyFieldName(Guid taxonomyId, out string taxonomyField)
         {
-            if (taxon.Taxonomy.Name == "Categories")
-                return taxon.Taxonomy.TaxonName;
+            taxonomyField = string.Empty;
 
-            return taxon.Taxonomy.Name;
+            var taxonomyPropertyDescriptor = FieldHelper.GetFields(this.ContentType)
+                                                        .OfType<TaxonomyPropertyDescriptor>()
+                                                        .FirstOrDefault(t => t.TaxonomyId == taxonomyId);
+
+            if (taxonomyPropertyDescriptor != null)
+            {
+                taxonomyField = taxonomyPropertyDescriptor.Name;
+            }
+
+            return taxonomyPropertyDescriptor != null;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1002:AvoidToListOnIEnumerable")]
