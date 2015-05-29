@@ -928,16 +928,23 @@
                   },
                   {
                      "article" : "",
-                     "commitHash" : "",
-                     "date" : "",
-                     "name" : "Comments in Images",
-                     "tag" : ""
+                     "commitHash" : "840f3b5a56918d7324b1f01b0240d5e36610ec73",
+                     "date" : "05-29-2015 16:21 +0300",
+                     "name" : "Comments in Blogs",
+                     "tag" : "v.1.2.230.0"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "840f3b5a56918d7324b1f01b0240d5e36610ec73",
+                     "date" : "05-29-2015 16:21 +0300",
+                     "name" : "Comments in List items",
+                     "tag" : "v.1.2.230.0"
                   },
                   {
                      "article" : "",
                      "commitHash" : "",
                      "date" : "",
-                     "name" : "Comments in Blogs",
+                     "name" : "Comments in Images",
                      "tag" : ""
                   },
                   {
@@ -953,16 +960,9 @@
                      "date" : "",
                      "name" : "Comments in Documents",
                      "tag" : ""
-                  },
-                  {
-                     "article" : "",
-                     "commitHash" : "",
-                     "date" : "",
-                     "name" : "Comments in List items",
-                     "tag" : ""
                   }
                ],
-               "shortDescription" : "Coming soon",
+               "shortDescription" : "Released",
                "unstable" : false
             },
             {
@@ -1144,8 +1144,17 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Embed code",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Embed-code-widget",
+                     "commitHash" : "840f3b5a56918d7324b1f01b0240d5e36610ec73",
+                     "date" : "05-29-2015 16:21 +0300",
+                     "name" : "Embed code widget implementation",
+                     "tag" : "v.1.2.230.0"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             }
          ]
@@ -1383,16 +1392,32 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Categories",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "name" : "Tags",
+               "progress" : 90,
+               "releases" : [
+                  {
+                     "article" : "MVC-Tags-widget",
+                     "commitHash" : "840f3b5a56918d7324b1f01b0240d5e36610ec73",
+                     "date" : "05-29-2015 16:21 +0300",
+                     "name" : "Tags widget base implementation",
+                     "tag" : "v.1.2.230.0"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "",
+                     "date" : "",
+                     "name" : "Query string support",
+                     "tag" : ""
+                  }
+               ],
+               "shortDescription" : "Released",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Tags",
-               "progress" : 0,
+               "name" : "Categories",
+               "progress" : 75,
                "shortDescription" : "Coming soon",
                "unstable" : false
             }
