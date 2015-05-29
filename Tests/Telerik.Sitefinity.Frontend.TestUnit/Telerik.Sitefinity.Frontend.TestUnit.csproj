@@ -109,19 +109,19 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.0.5777.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Model">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.0.5777.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Mvc">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.8.0.5777.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.8.1.5800.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
-      <HintPath>..\..\packages\Telerik.Sitefinity.TestUtilities.8.0.5777.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.TestUtilities.8.1.5800.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.0.5777.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.Design">
       <HintPath>..\..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.Design.dll</HintPath>
