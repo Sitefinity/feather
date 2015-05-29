@@ -7,7 +7,7 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">
-        @(Res.Get<ClientComponentsResources>().Done)
+        @(Res.Get<ClientComponentsResources>().DoneSelecting)
     </button>
     <button type="button" class="btn btn-link  pull-left" ng-click="cancel()">
         @(Res.Get<ClientComponentsResources>().Cancel)

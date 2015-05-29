@@ -6395,7 +6395,7 @@ button.close {
       pointer-events: none; }
   /* line 12, C:/Projects/FeatherSite/assets/src/sass/kendo/_tabstrip */
   .k-tabstrip.k-tabstrip--selection .k-tabstrip-items {
-    margin: -20px -20px 20px;
+    margin: -5px -20px 20px;
     padding: 10px 15px 0;
     background: #f2f2f2;
     border-bottom: 1px solid #ddd; }
@@ -8231,41 +8231,47 @@ h5, .h5 {
 .full-width {
   width: 100%; }
 
-/* line 2, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
-.modal-header, .modal-footer {
-  padding: 15px 20px; }
+/* line 1, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+.modal-header {
+  padding: 15px 20px 0;
+  border-bottom: none; }
 
 /* line 5, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+.modal-footer {
+  padding: 15px 20px; }
+
+/* line 8, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .sf-widget-header {
   padding-top: 15px;
-  padding-bottom: 15px; }
-  /* line 8, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e5e5e5; }
+  /* line 12, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
   .sf-widget-header h3 {
     font-size: 10px;
     color: #666;
     text-transform: uppercase; }
 
-/* line 13, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 17, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-header .close {
   margin-top: -4px; }
 
-/* line 16, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 20, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-body {
   padding: 20px; }
-  /* line 18, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+  /* line 22, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
   .modal-body .modal-body {
     padding: 0;
     min-height: 0; }
 
-/* line 22, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 26, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-backdrop {
   bottom: 0; }
 
-/* line 25, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 29, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-content {
   border-radius: 3px; }
 
-/* line 29, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 33, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-fluid .modal-dialog {
   width: 100% !important;
   height: 100%;
@@ -8277,7 +8283,7 @@ h5, .h5 {
   bottom: 0;
   left: 0;
   box-sizing: border-box; }
-/* line 41, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 45, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-fluid .modal-content {
   position: absolute;
   top: 20px;
@@ -8285,19 +8291,19 @@ h5, .h5 {
   left: 20px;
   right: 20px;
   overflow: hidden; }
-/* line 50, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 54, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-fluid .modal-header, .modal-fluid .modal-footer {
   z-index: 2;
   position: absolute;
   width: 100%;
   background: #fff; }
-/* line 56, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 60, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-fluid .modal-header {
   width: 100%; }
-/* line 59, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 63, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-fluid .modal-footer {
   bottom: 0; }
-/* line 62, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 66, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-fluid .modal-body {
   position: absolute;
   top: 65px;
@@ -8305,7 +8311,7 @@ h5, .h5 {
   bottom: 65px;
   left: 0; }
 
-/* line 70, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
+/* line 74, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_modals */
 .modal-settings {
   display: block;
   margin: -20px -20px 20px -20px;
@@ -8484,12 +8490,11 @@ tab {
   box-shadow: none;
   margin-bottom: 0 !important;
   padding: 0 4px;
-  cursor: pointer;
   font-size: 14px; }
-  /* line 32, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_forms */
+  /* line 31, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_forms */
   .form-control-highlight[type=text]:hover {
     background: #ffc; }
-  /* line 35, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_forms */
+  /* line 34, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_forms */
   .form-control-highlight[type=text]:focus {
     cursor: text;
     background: transparent;
@@ -8497,11 +8502,11 @@ tab {
     border-color: #66afe9;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 4px rgba(102, 175, 233, 0.6); }
 
-/* line 46, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_forms */
+/* line 45, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_forms */
 .sf-filter-selector .sf-taxon-filter + .sf-date-filter > .checkbox {
   margin-top: -5px; }
 
-/* line 50, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_forms */
+/* line 49, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_forms */
 .modal-dialog .form-control-sm {
   height: 27px !important;
   padding: 0 7px !important; }
@@ -8945,12 +8950,23 @@ tab {
 /* line 1, C:/Projects/FeatherSite/assets/src/sass/modules/_options */
 .Options {
   margin: 50px -20px -20px;
-  padding: 15px 20px;
   border-top: 1px solid #e5e5e5; }
 
-/* line 6, C:/Projects/FeatherSite/assets/src/sass/modules/_options */
+/* line 5, C:/Projects/FeatherSite/assets/src/sass/modules/_options */
+.Options-toggler {
+  padding: 15px 20px;
+  display: block;
+  color: #777;
+  transition: 0.2s; }
+  /* line 10, C:/Projects/FeatherSite/assets/src/sass/modules/_options */
+  .Options-toggler:hover {
+    text-decoration: none;
+    color: #333;
+    background: #f2f2f2; }
+
+/* line 15, C:/Projects/FeatherSite/assets/src/sass/modules/_options */
 .Options-toggler + div {
-  margin-top: 20px; }
+  padding: 15px 20px 20px; }
 
 /* line 2, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-content, .Media-sidebar {
@@ -8958,27 +8974,28 @@ tab {
   top: 0;
   bottom: 0;
   padding: 20px;
-  overflow-y: auto; }
+  overflow-y: auto;
+  border-top: 1px solid #e5e5e5; }
 
-/* line 9, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 10, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-content {
   right: 260px;
   left: 0; }
 
-/* line 13, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 14, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-sidebar {
   right: 0;
   width: 260px;
   border-left: 1px solid #e5e5e5; }
 
-/* line 18, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 19, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-sidebar-content {
-  height: calc(100% - 14px);
-  margin: -20px -20px 0 -15px;
-  padding: 20px;
+  height: calc(100% - 10px);
+  margin: -20px -20px 0 0;
+  padding: 20px 20px 20px 0;
   overflow-y: auto; }
 
-/* line 24, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 26, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-items {
   padding: 10px 20px;
   position: absolute;
@@ -8987,21 +9004,21 @@ tab {
   right: 0;
   left: 0;
   overflow-y: auto !important; }
-  /* line 33, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 35, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-items {
     padding: 0; }
 
-/* line 37, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 39, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-folder, .Media-file {
   display: inline-block;
   width: 160px;
   height: 160px;
-  margin: 10px 20px 0 -10px;
+  margin: 10px 10px 0 0;
   vertical-align: top;
   text-align: center;
   cursor: pointer;
   border: 10px solid transparent; }
-  /* line 47, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 49, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-folder, .is-list .Media-file {
     display: block;
     width: 100%;
@@ -9014,32 +9031,32 @@ tab {
     border: none;
     border-bottom: 1px solid #e5e5e5;
     transition: background-color 0.2s ease; }
-    /* line 61, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+    /* line 63, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-folder:hover, .is-list .Media-folder:focus, .is-list .Media-file:hover, .is-list .Media-file:focus {
       border-color: #e5e5e5;
       background: #f2f2f2; }
 
-/* line 65, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 67, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-folder {
   position: relative;
   border-radius: 3px;
   border: 1px solid transparent; }
-  /* line 70, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 72, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-folder i {
     color: #bfbfbf;
     font-size: 90px;
     margin-left: -2px;
     transition: color 0.2s ease; }
-  /* line 77, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 79, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-folder i {
     font-size: 48px; }
-  /* line 80, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 82, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-folder:hover {
     border-color: #d7d7d7; }
-    /* line 82, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+    /* line 84, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
     .Media-folder:hover i {
       color: #9B9B9B; }
-  /* line 85, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 87, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-folder strong {
     display: inline-block;
     color: #337cb7;
@@ -9047,96 +9064,96 @@ tab {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 130px; }
-    /* line 93, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+    /* line 95, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-folder strong {
       display: none; }
-  /* line 96, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 98, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-folder > div {
     width: 100%;
     display: table;
     table-layout: fixed; }
-  /* line 101, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 103, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-folder .Media-file-wrapper {
     border: 10px solid transparent; }
-    /* line 104, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+    /* line 106, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-folder .Media-file-wrapper {
       border: 0; }
-  /* line 107, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 109, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-folder .Media-file-thumb-holder {
     background: #fff; }
-    /* line 110, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+    /* line 112, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-folder .Media-file-thumb-holder {
       border: 0;
       background: transparent; }
-  /* line 114, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 116, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-folder .Media-item-info {
     bottom: 14px;
     right: 14px; }
 
-/* line 118, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 120, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-folder-title {
   width: 50%;
   display: none;
   color: #337cb7;
   padding: 0 10px; }
-  /* line 124, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 126, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-folder-title {
     display: table-cell;
     font-weight: 700; }
-  /* line 128, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 130, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-folder-title.Media-folder-title--wa {
     width: auto; }
 
-/* line 131, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 133, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-file {
   position: relative;
   overflow: hidden;
   border-radius: 3px;
   transition: color 0.2s ease, background-color 0.2s ease; }
-  /* line 137, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 139, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-file img {
     max-width: 100%;
     max-height: 100%; }
-    /* line 141, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+    /* line 143, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-file img {
       max-width: none;
       max-height: none;
       width: 100%;
       height: auto; }
-  /* line 148, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 150, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-file:hover, .Media-file:focus {
     background: rgba(66, 139, 202, 0.2); }
-  /* line 151, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 153, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-file.is-selected {
     background-color: #428BCA; }
-  /* line 154, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 156, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file {
     border-radius: 0; }
-    /* line 158, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+    /* line 160, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-file:hover, .is-list .Media-file:focus {
       background: #F2F2F2; }
-    /* line 161, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+    /* line 163, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-file.is-selected {
       background-color: #428BCA;
       color: #fff; }
-      /* line 167, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+      /* line 169, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
       .is-list .Media-file.is-selected .Media-item-title, .is-list .Media-file.is-selected .Media-item-meta, .is-list .Media-file.is-selected .Media-item-date {
         color: #fff; }
 
-/* line 170, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 172, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-file-wrapper {
   display: table; }
-  /* line 173, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 175, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file-wrapper {
     width: 100%;
     height: 50px;
     table-layout: fixed; }
 
-/* line 179, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 181, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-file-thumb {
   display: table-cell;
   vertical-align: middle; }
-  /* line 183, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 185, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file-thumb {
     vertical-align: top;
     width: 50px;
@@ -9144,7 +9161,7 @@ tab {
     overflow: hidden;
     padding: 0 !important; }
 
-/* line 190, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 192, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-file-thumb-holder {
   width: 140px;
   height: 140px;
@@ -9152,7 +9169,7 @@ tab {
   display: table-cell;
   vertical-align: middle;
   background: #efefef; }
-  /* line 198, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 200, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file-thumb-holder {
     display: inline-block;
     width: 48px;
@@ -9161,29 +9178,29 @@ tab {
     text-align: center;
     border: 1px solid #D7D7D7; }
 
-/* line 209, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 211, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-item-title, .Media-item-meta, .Media-item-date {
   display: none;
   font-size: 13px;
   color: #666; }
-  /* line 214, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 216, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-item-title, .is-list .Media-item-meta, .is-list .Media-item-date {
     display: table-cell;
     padding: 0 10px; }
 
-/* line 218, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 220, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-item-title {
   width: 50%; }
 
-/* line 221, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 223, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-item-meta {
   line-height: 1.3; }
 
-/* line 224, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 226, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-item-date {
   color: #999; }
 
-/* line 227, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 229, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-item-info {
   position: absolute;
   bottom: 5px;
@@ -9201,18 +9218,18 @@ tab {
   opacity: 0;
   transition: opacity 0.3s ease;
   font-weight: 700; }
-  /* line 246, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 248, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-file:hover .Media-item-info, .Media-folder:hover .Media-item-info {
     opacity: 0.6; }
-  /* line 249, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 251, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-item-info:hover {
     opacity: 1 !important; }
 
-/* line 252, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 254, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .is-list .Media-item-info {
   display: none !important; }
 
-/* line 256, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 258, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-settings {
   background: #f2f2f2;
   width: 100%;
@@ -9223,59 +9240,59 @@ tab {
   top: 0;
   left: 0;
   right: 0; }
-  /* line 268, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 270, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-settings .breadcrumb {
     padding: 2px 0 0; }
 
-/* line 271, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 273, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-settings--bottom {
   top: auto;
   bottom: 0;
   border-top: 1px solid #e5e5e5;
   border-bottom: none; }
 
-/* line 278, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 280, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-settings-sort > span {
   font-size: 20px;
   cursor: pointer;
   color: #999; }
-  /* line 283, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 285, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-settings-sort > span.is-selected {
     color: #596C9B; }
 
-/* line 286, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 288, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-upload-text {
   position: absolute;
   top: 50%;
   left: 0;
   right: 0;
   margin-top: -100px; }
-  /* line 293, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 295, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-upload-text .lead {
     margin-bottom: 0; }
 
-/* line 296, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 298, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-no-results {
   margin-top: 45px; }
 
-/* line 299, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 301, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .sf-Media--info {
   overflow: hidden; }
-  /* line 301, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 303, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .sf-Media--info img {
     max-width: 100%; }
-  /* line 304, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 306, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .sf-Media--info h4 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
 
-/* line 307, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 309, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .sf-Media--info-image {
   margin-right: 20px;
   float: left; }
 
-/* line 311, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 313, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .sf-Media--info-doc {
   width: 160px;
   height: 160px;
@@ -9284,33 +9301,33 @@ tab {
   display: table;
   background-color: #fff;
   border: 1px solid #ccc; }
-  /* line 320, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 322, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .sf-Media--info-doc .sf-Media--info-doc-holder {
     display: table-cell;
     vertical-align: middle;
     text-align: center; }
 
-/* line 325, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 327, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .sf-Media--info-video {
   width: 250px;
   margin-right: 20px;
   float: left;
   position: relative;
   cursor: pointer; }
-  /* line 331, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 333, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .sf-Media--info-video video {
     max-width: 100%; }
 
-/* line 334, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 336, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .sf-Media--info-video-big {
   margin: -20px -20px 15px;
   background: #000; }
-  /* line 337, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 339, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .sf-Media--info-video-big video {
     display: block;
     margin: 0 auto; }
 
-/* line 341, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 343, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .sf-Media-play-button {
   position: absolute;
   top: 50%;
@@ -9326,57 +9343,57 @@ tab {
   cursor: pointer;
   border-radius: 5px; }
 
-/* line 357, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 359, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .sf-Media-play-button:before {
   position: absolute;
   top: 16px;
   left: 19px; }
 
-/* line 364, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 366, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .nav-sm > li > a {
-  padding: 6px;
+  padding: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-/* line 369, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 371, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .nav-stacked strong {
   padding: 6px;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
-/* line 374, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 376, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .nav-stacked a {
   color: #000; }
-/* line 379, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 381, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .nav-stacked li.active > a, .nav-stacked li.active > a:hover {
-  background-color: #bdbdbd; }
+  background-color: #428bca; }
 
-/* line 385, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 387, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .is-grid .Media-file.Media-file--doc {
   border: 1px solid #d7d7d7; }
-/* line 390, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 392, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .is-list .Media-file.Media-file--doc.is-selected .icon-file, .is-list .Media-file.Media-file--doc.is-selected [class^="icon-item-"]:before, .is-list .Media-file.Media-file--doc.is-selected [class*=" icon-item-"]:before {
   color: #fff; }
-/* line 393, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 395, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-file.Media-file--doc .Media-file-wrapper {
   border: 10px solid transparent; }
-  /* line 396, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 398, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file.Media-file--doc .Media-file-wrapper {
     border: 0; }
-/* line 399, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 401, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-file.Media-file--doc .Media-file-thumb {
   overflow: visible; }
-/* line 402, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 404, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-file.Media-file--doc .Media-file-thumb-holder {
   background: #fff;
   overflow: visible; }
-  /* line 406, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 408, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file.Media-file--doc .Media-file-thumb-holder {
     border: 0;
     background: transparent; }
-  /* line 410, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 412, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-file.Media-file--doc .Media-file-thumb-holder .Media-item-title {
     display: inline-block;
     width: auto;
@@ -9385,26 +9402,26 @@ tab {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
-    /* line 419, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+    /* line 421, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-file.Media-file--doc .Media-file-thumb-holder .Media-item-title {
       display: none; }
-/* line 422, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 424, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-file.Media-file--doc .icon-file, .Media-file.Media-file--doc [class^="icon-item-"]:before, .Media-file.Media-file--doc [class*=" icon-item-"]:before {
   color: #999; }
-/* line 425, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 427, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-file.Media-file--doc .Media-item-info {
   bottom: 14px;
   right: 14px; }
-/* line 430, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+/* line 432, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
 .Media-file.Media-file--video {
   width: 180px; }
-  /* line 433, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 435, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .Media-file.Media-file--video .Media-file-thumb-holder {
     width: 160px; }
-    /* line 436, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+    /* line 438, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
     .is-list .Media-file.Media-file--video .Media-file-thumb-holder {
       width: 48px; }
-  /* line 440, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
+  /* line 442, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-media-selector */
   .is-list .Media-file.Media-file--video {
     width: 100%; }
 
@@ -9436,27 +9453,33 @@ tab {
       opacity: 0;
       transition: opacity 0s, max-height 0.1s ease; }
 
-/* line 29, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
-.sf-Tree-item span {
-  padding: 5px;
-  display: block;
-  cursor: pointer;
-  border-radius: 4px;
-  width: 100%;
-  text-overflow: ellipsis;
-  overflow: hidden; }
-  /* line 39, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
-  .sf-Tree-item span:hover, .sf-Tree-item span:focus {
-    background-color: #eee; }
-  /* line 42, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
-  .sf-Tree-item span.is-selected {
-    background-color: #bdbdbd;
-    color: #fff; }
+/* line 28, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+.sf-Tree-item {
+  margin-bottom: 2px; }
+  /* line 30, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+  .sf-Tree-item span {
+    padding: 5px;
+    display: block;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden; }
+    /* line 40, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+    .sf-Tree-item span:hover, .sf-Tree-item span:focus {
+      background-color: #eee; }
+    /* line 43, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+    .sf-Tree-item span.is-selected {
+      background-color: #428bca;
+      color: #fff; }
+  /* line 46, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+  .sf-Tree-item label {
+    cursor: pointer; }
 
-/* line 46, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+/* line 49, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
 .sf-Tree-expander {
   position: absolute;
-  top: 8px;
+  top: 14px;
   left: -12px;
   height: 0;
   width: 0;
@@ -9467,31 +9490,36 @@ tab {
   transition: transform 0.2s ease;
   transform-origin: 20% 60%;
   transform: rotateZ(0); }
-  /* line 60, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+  /* line 63, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
   .sf-Tree-expander:before {
     content: "";
     display: block;
     margin: -10px 0 0 -10px;
     width: 20px;
     height: 20px; }
-  /* line 67, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+  /* line 70, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
   .sf-Tree-expander.is-expanded {
     transform: rotateZ(90deg); }
 
-/* line 72, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+/* line 75, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
 .sf-Tree label {
   margin-left: 7px;
   font-weight: normal; }
-/* line 76, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+/* line 79, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
 .sf-Tree .glyphicon-folder-close {
   font-size: 20px;
-  color: #d6d6d6; }
+  color: #d6d6d6;
+  top: 4px;
+  left: 4px; }
+/* line 85, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+.sf-Tree .icon-file, .sf-Tree [class^="icon-item-"]:before, .sf-Tree [class*=" icon-item-"]:before {
+  left: 2px; }
 
-/* line 81, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
-.is-selected .icon-file, .is-selected [class^="icon-item-"]:before, .is-selected [class*=" icon-item-"]:before {
+/* line 90, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+.is-selected .icon-file, .is-selected [class^="icon-item-"]:before, .is-selected [class*=" icon-item-"]:before, .is-selected .glyphicon-folder-close {
   color: #fff; }
 
-/* line 86, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
+/* line 95, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-tree */
 .list-group .sf-Tree {
   margin-left: 25px; }
 
