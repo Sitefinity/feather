@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// Instances of this class manage attribute routing for controllers.
     /// </summary>
-    internal class AttributeRoutingManager
+    internal sealed class AttributeRoutingManager
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeRoutingManager"/> class.
@@ -17,7 +17,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         public AttributeRoutingManager()
         {
             var routeCollection = new RouteCollection();
-            routeCollection.MapMvcAttributeRoutes();
+            routeCollection.MapMvcAttributeRoutes(new RelativeDirectRouteProvider());
 
             this.routesPerController = new Dictionary<string, RouteBase>();
             this.OrganizeRoutes(routeCollection);
