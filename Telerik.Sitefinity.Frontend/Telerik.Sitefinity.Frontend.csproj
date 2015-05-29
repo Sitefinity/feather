@@ -222,6 +222,7 @@
     <Compile Include="..\AssemblyInfoShare\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Mvc\Infrastructure\Routing\AttributeRoutingManager.cs" />
     <Compile Include="FilesMonitoring\GridFileManager.cs" />
     <Compile Include="FilesMonitoring\FileChangeType.cs" />
     <Compile Include="FilesMonitoring\FileMonitoringInitializer.cs" />
@@ -246,6 +247,9 @@
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageEditorRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcTemplateEditorRouteHandler.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\PageRelativePathContextRegion.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\RelativeDirectRouteProvider.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\RelativeRouteAttribute.cs" />
     <Compile Include="Mvc\Models\ScriptDependencyConfigModel.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\RequiredIfExistAttribute.cs" />
     <Compile Include="Mvc\StringResources\ClientComponentsResources.cs" />
