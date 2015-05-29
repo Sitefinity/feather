@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web.UrlEvaluation;
@@ -13,34 +14,40 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             this.taxonomyEvaluator = this.GetDefaultEvaluator();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public bool TryGetTaxonFromUrl(string url, out ITaxon taxon)
         {
-            taxon = null;
+            taxon = this.GetTaxonFromUrl(url, UrlEvaluationMode.UrlPath);
 
+            return taxon != null;
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        public ITaxon GetTaxonFromUrl(string url, UrlEvaluationMode mode)
+        {
             if (this.taxonomyEvaluator == null)
             {
-                return false;
+                return null;
             }
 
             string taxonomyName;
             string taxonName;
 
-            this.taxonomyEvaluator.ParseTaxonomyParams(UrlEvaluationMode.UrlPath, url, null, out taxonName, out taxonomyName);
+            this.taxonomyEvaluator.ParseTaxonomyParams(mode, url, null, out taxonName, out taxonomyName);
 
             if (!string.IsNullOrEmpty(taxonName) && !string.IsNullOrEmpty(taxonomyName))
             {
                 try
                 {
-                    taxon = this.taxonomyEvaluator.GetTaxonByName(taxonomyName, taxonName);
+                    return this.taxonomyEvaluator.GetTaxonByName(taxonomyName, taxonName);
                 }
                 catch
                 {
-                    return false;
+                    return null;
                 }
             }
 
-            return taxon != null;
+            return null;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
