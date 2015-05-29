@@ -188,7 +188,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Test.Helpers
 
         [TestMethod]
         [Owner("Manev")]
-        [Description("Returns false with a valid taxon - [-in-category/category/cat1/cat11/cat22/cat33/cat44]")]
+        [Description("Returns true with a valid taxon - [-in-category/category/cat1/cat11/cat22/cat33/cat44]")]
         public void Return_True_With_Valid_HierarchicalTaxon_With_Deep_Hierarchy()
         {
             ITaxon taxon;
