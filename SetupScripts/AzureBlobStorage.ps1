@@ -26,7 +26,7 @@ function DownloadFromBlobStorage
 		[string]$UnzipLocation
 	)
 	
-	& $config.BlobScripts.copyFilesFromAzureStorageContainer -LocalPath $DownloadLocation -StorageContainer $AzureStorageContainer -BlobName $BlobName
+	& "$PSScriptRoot\$($config.BlobScripts.copyFilesFromAzureStorageContainer)" -LocalPath $DownloadLocation -StorageContainer $AzureStorageContainer -BlobName $BlobName
 	
 	$LocalZip = (Get-ChildItem (Join-Path $DownloadLocation $AzureStorageContainer) | Where-Object {$_.Name -eq $BlobName} | % { $_.FullName })
 	
