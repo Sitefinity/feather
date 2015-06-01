@@ -1,10 +1,12 @@
-param($useBlobSite=$false)
+param($useBlobSite=$false,
+      $enableFeatherModule=$false)
 
 Import-Module WebAdministration
 [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.SMO") | out-null
 . "$PSScriptRoot\Config.ps1"
 . "$PSScriptRoot\IIS.ps1"
 . "$PSScriptRoot\SQL.ps1"
+. "$PSScriptRoot\FeatherSetup.ps1"
 
 write-output "------- Installing Sitefinity --------"
 
@@ -70,4 +72,9 @@ while(!$installed){
 		write-output "$_.Exception.Message"
 		$installed = $false
 	}
+}
+
+if($enableFeatherModule)
+{
+    EnableFeatherModule
 }

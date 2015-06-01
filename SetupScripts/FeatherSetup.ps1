@@ -5,6 +5,7 @@ Import-Module WebAdministration
 
 function UpdateSystemConfig
 {
+    Write-Output "Updating Sitefinity SystemConfig.config..."
     $systemConfig = "$($config.SitefinitySite.configDirectory)\SystemConfig.config"    
 	$doc = New-Object System.Xml.XmlDocument
 	$doc.Load($systemConfig)
@@ -19,28 +20,45 @@ function UpdateSystemConfig
 	$doc.Save($systemConfig)
 }
 
-function InstallFeather($featherBinDirectory)
+function DeployFeatherAssemblies($from, $to)
 {
-    Write-Output "----- Installing Feather ------"
+    Write-Output "Deploying feather assemblies to '$to' from '$from'"
+    Get-ChildItem Telerik.Sitefinity.Frontend.dll -force -recurse -path $from | Copy-Item -destination $config.SitefinitySite.binDirectory
+    Get-ChildItem Ninject.dll -force -recurse -path $from | Copy-Item -destination $to
+}
 
-    Write-Output "Deploying feather assemblies to '$($config.SitefinitySite.binDirectory)' from '$featherBinDirectory'"
-    Get-ChildItem Telerik.Sitefinity.Frontend.dll -force -recurse -path $featherBinDirectory | Copy-Item -destination $config.SitefinitySite.binDirectory
-    Get-ChildItem Ninject.dll -force -recurse -path $featherBinDirectory | Copy-Item -destination $config.SitefinitySite.binDirectory
-        
-    Write-Output "Updating Sitefinity SystemConfig.config..."
-    UpdateSystemConfig
-    
+function DeployFeatherWidgetsAssemblies($from, $to)
+{
+    Write-Output "Deploying feather assemblies to '$to' from '$from'"
+    Get-ChildItem $from -Include Telerik.Sitefinity.Frontend.*.dll -Recurse | Copy-Item -destination $to
+}
+
+function EnableFeatherModule
+{
+    Write-Output "----- Enabling Feather module ------"
+
+    UpdateSystemConfig    
     Write-Output "Restarting $($config.SitefinitySite.name) application pool..."
     Restart-WebAppPool $config.SitefinitySite.name -ErrorAction Continue
     GetRequest $config.SitefinitySite.url
 
+    Write-Output "----- Feather module successfully enabled ------"
+}
+
+function InstallFeather($featherBinDirectory)
+{
+    Write-Output "----- Installing Feather ------"
+
+    DeployFeatherAssemblies $featherBinDirectory $config.SitefinitySite.binDirectory
+    
+    EnableFeatherModule
+    
     Write-Output "----- Feather successfully installed ------"
 }
 
 function InstallFeatherWidgets($featherWidgetsDirectory)
 {
-    Write-Output "Deploying feather widgets assembly to '$($config.SitefinitySite.binDirectory)' from '$featherBinDirectory'"
-	Get-ChildItem $featherWidgetsDirectory -Include Telerik.Sitefinity.Frontend.*.dll -Recurse | Copy-Item -destination $config.SitefinitySite.binDirectory
+    DeployFeatherWidgetsAssemblies$featherWidgetsDirectory $($config.SitefinitySite.binDirectory)
     InstallFeather $featherBinDirectory
 }
 
