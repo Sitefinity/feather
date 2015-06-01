@@ -1,6 +1,9 @@
 . "$PSScriptRoot\Config.ps1"
 . "$PSScriptRoot\$($config.BlobScripts.common)"
 
+$azureBlobDownloadLocation = $config.Common.azureBlobDownloadLocation
+$azureStorageContainer = $config.Common.azureStorageContainer
+
 function DeleteLocalBlobStorage
 {
 	Param(

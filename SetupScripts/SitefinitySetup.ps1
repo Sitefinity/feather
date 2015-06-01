@@ -1,4 +1,4 @@
-param($useBlobSite="false")
+param($useBlobSite=$false)
 
 Import-Module WebAdministration
 [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.SMO") | out-null
@@ -31,7 +31,7 @@ if (Test-Path $config.SitefinitySite.siteDirectory){
 
 write-output "Sitefinity deploying from $($config.SitefinitySite.projectLocationShare)..."
 
-if($useBlobSite -eq "true")
+if($useBlobSite)
 {
     Copy-Item $config.SitefinitySite.blobSitefinityWebApp $config.SitefinitySite.projectDeploymentDirectory -Recurse -ErrorAction stop
 } else {
