@@ -1,5 +1,6 @@
 param($useBlobSite=$false,
-      $enableFeatherModule=$false)
+      $enableFeatherModule=$false,
+      $rebuildSitefinity=$true)
 
 Import-Module WebAdministration
 [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.SMO") | out-null
@@ -26,9 +27,7 @@ Set-ItemProperty IIS:\AppPools\$($config.SitefinitySite.name) managedRuntimeVers
 #Setting application pool identity to NetworkService
 Set-ItemProperty IIS:\AppPools\$($config.SitefinitySite.name) processmodel.identityType -Value 2 
 
-DeploySitefinity $useBlobSite
-
-CompileProject $config.SitefinitySite.sln
+DeploySitefinity $useBlobSite $rebuildSitefinity
 
 $siteId = GetNextWebsiteId
 write-output "Registering $($config.SitefinitySite.name) website with id $siteId in IIS."

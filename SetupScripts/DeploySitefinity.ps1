@@ -1,6 +1,6 @@
 . "$PSScriptRoot\Config.ps1"
 
-function DeploySitefinity($useBlobSite)
+function DeploySitefinity($useBlobSite, $rebuildSitefinity = $true)
 {
     write-output "Deploy SitefinityWebApp to test execution machine $machineName"
 
@@ -23,6 +23,11 @@ function DeploySitefinity($useBlobSite)
     }
     Get-ChildItem $config.SitefinitySite.configDirectory | Remove-Item -Force
     Copy-Item "$PSScriptRoot\StartupConfig.config" $config.SitefinitySite.configDirectory
+
+    if($rebuildSitefinity)
+    {
+        CompileProject $config.SitefinitySite.sln
+    }
 
     write-output "Sitefinity successfully deployed."
 }
