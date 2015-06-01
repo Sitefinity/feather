@@ -24,14 +24,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SetupScripts", "SetupScript
 		SetupScripts\Cleanup.bat = SetupScripts\Cleanup.bat
 		SetupScripts\Cleanup.ps1 = SetupScripts\Cleanup.ps1
 		SetupScripts\FeatherSetup.ps1 = SetupScripts\FeatherSetup.ps1
-		SetupScripts\Functions.ps1 = SetupScripts\Functions.ps1
 		SetupScripts\IIS.ps1 = SetupScripts\IIS.ps1
 		SetupScripts\Setup.bat = SetupScripts\Setup.bat
 		SetupScripts\Setup.ps1 = SetupScripts\Setup.ps1
 		SetupScripts\SitefinitySetup.ps1 = SetupScripts\SitefinitySetup.ps1
 		SetupScripts\SQL.ps1 = SetupScripts\SQL.ps1
-		SetupScripts\Variables.ps1 = SetupScripts\Variables.ps1
-		SetupScripts\Variables.xml = SetupScripts\Variables.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D7E812B2-E16E-4B90-9EF8-1C5F9F907E96}"
