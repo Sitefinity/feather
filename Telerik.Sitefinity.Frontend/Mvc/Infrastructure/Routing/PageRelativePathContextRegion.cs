@@ -4,8 +4,15 @@ using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
+    /// <summary>
+    /// In the scope of the region the request path of the context is rewritten to omit the page node URL in order to get node-relative path.
+    /// </summary>
     internal sealed class PageRelativePathContextRegion : IDisposable
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageRelativePathContextRegion"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public PageRelativePathContextRegion(HttpContextBase context)
         {
             if (context == null)
@@ -25,6 +32,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
         }
 
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
         public void Dispose()
         {
             this.context.RewritePath(this.originalPath);
