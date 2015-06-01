@@ -7,6 +7,7 @@ Import-Module WebAdministration
 . "$PSScriptRoot\IIS.ps1"
 . "$PSScriptRoot\SQL.ps1"
 . "$PSScriptRoot\FeatherSetup.ps1"
+. "$PSScriptRoot\DeploySitefinity.ps1"
 
 write-output "------- Installing Sitefinity --------"
 
@@ -25,29 +26,7 @@ Set-ItemProperty IIS:\AppPools\$($config.SitefinitySite.name) managedRuntimeVers
 #Setting application pool identity to NetworkService
 Set-ItemProperty IIS:\AppPools\$($config.SitefinitySite.name) processmodel.identityType -Value 2 
 
-write-output "Deploy SitefinityWebApp to test execution machine $machineName"
-
-if (Test-Path $config.SitefinitySite.siteDirectory){
-	CleanWebsiteDirectory $config.SitefinitySite.siteDirectory 10
-}  
-
-if($useBlobSite)
-{
-    Write-Output "Sitefinity deploying from $($config.SitefinitySite.blobSitefinityWebApp)..."
-    Copy-Item $config.SitefinitySite.blobSitefinityWebApp $config.SitefinitySite.projectDeploymentDirectory -Recurse -ErrorAction stop
-} else {
-    Write-Output "Sitefinity deploying from $($config.SitefinitySite.projectLocationShare)..."
-    Copy-Item $config.SitefinitySite.projectLocationShare $config.SitefinitySite.projectDeploymentDirectory -Recurse -ErrorAction stop
-}
-
-if(!(Test-Path $config.SitefinitySite.configDirectory))
-{
-    New-Item $config.SitefinitySite.configDirectory -ItemType Directory
-}
-Get-ChildItem $config.SitefinitySite.configDirectory | Remove-Item -Force
-Copy-Item "$PSScriptRoot\StartupConfig.config" $config.SitefinitySite.configDirectory
-
-write-output "Sitefinity successfully deployed."
+DeploySitefinity $useBlobSite
 
 CompileProject $config.SitefinitySite.sln
 
