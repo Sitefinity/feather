@@ -32,7 +32,7 @@ function InstallFeather($featherBinDirectory)
     
     Write-Output "Restarting $($config.SitefinitySite.name) application pool..."
     Restart-WebAppPool $config.SitefinitySite.name -ErrorAction Continue
-    GetRequest $config.SitefinitySite.name
+    GetRequest $config.SitefinitySite.url
 
     Write-Output "----- Feather successfully installed ------"
 }
