@@ -1,7 +1,4 @@
-$currentPath = Split-Path $script:MyInvocation.MyCommand.Path
-$variables = Join-Path $currentPath "\Variables.ps1"
-. $variables
-. $functionsModule
+. "$PSScriptRoot\Config.ps1"
 
 write-output "Restarting TestAgent process..."
 try
@@ -20,8 +17,8 @@ finally
     Get-Process iexplore | stop-process
     write-output "Cleaning test agent temp folders..."
     Start-Sleep -s 5
-    CleanDirectory $agentTempFolder
-    Start-Process -FilePath $testAgentExe
-    Remove-Item  $aspNetTempFolder -Force -Recurse -ErrorAction Ignore
+    CleanDirectory $config.TestAgent.tempDirectory
+    Start-Process -FilePath $config.TestAgent.exe
+    Remove-Item  $config.Common.aspNetTempDirectory -Force -Recurse -ErrorAction Ignore
     write-output "TestAgent process started."
 }

@@ -14,7 +14,7 @@ function GetRequest($url)
 {
 	$request = [System.Net.WebRequest]::Create($url)
 	$request.Method = "GET"
-	$request.Timeout = 360000
+	$request.Timeout = 600000
 	$request.AuthenticationLevel = "None"
 	return $request.GetResponse()
 }
@@ -23,7 +23,7 @@ function PostRequest($url)
 {
 	$request = [System.Net.WebRequest]::Create($url)
 	$request.Method = "POST"
-	$request.Timeout = 360000
+	$request.Timeout = 600000
     $request.ContentLength = 0
 	$request.AuthenticationLevel = "None"
 	return $request.GetResponse()

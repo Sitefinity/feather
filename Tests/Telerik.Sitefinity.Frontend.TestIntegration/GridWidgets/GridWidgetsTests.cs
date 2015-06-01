@@ -51,9 +51,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
 
                 string pageContent = this.GetPageContent(pageId);
 
-                Assert.IsTrue(pageContent.Contains(Row3), "Grid row not found in the page content");
-                Assert.IsTrue(pageContent.Contains(Row9), "Grid row not found in the page content");
-                Assert.IsTrue(pageContent.Contains(ParagraphText), "Grid row not found in the page content");
+                Assert.IsTrue(pageContent.Contains(Row3), "Grid row 3 not found in the page content");
+                Assert.IsTrue(pageContent.Contains(Row9), "Grid row 9 not found in the page content");
+                Assert.IsTrue(pageContent.Contains(ParagraphText), "Paragraph Text was not found in the page content");
             }
             finally
             {

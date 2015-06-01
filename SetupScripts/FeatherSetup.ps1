@@ -1,15 +1,11 @@
 Import-Module WebAdministration
 
-$currentPath = Split-Path $script:MyInvocation.MyCommand.Path
-$variables = Join-Path $currentPath "\Variables.ps1"
-. $variables
-. $iisModule
-
-$websiteConfigDir = $defaultWebsiteRootDirectory + "\App_Data\Sitefinity\Configuration"
+. "$PSScriptRoot\Config.ps1"
+. "$PSScriptRoot\IIS.ps1"
 
 function UpdateSystemConfig
 {
-    $systemConfig = $websiteConfigDir+"\SystemConfig.config"    
+    $systemConfig = "$($config.SitefinitySite.configDirectory)\SystemConfig.config"    
 	$doc = New-Object System.Xml.XmlDocument
 	$doc.Load($systemConfig)
 	$modulesNode = $doc.SelectSingleNode("//systemConfig/applicationModules")            
@@ -27,45 +23,39 @@ function InstallFeather($featherBinDirectory)
 {
     Write-Output "----- Installing Feather ------"
 
-    Write-Output "Deploying feather assemblies to '$websiteBinariesDirectory' from '$featherBinDirectory'"
-    Get-ChildItem Telerik.Sitefinity.Frontend.dll -force -recurse -path $featherBinDirectory | Copy-Item -destination $websiteBinariesDirectory
-    Get-ChildItem Ninject.dll -force -recurse -path $featherBinDirectory | Copy-Item -destination $websiteBinariesDirectory
+    Write-Output "Deploying feather assemblies to '$($config.SitefinitySite.binDirectory)' from '$featherBinDirectory'"
+    Get-ChildItem Telerik.Sitefinity.Frontend.dll -force -recurse -path $featherBinDirectory | Copy-Item -destination $config.SitefinitySite.binDirectory
+    Get-ChildItem Ninject.dll -force -recurse -path $featherBinDirectory | Copy-Item -destination $config.SitefinitySite.binDirectory
         
     Write-Output "Updating Sitefinity SystemConfig.config..."
     UpdateSystemConfig
     
-    Write-Output "Restarting $appPollName application pool..."
-    Restart-WebAppPool $appPollName -ErrorAction Continue
-    GetRequest $defaultWebsiteUrl
+    Write-Output "Restarting $($config.SitefinitySite.name) application pool..."
+    Restart-WebAppPool $config.SitefinitySite.name -ErrorAction Continue
+    GetRequest $config.SitefinitySite.url
 
     Write-Output "----- Feather successfully installed ------"
 }
 
 function InstallFeatherWidgets($featherWidgetsDirectory)
 {
-    Write-Output "Deploying feather widgets assembly to '$websiteBinariesDirectory' from '$featherBinDirectory'"
-    Get-ChildItem Telerik.Sitefinity.Frontend.ContentBlock.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.Navigation.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.News.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.SocialShare.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.DynamicContent.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.Search.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.Media.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.Identity.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.Lists.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.Blogs.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.InlineClientAssets.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	Get-ChildItem Telerik.Sitefinity.Frontend.Comments.dll -force -recurse -path $featherWidgetsDirectory | Copy-Item -destination $websiteBinariesDirectory
-	
+    Write-Output "Deploying feather widgets assembly to '$($config.SitefinitySite.binDirectory)' from '$featherBinDirectory'"
+	Get-ChildItem $featherWidgetsDirectory -Include Telerik.Sitefinity.Frontend.*.dll -Recurse | Copy-Item -destination $config.SitefinitySite.binDirectory
     InstallFeather $featherBinDirectory
+}
+
+function DeleteFeatherWidgets
+{
+    Write-Output "Deleting feather widgets assemblies from '$($config.SitefinitySite.binDirectory)'"
+    Get-ChildItem $config.SitefinitySite.binDirectory -Include Telerik.Sitefinity.Frontend.*.dll -Recurse | Remove-Item -Force
 }
 
 function InstallFeatherPackages($featherPackagesDirectory)
 {
 	Write-Output "----- Feather packages directory is '$featherPackagesDirectory' ------"
 	Write-Output "----- Create Resource Packages directory in SitefinityWebApp ------"
-	Write-Output "----- DefaultWebsiteRootDirectory is directory is '$defaultWebsiteRootDirectory' ------"
-	$resourcePackagesFolder = $defaultWebsiteRootDirectory + "\ResourcePackages"
+	Write-Output "----- DefaultWebsiteRootDirectory is directory is '$($config.SitefinitySite.siteDirectory)' ------"
+	$resourcePackagesFolder = $config.SitefinitySite.siteDirectory + "\ResourcePackages"
 	Write-Output "----- ResourcePackagesFolder is directory is '$resourcePackagesFolder' ------"
 	if(!(Test-Path -Path $resourcePackagesFolder )){
 		New-Item -ItemType directory -Path $resourcePackagesFolder

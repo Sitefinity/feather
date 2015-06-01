@@ -1,43 +1,58 @@
+param($useBlobSite=$false)
+
 Import-Module WebAdministration
 [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.SMO") | out-null
-$currentPath = Split-Path $script:MyInvocation.MyCommand.Path
-$variables = Join-Path $currentPath "\Variables.ps1"
-. $variables
-. $iisModule
-. $sqlModule
-. $functionsModule
+. "$PSScriptRoot\Config.ps1"
+. "$PSScriptRoot\IIS.ps1"
+. "$PSScriptRoot\SQL.ps1"
 
 write-output "------- Installing Sitefinity --------"
 
-DeleteAllSitesWithSameBinding $defaultWebsitePort
+EnsureDBDeleted $config.SitefinitySite.databaseServer $config.SitefinitySite.name
+
+DeleteAllSitesWithSameBinding $config.SitefinitySite.port
 
 write-output "Setting up Application pool..."
 
-Remove-WebAppPool $appPollName -ErrorAction continue
+Remove-WebAppPool $config.SitefinitySite.name -ErrorAction continue
 
-New-WebAppPool $appPollName -Force
+New-WebAppPool $config.SitefinitySite.name -Force
 
-Set-ItemProperty IIS:\AppPools\$appPollName managedRuntimeVersion v4.0 -Force
+Set-ItemProperty IIS:\AppPools\$($config.SitefinitySite.name) managedRuntimeVersion v4.0 -Force
 
 #Setting application pool identity to NetworkService
-Set-ItemProperty IIS:\AppPools\$appPollName processmodel.identityType -Value 2 
+Set-ItemProperty IIS:\AppPools\$($config.SitefinitySite.name) processmodel.identityType -Value 2 
 
 write-output "Deploy SitefinityWebApp to test execution machine $machineName"
 
-if (Test-Path $defaultWebsiteRootDirectory){
-	CleanWebsiteDirectory $defaultWebsiteRootDirectory 10 $appPollName
+if (Test-Path $config.SitefinitySite.siteDirectory){
+	CleanWebsiteDirectory $config.SitefinitySite.siteDirectory 10
 }  
 
-write-output "Sitefinity deploying from $projectLocationShare..."
+if($useBlobSite)
+{
+    Write-Output "Sitefinity deploying from $($config.SitefinitySite.blobSitefinityWebApp)..."
+    Copy-Item $config.SitefinitySite.blobSitefinityWebApp $config.SitefinitySite.projectDeploymentDirectory -Recurse -ErrorAction stop
+} else {
+    Write-Output "Sitefinity deploying from $($config.SitefinitySite.projectLocationShare)..."
+    Copy-Item $config.SitefinitySite.projectLocationShare $config.SitefinitySite.projectDeploymentDirectory -Recurse -ErrorAction stop
+}
 
-Copy-Item $emptyWebsiteShare $projectDeploymentDirectory -Recurse -ErrorAction stop
+if(!(Test-Path $config.SitefinitySite.configDirectory))
+{
+    New-Item $config.SitefinitySite.configDirectory -ItemType Directory
+}
+Get-ChildItem $config.SitefinitySite.configDirectory | Remove-Item -Force
+Copy-Item "$PSScriptRoot\StartupConfig.config" $config.SitefinitySite.configDirectory
 
 write-output "Sitefinity successfully deployed."
 
+CompileProject $config.SitefinitySite.sln
+
 $siteId = GetNextWebsiteId
-write-output "Registering $siteName website with id $siteId in IIS."
-New-WebSite -Id $siteId -Name $siteName -Port $defaultWebsitePort -HostHeader localhost -PhysicalPath $defaultWebsiteRootDirectory -ApplicationPool $appPollName -Force
-Start-WebSite -Name $siteName
+write-output "Registering $($config.SitefinitySite.name) website with id $siteId in IIS."
+New-WebSite -Id $siteId -Name $config.SitefinitySite.name -Port $config.SitefinitySite.port -HostHeader localhost -PhysicalPath $config.SitefinitySite.siteDirectory -ApplicationPool $config.SitefinitySite.name -Force
+Start-WebSite -Name $config.SitefinitySite.name
 
 write-output "Setting up Sitefinity..."
 
@@ -45,13 +60,13 @@ $installed = $false
 
 while(!$installed){
 	try{    
-		$response = GetRequest $defaultWebsiteUrl
+		$response = GetRequest $config.SitefinitySite.url
 		if($response.StatusCode -eq "OK"){
 			$installed = $true;
 			$response
 		}
 	}catch [Exception]{
-		Restart-WebAppPool $appPollName -ErrorAction Continue
+		Restart-WebAppPool $config.SitefinitySite.name -ErrorAction Continue
 		write-output "$_.Exception.Message"
 		$installed = $false
 	}
