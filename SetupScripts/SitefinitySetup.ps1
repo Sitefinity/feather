@@ -43,7 +43,7 @@ if(!(Test-Path $config.SitefinitySite.configDirectory))
     New-Item $config.SitefinitySite.configDirectory -ItemType Directory
 }
 Get-ChildItem $config.SitefinitySite.configDirectory | Remove-Item -Force
-Copy-Item .\StartupConfig.config $config.SitefinitySite.configDirectory
+Copy-Item "$PSScriptRoot\StartupConfig.config" $config.SitefinitySite.configDirectory
 
 write-output "Sitefinity successfully deployed."
 

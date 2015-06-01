@@ -1,5 +1,5 @@
 . "$PSScriptRoot\Config.ps1"
-. $config.BlobScripts.common
+. "$PSScriptRoot\$($config.BlobScripts.common)"
 
 function DeleteLocalBlobStorage
 {
