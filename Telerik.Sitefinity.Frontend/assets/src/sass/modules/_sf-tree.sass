@@ -26,6 +26,7 @@
 			transition: opacity 0s, max-height .1s ease
 
 .sf-Tree-item
+	margin-bottom: 2px
 	span
 		padding: 5px
 		display: block
@@ -40,12 +41,14 @@
 			background-color: #eee
 
 		&.is-selected
-			background-color: #bdbdbd
+			background-color: #428bca
 			color: #fff
+	label
+		cursor: pointer
 
 .sf-Tree-expander
 	position: absolute
-	top: 8px
+	top: 14px
 	left: -12px
 	height: 0
 	width: 0
@@ -71,14 +74,20 @@
 
 .sf-Tree
 	label
-		margin-left: 7px;
+		margin-left: 7px
 		font-weight: normal
 
 	.glyphicon-folder-close
 		font-size: 20px
 		color: #d6d6d6
+		top: 4px
+		left: 4px
 
-.icon-file
+	.icon-file
+		left:2px
+
+.icon-file,
+.glyphicon-folder-close
 	.is-selected &
 		color: #fff
 

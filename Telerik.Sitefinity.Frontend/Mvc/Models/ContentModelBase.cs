@@ -185,7 +185,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// The name of the field.
         /// </value>
         public virtual string RelatedFieldName { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the relation type of the items that will be display - children or parent.
         /// </summary>
@@ -232,14 +232,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (query == null)
                 return this.CreateListViewModelInstance();
 
+            var viewModel = this.CreateListViewModelInstance();
             if (taxonFilter != null)
             {
-                var taxonField = this.ExpectedTaxonFieldName(taxonFilter);
-                var filter = string.Format(CultureInfo.InvariantCulture, "{0}.Contains({{{1}}})", taxonField, taxonFilter.Id);
-                query = query.Where(filter);
+                var taxonomy = taxonFilter.Taxonomy.RootTaxonomy ?? taxonFilter.Taxonomy;
+
+                string taxonomyField;
+
+                if (this.TryGetTaxonomyFieldName(taxonomy.Id, out taxonomyField))
+                {
+                    var filter = string.Format(CultureInfo.InvariantCulture, "{0}.Contains({{{1}}})", taxonomyField, taxonFilter.Id);
+                    query = query.Where(filter);
+                }
+                else
+                {
+                    viewModel.Items = Enumerable.Empty<ItemViewModel>();
+                    this.SetViewModelProperties(viewModel, page, null);
+                    return viewModel;
+                }
             }
 
-            var viewModel = this.CreateListViewModelInstance();
             this.PopulateListViewModel(page, query, viewModel);
 
             return viewModel;
@@ -481,7 +493,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             this.SetViewModelProperties(viewModel, page, totalPages);
         }
-  
+
         /// <summary>
         /// Sets the view model properties.
         /// </summary>
@@ -512,7 +524,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return ManagerBase.GetMappedManager(this.ContentType, this.ProviderName);
         }
 
-         /// <summary>
+        /// <summary>
         /// Updates the expression.
         /// </summary>
         /// <param name="query">The query.</param>
@@ -655,12 +667,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         #region Private methods
 
-        private string ExpectedTaxonFieldName(ITaxon taxon)
+        /// <summary>
+        /// Tries to get the name of the taxonomy field.
+        /// </summary>
+        /// <param name="taxonomyId">The taxonomy id.</param>
+        /// <param name="taxonomyField">The taxonomy field.</param>
+        /// <returns></returns>
+        private bool TryGetTaxonomyFieldName(Guid taxonomyId, out string taxonomyField)
         {
-            if (taxon.Taxonomy.Name == "Categories")
-                return taxon.Taxonomy.TaxonName;
+            taxonomyField = string.Empty;
 
-            return taxon.Taxonomy.Name;
+            var taxonomyPropertyDescriptor = FieldHelper.GetFields(this.ContentType)
+                                                        .OfType<TaxonomyPropertyDescriptor>()
+                                                        .FirstOrDefault(t => t.TaxonomyId == taxonomyId);
+
+            if (taxonomyPropertyDescriptor != null)
+            {
+                taxonomyField = taxonomyPropertyDescriptor.Name;
+            }
+
+            return taxonomyPropertyDescriptor != null;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1002:AvoidToListOnIEnumerable")]

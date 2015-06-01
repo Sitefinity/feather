@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'sfHierarchicalTaxonService', function (serviceHelper, hierarchicalTaxonService) {
+        .directive('sfHierarchicalTaxonSelector', ['serviceHelper', 'sfHierarchicalTaxonService', 'serverContext', function (serviceHelper, hierarchicalTaxonService, serverContext) {
             var _applyBreadcrumbPath = function (result) {
                 var taxa = result.Items;
                 var taxonToAdd = null;
@@ -36,9 +36,22 @@
                         pre: function (scope, element, attrs, ctrl) {
                             var taxonomyId = attrs.sfTaxonomyId;
 
+                            var fromCurrentLanguageOnly = scope.$eval(attrs.sfFromCurrentLanguageOnly);
+
                             if (!taxonomyId || taxonomyId === serviceHelper.emptyGuid()) {
                                 taxonomyId = sitefinity.getCategoriesTaxonomyId();
                             }
+
+                            ctrl.itemDisabled = function (item) {
+                                if (!fromCurrentLanguageOnly) return false;
+
+                                var uiCulture = serverContext.getUICulture();
+
+                                if (uiCulture && item.AvailableLanguages && item.AvailableLanguages.length > 0) {
+                                    return item.AvailableLanguages.indexOf(uiCulture) < 0;
+                                }
+                                return false;
+                            };
 
                             ctrl.getItems = function (skip, take, search, frontendLanguages) {
                                 return hierarchicalTaxonService.getTaxons(taxonomyId, skip, take, search, frontendLanguages);
@@ -46,9 +59,9 @@
 
                             ctrl.getChildren = function (parentId, search) {
                                 return hierarchicalTaxonService.getChildTaxons(parentId, search)
-                                                           .then(function (data) {
-                                                                   return data.Items;
-                                                               });
+                                    .then(function (data) {
+                                        return data.Items;
+                                    });
                             };
 
                             ctrl.getSpecificItems = function (ids) {

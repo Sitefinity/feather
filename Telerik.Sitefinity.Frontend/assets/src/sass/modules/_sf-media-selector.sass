@@ -6,6 +6,7 @@
 	bottom: 0
 	padding: 20px
 	overflow-y: auto
+	border-top: 1px solid #e5e5e5
 
 // Content
 .Media-content
@@ -19,10 +20,11 @@
 	border-left: 1px solid #e5e5e5
 
 .Media-sidebar-content
-	height: calc(100% - 14px)
-	margin: -20px -20px 0 -15px
-	padding: 20px
+	height: calc(100% - 10px)
+	margin: -20px -20px 0 0
+	padding: 20px 20px 20px 0
 	overflow-y: auto
+
 
 .Media-items
 	padding: 10px 20px
@@ -42,7 +44,7 @@
 	display: inline-block
 	width: 160px
 	height: 160px
-	margin: 10px 20px 0 -10px
+	margin: 10px 10px 0 0
 	vertical-align: top
 	text-align: center
 	cursor: pointer
@@ -306,6 +308,7 @@
 
 // In image properties screen
 .sf-Media--info
+	overflow: hidden
 	img
 		max-width: 100%
 
@@ -313,24 +316,38 @@
 		@include text-overflow()
 
 .sf-Media--info-image
-	border: 1px solid #ccc
+	margin-right: 20px
+	float: left
 
 .sf-Media--info-doc
-	display: table
+	width: 160px
 	height: 160px
-	width: 100%
+	margin-right: 20px
+	float: left
+	display: table
 	background-color: #fff
 	border: 1px solid #ccc
 
 	.sf-Media--info-doc-holder
 		display: table-cell
 		vertical-align: middle
+		text-align: center
 
 .sf-Media--info-video
+	width: 250px
+	margin-right: 20px
+	float: left
 	position: relative
-	border: 1px solid #ccc
+	cursor: pointer
 	video
 		max-width: 100%
+
+.sf-Media--info-video-big
+	margin: -20px -20px 15px
+	background: #000
+	video
+		display: block
+		margin: 0 auto
 
 .sf-Media-play-button
 	position: absolute
@@ -358,7 +375,7 @@
 .nav-sm
 	>li
 		>a
-			padding: 6px
+			padding: 5px
 			@include text-overflow()
 
 .nav-stacked
@@ -373,7 +390,7 @@
 	li.active > a
 		&,
 		&:hover
-			background-color: #bdbdbd
+			background-color: #428bca
 
 //Document selector
 .Media-file

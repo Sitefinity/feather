@@ -78,6 +78,11 @@ function InstallFeatherPackages($featherPackagesDirectory)
 	if(!(Test-Path -Path $resourcePackagesFolder )){
 		New-Item -ItemType directory -Path $resourcePackagesFolder
 	}
+	else {
+		Write-Output "----- Delete old Resource Packages content ------"
+		$resourcePackageSubfolders = $resourcePackagesFolder + "\*"
+		Remove-Item $resourcePackageSubfolders -recurse
+	}
 	
 	Write-Output "----- Copy packages ------"
 	Get-ChildItem Bootstrap -path $featherPackagesDirectory | Copy-Item -destination $resourcePackagesFolder -force -recurse

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -113,6 +113,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             result = result
                 .SetLast(this.GetInferredDetailActionParamsMapper(controller))
                 .SetLast(this.GetInferredTaxonFilterMapper(controller, "ListByTaxon"))
+                .SetLast(this.GetInferredClassificationFilterMapper(controller, "ListByTaxon"))
                 .SetLast(this.GetInferredPagingMapper(controller, "Index"));
 
             // If no other mappers are added we skip the default one.
@@ -229,6 +230,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
 
             return result;
+        }
+
+        private IUrlParamsMapper GetInferredClassificationFilterMapper(ControllerBase controller, string actionName)
+        {
+            var actionDescriptor = new ReflectedControllerDescriptor(controller.GetType()).FindAction(controller.ControllerContext, actionName);
+
+            if (actionDescriptor == null || actionDescriptor.GetParameters().Length == 0)
+                return null;
+
+            return new TaxonomyUrlParamsMapper(controller, new TaxonUrlMapper(new TaxonUrlEvaluatorAdapter()));
         }
 
         private IUrlParamsMapper GetInferredPagingMapper(ControllerBase controller, string actionName)

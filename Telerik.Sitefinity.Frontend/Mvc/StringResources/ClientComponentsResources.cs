@@ -81,18 +81,34 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// Insert image
+        /// Insert a image
         /// </summary>
-        /// <value>Insert image</value>
+        /// <value>Insert a image</value>
         [ResourceEntry("InsertImage",
-            Value = "Insert image",
-            Description = "phrase: Insert image",
+            Value = "Insert a image",
+            Description = "phrase: Insert a image",
             LastModified = "2015/03/21")]
         public string InsertImage
         {
             get
             {
                 return this["InsertImage"];
+            }
+        }
+
+        /// <summary>
+        /// Insert this image
+        /// </summary>
+        /// <value>Insert this image</value>
+        [ResourceEntry("InsertThisImage",
+            Value = "Insert this image",
+            Description = "phrase: Insert this image",
+            LastModified = "2015/05/05")]
+        public string InsertThisImage
+        {
+            get
+            {
+                return this["InsertThisImage"];
             }
         }
 
@@ -129,6 +145,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// Insert this video
+        /// </summary>
+        /// <value>Insert this video</value>
+        [ResourceEntry("InsertThisVideo",
+            Value = "Insert this video",
+            Description = "phrase: Insert this video",
+            LastModified = "2015/05/05")]
+        public string InsertThisVideo
+        {
+            get
+            {
+                return this["InsertThisVideo"];
+            }
+        }
+
+        /// <summary>
         /// phrase: sfAction attribute is required!
         /// </summary>
         [ResourceEntry("SfActionAttrRequired",
@@ -156,6 +188,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["InsertDocumentLink"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Insert this document link
+        /// </summary>
+        /// <value>Insert this document link</value>
+        [ResourceEntry("InsertThisDocumentLink",
+            Value = "Insert this document link",
+            Description = "phrase: Insert this document link",
+            LastModified = "2015/03/23")]
+        public string InsertThisDocumentLink
+        {
+            get
+            {
+                return this["InsertThisDocumentLink"];
             }
         }
 
