@@ -26,7 +26,7 @@ function CompileProject($projectPath)
 {
 	LogMessage "Start building $projectPath"    
     
-	& $msbuild "$projectPath" /p:Configuration=Release /target:Rebuild
+	& $msbuild "$projectPath" /p:Configuration=Release
 	
 	LogMessage "Building completed"  
 }
