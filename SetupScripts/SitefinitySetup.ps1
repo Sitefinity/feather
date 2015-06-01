@@ -29,12 +29,12 @@ if (Test-Path $config.SitefinitySite.siteDirectory){
 	CleanWebsiteDirectory $config.SitefinitySite.siteDirectory 10
 }  
 
-write-output "Sitefinity deploying from $($config.SitefinitySite.projectLocationShare)..."
-
 if($useBlobSite)
 {
+    Write-Output "Sitefinity deploying from $($config.SitefinitySite.blobSitefinityWebApp)..."
     Copy-Item $config.SitefinitySite.blobSitefinityWebApp $config.SitefinitySite.projectDeploymentDirectory -Recurse -ErrorAction stop
 } else {
+    Write-Output "Sitefinity deploying from $($config.SitefinitySite.projectLocationShare)..."
     Copy-Item $config.SitefinitySite.projectLocationShare $config.SitefinitySite.projectDeploymentDirectory -Recurse -ErrorAction stop
 }
 
