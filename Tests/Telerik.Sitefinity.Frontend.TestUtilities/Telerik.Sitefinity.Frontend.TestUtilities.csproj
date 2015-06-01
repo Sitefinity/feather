@@ -248,6 +248,7 @@
     <Compile Include="FeatherTeams.cs" />
     <Compile Include="FileInjectHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Mvc\Controllers\AttributeRoutingTestController.cs" />
     <Compile Include="Mvc\Controllers\MvcTestController.cs" />
     <Compile Include="ObjectFactoryContainerRegion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
