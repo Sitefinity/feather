@@ -27,6 +27,8 @@ function DeploySitefinity($useBlobSite, $rebuildSitefinity = $true)
     if($rebuildSitefinity)
     {
         CompileProject $config.SitefinitySite.sln
+        #there is some issue with the local assemlies copy
+        CompileProject $config.SitefinitySite.sln
     }
 
     write-output "Sitefinity successfully deployed."
