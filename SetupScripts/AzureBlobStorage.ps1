@@ -1,6 +1,5 @@
-. "$PSScriptRoot\Variables.ps1"
-. $BlobCommon
-
+. "$PSScriptRoot\Config.ps1"
+. $config.BlobScripts.common
 
 function DeleteLocalBlobStorage
 {
@@ -24,7 +23,7 @@ function DownloadFromBlobStorage
 		[string]$UnzipLocation
 	)
 	
-	& $CopyFilesFromAzureStorageContainer -LocalPath $DownloadLocation -StorageContainer $AzureStorageContainer -BlobName $BlobName
+	& $config.BlobScripts.copyFilesFromAzureStorageContainer -LocalPath $DownloadLocation -StorageContainer $AzureStorageContainer -BlobName $BlobName
 	
 	$LocalZip = (Get-ChildItem (Join-Path $DownloadLocation $AzureStorageContainer) | Where-Object {$_.Name -eq $BlobName} | % { $_.FullName })
 	

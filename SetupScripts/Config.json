@@ -1,0 +1,26 @@
+{
+    "Common": {
+        "aspNetTempDirectory": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\Temporary ASP.NET Files\\root"
+    },
+	"BlobScripts": {
+        "common": "..\\..\\Tooling\\Azure\\Blob\\Common.ps1",
+		"copyFilesFromAzureStorageContainer": "..\\..\\Tooling\\Azure\\Blob\\CopyFilesFromAzureStorageContainer.ps1"
+    },
+	"SitefinitySite": {
+		"databaseServer": ".\\SQLSERVER",
+		"name": "FeatherTests",
+		"port": "80",
+		"url": "http://localhost",
+		"sln": "C:\\Tests\\SitefinityWebApp\\SitefinityWebApp.sln",
+		"siteDirectory": "C:\\Tests\\SitefinityWebApp",
+		"binDirectory": "C:\\Tests\\SitefinityWebApp\\bin",
+		"configDirectory": "C:\\Tests\\SitefinityWebApp\\App_Data\\Sitefinity\\Configuration",
+		"projectDeploymentDirectory": "C:\\Tests",
+		"projectLocationShare": "\\\\feather-ci\\c$\\Tests\\SitefinityWebApp",
+		"blobSitefinityWebApp": "C:\\AzureBlobStorage\\SitefinityWebApp"
+	 },
+	 "TestAgent": {
+		"exe": "C:\\Program Files (x86)\\Microsoft Visual Studio 11.0\\Common7\\IDE\\QTAgentProcessUI.exe",
+		"tempDirectory": "C:\\Users\\fadmin\\AppData\\Local\\VSEQT\\QTAgent"
+	 }
+}

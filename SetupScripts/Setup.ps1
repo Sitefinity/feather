@@ -1,8 +1,5 @@
-$currentPath = Split-Path $script:MyInvocation.MyCommand.Path
-$variables = Join-Path $currentPath "\Variables.ps1"
-
-. $variables
-. $sitefinitySetup
+. "$PSScriptRoot\Config.ps1"
+. "$PSScriptRoot\SitefinitySetup.ps1"
 
 Write-Output "Closing left IE processes..."
 Get-Process iexplore -ErrorAction Ignore | Stop-Process
