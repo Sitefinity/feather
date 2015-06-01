@@ -3,6 +3,7 @@
 
 $azureBlobDownloadLocation = $config.Common.azureBlobDownloadLocation
 $azureStorageContainer = $config.Common.azureStorageContainer
+$testRunnerBlobName = "Telerik.WebTestRunner.zip"
 
 function DeleteLocalBlobStorage
 {
