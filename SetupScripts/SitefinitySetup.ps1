@@ -9,12 +9,17 @@ $variables = Join-Path $currentPath "\Variables.ps1"
 
 write-output "------- Installing Sitefinity --------"
 
+write-output "Delete old website"
 DeleteAllSitesWithSameBinding $defaultWebsitePort
 
-write-output "Setting up Application pool..."
-
+write-output "Delete old app pool"
 Remove-WebAppPool $appPollName -ErrorAction continue
 
+write-output "Delete attached db"
+$attachedDB = "C:\TESTS\SITEFINITYWEBAPP\APP_DATA\SITEFINITY.MDF"
+EnsureDBDeleted $databaseServer $attachedDB
+
+write-output "Setting up Application pool..."
 New-WebAppPool $appPollName -Force
 
 Set-ItemProperty IIS:\AppPools\$appPollName managedRuntimeVersion v4.0 -Force
