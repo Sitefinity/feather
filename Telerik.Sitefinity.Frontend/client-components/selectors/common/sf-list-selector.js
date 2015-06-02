@@ -28,16 +28,16 @@
                 },
                 controller: function ($scope) {
                     this.defaultIdentifierField = 'Title';
-                    var identifierField = $scope.sfIdentifierField || this.defaultIdentifierField;
+                    this.identifierField = $scope.sfIdentifierField || this.defaultIdentifierField;
 
                     this.setIdentifierField = function (identifier) {
-                        identifierField = identifier;
+                        this.identifierField = identifier;
                         $scope.sfIdentifierField = identifier;
                     };
 
                     this.bindIdentifierField = function (item) {
                         if (item) {
-                            var mainField = item[identifierField];
+                            var mainField = item[this.identifierField];
                             var valueProp = 'Value';
 
                             if (!mainField) {
