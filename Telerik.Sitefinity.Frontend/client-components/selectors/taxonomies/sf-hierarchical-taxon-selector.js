@@ -42,46 +42,26 @@
                                 taxonomyId = sitefinity.getCategoriesTaxonomyId();
                             }
 
-                            function isItemTranslated(item) {
+                            ctrl.itemDisabled = function (item) {
+                                if (!fromCurrentLanguageOnly) return false;
+
                                 var uiCulture = serverContext.getUICulture();
 
                                 if (uiCulture && item.AvailableLanguages && item.AvailableLanguages.length > 0) {
-                                    return item.AvailableLanguages.indexOf(uiCulture) >= 0;
+                                    return item.AvailableLanguages.indexOf(uiCulture) < 0;
                                 }
-                                return true;
-                            }
+                                return false;
+                            };
 
                             ctrl.getItems = function (skip, take, search, frontendLanguages) {
-                                var itemsPromise = hierarchicalTaxonService.getTaxons(taxonomyId, skip, take, search, frontendLanguages);
-
-                                if (fromCurrentLanguageOnly) {
-                                    return itemsPromise.then(function (data) {
-                                        data.Items = data.Items.filter(function (item) {
-                                            return isItemTranslated(item);
-                                        });
-                                        return data;
-                                    });
-                                }
-
-                                return itemsPromise;
+                                return hierarchicalTaxonService.getTaxons(taxonomyId, skip, take, search, frontendLanguages);
                             };
 
                             ctrl.getChildren = function (parentId, search) {
-                                var itemsPromise = hierarchicalTaxonService.getChildTaxons(parentId, search)
-                                                           .then(function (data) {
-                                                                   return data.Items;
-                                                           });
-
-                                if (fromCurrentLanguageOnly) {
-                                    return itemsPromise.then(function (data) {
-                                        data.Items = data.Items.filter(function (item) {
-                                            return isItemTranslated(item);
-                                        });
-                                        return data;
+                                return hierarchicalTaxonService.getChildTaxons(parentId, search)
+                                    .then(function (data) {
+                                        return data.Items;
                                     });
-                                }
-
-                                return itemsPromise;
                             };
 
                             ctrl.getSpecificItems = function (ids) {
