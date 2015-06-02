@@ -18,20 +18,25 @@
         <!--Select document-->
         <div ng-hide="isInUploadMode">
             <div class="Media-settings">
-                <sf-provider-selector sf-manager-type="Telerik.Sitefinity.Modules.Libraries.LibrariesManager"
-                                      ng-model="provider"
-                                      class="pull-left m-right-md">
-                </sf-provider-selector>
+				<div class="row row-xs">
+					<div class="col-xs-9">
+						<sf-provider-selector sf-manager-type="Telerik.Sitefinity.Modules.Libraries.LibrariesManager"
+											  ng-model="provider"
+											  class="pull-left m-right-md">
+						</sf-provider-selector>
 
-                <ol class="pull-left breadcrumb" ng-show="breadcrumbs && breadcrumbs.length > 0">
-                    <li ng-click="onBreadcrumbItemClick()"><a>@(Res.Get<ClientComponentsResources>().AllLibraries)</a></li>
-                    <li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
-                        <a>{{::item.Title}}</a>
-                    </li>
-                </ol>
-
-                <sf-search-box class="pull-right" sf-placeholder="@(Res.Get<ClientComponentsResources>().SearchByTitle)" sf-action="narrowResults(query)" 
-                    sf-clear-search-string="clearSearch" sf-timeout-ms="500"> </sf-search-box>
+						<ol class="pull-left breadcrumb" ng-show="breadcrumbs && breadcrumbs.length > 0">
+							<li ng-click="onBreadcrumbItemClick()"><a>@(Res.Get<ClientComponentsResources>().AllLibraries)</a></li>
+							<li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
+								<a>{{::item.Title}}</a>
+							</li>
+						</ol>
+					</div>
+					<div class="col-xs-3 m-top-xs">
+						<sf-search-box class="pull-right" sf-placeholder="@(Res.Get<ClientComponentsResources>().SearchByTitle)" sf-action="narrowResults(query)" 
+							sf-clear-search-string="clearSearch" sf-timeout-ms="500"> </sf-search-box>
+					</div>
+				</div>
             </div>
 
             <div ng-hide="items.length">
@@ -60,7 +65,7 @@
             </div>
 
             <div class="Media-settings Media-settings--bottom">
-                <button type="button" class="btn btn-link btn-sm" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">@(Res.Get<ClientComponentsResources>().SortingAndView)</button>
+                <a href="" ng-show="!showSortingAndView" ng-click="showSortingAndView = true">@(Res.Get<ClientComponentsResources>().SortingAndView)</a>
                 <div ng-show="showSortingAndView" class="row">
 
                     <sf-sort-box class="col-xs-3" sf-model="sortExpression"></sf-sort-box>
@@ -153,7 +158,7 @@
 
         <!--Filter dropdown-->
         <div class="Media-settings Media-settings--bottom">
-            <button type="button" class="btn btn-link btn-sm" ng-show="!showOtherFilterOptions" ng-click="showOtherFilterOptions = true">@(Res.Get<ClientComponentsResources>().OtherFilterOptions)</button>
+            <a href="" ng-show="!showOtherFilterOptions" ng-click="showOtherFilterOptions = true">@(Res.Get<ClientComponentsResources>().OtherFilterOptions)</a>
 
             <select ng-show="showOtherFilterOptions" class="form-control form-control-sm" ng-model="selectedFilterOption">
                 <option value="1" selected="selected">@(Res.Get<ClientComponentsResources>().Libraries)</option>
