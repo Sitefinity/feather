@@ -12,6 +12,7 @@
 	padding: 0
 
 	li
+		margin-top: 2px
 		position: relative
 
 	.sf-Tree
@@ -26,7 +27,6 @@
 			transition: opacity 0s, max-height .1s ease
 
 .sf-Tree-item
-	margin-bottom: 2px
 	span
 		padding: 5px
 		display: block
@@ -35,6 +35,7 @@
 		width: 100%
 		text-overflow: ellipsis
 		overflow: hidden
+		white-space: nowrap
 
 		&:hover,
 		&:focus
@@ -48,8 +49,8 @@
 
 .sf-Tree-expander
 	position: absolute
-	top: 14px
-	left: -12px
+	top: 10px 
+	left: -10px
 	height: 0
 	width: 0
 	float: left
@@ -69,6 +70,10 @@
 
 	&.is-expanded
 		transform: rotateZ(90deg)
+
+	&.sf-Tree-expander--lg
+		top: 14px
+
 
 // Temporary styles
 
