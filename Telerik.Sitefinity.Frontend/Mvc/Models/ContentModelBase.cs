@@ -194,6 +194,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </value>
         public virtual RelationDirection RelationTypeToDisplay { get; set; }
 
+        /// <summary>
+        /// Gets or sets the URL key prefix.
+        /// </summary>
+        /// <value>The URL key prefix.</value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
+        public virtual string UrlKeyPrefix { get; set; }
+
         #endregion
 
         #region Public methods

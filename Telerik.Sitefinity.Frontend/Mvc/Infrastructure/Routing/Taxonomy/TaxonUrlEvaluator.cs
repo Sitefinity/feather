@@ -14,6 +14,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <returns></returns>
         public static ITaxon GetTaxonFromQuery(HttpContextBase context)
         {
+            return GetTaxonFromQuery(context, null);
+        }
+
+        /// <summary>
+        /// Gets the taxon from query.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="urlKeyPrefix">The URL key prefix.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#")]
+        public static ITaxon GetTaxonFromQuery(HttpContextBase context, string urlKeyPrefix)
+        {
             if (context == null ||
                 context.Request == null)
             {
@@ -22,7 +34,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             var taxonUrlEvaluatorAdapter = new TaxonUrlEvaluatorAdapter();
 
-            return taxonUrlEvaluatorAdapter.GetTaxonFromUrl(context.Request.RawUrl, UrlEvaluationMode.QueryString);
+            return taxonUrlEvaluatorAdapter.GetTaxonFromUrl(context.Request.RawUrl, UrlEvaluationMode.QueryString, urlKeyPrefix);
         }
     }
 }
