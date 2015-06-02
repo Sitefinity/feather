@@ -50,7 +50,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             this.InitializeControllers(controllerTypes);
 
             this.InitializeCustomRouting();
-            FrontendManager.AttributeRouting.MapMvcAttributeRoutes();
         }
 
         #endregion
@@ -242,6 +241,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             string mvcControllerProxySettingsPropertyDescriptorName = string.Format("{0}.{1}", typeof(MvcWidgetProxy).FullName, "Settings");
             ObjectFactory.Container.RegisterType<IControlPropertyDescriptor, ControllerSettingsPropertyDescriptor>(mvcControllerProxySettingsPropertyDescriptorName);
+
+            FrontendManager.AttributeRouting.MapMvcAttributeRoutes();
         }
 
         #endregion
