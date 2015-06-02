@@ -19,18 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F98855
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UITests", "UITests", "{EFF407A4-62ED-4B78-9573-7F65D70482C6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SetupScripts", "SetupScripts", "{C9DF549F-1595-4163-B5CE-AFAB8F4048BB}"
-	ProjectSection(SolutionItems) = preProject
-		SetupScripts\Cleanup.bat = SetupScripts\Cleanup.bat
-		SetupScripts\Cleanup.ps1 = SetupScripts\Cleanup.ps1
-		SetupScripts\FeatherSetup.ps1 = SetupScripts\FeatherSetup.ps1
-		SetupScripts\IIS.ps1 = SetupScripts\IIS.ps1
-		SetupScripts\Setup.bat = SetupScripts\Setup.bat
-		SetupScripts\Setup.ps1 = SetupScripts\Setup.ps1
-		SetupScripts\SitefinitySetup.ps1 = SetupScripts\SitefinitySetup.ps1
-		SetupScripts\SQL.ps1 = SetupScripts\SQL.ps1
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D7E812B2-E16E-4B90-9EF8-1C5F9F907E96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.ClientTest", "Tests\Telerik.Sitefinity.Frontend.ClientTest\Telerik.Sitefinity.Frontend.ClientTest.csproj", "{889A8B70-2B62-472A-AB7C-33CA9A7F48A0}"
