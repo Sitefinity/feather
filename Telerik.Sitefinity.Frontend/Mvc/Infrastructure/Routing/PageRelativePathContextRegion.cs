@@ -20,14 +20,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             this.context = context;
             this.originalPath = context.Request.AppRelativeCurrentExecutionFilePath;
+            var originalWithSlash = VirtualPathUtility.AppendTrailingSlash(this.originalPath);
 
             var currentNode = SiteMapBase.GetCurrentNode();
             if (currentNode != null)
             {
                 var nodeUrl = currentNode.Url.StartsWith("~/", StringComparison.Ordinal) ? RouteHelper.ResolveUrl(currentNode.Url, UrlResolveOptions.ApplicationRelative | UrlResolveOptions.AppendTrailingSlash) : currentNode.Url;
-                if (this.originalPath.StartsWith(nodeUrl, StringComparison.OrdinalIgnoreCase))
+                if (originalWithSlash.StartsWith(nodeUrl, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.context.RewritePath("~/" + this.originalPath.Right(this.originalPath.Length - nodeUrl.Length));
+                    this.context.RewritePath("~/" + originalWithSlash.Right(originalWithSlash.Length - nodeUrl.Length));
                 }
             }
         }

@@ -16,10 +16,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// </summary>
         public AttributeRoutingManager()
         {
+            this.routesPerController = new Dictionary<string, RouteBase>();
+        }
+
+        /// <summary>
+        /// Maps the attribute-defined routes for the application.
+        /// </summary>
+        public void MapMvcAttributeRoutes()
+        {
+            //// Map direct routes in the global route table.
+            RouteTable.Routes.MapMvcAttributeRoutes();
+
             var routeCollection = new RouteCollection();
             routeCollection.MapMvcAttributeRoutes(new RelativeDirectRouteProvider());
 
-            this.routesPerController = new Dictionary<string, RouteBase>();
             this.OrganizeRoutes(routeCollection);
         }
 
