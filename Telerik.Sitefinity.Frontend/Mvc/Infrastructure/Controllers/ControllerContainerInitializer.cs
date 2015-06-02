@@ -50,6 +50,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             this.InitializeControllers(controllerTypes);
 
             this.InitializeCustomRouting();
+            FrontendManager.AttributeRouting.MapMvcAttributeRoutes();
         }
 
         #endregion
