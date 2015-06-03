@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public ITaxon GetTaxonFromUrl(string url, UrlEvaluationMode mode)
+        public ITaxon GetTaxonFromUrl(string url, UrlEvaluationMode mode, string urlPrefix = null)
         {
             if (this.taxonomyEvaluator == null)
             {
@@ -33,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             string taxonomyName;
             string taxonName;
 
-            this.taxonomyEvaluator.ParseTaxonomyParams(mode, url, null, out taxonName, out taxonomyName);
+            this.taxonomyEvaluator.ParseTaxonomyParams(mode, url, urlPrefix, out taxonName, out taxonomyName);
 
             if (!string.IsNullOrEmpty(taxonName) && !string.IsNullOrEmpty(taxonomyName))
             {
