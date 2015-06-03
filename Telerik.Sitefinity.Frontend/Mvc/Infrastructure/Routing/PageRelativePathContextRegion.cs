@@ -28,7 +28,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 var nodeUrl = currentNode.Url.StartsWith("~/", StringComparison.Ordinal) ? RouteHelper.ResolveUrl(currentNode.Url, UrlResolveOptions.ApplicationRelative | UrlResolveOptions.AppendTrailingSlash) : currentNode.Url;
                 if (originalWithSlash.StartsWith(nodeUrl, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.context.RewritePath("~/" + originalWithSlash.Right(originalWithSlash.Length - nodeUrl.Length));
+                    var newPath = originalWithSlash.Right(originalWithSlash.Length - nodeUrl.Length);
+                    if (newPath.Equals("Action/Edit/", StringComparison.OrdinalIgnoreCase))
+                        newPath = string.Empty;
+
+                    this.context.RewritePath("~/" + newPath);
                 }
             }
         }
