@@ -55,7 +55,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     var requestContext = proxyControl.RequestContext;
 
                     paramsMapper.ResolveUrlParams(originalParams, requestContext);
-                    controller.TempData.Add("IsInPureMode", proxyControl.IsInPureMode);
 
                     if (!proxyControl.ContentTypeName.IsNullOrEmpty())
                         controller.RouteData.Values.Add("contentTypeName", proxyControl.ContentTypeName);
@@ -74,6 +73,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     RouteHelper.SetUrlParametersResolved();
                 }
             }
+
+            controller.TempData.Add("IsInPureMode", proxyControl.IsInPureMode);
         }
 
         /// <summary>
