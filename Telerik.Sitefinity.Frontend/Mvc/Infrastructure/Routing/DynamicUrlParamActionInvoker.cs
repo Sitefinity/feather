@@ -46,7 +46,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             var controller = proxyControl.GetController();
 
-            if (!FrontendManager.AttributeRouting.UpdateRouteData(this.Context, controller.RouteData))
+            if (!FrontendManager.AttributeRouting.HasAttributeRouting(controller.RouteData))
             {
                 var paramsMapper = this.GetDefaultParamsMapper(controller);
                 if (paramsMapper != null)
@@ -68,8 +68,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             else
             {
-                //// Attribute routing was successful.
-                RouteHelper.SetUrlParametersResolved();
+                if (FrontendManager.AttributeRouting.UpdateRouteData(this.Context, controller.RouteData))
+                {
+                    //// Attribute routing was successful.
+                    RouteHelper.SetUrlParametersResolved();
+                }
             }
         }
 

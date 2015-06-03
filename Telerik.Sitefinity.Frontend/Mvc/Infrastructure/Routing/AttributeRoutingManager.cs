@@ -34,6 +34,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         /// <summary>
+        /// Determines whether the controller in the specified route data has attribute routing.
+        /// </summary>
+        /// <param name="routeData">The route data.</param>
+        /// <exception cref="System.ArgumentNullException">routeData</exception>
+        public bool HasAttributeRouting(RouteData routeData)
+        {
+            if (routeData == null)
+                throw new ArgumentNullException("routeData");
+
+            var controllerName = routeData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] as string;
+            return this.routesPerController.ContainsKey(controllerName);
+        }
+
+        /// <summary>
         /// Updates the route data using the applicable routes for the given context. Returns false if there are no applicable routes. Infers controller name from the given route data.
         /// </summary>
         /// <param name="context">The context.</param>
