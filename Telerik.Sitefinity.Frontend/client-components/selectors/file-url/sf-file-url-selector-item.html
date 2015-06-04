@@ -1,10 +1,10 @@
-﻿<a class="sf-Tree-expander" ng-class="{'is-expanded' : node.collapsed !== true}" ng-if="hasChildren(node)" ng-click="toggle(node)"></a>
+﻿<a class="sf-Tree-expander sf-Tree-expander--lg" ng-class="{'is-expanded' : node.collapsed !== true}" ng-if="hasChildren(node)" ng-click="toggle(node)"></a>
 <span ng-click="select(node)" ng-class="{'is-selected' : isSelected(node) === true, 'is-folder' : node.item.isFolder === true, 'is-file' : node.item.isFolder === false}">
     
-    <i class="icon-file icon-txt icon-sm" ng-show="node.item.extension === 'css' || node.item.extension === 'js' ">
+    <i class="icon-file icon-txt icon-sm" ng-if="node.item.extension === 'css' || node.item.extension === 'js' ">
         <small class="icon-txt-{{node.item.extension}}">{{node.item.extension}}</small>
     </i>
-    <i class="glyphicon glyphicon-folder-close" ng-show="node.item.isFolder === true">
+    <i class="glyphicon glyphicon-folder-close" ng-if="node.item.isFolder === true">
     </i>
 
     <label ng-bind="node.item.label"></label>

@@ -52,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#")]
         public static MvcHtmlString CommentsCount(this HtmlHelper helper, string navigateUrl, string threadKey, string threadType, bool? allowComments = null)
         {
-            if (SystemManager.GetModule("Comments") == null)
+            if (SystemManager.GetModule("Comments") == null || string.IsNullOrEmpty(threadKey))
                 return MvcHtmlString.Empty;
 
             if (string.IsNullOrEmpty(navigateUrl))

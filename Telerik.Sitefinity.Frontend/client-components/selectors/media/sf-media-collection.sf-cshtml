@@ -1,46 +1,46 @@
 ﻿<div class="Media-items" sf-infinite-scroll="$parent.loadMore()">
 
-    <div>
-        <div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder">
-            <div ng-if="item.IsFolder === true">
-                <span class="Media-item-info"
-                        ng-show="item.metricsAvailable"
-                        sf-popover-html
-                        sf-popover-placement="right"
-                        sf-popover-trigger="hover"
-                        sf-popover-append-to-body="true"
-                        sf-popover-title="{{item.Title}}"
-                        sf-popover-content="
-                                <p>{{item.FoldersCount}}</p>
-                                <p>{{item.ItemsCount}}</p>
-                                <p>@(Res.Get<ClientComponentsResources>().CreatedOn) {{$parent.$parent.$parent.getDateCreated(item) | date : 'M/d/yyyy h:mm'}}</p>
-                        ">
-                    i
-                </span>
 
-                <div class="Media-file-wrapper" ng-click="select(item)">
-                    <div class="Media-file-thumb">
-                        <div class="Media-file-thumb-holder">
-                            <div><i class="glyphicon glyphicon-folder-close"></i></div>
-                            <strong>{{item.Title}}</strong>
-                        </div>
-                    </div>
+  <div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder">
+      <div ng-if="item.IsFolder === true">
+          <span class="Media-item-info"
+                  ng-show="item.metricsAvailable"
+                  sf-popover-html
+                  sf-popover-placement="right"
+                  sf-popover-trigger="hover"
+                  sf-popover-append-to-body="true"
+                  sf-popover-title="{{item.Title}}"
+                  sf-popover-content="
+                          <p>{{item.FoldersCount}}</p>
+                          <p>{{item.ItemsCount}}</p>
+                          <p>@(Res.Get<ClientComponentsResources>().CreatedOn) {{$parent.$parent.$parent.getDateCreated(item) | date : 'M/d/yyyy h:mm'}}</p>
+                  ">
+              i
+          </span>
 
-                    <div class="Media-folder-title" ng-class="{'Media-folder-title--wa' : !item.metricsAvailable}">
-                        {{item.Title}}
-                    </div>
+          <div class="Media-file-wrapper" ng-click="select(item)">
+              <div class="Media-file-thumb">
+                  <div class="Media-file-thumb-holder">
+                      <div><i class="glyphicon glyphicon-folder-close"></i></div>
+                      <strong>{{item.Title}}</strong>
+                  </div>
+              </div>
 
-                    <div class="Media-item-meta" ng-show="item.metricsAvailable">
-                        <div>{{item.ItemsCount}}</div>
-                        {{item.FoldersCount}}
-                    </div>
-                </div>
+              <div class="Media-folder-title" ng-class="{'Media-folder-title--wa' : !item.metricsAvailable}">
+                  {{item.Title}}
+              </div>
 
-            </div>
-        </div>
-    </div>
+              <div class="Media-item-meta" ng-show="item.metricsAvailable">
+                  <div>{{item.ItemsCount}}</div>
+                  {{item.FoldersCount}}
+              </div>
+          </div>
 
-	<div>
+      </div>
+  </div>
+
+
+	<div class="Media-items-holder">
 		<div ng-repeat="item in items | filter: { IsFolder : false }" class="Media-file Media-file--video" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected>
 			<span class="Media-item-info"
 						sf-popover-html

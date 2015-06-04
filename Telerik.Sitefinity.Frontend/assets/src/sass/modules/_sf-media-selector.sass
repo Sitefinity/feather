@@ -4,7 +4,6 @@
 	position: absolute
 	top: 0
 	bottom: 0
-	padding: 20px
 	overflow-y: auto
 	border-top: 1px solid #e5e5e5
 
@@ -15,28 +14,33 @@
 
 // Sidebar
 .Media-sidebar
-	right: 0
 	width: 260px
+	right: 0
+	padding: 20px 20px 20px 0
 	border-left: 1px solid #e5e5e5
 
 .Media-sidebar-content
 	height: calc(100% - 10px)
 	margin: -20px -20px 0 0
-	padding: 20px 20px 20px 0
+	padding: 20px
 	overflow-y: auto
 
 
 .Media-items
-	padding: 10px 20px
+	padding: 10px 20px 0
 	position: absolute
-	top: 48px
-	bottom: 48px
+	top: 46px
+	bottom: 45px
 	right: 0
 	left: 0
 	overflow-y: auto !important // Needed to overwrite the overflow: scroll inline style
 
 	.is-list &
 		padding: 0
+
+	.Media-items-holder
+		padding-bottom: 20px
+	
 
 // Folder/File common styles
 .Media-folder,
@@ -112,11 +116,9 @@
 			border:0
 
 	.Media-file-thumb-holder
-		background: #fff
 
 		.is-list &
 			border: 0
-			background: transparent
 
 	.Media-item-info
 		bottom: 14px
@@ -154,7 +156,7 @@
 
 	&:hover,
 	&:focus
-		background: rgba(#428BCA, .2)
+		background: #eee
 
 	&.is-selected
 		background-color: #428BCA
@@ -201,7 +203,6 @@
 	overflow: hidden
 	display: table-cell
 	vertical-align: middle
-	background: #efefef
 
 	.is-list &
 		display: inline-block
@@ -209,7 +210,6 @@
 		height: 48px
 		line-height: 48px
 		text-align: center
-		border: 1px solid #D7D7D7
 
 
 .Media-item-title,
@@ -265,23 +265,31 @@
 .Media-settings
 	background: #f2f2f2
 	width: 100%
-	height: 48px
-	padding: 10px 20px
-	border-bottom: 1px solid #e5e5e5
-
+	height: 45px
+	line-height: 42px
+	padding: 0 5px 0 20px
 	position: absolute
 	top: 0
 	left: 0
 	right: 0
 
 	.breadcrumb
-		padding: 2px 0 0
+		padding: 0
+		background: none
 
 .Media-settings--bottom
 	top: auto
 	bottom: 0
+	padding: 0 20px
 	border-top: 1px solid #e5e5e5
 	border-bottom: none
+	background: none
+
+	a
+		color: #777
+
+		&hover
+			color: #333
 
 // Sort and view options
 .Media-settings-sort
@@ -392,21 +400,16 @@
 		&:hover
 			background-color: #428bca
 
+
 //Document selector
 .Media-file
 	&.Media-file--doc
-
-		.is-grid &
-			border: 1px solid #d7d7d7
-
 		&.is-selected
 			.icon-file
 				.is-list &
 					color: #fff
 
 		.Media-file-wrapper
-			border: 10px solid transparent
-
 			.is-list &
 				border: 0
 
@@ -414,8 +417,10 @@
 			overflow: visible
 
 		.Media-file-thumb-holder
-			background: #fff
 			overflow: visible
+			border-radius: 3px
+			border: 1px solid #d7d7d7
+			background: #fff
 
 			.is-list &
 				border: 0
@@ -440,18 +445,30 @@
 			bottom: 14px
 			right: 14px
 
-	//Video selector
-
+//Video selector
+.Media-file
 	&.Media-file--video
 		width: 180px
+		height: 140px
+
+		.Media-file-wrapper
+			.is-list &
+				height: auto
 
 		.Media-file-thumb-holder
 			width: 160px
+			height: 120px
 
 			.is-list &
 				width: 48px
+				height: auto
+				line-height: 36px
 
+		.Media-file-thumb
+			.is-list &
+				height: 36px
 
 		.is-list &
 			width: 100%
+			height: auto
 
