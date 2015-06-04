@@ -168,7 +168,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 if (country != null)
                 {
                     countryName = country.Name;
-                    if (fieldValue.StateCode.IsNullOrEmpty() &&
+                    if (!fieldValue.StateCode.IsNullOrEmpty() &&
                         (fieldValue.CountryCode == "CA" || fieldValue.CountryCode == "US"))
                     {
                         var stateData = Telerik.Sitefinity.Configuration.Config.Get<LocationsConfig>().Countries[fieldValue.CountryCode]
