@@ -24,6 +24,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             ObjectFactory.Container.RegisterType<PageRouteHandler, MvcPageRouteHandler>();
             ObjectFactory.Container.RegisterType<PageEditorRouteHandler, MvcPageEditorRouteHandler>();
             ObjectFactory.Container.RegisterType<TemplateEditorRouteHandler, MvcTemplateEditorRouteHandler>();
+            System.Web.Routing.RouteTable.Routes.Insert(1, new System.Web.Routing.Route("Sitefinity/Versioning/{itemId}/{VersionNumber}", ObjectFactory.Resolve<MvcVersioningRouteHandler>()));
         }
     }
 }
