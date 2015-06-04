@@ -241,6 +241,7 @@
     </Compile>
     <Compile Include="Mvc\Infrastructure\Layouts\SectionRenderer.cs" />
     <Compile Include="Mvc\Infrastructure\PageInitializer.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcVersioningRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageEditorRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcTemplateEditorRouteHandler.cs" />

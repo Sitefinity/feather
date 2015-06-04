@@ -30,8 +30,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         {
             var shouldProcess = base.ShouldProcessRequest(proxyControl);
 
-            var configManager = ConfigManager.GetManager();
-            var toolboxesConfig = configManager.GetSection<ToolboxesConfig>();
+            var toolboxesConfig = Config.Get<ToolboxesConfig>();
             shouldProcess &= toolboxesConfig != null;
 
             return shouldProcess;
