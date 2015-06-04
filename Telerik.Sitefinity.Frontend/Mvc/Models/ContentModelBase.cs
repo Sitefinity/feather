@@ -724,10 +724,34 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var filterExpression = ContentHelper.AdaptMultilingualFilterExpression(this.FilterExpression);
             int? skip = (page - 1) * this.ItemsPerPage;
 
-            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay)
+            Guid id = this.GetLifecycleItemRelevantId(relatedItem);
+
+            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay)
                 .OfType<IDataItem>();
 
             return relatedItems;
+        }
+
+        private Guid GetLifecycleItemRelevantId(IDataItem item)
+        {
+            Guid id;
+            var lifecycleItem = item as ILifecycleDataItemGeneric;
+            if (lifecycleItem != null)
+            {
+                if (lifecycleItem.Status == ContentLifecycleStatus.Master)
+                {
+                    id = lifecycleItem.Id;
+                }
+                else
+                {
+                    id = lifecycleItem.OriginalContentId;
+                }
+            }
+            else
+            {
+                id = item.Id;
+            }
+            return id;
         }
         #endregion
 
