@@ -371,6 +371,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
         }
 
+        /// <summary>
+        /// Sets the properties of the model needed to retrieve the related data.
+        /// </summary>
+        /// <param name="relatedItem">The related item.</param>
+        /// <param name="relatedDataViewModel">The related data view model.</param>
+        public virtual void SetRelatedDataProperties(IDataItem relatedItem, RelatedDataViewModel relatedDataViewModel)
+        {
+            this.RelatedItemType = relatedDataViewModel.RelatedItemType;
+            this.RelatedItemProviderName = ((IDataProviderBase)relatedItem.Provider).Name;
+            this.RelationTypeToDisplay = (RelationDirection)Enum.Parse(typeof(RelationDirection), relatedDataViewModel.RelationTypeToDisplay);
+            this.RelatedFieldName = relatedDataViewModel.RelatedFieldName;
+
+            var manager = ManagerBase.GetMappedManager(this.RelatedItemType, this.RelatedItemProviderName);
+
+            if (this.RelatedItemProviderName.IsNullOrEmpty())
+                this.RelatedItemProviderName = manager.Provider.Name;
+        }
         #endregion
 
         #region Protected methods
@@ -751,6 +768,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             {
                 id = item.Id;
             }
+
             return id;
         }
         #endregion
