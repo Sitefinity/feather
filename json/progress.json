@@ -1404,13 +1404,13 @@
                   },
                   {
                      "article" : "",
-                     "commitHash" : "",
-                     "date" : "",
+                     "commitHash" : "bee2b20758707b21c27788bff2aa7b629b248d0e",
+                     "date" : "06-05-2015 15:56 +0300",
                      "name" : "Query string support",
-                     "tag" : ""
+                     "tag" : "v.1.2.240.0"
                   }
                ],
-               "shortDescription" : "Released",
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -1418,6 +1418,15 @@
                "longDescription" : "",
                "name" : "Categories",
                "progress" : 75,
+               "releases" : [
+                  {
+                     "article" : "MVC-Categories-widget",
+                     "commitHash" : "bee2b20758707b21c27788bff2aa7b629b248d0e",
+                     "date" : "06-05-2015 15:56 +0300",
+                     "name" : "Categories widget implementation",
+                     "tag" : "v.1.2.240.0"
+                  }
+               ],
                "shortDescription" : "Coming soon",
                "unstable" : false
             }
