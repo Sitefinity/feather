@@ -978,7 +978,7 @@
                "longDescription" : "",
                "name" : "Feed",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
@@ -1393,7 +1393,7 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Tags",
-               "progress" : 90,
+               "progress" : 100,
                "releases" : [
                   {
                      "article" : "MVC-Tags-widget",
@@ -1417,7 +1417,7 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Categories",
-               "progress" : 75,
+               "progress" : 100,
                "releases" : [
                   {
                      "article" : "MVC-Categories-widget",
