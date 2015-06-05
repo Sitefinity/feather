@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Telerik.Sitefinity.RelatedData;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
