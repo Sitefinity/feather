@@ -101,8 +101,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.8.1.5800.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.2.270.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.1.2.270.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization">
       <SpecificVersion>False</SpecificVersion>
@@ -180,6 +181,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Data\DesignerView.Selector.cshtml" />
     <EmbeddedResource Include="Data\DesignerView.Selector.json" />
+    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

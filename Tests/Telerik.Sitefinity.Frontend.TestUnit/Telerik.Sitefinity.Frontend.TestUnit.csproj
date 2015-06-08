@@ -114,8 +114,9 @@
     <Reference Include="Telerik.Sitefinity.Model">
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.8.1.5800.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.2.270.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.1.2.270.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
       <HintPath>..\..\packages\Telerik.Sitefinity.TestUtilities.8.1.5800.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
@@ -157,7 +158,7 @@
     <Compile Include="Mvc\Helpers\LayoutsHelpersTests.cs" />
     <Compile Include="Mvc\Helpers\LocalizationHelpersTests.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelperTests.cs" />
-	<Compile Include="Mvc\Helpers\TaxonUrlMapperTests.cs" />
+    <Compile Include="Mvc\Helpers\TaxonUrlMapperTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttributeTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerExtensionsTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensionsTests.cs" />
@@ -202,6 +203,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="ClientScripts\test.bat" />
     <None Include="ClientScripts\test.debug.bat" />
     <None Include="packages.config">
