@@ -62,6 +62,12 @@ namespace Telerik.Sitefinity.Frontend
             get { return new Type[0]; }
         }
 
+        /// <summary>
+        /// Gets the dependency resolver. Can be used for overriding the default implementations of some interfaces.
+        /// </summary>
+        /// <value>
+        /// The dependency resolver.
+        /// </value>
         public IKernel DependencyResolver
         {
             get
