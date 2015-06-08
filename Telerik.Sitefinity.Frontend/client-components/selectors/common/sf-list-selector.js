@@ -207,6 +207,9 @@
                                 that.onSelectedItemsLoadedSuccess(data);
                             }, that.onError);
                     };
+
+                    this.areItemsEqualFunc = function (selectedItemInDialog, item) {
+                    };
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -499,9 +502,18 @@
                         scope.isItemSelectedInDialog = function (item) {
                             if (!item) return false;
 
-                            for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
-                                if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
-                                    return true;
+                            if (ctrl.areItemsEqualFunc) {
+                                for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
+                                    if (ctrl.areItemsEqualFunc(scope.selectedItemsInTheDialog[i], item)) {
+                                        return true;
+                                    }
+                                }
+                            }
+                            else {
+                                for (var i = 0; i < scope.selectedItemsInTheDialog.length; i++) {
+                                    if (scope.selectedItemsInTheDialog[i].Id === item.Id) {
+                                        return true;
+                                    }
                                 }
                             }
                         };

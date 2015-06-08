@@ -6,9 +6,9 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
-                        ctrl.getItems = function (skip, take, search, frontendLanguages) {
+                        ctrl.getItems = function (skip, take, search) {
                             var provider = ctrl.$scope.sfProvider;
-                            return feedsService.getItems(provider, skip, take, search, frontendLanguages);
+                            return feedsService.getItems(provider, skip, take, search);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
@@ -26,6 +26,10 @@
                             'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
+
+                        ctrl.areItemsEqualFunc = function (selectedItemInDialog, item) {
+                            return selectedItemInDialog.ID == item.ID;
+                        };
                     }
                 }
             };
