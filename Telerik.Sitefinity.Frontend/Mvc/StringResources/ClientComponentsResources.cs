@@ -3002,5 +3002,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["UserSelectorHeader"];
             }
         }
+
+        /// <summary>
+        /// phrase: Select feed
+        /// </summary>
+        /// <value>Select feed</value>
+        [ResourceEntry("FeedSelectorHeader",
+            Value = "Select feed",
+            Description = "phrase: Select feed",
+            LastModified = "2015/03/24")]
+        public string FeedSelectorHeader
+        {
+            get
+            {
+                return this["FeedSelectorHeader"];
+            }
+        }
     }
 }
