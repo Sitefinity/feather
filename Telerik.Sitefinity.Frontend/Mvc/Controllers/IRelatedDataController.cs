@@ -24,7 +24,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             IDataItem relatedItem,
             string templateName,
             RelatedDataViewModel relatedDataViewModel,
-            ListWidgetSettingsViewModel settingsViewModel,
+            ContentListSettingsViewModel settingsViewModel,
             int? page);
     }
 }

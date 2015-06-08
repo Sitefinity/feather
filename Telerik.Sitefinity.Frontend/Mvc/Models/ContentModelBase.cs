@@ -394,7 +394,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Sets the model properties by given view model.
         /// </summary>
         /// <param name="viewModel">The view model.</param>
-        public virtual void SetModelProperties(ListWidgetSettingsViewModel viewModel)
+        public virtual void SetModelProperties(ContentListSettingsViewModel viewModel)
         {
             this.DisableCanonicalUrlMetaTag = viewModel.DisableCanonicalUrlMetaTag;
             this.DisplayMode = viewModel.DisplayMode;

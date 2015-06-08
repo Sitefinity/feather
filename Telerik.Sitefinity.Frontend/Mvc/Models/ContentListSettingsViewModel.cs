@@ -7,7 +7,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
     /// This is the view model of the list widget's settings.
     /// It can be used when we want to call a widget's action with specific settings for its model.
     /// </summary>
-    public class ListWidgetSettingsViewModel
+    public class ContentListSettingsViewModel
     {
         /// <summary>
         /// Gets or sets the CSS class that will be applied on the wrapping element of the widget when it is in List view.

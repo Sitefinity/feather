@@ -251,7 +251,7 @@
     <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlEvaluator.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlEvaluatorAdapter.cs" />
-    <Compile Include="Mvc\Models\ListWidgetSettingsViewModel.cs" />
+    <Compile Include="Mvc\Models\ContentListSettingsViewModel.cs" />
     <Compile Include="Mvc\Models\RelatedDataViewModel.cs" />
     <Compile Include="Mvc\Models\ScriptDependencyConfigModel.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\RequiredIfExistAttribute.cs" />
