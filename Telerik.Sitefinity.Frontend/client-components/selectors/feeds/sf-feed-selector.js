@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfFeedSelector', ['sfNewsItemService', function (feedsService) {
+        .directive('sfFeedSelector', ['sfFeedsService', function (feedsService) {
             return {
                 require: '^sfListSelector',
                 restrict: 'A',
