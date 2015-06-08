@@ -156,15 +156,15 @@ namespace Telerik.Sitefinity.Frontend
         {
             if (e.CommandName == "Bootstrapped")
             {
-                var controllerContainerInitializer = new ControllerContainerInitializer();
-                controllerContainerInitializer.Initialize(this.controllerAssemblies);
-                this.controllerAssemblies = null; // We won't be needing those anymore. Set them free.
-
                 var resourcesInitializer = new ResourcesInitializer();
                 resourcesInitializer.Initialize();
 
                 var fileMonitoringInitilizer = new FileMonitoringInitializer();
                 fileMonitoringInitilizer.Initialize();
+
+                var controllerContainerInitializer = new ControllerContainerInitializer();
+                controllerContainerInitializer.Initialize(this.controllerAssemblies);
+                this.controllerAssemblies = null; // We won't be needing those anymore. Set them free.
 
                 var layoutsInitializer = new LayoutInitializer();
                 layoutsInitializer.Initialize();
