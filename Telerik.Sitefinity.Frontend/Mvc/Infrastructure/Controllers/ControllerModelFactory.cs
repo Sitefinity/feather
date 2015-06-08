@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Web.Mvc;
 using Ninject;
 using Ninject.Parameters;
 
@@ -25,16 +23,35 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controllerType == null)
                 throw new ArgumentNullException("controllerType");
 
-            var parameters = new List<ConstructorArgument>();
-            if (constructorParameters != null && constructorParameters.Any())
+            ConstructorArgument[] parameters;
+            if (constructorParameters != null && constructorParameters.Count > 0)
             {
+                parameters = new ConstructorArgument[constructorParameters.Count];
+
+                int i = 0;
                 foreach (var param in constructorParameters)
                 {
-                    parameters.Add(new ConstructorArgument(param.Key, param.Value));
+                    parameters[i] = new ConstructorArgument(param.Key, param.Value);
+                    i++;
                 }
             }
+            else
+            {
+                parameters = null;
+            }
 
-            return FrontendModule.Current.DependencyResolver.Get<T>(parameters.ToArray());
+            if (FrontendModule.Current != null)
+            {
+                return FrontendModule.Current.DependencyResolver.Get<T>(parameters);
+            }
+            else
+            {
+                using (var kernel = new StandardKernel())
+                {
+                    kernel.Load(controllerType.Assembly);
+                    return kernel.Get<T>(parameters.ToArray());
+                }
+            }
         }
     }
 }
