@@ -383,10 +383,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             this.RelationTypeToDisplay = (RelationDirection)Enum.Parse(typeof(RelationDirection), relatedDataViewModel.RelationTypeToDisplay);
             this.RelatedFieldName = relatedDataViewModel.RelatedFieldName;
 
-            var manager = ManagerBase.GetMappedManager(this.RelatedItemType, this.RelatedItemProviderName);
-
             if (this.RelatedItemProviderName.IsNullOrEmpty())
+            {
+                var manager = ManagerBase.GetMappedManager(this.RelatedItemType, this.RelatedItemProviderName);
                 this.RelatedItemProviderName = manager.Provider.Name;
+            }
+        }
+
+        /// <summary>
+        /// Sets the model properties by given view model.
+        /// </summary>
+        /// <param name="viewModel">The view model.</param>
+        public virtual void SetModelProperties(ListWidgetSettingsViewModel viewModel)
+        {
+            this.DisableCanonicalUrlMetaTag = viewModel.DisableCanonicalUrlMetaTag;
+            this.DisplayMode = viewModel.DisplayMode;
+            this.EnableSocialSharing = viewModel.EnableSocialSharing;
+            this.FilterExpression = viewModel.FilterExpression;
+
+            if (viewModel.ItemsPerPage > 0)
+                this.ItemsPerPage = viewModel.ItemsPerPage;
+
+            this.ListCssClass = viewModel.ListCssClass;
+            this.SelectionMode = viewModel.SelectionMode;
+            this.SerializedAdditionalFilters = viewModel.SerializedAdditionalFilters;
+            this.SortExpression = viewModel.SortExpression;
         }
         #endregion
 
