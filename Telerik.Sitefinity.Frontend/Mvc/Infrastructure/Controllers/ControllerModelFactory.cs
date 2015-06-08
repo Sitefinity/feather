@@ -25,36 +25,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controllerType == null)
                 throw new ArgumentNullException("controllerType");
 
-            using (var kernel = new StandardKernel())
+            var parameters = new List<ConstructorArgument>();
+            if (constructorParameters != null && constructorParameters.Any())
             {
-                var assemblies = ControllerModelFactory.GetTypeHierarchyAssemblies(controllerType).Distinct();
-                kernel.Load(assemblies);
-
-                var parameters = new List<ConstructorArgument>();
-                if (constructorParameters != null && constructorParameters.Any())
+                foreach (var param in constructorParameters)
                 {
-                    foreach (var param in constructorParameters)
-                    {
-                        parameters.Add(new ConstructorArgument(param.Key, param.Value));
-                    }
+                    parameters.Add(new ConstructorArgument(param.Key, param.Value));
                 }
-
-                return kernel.Get<T>(parameters.ToArray());
-            }
-        }
-
-        private static IEnumerable<Assembly> GetTypeHierarchyAssemblies(Type type)
-        {
-            var result = new List<Assembly>();
-            var currentType = type;
-
-            while (currentType != null && currentType != typeof(Controller) && currentType != typeof(object))
-            {
-                result.Add(currentType.Assembly);
-                currentType = currentType.BaseType;
             }
 
-            return result;
+            return FrontendModule.Current.DependencyResolver.Get<T>(parameters.ToArray());
         }
     }
 }

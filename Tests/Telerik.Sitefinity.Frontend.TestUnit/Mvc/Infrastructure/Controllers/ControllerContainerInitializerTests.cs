@@ -165,7 +165,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
                 };
 
             // Act
-            initializer.Initialize();
+            initializer.Initialize(null);
 
             // Assert
             Assert.IsTrue(registerVirtualPathsCalled, "RegisterVirtualPaths was not called.");
