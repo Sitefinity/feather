@@ -37,7 +37,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
             else
             {
-                parameters = null;
+                parameters = new ConstructorArgument[0];
             }
 
             if (FrontendModule.Current != null)
@@ -49,7 +49,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 using (var kernel = new StandardKernel())
                 {
                     kernel.Load(controllerType.Assembly);
-                    return kernel.Get<T>(parameters.ToArray());
+                    return kernel.Get<T>(parameters);
                 }
             }
         }
