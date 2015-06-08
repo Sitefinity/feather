@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Routing;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Versioning;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -205,6 +207,13 @@ namespace Telerik.Sitefinity.Frontend.Resources
             {
                 var pageNodeId = PackageManager.GetEditedContainerKey(context);
                 packageName = this.GetPackageFromNodeId(pageNodeId);
+            }
+            else if (context.Request.Path.Contains("/Sitefinity/Versioning"))
+            {
+                var pageNodeId = new Guid(context.Request.RequestContext.RouteData.Values["itemId"].ToString());
+                var page = PageManager.GetManager().GetPageData(pageNodeId);
+
+                packageName = this.GetPackageFromNodeId(page.NavigationNodeId.ToString());
             }
             else
             {
