@@ -26,10 +26,6 @@
                             'client-components/selectors/common/sf-bubbles-selection.sf-cshtml';
 
                         ctrl.closedDialogTemplateUrl = closedDialogTemplate;
-
-                        ctrl.areItemsEqualFunc = function (selectedItemInDialog, item) {
-                            return selectedItemInDialog.ID == item.ID;
-                        };
                     }
                 }
             };

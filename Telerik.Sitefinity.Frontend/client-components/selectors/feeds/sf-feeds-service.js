@@ -3,6 +3,8 @@
         .factory('sfFeedsService', ['serviceHelper', 'serverContext', function (serviceHelper, serverContext) {
             /* Private methods and variables */
 
+            var defaultProviderName = "OAPublishingProvider";
+            var defaultPipeName = "RSSOutboundPipe";
             var serviceUrl = serverContext.getRootedUrl('Sitefinity/Services/Publishing/PublishingService.svc/');
 
             var getResource = function (uriTemplate) {
@@ -15,29 +17,41 @@
                 return serviceHelper.getResource(url);
             };
 
-            var defaultProviderName = "OAPublishingProvider";
-            var pipeName = "RSSOutboundPipe";
+            var mapPromiseItemId = function (promise) {
+                promise.then(function (data) {
+                    data.Items.map(function (item) {
+                        item.Id = item.ID;
+                    });
+                });
+
+                return promise;
+            };
 
             var getFeeds = function (provider, skip, take, search, sort) {
                 var filter = serviceHelper.filterBuilder()
-                    .searchFilter(search)
+                    .searchFilter(search, '', 'PublishingPoint.Name')
                     .getFilter();
 
-                return getResource('pipes').get({
+                var promise = getResource('pipes').get({
                     providerName: provider || defaultProviderName,
-                    pipeTypeName: pipeName,
+                    pipeTypeName: defaultPipeName,
                     sort: sort,
                     skip: skip,
                     take: take,
                     filter: filter
                 }).$promise;
+
+                return mapPromiseItemId(promise);
             };
 
             var getSpecificItems = function (id, provider) {
-                return getResource(id).put({
-                    providerName: provider,
-                    createNew: false
+                var promise = getResource('pipes').get({
+                    providerName: provider || defaultProviderName,
+                    pipeTypeName: defaultPipeName,
+                    filter: '(Id.Equals("' + id + '"))'
                 }).$promise;
+
+                return mapPromiseItemId(promise);
             };
 
             return {
