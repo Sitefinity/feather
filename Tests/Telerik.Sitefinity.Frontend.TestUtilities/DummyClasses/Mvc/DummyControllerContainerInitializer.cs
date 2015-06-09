@@ -140,18 +140,18 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
             return this.IsControllerContainer(assemblyFileName);
         }
 
-        #endregion
-
-        #region Overrides
-
         /// <inheritdoc />
-        protected override IEnumerable<Assembly> RetrieveAssemblies()
+        public override IEnumerable<Assembly> RetrieveAssemblies()
         {
             if (this.RetrieveAssembliesMock != null)
                 return this.RetrieveAssembliesMock();
             else
                 return base.RetrieveAssemblies();
         }
+
+        #endregion
+
+        #region Overrides
 
         /// <inheritdoc />
         protected override void RegisterVirtualPaths(IEnumerable<Assembly> assemblies)
