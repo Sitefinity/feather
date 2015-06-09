@@ -22,7 +22,7 @@ describe('sfFeedsService', function () {
             Id: '4c013fb0-2a77-61ec-be54-ff00007864f4',
             Title: 'Feed title2'
         }],
-        TotalCount: 2
+        TotalCount: 1
     };
 
     var appPath = 'http://mysite.com:9999/myapp';
