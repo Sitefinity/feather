@@ -44,7 +44,7 @@
                 return mapPromiseItemId(promise);
             };
 
-            var getSpecificItems = function (id, provider) {
+            var getSpecificFeed = function (id, provider) {
                 var promise = getResource('pipes').get({
                     providerName: provider || defaultProviderName,
                     pipeTypeName: defaultPipeName,
@@ -58,7 +58,7 @@
                 /* Returns the data items. */
 
                 getItems: getFeeds,
-                getSpecificItems: getSpecificItems,
+                getSpecificItems: getSpecificFeed,
             };
         }]);
 })();
