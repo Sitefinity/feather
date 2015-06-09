@@ -19,6 +19,7 @@
 
                     var isInHtmlView = false;
                     var isFullScreen = false;
+                    var showAllCommands = false;
                     var editor = null;
                     var content = null;
                     var originalEditorSizes = null;
@@ -57,7 +58,7 @@
                     }
 
                     // If an anchor is in the range, preserve it and insert the given markup in it.
-                    function preserveWrapperATag (newMarkup) {
+                    function preserveWrapperATag(newMarkup) {
                         var range = editor.getRange();
                         var anchor = getAnchorElement(range);
                         if (anchor) {
@@ -77,6 +78,8 @@
 
                             fullScreenIcon = $(".js-fullScreen");
                             fullScreenIcon.addClass("glyphicon-resize-full");
+
+                            scope.toggleAllTools();
                         }
                     });
 
@@ -274,6 +277,22 @@
                         modalHeaderAndFooter.toggle();
                         isFullScreen = !isFullScreen;
                     };
+
+                    scope.toggleAllTools = function () {
+                        if (!editor) {
+                            return;
+                        }
+                        var toolbar = editor.toolbar.element.eq(0);
+                        var commands = editor.element.eq(0).attr('sf-toggle-commands').split(',');
+                        
+                        commands.forEach(function (command) {
+                            var selector = String.format("select.k-{0},a.k-{0},span.k-{0}", command.trim());
+                            var anchor = toolbar.find(selector).parents('li');
+                            var func = showAllCommands ? anchor.show : anchor.hide;
+                            func.call(anchor);
+                        });
+                        showAllCommands = !showAllCommands;
+                    };
                 }
             };
         }])
@@ -348,7 +367,7 @@
                         $scope.cancel();
                     }
                 });
-                
+
                 $scope.done = function () {
                     $scope.model.width = $scope.videoModel.aspectRatio === 'auto' ? null : $scope.videoModel.width;
                     $scope.model.height = $scope.videoModel.aspectRatio === 'auto' ? null : $scope.videoModel.height;
