@@ -1,5 +1,6 @@
 ﻿<textarea id="editor" style="height: 340px;"
     kendo-editor ng-model="sfModel"
+    sf-toggle-commands="strikethrough, justifyFull, subscript, superscript, fontName, fontSize, foreColor, backColor, print"
     k-encoded="false"
     k-stylesheets='["{{htmlFieldCssUrl}}"]',
     k-tools='[
@@ -26,6 +27,11 @@
     },
     "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn",
     "cleanFormatting",
+    "strikethrough", "justifyFull", "subscript", "superscript","fontName", "fontSize", "foreColor", "backColor", "print",
+    {
+        name: "showAll",
+        template: "<a class=\"custom-tool k-button\" ng-click=\"toggleAllTools()\">===</a>"
+    },
     {
         name: "fullscreen",
         template: "<a class=\"k-button js-custom-tool custom-tool\" title=\"Fullscreen\" ng-click=\"toggleFullScreen()\"><span class=\"js-fullScreen glyphicon\"></span></a>"
@@ -33,7 +39,7 @@
     {
         name: "htmlView",
         template: "<button class=\"custom-tool k-button pull-right js-custom-tool\" ng-click=\"toggleHtmlView()\">\{\{htmlViewLabel\}\}</button>"
-    }
+    },
     ]'>
 </textarea>
 
