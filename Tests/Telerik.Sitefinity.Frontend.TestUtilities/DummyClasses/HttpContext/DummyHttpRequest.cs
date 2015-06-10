@@ -53,6 +53,14 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.HttpContext
             }
         }
 
+        public override NameValueCollection QueryString
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// When overridden in a derived class, gets a collection of Web server variables.
         /// </summary>
