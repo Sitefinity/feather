@@ -69,6 +69,7 @@
     <EmbeddedResource Include="unit\selectors\sfRoleSelectorSpec.js" />
     <Content Include="unit\selectors\sfThumbnailSizeSelection.js" />
     <Content Include="unit\services\languageServiceSpec.js" />
+    <Content Include="unit\services\feedsServiceSpec.js" />
     <Content Include="unit\services\multisiteSpec.js" />
     <Content Include="unit\services\listsServiceSpec.js" />
     <Content Include="unit\services\sfFilesUrlServiceSpec.js" />
