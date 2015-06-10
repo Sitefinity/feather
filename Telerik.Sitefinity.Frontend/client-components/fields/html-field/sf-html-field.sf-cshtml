@@ -30,7 +30,7 @@
     "strikethrough", "justifyFull", "subscript", "superscript","fontName", "fontSize", "foreColor", "backColor", "print",
     {
         name: "showAll",
-        template: "<a class=\"custom-tool k-button\" ng-click=\"toggleAllTools()\">===</a>"
+        template: "<a class=\"custom-tool show-all-button k-button\" ng-click=\"toggleAllTools()\">===</a>"
     },
     {
         name: "fullscreen",

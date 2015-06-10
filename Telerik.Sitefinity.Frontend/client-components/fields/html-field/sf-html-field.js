@@ -283,14 +283,22 @@
                             return;
                         }
                         var toolbar = editor.toolbar.element.eq(0);
-                        var commands = editor.element.eq(0).attr('sf-toggle-commands').split(',');
-                        
-                        commands.forEach(function (command) {
-                            var selector = String.format("select.k-{0},a.k-{0},span.k-{0}", command.trim());
-                            var anchor = toolbar.find(selector).parents('li');
-                            var func = showAllCommands ? anchor.show : anchor.hide;
-                            func.call(anchor);
-                        });
+
+                        var commands = editor.element.eq(0).attr('sf-toggle-commands');
+
+                        if (commands) {
+                            toolbar.find('.show-all-button').parents('li').show();
+
+                            commands.split(',').forEach(function (command) {
+                                var selector = String.format("select.k-{0},a.k-{0},span.k-{0}", command.trim());
+                                var anchor = toolbar.find(selector).parents('li');
+                                var func = showAllCommands ? anchor.show : anchor.hide;
+                                func.call(anchor);
+                            });
+                        }
+                        else {
+                            toolbar.find('.show-all-button').parents('li').hide();
+                        }
                         showAllCommands = !showAllCommands;
                     };
                 }
