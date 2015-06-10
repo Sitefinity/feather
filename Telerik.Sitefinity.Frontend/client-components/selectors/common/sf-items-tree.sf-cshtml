@@ -7,10 +7,14 @@
 
 <script type="text/ng-template" id="sfDefaultTreeItemTemplate">
   <a ng-click="sfSelectItem({ dataItem: dataItem })" ng-class="{'disabled': sfItemDisabled({dataItem: dataItem}),'active': sfItemSelected({dataItem: dataItem})}">
-      <span ng-class="{'text-muted': sfItemDisabled({dataItem: dataItem})}">{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</span> 
-    <em ng-show='sfItemDisabled({dataItem: dataItem})' class="m-left-md\">
+    <span>
+      
+      <span ng-class="{'text-muted': sfItemDisabled({dataItem: dataItem})}">{{ sfIdentifierFieldValue({dataItem: dataItem}) }}</span>
+      <em ng-show='sfItemDisabled({dataItem: dataItem})' class="m-left-md">
         (@(Res.Get<ClientComponentsResources>().NotTranslated))
-    </em>
+      </em>
+      
+    </span>
   </a>
 </script>
 

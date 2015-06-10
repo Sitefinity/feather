@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Web.Mvc;
 using Ninject;
 using Ninject.Parameters;
 
@@ -25,36 +23,35 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controllerType == null)
                 throw new ArgumentNullException("controllerType");
 
-            using (var kernel = new StandardKernel())
+            ConstructorArgument[] parameters;
+            if (constructorParameters != null && constructorParameters.Count > 0)
             {
-                var assemblies = ControllerModelFactory.GetTypeHierarchyAssemblies(controllerType).Distinct();
-                kernel.Load(assemblies);
+                parameters = new ConstructorArgument[constructorParameters.Count];
 
-                var parameters = new List<ConstructorArgument>();
-                if (constructorParameters != null && constructorParameters.Any())
+                int i = 0;
+                foreach (var param in constructorParameters)
                 {
-                    foreach (var param in constructorParameters)
-                    {
-                        parameters.Add(new ConstructorArgument(param.Key, param.Value));
-                    }
+                    parameters[i] = new ConstructorArgument(param.Key, param.Value);
+                    i++;
                 }
-
-                return kernel.Get<T>(parameters.ToArray());
             }
-        }
-
-        private static IEnumerable<Assembly> GetTypeHierarchyAssemblies(Type type)
-        {
-            var result = new List<Assembly>();
-            var currentType = type;
-
-            while (currentType != null && currentType != typeof(Controller) && currentType != typeof(object))
+            else
             {
-                result.Add(currentType.Assembly);
-                currentType = currentType.BaseType;
+                parameters = new ConstructorArgument[0];
             }
 
-            return result;
+            if (FrontendModule.Current != null)
+            {
+                return FrontendModule.Current.DependencyResolver.Get<T>(parameters);
+            }
+            else
+            {
+                using (var kernel = new StandardKernel())
+                {
+                    kernel.Load(controllerType.Assembly);
+                    return kernel.Get<T>(parameters);
+                }
+            }
         }
     }
 }

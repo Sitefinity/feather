@@ -530,6 +530,16 @@
 		"client-components/selectors/file-url/sf-file-url-service.js"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-tree"]
-}
+},
 
+"_____FEEDS_____" : {"scripts" : [], "components" : []},
+
+
+"sf-feed-selector" : {
+	"scripts" : [
+		"client-components/selectors/feeds/sf-feeds-service.js",
+		"client-components/selectors/feeds/sf-feed-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+}
 }

@@ -241,6 +241,7 @@
     </Compile>
     <Compile Include="Mvc\Infrastructure\Layouts\SectionRenderer.cs" />
     <Compile Include="Mvc\Infrastructure\PageInitializer.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcVersioningRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageEditorRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcPageRouteHandler.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\MvcTemplateEditorRouteHandler.cs" />
@@ -533,6 +534,9 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js.map" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js.map" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js.map" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feed-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -673,6 +677,8 @@
     <EmbeddedResource Include="client-components\sf-mvc-ext.png" />
     <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.js" />
     <EmbeddedResource Include="assets\src\img\dummy.jpg" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feeds-service.js" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feed-selector.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
