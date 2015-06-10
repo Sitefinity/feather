@@ -8,7 +8,9 @@ using System.Web.Routing;
 using Ninject;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc;
+using Telerik.Sitefinity.Pages.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -107,6 +109,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var controllerVp = customPath ?? AppendDefaultPath(FrontendManager.VirtualPathBuilder.GetVirtualPath(controller.GetType().Assembly));
             pathTransformations.Add(FrontendControllerFactory.GetPathTransformation(controllerVp, currentPackage));
 
+            FrontendControllerFactory.AddDynamicControllerPathTransformations(controller, controllerVp, currentPackage, pathTransformations);
+
             var frontendVp = AppendDefaultPath(FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendControllerFactory).Assembly));
             if (!string.Equals(controllerVp, frontendVp, StringComparison.OrdinalIgnoreCase))
             {
@@ -114,6 +118,33 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
 
             return pathTransformations;
+        }
+
+        private static void AddDynamicControllerPathTransformations(Controller controller, string virtualPath, string currentPackage, List<Func<string, string>> pathTransformations)
+        {
+            if (controller != null && controller.Request != null && controller.Request.QueryString != null && controller.RouteData != null && controller.RouteData.Values.ContainsKey("widgetName") && (string)controller.RouteData.Values["widgetName"] == "DynamicContent")
+            {
+                var controlId = controller.Request.QueryString["controlId"] as string;
+                Guid controlIdGuid;
+
+                if (!string.IsNullOrEmpty(controlId) && Guid.TryParse(controlId, out controlIdGuid))
+                {
+                    var controlObjectData = PageManager.GetManager().GetControl<ObjectData>(controlIdGuid);
+
+                    if (controlObjectData != null && controlObjectData.Properties != null)
+                    {
+                        var controllerWidgetProperty = controlObjectData.Properties.FirstOrDefault(x => x.Name == "WidgetName");
+                        if (controllerWidgetProperty != null)
+                        {
+                            var dynamicControllerWidgetName = controllerWidgetProperty.Value;
+                            if (!string.IsNullOrEmpty(dynamicControllerWidgetName))
+                            {
+                                pathTransformations.Add(FrontendControllerFactory.GetPathTransformation(virtualPath, currentPackage, dynamicControllerWidgetName));
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private static Func<string, string> GetPathTransformation(string controllerVirtualPath, string currentPackage, string widgetName = null)
