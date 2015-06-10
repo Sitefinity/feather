@@ -280,7 +280,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 throw new ArgumentNullException("relatedItem");
 
             int? totalCount = 0;
-            var query = this.GetRelatedItems(relatedItem, 1, ref totalCount);
+            var query = this.GetRelatedItems(relatedItem, page, ref totalCount);
 
             var viewModel = this.CreateListViewModelInstance();
 
