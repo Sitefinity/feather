@@ -76,6 +76,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             if (item != null)
             {
+                SystemManager.CurrentHttpContext.Items["detailItem"] = item;
+
                 this.AddContentItemToRouteData(requestContext, redirectUrl, item);
 
                 return true;
