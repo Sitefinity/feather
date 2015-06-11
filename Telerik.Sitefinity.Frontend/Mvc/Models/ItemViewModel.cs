@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
+using Telerik.Sitefinity.Descriptors;
 using Telerik.Sitefinity.GeoLocations.Model;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Locations.Configuration;
@@ -376,9 +378,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             object cachedResult;
             if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
                 return cachedResult as IEnumerable<ItemViewModel>;
-                
+
             IEnumerable<ItemViewModel> result;
-            var relatedItems = this.DataItem.GetRelatedItems(fieldName);
+
+            IEnumerable<IDataItem> relatedItems;
+            if (!this.TryGetResultFromRelatedDataPropertyDescriptor<IEnumerable<IDataItem>>(fieldName, out relatedItems))
+            {
+                relatedItems = this.DataItem.GetRelatedItems(fieldName);
+            }
+
             if (relatedItems != null)
                 result = relatedItems.ToArray().Select(item => new ItemViewModel(item)).ToArray();
             else
@@ -402,18 +410,44 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 return cachedResult as ItemViewModel;
 
             ItemViewModel result;
-            var relatedItems = this.DataItem.GetRelatedItems(fieldName);
-
-            if (relatedItems != null)
-                result = relatedItems.ToArray().Select(item => new ItemViewModel(item)).FirstOrDefault();
+            IDataItem relatedItem;
+            if (this.TryGetResultFromRelatedDataPropertyDescriptor<IDataItem>(fieldName, out relatedItem))
+            {
+                result = relatedItem == null ? null : new ItemViewModel(relatedItem);
+            }
             else
-                result = null;
+            {
+                var relatedItems = this.DataItem.GetRelatedItems(fieldName);
+
+                if (relatedItems != null)
+                    result = relatedItems.ToArray().Select(item => new ItemViewModel(item)).FirstOrDefault();
+                else
+                    result = null;
+            }
 
             this.cachedFieldValues[cahcedResultKey] = result;
 
             return result;
         }
 
+        private bool TryGetResultFromRelatedDataPropertyDescriptor<T>(string fieldName, out T param)
+        {
+            param = default(T);
+            var propInfo = TypeDescriptor.GetProperties(this.DataItem)[fieldName];
+            var relatedDataPropertyDescriptor = propInfo as RelatedDataPropertyDescriptor;
+            if (relatedDataPropertyDescriptor != null)
+            {
+                var result = relatedDataPropertyDescriptor.GetValue(this.DataItem);
+                if (result != null && typeof(T).IsAssignableFrom(result.GetType()))
+                {
+                    param = (T)result;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
         #endregion
 
         #endregion
