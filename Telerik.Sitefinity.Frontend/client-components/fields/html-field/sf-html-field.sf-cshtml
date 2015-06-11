@@ -30,16 +30,16 @@
     "strikethrough", "justifyFull", "subscript", "superscript","fontName", "fontSize", "foreColor", "backColor", "print",
     {
         name: "showAll",
-        template: "<a class=\"custom-tool show-all-button k-button\" ng-click=\"toggleAllTools()\">===</a>"
-    },
-    {
-        name: "fullscreen",
-        template: "<a class=\"k-button js-custom-tool custom-tool\" title=\"Fullscreen\" ng-click=\"toggleFullScreen()\"><span class=\"js-fullScreen glyphicon\"></span></a>"
+        template: "<a class=\"custom-tool show-all-button k-button\" title=\"@(Res.Get<ClientComponentsResources>().AllTools)\" ng-click=\"toggleAllTools()\"><span class=\"glyphicon glyphicon-option-horizontal\"></span></a>"
     },
     {
         name: "htmlView",
         template: "<button class=\"custom-tool k-button pull-right js-custom-tool\" ng-click=\"toggleHtmlView()\">\{\{htmlViewLabel\}\}</button>"
     },
+    {
+        name: "fullscreen",
+        template: "<a class=\"k-button js-custom-tool custom-tool\" title=\"Fullscreen\" ng-click=\"toggleFullScreen()\"><span class=\"js-fullScreen glyphicon\"></span></a>"
+    }
     ]'>
 </textarea>
 

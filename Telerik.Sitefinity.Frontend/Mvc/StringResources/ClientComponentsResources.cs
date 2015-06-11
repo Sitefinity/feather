@@ -3018,5 +3018,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["FeedSelectorHeader"];
             }
         }
+
+        /// <summary>
+        /// phrase: All tools
+        /// </summary>
+        /// <value>All tools</value>
+        [ResourceEntry("AllTools",
+            Value = "All tools",
+            Description = "phrase: All tools",
+            LastModified = "2015/06/10")]
+        public string AllTools
+        {
+            get
+            {
+                return this["AllTools"];
+            }
+        }
     }
 }
