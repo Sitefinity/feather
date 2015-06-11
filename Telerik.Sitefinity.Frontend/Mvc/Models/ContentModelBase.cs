@@ -396,6 +396,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="viewModel">The view model.</param>
         public virtual void SetModelProperties(ContentListSettingsViewModel viewModel)
         {
+            if (viewModel == null) return;
+
             this.DisableCanonicalUrlMetaTag = viewModel.DisableCanonicalUrlMetaTag;
             this.DisplayMode = viewModel.DisplayMode;
             this.EnableSocialSharing = viewModel.EnableSocialSharing;
