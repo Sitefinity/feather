@@ -468,7 +468,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             public string GetResourceUrl()
             {
-                return this.GetUrl(new ScriptManager(), zip: false);
+                var scriptManager = new ScriptManager();
+
+                try
+                {
+                    return this.GetUrl(scriptManager, zip: false);
+                }
+                catch (NullReferenceException ex)
+                {
+                    ////This is because ScriptReference.ClientUrlResolver is null as the class in to initialize on the page.
+                    if (this.IsGetUrlFromPathException(ex))
+                    {
+                        return scriptManager.ResolveClientUrl(this.Path);
+                    }
+
+                    throw;
+                }
+            }
+
+            private bool IsGetUrlFromPathException(Exception ex)
+            {
+                return ex.TargetSite.Name == "GetUrlFromPath" && ex.TargetSite.DeclaringType.FullName == "System.Web.UI.ScriptReference";
             }
         }
 
