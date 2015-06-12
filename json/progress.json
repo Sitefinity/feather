@@ -532,6 +532,23 @@
                ],
                "shortDescription" : "Done",
                "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Feed selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-feed-selector",
+                     "commitHash" : "5660218d8c7f8ae1ee2125557ccda0ae6fc345e7",
+                     "date" : "2015-06-12 15:01 +0300",
+                     "name" : "Feed selector implementation",
+                     "tag" : "v1.2.250.1"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
             }
          ]
       },
@@ -641,14 +658,6 @@
                ],
                "shortDescription" : "Done",
                "unstable" : false
-            },
-            {
-               "expectedBy" : "",
-               "longDescription" : "Comments for dynamic content items",
-               "name" : "Comments",
-               "progress" : 0,
-               "shortDescription" : "Not done",
-               "unstable" : false
             }
          ]
       },
@@ -677,7 +686,7 @@
                      "tag" : "v1.1.40.0"
                   }
                ],
-               "shortDescription" : "In progress",
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -734,9 +743,16 @@
                      "date" : "04-08-2015 18:50 +0300",
                      "name" : "Video manager",
                      "tag" : "v.1.2.160.0"
+                  },
+                  {
+                     "article" : "",
+                     "commitHash" : "5660218d8c7f8ae1ee2125557ccda0ae6fc345e7",
+                     "date" : "2015-06-12 15:01 +0300",
+                     "name" : "All tools option",
+                     "tag" : "v1.2.250.1"
                   }
                ],
-               "shortDescription" : "In progress",
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
@@ -968,17 +984,26 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Form",
-               "progress" : 0,
-               "shortDescription" : "Not done",
+               "name" : "Feed",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "MVC-Feed-widget",
+                     "commitHash" : "5660218d8c7f8ae1ee2125557ccda0ae6fc345e7",
+                     "date" : "2015-06-12 15:01 +0300",
+                     "name" : "Feed widget implementation",
+                     "tag" : "v1.2.250.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
-               "name" : "Feed",
+               "name" : "Form",
                "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
@@ -1427,7 +1452,7 @@
                      "tag" : "v.1.2.240.0"
                   }
                ],
-               "shortDescription" : "Coming soon",
+               "shortDescription" : "Done",
                "unstable" : false
             }
          ]
@@ -1441,7 +1466,7 @@
                "longDescription" : "",
                "name" : "Subscribe form",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             },
             {
@@ -1449,7 +1474,7 @@
                "longDescription" : "",
                "name" : "Unsubscribe",
                "progress" : 0,
-               "shortDescription" : "Not done",
+               "shortDescription" : "Coming soon",
                "unstable" : false
             }
          ]
