@@ -3010,7 +3010,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         [ResourceEntry("FeedSelectorHeader",
             Value = "Select feed",
             Description = "phrase: Select feed",
-            LastModified = "2015/03/24")]
+            LastModified = "2015/06/10")]
         public string FeedSelectorHeader
         {
             get
@@ -3032,6 +3032,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["AllTools"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select mailing list
+        /// </summary>
+        /// <value>Select mailing list</value>
+        [ResourceEntry("MailingListSelectorHeader",
+            Value = "Select mailing list",
+            Description = "phrase: Select mailing list",
+            LastModified = "2015/06/15")]
+        public string MailingListSelectorHeader
+        {
+            get
+            {
+                return this["MailingListSelectorHeader"];
             }
         }
     }

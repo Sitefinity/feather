@@ -542,4 +542,17 @@
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 }
+
+,
+
+"_____MAILING LISTS_____" : {"scripts" : [], "components" : []},
+
+
+"sf-mailing-list-selector" : {
+	"scripts" : [
+		"client-components/selectors/email-campaigns/sf-mailing-list-service.js",
+		"client-components/selectors/email-campaigns/sf-mailing-list-selector.js"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+}
 }
