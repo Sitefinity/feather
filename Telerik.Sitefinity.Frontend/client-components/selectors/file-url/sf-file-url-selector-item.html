@@ -4,7 +4,7 @@
     <i class="icon-file icon-txt icon-sm" ng-if="node.item.extension === 'css' || node.item.extension === 'js' ">
         <small class="icon-txt-{{node.item.extension}}">{{node.item.extension}}</small>
     </i>
-    <i class="glyphicon glyphicon-folder-close" ng-if="node.item.isFolder === true">
+    <i class="icon-folder" ng-if="node.item.isFolder === true">
     </i>
 
     <label ng-bind="node.item.label"></label>

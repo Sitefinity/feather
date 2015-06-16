@@ -210,7 +210,7 @@
                             return;
 
                         if (isInHtmlView === false) {
-                            scope.htmlViewLabel = 'Design';
+                            $(".js-htmlview").addClass("active");
 
                             var htmlEditor = $('<textarea class="html k-content" ng-model="sfModel" style="resize: none">');
                             $compile(htmlEditor)(scope);
@@ -237,7 +237,7 @@
                             shortToolbar.show();
                             shortToolbar.append(customButtons);
                         } else {
-                            scope.htmlViewLabel = 'HTML';
+                            $(".js-htmlview").removeClass("active");
 
                             shortToolbar.hide();
                             fullToolbar.show();

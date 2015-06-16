@@ -9,9 +9,12 @@
 		border: none
 		border-collapse: collapse
 
+		.k-editor-toolbar-wrap
+			padding-left: 0
+
 		.k-editor-toolbar
 			margin: -23px 0 0
-			padding: 10px 20px
+			padding: 0 20px
 			min-height: 34px
 			background: #f2f2f2
 
@@ -20,10 +23,15 @@
 
 			.k-tool-group
 				.custom-tool
-					height: 30px
-
+					color: #797979
+					&:hover
+						color: #000
 					.glyphicon
-						padding-top: 2px
+						padding-top: 11px
+					&.btn
+						margin-top: 11px;
+						margin-right: -12px;
+
 
 		.k-editable-area
 			vertical-align: top
@@ -41,6 +49,17 @@
 			textarea.html
 				padding: 20px
 				box-sizing: border-box
+
+		.k-tool
+			transition: 0.2s
+			&:hover
+				background: #ddd
+				.k-tool-icon
+					opacity: 1
+
+		.k-state-selected,
+		.k-tool.k-state-active
+				background: #ddd
 
 
 .kendo-content-block
@@ -77,12 +96,3 @@
 
 .editor-lg
 	height: 540px
-
-
-.k-tool:hover
-	background-color: #b6bdca
-	.k-createLink
-		background-position: -312px -48px
-
-
-
