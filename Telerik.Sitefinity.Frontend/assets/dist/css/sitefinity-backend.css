@@ -18021,70 +18021,68 @@ div.k-scheduler-marquee:before, div.k-scheduler-marquee:after {
   .modal-body .k-editor-widget .k-editor-toolbar {
     position: relative;
     margin: -23px 0 0;
-    padding: 0 20px;
-    min-height: 34px;
+    padding: 0 110px 0 20px;
+    min-height: 50px;
     background: #f2f2f2; }
     /* line 22, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
     .modal-body .k-editor-widget .k-editor-toolbar > li:last-child, .modal-body .k-editor-widget .k-editor-toolbar > li:nth-last-child(2) {
-      position: absolute;
-      top: 10px; }
-    /* line 26, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+      position: absolute; }
+    /* line 25, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
     .modal-body .k-editor-widget .k-editor-toolbar > li:last-child {
+      top: 10px;
       right: 20px; }
     /* line 29, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
     .modal-body .k-editor-widget .k-editor-toolbar > li:nth-last-child(2) {
-      right: 55px; }
-    /* line 33, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+      top: 0;
+      right: 65px; }
+    /* line 34, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
     .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .custom-tool {
       color: #797979; }
-      /* line 35, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+      /* line 36, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
       .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .custom-tool:hover {
         color: #000; }
-      /* line 37, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+      /* line 38, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
       .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .custom-tool .glyphicon {
         padding-top: 11px; }
-      /* line 39, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+      /* line 40, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
       .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .custom-tool.btn {
-        margin-top: 11px;
+        margin-top: 1px;
         margin-right: -12px; }
-      /* line 44, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
-      .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .custom-tool .glyphicon-option-horizontal {
-        padding-top: 4px; }
-  /* line 47, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+  /* line 44, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
   .modal-body .k-editor-widget .k-editable-area {
     vertical-align: top;
     border: none;
     padding: 0; }
-    /* line 53, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+    /* line 50, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
     .modal-body .k-editor-widget .k-editable-area iframe, .modal-body .k-editor-widget .k-editable-area textarea.html {
       display: block;
       margin: 0 auto;
       padding: 0;
       min-height: 347px;
       max-width: 900px; }
-    /* line 60, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+    /* line 57, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
     .modal-body .k-editor-widget .k-editable-area textarea.html {
       padding: 20px;
       box-sizing: border-box; }
-  /* line 64, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+  /* line 61, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
   .modal-body .k-editor-widget .k-tool {
     transition: 0.2s; }
-    /* line 66, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+    /* line 63, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
     .modal-body .k-editor-widget .k-tool:hover {
       background: #ddd; }
-      /* line 68, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+      /* line 65, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
       .modal-body .k-editor-widget .k-tool:hover .k-tool-icon {
         opacity: 1; }
-  /* line 72, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+  /* line 69, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
   .modal-body .k-editor-widget .k-state-selected, .modal-body .k-editor-widget .k-tool.k-state-active {
     background: #ddd; }
 
-/* line 76, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+/* line 73, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
 .kendo-content-block {
   display: block;
   margin: 3px -20px -20px; }
 
-/* line 80, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+/* line 77, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
 .modal-full-screen {
   width: 100% !important;
   margin: 0 !important;
@@ -18093,24 +18091,24 @@ div.k-scheduler-marquee:before, div.k-scheduler-marquee:after {
   right: 0;
   bottom: 0;
   left: 0; }
-  /* line 92, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+  /* line 89, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
   .modal-full-screen #viewsPlaceholder, .modal-full-screen .modal-content, .modal-full-screen .modal-body, .modal-full-screen .kendo-content-block {
     display: block;
     height: 100%; }
-  /* line 96, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+  /* line 93, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
   .modal-full-screen .k-editor {
     height: 100% !important; }
-  /* line 99, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+  /* line 96, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
   .modal-full-screen .k-content {
     border: 1px dashed transparent;
     transition: border-color 0.2s ease;
     -webkit-box-sizing: border-box;
     box-sizing: border-box; }
-    /* line 105, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+    /* line 102, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
     .modal-full-screen .k-content:hover {
       border: 1px dashed #999; }
 
-/* line 108, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
+/* line 105, C:/Projects/FeatherSite/assets/src/sass/kendo/_editor */
 .editor-lg {
   height: 540px; }
 

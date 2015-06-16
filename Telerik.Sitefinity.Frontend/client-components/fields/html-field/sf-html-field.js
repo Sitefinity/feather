@@ -297,6 +297,11 @@
                         else {
                             toolbar.find('.show-all-button').parents('li').hide();
                         }
+                        if (showAllCommands) {
+                            toolbar.find('.show-all-button').addClass('k-state-active');
+                        } else {
+                            toolbar.find('.show-all-button').removeClass('k-state-active');
+                        }
                         showAllCommands = !showAllCommands;
                     };
                 }
