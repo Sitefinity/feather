@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
+using System.Web.Mvc;
 using Ninject;
 using Ninject.Parameters;
 
@@ -48,10 +49,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 using (var kernel = new StandardKernel())
                 {
-                    kernel.Load(controllerType.Assembly);
+                    kernel.Load(ControllerModelFactory.GetTypeHierarchyAssemblies(controllerType));
                     return kernel.Get<T>(parameters);
                 }
             }
+        }
+
+        private static IEnumerable<Assembly> GetTypeHierarchyAssemblies(Type type)
+        {
+            var result = new List<Assembly>();
+            var currentType = type;
+
+            while (currentType != null && currentType != typeof(Controller) && currentType != typeof(object))
+            {
+                result.Add(currentType.Assembly);
+                currentType = currentType.BaseType;
+            }
+
+            return result;
         }
     }
 }

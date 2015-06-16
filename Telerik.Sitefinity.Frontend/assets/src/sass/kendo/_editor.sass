@@ -4,22 +4,33 @@
 
 .modal-body
 	.k-editor-widget
-		margin: 0
+		margin-right: 6px
 		background: transparent
 		border: none
 		border-collapse: collapse
+		&:last-child
+			margin-right: 0
 
 		.k-editor-toolbar-wrap
 			padding-left: 0
 
 		.k-editor-toolbar
+			position: relative
 			margin: -23px 0 0
 			padding: 0 20px
 			min-height: 34px
 			background: #f2f2f2
 
+			> li:last-child,
+			> li:nth-last-child(2)
+				position: absolute
+				top: 10px
+
 			> li:last-child
-				float: right
+				right: 20px
+
+			> li:nth-last-child(2)
+				right: 55px
 
 			.k-tool-group
 				.custom-tool
@@ -32,6 +43,9 @@
 						margin-top: 11px;
 						margin-right: -12px;
 
+
+					.glyphicon-option-horizontal
+						padding-top: 4px
 
 		.k-editable-area
 			vertical-align: top
