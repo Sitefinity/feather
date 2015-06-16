@@ -152,9 +152,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     this.ResolveRequestedItemStatus() == ContentLifecycleStatus.Live;
                 item = contentManager.GetItemFromUrl(this.ItemType, url, isPublished, out redirectUrl);
 
-                if (item != null && !item.GetType().Equals(this.ItemType))
+                if (item != null)
                 {
-                    item = null;
+                    var type = item.GetType();
+                    if (!type.Equals(this.ItemType) && !(type.Module != null && type.Module.ScopeName == "OpenAccessDynamic" && type.BaseType != null && type.BaseType.Equals(this.ItemType)))
+                    {
+                        item = null;
+                    }
                 }
             }
             else
