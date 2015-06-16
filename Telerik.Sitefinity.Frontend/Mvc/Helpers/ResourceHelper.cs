@@ -232,7 +232,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         public static MvcHtmlString RenderLangAttribute(this HtmlHelper helper)
         {
-            return RenderLangAttribute(helper, CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+            return RenderLangAttribute(helper, CultureInfo.CurrentUICulture.Name);
         }
 
         /// <summary>
