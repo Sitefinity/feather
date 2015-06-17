@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Web;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
-using Telerik.Sitefinity.Mvc.TestUI.Arrangements;
+using Telerik.Sitefinity.Frontend.TestUI.Arrangements;
 using Telerik.Sitefinity.TestUI.Arrangements.Core.Framework.Attributes;
 
 // General Information about an assembly is controlled through the following 

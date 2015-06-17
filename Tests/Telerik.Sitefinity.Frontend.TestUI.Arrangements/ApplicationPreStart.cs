@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Routing;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
 
-namespace Telerik.Sitefinity.Mvc.TestUI.Arrangements
+namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
     /// This class is used for setting up the Core project before the application has been started
