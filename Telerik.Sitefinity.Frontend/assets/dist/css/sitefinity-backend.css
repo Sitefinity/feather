@@ -8582,6 +8582,14 @@ tab {
   .popover-table td, .popover-table th {
     padding: 4px 0; }
 
+/* line 1, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_code */
+pre {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px; }
+
 @font-face {
   font-family: "sf-icon-font";
   src: url("../fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.eot");
@@ -9781,7 +9789,7 @@ tab {
 
 /* line 1, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-textarea */
 .sf-textarea {
-  margin: -20px -20px -55px; }
+  margin: -20px -20px -50px; }
   /* line 4, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-textarea */
   .sf-textarea textarea {
     padding: 10px 10px 20px;
