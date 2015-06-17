@@ -18680,15 +18680,18 @@ h5, .h5 {
 .sf-designer-dlg .btn-primary {
   min-width: 90px; }
 
-/* line 3, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_alerts */
-.modal-body .alert-warning, .modal-body .alert-danger {
+/* line 2, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_alerts */
+.modal-body .alert {
   margin: -21px -20px 20px;
   font-size: 13px;
   padding: 10px 20px;
   border-radius: 0; }
+/* line 9, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_alerts */
+.modal-body .form-group .alert {
+  margin: 0 0 20px; }
 
-/* line 12, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_alerts */
-.modal-body .Media .alert-danger {
+/* line 15, C:/Projects/FeatherSite/assets/src/sass/bootstrap/_alerts */
+.modal-body .Media .alert {
   position: absolute;
   z-index: 1;
   width: 100%;
