@@ -69,29 +69,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <returns>The path with appended variables.</returns>
         protected virtual string AddVariablesToPath(string layoutVirtualPath)
         {
-            var varies = new List<string>();
-
             var packagesManager = new PackageManager();
             var currentPackage = packagesManager.GetCurrentPackage();
             if (!currentPackage.IsNullOrEmpty())
-                varies.Add(currentPackage);
-
-            if (SystemManager.CurrentContext.AppSettings.Multilingual)
-                varies.Add(CultureInfo.CurrentUICulture.Name);
-
-            if (MasterPageBuilder.IsFormTagRequired())
-                varies.Add("form");
-            else
-                varies.Add("noform");
-
-            var pageData = MasterPageBuilder.GetRequestedPageData();
-            if (pageData != null)
-            {
-                varies.Add(pageData.Id.ToString());
-                varies.Add(pageData.Version.ToString(CultureInfo.InvariantCulture));
-            }
-
-            layoutVirtualPath = (new VirtualPathBuilder()).AddParams(layoutVirtualPath, string.Join("_", varies));
+                layoutVirtualPath = (new VirtualPathBuilder()).AddParams(layoutVirtualPath, currentPackage);
 
             return layoutVirtualPath;
         }
