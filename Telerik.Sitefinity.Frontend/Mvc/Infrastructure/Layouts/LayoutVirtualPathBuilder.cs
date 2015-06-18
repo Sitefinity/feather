@@ -71,8 +71,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         {
             var packagesManager = new PackageManager();
             var currentPackage = packagesManager.GetCurrentPackage();
-            if (!currentPackage.IsNullOrEmpty())
-                layoutVirtualPath = (new VirtualPathBuilder()).AddParams(layoutVirtualPath, currentPackage);
+            layoutVirtualPath = (new VirtualPathBuilder()).AddParams(layoutVirtualPath, currentPackage ?? "_");
 
             return layoutVirtualPath;
         }
