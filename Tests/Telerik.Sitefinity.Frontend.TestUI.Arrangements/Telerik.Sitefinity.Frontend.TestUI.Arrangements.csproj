@@ -37,6 +37,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers" />
@@ -44,6 +47,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -104,7 +108,7 @@
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.0.5700.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestArrangementService.Core">
-      <HintPath>..\..\packages\Telerik.Sitefinity.TestArrangementService.Core.1.0.2\lib\net40\Telerik.Sitefinity.TestArrangementService.Core.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.TestArrangementService.Core.1.0.3\lib\net40\Telerik.Sitefinity.TestArrangementService.Core.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
       <SpecificVersion>False</SpecificVersion>
@@ -119,6 +123,7 @@
     <Compile Include="..\..\AssemblyInfoShare\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ApplicationPreStart.cs" />
     <Compile Include="GridWidgets\AddAndDeleteGridWidgetFromFileSystemVerifyPageToolbox.cs" />
     <Compile Include="GridWidgets\AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox.cs" />
     <Compile Include="GridWidgets\ManagaGridWidgetOnThePage.cs" />
