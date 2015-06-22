@@ -2,11 +2,11 @@
 // Based on https://github.com/endtwist/fontcustom/blob/master/lib/fontcustom/templates/fontcustom.css
 @font-face {
   font-family: "sf-icon-font";
-  src: url("../fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.eot");
-  src: url("../fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.eot?#iefix") format("embedded-opentype"),
-		url("../fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.svg?#sf-icon-font") format("svg"),
-		url("../fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.woff") format("woff"),
-		url("../fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.ttf") format("truetype");
+  src: url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.eot");
+  src: url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.eot?#iefix") format("embedded-opentype"),
+		url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.svg?#sf-icon-font") format("svg"),
+		url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.woff") format("woff"),
+		url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -41,13 +41,17 @@
 .icon-bin-single {content:"\b5";}
 .icon-draft-single {content:"\b6";}
 .icon-file-single {content:"\b7";}
-.icon-homepage-single {content:"\b8";}
-.icon-locked-single {content:"\b9";}
-.icon-no-image-single {content:"\ba";}
-.icon-published-single {content:"\bb";}
-.icon-scheduled-single {content:"\bc";}
-.icon-settings-single {content:"\bd";}
-.icon-unpublished-single {content:"\be";}
+.icon-folder-open-single {content:"\b8";}
+.icon-folder-single {content:"\b9";}
+.icon-homepage-single {content:"\ba";}
+.icon-locked-single {content:"\bb";}
+.icon-no-file-single {content:"\bc";}
+.icon-no-image-single {content:"\bd";}
+.icon-no-video-single {content:"\be";}
+.icon-published-single {content:"\bf";}
+.icon-scheduled-single {content:"\c0";}
+.icon-settings-single {content:"\c1";}
+.icon-unpublished-single {content:"\c2";}
 
 // Icons
 .icon-align-center:before {content:"\b1";}
@@ -57,13 +61,17 @@
 .icon-bin:before {content:"\b5";}
 .icon-draft:before {content:"\b6";}
 .icon-file:before {content:"\b7";}
-.icon-homepage:before {content:"\b8";}
-.icon-locked:before {content:"\b9";}
-.icon-no-image:before {content:"\ba";}
-.icon-published:before {content:"\bb";}
-.icon-scheduled:before {content:"\bc";}
-.icon-settings:before {content:"\bd";}
-.icon-unpublished:before {content:"\be";}
+.icon-folder-open:before {content:"\b8";}
+.icon-folder:before {content:"\b9";}
+.icon-homepage:before {content:"\ba";}
+.icon-locked:before {content:"\bb";}
+.icon-no-file:before {content:"\bc";}
+.icon-no-image:before {content:"\bd";}
+.icon-no-video:before {content:"\be";}
+.icon-published:before {content:"\bf";}
+.icon-scheduled:before {content:"\c0";}
+.icon-settings:before {content:"\c1";}
+.icon-unpublished:before {content:"\c2";}
 
 
 
@@ -95,6 +103,14 @@
   @extend .icon-file-single
 }
 
+.icon-item-folder-open:after {
+  @extend .icon-folder-open-single
+}
+
+.icon-item-folder:after {
+  @extend .icon-folder-single
+}
+
 .icon-item-homepage:after {
   @extend .icon-homepage-single
 }
@@ -103,8 +119,16 @@
   @extend .icon-locked-single
 }
 
+.icon-item-no-file:after {
+  @extend .icon-no-file-single
+}
+
 .icon-item-no-image:after {
   @extend .icon-no-image-single
+}
+
+.icon-item-no-video:after {
+  @extend .icon-no-video-single
 }
 
 .icon-item-published:after {

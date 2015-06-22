@@ -5,7 +5,6 @@
 	top: 0
 	bottom: 0
 	overflow-y: auto
-	border-top: 1px solid #e5e5e5
 
 // Content
 .Media-content
@@ -77,16 +76,19 @@
 	position: relative
 	border-radius: 3px
 	border: 1px solid transparent
+	line-height: normal	
 
 	i
+		font-size: 75px
+		margin-bottom: 5px
+		display: inline-block
 		color: #bfbfbf
-		font-size: 90px
-		margin-left: -2px
 		transition: color .2s ease
 
 	.is-list &
 		i
 			font-size: 48px
+			margin-bottom: 0
 
 	&:hover
 		border-color: #d7d7d7
@@ -277,6 +279,13 @@
 		padding: 0
 		background: none
 
+		li:last-child a
+			color: #999
+			cursor: text
+			&:hover
+				text-decoration: none
+
+
 .Media-settings--bottom
 	top: auto
 	bottom: 0
@@ -293,13 +302,7 @@
 
 // Sort and view options
 .Media-settings-sort
-	> span
-		font-size: 20px
-		cursor: pointer
-		color: #999
-
-		&.is-selected
-			color: #596C9B
+	margin-right: -10px
 
 .Media-upload-text
 	position: absolute
@@ -312,7 +315,8 @@
 		margin-bottom: 0
 
 .Media-no-results
-	margin-top: 45px
+	margin-top: 65px
+	margin-left: 20px
 
 // In image properties screen
 .sf-Media--info
@@ -383,7 +387,7 @@
 .nav-sm
 	>li
 		>a
-			padding: 5px
+			padding: 5px 10px
 			@include text-overflow()
 
 .nav-stacked

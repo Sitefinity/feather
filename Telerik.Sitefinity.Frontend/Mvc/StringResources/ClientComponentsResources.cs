@@ -1396,9 +1396,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         /// <value>Insert link</value>
         [ResourceEntry("InsertLinkButton",
-            Value = "Insert link",
-            Description = "phrase: Insert link",
-            LastModified = "2015/03/23")]
+            Value = "Insert this link",
+            Description = "phrase: Insert this link",
+            LastModified = "2015/06/12")]
         public string InsertLinkButton
         {
             get
