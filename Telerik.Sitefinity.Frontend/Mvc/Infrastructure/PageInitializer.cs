@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
@@ -22,7 +23,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             if (handler == null)
                 throw new ArgumentNullException("handler");
 
-            var page = handler as Page;
+            Page page = this.GetPageHandler(handler);
+
             if (page != null)
             {
                 this.Initialize(page);
@@ -63,6 +65,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
                 page.Request.RequestContext.HttpContext.Items.Remove("JsRegister");
                 new MvcMasterPage().ApplyToPage(page);
             }
+        }
+
+        private Page GetPageHandler(IHttpHandler handler)
+        {
+            var page = handler as Page;
+            
+            if (page == null)
+            {
+                var pageHandlerWrapperType = Type.GetType("Telerik.Sitefinity.Web.PageHandlerWrapper, Telerik.Sitefinity");
+                var pageAsHandlerWrapper = Convert.ChangeType(handler, pageHandlerWrapperType);
+                if (pageAsHandlerWrapper != null)
+                {
+                    var baseHandlerField = pageHandlerWrapperType.GetField("baseHandler", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                    var valueObject = baseHandlerField.GetValue(pageAsHandlerWrapper);
+                    
+                    page = valueObject as Page;
+                }
+            }
+
+            return page;
         }
     }
 }
