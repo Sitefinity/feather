@@ -46,6 +46,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             return inlineCss;
         }
 
+        /// <summary>
+        /// Casts the IHttpHandler to Page. If the handler is a wrapper of this page - extracts it.
+        /// </summary>
+        /// <param name="handler">The handler.</param>
+        /// <returns>
+		/// The Page or null if the cast failed.
+		/// </returns>
         internal static Page GetPageHandler(IHttpHandler handler)
         {
             Page page = null;
