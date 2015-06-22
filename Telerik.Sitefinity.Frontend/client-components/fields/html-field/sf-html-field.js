@@ -210,7 +210,7 @@
                             return;
 
                         if (isInHtmlView === false) {
-                            scope.htmlViewLabel = 'Design';
+                            $(".js-htmlview").addClass("active");
 
                             var htmlEditor = $('<textarea class="html k-content" ng-model="sfModel" style="resize: none">');
                             $compile(htmlEditor)(scope);
@@ -237,7 +237,7 @@
                             shortToolbar.show();
                             shortToolbar.append(customButtons);
                         } else {
-                            scope.htmlViewLabel = 'HTML';
+                            $(".js-htmlview").removeClass("active");
 
                             shortToolbar.hide();
                             fullToolbar.show();
@@ -296,6 +296,11 @@
                         }
                         else {
                             toolbar.find('.show-all-button').parents('li').hide();
+                        }
+                        if (showAllCommands) {
+                            toolbar.find('.show-all-button').addClass('k-state-active');
+                        } else {
+                            toolbar.find('.show-all-button').removeClass('k-state-active');
                         }
                         showAllCommands = !showAllCommands;
                     };
