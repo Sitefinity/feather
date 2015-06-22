@@ -46,6 +46,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             return inlineCss;
         }
 
+        /// <summary>
+        /// Casts the IHttpHandler to Page. If the handler is a wrapper of this page - extracts it.
+        /// </summary>
+        /// <param name="handler">The handler.</param>
+        /// <returns>
+		/// The Page or null if the cast failed.
+		/// </returns>
         internal static Page GetPageHandler(IHttpHandler handler)
         {
             Page page = null;
@@ -57,11 +64,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
                 if (page == null)
                 {
                     var pageHandlerWrapperType = Type.GetType("Telerik.Sitefinity.Web.PageHandlerWrapper, Telerik.Sitefinity");
-                    var pageAsHandlerWrapper = Convert.ChangeType(handler, pageHandlerWrapperType);
-                    if (pageAsHandlerWrapper != null)
+                    if (handler.GetType() == pageHandlerWrapperType)
                     {
                         var baseHandlerField = pageHandlerWrapperType.GetField("baseHandler", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                        var valueObject = baseHandlerField.GetValue(pageAsHandlerWrapper);
+                        var valueObject = baseHandlerField.GetValue(handler);
 
                         page = valueObject as Page;
                     }
