@@ -3,10 +3,10 @@
   <Description>These are default test settings for a remote test run.</Description>
   <Deployment>
     <DeploymentItem filename="app.config" />
-	<DeploymentItem filename="..\..\SetupScripts\" />
+	<DeploymentItem filename="..\..\..\Tooling\Feather\SetupScripts\" />
   </Deployment>
   <NamingScheme baseName="TestExecution@Sitefinity_UITests" useDefault="false" />
-<Scripts setupScript=".\Feather\SetupScripts\Setup.bat" cleanupScript=".\Feather\SetupScripts\Cleanup.bat" />
+<Scripts setupScript=".\Tooling\Feather\SetupScripts\Setup.bat" cleanupScript=".\Tooling\Feather\SetupScripts\Cleanup.bat" />
   <RemoteController name="FEATHER-CI" />
   <Execution location="Remote">
     <Buckets size="1" />

@@ -19034,6 +19034,24 @@ tab {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
+/* line 9, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_popovers */
+.popover-table {
+  width: 500px; }
+  /* line 11, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_popovers */
+  .popover-table tr {
+    border-bottom: 1px solid #e4e4e4; }
+  /* line 13, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_popovers */
+  .popover-table td, .popover-table th {
+    padding: 4px 0; }
+
+/* line 1, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_code */
+pre {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px; }
+
 @font-face {
   font-family: "sf-icon-font";
   src: url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.eot");
@@ -20265,5 +20283,21 @@ tab {
 
 /* line 14, C:/Projects/FeatherSite/assets/src/sass/modules/_sf-code */
 .sf-code-tips {
-  margin-top: -30px;
-  position: relative; }
+  position: relative;
+  margin-top: -30px; }
+
+/* line 1, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-textarea */
+.sf-textarea {
+  margin: -20px -20px -50px; }
+  /* line 4, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-textarea */
+  .sf-textarea textarea {
+    padding: 10px 10px 20px;
+    width: 100%;
+    height: 300px;
+    border: 0; }
+  /* line 10, D:/Repositories/Feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-textarea */
+  .sf-textarea .sf-textarea-tips {
+    position: relative;
+    margin-top: -35px;
+    margin-right: 20px;
+    z-index: 1; }

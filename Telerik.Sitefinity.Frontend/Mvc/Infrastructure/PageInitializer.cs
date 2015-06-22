@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
@@ -22,7 +23,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             if (handler == null)
                 throw new ArgumentNullException("handler");
 
-            var page = handler as Page;
+            Page page = PageInitializer.GetPageHandler(handler);
+
             if (page != null)
             {
                 this.Initialize(page);
@@ -44,6 +46,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             return inlineCss;
         }
 
+        internal static Page GetPageHandler(IHttpHandler handler)
+        {
+            Page page = null;
+
+            if (handler != null)
+            {
+                page = handler as Page;
+
+                if (page == null)
+                {
+                    var pageHandlerWrapperType = Type.GetType("Telerik.Sitefinity.Web.PageHandlerWrapper, Telerik.Sitefinity");
+                    var pageAsHandlerWrapper = Convert.ChangeType(handler, pageHandlerWrapperType);
+                    if (pageAsHandlerWrapper != null)
+                    {
+                        var baseHandlerField = pageHandlerWrapperType.GetField("baseHandler", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                        var valueObject = baseHandlerField.GetValue(pageAsHandlerWrapper);
+
+                        page = valueObject as Page;
+                    }
+                }
+            }
+
+            return page;
+        }
+
         private void Initialize(Page page)
         {
             if (page == null)
@@ -57,7 +84,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
 
         private void PreInitHandler(object sender, EventArgs e)
         {
-            var page = (Page)sender;
+            var page = PageInitializer.GetPageHandler((IHttpHandler)sender);
+
             if (LayoutMvcPageResolver.IsLayoutPath(page.MasterPageFile))
             {
                 page.Request.RequestContext.HttpContext.Items.Remove("JsRegister");

@@ -3036,13 +3036,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// phrase: Select mailing list
+        /// phrase: Select a mailing list
         /// </summary>
-        /// <value>Select mailing list</value>
+        /// <value>Select a mailing list</value>
         [ResourceEntry("MailingListSelectorHeader",
-            Value = "Select mailing list",
-            Description = "phrase: Select mailing list",
-            LastModified = "2015/06/15")]
+            Value = "Select a mailing list",
+            Description = "phrase: Select a mailing list",
+            LastModified = "2015/06/17")]
         public string MailingListSelectorHeader
         {
             get
