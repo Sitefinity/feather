@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using Telerik.Sitefinity.Frontend.InlineEditing;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -117,6 +119,36 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var fieldTypeEncoded = htmlHelper.Encode(fieldType);
 
             return htmlHelper.Raw("data-sf-field='{0}' data-sf-ftype='{1}'".Arrange(fieldNameEncoded, fieldTypeEncoded));
+        }
+
+        /// <summary>
+        /// Returns if the inline editin section should be rendered.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <returns></returns>
+        public static bool ShouldRenderInlineEditing(this HtmlHelper htmlHelper)
+        {
+            var shouldRender = false;
+
+            if (SitefinityContext.IsBackend && ControlExtensions.InlineEditingIsEnabled() && !SystemManager.CurrentHttpContext.Request.IsAjaxRequest())
+            {
+                var siteMapNodeKey = "SiteMapNode";
+
+                if (HttpContext.Current != null && HttpContext.Current.Items != null && HttpContext.Current.Items.Contains(siteMapNodeKey))
+                {
+                    var siteMapNode = HttpContext.Current.Items[siteMapNodeKey] as PageSiteNode;
+                    if (siteMapNode != null)
+	                {
+                        var firstPageDataNode = RouteHelper.GetFirstPageDataNode(siteMapNode, true);
+                        if (firstPageDataNode != null && firstPageDataNode.Framework == Pages.Model.PageTemplateFramework.Mvc)
+                        {
+                            shouldRender = true;
+                        }
+	                }
+                }
+            }
+
+            return shouldRender;
         }
     }
 }
