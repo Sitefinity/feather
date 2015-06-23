@@ -11,21 +11,16 @@ using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
-using Telerik.Sitefinity.DynamicModules;
-using Telerik.Sitefinity.DynamicModules.Builder;
-using Telerik.Sitefinity.DynamicModules.Builder.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Mvc;
-using Telerik.Sitefinity.Mvc.Proxy;
 using Telerik.Sitefinity.Mvc.Proxy.TypeDescription;
 using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages;
 using Telerik.Sitefinity.Services;
-using Telerik.Sitefinity.Utilities.TypeConverters;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -39,11 +34,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <summary>
         /// Initializes the controllers that are available to the web application.
         /// </summary>
-        public virtual void Initialize()
+        public virtual void Initialize(IEnumerable<Assembly> controllerAssemblies)
         {
             GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
-            var assemblies = this.RetrieveAssemblies();
+            var assemblies = controllerAssemblies ?? this.RetrieveAssemblies();
             this.RegisterVirtualPaths(assemblies);
 
             var controllerTypes = this.GetControllers(assemblies);
@@ -52,14 +47,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             this.InitializeCustomRouting();
         }
 
-        #endregion
-
-        #region Protected members
-
         /// <summary>
         /// Gets the assemblies that are marked as controller containers with the <see cref="ControllerContainerAttribute"/> attribute.
         /// </summary>
-        protected virtual IEnumerable<Assembly> RetrieveAssemblies()
+        public virtual IEnumerable<Assembly> RetrieveAssemblies()
         {
             var assemblyFileNames = this.RetrieveAssembliesFileNames().ToArray();
             var result = new List<Assembly>();
@@ -77,6 +68,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             return result;
         }
+
+        #endregion
+
+        #region Protected members
 
         /// <summary>
         /// Executes the initialization method specified in the <see cref="ControllerContainerAttribute"/> attribute.

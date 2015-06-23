@@ -242,6 +242,7 @@
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
     <Compile Include="Mvc\Helpers\CommentsHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\EmailAddressAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\HttpHandlerExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\DuplicateSectionException.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -485,9 +486,9 @@
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.eot" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.ttf" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.woff" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.eot" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.ttf" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.woff" />
     <None Include="assets\feather-icons.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="assets\jshint.json" />
@@ -544,6 +545,10 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js.map" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js.map" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js.map" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feed-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-selector.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -594,15 +599,15 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
     <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
     <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
-    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
-    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <EmbeddedResource Include="assets\dist\css\html-field.css" />
     <EmbeddedResource Include="assets\dist\css\html-field.min.css" />
+    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
+    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.svg" />
     <EmbeddedResource Include="assets\dist\img\crop-to-area.png" />
-    <EmbeddedResource Include="assets\dist\img\resize-to-area.png" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.svg" />
     <EmbeddedResource Include="assets\dist\img\dummy.jpg" />
+    <EmbeddedResource Include="assets\dist\img\resize-to-area.png" />
     <Content Include="assets\documentation\designer.html" />
     <Content Include="assets\feather-icons.css" />
     <Content Include="assets\gruntfile.js" />
@@ -684,6 +689,10 @@
     <EmbeddedResource Include="client-components\sf-mvc-ext.png" />
     <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.js" />
     <EmbeddedResource Include="assets\src\img\dummy.jpg" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feeds-service.js" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feed-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-service.js" />
+    <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-selector.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

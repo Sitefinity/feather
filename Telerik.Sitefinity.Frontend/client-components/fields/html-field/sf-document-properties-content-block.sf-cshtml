@@ -16,7 +16,7 @@
             <label for="title">@(Res.Get<ClientComponentsResources>().Title)</label>
 
             <div class="row">
-                <div class="col-xs-8">
+                <div class="col-xs-11">
                     <input class="form-control" name="title" type="text" ng-model="model.title" ng-required="true" />
                 </div>
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
@@ -22,7 +23,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             if (handler == null)
                 throw new ArgumentNullException("handler");
 
-            var page = handler as Page;
+            Page page = handler.GetPageHandler();
+
             if (page != null)
             {
                 this.Initialize(page);
@@ -57,7 +59,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
 
         private void PreInitHandler(object sender, EventArgs e)
         {
-            var page = (Page)sender;
+            var page = ((IHttpHandler)sender).GetPageHandler();
+
             if (LayoutMvcPageResolver.IsLayoutPath(page.MasterPageFile))
             {
                 page.Request.RequestContext.HttpContext.Items.Remove("JsRegister");
