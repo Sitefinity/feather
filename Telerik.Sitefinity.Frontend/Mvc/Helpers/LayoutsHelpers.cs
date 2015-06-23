@@ -35,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             if (helper.ViewContext.HttpContext != null)
             {
-                SectionRenderer.MarkAvailability(PageInitializer.GetPageHandler(helper.ViewContext.HttpContext.Handler), name);
+                SectionRenderer.MarkAvailability(helper.ViewContext.HttpContext.Handler.GetPageHandler(), name);
             }
 
             return new System.Web.Mvc.MvcHtmlString(LayoutsHelpers.SectionHtml.Arrange(name));

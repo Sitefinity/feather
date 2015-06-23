@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using MbUnit.Framework;
-using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations.ActionFilters;
@@ -68,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
                 Assert.IsTrue(string.IsNullOrEmpty(result.Content), "The script should not be added outside of ScriptManager.");
 
                 var httpContext = ActionExecutionRegister.ExecutedActionInfos[i].CurrentHttpContext;
-                var scriptManagerScripts = System.Web.UI.ScriptManager.GetCurrent(httpContext.Handler as System.Web.UI.Page).Scripts;
+                var scriptManagerScripts = System.Web.UI.ScriptManager.GetCurrent(httpContext.Handler.GetPageHandler()).Scripts;
                 Assert.AreEqual(3, scriptManagerScripts.Count(), "The script is not added correctly");
             }          
         }

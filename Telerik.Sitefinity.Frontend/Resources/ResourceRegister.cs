@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -98,7 +99,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             if (sectionName != null)
             {
-                var page = this.Context.Handler as System.Web.UI.Page;
+                var page = this.Context.Handler.GetPageHandler();
                 if (throwException && page != null && (page.Master is MvcMasterPage) && !SectionRenderer.IsAvailable(page, sectionName))
                 {
                     throw new ArgumentException("A section with name \"{0}\" could not be found.".Arrange(sectionName), sectionName);

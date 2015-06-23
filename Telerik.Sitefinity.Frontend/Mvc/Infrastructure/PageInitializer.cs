@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             if (handler == null)
                 throw new ArgumentNullException("handler");
 
-            Page page = PageInitializer.GetPageHandler(handler);
+            Page page = handler.GetPageHandler();
 
             if (page != null)
             {
@@ -46,37 +46,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             return inlineCss;
         }
 
-        /// <summary>
-        /// Casts the IHttpHandler to Page. If the handler is a wrapper of this page - extracts it.
-        /// </summary>
-        /// <param name="handler">The handler.</param>
-        /// <returns>
-		/// The Page or null if the cast failed.
-		/// </returns>
-        internal static Page GetPageHandler(IHttpHandler handler)
-        {
-            Page page = null;
-
-            if (handler != null)
-            {
-                page = handler as Page;
-
-                if (page == null)
-                {
-                    var pageHandlerWrapperType = Type.GetType("Telerik.Sitefinity.Web.PageHandlerWrapper, Telerik.Sitefinity");
-                    if (handler.GetType() == pageHandlerWrapperType)
-                    {
-                        var baseHandlerField = pageHandlerWrapperType.GetField("baseHandler", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                        var valueObject = baseHandlerField.GetValue(handler);
-
-                        page = valueObject as Page;
-                    }
-                }
-            }
-
-            return page;
-        }
-
         private void Initialize(Page page)
         {
             if (page == null)
@@ -90,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
 
         private void PreInitHandler(object sender, EventArgs e)
         {
-            var page = PageInitializer.GetPageHandler((IHttpHandler)sender);
+            var page = ((IHttpHandler)sender).GetPageHandler();
 
             if (LayoutMvcPageResolver.IsLayoutPath(page.MasterPageFile))
             {
