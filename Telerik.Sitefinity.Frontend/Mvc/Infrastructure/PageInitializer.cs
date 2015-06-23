@@ -11,50 +11,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
     /// <summary>
     /// Instances of this are used to manipulated a page right after it is created.
     /// </summary>
-    public class PageInitializer
+    internal class PageInitializer
     {
-        /// <summary>
-        /// Casts the IHttpHandler to Page. If the handler is a wrapper of this page - extracts it.
-        /// </summary>
-        /// <param name="handler">The handler.</param>
-        /// <returns>
-        /// The Page or null if the cast failed.
-        /// </returns>
-        public static Page GetPageHandler(IHttpHandler handler)
-        {
-            Page page = null;
-
-            if (handler != null)
-            {
-                page = handler as Page;
-
-                if (page == null)
-                {
-                    var pageHandlerWrapperType = Type.GetType("Telerik.Sitefinity.Web.PageHandlerWrapper, Telerik.Sitefinity");
-                    if (handler.GetType() == pageHandlerWrapperType)
-                    {
-                        var baseHandlerField = pageHandlerWrapperType.GetField("baseHandler", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                        var valueObject = baseHandlerField.GetValue(handler);
-
-                        page = valueObject as Page;
-                    }
-                }
-            }
-
-            return page;
-        }
-
         /// <summary>
         /// Initializes the specified handler as a page. This method is called right after the handler is created and can be used to add controls to the Page.
         /// </summary>
         /// <param name="handler">The handler.</param>
         /// <exception cref="System.ArgumentNullException">handler</exception>
-        internal void Initialize(IHttpHandler handler)
+        public void Initialize(IHttpHandler handler)
         {
             if (handler == null)
                 throw new ArgumentNullException("handler");
 
-            Page page = PageInitializer.GetPageHandler(handler);
+            Page page = handler.GetPageHandler();
 
             if (page != null)
             {
@@ -66,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
         /// Gets the inline style.
         /// </summary>
         /// <returns></returns>
-        internal string GetInlineStyle()
+        public string GetInlineStyle()
         {
             var iconUrl = "client-components/sf-mvc-ext.png";
 
@@ -90,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
 
         private void PreInitHandler(object sender, EventArgs e)
         {
-            var page = PageInitializer.GetPageHandler((IHttpHandler)sender);
+            var page = ((IHttpHandler)sender).GetPageHandler();
 
             if (LayoutMvcPageResolver.IsLayoutPath(page.MasterPageFile))
             {

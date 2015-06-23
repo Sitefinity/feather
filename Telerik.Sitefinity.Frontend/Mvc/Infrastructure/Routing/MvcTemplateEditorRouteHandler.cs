@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var handler = base.BuildHandler(requestContext, pageData);
             new PageInitializer().Initialize(handler);
 
-            var page = PageInitializer.GetPageHandler(handler);
+            var page = handler.GetPageHandler();
             if (page != null)
             {
                 page.Init += this.MvcTemplateEditorRouteHandlerInit;

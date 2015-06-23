@@ -68,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
                 Assert.IsTrue(string.IsNullOrEmpty(result.Content), "The script should not be added outside of ScriptManager.");
 
                 var httpContext = ActionExecutionRegister.ExecutedActionInfos[i].CurrentHttpContext;
-                var scriptManagerScripts = System.Web.UI.ScriptManager.GetCurrent(PageInitializer.GetPageHandler(httpContext.Handler)).Scripts;
+                var scriptManagerScripts = System.Web.UI.ScriptManager.GetCurrent(httpContext.Handler.GetPageHandler()).Scripts;
                 Assert.AreEqual(3, scriptManagerScripts.Count(), "The script is not added correctly");
             }          
         }

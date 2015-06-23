@@ -99,7 +99,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             if (sectionName != null)
             {
-                var page = PageInitializer.GetPageHandler(this.Context.Handler);
+                var page = this.Context.Handler.GetPageHandler();
                 if (throwException && page != null && (page.Master is MvcMasterPage) && !SectionRenderer.IsAvailable(page, sectionName))
                 {
                     throw new ArgumentException("A section with name \"{0}\" could not be found.".Arrange(sectionName), sectionName);
