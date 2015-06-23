@@ -11,48 +11,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
     /// <summary>
     /// Instances of this are used to manipulated a page right after it is created.
     /// </summary>
-    internal class PageInitializer
+    public class PageInitializer
     {
-        /// <summary>
-        /// Initializes the specified handler as a page. This method is called right after the handler is created and can be used to add controls to the Page.
-        /// </summary>
-        /// <param name="handler">The handler.</param>
-        /// <exception cref="System.ArgumentNullException">handler</exception>
-        public void Initialize(IHttpHandler handler)
-        {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
-
-            Page page = PageInitializer.GetPageHandler(handler);
-
-            if (page != null)
-            {
-                this.Initialize(page);
-            }
-        }
-
-        /// <summary>
-        /// Gets the inline style.
-        /// </summary>
-        /// <returns></returns>
-        public string GetInlineStyle()
-        {
-            var iconUrl = "client-components/sf-mvc-ext.png";
-
-            var fullIconUrl = RouteHelper.ResolveUrl(string.Format("~/{0}{1}", FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly), iconUrl), UrlResolveOptions.Rooted);
-            var cssValue = @".sfMvcIcn { position: relative; } .sfMvcIcn:after { content: """"; background: transparent url(" + fullIconUrl + ") no-repeat; width: 26px; height: 17px;display: block; position: absolute; left: 29px; bottom: 0px;} a.sfAddContentLnk.sfMvcIcn:after{ top: 22px; left: 0; width: 100%; background-position: calc(50% + 15px); }";
-            var inlineCss = string.Format(@"<style type=""text/css"">{0}</style>", cssValue);
-
-            return inlineCss;
-        }
-
         /// <summary>
         /// Casts the IHttpHandler to Page. If the handler is a wrapper of this page - extracts it.
         /// </summary>
         /// <param name="handler">The handler.</param>
         /// <returns>
-		/// The Page or null if the cast failed.
-		/// </returns>
+        /// The Page or null if the cast failed.
+        /// </returns>
         public static Page GetPageHandler(IHttpHandler handler)
         {
             Page page = null;
@@ -75,6 +42,39 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             }
 
             return page;
+        }
+
+        /// <summary>
+        /// Initializes the specified handler as a page. This method is called right after the handler is created and can be used to add controls to the Page.
+        /// </summary>
+        /// <param name="handler">The handler.</param>
+        /// <exception cref="System.ArgumentNullException">handler</exception>
+        internal void Initialize(IHttpHandler handler)
+        {
+            if (handler == null)
+                throw new ArgumentNullException("handler");
+
+            Page page = PageInitializer.GetPageHandler(handler);
+
+            if (page != null)
+            {
+                this.Initialize(page);
+            }
+        }
+
+        /// <summary>
+        /// Gets the inline style.
+        /// </summary>
+        /// <returns></returns>
+        internal string GetInlineStyle()
+        {
+            var iconUrl = "client-components/sf-mvc-ext.png";
+
+            var fullIconUrl = RouteHelper.ResolveUrl(string.Format("~/{0}{1}", FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly), iconUrl), UrlResolveOptions.Rooted);
+            var cssValue = @".sfMvcIcn { position: relative; } .sfMvcIcn:after { content: """"; background: transparent url(" + fullIconUrl + ") no-repeat; width: 26px; height: 17px;display: block; position: absolute; left: 29px; bottom: 0px;} a.sfAddContentLnk.sfMvcIcn:after{ top: 22px; left: 0; width: 100%; background-position: calc(50% + 15px); }";
+            var inlineCss = string.Format(@"<style type=""text/css"">{0}</style>", cssValue);
+
+            return inlineCss;
         }
 
         private void Initialize(Page page)
