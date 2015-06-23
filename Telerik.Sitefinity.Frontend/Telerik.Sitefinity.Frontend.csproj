@@ -143,16 +143,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.2.270.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.3.260.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.2.270.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.3.260.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities">
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.2.270.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.3.260.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.3.260.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
@@ -162,32 +163,32 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity.Search, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Search.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Search.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Documents, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Documents.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Documents.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Events, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Notifications.Impl.dll</HintPath>
@@ -200,7 +201,7 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Statistics, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Statistics.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Statistics.Impl.dll</HintPath>
@@ -713,7 +714,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
