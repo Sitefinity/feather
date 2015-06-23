@@ -136,11 +136,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
                 if (HttpContext.Current != null && HttpContext.Current.Items != null && HttpContext.Current.Items.Contains(siteMapNodeKey))
                 {
-                    var siteMapNode = RouteHelper.GetFirstPageDataNode(HttpContext.Current.Items[siteMapNodeKey] as PageSiteNode, true);
-                    if (siteMapNode != null && siteMapNode.Framework == Pages.Model.PageTemplateFramework.Mvc)
-                    {
-                        shouldRender = true;
-                    }
+                    var siteMapNode = HttpContext.Current.Items[siteMapNodeKey] as PageSiteNode;
+                    if (siteMapNode != null)
+	                {
+                        var firstPageDataNode = RouteHelper.GetFirstPageDataNode(siteMapNode, true);
+                        if (firstPageDataNode != null && firstPageDataNode.Framework == Pages.Model.PageTemplateFramework.Mvc)
+                        {
+                            shouldRender = true;
+                        }
+	                }
                 }
             }
 
