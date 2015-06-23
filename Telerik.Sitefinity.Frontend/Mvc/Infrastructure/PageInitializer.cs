@@ -53,7 +53,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
         /// <returns>
 		/// The Page or null if the cast failed.
 		/// </returns>
-        internal static Page GetPageHandler(IHttpHandler handler)
+        public static Page GetPageHandler(IHttpHandler handler)
         {
             Page page = null;
 
