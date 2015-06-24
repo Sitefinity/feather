@@ -179,5 +179,6 @@ var sitefinity = sitefinity || {};
 	    $telerik.$(document).on('needsModalDialog', $.proxy(sitefinity.pageEditor.openDialog, sitefinity.pageEditor));
 	    $telerik.$(document).on('needsGridModalDialog', $.proxy(sitefinity.pageEditor.openGridDialog, sitefinity.pageEditor));
 	    $telerik.$(document).on('modalDialogClosed', $.proxy(sitefinity.pageEditor.destroyDialog, sitefinity.pageEditor));
+	    $telerik.$(document).on('gridModalDialogClosed', $.proxy(sitefinity.pageEditor.destroyDialog, sitefinity.pageEditor));
 	}
 })(jQuery);

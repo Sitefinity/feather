@@ -80,6 +80,9 @@
             try {
                 $modalInstance.close();
             } catch (e) { }
+
+            if (typeof ($telerik) != 'undefined')
+                $telerik.$(document).trigger('gridModalDialogClosed');
         };
 
         $scope.hideError = function () {
