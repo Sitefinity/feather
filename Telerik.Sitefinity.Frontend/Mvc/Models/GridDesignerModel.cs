@@ -11,21 +11,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="GridDesignerModel"/> class.
         /// </summary>
-        /// <param name="widgetName">Name of the widget.</param>
+        /// <param name="gridTitle">Titel of the grid.</param>
         /// <param name="controlId">The control identifier.</param>
-        public GridDesignerModel(string widgetName, string controlId)
+        public GridDesignerModel(string gridTitle, string controlId)
         {
-            this.WidgetName = widgetName;
+            this.GridTitle = gridTitle;
             this.ControlId = controlId;
         }
 
         /// <summary>
-        /// Gets or sets the name of the widget.
+        /// Gets or sets the grid title.
         /// </summary>
         /// <value>
-        /// The name of the widget.
+        /// The grid title.
         /// </value>
-        public string WidgetName
+        public string GridTitle
         {
             get;
             set;

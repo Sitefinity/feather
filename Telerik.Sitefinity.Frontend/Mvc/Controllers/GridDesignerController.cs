@@ -31,8 +31,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             this.GetHttpContext().Items[SystemManager.IsBackendRequestKey] = true;
 
             var controlId = this.Request != null ? this.Request["controlId"] ?? Guid.Empty.ToString() : Guid.Empty.ToString();
+            var gridTitle = this.Request != null ? this.Request["gridTitle"] ?? Guid.Empty.ToString() : Guid.Empty.ToString();
 
-            var model = this.GetModel(widgetName, controlId);
+            var model = this.GetModel(gridTitle, controlId);
 
             return this.View(GridDesignerController.DefaultView, model);
         }
@@ -50,11 +51,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <summary>
         /// Gets the model of the designer.
         /// </summary>
-        private IGridDesignerModel GetModel(string widgetName, string controlId)
+        private IGridDesignerModel GetModel(string gridTitle, string controlId)
         {
             var constructorParameters = new Dictionary<string, object> 
                         {
-                           { "widgetName", widgetName },
+                           { "gridTitle", gridTitle },
                            { "controlId", controlId }
                         };
 

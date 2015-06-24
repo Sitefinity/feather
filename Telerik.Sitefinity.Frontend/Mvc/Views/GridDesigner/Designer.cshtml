@@ -3,12 +3,12 @@
 @using Telerik.Sitefinity.Frontend.Mvc.Helpers
 
 <div class="grid-designer" modal dialog-controller="GridDialogCtrl" template-url="dialog-template" auto-open="true" window-class="sf-designer-dlg">
-	<server-data widget-name='@Model.WidgetName' control-id='@Model.ControlId'></server-data>
+	<server-data control-id='@Model.ControlId'></server-data>
 
 	<script type="text/ng-template" id="dialog-template">
 		<div class="modal-header sf-widget-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel($event)">&times;</button>
-			<h3 class="modal-title">@Html.Raw(Model.WidgetName)</h3>
+			<h3 class="modal-title">@Html.Raw(Model.GridTitle)</h3>
 		</div>
 
 		<div class="modal-body">

@@ -10,12 +10,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
     public interface IGridDesignerModel
     {
         /// <summary>
-        /// Gets or sets the name of the widget.
+        /// Gets or sets the grid title.
         /// </summary>
         /// <value>
-        /// The name of the widget.
+        /// The grid title.
         /// </value>
-        string WidgetName { get; set; }
+        string GridTitle { get; set; }
 
         /// <summary>
         /// Gets the control identifier.
