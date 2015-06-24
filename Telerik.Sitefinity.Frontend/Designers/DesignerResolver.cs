@@ -83,6 +83,10 @@ namespace Telerik.Sitefinity.Frontend.Designers
         private string GetDefaultUrl(Type widgetType)
         {
             string designerUrl = null;
+
+            if (typeof(GridSystem.GridControl).IsAssignableFrom(widgetType))
+                return DesignerResolver.DefaultGridActionUrlTemplate;
+
             var controllerRegistry = FrontendManager.ControllerFactory;
             bool isController = controllerRegistry.IsController(widgetType);
 
@@ -100,6 +104,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
         #region Constants
 
         private const string DefaultActionUrlTemplate = "~/Telerik.Sitefinity.Frontend/Designer/Master/{0}";
+        private const string DefaultGridActionUrlTemplate = "~/Telerik.Sitefinity.Frontend/GridDesigner/Master/GridDesigner";
 
         #endregion
     }

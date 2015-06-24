@@ -24,6 +24,21 @@
         };
     });
 
+    pageEditorServices.provider('gridContext', function () {
+        var context = sitefinity.pageEditor.gridContext;
+
+        this.$get = function () {
+            return {
+                contentId: context.Id,
+                pageId: context.PageId,
+                mediaType: context.MediaType,
+                layoutRoot: context.LayoutRoot,
+                layoutContainer: context.LayoutContainer,
+                dock: context.Dock
+            };
+        };
+    });
+
     //this is the service responsible for managing the properties data for all interested parties
     pageEditorServices.factory('propertyService', function ($rootScope, $http, $q, widgetContext) {
 
@@ -189,6 +204,139 @@
             toAssociativeArray: function (propertyBag) {
                 return toAssociativeArray(propertyBag);
             }
+        };
+
+        return service;
+    });
+
+
+    //this is the service responsible for managing the grid data for all interested parties
+    pageEditorServices.factory('gridService', function ($rootScope, $http, $q, gridContext) {
+
+        var loadingPromise,
+            placeholders;
+
+        /**
+         * Generates the headers dictionary for the HTTP request
+         * to be performed. The headers will contain by default the
+         * Sitefinity UI culture header.
+         */
+        var requestOptions = function () {
+            return {
+                cache: false
+            };
+        };
+
+        var placeholder = function (id, name, css, label) {
+            this.id = id;
+            this.name = name;
+            this.css = css;
+            this.label = label;
+        };
+
+        var getInnerPlaceholders = function (layoutRoot) {
+            var innerPlaceholders = [];
+            var innerDivs = $(layoutRoot).find('.sf_colsIn');
+
+            //Sort out the inner columns
+            for (var i = 0; i < innerDivs.length; i++) {
+                var innerDiv = innerDivs[i];
+                var id = $(innerDiv).attr('id');
+                var classValue = $(innerDiv).attr('class');
+                var displayClass = classValue.replace('sf_colsIn', '').trim();
+                var columnName = "Column " + (i + 1);
+
+                innerPlaceholders.push(new placeholder(id, columnName, displayClass, $(innerDiv).attr('data-placeholder-label')));
+            }
+
+            return innerPlaceholders;
+        };
+
+        var constructLayoutHtml = function (placeholders) {
+            var tempLayout = $(gridContext.layoutRoot).clone();
+		
+            for (var i = 0; i < placeholders.length; i++) {
+                var innerDiv = $(tempLayout).find('#' + placeholders[i].id);
+                if (innerDiv) {
+                    var label = placeholders[i].label;
+                    var css = ('sf_colsIn ' + placeholders[i].css).trim();
+                    label ? $(innerDiv).attr('data-placeholder-label', label) : $(innerDiv).removeAttr('data-placeholder-label');
+                    $(innerDiv).attr('class', css);
+                }
+            }
+
+            $(tempLayout).find('.RadDockZone').each(function () {
+                $(this).remove();
+            });
+
+            return tempLayout.html();
+        };
+
+        var refreshContainer = function (placeholders) {
+            for (var i = 0; i < placeholders.length; i++) {
+                var innerDiv = $(gridContext.layoutContainer).find('#' + placeholders[i].id);
+                if (innerDiv) {
+                    var label = placeholders[i].label;
+                    var css = ('sf_colsIn ' + placeholders[i].css).trim();
+                    $(innerDiv).attr('class', css);
+                    if (label) {
+                        $(innerDiv).find(".zeDockZoneLabel b").html(label);
+                        $(innerDiv).attr('data-placeholder-label', label);
+                    }
+                    else {
+                        $(innerDiv).removeAttr('data-placeholder-label');
+                    }
+                }
+            }
+        };
+
+        /**
+         * Constructs and returns the PUT URL for the server side web service
+         * that saves grid layout.
+         */
+        var updateUrl = function () {
+            return '/Sitefinity/Services/Pages/ZoneEditorService.svc/Layout/Style/' + gridContext.contentId + '/' +
+                gridContext.pageId + '/' + (gridContext.mediaType===1) + "?package=Bootstrap";
+        };
+
+
+        var service = {
+
+            /**
+             * Retrieves the placeholders for the current grid context.
+             *
+             * @returns {object} promise The promise object that is resolved or rejected once the operation completes.
+             */
+            get: function () {
+                var deferred = $q.defer();
+                var placeholders = getInnerPlaceholders(gridContext.layoutRoot);
+                deferred.resolve(placeholders);
+                return deferred.promise;
+            },
+
+            /**
+             * Saves the grid html to the server.
+             *
+             * @returns {object} promise The promise object that is resolved or rejected once the operation completes.
+             */
+            save: function (placeholders) {
+                var modifiedData = $find("ZoneEditor")._getWebServiceParameters('reload', gridContext.dock);
+                modifiedData.LayoutHtml = constructLayoutHtml(placeholders);
+
+                var deferred = $q.defer();
+
+                $http.put(updateUrl(), modifiedData, requestOptions())
+                    .success(function (data) {
+                        refreshContainer(placeholders);
+                        deferred.resolve(data);
+                    })
+                    .error(function (data) {
+                        deferred.reject(data);
+                    });
+
+                return deferred.promise;
+            }
+
         };
 
         return service;
