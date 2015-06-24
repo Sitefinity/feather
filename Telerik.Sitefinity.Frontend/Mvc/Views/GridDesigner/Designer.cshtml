@@ -22,13 +22,13 @@
             <tabset class="nav-tabs-wrapper">
                 <tab heading="@Html.Resource("Classes")">
 			
-                    <div data-ng-repeat="item in placeholders" class="form-group">
+                    <div data-ng-repeat="item in gridElements" class="form-group">
                         <label for="prop-{{item.name}}" ng-bind="item.name"></label>
                         <input id="prop-{{item.css}}" type="text" class="form-control" ng-model="item.css"/>
                     </div>
                 </tab>
                 <tab heading="@Html.Resource("Labels")">
-                    <div data-ng-repeat="item in placeholders" class="form-group">
+                    <div data-ng-repeat="item in gridElements|filter:{isPlaceholder:true}" class="form-group">
                         <label for="prop-{{item.name}}" ng-bind="item.name"></label>
                         <input id="prop-{{item.label}}" type="text" class="form-control" ng-model="item.label"/>
                     </div>	

@@ -33,7 +33,7 @@
 
         var saveHtml = function () {
 
-            return gridService.save($scope.placeholders);
+            return gridService.save($scope.gridElements);
         };
 
         // ------------------------------------------------------------------------
@@ -90,7 +90,7 @@
 
         gridService.get().then(function (data) {
             if (data) {
-                $scope.placeholders = data;
+                $scope.gridElements = data;
                 $scope.feedback.showLoadingIndicator = false;
             }
         },

@@ -215,7 +215,7 @@
     pageEditorServices.factory('gridService', function ($rootScope, $http, $q, gridContext) {
 
         var loadingPromise,
-            placeholders;
+            elements;
 
         /**
          * Generates the headers dictionary for the HTTP request
@@ -228,39 +228,43 @@
             };
         };
 
-        var placeholder = function (id, name, css, label) {
+        var gridElement = function (id, name, css, label, isPlaceholder) {
             this.id = id;
             this.name = name;
             this.css = css;
             this.label = label;
+            this.isPlaceholder = isPlaceholder;
         };
 
-        var getInnerPlaceholders = function (layoutRoot) {
-            var innerPlaceholders = [];
-            var innerDivs = $(layoutRoot).find('.sf_colsIn');
+        var getInnerElements = function (layoutRoot) {
+            var gridElements = [];
+            var elements = $(layoutRoot).find('[data-sf-element]');
 
             //Sort out the inner columns
-            for (var i = 0; i < innerDivs.length; i++) {
-                var innerDiv = innerDivs[i];
-                var id = $(innerDiv).attr('id');
-                var classValue = $(innerDiv).attr('class');
+            for (var i = 0; i < elements.length; i++) {
+                var element = elements[i];
+                var id = $(element).attr('id');
+                var classValue = $(element).attr('class');
                 var displayClass = classValue.replace('sf_colsIn', '').trim();
-                var columnName = "Column " + (i + 1);
+                var columnName = $(element).attr('data-sf-element');
+                var label = $(element).attr('data-placeholder-label');
+                var isPlaceholder = $(element).hasClass('sf_colsIn');
 
-                innerPlaceholders.push(new placeholder(id, columnName, displayClass, $(innerDiv).attr('data-placeholder-label')));
+                gridElements.push(new gridElement(id, columnName, displayClass, label, isPlaceholder));
             }
 
-            return innerPlaceholders;
+            return gridElements;
         };
 
-        var constructLayoutHtml = function (placeholders) {
+        var constructLayoutHtml = function (elements) {
             var tempLayout = $(gridContext.layoutRoot).clone();
 
-            for (var i = 0; i < placeholders.length; i++) {
-                var innerDiv = $(tempLayout).find('#' + placeholders[i].id);
+            for (var i = 0; i < elements.length; i++) {
+                var innerDiv = elements[i].id ? $(tempLayout).find('#' + elements[i].id) : $(tempLayout).find('[data-sf-element=' + elements[i].name + ']');
+
                 if (innerDiv) {
-                    var label = placeholders[i].label;
-                    var css = ('sf_colsIn ' + placeholders[i].css).trim();
+                    var label = elements[i].label;
+                    var css = ('sf_colsIn ' + elements[i].css).trim();
                     label ? $(innerDiv).attr('data-placeholder-label', label) : $(innerDiv).removeAttr('data-placeholder-label');
                     $(innerDiv).attr('class', css);
                 }
@@ -273,12 +277,13 @@
             return tempLayout.html();
         };
 
-        var refreshContainer = function (placeholders) {
-            for (var i = 0; i < placeholders.length; i++) {
-                var innerDiv = $(gridContext.layoutContainer).find('#' + placeholders[i].id);
+        var refreshContainer = function (elements) {
+            for (var i = 0; i < elements.length; i++) {
+                var innerDiv = elements[i].id ? $(gridContext.layoutContainer).find('#' + elements[i].id) : $(gridContext.layoutContainer).find('[data-sf-element=' + elements[i].name + ']');
+
                 if (innerDiv) {
-                    var label = placeholders[i].label;
-                    var css = ('sf_colsIn ' + placeholders[i].css).trim();
+                    var label = elements[i].label;
+                    var css = ('sf_colsIn ' + elements[i].css).trim();
                     $(innerDiv).attr('class', css);
                     if (label) {
                         $(innerDiv).find(".zeDockZoneLabel b").html(label);
@@ -333,8 +338,8 @@
              */
             get: function () {
                 var deferred = $q.defer();
-                var placeholders = getInnerPlaceholders(gridContext.layoutRoot);
-                deferred.resolve(placeholders);
+                var elements = getInnerElements(gridContext.layoutRoot);
+                deferred.resolve(elements);
                 return deferred.promise;
             },
 
@@ -343,14 +348,14 @@
              *
              * @returns {object} promise The promise object that is resolved or rejected once the operation completes.
              */
-            save: function (placeholders) {
+            save: function (elements) {
                 var modifiedData = $find(gridContext.zoneEditorId)._getWebServiceParameters('reload', gridContext.dock);
-                modifiedData.LayoutHtml = constructLayoutHtml(placeholders);
+                modifiedData.LayoutHtml = constructLayoutHtml(elements);
 
                 var deferred = $q.defer();
 
                 var success = function () {
-                    refreshContainer(placeholders);
+                    refreshContainer(elements);
                     deferred.resolve();
                 };
 
