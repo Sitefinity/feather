@@ -264,9 +264,9 @@
 
                 if (innerDiv) {
                     var label = elements[i].label;
-                    var css = ('sf_colsIn ' + elements[i].css).trim();
+                    var css = elements[i].isPlaceholder? 'sf_colsIn ' + elements[i].css : elements[i].css;
                     label ? $(innerDiv).attr('data-placeholder-label', label) : $(innerDiv).removeAttr('data-placeholder-label');
-                    $(innerDiv).attr('class', css);
+                    $(innerDiv).attr('class', css.trim());
                 }
             }
 
@@ -283,8 +283,8 @@
 
                 if (innerDiv) {
                     var label = elements[i].label;
-                    var css = ('sf_colsIn ' + elements[i].css).trim();
-                    $(innerDiv).attr('class', css);
+                    var css = elements[i].isPlaceholder ? 'sf_colsIn ' + elements[i].css : elements[i].css;
+                    $(innerDiv).attr('class', css.trim());
                     if (label) {
                         $(innerDiv).find(".zeDockZoneLabel b").html(label);
                         $(innerDiv).attr('data-placeholder-label', label);
