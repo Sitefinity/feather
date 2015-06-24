@@ -34,7 +34,8 @@
                 mediaType: context.MediaType,
                 layoutRoot: context.LayoutRoot,
                 layoutContainer: context.LayoutContainer,
-                dock: context.Dock
+                dock: context.Dock,
+                zoneEditorId: context.ZoneEditorId
             };
         };
     });
@@ -254,7 +255,7 @@
 
         var constructLayoutHtml = function (placeholders) {
             var tempLayout = $(gridContext.layoutRoot).clone();
-		
+
             for (var i = 0; i < placeholders.length; i++) {
                 var innerDiv = $(tempLayout).find('#' + placeholders[i].id);
                 if (innerDiv) {
@@ -290,13 +291,37 @@
             }
         };
 
+        var invokePut = function (url, data, deferred, success) {
+            var wRequest = new Sys.Net.WebRequest();
+            wRequest.set_url(url);
+            wRequest.set_httpVerb("PUT");
+            wRequest.set_body(Sys.Serialization.JavaScriptSerializer.serialize(data));
+            wRequest.get_headers()["Cache-Control"] = "no-cache, no-store, must-revalidate";
+            wRequest.get_headers()["Pragma"] = "no-cache";
+            wRequest.get_headers()["Expires"] = "0";
+            wRequest.get_headers()["Content-Type"] = "application/json";
+            wRequest.add_completed(
+                function (executor, eventArgs) {
+                    debugger;
+                    if (executor.get_responseAvailable()) {
+                        success()
+                    }
+                    else {
+                        deferred.reject(data);
+                    }
+                });
+
+            // Execute the request.
+            wRequest.invoke();
+        };
+
         /**
          * Constructs and returns the PUT URL for the server side web service
          * that saves grid layout.
          */
         var updateUrl = function () {
             return '/Sitefinity/Services/Pages/ZoneEditorService.svc/Layout/Style/' + gridContext.contentId + '/' +
-                gridContext.pageId + '/' + (gridContext.mediaType===1) + "?package=Bootstrap";
+                gridContext.pageId + '/' + (gridContext.mediaType === 1);
         };
 
 
@@ -320,19 +345,17 @@
              * @returns {object} promise The promise object that is resolved or rejected once the operation completes.
              */
             save: function (placeholders) {
-                var modifiedData = $find("ZoneEditor")._getWebServiceParameters('reload', gridContext.dock);
+                var modifiedData = $find(gridContext.zoneEditorId)._getWebServiceParameters('reload', gridContext.dock);
                 modifiedData.LayoutHtml = constructLayoutHtml(placeholders);
 
                 var deferred = $q.defer();
 
-                $http.put(updateUrl(), modifiedData, requestOptions())
-                    .success(function (data) {
-                        refreshContainer(placeholders);
-                        deferred.resolve(data);
-                    })
-                    .error(function (data) {
-                        deferred.reject(data);
-                    });
+                var success = function () {
+                    refreshContainer(placeholders);
+                    deferred.resolve();
+                };
+
+                invokePut(updateUrl(), modifiedData, deferred, success);
 
                 return deferred.promise;
             }
