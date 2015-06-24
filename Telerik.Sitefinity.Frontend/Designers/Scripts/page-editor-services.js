@@ -297,14 +297,13 @@
             wRequest.set_httpVerb("PUT");
             wRequest.set_body(Sys.Serialization.JavaScriptSerializer.serialize(data));
             wRequest.get_headers()["Cache-Control"] = "no-cache, no-store, must-revalidate";
-            wRequest.get_headers()["Pragma"] = "no-cache";
-            wRequest.get_headers()["Expires"] = "0";
+            wRequest.get_headers().Pragma = "no-cache";
+            wRequest.get_headers().Expires = "0";
             wRequest.get_headers()["Content-Type"] = "application/json";
             wRequest.add_completed(
                 function (executor, eventArgs) {
-                    debugger;
                     if (executor.get_responseAvailable()) {
-                        success()
+                        success();
                     }
                     else {
                         deferred.reject(data);
