@@ -323,9 +323,8 @@
          * Constructs and returns the PUT URL for the server side web service
          * that saves grid layout.
          */
-        var updateUrl = function () {
-            return '/Sitefinity/Services/Pages/ZoneEditorService.svc/Layout/Style/' + gridContext.contentId + '/' +
-                gridContext.pageId + '/' + (gridContext.mediaType === 1);
+        var updateUrl = function (url) {
+            return String.format(url, gridContext.contentId, gridContext.pageId, (gridContext.mediaType === 1));
         };
 
 
@@ -348,7 +347,7 @@
              *
              * @returns {object} promise The promise object that is resolved or rejected once the operation completes.
              */
-            save: function (elements) {
+            save: function (elements, serviceUrl) {
                 var modifiedData = $find(gridContext.zoneEditorId)._getWebServiceParameters('reload', gridContext.dock);
                 modifiedData.LayoutHtml = constructLayoutHtml(elements);
 
@@ -359,7 +358,7 @@
                     deferred.resolve();
                 };
 
-                invokePut(updateUrl(), modifiedData, deferred, success);
+                invokePut(updateUrl(serviceUrl), modifiedData, deferred, success);
 
                 return deferred.promise;
             }

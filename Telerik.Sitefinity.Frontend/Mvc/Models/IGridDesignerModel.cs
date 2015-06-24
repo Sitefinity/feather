@@ -23,6 +23,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         /// The control identifier.
         /// </value>
-        string ControlId { get; }
+        string ControlId { get; set; }
+
+        /// <summary>
+        /// Gets the grid update service URL.
+        /// </summary>
+        /// <value>
+        /// The grid update service URL.
+        /// </value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
+        string GridUpdateServiceUrl { get; }
     }
 }

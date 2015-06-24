@@ -33,7 +33,7 @@
 
         var saveHtml = function () {
 
-            return gridService.save($scope.gridElements);
+            return gridService.save($scope.gridElements, serverData.get("updateServiceUrl"));
         };
 
         // ------------------------------------------------------------------------

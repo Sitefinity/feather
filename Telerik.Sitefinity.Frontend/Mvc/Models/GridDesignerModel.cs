@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
@@ -11,7 +12,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="GridDesignerModel"/> class.
         /// </summary>
-        /// <param name="gridTitle">Titel of the grid.</param>
+        /// <param name="gridTitle">Title of the grid.</param>
         /// <param name="controlId">The control identifier.</param>
         public GridDesignerModel(string gridTitle, string controlId)
         {
@@ -42,5 +43,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets the grid update service URL.
+        /// </summary>
+        /// <value>
+        /// The grid update service URL.
+        /// </value>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public string GridUpdateServiceUrl
+        {
+            get 
+            {
+                return RouteHelper.ResolveUrl(GridDesignerModel.GridUpdateUrlFormat, UrlResolveOptions.Rooted);
+            }
+        }
+
+        private const string GridUpdateUrlFormat = "/Sitefinity/Services/Pages/ZoneEditorService.svc/Layout/Style/{0}/{1}/{2}";
     }
 }
