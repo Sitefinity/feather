@@ -50,22 +50,26 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="templateTitle">The template title.</param>
         /// <param name="createIfNotExist">if set to <c>true</c> [create if not exist].</param>
         /// <returns>The id of the category.</returns>
-        public static Guid GetOrCreateTemplateCategoryId(string templateTitle, bool createIfNotExist = true)
+        public static Guid GetOrCreateTemplateCategoryId(string templateCategoryName, bool createIfNotExist = true)
         {
-            var taxonomyManager = TaxonomyManager.GetManager();
-            var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
+            if (templateCategoryName.Contains('.'))
+            {
+                templateCategoryName = templateCategoryName.Substring(0, templateCategoryName.IndexOf('.'));
+            }
 
-            var templateCategoryTitle = templateTitle.Contains('.') ? templateTitle.Substring(0, templateTitle.IndexOf('.')) : templateTitle;
-            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Title.Equals(templateCategoryTitle, StringComparison.OrdinalIgnoreCase));
+            var taxonomyManager = TaxonomyManager.GetManager();
+
+            var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
+            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Name.Equals(templateCategoryName, StringComparison.OrdinalIgnoreCase));
 
             if (templateCategory == null && createIfNotExist)
             {
                 templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>();
-                templateCategory.Name = templateCategoryTitle;
-                templateCategory.UrlName = templateCategoryTitle;
+                templateCategory.Name = templateCategoryName;
+                templateCategory.UrlName = templateCategoryName;
                 templateCategory.RenderAsLink = false;
-                templateCategory.Title = templateCategoryTitle;
-                templateCategory.Description = string.Format("Represents category for {0} page templates.", templateCategoryTitle);
+                templateCategory.Title = templateCategoryName;
+                templateCategory.Description = string.Format("Represents category for {0} page templates.", templateCategoryName);
 
                 pageTemplatesTaxonomy.Taxa.Add(templateCategory);
                 taxonomyManager.SaveChanges();
