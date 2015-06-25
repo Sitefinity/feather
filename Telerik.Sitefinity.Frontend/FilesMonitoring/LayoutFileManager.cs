@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Multisite;
-using Telerik.Sitefinity.Project.Configuration;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Taxonomies;
+using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
@@ -43,12 +42,40 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
         #endregion
 
+        #region Public methods
+
+        /// <summary>
+        /// Creates the template category.
+        /// </summary>
+        /// <param name="templateCategoryTitle">The template category title.</param>
+        /// <returns><see cref="HierarchicalTaxon"/> object.</returns>
+        public static HierarchicalTaxon CreateTemplateCategory(string templateCategoryTitle)
+        {
+            var taxonomyManager = TaxonomyManager.GetManager();
+            var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
+
+            var templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>();
+            templateCategory.Name = templateCategoryTitle;
+            templateCategory.UrlName = templateCategoryTitle;
+            templateCategory.RenderAsLink = false;
+            templateCategory.Title = templateCategoryTitle;
+            templateCategory.Description = string.Format("Represents category for {0} page templates.", templateCategoryTitle);
+
+            pageTemplatesTaxonomy.Taxa.Add(templateCategory);
+            taxonomyManager.SaveChanges();
+
+            return templateCategory;
+        }
+
+        #endregion
+
         #region IFileManager
 
         /// <summary>
         /// Process the file if such is added to the existing folder.
         /// </summary>
-        /// <param name="virtualFilePath">The virtual file path.</param>
+        /// <param name="fileName">The virtual file name.</param>
+        /// <param name="filePath">The virtual file path.</param>
         /// <param name="packageName">Name of the package.</param>
         public void FileAdded(string fileName, string filePath, string packageName = "")
         {
@@ -207,8 +234,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     if (pageManager.GetTemplates().Where(pt => pt.Title.Equals(templateTitle, StringComparison.InvariantCultureIgnoreCase)).Count() == 0)
                     {
                         var template = pageManager.CreateTemplate();
-                    
-                        template.Category = SiteInitializer.CustomTemplatesCategoryId;
+
+                        template.Category = this.GetTemplateCategoryId(templateTitle);
                         template.Name = templateTitle;
                         template.Title = templateTitle;
                         template.Framework = Pages.Model.PageTemplateFramework.Mvc;
@@ -232,6 +259,20 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     multisiteContext.ChangeCurrentSite(prevSite);
                 }
             }
+        }
+
+        private Guid GetTemplateCategoryId(string templateTitle)
+        {
+            var pageTemplatesTaxonomy = TaxonomyManager.GetManager().GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
+            var templateCategoryTitle = templateTitle.Contains('.') ? templateTitle.Substring(0, templateTitle.IndexOf('.')) : templateTitle;
+            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Title.Equals(templateCategoryTitle, StringComparison.OrdinalIgnoreCase));
+
+            if (templateCategory == null)
+            {
+                templateCategory = LayoutFileManager.CreateTemplateCategory(templateCategoryTitle);
+            }
+
+            return templateCategory.Id;
         }
 
         #endregion
