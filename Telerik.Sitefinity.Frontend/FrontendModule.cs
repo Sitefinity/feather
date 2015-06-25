@@ -31,6 +31,36 @@ namespace Telerik.Sitefinity.Frontend
     public class FrontendModule : ModuleBase
     {
         /// <summary>
+        /// The name of the Bootstrap templates category.
+        /// </summary>
+        public const string BootstrapTemplatesCategoryName = "Bootstrap";
+
+        /// <summary>
+        /// The name of the SemanticUI templates category.
+        /// </summary>
+        public const string SemanticUITemplatesCategoryName = "SemanticUI";
+
+        /// <summary>
+        /// The name of the Foundation templates category.
+        /// </summary>
+        public const string FoundationTemplatesCategoryName = "Foundation";
+
+        /// <summary>
+        /// The identifier of the Bootstrap templates category.
+        /// </summary>
+        public static readonly Guid BootstrapTemplatesCategoryId = new Guid("EEC6C344-F08F-47A5-87CA-6AF43F0D249A");
+        
+        /// <summary>
+        /// The identifier of the Semantic UI templates category.
+        /// </summary>
+        public static readonly Guid SemanticUITemplatesCategoryId = new Guid("9106C74A-24D1-49C2-B3DE-BD2CBDD92DF4");
+        
+        /// <summary>
+        /// The identifier of the Foundation templates category.
+        /// </summary>
+        public static readonly Guid FoundationTemplatesCategoryId = new Guid("2E03D37A-74F9-48B2-914B-27FB37DCE42D");
+        
+        /// <summary>
         /// Gets the current instance of the module.
         /// </summary>
         /// <value>
