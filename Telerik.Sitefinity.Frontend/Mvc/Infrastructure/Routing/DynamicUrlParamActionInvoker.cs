@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -91,8 +92,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             catch (Exception ex)
             {
-                if (Exceptions.HandleException(ex, ExceptionPolicyName.IgnoreExceptions))
-                    throw;
+                if (!(ex is ThreadAbortException))
+                    if (Exceptions.HandleException(ex, ExceptionPolicyName.IgnoreExceptions))
+                        throw;
 
                 this.Context.Response.Clear();
 
