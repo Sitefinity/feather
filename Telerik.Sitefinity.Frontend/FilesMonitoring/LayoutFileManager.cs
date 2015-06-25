@@ -54,8 +54,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var taxonomyManager = TaxonomyManager.GetManager();
             var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
 
-            var templateCategoryId = LayoutFileManager.CreateTemplateCategoryId(templateCategoryTitle);
-            var templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>(templateCategoryId);
+            var templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>();
             templateCategory.Name = templateCategoryTitle;
             templateCategory.UrlName = templateCategoryTitle;
             templateCategory.RenderAsLink = false;
@@ -128,30 +127,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         #endregion
 
         #region Private methods
-
-        private static Guid CreateTemplateCategoryId(string templateName)
-        {
-            Guid id = Guid.Empty;
-
-            if (templateName.Equals(FrontendModule.BootstrapTemplatesCategoryName, StringComparison.OrdinalIgnoreCase))
-            {
-                id = FrontendModule.BootstrapTemplatesCategoryId;
-            }
-            else if (templateName.Equals(FrontendModule.FoundationTemplatesCategoryName, StringComparison.OrdinalIgnoreCase))
-            {
-                id = FrontendModule.FoundationTemplatesCategoryId;
-            }
-            else if (templateName.Equals(FrontendModule.SemanticUITemplatesCategoryName, StringComparison.OrdinalIgnoreCase))
-            {
-                id = FrontendModule.SemanticUITemplatesCategoryId;
-            }
-            else
-            {
-                id = Guid.NewGuid();
-            }
-
-            return id;
-        }
 
         /// <summary>
         /// Determines whether a file exists on the specified location and whether it is applicable for the current application.
