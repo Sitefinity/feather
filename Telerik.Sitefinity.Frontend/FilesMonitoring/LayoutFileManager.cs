@@ -45,26 +45,33 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         #region Public methods
 
         /// <summary>
-        /// Creates the template category.
+        /// Gets the or create template category identifier.
         /// </summary>
-        /// <param name="templateCategoryTitle">The template category title.</param>
-        /// <returns><see cref="HierarchicalTaxon"/> object.</returns>
-        public static HierarchicalTaxon CreateTemplateCategory(string templateCategoryTitle)
+        /// <param name="templateTitle">The template title.</param>
+        /// <param name="createIfNotExist">if set to <c>true</c> [create if not exist].</param>
+        /// <returns>The id of the category.</returns>
+        public static Guid GetOrCreateTemplateCategoryId(string templateTitle, bool createIfNotExist = true)
         {
             var taxonomyManager = TaxonomyManager.GetManager();
             var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
 
-            var templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>();
-            templateCategory.Name = templateCategoryTitle;
-            templateCategory.UrlName = templateCategoryTitle;
-            templateCategory.RenderAsLink = false;
-            templateCategory.Title = templateCategoryTitle;
-            templateCategory.Description = string.Format("Represents category for {0} page templates.", templateCategoryTitle);
+            var templateCategoryTitle = templateTitle.Contains('.') ? templateTitle.Substring(0, templateTitle.IndexOf('.')) : templateTitle;
+            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Title.Equals(templateCategoryTitle, StringComparison.OrdinalIgnoreCase));
 
-            pageTemplatesTaxonomy.Taxa.Add(templateCategory);
-            taxonomyManager.SaveChanges();
+            if (templateCategory == null && createIfNotExist)
+            {
+                templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>();
+                templateCategory.Name = templateCategoryTitle;
+                templateCategory.UrlName = templateCategoryTitle;
+                templateCategory.RenderAsLink = false;
+                templateCategory.Title = templateCategoryTitle;
+                templateCategory.Description = string.Format("Represents category for {0} page templates.", templateCategoryTitle);
 
-            return templateCategory;
+                pageTemplatesTaxonomy.Taxa.Add(templateCategory);
+                taxonomyManager.SaveChanges();
+            }
+
+            return templateCategory.Id;
         }
 
         #endregion
@@ -235,7 +242,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     {
                         var template = pageManager.CreateTemplate();
 
-                        template.Category = this.GetTemplateCategoryId(templateTitle);
+                        template.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(templateTitle);
                         template.Name = templateTitle;
                         template.Title = templateTitle;
                         template.Framework = Pages.Model.PageTemplateFramework.Mvc;
@@ -259,20 +266,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     multisiteContext.ChangeCurrentSite(prevSite);
                 }
             }
-        }
-
-        private Guid GetTemplateCategoryId(string templateTitle)
-        {
-            var pageTemplatesTaxonomy = TaxonomyManager.GetManager().GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
-            var templateCategoryTitle = templateTitle.Contains('.') ? templateTitle.Substring(0, templateTitle.IndexOf('.')) : templateTitle;
-            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Title.Equals(templateCategoryTitle, StringComparison.OrdinalIgnoreCase));
-
-            if (templateCategory == null)
-            {
-                templateCategory = LayoutFileManager.CreateTemplateCategory(templateCategoryTitle);
-            }
-
-            return templateCategory.Id;
         }
 
         #endregion
