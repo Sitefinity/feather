@@ -376,10 +376,14 @@ namespace Telerik.Sitefinity.Frontend
         {
             var pageManager = PageManager.GetManager();
 
-            var customPageTemplates = pageManager.GetTemplates().Where(pt => pt.Category == SiteInitializer.CustomTemplatesCategoryId);
+            var customPageTemplates = pageManager.GetTemplates().Where(pt => pt.Category == SiteInitializer.CustomTemplatesCategoryId).ToArray();
             foreach (var customPageTemplate in customPageTemplates)
             {
-                customPageTemplate.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(customPageTemplate.Title);
+                var titleTokens = customPageTemplate.Title.ToString().Split('.');
+                if (titleTokens.Length > 1 && (new PackageManager()).PackageExists(titleTokens[0]))
+                {
+                    customPageTemplate.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(customPageTemplate.Title);
+                }
             }
 
             pageManager.SaveChanges();
