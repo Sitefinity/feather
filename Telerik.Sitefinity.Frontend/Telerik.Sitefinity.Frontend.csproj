@@ -476,9 +476,9 @@
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.eot" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.ttf" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.woff" />
+    <None Include="assets\dist\fonts\sf-icon-font.eot" />
+    <None Include="assets\dist\fonts\sf-icon-font.ttf" />
+    <None Include="assets\dist\fonts\sf-icon-font.woff" />
     <None Include="assets\feather-icons.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="assets\jshint.json" />
@@ -594,10 +594,10 @@
     <EmbeddedResource Include="assets\dist\css\html-field.min.css" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.svg" />
     <EmbeddedResource Include="assets\dist\img\crop-to-area.png" />
     <EmbeddedResource Include="assets\dist\img\dummy.jpg" />
     <EmbeddedResource Include="assets\dist\img\resize-to-area.png" />
+    <Content Include="assets\dist\fonts\sf-icon-font.svg" />
     <Content Include="assets\documentation\designer.html" />
     <Content Include="assets\feather-icons.css" />
     <Content Include="assets\gruntfile.js" />
