@@ -34,30 +34,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return handler;
         }
 
-        /// <inheritDoc/>
-        protected override void ApplyLayoutsAndControls(Page page, RequestContext requestContext)
-        {
-            base.ApplyLayoutsAndControls(page, requestContext);
-
-            var context = Telerik.Sitefinity.Services.SystemManager.CurrentHttpContext.Items;
-            var pageData = (Telerik.Sitefinity.Modules.Pages.PageDraftProxy)context["StaticPageDraft"];
-
-            var field = typeof(Telerik.Sitefinity.Modules.Pages.DraftProxyBase).GetField("editor", BindingFlags.NonPublic | BindingFlags.Instance);
-            var zoneEditor = field.GetValue(pageData) as ZoneEditor;
-
-            zoneEditor.ControlAdd += this.ZoneEditor_ControlAdd;
-        }
-
-        private void ZoneEditor_ControlAdd(object sender, ZoneEditorEventArgs e)
-        {
-            if (e.ControlData.ObjectType == typeof(MvcControllerProxy).FullName)
-            {
-                var dockZone = (System.Web.UI.WebControls.WebControl)e.ControlContainer.NamingContainer;
-                if (dockZone != null && dockZone.Attributes["perm_rollback"] == null)
-                    dockZone.Attributes["perm_rollback"] = "False";
-            }
-        }
-
         private void MvcPageEditorRouteHandlerInit(object sender, System.EventArgs e)
         {
             var page = (Page)sender;
