@@ -374,14 +374,16 @@ namespace Telerik.Sitefinity.Frontend
 
         private void RecategorizePageTemplates()
         {
-            var defaultPageTemplateNames = new string[] { "Bootstrap.default", "SemanticUI.default", "Foundation.default" };
-
             var pageManager = PageManager.GetManager();
 
-            var defaultPageTemplates = pageManager.GetTemplates().Where(pt => pt.Category == SiteInitializer.CustomTemplatesCategoryId && defaultPageTemplateNames.Contains(pt.Name));
-            foreach (var defaultPageTemplate in defaultPageTemplates)
+            var customPageTemplates = pageManager.GetTemplates().Where(pt => pt.Category == SiteInitializer.CustomTemplatesCategoryId).ToArray();
+            foreach (var customPageTemplate in customPageTemplates)
             {
-                defaultPageTemplate.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(defaultPageTemplate.Title);
+                var titleTokens = customPageTemplate.Title.ToString().Split('.');
+                if (titleTokens.Length > 1 && (new PackageManager()).PackageExists(titleTokens[0]))
+                {
+                    customPageTemplate.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(customPageTemplate.Title);
+                }
             }
 
             pageManager.SaveChanges();
