@@ -23,6 +23,10 @@ sfVideoSelector.directive('sfVideoSelector',
         link: function (scope, element, attrs) {
             serverData.refresh();
             scope.labels = serverData.getAll();
+
+            // Ensures that modal is styled correctly.
+
+            element.parents('.modal[role=dialog]').first().addClass('modal-fluid');
         }
     };
 }]);
