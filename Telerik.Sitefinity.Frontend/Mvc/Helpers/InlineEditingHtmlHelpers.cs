@@ -130,16 +130,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var shouldRender = false;
 
-            if (SitefinityContext.IsBackend && ControlExtensions.InlineEditingIsEnabled() && !SystemManager.CurrentHttpContext.Request.IsAjaxRequest())
+            if (!SitefinityContext.IsBackend && ControlExtensions.InlineEditingIsEnabled() && !SystemManager.CurrentHttpContext.Request.IsAjaxRequest())
             {
-                var siteMapNodeKey = "SiteMapNode";
+                const string SiteMapNodeKey = "ServedPageNode";
 
-                if (HttpContext.Current != null && HttpContext.Current.Items != null && HttpContext.Current.Items.Contains(siteMapNodeKey))
+                if (HttpContext.Current != null && HttpContext.Current.Items != null && HttpContext.Current.Items.Contains(SiteMapNodeKey))
                 {
-                    var siteMapNode = HttpContext.Current.Items[siteMapNodeKey] as PageSiteNode;
-                    if (siteMapNode != null)
+                    var pageSiteNode = HttpContext.Current.Items[SiteMapNodeKey] as PageSiteNode;
+                    if (pageSiteNode != null)
 	                {
-                        var firstPageDataNode = RouteHelper.GetFirstPageDataNode(siteMapNode, true);
+                        var firstPageDataNode = RouteHelper.GetFirstPageDataNode(pageSiteNode, true);
                         if (firstPageDataNode != null && firstPageDataNode.Framework == Pages.Model.PageTemplateFramework.Mvc)
                         {
                             shouldRender = true;
