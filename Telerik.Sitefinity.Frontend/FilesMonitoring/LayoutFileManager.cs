@@ -9,6 +9,7 @@ using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Multisite;
+using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies;
 using Telerik.Sitefinity.Taxonomies.Model;
@@ -50,26 +51,21 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="templateTitle">The template title.</param>
         /// <param name="createIfNotExist">if set to <c>true</c> [create if not exist].</param>
         /// <returns>The id of the category.</returns>
-        public static Guid GetOrCreateTemplateCategoryId(string templateCategoryName, bool createIfNotExist = true)
+        public static Guid GetOrCreateTemplateCategoryId(string packageName, bool createIfNotExist = true)
         {
-            if (templateCategoryName.Contains('.'))
-            {
-                templateCategoryName = templateCategoryName.Substring(0, templateCategoryName.IndexOf('.'));
-            }
-
             var taxonomyManager = TaxonomyManager.GetManager();
 
             var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
-            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Name.Equals(templateCategoryName, StringComparison.OrdinalIgnoreCase));
+            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Name.Equals(packageName, StringComparison.OrdinalIgnoreCase));
 
             if (templateCategory == null && createIfNotExist)
             {
                 templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>();
-                templateCategory.Name = templateCategoryName;
-                templateCategory.UrlName = templateCategoryName;
+                templateCategory.Name = packageName;
+                templateCategory.UrlName = packageName;
                 templateCategory.RenderAsLink = false;
-                templateCategory.Title = templateCategoryName;
-                templateCategory.Description = string.Format("Represents category for {0} page templates.", templateCategoryName);
+                templateCategory.Title = packageName;
+                templateCategory.Description = string.Format("Represents category for {0} page templates.", packageName);
 
                 pageTemplatesTaxonomy.Taxa.Add(templateCategory);
                 taxonomyManager.SaveChanges();
@@ -209,7 +205,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                 fileMonitorDataManager.SaveChanges();
 
-                this.CreateTemplate(templateTitle);
+                this.CreateTemplate(packageName, fileNameWithoutExtension);
             }
         }
 
@@ -227,7 +223,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// Creates the page template.
         /// </summary>
         /// <param name="templateTitle">The template title.</param>
-        private void CreateTemplate(string templateTitle)
+        private void CreateTemplate(string packageName, string fileNameWithoutExtension)
         {
             var multisiteContext = SystemManager.CurrentContext as MultisiteContext;
             var prevSite = SystemManager.CurrentContext.CurrentSite;
@@ -242,13 +238,15 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 PageManager pageManager = PageManager.GetManager();
                 using (new ElevatedModeRegion(pageManager))
                 {
-                    if (pageManager.GetTemplates().Where(pt => pt.Title.Equals(templateTitle, StringComparison.InvariantCultureIgnoreCase)).Count() == 0)
+                    var fullTemplateName = string.IsNullOrEmpty(packageName) ? fileNameWithoutExtension : string.Format("{0}.{1}", packageName, fileNameWithoutExtension);
+
+                    if (!pageManager.GetTemplates().Any(pt => pt.Name.Equals(fullTemplateName, StringComparison.InvariantCultureIgnoreCase)))
                     {
                         var template = pageManager.CreateTemplate();
 
-                        template.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(templateTitle);
-                        template.Name = templateTitle;
-                        template.Title = templateTitle;
+                        template.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(packageName);
+                        template.Name = fullTemplateName;
+                        template.Title = fileNameWithoutExtension;
                         template.Framework = Pages.Model.PageTemplateFramework.Mvc;
                         template.Theme = ThemeController.NoThemeName;
 
