@@ -143,6 +143,11 @@ namespace Telerik.Sitefinity.Frontend
                 this.RemoveMvcWidgetToolboxItems();
                 this.RenameDynamicContentMvcToolboxItems();
             }
+
+            if (upgradeFrom <= new Version(1, 2, 260, 1))
+            {
+                this.RecategorizePageTemplates();
+            }
         }
 
         /// <summary>
@@ -365,6 +370,23 @@ namespace Telerik.Sitefinity.Frontend
 
                 pageManager.SaveChanges();
             }
+        }
+
+        private void RecategorizePageTemplates()
+        {
+            var pageManager = PageManager.GetManager();
+
+            var customPageTemplates = pageManager.GetTemplates().Where(pt => pt.Category == SiteInitializer.CustomTemplatesCategoryId).ToArray();
+            foreach (var customPageTemplate in customPageTemplates)
+            {
+                var titleTokens = customPageTemplate.Title.ToString().Split('.');
+                if (titleTokens.Length > 1 && (new PackageManager()).PackageExists(titleTokens[0]))
+                {
+                    customPageTemplate.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(customPageTemplate.Title);
+                }
+            }
+
+            pageManager.SaveChanges();
         }
 
         private IKernel ninjectDependencyResolver;
