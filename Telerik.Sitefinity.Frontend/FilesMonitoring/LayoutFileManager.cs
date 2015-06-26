@@ -47,7 +47,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <summary>
         /// Gets the or create template category identifier.
         /// </summary>
-        /// <param name="templateTitle">The template title.</param>
+        /// <param name="templateCategoryName">The template category name.</param>
         /// <param name="createIfNotExist">if set to <c>true</c> [create if not exist].</param>
         /// <returns>The id of the category.</returns>
         public static Guid GetOrCreateTemplateCategoryId(string templateCategoryName, bool createIfNotExist = true)
