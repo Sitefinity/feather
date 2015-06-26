@@ -549,6 +549,23 @@
                ],
                "shortDescription" : "Done",
                "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Mailing list selector",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "Use-a-mailing-list-selector",
+                     "commitHash" : "0f9d69b0d7b68d52c8011492c99de220808e9c01",
+                     "date" : "06-19-2015 14:03 +0300",
+                     "name" : "Mailing list selector implementation",
+                     "tag" : "v1.2.260.1"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
             }
          ]
       },
@@ -911,8 +928,25 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
+               "name" : "Feed",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "MVC-Feed-widget",
+                     "commitHash" : "5660218d8c7f8ae1ee2125557ccda0ae6fc345e7",
+                     "date" : "2015-06-12 15:01 +0300",
+                     "name" : "Feed widget implementation",
+                     "tag" : "v1.2.250.1"
+                  }
+               ],
+               "shortDescription" : "Done",
+               "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
                "name" : "Comments and reviews",
-               "progress" : 70,
+               "progress" : 85,
                "releases" : [
                   {
                      "article" : "Comments-widget",
@@ -958,10 +992,10 @@
                   },
                   {
                      "article" : "",
-                     "commitHash" : "",
-                     "date" : "",
-                     "name" : "Comments in Images",
-                     "tag" : ""
+                     "commitHash" : "0f9d69b0d7b68d52c8011492c99de220808e9c01",
+                     "date" : "06-19-2015 14:03 +0300",
+                     "name" : "Comments in Image Gallery",
+                     "tag" : "v.1.2.260.1"
                   },
                   {
                      "article" : "",
@@ -979,23 +1013,6 @@
                   }
                ],
                "shortDescription" : "Released",
-               "unstable" : false
-            },
-            {
-               "expectedBy" : "",
-               "longDescription" : "",
-               "name" : "Feed",
-               "progress" : 100,
-               "releases" : [
-                  {
-                     "article" : "MVC-Feed-widget",
-                     "commitHash" : "5660218d8c7f8ae1ee2125557ccda0ae6fc345e7",
-                     "date" : "2015-06-12 15:01 +0300",
-                     "name" : "Feed widget implementation",
-                     "tag" : "v1.2.250.1"
-                  }
-               ],
-               "shortDescription" : "Done",
                "unstable" : false
             },
             {
