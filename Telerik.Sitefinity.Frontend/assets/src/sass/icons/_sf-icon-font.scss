@@ -2,11 +2,11 @@
 // Based on https://github.com/endtwist/fontcustom/blob/master/lib/fontcustom/templates/fontcustom.css
 @font-face {
   font-family: "sf-icon-font";
-  src: url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.eot");
-  src: url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.eot?#iefix") format("embedded-opentype"),
-		url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.svg?#sf-icon-font") format("svg"),
-		url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.woff") format("woff"),
-		url("../fonts/sf-icon-font-e076f7f65bb2054c5a8147147a106106.ttf") format("truetype");
+  src: url("../fonts/sf-icon-font.eot?1ea92cc84714f98ca037a9c2dbbdf5cf");
+  src: url("../fonts/sf-icon-font.eot?#iefix") format("embedded-opentype"),
+		url("../fonts/sf-icon-font.woff?1ea92cc84714f98ca037a9c2dbbdf5cf") format("woff"),
+		url("../fonts/sf-icon-font.ttf?1ea92cc84714f98ca037a9c2dbbdf5cf") format("truetype"),
+		url("../fonts/sf-icon-font.svg?1ea92cc84714f98ca037a9c2dbbdf5cf#sf-icon-font") format("svg");
   font-weight: normal;
   font-style: normal;
 }
