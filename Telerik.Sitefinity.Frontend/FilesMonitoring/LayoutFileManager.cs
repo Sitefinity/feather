@@ -51,21 +51,21 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="templateTitle">The template title.</param>
         /// <param name="createIfNotExist">if set to <c>true</c> [create if not exist].</param>
         /// <returns>The id of the category.</returns>
-        public static Guid GetOrCreateTemplateCategoryId(string packageName, bool createIfNotExist = true)
+        public static Guid GetOrCreateTemplateCategoryId(string templateCategoryName, bool createIfNotExist = true)
         {
             var taxonomyManager = TaxonomyManager.GetManager();
 
             var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
-            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Name.Equals(packageName, StringComparison.OrdinalIgnoreCase));
+            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Name.Equals(templateCategoryName, StringComparison.OrdinalIgnoreCase));
 
             if (templateCategory == null && createIfNotExist)
             {
                 templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>();
-                templateCategory.Name = packageName;
-                templateCategory.UrlName = packageName;
+                templateCategory.Name = templateCategoryName;
+                templateCategory.UrlName = templateCategoryName;
                 templateCategory.RenderAsLink = false;
-                templateCategory.Title = packageName;
-                templateCategory.Description = string.Format("Represents category for {0} page templates.", packageName);
+                templateCategory.Title = templateCategoryName;
+                templateCategory.Description = string.Format("Represents category for {0} page templates.", templateCategoryName);
 
                 pageTemplatesTaxonomy.Taxa.Add(templateCategory);
                 taxonomyManager.SaveChanges();
