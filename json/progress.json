@@ -1465,16 +1465,34 @@
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Subscribe form",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "MVC-Subscribe-form-widget",
+                     "commitHash" : "0f9d69b0d7b68d52c8011492c99de220808e9c01",
+                     "date" : "06-19-2015 14:03 +0300",
+                     "name" : "Subscribe widget implementation",
+                     "tag" : "v.1.2.260.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             },
             {
                "expectedBy" : "",
                "longDescription" : "",
                "name" : "Unsubscribe",
-               "progress" : 0,
-               "shortDescription" : "Coming soon",
+               "progress" : 100,
+               "releases" : [
+                  {
+                     "article" : "MVC-Unsubscribe-form-widget",
+                     "commitHash" : "0f9d69b0d7b68d52c8011492c99de220808e9c01",
+                     "date" : "06-19-2015 14:03 +0300",
+                     "name" : "Unsubscribe widget implementation",
+                     "tag" : "v.1.2.260.1"
+                  }
+               ],
+               "shortDescription" : "Done",
                "unstable" : false
             }
          ]
