@@ -234,7 +234,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 {
                     var fullTemplateName = string.IsNullOrEmpty(packageName) ? fileNameWithoutExtension : string.Format("{0}.{1}", packageName, fileNameWithoutExtension);
 
-                    if (!pageManager.GetTemplates().Any(pt => pt.Name.Equals(fullTemplateName, StringComparison.InvariantCultureIgnoreCase)))
+                    if (!pageManager.GetTemplates().Any(pt => string.Compare(pt.Name, fullTemplateName, true) == 0))
                     {
                         var template = pageManager.CreateTemplate();
 
