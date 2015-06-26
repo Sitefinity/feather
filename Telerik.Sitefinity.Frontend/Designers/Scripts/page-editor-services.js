@@ -282,11 +282,13 @@
                 var innerDiv = elements[i].id ? $(gridContext.layoutContainer).find('#' + elements[i].id) : $(gridContext.layoutContainer).find('[data-sf-element=' + elements[i].name + ']');
 
                 if (innerDiv) {
-                    var label = elements[i].label;
                     var css = elements[i].isPlaceholder ? 'sf_colsIn ' + elements[i].css : elements[i].css;
                     $(innerDiv).attr('class', css.trim());
+
+                    var label = elements[i].label;
+                    $(innerDiv).find('.zeDockZoneLabel b').html(label);
+
                     if (label) {
-                        $(innerDiv).find('.zeDockZoneLabel b').html(label);
                         $(innerDiv).attr('data-placeholder-label', label);
                     }
                     else {
