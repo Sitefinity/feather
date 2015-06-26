@@ -286,7 +286,7 @@
                     var css = elements[i].isPlaceholder ? 'sf_colsIn ' + elements[i].css : elements[i].css;
                     $(innerDiv).attr('class', css.trim());
                     if (label) {
-                        $(innerDiv).find(".zeDockZoneLabel b").html(label);
+                        $(innerDiv).find('.zeDockZoneLabel b').html(label);
                         $(innerDiv).attr('data-placeholder-label', label);
                     }
                     else {
@@ -299,12 +299,12 @@
         var invokePut = function (url, data, deferred, success) {
             var wRequest = new Sys.Net.WebRequest();
             wRequest.set_url(url);
-            wRequest.set_httpVerb("PUT");
+            wRequest.set_httpVerb('PUT');
             wRequest.set_body(Sys.Serialization.JavaScriptSerializer.serialize(data));
-            wRequest.get_headers()["Cache-Control"] = "no-cache, no-store, must-revalidate";
-            wRequest.get_headers().Pragma = "no-cache";
-            wRequest.get_headers().Expires = "0";
-            wRequest.get_headers()["Content-Type"] = "application/json";
+            wRequest.get_headers()['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+            wRequest.get_headers().Pragma = 'no-cache';
+            wRequest.get_headers().Expires = '0';
+            wRequest.get_headers()['Content-Type'] = 'application/json';
             wRequest.add_completed(
                 function (executor, eventArgs) {
                     if (executor.get_responseAvailable()) {
