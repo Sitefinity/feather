@@ -48,7 +48,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <summary>
         /// Gets the or create template category identifier.
         /// </summary>
-        /// <param name="templateTitle">The template title.</param>
+        /// <param name="templateCategoryName">The template category name.</param>
         /// <param name="createIfNotExist">if set to <c>true</c> [create if not exist].</param>
         /// <returns>The id of the category.</returns>
         public static Guid GetOrCreateTemplateCategoryId(string templateCategoryName, bool createIfNotExist = true)
@@ -189,13 +189,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
             if (viewFileExtensions.Contains(extension, StringComparer.Ordinal))
             {
-                string templateTitle = string.Empty;
-
-                if (string.IsNullOrEmpty(packageName))
-                    templateTitle = fileNameWithoutExtension;
-                else
-                    templateTitle = packageName + "." + fileNameWithoutExtension;
-
                 if (fileData == null)
                     fileData = fileMonitorDataManager.CreateFileData();
 
@@ -220,9 +213,10 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         }
 
         /// <summary>
-        /// Creates the page template.
+        /// Creates the template.
         /// </summary>
-        /// <param name="templateTitle">The template title.</param>
+        /// <param name="packageName">Name of the package.</param>
+        /// <param name="fileNameWithoutExtension">The file name without extension.</param>
         private void CreateTemplate(string packageName, string fileNameWithoutExtension)
         {
             var multisiteContext = SystemManager.CurrentContext as MultisiteContext;
