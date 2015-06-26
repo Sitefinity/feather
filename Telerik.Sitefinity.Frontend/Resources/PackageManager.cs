@@ -87,6 +87,16 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return url;
         }
 
+        /// <summary>
+        /// Checks whether a given package exists.
+        /// </summary>
+        /// <param name="packageName">Name of the package.</param>
+        public bool PackageExists(string packageName)
+        {
+            var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(packageName));
+            return path != null && Directory.Exists(path);
+        }
+
         #endregion
 
         #region Private methods
