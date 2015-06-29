@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Ninject;
@@ -16,11 +18,14 @@ using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Services.FilesService;
 using Telerik.Sitefinity.Frontend.Services.ListsService;
 using Telerik.Sitefinity.Frontend.Services.ReviewsService;
+using Telerik.Sitefinity.Libraries.Model;
+using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Comments.Notifications;
+using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend
 {
@@ -86,6 +91,8 @@ namespace Telerik.Sitefinity.Frontend
             {
                 this.InitialUpgrade(initializer);
             }
+
+            this.UploadDefaultTemplateImages(initializer);
         }
 
         /// <summary>
@@ -148,6 +155,11 @@ namespace Telerik.Sitefinity.Frontend
             {
                 this.RecategorizePageTemplates();
             }
+
+            if (upgradeFrom <= new Version(1, 2, 270, 1))
+            {
+                this.UpdatePageTemplates();
+            }
         }
 
         /// <summary>
@@ -186,6 +198,51 @@ namespace Telerik.Sitefinity.Frontend
                 ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
             }
         }
+        
+        private void UploadDefaultTemplateImages(SiteInitializer initializer)
+        {
+            var libraryManager = initializer.GetManagerInTransaction<LibrariesManager>("SystemLibrariesProvider");
+            var templateThumbsImageLibrary = libraryManager.GetAlbums().FirstOrDefault(lib => lib.Id == LibrariesModule.DefaultTemplateThumbnailsLibraryId);
+            var layoutManager = new LayoutFileManager();
+
+            foreach (var defaultTemplateName in layoutManager.DefaultTemplateNames)
+            {
+                var iconResource = string.Format(LayoutFileManager.PageTemplateIconPathFormat, defaultTemplateName);
+                if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Any(mrn => mrn.Equals(iconResource, StringComparison.OrdinalIgnoreCase)))
+                {
+                    if (!templateThumbsImageLibrary.Images().Any(i => i.Title.Equals(defaultTemplateName, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        this.UploadTemplateIcon(libraryManager, templateThumbsImageLibrary, defaultTemplateName, iconResource);
+                    }
+                }
+            }
+        }
+
+        private Image UploadTemplateIcon(LibrariesManager libraryManager, Album templateThumbsImageLibrary, string templateName, string iconResource)
+        {
+            var image = libraryManager.CreateImage();
+            image.Parent = templateThumbsImageLibrary;
+            image.Title = templateName;
+            image.UrlName = templateName.ToLower().Replace(' ', '-');
+            image.Description = "Description_" + templateName;
+            image.AlternativeText = "AltText_" + templateName;
+            image.ApprovalWorkflowState = "Published";
+            libraryManager.RecompileItemUrls<Image>(image);
+
+            using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(iconResource))
+            {
+                using (var resourceImage = System.Drawing.Image.FromStream(imageStream))
+                {
+                    var resourceImageStream = new MemoryStream();
+                    resourceImage.Save(resourceImageStream, ImageFormat.Png);
+
+                    libraryManager.Upload(image, resourceImageStream, Path.GetExtension(iconResource));
+                    libraryManager.Lifecycle.Publish(image);
+                }
+            }
+
+            return image;
+        }
 
         private void InitialUpgrade(SiteInitializer initializer)
         {
@@ -193,7 +250,7 @@ namespace Telerik.Sitefinity.Frontend
             this.RenameControllers(initializer);
             this.ClearToolboxItems();
         }
-
+        
         private void ClearToolboxItems()
         {
             var configManager = ConfigManager.GetManager();
@@ -375,6 +432,7 @@ namespace Telerik.Sitefinity.Frontend
         private void RecategorizePageTemplates()
         {
             var pageManager = PageManager.GetManager();
+            var layoutManager = new LayoutFileManager();
 
             var customPageTemplates = pageManager.GetTemplates().Where(pt => pt.Category == SiteInitializer.CustomTemplatesCategoryId).ToArray();
             foreach (var customPageTemplate in customPageTemplates)
@@ -382,8 +440,30 @@ namespace Telerik.Sitefinity.Frontend
                 var titleTokens = customPageTemplate.Title.ToString().Split('.');
                 if (titleTokens.Length > 1 && (new PackageManager()).PackageExists(titleTokens[0]))
                 {
-                    customPageTemplate.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(customPageTemplate.Title);
+                    customPageTemplate.Category = layoutManager.GetOrCreateTemplateCategoryId(customPageTemplate.Title);
                 }
+            }
+
+            pageManager.SaveChanges();
+        }
+
+        private void UpdatePageTemplates()
+        {
+            var pageManager = PageManager.GetManager();
+            var layoutFileManager = new LayoutFileManager();
+
+            var defaultPageTemplates = pageManager.GetTemplates().Where(pt => layoutFileManager.DefaultTemplateNames.Contains(pt.Name)).ToArray();
+            foreach (var defaultPageTemplate in defaultPageTemplates)
+            {
+                // Renaming template title
+                var titleParts = defaultPageTemplate.Title.ToString().Split('.');
+                if (titleParts.Length > 1)
+                {
+                    defaultPageTemplate.Title = titleParts[1];
+                }
+
+                // Adding icon to title
+                layoutFileManager.TryAttachTemplateImage(defaultPageTemplate, pageManager);
             }
 
             pageManager.SaveChanges();

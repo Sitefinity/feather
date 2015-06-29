@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
+using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Multisite;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Services.RelatedData.Messages;
 using Telerik.Sitefinity.Taxonomies;
 using Telerik.Sitefinity.Taxonomies.Model;
+using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
@@ -22,7 +26,26 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
     /// </summary>
     internal class LayoutFileManager : IFileManager
     {
+        /// <summary>
+        /// The page template icon path format
+        /// </summary>
+        public const string PageTemplateIconPathFormat = "Telerik.Sitefinity.Frontend.Resources.PageTemplateImages.{0}.gif";
+
         #region Properties
+
+        /// <summary>
+        /// Gets the default template names.
+        /// </summary>
+        /// <value>
+        /// The default template names.
+        /// </value>
+        public virtual ICollection<string> DefaultTemplateNames
+        {
+            get
+            {
+                return new List<string>() { "Bootstrap.default", "SemanticUI.default", "Foundation.default" };
+            }
+        }
 
         /// <summary>
         /// Gets the required folder path structure. Only layout files placed inside the specified folder structure will trigger automatic creation of the templates.
@@ -51,7 +74,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="templateCategoryName">The template category name.</param>
         /// <param name="createIfNotExist">if set to <c>true</c> [create if not exist].</param>
         /// <returns>The id of the category.</returns>
-        public static Guid GetOrCreateTemplateCategoryId(string templateCategoryName, bool createIfNotExist = true)
+        public virtual Guid GetOrCreateTemplateCategoryId(string templateCategoryName, bool createIfNotExist = true)
         {
             var taxonomyManager = TaxonomyManager.GetManager();
 
@@ -72,6 +95,60 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             }
 
             return templateCategory.Id;
+        }
+
+        /// <summary>
+        /// Tries the attach template image.
+        /// </summary>
+        /// <param name="template">The template.</param>
+        /// <param name="pageManager">The page manager.</param>
+        public virtual void TryAttachTemplateImage(PageTemplate template, PageManager pageManager)
+        {
+            var templateImage = template.GetImage("icon", ThemeController.NoThemeName);
+            if (!string.IsNullOrEmpty(templateImage))
+            {
+                var librariesManager = LibrariesManager.GetManager("SystemLibrariesProvider");
+                var templateImagesAlbum = librariesManager.GetAlbums().FirstOrDefault(a => a.Id == LibrariesModule.DefaultTemplateThumbnailsLibraryId);
+
+                if (templateImagesAlbum != null)
+                {
+                    var image = templateImagesAlbum.Images().FirstOrDefault(i => i.Title.Equals(template.Name, StringComparison.OrdinalIgnoreCase));
+                    if (image != null)
+                    {
+                        ContentLinkChange[] changedRelations = new ContentLinkChange[] 
+                        { 
+                            new ContentLinkChange()
+                            {
+                                ChildItemId = image.Id,
+                                ChildItemProviderName = image.GetProviderName(),
+                                ChildItemType = image.GetType().FullName,
+                                ComponentPropertyName = PageTemplate.ThumbnailFieldName,
+                                Ordinal = -2,
+                                State = Telerik.Sitefinity.Web.UI.Fields.Enums.ContentLinkChangeState.Added
+                            }
+                        };
+
+                        var type = Type.GetType("Telerik.Sitefinity.RelatedData.RelatedDataHelper, Telerik.Sitefinity");
+                        var method = type.GetMethod("SaveRelatedDataChanges", BindingFlags.NonPublic | BindingFlags.Static);
+                        method.Invoke(null, new object[] { pageManager, template, changedRelations, false });
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds the presentation.
+        /// </summary>
+        /// <param name="template">The template.</param>
+        /// <param name="pageManager">The page manager.</param>
+        public virtual void AddPresentation(PageTemplate template, PageManager pageManager)
+        {
+            var present = pageManager.CreatePresentationItem<TemplatePresentation>();
+            present.DataType = Presentation.ImageUrl;
+            present.Name = "icon";
+            present.Theme = ThemeController.NoThemeName;
+            present.Data = string.Format(LayoutFileManager.PageTemplateIconPathFormat, template.Name);
+            template.Presentation.Add(present);
         }
 
         #endregion
@@ -238,15 +315,21 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     {
                         var template = pageManager.CreateTemplate();
 
-                        template.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(packageName);
+                        template.Category = this.GetOrCreateTemplateCategoryId(packageName);
                         template.Name = fullTemplateName;
                         template.Title = fileNameWithoutExtension;
                         template.Framework = Pages.Model.PageTemplateFramework.Mvc;
                         template.Theme = ThemeController.NoThemeName;
-
                         var languageData = pageManager.CreatePublishedInvarianLanguageData();
                         template.LanguageData.Add(languageData);
-                    
+
+                        if (this.DefaultTemplateNames.Contains(template.Name))
+                        {
+                            this.AddPresentation(template, pageManager);
+                        }
+
+                        this.TryAttachTemplateImage(template, pageManager);
+
                         pageManager.SaveChanges();
 
                         var master = pageManager.TemplatesLifecycle.Edit(template);

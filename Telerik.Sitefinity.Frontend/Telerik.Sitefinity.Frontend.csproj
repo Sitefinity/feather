@@ -84,6 +84,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -574,6 +575,12 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\PageTemplateImages\Bootstrap.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\Foundation.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\SemanticUI.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\sml_Bootstrap.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\sml_Foundation.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\sml_SemanticUI.default.gif" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.js" />
@@ -703,7 +710,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
