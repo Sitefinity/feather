@@ -264,7 +264,7 @@
 
                 if (innerDiv) {
                     var label = elements[i].label;
-                    var css = elements[i].isPlaceholder? 'sf_colsIn ' + elements[i].css : elements[i].css;
+                    var css = elements[i].isPlaceholder ? 'sf_colsIn ' + elements[i].css : elements[i].css;
                     label ? $(innerDiv).attr('data-placeholder-label', label) : $(innerDiv).removeAttr('data-placeholder-label');
                     $(innerDiv).attr('class', css.trim());
                 }
