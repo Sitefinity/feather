@@ -104,6 +104,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="pageManager">The page manager.</param>
         public virtual void AttachImageToTemplate(PageTemplate template, PageManager pageManager)
         {
+            this.AddPresentation(template, pageManager);
+
             var templateImage = template.GetImage("icon", ThemeController.NoThemeName);
             if (!string.IsNullOrEmpty(templateImage))
             {
@@ -134,21 +136,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Adds the presentation.
-        /// </summary>
-        /// <param name="template">The template.</param>
-        /// <param name="pageManager">The page manager.</param>
-        public virtual void AddPresentation(PageTemplate template, PageManager pageManager)
-        {
-            var present = pageManager.CreatePresentationItem<TemplatePresentation>();
-            present.DataType = Presentation.ImageUrl;
-            present.Name = "icon";
-            present.Theme = ThemeController.NoThemeName;
-            present.Data = string.Format(LayoutFileManager.PageTemplateIconPathFormat, template.Name);
-            template.Presentation.Add(present);
         }
 
         #endregion
@@ -323,11 +310,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         var languageData = pageManager.CreatePublishedInvarianLanguageData();
                         template.LanguageData.Add(languageData);
 
-                        if (this.DefaultTemplateNames.Contains(template.Name))
-                        {
-                            this.AddPresentation(template, pageManager);
-                        }
-
                         this.AttachImageToTemplate(template, pageManager);
 
                         pageManager.SaveChanges();
@@ -344,6 +326,19 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 {
                     multisiteContext.ChangeCurrentSite(prevSite);
                 }
+            }
+        }
+
+        private void AddPresentation(PageTemplate template, PageManager pageManager)
+        {
+            if (this.DefaultTemplateNames.Contains(template.Name))
+            {
+                var present = pageManager.CreatePresentationItem<TemplatePresentation>();
+                present.DataType = Presentation.ImageUrl;
+                present.Name = "icon";
+                present.Theme = ThemeController.NoThemeName;
+                present.Data = string.Format(LayoutFileManager.PageTemplateIconPathFormat, template.Name);
+                template.Presentation.Add(present);
             }
         }
 
