@@ -158,6 +158,7 @@ namespace Telerik.Sitefinity.Frontend
 
             if (upgradeFrom <= new Version(1, 2, 270, 1))
             {
+                this.UploadDefaultTemplateImages(initializer);
                 this.UpdatePageTemplates();
             }
         }
