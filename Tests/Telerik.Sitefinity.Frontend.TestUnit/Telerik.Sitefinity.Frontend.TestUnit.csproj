@@ -174,13 +174,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Web.Design">
-      <HintPath>..\..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.Design.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Web.UI.2015.2.263.40\lib\net40\Telerik.Web.Design.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI">
-      <HintPath>..\..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Web.UI.2015.2.263.40\lib\net40\Telerik.Web.UI.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI.Skins">
-      <HintPath>..\..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.Web.UI.2015.2.263.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
