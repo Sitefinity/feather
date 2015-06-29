@@ -26,11 +26,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
     /// </summary>
     internal class LayoutFileManager : IFileManager
     {
-        /// <summary>
-        /// The page template icon path format
-        /// </summary>
-        public const string PageTemplateIconPathFormat = "Telerik.Sitefinity.Frontend.Resources.PageTemplateImages.{0}.gif";
-
         #region Properties
 
         /// <summary>
@@ -43,7 +38,12 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         {
             get
             {
-                return new List<string>() { "Bootstrap.default", "SemanticUI.default", "Foundation.default" };
+                return new List<string>() 
+                { 
+                    LayoutFileManager.BootstrapDefaultTemplateName, 
+                    LayoutFileManager.SemanticUIDefaultTemplateName, 
+                    LayoutFileManager.FoundationDefaultTemplateName 
+                };
             }
         }
 
@@ -102,7 +102,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         /// <param name="template">The template.</param>
         /// <param name="pageManager">The page manager.</param>
-        public virtual void TryAttachTemplateImage(PageTemplate template, PageManager pageManager)
+        public virtual void AttachImageToTemplate(PageTemplate template, PageManager pageManager)
         {
             var templateImage = template.GetImage("icon", ThemeController.NoThemeName);
             if (!string.IsNullOrEmpty(templateImage))
@@ -328,7 +328,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                             this.AddPresentation(template, pageManager);
                         }
 
-                        this.TryAttachTemplateImage(template, pageManager);
+                        this.AttachImageToTemplate(template, pageManager);
 
                         pageManager.SaveChanges();
 
@@ -352,6 +352,19 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         #region Private fileds
 
         private List<string> folderPathStructure;
+
+        #endregion
+
+        #region Constants
+
+        /// <summary>
+        /// The page template icon path format
+        /// </summary>
+        public const string PageTemplateIconPathFormat = "Telerik.Sitefinity.Frontend.Resources.PageTemplateImages.{0}.gif";
+
+        private const string BootstrapDefaultTemplateName = "Bootstrap.default";
+        private const string SemanticUIDefaultTemplateName = "SemanticUI.default";
+        private const string FoundationDefaultTemplateName = "Foundation.default";
 
         #endregion
     }

@@ -464,7 +464,7 @@ namespace Telerik.Sitefinity.Frontend
                 }
 
                 // Adding icon to title
-                layoutFileManager.TryAttachTemplateImage(defaultPageTemplate, pageManager);
+                layoutFileManager.AttachImageToTemplate(defaultPageTemplate, pageManager);
             }
 
             pageManager.SaveChanges();
