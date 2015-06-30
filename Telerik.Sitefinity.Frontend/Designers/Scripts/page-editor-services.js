@@ -264,8 +264,15 @@
 
                 if (innerDiv) {
                     var label = elements[i].label;
+
+                    if (label) {
+                        $(innerDiv).attr('data-placeholder-label', label);
+                    }
+                    else {
+                        $(innerDiv).removeAttr('data-placeholder-label');
+                    }
+
                     var css = elements[i].isPlaceholder ? 'sf_colsIn ' + elements[i].css : elements[i].css;
-                    label ? $(innerDiv).attr('data-placeholder-label', label) : $(innerDiv).removeAttr('data-placeholder-label');
                     $(innerDiv).attr('class', css.trim());
                 }
             }
