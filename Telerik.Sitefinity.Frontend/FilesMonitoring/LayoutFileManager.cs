@@ -322,7 +322,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Any(mrn => mrn.Equals(iconResource, StringComparison.OrdinalIgnoreCase)))
                     {
                         image = this.UploadTemplateImage(libraryManager, templateThumbsImageLibrary, template.Name, iconResource);
-                        libraryManager.SaveChanges();
                     }
                 }
             }
@@ -332,27 +331,40 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
         private Image UploadTemplateImage(LibrariesManager libraryManager, Album templateThumbsImageLibrary, string templateName, string iconResource)
         {
-            var image = libraryManager.CreateImage();
-            image.Parent = templateThumbsImageLibrary;
-            image.Title = templateName;
-            image.UrlName = templateName.ToLower().Replace(' ', '-');
-            image.Description = "Description_" + templateName;
-            image.AlternativeText = "AltText_" + templateName;
-            image.ApprovalWorkflowState = "Published";
-            libraryManager.RecompileItemUrls<Image>(image);
+            Image image = null;
 
-            using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(iconResource))
+            var suppressSecurityChecks = libraryManager.Provider.SuppressSecurityChecks;
+            try
             {
-                using (var resourceImage = System.Drawing.Image.FromStream(imageStream))
-                {
-                    var resourceImageStream = new MemoryStream();
-                    resourceImage.Save(resourceImageStream, System.Drawing.Imaging.ImageFormat.Png);
+                libraryManager.Provider.SuppressSecurityChecks = true;
 
-                    libraryManager.Upload(image, resourceImageStream, Path.GetExtension(iconResource));
-                    libraryManager.Lifecycle.Publish(image);
+                image = libraryManager.CreateImage();
+                image.Parent = templateThumbsImageLibrary;
+                image.Title = templateName;
+                image.UrlName = templateName.ToLower().Replace(' ', '-');
+                image.Description = "Description_" + templateName;
+                image.AlternativeText = "AltText_" + templateName;
+                image.ApprovalWorkflowState = "Published";
+                libraryManager.RecompileItemUrls<Image>(image);
+
+                using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(iconResource))
+                {
+                    using (var resourceImage = System.Drawing.Image.FromStream(imageStream))
+                    {
+                        var resourceImageStream = new MemoryStream();
+                        resourceImage.Save(resourceImageStream, System.Drawing.Imaging.ImageFormat.Png);
+
+                        libraryManager.Upload(image, resourceImageStream, Path.GetExtension(iconResource));
+                        libraryManager.Lifecycle.Publish(image);
+                        libraryManager.SaveChanges();
+                    }
                 }
             }
-
+            finally
+            {
+                libraryManager.Provider.SuppressSecurityChecks = suppressSecurityChecks;
+            }
+            
             return image;
         }
 
