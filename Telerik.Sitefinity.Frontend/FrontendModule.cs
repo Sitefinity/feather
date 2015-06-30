@@ -393,7 +393,7 @@ namespace Telerik.Sitefinity.Frontend
                 var titleTokens = customPageTemplate.Title.ToString().Split('.');
                 if (titleTokens.Length > 1 && (new PackageManager()).PackageExists(titleTokens[0]))
                 {
-                    customPageTemplate.Category = layoutManager.GetOrCreateTemplateCategoryId(customPageTemplate.Title);
+                    customPageTemplate.Category = layoutManager.GetOrCreateTemplateCategoryId(titleTokens[0]);
                 }
             }
 
