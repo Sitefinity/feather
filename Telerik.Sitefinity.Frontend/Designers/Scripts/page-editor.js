@@ -134,6 +134,25 @@ var sitefinity = sitefinity || {};
 				});
 		},
 
+		openGridDialog: function (ev, args) {
+		    this.showLoader(args.AppPath);
+		    this.gridContext = args;
+
+		    var separator;
+		    if (this.gridContext.url.indexOf('?') > -1)
+		        separator = '&';
+		    else
+		        separator = '?';
+
+		    var url = this.gridContext.url + separator + 'controlId=' + this.gridContext.Id;
+		    url += '&gridTitle=' + this.gridContext.GridTitle;
+		    $.get(url)
+				.done($.proxy(this.renderDialog, this))
+				.fail(function (data) {
+				    alert('There is a problem with loading the grid designer: ' + data);
+				});
+		},
+
 		/**
 		 * Destroys the currently opened dialog.
 		 */
@@ -141,13 +160,15 @@ var sitefinity = sitefinity || {};
 			if (dialog) {
 				dialog.remove();
 				this.widgetContext = null;
+				this.gridContext = null;
 			}
 		},
 
 		/**
 		 * Provides the context for the currently active widget.
 		 */
-		widgetContext: null
+		widgetContext: null,
+        gridContext: null
 
 	};
 
@@ -156,6 +177,8 @@ var sitefinity = sitefinity || {};
 	 */
 	if (typeof ($telerik) != 'undefined') {
 	    $telerik.$(document).on('needsModalDialog', $.proxy(sitefinity.pageEditor.openDialog, sitefinity.pageEditor));
+	    $telerik.$(document).on('needsGridModalDialog', $.proxy(sitefinity.pageEditor.openGridDialog, sitefinity.pageEditor));
 	    $telerik.$(document).on('modalDialogClosed', $.proxy(sitefinity.pageEditor.destroyDialog, sitefinity.pageEditor));
+	    $telerik.$(document).on('gridModalDialogClosed', $.proxy(sitefinity.pageEditor.destroyDialog, sitefinity.pageEditor));
 	}
 })(jQuery);
