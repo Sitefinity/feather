@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
+using Telerik.Sitefinity.Libraries.Model;
 using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Multisite;
@@ -98,57 +99,18 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         }
 
         /// <summary>
-        /// Tries the attach template image.
+        /// Attaches image to a template (if available).
         /// </summary>
         /// <param name="template">The template.</param>
         /// <param name="pageManager">The page manager.</param>
         public virtual void AttachImageToTemplate(PageTemplate template, PageManager pageManager)
         {
-            var templateImage = template.GetImage("icon", ThemeController.NoThemeName);
-            if (!string.IsNullOrEmpty(templateImage))
+            var templateImage = this.GetTemplateImage(template);
+            if (templateImage != null)
             {
-                var librariesManager = LibrariesManager.GetManager("SystemLibrariesProvider");
-                var templateImagesAlbum = librariesManager.GetAlbums().FirstOrDefault(a => a.Id == LibrariesModule.DefaultTemplateThumbnailsLibraryId);
-
-                if (templateImagesAlbum != null)
-                {
-                    var image = templateImagesAlbum.Images().FirstOrDefault(i => i.Title.Equals(template.Name, StringComparison.OrdinalIgnoreCase));
-                    if (image != null)
-                    {
-                        ContentLinkChange[] changedRelations = new ContentLinkChange[] 
-                        { 
-                            new ContentLinkChange()
-                            {
-                                ChildItemId = image.Id,
-                                ChildItemProviderName = image.GetProviderName(),
-                                ChildItemType = image.GetType().FullName,
-                                ComponentPropertyName = PageTemplate.ThumbnailFieldName,
-                                Ordinal = -2,
-                                State = Telerik.Sitefinity.Web.UI.Fields.Enums.ContentLinkChangeState.Added
-                            }
-                        };
-
-                        var type = Type.GetType("Telerik.Sitefinity.RelatedData.RelatedDataHelper, Telerik.Sitefinity");
-                        var method = type.GetMethod("SaveRelatedDataChanges", BindingFlags.NonPublic | BindingFlags.Static);
-                        method.Invoke(null, new object[] { pageManager, template, changedRelations, false });
-                    }
-                }
+                this.AddTemplatePresentation(template, pageManager);
+                this.AddTemplateRelatedData(template, templateImage, pageManager);
             }
-        }
-
-        /// <summary>
-        /// Adds the presentation.
-        /// </summary>
-        /// <param name="template">The template.</param>
-        /// <param name="pageManager">The page manager.</param>
-        public virtual void AddPresentation(PageTemplate template, PageManager pageManager)
-        {
-            var present = pageManager.CreatePresentationItem<TemplatePresentation>();
-            present.DataType = Presentation.ImageUrl;
-            present.Name = "icon";
-            present.Theme = ThemeController.NoThemeName;
-            present.Data = string.Format(LayoutFileManager.PageTemplateIconPathFormat, template.Name);
-            template.Presentation.Add(present);
         }
 
         #endregion
@@ -323,11 +285,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         var languageData = pageManager.CreatePublishedInvarianLanguageData();
                         template.LanguageData.Add(languageData);
 
-                        if (this.DefaultTemplateNames.Contains(template.Name))
-                        {
-                            this.AddPresentation(template, pageManager);
-                        }
-
                         this.AttachImageToTemplate(template, pageManager);
 
                         pageManager.SaveChanges();
@@ -345,6 +302,88 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     multisiteContext.ChangeCurrentSite(prevSite);
                 }
             }
+        }
+
+        private Image GetTemplateImage(PageTemplate template)
+        {
+            Image image = null;
+
+            if (template != null && !string.IsNullOrEmpty(template.Name))
+            {
+                // Try get image from library
+                var libraryManager = LibrariesManager.GetManager("SystemLibrariesProvider");
+                var templateThumbsImageLibrary = libraryManager.GetAlbums().FirstOrDefault(lib => lib.Id == LibrariesModule.DefaultTemplateThumbnailsLibraryId);
+
+                image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals(template.Name, StringComparison.OrdinalIgnoreCase));
+                if (image == null)
+                {
+                    // Check if image is in the resources and upload it
+                    var iconResource = string.Format(LayoutFileManager.PageTemplateIconPathFormat, template.Name);
+                    if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Any(mrn => mrn.Equals(iconResource, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        image = this.UploadTemplateImage(libraryManager, templateThumbsImageLibrary, template.Name, iconResource);
+                        libraryManager.SaveChanges();
+                    }
+                }
+            }
+
+            return image;
+        }
+
+        private Image UploadTemplateImage(LibrariesManager libraryManager, Album templateThumbsImageLibrary, string templateName, string iconResource)
+        {
+            var image = libraryManager.CreateImage();
+            image.Parent = templateThumbsImageLibrary;
+            image.Title = templateName;
+            image.UrlName = templateName.ToLower().Replace(' ', '-');
+            image.Description = "Description_" + templateName;
+            image.AlternativeText = "AltText_" + templateName;
+            image.ApprovalWorkflowState = "Published";
+            libraryManager.RecompileItemUrls<Image>(image);
+
+            using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(iconResource))
+            {
+                using (var resourceImage = System.Drawing.Image.FromStream(imageStream))
+                {
+                    var resourceImageStream = new MemoryStream();
+                    resourceImage.Save(resourceImageStream, System.Drawing.Imaging.ImageFormat.Png);
+
+                    libraryManager.Upload(image, resourceImageStream, Path.GetExtension(iconResource));
+                    libraryManager.Lifecycle.Publish(image);
+                }
+            }
+
+            return image;
+        }
+
+        private void AddTemplatePresentation(PageTemplate template, PageManager pageManager)
+        {
+            var present = pageManager.CreatePresentationItem<TemplatePresentation>();
+            present.DataType = Presentation.ImageUrl;
+            present.Name = "icon";
+            present.Theme = ThemeController.NoThemeName;
+            present.Data = string.Format(LayoutFileManager.PageTemplateIconPathFormat, template.Name);
+            template.Presentation.Add(present);
+        }
+
+        private void AddTemplateRelatedData(PageTemplate template, Image image, PageManager pageManager)
+        {
+            var changedRelations = new ContentLinkChange[] 
+            { 
+                new ContentLinkChange()
+                {
+                    ChildItemId = image.Id,
+                    ChildItemProviderName = image.GetProviderName(),
+                    ChildItemType = image.GetType().FullName,
+                    ComponentPropertyName = PageTemplate.ThumbnailFieldName,
+                    Ordinal = -2,
+                    State = Telerik.Sitefinity.Web.UI.Fields.Enums.ContentLinkChangeState.Added
+                }
+            };
+
+            var type = Type.GetType("Telerik.Sitefinity.RelatedData.RelatedDataHelper, Telerik.Sitefinity");
+            var method = type.GetMethod("SaveRelatedDataChanges", BindingFlags.NonPublic | BindingFlags.Static);
+            method.Invoke(null, new object[] { pageManager, template, changedRelations, false });
         }
 
         #endregion

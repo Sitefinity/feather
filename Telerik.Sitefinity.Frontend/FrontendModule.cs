@@ -91,8 +91,6 @@ namespace Telerik.Sitefinity.Frontend
             {
                 this.InitialUpgrade(initializer);
             }
-
-            this.UploadDefaultTemplateImages(initializer);
         }
 
         /// <summary>
@@ -158,7 +156,6 @@ namespace Telerik.Sitefinity.Frontend
 
             if (upgradeFrom <= new Version(1, 2, 270, 1))
             {
-                this.UploadDefaultTemplateImages(initializer);
                 this.UpdatePageTemplates();
             }
         }
@@ -198,51 +195,6 @@ namespace Telerik.Sitefinity.Frontend
 
                 ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
             }
-        }
-        
-        private void UploadDefaultTemplateImages(SiteInitializer initializer)
-        {
-            var libraryManager = initializer.GetManagerInTransaction<LibrariesManager>("SystemLibrariesProvider");
-            var templateThumbsImageLibrary = libraryManager.GetAlbums().FirstOrDefault(lib => lib.Id == LibrariesModule.DefaultTemplateThumbnailsLibraryId);
-            var layoutManager = new LayoutFileManager();
-
-            foreach (var defaultTemplateName in layoutManager.DefaultTemplateNames)
-            {
-                var iconResource = string.Format(LayoutFileManager.PageTemplateIconPathFormat, defaultTemplateName);
-                if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Any(mrn => mrn.Equals(iconResource, StringComparison.OrdinalIgnoreCase)))
-                {
-                    if (!templateThumbsImageLibrary.Images().Any(i => i.Title.Equals(defaultTemplateName, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        this.UploadTemplateIcon(libraryManager, templateThumbsImageLibrary, defaultTemplateName, iconResource);
-                    }
-                }
-            }
-        }
-
-        private Image UploadTemplateIcon(LibrariesManager libraryManager, Album templateThumbsImageLibrary, string templateName, string iconResource)
-        {
-            var image = libraryManager.CreateImage();
-            image.Parent = templateThumbsImageLibrary;
-            image.Title = templateName;
-            image.UrlName = templateName.ToLower().Replace(' ', '-');
-            image.Description = "Description_" + templateName;
-            image.AlternativeText = "AltText_" + templateName;
-            image.ApprovalWorkflowState = "Published";
-            libraryManager.RecompileItemUrls<Image>(image);
-
-            using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(iconResource))
-            {
-                using (var resourceImage = System.Drawing.Image.FromStream(imageStream))
-                {
-                    var resourceImageStream = new MemoryStream();
-                    resourceImage.Save(resourceImageStream, ImageFormat.Png);
-
-                    libraryManager.Upload(image, resourceImageStream, Path.GetExtension(iconResource));
-                    libraryManager.Lifecycle.Publish(image);
-                }
-            }
-
-            return image;
         }
 
         private void InitialUpgrade(SiteInitializer initializer)
