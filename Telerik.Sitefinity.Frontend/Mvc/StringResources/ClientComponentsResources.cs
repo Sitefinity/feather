@@ -129,6 +129,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// Insert this file
+        /// </summary>
+        /// <value>Insert this file</value>
+        [ResourceEntry("InsertThisFile",
+            Value = "Insert this file",
+            Description = "phrase: Insert this file",
+            LastModified = "2015/06/26")]
+        public string InsertThisFile
+        {
+            get
+            {
+                return this["InsertThisFile"];
+            }
+        }
+
+        /// <summary>
         /// Insert video
         /// </summary>
         /// <value>Insert video</value>

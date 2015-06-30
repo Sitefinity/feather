@@ -88,6 +88,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -492,9 +493,9 @@
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.eot" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.ttf" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.woff" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.eot" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.ttf" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.woff" />
     <None Include="assets\feather-icons.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="assets\jshint.json" />
@@ -592,6 +593,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Designer\grid-designer.js" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\Bootstrap.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\Foundation.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\SemanticUI.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\sml_Bootstrap.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\sml_Foundation.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\sml_SemanticUI.default.gif" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.js" />
@@ -612,10 +619,10 @@
     <EmbeddedResource Include="assets\dist\css\html-field.min.css" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
     <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.svg" />
     <EmbeddedResource Include="assets\dist\img\crop-to-area.png" />
     <EmbeddedResource Include="assets\dist\img\dummy.jpg" />
     <EmbeddedResource Include="assets\dist\img\resize-to-area.png" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.svg" />
     <Content Include="assets\documentation\designer.html" />
     <Content Include="assets\feather-icons.css" />
     <Content Include="assets\gruntfile.js" />

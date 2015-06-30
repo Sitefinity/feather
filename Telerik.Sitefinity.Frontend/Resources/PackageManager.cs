@@ -180,8 +180,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var currentTemplate = template;
             while (currentTemplate != null)
             {
-                var title = currentTemplate.Title.ToString();
-                var parts = title.Split('.');
+                var name = currentTemplate.Name.ToString();
+                var parts = name.Split('.');
                 if (parts.Length > 1)
                 {
                     var expectedPackageName = this.StripInvalidCharacters(parts[0]);

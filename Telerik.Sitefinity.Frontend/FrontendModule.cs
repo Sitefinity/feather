@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Ninject;
@@ -16,11 +18,14 @@ using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Services.FilesService;
 using Telerik.Sitefinity.Frontend.Services.ListsService;
 using Telerik.Sitefinity.Frontend.Services.ReviewsService;
+using Telerik.Sitefinity.Libraries.Model;
+using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Comments.Notifications;
+using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend
 {
@@ -148,6 +153,11 @@ namespace Telerik.Sitefinity.Frontend
             {
                 this.RecategorizePageTemplates();
             }
+
+            if (upgradeFrom <= new Version(1, 2, 270, 1))
+            {
+                this.UpdatePageTemplates();
+            }
         }
 
         /// <summary>
@@ -193,7 +203,7 @@ namespace Telerik.Sitefinity.Frontend
             this.RenameControllers(initializer);
             this.ClearToolboxItems();
         }
-
+        
         private void ClearToolboxItems()
         {
             var configManager = ConfigManager.GetManager();
@@ -375,6 +385,7 @@ namespace Telerik.Sitefinity.Frontend
         private void RecategorizePageTemplates()
         {
             var pageManager = PageManager.GetManager();
+            var layoutManager = new LayoutFileManager();
 
             var customPageTemplates = pageManager.GetTemplates().Where(pt => pt.Category == SiteInitializer.CustomTemplatesCategoryId).ToArray();
             foreach (var customPageTemplate in customPageTemplates)
@@ -382,8 +393,30 @@ namespace Telerik.Sitefinity.Frontend
                 var titleTokens = customPageTemplate.Title.ToString().Split('.');
                 if (titleTokens.Length > 1 && (new PackageManager()).PackageExists(titleTokens[0]))
                 {
-                    customPageTemplate.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(customPageTemplate.Title);
+                    customPageTemplate.Category = layoutManager.GetOrCreateTemplateCategoryId(titleTokens[0]);
                 }
+            }
+
+            pageManager.SaveChanges();
+        }
+
+        private void UpdatePageTemplates()
+        {
+            var pageManager = PageManager.GetManager();
+            var layoutFileManager = new LayoutFileManager();
+
+            var defaultPageTemplates = pageManager.GetTemplates().Where(pt => layoutFileManager.DefaultTemplateNames.Contains(pt.Name)).ToArray();
+            foreach (var defaultPageTemplate in defaultPageTemplates)
+            {
+                // Renaming template title
+                var titleParts = defaultPageTemplate.Title.ToString().Split('.');
+                if (titleParts.Length > 1)
+                {
+                    defaultPageTemplate.Title = titleParts[1];
+                }
+
+                // Adding icon to title
+                layoutFileManager.AttachImageToTemplate(defaultPageTemplate, pageManager);
             }
 
             pageManager.SaveChanges();
