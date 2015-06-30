@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
@@ -232,7 +233,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         public static MvcHtmlString RenderLangAttribute(this HtmlHelper helper)
         {
-            return RenderLangAttribute(helper, CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+            return RenderLangAttribute(helper, CultureInfo.CurrentUICulture.Name);
         }
 
         /// <summary>
@@ -266,7 +267,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
             else
             {
-                var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
+                var page = HttpContext.Current.Handler.GetPageHandler() ?? new PageProxy(null);
 
                 resourceUrl = page.ClientScript.GetWebResourceUrl(
                     TypeResolutionService.ResolveType("Telerik.Sitefinity.Resources.Reference"),
@@ -319,7 +320,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             MvcHtmlString result = MvcHtmlString.Empty;
 
             // No section name renders the script inline if it hasn't been rendered
-            if (string.IsNullOrEmpty(sectionName) || !SectionRenderer.IsAvailable(httpContext.Handler as Page, sectionName))
+            if (string.IsNullOrEmpty(sectionName) || !SectionRenderer.IsAvailable(httpContext.Handler.GetPageHandler(), sectionName))
             {
                 if (!register.IsRegistered(resourcePath, sectionName: null))
                 {
@@ -382,7 +383,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
         private static Page GetTopMostPageFromHandler(IHttpHandler httpHandler)
         {
-            var page = httpHandler as Page;
+            var page = httpHandler.GetPageHandler();
 
             if (page != null)
             {
@@ -468,7 +469,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             public string GetResourceUrl()
             {
-                return this.GetUrl(new ScriptManager(), zip: false);
+                var scriptManager = new ScriptManager();
+
+                try
+                {
+                    return this.GetUrl(scriptManager, zip: false);
+                }
+                catch (NullReferenceException ex)
+                {
+                    ////This is because ScriptReference.ClientUrlResolver is null as the class in to initialize on the page.
+                    if (this.IsGetUrlFromPathException(ex))
+                    {
+                        return scriptManager.ResolveClientUrl(this.Path);
+                    }
+
+                    throw;
+                }
+            }
+
+            private bool IsGetUrlFromPathException(Exception ex)
+            {
+                return ex.TargetSite.Name == "GetUrlFromPath" && ex.TargetSite.DeclaringType.FullName == "System.Web.UI.ScriptReference";
             }
         }
 

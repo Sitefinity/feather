@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using global::Microsoft.VisualStudio.TestTools.UnitTesting;
+using Telerik.Microsoft.Practices.EnterpriseLibrary.Caching;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
@@ -13,6 +14,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Helpers;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Localization.Configuration;
 using Telerik.Sitefinity.Project.Configuration;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
 {
@@ -27,6 +29,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
         /// <summary>
         /// The get label_ dummy localized controller_ ensures the resource string is found.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
         [TestMethod]
         [Owner("Bonchev")]
         [Description("Checks whether the LocalizationHelpers returns a proper resource value for localized controller.")]
@@ -44,8 +47,10 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
             {
                 ObjectFactory.Container.RegisterType<ConfigManager, ConfigManager>(typeof(XmlConfigProvider).Name.ToUpperInvariant(), new InjectionConstructor(typeof(XmlConfigProvider).Name));
                 ObjectFactory.Container.RegisterType<XmlConfigProvider, DummyConfigProvider>();
+                ObjectFactory.Container.RegisterType<ICacheManager, NoCacheManager>(CacheManagerInstance.LocalizationResources.ToString());
                 Config.RegisterSection<ResourcesConfig>();
                 Config.RegisterSection<ProjectConfig>();
+                Config.RegisterSection<SystemConfig>();
 
                 // Act
                 initializer.RegisterControllerPublic(controller);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.UI;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
@@ -34,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             if (helper.ViewContext.HttpContext != null)
             {
-                SectionRenderer.MarkAvailability(helper.ViewContext.HttpContext.Handler as Page, name);
+                SectionRenderer.MarkAvailability(helper.ViewContext.HttpContext.Handler.GetPageHandler(), name);
             }
 
             return new System.Web.Mvc.MvcHtmlString(LayoutsHelpers.SectionHtml.Arrange(name));

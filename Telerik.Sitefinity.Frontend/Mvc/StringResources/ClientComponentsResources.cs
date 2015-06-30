@@ -1396,9 +1396,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         /// <value>Insert link</value>
         [ResourceEntry("InsertLinkButton",
-            Value = "Insert link",
-            Description = "phrase: Insert link",
-            LastModified = "2015/03/23")]
+            Value = "Insert this link",
+            Description = "phrase: Insert this link",
+            LastModified = "2015/06/12")]
         public string InsertLinkButton
         {
             get
@@ -3000,6 +3000,54 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["UserSelectorHeader"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select feed
+        /// </summary>
+        /// <value>Select feed</value>
+        [ResourceEntry("FeedSelectorHeader",
+            Value = "Select feed",
+            Description = "phrase: Select feed",
+            LastModified = "2015/06/10")]
+        public string FeedSelectorHeader
+        {
+            get
+            {
+                return this["FeedSelectorHeader"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: All tools
+        /// </summary>
+        /// <value>All tools</value>
+        [ResourceEntry("AllTools",
+            Value = "All tools",
+            Description = "phrase: All tools",
+            LastModified = "2015/06/10")]
+        public string AllTools
+        {
+            get
+            {
+                return this["AllTools"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select a mailing list
+        /// </summary>
+        /// <value>Select a mailing list</value>
+        [ResourceEntry("MailingListSelectorHeader",
+            Value = "Select a mailing list",
+            Description = "phrase: Select a mailing list",
+            LastModified = "2015/06/17")]
+        public string MailingListSelectorHeader
+        {
+            get
+            {
+                return this["MailingListSelectorHeader"];
             }
         }
     }

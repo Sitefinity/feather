@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
+using Ninject;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
@@ -23,8 +27,23 @@ namespace Telerik.Sitefinity.Frontend
     /// <summary>
     /// A module that will be invoked by Sitefinity.
     /// </summary>
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "Field is disposed on Unload.")]
     public class FrontendModule : ModuleBase
     {
+        /// <summary>
+        /// Gets the current instance of the module.
+        /// </summary>
+        /// <value>
+        /// The current.
+        /// </value>
+        public static FrontendModule Current
+        {
+            get
+            {
+                return (FrontendModule)SystemManager.GetModule("Feather");
+            }
+        }
+
         /// <summary>
         /// Gets the landing page id for each module inherit from <see cref="SecuredModuleBase"/> class.
         /// </summary>
@@ -41,6 +60,20 @@ namespace Telerik.Sitefinity.Frontend
         public override Type[] Managers
         {
             get { return new Type[0]; }
+        }
+
+        /// <summary>
+        /// Gets the dependency resolver. Can be used for overriding the default implementations of some interfaces.
+        /// </summary>
+        /// <value>
+        /// The dependency resolver.
+        /// </value>
+        public IKernel DependencyResolver
+        {
+            get
+            {
+                return this.ninjectDependencyResolver;
+            }
         }
 
         /// <summary>
@@ -69,6 +102,25 @@ namespace Telerik.Sitefinity.Frontend
             SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
             SystemManager.RegisterServiceStackPlugin(new FilesServiceStackPlugin());
             SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
+
+            this.controllerAssemblies = new ControllerContainerInitializer().RetrieveAssemblies();
+
+            this.ninjectDependencyResolver = new StandardKernel();
+            this.ninjectDependencyResolver.Load(this.controllerAssemblies);
+        }
+
+        /// <summary>
+        /// This method is invoked during the unload process of an active module from Sitefinity, e.g. when a module is deactivated. For instance this method is also invoked for every active module during a restart of the application. 
+        /// Typically you will use this method to unsubscribe the module from all events to which it has subscription.
+        /// </summary>
+        public override void Unload()
+        {
+            if (this.ninjectDependencyResolver != null && !this.ninjectDependencyResolver.IsDisposed)
+                this.ninjectDependencyResolver.Dispose();
+
+            Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
+
+            base.Unload();
         }
 
         /// <summary>
@@ -90,6 +142,11 @@ namespace Telerik.Sitefinity.Frontend
             {
                 this.RemoveMvcWidgetToolboxItems();
                 this.RenameDynamicContentMvcToolboxItems();
+            }
+
+            if (upgradeFrom <= new Version(1, 2, 260, 1))
+            {
+                this.RecategorizePageTemplates();
             }
         }
 
@@ -117,7 +174,8 @@ namespace Telerik.Sitefinity.Frontend
                 fileMonitoringInitilizer.Initialize();
 
                 var controllerContainerInitializer = new ControllerContainerInitializer();
-                controllerContainerInitializer.Initialize();
+                controllerContainerInitializer.Initialize(this.controllerAssemblies);
+                this.controllerAssemblies = null; // We won't be needing those anymore. Set them free.
 
                 var layoutsInitializer = new LayoutInitializer();
                 layoutsInitializer.Initialize();
@@ -313,6 +371,26 @@ namespace Telerik.Sitefinity.Frontend
                 pageManager.SaveChanges();
             }
         }
+
+        private void RecategorizePageTemplates()
+        {
+            var pageManager = PageManager.GetManager();
+
+            var customPageTemplates = pageManager.GetTemplates().Where(pt => pt.Category == SiteInitializer.CustomTemplatesCategoryId).ToArray();
+            foreach (var customPageTemplate in customPageTemplates)
+            {
+                var titleTokens = customPageTemplate.Title.ToString().Split('.');
+                if (titleTokens.Length > 1 && (new PackageManager()).PackageExists(titleTokens[0]))
+                {
+                    customPageTemplate.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(customPageTemplate.Title);
+                }
+            }
+
+            pageManager.SaveChanges();
+        }
+
+        private IKernel ninjectDependencyResolver;
+        private IEnumerable<Assembly> controllerAssemblies;
 
         private const string FrontendServiceName = "Telerik.Sitefinity.Frontend";
     }

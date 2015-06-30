@@ -16,11 +16,11 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2015.1.225.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <JSLintSkip>\Mvc\Scripts\Angular\angular.min.js|\Mvc\Scripts\Angular\angular-route.min.js|\Mvc\Scripts\Angular\|\Mvc\Scripts\Bootstrap\|\Mvc\Scripts\Kendo\</JSLintSkip>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2015.2.624.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,19 +66,23 @@
     </Reference>
     <Reference Include="ServiceStack">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ServiceStack.Signed.4.0.36\lib\net40\ServiceStack.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Signed.4.0.40\lib\net40\ServiceStack.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Client">
-      <HintPath>..\packages\ServiceStack.Client.Signed.4.0.36\lib\net40\ServiceStack.Client.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ServiceStack.Client.Signed.4.0.40\lib\net40\ServiceStack.Client.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common">
-      <HintPath>..\packages\ServiceStack.Common.Signed.4.0.36\lib\net40\ServiceStack.Common.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ServiceStack.Common.Signed.4.0.40\lib\net40\ServiceStack.Common.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\packages\ServiceStack.Interfaces.4.0.36\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid\ServiceStack.Interfaces.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ServiceStack.Interfaces.4.0.40\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text">
-      <HintPath>..\packages\ServiceStack.Text.Signed.4.0.36\lib\net40\ServiceStack.Text.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ServiceStack.Text.Signed.4.0.40\lib\net40\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -117,19 +121,21 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.OpenAccess">
+    <Reference Include="Telerik.OpenAccess, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.35.Extensions">
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.40.Extensions">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.Runtime">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2015.1.225.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+    <Reference Include="Telerik.OpenAccess.Runtime, Version=2015.2.624.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.2.624.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity">
       <SpecificVersion>False</SpecificVersion>
@@ -143,16 +149,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.2.270.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.3.260.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.2.270.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.3.260.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities">
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.2.270.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.3.260.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.3.260.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
@@ -162,32 +169,32 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity.Search, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Search.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Search.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Documents, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Documents.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Documents.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Events, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Notifications.Impl.dll</HintPath>
@@ -200,7 +207,7 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Statistics, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Statistics.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Statistics.Impl.dll</HintPath>
@@ -212,14 +219,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.Design">
-      <HintPath>..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.Design.dll</HintPath>
-    </Reference>
     <Reference Include="Telerik.Web.UI">
-      <HintPath>..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Web.UI.Skins">
-      <HintPath>..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Web.UI.2015.2.263.40\lib\net40\Telerik.Web.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +244,7 @@
     <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
     <Compile Include="Mvc\Helpers\CommentsHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\EmailAddressAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\HttpHandlerExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\DuplicateSectionException.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -485,13 +487,14 @@
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.json" />
     <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
+    <None Include="app.config" />
     <None Include="assets\csslint.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.eot" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.ttf" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.woff" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.eot" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.ttf" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.woff" />
     <None Include="assets\feather-icons.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="assets\jshint.json" />
@@ -549,6 +552,10 @@
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js.map" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js.map" />
     <EmbeddedResource Include="Mvc\Views\GridDesigner\Designer.cshtml" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feed-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-selector.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -600,15 +607,15 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
     <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
     <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
-    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
-    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <EmbeddedResource Include="assets\dist\css\html-field.css" />
     <EmbeddedResource Include="assets\dist\css\html-field.min.css" />
+    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
+    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-e076f7f65bb2054c5a8147147a106106.svg" />
     <EmbeddedResource Include="assets\dist\img\crop-to-area.png" />
-    <EmbeddedResource Include="assets\dist\img\resize-to-area.png" />
-    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.svg" />
     <EmbeddedResource Include="assets\dist\img\dummy.jpg" />
+    <EmbeddedResource Include="assets\dist\img\resize-to-area.png" />
     <Content Include="assets\documentation\designer.html" />
     <Content Include="assets\feather-icons.css" />
     <Content Include="assets\gruntfile.js" />
@@ -690,6 +697,10 @@
     <EmbeddedResource Include="client-components\sf-mvc-ext.png" />
     <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.js" />
     <EmbeddedResource Include="assets\src\img\dummy.jpg" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feeds-service.js" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feed-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-service.js" />
+    <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-selector.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

@@ -7,6 +7,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
+using MvcServerOperations = Telerik.Sitefinity.Mvc.TestUtilities.CommonOperations.ServerOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
@@ -28,7 +29,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             Guid pageId = ServerOperations.Pages().CreatePage(PageName);
 
             FeatherServerOperations.ResourcePackages().ImportDataForSelectorsTests(FileResource, DesignerViewFileName, FileResourceJson, JsonFileName, ControllerFileResource, ControllerFileName);
-            ServerOperations.Widgets().AddMvcWidgetToPage(pageId, typeof(DummyTextController).FullName, WidgetCaption);
+            MvcServerOperations.Widgets().AddMvcWidgetToPage(pageId, typeof(DummyTextController).FullName, WidgetCaption);
         }
 
         [ServerTearDown]

@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Multisite;
-using Telerik.Sitefinity.Project.Configuration;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Taxonomies;
+using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
@@ -43,12 +42,51 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
         #endregion
 
+        #region Public methods
+
+        /// <summary>
+        /// Gets the or create template category identifier.
+        /// </summary>
+        /// <param name="templateCategoryName">The template category name.</param>
+        /// <param name="createIfNotExist">if set to <c>true</c> [create if not exist].</param>
+        /// <returns>The id of the category.</returns>
+        public static Guid GetOrCreateTemplateCategoryId(string templateCategoryName, bool createIfNotExist = true)
+        {
+            if (templateCategoryName.Contains('.'))
+            {
+                templateCategoryName = templateCategoryName.Substring(0, templateCategoryName.IndexOf('.'));
+            }
+
+            var taxonomyManager = TaxonomyManager.GetManager();
+
+            var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
+            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Name.Equals(templateCategoryName, StringComparison.OrdinalIgnoreCase));
+
+            if (templateCategory == null && createIfNotExist)
+            {
+                templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>();
+                templateCategory.Name = templateCategoryName;
+                templateCategory.UrlName = templateCategoryName;
+                templateCategory.RenderAsLink = false;
+                templateCategory.Title = templateCategoryName;
+                templateCategory.Description = string.Format("Represents category for {0} page templates.", templateCategoryName);
+
+                pageTemplatesTaxonomy.Taxa.Add(templateCategory);
+                taxonomyManager.SaveChanges();
+            }
+
+            return templateCategory.Id;
+        }
+
+        #endregion
+
         #region IFileManager
 
         /// <summary>
         /// Process the file if such is added to the existing folder.
         /// </summary>
-        /// <param name="virtualFilePath">The virtual file path.</param>
+        /// <param name="fileName">The virtual file name.</param>
+        /// <param name="filePath">The virtual file path.</param>
         /// <param name="packageName">Name of the package.</param>
         public void FileAdded(string fileName, string filePath, string packageName = "")
         {
@@ -207,8 +245,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     if (pageManager.GetTemplates().Where(pt => pt.Title.Equals(templateTitle, StringComparison.InvariantCultureIgnoreCase)).Count() == 0)
                     {
                         var template = pageManager.CreateTemplate();
-                    
-                        template.Category = SiteInitializer.CustomTemplatesCategoryId;
+
+                        template.Category = LayoutFileManager.GetOrCreateTemplateCategoryId(templateTitle);
                         template.Name = templateTitle;
                         template.Title = templateTitle;
                         template.Framework = Pages.Model.PageTemplateFramework.Mvc;

@@ -189,6 +189,8 @@
                             return ctrl.getSpecificItems(ids)
                                 .then(function (data) {
                                     Array.prototype.push.apply(data.Items, externalPages);
+
+                                    ctrl.$scope.sfMissingSelectedItems = data.Items.length < ids.length;
                                     ctrl.onSelectedItemsLoadedSuccess(data);
                                 }, ctrl.onError)
                                 .finally(function () {
