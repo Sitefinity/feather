@@ -477,9 +477,9 @@
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff" />
-    <None Include="assets\dist\fonts\sf-icon-font.eot" />
-    <None Include="assets\dist\fonts\sf-icon-font.ttf" />
-    <None Include="assets\dist\fonts\sf-icon-font.woff" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.eot" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.ttf" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.woff" />
     <None Include="assets\feather-icons.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="assets\jshint.json" />
@@ -604,7 +604,7 @@
     <EmbeddedResource Include="assets\dist\img\crop-to-area.png" />
     <EmbeddedResource Include="assets\dist\img\dummy.jpg" />
     <EmbeddedResource Include="assets\dist\img\resize-to-area.png" />
-    <Content Include="assets\dist\fonts\sf-icon-font.svg" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.svg" />
     <Content Include="assets\documentation\designer.html" />
     <Content Include="assets\feather-icons.css" />
     <Content Include="assets\gruntfile.js" />
