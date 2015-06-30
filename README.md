@@ -17,7 +17,7 @@ This repository contains the core infrastructure related to [Project Feather](ht
 
 [feather-samples](https://github.com/Sitefinity/feather-samples) - This repository contains code samples related to the Feather project.
 
-# Stiefinity compatibility
+# Sitefinity  compatibility
 
 | Feather version | Sitefinity version |
 |----|----|
@@ -30,7 +30,7 @@ This repository contains the core infrastructure related to [Project Feather](ht
 
 # Documentation
 
-[Getting Started](https://github.com/Sitefinity/feather/wiki/getting-started) - Follow the intallation instructions to get started with Feather  
+[Getting Started](https://github.com/Sitefinity/feather/wiki/getting-started) - Follow the intallation installation to get started with Feather  
 
 [Upgrade Instructions](https://github.com/Sitefinity/feather/wiki/upgrade-instructions) - Upgrade your existing Feather projects following this guide  
 
