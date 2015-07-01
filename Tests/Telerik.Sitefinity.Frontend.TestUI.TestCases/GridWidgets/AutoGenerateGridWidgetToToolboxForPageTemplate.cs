@@ -74,7 +74,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
             BAT.Arrange(this.TestName).ExecuteTearDown();
         }
 
-        private const string PageTemplateName = "Bootstrap.defaultNew";
+        private const string PageTemplateName = "defaultNew";
         private const string PageName = "GridPage";
         private const string LayoutCaption = "grid-grid";
         private const string LayoutRenamed = "renamed-grid";
