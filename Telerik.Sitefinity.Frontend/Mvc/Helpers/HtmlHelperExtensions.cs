@@ -65,12 +65,48 @@ namespace ASP
         {
             using (var writer = new StringWriter(CultureInfo.CurrentCulture))
             {
-                PartialExtensions.RenderPartial(htmlHelper, partialViewName, viewData, model, writer);
+                PartialExtensions.RenderPartialInternal(htmlHelper, partialViewName, viewData, model, writer);
                 return MvcHtmlString.Create(writer.ToString());
             }
         }
 
-        private static void RenderPartial(HtmlHelper htmlHelper, string partialViewName, ViewDataDictionary viewData, object model, TextWriter writer)
+        /// <summary>Renders the specified partial view by using the specified HTML helper.</summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="partialViewName">The name of the partial view</param>
+        public static void RenderPartial(this HtmlHelper htmlHelper, string partialViewName)
+        {
+            PartialExtensions.RenderPartialInternal(htmlHelper, partialViewName, htmlHelper.ViewData, null, htmlHelper.ViewContext.Writer);
+        }
+
+        /// <summary>Renders the specified partial view, replacing its ViewData property with the specified <see cref="T:System.Web.Mvc.ViewDataDictionary" /> object.</summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="partialViewName">The name of the partial view.</param>
+        /// <param name="viewData">The view data.</param>
+        public static void RenderPartial(this HtmlHelper htmlHelper, string partialViewName, ViewDataDictionary viewData)
+        {
+            PartialExtensions.RenderPartialInternal(htmlHelper, partialViewName, viewData, null, htmlHelper.ViewContext.Writer);
+        }
+
+        /// <summary>Renders the specified partial view, passing it a copy of the current <see cref="T:System.Web.Mvc.ViewDataDictionary" /> object, but with the Model property set to the specified model.</summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="partialViewName">The name of the partial view.</param>
+        /// <param name="model">The model.</param>
+        public static void RenderPartial(this HtmlHelper htmlHelper, string partialViewName, object model)
+        {
+            PartialExtensions.RenderPartialInternal(htmlHelper, partialViewName, htmlHelper.ViewData, model, htmlHelper.ViewContext.Writer);
+        }
+
+        /// <summary>Renders the specified partial view, replacing the partial view's ViewData property with the specified <see cref="T:System.Web.Mvc.ViewDataDictionary" /> object and setting the Model property of the view data to the specified model.</summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="partialViewName">The name of the partial view.</param>
+        /// <param name="model">The model for the partial view.</param>
+        /// <param name="viewData">The view data for the partial view.</param>
+        public static void RenderPartial(this HtmlHelper htmlHelper, string partialViewName, object model, ViewDataDictionary viewData)
+        {
+            PartialExtensions.RenderPartialInternal(htmlHelper, partialViewName, viewData, model, htmlHelper.ViewContext.Writer);
+        }
+
+        private static void RenderPartialInternal(HtmlHelper htmlHelper, string partialViewName, ViewDataDictionary viewData, object model, TextWriter writer)
         {
             ViewDataDictionary newViewData;
             if (model == null)
