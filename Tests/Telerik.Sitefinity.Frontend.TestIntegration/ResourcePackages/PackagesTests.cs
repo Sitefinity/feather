@@ -144,8 +144,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
             string page2 = "page2";
 
-            string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath("Foundation", Constants.LayoutFileName);
-            string file2Path = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath("Bootstrap", Constants.LayoutFileName);
+            string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath("Foundation", Constants.LayoutFileNameFoundation);
+            string file2Path = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath("Bootstrap", Constants.LayoutFileNameBootstrap);
 
             string folderPath = Path.Combine(FeatherServerOperations.ResourcePackages().SfPath, "ResourcePackages");
             string folderName = "ResourcePackages";
@@ -243,10 +243,10 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             string widgetCaption = "TestMvcWidget";
             string placeHolderId = "Body";
             string packageName = "Bootstrap";
-            string viewFileName = "Default.cshtml";
+            string viewFileName = "Default1.cshtml";
             string widgetName = "MvcTest";
             string fileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Default.cshtml";
-            string templateTitle = "MyTestTemplate";
+            string templateTitle = "Bootstrap.default";
             string text = "This is a view from package.";
 
             try
@@ -254,7 +254,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageMvcViewDestinationFilePath(packageName, widgetName, viewFileName);
                 FeatherServerOperations.ResourcePackages().AddNewResource(fileResource, filePath);
 
-                Guid templateId = FeatherServerOperations.Pages().CreatePureMvcTemplate(templateTitle);
+                Guid templateId = ServerOperations.Templates().GetTemplateIdByTitle(templateTitle);
 
                 Guid pageId = ServerOperations.Pages().CreatePage(pageName, templateId);
                 pageId = ServerOperations.Pages().GetPageNodeId(pageId);
