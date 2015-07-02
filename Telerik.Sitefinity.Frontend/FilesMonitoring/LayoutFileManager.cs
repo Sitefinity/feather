@@ -360,7 +360,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         var resourceImageStream = new MemoryStream();
                         resourceImage.Save(resourceImageStream, System.Drawing.Imaging.ImageFormat.Png);
 
-                        libraryManager.Upload(image, resourceImageStream, Path.GetExtension(iconResource));
+                        libraryManager.Upload(image, resourceImageStream, Path.GetExtension(".png"));
                         libraryManager.Lifecycle.Publish(image);
                         libraryManager.SaveChanges();
                     }
