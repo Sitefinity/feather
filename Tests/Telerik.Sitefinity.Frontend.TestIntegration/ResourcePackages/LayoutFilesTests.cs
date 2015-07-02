@@ -362,7 +362,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Test]
         [Category(TestCategories.LayoutFiles)]
         [Author(FeatherTeams.Team2)]
-        [Description("Adds a resource package, creates a template in Sitefinity and then adds new layout file in the package; verifies the public page before and after")]
+        [Description("Adds a resource package, creates a template in Sitefinity and then adds new layout file in the package; verifies the public page before and after"), Ignore]
         public void ResourcePackageLayoutFiles_CreateTemplateAndAddLayoutFile_VerifyPublicPage()
         {
             string packageName = "TestPackageNoLayouts";
