@@ -85,7 +85,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string GridTitle = "grid-grid";
         private const string GridCss = "sfL25_75";
         private const string PageName = "GridPage";
-        private const string PageTemplateName = "Bootstrap.defaultNew";
+        private const string PageTemplateName = "defaultNew";
         private readonly string layoutTemplatePath = Path.Combine("ResourcePackages", "Bootstrap", "MVC", "Views", "Layouts", "default.cshtml");
         private readonly string newLayoutTemplatePath = Path.Combine("ResourcePackages", "Bootstrap", "MVC", "Views", "Layouts", "defaultNew.cshtml");
         private readonly string gridPath = Path.Combine("ResourcePackages", "Bootstrap", "GridSystem", "Templates", GridFileName);

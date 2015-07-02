@@ -246,7 +246,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             string viewFileName = "Default.cshtml";
             string widgetName = "MvcTest";
             string fileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Default.cshtml";
-            string templateTitle = "Bootstrap.MyTestTemplate";
+            string templateTitle = "MyTestTemplate";
             string text = "This is a view from package.";
 
             try
@@ -294,10 +294,10 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             string widgetName = "MvcTest";
             string fileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Default.cshtml";
             string packageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Package1.zip";
-            string templateTitle = "Package1.test-layout";
+            string templateTitle = "test-layout";
             string viewText = "This is a view from package.";
             string layoutText = "Package1 - test layout";
-            string templateRenamed = "Package1.TemplateRenamed";
+            string templateRenamed = "TemplateRenamed";
 
             int templatesCount = this.PageManager.GetTemplates().Count();
 

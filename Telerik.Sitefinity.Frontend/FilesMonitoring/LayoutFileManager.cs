@@ -310,18 +310,24 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
             if (template != null && !string.IsNullOrEmpty(template.Name))
             {
-                // Try get image from library
                 var libraryManager = LibrariesManager.GetManager("SystemLibrariesProvider");
-                var templateThumbsImageLibrary = libraryManager.GetAlbums().FirstOrDefault(lib => lib.Id == LibrariesModule.DefaultTemplateThumbnailsLibraryId);
-
-                image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals(template.Name, StringComparison.OrdinalIgnoreCase));
-                if (image == null)
+                if (libraryManager != null)
                 {
-                    // Check if image is in the resources and upload it
-                    var iconResource = string.Format(LayoutFileManager.PageTemplateIconPathFormat, template.Name);
-                    if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Any(mrn => mrn.Equals(iconResource, StringComparison.OrdinalIgnoreCase)))
+                    var templateThumbsImageLibrary = libraryManager.GetAlbums().FirstOrDefault(lib => lib.Id == LibrariesModule.DefaultTemplateThumbnailsLibraryId);
+
+                    if (templateThumbsImageLibrary != null)
                     {
-                        image = this.UploadTemplateImage(libraryManager, templateThumbsImageLibrary, template.Name, iconResource);
+                        // Try get image from library
+                        image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals(template.Name, StringComparison.OrdinalIgnoreCase));
+                        if (image == null)
+                        {
+                            // Check if image is in the resources and upload it
+                            var iconResource = string.Format(LayoutFileManager.PageTemplateIconPathFormat, template.Name);
+                            if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Any(mrn => mrn.Equals(iconResource, StringComparison.OrdinalIgnoreCase)))
+                            {
+                                image = this.UploadTemplateImage(libraryManager, templateThumbsImageLibrary, template.Name, iconResource);
+                            }
+                        }
                     }
                 }
             }
@@ -364,7 +370,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             {
                 libraryManager.Provider.SuppressSecurityChecks = suppressSecurityChecks;
             }
-            
+
             return image;
         }
 

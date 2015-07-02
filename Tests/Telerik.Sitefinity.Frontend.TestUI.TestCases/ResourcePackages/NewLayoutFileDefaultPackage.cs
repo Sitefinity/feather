@@ -34,7 +34,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
             Assert.IsTrue(isTextPresent, "Layout template text was not found");
 
             bool isPlaceholderPresent = BATFrontend.Wrappers().Backend().PageTemplates().PageTemplateEditor().IsPlaceHolderPresent(PlaceHolderId);
-            Assert.IsTrue(isPlaceholderPresent, "Placeholder not found");
+            Assert.IsTrue(isPlaceholderPresent, "Placeholder not found");           
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
             BAT.Arrange(this.TestName).ExecuteTearDown();
         }
 
-        private const string TemplateTitle = "Foundation.TestLayout";
+        private const string TemplateTitle = "TestLayout";
         private const string LayoutText = "Test Layout";
         private const string PlaceHolderId = "TestPlaceHolder";
     }

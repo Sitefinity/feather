@@ -307,7 +307,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             string backFileName = "test-layout.cshtml.bac";
             string sitefinityPath = FeatherServerOperations.ResourcePackages().SfPath;
             string tempFolder = "Temp";
-            string templateTitle = "Package1.test-layout";
+            string templateTitle = "test-layout";
             string layoutTemplateText = "Package1 - test layout";
             string layoutTemplateTextReplaced = "Package1 - test layout REPLACED";
             string page = "featherpage";
@@ -369,7 +369,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             string packageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestPackageNoLayouts.zip";
             string layoutName = "TestLayout.cshtml";
             string layoutResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayout.cshtml";
-            string templateTitle = "TestPackageNoLayouts.TestLayout";
+            string templateTitle = "TestLayout";
             string pageTitle = "FeatherTestPage";
             string testLayoutTemplateText = "Test Layout";
            

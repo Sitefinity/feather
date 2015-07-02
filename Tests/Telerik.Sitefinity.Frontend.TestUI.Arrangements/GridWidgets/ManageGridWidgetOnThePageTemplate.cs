@@ -44,7 +44,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             ServerOperations.Templates().DeletePageTemplate(PageTemplateName);
         }
 
-        private const string PageTemplateName = "Bootstrap.defaultNew";
+        private const string PageTemplateName = "defaultNew";
         private string layoutTemplatePath = Path.Combine("ResourcePackages", "Bootstrap", "MVC", "Views", "Layouts", "default.cshtml");
         private string newLayoutTemplatePath = Path.Combine("ResourcePackages", "Bootstrap", "MVC", "Views", "Layouts", "defaultNew.cshtml");
     }
