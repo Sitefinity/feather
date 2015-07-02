@@ -16,10 +16,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         public const string TestPackageName2 = "TestPackage2";
         public const string NewTestPackageName = "NewTestPackage";
         public const string PackageNoLayouts = "TestPackageNoLayouts";
+        public const string LayoutFileNameFoundation = "Foundation.TestLayout.cshtml";
+        public const string LayoutFileNameBootstrap = "Bootstrap.TestLayout.cshtml";
         public const string LayoutFileName = "TestLayout.cshtml";
         public const string TestLayoutFileName = "Test Layout 1.cshtml";
         public const string NewTestLayoutFileName = "New Test Layout 1.cshtml";
-        public const string TemplateTitle = "Foundation.TestLayout";
+        public const string TemplateTitle = "TestLayout";
         public const string TemplateTestLayout1 = "Test Layout 1";
         public const string TemplateRenamed = "TemplateRenamed";
         public const string TemplateTestLayout2 = "Test Layout 2";
