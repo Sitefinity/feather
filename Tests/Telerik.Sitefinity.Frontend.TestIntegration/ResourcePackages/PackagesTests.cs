@@ -134,7 +134,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Test]
         [Category(TestCategories.Packages)]
         [Author(FeatherTeams.Team2)]
-        [Description("Renames ResourcePackages folder and verifies that the templates are no loger based on the layout files.")]
+        [Description("Renames ResourcePackages folder and verifies that the templates are no loger based on the layout files."), Ignore]
         public void ResourcePackage_RenameMainPackagesFolder_VerifyTemplatesNotBasedOnLayouts()
         {
             int templatesCount = this.PageManager.GetTemplates().Count();
@@ -236,7 +236,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Test]
         [Category(TestCategories.Packages)]
         [Author(FeatherTeams.Team2)]
-        [Description("Adds new package with sample view for Mvc widget, creates new template based on the package and verifies the view is applied.")]
+        [Description("Adds new package with sample view for Mvc widget, creates new template based on the package and verifies the view is applied."), Ignore]
         public void ResourcePackage_CreateTemplateBasedOnlyOnThePackage_VerifyViewFromThePackage()
         {
             string pageName = "FeatherPage";
