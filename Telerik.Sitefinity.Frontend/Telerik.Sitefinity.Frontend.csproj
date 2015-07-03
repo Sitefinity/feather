@@ -575,7 +575,7 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\PageTemplateImages\Bootstrap.default.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\Bootstrap.default.gif" />
     <EmbeddedResource Include="Resources\PageTemplateImages\Foundation.default.gif" />
     <EmbeddedResource Include="Resources\PageTemplateImages\SemanticUI.default.gif" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.js" />
