@@ -607,9 +607,6 @@
     <EmbeddedResource Include="Resources\PageTemplateImages\Bootstrap.default.gif" />
     <EmbeddedResource Include="Resources\PageTemplateImages\Foundation.default.gif" />
     <EmbeddedResource Include="Resources\PageTemplateImages\SemanticUI.default.gif" />
-    <EmbeddedResource Include="Resources\PageTemplateImages\sml_Bootstrap.default.gif" />
-    <EmbeddedResource Include="Resources\PageTemplateImages\sml_Foundation.default.gif" />
-    <EmbeddedResource Include="Resources\PageTemplateImages\sml_SemanticUI.default.gif" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.js" />
