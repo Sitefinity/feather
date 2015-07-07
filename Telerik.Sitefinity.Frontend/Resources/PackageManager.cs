@@ -178,18 +178,21 @@ namespace Telerik.Sitefinity.Frontend.Resources
         private string GetPackageFromTemplate(PageTemplate template)
         {
             var currentTemplate = template;
-            while (currentTemplate != null && !currentTemplate.Name.IsNullOrEmpty())
+            while (currentTemplate != null)
             {
-                var name = currentTemplate.Name;
-                var parts = name.Split('.');
-                if (parts.Length > 1)
+                var name = currentTemplate.Name ?? (currentTemplate.Title != null ? currentTemplate.Title.ToString() : null);
+                if (!name.IsNullOrEmpty())
                 {
-                    var expectedPackageName = this.StripInvalidCharacters(parts[0]);
-                    var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
-                    if (path != null && Directory.Exists(path))
+                    var parts = name.Split('.');
+                    if (parts.Length > 1)
                     {
-                        SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
-                        return expectedPackageName;
+                        var expectedPackageName = this.StripInvalidCharacters(parts[0]);
+                        var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
+                        if (path != null && Directory.Exists(path))
+                        {
+                            SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
+                            return expectedPackageName;
+                        }
                     }
                 }
 
