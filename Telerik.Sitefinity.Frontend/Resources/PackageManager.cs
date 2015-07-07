@@ -178,9 +178,9 @@ namespace Telerik.Sitefinity.Frontend.Resources
         private string GetPackageFromTemplate(PageTemplate template)
         {
             var currentTemplate = template;
-            while (currentTemplate != null)
+            while (currentTemplate != null && !currentTemplate.Name.IsNullOrEmpty())
             {
-                var name = currentTemplate.Name.ToString();
+                var name = currentTemplate.Name;
                 var parts = name.Split('.');
                 if (parts.Length > 1)
                 {
