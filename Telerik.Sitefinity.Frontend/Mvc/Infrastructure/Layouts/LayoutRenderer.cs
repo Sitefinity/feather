@@ -250,6 +250,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         private void RenderContentPlaceHolders(string layoutPath, StringWriter writer)
         {
             writer.WriteLine("<%@ Master Language=\"C#\" %>");
+            writer.WriteLine("<html><head runat=\"server\"></head><body>");
 
             string layoutText;
             using (var layoutFile = new StreamReader(HostingEnvironment.VirtualPathProvider.GetFile(layoutPath).Open()))
@@ -270,6 +271,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                     }
                 }
             }
+
+            writer.Write("</body></html>");
         }
 
         #endregion
