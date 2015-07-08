@@ -99,6 +99,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// Apply custom labels to the columns for your convenience only.
+        /// </summary>
+        [ResourceEntry("LabelForYourConvenienceOnly",
+            Value = "Apply custom labels to the columns for your convenience only.",
+            Description = "phrase: Apply custom labels to the columns for your convenience only.",
+            LastModified = "2015/07/08")]
+        public string LabelForYourConvenienceOnly
+        {
+            get
+            {
+                return this["LabelForYourConvenienceOnly"];
+            }
+        }
+
+        /// <summary>
         /// Labels
         /// </summary>
         [ResourceEntry("Classes",
