@@ -604,10 +604,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mvc\Scripts\Designer\grid-designer.js" />
-    <EmbeddedResource Include="Resources\PageTemplateImages\LeftSidebarHeader Footer.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\LeftSidebarHeaderFooter.gif" />
     <EmbeddedResource Include="Resources\PageTemplateImages\RightSidebarHeaderFooter.gif" />
     <EmbeddedResource Include="Resources\PageTemplateImages\1ColumnHeaderFooter.gif" />
-    <EmbeddedResource Include="Resources\PageTemplateImages\2EqualColumns HeaderFooter.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\2EqualColumnsHeaderFooter.gif" />
     <EmbeddedResource Include="Resources\PageTemplateImages\3EqualColumnsHeaderFooter.gif" />
     <EmbeddedResource Include="Resources\PageTemplateImages\4EqualColumnsHeaderFooter.gif" />
     <EmbeddedResource Include="Resources\PageTemplateImages\default.gif" />
@@ -740,7 +740,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
