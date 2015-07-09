@@ -24,14 +24,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (template.GetTemplateFramework() != PageTemplateFramework.Mvc)
                 return null;
 
-            var hasTitle = template as IHasTitle;
+            string templateName;
+            var strictTemplate = template as PageTemplate;
+            if (strictTemplate != null && strictTemplate.Name != null)
+            {
+                templateName = strictTemplate.Name;
+            }
+            else
+            {
+                var hasTitle = template as IHasTitle;
+                if (hasTitle != null)
+                    templateName = hasTitle.GetTitle();
+                else
+                    templateName = null;
+            }
 
-            if (hasTitle == null)
+            if (templateName == null)
                 return null;
 
-            string templateTitle = hasTitle.GetTitle();
             var virtualBuilder = this.CreateLayoutVirtualPathBuilder();
-            var layoutVirtualPath = virtualBuilder.BuildPathFromTitle(templateTitle);
+            var layoutVirtualPath = virtualBuilder.BuildPathFromName(templateName);
             var doesLayoutExist = VirtualPathManager.FileExists(layoutVirtualPath);
 
             if (!doesLayoutExist)

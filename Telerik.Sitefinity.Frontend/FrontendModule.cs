@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using Ninject;
@@ -18,14 +16,11 @@ using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Services.FilesService;
 using Telerik.Sitefinity.Frontend.Services.ListsService;
 using Telerik.Sitefinity.Frontend.Services.ReviewsService;
-using Telerik.Sitefinity.Libraries.Model;
-using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Comments.Notifications;
-using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend
 {
@@ -157,6 +152,11 @@ namespace Telerik.Sitefinity.Frontend
             if (upgradeFrom <= new Version(1, 2, 270, 1))
             {
                 this.UpdatePageTemplates();
+            }
+
+            if (upgradeFrom <= new Version(1, 2, 280, 2))
+            {
+                this.CreateDefaultTemplates();
             }
         }
 
@@ -405,7 +405,7 @@ namespace Telerik.Sitefinity.Frontend
             var pageManager = PageManager.GetManager();
             var layoutFileManager = new LayoutFileManager();
 
-            var defaultPageTemplates = pageManager.GetTemplates().Where(pt => layoutFileManager.DefaultTemplateNames.Contains(pt.Name)).ToArray();
+            var defaultPageTemplates = pageManager.GetTemplates().Where(pt => LayoutFileManager.DefaultTemplateNames.Contains(pt.Name)).ToArray();
             foreach (var defaultPageTemplate in defaultPageTemplates)
             {
                 // Renaming template title
@@ -416,10 +416,27 @@ namespace Telerik.Sitefinity.Frontend
                 }
 
                 // Adding icon to title
-                layoutFileManager.AttachImageToTemplate(defaultPageTemplate, pageManager);
+                layoutFileManager.AttachImageToTemplate(defaultPageTemplate, pageManager, null);
             }
 
             pageManager.SaveChanges();
+        }
+
+        private void CreateDefaultTemplates()
+        {
+            var layoutManager = new LayoutFileManager();
+
+            var pageManager = PageManager.GetManager();
+            var defaultPageTemplates = pageManager.GetTemplates().Where(pt => LayoutFileManager.DefaultTemplateNames.Contains(pt.Name));
+            foreach (var template in defaultPageTemplates)
+            {
+                if (string.Equals(LayoutFileManager.BootstrapDefaultTemplateName, template.Name, StringComparison.OrdinalIgnoreCase))
+                    layoutManager.CreateDefaultBootstrapTemplates();
+                else if (string.Equals(LayoutFileManager.FoundationDefaultTemplateName, template.Name, StringComparison.OrdinalIgnoreCase))
+                    layoutManager.CreateDefaultFoundationTemplates();
+                else if (string.Equals(LayoutFileManager.SemanticUIDefaultTemplateName, template.Name, StringComparison.OrdinalIgnoreCase))
+                    layoutManager.CreateDefaultSemanticUiTemplates();
+            }
         }
 
         private IKernel ninjectDependencyResolver;
