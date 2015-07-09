@@ -274,6 +274,8 @@
 
                     var css = elements[i].isPlaceholder ? 'sf_colsIn ' + elements[i].css : elements[i].css;
                     $(innerDiv).attr('class', css.trim());
+
+                    $(innerDiv).removeAttr('id');
                 }
             }
 
