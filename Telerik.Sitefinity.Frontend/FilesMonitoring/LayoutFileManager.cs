@@ -553,14 +553,14 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     if (templateThumbsImageLibrary != null)
                     {
                         // Try get image from library
-                        image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals(imageName, StringComparison.OrdinalIgnoreCase));
+                        image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals("MVC_" + imageName, StringComparison.OrdinalIgnoreCase));
                         if (image == null)
                         {
                             // Check if image is in the resources and upload it
                             var iconResource = string.Format(LayoutFileManager.PageTemplateIconPathFormat, imageName);
                             if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Any(mrn => mrn.Equals(iconResource, StringComparison.OrdinalIgnoreCase)))
                             {
-                                image = this.UploadTemplateImage(libraryManager, templateThumbsImageLibrary, template.Name, iconResource);
+                                image = this.UploadTemplateImage(libraryManager, templateThumbsImageLibrary, "MVC_" + imageName, iconResource);
                             }
                         }
                     }
