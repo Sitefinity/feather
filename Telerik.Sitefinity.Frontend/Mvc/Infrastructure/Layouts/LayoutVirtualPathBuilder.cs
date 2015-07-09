@@ -20,14 +20,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         #region Public members
 
         /// <summary>
-        /// Builds the path from template title.
+        /// Builds the path from template name.
         /// </summary>
-        /// <param name="templateTitle">Title of the template.</param>
+        /// <param name="templateName">Name of the template.</param>
         /// <returns> Resolved path will be in the following format: "~/SfLayouts/some_title.master"</returns>
-        public virtual string BuildPathFromTitle(string templateTitle)
+        public virtual string BuildPathFromName(string templateName)
         {
             var templateFileNameParser = new TemplateTitleParser();
-            var fileName = templateFileNameParser.GetLayoutName(templateTitle);
+            var fileName = templateFileNameParser.GetLayoutName(templateName);
 
             var layoutVirtualPath = string.Format(CultureInfo.InvariantCulture, LayoutVirtualPathBuilder.LayoutVirtualPathTemplate, LayoutVirtualPathBuilder.LayoutsPrefix, fileName, LayoutVirtualPathBuilder.LayoutSuffix);
             layoutVirtualPath = this.AddVariablesToPath(layoutVirtualPath);
