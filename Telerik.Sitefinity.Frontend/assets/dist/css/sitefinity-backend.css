@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -5338,10 +5339,10 @@ tbody.collapse.in {
     display: inline-block; }
     /* line 16, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_breadcrumbs.scss */
     .breadcrumb > li + li:before {
-      content: "/\\00a0";
+      content: "/ ";
       padding: 0 5px;
       color: #ccc; }
-  /* line 23, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_breadcrumbs.scss */
+  /* line 25, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_breadcrumbs.scss */
   .breadcrumb > .active {
     color: #777777; }
 
