@@ -59,6 +59,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
         }
 
-        private const string GridUpdateUrlFormat = "/Sitefinity/Services/Pages/ZoneEditorService.svc/Layout/Style/{0}/{1}/{2}";
+        private const string GridUpdateUrlFormat = "/Sitefinity/Services/Pages/ZoneEditorService.svc/Layout/Style/{0}/{1}/{2}/";
     }
 }
