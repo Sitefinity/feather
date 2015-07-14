@@ -19913,11 +19913,15 @@ h5, .h5 {
   padding: 10px 20px;
   border-radius: 0; }
 
-/* line 10, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts.sass */
+/* line 9, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts.sass */
+.modal-body .alert-info {
+  margin: 0; }
+
+/* line 13, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts.sass */
 .modal-body .form-group .alert {
   margin: 0 0 20px; }
 
-/* line 16, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts.sass */
+/* line 19, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_alerts.sass */
 .modal-body .Media .alert {
   position: absolute;
   z-index: 1;
