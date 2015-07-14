@@ -21,9 +21,9 @@
 
             <tabset class="nav-tabs-wrapper">
                 <tab heading="@Html.Resource("Classes")">
-			        <div>
+			        <h3>
                         @Html.Resource("Classes")
-                    </div>
+                    </h3>
 
                     <div data-ng-repeat="item in gridElements" class="form-group">
                         <label for="prop-{{item.name}}" ng-bind="item.name"></label>
@@ -31,11 +31,11 @@
                     </div>
                 </tab>
                 <tab heading="@Html.Resource("Labels")">
-                    <div>
+                    <h3>
                         @Html.Resource("Labels")
-                    </div>
+                    </h3>
 
-                    @Html.Resource("LabelForYourConvenienceOnly")
+                    <p class="description-note">@Html.Resource("LabelForYourConvenienceOnly")</p>
 
                     <div data-ng-repeat="item in gridElements|filter:{isPlaceholder:true}" class="form-group">
                         <label for="prop-{{item.name}}" ng-bind="item.name"></label>
