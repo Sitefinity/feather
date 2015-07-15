@@ -134,7 +134,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Test]
         [Category(TestCategories.Packages)]
         [Author(FeatherTeams.Team2)]
-        [Description("Renames ResourcePackages folder and verifies that the templates are no loger based on the layout files."), Ignore]
+        [Description("Renames ResourcePackages folder and verifies that the templates are no loger based on the layout files.")]
         public void ResourcePackage_RenameMainPackagesFolder_VerifyTemplatesNotBasedOnLayouts()
         {
             int templatesCount = this.PageManager.GetTemplates().Count();
