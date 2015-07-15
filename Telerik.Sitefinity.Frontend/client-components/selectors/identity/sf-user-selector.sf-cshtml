@@ -17,8 +17,8 @@
 
             <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
-          <div ng-hide="noItemsExist || showError" style="margin-top:-10px;">
-            <div class="row" ng-show="usersProviders.length">
+          <div ng-hide="noItemsExist || showError">
+            <div class="row full-width" ng-show="usersProviders.length">
               <div class="col-xs-5">
                 <select class="form-control m-bottom-sm" ng-model="sfProvider" ng-change="providerChanged(sfProvider)" ng-options="provider.UserProviderName as provider.UserProviderTitle for provider in usersProviders">
                   <option style="display:none" value=""></option>
