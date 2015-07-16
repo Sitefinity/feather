@@ -98,6 +98,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var currentPackage = packagesManager.GetCurrentPackage();
             var pathTransformations = new List<Func<string, string>>();
 
+            var controllerVp = customPath ?? AppendDefaultPath(FrontendManager.VirtualPathBuilder.GetVirtualPath(controller.GetType().Assembly));
+            FrontendControllerFactory.AddDynamicControllerPathTransformations(controller, controllerVp, currentPackage, pathTransformations);
+
             if (controller.RouteData != null && controller.RouteData.Values.ContainsKey("widgetName"))
             {
                 var widgetName = (string)controller.RouteData.Values["widgetName"];
@@ -106,10 +109,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 pathTransformations.Add(FrontendControllerFactory.GetPathTransformation(widgetVp, currentPackage, widgetName));
             }
 
-            var controllerVp = customPath ?? AppendDefaultPath(FrontendManager.VirtualPathBuilder.GetVirtualPath(controller.GetType().Assembly));
             pathTransformations.Add(FrontendControllerFactory.GetPathTransformation(controllerVp, currentPackage));
-
-            FrontendControllerFactory.AddDynamicControllerPathTransformations(controller, controllerVp, currentPackage, pathTransformations);
 
             var frontendVp = AppendDefaultPath(FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendControllerFactory).Assembly));
             if (!string.Equals(controllerVp, frontendVp, StringComparison.OrdinalIgnoreCase))
@@ -139,7 +139,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                             var dynamicControllerWidgetName = controllerWidgetProperty.Value;
                             if (!string.IsNullOrEmpty(dynamicControllerWidgetName))
                             {
-                                pathTransformations.Insert(0, FrontendControllerFactory.GetPathTransformation(virtualPath, currentPackage, dynamicControllerWidgetName));
+                                pathTransformations.Add(FrontendControllerFactory.GetPathTransformation(virtualPath, currentPackage, dynamicControllerWidgetName));
                             }
                         }
                     }
