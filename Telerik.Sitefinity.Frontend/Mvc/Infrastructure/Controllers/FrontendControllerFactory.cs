@@ -139,7 +139,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                             var dynamicControllerWidgetName = controllerWidgetProperty.Value;
                             if (!string.IsNullOrEmpty(dynamicControllerWidgetName))
                             {
-                                pathTransformations.Add(FrontendControllerFactory.GetPathTransformation(virtualPath, currentPackage, dynamicControllerWidgetName));
+                                pathTransformations.Insert(0, FrontendControllerFactory.GetPathTransformation(virtualPath, currentPackage, dynamicControllerWidgetName));
                             }
                         }
                     }
