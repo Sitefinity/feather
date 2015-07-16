@@ -136,7 +136,17 @@ namespace Telerik.Sitefinity.Frontend.Resources
         protected virtual void SendParsedTemplate(HttpContext context)
         {
             context.Response.ContentType = "text/html";
-            var output = this.parser.Process(context.Request.Url.AbsolutePath);
+
+            var packagesManager = new PackageManager();
+            var packageName = packagesManager.GetCurrentPackage();
+            var templatePath = context.Request.Url.AbsolutePath;
+
+            if (!string.IsNullOrEmpty(packageName))
+            {
+                templatePath += "#" + packageName;
+            }
+
+            var output = this.parser.Process(templatePath);
 
             this.WriteToOutput(context, context.Response.ContentEncoding.GetBytes(output));
         }
