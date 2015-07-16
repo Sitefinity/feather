@@ -236,14 +236,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Test]
         [Category(TestCategories.Packages)]
         [Author(FeatherTeams.Team2)]
-        [Description("Adds new package with sample view for Mvc widget, creates new template based on the package and verifies the view is applied."), Ignore]
+        [Description("Adds new package with sample view for Mvc widget, creates new template based on the package and verifies the view is applied.")]
         public void ResourcePackage_CreateTemplateBasedOnlyOnThePackage_VerifyViewFromThePackage()
         {
             string pageName = "FeatherPage";
             string widgetCaption = "TestMvcWidget";
-            string placeHolderId = "Body";
+            string placeHolderId = "Contentplaceholder1";
             string packageName = "Bootstrap";
-            string viewFileName = "Default1.cshtml";
+            string viewFileName = "Default.cshtml";
             string widgetName = "MvcTest";
             string fileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Default.cshtml";
             string templateTitle = "Bootstrap.default";
@@ -267,7 +267,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             finally
             {
                 ServerOperations.Pages().DeleteAllPages();
-                ServerOperations.Templates().DeletePageTemplate(templateTitle);
 
                 string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageMvcViewDestinationFilePath(packageName, widgetName, viewFileName);
 

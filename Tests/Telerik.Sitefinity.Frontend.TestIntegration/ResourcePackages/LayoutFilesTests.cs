@@ -362,14 +362,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Test]
         [Category(TestCategories.LayoutFiles)]
         [Author(FeatherTeams.Team2)]
-        [Description("Adds a resource package, creates a template in Sitefinity and then adds new layout file in the package; verifies the public page before and after"), Ignore]
+        [Description("Adds a resource package, creates a template in Sitefinity and then adds new layout file in the package; verifies the public page before and after")]
         public void ResourcePackageLayoutFiles_CreateTemplateAndAddLayoutFile_VerifyPublicPage()
         {
             string packageName = "TestPackageNoLayouts";
             string packageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestPackageNoLayouts.zip";
             string layoutName = "TestLayout.cshtml";
             string layoutResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayout.cshtml";
-            string templateTitle = "TestLayout";
+            string templateTitle = "TestPackageNoLayouts.TestLayout";
             string pageTitle = "FeatherTestPage";
             string testLayoutTemplateText = "Test Layout";
            
@@ -378,7 +378,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
             try
             {
-                var templateId = ServerOperations.Templates().CreatePureMVCPageTemplate(templateTitle);
+                var templateId = FeatherServerOperations.Pages().CreatePureMvcTemplate(templateTitle);
                 Guid pageId = ServerOperations.Pages().CreatePage(pageTitle, templateId);
 
                 var filePath = Path.Combine(packagePath, "MVC", "Views", "Layouts", layoutName);
