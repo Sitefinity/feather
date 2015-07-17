@@ -22,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Infrastructure
         /// Checks whether error message is rendered when a controller throws exception.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Checks whether error message is rendered when a controller throws exception.")]
         public void CreatePageWithFailingWidget_RenderPage_ResponseContainsErrorMessage()
         {

@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         /// UI test ApplyTwoDifferentTemplatesFromDifferentPackagesToPages.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team2),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent), Ignore]
         public void ApplyTwoDifferentTemplatesFromDifferentPackagesToPages()
         {

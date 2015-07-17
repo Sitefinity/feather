@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// UI test AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team2),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox()
         {            

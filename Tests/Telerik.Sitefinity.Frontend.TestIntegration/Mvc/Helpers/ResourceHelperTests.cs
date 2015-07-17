@@ -47,7 +47,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         /// Ensures that a JavaScript is registered only in ScriptManager for hybrid pages.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that a JavaScript is registered only in ScriptManager for hybrid pages.")]
         public void RegisterScript_HybridPage_AddedInScriptManagerOnly()
         {
@@ -77,7 +77,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         /// Ensures that a JavaScript is registered only in ScriptManager for pure MVC pages.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that a JavaScript is registered only in ScriptManager for pure MVC pages.")]
         public void RegisterScript_PureMvcPage_AddedOnce()
         {
@@ -121,7 +121,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         }
 
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that when two widgets on a page based on a layout register the same script in two sections only the reference in the top section is rendered.")]
         public void PageBasedOnLayoutTwoWidgets_RegisterBottomAndTopSameScript_TopReferenceRendered()
         {
@@ -143,7 +143,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         }
 
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that when two widgets on a page based on a layout register the same script, one inline and one on in top section, the one in the section is rendered.")]
         public void PageBasedOnLayoutTwoWidgets_RegisterInlineAndTopSameScript_TopReferenceRendered()
         {
@@ -164,7 +164,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         }
 
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that when two widgets on a page based on a layout register the same script, both inline, only one is rendered.")]
         public void PageBasedOnLayoutTwoWidgets_RegisteredScriptInline_RenderedOnce()
         {

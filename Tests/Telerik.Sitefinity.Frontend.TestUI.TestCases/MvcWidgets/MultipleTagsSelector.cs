@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// Verifies selected tab in multiple selector and ordering in all tab of selected items.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team7),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleTagsSelectorVerifySelectedTabAndOrderingInAllTab()
         {
@@ -47,7 +47,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// Verifies items selection after switching to Advanced settings.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team7),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleTagsSelectorVerifySelectionAfterSwitchingToAdvancedSettings()
         {
@@ -71,7 +71,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// Verifies selected items reordering from top to bottom for tag items.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team7),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleTagsSelectorVerifySelectedItemsNoReordering()
         {
@@ -102,7 +102,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// Verifies search in Selected tab.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team7),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleTagsSelectorVerifySearchInSelectedTab()
         {
