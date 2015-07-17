@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Wrappers.Backend.PageEditor;
+using Telerik.TestUI.Core.Utilities;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
 {
@@ -20,8 +21,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         Owner(FeatherTeams.Team2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox()
-        {
-            BAT.Macros().NavigateTo().Design().PageTemplates();
+        {            
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(400000, () => BAT.Macros().NavigateTo().Design().PageTemplates());         
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
             BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
