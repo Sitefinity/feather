@@ -22,32 +22,27 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team7),
-        TestCategory(FeatherTestCategories.Selectors)]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcReorderSelectedNewsItems()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("newsItemsMultipleSelector");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(this.selectedNewsNames);
             var countOfSelectedItems = this.selectedNewsNames.Count();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);
-            
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);            
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(4);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ReorderSelectedItems(this.expectedOrderOfNames, this.selectedNewsNames, this.reorderedIndexMapping);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.expectedOrderOfNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
-
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("newsItemsMultipleSelector");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.expectedOrderOfNames);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
@@ -72,10 +67,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "SelectorWidget";
-
         private readonly string[] selectedNewsNames = { "News Item Title1", "News Item Title5", "News Item Title6", "News Item Title9" };
         private readonly string[] expectedOrderOfNames = { "News Item Title9", "News Item Title5", "News Item Title1", "News Item Title6" };
-
         private readonly Dictionary<int, int> reorderedIndexMapping = new Dictionary<int, int>()
         {
             { 3, 0 },

@@ -22,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team7),
-        TestCategory(FeatherTestCategories.Selectors)]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcDynamicSelectorTest()
         {
             BAT.Macros().NavigateTo().Pages();
@@ -30,38 +30,27 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetTitle(WidgetCaption);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetSaveButton();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetCancelButton();
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("dynamicItemsSingleSelector");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(3);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText("Title1");
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(1);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedName1);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
-            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInFlatSelectors(SelectedName1);
-         
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInFlatSelectors(SelectedName1);         
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
-
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().VerifyContentInWidget(SelectedName1);
-
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().VerifyContentInWidget(SelectedName1);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("dynamicItemsSingleSelector");
-
-            // Commented because of Bug 276501
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(3);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(SelectedName2);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInFlatSelectors(SelectedName2);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
-
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().VerifyContentInWidget(SelectedName2);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
         }

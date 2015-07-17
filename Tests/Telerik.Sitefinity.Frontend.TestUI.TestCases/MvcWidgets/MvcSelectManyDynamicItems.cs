@@ -22,14 +22,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team7),
-        TestCategory(FeatherTestCategories.Selectors)]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcSelectManyDynamicItems()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("dynamicItemsMultipleSelector");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(50);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(this.selectedNames);
@@ -40,14 +39,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.selectedNamesInDesigner);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
-
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectMoreLink("and 9 more");
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(14);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
@@ -72,13 +67,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
 
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "SelectorWidget";
-
         private readonly string[] selectedNames = 
         { 
             "Item Title1", "Item Title2", "Item Title6", "Item Title16", "Item Title11", "Item Title30",
             "Item Title21", "Item Title23", "Item Title24", "Item Title25", "Item Title49", "Item Title22", "Item Title31", "Item Title35" 
         };
-
         private readonly string[] selectedNamesInDesigner = { "Item Title1", "Item Title2", "Item Title6", "Item Title16", "Item Title11" };
     }
 }

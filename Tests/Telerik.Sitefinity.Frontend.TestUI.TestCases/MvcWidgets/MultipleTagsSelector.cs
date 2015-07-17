@@ -20,25 +20,22 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team7),
-        TestCategory(FeatherTestCategories.Selectors)]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleTagsSelectorVerifySelectedTabAndOrderingInAllTab()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(TagItemsToAppearCount);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(this.selectedTagNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.selectedTagNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
-
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedTab(SelectedTabAfterSelection);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenAllTab();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemsInAllTab(TagPrefixName, this.selectedTagNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
@@ -51,20 +48,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team7),
-        TestCategory(FeatherTestCategories.Selectors)]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleTagsSelectorVerifySelectionAfterSwitchingToAdvancedSettings()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(TagItemsToAppearCount);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(this.selectedTagNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.selectedTagNames);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickAdvancedButton();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSelectorButton();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.selectedTagNames);
@@ -77,32 +72,27 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team7),
-        TestCategory(FeatherTestCategories.Selectors)]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleTagsSelectorVerifySelectedItemsNoReordering()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(TagItemsToAppearCount);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(this.selectedTagNames);
             var countOfSelectedItems = this.selectedTagNames.Count();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(countOfSelectedItems);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyReorderingIconVisibility(SelectedTagItemsCount, false);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.selectedTagNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
-
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.selectedTagNames);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
@@ -113,20 +103,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.Team7),
-        TestCategory(FeatherTestCategories.Selectors)]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleTagsSelectorVerifySearchInSelectedTab()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent(TagSelectorName);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(TagItemsToAppearCount);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectItem(this.selectedTagNames);
             var countOfSelectedItems = this.selectedTagNames.Count();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().CheckNotificationInSelectedTab(countOfSelectedItems);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().OpenSelectedTab();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForItemsToAppear(countOfSelectedItems);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyReorderingIconVisibility(SelectedTagItemsCount, false);
@@ -139,7 +127,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
             // clear search and verify that correct span css class is applied
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetSearchText(string.Empty);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyReorderingIconVisibility(SelectedTagItemsCount, false);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifySelectedItemInMultipleSelectors(this.selectedTagNames);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
@@ -164,10 +151,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         }
 
         private const string ArrangementClassName = "MultipleTagsSelector";
-
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "SelectorWidget";
-
         private const string SelectedTabAfterSelection = "Selected";
         private const string TagSelectorName = "TagsMultipleSelector";
         private const string TagPrefixName = "Tag Title";
@@ -175,10 +160,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         private const int TagItemsToAppearCount = 10;
         private const int SelectedTagItemsCount = 5;
         private const int FilteredTagItemsCount = 1;
-
         private readonly string[] selectedTagNames = { "Tag Title1", "Tag Title2", "Tag Title6", "Tag Title7", "Tag Title9" };
         private readonly string[] expectedOrderOfTagNames = { "Tag Title2", "Tag Title1", "Tag Title7", "Tag Title6", "Tag Title9" };
-
         private readonly Dictionary<int, int> reorderedIndexMapping = new Dictionary<int, int>() { { 0, 2 }, { 2, 4 } };
     }
 }
