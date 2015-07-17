@@ -302,6 +302,8 @@
     <EmbeddedResource Include="Data\TestPackage2.zip" />
     <EmbeddedResource Include="Data\TestLayoutTwoPlaceholders.cshtml" />
     <None Include="app.config" />
+    <EmbeddedResource Include="Data\Package11.zip" />
+    <EmbeddedResource Include="Data\Package22.zip" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
