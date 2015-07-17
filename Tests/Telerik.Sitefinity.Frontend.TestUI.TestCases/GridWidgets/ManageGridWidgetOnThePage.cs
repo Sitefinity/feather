@@ -26,7 +26,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void ManageGridWidgetOnThePage()
         {            
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(400000, () => BAT.Macros().NavigateTo().Pages());         
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().Pages());         
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
             BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
@@ -80,7 +80,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// </summary>
         protected override void ServerSetup()
         {
-            BAT.Macros().User().EnsureAdminLoggedIn();
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());              
             BAT.Arrange(this.TestName).ExecuteSetUp();
         }
 
