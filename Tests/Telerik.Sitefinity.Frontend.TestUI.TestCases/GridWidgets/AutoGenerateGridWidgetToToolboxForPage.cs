@@ -56,7 +56,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// </summary>
         protected override void ServerSetup()
         {
-            BAT.Macros().User().EnsureAdminLoggedIn();
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(400000, () => BAT.Macros().User().EnsureAdminLoggedIn());              
             BAT.Arrange(this.TestName).ExecuteSetUp();
         }
 
