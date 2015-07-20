@@ -21,7 +21,8 @@ This repository contains the core infrastructure related to [Project Feather](ht
 
 | Feather version | Sitefinity version |
 |----|----|
-| v.1.2.120.0 - latest | 8.0.5700.0 to 8.0.9999 |
+| v.1.3.300.1 - latest | 8.1.8700.0 to 8.1.9999 |
+| v.1.2.120.0 - 1.2.290.1 | 8.0.5700.0 to 8.0.9999 |
 | v.1.1.20.3 - 1.1.110.0 | 7.3.5600.0 to 7.3.9999 |
 | v.1.0.0.0 - 1.0.10.2 | 7.2.5300.0 to 7.2.9999 |
 | v.0.5.1000.4  | 7.1.5208.0 to 7.1.9999 |
