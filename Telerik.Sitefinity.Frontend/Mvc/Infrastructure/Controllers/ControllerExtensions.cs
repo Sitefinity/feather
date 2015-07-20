@@ -187,6 +187,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         #region Private methods
 
+        /// <summary>
+        /// Gets an already cached view engine collection from the dictionary or builds a new one.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="pathTransformationsFunc">The path transformations function.</param>
         private static ViewEngineCollection GetViewEngineCollection(Controller controller, Func<IList<Func<string, string>>> pathTransformationsFunc)
         {
             var controllerTypeName = controller.GetType().FullName;
@@ -206,6 +211,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return viewEngineCollections[controllerTypeName];
         }
 
+        /// <summary>
+        /// Gets the key to be used in the view engine collection dictionary based on the controller type and the widget name.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
         private static string GetKey(Controller controller)
         {
             const string WidgetNameKey = "widgetName";
@@ -222,6 +231,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return key;
         }
 
+        /// <summary>
+        /// Builds the view engine collection by applying the passed path transformations to each view engine.
+        /// </summary>
+        /// <param name="pathTransformations">The path transformations.</param>
         private static ViewEngineCollection BuildViewEngineCollection(IList<Func<string, string>> pathTransformations)
         {
             var viewEngines = new ViewEngineCollection();
