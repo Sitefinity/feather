@@ -51,7 +51,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 routeData.Values.Add("controller", "Generic");
             }
 
-            controller.UpdateViewEnginesCollection(this.GetPathTransformations());
+            controller.UpdateViewEnginesCollection(() => this.GetPathTransformations());
 
             // here we create the context for the controller passing the just created controller the httpcontext and the route data that we built above
             controller.ControllerContext = new ControllerContext(context, routeData, controller);
