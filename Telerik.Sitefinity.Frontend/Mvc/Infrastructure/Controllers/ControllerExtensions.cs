@@ -28,25 +28,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         /// <param name="controller">The controller.</param>
         /// <exception cref="System.ArgumentNullException">controller</exception>
-        /// <param name="pathTransformations">Transformations that have to be applied to each view engine search path.</param>
-        public static void UpdateViewEnginesCollection(this Controller controller, IList<Func<string, string>> pathTransformations)
+        /// <param name="pathTransformationsFunc">Transformations func that have to be applied to each view engine search path.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
+        public static void UpdateViewEnginesCollection(this Controller controller, Func<IList<Func<string, string>>> pathTransformationsFunc)
         {
-            if (pathTransformations == null)
-                throw new ArgumentNullException("pathTransformations");
+            if (pathTransformationsFunc == null)
+                throw new ArgumentNullException("pathTransformationsFunc");
 
             if (controller == null)
                 throw new ArgumentNullException("controller");
 
-            var viewEngines = new ViewEngineCollection();
-
-            foreach (var globalEngine in ViewEngines.Engines)
-            {
-                var vppEngine = globalEngine as VirtualPathProviderViewEngine;
-                var newEngine = vppEngine != null ? ControllerExtensions.GetViewEngine(vppEngine, pathTransformations) : globalEngine;
-                viewEngines.Add(newEngine);
-            }
-
-            controller.ViewEngineCollection = viewEngines;
+            controller.ViewEngineCollection = GetViewEngineCollection(controller, pathTransformationsFunc);
         }
 
         /// <summary>
@@ -90,7 +82,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 dependencies = SystemManager.CurrentHttpContext.Items[PageCacheDependencyKeys.PageData] as IList<CacheDependencyKey>;
             }
-            
+
             if (dependencies == null)
             {
                 dependencies = new List<CacheDependencyKey>();
@@ -195,12 +187,61 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         #region Private methods
 
+        private static ViewEngineCollection GetViewEngineCollection(Controller controller, Func<IList<Func<string, string>>> pathTransformationsFunc)
+        {
+            var controllerTypeName = controller.GetType().FullName;
+
+            if (!viewEngineCollections.ContainsKey(controllerTypeName))
+            {
+                lock (viewEngineCollections)
+                {
+                    if (!viewEngineCollections.ContainsKey(controllerTypeName))
+                    {
+                        var viewEngineCollection = BuildViewEngineCollection(pathTransformationsFunc());
+                        viewEngineCollections.Add(GetKey(controller), viewEngineCollection);
+                    }
+                }
+            }
+
+            return viewEngineCollections[controllerTypeName];
+        }
+
+        private static string GetKey(Controller controller)
+        {
+            const string WidgetNameKey = "widgetName";
+
+            var key = controller.GetType().FullName;
+
+            if (controller.RouteData != null && controller.RouteData.Values != null && controller.RouteData.Values.ContainsKey(WidgetNameKey))
+            {
+                var widgetName = (string)controller.RouteData.Values[WidgetNameKey];
+
+                key = string.Format("{0}-{1}", key, widgetName);
+            }
+
+            return key;
+        }
+
+        private static ViewEngineCollection BuildViewEngineCollection(IList<Func<string, string>> pathTransformations)
+        {
+            var viewEngines = new ViewEngineCollection();
+
+            foreach (var globalEngine in ViewEngines.Engines)
+            {
+                var vppEngine = globalEngine as VirtualPathProviderViewEngine;
+                var newEngine = vppEngine != null ? ControllerExtensions.GetViewEngine(vppEngine, pathTransformations) : globalEngine;
+                viewEngines.Add(newEngine);
+            }
+
+            return viewEngines;
+        }
+
         /// <summary>
         /// Gets a view engine that is a clone of the given <paramref name="viewEngine"/> and has enhanced search locations.
         /// </summary>
         /// <param name="viewEngine">The view engine.</param>
         /// <param name="pathTransformations">Transformations that have to be applied to each view engine search path.</param>
-        private static IViewEngine GetViewEngine(VirtualPathProviderViewEngine viewEngine,  IList<Func<string, string>> pathTransformations)
+        private static IViewEngine GetViewEngine(VirtualPathProviderViewEngine viewEngine, IList<Func<string, string>> pathTransformations)
         {
             var newEngine = (VirtualPathProviderViewEngine)Activator.CreateInstance(viewEngine.GetType());
             newEngine.AreaViewLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.AreaViewLocationFormats, pathTransformations);
@@ -303,6 +344,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             return new string[] { };
         }
+
+        #endregion
+
+        #region Private Fields
+
+        private static Dictionary<string, ViewEngineCollection> viewEngineCollections = new Dictionary<string, ViewEngineCollection>();
 
         #endregion
     }

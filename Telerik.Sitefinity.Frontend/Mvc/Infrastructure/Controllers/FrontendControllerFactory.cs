@@ -55,7 +55,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 this.EnhanceViewEngines(controller);
             }
-            
+
             return baseController;
         }
 
@@ -176,7 +176,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var enhanceAttr = this.GetEnhanceAttribute(controller.GetType());
             if (!enhanceAttr.Disabled)
             {
-                controller.UpdateViewEnginesCollection(GetControllerPathTransformations(controller, enhanceAttr.VirtualPath));
+                controller.UpdateViewEnginesCollection(() => GetControllerPathTransformations(controller, enhanceAttr.VirtualPath));
             }
         }
 
@@ -188,14 +188,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 return enhanceAttr;
             }
 
-            enhanceAttr = new EnhanceViewEnginesAttribute
-                              {
-                                  Disabled = !this.IsInDefaultMvcNamespace(controllerType),
-                                  VirtualPath =
-                                      AppendDefaultPath(
-                                          FrontendManager.VirtualPathBuilder.GetVirtualPath(
-                                              controllerType.Assembly))
-                              };
+            if (!enhanceAttributes.ContainsKey(controllerType.FullName))
+            {
+                lock (enhanceAttributes)
+                {
+                    if (!enhanceAttributes.ContainsKey(controllerType.FullName))
+                    {
+                        var newEnhanceAttr = new EnhanceViewEnginesAttribute
+                        {
+                            Disabled = !this.IsInDefaultMvcNamespace(controllerType),
+                            VirtualPath = AppendDefaultPath(FrontendManager.VirtualPathBuilder.GetVirtualPath(controllerType.Assembly))
+                        };
+
+                        enhanceAttributes.Add(controllerType.FullName, newEnhanceAttr);
+                    }
+                }
+            }
+
+            enhanceAttr = enhanceAttributes[controllerType.FullName];
+
             return enhanceAttr;
         }
 
@@ -210,6 +221,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #region Fields
 
         private IKernel ninjectKernel;
+
+        private static Dictionary<string, EnhanceViewEnginesAttribute> enhanceAttributes = new Dictionary<string, EnhanceViewEnginesAttribute>();
 
         #endregion
     }
