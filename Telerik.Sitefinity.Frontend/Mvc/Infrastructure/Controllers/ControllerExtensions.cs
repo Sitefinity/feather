@@ -42,6 +42,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
+        /// Updates the view engines collection of the given <paramref name="controller"/> by making the engines aware of the controller's container virtual path.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <exception cref="System.ArgumentNullException">controller</exception>
+        /// <param name="pathTransformations">Transformations that have to be applied to each view engine search path.</param>
+        [Obsolete("Use the UpdateViewEnginesCollection with the Func<IList<Func<string, string>>> overload")]
+        public static void UpdateViewEnginesCollection(this Controller controller, IList<Func<string, string>> pathTransformations)
+        {
+            if (pathTransformations == null)
+                throw new ArgumentNullException("pathTransformations");
+
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+
+            controller.ViewEngineCollection = GetViewEngineCollection(controller, () => pathTransformations);
+        }
+
+        /// <summary>
         /// Gets the partial views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
