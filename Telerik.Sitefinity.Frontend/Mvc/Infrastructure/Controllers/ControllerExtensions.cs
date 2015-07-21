@@ -212,21 +212,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <param name="pathTransformationsFunc">The path transformations function.</param>
         private static ViewEngineCollection GetViewEngineCollection(Controller controller, Func<IList<Func<string, string>>> pathTransformationsFunc)
         {
-            var controllerTypeName = controller.GetType().FullName;
+            var key = ControllerExtensions.GetKey(controller);
 
-            if (!viewEngineCollections.ContainsKey(controllerTypeName))
+            if (!ControllerExtensions.ViewEngineCollections.ContainsKey(key))
             {
-                lock (viewEngineCollections)
+                lock (ControllerExtensions.ViewEngineCollections)
                 {
-                    if (!viewEngineCollections.ContainsKey(controllerTypeName))
+                    if (!ControllerExtensions.ViewEngineCollections.ContainsKey(key))
                     {
-                        var viewEngineCollection = BuildViewEngineCollection(pathTransformationsFunc());
-                        viewEngineCollections.Add(GetKey(controller), viewEngineCollection);
+                        var viewEngineCollection = ControllerExtensions.BuildViewEngineCollection(pathTransformationsFunc());
+                        ControllerExtensions.ViewEngineCollections.Add(key, viewEngineCollection);
                     }
                 }
             }
 
-            return viewEngineCollections[controllerTypeName];
+            return ControllerExtensions.ViewEngineCollections[key];
         }
 
         /// <summary>
@@ -272,6 +272,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         /// <param name="viewEngine">The view engine.</param>
         /// <param name="pathTransformations">Transformations that have to be applied to each view engine search path.</param>
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         private static IViewEngine GetViewEngine(VirtualPathProviderViewEngine viewEngine, IList<Func<string, string>> pathTransformations)
         {
             var newEngine = (VirtualPathProviderViewEngine)Activator.CreateInstance(viewEngine.GetType());
@@ -380,7 +381,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         #region Private Fields
 
-        private static Dictionary<string, ViewEngineCollection> viewEngineCollections = new Dictionary<string, ViewEngineCollection>();
+        private static readonly Dictionary<string, ViewEngineCollection> ViewEngineCollections = new Dictionary<string, ViewEngineCollection>();
 
         #endregion
     }
