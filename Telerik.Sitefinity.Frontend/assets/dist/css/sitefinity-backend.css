@@ -20292,13 +20292,15 @@ pre {
   margin: -20px -20px -50px; }
   /* line 4, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/modules/_sf-textarea */
   .sf-textarea textarea {
+    display: block;
     padding: 15px 15px 30px;
     outline: none;
     width: 100%;
     height: 300px;
     border: 0; }
-  /* line 11, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/modules/_sf-textarea */
+  /* line 12, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/modules/_sf-textarea */
   .sf-textarea .sf-textarea-tips {
+    display: block;
     position: relative;
     margin-top: -35px;
     margin-right: 20px;
