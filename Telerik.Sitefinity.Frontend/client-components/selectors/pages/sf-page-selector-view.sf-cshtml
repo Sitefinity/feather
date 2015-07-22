@@ -1,4 +1,4 @@
-﻿<div kendo-tab-strip class="k-tabstrip--selection">
+﻿<div kendo-tab-strip k-animation="false" class="k-tabstrip--selection">
     <ul ng-show="multiselect">
         <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
             @(Res.Get<ClientComponentsResources>().All)
