@@ -12,6 +12,7 @@
 			margin-right: 0
 
 		.k-editor-toolbar-wrap
+			position: relative
 			padding-left: 0
 
 		.k-editor-toolbar
@@ -20,6 +21,22 @@
 			padding: 0 110px 0 20px
 			min-height: 50px
 			background: #f2f2f2
+
+			&.sf-toolbar-short
+				position: absolute
+				top: 0
+				left: 0
+				right: 0
+				background: transparent
+				z-index: 10
+
+			&.sf-toolbar-full
+				li
+					opacity: 0.4
+
+				> li:last-child,
+				> li:nth-last-child(2)
+					position: static
 
 			> li:last-child,
 			> li:nth-last-child(2)
@@ -36,13 +53,16 @@
 			.k-tool-group
 				.custom-tool
 					color: #797979
+
 					&:hover
 						color: #000
+
 					.glyphicon
 						padding-top: 11px
+
 					&.btn
-						margin-top: 1px;
-						margin-right: -12px;
+						margin-top: 1px
+						margin-right: -12px
 
 		.k-editable-area
 			vertical-align: top

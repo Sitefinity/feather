@@ -11,9 +11,8 @@
                   sf-popover-append-to-body="true"
                   sf-popover-title="{{item.Title}}"
                   sf-popover-content="
-                          <p>{{item.FoldersCount}}</p>
-                          <p>{{item.ItemsCount}}</p>
-                          <p>@(Res.Get<ClientComponentsResources>().CreatedOn) {{$parent.$parent.$parent.getDateCreated(item) | date : 'M/d/yyyy h:mm'}}</p>
+                          {{item.FoldersCount}}<br/>
+                          {{item.ItemsCount}}
                   ">
               i
           </span>

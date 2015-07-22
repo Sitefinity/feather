@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", 
             MessageId = "Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets.GridWidgetsTests.AddGridControlToPage(System.Guid,System.String,System.String,System.String)"), Test]
         [Category(TestCategories.GridWidgets)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Grid widgets - edit grid widget on page from file system.")]
         public void GridWidget_EditGridWidgetOnPageFromFileSystem()
         {
@@ -71,7 +71,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
             System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", 
             MessageId = "Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets.GridWidgetsTests.AddGridControlToPage(System.Guid,System.String,System.String,System.String)"), Test]
         [Category(TestCategories.GridWidgets)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Grid widgets - edit grid widget on page template from file system.")]
         [Ignore("Ignored due to OptimisticVerificationException: Row not found")]
         public void GridWidget_EditGridWidgetOnPageTemplateFromFileSystem()
@@ -133,7 +133,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
             System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", 
             MessageId = "Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets.GridWidgetsTests.AddGridControlToPage(System.Guid,System.String,System.String,System.String)"), Test]
         [Category(TestCategories.GridWidgets)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Grid widgets - delete grid widget from file system.")]
         [Ignore("There is a bug - page stop working on the frontend, when delete the grid widget template.")]
         public void GridWidget_DeleteGridWidgetOnPageFromFileSystem()
@@ -174,7 +174,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets.GridWidgetsTests.AddGridControlToPageTemplate(System.Guid,System.String,System.String,System.String)"), Test]
         [Category(TestCategories.GridWidgets)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Grid widgets - delete grid widget on page template from file system.")]
         [Ignore("There is a bug - page stop working on the frontend, when delete the grid widget template.")]
         public void GridWidget_DeleteGridWidgetOnPageTemplateFromFileSystem()

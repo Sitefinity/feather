@@ -26,6 +26,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             Stream destination = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -62,6 +64,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             FeatherServerOperations.GridWidgets().RemoveGridControlFromToolboxesConfig(GridTitle);
         }
 
+        private const string AdminUserName = "admin";
+        private const string AdminPass = "admin@2";
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Data.grid-grid.html";
         private const string GridFileName = "grid-grid.html";
         private const string GridTitle = "grid-grid";

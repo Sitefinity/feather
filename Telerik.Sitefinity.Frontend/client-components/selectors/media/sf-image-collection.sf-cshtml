@@ -1,24 +1,24 @@
 ﻿<div class="Media-items" sf-infinite-scroll="$parent.loadMore()">
 
 	<div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder" ng-click="select(item)">
+
+    <span class="Media-item-info"
+            ng-show="item.metricsAvailable"
+						sf-popover-html
+						sf-popover-placement="right"
+						sf-popover-trigger="hover"
+						sf-popover-append-to-body="true"
+						sf-popover-title="{{item.Title}}"
+						sf-popover-content="
+              {{item.LibrariesCount}}<br/>
+              {{item.ImagesCount}}
+            ">
+      i
+    </span>
+    
 		<div class="Media-file-wrapper" ng-if="item.IsFolder === true">
 			<div class="Media-file-thumb">
 
-<!--		Popups for folders are removed
-			until we have images and libraries count
-			info in the model.
-			Uncomment this after the SF 8.0 release!
-			<div class="Media-file-thumb"
-				popover-popup-delay="1000"
-				popover-placement="right"
-				popover-trigger="mouseenter"
-				popover-append-to-body="true"
-				popover-title="{{item.Title}}"
-				sf-popover-html="
-					<div>{{item.LibrariesCount}}</div>
-					{{item.ImagesCount}}
-				"
-			> -->
         <div class="Media-file-thumb-holder">
           <div><i class="icon-folder"></i></div>
           <strong>{{item.Title}}</strong>
@@ -30,7 +30,7 @@
 			</div>
 
 			<div class="Media-item-meta">
-				<div>{{item.ImagesCount}}</div>
+				{{item.ImagesCount}} <br/>
 				{{item.LibrariesCount}}
 			</div>
 		</div>

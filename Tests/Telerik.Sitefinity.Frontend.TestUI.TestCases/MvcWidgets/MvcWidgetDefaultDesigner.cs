@@ -19,30 +19,24 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// UI test MVCWidgetDefaultFeatherDesigner.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team2),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcWidgetDefaultFeatherDesigner()
         {
             BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetName);
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetTitle(WidgetName);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetInputFieldLabelText(InputFieldLabel);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyDummyWidgetInputTextField();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetSaveButton();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetCancelButton();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().VerifyWidgetCloseButton();
-
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SetTextDummyWidget(DummyText);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
-
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
-
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower());
-
             var pageContent = BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().GetPageContent();
-
             Assert.IsTrue(pageContent.TextContent.Contains(DummyText));
         }
 

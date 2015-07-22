@@ -19,15 +19,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// UI test MVCWidgetDefaultFeatherDesigner.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team2),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcWidgetEditViewFromPackageCacheInvalidation()
         {
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromPackageText), "Default view text is not correct.");
-
             BAT.Arrange(this.TestName).ExecuteArrangement("EditViewFromPackage");
-
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromPackageEditedText), "Default view text after edit is not correct.");
         }

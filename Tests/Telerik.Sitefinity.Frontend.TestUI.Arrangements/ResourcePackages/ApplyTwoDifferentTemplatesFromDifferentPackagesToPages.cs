@@ -54,12 +54,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             FeatherServerOperations.Pages().CreatePageWithTemplate(template, pageName, pageUrl);
         }
 
-        private const string Package1Resource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Package1.zip";
-        private const string Package2Resource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Package2.zip";
-        private const string Package1Name = "Package1";
-        private const string Package2Name = "Package2";
-        private const string Template1Title = "Package1.test-layout";
-        private const string Template2Title = "Package2.test-layout";
+        private const string Package1Resource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Package11.zip";
+        private const string Package2Resource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Package22.zip";
+        private const string Package1Name = "Package11";
+        private const string Package2Name = "Package22";
+        private const string Template1Title = "Package11.test-layout";
+        private const string Template2Title = "Package22.test-layout";
         private const string Page1Title = "page1";
         private const string Page2Title = "page2";
         private const string Page1Url = "page1";

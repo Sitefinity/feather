@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Routing
         /// Ensures that when two MVC widgets are on the page the page can be requested successfully when the second widget does not resolve the URL.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that when two MVC widgets are on the page the page can be requested successfully when the second widget does not resolve the URL.")]
         public void RequestDetailsPage_WithNewsWidgetAndContentBlock_ResponseOk()
         {
@@ -64,7 +64,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Routing
         /// Ensures that attribute routing with relative routes on controller actions works.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that attribute routing with relative routes on controller actions works.")]
         public void RequestPage_WithAttributeRoutedWidget_RoutedCorrectly()
         {

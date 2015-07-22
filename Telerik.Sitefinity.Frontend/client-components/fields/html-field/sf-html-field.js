@@ -233,11 +233,14 @@
                                 fullToolbar.after(shortToolbar);
                             }
 
-                            fullToolbar.hide();
+                            fullToolbar.addClass("sf-toolbar-full")
+                            shortToolbar.addClass("sf-toolbar-short");
                             shortToolbar.show();
                             shortToolbar.append(customButtons);
                         } else {
                             $(".js-htmlview").removeClass("active");
+                            fullToolbar.removeClass("sf-toolbar-full")
+                            shortToolbar.removeClass("sf-toolbar-short");
 
                             shortToolbar.hide();
                             fullToolbar.show();

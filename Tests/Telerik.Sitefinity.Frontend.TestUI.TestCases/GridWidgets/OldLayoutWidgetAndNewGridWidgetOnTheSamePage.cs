@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// UI test OldLayoutWidgetAndNewGridWidgetOnTheSamePage
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team2),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void OldLayoutWidgetAndNewGridWidgetOnTheSamePage()
         {
