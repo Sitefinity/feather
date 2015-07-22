@@ -18923,13 +18923,12 @@ h5, .h5 {
 .list-group-endless {
   max-height: 500px;
   overflow-y: auto;
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.05);
   border-radius: 4px; }
 
-/* line 114, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group */
+/* line 113, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group */
 .list-group-external .list-group-item {
   padding: 10px 5px 5px 30px; }
-  /* line 117, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group */
+  /* line 116, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group */
   .list-group-external .list-group-item input[type="text"] {
     margin-top: -5px; }
 
