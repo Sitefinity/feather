@@ -258,7 +258,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 layoutText = layoutFile.ReadToEnd();
             }
 
-            var matches = new Regex(@"@Html\.SfPlaceHolder(?:\(\""(?<placeHolder>\w*)\""\)|(?<placeHolder>\(\)))").Matches(layoutText);
+            var matches = new Regex(@"@Html\.SfPlaceHolder(?:\(\s*\""(?<placeHolder>\w*)\""\s*\)|(?<placeHolder>\(\)))").Matches(layoutText);
             foreach (Match match in matches)
             {
                 var group = match.Groups["placeHolder"];
