@@ -70,18 +70,18 @@
                         }
                     }
 
-                    scope.$on('kendoWidgetCreated', function (event, widget) {
-                        if (widget.wrapper && widget.wrapper.is('.k-editor')) {
-                            widget.focus();
-                            editor = widget;
-                            content = editor.wrapper.find('iframe.k-content').first();
+                    function setupEditor() {
+                        if (scope.editorWidget.wrapper && scope.editorWidget.wrapper.is('.k-editor')) {
+                            scope.editorWidget.focus();
+                            editor = scope.editorWidget;
+                            content = scope.editorWidget.wrapper.find('iframe.k-content').first();
 
                             fullScreenIcon = $(".js-fullScreen");
                             fullScreenIcon.addClass("glyphicon-resize-full");
 
                             scope.toggleAllTools();
                         }
-                    });
+                    }
 
                     scope.openLinkSelector = function () {
                         var range = editor.getRange();
@@ -233,14 +233,11 @@
                                 fullToolbar.after(shortToolbar);
                             }
 
-                            fullToolbar.addClass("sf-toolbar-full")
-                            shortToolbar.addClass("sf-toolbar-short");
+                            fullToolbar.hide();
                             shortToolbar.show();
                             shortToolbar.append(customButtons);
                         } else {
                             $(".js-htmlview").removeClass("active");
-                            fullToolbar.removeClass("sf-toolbar-full")
-                            shortToolbar.removeClass("sf-toolbar-short");
 
                             shortToolbar.hide();
                             fullToolbar.show();
@@ -307,6 +304,8 @@
                         }
                         showAllCommands = !showAllCommands;
                     };
+
+                    setupEditor();
                 }
             };
         }])
