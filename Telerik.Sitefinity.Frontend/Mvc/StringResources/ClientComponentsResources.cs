@@ -81,12 +81,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// Insert a image
+        /// Insert an image
         /// </summary>
-        /// <value>Insert a image</value>
+        /// <value>Insert an image</value>
         [ResourceEntry("InsertImage",
-            Value = "Insert a image",
-            Description = "phrase: Insert a image",
+            Value = "Insert an image",
+            Description = "phrase: Insert an image",
             LastModified = "2015/03/21")]
         public string InsertImage
         {
