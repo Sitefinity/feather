@@ -223,13 +223,17 @@
                         // ------------------------------------------------------------------------
                         // Event handlers
                         // ------------------------------------------------------------------------
-                        var activateTab = function () {
-                            var tabStrip = $("[kendo-tab-strip]");
-                            if (tabStrip && tabStrip.data("kendoTabStrip")) {
+                        var activateTabStripContent = function () {
+                            var onActivate = function () {
                                 if (!scope.isItemSelected() || scope.multiselect === false)
                                     tabStrip.data("kendoTabStrip").activateTab("li:first");
                                 else if (scope.isItemSelected() && scope.multiselect === true)
                                     tabStrip.data("kendoTabStrip").activateTab("li:last");
+                            };
+
+                            var tabStrip = $("[kendo-tab-strip]");
+                            if (tabStrip && tabStrip.data("kendoTabStrip")) {
+                                tabStrip.kendoTabStrip().data("kendoTabStrip").bind("activate", onActivate);
                             }
                         };
 
@@ -245,7 +249,7 @@
                                 ctrl.pushNotSelectedItems(data.Items);
                             }
 
-                            activateTab();
+                            activateTabStripContent();
 
                             return scope.items;
                         };
