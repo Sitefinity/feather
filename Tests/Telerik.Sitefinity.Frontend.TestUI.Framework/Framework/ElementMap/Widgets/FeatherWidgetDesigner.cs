@@ -136,11 +136,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         /// Gets the selected tab.
         /// </summary>
         /// <value>The selected tab.</value>
-        public HtmlAnchor SelectedTab
+        public HtmlSpan SelectedTab
         {
             get
             {
-                return this.Get<HtmlAnchor>("class=k-link", "innertext=~Selected");
+                return this.Get<HtmlSpan>("class=k-link", "innertext=~Selected");
             }
         }
 
