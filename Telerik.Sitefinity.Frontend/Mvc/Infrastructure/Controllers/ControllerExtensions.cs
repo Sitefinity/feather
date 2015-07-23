@@ -10,6 +10,7 @@ using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.DynamicModules.Builder;
 using Telerik.Sitefinity.DynamicModules.Builder.Model;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
@@ -242,8 +243,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controller.RouteData != null && controller.RouteData.Values != null && controller.RouteData.Values.ContainsKey(WidgetNameKey))
             {
                 var widgetName = (string)controller.RouteData.Values[WidgetNameKey];
-
                 key = string.Format("{0}-{1}", key, widgetName);
+            }
+
+            var currentPackage = new PackageManager().GetCurrentPackage();
+            if (!currentPackage.IsNullOrEmpty())
+            {
+                key += "-" + currentPackage;
             }
 
             return key;
