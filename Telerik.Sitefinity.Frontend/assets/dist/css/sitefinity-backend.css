@@ -20044,17 +20044,17 @@ h5, .h5 {
 
 /* line 1, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
 .list-group-item {
+  cursor: pointer;
   color: #000;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
-  /* line 6, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 7, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
   .list-group-item:first-child {
     border-top: 1px solid #ddd; }
-  /* line 9, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 10, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
   .list-group-item > div {
-    cursor: default;
     overflow: hidden;
     text-overflow: ellipsis; }
   /* line 13, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
