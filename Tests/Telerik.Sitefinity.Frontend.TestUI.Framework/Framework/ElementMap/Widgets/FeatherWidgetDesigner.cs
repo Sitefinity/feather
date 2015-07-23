@@ -148,11 +148,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         /// Gets the all tab.
         /// </summary>
         /// <value>The all tab.</value>
-        public HtmlAnchor AllTab
+        public HtmlSpan AllTab
         {
             get
             {
-                return this.Get<HtmlAnchor>("class=k-link", "innertext=~All");
+                return this.Get<HtmlSpan>("class=k-link", "innertext=~All");
             }
         }
 
