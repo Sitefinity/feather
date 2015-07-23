@@ -197,7 +197,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// </summary>
         public void OpenSelectedTab()
         {
-            HtmlAnchor selectedTab = this.EM.Widgets.FeatherWidget.SelectedTab
+            HtmlSpan selectedTab = this.EM.Widgets.FeatherWidget.SelectedTab
                                          .AssertIsPresent("selected tab");
             selectedTab.Click();
             ActiveBrowser.WaitForAsyncRequests();
@@ -209,7 +209,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// </summary>
         public void OpenAllTab()
         {
-            HtmlAnchor allTab = this.EM.Widgets.FeatherWidget.AllTab
+            HtmlSpan allTab = this.EM.Widgets.FeatherWidget.AllTab
                                     .AssertIsPresent("all tab");
 
             allTab.Click();
