@@ -207,6 +207,7 @@
                                 that.onSelectedItemsLoadedSuccess(data);
                             }, that.onError);
                     };
+
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -222,6 +223,15 @@
                         // ------------------------------------------------------------------------
                         // Event handlers
                         // ------------------------------------------------------------------------
+                        var activateTab = function () {
+                            var tabStrip = $("[kendo-tab-strip]");
+                            if (tabStrip && tabStrip.data("kendoTabStrip")) {
+                                if (!scope.isItemSelected() || scope.multiselect === false)
+                                    tabStrip.data("kendoTabStrip").activateTab("li:first");
+                                else if (scope.isItemSelected() && scope.multiselect === true)
+                                    tabStrip.data("kendoTabStrip").activateTab("li:last");
+                            }
+                        };
 
                         var onFirstPageLoadedSuccess = function (data) {
                             scope.noItemsExist = !data.Items.length;
@@ -234,6 +244,9 @@
                                 ctrl.pushSelectedItemToTheTop(data.Items);
                                 ctrl.pushNotSelectedItems(data.Items);
                             }
+
+                            activateTab();
+
                             return scope.items;
                         };
 
