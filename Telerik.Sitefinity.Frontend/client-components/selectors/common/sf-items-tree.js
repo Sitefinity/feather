@@ -296,27 +296,29 @@
                             initialize();
                         }
                     });
+                },
+                controller: function ($scope) {
 
-                    scope.checkboxes = {};
+                    $scope.checkboxes = {};
 
-                    if (scope.sfItemCheckboxTemplateId) {
-                        var cbElement = document.getElementById(scope.sfItemCheckboxTemplateId);
+                    if ($scope.sfItemCheckboxTemplateId) {
+                        var cbElement = document.getElementById($scope.sfItemCheckboxTemplateId);
                         if (cbElement) {
-                            scope.checkboxes.template = cbElement.text;
+                            $scope.checkboxes.template = cbElement.text;
                         }
                     }
                     else {
-                        scope.checkboxes.template = document.getElementById('sfDefaultTreeItemCheckboxTemplate').text;
+                        $scope.checkboxes.template = document.getElementById('sfDefaultTreeItemCheckboxTemplate').text;
                     }
 
-                    if (scope.sfItemTemplateId) {
-                        var templateElement = document.getElementById(scope.sfItemTemplateId);
-                        if(templateElement) {
-                            scope.itemTemplate = templateElement.text;
+                    if ($scope.sfItemTemplateId) {
+                        var templateElement = document.getElementById($scope.sfItemTemplateId);
+                        if (templateElement) {
+                            $scope.itemTemplate = templateElement.text;
                         }
                     }
                     else {
-                        scope.itemTemplate = document.getElementById('sfDefaultTreeItemTemplate').text;
+                        $scope.itemTemplate = document.getElementById('sfDefaultTreeItemTemplate').text;
                     }
                 }
             };
