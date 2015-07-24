@@ -218,25 +218,25 @@
                     pre: function (scope) {
                         if (!scope.sfExternalPages)
                             scope.sfExternalPages = [];
+
+
+                        scope.kendoTabStrips = [];
+                        scope.$on('kendoWidgetCreated', function (event, widget) {
+                            if (widget.wrapper && widget.wrapper.is('.k-tabstrip')) {
+                                scope.kendoTabStrips.push(widget);
+                            }
+                        });
+
+                        scope.$on('kendoRendered', function (event) {
+                            for (var i = 0; i < scope.kendoTabStrips.length; i++) {
+                                scope.kendoTabStrips[i].activateTab('li.k-state-active');
+                            }
+                        });
                     },
                     post: function (scope, element, attrs, ctrl, transclude) {
                         // ------------------------------------------------------------------------
                         // Event handlers
                         // ------------------------------------------------------------------------
-                        var activateTabStripContent = function () {
-                            var onActivate = function () {
-                                if (!scope.isItemSelected() || scope.multiselect === false)
-                                    tabStrip.data("kendoTabStrip").activateTab("li:first");
-                                else if (scope.isItemSelected() && scope.multiselect === true)
-                                    tabStrip.data("kendoTabStrip").activateTab("li:last");
-                            };
-
-                            var tabStrip = $("[kendo-tab-strip]");
-                            if (tabStrip && tabStrip.data("kendoTabStrip")) {
-                                tabStrip.kendoTabStrip().data("kendoTabStrip").bind("activate", onActivate);
-                            }
-                        };
-
                         var onFirstPageLoadedSuccess = function (data) {
                             scope.noItemsExist = !data.Items.length;
                             scope.paging.skip += data.Items.length;
@@ -248,8 +248,6 @@
                                 ctrl.pushSelectedItemToTheTop(data.Items);
                                 ctrl.pushNotSelectedItems(data.Items);
                             }
-
-                            activateTabStripContent();
 
                             return scope.items;
                         };
