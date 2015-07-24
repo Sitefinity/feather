@@ -4,6 +4,11 @@
 
     angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField', 'sfThumbnailSizeSelection', 'sfAspectRatioSelection'])
         .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
+            var editor = null;
+            var content = null;
+            var fullScreenIcon = null;
+            var showAllCommands = false;
+
             return {
                 restrict: "E",
                 scope: {
@@ -21,20 +26,56 @@
                         scope.getPackageResourceUrl = function (resourcePath) {
                             return serverContext.getRootedUrl(resourcePath);
                         };
+
+                        scope.$on('kendoWidgetCreated', function (event, widget) {
+                            if (widget.wrapper && widget.wrapper.is('.k-editor')) {
+                                widget.focus();
+                                editor = widget;
+                                content = editor.wrapper.find('iframe.k-content').first();
+
+                                fullScreenIcon = $(".js-fullScreen");
+                                fullScreenIcon.addClass("glyphicon-resize-full");
+
+                                scope.toggleAllTools();
+                            }
+                        });
+
+                        scope.toggleAllTools = function () {
+                            if (!editor) {
+                                return;
+                            }
+                            var toolbar = editor.toolbar.element.eq(0);
+
+                            var commands = editor.element.eq(0).attr('sf-toggle-commands');
+
+                            if (commands) {
+                                commands.split(',').forEach(function (command) {
+                                    var selector = String.format("select.k-{0},a.k-{0},span.k-{0}", command.trim());
+                                    var anchor = toolbar.find(selector).parents('li');
+                                    var func = showAllCommands ? anchor.show : anchor.hide;
+                                    func.call(anchor);
+                                });
+                            }
+                            else {
+                                toolbar.find('.show-all-button').parents('li').hide();
+                            }
+                            if (showAllCommands) {
+                                toolbar.find('.show-all-button').addClass('k-state-active');
+                            } else {
+                                toolbar.find('.show-all-button').removeClass('k-state-active');
+                            }
+                            showAllCommands = !showAllCommands;
+                        };
                     },
                     post: function (scope, element) {
                         scope.htmlViewLabel = 'HTML';
 
                         var isInHtmlView = false;
                         var isFullScreen = false;
-                        var showAllCommands = false;
-                        var editor = null;
-                        var content = null;
                         var originalEditorSizes = null;
                         var fullToolbar = null;
                         var shortToolbar = null;
                         var customButtons = null;
-                        var fullScreenIcon = null;
 
                         function getPropertiesFromTag(type, wrapperClass, tag) {
                             var range = editor.getRange();
@@ -77,19 +118,6 @@
                                 return newMarkup;
                             }
                         }
-
-                        scope.$on('kendoWidgetCreated', function (event, widget) {
-                            if (widget.wrapper && widget.wrapper.is('.k-editor')) {
-                                widget.focus();
-                                editor = widget;
-                                content = editor.wrapper.find('iframe.k-content').first();
-
-                                fullScreenIcon = $(".js-fullScreen");
-                                fullScreenIcon.addClass("glyphicon-resize-full");
-
-                                scope.toggleAllTools();
-                            }
-                        });
 
                         scope.openLinkSelector = function () {
                             var range = editor.getRange();
@@ -280,33 +308,6 @@
 
                             modalHeaderAndFooter.toggle();
                             isFullScreen = !isFullScreen;
-                        };
-
-                        scope.toggleAllTools = function () {
-                            if (!editor) {
-                                return;
-                            }
-                            var toolbar = editor.toolbar.element.eq(0);
-
-                            var commands = editor.element.eq(0).attr('sf-toggle-commands');
-
-                            if (commands) {
-                                commands.split(',').forEach(function (command) {
-                                    var selector = String.format("select.k-{0},a.k-{0},span.k-{0}", command.trim());
-                                    var anchor = toolbar.find(selector).parents('li');
-                                    var func = showAllCommands ? anchor.show : anchor.hide;
-                                    func.call(anchor);
-                                });
-                            }
-                            else {
-                                toolbar.find('.show-all-button').parents('li').hide();
-                            }
-                            if (showAllCommands) {
-                                toolbar.find('.show-all-button').addClass('k-state-active');
-                            } else {
-                                toolbar.find('.show-all-button').removeClass('k-state-active');
-                            }
-                            showAllCommands = !showAllCommands;
                         };
                     }
                 }
