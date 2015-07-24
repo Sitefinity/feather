@@ -1,11 +1,12 @@
 ﻿<textarea id="editor" style="height: 340px;"
-    kendo-editor ng-model="sfModel"
+    kendo-editor="editorWidget" ng-model="sfModel"
+	k-scope-field="editorWidget"
     sf-toggle-commands="strikethrough, justifyFull, subscript, superscript, fontName, fontSize, foreColor, backColor, print"
     k-encoded="false"
     k-stylesheets='["{{htmlFieldCssUrl}}"]',
     k-tools='[
     "formatting",
-    "bold", "italic", "underline", "trikethrough",
+    "bold", "italic", "underline", "strikethrough",
     "justifyLeft", "justifyCenter", "justifyRight", "justifyFull",
     "insertUnorderedList", "insertOrderedList", "indent", "outdent",
     {

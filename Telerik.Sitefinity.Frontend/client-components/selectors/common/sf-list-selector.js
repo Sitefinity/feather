@@ -207,6 +207,7 @@
                                 that.onSelectedItemsLoadedSuccess(data);
                             }, that.onError);
                     };
+
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -217,12 +218,25 @@
                     pre: function (scope) {
                         if (!scope.sfExternalPages)
                             scope.sfExternalPages = [];
+
+
+                        scope.kendoTabStrips = [];
+                        scope.$on('kendoWidgetCreated', function (event, widget) {
+                            if (widget.wrapper && widget.wrapper.is('.k-tabstrip')) {
+                                scope.kendoTabStrips.push(widget);
+                            }
+                        });
+
+                        scope.$on('kendoRendered', function (event) {
+                            for (var i = 0; i < scope.kendoTabStrips.length; i++) {
+                                scope.kendoTabStrips[i].activateTab('li.k-state-active');
+                            }
+                        });
                     },
                     post: function (scope, element, attrs, ctrl, transclude) {
                         // ------------------------------------------------------------------------
                         // Event handlers
                         // ------------------------------------------------------------------------
-
                         var onFirstPageLoadedSuccess = function (data) {
                             scope.noItemsExist = !data.Items.length;
                             scope.paging.skip += data.Items.length;
@@ -234,6 +248,7 @@
                                 ctrl.pushSelectedItemToTheTop(data.Items);
                                 ctrl.pushNotSelectedItems(data.Items);
                             }
+
                             return scope.items;
                         };
 
