@@ -180,6 +180,6 @@
      template-url="{{uploadPropertiesTemplateUrl}}"
      modal
      size="normal"
-     window-class="sf-designer-dlg sf-timespan-selector-dlg"
+     window-class="sf-designer-dlg sf-timespan-selector-dlg sf-backend-wrp"
      dialog-controller="SfImageSelectorUploadPropertiesCtrl">
 </div>

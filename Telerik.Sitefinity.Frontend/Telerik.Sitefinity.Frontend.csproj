@@ -430,19 +430,25 @@
     </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\common\sf-items-tree.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-list-group-selection.sf-cshtml" />
-    <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.html" />
     <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-provider-service.js" />
-    <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-selectors.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-services.js" />
     <EmbeddedResource Include="client-components\selectors\date-time\sf-date-filter.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\date-time\sf-date-filter.js" />
     <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.js" />
-    <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.js" />
     <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-data-service.js" />
     <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-dynamic-items-selector.sf-cshtml" />
@@ -678,7 +684,9 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-media-markup-service.js" />
     <EmbeddedResource Include="client-components\fields\drag-drop\sf-drag-drop.js" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-image-properties-content-block.sf-cshtml" />
-    <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-custom-thumbnail-size.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\sf-thumbnail-size-selection.html" />
