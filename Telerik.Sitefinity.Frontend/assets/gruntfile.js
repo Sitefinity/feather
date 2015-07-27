@@ -68,7 +68,8 @@ module.exports = function (grunt) {
       dist: {
         files: {
           '<%= dist.path %>/css/sitefinity-backend.css': '<%= src.path %>/sass/sitefinity-backend.sass',
-          '<%= dist.path %>/css/html-field.css': '<%= src.path %>/sass/html-field.sass'
+          '<%= dist.path %>/css/html-field.css': '<%= src.path %>/sass/html-field.sass',
+          '<%= dist.path %>/css/loading.css': '<%= src.path %>/sass/loading.sass'
         }
       }
     },

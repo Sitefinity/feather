@@ -19746,7 +19746,7 @@ fieldset {
 fieldset[disabled="disabled"] {
   opacity: 0.4; }
 
-/* line 1, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/_loading.sass */
+/* line 1, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/loading.sass */
 .sf-loading:before,
 .sf-loading:after, .sf-loading > span {
   background-color: #9cc5f7;
@@ -19756,40 +19756,39 @@ fieldset[disabled="disabled"] {
   -webkit-animation: stretchdelay 1.1s infinite ease-in-out;
   animation: stretchdelay 1.1s infinite ease-in-out; }
 
-/* line 9, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/_loading.sass */
+/* line 9, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/loading.sass */
 .sf-loading {
-  position: relative;
-  display: inline-block;
   height: 30px;
   width: 6px;
-  margin: -5px 0 0 12px;
-  top: 5px; }
-  /* line 22, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/_loading.sass */
+  position: relative;
+  margin: -5px 0 0 12px; }
+  /* line 20, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/loading.sass */
   .sf-loading:before,
   .sf-loading:after {
     content: " ";
     position: absolute;
     top: 0; }
-  /* line 27, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/_loading.sass */
+  /* line 25, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/loading.sass */
   .sf-loading:before {
     -webkit-animation-delay: -1.2s;
     animation-delay: -1.2s;
     left: -10px; }
-  /* line 32, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/_loading.sass */
+  /* line 30, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/loading.sass */
   .sf-loading:after {
     -webkit-animation-delay: -1.0s;
     animation-delay: -1.0s;
     right: -10px; }
 
-/* line 40, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/_loading.sass */
+/* line 38, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/loading.sass */
 .sf-loading-wrapper {
   position: absolute;
+  z-index: 902;
   background: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0; }
-  /* line 49, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/_loading.sass */
+  /* line 48, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/loading.sass */
   .sf-loading-wrapper .sf-loading {
     position: absolute;
     left: 50%;
@@ -20044,17 +20043,17 @@ h5, .h5 {
 
 /* line 1, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
 .list-group-item {
+  cursor: pointer;
   color: #000;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
-  /* line 6, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 7, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
   .list-group-item:first-child {
     border-top: 1px solid #ddd; }
-  /* line 9, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 10, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
   .list-group-item > div {
-    cursor: default;
     overflow: hidden;
     text-overflow: ellipsis; }
   /* line 13, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/bootstrap/_list-group.sass */
@@ -20315,8 +20314,8 @@ pre {
 
 @font-face {
   font-family: "sf-icon-font";
-  src: url("../fonts/sf-icon-font.eot?1ea92cc84714f98ca037a9c2dbbdf5cf");
-  src: url("../fonts/sf-icon-font.eot?#iefix") format("embedded-opentype"), url("../fonts/sf-icon-font.woff?1ea92cc84714f98ca037a9c2dbbdf5cf") format("woff"), url("../fonts/sf-icon-font.ttf?1ea92cc84714f98ca037a9c2dbbdf5cf") format("truetype"), url("../fonts/sf-icon-font.svg?1ea92cc84714f98ca037a9c2dbbdf5cf#sf-icon-font") format("svg");
+  src: url("../fonts/sf-icon-font.eot?225ce12d87a8c8c92bcb2ef116247b06");
+  src: url("../fonts/sf-icon-font.eot?#iefix") format("embedded-opentype"), url("../fonts/sf-icon-font.woff?225ce12d87a8c8c92bcb2ef116247b06") format("woff"), url("../fonts/sf-icon-font.ttf?225ce12d87a8c8c92bcb2ef116247b06") format("truetype"), url("../fonts/sf-icon-font.svg?225ce12d87a8c8c92bcb2ef116247b06#sf-icon-font") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -20354,133 +20353,149 @@ pre {
   content: "\b4"; }
 
 /* line 41, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-bin-single, .icon-item-bin:after {
+.icon-awaitingapproval-single, .icon-item-awaitingapproval:after {
   content: "\b5"; }
 
 /* line 42, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-draft-single, .icon-item-draft:after {
+.icon-awaitingpublishing-single, .icon-item-awaitingpublishing:after {
   content: "\b6"; }
 
 /* line 43, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-file-single, .icon-item-file:after {
+.icon-bin-single, .icon-item-bin:after {
   content: "\b7"; }
 
 /* line 44, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-folder-open-single, .icon-item-folder-open:after {
+.icon-draft-single, .icon-item-draft:after {
   content: "\b8"; }
 
 /* line 45, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-folder-single, .icon-item-folder:after {
+.icon-file-single, .icon-item-file:after {
   content: "\b9"; }
 
 /* line 46, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-homepage-single, .icon-item-homepage:after {
+.icon-folder-open-single, .icon-item-folder-open:after {
   content: "\ba"; }
 
 /* line 47, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-locked-single, .icon-item-locked:after {
+.icon-folder-single, .icon-item-folder:after {
   content: "\bb"; }
 
 /* line 48, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-no-file-single, .icon-item-no-file:after {
+.icon-homepage-single, .icon-item-homepage:after {
   content: "\bc"; }
 
 /* line 49, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-no-image-single, .icon-item-no-image:after {
+.icon-locked-single, .icon-item-locked:after {
   content: "\bd"; }
 
 /* line 50, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-no-video-single, .icon-item-no-video:after {
+.icon-no-file-single, .icon-item-no-file:after {
   content: "\be"; }
 
 /* line 51, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-published-single, .icon-item-published:after {
+.icon-no-image-single, .icon-item-no-image:after {
   content: "\bf"; }
 
 /* line 52, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-scheduled-single, .icon-item-scheduled:after {
+.icon-no-video-single, .icon-item-no-video:after {
   content: "\c0"; }
 
 /* line 53, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-settings-single, .icon-item-settings:after {
+.icon-published-single, .icon-item-published:after {
   content: "\c1"; }
 
 /* line 54, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-unpublished-single, .icon-item-unpublished:after {
+.icon-scheduled-single, .icon-item-scheduled:after {
   content: "\c2"; }
 
-/* line 57, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+/* line 55, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-settings-single, .icon-item-settings:after {
+  content: "\c3"; }
+
+/* line 56, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-unpublished-single, .icon-item-unpublished:after {
+  content: "\c4"; }
+
+/* line 59, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
 .icon-align-center:before {
   content: "\b1"; }
 
-/* line 58, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+/* line 60, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
 .icon-align-left:before {
   content: "\b2"; }
 
-/* line 59, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+/* line 61, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
 .icon-align-none:before {
   content: "\b3"; }
 
-/* line 60, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+/* line 62, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
 .icon-align-right:before {
   content: "\b4"; }
 
-/* line 61, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-bin:before {
+/* line 63, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-awaitingapproval:before {
   content: "\b5"; }
 
-/* line 62, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-draft:before {
+/* line 64, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-awaitingpublishing:before {
   content: "\b6"; }
 
-/* line 63, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-file:before, [class^="icon-item-"]:before,
-[class*=" icon-item-"]:before {
+/* line 65, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-bin:before {
   content: "\b7"; }
 
-/* line 64, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-folder-open:before {
+/* line 66, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-draft:before {
   content: "\b8"; }
 
-/* line 65, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-folder:before {
+/* line 67, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-file:before, [class^="icon-item-"]:before,
+[class*=" icon-item-"]:before {
   content: "\b9"; }
 
-/* line 66, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-homepage:before {
+/* line 68, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-folder-open:before {
   content: "\ba"; }
 
-/* line 67, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-locked:before {
+/* line 69, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-folder:before {
   content: "\bb"; }
 
-/* line 68, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-no-file:before {
+/* line 70, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-homepage:before {
   content: "\bc"; }
 
-/* line 69, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-no-image:before {
+/* line 71, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-locked:before {
   content: "\bd"; }
 
-/* line 70, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-no-video:before {
+/* line 72, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-no-file:before {
   content: "\be"; }
 
-/* line 71, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-published:before {
+/* line 73, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-no-image:before {
   content: "\bf"; }
 
-/* line 72, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-scheduled:before {
+/* line 74, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-no-video:before {
   content: "\c0"; }
 
-/* line 73, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-settings:before {
+/* line 75, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-published:before {
   content: "\c1"; }
 
-/* line 74, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
-.icon-unpublished:before {
+/* line 76, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-scheduled:before {
   content: "\c2"; }
+
+/* line 77, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-settings:before {
+  content: "\c3"; }
+
+/* line 78, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_sf-icon-font.scss */
+.icon-unpublished:before {
+  content: "\c4"; }
 
 /* line 2, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
 [class^="icon-item-"],
@@ -20534,11 +20549,16 @@ pre {
   color: #596C9B; }
 
 /* line 45, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+.icon-item-awaitingapproval,
+.icon-item-awaitingpublishing {
+  color: #ed8527; }
+
+/* line 49, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
 .icon--text:before {
   vertical-align: baseline;
   margin-right: 0.3em; }
 
-/* line 49, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+/* line 53, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
 .icon-align {
   position: relative;
   display: inline-block;
@@ -20546,23 +20566,23 @@ pre {
   font-size: 19px;
   color: #3390CF; }
 
-/* line 58, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+/* line 62, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
 .icon-no-image,
 .icon-no-video,
 .icon-no-file {
   font-size: 70px;
   color: #ddd; }
 
-/* line 62, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+/* line 66, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
 .icon-txt {
   position: relative;
   display: inline-block;
   line-height: normal; }
-  /* line 67, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+  /* line 71, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
   .icon-txt.icon-file, .icon-txt[class^="icon-item-"]:before,
   .icon-txt[class*=" icon-item-"]:before {
     color: #999; }
-  /* line 70, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+  /* line 74, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
   .icon-txt [class^="icon-txt-"] {
     position: absolute;
     top: 47%;
@@ -20576,39 +20596,39 @@ pre {
     text-transform: uppercase;
     background-color: #333;
     color: #fff; }
-  /* line 84, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+  /* line 88, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
   .icon-txt .icon-txt-xlsx {
     background-color: #38ab63; }
-  /* line 88, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+  /* line 92, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
   .icon-txt .icon-txt-doc,
   .icon-txt .icon-txt-docx {
     background-color: #1a8cff; }
-  /* line 92, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+  /* line 96, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
   .icon-txt .icon-txt-ppt,
   .icon-txt .icon-txt-pptx {
     background-color: #ed8527; }
-  /* line 95, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+  /* line 99, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
   .icon-txt .icon-txt-pdf {
     background-color: #ff4848; }
-  /* line 98, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+  /* line 102, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
   .icon-txt .icon-txt-zip {
     background-color: #596c9b; }
 
-/* line 102, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+/* line 106, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
 .icon-sm {
   font-size: 22px; }
-  /* line 105, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+  /* line 109, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
   .icon-sm [class^=icon-txt-] {
     top: 43%;
     right: -20%;
     padding: 0.1em 0.3em;
     font-size: .35em; }
 
-/* line 112, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+/* line 116, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
 .icon-md {
   font-size: 38px; }
 
-/* line 115, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
+/* line 119, D:/Sitefinity81/8_1_5800_0_Code_Base_Setup/Projects/sf81/assets/src/sass/icons/_icons.sass */
 .icon-lg {
   font-size: 48px; }
 

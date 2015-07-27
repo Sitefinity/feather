@@ -10,9 +10,10 @@
         <sf-items-filter sf-filter='filter'></sf-items-filter>
     </div>
     <div class="list-group list-group-endless" kendo-sortable k-options="sortableOptions" k-on-change="sortItems(kendoEvent)">
-        <div class="list-group-item list-group-item-multiselect list-group-item-draggable"
+        <div class="list-group-item list-group-item-multiselect"
             ng-click="itemClicked(item)"
-            ng-repeat="item in currentItems track by item.Id">
+            ng-repeat="item in currentItems track by item.Id"
+            ng-class="!!filter.searchString || !sfSortable ? '' : 'list-group-item-draggable' " >
 
             <span class="handler list-group-item-drag" ng-hide="!!filter.searchString || !sfSortable"></span>
 

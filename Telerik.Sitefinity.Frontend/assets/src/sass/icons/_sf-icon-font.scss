@@ -2,11 +2,11 @@
 // Based on https://github.com/endtwist/fontcustom/blob/master/lib/fontcustom/templates/fontcustom.css
 @font-face {
   font-family: "sf-icon-font";
-  src: url("../fonts/sf-icon-font.eot?1ea92cc84714f98ca037a9c2dbbdf5cf");
+  src: url("../fonts/sf-icon-font.eot?225ce12d87a8c8c92bcb2ef116247b06");
   src: url("../fonts/sf-icon-font.eot?#iefix") format("embedded-opentype"),
-		url("../fonts/sf-icon-font.woff?1ea92cc84714f98ca037a9c2dbbdf5cf") format("woff"),
-		url("../fonts/sf-icon-font.ttf?1ea92cc84714f98ca037a9c2dbbdf5cf") format("truetype"),
-		url("../fonts/sf-icon-font.svg?1ea92cc84714f98ca037a9c2dbbdf5cf#sf-icon-font") format("svg");
+		url("../fonts/sf-icon-font.woff?225ce12d87a8c8c92bcb2ef116247b06") format("woff"),
+		url("../fonts/sf-icon-font.ttf?225ce12d87a8c8c92bcb2ef116247b06") format("truetype"),
+		url("../fonts/sf-icon-font.svg?225ce12d87a8c8c92bcb2ef116247b06#sf-icon-font") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -38,40 +38,44 @@
 .icon-align-left-single {content:"\b2";}
 .icon-align-none-single {content:"\b3";}
 .icon-align-right-single {content:"\b4";}
-.icon-bin-single {content:"\b5";}
-.icon-draft-single {content:"\b6";}
-.icon-file-single {content:"\b7";}
-.icon-folder-open-single {content:"\b8";}
-.icon-folder-single {content:"\b9";}
-.icon-homepage-single {content:"\ba";}
-.icon-locked-single {content:"\bb";}
-.icon-no-file-single {content:"\bc";}
-.icon-no-image-single {content:"\bd";}
-.icon-no-video-single {content:"\be";}
-.icon-published-single {content:"\bf";}
-.icon-scheduled-single {content:"\c0";}
-.icon-settings-single {content:"\c1";}
-.icon-unpublished-single {content:"\c2";}
+.icon-awaitingapproval-single {content:"\b5";}
+.icon-awaitingpublishing-single {content:"\b6";}
+.icon-bin-single {content:"\b7";}
+.icon-draft-single {content:"\b8";}
+.icon-file-single {content:"\b9";}
+.icon-folder-open-single {content:"\ba";}
+.icon-folder-single {content:"\bb";}
+.icon-homepage-single {content:"\bc";}
+.icon-locked-single {content:"\bd";}
+.icon-no-file-single {content:"\be";}
+.icon-no-image-single {content:"\bf";}
+.icon-no-video-single {content:"\c0";}
+.icon-published-single {content:"\c1";}
+.icon-scheduled-single {content:"\c2";}
+.icon-settings-single {content:"\c3";}
+.icon-unpublished-single {content:"\c4";}
 
 // Icons
 .icon-align-center:before {content:"\b1";}
 .icon-align-left:before {content:"\b2";}
 .icon-align-none:before {content:"\b3";}
 .icon-align-right:before {content:"\b4";}
-.icon-bin:before {content:"\b5";}
-.icon-draft:before {content:"\b6";}
-.icon-file:before {content:"\b7";}
-.icon-folder-open:before {content:"\b8";}
-.icon-folder:before {content:"\b9";}
-.icon-homepage:before {content:"\ba";}
-.icon-locked:before {content:"\bb";}
-.icon-no-file:before {content:"\bc";}
-.icon-no-image:before {content:"\bd";}
-.icon-no-video:before {content:"\be";}
-.icon-published:before {content:"\bf";}
-.icon-scheduled:before {content:"\c0";}
-.icon-settings:before {content:"\c1";}
-.icon-unpublished:before {content:"\c2";}
+.icon-awaitingapproval:before {content:"\b5";}
+.icon-awaitingpublishing:before {content:"\b6";}
+.icon-bin:before {content:"\b7";}
+.icon-draft:before {content:"\b8";}
+.icon-file:before {content:"\b9";}
+.icon-folder-open:before {content:"\ba";}
+.icon-folder:before {content:"\bb";}
+.icon-homepage:before {content:"\bc";}
+.icon-locked:before {content:"\bd";}
+.icon-no-file:before {content:"\be";}
+.icon-no-image:before {content:"\bf";}
+.icon-no-video:before {content:"\c0";}
+.icon-published:before {content:"\c1";}
+.icon-scheduled:before {content:"\c2";}
+.icon-settings:before {content:"\c3";}
+.icon-unpublished:before {content:"\c4";}
 
 
 
@@ -89,6 +93,14 @@
 
 .icon-item-align-right:after {
   @extend .icon-align-right-single
+}
+
+.icon-item-awaitingapproval:after {
+  @extend .icon-awaitingapproval-single
+}
+
+.icon-item-awaitingpublishing:after {
+  @extend .icon-awaitingpublishing-single
 }
 
 .icon-item-bin:after {
