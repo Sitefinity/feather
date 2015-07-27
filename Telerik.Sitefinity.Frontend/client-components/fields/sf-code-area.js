@@ -28,8 +28,8 @@
                 });
 
                 // forces a refresh after current $digest is finished.
-                setTimeout(codeArea.refresh, 0);
                 codeArea.focus();
+                setTimeout(codeArea.refresh, 0);
                 scope.$watch('sfModel', function (newVal, oldVal) {
                     
                     if (codeArea.getValue() !== newVal) {
