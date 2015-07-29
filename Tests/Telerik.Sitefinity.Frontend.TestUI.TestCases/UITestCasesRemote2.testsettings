@@ -31,7 +31,10 @@
         </Browser>
       </WebTestRunConfiguration>
     </TestTypeSpecific>
-    <AgentRule name="AllAgentsDefaultRole">
+    <AgentRule name="roleExecutor2">
+		<SelectionCriteria>
+			<AgentProperty name="batch" value="ui2" />
+		</SelectionCriteria>
     </AgentRule>
   </Execution>
 </TestSettings>
