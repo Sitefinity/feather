@@ -7,7 +7,7 @@
   </Deployment>
   <NamingScheme baseName="TestExecution@Sitefinity_UITests" useDefault="false" />
 <Scripts setupScript=".\Tooling\Feather\SetupScripts\Setup.bat" cleanupScript=".\Tooling\Feather\SetupScripts\Cleanup.bat" />
-  <RemoteController name="FEATHER-CI" />
+  <RemoteController name="FEATHER-CI-UI1" />
   <Execution location="Remote">
     <Buckets size="1" />
     <Timeouts agentNotRespondingTimeout="90000" scriptTimeout="900000" />
