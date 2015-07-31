@@ -724,6 +724,17 @@
     <EmbeddedResource Include="client-components\selectors\feeds\sf-feed-selector.js" />
     <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-service.js" />
     <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-selector.js" />
+    <EmbeddedResource Include="GridSystem\Templates\container.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-12.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-2+3+2+3+2.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-3+3+3+3.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-3+6+3.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-3+9.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-4+4+4.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-4+8.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-6+6.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-8+4.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-9+3.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
@@ -744,7 +755,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
