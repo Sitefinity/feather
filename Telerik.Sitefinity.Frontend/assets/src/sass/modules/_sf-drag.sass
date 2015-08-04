@@ -1,4 +1,6 @@
-.sf-Drag
+$sf-drag-class: sf-Drag
+
+.#{$sf-drag-class}
 	position: absolute
 	top: 0
 	right: 0
@@ -18,12 +20,12 @@
 		pointer-events: none
 		font-size: 30px
 
-	.sf-Drag-start &
-		z-index: 5
-		background: rgba(255, 255, 255, .9)
-		border: 2px dashed #105CB6
+.sf-Drag-start .#{$sf-drag-class}
+	z-index: 5
+	background: rgba(255, 255, 255, .9)
+	border: 2px dashed #105CB6
 
-	.sf-Drag-over &
-		z-index: 5
-		background: rgba(#f2f2f2, .9)
-		border: 2px solid #105CB6
+.sf-Drag-over .#{$sf-drag-class}
+	z-index: 5
+	background: rgba(#f2f2f2, .9)
+	border: 2px solid #105CB6

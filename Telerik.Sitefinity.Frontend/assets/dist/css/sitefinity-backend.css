@@ -18514,7 +18514,7 @@
   left: 0;
   z-index: -1;
   line-height: 100%; }
-  /* line 10, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-drag.sass */
+  /* line 12, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-drag.sass */
   .sf-backend-wrp .sf-Drag > strong {
     position: absolute;
     width: 100%;
@@ -18525,16 +18525,18 @@
     text-align: center;
     pointer-events: none;
     font-size: 30px; }
-  /* line 21, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-drag.sass */
-  .sf-Drag-start .sf-backend-wrp .sf-Drag {
-    z-index: 5;
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px dashed #105CB6; }
-  /* line 26, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-drag.sass */
-  .sf-Drag-over .sf-backend-wrp .sf-Drag {
-    z-index: 5;
-    background: rgba(242, 242, 242, 0.9);
-    border: 2px solid #105CB6; }
+
+/* line 21, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-drag.sass */
+.sf-backend-wrp .sf-Drag-start .sf-Drag {
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px dashed #105CB6; }
+
+/* line 26, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-drag.sass */
+.sf-backend-wrp .sf-Drag-over .sf-Drag {
+  z-index: 5;
+  background: rgba(242, 242, 242, 0.9);
+  border: 2px solid #105CB6; }
 
 /* line 1, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/modules/_sf-flat-taxon-field.sass */
 .sf-backend-wrp .sf-FlatTaxonField {
