@@ -10,6 +10,7 @@ using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.Designers;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
+using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
@@ -157,6 +158,12 @@ namespace Telerik.Sitefinity.Frontend
             if (upgradeFrom <= new Version(1, 2, 280, 2))
             {
                 this.CreateDefaultTemplates();
+            }
+
+            if (upgradeFrom <= new Version(1, 3, 320, 0))
+            {
+                this.UpdateGridWidgetsToolbox();
+                this.UpdateGridWidgetPaths();
             }
         }
 
@@ -431,11 +438,75 @@ namespace Telerik.Sitefinity.Frontend
             foreach (var template in defaultPageTemplates)
             {
                 if (string.Equals(LayoutFileManager.BootstrapDefaultTemplateName, template.Name, StringComparison.OrdinalIgnoreCase))
-                    layoutManager.CreateDefaultBootstrapTemplates();
+                    layoutManager.CreateDefaultTemplates("Bootstrap", "default");
                 else if (string.Equals(LayoutFileManager.FoundationDefaultTemplateName, template.Name, StringComparison.OrdinalIgnoreCase))
-                    layoutManager.CreateDefaultFoundationTemplates();
+                    layoutManager.CreateDefaultTemplates("Foundation", "default");
                 else if (string.Equals(LayoutFileManager.SemanticUIDefaultTemplateName, template.Name, StringComparison.OrdinalIgnoreCase))
-                    layoutManager.CreateDefaultSemanticUiTemplates();
+                    layoutManager.CreateDefaultTemplates("SemanticUI", "default");
+            }
+        }
+
+        private void UpdateGridWidgetPaths()
+        {
+            var pathPairs = new Tuple<string, string>[] 
+            {
+                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-11+5.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-8+4.html"),
+                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-12+4.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-9+3.html"),
+                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-5+11.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+8.html"),
+                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+12.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+9.html"),
+                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-five-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-2+3+2+3+2.html"),
+                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-four-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+3+3+3.html"),
+                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-one-col.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-12.html"),
+                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-three-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+4+4.html"),
+                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-two-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-6+6.html")
+            };
+
+            var pageManager = PageManager.GetManager();
+            for (var i = 0; i < pathPairs.Length; i++)
+            {
+                var pathPair = pathPairs[i];
+                var propertiesToUpdate = pageManager.GetProperties().Where(p => p.Value == pathPair.Item1).ToArray();
+                foreach (var property in propertiesToUpdate)
+                    property.Value = pathPair.Item2;
+
+                if (propertiesToUpdate.Length > 0)
+                    pageManager.SaveChanges();
+            }
+        }
+
+        private void UpdateGridWidgetsToolbox()
+        {
+            this.TransferGridWidgetSectionToDefault("BootstrapGrids");
+            this.TransferGridWidgetSectionToDefault("FoundationGrids");
+            this.TransferGridWidgetSectionToDefault("SemanticUIGrids");
+        }
+
+        private void TransferGridWidgetSectionToDefault(string sectionName)
+        {
+            var layoutConfig = Config.Get<ToolboxesConfig>().Toolboxes["PageLayouts"];
+            var section = layoutConfig.Sections.FirstOrDefault<ToolboxSection>(e => e.Name == sectionName);
+            if (section != null)
+            {
+                var registrator = new GridWidgetRegistrator();
+                foreach (var tool in section.Tools)
+                {
+                    if (tool.LayoutTemplate.IsNullOrEmpty())
+                        continue;
+
+                    registrator.RegisterToolboxItem(System.Web.VirtualPathUtility.GetFileName(tool.LayoutTemplate));
+                }
+
+                var configurationManager = ConfigManager.GetManager();
+                using (new ElevatedConfigModeRegion())
+                {
+                    var toolboxesConfig = configurationManager.GetSection<ToolboxesConfig>();
+                    var pageControls = toolboxesConfig.Toolboxes["PageLayouts"];
+
+                    var sectionToDelete = pageControls.Sections.FirstOrDefault<ToolboxSection>(e => e.Name == sectionName);
+                    pageControls.Sections.Remove(sectionToDelete);
+
+                    configurationManager.SaveSection(toolboxesConfig);
+                }
             }
         }
 

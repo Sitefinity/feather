@@ -156,202 +156,70 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 this.FileAdded(newFileName, newFilePath, packageName);
         }
 
-        internal void CreateDefaultSemanticUiTemplates()
-        {
-            var header = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaptionHeader,
-                Description = LayoutFileManager.LayoutDescriptionHeader,
-                Path = LayoutFileManager.GridTemplatePathSemanticUiContainer
-            };
-
-            var content = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaptionContent,
-                Description = LayoutFileManager.LayoutDescriptionContent,
-                Path = LayoutFileManager.GridTemplatePathSemanticUiContainer
-            };
-
-            var footer = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaptionFooter,
-                Description = LayoutFileManager.LayoutDescriptionFooter,
-                Path = LayoutFileManager.GridTemplatePathSemanticUiContainer
-            };
-
-            var twoColumns = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaption2Columns,
-                Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                Path = LayoutFileManager.GridTemplatePathSemanticUi2Columns
-            };
-
-            var threeColumns = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaption3Columns,
-                Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                Path = LayoutFileManager.GridTemplatePathSemanticUi3Columns
-            };
-
-            var fourColumns = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaption4Columns,
-                Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                Path = LayoutFileManager.GridTemplatePathSemanticUi4Columns
-            };
-
-            var leftSidebar = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaptionContentSidebar,
-                Description = LayoutFileManager.LayoutDescriptionContentSidebar,
-                Path = LayoutFileManager.GridTemplatePathSemanticUiLeftSidebar
-            };
-
-            var rightSidebar = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaptionContentSidebar,
-                Description = LayoutFileManager.LayoutDescriptionContentSidebar,
-                Path = LayoutFileManager.GridTemplatePathSemanticUiRightSidebar
-            };
-
-            this.CreateSemanticUiTemplate(LayoutFileManager.TemplateCaption1Column, LayoutFileManager.TemplateImage1Column, new LayoutControlDescription[] { header, content, footer });
-            this.CreateSemanticUiTemplate(LayoutFileManager.TemplateCaption2Columns, LayoutFileManager.TemplateImage2Columns, new LayoutControlDescription[] { header, twoColumns, footer });
-            this.CreateSemanticUiTemplate(LayoutFileManager.TemplateCaption3Columns, LayoutFileManager.TemplateImage3Columns, new LayoutControlDescription[] { header, threeColumns, footer });
-            this.CreateSemanticUiTemplate(LayoutFileManager.TemplateCaption4Columns, LayoutFileManager.TemplateImage4Columns, new LayoutControlDescription[] { header, fourColumns, footer });
-            this.CreateSemanticUiTemplate(LayoutFileManager.TemplateCaptionLeftSidebar, LayoutFileManager.TemplateImageLeftSidebar, new LayoutControlDescription[] { header, leftSidebar, footer });
-            this.CreateSemanticUiTemplate(LayoutFileManager.TemplateCaptionRightSidebar, LayoutFileManager.TemplateImageRightSidebar, new LayoutControlDescription[] { header, rightSidebar, footer });
-        }
-
-        internal void CreateDefaultFoundationTemplates()
-        {
-            var header = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaptionHeader,
-                Description = LayoutFileManager.LayoutDescriptionHeader,
-                Path = LayoutFileManager.GridTemplatePathFoundationContainer
-            };
-
-            var content = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaptionContent,
-                Description = LayoutFileManager.LayoutDescriptionContent,
-                Path = LayoutFileManager.GridTemplatePathFoundationContainer
-            };
-
-            var footer = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaptionFooter,
-                Description = LayoutFileManager.LayoutDescriptionFooter,
-                Path = LayoutFileManager.GridTemplatePathFoundationContainer
-            };
-
-            var twoColumns = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaption2Columns,
-                Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                Path = LayoutFileManager.GridTemplatePathFoundation2Columns
-            };
-
-            var threeColumns = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaption3Columns,
-                Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                Path = LayoutFileManager.GridTemplatePathFoundation3Columns
-            };
-
-            var fourColumns = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaption4Columns,
-                Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                Path = LayoutFileManager.GridTemplatePathFoundation4Columns
-            };
-
-            var leftSidebar = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaptionContentSidebar,
-                Description = LayoutFileManager.LayoutDescriptionContentSidebar,
-                Path = LayoutFileManager.GridTemplatePathFoundationLeftSidebar
-            };
-
-            var rightSidebar = new LayoutControlDescription()
-            {
-                Caption = LayoutFileManager.LayoutCaptionContentSidebar,
-                Description = LayoutFileManager.LayoutDescriptionContentSidebar,
-                Path = LayoutFileManager.GridTemplatePathFoundationRightSidebar
-            };
-
-            this.CreateFoundationTemplate(LayoutFileManager.TemplateCaption1Column, LayoutFileManager.TemplateImage1Column, new LayoutControlDescription[] { header, content, footer });
-            this.CreateFoundationTemplate(LayoutFileManager.TemplateCaption2Columns, LayoutFileManager.TemplateImage2Columns, new LayoutControlDescription[] { header, twoColumns, footer });
-            this.CreateFoundationTemplate(LayoutFileManager.TemplateCaption3Columns, LayoutFileManager.TemplateImage3Columns, new LayoutControlDescription[] { header, threeColumns, footer });
-            this.CreateFoundationTemplate(LayoutFileManager.TemplateCaption4Columns, LayoutFileManager.TemplateImage4Columns, new LayoutControlDescription[] { header, fourColumns, footer });
-            this.CreateFoundationTemplate(LayoutFileManager.TemplateCaptionLeftSidebar, LayoutFileManager.TemplateImageLeftSidebar, new LayoutControlDescription[] { header, leftSidebar, footer });
-            this.CreateFoundationTemplate(LayoutFileManager.TemplateCaptionRightSidebar, LayoutFileManager.TemplateImageRightSidebar, new LayoutControlDescription[] { header, rightSidebar, footer });
-        }
-
-        internal void CreateDefaultBootstrapTemplates()
+        internal void CreateDefaultTemplates(string packageName, string layoutFile)
         {
             var header = new LayoutControlDescription() 
                     {
                         Caption = LayoutFileManager.LayoutCaptionHeader,
                         Description = LayoutFileManager.LayoutDescriptionHeader,
-                        Path = LayoutFileManager.GridTemplatePathBootstrapContainer
+                        Path = LayoutFileManager.GridTemplatePathContainer
                     };
 
             var content = new LayoutControlDescription()
                     {
                         Caption = LayoutFileManager.LayoutCaptionContent,
                         Description = LayoutFileManager.LayoutDescriptionContent,
-                        Path = LayoutFileManager.GridTemplatePathBootstrapContainer
+                        Path = LayoutFileManager.GridTemplatePathContainer
                     };
 
             var footer = new LayoutControlDescription()
                     {
                         Caption = LayoutFileManager.LayoutCaptionFooter,
                         Description = LayoutFileManager.LayoutDescriptionFooter,
-                        Path = LayoutFileManager.GridTemplatePathBootstrapContainer
+                        Path = LayoutFileManager.GridTemplatePathContainer
                     };
 
             var twoColumns = new LayoutControlDescription()
                     {
                         Caption = LayoutFileManager.LayoutCaption2Columns,
                         Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                        Path = LayoutFileManager.GridTemplatePathBootstrap2Columns
+                        Path = LayoutFileManager.GridTemplatePath2Columns
                     };
 
             var threeColumns = new LayoutControlDescription()
                     {
                         Caption = LayoutFileManager.LayoutCaption3Columns,
                         Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                        Path = LayoutFileManager.GridTemplatePathBootstrap3Columns
+                        Path = LayoutFileManager.GridTemplatePath3Columns
                     };
 
             var fourColumns = new LayoutControlDescription()
                     {
                         Caption = LayoutFileManager.LayoutCaption4Columns,
                         Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                        Path = LayoutFileManager.GridTemplatePathBootstrap4Columns
+                        Path = LayoutFileManager.GridTemplatePath4Columns
                     };
 
             var leftSidebar = new LayoutControlDescription()
                     {
                         Caption = LayoutFileManager.LayoutCaptionContentSidebar,
                         Description = LayoutFileManager.LayoutDescriptionContentSidebar,
-                        Path = LayoutFileManager.GridTemplatePathBootstrapLeftSidebar
+                        Path = LayoutFileManager.GridTemplatePathLeftSidebar
                     };
 
             var rightSidebar = new LayoutControlDescription()
                     {
                         Caption = LayoutFileManager.LayoutCaptionContentSidebar,
                         Description = LayoutFileManager.LayoutDescriptionContentSidebar,
-                        Path = LayoutFileManager.GridTemplatePathBootstrapRightSidebar
+                        Path = LayoutFileManager.GridTemplatePathRightSidebar
                     };
 
-            this.CreateBootstrapTemplate(LayoutFileManager.TemplateCaption1Column, LayoutFileManager.TemplateImage1Column, new LayoutControlDescription[] { header, content, footer });
-            this.CreateBootstrapTemplate(LayoutFileManager.TemplateCaption2Columns, LayoutFileManager.TemplateImage2Columns, new LayoutControlDescription[] { header, twoColumns, footer });
-            this.CreateBootstrapTemplate(LayoutFileManager.TemplateCaption3Columns, LayoutFileManager.TemplateImage3Columns, new LayoutControlDescription[] { header, threeColumns, footer });
-            this.CreateBootstrapTemplate(LayoutFileManager.TemplateCaption4Columns, LayoutFileManager.TemplateImage4Columns, new LayoutControlDescription[] { header, fourColumns, footer });
-            this.CreateBootstrapTemplate(LayoutFileManager.TemplateCaptionLeftSidebar, LayoutFileManager.TemplateImageLeftSidebar, new LayoutControlDescription[] { header, leftSidebar, footer });
-            this.CreateBootstrapTemplate(LayoutFileManager.TemplateCaptionRightSidebar, LayoutFileManager.TemplateImageRightSidebar, new LayoutControlDescription[] { header, rightSidebar, footer });
+            this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption1Column, LayoutFileManager.TemplateImage1Column, new LayoutControlDescription[] { header, content, footer });
+            this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption2Columns, LayoutFileManager.TemplateImage2Columns, new LayoutControlDescription[] { header, twoColumns, footer });
+            this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption3Columns, LayoutFileManager.TemplateImage3Columns, new LayoutControlDescription[] { header, threeColumns, footer });
+            this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption4Columns, LayoutFileManager.TemplateImage4Columns, new LayoutControlDescription[] { header, fourColumns, footer });
+            this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaptionLeftSidebar, LayoutFileManager.TemplateImageLeftSidebar, new LayoutControlDescription[] { header, leftSidebar, footer });
+            this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaptionRightSidebar, LayoutFileManager.TemplateImageRightSidebar, new LayoutControlDescription[] { header, rightSidebar, footer });
         }
 
         #endregion
@@ -440,21 +308,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             this.CreateTemplate(packageName, fileNameWithoutExtension, fileNameWithoutExtension, null, null);
         }
 
-        private void CreateBootstrapTemplate(string title, string image, LayoutControlDescription[] layoutControls)
-        {
-            this.CreateTemplate("Bootstrap", "default", title, image, layoutControls);
-        }
-
-        private void CreateFoundationTemplate(string title, string image, LayoutControlDescription[] layoutControls)
-        {
-            this.CreateTemplate("Foundation", "default", title, image, layoutControls);
-        }
-
-        private void CreateSemanticUiTemplate(string title, string image, LayoutControlDescription[] layoutControls)
-        {
-            this.CreateTemplate("SemanticUI", "default", title, image, layoutControls);
-        }
-
         private void CreateTemplate(string packageName, string fileNameWithoutExtension, string title, string image, LayoutControlDescription[] layoutControls)
         {
             var multisiteContext = SystemManager.CurrentContext as MultisiteContext;
@@ -495,11 +348,11 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         pageManager.SaveChanges();
 
                         if (string.Equals(LayoutFileManager.BootstrapDefaultTemplateName, fullTemplateName, StringComparison.OrdinalIgnoreCase))
-                            this.CreateDefaultBootstrapTemplates();
+                            this.CreateDefaultTemplates("Bootstrap", "default");
                         else if (string.Equals(LayoutFileManager.FoundationDefaultTemplateName, fullTemplateName, StringComparison.OrdinalIgnoreCase))
-                            this.CreateDefaultFoundationTemplates();
+                            this.CreateDefaultTemplates("Foundation", "default");
                         else if (string.Equals(LayoutFileManager.SemanticUIDefaultTemplateName, fullTemplateName, StringComparison.OrdinalIgnoreCase))
-                            this.CreateDefaultSemanticUiTemplates();
+                            this.CreateDefaultTemplates("SemanticUI", "default");
                     }
                 }
             }
@@ -709,26 +562,12 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         private const string LayoutDescriptionContentSidebar = "Represents the sidebar and content areas of the template.";
         private const string LayoutDescriptionContentColumns = "Represents the content areas of the template.";
 
-        private const string GridTemplatePathBootstrapContainer = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/container.html";
-        private const string GridTemplatePathBootstrap2Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-6+6.html";
-        private const string GridTemplatePathBootstrap3Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+4+4.html";
-        private const string GridTemplatePathBootstrap4Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+3+3+3.html";
-        private const string GridTemplatePathBootstrapLeftSidebar = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+9.html";
-        private const string GridTemplatePathBootstrapRightSidebar = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-9+3.html";
-
-        private const string GridTemplatePathFoundationContainer = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-12.html";
-        private const string GridTemplatePathFoundation2Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-6+6.html";
-        private const string GridTemplatePathFoundation3Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+4+4.html";
-        private const string GridTemplatePathFoundation4Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+3+3+3.html";
-        private const string GridTemplatePathFoundationLeftSidebar = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+9.html";
-        private const string GridTemplatePathFoundationRightSidebar = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-9+3.html";
-
-        private const string GridTemplatePathSemanticUiContainer = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-one-col.html";
-        private const string GridTemplatePathSemanticUi2Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-two-cols.html";
-        private const string GridTemplatePathSemanticUi3Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-three-cols.html";
-        private const string GridTemplatePathSemanticUi4Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-four-cols.html";
-        private const string GridTemplatePathSemanticUiLeftSidebar = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+12.html";
-        private const string GridTemplatePathSemanticUiRightSidebar = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-12+4.html";
+        private const string GridTemplatePathContainer = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/container.html";
+        private const string GridTemplatePath2Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-6+6.html";
+        private const string GridTemplatePath3Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+4+4.html";
+        private const string GridTemplatePath4Columns = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+3+3+3.html";
+        private const string GridTemplatePathLeftSidebar = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+9.html";
+        private const string GridTemplatePathRightSidebar = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-9+3.html";
 
         #endregion
     }

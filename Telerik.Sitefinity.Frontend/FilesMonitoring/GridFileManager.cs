@@ -92,7 +92,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 fileMonitorDataManager.SaveChanges();
             }
 
-            this.WidgetRegistrator.UnregisterToolboxItem(this.GetFileName(filePath), packageName);
+            this.WidgetRegistrator.UnregisterToolboxItem(this.GetFileName(filePath));
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             if (!this.IsFileValid(newFileName, newFilePath, packageName))
                 return;
 
-            this.WidgetRegistrator.RegisterToolboxItem(newFileName, packageName, oldFileName);
+            this.WidgetRegistrator.RegisterToolboxItem(newFileName, oldFileName);
 
             this.CreateOrUpdateFileData(fileMonitorDataManager, newFileName, newFilePath, packageName, fileData);
         }
