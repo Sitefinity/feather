@@ -139,8 +139,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         {
             int templatesCount = this.PageManager.GetTemplates().Count();
 
-            string template1Title = "Foundation.Foundation.TestLayout";
-            string template2Title = "Bootstrap.Bootstrap.TestLayout";
+            string template1Title = "Foundation.TestLayout";
+            string template2Title = "Bootstrap.TestLayout";
 
             string page2 = "page2";
 
@@ -159,7 +159,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
                 // Verify template is generated successfully
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
-                var template1 = this.PageManager.GetTemplates().FirstOrDefault(t => t.Name == template1Title);
+                var template1 = this.PageManager.GetTemplates().FirstOrDefault(t => t.Name == "Foundation." + template1Title);
                 Assert.IsNotNull(template1, "Template was not found");
 
                 // Add layout file to Bootstrap package
@@ -167,7 +167,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
                 // Verify template is generated successfully
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 2);
-                var template2 = this.PageManager.GetTemplates().FirstOrDefault(t => t.Name == template2Title);
+                var template2 = this.PageManager.GetTemplates().FirstOrDefault(t => t.Name == "Bootstrap." + template2Title);
                 Assert.IsNotNull(template2, "Template was not found");
 
                 // Create page with template from Foundation package and verify content
