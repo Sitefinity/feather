@@ -3066,5 +3066,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["MailingListSelectorHeader"];
             }
         }
+
+        /// <summary>
+        /// phrase: No forms
+        /// </summary>
+        /// <value>No forms</value>
+        [ResourceEntry("NoForms",
+            Value = "No forms",
+            Description = "phrase: No forms",
+            LastModified = "2015/08/06")]
+        public string NoForms
+        {
+            get
+            {
+                return this["NoForms"];
+            }
+        }
     }
 }
