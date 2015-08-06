@@ -95,6 +95,25 @@
             return widget;
         };
 
+        var toHierarchyArray = function (propertyBag) {
+            var widget = {};
+            for (var i = 0; i < propertyBag.length; i++) {
+                var prop = propertyBag[i];
+                if (!prop.NeedsEditor) {
+                    var pathArray = prop.PropertyPath.split('/').splice(2);
+
+                    var temp = widget;
+                    for (var j = 0; j < pathArray.length - 1; j++) {
+                        temp[pathArray[j]] = temp[pathArray[j]] || {};
+                        temp = temp[pathArray[j]];
+                    }
+                    temp[prop.PropertyName] = prop;
+                }
+            }
+
+            return widget;
+        };
+
         //get the property data from the service
         var load = function () {
             if (loadingPromise)
@@ -204,6 +223,10 @@
              */
             toAssociativeArray: function (propertyBag) {
                 return toAssociativeArray(propertyBag);
+            },
+
+            toHierarchyArray: function (propertyBag) {
+                return toHierarchyArray(propertyBag);
             }
         };
 
