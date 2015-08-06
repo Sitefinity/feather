@@ -1,0 +1,26 @@
+﻿<div>
+  <alert type="danger" ng-show="error.show">
+    <div>
+      {{error.message}}
+
+      <button class="close" ng-click="error.show = false">&times;</button>
+    </div>
+  </alert>
+
+  <div ng-hide="items.length">
+    <div class="icon-no-image"></div>
+
+    <div ng-hide="searchQuery" class="text-muted">@(Res.Get<ClientComponentsResources>().NoForms)</div>
+
+    <div ng-show="searchQuery" class="text-muted">@(Res.Get<ClientComponentsResources>().NoItemsFound)</div>
+  </div>
+
+  <div ng-show="items.length"
+    sf-collection=""
+    sf-data="items"
+    sf-model="selectedItems"
+    sf-deselectable="{{isDeselectable}}"
+    sf-multiselect="{{isMultiselect}}"
+    sf-template-url="client-components/selectors/forms/sf-form-collection.sf-cshtml">
+  </div>
+</div>

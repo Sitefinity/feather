@@ -570,6 +570,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\forms\sf-form-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\forms\sf-form-collection.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\form-field\sf-form-field.sf-cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -735,6 +738,9 @@
     <EmbeddedResource Include="GridSystem\Templates\grid-6+6.html" />
     <EmbeddedResource Include="GridSystem\Templates\grid-8+4.html" />
     <EmbeddedResource Include="GridSystem\Templates\grid-9+3.html" />
+    <EmbeddedResource Include="client-components\selectors\forms\sf-form-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\forms\sf-form-service.js" />
+    <EmbeddedResource Include="client-components\fields\form-field\sf-form-field.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
