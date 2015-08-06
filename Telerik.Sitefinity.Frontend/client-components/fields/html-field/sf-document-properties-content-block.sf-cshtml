@@ -33,9 +33,7 @@
                     @(Res.Get<ClientComponentsResources>().TitleRequired)</p>
             </div>
 
-            <expander expander-title='@(Res.Get'
-                <ClientComponentsResources>
-                    ().MoreOptions)'>
+            <expander expander-title='@(Res.Get<ClientComponentsResources>().MoreOptions)'>
 
                     <label>
                         @(Res.Get<ClientComponentsResources>().CssClasses)</label>

@@ -80,9 +80,7 @@
                 </div>
             </div>
 
-            <expander expander-title='@(Res.Get'
-                <ClientComponentsResources>
-                    ().MoreOptions)'>
+            <expander expander-title='@(Res.Get<ClientComponentsResources>().MoreOptions)'>
                     <h5>
                         @(Res.Get<ClientComponentsResources>().Margins)</h5>
                     <div class="row row-xs">
