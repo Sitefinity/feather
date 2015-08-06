@@ -35,7 +35,7 @@
                                 scope.items = items.Items || [];
                                 scope.isLoading = false;
                             });
-                    }
+                    };
 
                     loadItems();
 

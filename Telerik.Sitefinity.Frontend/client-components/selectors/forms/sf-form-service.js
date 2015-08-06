@@ -43,7 +43,7 @@
                 skip: skip,
                 take: take,
                 filter: filter
-            }
+            };
         };
 
         var getItems = function (provider, skip, take, search, frontendLanguages, formFramework) {
