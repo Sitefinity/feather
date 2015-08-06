@@ -18,6 +18,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
     /// <summary>
     /// The LayoutControl comprises the basic building block of Sitefinity layouts. GridControl adds the ability to use pure HTML templates.
     /// </summary>
+    [RequiresEmbeddedWebResource("Telerik.Sitefinity.Resources.Themes.LayoutsBasics.css", "Telerik.Sitefinity.Resources.Reference")]
     public class GridControl : LayoutControl
     {
         /// <summary>
