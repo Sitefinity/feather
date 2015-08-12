@@ -52,7 +52,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
         {
             if (HostingEnvironment.VirtualPathProvider != null)
             {
-                return HostingEnvironment.VirtualPathProvider.GetCacheDependency(virtualPath, null, DateTime.UtcNow);
+                // Sitefinity 8.1 and older throw exception if the second argument of this method is null so we pass an empty array.
+                return HostingEnvironment.VirtualPathProvider.GetCacheDependency(virtualPath, new string[0], DateTime.UtcNow);
             }
 
             return null;
