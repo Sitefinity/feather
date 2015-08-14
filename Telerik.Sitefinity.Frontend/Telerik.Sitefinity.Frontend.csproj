@@ -154,13 +154,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.3.330.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.3.330.1, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.3.330.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.3.330.1\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.3.330.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.3.330.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.3.330.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.3.330.1\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
