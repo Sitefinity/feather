@@ -86,7 +86,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         protected override void ExecuteController(MvcProxyBase proxyControl)
         {
             var controller = proxyControl.GetController();
-            if (ControlExtensions.GetIndexRenderMode(proxyControl) == IndexRenderModes.NoOutput)
+            if (proxyControl.IsIndexingMode() && controller.GetIndexRenderMode() == IndexRenderModes.NoOutput)
                 return;
 
             try
