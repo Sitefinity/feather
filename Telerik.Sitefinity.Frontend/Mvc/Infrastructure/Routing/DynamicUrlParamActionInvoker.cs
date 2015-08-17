@@ -6,6 +6,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.UI;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
@@ -19,6 +20,7 @@ using Telerik.Sitefinity.Mvc.Proxy;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
@@ -84,6 +86,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         protected override void ExecuteController(MvcProxyBase proxyControl)
         {
             var controller = proxyControl.GetController();
+            if (proxyControl.IsIndexingMode() && controller.GetIndexRenderMode() == IndexRenderModes.NoOutput)
+                return;
 
             try
             {
