@@ -140,9 +140,9 @@
 
                         scope.sortableOptions = {
                             hint: function (element) {
-                                return $('<div class="list-group-item list-group-item-multiselect list-group-item-draggable list-group-item-hint">' +
+                                return $('<div class="sf-backend-wrp"><div class="list-group-item list-group-item-multiselect list-group-item-draggable list-group-item-hint">' +
                                             element.html() +
-                                        '</div>');
+                                        '</div></div>');
                             },
                             placeholder: function (element) {
                                 return $('<div class="list-group-item list-group-item-placeholder"></div>');
