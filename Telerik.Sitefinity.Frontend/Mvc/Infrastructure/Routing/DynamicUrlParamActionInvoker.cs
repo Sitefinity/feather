@@ -74,7 +74,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 }
             }
 
-            controller.TempData.Add("IsInPureMode", proxyControl.IsInPureMode);
+            string key = "IsInPureMode";
+            if (!controller.TempData.ContainsKey(key))
+            {
+                controller.TempData.Add(key, proxyControl.IsInPureMode);
+            }
         }
 
         /// <summary>
