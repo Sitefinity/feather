@@ -219,10 +219,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Telerik.Sitefinity.Web.UI.2015.2.263.40\lib\net40\Telerik.Web.Design.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Telerik.Sitefinity.Web.UI.2015.2.263.40\lib\net40\Telerik.Web.UI.dll</HintPath>
-    </Reference>
     <Reference Include="Telerik.Web.UI.Skins">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Telerik.Sitefinity.Web.UI.2015.2.263.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
