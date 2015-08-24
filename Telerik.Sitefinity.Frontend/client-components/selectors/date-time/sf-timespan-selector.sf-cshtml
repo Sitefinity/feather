@@ -10,7 +10,7 @@
             </button>
         </div>
     </div>
-    <div class="contentSelector" template-url ="timespan-selector-content" modal window-class="sf-designer-dlg sf-timespan-selector-dlg" existing-scope="true">
+    <div class="contentSelector" template-url ="timespan-selector-content" modal window-class="sf-designer-dlg sf-timespan-selector-dlg sf-backend-wrp" existing-scope="true">
 
     </div>
 </div>

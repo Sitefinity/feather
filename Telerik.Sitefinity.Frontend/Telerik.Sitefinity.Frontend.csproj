@@ -49,6 +49,7 @@
     <Reference Include="Microsoft.Http, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Http.1.0.0.0\lib\Microsoft.Http.dll</HintPath>
       <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.IdentityModel">
       <SpecificVersion>False</SpecificVersion>
@@ -57,6 +58,7 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -64,9 +66,11 @@
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="RazorEngine">
       <HintPath>..\packages\Sitefinity.RazorEngine.3.0.8.0\lib\net40\RazorEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="ServiceStack">
       <SpecificVersion>False</SpecificVersion>
@@ -154,13 +158,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.3.320.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.3.340.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.3.340.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.3.320.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.3.320.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.3.340.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.3.340.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
+      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.3.320.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -188,6 +194,7 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments.Impl">
       <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Documents, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -233,9 +240,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI">
+    <Reference Include="Telerik.Web.UI, Version=2015.2.623.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2015.2.623.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Web.UI.2015.2.263.40\lib\net40\Telerik.Web.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -430,19 +438,25 @@
     </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\common\sf-items-tree.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-list-group-selection.sf-cshtml" />
-    <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.html" />
     <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-provider-service.js" />
-    <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-selectors.js" />
     <EmbeddedResource Include="client-components\selectors\common\sf-services.js" />
     <EmbeddedResource Include="client-components\selectors\date-time\sf-date-filter.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\date-time\sf-date-filter.js" />
     <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.js" />
-    <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.js" />
     <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-data-service.js" />
     <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-dynamic-items-selector.sf-cshtml" />
@@ -681,7 +695,9 @@
     <EmbeddedResource Include="client-components\selectors\media\sf-media-markup-service.js" />
     <EmbeddedResource Include="client-components\fields\drag-drop\sf-drag-drop.js" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-image-properties-content-block.sf-cshtml" />
-    <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-custom-thumbnail-size.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\sf-thumbnail-size-selection.html" />
@@ -765,10 +781,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PostBuildEvent></PostBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
   <!-- Telerik OpenAccess Enhancement -->
   <!-- Fluent API Mapping -->

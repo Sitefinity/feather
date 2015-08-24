@@ -35,6 +35,7 @@
     <Reference Include="ArtOfTest.WebAii, Version=2015.1.319.0, Culture=neutral, PublicKeyToken=4fd5f65be123776c, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.ArtOfTest.WebAii.2015.1.319.0\lib\net40\ArtOfTest.WebAii.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <SpecificVersion>False</SpecificVersion>
@@ -42,6 +43,7 @@
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Configuration">
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,12 +64,15 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.Framework">
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUI.Framework.1.0.7\lib\net40\Telerik.Sitefinity.TestUI.Framework.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.UIArrangement">
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.0\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUtilities.8.1.5800.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Telerik.TestUI.Core, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -76,6 +81,7 @@
     <Reference Include="Telerik.WebAii.Controls.Html, Version=2015.1.319.0, Culture=neutral, PublicKeyToken=528163f3e645de45, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.WebAii.Controls.2015.1.319.0\lib\net40\Telerik.WebAii.Controls.Html.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="UITests.Configuration, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

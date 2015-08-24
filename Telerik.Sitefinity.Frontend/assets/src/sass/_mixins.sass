@@ -1,0 +1,11 @@
+//Arrays with
+$names: "none", "xs", "sm", "md", "lg"
+$sizes:  0,      5,    10,   15,   25
+
+// Mixin for generating utility classes
+=create-util-class($class, $property)
+  @each $item in $names
+    $i: index($names, $item)
+
+    .#{$class}-#{$item}
+      #{$property}: nth($sizes, $i) * 1px

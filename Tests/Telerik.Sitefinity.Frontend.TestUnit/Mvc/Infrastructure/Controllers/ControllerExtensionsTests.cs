@@ -6,8 +6,10 @@ using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
+using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
 {
@@ -20,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         #region Public Methods and Operators
 
         /// <summary>
-        /// The add cache dependencies_ has cache item_ creates and adds new list.
+        /// Checks if AddCacheDependencies adds the given dependencies and keeps the existing keys.
         /// </summary>
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
@@ -63,7 +65,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// The add cache dependencies_ no cache item_ creates and adds new list.
+        /// Checks if AddCacheDependencies adds the given dependencies to a new object when none is added before that.
         /// </summary>
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
@@ -97,7 +99,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// The add cache dependencies_ null context_ throws invalid operation exception.
+        /// Checks if AddCacheDependencies method throws InvalidOperationException when the current HttpContext is null.
         /// </summary>
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
@@ -112,7 +114,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// The add cache dependencies_ null controller_ throws argument null exception.
+        /// Checks if AddCacheDepencies method throws ArgumentNullException when the controller is null.
         /// </summary>
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
@@ -125,7 +127,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// The add cache dependencies_ null keys_ throws argument null exception.
+        /// Checks if AddCacheDepencies method throws ArgumentNullException when the keys are null.
         /// </summary>
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
@@ -137,6 +139,47 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
 
             /// TODO: fix always is null expression
             controller.AddCacheDependencies(null);
+        }
+
+        /// <summary>
+        /// Checks if AddCacheDepencies method throws ArgumentNullException when the keys are null.
+        /// </summary>
+        [TestMethod]
+        [Owner("Boyko-Karadzhov")]
+        [Description("Checks if GetIndexRenderMode method throws ArgumentNullException when the controller is null.")]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GetIndexRenderMode_NullController_ThrowsArgumentNullException()
+        {
+            Controller controller = null;
+            controller.GetIndexRenderMode();
+        }
+
+        /// <summary>
+        /// Checks if GetIndexRenderMode method returns Normal for controllers without the attribute.
+        /// </summary>
+        [TestMethod]
+        [Owner("Boyko-Karadzhov")]
+        [Description("Checks if GetIndexRenderMode method returns Normal for controllers without the attribute.")]
+        public void GetIndexRenderMode_NoAttributeController_ReturnsNormal()
+        {
+            var controller = new DummyController();
+            var result = controller.GetIndexRenderMode();
+
+            Assert.AreEqual(IndexRenderModes.Normal, result, "Default value for IndexRenderMode was not correct.");
+        }
+
+        /// <summary>
+        /// Checks if GetIndexRenderMode method returns NoOutput for controllers with attribute and mode set to NoOutput.
+        /// </summary>
+        [TestMethod]
+        [Owner("Boyko-Karadzhov")]
+        [Description("Checks if GetIndexRenderMode method returns NoOutput for controllers with attribute and mode set to NoOutput.")]
+        public void GetIndexRenderMode_AttributeNoOutputController_ReturnsNoOutput()
+        {
+            var controller = new DummyNoOutputInIndexingController();
+            var result = controller.GetIndexRenderMode();
+
+            Assert.AreEqual(IndexRenderModes.NoOutput, result, "IndexRenderMode was not retreived correctly.");
         }
 
         #endregion

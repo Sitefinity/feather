@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<div class="contentSelector" modal template-url="mainTemplate" window-class="sf-designer-dlg selector-dlg" existing-scope="true">
+<div class="contentSelector" modal template-url="mainTemplate" window-class="sf-designer-dlg selector-dlg sf-backend-wrp" existing-scope="true">
 </div>
 
 <script type="text/ng-template" id="mainTemplate">

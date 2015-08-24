@@ -200,16 +200,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
                 if (setTitle)
                     stringBuilder.Append("\r\n\t<title>" + pageData.HtmlTitle.ToString() + "\r\n\t</title>");
-
-                var descriptionTag = this.GetDescriptionTag(pageData);
-
-                if (!string.IsNullOrEmpty(descriptionTag))
-                    stringBuilder.Append("\r\n\t" + descriptionTag);
-
-                var keywordsTag = this.GetKeywordsTag(pageData);
-
-                if (!string.IsNullOrEmpty(keywordsTag))
-                    stringBuilder.Append("\r\n\t" + keywordsTag);
             }
         }
 
@@ -231,38 +221,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 return null;
 
             return MasterPageBuilder.RobotsMetaTag;
-        }
-
-        /// <summary>
-        /// Generates the page keywords meta tag from page data
-        /// </summary>
-        /// <param name="pageData">The information about the page</param>
-        /// <returns>Keywords meta tag if page has set keywords, otherwise null</returns>
-        private string GetKeywordsTag(PageData pageData)
-        {
-            if (pageData == null)
-                throw new ArgumentNullException("pageData");
-
-            if (string.IsNullOrEmpty(pageData.Keywords))
-                return null;
-
-            return string.Format(System.Globalization.CultureInfo.InvariantCulture, MasterPageBuilder.KeywordsMetaTag, pageData.Keywords);
-        }
-
-        /// <summary>
-        /// Generates the page description meta tag from page data
-        /// </summary>
-        /// <param name="pageData">The information about the page.</param>
-        /// <returns>Description meta tag if page has set description, otherwise null</returns>
-        private string GetDescriptionTag(PageData pageData)
-        {
-            if (pageData == null)
-                throw new ArgumentNullException("pageData");
-
-            if (string.IsNullOrEmpty(pageData.Description))
-                return null;
-
-            return string.Format(System.Globalization.CultureInfo.InvariantCulture, MasterPageBuilder.PageDescriptionMetaTag, pageData.Description);
         }
 
         /// <summary>
@@ -288,9 +246,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         #region Constants
 
         private const string MasterPageDirective = "<%@ Master Language=\"C#\" AutoEventWireup=\"true\" %>\r\n \r\n";
-        private const string PageDescriptionMetaTag = "<meta name=\"description\" content=\"{0}\" />";
         private const string RobotsMetaTag = "<meta name=\"robots\" content=\"noindex\" />";
-        private const string KeywordsMetaTag = "<meta name=\"keywords\" content=\"{0}\" />"; 
 
         #endregion
     }

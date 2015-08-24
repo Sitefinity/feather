@@ -51,7 +51,7 @@
      modal
      size="normal"
      existing-scope="true"
-     window-class="sf-designer-dlg sf-timespan-selector-dlg"
+     window-class="sf-designer-dlg sf-timespan-selector-dlg sf-backend-wrp"
      dialog-controller="{{sfMediaPropertiesController}}">
 </div>
 

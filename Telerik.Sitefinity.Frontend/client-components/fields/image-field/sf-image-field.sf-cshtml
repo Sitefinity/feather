@@ -28,7 +28,7 @@
     template-url="sf-image-selector-modal-template"
     modal
     size="normal"
-    window-class="modal-fluid"
+    window-class="modal-fluid sf-backend-wrp"
     existing-scope="true">
 </div>
 

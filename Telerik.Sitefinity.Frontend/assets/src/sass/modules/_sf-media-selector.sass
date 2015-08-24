@@ -34,12 +34,8 @@
 	left: 0
 	overflow-y: auto !important // Needed to overwrite the overflow: scroll inline style
 
-	.is-list &
-		padding: 0
-
 	.Media-items-holder
 		padding-bottom: 20px
-	
 
 // Folder/File common styles
 .Media-folder,
@@ -52,29 +48,12 @@
 	text-align: center
 	cursor: pointer
 
-	.is-list &
-		display: block
-		width: 100%
-		height: auto
-		padding: 10px 20px
-		margin: 0
-		vertical-align: top
-		text-align: left
-		cursor: pointer
-		border-bottom: 1px solid #e5e5e5
-		transition: background-color .2s ease
-
-		&:hover,
-		&:focus
-			border-color: #e5e5e5
-			background: #f2f2f2
-
 // Folder
 .Media-folder
 	height: 160px
 	position: relative
 	border-radius: 3px
-	line-height: normal	
+	line-height: normal
 
 	i
 		font-size: 75px
@@ -82,15 +61,6 @@
 		display: inline-block
 		color: #bfbfbf
 		transition: color .2s ease
-
-	.is-list &
-		i
-			font-size: 48px
-			margin-bottom: 0
-
-		&:hover,
-		&:focus
-			background: none
 
 	&:hover
 		i
@@ -111,18 +81,16 @@
 		white-space: nowrap
 		width: 130px
 
-		.is-list &
-			display: none
+	.is-list strong
+		display: none
 
 	> div
 		width: 100%
 		display: table
 		table-layout: fixed
 
-	.Media-file-thumb-holder
-
-		.is-list &
-			border: 0
+	.is-list .Media-file-thumb-holder
+		border: 0
 
 	.Media-item-info
 		bottom: 55px
@@ -134,9 +102,6 @@
 	color: #337cb7
 	padding: 0 10px
 
-	.is-list &
-		display: table-cell
-		font-weight: 700
 
 	&.Media-folder-title--wa
 		width: auto
@@ -152,11 +117,11 @@
 		max-width: 100%
 		max-height: 100%
 
-		.is-list &
-			max-width: none
-			max-height: none
-			width: 100%
-			height: auto
+	.is-list img
+		max-width: none
+		max-height: none
+		width: 100%
+		height: auto
 
 	&:hover,
 	&:focus
@@ -166,8 +131,6 @@
 		background-color: #428BCA
 		color: #fff
 
-	.is-list &
-		border-radius: 0
 
 		&:hover,
 		&:focus
@@ -182,26 +145,9 @@
 			.Media-item-date
 				color: #fff
 
-.Media-file-wrapper
-
-	.is-list &
-		width: 100%
-		height: 50px
-		table-layout: fixed
-		display: table
-
-
 .Media-file-thumb
 	vertical-align: middle
 	display: table
-
-	.is-list &
-		width: 50px
-		height: 44px
-		padding: 0 !important
-		display: table-cell
-		overflow: hidden
-		vertical-align: top
 
 .Media-file-thumb-holder
 	width: 140px
@@ -210,34 +156,19 @@
 	display: table-cell
 	vertical-align: middle
 
-	.is-list &
-		display: inline-block
-		width: 48px
-		height: 48px
-		line-height: 48px
-		text-align: center
-
-
 .Media-item-title,
 .Media-item-meta,
 .Media-item-date
 	font-size: 13px
 	display: none
 
-	.is-list &
-		display: table-cell
-		padding: 0 10px
-
 .Media-item-title
 	margin-top: 5px
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
+	text-overflow: ellipsis
+	white-space: nowrap
+	overflow: hidden
 
-	.is-list &
-		width: 50% 
-
-.Media-item-date	
+.Media-item-date
 	color: #999
 
 .Media-item-info
@@ -258,16 +189,12 @@
 	transition: opacity .3s ease
 	font-weight: 700
 
-	.Media-file:hover &,
-	.Media-folder:hover &
-			opacity: .6
+.Media-file:hover .Media-item-info,
+.Media-folder:hover .Media-item-info
+	opacity: .6
 
 	&:hover
 		opacity: 1 !important
-
-.is-list .Media-item-info
-	display: none !important
-
 
 // Settings
 .Media-settings
@@ -285,11 +212,11 @@
 		padding: 0
 		background: none
 
-		li:last-child a
-			color: #999
-			cursor: text
-			&:hover
-				text-decoration: none
+	li:last-child .breadcrumb
+		color: #999
+		cursor: text
+		&:hover
+			text-decoration: none
 
 
 .Media-settings--bottom
@@ -303,7 +230,7 @@
 	a
 		color: #777
 
-		&hover
+		&:hover
 			color: #333
 
 // Sort and view options
@@ -422,24 +349,24 @@
 			border: 1px solid #e5e5e5
 			background: #fff
 
-			.is-list &
-				height: auto
-				line-height: 38px
-				border: none
-				background: none
+		.is-list .Media-file-thumb-holder
+			height: auto
+			line-height: 38px
+			border: none
+			background: none
 
 		.Media-item-title
 			display: block
 
 		.Media-item-info
-			bottom: 37px;
-			right: 15px;
+			bottom: 37px
+			right: 15px
 
 		&.is-selected
 			.icon-file
 				color: #999
-				.is-list &
-					color: #fff
+			.is-list .icon-file
+				color: #fff
 
 			.Media-file-thumb-holder
 				border-color: #fff
@@ -454,12 +381,84 @@
 		.Media-file-thumb-holder
 			height: 105px
 
-			.is-list &
-				height: auto
+		.is-list .Media-file-thumb-holder
+			height: auto
 
 		.Media-item-title
 			display: block
 
 		.Media-item-info
-			bottom: 37px;
-			right: 15px;
+			bottom: 37px
+			right: 15px
+
+
+.is-list
+	.Media-items
+		padding: 0
+
+	.Media-item-info
+		display: none !important
+
+	.Media-item-title
+		width: 50%
+
+	.Media-item-title,
+	.Media-item-meta,
+	.Media-item-date
+		display: table-cell
+		padding: 0 10px
+
+	.Media-folder,
+	.Media-file
+		display: block
+		width: 100%
+		height: auto
+		padding: 10px 20px
+		margin: 0
+		vertical-align: top
+		text-align: left
+		cursor: pointer
+		border-bottom: 1px solid #e5e5e5
+		transition: background-color .2s ease
+
+		&:hover,
+		&:focus
+			border-color: #e5e5e5
+			background: #f2f2f2
+
+	.Media-file
+		border-radius: 0
+
+	.Media-file-wrapper
+		width: 100%
+		height: 50px
+		table-layout: fixed
+		display: table
+
+	.Media-file-thumb-holder
+		display: inline-block
+		width: 48px
+		height: 48px
+		line-height: 48px
+		text-align: center
+
+	.Media-file-thumb
+		width: 50px
+		height: 44px
+		padding: 0 !important
+		display: table-cell
+		overflow: hidden
+		vertical-align: top
+
+	.Media-folder-title
+		display: table-cell
+		font-weight: 700
+
+	.Media-folder
+		i
+			font-size: 48px
+			margin-bottom: 0
+
+		&:hover,
+		&:focus
+			background: none
