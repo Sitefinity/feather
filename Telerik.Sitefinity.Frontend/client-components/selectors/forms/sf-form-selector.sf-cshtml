@@ -8,7 +8,7 @@
   </alert>
 
   <div ng-hide="items.length">
-    <div class="icon-no-image"></div>
+    <div class="icon-no-file"></div>
 
     <div ng-hide="searchQuery" class="text-muted">@(Res.Get<ClientComponentsResources>().NoForms)</div>
 

@@ -1,11 +1,14 @@
-﻿<div ng-repeat="item in items" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected>
-  <p>{{item.Title}}</p>
-</div>
+﻿<div sf-infinite-scroll="$parent.loadMoreItems()">
+  <div class="restricted-width-div" ng-repeat="item in items" ng-click="select(item)" ng-class="{'is-selected' : isSelected(item)}" sf-scroll-if-selected="">
+    <p>{{item.Title}}</p>
+  </div>
 
-<div class="text-center">
-  <sf-loading ng-show="$parent.isLoading"></sf-loading>
+  <div class="text-center">
+    <sf-loading ng-show="$parent.isLoading"></sf-loading>
+  </div>
 </div>
 
 <style>
   .is-selected { color:blue; font-weight:900 }
+  .restricted-width-div { max-height:100px }
 </style>

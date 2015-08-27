@@ -16,6 +16,8 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
+                    var defaultItemsTake = 2;
+
                     scope.items = [];
                     scope.filterObject = scope.filterObject || {};
 
@@ -28,12 +30,19 @@
 
                     var loadItems = function () {
                         scope.isLoading = true;
-
-                        sfFormService.getItems(scope.filterObject.provider, scope.filterObject.skip, scope.filterObject.take, scope.filterObject.search)
+                        sfFormService.getItems(scope.filterObject.provider, scope.filterObject.skip, scope.filterObject.take || defaultItemsTake, scope.filterObject.search)
                             .then(function (items) {
                                 items = items || {};
                                 scope.items = items.Items || [];
                                 scope.isLoading = false;
+                            });
+                    };
+
+                    scope.loadMoreItems = function () {
+                        sfFormService.getItems(scope.filterObject.provider, scope.items.length, scope.filterObject.take || defaultItemsTake, scope.filterObject.search)
+                            .then(function (items) {
+                                items = items || {};
+                                Array.prototype.push.apply(scope.items, items.Items || []);
                             });
                     };
 
