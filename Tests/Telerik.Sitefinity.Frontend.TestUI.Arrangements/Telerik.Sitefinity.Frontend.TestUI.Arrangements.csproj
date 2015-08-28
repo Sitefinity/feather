@@ -229,6 +229,7 @@
     <Compile Include="ResourcePackages\AddNewLayoutFileToDefaultPackage.cs" />
     <Compile Include="ResourcePackages\ApplyTwoDifferentTemplatesFromDifferentPackagesToPages.cs" />
     <Compile Include="ResourcePackages\EditLayoutFileFromPackageCacheInvalidation.cs" />
+    <Compile Include="SystemSetup\SetupSitefinityForMultisiteMultilingual.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\DesignerView.Selector.cshtml" />
