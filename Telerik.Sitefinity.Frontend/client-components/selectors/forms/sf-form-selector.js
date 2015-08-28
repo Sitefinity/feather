@@ -16,7 +16,7 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs, ctrl) {
-                    var defaultItemsTake = 2;
+                    var defaultItemsTake = 20;
 
                     scope.items = [];
                     scope.filterObject = scope.filterObject || {};
