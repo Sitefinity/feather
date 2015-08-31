@@ -6,7 +6,7 @@ using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
-namespace Telerik.Sitefinity.TestUI.Arrangements
+namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
     /// <summary>
     /// SetupSitefinityForMultisiteMultilingual Arrangement
