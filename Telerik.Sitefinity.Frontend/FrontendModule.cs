@@ -208,10 +208,10 @@ namespace Telerik.Sitefinity.Frontend
 
         private static PageTemplateFramework ExtractFramework()
         {
-            var context = SystemManager.CurrentHttpContext.Items;
-            PageDraftProxy pageData = (PageDraftProxy)context["StaticPageDraft"];
+            var contextItems = SystemManager.CurrentHttpContext.Items;
+            PageTemplateFramework framework = (PageTemplateFramework)contextItems["PageTemplateFramework"];
 
-            return pageData.Framework;
+            return framework;
         }
 
         private void InitialUpgrade(SiteInitializer initializer)
