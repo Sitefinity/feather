@@ -240,8 +240,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI, Version=2015.2.623.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2015.2.623.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+    <Reference Include="Telerik.Web.UI, Version=2015.2.729.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2015.2.729.40\lib\net40\Telerik.Web.UI.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -250,6 +250,7 @@
     <Compile Include="..\AssemblyInfoShare\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="GridSystem\GridControlToolboxFilter.cs" />
     <Compile Include="Mvc\Controllers\GridDesignerController.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\AttributeRoutingManager.cs" />
     <Compile Include="FilesMonitoring\GridFileManager.cs" />
@@ -781,8 +782,10 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent></PostBuildEvent>
-    <PreBuildEvent></PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- Telerik OpenAccess Enhancement -->
   <!-- Fluent API Mapping -->
