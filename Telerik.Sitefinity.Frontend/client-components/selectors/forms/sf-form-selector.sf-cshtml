@@ -8,11 +8,10 @@
   </alert>
 
   <div ng-hide="items.length">
-    <div class="icon-no-file"></div>
 
-    <div ng-hide="searchQuery" class="text-muted">@(Res.Get<ClientComponentsResources>().NoForms)</div>
+    <div class="alert alert-info" ng-hide="searchQuery">@(Res.Get<ClientComponentsResources>().NoForms)</div>
 
-    <div ng-show="searchQuery" class="text-muted">@(Res.Get<ClientComponentsResources>().NoItemsFound)</div>
+    <i ng-show="searchQuery">@(Res.Get<ClientComponentsResources>().NoItemsFound)</i>
   </div>
 
   <div ng-show="items.length"

@@ -3072,9 +3072,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         /// <value>No forms</value>
         [ResourceEntry("NoForms",
-            Value = "No forms",
-            Description = "phrase: No forms",
-            LastModified = "2015/08/06")]
+            Value = "No forms have been created yet",
+            Description = "phrase: No forms have been vreated yet",
+            LastModified = "2015/09/04")]
         public string NoForms
         {
             get
