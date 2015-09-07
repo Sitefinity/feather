@@ -8,6 +8,7 @@ using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.DesignerToolbox;
 using Telerik.Sitefinity.Frontend.Designers;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
 using Telerik.Sitefinity.Frontend.GridSystem;
@@ -201,7 +202,16 @@ namespace Telerik.Sitefinity.Frontend
                 designerInitializer.Initialize();
 
                 ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
+                ObjectFactory.Container.RegisterType<IToolboxFilter, GridControlToolboxFilter>(typeof(GridControlToolboxFilter).FullName, new InjectionConstructor(new Func<PageTemplateFramework>(FrontendModule.ExtractFramework)));
             }
+        }
+
+        private static PageTemplateFramework ExtractFramework()
+        {
+            var contextItems = SystemManager.CurrentHttpContext.Items;
+            PageTemplateFramework framework = (PageTemplateFramework)contextItems["PageTemplateFramework"];
+
+            return framework;
         }
 
         private void InitialUpgrade(SiteInitializer initializer)

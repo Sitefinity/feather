@@ -201,17 +201,10 @@
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Web.Design">
+    <Reference Include="Telerik.Web.UI, Version=2015.2.729.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Web.UI.2015.2.729.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Web.UI">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Web.UI.Skins">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Telerik.Web.UI.2015.1.401.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -281,6 +274,7 @@
     <Compile Include="DummyClasses\ResourceResolvers\DummyResourceHttpHandler.cs" />
     <Compile Include="DummyClasses\ResourceResolvers\DummyVirtualPathProvider.cs" />
     <Compile Include="DummyClasses\Routing\DynamicUrlParamActionInvokerMock.cs" />
+    <Compile Include="DummyClasses\ToolboxItemProxy.cs" />
     <Compile Include="FeatherTeams.cs" />
     <Compile Include="FileInjectHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />

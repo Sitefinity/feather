@@ -215,18 +215,8 @@
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Web.Design, Version=2015.2.623.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Telerik.Web.UI.2015.2.623.40\lib\net40\Telerik.Web.Design.dll</HintPath>
-      <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Telerik.Web.UI, Version=2015.2.623.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Telerik.Web.UI.2015.2.623.40\lib\net40\Telerik.Web.UI.dll</HintPath>
-      <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Telerik.Web.UI.Skins, Version=2015.2.623.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Telerik.Web.UI.2015.2.623.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
+    <Reference Include="Telerik.Web.UI, Version=2015.2.729.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Web.UI.2015.2.729.40\lib\net40\Telerik.Web.UI.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -250,6 +240,7 @@
     <Compile Include="Designers\DesignerModelTests.cs" />
     <Compile Include="FileMonitoring\FileMonitorTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="GridSystem\GridControlToolboxFilterTests.cs" />
     <Compile Include="GridSystem\GridWidgetRegistratorTests.cs" />
     <Compile Include="InlineEditing\InlineEditingTests.cs" />
     <Compile Include="Mvc\Helpers\LayoutsHelpersTests.cs" />
