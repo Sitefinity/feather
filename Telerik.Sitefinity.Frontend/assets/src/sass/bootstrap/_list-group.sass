@@ -39,7 +39,6 @@
 		&:last-of-type
 			@include border-bottom-radius($list-group-border-radius)
 
-
 .list-group-item-multiselect
 	> div
 		position: relative
@@ -59,6 +58,7 @@
 			height: 30px
 			opacity: 0
 
+	> input[type="radio"],
 	> input[type="checkbox"]
 		position: absolute
 		z-index: 1
@@ -66,15 +66,48 @@
 		left: 10px
 
 // Draggable items
-.list-group-item-draggable
-	margin-bottom: 0
-	border-top: none
 
-	> input[type="checkbox"]
+.list-group-item-draggable,
+.list-group-item-draggable-2
+	margin-bottom: 0
+
+	> input[type="checkbox"],
+	> input[type="radio"]
 		left: 25px
+
+.list-group-item-draggable
+	border-top: none
 
 	> div
 		padding-left: 45px
+
+.list-group-item-draggable-2
+	padding: 5px 15px
+	border-color: transparent
+
+	&:first-child
+		border-color: transparent
+		border-radius: 0
+
+	&:hover
+		background: transparent
+		border-color: #ddd
+	>div
+		margin-right: 0
+		padding-left: 37px
+
+//Add new item link/button
+
+.list-group-item-add
+	padding-left: 37px
+	&:hover
+		color: #777
+		text-decoration: none
+
+.list-group-endless + .list-group-item-add
+	display: block
+	margin-top: -12px
+	margin-bottom: 45px
 
 // Currently dragged item
 .list-group-item-hint
@@ -88,6 +121,9 @@
 	box-shadow: 0 0 1px rgba(0, 0, 0, .2) inset
 	margin-bottom: 0
 	border-top: none
+
+	&.list-group-item-placeholder--bt
+		border-top: 1px solid #ddd
 
 // Area that triggers the dragging
 .list-group-item-drag
