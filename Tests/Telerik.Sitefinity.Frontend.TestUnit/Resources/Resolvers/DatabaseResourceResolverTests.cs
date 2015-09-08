@@ -90,7 +90,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
             var presentationDependency = this.GetCacheDependencyResult(resolver, VirtualPath);
 
             // Assert
-            var itemId = presentationDependency.GetType().GetField("itemId", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(presentationDependency) as string;
+            var itemId = typeof(DataItemSystemCacheDependency).GetField("itemId", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(presentationDependency) as string;
 
             Assert.AreEqual(presentationId.ToString().ToLowerInvariant(), itemId.ToLowerInvariant(), "GetCacheDependency did not return dependency on the expected object.");
         }
@@ -108,7 +108,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources.Resolvers
             var presentationDependency = this.GetCacheDependencyResult(resolver, VirtualPath);
 
             // Assert
-            var itemId = presentationDependency.GetType().GetField("itemId", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(presentationDependency) as string;
+            var itemId = typeof(DataItemSystemCacheDependency).GetField("itemId", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(presentationDependency) as string;
 
             Assert.IsNull(itemId, "The returned CacheDependency has an unexpected key.");
         }

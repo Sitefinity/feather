@@ -1,0 +1,10 @@
+﻿<div class="m-bottom-sm">
+  <sf-search-box 
+                sf-placeholder="@(Res.Get<ClientComponentsResources>().SearchByTitle)"
+                sf-action="narrowResults(query)"
+                sf-clear-search-string="clearSearch"
+                sf-timeout-ms="500"> 
+  </sf-search-box>
+</div>
+  
+<sf-form-selector sf-model="selectedItems" sf-filter="filterObj"/>

@@ -82,6 +82,14 @@ namespace Telerik.Sitefinity.Frontend.Designers
                         "sf_package",
                         packageVar + sb,
                         addScriptTags: true);
+
+                    var zoneEditor = @event.Sender as ZoneEditor;
+                    if (zoneEditor != null)
+                    {
+                        var packageStyleMarkup = "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ResourcePackages/{0}/assets/dist/css/styles.min.css\"></link>".Arrange(currentPackage);
+                        var packageStyleLiteralControl = new LiteralControl(packageStyleMarkup);
+                        zoneEditor.Page.Header.Controls.Add(packageStyleLiteralControl);
+                    }
                 }
             }
         }

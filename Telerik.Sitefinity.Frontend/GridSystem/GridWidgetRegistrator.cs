@@ -20,16 +20,15 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// Registers the grid widget in toolbox.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
-        /// <param name="packageName">Name of the package.</param>
         /// <param name="oldFileName">Old name of the file.</param>
-        public void RegisterToolboxItem(string fileName, string packageName, string oldFileName = "")
+        public void RegisterToolboxItem(string fileName, string oldFileName = "")
         {
             var configManager = ConfigManager.GetManager();
             using (new ElevatedConfigModeRegion())
             {
                 var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
-                var sectionName = packageName + GridWidgetRegistrator.GridSectionNameSuffix;
-                var sectionTitle = packageName + GridWidgetRegistrator.GridSectionTitleSuffix;
+                var sectionName = GridWidgetRegistrator.GridSectionName;
+                var sectionTitle = GridWidgetRegistrator.GridSectionTitle;
                 var htmlLayoutsSection = this.GetOrCreateToolBoxSection(toolboxConfig, sectionName, sectionTitle);
 
                 var layoutControl = this.CreateGridControlsData(fileName);
@@ -43,12 +42,12 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// Unregisters the toolbox item.
         /// </summary>
         /// <param name="contentTypeName">Name of the content type.</param>
-        public virtual void UnregisterToolboxItem(string fileName, string packageName)
+        public virtual void UnregisterToolboxItem(string fileName)
         {
             var configurationManager = ConfigManager.GetManager();
             var toolboxesConfig = configurationManager.GetSection<ToolboxesConfig>();
             var pageControls = toolboxesConfig.Toolboxes["PageLayouts"];
-            var sectionName = packageName + GridWidgetRegistrator.GridSectionNameSuffix;
+            var sectionName = GridWidgetRegistrator.GridSectionName;
 
             var section = pageControls.Sections.Where<ToolboxSection>(e => e.Name == sectionName).FirstOrDefault();
             if (section != null)
@@ -243,14 +242,14 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         public const string GridFolderPathStringTemplate = "~/{0}GridSystem/Templates/";
 
         /// <summary>
-        /// The grid section name suffix
+        /// The grid section name.
         /// </summary>
-        public const string GridSectionNameSuffix = "Grids";
+        public const string GridSectionName = "Grids";
 
         /// <summary>
-        /// The grid section title suffix
+        /// The grid section title.
         /// </summary>
-        public const string GridSectionTitleSuffix = " grid widgets";
+        public const string GridSectionTitle = "Grid widgets";
 
         #endregion
     }

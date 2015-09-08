@@ -1,0 +1,7 @@
+﻿<div class="list-group list-group-endless" sf-infinite-scroll="$parent.loadMoreItems()">
+  <div ng-repeat="item in items" ng-click="select(item)" ng-class="{'active' : isSelected(item)}" sf-scroll-if-selected="" class="list-group-item">
+    {{item.Title}}
+  </div>
+</div>
+
+<sf-loading ng-show="$parent.isLoading"></sf-loading>

@@ -159,6 +159,13 @@
 	"components" : ["sf-services", "sf-file-url-selector"]
 },
 
+"sf-form-field" : { 
+	"scripts" : [
+		"client-components/fields/form-field/sf-form-field.js"
+	],
+	"components" : ["sf-form-selector"]
+},
+
 "__________SELECTORS__________" : {"scripts" : [], "components" : []},
 
 
@@ -530,6 +537,16 @@
 		"client-components/selectors/file-url/sf-file-url-service.js"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-tree"]
+},
+
+"_____FORMS_____" : {"scripts" : [], "components" : []},
+
+"sf-form-selector" : {
+	"scripts" : [
+		"client-components/selectors/forms/sf-form-selector.js",
+		"client-components/selectors/forms/sf-form-service.js"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-collection", "sf-search-box", "sf-infinite-scroll"]
 },
 
 "_____FEEDS_____" : {"scripts" : [], "components" : []},
