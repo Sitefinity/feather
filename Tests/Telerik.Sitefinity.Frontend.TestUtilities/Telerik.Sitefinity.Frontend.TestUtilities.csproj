@@ -280,7 +280,7 @@
     <Compile Include="DummyClasses\Mvc\DummyControllerContainerInitializer.cs" />
     <Compile Include="DummyClasses\ResourceResolvers\DummyResourceHttpHandler.cs" />
     <Compile Include="DummyClasses\ResourceResolvers\DummyVirtualPathProvider.cs" />
-    <Compile Include="DummyClasses\Routing\DynamicUrlParamActionInvokerMock.cs" />
+    <Compile Include="DummyClasses\Routing\FeatherActionInvokerTests.cs" />
     <Compile Include="FeatherTeams.cs" />
     <Compile Include="FileInjectHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />

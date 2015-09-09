@@ -29,6 +29,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// </summary>
     public class FeatherActionInvoker : Telerik.Sitefinity.Mvc.ControllerActionInvoker
     {
+        /// <summary>
+        /// Gets the default parameters mapper.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <returns>The default parameters mapper for the controller.</returns>
+        internal IUrlParamsMapper GetDefaultParamsMapper(ControllerBase controller)
+        {
+            IUrlParamsMapper result = null;
+            result = result
+                .SetLast(this.GetInferredDetailActionParamsMapper(controller))
+                .SetLast(this.GetInferredTaxonFilterMapper(controller, "ListByTaxon"))
+                .SetLast(this.GetInferredClassificationFilterMapper(controller, "ListByTaxon"))
+                .SetLast(this.GetInferredPagingMapper(controller, "Index"));
+
+            // If no other mappers are added we skip the default one.
+            if (result != null)
+                result.SetLast(new DefaultUrlParamsMapper(controller));
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         protected override bool ShouldProcessRequest(MvcProxyBase proxyControl)
         {
             var shouldProcess = base.ShouldProcessRequest(proxyControl);
@@ -119,27 +141,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             if (this.ShouldDisplayErrors())
                 this.Context.Response.Write(Res.Get<InfrastructureResources>().ErrorExecutingController);
-        }
-
-        /// <summary>
-        /// Gets the default parameters mapper.
-        /// </summary>
-        /// <param name="controller">The controller.</param>
-        /// <returns>The default parameters mapper for the controller.</returns>
-        private IUrlParamsMapper GetDefaultParamsMapper(ControllerBase controller)
-        {
-            IUrlParamsMapper result = null;
-            result = result
-                .SetLast(this.GetInferredDetailActionParamsMapper(controller))
-                .SetLast(this.GetInferredTaxonFilterMapper(controller, "ListByTaxon"))
-                .SetLast(this.GetInferredClassificationFilterMapper(controller, "ListByTaxon"))
-                .SetLast(this.GetInferredPagingMapper(controller, "Index"));
-
-            // If no other mappers are added we skip the default one.
-            if (result != null)
-                result.SetLast(new DefaultUrlParamsMapper(controller));
-
-            return result;
         }
 
         /// <summary>

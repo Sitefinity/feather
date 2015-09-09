@@ -4,9 +4,9 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Routing
 {
     /// <summary>
-    /// This class mocks the <see cref="DynamicUrlParamActionInvoker"/> class. Used for test purposes only.
+    /// This class mocks the <see cref="FeatherActionInvoker"/> class. Used for test purposes only.
     /// </summary>
-    internal class DynamicUrlParamActionInvokerMock : DynamicUrlParamActionInvoker
+    internal class FeatherActionInvokerMock : FeatherActionInvoker
     {
         /// <summary>
         /// Public method that calls the base protected GetDefaultParamsMapper.
