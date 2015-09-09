@@ -30,7 +30,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 return true;
             }
 
-            var controllerName = requestContext.RouteData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] as string;
+            var controllerName = requestContext.RouteData.Values[FeatherActionInvoker.ControllerNameKey] as string;
             string actionName = null;
             if (requestContext.RouteData.Values.ContainsKey("action"))
             {
@@ -40,7 +40,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             try
             {
-                requestContext.RouteData.Values.Remove(DynamicUrlParamActionInvoker.ControllerNameKey);
+                requestContext.RouteData.Values.Remove(FeatherActionInvoker.ControllerNameKey);
                 MvcRequestContextBuilder.SetRouteParameters(urlParams, requestContext, this.Controller as Controller, controllerName);
             }
             finally

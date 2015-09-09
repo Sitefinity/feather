@@ -270,7 +270,7 @@
     <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilderTests.cs" />
     <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParserTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\FrontendControllerFactoryTests.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\DynamicUrlParamActionInvokerTests.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\FeatherActionInvokerTests.cs" />
     <Compile Include="Resources\PackageManagerTests.cs" />
     <Compile Include="Resources\RazorTemplateProcessorTests.cs" />
     <Compile Include="Resources\Resolvers\ResourceResolverNodeTests.cs" />
