@@ -1,0 +1,52 @@
+@model Telerik.Sitefinity.Frontend.Mvc.Models.IPersonalizationDesignerModel
+
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers
+<div class="sf-backend-wrp">
+    <div class="personalization-designer" modal dialog-controller="personalizationDialogCtrl" template-url="dialog-template" auto-open="true" window-class="sf-designer-dlg sf-backend-wrp">
+	    <server-data widget-name='@ViewBag.ControlName' control-id='@ViewBag.ControlId' culture='@Telerik.Sitefinity.Localization.Res.CurrentBackendCulture'></server-data>
+
+	    <script type="text/ng-template" id="dialog-template">
+		    <div class="modal-header sf-widget-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel($event)">&times;</button>
+                <h3 class="modal-title">@Html.Raw(Model.Title)</h3>
+		    </div>
+
+		    <div class="modal-body">
+			    <sf-loading ng-show="feedback.showLoadingIndicator"></sf-loading>
+
+			    <div ng-show="feedback.showError" class="alert alert-danger">
+				    <a class="close" data-dismiss="alert" ng-click="hideError()">&times;</a>
+				    <strong>@Html.Resource("Error")</strong> <span ng-bind="feedback.errorMessage"></span>
+			    </div>
+
+			    <div id="viewsPlaceholder" ng-show="!feedback.showLoadingIndicator" ng-view>
+                    <div class="form-group">
+
+                        <label for="segmentSelector">@Html.Resource("PersonalizationSegmentsLabel")</label>
+
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <select id="segmentSelector" ng-model="model.segmentId" class="form-control">
+                                    <option ng-repeat="segment in segments" value="{{ segment.Id }}">{{ segment.Name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		    </div>
+		    <div class="modal-footer" ng-show="!feedback.showLoadingIndicator" placeholder="modal-footer">
+                <button type="button" class="btn btn-primary pull-left" ng-click="addPersonalization()">@Html.Resource("Add")</button>
+                <a class="btn btn-link pull-left" data-dismiss="modal" ng-click="cancel()">@Html.Resource("Cancel")</a>
+            </div>
+	    </script>
+    </div>
+</div>
+
+@Html.StyleSheet(Url.WidgetContent("assets/dist/css/sitefinity-backend.min.css"))
+
+@Html.Script(Url.WidgetContent("~/Telerik.Sitefinity.Frontend/ServerContext.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/server-data.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js"))
+@Html.Script(Url.WidgetContent("client-components/personalization/services/personalization-services.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/personalization-designer.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Bootstrap/js/bootstrap.min.js"))

@@ -250,6 +250,7 @@
     <Compile Include="..\AssemblyInfoShare\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Mvc\Controllers\PersonalizationDesignerController.cs" />
     <Compile Include="Mvc\Controllers\GridDesignerController.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\AttributeRoutingManager.cs" />
     <Compile Include="FilesMonitoring\GridFileManager.cs" />
@@ -286,11 +287,14 @@
     <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlEvaluator.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlEvaluatorAdapter.cs" />
+    <Compile Include="Mvc\Models\IPersonalizationDesignerModel.cs" />
+    <Compile Include="Mvc\Models\PersonalizationDesignerModel.cs" />
     <Compile Include="Mvc\Models\GridDesignerModel.cs" />
     <Compile Include="Mvc\Models\IGridDesignerModel.cs" />
     <Compile Include="Mvc\Models\ScriptDependencyConfigModel.cs" />
     <Compile Include="Mvc\Infrastructure\Attributes\RequiredIfExistAttribute.cs" />
     <Compile Include="Mvc\StringResources\ClientComponentsResources.cs" />
+    <Compile Include="Mvc\StringResources\PersonalizationDesignerResources.cs" />
     <Compile Include="Mvc\StringResources\GridDesignerResources.cs" />
     <Compile Include="Notifications\EmailTemplateHelper.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerMetadataAttribute.cs" />
@@ -584,6 +588,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-selector.sf-cshtml" />
+    <EmbeddedResource Include="Mvc\Views\PersonalizationDesigner\Personalization.cshtml" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -619,6 +624,7 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Designer\personalization-designer.js" />
     <EmbeddedResource Include="Mvc\Scripts\Designer\grid-designer.js" />
     <EmbeddedResource Include="Resources\PageTemplateImages\LeftSidebarHeaderFooter.gif" />
     <EmbeddedResource Include="Resources\PageTemplateImages\RightSidebarHeaderFooter.gif" />
