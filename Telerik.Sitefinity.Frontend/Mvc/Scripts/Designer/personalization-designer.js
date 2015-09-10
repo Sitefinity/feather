@@ -12,8 +12,8 @@
 
     var personalizationDesignerModule = angular.module('personalizationDesigner', ['pageEditorServices', 'modalDialog', 'serverDataModule', 'personalizationServices']);
 
-    personalizationDesignerModule.controller('personalizationDialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', 'serverData', 'personalizationService',
-    function ($rootScope, $scope, $q, $modalInstance, serverData, personalizationService) {
+    personalizationDesignerModule.controller('personalizationDialogCtrl', ['$rootScope', '$scope', '$q', '$filter', '$modalInstance', 'serverData', 'personalizationService',
+    function ($rootScope, $scope, $q, $filter, $modalInstance, serverData, personalizationService) {
 
         // ------------------------------------------------------------------------
         var onError = function (data) {
@@ -38,10 +38,12 @@
         };
 
         $scope.segments = [];
+        $scope.filteredSegments = [];
         personalizationService.getSegments($scope.model).then(function (data) {
             $scope.segments = data;
-            if (data && data.length > 0) {
-                $scope.model.segmentId = data[0].Id;
+            $scope.filteredSegments = $filter('filter')($scope.segments, { IsAvailable: false });
+            if ($scope.filteredSegments && $scope.filteredSegments.length > 0) {
+                $scope.model.segmentId = $scope.filteredSegments[0].Id;
             }
 
             $scope.feedback.showLoadingIndicator = false;

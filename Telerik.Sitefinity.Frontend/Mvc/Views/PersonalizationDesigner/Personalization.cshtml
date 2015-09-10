@@ -21,14 +21,22 @@
 
 			    <div id="viewsPlaceholder" ng-show="!feedback.showLoadingIndicator" ng-view>
                     <div class="form-group">
-
-                        <label for="segmentSelector">@Html.Resource("PersonalizationSegmentsLabel")</label>
-
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <select id="segmentSelector" ng-model="model.segmentId" class="form-control">
-                                    <option ng-repeat="segment in segments" value="{{ segment.Id }}">{{ segment.Name }}</option>
-                                </select>
+                        <div ng-if="segments.length === 0">
+                            <label for="segmentSelector"><strong>@Html.Resource("NoSegmentsCreatedLabel")</strong></label>
+                            <label for="segmentSelector">@Html.Resource("NoSegmentsCreatedMessage")</label>
+                        </div>
+                        <div ng-if="segments.length > 0">
+                            <label ng-if="filteredSegments.length > 0" for="segmentSelector">@Html.Resource("PersonalizationSegmentsLabel")</label>
+                            <div ng-if="filteredSegments.length > 0" class="row">
+                                <div class="col-xs-6">
+                                    <select id="segmentSelector" ng-model="model.segmentId" class="form-control">
+                                        <option ng-repeat="segment in filteredSegments" value="{{ segment.Id }}">{{ segment.Name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div ng-if="filteredSegments.length === 0">
+                                <label for="segmentSelector"><strong>@Html.Resource("AllSegmentsCreatedLabel")</strong></label>
+                                <label for="segmentSelector">@Html.Resource("AllSegmentsCreatedMessage")</label>
                             </div>
                         </div>
                     </div>

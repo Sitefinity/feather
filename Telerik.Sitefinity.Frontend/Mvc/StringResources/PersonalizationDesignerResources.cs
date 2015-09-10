@@ -116,5 +116,69 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["PersonalizationSegmentsLabel"];
             }
         }
+
+        /// <summary>
+        /// Label displayed when you have created versions of the widget for all segments
+        /// </summary>
+        /// <value>You cannot create other personalization</value>
+        [ResourceEntry("AllSegmentsCreatedLabel",
+            Value = "You cannot create other personalization",
+            Description = "Label displayed when you have created versions of the widget for all segments",
+            LastModified = "2015/09/10")]
+        public string AllSegmentsCreatedLabel
+        {
+            get
+            {
+                return this["AllSegmentsCreatedLabel"];
+            }
+        }
+
+        /// <summary>
+        /// Message displayed when you have created versions of the widget for all segments
+        /// </summary>
+        /// <value>This widget has been personalized for all available user segments.</value>
+        [ResourceEntry("AllSegmentsCreatedMessage",
+            Value = "This widget has been personalized for all available user segments.",
+            Description = "Message displayed when you have created versions of the widget for all segments",
+            LastModified = "2015/09/10")]
+        public string AllSegmentsCreatedMessage
+        {
+            get
+            {
+                return this["AllSegmentsCreatedMessage"];
+            }
+        }
+
+        /// <summary>
+        /// Label displayed when you have not created any segments
+        /// </summary>
+        /// <value>No user segments have been created yet</value>
+        [ResourceEntry("NoSegmentsCreatedLabel",
+            Value = "No user segments have been created yet",
+            Description = "Label displayed when you have not created any segments",
+            LastModified = "2015/09/10")]
+        public string NoSegmentsCreatedLabel
+        {
+            get
+            {
+                return this["NoSegmentsCreatedLabel"];
+            }
+        }
+
+        /// <summary>
+        /// Message displayed when you have not created any segments
+        /// </summary>
+        /// <value>To personalize this widget you should have at least one user segment</value>
+        [ResourceEntry("NoSegmentsCreatedMessage",
+            Value = "To personalize this widget you should have at least one user segment",
+            Description = "Message displayed when you have not created any segments",
+            LastModified = "2015/09/10")]
+        public string NoSegmentsCreatedMessage
+        {
+            get
+            {
+                return this["NoSegmentsCreatedMessage"];
+            }
+        }
     }
 }

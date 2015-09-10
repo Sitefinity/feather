@@ -30,8 +30,12 @@
 		    var getSegments = function () {
 		        var deferred = $q.defer(),
 			        url = getServiceUrl() + "segments/";
+		        var reqOptions = requestOptions();
+		        reqOptions.params = {
+		            "ControlId": widgetContext.widgetId
+		        };
 
-		        $http.get(url, requestOptions())
+		        $http.get(url, reqOptions)
 				    .success(function (data) {
 				        deferred.resolve(data);
 				    })
