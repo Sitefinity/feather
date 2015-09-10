@@ -37,7 +37,7 @@
 
             var culture = serverContext.getUICulture();
             if (culture) {
-                filter += 'Culture==' + culture;
+                filter += 'AND Culture==' + culture;
             }
 
             return {
