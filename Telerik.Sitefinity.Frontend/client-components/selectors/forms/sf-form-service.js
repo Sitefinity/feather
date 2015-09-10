@@ -35,6 +35,11 @@
                 }
             }
 
+            var culture = serverContext.getUICulture();
+            if (culture) {
+                filter += 'AND Culture==' + culture;
+            }
+
             return {
                 itemType: contentType,
                 itemSurrogateType: contentType,
