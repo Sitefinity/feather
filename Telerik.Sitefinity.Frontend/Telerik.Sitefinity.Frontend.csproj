@@ -159,14 +159,12 @@
       <HintPath>..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Mvc, Version=1.3.340.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.3.340.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
-      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.3.350.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.3.340.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.3.340.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
-      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.3.350.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -352,7 +350,7 @@
     </Compile>
     <Compile Include="Mvc\Infrastructure\Routing\DefaultUrlParamsMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\DetailActionParamsMapper.cs" />
-    <Compile Include="Mvc\Infrastructure\Routing\DynamicUrlParamActionInvoker.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\FeatherActionInvoker.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\IRouteParamResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\IUrlParamsMapper.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\RouteParamResolverBase.cs" />
@@ -764,8 +762,10 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent></PostBuildEvent>
-    <PreBuildEvent></PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- Telerik OpenAccess Enhancement -->
   <!-- Fluent API Mapping -->
