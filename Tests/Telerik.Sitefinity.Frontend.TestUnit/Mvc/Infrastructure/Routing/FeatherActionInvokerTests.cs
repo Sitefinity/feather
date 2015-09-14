@@ -8,10 +8,10 @@ using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Routing
 {
     /// <summary>
-    /// Ensures that the DynamicUrlParamActionInvoker class is working correctly.
+    /// Ensures that the FeatherActionInvoker class is working correctly.
     /// </summary>
     [TestClass]
-    public class DynamicUrlParamActionInvokerTests
+    public class FeatherActionInvokerTests
     {
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Routing
             // Arrange
             var controller = new DummyController();
             controller.ControllerContext = new ControllerContext();
-            var actionInvoker = new DynamicUrlParamActionInvokerMock();
+            var actionInvoker = new FeatherActionInvokerMock();
 
             // Act
             var result = actionInvoker.GetDefaultParamsMapperPublic(controller);
@@ -38,7 +38,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Routing
             // Arrange
             var controller = new DummyMasterDetailController();
             controller.ControllerContext = new ControllerContext();
-            var actionInvoker = new DynamicUrlParamActionInvokerMock();
+            var actionInvoker = new FeatherActionInvokerMock();
 
             // Act
             var result = actionInvoker.GetDefaultParamsMapperPublic(controller);
