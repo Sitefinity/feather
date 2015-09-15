@@ -43,7 +43,8 @@
                 </div>
 		    </div>
 		    <div class="modal-footer" ng-show="!feedback.showLoadingIndicator" placeholder="modal-footer">
-                <button type="button" class="btn btn-primary pull-left" ng-click="addPersonalization()">@Html.Resource("Add")</button>
+                <button type="button" ng-if="(segments.length === 0) || (filteredSegments.length === 0)" class="btn btn-primary pull-left" ng-click="goToCreateSegment()">@Html.Resource("GoToCreateSegment")</button>    
+                <button type="button" ng-if="filteredSegments.length > 0" class="btn btn-primary pull-left" ng-click="addPersonalization()">@Html.Resource("Add")</button>
                 <a class="btn btn-link pull-left" data-dismiss="modal" ng-click="cancel()">@Html.Resource("Cancel")</a>
             </div>
 	    </script>

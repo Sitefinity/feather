@@ -49,6 +49,13 @@
             $scope.feedback.showLoadingIndicator = false;
         });
 
+        $scope.goToCreateSegment = function () {
+            var newSegmentUrl = "Sitefinity/Marketing/Personalization?action=newSegment";
+            var newSegmentRootedUrl = sitefinity.getRootedUrl(newSegmentUrl);
+
+            window.location.href = newSegmentRootedUrl;
+        };
+
         $scope.addPersonalization = function () {
             $scope.feedback.showLoadingIndicator = true;
             setSegmentName();

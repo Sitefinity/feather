@@ -5,6 +5,7 @@
     personalizationServices.factory('personalizationService', ['$http', '$q', 'widgetContext',
 		function ($http, $q, widgetContext) {
 		    var CULTURE_HEADER = 'SF_UI_CULTURE';
+		    var IS_BACKEND_REQUEST_HEADER = "IsBackendRequest";
 
 		    /**
 		     * Generates the headers dictionary for the HTTP request
@@ -13,6 +14,7 @@
 		     */
 		    var requestOptions = function () {
 		        var header = {};
+		        header[IS_BACKEND_REQUEST_HEADER] = true;
 
 		        if (widgetContext.culture)
 		            header[CULTURE_HEADER] = widgetContext.culture;

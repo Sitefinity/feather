@@ -180,5 +180,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["NoSegmentsCreatedMessage"];
             }
         }
+
+        /// <summary>
+        /// Go to create a segment
+        /// </summary>
+        /// <value>Go to create a segment</value>
+        [ResourceEntry("GoToCreateSegment",
+            Value = "Go to create a segment",
+            Description = "Go to create a segment",
+            LastModified = "2015/09/15")]
+        public string GoToCreateSegment
+        {
+            get
+            {
+                return this["GoToCreateSegment"];
+            }
+        }
     }
 }
