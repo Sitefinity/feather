@@ -211,6 +211,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controller == null) 
                 throw new ArgumentNullException("controller");
 
+            var searchableControl = controller as ISearchIndexBehavior;
+            if (searchableControl != null)
+            {
+                var exclude = searchableControl.ExcludeFromSearchIndex;
+                if (exclude)
+                    return IndexRenderModes.NoOutput;
+                else
+                    return IndexRenderModes.Normal;
+            }
+
             var attribute = controller.GetType().GetCustomAttributes(true).OfType<IndexRenderModeAttribute>().LastOrDefault();
             return attribute == null ? IndexRenderModes.Normal : attribute.Mode;
         }
