@@ -153,6 +153,18 @@ var sitefinity = sitefinity || {};
 				});
 		},
 
+		openPersonalizationDialog: function (ev, args) {
+		    this.showLoader(args.AppPath);
+		    this.widgetContext = args;
+
+		    var url = this.widgetContext.AppPath + "Telerik.Sitefinity.Frontend/PersonalizationDesigner/Master/PersonalizationDesigner/";
+		    $.get(url)
+				.done($.proxy(this.renderDialog, this))
+				.fail(function (data) {
+				    alert('There is a problem with loading the widget designer: ' + data);
+				});
+		},
+
 		/**
 		 * Destroys the currently opened dialog.
 		 */
@@ -177,6 +189,9 @@ var sitefinity = sitefinity || {};
 	 */
 	if (typeof ($telerik) != 'undefined') {
 	    $telerik.$(document).on('needsModalDialog', $.proxy(sitefinity.pageEditor.openDialog, sitefinity.pageEditor));
+
+	    $telerik.$(document).on('needsPersonalizationModalDialog', $.proxy(sitefinity.pageEditor.openPersonalizationDialog, sitefinity.pageEditor));
+	    
 	    $telerik.$(document).on('needsGridModalDialog', $.proxy(sitefinity.pageEditor.openGridDialog, sitefinity.pageEditor));
 	    $telerik.$(document).on('modalDialogClosed', $.proxy(sitefinity.pageEditor.destroyDialog, sitefinity.pageEditor));
 	    $telerik.$(document).on('gridModalDialogClosed', $.proxy(sitefinity.pageEditor.destroyDialog, sitefinity.pageEditor));
