@@ -1,6 +1,6 @@
 ﻿<div class="m-bottom-sm">
   <sf-search-box 
-                sf-placeholder="@(Res.Get<ClientComponentsResources>().SearchByTitle)"
+                sf-placeholder="@(Res.Get<ClientComponentsResources>().NarrowByTyping)"
                 sf-action="narrowResults(query)"
                 sf-clear-search-string="clearSearch"
                 sf-timeout-ms="500"> 
