@@ -55,7 +55,8 @@
 
 		        var data = {
 		            "ControlId": widgetContext.widgetId,
-		            "SegmentId": model.segmentId
+		            "SegmentId": model.segmentId,
+		            "PageId": widgetContext.pageId
 		        };
 
 		        $http.post(url, data, requestOptions())
