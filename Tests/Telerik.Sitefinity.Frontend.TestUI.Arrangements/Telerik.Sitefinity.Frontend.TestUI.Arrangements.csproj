@@ -181,13 +181,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.TestArrangementService.Attributes, Version=1.0.0.8, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Telerik.Sitefinity.TestArrangementService.Attributes.1.0.8\lib\net40\Telerik.Sitefinity.TestArrangementService.Attributes.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Telerik.Sitefinity.TestArrangementService.Attributes">
+      <HintPath>..\..\packages\Telerik.Sitefinity.TestArrangementService.Attributes.1.0.9\lib\net40\Telerik.Sitefinity.TestArrangementService.Attributes.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.TestArrangementService.Core, Version=1.0.0.8, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Telerik.Sitefinity.TestArrangementService.Core.1.0.8\lib\net40\Telerik.Sitefinity.TestArrangementService.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Telerik.Sitefinity.TestArrangementService.Core">
+      <HintPath>..\..\packages\Telerik.Sitefinity.TestArrangementService.Core.1.0.9\lib\net40\Telerik.Sitefinity.TestArrangementService.Core.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Telerik.Sitefinity.TestUtilities.8.1.5800.1\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
