@@ -224,7 +224,7 @@
                     $modalInstance.close();
                 } catch (e) { }
 
-                if (typeof ($telerik) != 'undefined')
+                if (typeof ($telerik) !== 'undefined')
                     $telerik.$(document).trigger('modalDialogClosed');
             };
 
