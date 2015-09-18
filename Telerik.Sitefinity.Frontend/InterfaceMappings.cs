@@ -12,6 +12,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             Bind<IDesignerModel>().To<DesignerModel>();
             Bind<IGridDesignerModel>().To<GridDesignerModel>();
+            Bind<IPersonalizationDesignerModel>().To<PersonalizationDesignerModel>();
         }
     }
 }

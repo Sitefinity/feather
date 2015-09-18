@@ -19,7 +19,8 @@
         flatTaxonServiceUrl: applicationPath + 'Sitefinity/Services/Taxonomies/FlatTaxon.svc/',
         taxonomyServiceUrl: applicationPath + 'Sitefinity/Services/Taxonomies/Taxonomy.svc/',
         newsItemServiceUrl: applicationPath + 'Sitefinity/Services/Content/NewsItemService.svc/',
-        dataServiceUrl: applicationPath + 'Sitefinity/Services/DynamicModules/Data.svc/'
+        dataServiceUrl: applicationPath + 'Sitefinity/Services/DynamicModules/Data.svc/',
+        personalizationServiceUrl: applicationPath + 'RestApi/Sitefinity/personalizations/controls/'
     };
 
     sitefinity.services = {
@@ -49,6 +50,10 @@
 
         getDataServiceUrl: function () {
             return services.dataServiceUrl;
+        },
+
+        getPersonalizationServiceUrl: function () {
+            return services.personalizationServiceUrl;
         }
     };
 
