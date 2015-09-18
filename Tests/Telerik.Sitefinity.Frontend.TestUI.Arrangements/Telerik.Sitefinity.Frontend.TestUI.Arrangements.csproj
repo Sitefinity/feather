@@ -181,13 +181,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.8.1.5800.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.TestArrangementService.Core">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Telerik.Sitefinity.TestArrangementService.Core.1.0.3\lib\net40\Telerik.Sitefinity.TestArrangementService.Core.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.TestArrangementService.Attributes">
+      <HintPath>..\..\packages\Telerik.Sitefinity.TestArrangementService.Attributes.1.0.9\lib\net40\Telerik.Sitefinity.TestArrangementService.Attributes.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.TestUtilities">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Telerik.Sitefinity.TestUtilities.8.1.5800.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.TestArrangementService.Core">
+      <HintPath>..\..\packages\Telerik.Sitefinity.TestArrangementService.Core.1.0.9\lib\net40\Telerik.Sitefinity.TestArrangementService.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.TestUtilities, Version=8.1.5800.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Sitefinity.TestUtilities.8.1.5800.1\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
       <SpecificVersion>False</SpecificVersion>
@@ -223,6 +225,7 @@
     <Compile Include="ResourcePackages\AddNewLayoutFileToDefaultPackage.cs" />
     <Compile Include="ResourcePackages\ApplyTwoDifferentTemplatesFromDifferentPackagesToPages.cs" />
     <Compile Include="ResourcePackages\EditLayoutFileFromPackageCacheInvalidation.cs" />
+    <Compile Include="SystemSetup\SetupSitefinityForMultisiteMultilingual.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\DesignerView.Selector.cshtml" />
