@@ -318,7 +318,15 @@
                     $(innerDiv).attr('class', css.trim());
 
                     var label = elements[i].label;
-                    $(innerDiv).find('.zeDockZoneLabel b').html(label);
+                    var labelElement = $(innerDiv).find('.zeDockZoneLabel b');
+
+                    if (labelElement && labelElement.length > 0) {
+                        labelElement.html(label);
+                    }
+                    else if (label) {
+                        $(innerDiv).find('.RadDockZone').addClass('zeDockZoneHasLabel');
+                        $(innerDiv).find('.RadDockZone .emptyZoneDraggingText').after('<div class="zeDockZoneLabel"><b>' + label + '</b></div>');
+                    }
 
                     if (label) {
                         $(innerDiv).attr('data-placeholder-label', label);
