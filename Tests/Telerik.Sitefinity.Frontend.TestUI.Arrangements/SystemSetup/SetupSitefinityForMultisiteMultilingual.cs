@@ -6,7 +6,8 @@ using Telerik.Sitefinity.TestArrangementService.Core;
 using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
-using Telerik.Sitefinity.TestUtilities.Helpers.Models;
+
+//// using Telerik.Sitefinity.TestUtilities.Helpers.Models;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
@@ -21,12 +22,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerArrangement]
         public void CreateMultilingualSite()
         {  
-            AuthenticationHelper.AuthenticateUser(Admin, Password);
-            var siteName = ArrangementConfig.GetArrangementSite();
-            var siteUrl = ArrangementConfig.GetArrangementSiteUrl();
-            var siteCultures = ArrangementConfig.GetArrangementSiteCultures();
-            var site = new SiteModel(siteName, siteUrl, siteName + "Provider", true) { Cultures = siteCultures };
-            MultisiteHelper.CreateSite(site);
+            // AuthenticationHelper.AuthenticateUser(Admin, Password);
+            // var siteName = ArrangementConfig.GetArrangementSite();
+            // var siteUrl = ArrangementConfig.GetArrangementSiteUrl();
+            // var siteCultures = ArrangementConfig.GetArrangementSiteCultures();
+            // var site = new SiteModel(siteName, siteUrl, siteName + "Provider", true) { Cultures = siteCultures };
+            // MultisiteHelper.CreateSite(site);
         }
 
         /// <summary>
