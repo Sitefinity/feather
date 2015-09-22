@@ -7,7 +7,7 @@
     </div>
   </alert>
 
-  <div ng-hide="items.length">
+  <div ng-hide="items.length || !initialized">
 
     <div class="alert alert-info" ng-hide="searchQuery">@(Res.Get<ClientComponentsResources>().NoForms)</div>
 

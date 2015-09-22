@@ -18,6 +18,7 @@
                 link: function (scope, element, attrs, ctrl) {
                     var defaultItemsTake = 20;
 
+                    scope.initialized = false;
                     scope.items = [];
                     scope.filterObject = scope.filterObject || {};
 
@@ -32,6 +33,7 @@
                         scope.isLoading = true;
                         sfFormService.getItems(scope.filterObject.provider, scope.filterObject.skip, scope.filterObject.take || defaultItemsTake, scope.filterObject.search)
                             .then(function (items) {
+                                scope.initialized = true;
                                 items = items || {};
                                 scope.items = items.Items || [];
                                 scope.isLoading = false;
