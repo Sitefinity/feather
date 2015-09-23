@@ -19,8 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
-            Guid templateId = ServerOperations.Templates().GetTemplateIdByTitle(PageTemplateName);
-            ServerOperations.Pages().CreatePage(PageName, templateId);
+            ServerOperations.Pages().CreatePage(PageName);
         }
 
         /// <summary>
@@ -33,6 +32,5 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         }
 
         private const string PageName = "GridPage";
-        private const string PageTemplateName = "Bootstrap.default";
     }
 }

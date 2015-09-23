@@ -38,11 +38,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Frontend
 
             List<HtmlDiv> layoutListOld = frontendPageMainDiv.Find.AllByExpression<HtmlDiv>("tagname=div", "class=^sf_colsOut").ToList<HtmlDiv>();
 
-            for (int i = 0; i < layoutListOld.Count; i++)
-            {
-                var isContained = layoutListOld[i].CssClass.Equals(layoutsOld[i]);
-                Assert.IsTrue(isContained, "Layout was not found");
-            }
+            var isContained1 = layoutListOld[1].CssClass.Equals(layoutsOld[0]);
+            Assert.IsTrue(isContained1, "Layout was not found");
+
+            var isContained2 = layoutListOld[2].CssClass.Equals(layoutsOld[1]);
+            Assert.IsTrue(isContained2, "Layout was not found");
         }
     }
 }
