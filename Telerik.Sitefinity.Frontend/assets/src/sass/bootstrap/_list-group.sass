@@ -92,10 +92,22 @@
 	&:hover
 		background: transparent
 		border-color: #ddd
+		.close,
+		.make-default
+			display: block
+
 	>div
 		margin-right: 0
 		margin-left: 37px
 		padding-left: 0
+
+	.close,
+	.make-default
+		display: none
+
+	&.list-group-item-draggable-2--noCheckbox
+		>div
+			margin-left: 15px
 
 .list-group-item-draggable--disabled
 	margin-top: -30px
