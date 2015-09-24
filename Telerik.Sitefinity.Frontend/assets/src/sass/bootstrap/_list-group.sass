@@ -84,6 +84,7 @@
 .list-group-item-draggable-2
 	padding: 5px 15px
 	border-color: transparent
+	cursor: default
 
 	&:first-child
 		border-color: transparent
@@ -92,21 +93,29 @@
 	&:hover
 		background: transparent
 		border-color: #ddd
+
 		.close,
 		.make-default
 			display: block
 
-	>div
+	> div
 		margin-right: 0
 		margin-left: 37px
 		padding-left: 0
+
+	.form-control-highlight[type=text]
+		border-left: none
+
+		&:focus
+			border: none
+			box-shadow: none
 
 	.close,
 	.make-default
 		display: none
 
 	&.list-group-item-draggable-2--noCheckbox
-		>div
+		> div
 			margin-left: 15px
 
 .list-group-item-draggable--disabled
@@ -121,6 +130,7 @@
 	input[type=text]
 		border: 1px solid #ddd
 		margin-left: 35px
+		margin-top: -5px
 		background-color: #fff
 
 	.static-choice
@@ -134,9 +144,12 @@
 
 .list-group-item-add
 	padding-left: 37px
+	color: #000
+	opacity: .5
 	&:hover
-		color: #777
+		color: #000
 		text-decoration: none
+		opacity: .75
 
 .list-group-endless + .list-group-item-add
 	display: block
@@ -158,6 +171,9 @@
 
 	&.list-group-item-placeholder--bt
 		border-top: 1px solid #ddd
+
+.list-group-item-placeholder-2
+	height: 40px
 
 // Area that triggers the dragging
 .list-group-item-drag
