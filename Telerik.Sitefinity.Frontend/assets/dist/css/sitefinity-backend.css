@@ -17280,88 +17280,89 @@
     /* line 98, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
     .sf-backend-wrp .list-group-item-draggable-2:hover .close,
     .sf-backend-wrp .list-group-item-draggable-2:hover .make-default {
-      display: block; }
-  /* line 101, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+      display: block;
+      line-height: 28px; }
+  /* line 104, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-item-draggable-2 > div {
     margin-right: 0;
     margin-left: 37px;
     padding-left: 0; }
-  /* line 106, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 109, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-item-draggable-2 .form-control-highlight[type=text] {
     border-left: none; }
-    /* line 109, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+    /* line 112, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
     .sf-backend-wrp .list-group-item-draggable-2 .form-control-highlight[type=text]:focus {
       border: none;
       box-shadow: none; }
-  /* line 114, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 117, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-item-draggable-2 .close,
   .sf-backend-wrp .list-group-item-draggable-2 .make-default {
     display: none; }
-  /* line 118, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 121, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-item-draggable-2.list-group-item-draggable-2--noCheckbox > div {
     margin-left: 15px; }
 
-/* line 121, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+/* line 124, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
 .sf-backend-wrp .list-group-item-draggable--disabled {
   margin-top: -30px;
   padding-left: 21px; }
-  /* line 126, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 129, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-item-draggable--disabled input[type=radio],
   .sf-backend-wrp .list-group-item-draggable--disabled input[type=checkbox] {
     top: 5px;
     left: 26px; }
-  /* line 130, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 133, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-item-draggable--disabled input[type=text] {
     border: 1px solid #ddd;
     margin-left: 35px;
     margin-top: -5px;
     background-color: #fff; }
-  /* line 136, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 139, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-item-draggable--disabled .static-choice {
     min-height: 28px; }
-  /* line 139, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 142, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-item-draggable--disabled:hover {
     cursor: default;
     border-color: #fff; }
 
-/* line 145, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+/* line 148, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
 .sf-backend-wrp .list-group-item-add {
   padding-left: 37px;
   color: #000;
   opacity: .5; }
-  /* line 149, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 152, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-item-add:hover {
     color: #000;
     text-decoration: none;
     opacity: .75; }
 
-/* line 154, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+/* line 157, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
 .sf-backend-wrp .list-group-endless + .list-group-item-add {
   display: block;
   margin-top: -12px;
   margin-bottom: 45px; }
 
-/* line 160, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+/* line 163, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
 .sf-backend-wrp .list-group-item-hint {
   width: 550px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
 
-/* line 165, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+/* line 168, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
 .sf-backend-wrp .list-group-item-placeholder {
   background: #ffff99;
   height: 20px;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
   margin-bottom: 0;
   border-top: none; }
-  /* line 172, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 175, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-item-placeholder.list-group-item-placeholder--bt {
     border-top: 1px solid #ddd; }
 
-/* line 175, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+/* line 178, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
 .sf-backend-wrp .list-group-item-placeholder-2 {
   height: 40px; }
 
-/* line 179, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+/* line 182, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
 .sf-backend-wrp .list-group-item-drag {
   width: 10px;
   height: 20px;
@@ -17378,16 +17379,16 @@
   background-size: 3px 3px;
   z-index: 3; }
 
-/* line 198, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+/* line 201, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
 .sf-backend-wrp .list-group-endless {
   max-height: 500px;
   overflow-y: auto;
   border-radius: 4px; }
 
-/* line 206, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+/* line 209, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
 .sf-backend-wrp .list-group-external .list-group-item {
   padding: 10px 5px 5px 30px; }
-  /* line 209, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
+  /* line 212, c:/Work/feather/Telerik.Sitefinity.Frontend/assets/src/sass/bootstrap/_list-group.sass */
   .sf-backend-wrp .list-group-external .list-group-item input[type="text"] {
     margin-top: -5px; }
 
