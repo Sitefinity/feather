@@ -13231,19 +13231,87 @@
     height: 30px;
     opacity: 0; }
 
+.sf-backend-wrp .list-group-item-multiselect > input[type="radio"],
 .sf-backend-wrp .list-group-item-multiselect > input[type="checkbox"] {
   position: absolute;
   z-index: 1;
   top: 10px;
   left: 10px; }
 
-.sf-backend-wrp .list-group-item-draggable {
-  margin-bottom: 0;
-  border-top: none; }
-  .sf-backend-wrp .list-group-item-draggable > input[type="checkbox"] {
+.sf-backend-wrp .list-group-item-draggable,
+.sf-backend-wrp .list-group-item-draggable-2 {
+  margin-bottom: 0; }
+  .sf-backend-wrp .list-group-item-draggable > input[type="checkbox"],
+  .sf-backend-wrp .list-group-item-draggable > input[type="radio"],
+  .sf-backend-wrp .list-group-item-draggable-2 > input[type="checkbox"],
+  .sf-backend-wrp .list-group-item-draggable-2 > input[type="radio"] {
     left: 25px; }
+
+.sf-backend-wrp .list-group-item-draggable {
+  border-top: none; }
   .sf-backend-wrp .list-group-item-draggable > div {
     padding-left: 45px; }
+
+.sf-backend-wrp .list-group-item-draggable-2 {
+  padding: 5px 15px;
+  border-color: transparent;
+  cursor: default; }
+  .sf-backend-wrp .list-group-item-draggable-2:first-child {
+    border-color: transparent;
+    border-radius: 0; }
+  .sf-backend-wrp .list-group-item-draggable-2:hover {
+    background: transparent;
+    border-color: #ddd; }
+    .sf-backend-wrp .list-group-item-draggable-2:hover .close,
+    .sf-backend-wrp .list-group-item-draggable-2:hover .make-default {
+      display: block;
+      line-height: 28px; }
+  .sf-backend-wrp .list-group-item-draggable-2 > div {
+    margin-right: 0;
+    margin-left: 37px;
+    padding-left: 0; }
+  .sf-backend-wrp .list-group-item-draggable-2 .form-control-highlight[type=text] {
+    border-left: none; }
+    .sf-backend-wrp .list-group-item-draggable-2 .form-control-highlight[type=text]:focus {
+      border: none;
+      box-shadow: none; }
+  .sf-backend-wrp .list-group-item-draggable-2 .close,
+  .sf-backend-wrp .list-group-item-draggable-2 .make-default {
+    display: none; }
+  .sf-backend-wrp .list-group-item-draggable-2.list-group-item-draggable-2--noCheckbox > div {
+    margin-left: 15px; }
+
+.sf-backend-wrp .list-group-item-draggable--disabled {
+  margin-top: -30px;
+  padding-left: 21px; }
+  .sf-backend-wrp .list-group-item-draggable--disabled input[type=radio],
+  .sf-backend-wrp .list-group-item-draggable--disabled input[type=checkbox] {
+    top: 5px;
+    left: 26px; }
+  .sf-backend-wrp .list-group-item-draggable--disabled input[type=text] {
+    border: 1px solid #ddd;
+    margin-left: 35px;
+    margin-top: -5px;
+    background-color: #fff; }
+  .sf-backend-wrp .list-group-item-draggable--disabled .static-choice {
+    min-height: 28px; }
+  .sf-backend-wrp .list-group-item-draggable--disabled:hover {
+    cursor: default;
+    border-color: #fff; }
+
+.sf-backend-wrp .list-group-item-add {
+  padding-left: 37px;
+  color: #000;
+  opacity: .5; }
+  .sf-backend-wrp .list-group-item-add:hover {
+    color: #000;
+    text-decoration: none;
+    opacity: .75; }
+
+.sf-backend-wrp .list-group-endless + .list-group-item-add {
+  display: block;
+  margin-top: -12px;
+  margin-bottom: 45px; }
 
 .sf-backend-wrp .list-group-item-hint {
   width: 550px;
@@ -13255,6 +13323,11 @@
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
   margin-bottom: 0;
   border-top: none; }
+  .sf-backend-wrp .list-group-item-placeholder.list-group-item-placeholder--bt {
+    border-top: 1px solid #ddd; }
+
+.sf-backend-wrp .list-group-item-placeholder-2 {
+  height: 40px; }
 
 .sf-backend-wrp .list-group-item-drag {
   width: 10px;
@@ -13296,6 +13369,9 @@
 .sf-backend-wrp tab {
   display: none; }
 
+.sf-backend-wrp .form-group--tall {
+  min-height: 90px; }
+
 .sf-backend-wrp .form-group-list {
   margin-bottom: 15px; }
   .sf-backend-wrp .form-group-list h5 {
@@ -13312,7 +13388,8 @@
   margin-top: 40px;
   margin-bottom: 15px; }
 
-.sf-backend-wrp .form-group strong + .radio {
+.sf-backend-wrp .form-group strong + .radio,
+.sf-backend-wrp .form-group strong + .checkbox {
   margin-top: 5px; }
 
 .sf-backend-wrp .form-control-highlight[type=text] {
@@ -13788,6 +13865,12 @@
 
 .sf-backend-wrp .Options-toggler + div {
   padding: 15px 20px 20px; }
+
+.sf-backend-wrp .Options-section {
+  padding: 20px 20px 0; }
+
+.sf-backend-wrp .Options-simple-section {
+  padding: 20px; }
 
 .sf-backend-wrp .Media-content,
 .sf-backend-wrp .Media-sidebar {
