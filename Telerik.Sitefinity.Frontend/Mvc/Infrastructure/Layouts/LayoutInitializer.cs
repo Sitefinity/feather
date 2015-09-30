@@ -36,12 +36,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
         private void AugmentPageTemplateViewModel(IPageTemplateViewModelCreatedEvent ev)
         {
-            if (ev != null && ev.ViewModel != null && ev.ViewModel.Framework == PageTemplateFramework.Mvc && !string.IsNullOrEmpty(ev.ViewModel.Name))
+            if (ev != null && ev.PageTemplate != null && ev.ViewModel != null && ev.ViewModel.Framework == PageTemplateFramework.Mvc && !string.IsNullOrEmpty(ev.ViewModel.Name))
             {
-                var package = (new PackageManager()).GetPackageFromTemplateId(ev.ViewModel.Id.ToString());
+                var package = (new PackageManager()).GetPackageFromTemplate(ev.PageTemplate);
                 if (!string.IsNullOrEmpty(package))
                 {
-                    ev.ViewModel.FileBasedOn = package;
+                    ev.ViewModel.PackageBasedOn = package;
                 }
             }
         }

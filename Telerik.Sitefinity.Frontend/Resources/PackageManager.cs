@@ -116,20 +116,35 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Gets the package from template identifier.
+        /// Gets the package from template.
         /// </summary>
-        /// <param name="templateId">The template identifier.</param>
+        /// <param name="template">The template.</param>
         /// <returns></returns>
-        internal string GetPackageFromTemplateId(string templateId)
+        internal string GetPackageFromTemplate(PageTemplate template)
         {
-            Guid id;
-            if (!Guid.TryParse(templateId, out id))
-                return null;
+            var currentTemplate = template;
+            while (currentTemplate != null)
+            {
+                var name = currentTemplate.Name ?? (currentTemplate.Title != null ? currentTemplate.Title.ToString() : null);
+                if (!name.IsNullOrEmpty())
+                {
+                    var parts = name.Split('.');
+                    if (parts.Length > 1)
+                    {
+                        var expectedPackageName = this.StripInvalidCharacters(parts[0]);
+                        var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
+                        if (path != null && Directory.Exists(path))
+                        {
+                            SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
+                            return expectedPackageName;
+                        }
+                    }
+                }
 
-            var pageManager = PageManager.GetManager();
-            var template = pageManager.GetTemplate(id);
+                currentTemplate = currentTemplate.ParentTemplate;
+            }
 
-            return this.GetPackageFromTemplate(template);
+            return null;
         }
 
         /// <summary>
@@ -171,35 +186,20 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Gets the package from template.
+        /// Gets the package from template identifier.
         /// </summary>
-        /// <param name="template">The template.</param>
+        /// <param name="templateId">The template identifier.</param>
         /// <returns></returns>
-        private string GetPackageFromTemplate(PageTemplate template)
+        private string GetPackageFromTemplateId(string templateId)
         {
-            var currentTemplate = template;
-            while (currentTemplate != null)
-            {
-                var name = currentTemplate.Name ?? (currentTemplate.Title != null ? currentTemplate.Title.ToString() : null);
-                if (!name.IsNullOrEmpty())
-                {
-                    var parts = name.Split('.');
-                    if (parts.Length > 1)
-                    {
-                        var expectedPackageName = this.StripInvalidCharacters(parts[0]);
-                        var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
-                        if (path != null && Directory.Exists(path))
-                        {
-                            SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
-                            return expectedPackageName;
-                        }
-                    }
-                }
+            Guid id;
+            if (!Guid.TryParse(templateId, out id))
+                return null;
 
-                currentTemplate = currentTemplate.ParentTemplate;
-            }
+            var pageManager = PageManager.GetManager();
+            var template = pageManager.GetTemplate(id);
 
-            return null;
+            return this.GetPackageFromTemplate(template);
         }
 
         /// <summary>
