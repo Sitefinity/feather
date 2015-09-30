@@ -116,6 +116,23 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
+        /// Gets the package from template identifier.
+        /// </summary>
+        /// <param name="templateId">The template identifier.</param>
+        /// <returns></returns>
+        internal string GetPackageFromTemplateId(string templateId)
+        {
+            Guid id;
+            if (!Guid.TryParse(templateId, out id))
+                return null;
+
+            var pageManager = PageManager.GetManager();
+            var template = pageManager.GetTemplate(id);
+
+            return this.GetPackageFromTemplate(template);
+        }
+
+        /// <summary>
         /// Gets the key of the edited container.
         /// </summary>
         /// <param name="context">The context.</param>
@@ -151,23 +168,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
             var pageData = pageNode.GetPageData();
             return this.GetPackageFromTemplate(pageData.Template);
-        }
-
-        /// <summary>
-        /// Gets the package from template identifier.
-        /// </summary>
-        /// <param name="templateId">The template identifier.</param>
-        /// <returns></returns>
-        private string GetPackageFromTemplateId(string templateId)
-        {
-            Guid id;
-            if (!Guid.TryParse(templateId, out id))
-                return null;
-
-            var pageManager = PageManager.GetManager();
-            var template = pageManager.GetTemplate(id);
-
-            return this.GetPackageFromTemplate(template);
         }
 
         /// <summary>
