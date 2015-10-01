@@ -2,7 +2,7 @@
     <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
 </div>
 
-<ul class="list-unstyled">
+<ul class="list-unstyled" ng-show="sfModel && sfModel !== guidEmpty">
   <li>
     <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
     {{sfImage.Extension}}
@@ -18,7 +18,8 @@
 </ul>
 
 <br />
-<button class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
+<button ng-show="sfModel && sfModel !== guidEmpty" class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
+<button ng-show="!sfModel || sfModel === guidEmpty" class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().SelectImage)</button>
 <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
 
 
