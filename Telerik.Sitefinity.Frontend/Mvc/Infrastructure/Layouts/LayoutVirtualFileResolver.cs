@@ -57,7 +57,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             if (!string.IsNullOrEmpty(layoutHtmlString))
             {
-                var layoutBytes = Encoding.Default.GetBytes(layoutHtmlString.ToCharArray());
+                var layoutBytes = Encoding.UTF8.GetBytes(layoutHtmlString.ToCharArray());
                 outPutStream = new MemoryStream(layoutBytes);
             }
 

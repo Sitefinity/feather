@@ -1,8 +1,13 @@
-﻿using Telerik.Microsoft.Practices.Unity;
+﻿using System;
+using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Modules.Pages.Web.Services;
+using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
@@ -25,6 +30,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             ObjectFactory.Container.RegisterType<PageEditorRouteHandler, MvcPageEditorRouteHandler>();
             ObjectFactory.Container.RegisterType<TemplateEditorRouteHandler, MvcTemplateEditorRouteHandler>();
             System.Web.Routing.RouteTable.Routes.Insert(1, new System.Web.Routing.Route("Sitefinity/Versioning/{itemId}/{VersionNumber}", ObjectFactory.Resolve<MvcVersioningRouteHandler>()));
+
+            EventHub.Subscribe<IPageTemplateViewModelCreatedEvent>(this.AugmentPageTemplateViewModel);
+        }
+
+        private void AugmentPageTemplateViewModel(IPageTemplateViewModelCreatedEvent ev)
+        {
+            if (ev != null && ev.PageTemplate != null && ev.ViewModel != null && ev.ViewModel.Framework == PageTemplateFramework.Mvc && !string.IsNullOrEmpty(ev.ViewModel.Name))
+            {
+                var package = (new PackageManager()).GetPackageFromTemplate(ev.PageTemplate);
+                if (!string.IsNullOrEmpty(package))
+                {
+                    ev.ViewModel.PackageBasedOn = package;
+                }
+            }
         }
     }
 }

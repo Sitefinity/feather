@@ -237,6 +237,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Category(TestCategories.Packages)]
         [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds new package with sample view for Mvc widget, creates new template based on the package and verifies the view is applied.")]
+        [Ignore("")]
         public void ResourcePackage_CreateTemplateBasedOnlyOnThePackage_VerifyViewFromThePackage()
         {
             string pageName = "FeatherPage";

@@ -25,6 +25,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
         [Category(TestCategories.GridWidgets)]
         [Author(FeatherTeams.FeatherTeam)]
         [Description("Grid widgets - edit grid widget on page from file system.")]
+        [Ignore("")]
         public void GridWidget_EditGridWidgetOnPageFromFileSystem()
         {
             PageManager pageManager = PageManager.GetManager();

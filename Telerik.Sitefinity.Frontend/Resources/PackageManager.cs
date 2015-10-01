@@ -116,6 +116,38 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
+        /// Gets the package from template.
+        /// </summary>
+        /// <param name="template">The template.</param>
+        /// <returns></returns>
+        internal string GetPackageFromTemplate(PageTemplate template)
+        {
+            var currentTemplate = template;
+            while (currentTemplate != null)
+            {
+                var name = currentTemplate.Name ?? (currentTemplate.Title != null ? currentTemplate.Title.ToString() : null);
+                if (!name.IsNullOrEmpty())
+                {
+                    var parts = name.Split('.');
+                    if (parts.Length > 1)
+                    {
+                        var expectedPackageName = this.StripInvalidCharacters(parts[0]);
+                        var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
+                        if (path != null && Directory.Exists(path))
+                        {
+                            SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
+                            return expectedPackageName;
+                        }
+                    }
+                }
+
+                currentTemplate = currentTemplate.ParentTemplate;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Gets the key of the edited container.
         /// </summary>
         /// <param name="context">The context.</param>
@@ -168,38 +200,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var template = pageManager.GetTemplate(id);
 
             return this.GetPackageFromTemplate(template);
-        }
-
-        /// <summary>
-        /// Gets the package from template.
-        /// </summary>
-        /// <param name="template">The template.</param>
-        /// <returns></returns>
-        private string GetPackageFromTemplate(PageTemplate template)
-        {
-            var currentTemplate = template;
-            while (currentTemplate != null)
-            {
-                var name = currentTemplate.Name ?? (currentTemplate.Title != null ? currentTemplate.Title.ToString() : null);
-                if (!name.IsNullOrEmpty())
-                {
-                    var parts = name.Split('.');
-                    if (parts.Length > 1)
-                    {
-                        var expectedPackageName = this.StripInvalidCharacters(parts[0]);
-                        var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
-                        if (path != null && Directory.Exists(path))
-                        {
-                            SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
-                            return expectedPackageName;
-                        }
-                    }
-                }
-
-                currentTemplate = currentTemplate.ParentTemplate;
-            }
-
-            return null;
         }
 
         /// <summary>
