@@ -74,8 +74,7 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
-      <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUtilities.8.1.5800.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUtilities.8.2.5900.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.TestUI.Core, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.TestUI.Core.1.5.4\lib\net40\Telerik.TestUI.Core.dll</HintPath>

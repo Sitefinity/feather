@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Framework.Wrappers.Backend.PageTemplates;
+using Telerik.Sitefinity.TestUI.Framework.Utilities;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
 {
@@ -24,8 +25,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void VerifyGeneratedTemplatesDefaultResourcePackages()
         {
-            BAT.Macros().User().EnsureAdminLoggedIn();
-            BAT.Macros().NavigateTo().Design().PageTemplates();
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/design/pagetemplates", false));
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(BootstrapTemplate);
             Assert.IsTrue(BATFrontend.Wrappers().Backend().PageTemplates().PageTemplateEditor().IsPlaceHolderPresent(PlaceHolderId), "Placeholder not found in template editor");
             BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().ClickBackToTemplatesButton();
