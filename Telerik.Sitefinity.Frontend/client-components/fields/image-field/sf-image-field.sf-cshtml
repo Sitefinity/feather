@@ -1,5 +1,8 @@
 ﻿<div class="sf-Media--info-image">
     <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
+    <div ng-hide="sfImage.ThumbnailUrl" class="sf-Media-empty--image icon-no-image">
+        {{sfImage.ThumbnailUrl}}
+    </div>
 </div>
 
 <ul class="list-unstyled" ng-show="sfModel && sfModel !== guidEmpty">
@@ -17,7 +20,7 @@
   </li>
 </ul>
 
-<br />
+<br ng-hide="!sfImage.ThumbnailUrl" />
 <button ng-show="sfModel && sfModel !== guidEmpty" class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
 <button ng-show="!sfModel || sfModel === guidEmpty" class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().SelectImage)</button>
 <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>

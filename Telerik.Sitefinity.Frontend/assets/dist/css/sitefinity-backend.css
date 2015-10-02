@@ -12929,6 +12929,10 @@
 .sf-backend-wrp .u-dn {
   display: none; }
 
+.sf-backend-wrp .side-to-side {
+  margin-left: -20px;
+  margin-right: -20px; }
+
 .sf-backend-wrp .description-note {
   margin-top: -6px;
   color: #777; }
@@ -13173,6 +13177,11 @@
   margin: -20px -20px 20px -20px;
   padding: 20px;
   background: #f2f2f2; }
+
+.sf-backend-wrp .modal-settings-space {
+  margin-top: -35px;
+  padding-top: 45px;
+  background: #fff; }
 
 .sf-backend-wrp .list-group-item {
   cursor: pointer;
@@ -14102,6 +14111,11 @@
 .sf-backend-wrp .sf-Media--info-image {
   margin-right: 20px;
   float: left; }
+
+.sf-backend-wrp .sf-Media-empty--image {
+  font-size: 34px;
+  padding: 20px 25px;
+  border: 1px solid #ddd; }
 
 .sf-backend-wrp .sf-Media--info-doc {
   width: 160px;
