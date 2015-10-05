@@ -34,7 +34,8 @@
 			        url = getServiceUrl() + "segments/";
 		        var reqOptions = requestOptions();
 		        reqOptions.params = {
-		            "ControlId": widgetContext.widgetId
+		            "ControlId": widgetContext.widgetId,
+		            "PageId": widgetContext.pageId
 		        };
 
 		        $http.get(url, reqOptions)
