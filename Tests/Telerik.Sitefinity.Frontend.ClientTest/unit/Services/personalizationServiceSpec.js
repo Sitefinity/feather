@@ -70,7 +70,7 @@ describe('personalizationService', function () {
     };
 
     var expectGetSegmentsServiceCall = function (items) {
-        var url = personalizationServiceBaseUrl + 'segments/?ControlId=' + sitefinity.pageEditor.widgetContext.Id;
+        var url = personalizationServiceBaseUrl + 'segments/?ControlId=' + sitefinity.pageEditor.widgetContext.Id + '&PageId=' + sitefinity.pageEditor.widgetContext.PageId;
 
         $httpBackend.expectGET(url).respond(items);
     };
