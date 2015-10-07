@@ -2,10 +2,12 @@
 namespace ASP
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Text;
     using System.Web.Mvc;
+    using Telerik.Sitefinity.Services;
 
     /// <summary>
     /// <see cref="HtmlHelper"/> extensions methods for rendering partial views.
@@ -139,17 +141,11 @@ namespace ASP
             }
         }
     }
-}
-
-namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
-{
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using Telerik.Sitefinity.Services;
 
     /// <summary>
     /// Helepr method for HTML markup generation.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Reviewed.")]
     public static class HtmlHelperExtensions
     {
         /// <summary>
