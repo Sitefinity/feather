@@ -140,12 +140,7 @@ describe("link selector", function () {
             return serviceResult.promise;
         }),
         getPageTitleByCulture: jasmine.createSpy('sfPageService.getPageTitleByCulture').andCallFake(function (item) {
-            if ($q) {
-                serviceResult = $q.defer();
-            }
-            serviceResult.resolve(item.Title);
-
-            return serviceResult.promise;
+            return item.Title.Value;
         })
     };
 

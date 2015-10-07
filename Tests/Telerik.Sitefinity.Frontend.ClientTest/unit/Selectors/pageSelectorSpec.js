@@ -60,12 +60,7 @@ describe("page selector", function () {
         }),
         getPredecessors: jasmine.createSpy('sfPageService.getPredecessors'),
         getPageTitleByCulture: jasmine.createSpy('sfPageService.getPageTitleByCulture').andCallFake(function (item) {
-            if ($q) {
-                serviceResult = $q.defer();
-            }
-            serviceResult.resolve(item.Title);
-
-            return serviceResult.promise;
+            return item.Title.Value;
         })
     };
 
