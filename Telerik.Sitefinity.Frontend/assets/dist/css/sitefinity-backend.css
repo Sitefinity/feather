@@ -13023,6 +13023,9 @@
   .sf-backend-wrp .dl-half dd {
     width: 65%; }
 
+.sf-backend-wrp p {
+  margin-bottom: 0; }
+
 .sf-backend-wrp .row-none {
   margin-right: 0px;
   margin-left: 0px; }
