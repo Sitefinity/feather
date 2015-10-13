@@ -20,7 +20,6 @@
   </li>
 </ul>
 
-<br ng-hide="!sfImage.ThumbnailUrl" />
 <button ng-show="sfModel && sfModel !== guidEmpty" class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
 <button ng-show="!sfModel || sfModel === guidEmpty" class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().SelectImage)</button>
 <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
