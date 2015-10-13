@@ -70,8 +70,7 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.UIArrangement">
-      <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.0\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.1\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUtilities.8.2.5900.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
