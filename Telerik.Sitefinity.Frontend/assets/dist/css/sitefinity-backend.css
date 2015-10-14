@@ -13280,7 +13280,7 @@
       line-height: 28px; }
   .sf-backend-wrp .list-group-item-draggable-2 > div {
     margin-right: 0;
-    margin-left: 37px;
+    margin-left: 27px;
     padding-left: 0; }
   .sf-backend-wrp .list-group-item-draggable-2 .form-control-highlight[type=text] {
     border-left: none; }
@@ -13319,6 +13319,9 @@
     color: #000;
     text-decoration: none;
     opacity: .75; }
+
+.sf-backend-wrp .list-group-item-add--spaced {
+  padding-left: 46px; }
 
 .sf-backend-wrp .list-group-endless + .list-group-item-add {
   display: block;
