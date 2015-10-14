@@ -13301,8 +13301,10 @@
     top: 5px;
     left: 26px; }
   .sf-backend-wrp .list-group-item-draggable--disabled input[type=text] {
+    width: 260px;
+    height: 30px;
     border: 1px solid #ddd;
-    margin-left: 35px;
+    margin-left: 26px;
     margin-top: -5px;
     background-color: #fff; }
   .sf-backend-wrp .list-group-item-draggable--disabled .static-choice {
