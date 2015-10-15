@@ -29,6 +29,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             ServerOperations.Pages().DeleteAllPages();
             ServerOperations.Templates().DeletePageTemplate(Template1Title);
             ServerOperations.Templates().DeletePageTemplate(Template2Title);
@@ -64,5 +66,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string Page2Title = "page2";
         private const string Page1Url = "page1";
         private const string Page2Url = "page2";
+        private const string AdminUserName = "admin";
+        private const string AdminPass = "admin@2";
     }
 }
