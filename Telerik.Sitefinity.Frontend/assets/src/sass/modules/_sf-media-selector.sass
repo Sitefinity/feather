@@ -222,7 +222,8 @@
 .Media-settings--bottom
 	top: auto
 	bottom: 0
-	padding: 0 20px
+	padding: 9px 20px
+	line-height: 26px
 	border-top: 1px solid #e5e5e5
 	border-bottom: none
 	background: none
@@ -232,6 +233,11 @@
 
 		&:hover
 			color: #333
+
+	.btn-group.btn-group-xs .btn-default
+		height: 26px
+		padding: 5px 6px
+		line-height: 14px
 
 // Sort and view options
 .Media-settings-sort
@@ -354,12 +360,6 @@
 			border: 1px solid #e5e5e5
 			background: #fff
 
-		.is-list .Media-file-thumb-holder
-			height: auto
-			line-height: 38px
-			border: none
-			background: none
-
 		.Media-item-title
 			display: block
 
@@ -375,7 +375,6 @@
 
 			.Media-file-thumb-holder
 				border-color: #fff
-
 
 
 //Video selector
@@ -433,6 +432,15 @@
 
 	.Media-file
 		border-radius: 0
+
+		&.Media-file--doc .Media-file-thumb-holder
+			height: auto
+			line-height: 38px
+			border: none
+			background: none
+
+		&.Media-file--video .Media-file-thumb-holder
+			height: 48px
 
 	.Media-file-wrapper
 		width: 100%
