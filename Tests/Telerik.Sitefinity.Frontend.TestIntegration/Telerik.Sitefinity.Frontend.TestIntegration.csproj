@@ -213,7 +213,7 @@
     </Reference>
     <Reference Include="Telerik.WebTestRunner.Server">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Telerik.WebTestRunner.Server.1.0.0.1\lib\net40\Telerik.WebTestRunner.Server.dll</HintPath>
+      <HintPath>..\..\packages\Telerik.Sitefinity.WebTestRunner.Server.1.0.0.2\lib\net40\Telerik.WebTestRunner.Server.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
