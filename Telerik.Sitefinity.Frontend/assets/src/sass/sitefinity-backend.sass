@@ -6,6 +6,7 @@
 @import "_bootstrap"
 
 // Overwrite Kendo styles
+.k-animation-container,
 .sf-backend-wrp
 	@import "kendo/_kendo.common-material.min"
 	@import "kendo/_kendo.material.min"
@@ -15,6 +16,10 @@
 	@import "kendo/_checkbox"
 	@import "kendo/_widget.sass"
 	@import "kendo/_button.sass"
+
+
+.sfFormsEditor .sf-backend-wrp
+	@import "kendo/_editor_temp"
 
 // Global styles
 @import "_global"
