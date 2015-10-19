@@ -19406,6 +19406,10 @@
 .sf-backend-wrp .input-group-addon {
   background: #fff; }
 
+.sf-backend-wrp .checkbox label,
+.sf-backend-wrp .radio label {
+  cursor: default; }
+
 .sf-backend-wrp .label-taxon {
   max-width: 33%;
   overflow: hidden;
