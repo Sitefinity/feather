@@ -30,20 +30,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             ObjectFactory.Container.RegisterType<PageEditorRouteHandler, MvcPageEditorRouteHandler>();
             ObjectFactory.Container.RegisterType<TemplateEditorRouteHandler, MvcTemplateEditorRouteHandler>();
             System.Web.Routing.RouteTable.Routes.Insert(1, new System.Web.Routing.Route("Sitefinity/Versioning/{itemId}/{VersionNumber}", ObjectFactory.Resolve<MvcVersioningRouteHandler>()));
-
-            EventHub.Subscribe<IPageTemplateViewModelCreatedEvent>(this.AugmentPageTemplateViewModel);
-        }
-
-        private void AugmentPageTemplateViewModel(IPageTemplateViewModelCreatedEvent ev)
-        {
-            if (ev != null && ev.PageTemplate != null && ev.ViewModel != null && ev.ViewModel.Framework == PageTemplateFramework.Mvc && !string.IsNullOrEmpty(ev.ViewModel.Name))
-            {
-                var package = (new PackageManager()).GetPackageFromTemplate(ev.PageTemplate);
-                if (!string.IsNullOrEmpty(package))
-                {
-                    ev.ViewModel.PackageBasedOn = package;
-                }
-            }
         }
     }
 }

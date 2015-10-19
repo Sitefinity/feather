@@ -20058,7 +20058,8 @@
 .sf-backend-wrp .Media-settings--bottom {
   top: auto;
   bottom: 0;
-  padding: 0 20px;
+  padding: 9px 20px;
+  line-height: 26px;
   border-top: 1px solid #e5e5e5;
   border-bottom: none;
   background: none; }
@@ -20066,6 +20067,10 @@
     color: #777; }
     .sf-backend-wrp .Media-settings--bottom a:hover {
       color: #333; }
+  .sf-backend-wrp .Media-settings--bottom .btn-group.btn-group-xs .btn-default {
+    height: 26px;
+    padding: 5px 6px;
+    line-height: 14px; }
 
 .sf-backend-wrp .Media-settings-sort {
   margin-right: -10px; }
@@ -20175,12 +20180,6 @@
   border: 1px solid #e5e5e5;
   background: #fff; }
 
-.sf-backend-wrp .Media-file.Media-file--doc .is-list .Media-file-thumb-holder {
-  height: auto;
-  line-height: 38px;
-  border: none;
-  background: none; }
-
 .sf-backend-wrp .Media-file.Media-file--doc .Media-item-title {
   display: block; }
 
@@ -20245,6 +20244,13 @@
 
 .sf-backend-wrp .is-list .Media-file {
   border-radius: 0; }
+  .sf-backend-wrp .is-list .Media-file.Media-file--doc .Media-file-thumb-holder {
+    height: auto;
+    line-height: 38px;
+    border: none;
+    background: none; }
+  .sf-backend-wrp .is-list .Media-file.Media-file--video .Media-file-thumb-holder {
+    height: 48px; }
 
 .sf-backend-wrp .is-list .Media-file-wrapper {
   width: 100%;
