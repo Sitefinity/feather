@@ -11,15 +11,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// <summary>
         /// Title for the grid designer resources resources class.
         /// </summary>
-        [ResourceEntry("GridResourcesTitle",
+        [ResourceEntry("GridDesignerResourcesTitle",
             Value = "Grid designer resources",
             Description = "Title for the grid designer resources resources class.",
             LastModified = "2015/06/23")]
-        public string GridResourcesTitle
+        public string GridDesignerResourcesTitle
         {
             get
             {
-                return this["GridResourcesTitle"];
+                return this["GridDesignerResourcesTitle"];
             }
         }
 
