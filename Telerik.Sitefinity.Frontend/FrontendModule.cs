@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Ninject;
 using Telerik.Microsoft.Practices.Unity;
+using Telerik.OpenAccess;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
@@ -475,7 +476,13 @@ namespace Telerik.Sitefinity.Frontend
             for (var i = 0; i < pathPairs.Length; i++)
             {
                 var pathPair = pathPairs[i];
-                var propertiesToUpdate = pageManager.GetProperties().Where(p => p.Value == pathPair.Item1).ToArray();
+                var propertiesToUpdate = pageManager.GetControls<ControlData>()
+                    .Where(c => c.IsLayoutControl)
+                    .Include(c => c.Properties)
+                    .SelectMany(c => c.Properties)
+                    .Where(p => p.Value == pathPair.Item1)
+                    .ToArray();
+
                 foreach (var property in propertiesToUpdate)
                     property.Value = pathPair.Item2;
 
