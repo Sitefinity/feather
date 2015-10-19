@@ -477,7 +477,9 @@ namespace Telerik.Sitefinity.Frontend
             for (var i = 0; i < pathPairs.Length; i++)
             {
                 var pathPair = pathPairs[i];
-                var propertiesToUpdate = pageManager.GetControls<ControlData>().Include(c => c.Properties)
+                var propertiesToUpdate = pageManager.GetControls<ControlData>()
+                    .Where(c => c.IsLayoutControl)
+                    .Include(c => c.Properties)
                     .SelectMany(c => c.Properties)
                     .Where(p => p.Value == pathPair.Item1)
                     .ToArray();
