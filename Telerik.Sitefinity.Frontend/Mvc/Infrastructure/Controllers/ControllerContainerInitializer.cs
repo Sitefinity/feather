@@ -39,6 +39,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
             var assemblies = controllerAssemblies ?? this.RetrieveAssemblies();
+
             this.RegisterVirtualPaths(assemblies);
 
             var controllerTypes = this.GetControllers(assemblies);
