@@ -459,44 +459,42 @@ namespace Telerik.Sitefinity.Frontend
 
         private void UpdateGridWidgetPaths()
         {
-            const int BATCH = 50;
+            const int BATCH = 200;
 
-            var pathPairs = new Tuple<string, string>[] 
+            var pathPairs = new Dictionary<string, string>()
             {
-                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-11+5.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-8+4.html"),
-                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-12+4.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-9+3.html"),
-                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-5+11.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+8.html"),
-                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+12.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+9.html"),
-                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-five-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-2+3+2+3+2.html"),
-                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-four-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+3+3+3.html"),
-                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-one-col.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-12.html"),
-                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-three-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+4+4.html"),
-                new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-two-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-6+6.html")
+                { "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-11+5.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-8+4.html" },
+                { "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-12+4.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-9+3.html" },
+                { "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-5+11.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+8.html" },
+                { "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+12.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+9.html" },
+                { "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-five-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-2+3+2+3+2.html" },
+                { "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-four-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-3+3+3+3.html" },
+                { "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-one-col.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-12.html" },
+                { "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-three-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-4+4+4.html" },
+                { "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-two-cols.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-6+6.html" }
             };
 
             var pageManager = PageManager.GetManager();
+            var oldPaths = pathPairs.Keys.ToArray();
+
             var layoutControlIds = pageManager.GetControls<ControlData>().Where(c => c.IsLayoutControl).Select(c => c.Id).ToArray();
-            for (var i = 0; i < pathPairs.Length; i++)
+            var currentControl = 0;
+            while (currentControl < layoutControlIds.Length)
             {
-                var pathPair = pathPairs[i];
-                var currentControl = 0;
-                while (currentControl < layoutControlIds.Length)
-                {
-                    var batchArray = layoutControlIds.Skip(currentControl).Take(BATCH).ToArray();
+                var batchArray = layoutControlIds.Skip(currentControl).Take(BATCH).ToArray();
 
-                    var propertiesToUpdate = pageManager.GetProperties()
-                        .Where(p => batchArray.Contains(p.Control.Id))
-                        .Where(p => p.Value == pathPair.Item1)
-                        .ToArray();
+                var propertiesToUpdate = pageManager.GetProperties()
+                    .Where(p => batchArray.Contains(p.Control.Id))
+                    .Where(p => oldPaths.Contains(p.Value))
+                    .ToArray();
 
-                    foreach (var property in propertiesToUpdate)
-                        property.Value = pathPair.Item2;
+                foreach (var property in propertiesToUpdate)
+                    property.Value = pathPairs[property.Value];
 
-                    if (propertiesToUpdate.Length > 0)
-                        pageManager.SaveChanges();
+                if (propertiesToUpdate.Length > 0)
+                    pageManager.SaveChanges();
 
-                    currentControl += BATCH;
-                }
+                currentControl += BATCH;
             }
         }
 
