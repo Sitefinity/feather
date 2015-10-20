@@ -459,6 +459,8 @@ namespace Telerik.Sitefinity.Frontend
 
         private void UpdateGridWidgetPaths()
         {
+            const int BATCH = 50;
+
             var pathPairs = new Tuple<string, string>[] 
             {
                 new Tuple<string, string>("~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-11+5.html", "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/GridSystem/Templates/grid-8+4.html"),
@@ -473,21 +475,28 @@ namespace Telerik.Sitefinity.Frontend
             };
 
             var pageManager = PageManager.GetManager();
+            var layoutControlIds = pageManager.GetControls<ControlData>().Where(c => c.IsLayoutControl).Select(c => c.Id).ToArray();
             for (var i = 0; i < pathPairs.Length; i++)
             {
                 var pathPair = pathPairs[i];
-                var propertiesToUpdate = pageManager.GetControls<ControlData>()
-                    .Where(c => c.IsLayoutControl)
-                    .Include(c => c.Properties)
-                    .SelectMany(c => c.Properties)
-                    .Where(p => p.Value == pathPair.Item1)
-                    .ToArray();
+                var currentControl = 0;
+                while (currentControl < layoutControlIds.Length)
+                {
+                    var batchArray = layoutControlIds.Skip(currentControl).Take(BATCH).ToArray();
 
-                foreach (var property in propertiesToUpdate)
-                    property.Value = pathPair.Item2;
+                    var propertiesToUpdate = pageManager.GetProperties()
+                        .Where(p => batchArray.Contains(p.Control.Id))
+                        .Where(p => p.Value == pathPair.Item1)
+                        .ToArray();
 
-                if (propertiesToUpdate.Length > 0)
-                    pageManager.SaveChanges();
+                    foreach (var property in propertiesToUpdate)
+                        property.Value = pathPair.Item2;
+
+                    if (propertiesToUpdate.Length > 0)
+                        pageManager.SaveChanges();
+
+                    currentControl += BATCH;
+                }
             }
         }
 
