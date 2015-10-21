@@ -227,6 +227,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageResource);
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 3);
 
+                AuthenticationHelper.AuthenticateUser(adminUserName, adminPass, true);
                 ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout1);
 
                 string layoutFile = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(Constants.TestPackageName, Constants.TestLayoutFileName);
