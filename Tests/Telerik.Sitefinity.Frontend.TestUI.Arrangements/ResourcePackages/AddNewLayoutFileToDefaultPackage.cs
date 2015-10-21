@@ -21,6 +21,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
 
             string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(PackageName, LayoutFileName);           
@@ -31,5 +33,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string PackageName = "Foundation";
         private const string LayoutFileName = "TestLayout.cshtml";
         private const string TemplateTitle = "TestLayout";
+        private const string AdminUserName = "admin";
+        private const string AdminPass = "admin@2";
     }
 }
