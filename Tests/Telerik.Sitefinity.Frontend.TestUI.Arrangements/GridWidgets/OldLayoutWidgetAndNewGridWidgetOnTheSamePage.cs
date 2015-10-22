@@ -19,6 +19,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             ServerOperations.Pages().CreatePage(PageName);
         }
 
@@ -28,9 +30,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             ServerOperations.Pages().DeleteAllPages();
         }
 
         private const string PageName = "GridPage";
+        private const string AdminUserName = "admin";
+        private const string AdminPass = "admin@2";
     }
 }

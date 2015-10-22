@@ -18,8 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// UI test AddAndDeleteGridWidgetFromFileSystemVerifyPageToolbox
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.FeatherTeam),
-        TestCategory(FeatherTestCategories.PagesAndContent)]
+        Owner(FeatherTeams.FeatherTeam)]
         public void AddAndDeleteGridWidgetFromFileSystemVerifyPageToolbox()
         {
             RuntimeSettingsModificator.ExecuteWithClientTimeout(1600000, () =>  BAT.Macros().NavigateTo().CustomPage("~/sitefinity/pages", false));
