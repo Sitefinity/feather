@@ -68,6 +68,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             string templateFileCopy = FileInjectHelper.GetDestinationFilePath(this.newLayoutTemplatePath);
             string newFilePath = FileInjectHelper.GetDestinationFilePath(this.newGridPath);
