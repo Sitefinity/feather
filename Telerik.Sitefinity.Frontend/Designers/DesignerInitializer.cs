@@ -57,7 +57,6 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 ////    @event.Scripts.Add(scriptRef);
                 ////}
      
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/kendo.all.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor-services.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor.js"));
                 
