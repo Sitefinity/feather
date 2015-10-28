@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.UI;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web.UI;
@@ -85,7 +87,9 @@ namespace Telerik.Sitefinity.Frontend.Designers
                     var zoneEditor = @event.Sender as ZoneEditor;
                     if (zoneEditor != null)
                     {
-                        var packageStyleMarkup = "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ResourcePackages/{0}/assets/dist/css/styles.min.css\"></link>".Arrange(currentPackage);
+                        var urlhelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+                        var url = urlhelper.Content("~/ResourcePackages/{0}/assets/dist/css/styles.min.css".Arrange(currentPackage));
+                        var packageStyleMarkup = "<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\">".Arrange(url);
                         var packageStyleLiteralControl = new LiteralControl(packageStyleMarkup);
                         zoneEditor.Page.Header.Controls.Add(packageStyleLiteralControl);
                     }
