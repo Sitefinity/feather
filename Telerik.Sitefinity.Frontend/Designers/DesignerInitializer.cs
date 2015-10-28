@@ -88,8 +88,8 @@ namespace Telerik.Sitefinity.Frontend.Designers
                     if (zoneEditor != null)
                     {
                         var urlhelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-                        var url = urlhelper.WidgetContent("~/ResourcePackages/{0}/assets/dist/css/styles.min.css".Arrange(currentPackage));
-                        var packageStyleMarkup = "<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\"></link>".Arrange(url);
+                        var url = urlhelper.Content("~/ResourcePackages/{0}/assets/dist/css/styles.min.css".Arrange(currentPackage));
+                        var packageStyleMarkup = "<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\">".Arrange(url);
                         var packageStyleLiteralControl = new LiteralControl(packageStyleMarkup);
                         zoneEditor.Page.Header.Controls.Add(packageStyleLiteralControl);
                     }
