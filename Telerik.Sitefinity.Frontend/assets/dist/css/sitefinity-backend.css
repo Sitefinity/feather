@@ -19304,6 +19304,24 @@
   width: 550px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
 
+.sf-backend-wrp .list-group-item-hint-2 {
+  width: 550px;
+  height: 40px;
+  line-height: 20px;
+  padding-top: 6px;
+  box-shadow: none;
+  border: 1px solid #ddd !important; }
+  .sf-backend-wrp .list-group-item-hint-2 input[type=checkbox] {
+    position: absolute;
+    top: 10px; }
+  .sf-backend-wrp .list-group-item-hint-2 .close {
+    margin-top: 2px; }
+  .sf-backend-wrp .list-group-item-hint-2 .make-default {
+    margin-top: 2px; }
+  .sf-backend-wrp .list-group-item-hint-2 .col-md-2 {
+    height: 30px;
+    line-height: 25px; }
+
 .sf-backend-wrp .list-group-item-placeholder {
   background: #ffff99;
   height: 20px;
