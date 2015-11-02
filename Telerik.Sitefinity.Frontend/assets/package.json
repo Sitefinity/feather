@@ -1,7 +1,7 @@
 {
   "name": "Feather",
   "devDependencies": {
-    "bootstrap-sass": "git://github.com/twbs/bootstrap-sass.git#3.3-stable",
+    "bootstrap-sass": "3.3.5",
     "grunt": "^0.4.5",
     "grunt-concurrent": "^2.0.0",
     "grunt-contrib-uglify": "^0.10.0",
