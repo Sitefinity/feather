@@ -14,6 +14,7 @@ using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -200,6 +201,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 .FirstOrDefault();
 
             return dynamicContentType;
+        }
+
+        /// <summary>
+        /// Determines whether this controller will produce output when rendered in-memory by the search engine.
+        /// </summary>
+        public static IndexRenderModes GetIndexRenderMode(this IController controller)
+        {
+            if (controller == null) 
+                throw new ArgumentNullException("controller");
+
+            var searchableControl = controller as ISearchIndexBehavior;
+            if (searchableControl != null)
+            {
+                var exclude = searchableControl.ExcludeFromSearchIndex;
+                if (exclude)
+                    return IndexRenderModes.NoOutput;
+                else
+                    return IndexRenderModes.Normal;
+            }
+
+            var attribute = controller.GetType().GetCustomAttributes(true).OfType<IndexRenderModeAttribute>().LastOrDefault();
+            return attribute == null ? IndexRenderModes.Normal : attribute.Mode;
         }
 
         #endregion

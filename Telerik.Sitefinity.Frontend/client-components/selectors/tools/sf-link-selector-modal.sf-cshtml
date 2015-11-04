@@ -1,4 +1,4 @@
-<div class="contentSelector" template-url="sf-link-selector-template" modal size="normal" window-class="sf-designer-dlg sf-timespan-selector-dlg" existing-scope="true">
+<div class="contentSelector" template-url="sf-link-selector-template" modal size="normal" window-class="sf-designer-dlg sf-timespan-selector-dlg sf-backend-wrp" existing-scope="true">
 </div>
 
 <script type="text/ng-template" id="sf-link-selector-template">

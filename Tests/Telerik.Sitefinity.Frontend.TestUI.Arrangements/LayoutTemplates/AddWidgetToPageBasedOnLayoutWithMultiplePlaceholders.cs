@@ -6,8 +6,8 @@ using System.Text;
 using Telerik.Sitefinity.Frontend.TestUI.Arrangements.MvcWidgets.TestControllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.TestArrangementService.Attributes;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
-using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements

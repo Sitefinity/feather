@@ -1,8 +1,8 @@
 ﻿using System;
 using Telerik.Sitefinity.Frontend.TestUI.Arrangements.MvcWidgets;
 using Telerik.Sitefinity.Mvc.TestUtilities.CommonOperations;
+using Telerik.Sitefinity.TestArrangementService.Attributes;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
-using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {

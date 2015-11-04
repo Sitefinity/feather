@@ -9,8 +9,8 @@ using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
+using Telerik.Sitefinity.TestArrangementService.Attributes;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
-using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
@@ -68,6 +68,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             string templateFileCopy = FileInjectHelper.GetDestinationFilePath(this.newLayoutTemplatePath);
             string newFilePath = FileInjectHelper.GetDestinationFilePath(this.newGridPath);

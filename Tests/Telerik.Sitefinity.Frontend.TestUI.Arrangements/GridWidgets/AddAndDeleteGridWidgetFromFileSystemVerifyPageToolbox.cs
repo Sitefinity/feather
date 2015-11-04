@@ -9,8 +9,8 @@ using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
+using Telerik.Sitefinity.TestArrangementService.Attributes;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
-using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
@@ -48,6 +48,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerArrangement]
         public void DeleteGridWidgetFromFileSystem()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             File.Delete(filePath);
         }
@@ -58,6 +60,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             ServerOperations.Pages().DeleteAllPages();
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             File.Delete(filePath);

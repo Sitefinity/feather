@@ -11,7 +11,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations.Pages
     public class GridWidgetsOperations
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed")]
-        public void RemoveGridControlFromToolboxesConfig(string gridName, string sectionName = "BootstrapGrids")
+        public void RemoveGridControlFromToolboxesConfig(string gridName, string sectionName = "Grids")
         {
             ConfigManager configurationManager = ConfigManager.GetManager();
             var toolboxesConfig = configurationManager.GetSection<ToolboxesConfig>();

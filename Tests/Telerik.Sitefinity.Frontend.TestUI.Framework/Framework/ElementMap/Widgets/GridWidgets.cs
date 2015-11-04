@@ -31,7 +31,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         {
             get
             {
-                return this.Get<HtmlSpan>("tagname=span", "InnerText=Bootstrap grid widgets");
+                return this.Get<HtmlSpan>("tagname=span", "InnerText=Grid widgets");
             }
         }
     }

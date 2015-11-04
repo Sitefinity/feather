@@ -43,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (routeData == null)
                 throw new ArgumentNullException("routeData");
 
-            var controllerName = routeData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] as string;
+            var controllerName = routeData.Values[FeatherActionInvoker.ControllerNameKey] as string;
             return this.routesPerController.ContainsKey(controllerName);
         }
 
@@ -66,10 +66,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (routeData == null)
                 throw new ArgumentNullException("routeData");
 
-            if (context.Request == null || context.Request.RequestContext == null || !routeData.Values.ContainsKey(DynamicUrlParamActionInvoker.ControllerNameKey))
+            if (context.Request == null || context.Request.RequestContext == null || !routeData.Values.ContainsKey(FeatherActionInvoker.ControllerNameKey))
                 return false;
 
-            var controllerName = routeData.Values[DynamicUrlParamActionInvoker.ControllerNameKey] as string;
+            var controllerName = routeData.Values[FeatherActionInvoker.ControllerNameKey] as string;
             if (this.routesPerController.ContainsKey(controllerName))
             {
                 RouteData newRouteData;
@@ -82,7 +82,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 {
                     foreach (KeyValuePair<string, object> value in newRouteData.Values)
                     {
-                        if (value.Key != DynamicUrlParamActionInvoker.ControllerNameKey)
+                        if (value.Key != FeatherActionInvoker.ControllerNameKey)
                             routeData.Values[value.Key] = value.Value;
                     }
 
@@ -108,9 +108,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 var directRoute = route as Route;
                 if (directRoute != null)
                 {
-                    var controllerName = directRoute.Defaults[DynamicUrlParamActionInvoker.ControllerNameKey] as string;
+                    var controllerName = directRoute.Defaults[FeatherActionInvoker.ControllerNameKey] as string;
 
-                    if (directRoute.Defaults.ContainsKey(DynamicUrlParamActionInvoker.ControllerNameKey))
+                    if (directRoute.Defaults.ContainsKey(FeatherActionInvoker.ControllerNameKey))
                     {
                         if (!controllerRoutes.ContainsKey(controllerName))
                             controllerRoutes.Add(controllerName, new List<RouteBase>());

@@ -58,7 +58,10 @@ describe("page selector", function () {
 
             return serviceResult.promise;
         }),
-        getPredecessors: jasmine.createSpy('sfPageService.getPredecessors')
+        getPredecessors: jasmine.createSpy('sfPageService.getPredecessors'),
+        getPageTitleByCulture: jasmine.createSpy('sfPageService.getPageTitleByCulture').andCallFake(function (item) {
+            return item.Title.Value;
+        })
     };
 
     //Load the module responsible for the modal dialog

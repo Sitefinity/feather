@@ -39,6 +39,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
             var assemblies = controllerAssemblies ?? this.RetrieveAssemblies();
+
             this.RegisterVirtualPaths(assemblies);
 
             var controllerTypes = this.GetControllers(assemblies);
@@ -229,7 +230,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         protected virtual void InitializeCustomRouting()
         {
-            ObjectFactory.Container.RegisterType<IControllerActionInvoker, DynamicUrlParamActionInvoker>();
+            ObjectFactory.Container.RegisterType<IControllerActionInvoker, FeatherActionInvoker>();
             ObjectFactory.Container.RegisterType<IRouteParamResolver, IntParamResolver>("int");
             ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
             ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");

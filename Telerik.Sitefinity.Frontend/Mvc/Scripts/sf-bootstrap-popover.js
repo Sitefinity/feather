@@ -22,7 +22,8 @@
                             trigger: scope.sfPopoverTrigger,
                             container: scope.sfPopoverAppendToBody && scope.sfPopoverAppendToBody.toLowerCase() === 'true' ? 'body' : false,
                             content: $compile(scope.sfPopoverContent)(scope.$parent),
-                            title: $compile('<span>' + scope.sfPopoverTitle + '</span>')(scope.$parent)
+                            title: $compile('<span>' + scope.sfPopoverTitle + '</span>')(scope.$parent),
+                            template: '<div class="popover sf-backend-wrp" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
                         });
                     }
                 }

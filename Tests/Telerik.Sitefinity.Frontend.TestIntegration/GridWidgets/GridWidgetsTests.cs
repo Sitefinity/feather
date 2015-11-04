@@ -25,6 +25,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
         [Category(TestCategories.GridWidgets)]
         [Author(FeatherTeams.FeatherTeam)]
         [Description("Grid widgets - edit grid widget on page from file system.")]
+        [Ignore("")]
         public void GridWidget_EditGridWidgetOnPageFromFileSystem()
         {
             PageManager pageManager = PageManager.GetManager();
@@ -37,7 +38,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.GridWidgets
 
             try
             {
-                var template = pageManager.GetTemplates().Where(t => t.Title == TemplateTitle).FirstOrDefault();
+                var template = pageManager.GetTemplates().Where(t => t.Name == TemplateTitle).FirstOrDefault();
                 Assert.IsNotNull(template, "Template was not found");
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, PageNamePrefix, UrlNamePrefix);
