@@ -566,8 +566,25 @@
                ],
                "shortDescription" : "Done",
                "unstable" : false
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Form selector",
+               "progress" : 100,
+               "shortDescription" : "Done",
+               "unstable" : false,
+      			   "releases" : [
+                {
+                   "article" : "",
+                   "commitHash" : "e3ba7c1ec7edd7b302df342b0c2b8482b1de82b5",
+                   "date" : "2015-10-21 16:32 +0300",
+                   "name" : "Form selector implementation",
+                   "tag" : "v.1.4.360.0"
+                }
+              ]
             }
-         ]
+				]
       },
       {
          "description" : "",
@@ -945,6 +962,40 @@
             {
                "expectedBy" : "",
                "longDescription" : "",
+               "name" : "Form",
+               "progress" : 100,
+               "shortDescription" : "Done",
+               "unstable" : false,
+      			   "releases" : [
+                {
+                   "article" : "",
+                   "commitHash" : "e3ba7c1ec7edd7b302df342b0c2b8482b1de82b5",
+                   "date" : "2015-10-21 16:32 +0300",
+                   "name" : "Forms widget implementation",
+                   "tag" : "v.1.4.360.0"
+                }
+      				]
+            },
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
+               "name" : "Card",
+               "progress" : 100,
+               "shortDescription" : "Done",
+               "unstable" : false,
+      			   "releases" : [
+                {
+                   "article" : "",
+                   "commitHash" : "e3ba7c1ec7edd7b302df342b0c2b8482b1de82b5",
+                   "date" : "2015-10-21 16:32 +0300",
+                   "name" : "Card widget implementation",
+                   "tag" : "v.1.4.360.0"
+                }
+      				]
+            },			
+            {
+               "expectedBy" : "",
+               "longDescription" : "",
                "name" : "Comments and reviews",
                "progress" : 85,
                "releases" : [
@@ -1013,14 +1064,6 @@
                   }
                ],
                "shortDescription" : "Released",
-               "unstable" : false
-            },
-            {
-               "expectedBy" : "",
-               "longDescription" : "",
-               "name" : "Form",
-               "progress" : 0,
-               "shortDescription" : "Not done",
                "unstable" : false
             },
             {
