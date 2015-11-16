@@ -1,4 +1,9 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Reflection;
+using System.Web.WebPages;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities
 {
@@ -14,6 +19,27 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities
         public static Assembly GetTestUtilitiesAssembly()
         {
             return Assembly.GetExecutingAssembly();
+        }
+
+        /// <summary>
+        /// Ensures that the razor views are precompiled in a given assembly.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        /// <param name="failedViews">The views that are found to not be precompiled.</param>
+        /// <returns>True if all view are precompiled.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "1#")]
+        public static bool EnsurePrecompiledRazorViews(Assembly assembly, out string[] failedViews)
+        {
+            var extension = ".cshtml";
+            var prefix = assembly.GetName().Name + ".";
+            var names = assembly.GetManifestResourceNames().Where(r => r.EndsWith(extension, StringComparison.OrdinalIgnoreCase));
+            var viewTypes = assembly.GetExportedTypes()
+                .Where(t => t.GetCustomAttribute<PageVirtualPathAttribute>() != null)
+                .Select(t => t.GetCustomAttribute<PageVirtualPathAttribute>().VirtualPath)
+                    .Select(n => n.Replace("~/", prefix).Replace('/', '.'));
+
+            failedViews = names.Except(viewTypes).ToArray();
+            return failedViews.Length == 0;
         }
     }
 }
