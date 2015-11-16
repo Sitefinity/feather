@@ -1,7 +1,6 @@
-﻿using System;
+﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUtilities;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 {

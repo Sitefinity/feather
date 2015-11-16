@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -32,11 +31,11 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities
         {
             var extension = ".cshtml";
             var prefix = assembly.GetName().Name + ".";
-            var names = assembly.GetManifestResourceNames().Where(r => r.EndsWith(extension, StringComparison.OrdinalIgnoreCase));
+            var names = assembly.GetManifestResourceNames().Where(r => r.EndsWith(extension, StringComparison.OrdinalIgnoreCase)).Select(n => n.ToUpperInvariant());
             var viewTypes = assembly.GetExportedTypes()
                 .Where(t => t.GetCustomAttribute<PageVirtualPathAttribute>() != null)
                 .Select(t => t.GetCustomAttribute<PageVirtualPathAttribute>().VirtualPath)
-                    .Select(n => n.Replace("~/", prefix).Replace('/', '.'));
+                    .Select(n => n.Replace("~/", prefix).Replace('/', '.').ToUpperInvariant());
 
             failedViews = names.Except(viewTypes).ToArray();
             return failedViews.Length == 0;
