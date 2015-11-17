@@ -33,9 +33,10 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities
             var prefix = assembly.GetName().Name + ".";
             var names = assembly.GetManifestResourceNames().Where(r => r.EndsWith(extension, StringComparison.OrdinalIgnoreCase)).Select(n => n.ToUpperInvariant());
             var viewTypes = assembly.GetExportedTypes()
-                .Where(t => t.GetCustomAttribute<PageVirtualPathAttribute>() != null)
-                .Select(t => t.GetCustomAttribute<PageVirtualPathAttribute>().VirtualPath)
-                    .Select(n => n.Replace("~/", prefix).Replace('/', '.').ToUpperInvariant());
+                .Select(t => t.GetCustomAttribute<PageVirtualPathAttribute>())
+                    .Where(a => a != null)
+                    .Select(a => a.VirtualPath)
+                        .Select(n => n.Replace("~/", prefix).Replace('/', '.').ToUpperInvariant());
 
             failedViews = names.Except(viewTypes).ToArray();
             return failedViews.Length == 0;

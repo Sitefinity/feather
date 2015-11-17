@@ -301,6 +301,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="GridSystem\GridControlToolboxFilter.cs" />
+    <Compile Include="Mvc\Controllers\CompositePrecompiledMvcEngineWrapper.cs" />
     <Compile Include="Mvc\Controllers\PersonalizationDesignerController.cs" />
     <Compile Include="Mvc\Controllers\GridDesignerController.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\AttributeRoutingManager.cs" />

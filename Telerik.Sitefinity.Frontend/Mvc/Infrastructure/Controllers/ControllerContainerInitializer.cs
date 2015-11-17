@@ -7,10 +7,12 @@ using System.Reflection;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RazorGenerator.Mvc;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
@@ -46,6 +48,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             this.InitializeControllers(controllerTypes);
 
             this.InitializeCustomRouting();
+
+            this.RegisterPrecompiledViewEngines(assemblies);
         }
 
         /// <summary>
@@ -338,6 +342,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                     Res.RegisterResource(resourceClass);
                 }
             }
+        }
+
+        private void RegisterPrecompiledViews(IEnumerable<Assembly> assemblies, List<PrecompiledViewAssembly> precompiledViewAssemblies)
+        {
+            foreach (var assembly in assemblies)
+            {
+                var basePath = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(assembly);
+                precompiledViewAssemblies.Add(new PrecompiledViewAssembly(assembly, basePath)
+                {
+                    UsePhysicalViewsIfNewer = false
+                });
+            }
+        }
+
+        private void RegisterPrecompiledViewEngines(IEnumerable<Assembly> assemblies)
+        {
+            var precompiledViewAssemblies = new List<PrecompiledViewAssembly>();
+            this.RegisterPrecompiledViews(assemblies, precompiledViewAssemblies);
+
+            ViewEngines.Engines.Insert(0, new CompositePrecompiledMvcEngineWrapper(precompiledViewAssemblies.ToArray()));
         }
 
         #endregion
