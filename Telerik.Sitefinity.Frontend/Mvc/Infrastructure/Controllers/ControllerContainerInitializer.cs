@@ -361,7 +361,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var precompiledViewAssemblies = new List<PrecompiledViewAssembly>();
             this.RegisterPrecompiledViews(assemblies, precompiledViewAssemblies);
 
-            ViewEngines.Engines.Insert(0, new CompositePrecompiledMvcEngineWrapper(precompiledViewAssemblies.ToArray()));
+            if (precompiledViewAssemblies.Count > 0)
+            {
+                ViewEngines.Engines.Insert(0, new CompositePrecompiledMvcEngineWrapper(precompiledViewAssemblies.ToArray()));
+            }
         }
 
         #endregion

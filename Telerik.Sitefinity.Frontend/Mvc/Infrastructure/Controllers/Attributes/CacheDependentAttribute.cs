@@ -28,12 +28,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
                 {
                     var viewResult = filterContext.Result as ViewResultBase;
 
-                    if (viewResult != null)
+                    if (viewResult != null && viewResult.View != null)
                     {
-                        var builtView = viewResult.View as BuildManagerCompiledView;
-                        if (builtView != null)
+                        var viewPath = FrontendManager.VirtualPathBuilder.GetViewPath(viewResult.View);
+                        if (!viewPath.IsNullOrEmpty())
                         {
-                            var cacheDependency = this.GetCacheDependency(builtView.ViewPath);
+                            var cacheDependency = this.GetCacheDependency(viewPath);
                             if (cacheDependency != null)
                             {
                                 context.Response.AddCacheDependency(cacheDependency);
