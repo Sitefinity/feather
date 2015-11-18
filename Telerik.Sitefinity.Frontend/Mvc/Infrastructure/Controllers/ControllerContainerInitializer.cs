@@ -44,7 +44,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 if (ControllerContainerInitializer.controllerContainerAssemblies == null)
                 {
-                    lock (ControllerContainerInitializer.controllerContainerAssemblies)
+                    lock (ControllerContainerInitializer.ControllerContainerAssembliesLock)
                     {
                         if (ControllerContainerInitializer.controllerContainerAssemblies == null)
                         {
@@ -58,7 +58,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             private set
             {
-                lock (ControllerContainerInitializer.controllerContainerAssemblies)
+                lock (ControllerContainerInitializer.ControllerContainerAssembliesLock)
                 {
                     ControllerContainerInitializer.controllerContainerAssemblies = value;
                 }
@@ -410,6 +410,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         private static IEnumerable<Assembly> controllerContainerAssemblies;
+        private static readonly object ControllerContainerAssembliesLock = new object();
 
         #endregion
     }

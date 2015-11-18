@@ -528,7 +528,7 @@ namespace Telerik.Sitefinity.Frontend
 
         private IKernel ninjectDependencyResolver;
         private Lazy<IEnumerable<IInitializer>> initializers = new Lazy<IEnumerable<IInitializer>>(() =>
-            typeof(FrontendModule).Assembly.GetTypes().Where(t => typeof(IInitializer).IsAssignableFrom(t)).Select(t => Activator.CreateInstance(t) as IInitializer));
+            typeof(FrontendModule).Assembly.GetTypes().Where(t => typeof(IInitializer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).Select(t => Activator.CreateInstance(t) as IInitializer));
 
         private const string FrontendServiceName = "Telerik.Sitefinity.Frontend";
     }
