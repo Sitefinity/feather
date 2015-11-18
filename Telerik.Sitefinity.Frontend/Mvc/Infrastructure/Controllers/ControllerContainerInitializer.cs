@@ -16,6 +16,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Localization;
+using Telerik.Sitefinity.Modules.ControlTemplates;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy.TypeDescription;
 using Telerik.Sitefinity.Mvc.Store;
@@ -27,25 +28,68 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
     /// <summary>
     /// This class contains logic for locating and initializing controllers.
     /// </summary>
-    internal class ControllerContainerInitializer
+    internal class ControllerContainerInitializer : IInitializer
     {
         #region Public members
 
         /// <summary>
+        /// Gets the controller container assemblies.
+        /// </summary>
+        /// <value>
+        /// The controller container assemblies.
+        /// </value>
+        public static IEnumerable<Assembly> ControllerContainerAssemblies
+        {
+            get
+            {
+                if (ControllerContainerInitializer.controllerContainerAssemblies == null)
+                {
+                    lock (ControllerContainerInitializer.controllerContainerAssemblies)
+                    {
+                        if (ControllerContainerInitializer.controllerContainerAssemblies == null)
+                        {
+                            ControllerContainerInitializer.controllerContainerAssemblies = new ControllerContainerInitializer().RetrieveAssemblies();
+                        }
+                    }
+                }
+
+                return ControllerContainerInitializer.controllerContainerAssemblies;
+            }
+
+            private set
+            {
+                lock (ControllerContainerInitializer.controllerContainerAssemblies)
+                {
+                    ControllerContainerInitializer.controllerContainerAssemblies = value;
+                }
+            }
+        }
+
+        /// <summary>
         /// Initializes the controllers that are available to the web application.
         /// </summary>
-        public virtual void Initialize(IEnumerable<Assembly> controllerAssemblies)
+        public virtual void Initialize()
         {
             GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
-            var assemblies = controllerAssemblies ?? this.RetrieveAssemblies();
+            this.RegisterVirtualPaths(ControllerContainerInitializer.ControllerContainerAssemblies);
 
-            this.RegisterVirtualPaths(assemblies);
-
-            var controllerTypes = this.GetControllers(assemblies);
+            var controllerTypes = this.GetControllers(ControllerContainerInitializer.ControllerContainerAssemblies);
             this.InitializeControllers(controllerTypes);
 
             this.InitializeCustomRouting();
+        }
+
+        /// <summary>
+        /// Uninitializes the controllers that are available to the web application.
+        /// </summary>
+        public virtual void Uninitialize()
+        {
+            GlobalFilters.Filters.Remove(new CacheDependentAttribute());
+
+            this.UninitializeControllers(this.GetControllers(ControllerContainerInitializer.ControllerContainerAssemblies));
+
+            ControllerContainerInitializer.ControllerContainerAssemblies = null;
         }
 
         /// <summary>
@@ -140,6 +184,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (var controller in controllers)
             {
                 this.RegisterController(controller);
+            }
+        }
+
+        /// <summary>
+        /// Uninitializes the specified <paramref name="controllers"/> by ensuring they have their proper registrations in the toolbox and that the controller factory will be able to resolve them.
+        /// </summary>
+        /// <param name="controllers">The controllers.</param>
+        protected virtual void UninitializeControllers(IEnumerable<Type> controllers)
+        {
+            // We have not registered FrontendControllerFactory, so this will revert it
+            this.ReplaceControllerFactory();
+
+            this.AddSitefinityViewEngine();
+
+            foreach (var controller in controllers)
+            {
+                ControllerStore.RemoveController(controller);
             }
         }
 
@@ -306,7 +367,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 var widgetName = controllerType.Name.Replace("Controller", string.Empty);
                 var mvcWidgetName = string.Format(CultureInfo.InvariantCulture, "{0} (MVC)", widgetName);
 
-                Telerik.Sitefinity.Modules.ControlTemplates.ControlTemplates.RegisterTemplatableControl(controllerType, controllerType, string.Empty, widgetName, mvcWidgetName);
+                ControlTemplates.RegisterTemplatableControl(controllerType, controllerType, string.Empty, widgetName, mvcWidgetName);
             }
         }
 
@@ -318,6 +379,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 ViewEngines.Engines.Remove(sitefinityViewEngine);
             }
+        }
+
+        private void AddSitefinityViewEngine()
+        {
+            // Remove it first in case it is there
+            this.RemoveSitefinityViewEngine();
+
+            ViewEngines.Engines.Add(new SitefinityViewEngine());
         }
 
         /// <summary>
@@ -339,6 +408,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 }
             }
         }
+
+        private static IEnumerable<Assembly> controllerContainerAssemblies;
 
         #endregion
     }

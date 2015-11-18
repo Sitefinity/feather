@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
     /// <summary>
     /// This class contains logic for configuring the file monitoring functionality. 
     /// </summary>
-    internal class FileMonitoringInitializer
+    internal class FileMonitoringInitializer : IInitializer
     {
         /// <summary>
         /// Initializes and configure file monitoring functionality.
@@ -34,17 +34,27 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         }
 
         /// <summary>
+        /// Uninitializes the file monitoring functionality.
+        /// </summary>
+        public void Uninitialize()
+        {
+            this.fileMonitor.Dispose();
+        }
+
+        /// <summary>
         /// Registers the file observers.
         /// </summary>
         private void RegisterFileObservers()
         {
-            var fileObserver = ObjectFactory.Resolve<IFileMonitor>();
+            this.fileMonitor = ObjectFactory.Resolve<IFileMonitor>();
 
             var monitoredDirectories = new List<MonitoredDirectory>();
             monitoredDirectories.Add(new MonitoredDirectory("~/" + PackageManager.PackagesFolder, true));
             monitoredDirectories.Add(new MonitoredDirectory("~/Mvc/Views/Layouts", false));
 
-            fileObserver.Start(monitoredDirectories);
+            this.fileMonitor.Start(monitoredDirectories);
         }
+
+        private IFileMonitor fileMonitor;
     }
 }

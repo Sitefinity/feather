@@ -106,10 +106,8 @@ namespace Telerik.Sitefinity.Frontend
             SystemManager.RegisterServiceStackPlugin(new FilesServiceStackPlugin());
             SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
 
-            this.controllerAssemblies = new ControllerContainerInitializer().RetrieveAssemblies();
-
             this.ninjectDependencyResolver = new StandardKernel();
-            this.ninjectDependencyResolver.Load(this.controllerAssemblies);
+            this.ninjectDependencyResolver.Load(ControllerContainerInitializer.ControllerContainerAssemblies);
         }
 
         /// <summary>
@@ -122,6 +120,11 @@ namespace Telerik.Sitefinity.Frontend
                 this.ninjectDependencyResolver.Dispose();
 
             Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
+
+            foreach (var initializer in this.initializers.Value)
+            {
+                initializer.Uninitialize();
+            }
 
             base.Unload();
         }
@@ -186,21 +189,10 @@ namespace Telerik.Sitefinity.Frontend
         {
             if (e.CommandName == "Bootstrapped")
             {
-                var resourcesInitializer = new ResourcesInitializer();
-                resourcesInitializer.Initialize();
-
-                var fileMonitoringInitilizer = new FileMonitoringInitializer();
-                fileMonitoringInitilizer.Initialize();
-
-                var controllerContainerInitializer = new ControllerContainerInitializer();
-                controllerContainerInitializer.Initialize(this.controllerAssemblies);
-                this.controllerAssemblies = null; // We won't be needing those anymore. Set them free.
-
-                var layoutsInitializer = new LayoutInitializer();
-                layoutsInitializer.Initialize();
-
-                var designerInitializer = new DesignerInitializer();
-                designerInitializer.Initialize();
+                foreach (var initializer in this.initializers.Value)
+                {
+                    initializer.Initialize();
+                }
 
                 ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
                 ObjectFactory.Container.RegisterType<IToolboxFilter, GridControlToolboxFilter>(typeof(GridControlToolboxFilter).FullName, new InjectionConstructor(new Func<PageTemplateFramework>(FrontendModule.ExtractFramework)));
@@ -535,7 +527,8 @@ namespace Telerik.Sitefinity.Frontend
         }
 
         private IKernel ninjectDependencyResolver;
-        private IEnumerable<Assembly> controllerAssemblies;
+        private Lazy<IEnumerable<IInitializer>> initializers = new Lazy<IEnumerable<IInitializer>>(() =>
+            typeof(FrontendModule).Assembly.GetTypes().Where(t => typeof(IInitializer).IsAssignableFrom(t)).Select(t => Activator.CreateInstance(t) as IInitializer));
 
         private const string FrontendServiceName = "Telerik.Sitefinity.Frontend";
     }
