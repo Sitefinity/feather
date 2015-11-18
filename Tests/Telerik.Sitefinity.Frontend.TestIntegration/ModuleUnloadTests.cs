@@ -172,7 +172,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
 
         private void DeactivateFeather()
         {
-            const string UninstallOperationEndpoint = "/Sitefinity/Services/ModulesService/modules?operation=1";
+            const string UninstallOperationEndpoint = "/Sitefinity/Services/ModulesService/modules?operation=3";
             this.MakePutRequest(UninstallOperationEndpoint, JsonRequestPayload);
         }
 
