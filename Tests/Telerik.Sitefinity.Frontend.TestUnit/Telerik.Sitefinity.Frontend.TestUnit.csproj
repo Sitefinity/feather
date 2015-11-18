@@ -256,6 +256,7 @@
     <Compile Include="Mvc\Helpers\ResourceHelperTests.cs" />
     <Compile Include="Mvc\Helpers\TaxonUrlMapperTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttributeTests.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerContainerAttributeTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerExtensionsTests.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensionsTests.cs" />
     <Compile Include="GridSystem\GridControlTests.cs" />
