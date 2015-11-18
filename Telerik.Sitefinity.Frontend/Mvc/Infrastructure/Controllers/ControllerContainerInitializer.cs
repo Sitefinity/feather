@@ -89,6 +89,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             this.UninitializeControllers(this.GetControllers(ControllerContainerInitializer.ControllerContainerAssemblies));
 
+            foreach (var assembly in ControllerContainerInitializer.ControllerContainerAssemblies)
+            {
+                this.UninitializeControllerContainer(assembly);
+            }
+
             ControllerContainerInitializer.ControllerContainerAssemblies = null;
         }
 
@@ -134,6 +139,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             var initializationMethod = containerAttribute.InitializationType.GetMethod(containerAttribute.InitializationMethod);
             initializationMethod.Invoke(null, null);
+        }
+
+        /// <summary>
+        /// Executes the uninitialization method specified in the <see cref="ControllerContainerAttribute"/> attribute.
+        /// </summary>
+        /// <param name="container"></param>
+        protected virtual void UninitializeControllerContainer(Assembly container)
+        {
+            if (container == null)
+                throw new ArgumentNullException("container");
+
+            var containerAttribute = container.GetCustomAttributes(false).Single(attr => attr.GetType().AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName) as ControllerContainerAttribute;
+
+            if (containerAttribute.UninitializationType == null || containerAttribute.UninitializationMethod.IsNullOrWhitespace())
+                return;
+
+            var uninitializationMethod = containerAttribute.UninitializationType.GetMethod(containerAttribute.UninitializationMethod);
+            uninitializationMethod.Invoke(null, null);
         }
 
         /// <summary>
