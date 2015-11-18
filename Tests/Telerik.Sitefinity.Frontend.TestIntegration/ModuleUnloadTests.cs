@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using MbUnit.Framework;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.TestUtilities;
+using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend.TestIntegration
 {
@@ -156,12 +158,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         {
         }
 
-        private void EnsureFeatherActivated()
+        private bool IsFeatherEnabled()
         {
-        }
-
-        private void EnsureFeatherDeactivated()
-        {
+            return SystemManager.GetModule("Feather") != null;
         }
 
         private void ActivateFeather()
