@@ -11,7 +11,7 @@ using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.TestIntegration.SDK;
 using Telerik.Sitefinity.Web;
 
-namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
+namespace Telerik.Sitefinity.Frontend.TestIntegration
 {
     /// <summary>
     /// This class contains tests for unloading of the Feather module.
