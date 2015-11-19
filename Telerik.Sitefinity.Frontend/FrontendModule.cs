@@ -116,17 +116,18 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         public override void Unload()
         {
-            if (this.ninjectDependencyResolver != null && !this.ninjectDependencyResolver.IsDisposed)
-                this.ninjectDependencyResolver.Dispose();
-
-            Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
-
-            foreach (var initializer in this.initializers.Value)
-            {
-                initializer.Uninitialize();
-            }
-
+            this.Uninitialize();
             base.Unload();
+        }
+
+        /// <summary>
+        /// Uninstall the module from Sitefinity system. Deletes the module artifacts added with Install method.
+        /// </summary>
+        /// <param name="initializer">The site initializer instance.</param>
+        public override void Uninstall(SiteInitializer initializer)
+        {
+            this.Uninitialize();
+            base.Uninstall(initializer);
         }
 
         /// <summary>
@@ -205,6 +206,19 @@ namespace Telerik.Sitefinity.Frontend
             PageTemplateFramework framework = (PageTemplateFramework)contextItems["PageTemplateFramework"];
 
             return framework;
+        }
+
+        private void Uninitialize()
+        {
+            if (this.ninjectDependencyResolver != null && !this.ninjectDependencyResolver.IsDisposed)
+                this.ninjectDependencyResolver.Dispose();
+
+            Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
+
+            foreach (var initializer in this.initializers.Value)
+            {
+                initializer.Uninitialize();
+            }
         }
 
         private void InitialUpgrade(SiteInitializer initializer)
@@ -528,7 +542,7 @@ namespace Telerik.Sitefinity.Frontend
 
         private IKernel ninjectDependencyResolver;
         private Lazy<IEnumerable<IInitializer>> initializers = new Lazy<IEnumerable<IInitializer>>(() =>
-            typeof(FrontendModule).Assembly.GetTypes().Where(t => typeof(IInitializer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).Select(t => Activator.CreateInstance(t) as IInitializer));
+            typeof(FrontendModule).Assembly.GetTypes().Where(t => typeof(IInitializer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).Select(t => Activator.CreateInstance(t) as IInitializer).ToList());
 
         private const string FrontendServiceName = "Telerik.Sitefinity.Frontend";
     }
