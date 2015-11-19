@@ -1,4 +1,5 @@
 ﻿using System;
+using ArtOfTest.WebAii.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.MS.TestUI.Framework.MSTest;
 using Telerik.TestUI.Core.Configuration;
@@ -22,7 +23,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases
             SitefinityBaseTestCase.InitializeManager();
             try
             {
-                ArtOfTest.WebAii.Core.Manager.Current.ConfigureBrowser(ArtOfTest.WebAii.Core.BrowserType.InternetExplorer, true);
+                string error = String.Empty;
+                Manager.Current.ConfigureBrowser(BrowserType.InternetExplorer, out error);
             }
             catch (Exception e)
             {
