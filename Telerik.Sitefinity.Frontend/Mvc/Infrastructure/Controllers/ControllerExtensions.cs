@@ -312,6 +312,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var precompiledEngine = viewEngine as CompositePrecompiledMvcEngineWrapper;
             if (precompiledEngine != null)
             {
+                if (!precompiledEngine.PackageName.IsNullOrEmpty() &&
+                    !string.Equals(precompiledEngine.PackageName, new PackageManager().GetCurrentPackage(), StringComparison.OrdinalIgnoreCase))
+                {
+                    return null;
+                }
+
                 newEngine = precompiledEngine.Clone();
             }
             else

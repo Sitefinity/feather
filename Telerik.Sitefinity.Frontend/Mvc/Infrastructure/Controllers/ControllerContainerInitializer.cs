@@ -69,6 +69,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
                     result.Add(assembly);
                 }
+
+                if (this.IsMarkedAssembly<ResourcePackageAttribute>(assemblyFileName))
+                {
+                    result.Add(this.LoadAssembly(assemblyFileName));
+                }
             }
 
             return result;
@@ -187,37 +192,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <returns>True if the given file name is of an assembly file that is marked as <see cref="ContainerControllerAttribute"/>, false otherwise.</returns>
         protected virtual bool IsControllerContainer(string assemblyFileName)
         {
-            if (assemblyFileName == null)
-                return false;
-
-            bool result;
-            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += this.CurrentDomain_ReflectionOnlyAssemblyResolve;
-            try
-            {
-                try
-                {
-                    var reflOnlyAssembly = Assembly.ReflectionOnlyLoadFrom(assemblyFileName);
-
-                    result = reflOnlyAssembly != null &&
-                            reflOnlyAssembly.GetCustomAttributesData()
-                                .Any(d => d.Constructor.DeclaringType.AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName);
-                }
-                catch (IOException) 
-                {
-                    // We might not be able to load some .DLL files as .NET assemblies. Those files cannot contain controllers.
-                    result = false;
-                }
-                catch (BadImageFormatException)
-                {
-                    result = false;
-                }
-            }
-            finally
-            {
-                AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve -= this.CurrentDomain_ReflectionOnlyAssemblyResolve;
-            }
-
-            return result;
+            return this.IsMarkedAssembly<ControllerContainerAttribute>(assemblyFileName);
         }
 
         /// <summary>
@@ -269,6 +244,48 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             // if there is no ControllerMetaDataAttribute, by default allow template registration
             return true;
+        }
+
+        /// <summary>
+        /// Determines whether the specified assembly file name is marked with a given attribute.
+        /// </summary>
+        /// <typeparam name="TAttribute">The type of the attribute.</typeparam>
+        /// <param name="assemblyFileName">File name of the assembly.</param>
+        /// <returns>True if the assembly has the given attribute.</returns>
+        private bool IsMarkedAssembly<TAttribute>(string assemblyFileName)
+            where TAttribute : Attribute
+        {
+            if (assemblyFileName == null)
+                return false;
+
+            bool result;
+            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += this.CurrentDomain_ReflectionOnlyAssemblyResolve;
+            try
+            {
+                try
+                {
+                    var reflOnlyAssembly = Assembly.ReflectionOnlyLoadFrom(assemblyFileName);
+
+                    result = reflOnlyAssembly != null &&
+                            reflOnlyAssembly.GetCustomAttributesData()
+                                .Any(d => d.Constructor.DeclaringType.AssemblyQualifiedName == typeof(TAttribute).AssemblyQualifiedName);
+                }
+                catch (IOException)
+                {
+                    // We might not be able to load some .DLL files as .NET assemblies. Those files cannot contain controllers.
+                    result = false;
+                }
+                catch (BadImageFormatException)
+                {
+                    result = false;
+                }
+            }
+            finally
+            {
+                AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve -= this.CurrentDomain_ReflectionOnlyAssemblyResolve;
+            }
+
+            return result;
         }
 
         private Assembly CurrentDomain_ReflectionOnlyAssemblyResolve(object sender, ResolveEventArgs args)
@@ -344,27 +361,53 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
         }
 
-        private void RegisterPrecompiledViews(IEnumerable<Assembly> assemblies, List<PrecompiledViewAssembly> precompiledViewAssemblies)
+        private Dictionary<string, List<PrecompiledViewAssembly>> RegisterPrecompiledViews(IEnumerable<Assembly> assemblies)
         {
+            var precompiledViewAssemblies = new Dictionary<string, List<PrecompiledViewAssembly>>();
             foreach (var assembly in assemblies)
             {
-                var basePath = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(assembly);
-                precompiledViewAssemblies.Add(new PrecompiledViewAssembly(assembly, basePath)
+                var package = this.AssemblyPackage(assembly);
+                if (!precompiledViewAssemblies.ContainsKey(package))
+                    precompiledViewAssemblies[package] = new List<PrecompiledViewAssembly>();
+
+                var basePath = package.IsNullOrEmpty() ? "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(assembly) : "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(ControllerContainerInitializer));
+                precompiledViewAssemblies[package].Add(new PrecompiledViewAssembly(assembly, basePath)
                 {
                     UsePhysicalViewsIfNewer = false
                 });
             }
+
+            return precompiledViewAssemblies;
         }
 
         private void RegisterPrecompiledViewEngines(IEnumerable<Assembly> assemblies)
         {
-            var precompiledViewAssemblies = new List<PrecompiledViewAssembly>();
-            this.RegisterPrecompiledViews(assemblies, precompiledViewAssemblies);
-
-            if (precompiledViewAssemblies.Count > 0)
+            var precompiledViewAssemblies = this.RegisterPrecompiledViews(assemblies);
+            if (precompiledViewAssemblies.ContainsKey(string.Empty))
             {
-                ViewEngines.Engines.Insert(0, new CompositePrecompiledMvcEngineWrapper(precompiledViewAssemblies.ToArray()));
+                var globalAssemblies = precompiledViewAssemblies[string.Empty];
+                if (globalAssemblies.Count > 0)
+                    ViewEngines.Engines.Insert(0, new CompositePrecompiledMvcEngineWrapper(globalAssemblies, null));
             }
+
+            foreach (var package in precompiledViewAssemblies.Keys)
+            {
+                if (package.IsNullOrEmpty())
+                    continue;
+
+                var packageAssemblies = precompiledViewAssemblies[package];
+                if (packageAssemblies.Count > 0)
+                    ViewEngines.Engines.Insert(0, new CompositePrecompiledMvcEngineWrapper(packageAssemblies, null, package));
+            }
+        }
+
+        private string AssemblyPackage(Assembly assembly)
+        {
+            var attribute = assembly.GetCustomAttribute<ResourcePackageAttribute>();
+            if (attribute == null)
+                return string.Empty;
+            else
+                return attribute.Name ?? string.Empty;
         }
 
         #endregion
