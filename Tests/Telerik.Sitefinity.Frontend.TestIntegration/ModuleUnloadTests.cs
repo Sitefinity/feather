@@ -10,6 +10,13 @@ using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using ServiceStack;
+using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Services.Events;
+using Telerik.Sitefinity.Modules.ControlTemplates;
+using System.Web.Routing;
+using Newtonsoft.Json;
+using System.Collections.Concurrent;
 
 namespace Telerik.Sitefinity.Frontend.TestIntegration
 {
@@ -100,6 +107,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_Res_RegisterResource_ShouldBeUndone()
         {
+            // Registering of resources is actually registering types in the Object factory
         }
 
         /// <summary>
@@ -156,6 +164,48 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_RouteTable_Routes_MapRoute_ShouldBeUndone()
         {
+        }
+
+        private Dictionary<string, string> GetState()
+        {
+            var state = new Dictionary<string, string>();
+            var jsonSerializerSettings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+
+            var wildcardPaths = typeof(VirtualPathManager).GetField("wildcardPaths", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+            state.Add("UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone_wildcardPaths", JsonConvert.SerializeObject(wildcardPaths, Formatting.Indented, jsonSerializerSettings));
+            var virtualPaths = typeof(VirtualPathManager).GetField("virtualPaths", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+            state.Add("UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone_virtualPaths", JsonConvert.SerializeObject(virtualPaths, Formatting.Indented, jsonSerializerSettings));
+
+            state.Add("UnloadingFeather_SystemManager_RegisterServiceStackPlugin_ShouldBeUndone_pendingServiceStackPlugins", JsonConvert.SerializeObject(SystemManager.PendingServiceStackPlugins, Formatting.Indented, jsonSerializerSettings));
+
+            state.Add("UnloadingFeather_ObjectFactory_Container_RegisterType_ShouldBeUndone_registrations", JsonConvert.SerializeObject(ObjectFactory.Container.Registrations, Formatting.Indented, jsonSerializerSettings));
+
+            state.Add("UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone_pendingRouteRegistrations", JsonConvert.SerializeObject(SystemManager.PendingRouteRegistrations, Formatting.Indented, jsonSerializerSettings));
+
+            var handlerLists = typeof(EventService).GetField("handlerLists", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(ObjectFactory.Resolve<IEventService>());
+            state.Add("UnloadingFeather_EventHub_Subscribe_ShouldBeUndone_handlerLists", JsonConvert.SerializeObject(handlerLists, Formatting.Indented, jsonSerializerSettings));
+
+            var filters = Type.GetType("System.Web.Mvc.GlobalFilters, System.Web.Mvc").GetProperty("Filters", BindingFlags.Static | BindingFlags.Public).GetValue(null, null);
+            state.Add("UnloadingFeather_GlobalFilters_Filters_Add_ShouldBeUndone_filters", JsonConvert.SerializeObject(filters, Formatting.Indented, jsonSerializerSettings));
+
+            var controlTemplates = typeof(ControlTemplates).GetField("controlTemplates", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, IControlTemplateInfo>;
+            state.Add("UnloadingFeather_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone_controlTemplates", JsonConvert.SerializeObject(controlTemplates, Formatting.Indented, jsonSerializerSettings));
+
+            var viewEngines = Type.GetType("System.Web.Mvc.ViewEngines, System.Web.Mvc").GetProperty("Engines", BindingFlags.Static | BindingFlags.Public).GetValue(null, null);
+            state.Add("UnloadingFeather_ViewEngines_Engines_Remove_ShouldBeUndone_viewEngines", JsonConvert.SerializeObject(viewEngines, Formatting.Indented, jsonSerializerSettings));
+
+            var currentControllerBuilder = Type.GetType("System.Web.Mvc.ControllerBuilder, System.Web.Mvc").GetProperty("Current", BindingFlags.Static | BindingFlags.Public).GetValue(null, null);
+            var controllerFactory = Type.GetType("System.Web.Mvc.ControllerBuilder, System.Web.Mvc").GetMethod("GetControllerFactory", BindingFlags.Public | BindingFlags.Instance).Invoke(currentControllerBuilder, null);
+            state.Add("UnloadingFeather_ControllerBuilder_Current_SetControllerFactory_ShouldBeUndone_controllerFactory", JsonConvert.SerializeObject(controllerFactory, Formatting.Indented, jsonSerializerSettings));
+
+            var controllers = Type.GetType("Telerik.Sitefinity.Mvc.Store.ControllerStore, Telerik.Sitefinity.Mvc").GetMethod("Controllers", BindingFlags.Static | BindingFlags.Public).Invoke(null, null);
+            state.Add("UnloadingFeather_ControllerStore_AddController_ShouldBeUndone_controllers", JsonConvert.SerializeObject(controllers, Formatting.Indented, jsonSerializerSettings));
+
+            var routes = RouteTable.Routes;
+            state.Add("UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone_routes", JsonConvert.SerializeObject(routes, Formatting.Indented, jsonSerializerSettings));
+            state.Add("UnloadingFeather_RouteTable_Routes_MapRoute_ShouldBeUndone_routes", JsonConvert.SerializeObject(routes, Formatting.Indented, jsonSerializerSettings));
+
+            return state;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

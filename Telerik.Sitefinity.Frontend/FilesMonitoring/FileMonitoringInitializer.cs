@@ -38,7 +38,10 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         public void Uninitialize()
         {
-            this.fileMonitor.Dispose();
+            if (this.fileMonitor != null)
+            {
+                this.fileMonitor.Dispose();
+            }
         }
 
         /// <summary>
