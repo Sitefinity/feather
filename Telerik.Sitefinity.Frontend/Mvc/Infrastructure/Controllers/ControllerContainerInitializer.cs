@@ -85,7 +85,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         public virtual void Uninitialize()
         {
-            GlobalFilters.Filters.Remove(new CacheDependentAttribute());
+            this.UninitializeGlobalFilters();
 
             this.UninitializeControllers(this.GetControllers(ControllerContainerInitializer.ControllerContainerAssemblies));
 
@@ -210,6 +210,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
         }
 
+        protected virtual void UninitializeGlobalFilters()
+        {
+            var cacheDependentAttribute = GlobalFilters.Filters.FirstOrDefault(f => f.Instance.GetType().FullName == typeof(CacheDependentAttribute).FullName);
+            if (cacheDependentAttribute != null)
+                GlobalFilters.Filters.Remove(cacheDependentAttribute.Instance);
+        }
+
         /// <summary>
         /// Uninitializes the specified <paramref name="controllers"/> by ensuring they have their proper registrations in the toolbox and that the controller factory will be able to resolve them.
         /// </summary>
@@ -282,7 +289,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                             reflOnlyAssembly.GetCustomAttributesData()
                                 .Any(d => d.Constructor.DeclaringType.AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName);
                 }
-                catch (IOException) 
+                catch (IOException)
                 {
                     // We might not be able to load some .DLL files as .NET assemblies. Those files cannot contain controllers.
                     result = false;
@@ -364,16 +371,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var virtualPath = FrontendManager.VirtualPathBuilder.GetVirtualPath(assembly);
 
             VirtualPathManager.AddVirtualFileResolver<ResourceResolver>(
-                                                                        string.Format(CultureInfo.InvariantCulture, "~/{0}*", virtualPath), 
+                                                                        string.Format(CultureInfo.InvariantCulture, "~/{0}*", virtualPath),
                                                                         assemblyName.Name,
                                                                         assemblyName.CodeBase);
 
             SystemManager.RegisterRoute(
-                                        assemblyName.Name, 
+                                        assemblyName.Name,
                                         new Route(
-                                                  virtualPath + "{*Params}", 
+                                                  virtualPath + "{*Params}",
                                                   new GenericRouteHandler<ResourceHttpHandler>(() => new ResourceHttpHandler(virtualPath))),
-                                                  assemblyName.Name, 
+                                                  assemblyName.Name,
                                                   requireBasicAuthentication: false);
         }
 
