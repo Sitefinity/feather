@@ -87,14 +87,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             this.UninitializeGlobalFilters();
 
-            this.UninitializeControllers(this.GetControllers(ControllerContainerInitializer.ControllerContainerAssemblies));
-
             foreach (var assembly in ControllerContainerInitializer.ControllerContainerAssemblies)
             {
                 this.UninitializeControllerContainer(assembly);
             }
 
             ControllerContainerInitializer.ControllerContainerAssemblies = null;
+
+            ControllerStore.ClearControllers();
         }
 
         /// <summary>
@@ -215,23 +215,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var cacheDependentAttribute = GlobalFilters.Filters.FirstOrDefault(f => f.Instance.GetType().FullName == typeof(CacheDependentAttribute).FullName);
             if (cacheDependentAttribute != null)
                 GlobalFilters.Filters.Remove(cacheDependentAttribute.Instance);
-        }
-
-        /// <summary>
-        /// Uninitializes the specified <paramref name="controllers"/> by ensuring they have their proper registrations in the toolbox and that the controller factory will be able to resolve them.
-        /// </summary>
-        /// <param name="controllers">The controllers.</param>
-        protected virtual void UninitializeControllers(IEnumerable<Type> controllers)
-        {
-            // We have not registered FrontendControllerFactory, so this will revert it
-            this.ReplaceControllerFactory();
-
-            this.AddSitefinityViewEngine();
-
-            foreach (var controller in controllers)
-            {
-                ControllerStore.RemoveController(controller);
-            }
         }
 
         /// <summary>
@@ -409,14 +392,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 ViewEngines.Engines.Remove(sitefinityViewEngine);
             }
-        }
-
-        private void AddSitefinityViewEngine()
-        {
-            // Remove it first in case it is there
-            this.RemoveSitefinityViewEngine();
-
-            ViewEngines.Engines.Add(new SitefinityViewEngine());
         }
 
         /// <summary>

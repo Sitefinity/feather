@@ -83,7 +83,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
 
             // There are no changes on virtualPaths
             Assert.IsFalse(wildcardPaths.Any(wp => wp.ResolverName == "MvcFormsResolver"));
-            Assert.IsFalse(wildcardPaths.Any(wp => wp.ResolverName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix)));
+            Assert.IsFalse(wildcardPaths.Any(wp => wp.ResolverName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
         }
 
         /// <summary>
@@ -91,8 +91,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_SystemManager_RegisterServiceStackPlugin_ShouldBeUndone()
         {
-            var pendingServiceStackPlugins = typeof(SystemManager).GetField("PendingServiceStackPlugins", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as IList<object>;
-            Assert.IsFalse(pendingServiceStackPlugins.Any(pssp => pssp.GetType().FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix)));
+            var pendingServiceStackPlugins = typeof(SystemManager).GetField("PendingServiceStackPlugins", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as IEnumerable<object>;
+            Assert.IsFalse(pendingServiceStackPlugins.Any(pssp => pssp.GetType().FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
         }
 
         /// <summary>
@@ -100,29 +100,34 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_ObjectFactory_Container_RegisterType_ShouldBeUndone()
         {
-            // TODO
+            Assert.IsFalse(ObjectFactory.Container.Registrations.Any(r =>
+                (r.RegisteredType != null && !string.IsNullOrEmpty(r.RegisteredType.FullName) && r.RegisteredType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)) || 
+                (r.MappedToType != null && !string.IsNullOrEmpty(r.MappedToType.FullName) && r.MappedToType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix))));
         }
 
         /// <summary>
         /// Checks whether after unloading Feather the SystemManager RegisterRoute calls are undone.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "routes"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "routeRegistrations")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "testo"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "routes"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "routeRegistrations")]
         public void UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone()
         {
-            var routes = Type.GetType("Telerik.Sitefinity.Services.RouteManager, Telerik.Sitefinity").GetField("routes", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as RouteCollection;
-            var routeRegistrations = Type.GetType("Telerik.Sitefinity.Services.RouteManager, Telerik.Sitefinity").GetField("routeRegistrations", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as List<object>;
-
-            // TODO: Track this
+            // Routes are checked in RouteTable.Routes in UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone
+            var routeRegistrationModuleName = Type.GetType("Telerik.Sitefinity.Abstractions.RouteRegistration, Telerik.Sitefinity").GetProperty("ModuleName", BindingFlags.NonPublic | BindingFlags.Instance);
+            var routeRegistrations = Type.GetType("Telerik.Sitefinity.Services.RouteManager, Telerik.Sitefinity").GetField("routeRegistrations", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as IEnumerable<object>;
+            Assert.IsFalse(routeRegistrations.Any(r => (routeRegistrationModuleName.GetValue(r) as string).StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
         }
 
         /// <summary>
         /// Checks whether after unloading Feather the EventHub Subscribe calls are undone.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "testo")]
         public void UnloadingFeather_EventHub_Subscribe_ShouldBeUndone()
         {
-            var handlerLists = typeof(EventService).GetField("handlerLists", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(ObjectFactory.Resolve<IEventService>()) as ConcurrentDictionary<Type, object>;
-            var allHandlers = typeof(EventService).GetNestedType("HandlerList", BindingFlags.Instance | BindingFlags.NonPublic).GetField("handlers", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(handlerLists) as List<Delegate>;
-            Assert.IsFalse(allHandlers.Any(h => h.Method.ReflectedType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix)));
+            var handlerLists = typeof(EventService).GetField("handlerLists", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(ObjectFactory.Resolve<IEventService>());
+            var allHandlersValues = handlerLists.GetType().GetProperty("Values").GetValue(handlerLists) as IEnumerable<object>;
+            var innerHandlersProperty = typeof(EventService).GetNestedType("HandlerList", BindingFlags.Instance | BindingFlags.NonPublic).GetField("handlers", BindingFlags.Instance | BindingFlags.NonPublic);
+            var allHandlers = allHandlersValues.SelectMany(h => innerHandlersProperty.GetValue(h) as IList<Delegate>);
+            Assert.IsFalse(allHandlers.Any(h => h.Method.ReflectedType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
         }
 
         /// <summary>
@@ -131,10 +136,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         public void UnloadingFeather_IFileMonitor_Start_ShouldBeUndone()
         {
             var moduleInstance = SystemManager.GetModule("Feather");
-            var initializers = typeof(FrontendModule).GetField("initializers", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(moduleInstance) as IEnumerable<object>;
-            var fileInitializer = initializers.FirstOrDefault(i => i is FileMonitoringInitializer);
-            var fileMonitorInstance = typeof(FileMonitoringInitializer).GetField("fileMonitor", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(fileInitializer);
-            Assert.IsNull(fileMonitorInstance);
+            if (moduleInstance != null)
+            {
+                var initializers = typeof(FrontendModule).GetField("initializers", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(moduleInstance) as Lazy<IEnumerable<IInitializer>>;
+                var fileInitializer = initializers.Value.FirstOrDefault(i => i is FileMonitoringInitializer);
+                var fileMonitorInstance = typeof(FileMonitoringInitializer).GetField("fileMonitor", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(fileInitializer);
+                Assert.IsNull(fileMonitorInstance);
+            }
         }
 
         /// <summary>
@@ -151,7 +159,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         public void UnloadingFeather_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone()
         {
             var controlTemplates = typeof(ControlTemplates).GetField("controlTemplates", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, IControlTemplateInfo>;
-            Assert.IsFalse(controlTemplates.Values.Any(cti => cti.ControlType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix)));
+            Assert.IsFalse(controlTemplates.Values.Any(cti => cti.ControlType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
         }
 
         /// <summary>
@@ -175,7 +183,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_ControllerStore_AddController_ShouldBeUndone()
         {
-            Assert.IsFalse(ControllerStore.Controllers().Any(c => c.ControllerType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix)));
+            Assert.IsFalse(ControllerStore.Controllers().Any(c => c.ControllerType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
         }
 
         /// <summary>
@@ -185,6 +193,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         {
             Assert.IsFalse(RouteTable.Routes.Any(r => r is Route && ((Route)r).Url == "Telerik.Sitefinity.Frontend/{controller}/Master/{widgetName}"));
             Assert.IsFalse(RouteTable.Routes.Any(r => r is Route && ((Route)r).Url == "Telerik.Sitefinity.Frontend/{controller}/View/{widgetName}/{viewType}"));
+            Assert.IsFalse(RouteTable.Routes.Any(r => r is Route && ((Route)r).Url.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)));
             Assert.IsFalse(RouteTable.Routes.Any(r => r.GetType().FullName == "System.Web.Mvc.Routing.RouteCollectionRoute" && ((IEnumerable<RouteBase>)r).Any(rb => rb is Route && ((Route)rb).Url == "rest-api/login-status")));
             Assert.IsFalse(RouteTable.Routes.Any(r => r.GetType().FullName == "System.Web.Mvc.Routing.LinkGenerationRoute" && ((Route)r).Url == "rest-api/login-status"));
         }

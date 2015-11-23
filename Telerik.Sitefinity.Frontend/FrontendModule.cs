@@ -219,6 +219,9 @@ namespace Telerik.Sitefinity.Frontend
             {
                 initializer.Uninitialize();
             }
+
+            // Force mvc initialization to run again after feather uninstalls
+            typeof(SystemManager).GetField("mvcEnabled", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, false);
         }
 
         private void InitialUpgrade(SiteInitializer initializer)
