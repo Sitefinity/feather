@@ -45,7 +45,7 @@ namespace Telerik.Sitefinity.Frontend
             var type = typeof(Func<string, Tuple<bool, string>>);
             Delegate del = Delegate.CreateDelegate(type, method);
 
-            var processWidgetValidationInfo = typeof(ToolboxesConfig).GetField("ProcessWidgetValidation", BindingFlags.NonPublic | BindingFlags.Static);
+            var processWidgetValidationInfo = typeof(ToolboxesConfig).GetField("ValidateWidget", BindingFlags.NonPublic | BindingFlags.Static);
 
             if (processWidgetValidationInfo.GetValue(del) == null)
             {
