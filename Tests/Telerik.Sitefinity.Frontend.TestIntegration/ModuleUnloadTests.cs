@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using MbUnit.Framework;
-using Newtonsoft.Json;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
@@ -37,68 +36,105 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// Checks whether after deactivating Feather the Sitefinity application changes it has done are undone.
         /// </summary>
         /// <remarks>
-        /// UnloadingFeather_Res_RegisterResource_ShouldBeUndone is not needed - Registering of resources is actually registering types in the Object factory
-        /// UnloadingFeather_RouteTable_Routes_MapRoute_ShouldBeUndone is not needed - Routes are in one collection checked by UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone
+        /// Check_Res_RegisterResource_ShouldBeUndone is not needed - Registering of resources is actually registering types in the Object factory
+        /// Check_RouteTable_Routes_MapRoute_ShouldBeUndone is not needed - Routes are in one collection checked by UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone
         /// </remarks>
         [Test]
         [Author(FeatherTeams.FeatherTeam)]
         [Description("Checks whether after deactivating Feather the Sitefinity application changes it has done are undone.")]
         public void DeactivatingFeatherShouldRestoreAppStateToPreFeatherActivation()
         {
-            //// var featherWasEnabled = this.IsFeatherEnabled();
+            if (this.IsFeatherDisabled())
+                throw new ArgumentException("Feather module must be installed to run this test");
 
-            //// try
-            //// {
-                //// if (!featherWasEnabled)
-                    //// this.ActivateFeather();
-
-                //// this.DeactivateFeather();
-
-                this.UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone();
-                this.UnloadingFeather_SystemManager_RegisterServiceStackPlugin_ShouldBeUndone();
-                this.UnloadingFeather_ObjectFactory_Container_RegisterType_ShouldBeUndone();
-                this.UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone();
-                this.UnloadingFeather_EventHub_Subscribe_ShouldBeUndone();
-                this.UnloadingFeather_IFileMonitor_Start_ShouldBeUndone();
-                this.UnloadingFeather_GlobalFilters_Filters_Add_ShouldBeUndone();
-                this.UnloadingFeather_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone();
-                this.UnloadingFeather_ViewEngines_Engines_Remove_ShouldBeUndone();
-                this.UnloadingFeather_ControllerBuilder_Current_SetControllerFactory_ShouldBeUndone();
-                this.UnloadingFeather_ControllerStore_AddController_ShouldBeUndone();
-                this.UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone();
-            //// }
-            //// finally
-            //// {
-                //// if (featherWasEnabled)
-                    //// this.ActivateFeather();
-            //// }
+            try
+            {
+                this.DeactivateFeather();
+                this.CheckDeactivatingFeatherShouldRestoreAppStateToPreFeatherActivation();
+            }
+            finally
+            {
+                this.ActivateFeatherFromDeactivatedState();
+            }
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the VirtualPathManager AddVirtualFileResolver calls are undone.
+        /// Checks whether after uninstalling Feather the Sitefinity application changes it has done are undone.
         /// </summary>
-        public void UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone()
+        /// <remarks>
+        /// Check_Res_RegisterResource_ShouldBeUndone is not needed - Registering of resources is actually registering types in the Object factory
+        /// Check_RouteTable_Routes_MapRoute_ShouldBeUndone is not needed - Routes are in one collection checked by UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone
+        /// </remarks>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after uninstalling Feather the Sitefinity application changes it has done are undone.")]
+        public void UninstallingFeatherShouldRestoreAppStateToPreFeatherActivation()
+        {
+            if (this.IsFeatherDisabled())
+                throw new ArgumentException("Feather module must be installed to run this test");
+
+            try
+            {
+                this.DeactivateFeather();
+                this.UninstallFeather();
+                this.CheckDeactivatingFeatherShouldRestoreAppStateToPreFeatherActivation();
+            }
+            finally
+            {
+                this.ActivateFeatherFromUninstalledState();
+            }
+        }
+
+        #region Checks
+
+        /// <summary>
+        /// Execute all the checks after feather is deactivated/uninstalled.
+        /// </summary>
+        private void CheckDeactivatingFeatherShouldRestoreAppStateToPreFeatherActivation()
+        {
+            this.Check_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone();
+            this.Check_SystemManager_RegisterServiceStackPlugin_ShouldBeUndone();
+            this.Check_ObjectFactory_Container_RegisterType_ShouldBeUndone();
+            this.Check_SystemManager_RegisterRoute_ShouldBeUndone();
+            this.Check_EventHub_Subscribe_ShouldBeUndone();
+            this.Check_IFileMonitor_Start_ShouldBeUndone();
+            this.Check_GlobalFilters_Filters_Add_ShouldBeUndone();
+            this.Check_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone();
+            this.Check_ViewEngines_Engines_Remove_ShouldBeUndone();
+            this.Check_ControllerBuilder_Current_SetControllerFactory_ShouldBeUndone();
+            this.Check_ControllerStore_AddController_ShouldBeUndone();
+            this.Check_RouteTable_Routes_Insert_ShouldBeUndone();
+        }
+
+        /// <summary>
+        /// Checks whether after unloading/uninstalling Feather the VirtualPathManager AddVirtualFileResolver calls are undone.
+        /// </summary>
+        /// <remarks>
+        /// There are no changes on virtualPaths.
+        /// </remarks>
+        private void Check_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone()
         {
             var wildcardPaths = typeof(VirtualPathManager).GetField("wildcardPaths", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) as IList<PathDefinition>;
-
-            // There are no changes on virtualPaths
-            Assert.IsFalse(wildcardPaths.Any(wp => wp.ResolverName == "MvcFormsResolver"));
-            Assert.IsFalse(wildcardPaths.Any(wp => wp.ResolverName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
+            if (wildcardPaths != null)
+            {
+                Assert.IsFalse(wildcardPaths.Any(wp => wp.ResolverName == "MvcFormsResolver"));
+                Assert.IsFalse(wildcardPaths.Any(wp => wp.ResolverName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
+            }
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the SystemManager RegisterServiceStackPlugin calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the SystemManager RegisterServiceStackPlugin calls are undone.
         /// </summary>
-        public void UnloadingFeather_SystemManager_RegisterServiceStackPlugin_ShouldBeUndone()
+        private void Check_SystemManager_RegisterServiceStackPlugin_ShouldBeUndone()
         {
             var pendingServiceStackPlugins = typeof(SystemManager).GetField("PendingServiceStackPlugins", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as IEnumerable<object>;
             Assert.IsFalse(pendingServiceStackPlugins.Any(pssp => pssp.GetType().FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the ObjectFactory Container RegisterType calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the ObjectFactory Container RegisterType calls are undone.
         /// </summary>
-        public void UnloadingFeather_ObjectFactory_Container_RegisterType_ShouldBeUndone()
+        private void Check_ObjectFactory_Container_RegisterType_ShouldBeUndone()
         {
             Assert.IsFalse(ObjectFactory.Container.Registrations.Any(r =>
                 (r.RegisteredType != null && !string.IsNullOrEmpty(r.RegisteredType.FullName) && r.RegisteredType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)) || 
@@ -106,10 +142,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the SystemManager RegisterRoute calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the SystemManager RegisterRoute calls are undone.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "testo"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "routes"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "routeRegistrations")]
-        public void UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone()
+        private void Check_SystemManager_RegisterRoute_ShouldBeUndone()
         {
             // Routes are checked in RouteTable.Routes in UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone
             var routeRegistrationModuleName = Type.GetType("Telerik.Sitefinity.Abstractions.RouteRegistration, Telerik.Sitefinity").GetProperty("ModuleName", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -118,10 +153,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the EventHub Subscribe calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the EventHub Subscribe calls are undone.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "testo")]
-        public void UnloadingFeather_EventHub_Subscribe_ShouldBeUndone()
+        private void Check_EventHub_Subscribe_ShouldBeUndone()
         {
             var handlerLists = typeof(EventService).GetField("handlerLists", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(ObjectFactory.Resolve<IEventService>());
             var allHandlersValues = handlerLists.GetType().GetProperty("Values").GetValue(handlerLists) as IEnumerable<object>;
@@ -131,9 +165,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the IFileMonitor Start calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the IFileMonitor Start calls are undone.
         /// </summary>
-        public void UnloadingFeather_IFileMonitor_Start_ShouldBeUndone()
+        private void Check_IFileMonitor_Start_ShouldBeUndone()
         {
             var moduleInstance = SystemManager.GetModule("Feather");
             if (moduleInstance != null)
@@ -146,50 +180,50 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the GlobalFilters Filters Add calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the GlobalFilters Filters Add calls are undone.
         /// </summary>
-        public void UnloadingFeather_GlobalFilters_Filters_Add_ShouldBeUndone()
+        private void Check_GlobalFilters_Filters_Add_ShouldBeUndone()
         {
             Assert.IsFalse(GlobalFilters.Filters.Any(f => f.Instance is CacheDependentAttribute));
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the ControlTemplates RegisterTemplatableControl calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the ControlTemplates RegisterTemplatableControl calls are undone.
         /// </summary>
-        public void UnloadingFeather_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone()
+        private void Check_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone()
         {
             var controlTemplates = typeof(ControlTemplates).GetField("controlTemplates", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, IControlTemplateInfo>;
             Assert.IsFalse(controlTemplates.Values.Any(cti => cti.ControlType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the ViewEngines Engines Remove calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the ViewEngines Engines Remove calls are undone.
         /// </summary>
-        public void UnloadingFeather_ViewEngines_Engines_Remove_ShouldBeUndone()
+        private void Check_ViewEngines_Engines_Remove_ShouldBeUndone()
         {
             Assert.IsTrue(ViewEngines.Engines.Any(ve => ve is SitefinityViewEngine));
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the ControllerBuilder Current SetControllerFactory calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the ControllerBuilder Current SetControllerFactory calls are undone.
         /// </summary>
-        public void UnloadingFeather_ControllerBuilder_Current_SetControllerFactory_ShouldBeUndone()
+        private void Check_ControllerBuilder_Current_SetControllerFactory_ShouldBeUndone()
         {
             Assert.IsFalse(ControllerBuilder.Current.GetControllerFactory() is FrontendControllerFactory);
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the ControllerStore AddController calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the ControllerStore AddController calls are undone.
         /// </summary>
-        public void UnloadingFeather_ControllerStore_AddController_ShouldBeUndone()
+        private void Check_ControllerStore_AddController_ShouldBeUndone()
         {
             Assert.IsFalse(ControllerStore.Controllers().Any(c => c.ControllerType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix, StringComparison.Ordinal)));
         }
 
         /// <summary>
-        /// Checks whether after unloading Feather the RouteTable Routes Insert calls are undone.
+        /// Checks whether after unloading/uninstalling Feather the RouteTable Routes Insert calls are undone.
         /// </summary>
-        public void UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone()
+        private void Check_RouteTable_Routes_Insert_ShouldBeUndone()
         {
             Assert.IsFalse(RouteTable.Routes.Any(r => r is Route && ((Route)r).Url == "Telerik.Sitefinity.Frontend/{controller}/Master/{widgetName}"));
             Assert.IsFalse(RouteTable.Routes.Any(r => r is Route && ((Route)r).Url == "Telerik.Sitefinity.Frontend/{controller}/View/{widgetName}/{viewType}"));
@@ -198,90 +232,57 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             Assert.IsFalse(RouteTable.Routes.Any(r => r.GetType().FullName == "System.Web.Mvc.Routing.LinkGenerationRoute" && ((Route)r).Url == "rest-api/login-status"));
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        private string SerializeObject(object obj)
+        #endregion
+
+        #region Helper methods
+
+        private bool IsFeatherDisabled()
         {
-            var jsonSerializerSettings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.Objects };
-            return JsonConvert.SerializeObject(obj, Formatting.Indented, jsonSerializerSettings);
+            var isDisabled = SystemManager.GetModule("Feather") == null;
+            return isDisabled;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        private Dictionary<string, object> GetState()
+        private void ActivateFeatherFromDeactivatedState()
         {
-            var state = new Dictionary<string, object>();
-
-            var wildcardPaths = typeof(VirtualPathManager).GetField("wildcardPaths", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-            var virtualPaths = typeof(VirtualPathManager).GetField("virtualPaths", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-            state.Add("UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone_wildcardPaths", wildcardPaths);
-            state.Add("UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone_virtualPaths", virtualPaths);
-
-            var pendingServiceStackPlugins = typeof(SystemManager).GetField("PendingServiceStackPlugins", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
-            state.Add("UnloadingFeather_SystemManager_RegisterServiceStackPlugin_ShouldBeUndone_pendingServiceStackPlugins", pendingServiceStackPlugins);
-
-            state.Add("UnloadingFeather_ObjectFactory_Container_RegisterType_ShouldBeUndone_registrations", ObjectFactory.Container.Registrations);
-
-            var routes = Type.GetType("Telerik.Sitefinity.Services.RouteManager, Telerik.Sitefinity").GetField("routes", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as RouteCollection;
-            var routeRegistrations = Type.GetType("Telerik.Sitefinity.Services.RouteManager, Telerik.Sitefinity").GetField("routeRegistrations", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as List<object>;
-            state.Add("UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone_routes", routes);
-            state.Add("UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone_routeRegistrations", routeRegistrations);
-
-            var handlerLists = typeof(EventService).GetField("handlerLists", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(ObjectFactory.Resolve<IEventService>());
-            state.Add("UnloadingFeather_EventHub_Subscribe_ShouldBeUndone_handlerLists", handlerLists);
-
-            var filters = Type.GetType("System.Web.Mvc.GlobalFilters, System.Web.Mvc").GetProperty("Filters", BindingFlags.Static | BindingFlags.Public).GetValue(null, null);
-            state.Add("UnloadingFeather_GlobalFilters_Filters_Add_ShouldBeUndone_filters", filters);
-
-            var controlTemplates = typeof(ControlTemplates).GetField("controlTemplates", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, IControlTemplateInfo>;
-            state.Add("UnloadingFeather_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone_controlTemplates", controlTemplates);
-
-            var viewEngines = Type.GetType("System.Web.Mvc.ViewEngines, System.Web.Mvc").GetProperty("Engines", BindingFlags.Static | BindingFlags.Public).GetValue(null, null);
-            state.Add("UnloadingFeather_ViewEngines_Engines_Remove_ShouldBeUndone_viewEngines", viewEngines);
-
-            var currentControllerBuilder = Type.GetType("System.Web.Mvc.ControllerBuilder, System.Web.Mvc").GetProperty("Current", BindingFlags.Static | BindingFlags.Public).GetValue(null, null);
-            var controllerFactory = Type.GetType("System.Web.Mvc.ControllerBuilder, System.Web.Mvc").GetMethod("GetControllerFactory", BindingFlags.Public | BindingFlags.Instance).Invoke(currentControllerBuilder, null);
-            state.Add("UnloadingFeather_ControllerBuilder_Current_SetControllerFactory_ShouldBeUndone_controllerFactory", controllerFactory);
-
-            var controllers = Type.GetType("Telerik.Sitefinity.Mvc.Store.ControllerStore, Telerik.Sitefinity.Mvc").GetMethod("Controllers", BindingFlags.Static | BindingFlags.Public).Invoke(null, null);
-            state.Add("UnloadingFeather_ControllerStore_AddController_ShouldBeUndone_controllers", controllers);
-
-            var globalRoutes = RouteTable.Routes;
-            state.Add("UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone_routes", globalRoutes);
-
-            return state;
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        private bool IsFeatherEnabled()
-        {
-            return SystemManager.GetModule("Feather") != null;
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        private void ActivateFeather()
-        {
-            if (this.IsFeatherEnabled())
-                return;
-
-            var installOperationEndpoint = UrlPath.ResolveUrl("/Sitefinity/Services/ModulesService/modules?operation=2", true);
+            var installOperationEndpoint = UrlPath.ResolveUrl(ModuleUnloadTests.FeatherActivateFromDeactivatedStateUrl, true);
             this.MakePutRequest(installOperationEndpoint, JsonRequestPayload);
+
+            // Give time for events to fire
+            Thread.Sleep(5000);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        private void ActivateFeatherFromUninstalledState()
+        {
+            var installOperationEndpoint = UrlPath.ResolveUrl(ModuleUnloadTests.FeatherActivateFromUninstalledStateUrl, true);
+            this.MakePutRequest(installOperationEndpoint, JsonRequestPayload);
+
+            // Give time for events to fire
+            Thread.Sleep(5000);
+        }
+
         private void DeactivateFeather()
         {
-            if (!this.IsFeatherEnabled())
-                return;
-
-            var uninstallOperationEndpoint = UrlPath.ResolveUrl("/Sitefinity/Services/ModulesService/modules?operation=3", true);
+            var uninstallOperationEndpoint = UrlPath.ResolveUrl(ModuleUnloadTests.FeatherDeactivateUrl, true);
             this.MakePutRequest(uninstallOperationEndpoint, JsonRequestPayload);
+
+            // Give time for events to fire
+            Thread.Sleep(5000);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        private void UninstallFeather()
+        {
+            var uninstallOperationEndpoint = UrlPath.ResolveUrl(ModuleUnloadTests.FeatherUninstallUrl, true);
+            this.MakePutRequest(uninstallOperationEndpoint, JsonRequestPayload);
+
+            // Give time for events to fire
+            Thread.Sleep(5000);
+        }
+
         private void MakePutRequest(string url, string payload)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
             httpWebRequest.CookieContainer = new CookieContainer();
-            httpWebRequest.Headers["Cookie"] = HttpContext.Current.Request.Headers["Cookie"];
+            httpWebRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "PUT";
 
@@ -293,7 +294,17 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             httpWebRequest.GetResponse();
         }
 
+        #endregion
+
+        #region Constants
+
+        private const string FeatherUninstallUrl = "/Sitefinity/Services/ModulesService/modules?operation=1";
+        private const string FeatherActivateFromDeactivatedStateUrl = "/Sitefinity/Services/ModulesService/modules?operation=2";
+        private const string FeatherActivateFromUninstalledStateUrl = "/Sitefinity/Services/ModulesService/modules?operation=0";
+        private const string FeatherDeactivateUrl = "/Sitefinity/Services/ModulesService/modules?operation=3";
         private const string FrontendAssemblyPrefix = "Telerik.Sitefinity.Frontend";
         private const string JsonRequestPayload = "{\"ClientId\":\"Feather\",\"Description\":\"Modern, intuitive, convention based, mobile-first UI for Telerik Sitefinity\",\"ErrorMessage\":\"\",\"IsModuleLicensed\":true,\"IsSystemModule\":false,\"Key\":\"Feather\",\"ModuleId\":\"00000000-0000-0000-0000-000000000000\",\"ModuleType\":0,\"Name\":\"Feather\",\"ProviderName\":\"\",\"StartupType\":3,\"Status\":1,\"Title\":\"Feather\",\"Type\":\"Telerik.Sitefinity.Frontend.FrontendModule, Telerik.Sitefinity.Frontend\",\"Version\":{\"_Build\":390,\"_Major\":1,\"_Minor\":4,\"_Revision\":0}}";
+    
+        #endregion
     }
 }
