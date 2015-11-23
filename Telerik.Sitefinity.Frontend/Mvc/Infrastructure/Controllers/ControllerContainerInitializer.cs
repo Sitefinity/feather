@@ -361,20 +361,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
         }
 
-        private Dictionary<string, List<PrecompiledViewAssembly>> RegisterPrecompiledViews(IEnumerable<Assembly> assemblies)
+        private Dictionary<string, List<PrecompiledViewAssemblyWrapper>> RegisterPrecompiledViews(IEnumerable<Assembly> assemblies)
         {
-            var precompiledViewAssemblies = new Dictionary<string, List<PrecompiledViewAssembly>>();
+            var precompiledViewAssemblies = new Dictionary<string, List<PrecompiledViewAssemblyWrapper>>();
             foreach (var assembly in assemblies)
             {
                 var package = this.AssemblyPackage(assembly);
                 if (!precompiledViewAssemblies.ContainsKey(package))
-                    precompiledViewAssemblies[package] = new List<PrecompiledViewAssembly>();
+                    precompiledViewAssemblies[package] = new List<PrecompiledViewAssemblyWrapper>();
 
-                var basePath = package.IsNullOrEmpty() ? "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(assembly) : "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(ControllerContainerInitializer));
-                precompiledViewAssemblies[package].Add(new PrecompiledViewAssembly(assembly, basePath)
-                {
-                    UsePhysicalViewsIfNewer = false
-                });
+                precompiledViewAssemblies[package].Add(new PrecompiledViewAssemblyWrapper(assembly, package));
             }
 
             return precompiledViewAssemblies;
