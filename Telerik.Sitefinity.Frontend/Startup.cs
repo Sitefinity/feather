@@ -47,7 +47,7 @@ namespace Telerik.Sitefinity.Frontend
 
             var processWidgetValidationInfo = typeof(ToolboxesConfig).GetField("ValidateWidget", BindingFlags.NonPublic | BindingFlags.Static);
 
-            if (processWidgetValidationInfo.GetValue(del) == null)
+            if (processWidgetValidationInfo != null && processWidgetValidationInfo.GetValue(del) == null)
             {
                 processWidgetValidationInfo.SetValue(null, del);
             }
