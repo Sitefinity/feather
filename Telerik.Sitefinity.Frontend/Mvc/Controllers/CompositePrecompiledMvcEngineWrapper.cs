@@ -8,6 +8,7 @@ using System.Web.Caching;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using RazorGenerator.Mvc;
+using Telerik.Sitefinity.Configuration;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 {
@@ -92,7 +93,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <returns></returns>
         protected override bool FileExists(ControllerContext controllerContext, string virtualPath)
         {
-            return base.FileExists(controllerContext, virtualPath) && this.ShouldServe(virtualPath);
+            return !Config.Get<FeatherConfig>().DisablePrecompilation && base.FileExists(controllerContext, virtualPath) && (Config.Get<FeatherConfig>().AlwaysUsePrecompiledVersion || this.ShouldServe(virtualPath));
         }
 
         private bool ShouldServe(string virtualPath)

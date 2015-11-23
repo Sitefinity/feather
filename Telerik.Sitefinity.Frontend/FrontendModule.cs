@@ -110,6 +110,11 @@ namespace Telerik.Sitefinity.Frontend
 
             this.ninjectDependencyResolver = new StandardKernel();
             this.ninjectDependencyResolver.Load(this.controllerAssemblies);
+
+            App.WorkWith()
+                .Module(settings.Name)
+                    .Initialize()
+                    .Configuration<FeatherConfig>();
         }
 
         /// <summary>
@@ -174,7 +179,7 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         protected override ConfigSection GetModuleConfig()
         {
-            return null;
+            return Config.Get<FeatherConfig>();
         }
 
         /// <summary>
