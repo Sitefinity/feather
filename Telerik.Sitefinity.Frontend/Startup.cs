@@ -24,6 +24,7 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         public static void OnPreApplicationStart()
         {
+            return;
             Bootstrapper.Initialized -= Bootstrapper_Initialized;
             Bootstrapper.Initialized += Bootstrapper_Initialized;
         }

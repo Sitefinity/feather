@@ -95,7 +95,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             ControllerContainerInitializer.ControllerContainerAssemblies = null;
 
             // Clears all controllers
-            foreach (var ctrl in ControllerStore.Controllers())
+            foreach (var ctrl in ControllerStore.Controllers().ToList())
             {
                 ControllerStore.RemoveController(ctrl.ControllerType);
             }
