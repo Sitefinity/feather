@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Web.Caching;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using RazorGenerator.Mvc;
@@ -117,16 +119,50 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 
         private string VirtualResourceHash(string virtualPath)
         {
-            if (HostingEnvironment.VirtualPathProvider.FileExists(virtualPath))
+            CompositePrecompiledMvcEngineWrapper.HashCacheRecord hashRecord;
+            if (CompositePrecompiledMvcEngineWrapper.HashCache.ContainsKey(virtualPath))
             {
-                using (var stream = HostingEnvironment.VirtualPathProvider.GetFile(virtualPath).Open())
-                {
-                    return CompositePrecompiledMvcEngineWrapper.ComputeHash(stream);
-                }
+                hashRecord = CompositePrecompiledMvcEngineWrapper.HashCache[virtualPath];
+                if (hashRecord.Dependency == null || !hashRecord.Dependency.HasChanged)
+                    return hashRecord.Hash;
             }
 
-            return null;
+            lock (CompositePrecompiledMvcEngineWrapper.HashCache)
+            {
+                if (HostingEnvironment.VirtualPathProvider.FileExists(virtualPath))
+                {
+                    using (var stream = HostingEnvironment.VirtualPathProvider.GetFile(virtualPath).Open())
+                    {
+                        hashRecord = new CompositePrecompiledMvcEngineWrapper.HashCacheRecord()
+                        {
+                            Hash = CompositePrecompiledMvcEngineWrapper.ComputeHash(stream),
+                            Dependency = HostingEnvironment.VirtualPathProvider.GetCacheDependency(virtualPath, new object[0], DateTime.UtcNow)
+                        };
+                    }
+                }
+                else
+                {
+                    hashRecord = new CompositePrecompiledMvcEngineWrapper.HashCacheRecord()
+                    {
+                        Hash = null,
+                        Dependency = null
+                    };
+                }
+
+                CompositePrecompiledMvcEngineWrapper.HashCache[virtualPath] = hashRecord;
+            }
+
+            return hashRecord.Hash;
         }
+
+        private class HashCacheRecord
+        {
+            public string Hash { get; set; }
+
+            public CacheDependency Dependency { get; set; }
+        }
+
+        private static readonly ConcurrentDictionary<string, CompositePrecompiledMvcEngineWrapper.HashCacheRecord> HashCache = new ConcurrentDictionary<string, CompositePrecompiledMvcEngineWrapper.HashCacheRecord>(StringComparer.OrdinalIgnoreCase);
 
         private readonly PrecompiledViewAssemblyWrapper[] precompiledAssemblies;
         private readonly string packageName;
