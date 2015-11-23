@@ -296,6 +296,7 @@
     <Compile Include="IInitializer.cs" />
     <Compile Include="Mvc\Controllers\PersonalizationDesignerController.cs" />
     <Compile Include="Mvc\Controllers\GridDesignerController.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\FeatherEnabledToolboxFilter.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\AttributeRoutingManager.cs" />
     <Compile Include="FilesMonitoring\GridFileManager.cs" />
     <Compile Include="FilesMonitoring\FileChangeType.cs" />
@@ -420,6 +421,7 @@
     <Compile Include="Mvc\Models\ListDisplayMode.cs" />
     <Compile Include="Mvc\Models\SelectionMode.cs" />
     <Compile Include="Mvc\StringResources\DesignerResources.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="Resources\GenericRouteHandler.cs" />
     <Compile Include="Resources\RazorTemplateProcessor.cs" />
     <Compile Include="Resources\ResourceRegister.cs" />
