@@ -1,22 +1,27 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Web;
-using MbUnit.Framework;
-using Telerik.Sitefinity.Abstractions.VirtualPath;
-using Telerik.Sitefinity.Frontend.TestUtilities;
-using Telerik.Sitefinity.Services;
-using Telerik.Sitefinity.Web;
-using ServiceStack;
-using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Services.Events;
-using Telerik.Sitefinity.Modules.ControlTemplates;
+using System.Web.Mvc;
 using System.Web.Routing;
+using MbUnit.Framework;
 using Newtonsoft.Json;
-using System.Collections.Concurrent;
+using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Frontend.FilesMonitoring;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
+using Telerik.Sitefinity.Frontend.TestUtilities;
+using Telerik.Sitefinity.Modules.ControlTemplates;
+using Telerik.Sitefinity.Mvc;
+using Telerik.Sitefinity.Mvc.Store;
+using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Services.Events;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.TestIntegration
 {
@@ -31,6 +36,10 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// <summary>
         /// Checks whether after deactivating Feather the Sitefinity application changes it has done are undone.
         /// </summary>
+        /// <remarks>
+        /// UnloadingFeather_Res_RegisterResource_ShouldBeUndone is not needed - Registering of resources is actually registering types in the Object factory
+        /// UnloadingFeather_RouteTable_Routes_MapRoute_ShouldBeUndone is not needed - Routes are in one collection checked by UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone
+        /// </remarks>
         [Test]
         [Author(FeatherTeams.FeatherTeam)]
         [Description("Checks whether after deactivating Feather the Sitefinity application changes it has done are undone.")]
@@ -50,7 +59,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
                 this.UnloadingFeather_ObjectFactory_Container_RegisterType_ShouldBeUndone();
                 this.UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone();
                 this.UnloadingFeather_EventHub_Subscribe_ShouldBeUndone();
-                this.UnloadingFeather_Res_RegisterResource_ShouldBeUndone();
                 this.UnloadingFeather_IFileMonitor_Start_ShouldBeUndone();
                 this.UnloadingFeather_GlobalFilters_Filters_Add_ShouldBeUndone();
                 this.UnloadingFeather_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone();
@@ -58,7 +66,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
                 this.UnloadingFeather_ControllerBuilder_Current_SetControllerFactory_ShouldBeUndone();
                 this.UnloadingFeather_ControllerStore_AddController_ShouldBeUndone();
                 this.UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone();
-                this.UnloadingFeather_RouteTable_Routes_MapRoute_ShouldBeUndone();
             //// }
             //// finally
             //// {
@@ -72,6 +79,11 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone()
         {
+            var wildcardPaths = typeof(VirtualPathManager).GetField("wildcardPaths", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) as IList<PathDefinition>;
+
+            // There are no changes on virtualPaths
+            Assert.IsFalse(wildcardPaths.Any(wp => wp.ResolverName == "MvcFormsResolver"));
+            Assert.IsFalse(wildcardPaths.Any(wp => wp.ResolverName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix)));
         }
 
         /// <summary>
@@ -79,6 +91,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_SystemManager_RegisterServiceStackPlugin_ShouldBeUndone()
         {
+            var pendingServiceStackPlugins = typeof(SystemManager).GetField("PendingServiceStackPlugins", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as IList<object>;
+            Assert.IsFalse(pendingServiceStackPlugins.Any(pssp => pssp.GetType().FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix)));
         }
 
         /// <summary>
@@ -86,13 +100,19 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_ObjectFactory_Container_RegisterType_ShouldBeUndone()
         {
+            // TODO
         }
 
         /// <summary>
         /// Checks whether after unloading Feather the SystemManager RegisterRoute calls are undone.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "routes"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "routeRegistrations")]
         public void UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone()
         {
+            var routes = Type.GetType("Telerik.Sitefinity.Services.RouteManager, Telerik.Sitefinity").GetField("routes", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as RouteCollection;
+            var routeRegistrations = Type.GetType("Telerik.Sitefinity.Services.RouteManager, Telerik.Sitefinity").GetField("routeRegistrations", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as List<object>;
+
+            // TODO: Track this
         }
 
         /// <summary>
@@ -100,14 +120,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_EventHub_Subscribe_ShouldBeUndone()
         {
-        }
-
-        /// <summary>
-        /// Checks whether after unloading Feather the Res RegisterResource calls are undone.
-        /// </summary>
-        public void UnloadingFeather_Res_RegisterResource_ShouldBeUndone()
-        {
-            // Registering of resources is actually registering types in the Object factory
+            var handlerLists = typeof(EventService).GetField("handlerLists", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(ObjectFactory.Resolve<IEventService>()) as ConcurrentDictionary<Type, object>;
+            var allHandlers = typeof(EventService).GetNestedType("HandlerList", BindingFlags.Instance | BindingFlags.NonPublic).GetField("handlers", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(handlerLists) as List<Delegate>;
+            Assert.IsFalse(allHandlers.Any(h => h.Method.ReflectedType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix)));
         }
 
         /// <summary>
@@ -115,6 +130,11 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_IFileMonitor_Start_ShouldBeUndone()
         {
+            var moduleInstance = SystemManager.GetModule("Feather");
+            var initializers = typeof(FrontendModule).GetField("initializers", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(moduleInstance) as IEnumerable<object>;
+            var fileInitializer = initializers.FirstOrDefault(i => i is FileMonitoringInitializer);
+            var fileMonitorInstance = typeof(FileMonitoringInitializer).GetField("fileMonitor", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(fileInitializer);
+            Assert.IsNull(fileMonitorInstance);
         }
 
         /// <summary>
@@ -122,6 +142,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_GlobalFilters_Filters_Add_ShouldBeUndone()
         {
+            Assert.IsFalse(GlobalFilters.Filters.Any(f => f.Instance is CacheDependentAttribute));
         }
 
         /// <summary>
@@ -129,6 +150,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone()
         {
+            var controlTemplates = typeof(ControlTemplates).GetField("controlTemplates", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, IControlTemplateInfo>;
+            Assert.IsFalse(controlTemplates.Values.Any(cti => cti.ControlType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix)));
         }
 
         /// <summary>
@@ -136,6 +159,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_ViewEngines_Engines_Remove_ShouldBeUndone()
         {
+            Assert.IsTrue(ViewEngines.Engines.Any(ve => ve is SitefinityViewEngine));
         }
 
         /// <summary>
@@ -143,6 +167,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_ControllerBuilder_Current_SetControllerFactory_ShouldBeUndone()
         {
+            Assert.IsFalse(ControllerBuilder.Current.GetControllerFactory() is FrontendControllerFactory);
         }
 
         /// <summary>
@@ -150,6 +175,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_ControllerStore_AddController_ShouldBeUndone()
         {
+            Assert.IsFalse(ControllerStore.Controllers().Any(c => c.ControllerType.FullName.StartsWith(ModuleUnloadTests.FrontendAssemblyPrefix)));
         }
 
         /// <summary>
@@ -157,53 +183,60 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         public void UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone()
         {
+            Assert.IsFalse(RouteTable.Routes.Any(r => r is Route && ((Route)r).Url == "Telerik.Sitefinity.Frontend/{controller}/Master/{widgetName}"));
+            Assert.IsFalse(RouteTable.Routes.Any(r => r is Route && ((Route)r).Url == "Telerik.Sitefinity.Frontend/{controller}/View/{widgetName}/{viewType}"));
+            Assert.IsFalse(RouteTable.Routes.Any(r => r.GetType().FullName == "System.Web.Mvc.Routing.RouteCollectionRoute" && ((IEnumerable<RouteBase>)r).Any(rb => rb is Route && ((Route)rb).Url == "rest-api/login-status")));
+            Assert.IsFalse(RouteTable.Routes.Any(r => r.GetType().FullName == "System.Web.Mvc.Routing.LinkGenerationRoute" && ((Route)r).Url == "rest-api/login-status"));
         }
 
-        /// <summary>
-        /// Checks whether after unloading Feather the RouteTable Routes MapRoute calls are undone.
-        /// </summary>
-        public void UnloadingFeather_RouteTable_Routes_MapRoute_ShouldBeUndone()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        private string SerializeObject(object obj)
         {
-        }
-
-        private Dictionary<string, string> GetState()
-        {
-            var state = new Dictionary<string, string>();
             var jsonSerializerSettings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+            return JsonConvert.SerializeObject(obj, Formatting.Indented, jsonSerializerSettings);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        private Dictionary<string, object> GetState()
+        {
+            var state = new Dictionary<string, object>();
 
             var wildcardPaths = typeof(VirtualPathManager).GetField("wildcardPaths", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-            state.Add("UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone_wildcardPaths", JsonConvert.SerializeObject(wildcardPaths, Formatting.Indented, jsonSerializerSettings));
             var virtualPaths = typeof(VirtualPathManager).GetField("virtualPaths", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-            state.Add("UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone_virtualPaths", JsonConvert.SerializeObject(virtualPaths, Formatting.Indented, jsonSerializerSettings));
+            state.Add("UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone_wildcardPaths", wildcardPaths);
+            state.Add("UnloadingFeather_VirtualPathManager_AddVirtualFileResolver_ShouldBeUndone_virtualPaths", virtualPaths);
 
-            state.Add("UnloadingFeather_SystemManager_RegisterServiceStackPlugin_ShouldBeUndone_pendingServiceStackPlugins", JsonConvert.SerializeObject(SystemManager.PendingServiceStackPlugins, Formatting.Indented, jsonSerializerSettings));
+            var pendingServiceStackPlugins = typeof(SystemManager).GetField("PendingServiceStackPlugins", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+            state.Add("UnloadingFeather_SystemManager_RegisterServiceStackPlugin_ShouldBeUndone_pendingServiceStackPlugins", pendingServiceStackPlugins);
 
-            state.Add("UnloadingFeather_ObjectFactory_Container_RegisterType_ShouldBeUndone_registrations", JsonConvert.SerializeObject(ObjectFactory.Container.Registrations, Formatting.Indented, jsonSerializerSettings));
+            state.Add("UnloadingFeather_ObjectFactory_Container_RegisterType_ShouldBeUndone_registrations", ObjectFactory.Container.Registrations);
 
-            state.Add("UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone_pendingRouteRegistrations", JsonConvert.SerializeObject(SystemManager.PendingRouteRegistrations, Formatting.Indented, jsonSerializerSettings));
+            var routes = Type.GetType("Telerik.Sitefinity.Services.RouteManager, Telerik.Sitefinity").GetField("routes", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as RouteCollection;
+            var routeRegistrations = Type.GetType("Telerik.Sitefinity.Services.RouteManager, Telerik.Sitefinity").GetField("routeRegistrations", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as List<object>;
+            state.Add("UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone_routes", routes);
+            state.Add("UnloadingFeather_SystemManager_RegisterRoute_ShouldBeUndone_routeRegistrations", routeRegistrations);
 
             var handlerLists = typeof(EventService).GetField("handlerLists", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(ObjectFactory.Resolve<IEventService>());
-            state.Add("UnloadingFeather_EventHub_Subscribe_ShouldBeUndone_handlerLists", JsonConvert.SerializeObject(handlerLists, Formatting.Indented, jsonSerializerSettings));
+            state.Add("UnloadingFeather_EventHub_Subscribe_ShouldBeUndone_handlerLists", handlerLists);
 
             var filters = Type.GetType("System.Web.Mvc.GlobalFilters, System.Web.Mvc").GetProperty("Filters", BindingFlags.Static | BindingFlags.Public).GetValue(null, null);
-            state.Add("UnloadingFeather_GlobalFilters_Filters_Add_ShouldBeUndone_filters", JsonConvert.SerializeObject(filters, Formatting.Indented, jsonSerializerSettings));
+            state.Add("UnloadingFeather_GlobalFilters_Filters_Add_ShouldBeUndone_filters", filters);
 
             var controlTemplates = typeof(ControlTemplates).GetField("controlTemplates", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as Dictionary<string, IControlTemplateInfo>;
-            state.Add("UnloadingFeather_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone_controlTemplates", JsonConvert.SerializeObject(controlTemplates, Formatting.Indented, jsonSerializerSettings));
+            state.Add("UnloadingFeather_ControlTemplates_RegisterTemplatableControl_ShouldBeUndone_controlTemplates", controlTemplates);
 
             var viewEngines = Type.GetType("System.Web.Mvc.ViewEngines, System.Web.Mvc").GetProperty("Engines", BindingFlags.Static | BindingFlags.Public).GetValue(null, null);
-            state.Add("UnloadingFeather_ViewEngines_Engines_Remove_ShouldBeUndone_viewEngines", JsonConvert.SerializeObject(viewEngines, Formatting.Indented, jsonSerializerSettings));
+            state.Add("UnloadingFeather_ViewEngines_Engines_Remove_ShouldBeUndone_viewEngines", viewEngines);
 
             var currentControllerBuilder = Type.GetType("System.Web.Mvc.ControllerBuilder, System.Web.Mvc").GetProperty("Current", BindingFlags.Static | BindingFlags.Public).GetValue(null, null);
             var controllerFactory = Type.GetType("System.Web.Mvc.ControllerBuilder, System.Web.Mvc").GetMethod("GetControllerFactory", BindingFlags.Public | BindingFlags.Instance).Invoke(currentControllerBuilder, null);
-            state.Add("UnloadingFeather_ControllerBuilder_Current_SetControllerFactory_ShouldBeUndone_controllerFactory", JsonConvert.SerializeObject(controllerFactory, Formatting.Indented, jsonSerializerSettings));
+            state.Add("UnloadingFeather_ControllerBuilder_Current_SetControllerFactory_ShouldBeUndone_controllerFactory", controllerFactory);
 
             var controllers = Type.GetType("Telerik.Sitefinity.Mvc.Store.ControllerStore, Telerik.Sitefinity.Mvc").GetMethod("Controllers", BindingFlags.Static | BindingFlags.Public).Invoke(null, null);
-            state.Add("UnloadingFeather_ControllerStore_AddController_ShouldBeUndone_controllers", JsonConvert.SerializeObject(controllers, Formatting.Indented, jsonSerializerSettings));
+            state.Add("UnloadingFeather_ControllerStore_AddController_ShouldBeUndone_controllers", controllers);
 
-            var routes = RouteTable.Routes;
-            state.Add("UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone_routes", JsonConvert.SerializeObject(routes, Formatting.Indented, jsonSerializerSettings));
-            state.Add("UnloadingFeather_RouteTable_Routes_MapRoute_ShouldBeUndone_routes", JsonConvert.SerializeObject(routes, Formatting.Indented, jsonSerializerSettings));
+            var globalRoutes = RouteTable.Routes;
+            state.Add("UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone_routes", globalRoutes);
 
             return state;
         }
@@ -251,6 +284,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             httpWebRequest.GetResponse();
         }
 
+        private const string FrontendAssemblyPrefix = "Telerik.Sitefinity.Frontend";
         private const string JsonRequestPayload = "{\"ClientId\":\"Feather\",\"Description\":\"Modern, intuitive, convention based, mobile-first UI for Telerik Sitefinity\",\"ErrorMessage\":\"\",\"IsModuleLicensed\":true,\"IsSystemModule\":false,\"Key\":\"Feather\",\"ModuleId\":\"00000000-0000-0000-0000-000000000000\",\"ModuleType\":0,\"Name\":\"Feather\",\"ProviderName\":\"\",\"StartupType\":3,\"Status\":1,\"Title\":\"Feather\",\"Type\":\"Telerik.Sitefinity.Frontend.FrontendModule, Telerik.Sitefinity.Frontend\",\"Version\":{\"_Build\":390,\"_Major\":1,\"_Minor\":4,\"_Revision\":0}}";
     }
 }
