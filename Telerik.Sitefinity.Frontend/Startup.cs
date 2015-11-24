@@ -24,7 +24,6 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         public static void OnPreApplicationStart()
         {
-            return;
             Bootstrapper.Initialized -= Bootstrapper_Initialized;
             Bootstrapper.Initialized += Bootstrapper_Initialized;
         }
@@ -46,7 +45,7 @@ namespace Telerik.Sitefinity.Frontend
             var type = typeof(Func<string, Tuple<bool, string>>);
             Delegate del = Delegate.CreateDelegate(type, method);
 
-            var processWidgetValidationInfo = typeof(ToolboxesConfig).GetField("ValidateWidget", BindingFlags.NonPublic | BindingFlags.Static);
+            var processWidgetValidationInfo = typeof(ToolboxesConfig).GetField("ValidateWidgetState", BindingFlags.NonPublic | BindingFlags.Static);
 
             if (processWidgetValidationInfo != null && processWidgetValidationInfo.GetValue(del) == null)
             {
