@@ -83,7 +83,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
                 writer.Write(payload);
             }
 
-            httpWebRequest.GetResponse();
+            var response = httpWebRequest.GetResponse();
         }
 
         private const string FeatherUninstallUrl = "/Sitefinity/Services/ModulesService/modules?operation=1";
