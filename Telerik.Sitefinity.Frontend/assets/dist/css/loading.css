@@ -1,5 +1,4 @@
-.sf-loading:before,
-.sf-loading:after, .sf-loading > span {
+.sf-loading:before, .sf-loading:after, .sf-loading > span {
   background-color: #9cc5f7;
   height: 30px;
   width: 6px;
@@ -12,8 +11,7 @@
   width: 6px;
   position: relative;
   margin: -5px 0 0 12px; }
-  .sf-loading:before,
-  .sf-loading:after {
+  .sf-loading:before, .sf-loading:after {
     content: " ";
     position: absolute;
     top: 0; }
