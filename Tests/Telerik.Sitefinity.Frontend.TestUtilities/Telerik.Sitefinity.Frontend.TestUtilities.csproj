@@ -238,6 +238,7 @@
     <Compile Include="CommonOperations\ActionFilters\ActionExecutionRegister.cs" />
     <Compile Include="CommonOperations\ActionFilters\ActionInfo.cs" />
     <Compile Include="CommonOperations\ActionFilters\ExecutionRegistrationFilterAttribute.cs" />
+    <Compile Include="CommonOperations\FeatherModuleOperations.cs" />
     <Compile Include="CommonOperations\Pages\GridWidgetsOperations.cs" />
     <Compile Include="CommonOperations\Pages\ModuleBuilderOperations.cs" />
     <Compile Include="CommonOperations\Pages\PagesOperations.cs" />
