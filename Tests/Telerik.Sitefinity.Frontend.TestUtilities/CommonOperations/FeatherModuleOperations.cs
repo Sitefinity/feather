@@ -41,6 +41,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         {
             var installOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherActivateFromDeactivatedStateUrl, true);
             this.MakePutRequest(installOperationEndpoint, JsonRequestPayload);
+
+            Thread.Sleep(10000);
         }
 
         /// <summary>
@@ -50,6 +52,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         {
             var installOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherActivateFromUninstalledStateUrl, true);
             this.MakePutRequest(installOperationEndpoint, JsonRequestPayload);
+
+            Thread.Sleep(10000);
         }
 
         /// <summary>
@@ -59,6 +63,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         {
             var uninstallOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherDeactivateUrl, true);
             this.MakePutRequest(uninstallOperationEndpoint, JsonRequestPayload);
+            
+            Thread.Sleep(10000);
         }
 
         /// <summary>
@@ -68,6 +74,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         {
             var uninstallOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherUninstallUrl, true);
             this.MakePutRequest(uninstallOperationEndpoint, JsonRequestPayload);
+
+            Thread.Sleep(10000);
         }
 
         private void MakePutRequest(string url, string payload)
