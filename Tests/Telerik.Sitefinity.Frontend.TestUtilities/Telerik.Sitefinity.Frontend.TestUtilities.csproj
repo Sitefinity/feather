@@ -299,6 +299,7 @@
     <Compile Include="DummyClasses\ResourceResolvers\DummyVirtualPathProvider.cs" />
     <Compile Include="DummyClasses\ToolboxItemProxy.cs" />
     <Compile Include="DummyClasses\Routing\FeatherActionInvokerTests.cs" />
+    <Compile Include="FeatherConfigRegion.cs" />
     <Compile Include="FeatherTeams.cs" />
     <Compile Include="FileInjectHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
