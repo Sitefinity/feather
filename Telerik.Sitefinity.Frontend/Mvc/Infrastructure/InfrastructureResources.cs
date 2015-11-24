@@ -145,5 +145,35 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
                 return this["AlwaysUsePrecompiledVersionDescription"];
             }
         }
+
+        /// <summary>
+        /// Caption of the 'Log usage of precompiled views' checkbox.
+        /// </summary>
+        [ResourceEntry("LogPrecompiledViewUsageCaption",
+            Value = "Log usage of precompiled views",
+            Description = "Caption of the 'Log usage of precompiled views' checkbox.",
+            LastModified = "2015/11/24")]
+        public string LogPrecompiledViewUsageCaption
+        {
+            get
+            {
+                return this["LogPrecompiledViewUsageCaption"];
+            }
+        }
+
+        /// <summary>
+        /// Description of the 'Log usage of precompiled views' checkbox.
+        /// </summary>
+        [ResourceEntry("LogPrecompiledViewUsageDescription",
+            Value = "Feather will log when it uses precompiled views in the Trace log. Use for debugging.",
+            Description = "Description of the 'Log usage of precompiled views' checkbox.",
+            LastModified = "2015/11/24")]
+        public string LogPrecompiledViewUsageDescription
+        {
+            get
+            {
+                return this["LogPrecompiledViewUsageDescription"];
+            }
+        }
     }
 }

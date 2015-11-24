@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -8,6 +9,7 @@ using System.Web.Caching;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using RazorGenerator.Mvc;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
@@ -94,6 +96,46 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         protected override bool FileExists(ControllerContext controllerContext, string virtualPath)
         {
             return !Config.Get<FeatherConfig>().DisablePrecompilation && base.FileExists(controllerContext, virtualPath) && (Config.Get<FeatherConfig>().AlwaysUsePrecompiledVersion || this.ShouldServe(virtualPath));
+        }
+
+        /// <summary>
+        /// Creates the specified view by using the controller context, path of the view, and path of the master view.
+        /// </summary>
+        /// <param name="controllerContext">The controller context.</param>
+        /// <param name="viewPath">The path of the view.</param>
+        /// <param name="masterPath">The path of the master view.</param>
+        /// <returns>
+        /// A reference to the view.
+        /// </returns>
+        protected override IView CreateView(ControllerContext controllerContext, string viewPath, string masterPath)
+        {
+            this.LogPrecompiledViewUsage(controllerContext, viewPath);
+            return base.CreateView(controllerContext, viewPath, masterPath);
+        }
+
+        /// <summary>
+        /// Creates the specified partial view by using the specified controller context.
+        /// </summary>
+        /// <param name="controllerContext">The controller context.</param>
+        /// <param name="partialPath">The partial path for the new partial view.</param>
+        /// <returns>
+        /// A reference to the partial view.
+        /// </returns>
+        protected override IView CreatePartialView(ControllerContext controllerContext, string partialPath)
+        {
+            this.LogPrecompiledViewUsage(controllerContext, partialPath);
+            return base.CreatePartialView(controllerContext, partialPath);
+        }
+
+        private void LogPrecompiledViewUsage(ControllerContext controllerContext, string viewPath)
+        {
+            if (Config.Get<FeatherConfig>().LogPrecompiledViewUsage && controllerContext != null && controllerContext.Controller != null && controllerContext.RouteData != null)
+            {
+                var controllerName = controllerContext.Controller.GetType().Name;
+                var actionName = controllerContext.RouteData.Values["action"];
+                var message = string.Format("Precompiled view used for controller: \"{0}\", action: \"{1}\", ViewPath: {2}", controllerName, actionName, viewPath);
+                Log.Write(message, TraceEventType.Information);
+            }
         }
 
         private bool ShouldServe(string virtualPath)

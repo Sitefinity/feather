@@ -54,5 +54,26 @@ namespace Telerik.Sitefinity.Frontend
                 this["alwaysUsePrecompiledVersion"] = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to log when precompiled views are used.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if usage of precompiled views should be logged; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty("logPrecompiledViewUsage")]
+        [ObjectInfo(typeof(InfrastructureResources), Title = "LogPrecompiledViewUsageCaption", Description = "LogPrecompiledViewUsageDescription")]
+        public bool LogPrecompiledViewUsage
+        {
+            get
+            {
+                return (bool)this["logPrecompiledViewUsage"];
+            }
+
+            set
+            {
+                this["logPrecompiledViewUsage"] = value;
+            }
+        }
     }
 }
