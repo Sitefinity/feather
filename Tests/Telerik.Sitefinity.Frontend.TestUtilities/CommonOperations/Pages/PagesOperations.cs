@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.Web;
 
@@ -38,7 +40,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
                    pageId = p.Id;
                })
                .CheckOut()
-               .Publish(CultureInfo.InvariantCulture)
+               .Publish(SystemManager.CurrentContext.AppSettings.DefaultFrontendLanguage)
                .SaveChanges();
             return pageId;
         }
@@ -81,7 +83,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             PageManager pageManager = PageManager.GetManager();
 
             var page = pageManager.GetPageNode(pageId);
-            var pageUrl = page.GetFullUrl();
+            var pageUrl = page.GetFullUrl(SystemManager.CurrentContext.AppSettings.DefaultFrontendLanguage, true);
             pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
             pageUrl = UrlTransformations.AppendParam(pageUrl, "t", Guid.NewGuid().ToString());
 
