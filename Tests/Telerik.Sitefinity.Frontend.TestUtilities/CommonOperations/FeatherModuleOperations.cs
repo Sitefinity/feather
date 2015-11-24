@@ -15,6 +15,16 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
     public class FeatherModuleOperations
     {
         /// <summary>
+        /// Ensures the feather enabled.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Feather module must be installed to run this test</exception>
+        public void EnsureFeatherEnabled()
+        {
+            if (this.IsFeatherDisabled())
+                throw new ArgumentException("Feather module must be installed to run this test");
+        }
+
+        /// <summary>
         /// Determines whether feather module is disabled.
         /// </summary>
         /// <returns></returns>
@@ -24,6 +34,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             return isDisabled;
         }
 
+        /// <summary>
+        /// Activates the state of the feather from deactivated state.
+        /// </summary>
         public void ActivateFeatherFromDeactivatedState()
         {
             var installOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherActivateFromDeactivatedStateUrl, true);
@@ -33,6 +46,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             Thread.Sleep(5000);
         }
 
+        /// <summary>
+        /// Activates the state of the feather from uninstalled state.
+        /// </summary>
         public void ActivateFeatherFromUninstalledState()
         {
             var installOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherActivateFromUninstalledStateUrl, true);
@@ -42,6 +58,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             Thread.Sleep(5000);
         }
 
+        /// <summary>
+        /// Deactivates the feather.
+        /// </summary>
         public void DeactivateFeather()
         {
             var uninstallOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherDeactivateUrl, true);
@@ -51,6 +70,9 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             Thread.Sleep(5000);
         }
 
+        /// <summary>
+        /// Uninstalls the feather.
+        /// </summary>
         public void UninstallFeather()
         {
             var uninstallOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherUninstallUrl, true);
