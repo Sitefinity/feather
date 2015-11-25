@@ -35,45 +35,53 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         }
 
         /// <summary>
-        /// Activates the state of the feather from deactivated state.
+        /// Activates Feather.
         /// </summary>
-        public void ActivateFeatherFromDeactivatedState()
+        public void ActivateFeather()
         {
-            var installOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherActivateFromDeactivatedStateUrl, true);
-            this.MakePutRequest(installOperationEndpoint, JsonRequestPayload);
+            var url = "/Sitefinity/Services/ModulesService/modules?operation=2";
+            var installOperationEndpoint = UrlPath.ResolveUrl(url, true);
+            var json = "{\"ClientId\":\"Feather\",\"Description\":\"Modern, intuitive, convention based, mobile-first UI for Telerik Sitefinity\",\"ErrorMessage\":\"\",\"IsModuleLicensed\":true,\"IsSystemModule\":false,\"Key\":\"Feather\",\"ModuleId\":\"00000000-0000-0000-0000-000000000000\",\"ModuleType\":0,\"Name\":\"Feather\",\"ProviderName\":\"\",\"StartupType\":3,\"Status\":1,\"Title\":\"Feather\",\"Type\":\"Telerik.Sitefinity.Frontend.FrontendModule, Telerik.Sitefinity.Frontend\",\"Version\":{\"_Build\":400,\"_Major\":1,\"_Minor\":4,\"_Revision\":0}}";
+            this.MakePutRequest(installOperationEndpoint, json);
 
             Thread.Sleep(10000);
         }
 
         /// <summary>
-        /// Activates the state of the feather from uninstalled state.
+        /// Installs Feather.
         /// </summary>
-        public void ActivateFeatherFromUninstalledState()
+        public void InstallFeather()
         {
-            var installOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherActivateFromUninstalledStateUrl, true);
-            this.MakePutRequest(installOperationEndpoint, JsonRequestPayload);
-
-            Thread.Sleep(10000);
-        }
-
-        /// <summary>
-        /// Deactivates the feather.
-        /// </summary>
-        public void DeactivateFeather()
-        {
-            var uninstallOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherDeactivateUrl, true);
-            this.MakePutRequest(uninstallOperationEndpoint, JsonRequestPayload);
+            var url = "/Sitefinity/Services/ModulesService/modules?operation=0";
+            var installOperationEndpoint = UrlPath.ResolveUrl(url, true);
+            var json = "{\"ClientId\":\"Feather\",\"Description\":\"Modern, intuitive, convention based, mobile-first UI for Telerik Sitefinity\",\"ErrorMessage\":\"\",\"IsModuleLicensed\":true,\"IsSystemModule\":false,\"Key\":\"Feather\",\"ModuleId\":\"00000000-0000-0000-0000-000000000000\",\"ModuleType\":0,\"Name\":\"Feather\",\"ProviderName\":\"\",\"StartupType\":0,\"Status\":0,\"Title\":\"Feather\",\"Type\":\"Telerik.Sitefinity.Frontend.FrontendModule, Telerik.Sitefinity.Frontend\",\"Version\":null}";
+            this.MakePutRequest(installOperationEndpoint, json);
             
             Thread.Sleep(10000);
         }
 
         /// <summary>
-        /// Uninstalls the feather.
+        /// Deactivates Feather.
+        /// </summary>
+        public void DeactivateFeather()
+        {
+            var url = "/Sitefinity/Services/ModulesService/modules?operation=3";
+            var uninstallOperationEndpoint = UrlPath.ResolveUrl(url, true);
+            var json = "{\"ClientId\":\"Feather\",\"Description\":\"Modern, intuitive, convention based, mobile-first UI for Telerik Sitefinity\",\"ErrorMessage\":\"\",\"IsModuleLicensed\":true,\"IsSystemModule\":false,\"Key\":\"Feather\",\"ModuleId\":\"00000000-0000-0000-0000-000000000000\",\"ModuleType\":0,\"Name\":\"Feather\",\"ProviderName\":\"\",\"StartupType\":0,\"Status\":2,\"Title\":\"Feather\",\"Type\":\"Telerik.Sitefinity.Frontend.FrontendModule, Telerik.Sitefinity.Frontend\",\"Version\":{\"_Build\":400,\"_Major\":1,\"_Minor\":4,\"_Revision\":0}}";
+            this.MakePutRequest(uninstallOperationEndpoint, json);
+            
+            Thread.Sleep(10000);
+        }
+
+        /// <summary>
+        /// Uninstalls Feather.
         /// </summary>
         public void UninstallFeather()
         {
-            var uninstallOperationEndpoint = UrlPath.ResolveUrl(FeatherModuleOperations.FeatherUninstallUrl, true);
-            this.MakePutRequest(uninstallOperationEndpoint, JsonRequestPayload);
+            var url = "/Sitefinity/Services/ModulesService/modules?operation=1";
+            var uninstallOperationEndpoint = UrlPath.ResolveUrl(url, true);
+            var json = "{\"ClientId\":\"Feather\",\"Description\":\"Modern, intuitive, convention based, mobile-first UI for Telerik Sitefinity\",\"ErrorMessage\":\"\",\"IsModuleLicensed\":true,\"IsSystemModule\":false,\"Key\":\"Feather\",\"ModuleId\":\"00000000-0000-0000-0000-000000000000\",\"ModuleType\":0,\"Name\":\"Feather\",\"ProviderName\":\"\",\"StartupType\":3,\"Status\":1,\"Title\":\"Feather\",\"Type\":\"Telerik.Sitefinity.Frontend.FrontendModule, Telerik.Sitefinity.Frontend\",\"Version\":{\"_Build\":400,\"_Major\":1,\"_Minor\":4,\"_Revision\":0}}";
+            this.MakePutRequest(uninstallOperationEndpoint, json);
 
             Thread.Sleep(10000);
         }
@@ -93,11 +101,5 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 
             var response = httpWebRequest.GetResponse();
         }
-
-        private const string FeatherUninstallUrl = "/Sitefinity/Services/ModulesService/modules?operation=1";
-        private const string FeatherActivateFromDeactivatedStateUrl = "/Sitefinity/Services/ModulesService/modules?operation=2";
-        private const string FeatherActivateFromUninstalledStateUrl = "/Sitefinity/Services/ModulesService/modules?operation=0";
-        private const string FeatherDeactivateUrl = "/Sitefinity/Services/ModulesService/modules?operation=3";
-        private const string JsonRequestPayload = "{\"ClientId\":\"Feather\",\"Description\":\"Modern, intuitive, convention based, mobile-first UI for Telerik Sitefinity\",\"ErrorMessage\":\"\",\"IsModuleLicensed\":true,\"IsSystemModule\":false,\"Key\":\"Feather\",\"ModuleId\":\"00000000-0000-0000-0000-000000000000\",\"ModuleType\":0,\"Name\":\"Feather\",\"ProviderName\":\"\",\"StartupType\":3,\"Status\":1,\"Title\":\"Feather\",\"Type\":\"Telerik.Sitefinity.Frontend.FrontendModule, Telerik.Sitefinity.Frontend\",\"Version\":{\"_Build\":390,\"_Major\":1,\"_Minor\":4,\"_Revision\":0}}";
     }
 }
