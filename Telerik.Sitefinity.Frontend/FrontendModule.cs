@@ -212,11 +212,10 @@ namespace Telerik.Sitefinity.Frontend
         private void Unistall(SiteInitializer initializer)
         {
             var featherWidgetTypes = new List<string>();
-            //var toolboxesConfig = initializer.Context.GetConfig<ToolboxesConfig>();
-            //var configManager = initializer.GetManagerInTransaction<ConfigManager>();
             var configManager = ConfigManager.GetManager();
             var toolboxesConfig = configManager.GetSection<ToolboxesConfig>();
             var pageManager = initializer.PageManager;
+
             foreach (var toolbox in toolboxesConfig.Toolboxes.Values)
             {
                 foreach (var section in toolbox.Sections)
