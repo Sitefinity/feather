@@ -117,6 +117,7 @@ namespace Telerik.Sitefinity.Frontend
         public override void Unload()
         {
             this.Uninitialize();
+            this.InvalidatePages();
             base.Unload();
         }
 
@@ -209,6 +210,35 @@ namespace Telerik.Sitefinity.Frontend
             return framework;
         }
 
+        private void InvalidatePages()
+        {
+            var pageManager = PageManager.GetManager();
+            var provider = pageManager.Provider;
+            bool prevEnableDataSynchronization = false;
+            Telerik.Sitefinity.Data.OA.SitefinityOAContext context = null;
+            if (provider != null)
+            {
+                var oaProvider = provider as IOpenAccessDataProvider;
+                if (oaProvider != null)
+                {
+                    context = oaProvider.GetContext();
+                    if (context != null)
+                    {
+                        prevEnableDataSynchronization = context.ContextOptions.EnableDataSynchronization;
+                        context.ContextOptions.EnableDataSynchronization = true;
+                    }
+                }
+            }
+
+            this.ProcessPagesWithControls(pageManager, false);
+            pageManager.SaveChanges();
+
+            if (provider != null && context != null)
+            {
+                context.ContextOptions.EnableDataSynchronization = prevEnableDataSynchronization;
+            }
+        }
+
         private void Unistall(SiteInitializer initializer)
         {
             var featherWidgetTypes = new List<string>();
@@ -232,19 +262,19 @@ namespace Telerik.Sitefinity.Frontend
             }
 
             // Delete widgets from pages
-            this.DeleteControls(pageManager);
+            this.ProcessPagesWithControls(pageManager, true);
 
             configManager.SaveSection(toolboxesConfig);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
-        private void DeleteControls(PageManager pageManager)
+        private void ProcessPagesWithControls(PageManager pageManager, bool shouldDelete)
         {
-            List<ControlData> controlsToDelete = new List<ControlData>();
-            controlsToDelete.AddRange(this.GetControlsToDelete(pageManager));
+            List<ControlData> featherControls = new List<ControlData>();
+            featherControls.AddRange(this.GetControlsToDelete(pageManager));
 
             List<PageData> pagesToInvalidate = new List<PageData>();
-            foreach (var control in controlsToDelete)
+            foreach (var control in featherControls)
             {
                 if (control is PageControl)
                 {
@@ -256,7 +286,9 @@ namespace Telerik.Sitefinity.Frontend
                 {
                     pagesToInvalidate.AddRange(((TemplateControl)control).Page.Pages());
                 }
-                pageManager.Delete(control);
+
+                if (shouldDelete)
+                    pageManager.Delete(control);
             }
 
             foreach (var page in pagesToInvalidate.Distinct())
