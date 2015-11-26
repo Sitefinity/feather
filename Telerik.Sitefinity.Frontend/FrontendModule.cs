@@ -117,7 +117,9 @@ namespace Telerik.Sitefinity.Frontend
         public override void Unload()
         {
             this.Uninitialize();
-            this.InvalidatePages();
+            Bootstrapper.Initialized -= this.Bootstrapper_InitializedOnUnload;
+            Bootstrapper.Initialized += this.Bootstrapper_InitializedOnUnload;
+
             base.Unload();
         }
 
@@ -202,41 +204,27 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
+        /// <summary>
+        /// Handles the Initialized event of the Bootstrapper.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Sitefinity.Data.ExecutedEventArgs"/> instance containing the event data.</param>
+        protected virtual void Bootstrapper_InitializedOnUnload(object sender, ExecutedEventArgs e)
+        {
+            if (e.CommandName == "Bootstrapped")
+            {
+                var pageManager = PageManager.GetManager();
+                this.ProcessPagesWithControls(pageManager, false);
+                pageManager.SaveChanges();
+            }
+        }
+
         private static PageTemplateFramework ExtractFramework()
         {
             var contextItems = SystemManager.CurrentHttpContext.Items;
             PageTemplateFramework framework = (PageTemplateFramework)contextItems["PageTemplateFramework"];
 
             return framework;
-        }
-
-        private void InvalidatePages()
-        {
-            var pageManager = PageManager.GetManager();
-            var provider = pageManager.Provider;
-            bool prevEnableDataSynchronization = false;
-            Telerik.Sitefinity.Data.OA.SitefinityOAContext context = null;
-            if (provider != null)
-            {
-                var oaProvider = provider as IOpenAccessDataProvider;
-                if (oaProvider != null)
-                {
-                    context = oaProvider.GetContext();
-                    if (context != null)
-                    {
-                        prevEnableDataSynchronization = context.ContextOptions.EnableDataSynchronization;
-                        context.ContextOptions.EnableDataSynchronization = true;
-                    }
-                }
-            }
-
-            this.ProcessPagesWithControls(pageManager, false);
-            pageManager.SaveChanges();
-
-            if (provider != null && context != null)
-            {
-                context.ContextOptions.EnableDataSynchronization = prevEnableDataSynchronization;
-            }
         }
 
         private void Unistall(SiteInitializer initializer)
@@ -256,7 +244,7 @@ namespace Telerik.Sitefinity.Frontend
                     var mvcToolsToDelete = featherWidgets.Select(i => i.GetKey());
                     foreach (var key in mvcToolsToDelete)
                     {
-                        section.Tools.Remove(section.Tools.Elements.SingleOrDefault(e=> e.GetKey() == key));
+                        section.Tools.Remove(section.Tools.Elements.SingleOrDefault(e => e.GetKey() == key));
                     }
                 }
             }
