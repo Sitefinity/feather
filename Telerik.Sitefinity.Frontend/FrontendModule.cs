@@ -226,7 +226,7 @@ namespace Telerik.Sitefinity.Frontend
                     var mvcToolsToDelete = featherWidgets.Select(i => i.GetKey());
                     foreach (var key in mvcToolsToDelete)
                     {
-                        section.Tools.Remove(section.Tools.Elements.SingleOrDefault(e=> e.GetKey() == key));
+                        section.Tools.Remove(section.Tools.Elements.SingleOrDefault(e => e.GetKey() == key));
                     }
                 }
             }
@@ -256,6 +256,7 @@ namespace Telerik.Sitefinity.Frontend
                 {
                     pagesToInvalidate.AddRange(((TemplateControl)control).Page.Pages());
                 }
+
                 pageManager.Delete(control);
             }
 
