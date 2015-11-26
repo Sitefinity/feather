@@ -200,7 +200,6 @@ namespace Telerik.Sitefinity.Frontend
                 }
 
                 ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
-                ObjectFactory.Container.RegisterType<IToolboxFilter, GridControlToolboxFilter>(typeof(GridControlToolboxFilter).FullName, new InjectionConstructor(new Func<PageTemplateFramework>(FrontendModule.ExtractFramework)));
             }
         }
 
@@ -274,6 +273,7 @@ namespace Telerik.Sitefinity.Frontend
                 {
                     pagesToInvalidate.AddRange(((TemplateControl)control).Page.Pages());
                 }
+
 
                 if (shouldDelete)
                     pageManager.Delete(control);
