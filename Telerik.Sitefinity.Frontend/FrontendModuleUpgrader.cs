@@ -79,6 +79,7 @@ namespace Telerik.Sitefinity.Frontend
         }
 
         // 1, 2, 140, 0
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Telerik.Sitefinity.Pages.Model.ControlData.set_Caption(System.String)")]
         private static void UpdateContentBlockTitle()
         {
             var configManager = ConfigManager.GetManager();
