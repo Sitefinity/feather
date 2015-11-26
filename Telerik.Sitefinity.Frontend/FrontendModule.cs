@@ -127,6 +127,7 @@ namespace Telerik.Sitefinity.Frontend
         public override void Uninstall(SiteInitializer initializer)
         {
             this.Uninitialize();
+            this.Unistall(initializer);
             base.Uninstall(initializer);
         }
 
@@ -197,6 +198,91 @@ namespace Telerik.Sitefinity.Frontend
 
                 ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
             }
+        }
+
+        private void Unistall(SiteInitializer initializer)
+        {
+            var featherWidgetTypes = new List<string>();
+            var configManager = ConfigManager.GetManager();
+            var toolboxesConfig = configManager.GetSection<ToolboxesConfig>();
+            var pageManager = initializer.PageManager;
+
+            foreach (var toolbox in toolboxesConfig.Toolboxes.Values)
+            {
+                foreach (var section in toolbox.Sections)
+                {
+                    var featherWidgets = ((ICollection<ToolboxItem>)section.Tools).Where(i => !i.ControllerType.IsNullOrEmpty() && i.ControllerType.StartsWith("Telerik.Sitefinity.Frontend", StringComparison.Ordinal));
+                    featherWidgetTypes.AddRange(featherWidgets.Select(t => t.ControllerType));
+
+                    var mvcToolsToDelete = featherWidgets.Select(i => i.GetKey());
+                    foreach (var key in mvcToolsToDelete)
+                    {
+                        section.Tools.Remove(section.Tools.Elements.SingleOrDefault(e => e.GetKey() == key));
+                    }
+                }
+            }
+
+            // Delete widgets from pages
+            this.DeleteControls(pageManager);
+
+            configManager.SaveSection(toolboxesConfig);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
+        private void DeleteControls(PageManager pageManager)
+        {
+            List<ControlData> controlsToDelete = new List<ControlData>();
+            controlsToDelete.AddRange(this.GetControlsToDelete(pageManager));
+
+            List<PageData> pagesToInvalidate = new List<PageData>();
+            foreach (var control in controlsToDelete)
+            {
+                if (control is PageControl)
+                {
+                    var pageForInvalidation = ((PageControl)control).Page;
+                    if (pageForInvalidation != null)
+                        pagesToInvalidate.Add(pageForInvalidation);
+                }
+                else if (control is TemplateControl)
+                {
+                    pagesToInvalidate.AddRange(((TemplateControl)control).Page.Pages());
+                }
+
+                pageManager.Delete(control);
+            }
+
+            foreach (var page in pagesToInvalidate.Distinct())
+                page.BuildStamp++;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        private List<ControlData> GetControlsToDelete(PageManager pageManager)
+        {
+            List<ControlData> controlsToDelete;
+            try
+            {
+                // Could fail if there are persisted records for not loaded types inherited from ControlData
+                controlsToDelete = this.GetFeatherControlsToDelete<ControlData>(pageManager);
+            }
+            catch
+            {
+                controlsToDelete = new List<ControlData>();
+                controlsToDelete.AddRange(this.GetFeatherControlsToDelete<PageControl>(pageManager));
+                controlsToDelete.AddRange(this.GetFeatherControlsToDelete<PageDraftControl>(pageManager));
+                controlsToDelete.AddRange(this.GetFeatherControlsToDelete<TemplateControl>(pageManager));
+                controlsToDelete.AddRange(this.GetFeatherControlsToDelete<TemplateDraftControl>(pageManager));
+            }
+
+            return controlsToDelete;
+        }
+
+        private List<ControlData> GetFeatherControlsToDelete<TControlData>(PageManager pageManager) where TControlData : ControlData
+        {
+            List<ControlData> controlsToDelete = new List<ControlData>();
+
+            controlsToDelete.AddRange(pageManager.GetControls<TControlData>().Where(c => c.Properties.Any(p => p.Name == "ControllerName" && p.Value.StartsWith("Telerik.Sitefinity.Frontend"))).ToList());
+
+            return controlsToDelete;
         }
 
         private void Uninitialize()
