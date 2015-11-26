@@ -117,7 +117,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             {
                 string pageUrl;
                 pageId = this.CreatePage(PageTemplateFramework.Hybrid, out pageUrl);
-                this.AddGridToPage(pageId);
+                this.AddGridToPage(pageId, PageTemplateFramework.Hybrid);
 
                 var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
@@ -151,7 +151,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             {
                 string pageUrl;
                 pageId = this.CreatePage(PageTemplateFramework.Mvc, out pageUrl);
-                this.AddGridToPage(pageId);
+                this.AddGridToPage(pageId, PageTemplateFramework.Mvc);
 
                 var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
@@ -185,7 +185,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             {
                 string pageUrl;
                 pageId = this.CreatePage(PageTemplateFramework.Hybrid, out pageUrl);
-                this.AddGridToPage(pageId);
+                this.AddGridToPage(pageId, PageTemplateFramework.Hybrid);
 
                 var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
@@ -220,7 +220,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             {
                 string pageUrl;
                 pageId = this.CreatePage(PageTemplateFramework.Mvc, out pageUrl);
-                this.AddGridToPage(pageId);
+                this.AddGridToPage(pageId, PageTemplateFramework.Mvc);
 
                 var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
@@ -259,7 +259,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             try
             {
                 templateId = templatesOperations.CreateHybridMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
-                this.AddGridToPageTemplate(templateId);
+                this.AddGridToPageTemplate(templateId, PageTemplateFramework.Hybrid);
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
                 var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
@@ -294,7 +294,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             try
             {
                 templateId = templatesOperations.CreatePureMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
-                this.AddGridToPageTemplate(templateId);
+                this.AddGridToPageTemplate(templateId, PageTemplateFramework.Mvc);
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
                 var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
@@ -329,7 +329,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             try
             {
                 templateId = templatesOperations.CreateHybridMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
-                this.AddGridToPageTemplate(templateId);
+                this.AddGridToPageTemplate(templateId, PageTemplateFramework.Hybrid);
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
                 var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
@@ -365,7 +365,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             try
             {
                 templateId = templatesOperations.CreatePureMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
-                this.AddGridToPageTemplate(templateId);
+                this.AddGridToPageTemplate(templateId, PageTemplateFramework.Mvc);
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
                 var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
@@ -863,16 +863,18 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             return pageId;
         }
 
-        private void AddGridToPage(Guid pageId, string gridVirtualPath = ModuleUnloadTests.GridVirtualPath, string placeHolder = ModuleUnloadTests.PlaceHolder, string caption = ModuleUnloadTests.Caption)
+        private void AddGridToPage(Guid pageId, PageTemplateFramework framework, string gridVirtualPath = ModuleUnloadTests.GridVirtualPath)
         {
+            var placeholder = framework == PageTemplateFramework.Mvc ? "Body" : "Contentplaceholder1";
             var control = new GridControl() { Layout = gridVirtualPath };
-            SampleUtilities.AddControlToPage(pageId, control, placeHolder, caption);
+            SampleUtilities.AddControlToPage(pageId, control, placeholder, "9 + 3");
         }
 
-        private void AddGridToPageTemplate(Guid pageTemplateId, string gridVirtualPath = ModuleUnloadTests.GridVirtualPath, string placeHolder = ModuleUnloadTests.PlaceHolder, string caption = ModuleUnloadTests.Caption)
+        private void AddGridToPageTemplate(Guid pageTemplateId, PageTemplateFramework framework, string gridVirtualPath = ModuleUnloadTests.GridVirtualPath)
         {
+            var placeholder = framework == PageTemplateFramework.Mvc ? "Body" : "Contentplaceholder1";
             var control = new GridControl() { Layout = gridVirtualPath };
-            SampleUtilities.AddControlToTemplate(pageTemplateId, control, placeHolder, caption);
+            SampleUtilities.AddControlToTemplate(pageTemplateId, control, placeholder, "9 + 3");
         }
 
         private string ExecuteWebRequest(string url)
@@ -912,8 +914,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         private const string SitefinityTemplateRoutePrefix = "~/Sitefinity/Template/";
         private const string GridUnavailableMessage = "This grid widget doesn't work, because Feather module has been deactivated.";
         private const string GridVirtualPath = "~/ResourcePackages/Bootstrap/GridSystem/Templates/grid-9+3.html";
-        private const string PlaceHolder = "Contentplaceholder1";
-        private const string Caption = "9 + 3";
 
         #endregion
 
