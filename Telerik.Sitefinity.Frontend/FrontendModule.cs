@@ -196,16 +196,7 @@ namespace Telerik.Sitefinity.Frontend
                 }
 
                 ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
-                ObjectFactory.Container.RegisterType<IToolboxFilter, GridControlToolboxFilter>(typeof(GridControlToolboxFilter).FullName, new InjectionConstructor(new Func<PageTemplateFramework>(FrontendModule.ExtractFramework)));
             }
-        }
-
-        private static PageTemplateFramework ExtractFramework()
-        {
-            var contextItems = SystemManager.CurrentHttpContext.Items;
-            PageTemplateFramework framework = (PageTemplateFramework)contextItems["PageTemplateFramework"];
-
-            return framework;
         }
 
         private void Uninitialize()

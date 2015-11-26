@@ -1,6 +1,7 @@
 ﻿using System;
 using Telerik.Sitefinity.DesignerToolbox;
 using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web.UI;
 
@@ -27,6 +28,9 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// <returns><c>true</c> if it should be visible.</returns>
         public bool IsSectionVisible(IToolboxSection section)
         {
+            if (section.Name == GridWidgetRegistrator.GridSectionName && section.Title == GridWidgetRegistrator.GridSectionTitle)
+                return SystemManager.GetModule("Feather") != null;
+
             return true;
         }
 

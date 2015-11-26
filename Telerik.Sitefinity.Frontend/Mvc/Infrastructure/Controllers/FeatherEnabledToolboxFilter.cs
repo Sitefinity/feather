@@ -23,11 +23,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         public virtual bool IsToolVisible(IToolboxItem tool)
         {
             var isFeatherDeactivated = SystemManager.GetModule("Feather") == null;
-            var isFeatherWidget = tool.ControllerType.StartsWith("Telerik.Sitefinity.Frontend", StringComparison.Ordinal);
-
-            if (isFeatherDeactivated && isFeatherWidget)
-                return false;
-
+            if (isFeatherDeactivated)
+            {
+                var isFeatherWidget = tool.ControllerType.StartsWith("Telerik.Sitefinity.Frontend", StringComparison.Ordinal);
+                if (isFeatherWidget)
+                    return false;
+            }
+            
             return true;
         }
     }

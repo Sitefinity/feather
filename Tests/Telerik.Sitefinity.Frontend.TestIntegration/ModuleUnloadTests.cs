@@ -1,22 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Cache;
 using System.Reflection;
+using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using MbUnit.Framework;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
+using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.ControlTemplates;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Store;
+using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Events;
+using Telerik.Sitefinity.TestIntegration.Data.Content;
+using Telerik.Sitefinity.TestIntegration.SDK;
+using Telerik.Sitefinity.TestUtilities.CommonOperations;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.TestIntegration
 {
@@ -28,6 +41,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
     [Description("This class contains tests for unloading of the Feather module.")]
     public class ModuleUnloadTests
     {
+        #region Application state
+
         /// <summary>
         /// Checks whether after deactivating Feather the Sitefinity application changes it has done are undone.
         /// </summary>
@@ -49,7 +64,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             }
             finally
             {
-                FeatherServerOperations.FeatherModule().ActivateFeatherFromDeactivatedState();
+                FeatherServerOperations.FeatherModule().ActivateFeather();
             }
         }
 
@@ -75,9 +90,589 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
             }
             finally
             {
-                FeatherServerOperations.FeatherModule().ActivateFeatherFromUninstalledState();
+                FeatherServerOperations.FeatherModule().InstallFeather();
             }
         }
+
+        #endregion
+
+        #region Widgets
+
+        #region Page edit
+
+        /// <summary>
+        /// Checks whether after deactivating Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after deactivating Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
+        public void DeactivateFeather_GridWidgetsOnHybridPage_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            Guid pageId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                string pageUrl;
+                pageId = this.CreatePage(PageTemplateFramework.Hybrid, out pageUrl);
+                this.AddGridToPage(pageId);
+
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+
+                moduleOperations.DeactivateFeather();
+
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsTrue(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+            }
+            finally
+            {
+                ServerOperations.Pages().DeletePage(pageId);
+                moduleOperations.ActivateFeather();
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after deactivating Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after deactivating Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.")]
+        public void DeactivateFeather_GridWidgetsOnPurePage_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            Guid pageId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                string pageUrl;
+                pageId = this.CreatePage(PageTemplateFramework.Mvc, out pageUrl);
+                this.AddGridToPage(pageId);
+
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+
+                moduleOperations.DeactivateFeather();
+
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsTrue(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+            }
+            finally
+            {
+                moduleOperations.ActivateFeather();
+                ServerOperations.Pages().DeletePage(pageId);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after uninstalling Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after uninstalling Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
+        public void UninstallFeather_GridWidgetsOnHybridPage_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            Guid pageId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                string pageUrl;
+                pageId = this.CreatePage(PageTemplateFramework.Hybrid, out pageUrl);
+                this.AddGridToPage(pageId);
+
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+
+                moduleOperations.DeactivateFeather();
+                moduleOperations.UninstallFeather();
+
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+            }
+            finally
+            {
+                moduleOperations.InstallFeather();
+                ServerOperations.Pages().DeletePage(pageId);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after uninstalling Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after uninstalling Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.")]
+        public void UninstallFeather_GridWidgetsOnPurePage_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            Guid pageId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                string pageUrl;
+                pageId = this.CreatePage(PageTemplateFramework.Mvc, out pageUrl);
+                this.AddGridToPage(pageId);
+
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+
+                moduleOperations.DeactivateFeather();
+                moduleOperations.UninstallFeather();
+
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+            }
+            finally
+            {
+                moduleOperations.InstallFeather();
+                ServerOperations.Pages().DeletePage(pageId);
+            }
+        }
+
+        #endregion
+
+        #region Template edit
+
+        /// <summary>
+        /// Checks whether after deactivating Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after deactivating Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
+        public void DeactivateFeather_GridWidgetsOnHybridPageTemplate_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            var templatesOperations = ServerOperations.Templates();
+            Guid templateId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                templateId = templatesOperations.CreateHybridMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
+                this.AddGridToPageTemplate(templateId);
+                string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
+
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsFalse(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+
+                moduleOperations.DeactivateFeather();
+
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsTrue(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+            }
+            finally
+            {
+                moduleOperations.ActivateFeather();
+                templatesOperations.DeletePageTemplate(templateId);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after deactivating Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after deactivating Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.")]
+        public void DeactivateFeather_GridWidgetsOnPurePageTemplate_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            var templatesOperations = ServerOperations.Templates();
+            Guid templateId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                templateId = templatesOperations.CreatePureMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
+                this.AddGridToPageTemplate(templateId);
+                string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
+
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsFalse(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+
+                moduleOperations.DeactivateFeather();
+
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsTrue(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+            }
+            finally
+            {
+                moduleOperations.ActivateFeather();
+                templatesOperations.DeletePageTemplate(templateId);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after uninstalling Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after uninstalling Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
+        public void UninstallFeather_GridWidgetsOnHybridPageTemplate_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            var templatesOperations = ServerOperations.Templates();
+            Guid templateId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                templateId = templatesOperations.CreateHybridMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
+                this.AddGridToPageTemplate(templateId);
+                string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
+
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsFalse(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+
+                moduleOperations.DeactivateFeather();
+                moduleOperations.UninstallFeather();
+
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+            }
+            finally
+            {
+                moduleOperations.InstallFeather();
+                templatesOperations.DeletePageTemplate(templateId);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after uninstalling Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after uninstalling Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.")]
+        public void UninstallFeather_GridWidgetsOnPurePageTemplate_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            var templatesOperations = ServerOperations.Templates();
+            Guid templateId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                templateId = templatesOperations.CreatePureMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
+                this.AddGridToPageTemplate(templateId);
+                string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
+
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsFalse(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+
+                moduleOperations.DeactivateFeather();
+                moduleOperations.UninstallFeather();
+
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+            }
+            finally
+            {
+                moduleOperations.InstallFeather();
+                templatesOperations.DeletePageTemplate(templateId);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Toolbox
+        
+        #region Page edit
+
+        /// <summary>
+        /// Checks whether after deactivating Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after deactivating Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
+        public void DeactivateFeather_GridWidgetsInToolboxHybridPage_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            Guid pageId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                string pageUrl;
+                pageId = this.CreatePage(PageTemplateFramework.Hybrid, out pageUrl);
+
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsTrue(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+
+                moduleOperations.DeactivateFeather();
+
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+            }
+            finally
+            {
+                ServerOperations.Pages().DeletePage(pageId);
+                moduleOperations.ActivateFeather();
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after deactivating Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after deactivating Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.")]
+        public void DeactivateFeather_GridWidgetsInToolboxPurePage_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            Guid pageId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                string pageUrl;
+                pageId = this.CreatePage(PageTemplateFramework.Mvc, out pageUrl);
+
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsTrue(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+
+                moduleOperations.DeactivateFeather();
+
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+            }
+            finally
+            {
+                moduleOperations.ActivateFeather();
+                ServerOperations.Pages().DeletePage(pageId);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after uninstalling Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after uninstalling Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
+        public void UninstallFeather_GridWidgetsInToolboxHybridPage_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            Guid pageId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                string pageUrl;
+                pageId = this.CreatePage(PageTemplateFramework.Hybrid, out pageUrl);
+
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsTrue(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+
+                moduleOperations.DeactivateFeather();
+                moduleOperations.UninstallFeather();
+
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+            }
+            finally
+            {
+                moduleOperations.InstallFeather();
+                ServerOperations.Pages().DeletePage(pageId);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after uninstalling Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after uninstalling Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.")]
+        public void UninstallFeather_GridWidgetsInToolboxPurePage_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            Guid pageId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                string pageUrl;
+                pageId = this.CreatePage(PageTemplateFramework.Mvc, out pageUrl);
+
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsTrue(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+
+                moduleOperations.DeactivateFeather();
+                moduleOperations.UninstallFeather();
+
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
+                Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+            }
+            finally
+            {
+                moduleOperations.InstallFeather();
+                ServerOperations.Pages().DeletePage(pageId);
+            }
+        }
+
+        #endregion
+
+        #region Template edit
+
+        /// <summary>
+        /// Checks whether after deactivating Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after deactivating Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
+        public void DeactivateFeather_GridWidgetsInToolboxHybridPageTemplate_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            var templatesOperations = ServerOperations.Templates();
+            Guid templateId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                templateId = templatesOperations.CreateHybridMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
+                string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
+
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsTrue(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+
+                moduleOperations.DeactivateFeather();
+
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+            }
+            finally
+            {
+                moduleOperations.ActivateFeather();
+                templatesOperations.DeletePageTemplate(templateId);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after deactivating Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after deactivating Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.")]
+        public void DeactivateFeather_GridWidgetsInToolboxPurePageTemplate_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            var templatesOperations = ServerOperations.Templates();
+            Guid templateId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                templateId = templatesOperations.CreatePureMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
+                string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
+
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsTrue(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+
+                moduleOperations.DeactivateFeather();
+
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+            }
+            finally
+            {
+                moduleOperations.ActivateFeather();
+                templatesOperations.DeletePageTemplate(templateId);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after uninstalling Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after uninstalling Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
+        public void UninstallFeather_GridWidgetsInToolboxHybridPageTemplate_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            var templatesOperations = ServerOperations.Templates();
+            Guid templateId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                templateId = templatesOperations.CreateHybridMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
+                string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
+
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsTrue(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+
+                moduleOperations.DeactivateFeather();
+                moduleOperations.UninstallFeather();
+
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+            }
+            finally
+            {
+                moduleOperations.InstallFeather();
+                templatesOperations.DeletePageTemplate(templateId);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether after uninstalling Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether after uninstalling Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.")]
+        public void UninstallFeather_GridWidgetsInToolboxPurePageTemplate_VerifyBackend()
+        {
+            var moduleOperations = FeatherServerOperations.FeatherModule();
+            var templatesOperations = ServerOperations.Templates();
+            Guid templateId = Guid.Empty;
+
+            moduleOperations.EnsureFeatherEnabled();
+
+            try
+            {
+                templateId = templatesOperations.CreatePureMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
+                string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
+
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsTrue(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+
+                moduleOperations.DeactivateFeather();
+                moduleOperations.UninstallFeather();
+
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
+                Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+            }
+            finally
+            {
+                moduleOperations.InstallFeather();
+                templatesOperations.DeletePageTemplate(templateId);
+            }
+        }
+
+        #endregion
+
+        #endregion
+        
+        #region Private members
 
         #region Checks
 
@@ -130,9 +725,11 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         private void Check_ObjectFactory_Container_RegisterType_ShouldBeUndone()
         {
-            Assert.IsFalse(ObjectFactory.Container.Registrations.Any(r =>
-                (r.RegisteredType != null && !string.IsNullOrEmpty(r.RegisteredType.FullName) && r.RegisteredType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)) || 
-                (r.MappedToType != null && !string.IsNullOrEmpty(r.MappedToType.FullName) && r.MappedToType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix))));
+            var frontendRegistrations = ObjectFactory.Container.Registrations.Where(r =>
+                (r.RegisteredType != null && !string.IsNullOrEmpty(r.RegisteredType.FullName) && r.RegisteredType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)) ||
+                (r.MappedToType != null && !string.IsNullOrEmpty(r.MappedToType.FullName) && r.MappedToType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)));
+
+            Assert.IsFalse(frontendRegistrations.Any());
         }
 
         /// <summary>
@@ -228,10 +825,98 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
 
         #endregion
 
+        #region Helpers
+
+        private Guid CreatePage(PageTemplateFramework framework, out string pageUrl)
+        {
+            Guid pageId = Guid.Empty;
+            pageUrl = string.Empty;
+            var suffix = Guid.NewGuid().ToString("N");
+
+            if (framework == PageTemplateFramework.Hybrid)
+            {
+                var namePrefix = "TestPageName";
+                var titlePrefix = "TestPageTitle";
+                var urlPrefix = "test-page-url";
+                var index = 1;
+
+                pageId = new PageContentGenerator().CreatePage(
+                    string.Format(CultureInfo.InvariantCulture, "{0}{1}", namePrefix + suffix, index.ToString(CultureInfo.InvariantCulture)),
+                    string.Format(CultureInfo.InvariantCulture, "{0}{1}", titlePrefix + suffix, index.ToString(CultureInfo.InvariantCulture)),
+                    string.Format(CultureInfo.InvariantCulture, "{0}{1}", urlPrefix + suffix, index.ToString(CultureInfo.InvariantCulture)));
+
+                pageUrl = UrlPath.ResolveAbsoluteUrl("~/" + urlPrefix + suffix + index);
+            }
+            else if (framework == PageTemplateFramework.Mvc)
+            {
+                var pagesOperations = FeatherServerOperations.Pages();
+                var pageManager = PageManager.GetManager();
+
+                var bootstrapTemplate = pageManager.GetTemplates().FirstOrDefault(t => (t.Name == "Bootstrap.default" && t.Title == "default") || t.Title == "Bootstrap.default");
+                if (bootstrapTemplate == null)
+                    throw new ArgumentException("Bootstrap template not found");
+
+                pageId = pagesOperations.CreatePageWithTemplate(bootstrapTemplate, "FormsPageBootstrap" + suffix, "forms-page-bootstrap" + suffix);
+                pageUrl = RouteHelper.GetAbsoluteUrl(pageManager.GetPageNode(pageId).GetFullUrl());
+            }
+
+            return pageId;
+        }
+
+        private void AddGridToPage(Guid pageId, string gridVirtualPath = ModuleUnloadTests.GridVirtualPath, string placeHolder = ModuleUnloadTests.PlaceHolder, string caption = ModuleUnloadTests.Caption)
+        {
+            var control = new GridControl() { Layout = gridVirtualPath };
+            SampleUtilities.AddControlToPage(pageId, control, placeHolder, caption);
+        }
+
+        private void AddGridToPageTemplate(Guid pageTemplateId, string gridVirtualPath = ModuleUnloadTests.GridVirtualPath, string placeHolder = ModuleUnloadTests.PlaceHolder, string caption = ModuleUnloadTests.Caption)
+        {
+            var control = new GridControl() { Layout = gridVirtualPath };
+            SampleUtilities.AddControlToTemplate(pageTemplateId, control, placeHolder, caption);
+        }
+
+        private string ExecuteWebRequest(string url)
+        {
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.Timeout = 120 * 1000;
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
+            webRequest.CachePolicy = new RequestCachePolicy();
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+
+            string responseContent;
+            using (var sr = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8))
+                responseContent = sr.ReadToEnd();
+
+            return responseContent;
+        }
+        
+        private string AppendEditUrl()
+        {
+            return "/Action/Edit" + this.AppendUncacheUrl();
+        }
+
+        private string AppendUncacheUrl()
+        {
+            return "?t=" + Guid.NewGuid().ToString();
+        }
+
+        #endregion
+        
         #region Constants
 
         private const string FrontendAssemblyPrefix = "Telerik.Sitefinity.Frontend";
-    
+        private const string FeatherGridToolboxItemMarkup = "controltype=\"Telerik.Sitefinity.Frontend.GridSystem.GridControl, Telerik.Sitefinity.Frontend\"";
+        private const string PageTemplateTitle = "TestPageTemplate";
+
+        private const string SitefinityTemplateRoutePrefix = "~/Sitefinity/Template/";
+        private const string GridUnavailableMessage = "This grid widget doesn't work, because Feather module has been deactivated.";
+        private const string GridVirtualPath = "~/ResourcePackages/Bootstrap/GridSystem/Templates/grid-9+3.html";
+        private const string PlaceHolder = "Contentplaceholder1";
+        private const string Caption = "9 + 3";
+
+        #endregion
+
         #endregion
     }
 }
