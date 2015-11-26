@@ -200,6 +200,10 @@ namespace Telerik.Sitefinity.Frontend
                 }
 
                 ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
+            
+                var pageManager = PageManager.GetManager();
+                this.ProcessPagesWithControls(pageManager, false);
+                pageManager.SaveChanges();
             }
         }
 
@@ -216,14 +220,6 @@ namespace Telerik.Sitefinity.Frontend
                 this.ProcessPagesWithControls(pageManager, false);
                 pageManager.SaveChanges();
             }
-        }
-
-        private static PageTemplateFramework ExtractFramework()
-        {
-            var contextItems = SystemManager.CurrentHttpContext.Items;
-            PageTemplateFramework framework = (PageTemplateFramework)contextItems["PageTemplateFramework"];
-
-            return framework;
         }
 
         private void Unistall(SiteInitializer initializer)
@@ -273,7 +269,6 @@ namespace Telerik.Sitefinity.Frontend
                 {
                     pagesToInvalidate.AddRange(((TemplateControl)control).Page.Pages());
                 }
-
 
                 if (shouldDelete)
                     pageManager.Delete(control);
