@@ -390,9 +390,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         private void RemoveSitefinityViewEngine()
         {
-            var sitefinityViewEngine = ViewEngines.Engines.FirstOrDefault(v => v is SitefinityViewEngine);
-
-            if (sitefinityViewEngine != null)
+            var sitefinityViewEngines = ViewEngines.Engines.Where(v => v != null && v is SitefinityViewEngine).ToList();
+            foreach (var sitefinityViewEngine in sitefinityViewEngines)
             {
                 ViewEngines.Engines.Remove(sitefinityViewEngine);
             }
