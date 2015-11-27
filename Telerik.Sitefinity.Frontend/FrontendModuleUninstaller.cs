@@ -57,7 +57,7 @@ namespace Telerik.Sitefinity.Frontend
             }
 
             // Delete widgets from pages
-            FrontendModuleControlStore.ProcessPagesWithControls(initializer.PageManager, shouldDelete: true);
+            FrontendModuleControlStore.DeletePagesWithControls(initializer.PageManager);
 
             configManager.SaveSection(toolboxesConfig);
         }
@@ -76,9 +76,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             if (e.CommandName == "Bootstrapped")
             {
-                var pageManager = PageManager.GetManager();
-                FrontendModuleControlStore.ProcessPagesWithControls(pageManager, shouldDelete: false);
-                pageManager.SaveChanges();
+                FrontendModuleControlStore.InvalidatePagesWithControls(null);
 
                 Bootstrapper.Initialized -= FrontendModuleUninstaller.Bootstrapper_Initialized;
             }

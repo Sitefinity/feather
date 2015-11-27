@@ -725,11 +725,17 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
         /// </summary>
         private void Check_ObjectFactory_Container_RegisterType_ShouldBeUndone()
         {
+            var frondendPostUninstallMappedToTypesNames = new List<string>() 
+            { 
+                typeof(FeatherEnabledToolboxFilter).FullName,
+                typeof(GridControlToolboxFilter).FullName
+            };
+
             var frontendRegistrations = ObjectFactory.Container.Registrations.Where(r =>
                 (r.RegisteredType != null && !string.IsNullOrEmpty(r.RegisteredType.FullName) && r.RegisteredType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)) ||
                 (r.MappedToType != null && !string.IsNullOrEmpty(r.MappedToType.FullName) && r.MappedToType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)));
-
-            Assert.IsFalse(frontendRegistrations.Any());
+            
+            Assert.IsFalse(frontendRegistrations.Any(r => r.MappedToType != null && !frondendPostUninstallMappedToTypesNames.Contains(r.MappedToType.FullName)));
         }
 
         /// <summary>

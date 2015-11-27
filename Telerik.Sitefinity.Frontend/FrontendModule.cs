@@ -148,7 +148,6 @@ namespace Telerik.Sitefinity.Frontend
             Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
         }
 
-        internal const string FrontendServiceName = "Telerik.Sitefinity.Frontend";
         private Lazy<IEnumerable<IInitializer>> initializers = new Lazy<IEnumerable<IInitializer>>(() =>
             typeof(FrontendModule).Assembly.GetTypes().Where(t => typeof(IInitializer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).Select(t => Activator.CreateInstance(t) as IInitializer).ToList());
         

@@ -12,15 +12,48 @@ namespace Telerik.Sitefinity.Frontend
     internal static class FrontendModuleControlStore
     {
         /// <summary>
-        /// Processes the pages with controls.
+        /// Invalidates the pages with controls.
         /// </summary>
         /// <param name="pageManager">The page manager.</param>
-        /// <param name="shouldDelete">if set to <c>true</c> [should delete].</param>
-        public static void ProcessPagesWithControls(PageManager pageManager, bool shouldDelete)
+        public static void InvalidatePagesWithControls(PageManager pageManager = null)
+        {
+            var handleTransaction = false;
+            if (pageManager == null)
+            {
+                handleTransaction = true;
+                pageManager = PageManager.GetManager();
+            }
+
+            FrontendModuleControlStore.ProcessPagesWithControls(pageManager, deleteControls: false);
+
+            if (handleTransaction)
+                pageManager.SaveChanges();
+        }
+
+        /// <summary>
+        /// Deletes the pages with controls.
+        /// </summary>
+        /// <param name="pageManager">The page manager.</param>
+        public static void DeletePagesWithControls(PageManager pageManager = null)
+        {
+            var handleTransaction = false;
+            if (pageManager == null)
+            {
+                handleTransaction = true;
+                pageManager = PageManager.GetManager();
+            }
+
+            FrontendModuleControlStore.ProcessPagesWithControls(pageManager, deleteControls: true);
+
+            if (handleTransaction)
+                pageManager.SaveChanges();
+        }
+
+        private static void ProcessPagesWithControls(PageManager pageManager, bool deleteControls)
         {
             List<ControlData> featherControls = new List<ControlData>();
             
-            featherControls.AddRange(FrontendModuleControlStore.GetControlsToDelete(pageManager));
+            featherControls.AddRange(FrontendModuleControlStore.GetControlsToProcess(pageManager));
 
             List<PageData> pagesToInvalidate = new List<PageData>();
             foreach (var control in featherControls)
@@ -36,41 +69,45 @@ namespace Telerik.Sitefinity.Frontend
                     pagesToInvalidate.AddRange(((TemplateControl)control).Page.Pages());
                 }
 
-                if (shouldDelete)
+                if (deleteControls)
                     pageManager.Delete(control);
             }
 
             foreach (var page in pagesToInvalidate.Distinct())
                 page.BuildStamp++;
         }
-
-        private static List<ControlData> GetControlsToDelete(PageManager pageManager)
+                
+        private static List<ControlData> GetControlsToProcess(PageManager pageManager)
         {
-            List<ControlData> controlsToDelete;
+            List<ControlData> controlsToProcess;
             try
             {
                 // Could fail if there are persisted records for not loaded types inherited from ControlData
-                controlsToDelete = FrontendModuleControlStore.GetFeatherControlsToDelete<ControlData>(pageManager);
+                controlsToProcess = FrontendModuleControlStore.GetFeatherControlsToProcess<ControlData>(pageManager);
             }
             catch
             {
-                controlsToDelete = new List<ControlData>();
-                controlsToDelete.AddRange(FrontendModuleControlStore.GetFeatherControlsToDelete<PageControl>(pageManager));
-                controlsToDelete.AddRange(FrontendModuleControlStore.GetFeatherControlsToDelete<PageDraftControl>(pageManager));
-                controlsToDelete.AddRange(FrontendModuleControlStore.GetFeatherControlsToDelete<TemplateControl>(pageManager));
-                controlsToDelete.AddRange(FrontendModuleControlStore.GetFeatherControlsToDelete<TemplateDraftControl>(pageManager));
+                controlsToProcess = new List<ControlData>();
+                controlsToProcess.AddRange(FrontendModuleControlStore.GetFeatherControlsToProcess<PageControl>(pageManager));
+                controlsToProcess.AddRange(FrontendModuleControlStore.GetFeatherControlsToProcess<PageDraftControl>(pageManager));
+                controlsToProcess.AddRange(FrontendModuleControlStore.GetFeatherControlsToProcess<TemplateControl>(pageManager));
+                controlsToProcess.AddRange(FrontendModuleControlStore.GetFeatherControlsToProcess<TemplateDraftControl>(pageManager));
             }
 
-            return controlsToDelete;
+            return controlsToProcess;
         }
 
-        private static List<ControlData> GetFeatherControlsToDelete<TControlData>(PageManager pageManager) where TControlData : ControlData
+        private static List<ControlData> GetFeatherControlsToProcess<TControlData>(PageManager pageManager) where TControlData : ControlData
         {
-            var controlsToDelete = new List<ControlData>();
+            var controlsToProcess = new List<ControlData>();
 
-            controlsToDelete.AddRange(pageManager.GetControls<TControlData>().Where(c => c.Properties.Any(p => p.Name == "ControllerName" && p.Value.StartsWith("Telerik.Sitefinity.Frontend"))).ToList());
+            controlsToProcess.AddRange(
+                pageManager.GetControls<TControlData>()
+                .Where(c => c.ObjectType.StartsWith("Telerik.Sitefinity.Frontend.GridSystem.GridControl") || 
+                    c.Properties.Any(p => p.Name == "ControllerName" && p.Value.StartsWith("Telerik.Sitefinity.Frontend")))
+                .ToList());
 
-            return controlsToDelete;
+            return controlsToProcess;
         }
     }
 }

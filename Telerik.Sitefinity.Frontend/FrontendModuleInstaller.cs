@@ -57,9 +57,7 @@ namespace Telerik.Sitefinity.Frontend
 
             ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
 
-            var pageManager = PageManager.GetManager();
-            FrontendModuleControlStore.ProcessPagesWithControls(pageManager, shouldDelete: false);
-            pageManager.SaveChanges();
+            FrontendModuleControlStore.InvalidatePagesWithControls(null);
         }
         
         #region Install
@@ -67,7 +65,7 @@ namespace Telerik.Sitefinity.Frontend
         private static bool FrontendServiceExists()
         {
             var systemConfig = Config.Get<SystemConfig>();
-            return systemConfig.SystemServices.ContainsKey(FrontendModule.FrontendServiceName);
+            return systemConfig.SystemServices.ContainsKey(FrontendModuleInstaller.FrontendServiceName);
         }
 
         private static void InitialUpgrade(SiteInitializer initializer)
@@ -81,7 +79,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             var configManager = ConfigManager.GetManager();
             var systemConfig = configManager.GetSection<SystemConfig>();
-            systemConfig.SystemServices.Remove(FrontendModule.FrontendServiceName);
+            systemConfig.SystemServices.Remove(FrontendModuleInstaller.FrontendServiceName);
             configManager.SaveSection(systemConfig);
         }
 
@@ -133,6 +131,8 @@ namespace Telerik.Sitefinity.Frontend
             if (tool != null)
                 mvcWidgetsSection.Tools.Remove(tool);
         }
+
+        private const string FrontendServiceName = "Telerik.Sitefinity.Frontend";
 
         #endregion
     }
