@@ -13,6 +13,7 @@ using System.Web.Routing;
 using MbUnit.Framework;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
+using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
 using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
@@ -21,6 +22,7 @@ using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.ControlTemplates;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages.Model;
@@ -484,6 +486,21 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration
 
                 var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
+
+                var configManager = ConfigManager.GetManager();
+                var toolboxesConfig = configManager.GetSection<ToolboxesConfig>();
+
+                foreach (var toolbox in toolboxesConfig.Toolboxes.Values)
+                {
+                    foreach (var section in toolbox.Sections)
+                    {
+                        var existsFeatherWidgets = ((ICollection<ToolboxItem>)section.Tools)
+                            .Any(i =>
+                                i.ControlType.StartsWith("Telerik.Sitefinity.Frontend", StringComparison.Ordinal));
+
+                        Assert.IsFalse(existsFeatherWidgets, "Feather widget still exists in section " + section.Name);
+                    }
+                }
             }
             finally
             {
