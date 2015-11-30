@@ -6,9 +6,7 @@ using System.Web.Routing;
 using System.Web.UI;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Resources;
-using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web.UI;
 
@@ -54,11 +52,11 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Angular/angular-route.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls.min.js"));
            
-                var references = PageManager.GetScriptReferences(ScriptRef.KendoAll);
-                foreach (var scriptRef in references)
-                {
-                    @event.Scripts.Add(scriptRef);
-                }
+                ////var references = PageManager.GetScriptReferences(ScriptRef.KendoAll);
+                ////foreach (var scriptRef in references)
+                ////{
+                ////    @event.Scripts.Add(scriptRef);
+                ////}
      
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor-services.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor.js"));
