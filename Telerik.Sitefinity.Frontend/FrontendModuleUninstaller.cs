@@ -43,9 +43,13 @@ namespace Telerik.Sitefinity.Frontend
 
             foreach (var toolbox in toolboxesConfig.Toolboxes.Values)
             {
+                ICollection<ToolboxSection> emptySections = new List<ToolboxSection>();
                 foreach (var section in toolbox.Sections)
                 {
-                    var featherWidgets = ((ICollection<ToolboxItem>)section.Tools).Where(i => !i.ControllerType.IsNullOrEmpty() && i.ControllerType.StartsWith("Telerik.Sitefinity.Frontend", StringComparison.Ordinal));
+                    var featherWidgets = ((ICollection<ToolboxItem>)section.Tools)
+                        .Where(i =>
+                            i.ControlType.StartsWith("Telerik.Sitefinity.Frontend", StringComparison.Ordinal) ||
+                            (!i.ControllerType.IsNullOrEmpty() && i.ControllerType.StartsWith("Telerik.Sitefinity.Frontend", StringComparison.Ordinal)));
                     featherWidgetTypes.AddRange(featherWidgets.Select(t => t.ControllerType));
 
                     var mvcToolsToDelete = featherWidgets.Select(i => i.GetKey());
@@ -53,6 +57,14 @@ namespace Telerik.Sitefinity.Frontend
                     {
                         section.Tools.Remove(section.Tools.Elements.SingleOrDefault(e => e.GetKey() == key));
                     }
+
+                    if (section.Tools.Count == 0)
+                        emptySections.Add(section);
+                }
+
+                foreach (var emptySection in emptySections)
+                {
+                    toolbox.Sections.Remove(emptySection);
                 }
             }
 
