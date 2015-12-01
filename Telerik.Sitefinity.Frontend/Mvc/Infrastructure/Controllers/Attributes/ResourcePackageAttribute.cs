@@ -5,9 +5,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
     /// <summary>
     /// This attribute is used to mark assemblies that contain a precompiled resource package.
     /// </summary>
-    [AttributeUsage(AttributeTargets.All)]
+    [AttributeUsage(AttributeTargets.Assembly)]
     public sealed class ResourcePackageAttribute : Attribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResourcePackageAttribute"/> class.
+        /// </summary>
+        public ResourcePackageAttribute()
+            : this(string.Empty)
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourcePackageAttribute"/> class.
         /// </summary>

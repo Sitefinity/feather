@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         public PrecompiledViewAssemblyWrapper(Assembly assembly, string package)
         {
             this.assembly = assembly;
-            this.basePath = package.IsNullOrEmpty() ? "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(assembly) : "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(PrecompiledViewAssemblyWrapper));
+            this.basePath = package == null ? "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(assembly) : "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(PrecompiledViewAssemblyWrapper));
             this.precompiledViewAssembly = new PrecompiledViewAssembly(assembly, this.basePath)
             {
                 UsePhysicalViewsIfNewer = false

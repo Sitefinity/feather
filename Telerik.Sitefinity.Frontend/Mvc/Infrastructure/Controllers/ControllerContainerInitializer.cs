@@ -361,12 +361,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
         }
 
-        private Dictionary<string, List<PrecompiledViewAssemblyWrapper>> RegisterPrecompiledViews(IEnumerable<Assembly> assemblies)
+        private Dictionary<string, List<PrecompiledViewAssemblyWrapper>> PrecompiledResourcePackages(IEnumerable<Assembly> assemblies)
         {
             var precompiledViewAssemblies = new Dictionary<string, List<PrecompiledViewAssemblyWrapper>>();
             foreach (var assembly in assemblies)
             {
                 var package = this.AssemblyPackage(assembly);
+                if (package == null)
+                    continue;
+
                 if (!precompiledViewAssemblies.ContainsKey(package))
                     precompiledViewAssemblies[package] = new List<PrecompiledViewAssemblyWrapper>();
 
@@ -378,20 +381,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         private void RegisterPrecompiledViewEngines(IEnumerable<Assembly> assemblies)
         {
-            var precompiledViewAssemblies = this.RegisterPrecompiledViews(assemblies);
-            if (precompiledViewAssemblies.ContainsKey(string.Empty))
+            var precompiledAssemblies = assemblies.Where(a => a.GetCustomAttribute<ControllerContainerAttribute>() != null).Select(a => new PrecompiledViewAssemblyWrapper(a, null)).ToArray();
+            if (precompiledAssemblies.Length > 0)
             {
-                var globalAssemblies = precompiledViewAssemblies[string.Empty];
-                if (globalAssemblies.Count > 0)
-                    ViewEngines.Engines.Insert(0, new CompositePrecompiledMvcEngineWrapper(globalAssemblies, null));
+                ViewEngines.Engines.Insert(0, new CompositePrecompiledMvcEngineWrapper(precompiledAssemblies));
             }
 
-            foreach (var package in precompiledViewAssemblies.Keys)
+            var precompiledResourcePackages = this.PrecompiledResourcePackages(assemblies);
+            foreach (var package in precompiledResourcePackages.Keys)
             {
-                if (package.IsNullOrEmpty())
+                if (package == null)
                     continue;
 
-                var packageAssemblies = precompiledViewAssemblies[package];
+                var packageAssemblies = precompiledResourcePackages[package];
                 if (packageAssemblies.Count > 0)
                     ViewEngines.Engines.Insert(0, new CompositePrecompiledMvcEngineWrapper(packageAssemblies, null, package));
             }
@@ -401,9 +403,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             var attribute = assembly.GetCustomAttribute<ResourcePackageAttribute>();
             if (attribute == null)
-                return string.Empty;
+                return null;
             else
-                return attribute.Name ?? string.Empty;
+                return attribute.Name;
         }
 
         #endregion
