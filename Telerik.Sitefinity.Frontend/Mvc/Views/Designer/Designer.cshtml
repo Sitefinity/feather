@@ -1,5 +1,5 @@
 @model Telerik.Sitefinity.Frontend.Mvc.Models.IDesignerModel
-
+@using Telerik.Sitefinity.Modules.Pages
 @using Telerik.Sitefinity.Frontend.Mvc.Helpers
 <div class="sf-backend-wrp">
     <div class="designer" modal dialog-controller="DialogCtrl" template-url="dialog-template" auto-open="true" window-class="sf-designer-dlg sf-backend-wrp">
@@ -50,6 +50,7 @@
 @Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/designer.js"))
 @Html.Script(Url.WidgetContent("Mvc/Scripts/sf-loading.js"))
 @Html.Script(Url.WidgetContent("Mvc/Scripts/Bootstrap/js/bootstrap.min.js"))
+@Html.Script(ScriptRef.KendoAll, "top") 
 
 @foreach (var scriptPath in Model.ScriptReferences)
 {
