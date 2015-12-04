@@ -11,9 +11,9 @@ using Telerik.Sitefinity.Services;
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
     /// <summary>
-    /// This class resolves script dependencies for components.
+    /// This class handles frontend components by mapping them to scripts and extracting them from markup.
     /// </summary>
-    internal static class ScriptDependencyResolver
+    internal static class ComponentsDependencyResolver
     {
         /// <summary>
         /// Gets the scripts.
@@ -43,10 +43,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             foreach (var comp in components)
             {
-                dependencyScripts.AddRange(ScriptDependencyResolver.GetComponentScripts(comp));
+                dependencyScripts.AddRange(ComponentsDependencyResolver.GetComponentScripts(comp));
             }
 
-            return ScriptDependencyResolver.OrderScripts(dependencyScripts, originalScripts);
+            return ComponentsDependencyResolver.OrderScripts(dependencyScripts, originalScripts);
+        }
+
+        /// <summary>
+        /// Extracts the components.
+        /// </summary>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fileStream")]
+        public static IList<string> ExtractComponents(Stream fileStream)
+        {
+            return null;
         }
 
         private static IList<string> OrderScripts(IList<string> dependencyScripts, IEnumerable<string> originalScripts)
@@ -85,9 +95,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         {
             var allScripts = new List<string>();
 
-            if (!string.IsNullOrEmpty(component) && ScriptDependencyResolver.ComponentsDefinitionsDictionary.Value.ContainsKey(component))
+            if (!string.IsNullOrEmpty(component) && ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value.ContainsKey(component))
             {
-                var componentDefinitionObject = ScriptDependencyResolver.ComponentsDefinitionsDictionary.Value[component];
+                var componentDefinitionObject = ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value[component];
 
                 if (componentDefinitionObject.Scripts != null)
                 {
@@ -98,7 +108,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 {
                     foreach (var comp in componentDefinitionObject.Components)
                     {
-                        allScripts.AddRange(ScriptDependencyResolver.GetComponentScripts(comp));
+                        allScripts.AddRange(ComponentsDependencyResolver.GetComponentScripts(comp));
                     }
                 }
             }
@@ -112,7 +122,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private static Dictionary<string, ScriptDependencyConfigModel> Initialize()
         {
-            var assemblyPath = FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(ScriptDependencyResolver).Assembly);
+            var assemblyPath = FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(ComponentsDependencyResolver).Assembly);
             var filename = "client-components/components-definitions.json";
 
             var fileStream = VirtualPathManager.OpenFile("~/" + assemblyPath + filename);
@@ -125,6 +135,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         private static readonly Lazy<Dictionary<string, ScriptDependencyConfigModel>> ComponentsDefinitionsDictionary =
-           new Lazy<Dictionary<string, ScriptDependencyConfigModel>>(ScriptDependencyResolver.Initialize, true);
+           new Lazy<Dictionary<string, ScriptDependencyConfigModel>>(ComponentsDependencyResolver.Initialize, true);
     }
 }

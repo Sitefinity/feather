@@ -26,6 +26,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="widgetName">Name of the widget that is being edited.</param>
         /// <param name="controlId">Id of the control that is edited.</param>
         /// <param name="preselectedView">Name of the preselected view if there is one. Otherwise use null.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "notNullConfigs")]
         public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView)
         {
             this.Caption = widgetName;
@@ -39,8 +40,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 this.views = new[] { preselectedView };
             }
 
+            var allConfigs = this.views.Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations))).ToList();
+            var notNullConfigs = allConfigs.Where(c => c.Value != null).ToList();
+
             var viewConfigs = this.views
-                .Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations)))
+                .Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations) ?? this.GenerateViewConfig(v, viewLocations)))
                 .Where(c => c.Value != null);
 
             if (preselectedView.IsNullOrEmpty())
@@ -160,7 +164,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 .Union(configuredScriptReferences)
                 .Distinct();
         }
-
+        
         /// <summary>
         /// Gets the name of the script file for a given view.
         /// </summary>
@@ -210,6 +214,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             return null;
         }
+        
+        /// <summary>
+        /// Generates the view configuration if its missing from the file system.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="viewLocations">Locations where view files can be found.</param>
+        /// <returns>Config for the given view.</returns>
+        protected DesignerViewConfigModel GenerateViewConfig(string view, IEnumerable<string> viewLocations)
+        {
+            IEnumerable<string> viewExtensions = new string[] { "cshtml" };
+            foreach (var viewLocation in viewLocations)
+            {
+                foreach (var viewExtension in viewExtensions)
+                {
+                    var expectedViewFileName = string.Format("{0}/{1}{2}.{3}", viewLocation, DesignerViewPrefix, view, viewExtension);
+                    if (VirtualPathManager.FileExists(expectedViewFileName))
+                    {
+                        using (var fileStream = VirtualPathManager.OpenFile(expectedViewFileName))
+                        {
+                            var components = ComponentsDependencyResolver.ExtractComponents(fileStream);
+
+                            return new DesignerViewConfigModel()
+                            {
+                                Components = components
+                            };
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
 
         private void PopulateComponentsScriptReferences(DesignerViewConfigModel designerViewConfigModel)
         {
@@ -225,7 +261,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     designerViewConfigModel.Scripts = new List<string>();
                 }
 
-                designerViewConfigModel.Scripts = ScriptDependencyResolver.GetScripts(designerViewConfigModel.Components, designerViewConfigModel.Scripts);
+                designerViewConfigModel.Scripts = ComponentsDependencyResolver.GetScripts(designerViewConfigModel.Components, designerViewConfigModel.Scripts);
             }
         }
 
