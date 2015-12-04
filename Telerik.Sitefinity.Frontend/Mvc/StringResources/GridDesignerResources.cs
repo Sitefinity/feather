@@ -127,5 +127,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["Classes"];
             }
         }
+
+        /// <summary>
+        /// Labels
+        /// </summary>
+        [ResourceEntry("GridDoesNotWork",
+            Value = "This grid widget doesn't work, because Feather module has been deactivated.",
+            Description = "Message displayed in the place of grid widget when Feather module is deactivated.",
+            LastModified = "2015/11/20")]
+        public string GridDoesNotWork
+        {
+            get
+            {
+                return this["GridDoesNotWork"];
+            }
+        }
     }
 }

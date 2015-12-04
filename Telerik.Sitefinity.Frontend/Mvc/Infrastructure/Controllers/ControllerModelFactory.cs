@@ -62,7 +62,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             while (currentType != null && currentType != typeof(Controller) && currentType != typeof(object))
             {
-                result.Add(currentType.Assembly);
+                if (!result.Contains(currentType.Assembly))
+                {
+                    result.Add(currentType.Assembly);
+                }
+
                 currentType = currentType.BaseType;
             }
 

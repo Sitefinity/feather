@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
     /// <summary>
     /// This class contains logic for registration and initialization of the layouts.
     /// </summary>
-    internal class LayoutInitializer
+    internal class LayoutInitializer : IInitializer
     {
         /// <summary>
         /// Registers the types and resolvers related to the layouts functionality.
@@ -29,7 +29,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             ObjectFactory.Container.RegisterType<PageRouteHandler, MvcPageRouteHandler>();
             ObjectFactory.Container.RegisterType<PageEditorRouteHandler, MvcPageEditorRouteHandler>();
             ObjectFactory.Container.RegisterType<TemplateEditorRouteHandler, MvcTemplateEditorRouteHandler>();
-            System.Web.Routing.RouteTable.Routes.Insert(1, new System.Web.Routing.Route("Sitefinity/Versioning/{itemId}/{VersionNumber}", ObjectFactory.Resolve<MvcVersioningRouteHandler>()));
+
+            this.mvcVersioningRoute = new System.Web.Routing.Route("Sitefinity/Versioning/{itemId}/{VersionNumber}", ObjectFactory.Resolve<MvcVersioningRouteHandler>());
+            System.Web.Routing.RouteTable.Routes.Insert(1, this.mvcVersioningRoute);
         }
+
+        /// <summary>
+        /// Uninitializes the functionality related to the layouts.
+        /// </summary>
+        public virtual void Uninitialize()
+        {
+            System.Web.Routing.RouteTable.Routes.Remove(this.mvcVersioningRoute);
+        }
+
+        private System.Web.Routing.Route mvcVersioningRoute;
     }
 }

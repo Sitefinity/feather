@@ -5,8 +5,10 @@ using System.Text;
 using System.Web.Hosting;
 using System.Web.UI;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Modules.Newsletters;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.HtmlParsing;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
@@ -26,6 +28,11 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// </summary>
         protected override ITemplate GetTemplate()
         {
+            if (SystemManager.GetModule("Feather") == null)
+            {
+                throw new ArgumentException(Res.Get<GridDesignerResources>().GridDoesNotWork);
+            }
+
             var layout = this.Layout;
             bool isVirtualPath = layout.StartsWith("~/", StringComparison.Ordinal);
             bool isHtmlTemplate = layout.EndsWith(".html", StringComparison.OrdinalIgnoreCase) || layout.EndsWith(".htm", StringComparison.Ordinal);
