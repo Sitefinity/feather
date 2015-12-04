@@ -251,19 +251,16 @@
       <HintPath>..\packages\Telerik.Sitefinity.Core.9.0.6000.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.Design, Version=2015.3.1111.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2015.3.1111.40\lib\net40\Telerik.Web.Design.dll</HintPath>
-      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Web.UI.2015.3.1111.40\lib\net40\Telerik.Web.Design.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI, Version=2015.3.1111.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2015.3.1111.40\lib\net40\Telerik.Web.UI.dll</HintPath>
-      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Web.UI.2015.3.1111.40\lib\net40\Telerik.Web.UI.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI.Skins, Version=2015.3.1111.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2015.3.1111.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
-      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Web.UI.2015.3.1111.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -547,7 +544,9 @@
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.json" />
     <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="assets\csslint.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
@@ -680,7 +679,6 @@
     <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
     <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
-    <EmbeddedResource Include="Mvc\Scripts\Kendo\kendo.all.min.js" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <EmbeddedResource Include="assets\dist\css\html-field.css" />
     <EmbeddedResource Include="assets\dist\css\html-field.min.css" />

@@ -7,7 +7,6 @@ using System.Web.Routing;
 using System.Web.UI;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web.UI;
