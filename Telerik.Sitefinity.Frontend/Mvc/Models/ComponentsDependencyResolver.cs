@@ -58,8 +58,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <returns></returns>
         public static IList<string> ExtractComponents(Stream fileStream)
         {
-            var sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
             var candidateComponents = new HashSet<string>();
             using (var reader = new StreamReader(fileStream))
             {
@@ -98,11 +96,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             candidateComponents.IntersectWith(ComponentsDependencyResolver.AvailableComponents.Value.Keys);
 
-            var components = candidateComponents.Select(key => ComponentsDependencyResolver.AvailableComponents.Value[key]).ToList();
-            
-            sw.Stop();
-
-            return components;
+            return candidateComponents.Select(key => ComponentsDependencyResolver.AvailableComponents.Value[key]).ToList();
         }
 
         private static IList<string> OrderScripts(IList<string> dependencyScripts, IEnumerable<string> originalScripts)
