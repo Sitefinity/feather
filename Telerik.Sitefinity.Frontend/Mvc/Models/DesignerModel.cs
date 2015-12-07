@@ -240,19 +240,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                         using (var fileStream = VirtualPathManager.OpenFile(expectedViewFileName))
                         {
                             var components = ComponentsDependencyResolver.ExtractComponents(fileStream);
-                            if (components != null && components.Any())
-                            {
-                                this.ModuleDependencies.ToList().AddRange(ComponentsDependencyResolver.GetModules(components));
-                                this.ModuleDependencies.Distinct();
-                                return new DesignerViewConfigModel()
-                                {
-                                    Scripts = ComponentsDependencyResolver.GetScripts(components, null)
-                                };
-                            }
-                        }
+                            this.ModuleDependencies.ToList().AddRange(ComponentsDependencyResolver.GetModules(components));
+                            this.ModuleDependencies.Distinct();
 
-                        // View that exists has been parsed and no components are used in it - no point in cycling trough the other views
-                        return null;
+                            var scripts = ComponentsDependencyResolver.GetScripts(components, null);
+
+                            // If view that exists has been parsed and no components are used in it - no point in cycling trough the other views
+                            return new DesignerViewConfigModel() { Scripts = scripts, Components = components };
+                        }
                     }
                 }
             }
