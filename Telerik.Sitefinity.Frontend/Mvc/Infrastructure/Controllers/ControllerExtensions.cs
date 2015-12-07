@@ -65,7 +65,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// Gets the partial views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public static IEnumerable<string> GetPartialViews(this Controller controller)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
+        public static IEnumerable<string> GetPartialViews(this Controller controller, IList<string> fullViewPaths = null)
         {
             var viewLocations = ControllerExtensions.GetPartialViewLocations(controller);
             return ControllerExtensions.GetViews(controller, viewLocations);
@@ -75,7 +76,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// Gets the views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public static IEnumerable<string> GetViews(this Controller controller)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
+        public static IEnumerable<string> GetViews(this Controller controller, IList<string> fullViewPaths = null)
         {
             var viewLocations = ControllerExtensions.GetViewLocations(controller);
             return ControllerExtensions.GetViews(controller, viewLocations);

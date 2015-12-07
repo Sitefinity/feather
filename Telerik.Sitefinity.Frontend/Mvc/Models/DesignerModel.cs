@@ -40,17 +40,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 this.views = new[] { preselectedView };
             }
 
-            var allConfigs = this.views.Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations))).ToList();
-            var notNullConfigs = allConfigs.Where(c => c.Value != null).ToList();
-
             var viewConfigs = this.views
                 .Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations) ?? this.GenerateViewConfig(v, viewLocations)))
-                .Where(c => c.Value != null);
+                .Where(c => c.Value != null)
+                .ToList();
 
             if (preselectedView.IsNullOrEmpty())
             {
                 this.views = this.views.Where(v => !viewConfigs.Any(vc => vc.Key == v) || viewConfigs.Single(vc => vc.Key == v).Value.Hidden == false).ToArray();
-                viewConfigs = viewConfigs.Where(c => !c.Value.Hidden);
+                viewConfigs = viewConfigs.Where(c => !c.Value.Hidden).ToList();
             }
 
             this.PopulateScriptReferences(widgetName, viewConfigs);
@@ -234,12 +232,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                         using (var fileStream = VirtualPathManager.OpenFile(expectedViewFileName))
                         {
                             var components = ComponentsDependencyResolver.ExtractComponents(fileStream);
-
-                            return new DesignerViewConfigModel()
+                            if (components != null && components.Any())
                             {
-                                Components = components
-                            };
+                                return new DesignerViewConfigModel()
+                                {
+                                    Scripts = ComponentsDependencyResolver.GetScripts(components, null)
+                                };
+                            }
                         }
+
+                        // View that exists has been parsed and no components are used in it - no point in cycling trough the other views
+                        return null;
                     }
                 }
             }

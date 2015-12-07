@@ -7,6 +7,7 @@ using System.Web.Script.Serialization;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Utilities.HtmlParsing;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
@@ -53,9 +54,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Extracts the components.
         /// </summary>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fileStream")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "reader"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "line"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "availableComponents"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "components"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fileStream")]
         public static IList<string> ExtractComponents(Stream fileStream)
         {
+            return ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value.Keys.ToList();
+            var components = new List<string>();
+            var availableComponents = new HashSet<string>(ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value.Keys);
+
+            using (var reader = new StreamReader(fileStream))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                }
+            }
+
             return null;
         }
 
