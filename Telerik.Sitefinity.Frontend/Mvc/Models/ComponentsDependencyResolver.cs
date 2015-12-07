@@ -20,6 +20,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Gets the scripts.
         /// </summary>
         /// <param name="components">The components.</param>
+        /// <param name="scripts">The scripts.</param>
         /// <returns></returns>
         public static IList<string> GetScripts(IEnumerable<string> components, IEnumerable<string> scripts)
         {
@@ -53,23 +54,55 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <summary>
         /// Extracts the components.
         /// </summary>
+        /// <param name="fileStream">The file stream.</param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "reader"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "line"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "availableComponents"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "components"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fileStream")]
         public static IList<string> ExtractComponents(Stream fileStream)
         {
-            return ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value.Keys.ToList();
-            var components = new List<string>();
-            var availableComponents = new HashSet<string>(ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value.Keys);
-
+            var sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+            var candidateComponents = new HashSet<string>();
             using (var reader = new StreamReader(fileStream))
             {
-                string line;
-                while ((line = reader.ReadLine()) != null)
+                using (HtmlParser parser = new HtmlParser(reader.ReadToEnd()))
                 {
+                    HtmlChunk chunk = null;
+                    parser.SetChunkHashMode(false);
+                    parser.AutoExtractBetweenTagsOnly = false;
+                    parser.CompressWhiteSpaceBeforeTag = false;
+                    parser.KeepRawHTML = false;
+                    parser.AutoKeepComments = false;
+
+                    while ((chunk = parser.ParseNext()) != null)
+                    {
+                        if (chunk.Type == HtmlChunkType.OpenTag)
+                        {
+                            //// Angular directives can be tag name (E)
+                            candidateComponents.Add(chunk.TagName.ToLower());
+                            for (int i = 0; i < chunk.Attributes.Length; i++)
+                            {
+                                //// The html parser has no more attributes
+                                if (chunk.Values[i] == null)
+                                    break;
+
+                                //// Angular directives can be class attribute value (C)
+                                if (chunk.Attributes[i].ToLower() == "class")
+                                    candidateComponents.Add(chunk.Values[i].ToLower());
+                                else
+                                    //// Angular directives can be attribute name (A)
+                                    candidateComponents.Add(chunk.Attributes[i].ToLower());
+                            }
+                        }
+                    }
                 }
             }
 
-            return null;
+            candidateComponents.IntersectWith(ComponentsDependencyResolver.AvailableComponents.Value.Keys);
+
+            var components = candidateComponents.Select(key => ComponentsDependencyResolver.AvailableComponents.Value[key]).ToList();
+            
+            sw.Stop();
+
+            return components;
         }
 
         private static IList<string> OrderScripts(IList<string> dependencyScripts, IEnumerable<string> originalScripts)
@@ -133,7 +166,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return allScripts.Distinct();
         }
 
-        private static Dictionary<string, ScriptDependencyConfigModel> Initialize()
+        private static Dictionary<string, ScriptDependencyConfigModel> InitializeComponentsDefinitions()
         {
             var assemblyPath = FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(ComponentsDependencyResolver).Assembly);
             var filename = "client-components/components-definitions.json";
@@ -147,7 +180,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
         }
 
+        private static Dictionary<string, string> InitializeAvailableComponents()
+        {
+            var availableComponents = new Dictionary<string, string>();
+
+            var knownComponentsNamingMismatches = new Dictionary<string, string>()
+            {
+                { "sf-expander", "expander" },
+                { "sf-style-dropdown", "style-dropdown" },
+            };
+
+            foreach (var component in ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value.Keys)
+            {
+                if (knownComponentsNamingMismatches.ContainsKey(component))
+                    availableComponents.Add(knownComponentsNamingMismatches[component], component);
+                else
+                    availableComponents.Add(component, component);
+            }
+
+            return availableComponents;
+        }
+
         private static readonly Lazy<Dictionary<string, ScriptDependencyConfigModel>> ComponentsDefinitionsDictionary =
-           new Lazy<Dictionary<string, ScriptDependencyConfigModel>>(ComponentsDependencyResolver.Initialize, true);
+           new Lazy<Dictionary<string, ScriptDependencyConfigModel>>(ComponentsDependencyResolver.InitializeComponentsDefinitions, true);
+
+        private static readonly Lazy<Dictionary<string, string>> AvailableComponents =
+            new Lazy<Dictionary<string, string>>(ComponentsDependencyResolver.InitializeAvailableComponents, true);
     }
 }
