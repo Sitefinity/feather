@@ -76,6 +76,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
         }
 
+        public virtual IEnumerable<string> ModuleDependencies
+        {
+            get 
+            {
+                return this.moduleDependencies;
+            }
+        }
+
         /// <inheritdoc />
         public virtual string DefaultView
         {
@@ -234,6 +242,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                             var components = ComponentsDependencyResolver.ExtractComponents(fileStream);
                             if (components != null && components.Any())
                             {
+                                this.ModuleDependencies.ToList().AddRange(ComponentsDependencyResolver.GetModules(components));
+                                this.ModuleDependencies.Distinct();
                                 return new DesignerViewConfigModel()
                                 {
                                     Scripts = ComponentsDependencyResolver.GetScripts(components, null)
@@ -312,6 +322,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private IEnumerable<string> views;
         private IEnumerable<string> scriptReferences;
+        private IEnumerable<string> moduleDependencies = new List<string>();
         private string defaultView;
     }
 }

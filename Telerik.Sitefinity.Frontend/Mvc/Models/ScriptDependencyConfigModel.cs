@@ -7,7 +7,7 @@ using System.Text;
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
     /// <summary>
-    /// This class represents a JSON configuration for component cefinitions.
+    /// This class represents a JSON configuration for component definitions.
     /// </summary>
     internal class ScriptDependencyConfigModel
     {
@@ -28,5 +28,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </value>
         [DataMember(Name = "components")]
         public IEnumerable<string> Components { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dependant modules.
+        /// </summary>
+        /// <value>
+        /// The dependant modules.
+        /// </value>
+        [DataMember(Name = "dependant-modules")]
+        public IEnumerable<string> DependantModules { get; set; }
     }
 }

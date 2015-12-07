@@ -44,10 +44,33 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             foreach (var comp in components)
             {
-                dependencyScripts.AddRange(ComponentsDependencyResolver.GetComponentScripts(comp));
+                dependencyScripts.AddRange(ComponentsDependencyResolver.GetComponentDependencies(comp, DependencyType.Scripts));
             }
 
             return ComponentsDependencyResolver.OrderScripts(dependencyScripts, originalScripts);
+        }
+
+        public static IList<string> GetModules(IEnumerable<string> components)
+        {
+            if (components == null)
+            {
+                components = new List<string>();
+            }
+
+            var modules = new List<string>();
+
+            foreach (var comp in components)
+            {
+                modules.AddRange(ComponentsDependencyResolver.GetComponentDependencies(comp, DependencyType.Modules));
+            }
+
+            return modules;
+        }
+
+        public enum DependencyType
+        {
+            Scripts,
+            Modules
         }
 
         /// <summary>
@@ -104,24 +127,34 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return scripts.Distinct().ToList();
         }
 
-        private static IEnumerable<string> GetComponentScripts(string component)
+        private static IEnumerable<string> GetComponentDependencies(string component, DependencyType dependencyType)
         {
-            var allScripts = new List<string>();
+            var allDependencies = new List<string>();
 
             if (!string.IsNullOrEmpty(component) && ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value.ContainsKey(component))
             {
                 var componentDefinitionObject = ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value[component];
 
-                if (componentDefinitionObject.Scripts != null)
+                if (dependencyType == DependencyType.Scripts)
                 {
-                    allScripts.AddRange(componentDefinitionObject.Scripts);
+                    if (componentDefinitionObject.Scripts != null)
+                    {
+                        allDependencies.AddRange(componentDefinitionObject.Scripts);
+                    }
+                }
+                else
+                {
+                    if (componentDefinitionObject.DependantModules != null)
+                    {
+                        allDependencies.AddRange(componentDefinitionObject.DependantModules);
+                    }
                 }
 
                 if (componentDefinitionObject.Components != null)
                 {
                     foreach (var comp in componentDefinitionObject.Components)
                     {
-                        allScripts.AddRange(ComponentsDependencyResolver.GetComponentScripts(comp));
+                        allDependencies.AddRange(ComponentsDependencyResolver.GetComponentDependencies(comp, dependencyType));
                     }
                 }
             }
@@ -130,7 +163,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 Log.Write(string.Format(System.Globalization.CultureInfo.InvariantCulture, "The component {0} could not be resolved", component));
             }
 
-            return allScripts.Distinct();
+            return allDependencies.Distinct();
         }
 
         private static Dictionary<string, ScriptDependencyConfigModel> Initialize()

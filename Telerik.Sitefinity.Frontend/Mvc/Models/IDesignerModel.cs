@@ -19,6 +19,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         IEnumerable<string> ScriptReferences { get; }
 
         /// <summary>
+        /// Gets the module dependencies.
+        /// </summary>
+        /// <value>
+        /// The module dependencies.
+        /// </value>
+        IEnumerable<string> ModuleDependencies { get; }
+
+        /// <summary>
         /// Gets the default view.
         /// </summary>
         string DefaultView { get; }

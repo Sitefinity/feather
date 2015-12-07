@@ -56,3 +56,13 @@
 {
 	@Html.Script(Url.WidgetContent(scriptPath))
 }
+
+<script type="text/javascript">
+    (function () {
+        var desingerModule = angular.module('designer');
+        @foreach (var dependency in Model.ModuleDependencies)
+        {
+            desingerModule.requires.push(@dependency);
+        }
+    })();
+</script>
