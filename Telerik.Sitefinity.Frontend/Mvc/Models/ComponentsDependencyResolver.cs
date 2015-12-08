@@ -51,6 +51,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return ComponentsDependencyResolver.OrderScripts(dependencyScripts, originalScripts);
         }
 
+        /// <summary>
+        /// Gets the modules where components are defined.
+        /// </summary>
+        /// <param name="components">The components.</param>
+        /// <returns></returns>
         public static IList<string> GetModules(IEnumerable<string> components)
         {
             if (components == null)
@@ -66,12 +71,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             return modules;
-        }
-
-        public enum DependencyType
-        {
-            Scripts,
-            Modules
         }
 
         /// <summary>
@@ -120,6 +119,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             candidateComponents.IntersectWith(ComponentsDependencyResolver.AvailableComponents.Value.Keys);
 
             return candidateComponents.Select(key => ComponentsDependencyResolver.AvailableComponents.Value[key]).ToList();
+        }
+
+        /// <summary>
+        /// Defines dependencies for the components.
+        /// </summary>
+        public enum DependencyType
+        {
+            Scripts,
+            Modules
         }
 
         private static IList<string> OrderScripts(IList<string> dependencyScripts, IEnumerable<string> originalScripts)
