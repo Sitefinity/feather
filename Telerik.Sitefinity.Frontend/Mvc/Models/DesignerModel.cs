@@ -26,14 +26,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="widgetName">Name of the widget that is being edited.</param>
         /// <param name="controlId">Id of the control that is edited.</param>
         /// <param name="preselectedView">Name of the preselected view if there is one. Otherwise use null.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "notNullConfigs")]
-        public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView)
+        /// <param name="viewFilesMappings">Map of the view file location for each view.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView, Dictionary<string, string> viewFilesMappings)
         {
             this.Caption = widgetName;
+            var designerViewFilesMappings = new Dictionary<string, string>();
 
             if (preselectedView.IsNullOrEmpty())
             {
-                this.views = views.Where(this.IsDesignerView).Select(this.ExtractViewName);
+                var viewNames = new List<string>();
+                foreach (var view in views)
+                {
+                    if (this.IsDesignerView(view))
+                    {
+                        var viewName = this.ExtractViewName(view);
+                        viewNames.Add(viewName);
+
+                        // Remap viewFilesMappings to use the extracted view names as keys.
+                        if (viewFilesMappings != null && viewFilesMappings.ContainsKey(view))
+                            designerViewFilesMappings[viewName] = viewFilesMappings[view];
+                    }
+                }
+
+                this.views = viewNames;
             }
             else
             {
@@ -41,7 +57,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             var viewConfigs = this.views
-                .Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations) ?? this.GenerateViewConfig(v, viewLocations)))
+                .Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations) ?? this.GenerateViewConfig(v, viewLocations, designerViewFilesMappings)))
                 .Where(c => c.Value != null)
                 .ToList();
 
@@ -240,30 +256,46 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="viewLocations">Locations where view files can be found.</param>
+        /// <param name="viewFilesMappings">Map of the view file location for each view.</param>
         /// <returns>Config for the given view.</returns>
-        protected DesignerViewConfigModel GenerateViewConfig(string view, IEnumerable<string> viewLocations)
+        protected DesignerViewConfigModel GenerateViewConfig(string view, IEnumerable<string> viewLocations, Dictionary<string, string> viewFilesMappings)
         {
-            IEnumerable<string> viewExtensions = new string[] { "cshtml" };
+            var viewFilePath = this.GetViewFilePath(view, viewLocations, viewFilesMappings);
+            if (!string.IsNullOrEmpty(viewFilePath))
+            {
+                using (var fileStream = VirtualPathManager.OpenFile(viewFilePath))
+                {
+                    var components = ComponentsDependencyResolver.ExtractComponents(fileStream);
+                    var scripts = ComponentsDependencyResolver.GetScripts(components, null);
+
+                    // If view that exists has been parsed and no components are used in it - no point in cycling trough the other views
+                    return new DesignerViewConfigModel() { Scripts = scripts, Components = components };
+                }
+            }
+
+            return null;
+        }
+
+        private string GetViewFilePath(string view, IEnumerable<string> viewLocations, Dictionary<string, string> viewFilesMappings)
+        {
+            // If view file mapping exists return it
+            if (viewFilesMappings != null && viewFilesMappings.ContainsKey(view))
+                return viewFilesMappings[view];
+
+            // Search all locations for the view
+            IEnumerable<string> viewExtensions = new string[] { "aspx", "ascx", "master", "cshtml", "vbhtml" };
             foreach (var viewLocation in viewLocations)
             {
                 foreach (var viewExtension in viewExtensions)
                 {
-                    var expectedViewFileName = string.Format("{0}/{1}{2}.{3}", viewLocation, DesignerViewPrefix, view, viewExtension);
+                    var expectedViewFileName = string.Format("{0}{1}{2}.{3}", viewLocation, DesignerViewPrefix, view, viewExtension);
                     if (VirtualPathManager.FileExists(expectedViewFileName))
                     {
-                        using (var fileStream = VirtualPathManager.OpenFile(expectedViewFileName))
-                        {
-                            var components = ComponentsDependencyResolver.ExtractComponents(fileStream);
-
-                            var scripts = ComponentsDependencyResolver.GetScripts(components, null);
-
-                            // If view that exists has been parsed and no components are used in it - no point in cycling trough the other views
-                            return new DesignerViewConfigModel() { Scripts = scripts, Components = components };
-                        }
+                        return expectedViewFileName;
                     }
                 }
             }
-
+            
             return null;
         }
 
