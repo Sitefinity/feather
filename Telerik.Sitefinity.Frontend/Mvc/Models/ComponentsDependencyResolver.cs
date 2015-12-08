@@ -177,13 +177,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 }
                 else
                 {
-                    if (componentDefinitionObject.DependantModules != null)
+                    if (componentDefinitionObject.AngularModules != null)
                     {
-                        allDependencies.AddRange(componentDefinitionObject.DependantModules);
+                        allDependencies.AddRange(componentDefinitionObject.AngularModules);
                     }
                 }
 
-                if (componentDefinitionObject.Components != null)
+                if (componentDefinitionObject.Components != null && dependencyType == DependencyType.Scripts)
                 {
                     foreach (var comp in componentDefinitionObject.Components)
                     {

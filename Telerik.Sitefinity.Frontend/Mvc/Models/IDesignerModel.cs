@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         IEnumerable<string> ScriptReferences { get; }
 
         /// <summary>
-        /// Gets the module dependencies.
+        /// Gets the angular module dependencies where all used client components are defined.
         /// </summary>
         /// <value>
         /// The module dependencies.

@@ -30,12 +30,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public IEnumerable<string> Components { get; set; }
 
         /// <summary>
-        /// Gets or sets the dependant modules.
+        /// Gets or sets the angular modules.
         /// </summary>
         /// <value>
-        /// The dependant modules.
+        /// The angular modules.
         /// </value>
-        [DataMember(Name = "dependantmodules")]
-        public IEnumerable<string> DependantModules { get; set; }
+        [DataMember(Name = "angularmodules")]
+        public IEnumerable<string> AngularModules { get; set; }
     }
 }

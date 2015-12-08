@@ -1,18 +1,22 @@
 ﻿{
 
-"__________MVC__________" : {"scripts" : [], "components" : []},
+"__________MVC__________" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-loading" : {
 	"scripts" : [
 		"Mvc/Scripts/sf-loading.js"
 	],
+	"angularmodules": [],
 	"components" : []
 },
 
 "sf-expander" : {
 	"scripts" : [
 		"Mvc/Scripts/expander.js"
+	],
+	"angularmodules": [
+		"expander"
 	],
 	"components" : []
 },
@@ -21,6 +25,7 @@
 	"scripts" : [
 		"Mvc/Scripts/style-dropdown.js"
 	],
+	"angularmodules": [],
 	"components" : []
 },
 
@@ -28,16 +33,22 @@
 	"scripts" : [
 		"Mvc/Scripts/sf-bootstrap-popover.js"
 	],
+	"angularmodules": [
+		"sfBootstrapPopover"
+	],
 	"components" : []
 },
 
 
-"__________COLLECTIONS__________" : {"scripts" : [], "components" : []},
+"__________COLLECTIONS__________" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-collection" : {
 	"scripts" : [
 		"client-components/collections/sf-collection.js"
+	],
+	"angularmodules": [
+		"sfCollection"
 	],
 	"components" : ["sf-services"]
 },
@@ -46,6 +57,9 @@
 	"scripts" : [
 		"client-components/collections/sf-tree.js"
 	],
+	"angularmodules": [
+		"sfTree"
+	],
 	"components" : ["sf-services"]
 },
 
@@ -53,12 +67,15 @@
 	"scripts" : [
 		"client-components/collections/sf-infinite-scroll.js"
 	],
+	"angularmodules": [
+		"sfInfiniteScroll"
+	],
 	"components" : []
 },
 
 
 
-"__________SEARCH__________" : {"scripts" : [], "components" : []},
+"__________SEARCH__________" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 
@@ -66,12 +83,15 @@
 	"scripts" : [
 		"client-components/search/sf-search-box.js"
 	],
+	"angularmodules": [
+		"sfSearchBox"
+	],
 	"components" : ["sf-services"]
 },
 
 
 
-"__________SORT__________" : {"scripts" : [], "components" : []},
+"__________SORT__________" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 
@@ -79,18 +99,24 @@
 	"scripts" : [
 		"client-components/sorting/sf-sort-box.js"
 	],
+	"angularmodules": [
+		"sfSortBox"
+	],
 	"components" : ["sf-services"]
 },
 
 
 
-"__________FIELDS__________" : {"scripts" : [], "components" : []},
+"__________FIELDS__________" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 
 "sf-drag-drop" : {
 	"scripts" : [
         "client-components/fields/drag-drop/sf-drag-drop.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-selectors"]
 },
@@ -101,6 +127,9 @@
 		"client-components/selectors/taxonomies/sf-flat-taxon-service.js",
 		"client-components/fields/flat-taxon-field/sf-flat-taxon-field.js"
 	],
+	"angularmodules": [
+		"sfFields"
+	],
 	"components" : ["sf-services", "sf-fields"]
 },
 
@@ -108,6 +137,9 @@
 	"scripts" : [
 		"client-components/selectors/media/sf-media-markup-service.js",
 		"client-components/fields/html-field/sf-html-field.js"
+	],
+	"angularmodules": [
+		"sfFields"
 	],
 	"components" : ["sf-services", "sf-fields", "sf-link-selector-modal", "sf-expander", "sf-image-field", "sf-document-field","sf-video-field", "sf-thumbnail-size-selection", "sf-aspect-ratio-selection"]
 },
@@ -118,15 +150,20 @@
        "client-components/selectors/media/sf-media-filter.js",
        "client-components/fields/media-field/sf-media-field.js"
    ],
+   "angularmodules": [
+		"sfFields"
+	],
    "components": ["sf-services", "sf-fields"]
 },
 
 "sf-document-field" : {
-	"components" : ["sf-media-field", "sf-document-selector"]
+	"components" : ["sf-media-field", "sf-document-selector"],
+	"angularmodules": ["sfFields", "sfSelectors"]
 },
 
 "sf-video-field" : {
-	"components" : ["sf-media-field", "sf-video-selector"]
+	"components" : ["sf-media-field", "sf-video-selector"],
+	"angularmodules": ["sfFields", "sfSelectors"]
 },
 
 "sf-image-field" : {
@@ -135,6 +172,7 @@
 		"client-components/selectors/media/sf-media-filter.js",
 		"client-components/fields/image-field/sf-image-field.js"
 	],
+	"angularmodules": ["sfFields", "sfSelectors"],
 	"components" : ["sf-services", "sf-fields", "sf-image-selector"]
 },
 
@@ -142,6 +180,7 @@
 	"scripts" : [
 		"client-components/fields/sf-editable.js"
 	],
+	"angularmodules": ["sfFields"],
 	"components" : ["sf-services", "sf-fields"]
 },
 
@@ -149,6 +188,7 @@
 	"scripts" : [
 		"client-components/fields/sf-fields.js"
 	],
+	"angularmodules": ["sfFields"],
 	"components" : []
 },
 
@@ -156,6 +196,7 @@
 	"scripts" : [
 		"client-components/fields/file-url-field/sf-file-url-field.js"
 	],
+	"angularmodules": ["sfFields"],
 	"components" : ["sf-services", "sf-file-url-selector"]
 },
 
@@ -163,19 +204,23 @@
 	"scripts" : [
 		"client-components/fields/form-field/sf-form-field.js"
 	],
+	"angularmodules": ["sfFields"],
 	"components" : ["sf-form-selector"]
 },
 
-"__________SELECTORS__________" : {"scripts" : [], "components" : []},
+"__________SELECTORS__________" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 
-"_____COMMON_____" : {"scripts" : [], "components" : []},
+"_____COMMON_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-filter-selector" : { 
 	"scripts" : [
 		"client-components/selectors/common/sf-filter-selector.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-taxon-filter", "sf-date-filter"]
 },
@@ -184,12 +229,18 @@
 	"scripts" : [
 		"client-components/selectors/common/sf-items-tree.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors"]
 },
 
 "sf-list-selector" : {
 	"scripts" : [
 		"client-components/selectors/common/sf-list-selector.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-selectors"]
 },
@@ -199,12 +250,18 @@
 		"client-components/selectors/common/sf-provider-selector.js",
 		"client-components/selectors/common/sf-provider-service.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors"]
 },
 
 "sf-selected-items-view" : {
 	"scripts" : [
 		"client-components/selectors/common/sf-selected-items-view.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-shrinked-breadcrumb"]
 },
@@ -213,12 +270,18 @@
 	"scripts" : [
 		"client-components/selectors/common/sf-selectors.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services"]
 },
 
 "sf-items-filter" : {
 	"scripts" : [
 		"client-components/selectors/common/sf-selectors.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services"]
 },
@@ -227,12 +290,18 @@
 	"scripts" : [
 		"client-components/selectors/common/sf-selectors.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services"]
 },
 
 "sf-shrinked-breadcrumb" : {
 	"scripts" : [
 		"client-components/selectors/common/sf-selectors.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services"]
 },
@@ -242,15 +311,19 @@
 		"Mvc/Scripts/Angular/angular-resource.min.js",
 		"client-components/selectors/common/sf-services.js"
 	],
+	"angularmodules": ["sfServices"],
 	"components" : []
 },
 
-"_____DATETIME_____" : {"scripts" : [], "components" : []},
+"_____DATETIME_____" : {"scripts" : [], "components" : [], "angularmodules": []},
 
 
 "sf-date-filter" : {
 	"scripts" : [
 		"client-components/selectors/date-time/sf-date-filter.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-timespan-selector"]
 },
@@ -259,6 +332,9 @@
 	"scripts" : [
 		"client-components/selectors/date-time/sf-date-time-picker.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors"]
 },
 
@@ -266,11 +342,14 @@
 	"scripts" : [
 		"client-components/selectors/date-time/sf-timespan-selector.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors", "sf-date-time-picker"]
 },
 
 
-"_____DYNAMICMODULES_____" : {"scripts" : [], "components" : []},
+"_____DYNAMICMODULES_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-dynamic-items-selector" : {
@@ -278,17 +357,23 @@
 		"client-components/selectors/dynamic-modules/sf-data-service.js",
 		"client-components/selectors/dynamic-modules/sf-dynamic-items-selector.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-endless-scroll", "sf-list-selector", "sf-selected-items-view", "sf-items-filter"]
 },
 
 
-"_____IDENTITY_____" : {"scripts" : [], "components" : []},
+"_____IDENTITY_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-role-selector" : {
 	"scripts" : [
 		"client-components/selectors/identity/sf-role-selector.js",
 		"client-components/selectors/identity/sf-roles-service.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-list-selector", "sf-endless-scroll", "sf-selected-items-view", "sf-loading"]
 },
@@ -299,21 +384,27 @@
 		"client-components/selectors/identity/sf-users-service.js",
 		"client-components/selectors/identity/sf-user-selector.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 },
 
 
-"_____LISTS_____": { "scripts": [ ], "components": [ ] },
+"_____LISTS_____": { "scripts": [ ], "angularmodules": [], "components": [ ] },
 
 "sf-lists-selector" : {
 	"scripts" : [
         "client-components/selectors/lists/sf-lists-selector.js",
         "client-components/selectors/lists/sf-lists-service.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 },
 
-"_____LOCALIZATION_____" : {"scripts" : [], "components" : []},
+"_____LOCALIZATION_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-language-selector" : {
@@ -321,11 +412,14 @@
 		"client-components/selectors/localization/sf-language-selector.js",
 		"client-components/selectors/localization/sf-language-service.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors"]
 },
 
 
-"_____MEDIA_____" : {"scripts" : [], "components" : []},
+"_____MEDIA_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 "sf-image-selector" : {
 	"scripts" : [
@@ -334,6 +428,9 @@
   		"client-components/selectors/media/sf-media-filter.js",
 		"client-components/selectors/taxonomies/sf-flat-taxon-service.js",
 		"client-components/selectors/taxonomies/sf-hierarchical-taxon-service.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
@@ -348,6 +445,9 @@
 		"client-components/selectors/taxonomies/sf-flat-taxon-service.js",
 		"client-components/selectors/taxonomies/sf-hierarchical-taxon-service.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
 					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover"]
@@ -356,6 +456,9 @@
 "sf-video-selector" : {
 	"scripts" : [
 		"client-components/selectors/media/videos/sf-video-selector.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-media-selector"]
 },
@@ -368,6 +471,9 @@
 		"client-components/selectors/taxonomies/sf-flat-taxon-service.js",
 		"client-components/selectors/taxonomies/sf-hierarchical-taxon-service.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
 					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover"]
@@ -378,6 +484,9 @@
 		"client-components/selectors/media/sf-library-selector.js",
 		"client-components/selectors/media/sf-media-service.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-shrinked-breadcrumb", "sf-items-filter", "sf-items-tree", "sf-selected-items-view", "sf-list-selector"]
 },
 
@@ -386,6 +495,9 @@
 		"client-components/selectors/media/sf-media-service.js",
 		"client-components/selectors/media/sf-thumbnail-size-selection.js"
 	],
+	"angularmodules": [
+		"sfThumbnailSizeSelection"
+	],
 	"components" : ["sf-services", "sf-image-selector"]
 },
 
@@ -393,15 +505,21 @@
 	"scripts": [
 		"client-components/selectors/media/sf-aspect-ratio-selection.js"
 	],
+	"angularmodules": [
+		"sfAspectRatioSelection"
+	],
 	"components" : ["sf-services"]
 },
 
-"_____MULTISITE_____" : {"scripts" : [], "components" : []},
+"_____MULTISITE_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 "sf-multisite-page-selector" : {
 	"scripts" : [
 		"client-components/selectors/multi-site/sf-multi-site-service.js",
 		"client-components/selectors/multi-site/sf-multisite-page-selector.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-list-selector", "sf-items-tree", "sf-site-selector", "sf-language-selector", "sf-page-selector"]
 },
@@ -411,11 +529,14 @@
 		"client-components/selectors/multi-site/sf-multi-site-service.js",
 		"client-components/selectors/multi-site/sf-site-selector.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors"]
 },
 
 
-"_____NEWS_____" : {"scripts" : [], "components" : []},
+"_____NEWS_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-news-selector" : {
@@ -423,16 +544,22 @@
 		"client-components/selectors/news/sf-news-item-service.js",
 		"client-components/selectors/news/sf-news-selector.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 },
 
 
-"_____PAGES_____" : {"scripts" : [], "components" : []},
+"_____PAGES_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-external-urls-view" : {
 	"scripts" : [
 		"client-components/selectors/pages/sf-external-urls-view.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-fields", "sf-editable"]
 },
@@ -442,6 +569,9 @@
 		"client-components/selectors/pages/sf-page-service.js",
 		"client-components/selectors/pages/sf-page-selector.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-items-filter", "sf-shrinked-breadcrumb", "sf-items-tree", "sf-list-selector", 
 					"sf-loading", "sf-external-urls-view", "sf-selected-items-view", "sf-selected-pages-view"]
 },
@@ -450,17 +580,23 @@
 	"scripts" : [
 		"client-components/selectors/pages/sf-selected-pages-view.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-items-filter", "sf-shrinked-breadcrumb"]
 },
 
 
-"_____TAXONOMIES_____" : {"scripts" : [], "components" : []},
+"_____TAXONOMIES_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-hierarchical-taxon-selector" : {
 	"scripts" : [
 		"client-components/selectors/taxonomies/sf-hierarchical-taxon-service.js",
 		"client-components/selectors/taxonomies/sf-hierarchical-taxon-selector.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-shrinked-breadcrumb", "sf-items-tree", "sf-selected-items-view", "sf-list-selector"]
 },
@@ -469,6 +605,9 @@
 "sf-taxon-filter" : {
 	"scripts" : [
 		"client-components/selectors/taxonomies/sf-taxon-filter.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-list-selector", "sf-taxon-selector", "sf-hierarchical-taxon-selector"]
 },
@@ -479,15 +618,21 @@
 		"client-components/selectors/taxonomies/sf-flat-taxon-service.js",
 		"client-components/selectors/taxonomies/sf-taxon-selector.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors", "sf-items-filter", "sf-endless-scroll", "sf-loading", "sf-selected-items-view", "sf-list-selector"]
 },
 
-"_____TOOLS_____" : {"scripts" : [], "components" : []},
+"_____TOOLS_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 "sf-link-selector-modal" : {
 	"scripts" : [
 		"client-components/selectors/tools/sf-link-service.js",
 		"client-components/selectors/tools/sf-link-selector-modal.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-link-selector"]
 },
@@ -499,17 +644,23 @@
 		"client-components/selectors/tools/sf-link-service.js",
 		"client-components/selectors/tools/sf-link-selector.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors", "sf-multisite-page-selector" ]
 },
 
 
-"_____BLOGS_____" : {"scripts" : [], "components" : []},
+"_____BLOGS_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-blog-post-selector" : {
 	"scripts" : [
 		"client-components/selectors/blogs/sf-blog-post-service.js",
 		"client-components/selectors/blogs/sf-blog-post-selector.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 },
@@ -519,6 +670,9 @@
 		"client-components/selectors/blogs/sf-blog-service.js",
 		"client-components/selectors/blogs/sf-blog-selector.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 },
 
@@ -526,30 +680,39 @@
 	"scripts" : [
 		"client-components/fields/sf-code-area.js"
 	],
+	"angularmodules": [
+		"sfFields"
+	],
 	"components": ["sf-fields", "sf-services"]
 },
 
-"_____FILE-URL_____" : {"scripts" : [], "components" : []},
+"_____FILE-URL_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 "sf-file-url-selector" : {
 	"scripts" : [
 		"client-components/selectors/file-url/sf-file-url-selector.js",
 		"client-components/selectors/file-url/sf-file-url-service.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors", "sf-tree"]
 },
 
-"_____FORMS_____" : {"scripts" : [], "components" : []},
+"_____FORMS_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 "sf-form-selector" : {
 	"scripts" : [
 		"client-components/selectors/forms/sf-form-selector.js",
 		"client-components/selectors/forms/sf-form-service.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-selectors", "sf-collection", "sf-search-box", "sf-infinite-scroll"]
 },
 
-"_____FEEDS_____" : {"scripts" : [], "components" : []},
+"_____FEEDS_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-feed-selector" : {
@@ -557,18 +720,24 @@
 		"client-components/selectors/feeds/sf-feeds-service.js",
 		"client-components/selectors/feeds/sf-feed-selector.js"
 	],
+	"angularmodules": [
+		"sfSelectors"
+	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 }
 
 ,
 
-"_____MAILING LISTS_____" : {"scripts" : [], "components" : []},
+"_____MAILING LISTS_____" : {"scripts" : [], "angularmodules": [], "components" : []},
 
 
 "sf-mailing-list-selector" : {
 	"scripts" : [
 		"client-components/selectors/email-campaigns/sf-mailing-list-service.js",
 		"client-components/selectors/email-campaigns/sf-mailing-list-selector.js"
+	],
+	"angularmodules": [
+		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
 }
