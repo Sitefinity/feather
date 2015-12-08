@@ -35,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         /// The dependant modules.
         /// </value>
-        [DataMember(Name = "dependant-modules")]
+        [DataMember(Name = "dependantmodules")]
         public IEnumerable<string> DependantModules { get; set; }
     }
 }

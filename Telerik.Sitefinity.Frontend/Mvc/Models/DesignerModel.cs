@@ -76,11 +76,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
         }
 
+        /// <inheritdoc />
         public virtual IEnumerable<string> ModuleDependencies
         {
             get 
             {
                 return this.moduleDependencies;
+            }
+
+            private set
+            {
+                this.moduleDependencies = value;
             }
         }
 
@@ -240,8 +246,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                         using (var fileStream = VirtualPathManager.OpenFile(expectedViewFileName))
                         {
                             var components = ComponentsDependencyResolver.ExtractComponents(fileStream);
-                            this.ModuleDependencies.ToList().AddRange(ComponentsDependencyResolver.GetModules(components));
-                            this.ModuleDependencies.Distinct();
+                            this.ModuleDependencies = this.ModuleDependencies.Concat(ComponentsDependencyResolver.GetModules(components)).Distinct();
 
                             var scripts = ComponentsDependencyResolver.GetScripts(components, null);
 
