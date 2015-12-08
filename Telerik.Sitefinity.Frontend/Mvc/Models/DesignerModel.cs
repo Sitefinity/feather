@@ -26,7 +26,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="widgetName">Name of the widget that is being edited.</param>
         /// <param name="controlId">Id of the control that is edited.</param>
         /// <param name="preselectedView">Name of the preselected view if there is one. Otherwise use null.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "notNullConfigs")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "notNullConfigs")]
         public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView)
         {
             this.Caption = widgetName;
@@ -51,7 +51,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 viewConfigs = viewConfigs.Where(c => !c.Value.Hidden).ToList();
             }
 
-            this.PopulateScriptReferences(widgetName, viewConfigs);
+            this.PopulateDependencies(widgetName, viewConfigs);
 
             this.defaultView = viewConfigs.OrderByDescending(c => c.Value.Priority).Select(c => c.Key).FirstOrDefault();
 
@@ -139,11 +139,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
-        /// Populates the script references.
+        /// Populates the script references and dependant modules.
         /// </summary>
         /// <param name="widgetName">Name of the widget.</param>
         /// <param name="viewConfigs">The view configs.</param>
-        protected void PopulateScriptReferences(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
+        protected void PopulateDependencies(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
         {
             var packagesManager = new PackageManager();
             var packageName = packagesManager.GetCurrentPackage();
@@ -163,8 +163,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 else
                 {
                     scriptPath = this.GetScriptPath(scriptFileName, designerWidgetName, packageName);
+
                     if (VirtualPathManager.FileExists(scriptPath))
+                    {
                         viewScriptReferences.Add(this.GetScriptReferencePath(designerWidgetName, scriptFileName));
+                    }
+                    else
+                    {
+                        var viewConfig = viewConfigs.Where(v => v.Key == view).SingleOrDefault();
+                        this.ModuleDependencies = this.ModuleDependencies.Concat(ComponentsDependencyResolver.GetModules(viewConfig.Value.Components)).Distinct();
+                    }
                 }
             }
 
@@ -246,7 +254,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                         using (var fileStream = VirtualPathManager.OpenFile(expectedViewFileName))
                         {
                             var components = ComponentsDependencyResolver.ExtractComponents(fileStream);
-                            this.ModuleDependencies = this.ModuleDependencies.Concat(ComponentsDependencyResolver.GetModules(components)).Distinct();
 
                             var scripts = ComponentsDependencyResolver.GetScripts(components, null);
 
