@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -71,24 +72,15 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             Assert.AreEqual(0, components.Count());
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "withJsonResult2"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "withoutJsonResult2"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "withJsonSw"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "withoutJsonSw"), Test]
+        [Test]
         [Category(TestCategories.MvcCore)]
         [Author(FeatherTeams.FeatherTeam)]
         [Description("Checks whether ExtractComponents method handles invoking widget designer views with and without components correctly for acceptable time.")]
         public void ExtractComponents_InvokingWidgetDesignerWithAndWithoutJson_ShouldExtractComponentsCorrectlyForAcceptableTime()
         {
-            var withJsonSw = new Stopwatch();
-            var withJsonController = this.GetDesignerController(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
-            withJsonSw.Start();
-            var withJsonResult = withJsonController.Master(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
-            withJsonSw.Stop();
-
-            var withoutJsonSw = new Stopwatch();
-            var withoutJsonController = this.GetDesignerController(ComponentsDependencyResolverTestsLargeDesignerWithoutJsonController.WidgetName);
-            withoutJsonSw.Start();
-            var withoutJsonResult = withoutJsonController.Master(ComponentsDependencyResolverTestsLargeDesignerWithoutJsonController.WidgetName);
-            withoutJsonSw.Stop();
-
+            var withJsonResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
+            var withoutJsonResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithoutJsonController.WidgetName);
+            
             var withJsonModel = ((ViewResult)withJsonResult).Model as DesignerModel;
             var withoutJsonModel = ((ViewResult)withoutJsonResult).Model as DesignerModel;
 
@@ -101,24 +93,10 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
         [Description("Checks whether invoking widget designer views with and without js populates angular modules correctly for acceptable time.")]
         public void ExtractModules_InvokingWidgetDesignerWithAndWithoutJs_ShouldExtractModulesCorrectlyForAcceptableTime()
         {
-            var withJsSw = new Stopwatch();
-            var withJsController = this.GetDesignerController(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
-            withJsSw.Start();
-            var withJsResult = withJsController.Master(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
-            withJsSw.Stop();
-
-            var withoutJsSw = new Stopwatch();
-            var withoutJsController = this.GetDesignerController(ComponentsDependencyResolverTestsLargeDesignerWithoutJsController.WidgetName);
-            withoutJsSw.Start();
-            var withoutJsResult = withoutJsController.Master(ComponentsDependencyResolverTestsLargeDesignerWithoutJsController.WidgetName);
-            withoutJsSw.Stop();
-
-            var withoutBothSw = new Stopwatch();
-            var withoutBothController = this.GetDesignerController(ComponentsDependencyResolverTestsLargeDesignerWithoutBothController.WidgetName);
-            withoutBothSw.Start();
-            var withoutBothResult = withoutBothController.Master(ComponentsDependencyResolverTestsLargeDesignerWithoutBothController.WidgetName);
-            withoutBothSw.Stop();
-
+            var withJsResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
+            var withoutJsResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithoutJsController.WidgetName);
+            var withoutBothResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithoutBothController.WidgetName);
+            
             var withJsModel = ((ViewResult)withJsResult).Model as DesignerModel;
             var withoutJsModel = ((ViewResult)withoutJsResult).Model as DesignerModel;
             var withoutBothModel = ((ViewResult)withoutBothResult).Model as DesignerModel;
@@ -128,14 +106,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             Assert.AreEqual(withoutBothModel.ModuleDependencies.Count(), withoutJsModel.ModuleDependencies.Count());
         }
 
-        private DesignerController GetDesignerController(string widgetName)
+        private ActionResult ExecuteDesignerControllerMasterAction(string widgetName)
         {
             var routeData = new RouteData();
             routeData.Values.Add("widgetName", widgetName);
             routeData.Values.Add("controller", "Designer");
             routeData.Values.Add("action", "Master");
 
-            var context = new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null)));
+            var context = new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://tempuri.org?t=" + Guid.NewGuid().ToString("N"), null), new HttpResponse(null)));
             var controller = new DesignerController();
 
             controller.ControllerContext = new ControllerContext(context, routeData, controller);
@@ -144,7 +122,11 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             var testViewLocationFormat = "~/Frontend-Assembly/" + new AssemblyName(Assembly.GetExecutingAssembly().FullName).Name + "/Mvc/Views/" + widgetName + "/{0}.cshtml";
             viewEngine.PartialViewLocationFormats = viewEngine.PartialViewLocationFormats.Concat(new string[] { testViewLocationFormat }).ToArray();
 
-            return controller;
+            var result = controller.Master(widgetName);
+
+            viewEngine.PartialViewLocationFormats = viewEngine.PartialViewLocationFormats.Where(f => testViewLocationFormat != f).ToArray();
+
+            return result;
         }
 
         #region Constants

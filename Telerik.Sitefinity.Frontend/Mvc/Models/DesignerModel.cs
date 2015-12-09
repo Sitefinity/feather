@@ -31,40 +31,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView, Dictionary<string, string> viewFilesMappings)
         {
             this.Caption = widgetName;
-            var designerViewFilesMappings = new Dictionary<string, string>();
 
-            if (preselectedView.IsNullOrEmpty())
+            var formatedViewsDictionary = this.GetViews(views, preselectedView);
+            var viewConfigs = this.GetViewConfigs(formatedViewsDictionary, viewLocations, viewFilesMappings);
+
+            if (string.IsNullOrEmpty(preselectedView))
             {
-                var viewNames = new List<string>();
-                foreach (var view in views)
-                {
-                    if (this.IsDesignerView(view))
-                    {
-                        var viewName = this.ExtractViewName(view);
-                        viewNames.Add(viewName);
-
-                        // Remap viewFilesMappings to use the extracted view names as keys.
-                        if (viewFilesMappings != null && viewFilesMappings.ContainsKey(view))
-                            designerViewFilesMappings[viewName] = viewFilesMappings[view];
-                    }
-                }
-
-                this.views = viewNames;
+                this.views = formatedViewsDictionary.Values.Where(v => !viewConfigs.Any(vc => vc.Key == v) || viewConfigs.Single(vc => vc.Key == v).Value.Hidden == false).ToArray();
+                viewConfigs = viewConfigs.Where(c => !c.Value.Hidden).ToList();
             }
             else
             {
-                this.views = new[] { preselectedView };
-            }
-
-            var viewConfigs = this.views
-                .Select(v => new KeyValuePair<string, DesignerViewConfigModel>(v, this.GetViewConfig(v, viewLocations) ?? this.GenerateViewConfig(v, viewLocations, designerViewFilesMappings)))
-                .Where(c => c.Value != null)
-                .ToList();
-
-            if (preselectedView.IsNullOrEmpty())
-            {
-                this.views = this.views.Where(v => !viewConfigs.Any(vc => vc.Key == v) || viewConfigs.Single(vc => vc.Key == v).Value.Hidden == false).ToArray();
-                viewConfigs = viewConfigs.Where(c => !c.Value.Hidden).ToList();
+                this.views = formatedViewsDictionary.Values;
             }
 
             this.PopulateDependencies(widgetName, viewConfigs);
@@ -298,6 +276,41 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
             
             return null;
+        }
+
+        private IDictionary<string, string> GetViews(IEnumerable<string> rawViewNames, string preselectedView)
+        {
+            if (string.IsNullOrEmpty(preselectedView))
+                return rawViewNames.Where(this.IsDesignerView).ToDictionary(v => v, this.ExtractViewName);
+            else
+                return new Dictionary<string, string>() { { preselectedView, preselectedView } };
+        }
+
+        private IList<KeyValuePair<string, DesignerViewConfigModel>> GetViewConfigs(IDictionary<string, string> formatedViewsDictionary, IEnumerable<string> viewLocations, Dictionary<string, string> viewFilesMappings)
+        {
+            var designerViewFilesMappings = new Dictionary<string, string>();
+            if (viewFilesMappings != null)
+            {
+                foreach (var kv in formatedViewsDictionary)
+                {
+                    if (viewFilesMappings.ContainsKey(kv.Key))
+                        designerViewFilesMappings[kv.Value] = viewFilesMappings[kv.Key];
+                }
+            }
+
+            var viewConfigs = new List<KeyValuePair<string, DesignerViewConfigModel>>();
+
+            foreach (var kv in formatedViewsDictionary)
+            {
+                var config = this.GetViewConfig(kv.Value, viewLocations);
+                if (config == null)
+                    config = this.GenerateViewConfig(kv.Value, viewLocations, designerViewFilesMappings);
+
+                if (config != null)
+                    viewConfigs.Add(new KeyValuePair<string, DesignerViewConfigModel>(kv.Value, config));
+            }
+
+            return viewConfigs;
         }
 
         private void PopulateModulesForScripts(IEnumerable<string> scripts)
