@@ -95,30 +95,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             Assert.AreEqual(withJsonModel.ScriptReferences.Count(), withoutJsonModel.ScriptReferences.Count());
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "withJsonResult2"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "withoutJsonResult2"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "withJsonSw"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "withoutJsonSw"), Test]
-        [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
-        [Description("Checks whether ExtractComponents method handles invoking widget designer views with and without components correctly for acceptable time.")]
-        public void ExtractComponents_InvokingWidgetDesignerWithAndWithoutJson_ShouldExtractComponentsCorrectlyForAcceptableTime()
-        {
-            var withJsonSw = new Stopwatch();
-            var withJsonController = this.GetDesignerController(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
-            withJsonSw.Start();
-            var withJsonResult = withJsonController.Master(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
-            withJsonSw.Stop();
-
-            var withoutJsonSw = new Stopwatch();
-            var withoutJsonController = this.GetDesignerController(ComponentsDependencyResolverTestsLargeDesignerWithoutJsonController.WidgetName);
-            withoutJsonSw.Start();
-            var withoutJsonResult = withoutJsonController.Master(ComponentsDependencyResolverTestsLargeDesignerWithoutJsonController.WidgetName);
-            withoutJsonSw.Stop();
-
-            var withJsonModel = ((ViewResult)withJsonResult).Model as DesignerModel;
-            var withoutJsonModel = ((ViewResult)withoutJsonResult).Model as DesignerModel;
-
-            Assert.AreEqual(withJsonModel.ScriptReferences.Count(), withoutJsonModel.ScriptReferences.Count());
-        }
-
         [Category(TestCategories.MvcCore)]
         [Author(FeatherTeams.FeatherTeam)]
         [Description("Checks whether invoking widget designer views with and without js populates angular modules correctly for acceptable time.")]
