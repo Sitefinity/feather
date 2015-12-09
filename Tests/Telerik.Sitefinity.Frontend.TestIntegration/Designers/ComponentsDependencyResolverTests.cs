@@ -95,6 +95,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             Assert.AreEqual(withJsonModel.ScriptReferences.Count(), withoutJsonModel.ScriptReferences.Count());
         }
 
+        [Test]
         [Category(TestCategories.MvcCore)]
         [Author(FeatherTeams.FeatherTeam)]
         [Description("Checks whether invoking widget designer views with and without js populates angular modules correctly for acceptable time.")]
@@ -122,7 +123,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             var withoutJsModel = ((ViewResult)withoutJsResult).Model as DesignerModel;
             var withoutBothModel = ((ViewResult)withoutBothResult).Model as DesignerModel;
 
-            Assert.AreEqual(withJsModel.ModuleDependencies.Count(), withoutJsModel.ModuleDependencies.Count());
+            Assert.AreEqual(0, withJsModel.ModuleDependencies.Count());
+            Assert.AreEqual(7, withoutJsModel.ModuleDependencies.Count());
             Assert.AreEqual(withoutBothModel.ModuleDependencies.Count(), withoutJsModel.ModuleDependencies.Count());
         }
 
