@@ -58,7 +58,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Models
         /// <param name="viewConfigs">The view configs.</param>
         public void PopulateScriptReferencesPublic(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
         {
-            this.PopulateScriptReferences(widgetName, viewConfigs);
+            this.PopulateDependencies(widgetName, viewConfigs);
         }
 
         /// <summary>

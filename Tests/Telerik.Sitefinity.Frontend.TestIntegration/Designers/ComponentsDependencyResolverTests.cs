@@ -1,7 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -61,7 +61,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
         public void ExtractComponents_LargeDesignerFileWithNoClientComponents_ShouldReturnCorrectComponents()
         {
             const string DesignerMarkup = "<div class=\"form-group\">\r\n        <label for=\"title\">Title</label>\r\n\r\n        <div class=\"row\">\r\n            <div class=\"col-xs-11\">\r\n                <input class=\"form-control\" name=\"title\" type=\"text\" ng-model=\"propertieTitlePropertyValue\" ng-required=\"true\" />\r\n            </div>\r\n\r\n            <div class=\"m-top-xs\">propertiesTitlePropertyValuelength</div>\r\n        </div>\r\n\r\n        <div class=\"text-muted\">Less than 35 characters are recommended</div>\r\n\r\n        <p class=\"text-danger\">Title is required</p>\r\n    </div>";
-            
+
             var components = Enumerable.Empty<string>();
             using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(DesignerMarkup)))
             {
@@ -106,6 +106,10 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             var controller = new DesignerController();
 
             controller.ControllerContext = new ControllerContext(context, routeData, controller);
+
+            var viewEngine = controller.ViewEngineCollection.FirstOrDefault(e => e is RazorViewEngine) as VirtualPathProviderViewEngine;
+            var testViewLocationFormat = "~/Frontend-Assembly/" + new AssemblyName(Assembly.GetExecutingAssembly().FullName).Name + "/Mvc/Views/" + widgetName + "/{0}.cshtml";
+            viewEngine.PartialViewLocationFormats = viewEngine.PartialViewLocationFormats.Concat(new string[] { testViewLocationFormat }).ToArray();
 
             return controller;
         }
