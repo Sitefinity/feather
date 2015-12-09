@@ -102,7 +102,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             var withoutBothModel = ((ViewResult)withoutBothResult).Model as DesignerModel;
 
             Assert.AreEqual(0, withJsModel.ModuleDependencies.Count());
-            Assert.AreEqual(7, withoutJsModel.ModuleDependencies.Count());
+            Assert.AreEqual(8, withoutJsModel.ModuleDependencies.Count());
             Assert.AreEqual(withoutBothModel.ModuleDependencies.Count(), withoutJsModel.ModuleDependencies.Count());
         }
 
