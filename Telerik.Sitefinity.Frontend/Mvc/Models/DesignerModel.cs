@@ -241,6 +241,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                         var text = streamReader.ReadToEnd();
                         var designerViewConfigModel = new JavaScriptSerializer().Deserialize<DesignerViewConfigModel>(text);
 
+                        this.PopulateModulesForScripts(designerViewConfigModel.Scripts);
                         this.PopulateComponentsScriptReferences(designerViewConfigModel);
 
                         return designerViewConfigModel;
@@ -297,6 +298,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
             
             return null;
+        }
+
+        private void PopulateModulesForScripts(IEnumerable<string> scripts)
+        {
+            if (scripts == null || scripts.Count() == 0)
+            {
+                return;
+            }
+
+            var modules = ComponentsDependencyResolver.GetModulesByScripts(scripts);
+            this.ModuleDependencies = this.ModuleDependencies.Concat(modules);
         }
 
         private void PopulateComponentsScriptReferences(DesignerViewConfigModel designerViewConfigModel)
