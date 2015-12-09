@@ -243,8 +243,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithJsonRRR\DesignerView.Simple.cshtml" />
-    <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithJsonRRR\DesignerView.Simple.json" />
+    <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithJson\DesignerView.Simple.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithJson\DesignerView.Simple.json" />
     <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithoutJson\DesignerView.Simple.cshtml" />
     <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithoutBoth\DesignerView.Simple.cshtml" />
     <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithoutJs\DesignerView.Simple.cshtml" />
@@ -262,10 +262,6 @@
       <Project>{1c663ab5-aebc-41b5-a861-f635c37dab47}</Project>
       <Name>Telerik.Sitefinity.Frontend.TestUtilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mvc\Scripts\ComponentsDependencyResolverTestsLargeDesignerWithJsonRRR\designerview-simple.js" />
-    <EmbeddedResource Include="Mvc\Scripts\ComponentsDependencyResolverTestsLargeDesignerWithoutJson\designerview-simple.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
