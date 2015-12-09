@@ -27,6 +27,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="controlId">Id of the control that is edited.</param>
         /// <param name="preselectedView">Name of the preselected view if there is one. Otherwise use null.</param>
         /// <param name="viewFilesMappings">Map of the view file location for each view.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView, Dictionary<string, string> viewFilesMappings)
         {
             this.Caption = widgetName;
@@ -66,7 +67,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 viewConfigs = viewConfigs.Where(c => !c.Value.Hidden).ToList();
             }
 
-            this.PopulateScriptReferences(widgetName, viewConfigs);
+            this.PopulateDependencies(widgetName, viewConfigs);
 
             this.defaultView = viewConfigs.OrderByDescending(c => c.Value.Priority).Select(c => c.Key).FirstOrDefault();
 
@@ -88,6 +89,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             get
             {
                 return this.scriptReferences;
+            }
+        }
+
+        /// <inheritdoc />
+        public virtual IEnumerable<string> ModuleDependencies
+        {
+            get 
+            {
+                return this.moduleDependencies;
+            }
+
+            private set
+            {
+                this.moduleDependencies = value;
             }
         }
 
@@ -140,11 +155,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
-        /// Populates the script references.
+        /// Populates the script references and dependant modules.
         /// </summary>
         /// <param name="widgetName">Name of the widget.</param>
         /// <param name="viewConfigs">The view configs.</param>
-        protected void PopulateScriptReferences(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
+        protected void PopulateDependencies(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
         {
             var packagesManager = new PackageManager();
             var packageName = packagesManager.GetCurrentPackage();
@@ -164,8 +179,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 else
                 {
                     scriptPath = this.GetScriptPath(scriptFileName, designerWidgetName, packageName);
+
                     if (VirtualPathManager.FileExists(scriptPath))
+                    {
                         viewScriptReferences.Add(this.GetScriptReferencePath(designerWidgetName, scriptFileName));
+                    }
+                    else
+                    {
+                        var viewConfig = viewConfigs.Where(v => v.Key == view).SingleOrDefault();
+                        this.ModuleDependencies = this.ModuleDependencies.Concat(ComponentsDependencyResolver.GetModules(viewConfig.Value.Components)).Distinct();
+                    }
                 }
             }
 
@@ -218,6 +241,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                         var text = streamReader.ReadToEnd();
                         var designerViewConfigModel = new JavaScriptSerializer().Deserialize<DesignerViewConfigModel>(text);
 
+                        this.PopulateModulesForScripts(designerViewConfigModel.Scripts);
                         this.PopulateComponentsScriptReferences(designerViewConfigModel);
 
                         return designerViewConfigModel;
@@ -274,6 +298,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
             
             return null;
+        }
+
+        private void PopulateModulesForScripts(IEnumerable<string> scripts)
+        {
+            if (scripts == null || scripts.Count() == 0)
+            {
+                return;
+            }
+
+            var modules = ComponentsDependencyResolver.GetModulesByScripts(scripts);
+            this.ModuleDependencies = this.ModuleDependencies.Concat(modules);
         }
 
         private void PopulateComponentsScriptReferences(DesignerViewConfigModel designerViewConfigModel)
@@ -338,6 +373,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private IEnumerable<string> views;
         private IEnumerable<string> scriptReferences;
+        private IEnumerable<string> moduleDependencies = new List<string>();
         private string defaultView;
     }
 }
