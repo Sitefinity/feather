@@ -249,8 +249,8 @@
     <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithoutBoth\DesignerView.Simple.cshtml" />
     <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithoutJs\DesignerView.Simple.cshtml" />
     <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithoutJs\DesignerView.Simple.json" />
-    <EmbeddedResource Include="Mvc\Scripts\ComponentsDependencyResolverTestsLargeDesignerWithJson\DesignerView.Simple.js" />
-    <EmbeddedResource Include="Mvc\Scripts\ComponentsDependencyResolverTestsLargeDesignerWithoutJson\DesignerView.Simple.js" />
+    <EmbeddedResource Include="Mvc\Scripts\ComponentsDependencyResolverTestsLargeDesignerWithJson\designerview-simple.js" />
+    <EmbeddedResource Include="Mvc\Scripts\ComponentsDependencyResolverTestsLargeDesignerWithoutJson\designerview.simple.js" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
