@@ -95,6 +95,39 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             Assert.AreEqual(withJsonModel.ScriptReferences.Count(), withoutJsonModel.ScriptReferences.Count());
         }
 
+        [Test]
+        [Category(TestCategories.MvcCore)]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether invoking widget designer views with and without js populates angular modules correctly for acceptable time.")]
+        public void ExtractModules_InvokingWidgetDesignerWithAndWithoutJs_ShouldExtractModulesCorrectlyForAcceptableTime()
+        {
+            var withJsSw = new Stopwatch();
+            var withJsController = this.GetDesignerController(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
+            withJsSw.Start();
+            var withJsResult = withJsController.Master(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
+            withJsSw.Stop();
+
+            var withoutJsSw = new Stopwatch();
+            var withoutJsController = this.GetDesignerController(ComponentsDependencyResolverTestsLargeDesignerWithoutJsController.WidgetName);
+            withoutJsSw.Start();
+            var withoutJsResult = withoutJsController.Master(ComponentsDependencyResolverTestsLargeDesignerWithoutJsController.WidgetName);
+            withoutJsSw.Stop();
+
+            var withoutBothSw = new Stopwatch();
+            var withoutBothController = this.GetDesignerController(ComponentsDependencyResolverTestsLargeDesignerWithoutBothController.WidgetName);
+            withoutBothSw.Start();
+            var withoutBothResult = withoutBothController.Master(ComponentsDependencyResolverTestsLargeDesignerWithoutBothController.WidgetName);
+            withoutBothSw.Stop();
+
+            var withJsModel = ((ViewResult)withJsResult).Model as DesignerModel;
+            var withoutJsModel = ((ViewResult)withoutJsResult).Model as DesignerModel;
+            var withoutBothModel = ((ViewResult)withoutBothResult).Model as DesignerModel;
+
+            Assert.AreEqual(0, withJsModel.ModuleDependencies.Count());
+            Assert.AreEqual(7, withoutJsModel.ModuleDependencies.Count());
+            Assert.AreEqual(withoutBothModel.ModuleDependencies.Count(), withoutJsModel.ModuleDependencies.Count());
+        }
+
         private DesignerController GetDesignerController(string widgetName)
         {
             var routeData = new RouteData();
