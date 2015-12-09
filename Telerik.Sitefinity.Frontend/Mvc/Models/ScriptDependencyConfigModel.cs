@@ -35,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         /// The angular modules.
         /// </value>
-        [DataMember(Name = "angularmodules")]
+        [DataMember(Name = "angularModules")]
         public IEnumerable<string> AngularModules { get; set; }
     }
 }
