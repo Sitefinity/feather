@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
@@ -67,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     parser.SetChunkHashMode(false);
                     parser.AutoExtractBetweenTagsOnly = false;
                     parser.CompressWhiteSpaceBeforeTag = false;
-                    parser.KeepRawHTML = false;
+                    parser.KeepRawHTML = true;
                     parser.AutoKeepComments = false;
 
                     while ((chunk = parser.ParseNext()) != null)
@@ -75,7 +76,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                         if (chunk.Type == HtmlChunkType.OpenTag)
                         {
                             //// Angular directives can be tag name (E)
-                            candidateComponents.Add(chunk.TagName.ToLower());
+                            var tagName = chunk.TagName.ToLower();
+
+                            //// The parser can't handle tag names containing '-'
+                            if (string.IsNullOrEmpty(tagName))
+                            {
+                                var match = Regex.Match(chunk.Html, @"<\W*([a-zA-Z_-]+)").Groups[1];
+                                if (match.Success)
+                                    tagName = match.Value.ToLower();
+                            }
+
+                            candidateComponents.Add(tagName);
+
                             for (int i = 0; i < chunk.Attributes.Length; i++)
                             {
                                 //// The html parser has no more attributes

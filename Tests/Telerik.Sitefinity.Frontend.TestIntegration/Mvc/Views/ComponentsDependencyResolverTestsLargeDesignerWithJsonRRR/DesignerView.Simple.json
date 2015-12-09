@@ -1,4 +1,0 @@
-﻿{
-	"priority": 0,
-	"components": ["sf-expander","sf-collection","sf-endless-scroll","sf-image-field","sf-editable","sf-sort-box","sf-page-selector","sf-selected-pages-view","sf-blog-selector","sf-blog-post-selector","sf-dynamic-items-selector","sf-mailing-list-selector","sf-feed-selector","sf-role-selector","sf-user-selector","sf-lists-selector","sf-document-selector","sf-image-selector","sf-video-selector","sf-library-selector","sf-aspect-ratio-selection","sf-thumbnail-size-selection","sf-news-selector","sf-hierarchical-taxon-selector","sf-taxon-selector"]
-}
