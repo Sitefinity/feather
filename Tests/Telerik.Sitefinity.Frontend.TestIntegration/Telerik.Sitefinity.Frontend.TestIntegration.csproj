@@ -221,9 +221,12 @@
     <Compile Include="..\..\AssemblyInfoShare\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Designers\ComponentsDependencyResolverTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GridWidgets\GridWidgetsTests.cs" />
     <Compile Include="LayoutTemplates\LayoutTemplatesTests.cs" />
+    <Compile Include="Mvc\Controllers\ComponentsDependencyResolverTestsLargeDesignerWithoutJsonController.cs" />
+    <Compile Include="Mvc\Controllers\ComponentsDependencyResolverTestsLargeDesignerWithJsonController.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelperTests.cs" />
     <Compile Include="Mvc\Infrastructure\DynamicUrlActionInvokerTests.cs" />
     <Compile Include="Mvc\Infrastructure\MasterPageBuilderTests.cs" />
@@ -238,6 +241,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithJsonRRR\DesignerView.Simple.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithJsonRRR\DesignerView.Simple.json" />
+    <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithoutJson\DesignerView.Simple.cshtml" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -251,6 +257,10 @@
       <Project>{1c663ab5-aebc-41b5-a861-f635c37dab47}</Project>
       <Name>Telerik.Sitefinity.Frontend.TestUtilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\ComponentsDependencyResolverTestsLargeDesignerWithJsonRRR\designerview-simple.js" />
+    <EmbeddedResource Include="Mvc\Scripts\ComponentsDependencyResolverTestsLargeDesignerWithoutJson\designerview-simple.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
