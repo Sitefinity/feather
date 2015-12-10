@@ -90,8 +90,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
         [Test]
         [Category(TestCategories.MvcCore)]
         [Author(FeatherTeams.FeatherTeam)]
-        [Description("Checks whether invoking widget designer views with and without js populates angular modules correctly for acceptable time.")]
-        public void ExtractModules_InvokingWidgetDesignerWithAndWithoutJs_ShouldExtractModulesCorrectlyForAcceptableTime()
+        [Description("Checks whether invoking widget designer views with and without js populates angular modules correctly.")]
+        public void ExtractModules_InvokingWidgetDesignerWithAndWithoutJs_ShouldExtractModulesCorrectly()
         {
             var withJsResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
             var withoutJsResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithoutJsController.WidgetName);
@@ -104,6 +104,21 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             Assert.AreEqual(0, withJsModel.ModuleDependencies.Count());
             Assert.AreEqual(8, withoutJsModel.ModuleDependencies.Count());
             Assert.AreEqual(withoutBothModel.ModuleDependencies.Count(), withoutJsModel.ModuleDependencies.Count());
+        }
+
+        [Test]
+        [Category(TestCategories.MvcCore)]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether ExtractComponents method handles invoking widget designer with json with only scripts extracts modules correctly.")]
+        public void ExtractModules_InvokingWidgetDesignerWithJsonWithOnlyScripts_ShouldExtractModulesCorrectly()
+        {
+            var result = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithJsonScriptsController.WidgetName);
+
+            var model = ((ViewResult)result).Model as DesignerModel;
+
+            Assert.AreEqual(2, model.ModuleDependencies.Count());
+            Assert.IsTrue(model.ModuleDependencies.Contains("sfSelectors"));
+            Assert.IsTrue(model.ModuleDependencies.Contains("sfServices"));
         }
 
         private ActionResult ExecuteDesignerControllerMasterAction(string widgetName)

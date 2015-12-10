@@ -229,6 +229,7 @@
     <Compile Include="Mvc\Controllers\ComponentsDependencyResolverTestsLargeDesignerWithJsonController.cs" />
     <Compile Include="Mvc\Controllers\ComponentsDependencyResolverTestsLargeDesignerWithoutJsController.cs" />
     <Compile Include="Mvc\Controllers\ComponentsDependencyResolverTestsLargeDesignerWithoutBothController.cs" />
+    <Compile Include="Mvc\Controllers\ComponentsDependencyResolverTestsLargeDesignerWithJsonScriptsController.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelperTests.cs" />
     <Compile Include="Mvc\Infrastructure\DynamicUrlActionInvokerTests.cs" />
     <Compile Include="Mvc\Infrastructure\MasterPageBuilderTests.cs" />
@@ -251,6 +252,8 @@
     <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithoutJs\DesignerView.Simple.json" />
     <EmbeddedResource Include="Mvc\Scripts\ComponentsDependencyResolverTestsLargeDesignerWithJson\designerview-simple.js" />
     <EmbeddedResource Include="Mvc\Scripts\ComponentsDependencyResolverTestsLargeDesignerWithoutJson\designerview-simple.js" />
+    <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithJsonScripts\DesignerView.Simple.cshtml" />
+    <EmbeddedResource Include="Mvc\Views\ComponentsDependencyResolverTestsLargeDesignerWithJsonScripts\DesignerView.Simple.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
