@@ -38,7 +38,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             const int BufferSize = 200;
 
-            var manager = new PageManager();
+            var manager = PageManager.GetManager();
 
             var iteration = 0;
             while (true)
@@ -74,7 +74,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             const int BufferSize = 200;
 
-            var manager = new PageManager();
+            var manager = PageManager.GetManager();
 
             var iteration = 0;
             while (true)
@@ -119,7 +119,7 @@ namespace Telerik.Sitefinity.Frontend
 
             const int BufferSize = 200;
 
-            var manager = new PageManager();
+            var manager = PageManager.GetManager();
 
             var iteration = 0;
             while (true)
@@ -155,7 +155,7 @@ namespace Telerik.Sitefinity.Frontend
 
             const int BufferSize = 200;
 
-            var manager = new PageManager();
+            var manager = PageManager.GetManager();
 
             var iteration = 0;
             while (true)
