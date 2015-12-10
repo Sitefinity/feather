@@ -99,13 +99,28 @@ namespace Telerik.Sitefinity.Frontend
 
         private static List<ControlData> GetFeatherControlsToProcess<TControlData>(PageManager pageManager) where TControlData : ControlData
         {
-            var controlsToProcess = new List<ControlData>();
+            const int BufferSize = 500;
 
-            controlsToProcess.AddRange(
-                pageManager.GetControls<TControlData>()
-                .Where(c => c.ObjectType.StartsWith("Telerik.Sitefinity.Frontend.GridSystem.GridControl") || 
-                    c.Properties.Any(p => p.Name == "ControllerName" && p.Value.StartsWith("Telerik.Sitefinity.Frontend")))
-                .ToList());
+            var controlsToProcess = new List<ControlData>();
+            var iteration = 0;
+
+            while (true)
+            {
+                var range = pageManager
+                    .GetControls<TControlData>()
+                    .Where(c => c.ObjectType.StartsWith("Telerik.Sitefinity.Frontend.GridSystem.GridControl") || c.Properties.Any(p => p.Name == "ControllerName" && p.Value.StartsWith("Telerik.Sitefinity.Frontend")))
+                    .OrderBy(c => c.Id)
+                    .Skip(iteration * BufferSize)
+                    .Take(BufferSize)
+                    .ToList();
+                
+                controlsToProcess.AddRange(range);
+
+                if (range.Count == 0 || range.Count % BufferSize != 0)
+                    break;
+
+                iteration++;
+            }
 
             return controlsToProcess;
         }
