@@ -11,7 +11,7 @@ using ArtOfTest.WebAii.ObjectModel;
 namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 {
     /// <summary>
-    /// Widgets base actions. 
+    /// Widgets base actions.
     /// </summary>
     public class WidgetsWrapper : BaseWrapper
     {
@@ -34,6 +34,15 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void WaitForSaveButtonToAppear()
         {
             Manager.Current.Wait.For(this.WaitForSaveButton, Manager.Current.Settings.ClientReadyTimeout);
+            ActiveBrowser.RefreshDomTree();
+        }
+
+        /// <summary>
+        /// This method waits for the expander to be added.
+        /// </summary>
+        public void WaitForExpanderToAppear(int expectedCount)
+        {
+            Manager.Current.Wait.For(() => this.CountExpanders(expectedCount), Manager.Current.Settings.ClientReadyTimeout);
             ActiveBrowser.RefreshDomTree();
         }
 
@@ -344,6 +353,28 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
+        /// Verifies if the expander count is as expected.
+        /// </summary>
+        /// <param name="expected">The expected expanders count.</param>
+        /// <returns>True or false depending on the expander count.</returns>
+        public bool CountExpanders(int expected)
+        {
+            ActiveBrowser.RefreshDomTree();
+            var designer = this.EM.Widgets.FeatherWidget;
+
+            var expanders = designer.Find.AllByExpression<HtmlAnchor>("class=Options-toggler ng-binding");
+            int count = expanders.Count;
+
+            if (count > 1)
+            {
+                expanders[count - 1].ScrollToVisible();
+            }
+
+            bool isCountCorrect = expected <= count;
+            return isCountCorrect;
+        }
+
+        /// <summary>
         /// Verifies the collection contains any items
         /// </summary>
         /// <returns>True or False depending on the items count.</returns>
@@ -395,6 +426,16 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
                     Assert.IsNotNull(spanElement);
                 }
             }
+        }
+
+        /// <summary>
+        /// Verifies the content of the HTML field.
+        /// </summary>
+        public void VerifyHtmlFieldContent()
+        {
+            var htmlField = this.EM.Widgets.FeatherWidget.HtmlField;
+
+            htmlField.Find.ByExpression<HtmlTableCell>("TagName=td", "class=k-editable-area").AssertIsNotNull("Kendo editor is not presented!");
         }
 
         /// <summary>
@@ -461,6 +502,22 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             int actualSpanCount = spanList.Count;
 
             Assert.AreEqual(expectedSpanCount, actualSpanCount, "Expected and actual count of span elements are not equal.");
+        }
+
+        /// <summary>
+        /// Selects expander in the widget designer
+        /// </summary>
+        /// <param name="title">The title.</param>
+        public void ExpandOptions(string title)
+        {
+            HtmlAnchor expander = EM.Widgets.FeatherWidget.Get<HtmlAnchor>("class=Options-toggler ng-binding", "innerText={0}".Arrange(title)).AssertIsPresent("{0} span".Arrange(title));
+
+            expander.ScrollToVisible();
+            expander.Focus();
+            expander.MouseClick();
+
+            ActiveBrowser.RefreshDomTree();
+            expander.Refresh();
         }
 
         private Element GetContentSelectorByName(string cssClass)

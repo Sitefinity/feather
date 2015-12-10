@@ -203,5 +203,17 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
                 return this.Get<HtmlDiv>("class=~k-content k-state-active");
             }
         }
+
+        /// <summary>
+        /// Gets the html field.
+        /// </summary>
+        /// <value>The html field.</value>
+        public HtmlControl HtmlField
+        {
+            get
+            {
+                return this.Get<HtmlControl>("tagname=sf-html-field");
+            }
+        }
     }
 }
