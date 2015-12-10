@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 
@@ -14,115 +15,172 @@ namespace Telerik.Sitefinity.Frontend
         /// <summary>
         /// Invalidates the pages with controls.
         /// </summary>
-        /// <param name="pageManager">The page manager.</param>
-        public static void InvalidatePagesWithControls(PageManager pageManager = null)
+        public static void InvalidatePagesWithControls()
         {
-            var handleTransaction = false;
-            if (pageManager == null)
-            {
-                handleTransaction = true;
-                pageManager = PageManager.GetManager();
-            }
-
-            FrontendModuleControlStore.ProcessPagesWithControls(pageManager, deleteControls: false);
-
-            if (handleTransaction)
-                pageManager.SaveChanges();
+            FrontendModuleControlStore.ProcessPageControls(deleteControls: false);
+            FrontendModuleControlStore.ProcessTemplateControl(deleteControls: false);
+            FrontendModuleControlStore.ProcessPageDraftControls(deleteControls: false);
+            FrontendModuleControlStore.ProcessTemplateDraftControls(deleteControls: false);
         }
 
         /// <summary>
         /// Deletes the pages with controls.
         /// </summary>
-        /// <param name="pageManager">The page manager.</param>
-        public static void DeletePagesWithControls(PageManager pageManager = null)
+        public static void DeletePagesWithControls()
         {
-            var handleTransaction = false;
-            if (pageManager == null)
-            {
-                handleTransaction = true;
-                pageManager = PageManager.GetManager();
-            }
-
-            FrontendModuleControlStore.ProcessPagesWithControls(pageManager, deleteControls: true);
-
-            if (handleTransaction)
-                pageManager.SaveChanges();
+            FrontendModuleControlStore.ProcessPageControls(deleteControls: true);
+            FrontendModuleControlStore.ProcessTemplateControl(deleteControls: true);
+            FrontendModuleControlStore.ProcessPageDraftControls(deleteControls: true);
+            FrontendModuleControlStore.ProcessTemplateDraftControls(deleteControls: true);
         }
 
-        private static void ProcessPagesWithControls(PageManager pageManager, bool deleteControls)
+        private static void ProcessPageControls(bool deleteControls)
         {
-            List<ControlData> featherControls = new List<ControlData>();
-            
-            featherControls.AddRange(FrontendModuleControlStore.GetControlsToProcess(pageManager));
+            const int BufferSize = 200;
 
-            List<PageData> pagesToInvalidate = new List<PageData>();
-            foreach (var control in featherControls)
-            {
-                if (control is PageControl)
-                {
-                    var pageForInvalidation = ((PageControl)control).Page;
-                    if (pageForInvalidation != null)
-                        pagesToInvalidate.Add(pageForInvalidation);
-                }
-                else if (control is TemplateControl)
-                {
-                    pagesToInvalidate.AddRange(((TemplateControl)control).Page.Pages());
-                }
+            var manager = new PageManager();
 
-                if (deleteControls)
-                    pageManager.Delete(control);
-            }
-
-            foreach (var page in pagesToInvalidate.Distinct())
-                page.BuildStamp++;
-        }
-                
-        private static List<ControlData> GetControlsToProcess(PageManager pageManager)
-        {
-            List<ControlData> controlsToProcess;
-            try
-            {
-                // Could fail if there are persisted records for not loaded types inherited from ControlData
-                controlsToProcess = FrontendModuleControlStore.GetFeatherControlsToProcess<ControlData>(pageManager);
-            }
-            catch
-            {
-                controlsToProcess = new List<ControlData>();
-                controlsToProcess.AddRange(FrontendModuleControlStore.GetFeatherControlsToProcess<PageControl>(pageManager));
-                controlsToProcess.AddRange(FrontendModuleControlStore.GetFeatherControlsToProcess<PageDraftControl>(pageManager));
-                controlsToProcess.AddRange(FrontendModuleControlStore.GetFeatherControlsToProcess<TemplateControl>(pageManager));
-                controlsToProcess.AddRange(FrontendModuleControlStore.GetFeatherControlsToProcess<TemplateDraftControl>(pageManager));
-            }
-
-            return controlsToProcess;
-        }
-
-        private static List<ControlData> GetFeatherControlsToProcess<TControlData>(PageManager pageManager) where TControlData : ControlData
-        {
-            const int BufferSize = 500;
-
-            var controlsToProcess = new List<ControlData>();
             var iteration = 0;
-
             while (true)
             {
-                var range = pageManager
-                    .GetControls<TControlData>()
-                    .Where(c => c.ObjectType.StartsWith("Telerik.Sitefinity.Frontend.GridSystem.GridControl") || c.Properties.Any(p => p.Name == "ControllerName" && p.Value.StartsWith("Telerik.Sitefinity.Frontend")))
+                var range = manager.GetControls<PageControl>()
+                    .Where(c =>
+                        c.ObjectType.StartsWith("Telerik.Sitefinity.Frontend.GridSystem.GridControl") ||
+                        c.Properties.Any(p => p.Name == "ControllerName" && p.Value.StartsWith("Telerik.Sitefinity.Frontend")))
                     .OrderBy(c => c.Id)
                     .Skip(iteration * BufferSize)
                     .Take(BufferSize)
                     .ToList();
-                
-                controlsToProcess.AddRange(range);
+
+                foreach (var control in range)
+                {
+                    if (control.Page != null)
+                        control.Page.BuildStamp++;
+
+                    if (deleteControls)
+                        manager.Delete(control);
+                }
+
+                manager.SaveChanges();
 
                 if (range.Count == 0 || range.Count % BufferSize != 0)
                     break;
 
                 iteration++;
             }
+        }
 
-            return controlsToProcess;
+        private static void ProcessTemplateControl(bool deleteControls)
+        {
+            const int BufferSize = 200;
+
+            var manager = new PageManager();
+
+            var iteration = 0;
+            while (true)
+            {
+                var range = manager.GetControls<TemplateControl>()
+                    .Where(c =>
+                        c.ObjectType.StartsWith("Telerik.Sitefinity.Frontend.GridSystem.GridControl") ||
+                        c.Properties.Any(p => p.Name == "ControllerName" && p.Value.StartsWith("Telerik.Sitefinity.Frontend")))
+                    .OrderBy(c => c.Id)
+                    .Skip(iteration * BufferSize)
+                    .Take(BufferSize)
+                    .ToList();
+
+                foreach (var control in range)
+                {
+                    if (control.Page != null)
+                    {
+                        foreach (var page in control.Page.Pages())
+                        {
+                            page.BuildStamp++;
+                        }
+                    }
+
+                    if (deleteControls)
+                        manager.Delete(control);
+                }
+
+                manager.SaveChanges();
+
+                if (range.Count == 0 || range.Count % BufferSize != 0)
+                    break;
+
+                iteration++;
+            }
+        }
+
+        private static void ProcessPageDraftControls(bool deleteControls)
+        {
+            // We only process page draft controls by deleting them
+            if (!deleteControls)
+                return;
+
+            const int BufferSize = 200;
+
+            var manager = new PageManager();
+
+            var iteration = 0;
+            while (true)
+            {
+                var range = manager.GetControls<PageDraftControl>()
+                    .Where(c =>
+                        c.ObjectType.StartsWith("Telerik.Sitefinity.Frontend.GridSystem.GridControl") ||
+                        c.Properties.Any(p => p.Name == "ControllerName" && p.Value.StartsWith("Telerik.Sitefinity.Frontend")))
+                    .OrderBy(c => c.Id)
+                    .Skip(iteration * BufferSize)
+                    .Take(BufferSize)
+                    .ToList();
+
+                foreach (var control in range)
+                {
+                    manager.Delete(control);
+                }
+
+                manager.SaveChanges();
+
+                if (range.Count == 0 || range.Count % BufferSize != 0)
+                    break;
+
+                iteration++;
+            }
+        }
+
+        private static void ProcessTemplateDraftControls(bool deleteControls)
+        {
+            // We only process page draft controls by deleting them
+            if (!deleteControls)
+                return;
+
+            const int BufferSize = 200;
+
+            var manager = new PageManager();
+
+            var iteration = 0;
+            while (true)
+            {
+                var range = manager.GetControls<TemplateDraftControl>()
+                    .Where(c =>
+                        c.ObjectType.StartsWith("Telerik.Sitefinity.Frontend.GridSystem.GridControl") ||
+                        c.Properties.Any(p => p.Name == "ControllerName" && p.Value.StartsWith("Telerik.Sitefinity.Frontend")))
+                    .OrderBy(c => c.Id)
+                    .Skip(iteration * BufferSize)
+                    .Take(BufferSize)
+                    .ToList();
+
+                foreach (var control in range)
+                {
+                    manager.Delete(control);
+                }
+
+                manager.SaveChanges();
+
+                if (range.Count == 0 || range.Count % BufferSize != 0)
+                    break;
+
+                iteration++;
+            }
         }
     }
 }

@@ -105,7 +105,7 @@ namespace Telerik.Sitefinity.Frontend
         public override void Uninstall(SiteInitializer initializer)
         {
             this.Uninitialize();
-            FrontendModuleUninstaller.Uninstall(this.initializers.Value, initializer);
+            FrontendModuleUninstaller.Uninstall(this.initializers.Value);
             base.Uninstall(initializer);
         }
 
