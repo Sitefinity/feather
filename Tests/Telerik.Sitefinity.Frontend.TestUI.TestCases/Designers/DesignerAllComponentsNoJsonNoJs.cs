@@ -37,10 +37,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Designers
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ExpandOptions("selectors");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ExpandOptions("news");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("newsItemsSingleSelector");
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForDoneButtonToAppear();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ExpandOptions("taxa");
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().SelectContent("tagSingleSelector");
+            BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForDoneButtonToAppear();
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().DoneSelecting();
 
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ExpandOptions("Top");

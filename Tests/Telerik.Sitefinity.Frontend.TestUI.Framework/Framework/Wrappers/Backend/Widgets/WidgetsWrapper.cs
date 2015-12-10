@@ -38,6 +38,16 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
+        /// When the first control is added to a form a done button is automatically added to the page. 
+        /// This method waits for the done button to be added.
+        /// </summary>
+        public void WaitForDoneButtonToAppear()
+        {
+            Manager.Current.Wait.For(this.WaitForDoneButton, Manager.Current.Settings.ClientReadyTimeout);
+            ActiveBrowser.RefreshDomTree();
+        }
+
+        /// <summary>
         /// This method waits for the expander to be added.
         /// </summary>
         public void WaitForExpanderToAppear(int expectedCount)
@@ -531,6 +541,16 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             Manager.Current.ActiveBrowser.RefreshDomTree();
             var saveButton = this.EM.Widgets.FeatherWidget.SaveButton;
+
+            bool result = saveButton != null && saveButton.IsVisible();
+
+            return result;
+        }
+
+        private bool WaitForDoneButton()
+        {
+            Manager.Current.ActiveBrowser.RefreshDomTree();
+            var saveButton = this.EM.Widgets.FeatherWidget.DoneButton;
 
             bool result = saveButton != null && saveButton.IsVisible();
 
