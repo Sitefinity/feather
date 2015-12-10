@@ -45,6 +45,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 this.views = formatedViewsDictionary.Values;
             }
 
+            // If no configs have set priority and at least one config is generated - set its priority to 1.
+            if (!viewConfigs.Any(c => c.Value.Priority != 0) && viewConfigs.Any(c => c.Value.IsGenerated))
+                viewConfigs.FirstOrDefault(c => c.Value.IsGenerated).Value.Priority = 1;
+
             this.PopulateDependencies(widgetName, viewConfigs);
 
             this.defaultView = viewConfigs.OrderByDescending(c => c.Value.Priority).Select(c => c.Key).FirstOrDefault();
@@ -248,7 +252,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     var scripts = ComponentsDependencyResolver.GetScripts(components, null);
 
                     // If view that exists has been parsed and no components are used in it - no point in cycling trough the other views
-                    return new DesignerViewConfigModel() { Scripts = scripts, Components = components };
+                    return new DesignerViewConfigModel() { Scripts = scripts, Components = components, IsGenerated = true };
                 }
             }
 

@@ -1,0 +1,13 @@
+﻿{
+	"priority": 0,
+	"scripts": [
+		"Mvc/Scripts/sf-loading.js",
+		"Mvc/Scripts/Angular/angular-resource.min.js",
+		"client-components/selectors/common/sf-selectors.js",
+		"client-components/selectors/common/sf-services.js",
+		"client-components/selectors/common/sf-selected-items-view.js",
+		"client-components/selectors/common/sf-list-selector.js",
+		"client-components/selectors/news/sf-news-item-service.js",
+		"client-components/selectors/news/sf-news-selector.js"
+	]
+}
