@@ -82,10 +82,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public static IEnumerable<string> GetModulesByScripts(IEnumerable<string> scripts)
         {
             var modules = new List<string>();
-            foreach (var component in ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value)
+            foreach (var script in scripts)
             {
-                if (component.Value.Scripts != null && component.Value.Scripts.Intersect(scripts).Any())
-                    modules.AddRange(component.Value.AngularModules);
+                var components = ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value
+                    .Where(component => component.Value.Scripts != null && component.Value.Scripts.Contains(script));
+
+                if (components.Count() == 1)
+                    modules.AddRange(components.Single().Value.AngularModules);
             }
 
             return modules.Distinct();
