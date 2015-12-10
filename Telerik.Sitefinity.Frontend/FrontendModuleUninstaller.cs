@@ -33,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         /// <param name="initializers">The initializers.</param>
         /// <param name="initializer">The initializer.</param>
-        public static void Uninstall(IEnumerable<IInitializer> initializers, SiteInitializer initializer)
+        public static void Uninstall(IEnumerable<IInitializer> initializers)
         {
             FrontendModuleUninstaller.Uninitialize(initializers);
 
@@ -69,7 +69,7 @@ namespace Telerik.Sitefinity.Frontend
             }
 
             // Delete widgets from pages
-            FrontendModuleControlStore.DeletePagesWithControls(initializer.PageManager);
+            FrontendModuleControlStore.DeletePagesWithControls();
 
             configManager.SaveSection(toolboxesConfig);
         }
@@ -88,7 +88,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             if (e.CommandName == "Bootstrapped")
             {
-                FrontendModuleControlStore.InvalidatePagesWithControls(null);
+                FrontendModuleControlStore.InvalidatePagesWithControls();
 
                 Bootstrapper.Initialized -= FrontendModuleUninstaller.Bootstrapper_Initialized;
             }

@@ -57,7 +57,7 @@ namespace Telerik.Sitefinity.Frontend
 
             ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
 
-            FrontendModuleControlStore.InvalidatePagesWithControls(null);
+            FrontendModuleControlStore.InvalidatePagesWithControls();
         }
         
         #region Install
