@@ -212,6 +212,9 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationPreStart.cs" />
+    <Compile Include="Designers\DesignerWithJsonNoJs.cs" />
+    <Compile Include="Designers\DesignerNoJsonWithJs.cs" />
+    <Compile Include="Designers\DesignerNoJsonNoJs.cs" />
     <Compile Include="GridWidgets\AddAndDeleteGridWidgetFromFileSystemVerifyPageToolbox.cs" />
     <Compile Include="GridWidgets\AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox.cs" />
     <Compile Include="GridWidgets\ManagaGridWidgetOnThePage.cs" />

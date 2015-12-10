@@ -114,6 +114,9 @@
     <Compile Include="..\..\AssemblyInfoShare\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Designers\DesignerNoJsonWithJs.cs" />
+    <Compile Include="Designers\DesignerWithJsonNoJs.cs" />
+    <Compile Include="Designers\DesignerNoJsonNoJs.cs" />
     <Compile Include="GridWidgets\AutoGenerateGridWidgetToToolboxForPage.cs" />
     <Compile Include="GridWidgets\AutoGenerateGridWidgetToToolboxForPageTemplate.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePage.cs" />
