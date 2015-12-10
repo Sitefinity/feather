@@ -93,6 +93,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
         [Description("Checks whether invoking widget designer views with and without js populates angular modules correctly.")]
         public void ExtractModules_InvokingWidgetDesignerWithAndWithoutJs_ShouldExtractModulesCorrectly()
         {
+            var expectedWithoutJsModuleDependencies = new string[] { "expander", "sfCollection", "sfSelectors", "sfFields", "sfSearchBox", "sfSortBox", "sfAspectRatioSelection", "sfThumbnailSizeSelection" };
+
             var withJsResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
             var withoutJsResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithoutJsController.WidgetName);
             var withoutBothResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithoutBothController.WidgetName);
@@ -102,8 +104,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
             var withoutBothModel = ((ViewResult)withoutBothResult).Model as DesignerModel;
 
             Assert.AreEqual(0, withJsModel.ModuleDependencies.Count());
-            Assert.AreEqual(8, withoutJsModel.ModuleDependencies.Count());
             Assert.AreEqual(withoutBothModel.ModuleDependencies.Count(), withoutJsModel.ModuleDependencies.Count());
+            Assert.AreEqual(expectedWithoutJsModuleDependencies.Count(), withoutJsModel.ModuleDependencies.Count());
+            Assert.IsTrue(withoutJsModel.ModuleDependencies.All(expectedWithoutJsModuleDependencies.Contains));
         }
 
         [Test]
@@ -112,13 +115,37 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
         [Description("Checks whether ExtractComponents method handles invoking widget designer with json with only scripts extracts modules correctly.")]
         public void ExtractModules_InvokingWidgetDesignerWithJsonWithOnlyScripts_ShouldExtractModulesCorrectly()
         {
-            var result = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithJsonScriptsController.WidgetName);
+            var expectedModuleDependencies = new string[] { "sfSelectors", "sfServices" };
 
+            var result = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithJsonScriptsController.WidgetName);
             var model = ((ViewResult)result).Model as DesignerModel;
 
             Assert.AreEqual(2, model.ModuleDependencies.Count());
-            Assert.IsTrue(model.ModuleDependencies.Contains("sfSelectors"));
-            Assert.IsTrue(model.ModuleDependencies.Contains("sfServices"));
+            Assert.IsTrue(model.ModuleDependencies.All(expectedModuleDependencies.Contains));
+        }
+
+        [Test]
+        [Category(TestCategories.MvcCore)]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether Designer model when views with json with priority 1 and without json does not set priority 1 to generated config.")]
+        public void GenerateModel_WithAndWithoutJsonConfig_ShouldNotSetPriorityToTheGeneratedConfig()
+        {
+            var result = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithAndWithoutJsonController.WidgetName);
+            var model = ((ViewResult)result).Model as DesignerModel;
+
+            Assert.AreEqual("First", model.DefaultView);
+        }
+
+        [Test]
+        [Category(TestCategories.MvcCore)]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks whether Designer model when views without json does set priority 1 to generated config.")]
+        public void GenerateModel_WithoutJsonConfig_ShouldSetPriorityToTheGeneratedConfig()
+        {
+            var result = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithoutJsonController.WidgetName);
+            var model = ((ViewResult)result).Model as DesignerModel;
+
+            Assert.AreEqual("Simple", model.DefaultView);
         }
 
         private ActionResult ExecuteDesignerControllerMasterAction(string widgetName)
