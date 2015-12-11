@@ -24,7 +24,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void AddNewLayoutFileToDefaultPackage()
         {
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());              
             BAT.Arrange(this.TestName).ExecuteArrangement("AddNewLayoutFile");
 
             //Timeout is needed because system is initializing

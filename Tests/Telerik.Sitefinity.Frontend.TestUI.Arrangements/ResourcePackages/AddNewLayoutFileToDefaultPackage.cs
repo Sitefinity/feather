@@ -14,6 +14,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerArrangement]
         public void AddNewLayoutFile()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
             string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(PackageName, LayoutFileName);
             FeatherServerOperations.ResourcePackages().AddNewResource(FileResource, filePath);
         }
