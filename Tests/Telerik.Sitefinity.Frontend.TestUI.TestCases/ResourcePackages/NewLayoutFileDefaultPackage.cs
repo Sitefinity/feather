@@ -27,7 +27,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
             RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());              
             BAT.Arrange(this.TestName).ExecuteArrangement("AddNewLayoutFile");
 
-            BAT.Macros().NavigateTo().Design().PageTemplates();
+            //Timeout is needed because system is initializing
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().Design().PageTemplates());
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsItemPresentInGridView(TemplateTitle);
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(TemplateTitle);
 
