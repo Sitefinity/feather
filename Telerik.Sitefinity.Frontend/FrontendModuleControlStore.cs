@@ -217,7 +217,6 @@ namespace Telerik.Sitefinity.Frontend
         private static void DeletePageDraftControls()
         {
             var manager = PageManager.GetManager();
-            var iteration = 0;
             while (true)
             {
                 var drafts = manager
@@ -228,7 +227,6 @@ namespace Telerik.Sitefinity.Frontend
                             prop.Name == FeatherControlPropertiesName &&
                             prop.Value.StartsWith(FeatherControlPropertiesValue))))
                     .OrderBy(d => d.Id)
-                    .Skip(iteration * FrontendModuleControlStore.BufferSize)
                     .Take(FrontendModuleControlStore.BufferSize)
                     .ToList();
 
@@ -243,7 +241,6 @@ namespace Telerik.Sitefinity.Frontend
 
                     if (drafts.Count % FrontendModuleControlStore.BufferSize == 0)
                     {
-                        iteration++;
                         continue;
                     }
                 }
@@ -255,7 +252,6 @@ namespace Telerik.Sitefinity.Frontend
         private static void DeleteTemplateDraftControls()
         {
             var manager = PageManager.GetManager();
-            var iteration = 0;
             while (true)
             {
                 var drafts = manager
@@ -266,7 +262,6 @@ namespace Telerik.Sitefinity.Frontend
                             prop.Name == FeatherControlPropertiesName &&
                             prop.Value.StartsWith(FeatherControlPropertiesValue))))
                     .OrderBy(t => t.Id)
-                    .Skip(iteration * FrontendModuleControlStore.BufferSize)
                     .Take(FrontendModuleControlStore.BufferSize)
                     .ToList();
 
@@ -281,7 +276,6 @@ namespace Telerik.Sitefinity.Frontend
 
                     if (drafts.Count % FrontendModuleControlStore.BufferSize == 0)
                     {
-                        iteration++;
                         continue;
                     }
                 }
