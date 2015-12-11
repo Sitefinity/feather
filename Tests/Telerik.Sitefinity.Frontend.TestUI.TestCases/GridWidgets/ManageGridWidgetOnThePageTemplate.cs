@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Wrappers.Backend.PageEditor;
+using Telerik.Sitefinity.TestUI.Framework.Utilities;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
 {
@@ -25,6 +26,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void ManageGridWidgetOnThePageTemplate()
         {
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());
             BAT.Macros().NavigateTo().Design().PageTemplates();
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
