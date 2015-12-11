@@ -16,10 +16,8 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         public static void InvalidatePagesWithControls()
         {
-            FrontendModuleControlStore.ProcessPageControls(delete: false);
-            FrontendModuleControlStore.ProcessTemplateControls(delete: false);
-            FrontendModuleControlStore.ProcessPageDraftControls(delete: false);
-            FrontendModuleControlStore.ProcessTemplateDraftControls(delete: false);
+            FrontendModuleControlStore.InvalidatePageControls();
+            FrontendModuleControlStore.InvalidateTemplateControls();
         }
 
         /// <summary>
@@ -27,13 +25,13 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         public static void DeletePagesWithControls()
         {
-            FrontendModuleControlStore.ProcessPageControls(delete: true);
-            FrontendModuleControlStore.ProcessTemplateControls(delete: true);
-            FrontendModuleControlStore.ProcessPageDraftControls(delete: true);
-            FrontendModuleControlStore.ProcessTemplateDraftControls(delete: true);
+            FrontendModuleControlStore.DeletePageControls();
+            FrontendModuleControlStore.DeleteTemplateControls();
+            FrontendModuleControlStore.DeletePageDraftControls();
+            FrontendModuleControlStore.DeleteTemplateDraftControls();
         }
 
-        private static void ProcessPageControls(bool delete)
+        private static void InvalidatePageControls()
         {
             var manager = PageManager.GetManager();
             var iteration = 0;
@@ -59,22 +57,6 @@ namespace Telerik.Sitefinity.Frontend
                             page.BuildStamp++;
                     }
 
-                    if (delete)
-                    {
-                        var controls = pages
-                            .SelectMany(p => p.Controls.Where(ctrl =>
-                                ctrl.ObjectType.StartsWith(FeatherControlObjectType) ||
-                                ctrl.Properties.Any(prop =>
-                                    prop.Name == FeatherControlPropertiesName &&
-                                    prop.Value.StartsWith(FeatherControlPropertiesValue))))
-                            .ToList();
-
-                        foreach (var control in controls)
-                        {
-                            manager.Delete(control);
-                        }
-                    }
-
                     manager.SaveChanges();
 
                     if (pages.Count % FrontendModuleControlStore.BufferSize == 0)
@@ -88,7 +70,7 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
-        private static void ProcessTemplateControls(bool delete)
+        private static void InvalidateTemplateControls()
         {
             var manager = PageManager.GetManager();
             var iteration = 0;
@@ -118,21 +100,6 @@ namespace Telerik.Sitefinity.Frontend
                         }
                     }
 
-                    if (delete)
-                    {
-                        var controls = templates
-                            .SelectMany(p => p.Controls.Where(ctrl =>
-                                ctrl.ObjectType.StartsWith(FeatherControlObjectType) ||
-                                ctrl.Properties.Any(prop =>
-                                    prop.Name == FeatherControlPropertiesName &&
-                                    prop.Value.StartsWith(FeatherControlPropertiesValue)))).ToList();
-
-                        foreach (var control in controls)
-                        {
-                            manager.Delete(control);
-                        }
-                    }
-
                     manager.SaveChanges();
 
                     if (templates.Count % FrontendModuleControlStore.BufferSize == 0)
@@ -146,12 +113,109 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
-        private static void ProcessPageDraftControls(bool delete)
+        private static void DeletePageControls()
         {
-            // We process page draft controls only by deleting them
-            if (!delete)
-                return;
+            var manager = PageManager.GetManager();
+            while (true)
+            {
+                var pages = manager
+                    .GetPageDataList()
+                    .Where(p => p.Controls.Any(ctrl =>
+                        ctrl.ObjectType.StartsWith(FeatherControlObjectType) ||
+                        ctrl.Properties.Any(prop =>
+                            prop.Name == FeatherControlPropertiesName &&
+                            prop.Value.StartsWith(FeatherControlPropertiesValue))))
+                    .OrderBy(p => p.Id)
+                    .Take(FrontendModuleControlStore.BufferSize)
+                    .ToList();
 
+                if (pages.Count > 0)
+                {
+                    foreach (var page in pages)
+                    {
+                        if (page != null)
+                            page.BuildStamp++;
+                    }
+
+                    var controls = pages
+                            .SelectMany(p => p.Controls.Where(ctrl =>
+                                ctrl.ObjectType.StartsWith(FeatherControlObjectType) ||
+                                ctrl.Properties.Any(prop =>
+                                    prop.Name == FeatherControlPropertiesName &&
+                                    prop.Value.StartsWith(FeatherControlPropertiesValue))))
+                            .ToList();
+
+                    foreach (var control in controls)
+                    {
+                        manager.Delete(control);
+                    }
+
+                    manager.SaveChanges();
+
+                    if (pages.Count % FrontendModuleControlStore.BufferSize == 0)
+                    {
+                        continue;
+                    }
+                }
+
+                break;
+            }
+        }
+
+        private static void DeleteTemplateControls()
+        {
+            var manager = PageManager.GetManager();
+            while (true)
+            {
+                var templates = manager
+                    .GetTemplates()
+                    .Where(t => t.Controls.Any(ctrl =>
+                        ctrl.ObjectType.StartsWith(FeatherControlObjectType) ||
+                        ctrl.Properties.Any(prop =>
+                            prop.Name == FeatherControlPropertiesName &&
+                            prop.Value.StartsWith(FeatherControlPropertiesValue))))
+                    .OrderBy(t => t.Id)
+                    .Take(FrontendModuleControlStore.BufferSize)
+                    .ToList();
+
+                if (templates.Count > 0)
+                {
+                    foreach (var template in templates)
+                    {
+                        var pages = template.Pages().ToList();
+                        foreach (var page in pages)
+                        {
+                            if (page != null)
+                                page.BuildStamp++;
+                        }
+                    }
+
+                    var controls = templates
+                            .SelectMany(p => p.Controls.Where(ctrl =>
+                                ctrl.ObjectType.StartsWith(FeatherControlObjectType) ||
+                                ctrl.Properties.Any(prop =>
+                                    prop.Name == FeatherControlPropertiesName &&
+                                    prop.Value.StartsWith(FeatherControlPropertiesValue)))).ToList();
+
+                    foreach (var control in controls)
+                    {
+                        manager.Delete(control);
+                    }
+
+                    manager.SaveChanges();
+
+                    if (templates.Count % FrontendModuleControlStore.BufferSize == 0)
+                    {
+                        continue;
+                    }
+                }
+
+                break;
+            }
+        }
+
+        private static void DeletePageDraftControls()
+        {
             var manager = PageManager.GetManager();
             var iteration = 0;
             while (true)
@@ -188,12 +252,8 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
-        private static void ProcessTemplateDraftControls(bool delete)
+        private static void DeleteTemplateDraftControls()
         {
-            // We process page draft controls only by deleting them
-            if (!delete)
-                return;
-
             var manager = PageManager.GetManager();
             var iteration = 0;
             while (true)
