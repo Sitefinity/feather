@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Utilities;
+using ArtOfTest.WebAii.Core;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
 {
@@ -24,8 +25,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void AddWidgetToPageBasedOnLayoutWithMultiplePlaceholders()
         {
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());
-            BAT.Macros().NavigateTo().Pages();
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/pages", true, null, new HtmlFindExpression("class=~sfMain")));
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageTitle);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropWidgetToPlaceholder(WidgetCaption, FirstPlaceHolderId);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropWidgetToPlaceholder(WidgetCaption, SecondPlaceHolderId);
