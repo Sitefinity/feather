@@ -26,8 +26,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void ManageGridWidgetOnThePageTemplate()
         {
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/design/pagetemplates", true, null, new HtmlFindExpression("class=~sfMain")));
             RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().Design().PageTemplates());
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropLayoutWidgetToPlaceholder(LayoutCaption);
