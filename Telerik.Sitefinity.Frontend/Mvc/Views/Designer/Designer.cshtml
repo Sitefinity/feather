@@ -25,7 +25,7 @@
 
 		    <div class="modal-footer" ng-show="!feedback.showLoadingIndicator" placeholder="modal-footer"></div>
 
-		    <script type="text/ng-template" section="modal-footer">
+		    <script type="text/ng-template" section="modal-footer">			
 			    <button class="btn btn-primary pull-left" ng-click="save(false)">@Html.Resource("Save")</button>
 			    <button class="btn btn-default pull-left" ng-click="save(true)" ng-hide="hideSaveAllTranslations">@Html.Resource("SaveAllTranslations")</button>
 			    <a class="btn btn-link pull-left" data-dismiss="modal" ng-click="cancel()">@Html.Resource("Cancel")</a>
@@ -51,6 +51,18 @@
 @Html.Script(Url.WidgetContent("Mvc/Scripts/sf-loading.js"))
 @Html.Script(Url.WidgetContent("Mvc/Scripts/Bootstrap/js/bootstrap.min.js"))
 @Html.Script(ScriptRef.KendoAll, "top") 
+
+
+<script type="text/javascript">
+    (function () {
+        var desingerModule = angular.module('designer');
+		@foreach(var module in Model.ModuleDependencies){
+		    <text>
+                desingerModule.requires.push("@module");
+            </text>
+		};
+    })();
+</script>
 
 @foreach (var scriptPath in Model.ScriptReferences)
 {

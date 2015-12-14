@@ -279,29 +279,35 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             destination.Close();
 
             ////  inject DesignerView.Selector.json
-            Stream sourceJson = assembly.GetManifestResourceStream(fileResourceJson);
-            var jsonPath = Path.Combine("MVC", "Views", "DummyText", jsonFileName);
+            if (!string.IsNullOrEmpty(fileResourceJson) && !string.IsNullOrEmpty(jsonFileName))
+            {
+                Stream sourceJson = assembly.GetManifestResourceStream(fileResourceJson);
+                var jsonPath = Path.Combine("MVC", "Views", "DummyText", jsonFileName);
 
-            string filePathJson = FileInjectHelper.GetDestinationFilePath(jsonPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(filePathJson));
-            Stream destinationJson = new FileStream(filePathJson, FileMode.Create, FileAccess.Write);
+                string filePathJson = FileInjectHelper.GetDestinationFilePath(jsonPath);
+                Directory.CreateDirectory(Path.GetDirectoryName(filePathJson));
+                Stream destinationJson = new FileStream(filePathJson, FileMode.Create, FileAccess.Write);
 
-            FileInjectHelper.CopyStream(sourceJson, destinationJson);
-            sourceJson.Close();
-            destinationJson.Close();
+                FileInjectHelper.CopyStream(sourceJson, destinationJson);
+                sourceJson.Close();
+                destinationJson.Close();
+            }
 
             ////  inject designerview-selector.js
-            Stream sourceController = assembly.GetManifestResourceStream(controllerFileResource);
-            var controllerPath = Path.Combine("MVC", "Scripts", "DummyText", controllerFileName);
+            if (!string.IsNullOrEmpty(controllerFileResource) && !string.IsNullOrEmpty(controllerFileName))
+            {
+                Stream sourceController = assembly.GetManifestResourceStream(controllerFileResource);
+                var controllerPath = Path.Combine("MVC", "Scripts", "DummyText", controllerFileName);
 
-            string controllerFilePath = FileInjectHelper.GetDestinationFilePath(controllerPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(controllerFilePath));
-            Stream destinationController = new FileStream(controllerFilePath, FileMode.Create, FileAccess.Write);
+                string controllerFilePath = FileInjectHelper.GetDestinationFilePath(controllerPath);
+                Directory.CreateDirectory(Path.GetDirectoryName(controllerFilePath));
+                Stream destinationController = new FileStream(controllerFilePath, FileMode.Create, FileAccess.Write);
 
-            FileInjectHelper.CopyStream(sourceController, destinationController);
+                FileInjectHelper.CopyStream(sourceController, destinationController);
 
-            sourceController.Close();
-            destinationController.Close();
+                sourceController.Close();
+                destinationController.Close();
+            }
         }
 
         /// <summary>
@@ -313,13 +319,19 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             string filePath = FileInjectHelper.GetDestinationFilePath(path);
             File.Delete(filePath);
 
-            var jsonPath = Path.Combine("MVC", "Views", "DummyText", jsonFileName);
-            string filePathJson = FileInjectHelper.GetDestinationFilePath(jsonPath);
-            File.Delete(filePathJson);
+            if (!string.IsNullOrEmpty(jsonFileName))
+            {
+                var jsonPath = Path.Combine("MVC", "Views", "DummyText", jsonFileName);
+                string filePathJson = FileInjectHelper.GetDestinationFilePath(jsonPath);
+                File.Delete(filePathJson);
+            }
 
-            var controllerPath = Path.Combine("MVC", "Scripts", "DummyText", controllerFileName);
-            string controllerFilePath = FileInjectHelper.GetDestinationFilePath(controllerPath);
-            File.Delete(controllerFilePath);
+            if (!string.IsNullOrEmpty(controllerFileName))
+            {
+                var controllerPath = Path.Combine("MVC", "Scripts", "DummyText", controllerFileName);
+                string controllerFilePath = FileInjectHelper.GetDestinationFilePath(controllerPath);
+                File.Delete(controllerFilePath);
+            }
         }
 
         /// <summary>
