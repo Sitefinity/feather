@@ -19,20 +19,8 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         public static void InvalidatePagesWithControls()
         {
-            IObjectScope objectScope;
-            var manager = FrontendModuleControlStore.GetManager(out objectScope);
-            var activeConnectionTimeout = objectScope.Database.BackendConfiguration.ConnectionPool.ActiveConnectionTimeout;
-            objectScope.Database.BackendConfiguration.ConnectionPool.ActiveConnectionTimeout = FrontendModuleControlStore.ScopeTimeoutSeconds;
-
-            try
-            {
-                FrontendModuleControlStore.InvalidatePageControls(manager);
-                FrontendModuleControlStore.InvalidateTemplateControls(manager);
-            }
-            finally
-            {
-                objectScope.Database.BackendConfiguration.ConnectionPool.ActiveConnectionTimeout = activeConnectionTimeout;
-            }
+            FrontendModuleControlStore.InvalidatePageControls();
+            FrontendModuleControlStore.InvalidateTemplateControls();
         }
 
         /// <summary>
@@ -40,38 +28,15 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         public static void DeletePagesWithControls()
         {
-            IObjectScope objectScope;
-            var manager = FrontendModuleControlStore.GetManager(out objectScope);
-            var activeConnectionTimeout = objectScope.Database.BackendConfiguration.ConnectionPool.ActiveConnectionTimeout;
-            objectScope.Database.BackendConfiguration.ConnectionPool.ActiveConnectionTimeout = FrontendModuleControlStore.ScopeTimeoutSeconds;
-
-            try
-            {
-                FrontendModuleControlStore.DeletePageControls(manager);
-                FrontendModuleControlStore.DeleteTemplateControls(manager);
-                FrontendModuleControlStore.DeletePageDraftControls(manager);
-                FrontendModuleControlStore.DeleteTemplateDraftControls(manager);
-            }
-            finally
-            {
-                objectScope.Database.BackendConfiguration.ConnectionPool.ActiveConnectionTimeout = activeConnectionTimeout;
-            }
+            FrontendModuleControlStore.DeletePageControls();
+            FrontendModuleControlStore.DeleteTemplateControls();
+            FrontendModuleControlStore.DeletePageDraftControls();
+            FrontendModuleControlStore.DeleteTemplateDraftControls();
         }
-
-        private static PageManager GetManager(out IObjectScope objectScope)
+        
+        private static void InvalidatePageControls()
         {
-            var manager = PageManager.GetManager(null, Guid.NewGuid().ToString("N"));
-
-            var provider = manager.Provider as IOpenAccessDataProvider;
-            var context = provider.GetContext();
-
-            objectScope = context.GetType().GetProperty("Scope", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(context) as IObjectScope;
-            
-            return manager;
-        }
-
-        private static void InvalidatePageControls(PageManager manager)
-        {
+            var manager = PageManager.GetManager();
             var iteration = 0;
             while (true)
             {
@@ -85,6 +50,7 @@ namespace Telerik.Sitefinity.Frontend
                     .OrderBy(p => p.Id)
                     .Skip(iteration * FrontendModuleControlStore.BufferSize)
                     .Take(FrontendModuleControlStore.BufferSize)
+                    .WithOption(new QueryOptions() { CommandTimeout = FrontendModuleControlStore.CommandTimeoutSeconds })
                     .ToList();
 
                 if (pages.Count > 0)
@@ -108,8 +74,9 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
-        private static void InvalidateTemplateControls(PageManager manager)
+        private static void InvalidateTemplateControls()
         {
+            var manager = PageManager.GetManager();
             var iteration = 0;
             while (true)
             {
@@ -123,6 +90,7 @@ namespace Telerik.Sitefinity.Frontend
                     .OrderBy(t => t.Id)
                     .Skip(iteration * FrontendModuleControlStore.BufferSize)
                     .Take(FrontendModuleControlStore.BufferSize)
+                    .WithOption(new QueryOptions() { CommandTimeout = FrontendModuleControlStore.CommandTimeoutSeconds })
                     .ToList();
 
                 if (templates.Count > 0)
@@ -150,8 +118,9 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
-        private static void DeletePageControls(PageManager manager)
+        private static void DeletePageControls()
         {
+            var manager = PageManager.GetManager();
             while (true)
             {
                 var pages = manager
@@ -163,6 +132,7 @@ namespace Telerik.Sitefinity.Frontend
                             prop.Value.StartsWith(FeatherControlPropertiesValue))))
                     .OrderBy(p => p.Id)
                     .Take(FrontendModuleControlStore.BufferSize)
+                    .WithOption(new QueryOptions() { CommandTimeout = FrontendModuleControlStore.CommandTimeoutSeconds })
                     .ToList();
 
                 if (pages.Count > 0)
@@ -198,8 +168,9 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
-        private static void DeleteTemplateControls(PageManager manager)
+        private static void DeleteTemplateControls()
         {
+            var manager = PageManager.GetManager();
             while (true)
             {
                 var templates = manager
@@ -211,6 +182,7 @@ namespace Telerik.Sitefinity.Frontend
                             prop.Value.StartsWith(FeatherControlPropertiesValue))))
                     .OrderBy(t => t.Id)
                     .Take(FrontendModuleControlStore.BufferSize)
+                    .WithOption(new QueryOptions() { CommandTimeout = FrontendModuleControlStore.CommandTimeoutSeconds })
                     .ToList();
 
                 if (templates.Count > 0)
@@ -249,8 +221,9 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
-        private static void DeletePageDraftControls(PageManager manager)
+        private static void DeletePageDraftControls()
         {
+            var manager = PageManager.GetManager();
             while (true)
             {
                 var drafts = manager
@@ -262,6 +235,7 @@ namespace Telerik.Sitefinity.Frontend
                             prop.Value.StartsWith(FeatherControlPropertiesValue))))
                     .OrderBy(d => d.Id)
                     .Take(FrontendModuleControlStore.BufferSize)
+                    .WithOption(new QueryOptions() { CommandTimeout = FrontendModuleControlStore.CommandTimeoutSeconds })
                     .ToList();
 
                 if (drafts.Count > 0)
@@ -283,8 +257,9 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
-        private static void DeleteTemplateDraftControls(PageManager manager)
+        private static void DeleteTemplateDraftControls()
         {
+            var manager = PageManager.GetManager();
             while (true)
             {
                 var drafts = manager
@@ -296,6 +271,7 @@ namespace Telerik.Sitefinity.Frontend
                             prop.Value.StartsWith(FeatherControlPropertiesValue))))
                     .OrderBy(t => t.Id)
                     .Take(FrontendModuleControlStore.BufferSize)
+                    .WithOption(new QueryOptions() { CommandTimeout = FrontendModuleControlStore.CommandTimeoutSeconds })
                     .ToList();
 
                 if (drafts.Count > 0)
@@ -318,7 +294,7 @@ namespace Telerik.Sitefinity.Frontend
         }
 
         private const int BufferSize = 200;
-        private const int ScopeTimeoutSeconds = 300;
+        private const int CommandTimeoutSeconds = 100;
         private const string FeatherControlObjectType = "Telerik.Sitefinity.Frontend.GridSystem.GridControl";
         private const string FeatherControlPropertiesName = "ControllerName";
         private const string FeatherControlPropertiesValue = "Telerik.Sitefinity.Frontend";
