@@ -99,14 +99,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// </summary>
         private IDesignerModel GetModel(string widgetName, Guid controlId)
         {
+            var viewFilesMappgings = new Dictionary<string, string>();
+
             var constructorParameters = new Dictionary<string, object> 
-                        {
-                           { "views", this.GetPartialViews() },
-                           { "viewLocations", this.GetPartialViewLocations() },
-                           { "widgetName", widgetName },
-                           { "controlId", controlId },
-                           { "preselectedView", this.Request != null ? this.Request["view"] : null }
-                        };
+            {
+                { "views", this.GetPartialViews(ref viewFilesMappgings) },
+                { "viewLocations", this.GetPartialViewLocations() },
+                { "widgetName", widgetName },
+                { "controlId", controlId },
+                { "preselectedView", this.Request != null ? this.Request["view"] : null },
+                { "viewFilesMappings", viewFilesMappgings }
+            };
 
             return ControllerModelFactory.GetModel<IDesignerModel>(typeof(DesignerController), constructorParameters);
         }

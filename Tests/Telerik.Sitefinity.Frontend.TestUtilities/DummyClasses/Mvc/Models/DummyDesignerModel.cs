@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyDesignerModel"/> class.
         /// </summary>
-        public DummyDesignerModel() : base(new List<string>(), new List<string>(), string.Empty, Guid.Empty, string.Empty)
+        public DummyDesignerModel() : base(new List<string>(), new List<string>(), string.Empty, Guid.Empty, string.Empty, null)
         { 
         }
 
@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Models
         /// <param name="controlId">Id of the control that is being edited.</param>
         /// <param name="preselectedView">Name of the preselected view if there is one. Otherwise use null.</param>
         public DummyDesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView)
-            : base(views, viewLocations, widgetName, controlId, preselectedView)
+            : base(views, viewLocations, widgetName, controlId, preselectedView, null)
         {
         }
 
@@ -58,7 +58,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Models
         /// <param name="viewConfigs">The view configs.</param>
         public void PopulateScriptReferencesPublic(string widgetName, IEnumerable<KeyValuePair<string, DesignerViewConfigModel>> viewConfigs)
         {
-            this.PopulateScriptReferences(widgetName, viewConfigs);
+            this.PopulateDependencies(widgetName, viewConfigs);
         }
 
         /// <summary>

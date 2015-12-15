@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArtOfTest.WebAii.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
@@ -23,11 +24,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void AddNewLayoutFileToDefaultPackage()
-        {
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());              
+        {             
             BAT.Arrange(this.TestName).ExecuteArrangement("AddNewLayoutFile");
 
-            BAT.Macros().NavigateTo().Design().PageTemplates();
+            //Timeout is needed because system is initializing
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/design/pagetemplates", true, null, new HtmlFindExpression("class=~sfMain")));
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn()); 
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().IsItemPresentInGridView(TemplateTitle);
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(TemplateTitle);
 

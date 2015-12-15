@@ -30,8 +30,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// Updates the view engines collection of the given <paramref name="controller"/> by making the engines aware of the controller's container virtual path.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        /// <exception cref="System.ArgumentNullException">controller</exception>
         /// <param name="pathTransformationsFunc">Transformations func that have to be applied to each view engine search path.</param>
+        /// <exception cref="System.ArgumentNullException">controller</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public static void UpdateViewEnginesCollection(this Controller controller, Func<IList<Func<string, string>>> pathTransformationsFunc)
         {
@@ -66,7 +66,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// Gets the partial views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public static IEnumerable<string> GetPartialViews(this Controller controller)
+        /// <param name="fullViewPaths">The full view paths.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
+        public static IEnumerable<string> GetPartialViews(this Controller controller, IList<string> fullViewPaths = null)
         {
             var viewLocations = ControllerExtensions.GetPartialViewLocations(controller);
             return ControllerExtensions.GetViews(controller, viewLocations);
@@ -76,7 +78,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// Gets the views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public static IEnumerable<string> GetViews(this Controller controller)
+        /// <param name="fullViewPaths">The full view paths.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
+        public static IEnumerable<string> GetViews(this Controller controller, IList<string> fullViewPaths = null)
         {
             var viewLocations = ControllerExtensions.GetViewLocations(controller);
             return ControllerExtensions.GetViews(controller, viewLocations);
@@ -209,7 +213,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         public static IndexRenderModes GetIndexRenderMode(this IController controller)
         {
-            if (controller == null) 
+            if (controller == null)
                 throw new ArgumentNullException("controller");
 
             var searchableControl = controller as ISearchIndexBehavior;
@@ -224,6 +228,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             var attribute = controller.GetType().GetCustomAttributes(true).OfType<IndexRenderModeAttribute>().LastOrDefault();
             return attribute == null ? IndexRenderModes.Normal : attribute.Mode;
+        }
+
+        #endregion
+
+        #region Internal methods
+
+        /// <summary>
+        /// Gets the partial views that are available to the controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="viewFilesMappings">The view files mappings.</param>
+        /// <param name="fullViewPaths">The full view paths.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
+        internal static IEnumerable<string> GetPartialViews(this Controller controller, ref Dictionary<string, string> viewFilesMappings, IList<string> fullViewPaths = null)
+        {
+            var viewLocations = ControllerExtensions.GetPartialViewLocations(controller);
+            return ControllerExtensions.GetViews(controller, viewLocations, ref viewFilesMappings);
         }
 
         #endregion
@@ -409,12 +431,41 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return baseFiles;
         }
 
+        private static IEnumerable<string> GetViews(Controller controller, IEnumerable<string> viewLocations, ref Dictionary<string, string> viewFilesMappings)
+        {
+            var viewExtensions = ControllerExtensions.GetViewFileExtensions(controller);
+            var widgetName = controller.RouteData != null ? controller.RouteData.Values["widgetName"] as string : null;
+
+            var baseFiles = ControllerExtensions.GetViewsForAssembly(controller.GetType().Assembly, viewLocations, viewExtensions, ref viewFilesMappings);
+            if (!widgetName.IsNullOrEmpty())
+            {
+                var widgetAssembly = FrontendManager.ControllerFactory.ResolveControllerType(widgetName).Assembly;
+                var widgetFiles = ControllerExtensions.GetViewsForAssembly(widgetAssembly, viewLocations, viewExtensions, ref viewFilesMappings);
+                return baseFiles.Union(widgetFiles);
+            }
+
+            return baseFiles;
+        }
+
         private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions)
         {
             var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly);
             return viewLocations
                 .SelectMany(l => ControllerExtensions.GetViewsForPath(pathDef, l, viewExtensions))
                 .Distinct();
+        }
+
+        private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions, ref Dictionary<string, string> viewFilesMappings)
+        {
+            var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly);
+            var views = new List<string>();
+
+            foreach (var viewLocation in viewLocations)
+            {
+                views.AddRange(ControllerExtensions.GetViewsForPath(pathDef, viewLocation, viewExtensions, ref viewFilesMappings));
+            }
+
+            return views.Distinct();
         }
 
         private static IEnumerable<string> GetViewsForPath(PathDefinition definition, string path, IEnumerable<string> viewExtensions)
@@ -433,6 +484,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
 
             return new string[] { };
+        }
+
+        private static IEnumerable<string> GetViewsForPath(PathDefinition definition, string path, IEnumerable<string> viewExtensions, ref Dictionary<string, string> viewFilesMappings)
+        {
+            var views = new List<string>();
+            var files = ObjectFactory.Resolve<IResourceResolverStrategy>().GetFiles(definition, path);
+
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    if (viewExtensions.Any(e => file.EndsWith(e, StringComparison.Ordinal)))
+                    {
+                        var fileName = VirtualPathUtility.GetFileName(file);
+                        var fileNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(fileName);
+                        if (!viewFilesMappings.ContainsKey(fileNameWithoutExtension))
+                        {
+                            viewFilesMappings.Add(fileNameWithoutExtension, file);
+                            views.Add(fileNameWithoutExtension);
+                        }
+                    }
+                }
+            }
+
+            return views;
         }
 
         #endregion

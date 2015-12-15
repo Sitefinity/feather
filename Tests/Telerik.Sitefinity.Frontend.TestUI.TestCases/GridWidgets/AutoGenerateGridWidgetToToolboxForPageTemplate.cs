@@ -5,6 +5,7 @@ using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Wrappers.Backend.PageEditor;
 using Telerik.TestUI.Core.Utilities;
+using ArtOfTest.WebAii.Core;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
 {
@@ -21,9 +22,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox()
-        {                        
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/design/pagetemplates", false));
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());              
+        {
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/design/pagetemplates", true, null, new HtmlFindExpression("class=~sfMain")));
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);            
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropLayoutWidgetToPlaceholder(LayoutCaption);
