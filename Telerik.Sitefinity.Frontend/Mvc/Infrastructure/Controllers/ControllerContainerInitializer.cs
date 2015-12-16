@@ -66,6 +66,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
+        /// Registers the string resources.
+        /// </summary>
+        public static void RegisterStringResources()
+        {
+            ControllerContainerInitializer.ControllerContainerAssemblies
+                .SelectMany(asm => asm.GetExportedTypes().Where(FrontendManager.ControllerFactory.IsController))
+                .ToList()
+                .ForEach(ControllerContainerInitializer.RegisterStringResources);
+        }
+
+        /// <summary>
         /// Initializes the controllers that are available to the web application.
         /// </summary>
         public virtual void Initialize()
@@ -85,6 +96,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         public virtual void Uninitialize()
         {
+            ControllerContainerInitializer.RegisterStringResources();
+
             this.UninitializeGlobalFilters();
 
             foreach (var assembly in ControllerContainerInitializer.ControllerContainerAssemblies)
@@ -211,6 +224,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (var controller in controllers)
             {
                 this.RegisterController(controller);
+                ControllerContainerInitializer.RegisterStringResources(controller);
             }
         }
 
@@ -240,7 +254,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             using (var modeRegion = new ElevatedConfigModeRegion())
             {
-                this.RegisterStringResources(controller);
                 controllerStore.AddController(controller, configManager);
             }
         }
@@ -322,6 +335,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #endregion
 
         #region Private members
+        
+        /// <summary>
+        /// Registers the controller string resources.
+        /// </summary>
+        /// <param name="controller">Type of the controller.</param>
+        private static void RegisterStringResources(Type controller)
+        {
+            var localizationAttributes = controller.GetCustomAttributes(typeof(LocalizationAttribute), true);
+            foreach (var attribute in localizationAttributes)
+            {
+                var localAttr = (LocalizationAttribute)attribute;
+                var resourceClass = localAttr.ResourceClass;
+                var resourceClassId = Res.GetResourceClassId(resourceClass);
+
+                if (!ObjectFactory.Container.IsRegistered(resourceClass, resourceClassId))
+                {
+                    Res.RegisterResource(resourceClass);
+                }
+            }
+        }
 
         /// <summary>
         /// Determines whether the specified controller is allowed template registration
@@ -394,26 +427,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (var sitefinityViewEngine in sitefinityViewEngines)
             {
                 ViewEngines.Engines.Remove(sitefinityViewEngine);
-            }
-        }
-
-        /// <summary>
-        /// Registers the controller string resources.
-        /// </summary>
-        /// <param name="controller">Type of the controller.</param>
-        private void RegisterStringResources(Type controller)
-        {
-            var localizationAttributes = controller.GetCustomAttributes(typeof(LocalizationAttribute), true);
-            foreach (var attribute in localizationAttributes)
-            {
-                var localAttr = (LocalizationAttribute)attribute;
-                var resourceClass = localAttr.ResourceClass;
-                var resourceClassId = Res.GetResourceClassId(resourceClass);
-
-                if (!ObjectFactory.Container.IsRegistered(resourceClass, resourceClassId))
-                {
-                    Res.RegisterResource(resourceClass);
-                }
             }
         }
 

@@ -38,8 +38,16 @@ namespace Telerik.Sitefinity.Frontend
                 ObjectFactory.Container.RegisterType<IToolboxFilter, FeatherEnabledToolboxFilter>(typeof(FeatherEnabledToolboxFilter).FullName);
                 ObjectFactory.Container.RegisterType<IToolboxFilter, GridControlToolboxFilter>(typeof(GridControlToolboxFilter).FullName, new InjectionConstructor(new Func<PageTemplateFramework>(Startup.ExtractFramework)));
 
-                AddWidgetValidating();
+                Startup.AddWidgetValidating();
+
+                Startup.RegisterStringResources();
             }
+        }
+
+        private static void RegisterStringResources()
+        {
+            if (SystemManager.GetModule("Feather") == null)
+                ControllerContainerInitializer.RegisterStringResources();
         }
 
         private static void AddWidgetValidating()
