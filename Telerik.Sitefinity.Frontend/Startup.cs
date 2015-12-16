@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Web.Mvc;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.DesignerToolbox;
@@ -25,6 +26,9 @@ namespace Telerik.Sitefinity.Frontend
         {
             Bootstrapper.Initialized -= Bootstrapper_Initialized;
             Bootstrapper.Initialized += Bootstrapper_Initialized;
+
+            if (!GlobalFilters.Filters.Any(f => f.Instance.GetType() == typeof(FrontendModuleFilter)))
+                GlobalFilters.Filters.Add(new FrontendModuleFilter());
         }
 
         private static void Bootstrapper_Initialized(object sender, Data.ExecutedEventArgs e)

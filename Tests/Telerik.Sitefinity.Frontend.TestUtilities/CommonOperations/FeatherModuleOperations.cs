@@ -93,6 +93,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             httpWebRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "PUT";
+            httpWebRequest.Timeout = 5 * 60 * 1000;
 
             using (var writer = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
