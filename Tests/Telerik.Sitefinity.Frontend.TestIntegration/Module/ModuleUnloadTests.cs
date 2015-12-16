@@ -196,7 +196,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 moduleOperations.UninstallFeather();
 
                 var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
-                Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+                Assert.IsTrue(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
             {
@@ -231,7 +231,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 moduleOperations.UninstallFeather();
 
                 var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
-                Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+                Assert.IsTrue(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
             {
@@ -341,7 +341,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 moduleOperations.UninstallFeather();
 
                 var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
-                Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+                Assert.IsTrue(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
             {
@@ -377,7 +377,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 moduleOperations.UninstallFeather();
 
                 var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
-                Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
+                Assert.IsTrue(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
             {
@@ -888,14 +888,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
 
         private void AddGridToPage(Guid pageId, PageTemplateFramework framework, string gridVirtualPath = ModuleUnloadTests.GridVirtualPath)
         {
-            var placeholder = framework == PageTemplateFramework.Mvc ? "Body" : "Contentplaceholder1";
+            var placeholder = framework == PageTemplateFramework.Hybrid ? "Body" : "Contentplaceholder1";
             var control = new GridControl() { Layout = gridVirtualPath };
             SampleUtilities.AddControlToPage(pageId, control, placeholder, "9 + 3");
         }
 
         private void AddGridToPageTemplate(Guid pageTemplateId, PageTemplateFramework framework, string gridVirtualPath = ModuleUnloadTests.GridVirtualPath)
         {
-            var placeholder = framework == PageTemplateFramework.Mvc ? "Body" : "Contentplaceholder1";
+            var placeholder = framework == PageTemplateFramework.Hybrid ? "Body" : "Contentplaceholder1";
             var control = new GridControl() { Layout = gridVirtualPath };
             SampleUtilities.AddControlToTemplate(pageTemplateId, control, placeholder, "9 + 3");
         }
