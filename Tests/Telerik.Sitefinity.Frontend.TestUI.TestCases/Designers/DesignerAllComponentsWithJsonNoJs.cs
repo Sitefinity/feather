@@ -26,7 +26,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Designers
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void DesignerAllComponentsWithJsonNoJs()
         {
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/pages", false, null, new HtmlFindExpression("class=~sfMain")));
+            BAT.Macros().NavigateTo().DashboardWhenInstall();
+            BAT.Macros().NavigateTo().Pages();
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
