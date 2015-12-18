@@ -26,8 +26,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Designers
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void DesignerAllComponentsNoJsonNoJs()
         {
-            BAT.Macros().NavigateTo().DashboardWhenInstall();
-            BAT.Macros().NavigateTo().Pages();
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/pages", false, null, new HtmlFindExpression("class=~sfTreeTableColumn")));
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();
