@@ -1,4 +1,5 @@
 ﻿using System;
+using ArtOfTest.WebAii.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
@@ -26,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
             {
                 // Add widget to page
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().User().EnsureAdminLoggedIn());
-                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PagesPageUrl, false));
+                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PagesPageUrl, false, null, new HtmlFindExpression("InnerText=" + PageName)));
                 BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
                 BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropWidgetToPlaceholder(WidgetName, Placeholder);
                 BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().CheckWidgetContent(WidgetName, WidgetContent);
@@ -37,8 +38,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
                 Assert.IsTrue(BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().IsHtmlControlPresent(WidgetContent));
 
                 // Deactivate Feather
-                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(ModulesAndServicesPageUrl, false));
-                BAT.Wrappers().Backend().ModulesAndServices().ModulesAndServicesWrapper().DeactivateModule(FeatherModuleName);
+                BATFrontend.Wrappers().Backend().FrontendModule().FrontendModule().DeactivateFeather(ActiveBrowser);
                 featherDeactivated = true;
 
                 // Verify on frontend
@@ -47,7 +47,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
 
                 // Remove widget from page
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().User().EnsureAdminLoggedIn());
-                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PagesPageUrl, false));
+                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PagesPageUrl, false, null, new HtmlFindExpression("InnerText=" + PageName)));
                 BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
                 BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().DeleteWidget(WidgetName);
                 Assert.IsFalse(BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().IsHtmlControlPresent(WidgetContent));
@@ -58,8 +58,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
                 Assert.IsFalse(BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().IsHtmlControlPresent(WidgetContent));
 
                 // Activate Feather
-                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(ModulesAndServicesPageUrl, false));
-                BAT.Wrappers().Backend().ModulesAndServices().ModulesAndServicesWrapper().ActivateModule(FeatherModuleName);
+                BATFrontend.Wrappers().Backend().FrontendModule().FrontendModule().ActivateFeather(ActiveBrowser);
                 featherDeactivated = false;
             }
             finally 
@@ -67,9 +66,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
                 if (featherDeactivated)
                 {
                     // Activate Feather if Test Failed
-                    RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().User().EnsureAdminLoggedIn());
-                    RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(ModulesAndServicesPageUrl, false));
-                    BAT.Wrappers().Backend().ModulesAndServices().ModulesAndServicesWrapper().ActivateModule(FeatherModuleName);
+                    BATFrontend.Wrappers().Backend().FrontendModule().FrontendModule().ActivateFeather(ActiveBrowser);
                 }
             }
         }
@@ -95,13 +92,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
         private const string PageName = "Page_DeactivateFeatherAndDeleteWidgetFromHybridPage";
 
         private const int ClientTimeoutInterval = 80000;
-
-        private const string ModulesAndServicesPageUrl = "~/Sitefinity/Administration/ModulesAndServices";
         private const string PagesPageUrl = "~/sitefinity/pages";
-
-        private const string FeatherModuleName = "Feather";
         private const string Placeholder = "Body";
-
         private const string WidgetName = "ModuleTestsWidget";
         private const string WidgetContent = "ca9af596-eaa3-44ed-a654-0e9170266a36";
     }
