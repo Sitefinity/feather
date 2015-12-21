@@ -197,11 +197,22 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationPreStart.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GridWidgets\AddAndDeleteGridWidgetFromFileSystemVerifyPageToolbox.cs" />
     <Compile Include="GridWidgets\AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox.cs" />
     <Compile Include="GridWidgets\ManagaGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
     <Compile Include="LayoutTemplates\AddWidgetToPageBasedOnLayoutWithMultiplePlaceholders.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromHybridPageTemplate.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromPurePageTemplate.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromHybridPageTemplate.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromPurePageTemplate.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromPurePage.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromPurePage.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromHybridPage.cs" />
+    <Compile Include="Module\ModuleTestsResources.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromHybridPage.cs" />
+    <Compile Include="Module\ModuleTestsController.cs" />
     <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
     <Compile Include="MvcWidgets\MvcReorderSelectedNewsItems.cs" />
     <Compile Include="MvcWidgets\MvcSelectManyDynamicItems.cs" />
