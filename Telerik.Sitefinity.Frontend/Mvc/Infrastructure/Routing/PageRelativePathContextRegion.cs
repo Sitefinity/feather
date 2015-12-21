@@ -35,6 +35,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     this.context.RewritePath("~/" + newPath);
                 }
             }
+            else
+            {
+                this.context.RewritePath("~/");
+            }
         }
 
         /// <summary>
