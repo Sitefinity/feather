@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,8 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         {
             if (SystemManager.GetModule("Feather") == null)
             {
-                throw new ArgumentException(Res.Get<GridDesignerResources>().GridDoesNotWork);
+                var markup = this.ProcessLayoutString(Res.Get<GridDesignerResources>().GridDoesNotWork, ensureSfColsWrapper: true);
+                return ControlUtilities.GetTemplate(null, markup.GetHashCode().ToString(CultureInfo.InvariantCulture), null, markup);
             }
 
             var layout = this.Layout;
