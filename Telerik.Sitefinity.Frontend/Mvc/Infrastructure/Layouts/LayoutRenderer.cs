@@ -204,12 +204,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             if (viewEngineResult != null && viewEngineResult.View != null)
             {
-                var builtView = viewEngineResult.View as BuildManagerCompiledView;
-                if (builtView != null)
-                {
-                    result = builtView.ViewPath;
-                }
-
+                result = FrontendManager.VirtualPathBuilder.GetViewPath(viewEngineResult.View);
                 viewEngineResult.ViewEngine.ReleaseView(genericController.ControllerContext, viewEngineResult.View);
             }
 
