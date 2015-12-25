@@ -107,8 +107,7 @@ namespace Telerik.Sitefinity.Frontend
             SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
 
             this.controllerAssemblies = new ControllerContainerInitializer().RetrieveAssemblies();
-
-            this.ninjectDependencyResolver = new StandardKernel();
+            this.ninjectDependencyResolver = this.CreateKernel();
             this.ninjectDependencyResolver.Load(this.controllerAssemblies);
         }
 
@@ -175,6 +174,20 @@ namespace Telerik.Sitefinity.Frontend
         protected override ConfigSection GetModuleConfig()
         {
             return null;
+        }
+
+        /// <summary>
+        /// Creates Ninject kernel.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IKernel CreateKernel()
+        {
+            var bootstrapper = new Ninject.Web.Common.Bootstrapper();
+
+            if (bootstrapper.Kernel != null)
+                return bootstrapper.Kernel;
+
+            return new StandardKernel();
         }
 
         /// <summary>
