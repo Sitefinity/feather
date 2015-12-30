@@ -27,7 +27,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <RazorSrcFiles Condition="$(RazorSrcFiles)!=''" Remove="@(RazorSrcFiles)" />
     <RazorSrcFiles Include="MVC\**\*.cshtml" Exclude="$(FeatherResourcePackagesFolderName)\**\*.*" />
   </ItemGroup>
 
