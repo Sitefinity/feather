@@ -20,7 +20,7 @@
     <RestorePackages>true</RestorePackages>
     <JSLintSkip>\Mvc\Scripts\Angular\angular.min.js|\Mvc\Scripts\Angular\angular-route.min.js|\Mvc\Scripts\Angular\|\Mvc\Scripts\Bootstrap\|\Mvc\Scripts\Kendo\</JSLintSkip>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
-    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2015.3.926.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
+	<CodeAnalysisAdditionalOptions>/assemblyCompareMode:StrongNameIgnoringVersion</CodeAnalysisAdditionalOptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -370,12 +370,6 @@
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\RequestBackendUserAuthenticationAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerExtensions.cs" />
     <Compile Include="GridSystem\GridControl.cs" />
-    <Compile Include="FilesMonitoring\Data\FileData.cs" />
-    <Compile Include="FilesMonitoring\Data\FileMonitorDataManager.cs" />
-    <Compile Include="FilesMonitoring\Data\FileMonitorDataProvider.cs" />
-    <Compile Include="FilesMonitoring\Data\FileMonitorFluentMapping.cs" />
-    <Compile Include="FilesMonitoring\Data\FileMonitorFluentMetadataSource.cs" />
-    <Compile Include="FilesMonitoring\Data\OpenAccessFileMonitorDataProvider.cs" />
     <Compile Include="Designers\DesignerResolver.cs" />
     <Compile Include="FilesMonitoring\IFileManager.cs" />
     <Compile Include="FilesMonitoring\LayoutFileManager.cs" />
@@ -573,7 +567,9 @@
     <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.json" />
     <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="assets\csslint.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
@@ -648,7 +644,6 @@
     <EmbeddedResource Include="client-components\selectors\forms\sf-form-collection.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\form-field\sf-form-field.sf-cshtml" />
     <EmbeddedResource Include="Mvc\Views\PersonalizationDesigner\Personalization.cshtml" />
-    <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -826,8 +821,13 @@
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.src.js" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Telerik.Sitefinity.Frontend.Data\Telerik.Sitefinity.Frontend.Data.csproj">
+      <Project>{a9c3b088-8c44-4f0a-93e8-82fdb99a4205}</Project>
+      <Name>Telerik.Sitefinity.Frontend.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="OpenAccessNuget.targets" />
   <Target Name="BeforeBuild">
     <Copy SourceFiles="$(SolutionDir)FxCop\CustomDictionary.xml" DestinationFolder="$(CodeAnalysisPath)" OverwriteReadOnlyFiles="true" Retries="10" ContinueOnError="false" />
   </Target>
@@ -840,7 +840,7 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
