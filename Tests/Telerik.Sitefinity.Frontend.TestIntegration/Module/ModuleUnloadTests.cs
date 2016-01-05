@@ -18,6 +18,7 @@ using Telerik.Sitefinity.Frontend.FilesMonitoring;
 using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
+using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.ControlTemplates;
@@ -745,7 +746,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
             var frondendPostUninstallMappedToTypesNames = new List<string>() 
             { 
                 typeof(FeatherEnabledToolboxFilter).FullName,
-                typeof(GridControlToolboxFilter).FullName
+                typeof(GridControlToolboxFilter).FullName,
+                typeof(PersonalizationDesignerResources).FullName
             };
 
             var frontendRegistrations = ObjectFactory.Container.Registrations.Where(r =>
