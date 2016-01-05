@@ -749,7 +749,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 typeof(GridControlToolboxFilter).FullName,
                 typeof(PersonalizationDesignerResources).FullName,
                 typeof(GridDesignerResources).FullName,
-                typeof(DesignerResources).FullName
+                typeof(DesignerResources).FullName,
+                "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Module.ModuleTestsResources"
             };
 
             var frontendRegistrations = ObjectFactory.Container.Registrations.Where(r =>
