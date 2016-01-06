@@ -756,8 +756,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 (r.RegisteredType != null && !string.IsNullOrEmpty(r.RegisteredType.FullName) && r.RegisteredType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)) ||
                 (r.MappedToType != null && !string.IsNullOrEmpty(r.MappedToType.FullName) && r.MappedToType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)));
 
-            var frontendRegistration = frontendRegistrations.FirstOrDefault(r => r.MappedToType != null && !frondendPostUninstallMappedToTypesNames.Contains(r.MappedToType.FullName) && !r.MappedToType.FullName.StartsWith("Telerik.Sitefinity.Frontend.Test"));
-            Assert.IsNull(frontendRegistration, "Frontend registration [Name: {0} MappedToType:{1}] left in the object factory", frontendRegistration.Name, frontendRegistration.MappedToType == null ? "null" : frontendRegistration.MappedToType.FullName);
+            var leftRegistrations = frontendRegistrations.Where(r => r.MappedToType != null && !string.IsNullOrEmpty(r.MappedToType.FullName) && !frondendPostUninstallMappedToTypesNames.Contains(r.MappedToType.FullName) && !r.MappedToType.FullName.StartsWith("Telerik.Sitefinity.Frontend.Test"));
+            Assert.AreEqual(0, leftRegistrations.Count(), string.Join(Environment.NewLine, leftRegistrations.Select(r => string.Format("Frontend registration [Name: {0} MappedToType:{1}] left in the object factory", r.Name, r.MappedToType == null ? "null" : r.MappedToType.FullName))));
         }
 
         /// <summary>
