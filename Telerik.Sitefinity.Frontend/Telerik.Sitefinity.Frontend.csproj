@@ -793,7 +793,6 @@
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-service.js" />
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector.js" />
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector.html" />
-    <EmbeddedResource Include="client-components\sf-mvc-ext.png" />
     <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.js" />
     <EmbeddedResource Include="assets\src\img\dummy.jpg" />
     <EmbeddedResource Include="client-components\selectors\feeds\sf-feeds-service.js" />
