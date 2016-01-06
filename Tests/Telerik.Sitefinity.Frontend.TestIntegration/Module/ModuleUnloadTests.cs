@@ -749,15 +749,14 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 typeof(GridControlToolboxFilter).FullName,
                 typeof(PersonalizationDesignerResources).FullName,
                 typeof(GridDesignerResources).FullName,
-                typeof(DesignerResources).FullName,
-                "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Module.ModuleTestsResources"
+                typeof(DesignerResources).FullName
             };
 
             var frontendRegistrations = ObjectFactory.Container.Registrations.Where(r =>
                 (r.RegisteredType != null && !string.IsNullOrEmpty(r.RegisteredType.FullName) && r.RegisteredType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)) ||
                 (r.MappedToType != null && !string.IsNullOrEmpty(r.MappedToType.FullName) && r.MappedToType.FullName.Contains(ModuleUnloadTests.FrontendAssemblyPrefix)));
 
-            var frontendRegistration = frontendRegistrations.FirstOrDefault(r => r.MappedToType != null && !frondendPostUninstallMappedToTypesNames.Contains(r.MappedToType.FullName));
+            var frontendRegistration = frontendRegistrations.FirstOrDefault(r => r.MappedToType != null && !frondendPostUninstallMappedToTypesNames.Contains(r.MappedToType.FullName) && !r.MappedToType.FullName.StartsWith("Telerik.Sitefinity.Frontend.Test"));
             Assert.IsNull(frontendRegistration, "Frontend registration [Name: {0} MappedToType:{1}] left in the object factory", frontendRegistration.Name, frontendRegistration.MappedToType == null ? "null" : frontendRegistration.MappedToType.FullName);
         }
 
