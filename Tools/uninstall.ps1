@@ -7,7 +7,10 @@ param($installPath, $toolsPath, $package, $project)
     Add-Type -AssemblyName 'Microsoft.Build, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
     # Grab the loaded MSBuild project for the project
     $msbuild = [Microsoft.Build.Evaluation.ProjectCollection]::GlobalProjectCollection.GetLoadedProjects($project.FullName) | Select-Object -First 1
+    $projPath = Split-Path $project.FileName;
 
-    # Add the import and save the project
-    $msbuild.Xml.AddImport("Build\RazorGenerator.MsBuild\build\RazorGenerator.MsBuild.targets") | out-null
+    if(Test-Path (Join-Path $projPath "Build\RazorGenerator.MsBuild\build\RazorGenerator.MsBuild.targets")){
+        # Add the import and save the project
+        $msbuild.Xml.AddImport("Build\RazorGenerator.MsBuild\build\RazorGenerator.MsBuild.targets") | out-null
+    }
     $project.Save()
