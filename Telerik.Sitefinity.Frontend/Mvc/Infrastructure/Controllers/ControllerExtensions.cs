@@ -345,8 +345,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             else
             {
                 newEngine = (VirtualPathProviderViewEngine)Activator.CreateInstance(viewEngine.GetType());
-                newEngine.ViewLocationCache = DefaultViewLocationCache.Null;
             }
+
+            newEngine.ViewLocationCache = DefaultViewLocationCache.Null;
 
             newEngine.AreaViewLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.AreaViewLocationFormats, pathTransformations);
             newEngine.AreaMasterLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.AreaPartialViewLocationFormats, pathTransformations);
