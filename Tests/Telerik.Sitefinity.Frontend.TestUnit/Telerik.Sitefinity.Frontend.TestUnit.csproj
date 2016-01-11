@@ -284,6 +284,7 @@
     <Compile Include="Resources\StringResourcesTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Resources\PrecompilationTests.cs" />
     <Compile Include="Resources\VirtualPathBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
