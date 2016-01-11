@@ -13,4 +13,9 @@ param($installPath, $toolsPath, $package, $project)
         # Add the import and save the project
         $msbuild.Xml.AddImport("Build\RazorGenerator.MsBuild\build\RazorGenerator.MsBuild.targets") | out-null
     }
+
+    if(Test-Path (Join-Path $projPath "Build\FeatherPrecompilation.targets")){
+        # Add the import and save the project
+        $msbuild.Xml.AddImport("Build\FeatherPrecompilation.targets") | out-null
+    }
     $project.Save()
