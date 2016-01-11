@@ -298,6 +298,7 @@
     <Compile Include="DummyClasses\ResourceResolvers\DummyVirtualPathProvider.cs" />
     <Compile Include="DummyClasses\ToolboxItemProxy.cs" />
     <Compile Include="DummyClasses\Routing\FeatherActionInvokerTests.cs" />
+    <Compile Include="FeatherConfigRegion.cs" />
     <Compile Include="FeatherTeams.cs" />
     <Compile Include="FileInjectHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -335,6 +336,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Telerik.Sitefinity.Frontend.Data\Telerik.Sitefinity.Frontend.Data.csproj">
+      <Project>{a9c3b088-8c44-4f0a-93e8-82fdb99a4205}</Project>
+      <Name>Telerik.Sitefinity.Frontend.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Telerik.Sitefinity.Frontend\Telerik.Sitefinity.Frontend.csproj">
       <Project>{17ed04c3-0ab9-4055-9908-6c70720daf77}</Project>
       <Name>Telerik.Sitefinity.Frontend</Name>

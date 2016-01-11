@@ -16,3 +16,4 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 [assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestUnit")]
 [assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestUtilities")]
 [assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestIntegration")]
+[assembly: InternalsVisibleTo("FeatherWidgets.TestIntegration")]

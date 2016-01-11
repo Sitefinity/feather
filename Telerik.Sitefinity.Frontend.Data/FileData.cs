@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
     /// </summary>
     [Persistent]
     [ManagerType(typeof(FileMonitorDataManager))]
-    internal class FileData
+    public class FileData
     {
         #region Contructors
 
