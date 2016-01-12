@@ -8,7 +8,6 @@ param($installPath, $toolsPath, $package, $project)
   
   $fileInfo = new-object -typename System.IO.FileInfo -ArgumentList $project.FullName
   $projectDirectory = $fileInfo.DirectoryName
-  Write-Host "ProjectItems count is: $($project.ProjectItems.Count)"
   %{try { $project.ProjectItems.Item('App_Start').ProjectItems.Item('RazorGeneratorMvcStart.cs') } catch { $null }} | ?{$_ -ne $null} | %{ $_.Remove() }
   %{try { $project.ProjectItems.Item('App_Start') } catch { $null }} | ?{$_ -ne $null -and $_.ProjectItems.Count -eq 0} | %{ $_.Remove() }
 
