@@ -12,9 +12,20 @@ param($installPath, $toolsPath, $package, $project)
   %{try { $project.ProjectItems.Item('App_Start') } catch { $null }} | ?{$_ -ne $null -and $_.ProjectItems.Count -eq 0} | %{ $_.Remove() }
 
   $project.Save()
-  
-  
-  Get-ChildItem "$projectDirectory\App_Start\RazorGeneratorMvcStart.cs" | Remove-Item
+
+  Get-ChildItem "$projectDirectory\App_Start\RazorGeneratorMvcStart.cs" | Remove-Item -Confirm
   if ((Get-ChildItem "$projectDirectory\App_Start").Length -eq 0) {
     Remove-Item "$projectDirectory\App_Start"
+  }
+
+  # Make sure all Resource Packages have RazorGenerator directives
+  $generatorDirectivesPath = "$projectDirectory\ResourcePackages\Bootstrap\razorgenerator.directives"
+  if (Test-Path $generatorDirectivesPath) {
+    Get-ChildItem "$projectDirectory\ResourcePackages" -Directory -Exclude "Bootstrap" | %{ Copy-Item $generatorDirectivesPath $_.FullName }
+  }
+
+  # Prompt to remove Recaptcha template if exists since it isn't distributed with Feather anymore
+  $recaptchaTemplatesPath = "$projectDirectory\ResourcePackages\Bootstrap\MVC\Views\Recaptcha"
+  if (Test-Path $recaptchaTemplatesPath) {
+    Remove-Item $recaptchaTemplatesPath -Recurse -Confirm
   }
