@@ -21,7 +21,7 @@ param($installPath, $toolsPath, $package, $project)
   # Make sure all Resource Packages have RazorGenerator directives
   $generatorDirectivesPath = "$projectDirectory\ResourcePackages\Bootstrap\razorgenerator.directives"
   if (Test-Path $generatorDirectivesPath) {
-    Get-ChildItem "$projectDirectory\ResourcePackages" -Directory -Exclude "Bootstrap" | %{ Copy-Item $generatorDirectivesPath $_.FullName }
+    Get-ChildItem "$projectDirectory\ResourcePackages" -Directory -Exclude "Bootstrap" | ?{ $_.GetFiles("razorgenerator.directives").Count -eq 0 } | %{ Copy-Item $generatorDirectivesPath $_.FullName }
   }
 
   # Prompt to remove Recaptcha template if exists since it isn't distributed with Feather anymore
