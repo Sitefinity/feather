@@ -198,6 +198,12 @@
     </Compile>
     <Compile Include="ApplicationPreStart.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Designers\DesignerAllComponentsNoJsonNoJs.cs" />
+    <Compile Include="Designers\DesignerAllComponentsNoJsonWithJs.cs" />
+    <Compile Include="Designers\DesignerAllComponentsWithJsonNoJs.cs" />
+    <Compile Include="Designers\DesignerWithJsonNoJs.cs" />
+    <Compile Include="Designers\DesignerNoJsonWithJs.cs" />
+    <Compile Include="Designers\DesignerNoJsonNoJs.cs" />
     <Compile Include="GridWidgets\AddAndDeleteGridWidgetFromFileSystemVerifyPageToolbox.cs" />
     <Compile Include="GridWidgets\AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox.cs" />
     <Compile Include="GridWidgets\ManagaGridWidgetOnThePage.cs" />
@@ -240,6 +246,8 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <EmbeddedResource Include="Data\DesignerView.AllComponents.cshtml" />
+    <EmbeddedResource Include="Data\DesignerView.AllComponents.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -259,6 +267,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\grid-grid.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\designerview-allcomponents.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

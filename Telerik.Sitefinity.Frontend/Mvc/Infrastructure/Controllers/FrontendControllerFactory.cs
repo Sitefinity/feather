@@ -53,7 +53,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var controller = baseController as Controller;
             if (controller != null)
             {
-                this.EnhanceViewEngines(controller);
+                FrontendControllerFactory.EnhanceViewEngines(controller);
             }
 
             return baseController;
@@ -66,6 +66,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Enhances the view engines.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        internal static void EnhanceViewEngines(Controller controller)
+        {
+            var enhanceAttr = FrontendControllerFactory.GetEnhanceAttribute(controller.GetType());
+            if (!enhanceAttr.Disabled)
+            {
+                controller.UpdateViewEnginesCollection(() => FrontendControllerFactory.GetControllerPathTransformations(controller, enhanceAttr.VirtualPath));
+            }
         }
 
         /// <summary>
@@ -171,16 +184,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return VirtualPathUtility.AppendTrailingSlash(virtualPath) + "Mvc/";
         }
 
-        private void EnhanceViewEngines(Controller controller)
-        {
-            var enhanceAttr = this.GetEnhanceAttribute(controller.GetType());
-            if (!enhanceAttr.Disabled)
-            {
-                controller.UpdateViewEnginesCollection(() => FrontendControllerFactory.GetControllerPathTransformations(controller, enhanceAttr.VirtualPath));
-            }
-        }
-
-        private EnhanceViewEnginesAttribute GetEnhanceAttribute(Type controllerType)
+        private static EnhanceViewEnginesAttribute GetEnhanceAttribute(Type controllerType)
         {
             var enhanceAttr = controllerType.GetCustomAttributes(typeof(EnhanceViewEnginesAttribute), true).FirstOrDefault() as EnhanceViewEnginesAttribute;
             if (enhanceAttr != null)
@@ -198,7 +202,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                     {
                         var newEnhanceAttr = new EnhanceViewEnginesAttribute
                         {
-                            Disabled = !this.IsInDefaultMvcNamespace(controllerType),
+                            Disabled = !FrontendControllerFactory.IsInDefaultMvcNamespace(controllerType),
                             VirtualPath = AppendDefaultPath(FrontendManager.VirtualPathBuilder.GetVirtualPath(controllerType.Assembly))
                         };
 
@@ -212,7 +216,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return enhanceAttr;
         }
 
-        private bool IsInDefaultMvcNamespace(Type controller)
+        private static bool IsInDefaultMvcNamespace(Type controller)
         {
             var expectedTypeName = controller.Assembly.GetName().Name + ".Mvc.Controllers." + controller.Name;
             return string.Equals(expectedTypeName, controller.FullName, StringComparison.OrdinalIgnoreCase);

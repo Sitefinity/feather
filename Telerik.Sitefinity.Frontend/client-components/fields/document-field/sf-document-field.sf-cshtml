@@ -6,7 +6,7 @@
   </div>
 </div>
 <div ng-show="!sfMedia">
-    <span>@(Res.Get<clientcomponentsresources>().DocumentHasBeenDeleted)</span>
+    <span>@(Res.Get<ClientComponentsResources>().DocumentHasBeenDeleted)</span>
 </div>
 
 
@@ -25,7 +25,7 @@
 </div>
 
 <br />
-<button class="btn btn-xs btn-default" ng-click="changeMedia()">@(Res.Get<clientcomponentsresources>().ChangeDocument)</button>
+<button class="btn btn-xs btn-default" ng-click="changeMedia()">@(Res.Get<ClientComponentsResources>().ChangeDocument)</button>
 <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfMedia" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
 
 

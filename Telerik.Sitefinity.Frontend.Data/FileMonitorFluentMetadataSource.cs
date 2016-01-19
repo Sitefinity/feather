@@ -7,7 +7,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
     /// <summary>
     /// A concrete implementation of the <see cref="SitefinityMetadataSourceBase"/> for the file monitoring.
     /// </summary>
-    internal class FileMonitorFluentMetadataSource : SitefinityMetadataSourceBase
+    public class FileMonitorFluentMetadataSource : SitefinityMetadataSourceBase
     {
         #region Contructors
 
