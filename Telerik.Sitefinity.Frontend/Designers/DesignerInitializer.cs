@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -6,7 +7,6 @@ using System.Web.Routing;
 using System.Web.UI;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web.UI;
@@ -16,27 +16,36 @@ namespace Telerik.Sitefinity.Frontend.Designers
     /// <summary>
     /// This class contains logic for initializing the MVC designer.
     /// </summary>
-    internal class DesignerInitializer
+    internal class DesignerInitializer : IInitializer
     {
         /// <summary>
         /// Initializes the MVC designer.
         /// </summary>
         public void Initialize()
         {
-            if (RouteTable.Routes["MvcDesigner"] == null)
+            if (RouteTable.Routes[DesignerInitializer.MvcDesignerRouteName] == null)
             {
-                RouteTable.Routes.MapRoute("MvcDesigner", "Telerik.Sitefinity.Frontend/{controller}/Master/{widgetName}", new { controller = "DesignerController", action = "Master" });
+                RouteTable.Routes.MapRoute(DesignerInitializer.MvcDesignerRouteName, "Telerik.Sitefinity.Frontend/{controller}/Master/{widgetName}", new { controller = "DesignerController", action = "Master" });
             }
 
-            if (RouteTable.Routes["MvcDesignerView"] == null)
+            if (RouteTable.Routes[DesignerInitializer.MvcDesignerViewRouteName] == null)
             {
-                RouteTable.Routes.MapRoute("MvcDesignerView", "Telerik.Sitefinity.Frontend/{controller}/View/{widgetName}/{viewType}", new { controller = "DesignerController", action = "View", viewType = "PropertyGrid" });
+                RouteTable.Routes.MapRoute(DesignerInitializer.MvcDesignerViewRouteName, "Telerik.Sitefinity.Frontend/{controller}/View/{widgetName}/{viewType}", new { controller = "DesignerController", action = "View", viewType = "PropertyGrid" });
             }
 
             ObjectFactory.Container.RegisterType<IDesignerResolver, DesignerResolver>(new ContainerControlledLifetimeManager());
 
             EventHub.Unsubscribe<IScriptsRegisteringEvent>(this.RegisteringScriptsHandler);
             EventHub.Subscribe<IScriptsRegisteringEvent>(this.RegisteringScriptsHandler);
+        }
+
+        /// <summary>
+        /// Uninitializes the MVC designer.
+        /// </summary>
+        public void Uninitialize()
+        {
+            RouteTable.Routes.Remove(RouteTable.Routes[DesignerInitializer.MvcDesignerRouteName]);
+            RouteTable.Routes.Remove(RouteTable.Routes[DesignerInitializer.MvcDesignerViewRouteName]);
         }
 
         /// <summary>
@@ -96,5 +105,8 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 }
             }
         }
+
+        private const string MvcDesignerRouteName = "MvcDesigner";
+        private const string MvcDesignerViewRouteName = "MvcDesignerView";
     }
 }

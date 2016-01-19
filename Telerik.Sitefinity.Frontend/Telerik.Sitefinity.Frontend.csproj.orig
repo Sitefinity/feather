@@ -1,0 +1,860 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{17ED04C3-0AB9-4055-9908-6C70720DAF77}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Telerik.Sitefinity.Frontend</RootNamespace>
+    <AssemblyName>Telerik.Sitefinity.Frontend</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <JSLintSkip>\Mvc\Scripts\Angular\angular.min.js|\Mvc\Scripts\Angular\angular-route.min.js|\Mvc\Scripts\Angular\|\Mvc\Scripts\Bootstrap\|\Mvc\Scripts\Kendo\</JSLintSkip>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2015.3.1221.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
+    <CodeAnalysisAdditionalOptions>/assemblyCompareMode:StrongNameIgnoringVersion</CodeAnalysisAdditionalOptions>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>..\FxCop\Feather.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>bin\Debug\Telerik.Sitefinity.Frontend.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\Telerik.Sitefinity.Frontend.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Http, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Http.1.0.0.0\lib\Microsoft.Http.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.IdentityModel.6.1.7600.16394\lib\net35\Microsoft.IdentityModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\Sitefinity.RazorEngine.3.0.8.0\lib\net40\RazorEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorGenerator.Mvc.2.3.12\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ServiceStack, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Signed.4.0.46\lib\net40\ServiceStack.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ServiceStack.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Client.Signed.4.0.46\lib\net40\ServiceStack.Client.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ServiceStack.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Common.Signed.4.0.46\lib\net40\ServiceStack.Common.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Interfaces.4.0.46\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Text.Signed.4.0.46\lib\net40\ServiceStack.Text.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telerik.OpenAccess, Version=2015.3.1221.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.3.1221.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2015.3.1221.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.3.1221.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2015.3.1221.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.3.1221.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Telerik.OpenAccess.Runtime, Version=2015.3.1221.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2015.3.1221.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.9.0.6000.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.ContentModules, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.9.0.6000.0\lib\net40\Telerik.Sitefinity.ContentModules.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Ecommerce, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.9.0.6000.0\lib\net40\Telerik.Sitefinity.Ecommerce.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Forums, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.9.0.6000.0\lib\net40\Telerik.Sitefinity.Forums.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Model, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.9.0.6000.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.5.400.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.1.5.400.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.5.400.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.5.400.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Personalization, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Personalization.Impl, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.RecurrentRules, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.9.0.6000.0\lib\net40\Telerik.Sitefinity.RecurrentRules.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Resources, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.9.0.6000.0\lib\net40\Telerik.Sitefinity.Resources.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Search, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Search.Impl, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Search.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Comments, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Comments.Impl, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Documents, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Documents.Impl, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.Documents.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Events, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Notifications, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Notifications.Impl, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.Notifications.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.RecycleBin, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.RecycleBin.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.RecycleBin.Impl, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.RecycleBin.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Statistics, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Services.Statistics.Impl, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.0.6000.0\lib\net40\Telerik.Sitefinity.Services.Statistics.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.TestUtilities, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.TestUtilities.9.0.6000.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.Utilities, Version=9.0.6000.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.9.0.6000.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.Design, Version=2015.3.1111.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Web.UI.2015.3.1111.40\lib\net40\Telerik.Web.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.UI, Version=2015.3.1111.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Web.UI.2015.3.1111.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2015.3.1111.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Telerik.Web.UI.2015.3.1111.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfoShare\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="FrontendModuleFilter.cs" />
+    <Compile Include="FrontendModuleUpgrader.cs" />
+    <Compile Include="FrontendModuleUninstaller.cs" />
+    <Compile Include="FrontendModuleInstaller.cs" />
+    <Compile Include="GridSystem\GridControlToolboxFilter.cs" />
+    <Compile Include="IInitializer.cs" />
+    <Compile Include="Mvc\Controllers\PersonalizationDesignerController.cs" />
+    <Compile Include="Mvc\Controllers\GridDesignerController.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\FeatherEnabledToolboxFilter.cs" />
+    <Compile Include="FeatherConfig.cs" />
+    <Compile Include="GridSystem\GridControlToolboxFilter.cs" />
+    <Compile Include="Mvc\Controllers\CompositePrecompiledMvcEngineWrapper.cs" />
+    <Compile Include="Mvc\Controllers\PersonalizationDesignerController.cs" />
+    <Compile Include="Mvc\Controllers\GridDesignerController.cs" />
+    <Compile Include="Mvc\Controllers\PrecompiledViewAssemblyWrapper.cs" />
+    <Compile Include="Mvc\Helpers\AspHtmlHelperExtensions.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ResourcePackageAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\AttributeRoutingManager.cs" />
+    <Compile Include="FilesMonitoring\GridFileManager.cs" />
+    <Compile Include="FilesMonitoring\FileChangeType.cs" />
+    <Compile Include="FilesMonitoring\FileMonitoringInitializer.cs" />
+    <Compile Include="FilesMonitoring\MonitoredDirectory.cs" />
+    <Compile Include="FrontendModule.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="GridSystem\GridWidgetRegistrator.cs" />
+    <Compile Include="GridSystem\GridControlData.cs" />
+    <Compile Include="InlineEditing\HtmlProcessor.cs" />
+    <Compile Include="InlineEditing\HtmlRegion.cs" />
+    <Compile Include="InterfaceMappings.cs" />
+    <Compile Include="Modules\Comments\ReviewNotificationStrategy.cs" />
+    <Compile Include="Modules\ControlTemplates\Web\UI\MvcControlTemplateEditor.cs" />
+    <Compile Include="Mvc\Helpers\CommentsHelpers.cs" />
+    <Compile Include="Mvc\Infrastructure\Attributes\EmailAddressAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\HttpHandlerExtensions.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\DuplicateSectionException.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\MvcMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mvc\Infrastructure\Layouts\SectionRenderer.cs" />
+    <Compile Include="Mvc\Infrastructure\PageInitializer.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcVersioningRouteHandler.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcPageEditorRouteHandler.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcPageRouteHandler.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\MvcTemplateEditorRouteHandler.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\PageRelativePathContextRegion.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\RelativeDirectRouteProvider.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\RelativeRouteAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\ITaxonUrlEvaluatorAdapter.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonomyUrlParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlEvaluator.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\Taxonomy\TaxonUrlEvaluatorAdapter.cs" />
+    <Compile Include="Mvc\Models\IPersonalizationDesignerModel.cs" />
+    <Compile Include="Mvc\Models\PersonalizationDesignerModel.cs" />
+    <Compile Include="Mvc\Models\GridDesignerModel.cs" />
+    <Compile Include="Mvc\Models\IGridDesignerModel.cs" />
+    <Compile Include="Mvc\Models\ScriptDependencyConfigModel.cs" />
+    <Compile Include="Mvc\Infrastructure\Attributes\RequiredIfExistAttribute.cs" />
+    <Compile Include="Mvc\StringResources\ClientComponentsResources.cs" />
+    <Compile Include="Mvc\StringResources\PersonalizationDesignerResources.cs" />
+    <Compile Include="Mvc\StringResources\GridDesignerResources.cs" />
+    <Compile Include="Notifications\EmailTemplateHelper.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerMetadataAttribute.cs" />
+    <Compile Include="Mvc\Controllers\ContentPagerController.cs" />
+    <Compile Include="Mvc\Helpers\CustomFieldsHelpers.cs" />
+    <Compile Include="Mvc\Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Mvc\Helpers\HyperLinkHelpers.cs" />
+    <Compile Include="Mvc\Helpers\ResourceHelper.cs" />
+    <Compile Include="Mvc\Helpers\SitefinityContext.cs" />
+    <Compile Include="Mvc\Helpers\SitefinityHelper.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\CustomTaxonomyViewModel.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\PagerViewModel.cs" />
+    <Compile Include="Mvc\Helpers\ViewSelectorHelpers.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\CacheDependentAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ControllerContainerAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\EnhanceViewEnginesAttribute.cs" />
+    <Compile Include="InlineEditing\Attributes\FieldInfoAttribute.cs" />
+    <Compile Include="Designers\DesignerInitializer.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\RequestBackendUserAuthenticationAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\ControllerExtensions.cs" />
+    <Compile Include="GridSystem\GridControl.cs" />
+    <Compile Include="Designers\DesignerResolver.cs" />
+    <Compile Include="FilesMonitoring\IFileManager.cs" />
+    <Compile Include="FilesMonitoring\LayoutFileManager.cs" />
+    <Compile Include="FilesMonitoring\FileMonitor.cs" />
+    <Compile Include="FilesMonitoring\IFileMonitor.cs" />
+    <Compile Include="Mvc\Helpers\InlineEditingHtmlHelpers.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\ControllerModelFactory.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\IRouteMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\MvcWidgetProxy.cs" />
+    <Compile Include="Mvc\Infrastructure\InfrastructureResources.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutMvcPageResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\PageTemplateExtensions.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutInitializer.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutRenderer.cs" />
+    <Compile Include="Designers\DesignerUrlAttribute.cs" />
+    <Compile Include="Mvc\Controllers\GenericController.cs" />
+    <Compile Include="Mvc\Controllers\DesignerController.cs" />
+    <Compile Include="Mvc\Helpers\LayoutsHelpers.cs" />
+    <Compile Include="Mvc\Helpers\LocalizationHelpers.cs" />
+    <Compile Include="Mvc\Helpers\ProviderHelpers.cs" />
+    <Compile Include="Mvc\Helpers\UrlHelpers.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\MasterPageBuilder.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\SitefinityControllerFactroryExtensions.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\TemplateTitleParser.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualPathBuilder.cs" />
+    <Compile Include="Mvc\Infrastructure\MvcConstants.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\CategoryParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\IntParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\CustomActionParamsMapper.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Mvc\Infrastructure\Routing\DefaultUrlParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\DetailActionParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\FeatherActionInvoker.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\IRouteParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\IUrlParamsMapper.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\RouteParamResolverBase.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\TagParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\TaxonParamResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\UrlParamsMapperBase.cs" />
+    <Compile Include="Mvc\Infrastructure\Routing\UrlSegmentInfo.cs" />
+    <Compile Include="Mvc\Models\ComponentsDependencyResolver.cs" />
+    <Compile Include="Mvc\Models\ContentDetailsViewModel.cs" />
+    <Compile Include="Mvc\Models\ContentListViewModel.cs" />
+    <Compile Include="Mvc\Models\ContentModelBase.cs" />
+    <Compile Include="Mvc\Models\DesignerModel.cs" />
+    <Compile Include="Mvc\Models\DesignerViewConfigModel.cs" />
+    <Compile Include="Mvc\Models\DynamicDataItemFieldAccessor.cs" />
+    <Compile Include="Mvc\Models\ItemViewModel.cs" />
+    <Compile Include="Mvc\Models\IDesignerModel.cs" />
+    <Compile Include="Mvc\Models\ListDisplayMode.cs" />
+    <Compile Include="Mvc\Models\SelectionMode.cs" />
+    <Compile Include="Mvc\StringResources\DesignerResources.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Resources\GenericRouteHandler.cs" />
+    <Compile Include="Resources\RazorTemplateProcessor.cs" />
+    <Compile Include="Resources\ResourceRegister.cs" />
+    <Compile Include="Resources\PackageManager.cs" />
+    <Compile Include="FrontendManager.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\LocalizationAttribute.cs" />
+    <Compile Include="FilesMonitoring\ResourceType.cs" />
+    <Compile Include="Resources\ResourceHttpHandler.cs" />
+    <Compile Include="Resources\ResourcesInitiliazer.cs" />
+    <Compile Include="Resources\ResourceTemplateProcessor.cs" />
+    <Compile Include="Resources\ServerContextHandler.cs" />
+    <Compile Include="Resources\UrlTransformations.cs" />
+    <Compile Include="Security\AuthenticationEvaluator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FrontendService.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\PageDataViewModel.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\ProfileViewModel.cs" />
+    <Compile Include="Mvc\Helpers\ViewModels\SiteViewModel.cs" />
+    <Compile Include="Mvc\Helpers\SocialShareHelpers.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\FrontendControllerFactory.cs" />
+    <Compile Include="Resources\Resolvers\DatabaseResourceResolver.cs" />
+    <Compile Include="Resources\Resolvers\EmbeddedResourceResolver.cs" />
+    <Compile Include="Resources\Resolvers\FileSystemResourceResolver.cs" />
+    <Compile Include="Resources\Resolvers\IResourceResolverNode.cs" />
+    <Compile Include="Resources\Resolvers\IResourceResolverStrategy.cs" />
+    <Compile Include="Mvc\Infrastructure\Layouts\LayoutVirtualFileResolver.cs" />
+    <Compile Include="Resources\Resolvers\ResourceResolver.cs" />
+    <Compile Include="Resources\Resolvers\ResourceResolverNode.cs" />
+    <Compile Include="Resources\Resolvers\ResourceResolverStrategy.cs" />
+    <Compile Include="Resources\VirtualPathBuilder.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\ControllerContainerInitializer.cs" />
+    <Compile Include="Services\ReviewsService\CommentsUtilitiesReflector.cs" />
+    <Compile Include="Services\ReviewsService\CommentsWebServiceReflector.cs" />
+    <Compile Include="Services\ReviewsService\DTO\ReviewCreateRequest.cs" />
+    <Compile Include="Services\ReviewsService\DTO\AuthorReviewedGetRequest.cs" />
+    <Compile Include="Services\ReviewsService\DTO\AuthorReviewedViewModel.cs" />
+    <Compile Include="Services\ReviewsService\DTO\ReviewViewModel.cs" />
+    <Compile Include="Services\ReviewsService\ReviewsServiceStackPlugin.cs" />
+    <Compile Include="Services\ReviewsService\ReviewsWebService.cs" />
+    <Compile Include="Services\FilesService\DTO\FilesItemViewModel.cs" />
+    <Compile Include="Services\FilesService\DTO\FilesViewModel.cs" />
+    <Compile Include="Services\FilesService\FilesServiceStackPlugin.cs" />
+    <Compile Include="Services\FilesService\FilesWebServiceConstants.cs" />
+    <Compile Include="Services\ListsService\DTO\SpecificListsGetRequest.cs" />
+    <Compile Include="Services\FilesService\DTO\FilesGetRequest.cs" />
+    <Compile Include="Services\FilesService\FilesWebService.cs" />
+    <Compile Include="Services\ListsService\ListsServiceStackPlugin.cs" />
+    <Compile Include="Services\ListsService\ListsWebService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client-components\collections\sf-collection.js" />
+    <EmbeddedResource Include="client-components\collections\sf-infinite-scroll.js" />
+    <EmbeddedResource Include="client-components\collections\sf-tree-item.html" />
+    <EmbeddedResource Include="client-components\collections\sf-tree.html" />
+    <EmbeddedResource Include="client-components\collections\sf-tree.js" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-html-field.js" />
+    <EmbeddedResource Include="client-components\fields\sf-editable.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-bubbles-selection.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-filter-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-filter-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-items-tree.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\selectors\common\sf-items-tree.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-group-selection.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\selectors\common\sf-list-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-provider-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-provider-service.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\selectors\common\sf-selected-items-view.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-selectors.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-services.js" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-filter.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-filter.js" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.js" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-timespan-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-data-service.js" />
+    <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-dynamic-items-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\dynamic-modules\sf-dynamic-items-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\localization\sf-language-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\localization\sf-language-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\localization\sf-language-service.js" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-list-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-multi-site-service.js" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-multisite-page-selector.html" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-multisite-page-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\multi-site\sf-site-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\news\sf-news-item-service.js" />
+    <EmbeddedResource Include="client-components\selectors\news\sf-news-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\news\sf-news-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-external-urls-view.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-external-urls-view.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-service.js" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-selected-pages-view.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-selected-pages-view.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-flat-taxon-service.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-hierarchical-taxon-service.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-filter.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-filter.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxon-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\taxonomies\sf-taxonomy-service.js" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector-modal.js" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\tools\sf-link-service.js" />
+    <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Views\Designer\Designer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="assets\dist\js\" />
+    <Folder Include="assets\src\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Designer\designer.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\css\bootstrap.min.css" />
+    <EmbeddedResource Include="Mvc\Scripts\breadcrumb.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <EmbeddedResource Include="Mvc\Views\Designer\DesignerView.PropertyGrid.json" />
+    <EmbeddedResource Include="Mvc\Views\ContentPager\Pager.cshtml" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="assets\csslint.json" />
+    <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
+    <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
+    <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.eot" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.ttf" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.woff" />
+    <None Include="assets\feather-icons.json" />
+    <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="assets\jshint.json" />
+    <None Include="assets\package.json" />
+    <None Include="assets\src\sass\bootstrap\_alerts.sass" />
+    <None Include="assets\src\sass\bootstrap\_badges.sass" />
+    <None Include="assets\src\sass\bootstrap\_buttons.sass" />
+    <None Include="assets\src\sass\bootstrap\_datepicker.sass" />
+    <None Include="assets\src\sass\bootstrap\_forms.sass" />
+    <None Include="assets\src\sass\bootstrap\_labels.sass" />
+    <None Include="assets\src\sass\bootstrap\_list-group.sass" />
+    <None Include="assets\src\sass\bootstrap\_modals.sass" />
+    <None Include="assets\src\sass\bootstrap\_navs.sass" />
+    <None Include="assets\src\sass\bootstrap\_utilities.sass" />
+    <None Include="assets\src\sass\html-field.sass" />
+    <None Include="assets\src\sass\kendo\_checkbox.sass" />
+    <None Include="assets\src\sass\kendo\_editor.sass" />
+    <None Include="assets\src\sass\kendo\_kendo-ui.bootstrap.scss" />
+    <None Include="assets\src\sass\kendo\_tabstrip.sass" />
+    <None Include="assets\src\sass\kendo\_treeview.sass" />
+    <None Include="assets\src\sass\modules\_options.sass" />
+    <None Include="assets\src\sass\modules\_sf-drag.sass" />
+    <None Include="assets\src\sass\modules\_sf-flat-taxon-field.sass" />
+    <None Include="assets\src\sass\modules\_sf-media-selector.sass" />
+    <None Include="assets\src\sass\modules\_sf-Progress.sass" />
+    <None Include="assets\src\sass\modules\_sf-tree.sass" />
+    <None Include="assets\src\sass\modules\_tooltip.sass" />
+    <None Include="assets\src\sass\sitefinity-backend.sass" />
+    <None Include="assets\src\sass\_foundation-overwrites.sass" />
+    <None Include="assets\src\sass\_global.sass" />
+    <None Include="assets\src\sass\loading.sass" />
+    <None Include="assets\src\sass\_utility-classes.sass" />
+    <None Include="assets\src\sass\_variables.sass" />
+    <EmbeddedResource Include="client-components\components-definitions.json" />
+    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <EmbeddedResource Include="client-components\selectors\date-time\sf-date-time-picker.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector-view.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\videos\sf-video-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-video-properties-content-block.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\video-field\sf-video-field.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\video-field\sf-video-modal-template.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\document-field\sf-document-modal-template.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\document-field\sf-document-field.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-collection.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-upload-media-properties.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector-item.html" />
+    <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js.map" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js.map" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js.map" />
+    <EmbeddedResource Include="Mvc\Views\GridDesigner\Designer.cshtml" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feed-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\forms\sf-form-selector.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\selectors\forms\sf-form-collection.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\form-field\sf-form-field.sf-cshtml" />
+    <EmbeddedResource Include="Mvc\Views\PersonalizationDesigner\Personalization.cshtml" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EmbeddedResource Include="Resources\ServerContext.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Designers\Scripts\page-editor-services.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Designers\Scripts\page-editor.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\fonts\glyphicons-halflings-regular.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Designer\modal-dialog.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\expander.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Designer\designerview-propertygrid.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\server-data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Templates\expander.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\style-dropdown.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Designer\personalization-designer.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Designer\grid-designer.js" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\LeftSidebarHeaderFooter.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\RightSidebarHeaderFooter.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\1ColumnHeaderFooter.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\2EqualColumnsHeaderFooter.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\3EqualColumnsHeaderFooter.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\4EqualColumnsHeaderFooter.gif" />
+    <EmbeddedResource Include="Resources\PageTemplateImages\default.gif" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-resource.min.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-route.min.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular.min.js" />
+    <EmbeddedResource Include="Mvc\Scripts\sf-bootstrap-popover.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\ui-bootstrap-tpls.min.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Bootstrap\js\bootstrap.min.js" />
+    <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.bootstrap.min.css" />
+    <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.min.css" />
+    <EmbeddedResource Include="Mvc\Scripts\ng-tags-input.min\ng-tags-input.min.js" />
+    <EmbeddedResource Include="Mvc\Scripts\Templates\sf-loading.html" />
+    <EmbeddedResource Include="Mvc\Scripts\sf-loading.js" />
+    <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.svg" />
+    <EmbeddedResource Include="assets\dist\css\html-field.css" />
+    <EmbeddedResource Include="assets\dist\css\html-field.min.css" />
+    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.css" />
+    <EmbeddedResource Include="assets\dist\css\sitefinity-backend.min.css" />
+    <EmbeddedResource Include="assets\dist\img\crop-to-area.png" />
+    <EmbeddedResource Include="assets\dist\img\dummy.jpg" />
+    <EmbeddedResource Include="assets\dist\img\resize-to-area.png" />
+    <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.svg" />
+    <EmbeddedResource Include="assets\dist\css\loading.css" />
+    <EmbeddedResource Include="assets\dist\css\loading.min.css" />
+    <Content Include="assets\documentation\designer.html" />
+    <Content Include="assets\feather-icons.css" />
+    <Content Include="assets\gruntfile.js" />
+    <EmbeddedResource Include="Modules\ControlTemplates\Web\Scripts\MvcControlTemplateEditor.js" />
+    <Content Include="assets\src\icons\align-center.svg" />
+    <Content Include="assets\src\icons\align-left.svg" />
+    <Content Include="assets\src\icons\align-none.svg" />
+    <Content Include="assets\src\icons\align-right.svg" />
+    <Content Include="assets\src\icons\bin.svg" />
+    <Content Include="assets\src\icons\draft.svg" />
+    <Content Include="assets\src\icons\file.svg" />
+    <Content Include="assets\src\icons\homepage.svg" />
+    <Content Include="assets\src\icons\locked.svg" />
+    <Content Include="assets\src\icons\no-image.svg" />
+    <Content Include="assets\src\icons\published.svg" />
+    <Content Include="assets\src\icons\scheduled.svg" />
+    <Content Include="assets\src\icons\settings.svg" />
+    <Content Include="assets\src\icons\unpublished.svg" />
+    <EmbeddedResource Include="client-components\search\sf-search-box.sf-cshtml" />
+    <EmbeddedResource Include="client-components\search\sf-search-box.js" />
+    <EmbeddedResource Include="client-components\sorting\sf-sort-box.html" />
+    <EmbeddedResource Include="client-components\sorting\sf-sort-box.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-upload-image-properties.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\flat-taxon-field\sf-flat-taxon-field.html" />
+    <EmbeddedResource Include="client-components\fields\flat-taxon-field\sf-flat-taxon-field.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-image-collection.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-image-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-date-items.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-hierarchical-taxon-items.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-service.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-tag-taxon-items.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-filter.js" />
+    <EmbeddedResource Include="client-components\fields\sf-fields.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-markup-service.js" />
+    <EmbeddedResource Include="client-components\fields\drag-drop\sf-drag-drop.js" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-image-properties-content-block.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\fields\image-field\sf-image-field.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-custom-thumbnail-size.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-thumbnail-size-selection.html" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-thumbnail-size-selection.js" />
+    <EmbeddedResource Include="assets\src\img\crop-to-area.png" />
+    <EmbeddedResource Include="assets\src\img\resize-to-area.png" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-roles-service.js" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-role-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-role-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.js" />
+    <EmbeddedResource Include="client-components\fields\html-field\sf-document-properties-content-block.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-collection.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\search\sf-search-service.js" />
+    <EmbeddedResource Include="client-components\selectors\lists\sf-lists-service.js" />
+    <EmbeddedResource Include="client-components\selectors\lists\sf-lists-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\lists\sf-lists-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-media-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\media\videos\sf-video-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-aspect-ratio-selection.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-aspect-ratio-selection.js" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-service.js" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-service.js" />
+    <EmbeddedResource Include="client-components\fields\sf-code-area.js" />
+    <EmbeddedResource Include="client-components\selectors\common\sf-generic-items-service.js" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-users-service.js" />
+    <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-service.js" />
+    <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector.html" />
+    <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.js" />
+    <EmbeddedResource Include="assets\src\img\dummy.jpg" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feeds-service.js" />
+    <EmbeddedResource Include="client-components\selectors\feeds\sf-feed-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-service.js" />
+    <EmbeddedResource Include="client-components\selectors\email-campaigns\sf-mailing-list-selector.js" />
+    <EmbeddedResource Include="GridSystem\Templates\container.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-12.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-2+3+2+3+2.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-3+3+3+3.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-3+6+3.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-3+9.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-4+4+4.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-4+8.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-6+6.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-8+4.html" />
+    <EmbeddedResource Include="GridSystem\Templates\grid-9+3.html" />
+    <EmbeddedResource Include="client-components\selectors\forms\sf-form-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\forms\sf-form-service.js" />
+    <EmbeddedResource Include="client-components\fields\form-field\sf-form-field.js" />
+    <EmbeddedResource Include="client-components\personalization\services\personalization-services.js" />
+    <Content Include="Mvc\assets\mvc.css" />
+    <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
+    <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
+    <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.min.js" />
+    <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.src.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Telerik.Sitefinity.Frontend.Data\Telerik.Sitefinity.Frontend.Data.csproj">
+      <Project>{a9c3b088-8c44-4f0a-93e8-82fdb99a4205}</Project>
+      <Name>Telerik.Sitefinity.Frontend.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="BeforeBuild">
+    <Copy SourceFiles="$(SolutionDir)FxCop\CustomDictionary.xml" DestinationFolder="$(CodeAnalysisPath)" OverwriteReadOnlyFiles="true" Retries="10" ContinueOnError="false" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent></PostBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
+  </PropertyGroup>
+  <!-- Telerik OpenAccess Enhancement -->
+  <!-- Fluent API Mapping -->
+  <PropertyGroup>
+    <OpenAccessPath>$(ProjectDir)..\..\Reference Assemblies\Telerik\OpenAccess</OpenAccessPath>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="..\packages\RazorGenerator.MsBuild.2.4.1\build\RazorGenerator.MsBuild.targets" Condition="Exists('..\packages\RazorGenerator.MsBuild.2.4.1\build\RazorGenerator.MsBuild.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\RazorGenerator.MsBuild.2.4.1\build\RazorGenerator.MsBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RazorGenerator.MsBuild.2.4.1\build\RazorGenerator.MsBuild.targets'))" />
+  </Target>
+</Project>

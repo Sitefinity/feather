@@ -1,0 +1,265 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Ninject;
+using Telerik.OpenAccess;
+using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.Services;
+
+namespace Telerik.Sitefinity.Frontend
+{
+    /// <summary>
+    /// A module that will be invoked by Sitefinity.
+    /// </summary>
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "Field is disposed on Unload.")]
+    public class FrontendModule : ModuleBase
+    {
+        /// <summary>
+        /// Gets the current instance of the module.
+        /// </summary>
+        /// <value>
+        /// The current.
+        /// </value>
+        public static FrontendModule Current
+        {
+            get
+            {
+                return (FrontendModule)SystemManager.GetModule("Feather");
+            }
+        }
+
+        /// <summary>
+        /// Gets the landing page id for each module inherit from <see cref="SecuredModuleBase"/> class.
+        /// </summary>
+        /// <value>The landing page id.</value>
+        public override Guid LandingPageId
+        {
+            get { return Guid.Empty; }
+        }
+
+        /// <summary>
+        /// Gets the CLR types of all data managers provided by this module.
+        /// </summary>
+        /// <value>An array of <see cref="Type"/> objects.</value>
+        public override Type[] Managers
+        {
+            get { return new Type[0]; }
+        }
+
+        /// <summary>
+        /// Gets the dependency resolver. Can be used for overriding the default implementations of some interfaces.
+        /// </summary>
+        /// <value>
+        /// The dependency resolver.
+        /// </value>
+        public IKernel DependencyResolver
+        {
+            get
+            {
+                return this.ninjectDependencyResolver;
+            }
+        }
+
+        /// <summary>
+        /// Installs the specified initializer.
+        /// </summary>
+        /// <param name="initializer">The initializer.</param>
+        public override void Install(SiteInitializer initializer)
+        {
+            FrontendModuleInstaller.Install(initializer);
+        }
+
+        /// <summary>
+        /// Initializes the service with specified settings.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
+        public override void Initialize(ModuleSettings settings)
+        {
+            base.Initialize(settings);
+
+            Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
+            Bootstrapper.Initialized += this.Bootstrapper_Initialized;
+
+<<<<<<< HEAD
+            this.ninjectDependencyResolver = new StandardKernel();
+            FrontendModuleInstaller.Initialize(this.DependencyResolver);
+=======
+            SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
+            SystemManager.RegisterServiceStackPlugin(new FilesServiceStackPlugin());
+            SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
+
+            this.controllerAssemblies = new ControllerContainerInitializer().RetrieveAssemblies();
+            this.ninjectDependencyResolver = this.CreateKernel();
+            this.ninjectDependencyResolver.Load(this.controllerAssemblies);
+
+            App.WorkWith()
+                .Module(settings.Name)
+                    .Initialize()
+                    .Configuration<FeatherConfig>();
+>>>>>>> 8528a760830cb8b4d32ca70dffca354824dcb136
+        }
+
+        /// <summary>
+        /// This method is invoked during the unload process of an active module from Sitefinity, e.g. when a module is deactivated. For instance this method is also invoked for every active module during a restart of the application. 
+        /// Typically you will use this method to unsubscribe the module from all events to which it has subscription.
+        /// </summary>
+        public override void Unload()
+        {
+            this.Uninitialize();
+            FrontendModuleUninstaller.Unload(this.initializers.Value);
+            base.Unload();
+        }
+
+        /// <summary>
+        /// Uninstall the module from Sitefinity system. Deletes the module artifacts added with Install method.
+        /// </summary>
+        /// <param name="initializer">The site initializer instance.</param>
+        public override void Uninstall(SiteInitializer initializer)
+        {
+<<<<<<< HEAD
+            this.Uninitialize();
+            FrontendModuleUninstaller.Uninstall(this.initializers.Value);
+            base.Uninstall(initializer);
+=======
+            base.Upgrade(initializer, upgradeFrom);
+
+            if (upgradeFrom < new Version(1, 2, 140, 0))
+            {
+                this.DeleteOldGridSection();
+                this.UpdateContentBlockTitle();
+            }
+
+            if (upgradeFrom <= new Version(1, 2, 180, 1))
+            {
+                this.RemoveMvcWidgetToolboxItems();
+                this.RenameDynamicContentMvcToolboxItems();
+            }
+
+            if (upgradeFrom <= new Version(1, 2, 260, 1))
+            {
+                this.RecategorizePageTemplates();
+            }
+
+            if (upgradeFrom <= new Version(1, 2, 270, 1))
+            {
+                this.UpdatePageTemplates();
+            }
+
+            if (upgradeFrom <= new Version(1, 2, 280, 2))
+            {
+                this.CreateDefaultTemplates();
+            }
+
+            if (upgradeFrom <= new Version(1, 3, 320, 0))
+            {
+                this.UpdateGridWidgetsToolbox();
+                this.UpdateGridWidgetPaths();
+            }
+>>>>>>> 8528a760830cb8b4d32ca70dffca354824dcb136
+        }
+
+        /// <summary>
+        /// Upgrades this module from the specified version.
+        /// </summary>
+        /// <param name="initializer">The Site Initializer. A helper class for installing Sitefinity modules.</param>
+        /// <param name="upgradeFrom">The version this module us upgrading from.</param>
+        public override void Upgrade(SiteInitializer initializer, Version upgradeFrom)
+        {
+<<<<<<< HEAD
+            base.Upgrade(initializer, upgradeFrom);
+            FrontendModuleUpgrader.Upgrade(upgradeFrom);
+=======
+            return Config.Get<FeatherConfig>();
+        }
+
+        /// <summary>
+        /// Creates Ninject kernel.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IKernel CreateKernel()
+        {
+            var bootstrapper = new Ninject.Web.Common.Bootstrapper();
+
+            if (bootstrapper.Kernel != null)
+                return bootstrapper.Kernel;
+
+            return new StandardKernel();
+>>>>>>> 8528a760830cb8b4d32ca70dffca354824dcb136
+        }
+        
+        /// <summary>
+        /// Handles the Initialized event of the Bootstrapper.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Sitefinity.Data.ExecutedEventArgs"/> instance containing the event data.</param>
+        protected virtual void Bootstrapper_Initialized(object sender, ExecutedEventArgs e)
+        {
+            if (e.CommandName == "Bootstrapped")
+                FrontendModuleInstaller.Bootstrapper_Initialized(this.initializers.Value);
+        }
+
+        /// <summary>
+        /// Gets the module configuration.
+        /// </summary>
+        protected override ConfigSection GetModuleConfig()
+        {
+            return null;
+        }
+
+        // Called both by Unload and Uninstall
+        private void Uninitialize()
+        {
+            if (this.ninjectDependencyResolver != null && !this.ninjectDependencyResolver.IsDisposed)
+                this.ninjectDependencyResolver.Dispose();
+
+            Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
+        }
+
+<<<<<<< HEAD
+        private Lazy<IEnumerable<IInitializer>> initializers = new Lazy<IEnumerable<IInitializer>>(() =>
+            typeof(FrontendModule).Assembly.GetTypes().Where(t => typeof(IInitializer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).Select(t => Activator.CreateInstance(t) as IInitializer).ToList());
+        
+=======
+        private void UpdateGridWidgetsToolbox()
+        {
+            this.TransferGridWidgetSectionToDefault("BootstrapGrids");
+            this.TransferGridWidgetSectionToDefault("FoundationGrids");
+            this.TransferGridWidgetSectionToDefault("SemanticUIGrids");
+        }
+
+        private void TransferGridWidgetSectionToDefault(string sectionName)
+        {
+            var layoutConfig = Config.Get<ToolboxesConfig>().Toolboxes["PageLayouts"];
+            var section = layoutConfig.Sections.FirstOrDefault<ToolboxSection>(e => e.Name == sectionName);
+            if (section != null)
+            {
+                var registrator = new GridWidgetRegistrator();
+                foreach (var tool in section.Tools)
+                {
+                    if (tool.LayoutTemplate.IsNullOrEmpty())
+                        continue;
+
+                    registrator.RegisterToolboxItem(System.Web.VirtualPathUtility.GetFileName(tool.LayoutTemplate));
+                }
+
+                var configurationManager = ConfigManager.GetManager();
+                using (new ElevatedConfigModeRegion())
+                {
+                    var toolboxesConfig = configurationManager.GetSection<ToolboxesConfig>();
+                    var pageControls = toolboxesConfig.Toolboxes["PageLayouts"];
+
+                    var sectionToDelete = pageControls.Sections.FirstOrDefault<ToolboxSection>(e => e.Name == sectionName);
+                    pageControls.Sections.Remove(sectionToDelete);
+
+                    configurationManager.SaveSection(toolboxesConfig);
+                }
+            }
+        }
+
+>>>>>>> 8528a760830cb8b4d32ca70dffca354824dcb136
+        private IKernel ninjectDependencyResolver;
+    }
+}

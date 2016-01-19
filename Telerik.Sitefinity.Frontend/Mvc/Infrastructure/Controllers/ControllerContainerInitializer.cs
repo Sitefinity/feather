@@ -18,6 +18,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Localization;
+using Telerik.Sitefinity.Modules.ControlTemplates;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy.TypeDescription;
 using Telerik.Sitefinity.Mvc.Store;
@@ -29,27 +30,92 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
     /// <summary>
     /// This class contains logic for locating and initializing controllers.
     /// </summary>
-    internal class ControllerContainerInitializer
+    internal class ControllerContainerInitializer : IInitializer
     {
         #region Public members
 
         /// <summary>
+        /// Gets the controller container assemblies.
+        /// </summary>
+        /// <value>
+        /// The controller container assemblies.
+        /// </value>
+        public static IEnumerable<Assembly> ControllerContainerAssemblies
+        {
+            get
+            {
+                if (ControllerContainerInitializer.controllerContainerAssemblies == null)
+                {
+                    lock (ControllerContainerInitializer.ControllerContainerAssembliesLock)
+                    {
+                        if (ControllerContainerInitializer.controllerContainerAssemblies == null)
+                        {
+                            ControllerContainerInitializer.controllerContainerAssemblies = new ControllerContainerInitializer().RetrieveAssemblies();
+                        }
+                    }
+                }
+
+                return ControllerContainerInitializer.controllerContainerAssemblies;
+            }
+
+            private set
+            {
+                lock (ControllerContainerInitializer.ControllerContainerAssembliesLock)
+                {
+                    ControllerContainerInitializer.controllerContainerAssemblies = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Registers the string resources.
+        /// </summary>
+        public static void RegisterStringResources()
+        {
+            ControllerContainerInitializer.ControllerContainerAssemblies
+                .SelectMany(asm => asm.GetExportedTypes().Where(FrontendManager.ControllerFactory.IsController))
+                .ToList()
+                .ForEach(ControllerContainerInitializer.RegisterStringResources);
+        }
+
+        /// <summary>
         /// Initializes the controllers that are available to the web application.
         /// </summary>
-        public virtual void Initialize(IEnumerable<Assembly> controllerAssemblies)
+        public virtual void Initialize()
         {
             GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
-            var assemblies = controllerAssemblies ?? this.RetrieveAssemblies();
+            this.RegisterVirtualPaths(ControllerContainerInitializer.ControllerContainerAssemblies);
 
-            this.RegisterVirtualPaths(assemblies);
-
-            var controllerTypes = this.GetControllers(assemblies);
+            var controllerTypes = this.GetControllers(ControllerContainerInitializer.ControllerContainerAssemblies);
             this.InitializeControllers(controllerTypes);
 
             this.InitializeCustomRouting();
 
-            this.RegisterPrecompiledViewEngines(assemblies);
+            this.RegisterPrecompiledViewEngines(ControllerContainerInitializer.ControllerContainerAssemblies);
+        }
+
+        /// <summary>
+        /// Uninitializes the controllers that are available to the web application.
+        /// </summary>
+        public virtual void Uninitialize()
+        {
+            ControllerContainerInitializer.RegisterStringResources();
+
+            this.UninitializeGlobalFilters();
+
+            foreach (var assembly in ControllerContainerInitializer.ControllerContainerAssemblies)
+            {
+                this.UninitializeControllerContainer(assembly);
+            }
+
+            ControllerContainerInitializer.ControllerContainerAssemblies = null;
+
+            // Clears all controllers
+            foreach (var ctrl in ControllerStore.Controllers().ToList())
+            {
+                ControllerStore.RemoveController(ctrl.ControllerType);
+            }
         }
 
         /// <summary>
@@ -102,6 +168,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
+        /// Executes the uninitialization method specified in the <see cref="ControllerContainerAttribute"/> attribute.
+        /// </summary>
+        /// <param name="container"></param>
+        protected virtual void UninitializeControllerContainer(Assembly container)
+        {
+            if (container == null)
+                throw new ArgumentNullException("container");
+
+            var containerAttribute = container.GetCustomAttributes(false).Single(attr => attr.GetType().AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName) as ControllerContainerAttribute;
+
+            if (containerAttribute.UninitializationType == null || containerAttribute.UninitializationMethod.IsNullOrWhitespace())
+                return;
+
+            var uninitializationMethod = containerAttribute.UninitializationType.GetMethod(containerAttribute.UninitializationMethod);
+            uninitializationMethod.Invoke(null, null);
+        }
+
+        /// <summary>
         /// Loads the assembly file into the current application domain.
         /// </summary>
         /// <param name="assemblyFileName">Name of the assembly file.</param>
@@ -149,7 +233,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (var controller in controllers)
             {
                 this.RegisterController(controller);
+                ControllerContainerInitializer.RegisterStringResources(controller);
             }
+        }
+
+        protected virtual void UninitializeGlobalFilters()
+        {
+            var cacheDependentAttribute = GlobalFilters.Filters.FirstOrDefault(f => f.Instance.GetType().FullName == typeof(CacheDependentAttribute).FullName);
+            if (cacheDependentAttribute != null)
+                GlobalFilters.Filters.Remove(cacheDependentAttribute.Instance);
         }
 
         /// <summary>
@@ -171,7 +263,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             using (var modeRegion = new ElevatedConfigModeRegion())
             {
-                this.RegisterStringResources(controller);
                 controllerStore.AddController(controller, configManager);
             }
         }
@@ -223,6 +314,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #endregion
 
         #region Private members
+        
+        /// <summary>
+        /// Registers the controller string resources.
+        /// </summary>
+        /// <param name="controller">Type of the controller.</param>
+        private static void RegisterStringResources(Type controller)
+        {
+            var localizationAttributes = controller.GetCustomAttributes(typeof(LocalizationAttribute), true);
+            foreach (var attribute in localizationAttributes)
+            {
+                var localAttr = (LocalizationAttribute)attribute;
+                var resourceClass = localAttr.ResourceClass;
+                var resourceClassId = Res.GetResourceClassId(resourceClass);
+
+                if (!ObjectFactory.Container.IsRegistered(resourceClass, resourceClassId))
+                {
+                    Res.RegisterResource(resourceClass);
+                }
+            }
+        }
 
         /// <summary>
         /// Determines whether the specified controller is allowed template registration
@@ -301,16 +412,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var virtualPath = FrontendManager.VirtualPathBuilder.GetVirtualPath(assembly);
 
             VirtualPathManager.AddVirtualFileResolver<ResourceResolver>(
-                                                                        string.Format(CultureInfo.InvariantCulture, "~/{0}*", virtualPath), 
+                                                                        string.Format(CultureInfo.InvariantCulture, "~/{0}*", virtualPath),
                                                                         assemblyName.Name,
                                                                         assemblyName.CodeBase);
 
             SystemManager.RegisterRoute(
-                                        assemblyName.Name, 
+                                        assemblyName.Name,
                                         new Route(
-                                                  virtualPath + "{*Params}", 
+                                                  virtualPath + "{*Params}",
                                                   new GenericRouteHandler<ResourceHttpHandler>(() => new ResourceHttpHandler(virtualPath))),
-                                                  assemblyName.Name, 
+                                                  assemblyName.Name,
                                                   requireBasicAuthentication: false);
         }
 
@@ -327,39 +438,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 var widgetName = controllerType.Name.Replace("Controller", string.Empty);
                 var mvcWidgetName = string.Format(CultureInfo.InvariantCulture, "{0} (MVC)", widgetName);
 
-                Telerik.Sitefinity.Modules.ControlTemplates.ControlTemplates.RegisterTemplatableControl(controllerType, controllerType, string.Empty, widgetName, mvcWidgetName);
+                ControlTemplates.RegisterTemplatableControl(controllerType, controllerType, string.Empty, widgetName, mvcWidgetName);
             }
         }
 
         private void RemoveSitefinityViewEngine()
         {
-            var sitefinityViewEngine = ViewEngines.Engines.FirstOrDefault(v => v is SitefinityViewEngine);
-
-            if (sitefinityViewEngine != null)
+            var sitefinityViewEngines = ViewEngines.Engines.Where(v => v != null && v.GetType() == typeof(SitefinityViewEngine)).ToList();
+            foreach (var sitefinityViewEngine in sitefinityViewEngines)
             {
                 ViewEngines.Engines.Remove(sitefinityViewEngine);
             }
         }
 
-        /// <summary>
-        /// Registers the controller string resources.
-        /// </summary>
-        /// <param name="controller">Type of the controller.</param>
-        private void RegisterStringResources(Type controller)
-        {
-            var localizationAttributes = controller.GetCustomAttributes(typeof(LocalizationAttribute), true);
-            foreach (var attribute in localizationAttributes)
-            {
-                var localAttr = (LocalizationAttribute)attribute;
-                var resourceClass = localAttr.ResourceClass;
-                var resourceClassId = Res.GetResourceClassId(resourceClass);
-
-                if (!ObjectFactory.Container.IsRegistered(resourceClass, resourceClassId))
-                {
-                    Res.RegisterResource(resourceClass);
-                }
-            }
-        }
+        private static IEnumerable<Assembly> controllerContainerAssemblies;
+        private static readonly object ControllerContainerAssembliesLock = new object();
 
         private Dictionary<string, List<PrecompiledViewAssemblyWrapper>> PrecompiledResourcePackages(IEnumerable<Assembly> assemblies)
         {
