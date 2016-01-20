@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
     /// <summary>
     /// This class wraps a PrecompiledViewAssembly to 
     /// </summary>
-    public class PrecompiledViewAssemblyWrapper
+    internal class PrecompiledViewAssemblyWrapper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PrecompiledViewAssemblyWrapper"/> class.
