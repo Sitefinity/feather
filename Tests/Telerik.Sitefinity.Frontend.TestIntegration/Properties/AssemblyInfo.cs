@@ -12,3 +12,4 @@ using Telerik.WebTestRunner.Server.Attributes;
 [assembly: Guid("ccc0bf8e-72df-43b6-99ec-fe954f0e4277")]
 
 [assembly: IntegrationTests]
+[assembly: Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes.ControllerContainer]

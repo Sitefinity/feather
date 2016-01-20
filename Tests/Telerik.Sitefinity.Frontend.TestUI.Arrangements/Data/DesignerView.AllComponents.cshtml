@@ -1,0 +1,3247 @@
+﻿<div>
+
+<expander expander-title="Top">
+    <expander expander-title="collections">
+        <div sf-collection
+            sf-identifier="Id"
+            sf-template-url="client-components/selectors/media/sf-media-hierarchical-taxon-items.html"
+            sf-model="collectionmodel"></div>
+    
+        <div class="ivan" sf-endless-scroll 
+            sf-paging='sfendlessscrollpaging'></div>
+    </expander>
+
+    <expander expander-title="fields">
+        <sf-media-field sf-model="documentsField" sf-media-type="documents"></sf-media-field>
+
+        <sf-media-field sf-model="videosField" sf-media-type="videos"></sf-media-field>
+
+        <div sf-image-field sf-model="imageField"></div>
+
+        <sf-drag-drop></sf-drag-drop>
+
+        <sf-file-url-field sf-model="fileUrlField" sf-extension="js" sf-title='SelectJsFile'></sf-file-url-field>
+
+        <sf-flat-taxon-field sf-model="flatTaxonField" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
+
+        <sf-form-field sf-model="formField"></sf-form-field>
+    </expander>
+    <expander expander-title="html">
+        <sf-html-field class="kendo-content-block" sf-model="htmlField"></sf-html-field>
+    </expander>
+    <expander expander-title="searchsort">
+        <input class="form-control-highlight" type="text" placeholder="EnterTitle" sf-editable />
+
+        <sf-search-box class="pull-right" sf-placeholder="SearchByTitle" sf-timeout-ms="500"></sf-search-box>
+
+        <div sf-sort-box sf-model="sortExpression"></div>
+    </expander>
+
+    <expander expander-title="selectors">
+        <expander expander-title="common">
+            <sf-list-selector
+                sf-page-selector
+                sf-selected-item-id="pageSelector"></sf-list-selector>
+
+            <sf-selected-items-view sf-selected-pages-view sf-template-url="client-components/selectors/pages/sf-selected-pages-view.sf-cshtml" sf-items='selectedItemsViewData' sf-selected-items='selectedItemsInTheDialog' sf-search-identifier-field='searchIdentifierField'
+                sf-identifier-field='sfIdentifierField' sf-sortable='true'></sf-selected-items-view>
+
+            <sf-provider-selector sf-manager-type='Telerik.Sitefinity.Modules.Blogs.BlogsManager'
+                sf-provider-label='Provider'
+                ng-model="providerSelector"></sf-provider-selector>
+
+            <style-dropdown selected-class="blogSelectorListCssClass" view-name="blogSelectorListListTemplateName"></style-dropdown>
+
+            <sf-filter-selector sf-query-data="additionalFilters"></sf-filter-selector>
+
+            <a class="pull-right sf-textarea-tips" class="sf-textarea-tips" href=""
+                sf-popover-html
+                sf-popover-placement="bottom"
+                sf-popover-content="<h1>Popp</h1>">Pop me</a>
+        </expander>
+
+        <expander expander-title="news">
+            <sf-list-selector sf-news-selector name="newsItemsSingleSelector"
+                sf-multiselect="false" sf-sortable="true"
+                sf-provider="propertiesProviderNamePropertyValueNewsSelector"
+                sf-selected-ids ="newsSelectorselectedItemsIdsNewsSelector"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="taxa">
+            <sf-list-selector sf-hierarchical-taxon-selector
+                sf-dialog-header="CategorySelectorHeader"
+                sf-multiselect="true"
+                sf-selected-ids="modelcategorieshierarchical"></sf-list-selector>
+
+            <sf-list-selector sf-taxon-selector name="tagSingleSelector" sf-selected-item="selectedTaxonItem" sf-selected-item-id="propertiesSelectedIdTaxonItemPropertyValue" name="tagSingleSelector"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="blog">
+            <sf-list-selector sf-blog-selector
+                sf-multiselect="true" sf-sortable="true"
+                sf-selected-ids ="blogSelector"></sf-list-selector>
+            <sf-list-selector sf-blog-post-selector
+                sf-multiselect="true" sf-sortable="true"
+                sf-selected-ids ="blogPostSelector"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="datetime">
+            <sf-date-time-picker ng-model="selectedItemInTheDialog" sf-show-meridian="true"></sf-date-time-picker>
+            <sf-timespan-selector sf-selected-item="selectedDateFilters"></sf-timespan-selector>
+        </expander>
+
+        <expander expander-title="dynamic">
+            <sf-list-selector sf-dynamic-items-selector sf-item-type="itemType" sf-selected-item="selectedDynamicItem" sf-selected-item-id="selectedDynamicItemid" name="dynamicItemsSingleSelector"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="emails">
+            <sf-list-selector sf-mailing-list-selector
+                sf-selected-item-id="SelectedMailingListId"
+                sf-missing-selected-items="missingSelectedItems">
+				</sf-list-selector>
+        </expander>
+
+        <expander expander-title="feeds">
+            <sf-list-selector sf-feed-selector sf-selected-item-id="FeedIdPropertyValue" sf-selected-item="feed"
+                sf-missing-selected-items="missingSelectedItems"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="fileurl">
+            <sf-file-url-selector sf-model="selectedUrl" sf-extension="css"></sf-file-url-selector>
+        </expander>
+
+        <expander expander-title="form">
+            <sf-form-selector sf-model="selectedItems" sf-filter="filterObj"/>
+        </expander>
+
+        <expander expander-title="identity">
+            <sf-list-selector sf-role-selector sf-selected-items="rolesSelector" sf-multiselect="true"
+                 sf-hide-roles="Owner, Anonymous, Authenticated, Everyone"></sf-list-selector>
+
+            <sf-list-selector sf-user-selector
+                sf-multiselect="true" sf-selected-ids="usersSelectorselectedItemsIds"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="lists">
+            <sf-list-selector 
+                sf-lists-selector 
+                sf-master="true"
+                sf-multiselect="true"
+                sf-selected-ids="listSelectorselectedItemsIds"
+                sf-missing-selected-items="errorsmissingSelectedItems"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="language">
+            <sf-language-selector class="col-xs-5" sf-site="sfSite" sf-culture="sfCulture"></sf-language-selector>
+        </expander>
+
+        <expander expander-title="media">
+            <div sf-document-selector class="breakFullScreenMode" sf-model="modelselectedItemsDocuments"></div>
+            <div sf-image-selector class="breakFullScreenMode" sf-model="modelselectedItemsImageSelector"></div>
+            <div sf-video-selector class="breakFullScreenMode" sf-model="modelselectedItemsVideoSelector"></div>
+
+            <sf-list-selector sf-library-selector sf-media-type='documents' sf-selected-item-id='modelparentIdLibrarySelector'></sf-list-selector>
+            <sf-media-selector
+                sf-model="selectedItemsSfMediaSelector"
+                sf-filter-object="sfFilter"
+                sf-multiselect="true"
+                sf-deselectable="true"
+                sf-media-type="videos"
+                sf-labels="labels"></sf-media-selector>
+
+            <div sf-aspect-ratio-selection="" sf-model="videoModelAspectRatioSelector"></div>
+            <div sf-thumbnail-size-selection="" sf-model="sfThumbnailSizeSelection"></div>
+        </expander>
+   
+        <expander expander-title="sites">
+            <sf-site-selector class="col-xs-5" sf-site="sfSite"></sf-site-selector>
+
+            <sf-multisite-page-selector sf-site="sfSite"
+	            sf-culture="sfCulture"
+	            sf-selected-item="sfSelectedItemselectedPageMultiSitepage"
+	            sf-selected-item-id="sfSelectedItempageIdMultiSitepage"
+	            sf-bind-on-load="true"></sf-multisite-page-selector>
+        </expander>
+
+        <expander expander-title="link">
+            <sf-link-selector sf-link-html="selectedHtmlsflinkselector" sf-selected-item="selectedItemsflinkselector" sf-editor-content="sfModelsflinkselector"></sf-link-selector>
+        </expander>
+    </expander>
+</expander>
+
+<expander expander-title="Middle">
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+<div name="imageProperties">
+    <div class="form-group">
+        <label for="title">Title</label>
+
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="title" type="text" ng-model="propertieTitlePropertyValue" ng-required="true" />
+            </div>
+
+            <div class="m-top-xs">propertiesTitlePropertyValuelength</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+
+        <p class="text-danger">Title is required</p>
+    </div>
+    <div class="form-group">
+        <label for="alternativeText">Alternative text</label>
+        <div class="row">
+            <div class="col-xs-11">
+                <input class="form-control" name="alternativeText" type="text" ng-model="propertiesAlternativeTextPropertyValue" />
+            </div>
+            <div class="m-top-xs">properties.AlternativeText.PropertyValue.length</div>
+        </div>
+
+        <div class="text-muted">Less than 35 characters are recommended</div>
+    </div>
+    
+    <div class="form-group">
+        <label>ImageSize</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="propertiesUseAsLinkPropertyValue" ng-true-value="'True'" ng-false-value="'False'" />ImageIsLink
+            </label>
+        </div>
+
+        <div class="label-content">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="true" />ImageInOriginalSize
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="openOriginalImageOnClick" ng-value="false" />SelectedPage
+                </label>
+            </div>
+            <div class="label-content" sf-selected-item-id="propertiesLinkedPageIdPropertyValue"></div>
+        </div>
+    </div>
+
+    <div expander-title='MoreOptions'>
+        <div selected-class="propertiesCssClassPropertyValue" view-name="propertiesTemplateNamePropertyValue"></div>
+
+        <div class="form-group">
+            <label for="templateName">Template</label>
+            <div class="row">
+                <div class="col-xs-6">
+                    <select id="templateName" class="form-control">
+                        <option value="1">SomeOption</option>
+						<option value="2">SomeOption</option>
+                        <option value="3">SomeOption</option>
+						<option value="4">SomeOption</option>
+                        <option value="5">SomeOption</option>
+						<option value="6">SomeOption</option>
+                        <option value="7">SomeOption</option>
+						<option value="8">SomeOption</option>
+                        <option value="9">SomeOption</option>
+						<option value="10">SomeOption</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageCssClass">CssClasses</label>
+            <input type="text" id="imageCssClass" ng-model="propertiesCssClassPropertyValue" class="form-control" />
+        </div>
+    </div>
+</div>
+</expander>
+
+<expander expander-title="Bottom">
+    <expander expander-title="collections">
+        <div sf-collection
+            sf-identifier="Id"
+            sf-template-url="client-components/selectors/media/sf-media-hierarchical-taxon-items.html"
+            sf-model="collectionmodel"></div>
+    
+        <div class="ivan" sf-endless-scroll 
+            sf-paging='sfendlessscrollpaging'></div>
+    </expander>
+
+    <expander expander-title="fields">
+        <sf-media-field sf-model="documentsField" sf-media-type="documents"></sf-media-field>
+
+        <sf-media-field sf-model="videosField" sf-media-type="videos"></sf-media-field>
+
+        <div sf-image-field sf-model="imageField"></div>
+
+        <sf-drag-drop></sf-drag-drop>
+
+        <sf-file-url-field sf-model="fileUrlField" sf-extension="js" sf-title='SelectJsFile'></sf-file-url-field>
+
+        <sf-flat-taxon-field sf-model="flatTaxonField" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
+
+        <sf-form-field sf-model="formField"></sf-form-field>
+    </expander>
+    <expander expander-title="html field">
+        <sf-html-field class="kendo-content-block" sf-model="htmlField"></sf-html-field>
+    </expander>
+    <expander expander-title="searchsort">
+        <input class="form-control-highlight" type="text" placeholder="EnterTitle" sf-editable />
+
+        <sf-search-box class="pull-right" sf-placeholder="SearchByTitle" sf-timeout-ms="500"></sf-search-box>
+
+        <div sf-sort-box sf-model="sortExpression"></div>
+    </expander>
+
+    <expander expander-title="selectors">
+        <expander expander-title="common">
+            <sf-list-selector
+                sf-page-selector
+                sf-selected-item-id="pageSelector"></sf-list-selector>
+
+            <sf-selected-items-view sf-selected-pages-view sf-template-url="client-components/selectors/pages/sf-selected-pages-view.sf-cshtml" sf-items='selectedItemsViewData' sf-selected-items='selectedItemsInTheDialog' sf-search-identifier-field='searchIdentifierField'
+                sf-identifier-field='sfIdentifierField' sf-sortable='true'></sf-selected-items-view>
+
+            <sf-provider-selector sf-manager-type='Telerik.Sitefinity.Modules.Blogs.BlogsManager'
+                sf-provider-label='Provider'
+                ng-model="providerSelector"></sf-provider-selector>
+
+            <style-dropdown selected-class="blogSelectorListCssClass" view-name="blogSelectorListListTemplateName"></style-dropdown>
+
+            <sf-filter-selector sf-query-data="additionalFilters"></sf-filter-selector>
+
+            <a class="pull-right sf-textarea-tips" class="sf-textarea-tips" href=""
+                sf-popover-html
+                sf-popover-placement="bottom"
+                sf-popover-content="<h1>Popp</h1>">Pop me</a>
+        </expander>
+
+        <expander expander-title="blog">
+            <sf-list-selector sf-blog-selector
+                sf-multiselect="true" sf-sortable="true"
+                sf-selected-ids ="blogSelector"></sf-list-selector>
+            <sf-list-selector sf-blog-post-selector
+                sf-multiselect="true" sf-sortable="true"
+                sf-selected-ids ="blogPostSelector"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="datetime">
+            <sf-date-time-picker ng-model="selectedItemInTheDialog" sf-show-meridian="true"></sf-date-time-picker>
+            <sf-timespan-selector sf-selected-item="selectedDateFilters"></sf-timespan-selector>
+        </expander>
+
+        <expander expander-title="dynamic">
+            <sf-list-selector sf-dynamic-items-selector sf-item-type="itemType" sf-selected-item="selectedDynamicItem" sf-selected-item-id="selectedDynamicItemid" name="dynamicItemsSingleSelector"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="emails">
+            <sf-list-selector sf-mailing-list-selector
+                sf-selected-item-id="SelectedMailingListId"
+                sf-missing-selected-items="missingSelectedItems">
+				</sf-list-selector>
+        </expander>
+
+        <expander expander-title="feeds">
+            <sf-list-selector sf-feed-selector sf-selected-item-id="FeedIdPropertyValue" sf-selected-item="feed"
+                sf-missing-selected-items="missingSelectedItems"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="fileurl">
+            <sf-file-url-selector sf-model="selectedUrl" sf-extension="css"></sf-file-url-selector>
+        </expander>
+
+        <expander expander-title="form">
+            <sf-form-selector sf-model="selectedItems" sf-filter="filterObj"/>
+        </expander>
+
+        <expander expander-title="identity">
+            <sf-list-selector sf-role-selector sf-selected-items="rolesSelector" sf-multiselect="true"
+                 sf-hide-roles="Owner, Anonymous, Authenticated, Everyone"></sf-list-selector>
+
+            <sf-list-selector sf-user-selector
+                sf-multiselect="true" sf-selected-ids="usersSelectorselectedItemsIds"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="lists">
+            <sf-list-selector 
+                sf-lists-selector 
+                sf-master="true"
+                sf-multiselect="true"
+                sf-selected-ids="listSelectorselectedItemsIds"
+                sf-missing-selected-items="errorsmissingSelectedItems"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="language">
+            <sf-language-selector class="col-xs-5" sf-site="sfSite" sf-culture="sfCulture"></sf-language-selector>
+        </expander>
+
+        <expander expander-title="media">
+            <div sf-document-selector class="breakFullScreenMode" sf-model="modelselectedItemsDocuments"></div>
+            <div sf-image-selector class="breakFullScreenMode" sf-model="modelselectedItemsImageSelector"></div>
+            <div sf-video-selector class="breakFullScreenMode" sf-model="modelselectedItemsVideoSelector"></div>
+
+            <sf-list-selector sf-library-selector sf-media-type='documents' sf-selected-item-id='modelparentIdLibrarySelector'></sf-list-selector>
+            <sf-media-selector
+                sf-model="selectedItemsSfMediaSelector"
+                sf-filter-object="sfFilter"
+                sf-multiselect="true"
+                sf-deselectable="true"
+                sf-media-type="videos"
+                sf-labels="labels"></sf-media-selector>
+
+            <div sf-aspect-ratio-selection="" sf-model="videoModelAspectRatioSelector"></div>
+            <div sf-thumbnail-size-selection="" sf-model="sfThumbnailSizeSelection"></div>
+        </expander>
+   
+        <expander expander-title="sites">
+            <sf-site-selector class="col-xs-5" sf-site="sfSite"></sf-site-selector>
+
+            <sf-multisite-page-selector sf-site="sfSite"
+	            sf-culture="sfCulture"
+	            sf-selected-item="sfSelectedItemselectedPageMultiSitepage"
+	            sf-selected-item-id="sfSelectedItempageIdMultiSitepage"
+	            sf-bind-on-load="true"></sf-multisite-page-selector>
+        </expander>
+
+        <expander expander-title="news">
+            <sf-list-selector sf-news-selector
+                sf-multiselect="true" sf-sortable="true"
+                sf-provider="propertiesProviderNamePropertyValueNewsSelector"
+                sf-selected-ids ="newsSelectorselectedItemsIdsNewsSelector"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="taxa">
+            <sf-list-selector sf-hierarchical-taxon-selector
+                sf-dialog-header="CategorySelectorHeader"
+                sf-multiselect="true"
+                sf-selected-ids="modelcategorieshierarchical"></sf-list-selector>
+
+            <sf-list-selector sf-taxon-selector sf-selected-item="selectedTaxonItem" sf-selected-item-id="propertiesSelectedIdTaxonItemPropertyValue" name="tagSingleSelector"></sf-list-selector>
+        </expander>
+
+        <expander expander-title="link">
+            <sf-link-selector sf-link-html="selectedHtmlsflinkselector" sf-selected-item="selectedItemsflinkselector" sf-editor-content="sfModelsflinkselector"></sf-link-selector>
+        </expander>
+    </expander>
+</expander>
+</div>

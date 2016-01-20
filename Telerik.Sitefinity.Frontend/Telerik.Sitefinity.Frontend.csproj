@@ -20,7 +20,8 @@
     <RestorePackages>true</RestorePackages>
     <JSLintSkip>\Mvc\Scripts\Angular\angular.min.js|\Mvc\Scripts\Angular\angular-route.min.js|\Mvc\Scripts\Angular\|\Mvc\Scripts\Bootstrap\|\Mvc\Scripts\Kendo\</JSLintSkip>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
-    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2015.3.1221.1\tools\enhancer\enhancer.exe</EnhancerAssembly>
+    <EnhancerAssembly>$(SolutionDir)\packages\Telerik.DataAccess.Fluent.2015.3.1221.1\tools\enhancer\enhancer.exe</EnhancerAssembly>    
+	<CodeAnalysisAdditionalOptions>/assemblyCompareMode:StrongNameIgnoringVersion</CodeAnalysisAdditionalOptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,8 +69,17 @@
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RazorEngine">
       <HintPath>..\packages\Sitefinity.RazorEngine.3.0.8.0\lib\net40\RazorEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorGenerator.Mvc.2.3.12\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="ServiceStack, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
@@ -267,6 +277,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Telerik.Web.UI.2015.3.1111.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfoShare\SharedAssemblyInfo.cs">
@@ -276,11 +291,16 @@
     <Compile Include="FrontendModuleUpgrader.cs" />
     <Compile Include="FrontendModuleUninstaller.cs" />
     <Compile Include="FrontendModuleInstaller.cs" />
+    <Compile Include="FeatherConfig.cs" />
     <Compile Include="GridSystem\GridControlToolboxFilter.cs" />
     <Compile Include="IInitializer.cs" />
+    <Compile Include="Mvc\Controllers\CompositePrecompiledMvcEngineWrapper.cs" />
     <Compile Include="Mvc\Controllers\PersonalizationDesignerController.cs" />
     <Compile Include="Mvc\Controllers\GridDesignerController.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\FeatherEnabledToolboxFilter.cs" />
+    <Compile Include="Mvc\Controllers\PrecompiledViewAssemblyWrapper.cs" />
+    <Compile Include="Mvc\Helpers\AspHtmlHelperExtensions.cs" />
+    <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ResourcePackageAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\AttributeRoutingManager.cs" />
     <Compile Include="FilesMonitoring\GridFileManager.cs" />
     <Compile Include="FilesMonitoring\FileChangeType.cs" />
@@ -345,12 +365,6 @@
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\RequestBackendUserAuthenticationAttribute.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\ControllerExtensions.cs" />
     <Compile Include="GridSystem\GridControl.cs" />
-    <Compile Include="FilesMonitoring\Data\FileData.cs" />
-    <Compile Include="FilesMonitoring\Data\FileMonitorDataManager.cs" />
-    <Compile Include="FilesMonitoring\Data\FileMonitorDataProvider.cs" />
-    <Compile Include="FilesMonitoring\Data\FileMonitorFluentMapping.cs" />
-    <Compile Include="FilesMonitoring\Data\FileMonitorFluentMetadataSource.cs" />
-    <Compile Include="FilesMonitoring\Data\OpenAccessFileMonitorDataProvider.cs" />
     <Compile Include="Designers\DesignerResolver.cs" />
     <Compile Include="FilesMonitoring\IFileManager.cs" />
     <Compile Include="FilesMonitoring\LayoutFileManager.cs" />
@@ -393,7 +407,7 @@
     <Compile Include="Mvc\Infrastructure\Routing\TaxonParamResolver.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlParamsMapperBase.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\UrlSegmentInfo.cs" />
-    <Compile Include="Mvc\Models\ScriptDependencyResolver.cs" />
+    <Compile Include="Mvc\Models\ComponentsDependencyResolver.cs" />
     <Compile Include="Mvc\Models\ContentDetailsViewModel.cs" />
     <Compile Include="Mvc\Models\ContentListViewModel.cs" />
     <Compile Include="Mvc\Models\ContentModelBase.cs" />
@@ -626,7 +640,6 @@
     <EmbeddedResource Include="client-components\selectors\forms\sf-form-collection.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\form-field\sf-form-field.sf-cshtml" />
     <EmbeddedResource Include="Mvc\Views\PersonalizationDesigner\Personalization.cshtml" />
-    <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -775,7 +788,6 @@
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-service.js" />
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector.js" />
     <EmbeddedResource Include="client-components\selectors\file-url\sf-file-url-selector.html" />
-    <EmbeddedResource Include="client-components\sf-mvc-ext.png" />
     <EmbeddedResource Include="client-components\fields\file-url-field\sf-file-url-field.js" />
     <EmbeddedResource Include="assets\src\img\dummy.jpg" />
     <EmbeddedResource Include="client-components\selectors\feeds\sf-feeds-service.js" />
@@ -803,8 +815,13 @@
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.src.js" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Telerik.Sitefinity.Frontend.Data\Telerik.Sitefinity.Frontend.Data.csproj">
+      <Project>{a9c3b088-8c44-4f0a-93e8-82fdb99a4205}</Project>
+      <Name>Telerik.Sitefinity.Frontend.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="OpenAccessNuget.targets" />
   <Target Name="BeforeBuild">
     <Copy SourceFiles="$(SolutionDir)FxCop\CustomDictionary.xml" DestinationFolder="$(CodeAnalysisPath)" OverwriteReadOnlyFiles="true" Retries="10" ContinueOnError="false" />
   </Target>
@@ -821,10 +838,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PostBuildEvent></PostBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
   <!-- Telerik OpenAccess Enhancement -->
   <!-- Fluent API Mapping -->
@@ -832,4 +847,11 @@
     <OpenAccessPath>$(ProjectDir)..\..\Reference Assemblies\Telerik\OpenAccess</OpenAccessPath>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="..\packages\RazorGenerator.MsBuild.2.4.1\build\RazorGenerator.MsBuild.targets" Condition="Exists('..\packages\RazorGenerator.MsBuild.2.4.1\build\RazorGenerator.MsBuild.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\RazorGenerator.MsBuild.2.4.1\build\RazorGenerator.MsBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RazorGenerator.MsBuild.2.4.1\build\RazorGenerator.MsBuild.targets'))" />
+  </Target>
 </Project>

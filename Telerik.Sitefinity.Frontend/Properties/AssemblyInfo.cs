@@ -19,3 +19,4 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 [assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestIntegration")]
 
 [assembly: PreApplicationStartMethod(typeof(Telerik.Sitefinity.Frontend.Startup), "OnPreApplicationStart")]
+[assembly: InternalsVisibleTo("FeatherWidgets.TestIntegration")]

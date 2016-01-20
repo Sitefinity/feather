@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
     /// <summary>
     /// A concrete implementation of the <see cref="OpenAccessFluentMappingBase"/> for the file monitoring.
     /// </summary>
-    internal class FileMonitorFluentMapping : OpenAccessFluentMappingBase
+    public class FileMonitorFluentMapping : OpenAccessFluentMappingBase
     {
         #region Contructors
 

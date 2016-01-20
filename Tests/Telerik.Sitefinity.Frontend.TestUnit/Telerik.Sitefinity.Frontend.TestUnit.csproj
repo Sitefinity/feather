@@ -275,6 +275,7 @@
     <Compile Include="Resources\StringResourcesTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Resources\PrecompilationTests.cs" />
     <Compile Include="Resources\VirtualPathBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -288,6 +289,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="ClientScripts\test.bat" />
     <None Include="ClientScripts\test.debug.bat" />
     <None Include="OpenAccessNuGet.targets" />

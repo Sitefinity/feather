@@ -83,8 +83,14 @@ namespace Telerik.Sitefinity.Frontend
             Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
             Bootstrapper.Initialized += this.Bootstrapper_Initialized;
 
-            this.ninjectDependencyResolver = new StandardKernel();
+            this.ninjectDependencyResolver = this.CreateKernel();
+
             FrontendModuleInstaller.Initialize(this.DependencyResolver);
+
+            App.WorkWith()
+                .Module(settings.Name)
+                    .Initialize()
+                    .Configuration<FeatherConfig>();
         }
 
         /// <summary>
@@ -119,7 +125,29 @@ namespace Telerik.Sitefinity.Frontend
             base.Upgrade(initializer, upgradeFrom);
             FrontendModuleUpgrader.Upgrade(upgradeFrom);
         }
-        
+
+        /// <summary>
+        /// Gets the module configuration.
+        /// </summary>
+        protected override ConfigSection GetModuleConfig()
+        {
+            return Config.Get<FeatherConfig>();
+        }
+
+        /// <summary>
+        /// Creates Ninject kernel.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IKernel CreateKernel()
+        {
+            var bootstrapper = new Ninject.Web.Common.Bootstrapper();
+
+            if (bootstrapper.Kernel != null)
+                return bootstrapper.Kernel;
+
+            return new StandardKernel();
+        }
+
         /// <summary>
         /// Handles the Initialized event of the Bootstrapper.
         /// </summary>
@@ -130,15 +158,7 @@ namespace Telerik.Sitefinity.Frontend
             if (e.CommandName == "Bootstrapped")
                 FrontendModuleInstaller.Bootstrapper_Initialized(this.initializers.Value);
         }
-
-        /// <summary>
-        /// Gets the module configuration.
-        /// </summary>
-        protected override ConfigSection GetModuleConfig()
-        {
-            return null;
-        }
-
+        
         // Called both by Unload and Uninstall
         private void Uninitialize()
         {

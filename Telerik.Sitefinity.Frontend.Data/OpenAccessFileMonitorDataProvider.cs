@@ -8,7 +8,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
     /// <summary>
     /// OpenAccess implementation of the <see cref="FileMonitorDataProvider"/>.
     /// </summary>
-    internal class OpenAccessFileMonitorDataProvider : FileMonitorDataProvider, IOpenAccessDataProvider, IOpenAccessUpgradableProvider
+    public class OpenAccessFileMonitorDataProvider : FileMonitorDataProvider, IOpenAccessDataProvider, IOpenAccessUpgradableProvider
     {
         #region Upgrade
 
