@@ -16,9 +16,11 @@ param($installPath, $toolsPath, $package, $project)
   $fileInfo = new-object -typename System.IO.FileInfo -ArgumentList $project.FullName
   $projectDirectory = $fileInfo.DirectoryName
   
-  Get-ChildItem "$projectDirectory\App_Start\RazorGeneratorMvcStart.cs" | Remove-Item -Confirm
-  if ((Get-ChildItem "$projectDirectory\App_Start").Length -eq 0) {
-    Remove-Item "$projectDirectory\App_Start"
+  if (Test-Path "$projectDirectory\App_Start\RazorGeneratorMvcStart.cs") {
+	  Get-ChildItem "$projectDirectory\App_Start\RazorGeneratorMvcStart.cs" | Remove-Item -Confirm
+	  if ((Get-ChildItem "$projectDirectory\App_Start").Length -eq 0) {
+		Remove-Item "$projectDirectory\App_Start"
+	  }
   }
 
   # Make sure all Resource Packages have RazorGenerator directives
