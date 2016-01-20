@@ -6,13 +6,16 @@ param($installPath, $toolsPath, $package, $project)
   $msbuild = [Microsoft.Build.Evaluation.ProjectCollection]::GlobalProjectCollection.GetLoadedProjects($project.FullName) | Select-Object -First 1
   $msbuild.Xml.Imports | Where-Object { $_.Project -eq 'Build\RazorGenerator.MsBuild\build\RazorGenerator.MsBuild.targets' -or $_.Project -eq 'Build\FeatherPrecompilation.targets'} | %{ $msbuild.Xml.RemoveChild($_) }
   
-  $fileInfo = new-object -typename System.IO.FileInfo -ArgumentList $project.FullName
-  $projectDirectory = $fileInfo.DirectoryName
   %{try { $project.ProjectItems.Item('App_Start').ProjectItems.Item('RazorGeneratorMvcStart.cs') } catch { $null }} | ?{$_ -ne $null} | %{ $_.Remove() }
   %{try { $project.ProjectItems.Item('App_Start') } catch { $null }} | ?{$_ -ne $null -and $_.ProjectItems.Count -eq 0} | %{ $_.Remove() }
 
+  %{try { $project.ProjectItems.Item('ResourcePackages').ProjectItems.Item('Bootstrap').ProjectItems.Item('MVC').ProjectItems.Item('Views').ProjectItems.Item('Recaptcha') } catch { $null }} | ?{$_ -ne $null} | %{ $_.Remove() }
+  
   $project.Save()
 
+  $fileInfo = new-object -typename System.IO.FileInfo -ArgumentList $project.FullName
+  $projectDirectory = $fileInfo.DirectoryName
+  
   Get-ChildItem "$projectDirectory\App_Start\RazorGeneratorMvcStart.cs" | Remove-Item -Confirm
   if ((Get-ChildItem "$projectDirectory\App_Start").Length -eq 0) {
     Remove-Item "$projectDirectory\App_Start"

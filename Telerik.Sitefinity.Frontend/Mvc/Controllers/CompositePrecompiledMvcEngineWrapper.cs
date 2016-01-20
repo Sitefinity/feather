@@ -17,7 +17,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
     /// <summary>
     /// View engine that serves precompiled views from several assemblies.
     /// </summary>
-    public class CompositePrecompiledMvcEngineWrapper : CompositePrecompiledMvcEngine
+    internal class CompositePrecompiledMvcEngineWrapper : CompositePrecompiledMvcEngine
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CompositePrecompiledMvcEngineWrapper"/> class.

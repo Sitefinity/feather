@@ -108,7 +108,7 @@
       </_PackageResources>
 	  <_PackageRefences Condition="$(_PackageRefences)!=''" Remove="@(_PackageRefences)" />
 	  <_PackageRefences Include="@(ReferencePath)" />
-	  <_PackageRefences Include="$(OutputPath)$(AssemblyName).dll" />
+	  <_PackageRefences Include="$(IntermediateOutputPath)$(AssemblyName).dll" />
       <FeatherEmbeddedResources Condition="$(FeatherEmbeddedResources)!=''" Remove="@(FeatherEmbeddedResources)" />
     </ItemGroup>
 
