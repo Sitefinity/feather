@@ -29,12 +29,16 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
                 var sectionName = GridWidgetRegistrator.GridSectionName;
                 var sectionTitle = GridWidgetRegistrator.GridSectionTitle;
-                var htmlLayoutsSection = this.GetOrCreateToolBoxSection(toolboxConfig, sectionName, sectionTitle);
+                bool needsSaveSection = false;
+                var htmlLayoutsSection = this.GetOrCreateToolBoxSection(toolboxConfig, sectionName, sectionTitle, ref needsSaveSection);
 
                 var layoutControl = this.CreateGridControlsData(fileName);
                 this.AddOrRenameGridControl(htmlLayoutsSection.Tools, layoutControl, oldFileName);
 
-                configManager.SaveSection(toolboxConfig);
+                if (needsSaveSection)
+                {
+                    configManager.SaveSection(toolboxConfig);
+                }
             }
         }
 
@@ -105,7 +109,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// <param name="sectionName">Name of the section.</param>
         /// <param name="sectionTitle">The section title.</param>
         /// <returns></returns>
-        protected virtual ToolboxSection GetOrCreateToolBoxSection(ToolboxesConfig toolboxConfig, string sectionName, string sectionTitle)
+        protected virtual ToolboxSection GetOrCreateToolBoxSection(ToolboxesConfig toolboxConfig, string sectionName, string sectionTitle, ref bool needsSaveSection)
         {
             var layoutsToolbox = toolboxConfig.Toolboxes["PageLayouts"];
 
@@ -119,6 +123,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 htmlLayoutsSection.Title = sectionTitle;
 
                 layoutsToolbox.Sections.Add(htmlLayoutsSection);
+                needsSaveSection = true;
             }
 
             return htmlLayoutsSection;
