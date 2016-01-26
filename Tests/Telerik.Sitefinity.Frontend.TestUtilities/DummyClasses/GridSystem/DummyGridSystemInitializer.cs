@@ -16,7 +16,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.GridSystem
         /// <inheritdoc />
         public ToolboxSection PublicCreateToolBoxSection(ToolboxesConfig toolboxConfig, string sectionName, string sectionTitle)
         {
-            return this.GetOrCreateToolBoxSection(toolboxConfig, sectionName, sectionTitle);
+            bool needsSaveSection = false;
+            return this.GetOrCreateToolBoxSection(toolboxConfig, sectionName, sectionTitle, ref needsSaveSection);
         }
 
         /// <inheritdoc />
