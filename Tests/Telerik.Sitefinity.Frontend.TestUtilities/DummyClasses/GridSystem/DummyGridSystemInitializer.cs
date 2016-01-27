@@ -23,7 +23,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.GridSystem
         /// <inheritdoc />
         public void PublicAddGridControl(ConfigElementList<ToolboxItem> parent, GridControlData data, string oldFileName = "")
         {
-            this.AddOrRenameGridControl(parent, data, oldFileName);
+            bool needsSaveSection = false;
+            this.AddOrRenameGridControl(parent, data, ref needsSaveSection, oldFileName);
         }
 
         /// <inheritdoc />
