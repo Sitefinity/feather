@@ -26,24 +26,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void VerifyGeneratedTemplatesDefaultResourcePackages()
         {
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/design/pagetemplates", false, null, new HtmlFindExpression("class=~sfMain")));
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(1600000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/design/pagetemplates", false, null, new HtmlFindExpression("class=~sfMain")));
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(1600000, () => BAT.Macros().User().EnsureAdminLoggedIn());
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(BootstrapTemplate);
-            Assert.IsTrue(BATFrontend.Wrappers().Backend().PageTemplates().PageTemplateEditor().IsPlaceHolderPresent(PlaceHolderId), "Placeholder not found in template editor");
-            BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().ClickBackToTemplatesButton();
-
-            BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(SemanticTemplate);
-            Assert.IsTrue(BATFrontend.Wrappers().Backend().PageTemplates().PageTemplateEditor().IsPlaceHolderPresent(PlaceHolderId), "Placeholder not found in template editor");
-            BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().ClickBackToTemplatesButton();
-
-            BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(FoundationTemplate);
             Assert.IsTrue(BATFrontend.Wrappers().Backend().PageTemplates().PageTemplateEditor().IsPlaceHolderPresent(PlaceHolderId), "Placeholder not found in template editor");
             BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().ClickBackToTemplatesButton();
         }
 
         private const string BootstrapTemplate = "Bootstrap.default";
-        private const string SemanticTemplate = "SemanticUI.default";
-        private const string FoundationTemplate = "Foundation.default";
         private const string PlaceHolderId = "Contentplaceholder1";
     }
 }

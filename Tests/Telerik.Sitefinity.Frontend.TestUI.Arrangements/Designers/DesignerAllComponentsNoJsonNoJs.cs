@@ -18,6 +18,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
+            AuthenticationHelper.AuthenticateUser(UserName, Password);
+
             for (int i = 0; i < 3; i++)
             {
                 ServerOperations.News().CreatePublishedNewsItem(newsTitle: NewsItemTitle + i, newsContent: NewsItemContent + i, author: NewsItemAuthor + i);
@@ -57,5 +59,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string NewsItemAuthor = "NewsWriter";
 
         private const string TagTitle = "Tag Title";
+        private const string UserName = "admin";
+        private const string Password = "admin@2";
     }
 }
