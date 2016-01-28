@@ -61,12 +61,13 @@
           Inputs="@(FeatherRazorSrcFiles)"
           Outputs="%(FeatherRazorSrcFiles.PackageName).csFilesGenerated">
 
-    <RazorCodeGen ProjectRoot="$(MsBuildProjectDirectory)\$(FeatherResourcePackagesFolderName)\%(FeatherRazorSrcFiles.PackageName)\"
+	<!-- Please uncomment this in case of using Feather Razor precompilation -->
+	<!-- <RazorCodeGen ProjectRoot="$(MsBuildProjectDirectory)\$(FeatherResourcePackagesFolderName)\%(FeatherRazorSrcFiles.PackageName)\"
                                 FilesToPrecompile="@(FeatherRazorSrcFiles)"
                                 CodeGenDirectory="$(RazorViewsCodeGenDirectory)$(FeatherResourcePackagesFolderName)\%(FeatherRazorSrcFiles.PackageName)"
                                 RootNamespace="$(RootNamespace).$(FeatherResourcePackagesFolderName).%(FeatherRazorSrcFiles.PackageName)">
       <Output TaskParameter="GeneratedFiles" ItemName="FeatherRazorOutputFiles" />
-    </RazorCodeGen>
+    </RazorCodeGen> -->
     <ItemGroup>
       <RazorGeneratedCsFiles Include="$(RazorViewsCodeGenDirectory)$(FeatherResourcePackagesFolderName)\%(FeatherRazorSrcFiles.PackageName)\**\*.cs">
         <PackageName>%(FeatherRazorSrcFiles.PackageName)</PackageName>
