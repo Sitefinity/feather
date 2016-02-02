@@ -271,6 +271,8 @@
                                 fullToolbar.removeClass("sf-toolbar-full");
                                 shortToolbar.removeClass("sf-toolbar-short");
 
+                                scope.sfModel = editor.value();
+
                                 shortToolbar.hide();
                                 fullToolbar.show();
                                 fullToolbar.append(customButtons);
