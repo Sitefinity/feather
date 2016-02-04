@@ -311,6 +311,10 @@
                             modalHeaderAndFooter.toggle();
                             isFullScreen = !isFullScreen;
                         };
+
+                        scope.$on("close", function () {
+                            scope.sfModel = editor.value();
+                        });
                     }
                 }
             };
