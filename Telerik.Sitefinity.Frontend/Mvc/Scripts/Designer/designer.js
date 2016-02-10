@@ -45,7 +45,7 @@
                 redirectTo: '/' + resolveDefaultView(serverData)
             });
 
-        $httpProvider.interceptors.push(function () {
+        $httpProvider.interceptors.push(function ($q, $window) {
             return {
                 'request': function (config) {
                     if (config && config.method === 'GET' && config.headers && config.headers.SF_UI_CULTURE === undefined && config.url && endsWith(config.url, '.sf-cshtml')) {
@@ -53,6 +53,13 @@
                     }
 
                     return config;
+                },
+                'responseError': function (rejection) {
+                    if (rejection.status === 401 || rejection.status === 403) {
+                        $window.onbeforeunload = null;
+                        $window.location.reload();
+                    }
+                    return $q.reject(rejection);
                 }
             };
         });
@@ -118,7 +125,7 @@
                 if (data) {
                     $scope.properties = propertyService.toAssociativeArray(data.Items);
                 }
-            }, 
+            },
             function (data) {
                 $scope.feedback.showError = true;
                 if (data)
@@ -233,7 +240,7 @@
             $scope.isCurrentView = function (view) {
                 return $route.current && $route.current.params.view === view;
             };
-            
+
             $scope.hideError = function () {
                 $scope.feedback.showError = false;
                 $scope.feedback.errorMessage = null;
