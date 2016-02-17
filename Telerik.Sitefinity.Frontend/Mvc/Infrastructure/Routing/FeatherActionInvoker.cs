@@ -97,7 +97,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     var requestContext = proxyControl.RequestContext;
 
                     var model = controller.GetType().GetProperty("Model").GetValue(controller, null);
-                    var modelUrlKeyPrefix = (string)model.GetType().GetProperty("UrlKeyPrefix").GetValue(model, null);
+                    var modelUrlKeyPrefix = model == null ? null : (string)model.GetType().GetProperty("UrlKeyPrefix").GetValue(model, null);
                     var expectedUrlKeyPrefix = string.IsNullOrEmpty(modelUrlKeyPrefix) ? null : "!" + modelUrlKeyPrefix;
                     var currentUrlKeyPrefix = originalParams == null ? null : originalParams.FirstOrDefault(p => p.StartsWith("!", StringComparison.OrdinalIgnoreCase));
 
