@@ -108,6 +108,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     else
                     {
                         this.GetPrefixParamsMapper(controller).ResolveUrlParams(originalParams, requestContext);
+                        RouteHelper.SetUrlParametersResolved();
                     }
 
                     if (!proxyControl.ContentTypeName.IsNullOrEmpty())
