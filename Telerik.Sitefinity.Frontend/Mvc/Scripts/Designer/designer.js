@@ -56,6 +56,7 @@
                 },
                 'responseError': function (rejection) {
                     if (rejection.status === 401 || rejection.status === 403) {
+                        rejection.data = rejection.statusText;
                         $window.onbeforeunload = null;
                         $window.location.reload();
                     }
