@@ -72,21 +72,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// </remarks>
         public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, string sectionName, bool throwException)
         {
-            return ResourceHelper.Script(helper, scriptPath, sectionName, throwException, true);
-        }
-
-        /// <summary>
-        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
-        /// </summary>
-        /// <param name="helper">The helper.</param>
-        /// <param name="scriptPath">The script path.</param>
-        /// <param name="sectionName">Name of the section.</param>
-        /// <param name="throwException">if set to <c>true</c> [throw exception].</param>
-        /// <param name="includeInScriptManager">if set to <c>true</c> the script will be included in script manager if such is found.</param>
-        /// <returns></returns>
-        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, string sectionName, bool throwException, bool includeInScriptManager)
-        {
-            if (includeInScriptManager && ResourceHelper.TryConfigureScriptManager(scriptPath, helper.ViewContext.HttpContext.CurrentHandler))
+            if (ResourceHelper.TryConfigureScriptManager(scriptPath, helper.ViewContext.HttpContext.CurrentHandler))
                 return MvcHtmlString.Empty;
 
             return ResourceHelper.RegisterResource(helper.ViewContext.HttpContext, scriptPath, ResourceType.Js, sectionName, throwException);
