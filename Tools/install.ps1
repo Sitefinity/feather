@@ -34,3 +34,23 @@ param($installPath, $toolsPath, $package, $project)
   if (Test-Path $recaptchaTemplatesPath) {
     Remove-Item $recaptchaTemplatesPath -Recurse -Confirm
   }
+
+  Write-Host "Appending ControllerContainerAttribute to the AssemblyInfo..."
+  $assemblyInfoPath = Join-Path $projectDirectory "Properties\AssemblyInfo.cs"
+  if (Test-Path $assemblyInfoPath)
+  {
+	$attributeRegex = "\[\s*assembly\s*\:\s*(?:(?:(?:(?:(?:(?:(?:Telerik\.)?Sitefinity\.)?Frontend\.)?Mvc\.)?Infrastructure\.)?Controllers\.)?Attributes\.)?ControllerContainer(?:Attribute)?\s*\]"
+    if ((Get-Content $assemblyInfoPath | ? { $_ -match $attributeRegex } | group).Count -eq 0)
+    {
+      Add-Content $assemblyInfoPath "[assembly: Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes.ControllerContainer]"
+      Write-Host "Finished appending ControllerContainerAttribute to the AssemblyInfo."
+    }
+    Else
+    {
+      Write-Host "ControllerContainerAttribute is already in the AssemblyInfo. Nothing is appended."
+    }
+  }
+  Else
+  {
+    Write-Host "AssemblyInfo not found."
+  }

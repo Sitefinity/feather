@@ -19,3 +19,13 @@ param($installPath, $toolsPath, $package, $project)
         $msbuild.Xml.AddImport("Build\FeatherPrecompilation.targets") | out-null
     }
     $project.Save()
+	
+	$assemblyInfoPath = Join-Path $projPath "Properties\AssemblyInfo.cs"
+	if (Test-Path $assemblyInfoPath)
+	{
+		$assemblyInfoPathTemp = "$assemblyInfoPath.tmp"
+		$attributeRegex = "\[\s*assembly\s*\:\s*(?:(?:(?:(?:(?:(?:(?:Telerik\.)?Sitefinity\.)?Frontend\.)?Mvc\.)?Infrastructure\.)?Controllers\.)?Attributes\.)?ControllerContainer(?:Attribute)?\s*\]"
+		Get-Content $assemblyInfoPath | ? { $_ -notmatch $attributeRegex } | Set-Content $assemblyInfoPathTemp -Force
+		Remove-Item $assemblyInfoPath
+		Rename-Item $assemblyInfoPathTemp $assemblyInfoPath
+	}
