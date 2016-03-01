@@ -176,9 +176,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (container == null)
                 throw new ArgumentNullException("container");
 
-            var containerAttribute = container.GetCustomAttributes(false).Single(attr => attr.GetType().AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName) as ControllerContainerAttribute;
+            var containerAttribute = container.GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName) as ControllerContainerAttribute;
 
-            if (containerAttribute.UninitializationType == null || containerAttribute.UninitializationMethod.IsNullOrWhitespace())
+            if (containerAttribute == null || containerAttribute.UninitializationType == null || containerAttribute.UninitializationMethod.IsNullOrWhitespace())
                 return;
 
             var uninitializationMethod = containerAttribute.UninitializationType.GetMethod(containerAttribute.UninitializationMethod);
