@@ -39,7 +39,8 @@ param($installPath, $toolsPath, $package, $project)
   $assemblyInfoPath = Join-Path $projectDirectory "Properties\AssemblyInfo.cs"
   if (Test-Path $assemblyInfoPath)
   {
-    if ((Get-Content $assemblyInfoPath | ? { $_ -match "\[.*assembly.*\:.*ControllerContainer.*\]" } | group).Count -eq 0)
+	$attributeRegex = "\[\s*assembly\s*\:\s*(?:(?:(?:(?:(?:(?:(?:Telerik\.)?Sitefinity\.)?Frontend\.)?Mvc\.)?Infrastructure\.)?Controllers\.)?Attributes\.)?ControllerContainer(?:Attribute)?\s*\]"
+    if ((Get-Content $assemblyInfoPath | ? { $_ -match $attributeRegex } | group).Count -eq 0)
     {
       Add-Content $assemblyInfoPath "[assembly: Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes.ControllerContainer]"
       Write-Host "Finished appending ControllerContainerAttribute to the AssemblyInfo."

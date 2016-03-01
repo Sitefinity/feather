@@ -24,7 +24,8 @@ param($installPath, $toolsPath, $package, $project)
 	if (Test-Path $assemblyInfoPath)
 	{
 		$assemblyInfoPathTemp = "$assemblyInfoPath.tmp"
-		Get-Content $assemblyInfoPath | ? { $_ -notmatch "\[.*assembly.*\:.*ControllerContainer.*\]" } | Set-Content $assemblyInfoPathTemp -Force
+		$attributeRegex = "\[\s*assembly\s*\:\s*(?:(?:(?:(?:(?:(?:(?:Telerik\.)?Sitefinity\.)?Frontend\.)?Mvc\.)?Infrastructure\.)?Controllers\.)?Attributes\.)?ControllerContainer(?:Attribute)?\s*\]"
+		Get-Content $assemblyInfoPath | ? { $_ -notmatch $attributeRegex } | Set-Content $assemblyInfoPathTemp -Force
 		Remove-Item $assemblyInfoPath
 		Rename-Item $assemblyInfoPathTemp $assemblyInfoPath
 	}
