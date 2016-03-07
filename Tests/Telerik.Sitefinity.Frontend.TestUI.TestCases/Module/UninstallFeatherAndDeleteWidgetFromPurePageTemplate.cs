@@ -35,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
 
                 // Verify on frontend
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageUrl, false));
-                Assert.IsTrue(BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().IsHtmlControlPresent(WidgetContent));
+                Assert.IsTrue(BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().IsElementByInnerTextPresent(WidgetContent));
 
                 // Uninstall Feather
                 BATFrontend.Wrappers().Backend().FrontendModule().FrontendModule().UninstallFeather(ActiveBrowser);
@@ -43,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
 
                 // Verify on frontend
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageUrl, false));
-                Assert.IsFalse(BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().IsHtmlControlPresent(WidgetContent));
+                Assert.IsFalse(BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().IsElementByInnerTextPresent(WidgetContent));
 
                 // Remove widget from template
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().User().EnsureAdminLoggedIn());
@@ -55,7 +55,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
 
                 // Verify on frontend
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageUrl, false));
-                Assert.IsFalse(BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().IsHtmlControlPresent(WidgetContent));
+                Assert.IsFalse(BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().IsElementByInnerTextPresent(WidgetContent));
 
                 // Install Feather
                 BATFrontend.Wrappers().Backend().FrontendModule().FrontendModule().InstallFeather(ActiveBrowser);
