@@ -100,7 +100,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
             else
             {
-                url = DataResolver.Resolve(item, "URL", null, detailsPageId.ToString());
+                url = DataResolver.Resolve(item.DataItem, "URL", null, detailsPageId.ToString());
             }
 
             url = url.Replace("//", "/");
@@ -127,7 +127,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
             else
             {
-                url = DataResolver.Resolve(item, "URL", null, detailsPageId.ToString());
+                url = DataResolver.Resolve(item.DataItem, "URL", null, detailsPageId.ToString());
             }
 
             url = url + "?itemIndex=" + itemIndex;
