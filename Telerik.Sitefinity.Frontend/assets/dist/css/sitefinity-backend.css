@@ -12509,13 +12509,13 @@
       line-height: 1.4;
       position: relative;
       z-index: 1; }
-  .sf-backend-wrp .k-treeview.k-treeview--list-group .k-checkbox {
+  .sf-backend-wrp .k-treeview.k-treeview--list-group .k-checkbox-wrapper {
     position: absolute;
     margin-top: 0;
     z-index: 2;
     top: 15px;
     left: 32px; }
-  .sf-backend-wrp .k-treeview.k-treeview--list-group .k-checkbox + .k-in a {
+  .sf-backend-wrp .k-treeview.k-treeview--list-group .k-checkbox-wrapper + .k-in a {
     padding-left: 55px; }
   .sf-backend-wrp .k-treeview.k-treeview--list-group .k-state-hover,
   .sf-backend-wrp .k-treeview.k-treeview--list-group .k-state-selected,
@@ -12533,7 +12533,7 @@
   .sf-backend-wrp .k-treeview--taxon .k-treeview .k-icon {
     top: 13px;
     left: 10px; }
-  .sf-backend-wrp .k-treeview--taxon .k-treeview .k-checkbox {
+  .sf-backend-wrp .k-treeview--taxon .k-treeview .k-checkbox-wrapper {
     top: 10px;
     left: 32px; }
   .sf-backend-wrp .k-checkbox {
