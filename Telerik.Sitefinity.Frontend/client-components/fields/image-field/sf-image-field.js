@@ -36,7 +36,7 @@
 
                     var refreshScopeInfo = function (item) {
                         scope.sfImage = item;
-
+                        scope.sfImageIsVisible = scope.sfImage.ThumbnailUrl && scope.sfImage.ThumbnailUrl != "";
                         scope.imageSize = Math.ceil(item.TotalSize / 1024) + " KB";
                         scope.uploaded = getDateFromString(item.DateCreated);
                     };
