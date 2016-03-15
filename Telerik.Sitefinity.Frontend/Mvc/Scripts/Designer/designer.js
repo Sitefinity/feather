@@ -100,9 +100,14 @@
             restrict: 'AC',
             link: function (scope, element, attr) {
                 var placeholder = $('[placeholder="' + attr.section + '"]');
-                var modalBodyScope = angular.element('.modal-body').scope();
+                var selectedScope;
+                if (attr.useElementScope === 'true') {
+                    selectedScope = scope;
+                } else {
+                    selectedScope = angular.element('.modal-body').scope();
+                }
                 if (placeholder.length > 0) {
-                    placeholder.html($compile(element.html())(modalBodyScope));
+                    placeholder.html($compile(element.html())(selectedScope));
                 }
             }
         };
