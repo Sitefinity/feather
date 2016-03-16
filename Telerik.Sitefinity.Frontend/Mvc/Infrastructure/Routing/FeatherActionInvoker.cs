@@ -97,8 +97,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     RouteHelper.SetUrlParametersResolved();
                 }
             }
-
-            controller.TempData.Add("IsInPureMode", proxyControl.IsInPureMode);
         }
 
         /// <summary>
