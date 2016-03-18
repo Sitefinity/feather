@@ -344,7 +344,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
             else
             {
-                newEngine = (VirtualPathProviderViewEngine)Activator.CreateInstance(viewEngine.GetType());
+                try
+                {
+                    newEngine = (VirtualPathProviderViewEngine)Activator.CreateInstance(viewEngine.GetType());
+                }
+                catch (Exception ex)
+                {
+                    Log.Write(string.Format(System.Globalization.CultureInfo.InvariantCulture, "The {0} view engine could not be created because it does not have an empty constructor", viewEngine.GetType().FullName));
+                    return null;
+                }
             }
 
             newEngine.ViewLocationCache = DefaultViewLocationCache.Null;
