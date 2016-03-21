@@ -24,8 +24,9 @@ param($installPath, $toolsPath, $package, $project)
 	if (Test-Path $assemblyInfoPath)
 	{
 		$assemblyInfoPathTemp = "$assemblyInfoPath.tmp"
-		$attributeRegex = "\[\s*assembly\s*\:\s*(?:(?:(?:(?:(?:(?:(?:Telerik\.)?Sitefinity\.)?Frontend\.)?Mvc\.)?Infrastructure\.)?Controllers\.)?Attributes\.)?ControllerContainer(?:Attribute)?\s*\]"
-		Get-Content $assemblyInfoPath | ? { $_ -notmatch $attributeRegex } | Set-Content $assemblyInfoPathTemp -Force
+		$controllerContainerRegex = "\[\s*assembly\s*\:\s*(?:(?:(?:(?:(?:(?:(?:Telerik\.)?Sitefinity\.)?Frontend\.)?Mvc\.)?Infrastructure\.)?Controllers\.)?Attributes\.)?ControllerContainer(?:Attribute)?\s*\]"
+        $resourcePackageRegex = "\[\s*assembly\s*\:\s*(?:(?:(?:(?:(?:(?:(?:Telerik\.)?Sitefinity\.)?Frontend\.)?Mvc\.)?Infrastructure\.)?Controllers\.)?Attributes\.)?ResourcePackage(?:Attribute)?\s*\]"
+		Get-Content $assemblyInfoPath | ? { $_ -notmatch $controllerContainerRegex } | ? { $_ -notmatch $resourcePackageRegex } | Set-Content $assemblyInfoPathTemp -Force
 		Remove-Item $assemblyInfoPath
 		Rename-Item $assemblyInfoPathTemp $assemblyInfoPath
 	}
