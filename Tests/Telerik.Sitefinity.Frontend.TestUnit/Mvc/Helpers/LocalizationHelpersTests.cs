@@ -29,6 +29,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Helpers
         /// <summary>
         /// The get label_ dummy localized controller_ ensures the resource string is found.
         /// </summary>
+        [Ignore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
         [TestMethod]
         [Owner("Bonchev")]

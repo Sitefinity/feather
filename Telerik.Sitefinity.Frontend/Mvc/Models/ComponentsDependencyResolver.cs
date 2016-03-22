@@ -87,7 +87,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 var components = ComponentsDependencyResolver.ComponentsDefinitionsDictionary.Value
                     .Where(component => component.Value.Scripts != null && component.Value.Scripts.Contains(script));
 
-                if (components.Count() == 1)
+                if (components.Count() == 1 && components.Single().Value.AngularModules != null)
                     modules.AddRange(components.Single().Value.AngularModules);
             }
 

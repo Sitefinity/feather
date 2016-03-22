@@ -344,7 +344,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
             else
             {
-                newEngine = (VirtualPathProviderViewEngine)Activator.CreateInstance(viewEngine.GetType());
+                var viewEngineType = viewEngine.GetType();
+                var defaultCtor = viewEngineType.GetConstructor(Type.EmptyTypes);
+                if (defaultCtor != null)
+                    newEngine = (VirtualPathProviderViewEngine)Activator.CreateInstance(viewEngineType);
+                else
+                    return null;
             }
 
             newEngine.ViewLocationCache = DefaultViewLocationCache.Null;

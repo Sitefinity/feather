@@ -81,7 +81,7 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities">
-      <HintPath>packages\Telerik.Sitefinity.TestUtilities.8.2.5900.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
+      <HintPath>packages\Telerik.Sitefinity.TestUtilities.8.2.5990.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Telerik.TestUI.Core, Version=1.5.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -126,6 +126,14 @@
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
     <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />
     <Compile Include="LayoutTemplates\LayoutTemplateWithMultiplePlaceholders.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromHybridPage.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromHybridPageTemplate.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromPurePage.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromPurePageTemplate.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromHybridPageTemplate.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromHybridPage.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromPurePageTemplate.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromPurePage.cs" />
     <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
     <Compile Include="MvcWidgets\MvcReorderSelectedNewsItems.cs" />
     <Compile Include="MvcWidgets\MvcSelectManyDynamicItems.cs" />

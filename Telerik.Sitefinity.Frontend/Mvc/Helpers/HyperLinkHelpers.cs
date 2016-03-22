@@ -83,6 +83,61 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
+        /// Gets the full detail page URL for master/detail widgets.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="detailsPageId">The details page identifier.</param>
+        /// <param name="openInSamePage">if set to <c>true</c> [open in same page].</param>
+        /// <param name="urlKeyPrefix">The URL key prefix.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "3#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
+        public static string GetDetailPageUrl(ItemViewModel item, Guid detailsPageId, bool openInSamePage, string urlKeyPrefix)
+        {
+            string url;
+            if (openInSamePage)
+            {
+                url = DataResolver.Resolve(item.DataItem, "URL", urlKeyPrefix);
+            }
+            else
+            {
+                url = DataResolver.Resolve(item.DataItem, "URL", null, detailsPageId.ToString());
+            }
+
+            url = url.Replace("//", "/");
+
+            return UrlPath.ResolveUrl(url, true);
+        }
+
+        /// <summary>
+        /// Gets the full detail page URL for master/detail widgets.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="detailsPageId">The details page identifier.</param>
+        /// <param name="openInSamePage">if set to <c>true</c> [open in same page].</param>
+        /// <param name="urlKeyPrefix">The URL key prefix.</param>
+        /// <param name="itemIndex">Index of the item.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "3#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
+        public static string GetDetailPageUrl(ItemViewModel item, Guid detailsPageId, bool openInSamePage, string urlKeyPrefix, int itemIndex)
+        {
+            string url;
+            if (openInSamePage)
+            {
+                url = DataResolver.Resolve(item.DataItem, "URL", urlKeyPrefix);
+            }
+            else
+            {
+                url = DataResolver.Resolve(item.DataItem, "URL", null, detailsPageId.ToString());
+            }
+
+            url = url + "?itemIndex=" + itemIndex;
+
+            url = url.Replace("//", "/");
+
+            return UrlPath.ResolveUrl(url, true);
+        }
+
+        /// <summary>
         /// Gets the full page URL.
         /// </summary>
         /// <param name="pageId">The page identifier.</param>

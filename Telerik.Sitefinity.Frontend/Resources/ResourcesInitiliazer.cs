@@ -21,8 +21,11 @@ namespace Telerik.Sitefinity.Frontend.Resources
     /// <summary>
     /// This class contains logic for configuring the functionality related to the resolving of resources.
     /// </summary>
-    internal class ResourcesInitializer
+    internal class ResourcesInitializer : IInitializer
     {
+        /// <summary>
+        /// Initializes and configurates the resources functionality.
+        /// </summary>
         public void Initialize()
         {
             ObjectFactory.Container.RegisterType<IResourceResolverStrategy, ResourceResolverStrategy>(new ContainerControlledLifetimeManager());
@@ -37,7 +40,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
             ObjectFactory.Container.RegisterType<DialogBase, MvcControlTemplateEditor>(typeof(ControlTemplateEditor).Name);
 
-            EventHub.Subscribe<IDataEvent>(x => this.HandleIDataEvent(x));
+            EventHub.Subscribe<IDataEvent>(this.HandleIDataEvent);
 
             var resourceClass = typeof(InfrastructureResources);
             var resourceClassId = Res.GetResourceClassId(resourceClass);
@@ -76,6 +79,14 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
                 manager.SaveChanges();
             }
+        }
+
+        /// <summary>
+        /// Uninitializes the resources functionality.
+        /// </summary>
+        public void Uninitialize()
+        {
+            // There are no post soft-restart traces of this class Initialization
         }
     }
 }

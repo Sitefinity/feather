@@ -530,6 +530,28 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             expander.Refresh();
         }
 
+        /// <summary>
+        /// Verify if element By InnerText is present.
+        /// </summary>
+        /// <param name="innerText">The inner text of the element.</param>
+        /// <returns>If element is present.</returns>
+        public bool IsElementByInnerTextPresent(string innerText)
+        {
+            ActiveBrowser.WaitUntilReady();
+            ActiveBrowser.RefreshDomTree();
+
+            HtmlControl element = Manager.Current.ActiveBrowser.Find.ByExpression<HtmlControl>("innertext=~" + innerText);
+
+            bool result = false;
+
+            if (element != null)
+            {
+                result = element.IsVisible();
+            }
+
+            return result;
+        }
+
         private Element GetContentSelectorByName(string cssClass)
         {
             var contentContainer = this.EM.Widgets.FeatherWidget.ContentContainer.AssertIsPresent("Content container");

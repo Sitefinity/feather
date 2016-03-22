@@ -1,5 +1,5 @@
 ﻿<div class="sf-Media--info-image">
-    <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
+    <img ng-show="sfImageIsVisible" ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
     <div ng-hide="sfImage.ThumbnailUrl" class="sf-Media-empty--image icon-no-image">
         {{sfImage.ThumbnailUrl}}
     </div>

@@ -13,6 +13,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.GridSystem
     [TestClass]
     public class GridControlToolboxFilterTests
     {
+        [Ignore]
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Tests whether IsSectionVisible returns true when called.")]

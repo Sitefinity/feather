@@ -20,8 +20,9 @@
         <!-- Package sources used to restore packages. By default, registered sources under %APPDATA%\NuGet\NuGet.Config will be used -->
         <!-- The official NuGet package source (https://www.nuget.org/api/v2/) will be excluded if package sources are specified and it does not appear in the list -->
 
-        <PackageSource Include="\\telerik.com\distributions\OfficialReleases\Sitefinity\nuget\feather" />
         <PackageSource Include="\\feather-ci\C$\FeatherFeed\FeatherFeed\Packages"/>
+
+      <PackageSource Include="\\telerik.com\distributions\OfficialReleases\Sitefinity\nuget\feather" />
         <PackageSource Include="http://feather-ci.cloudapp.net:8088/nuget/" />
         <PackageSource Include="https://www.nuget.org/api/v2/" />
         <PackageSource Include="http://nuget.sitefinity.com/nuget/" />

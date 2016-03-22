@@ -46,5 +46,14 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         {
             return new GridWidgetsOperations();
         }
+
+        /// <summary>
+        /// Entry point for Feather module operations.
+        /// </summary>
+        /// <returnsResource>FeatherModuleOperations instance.</returns>
+        public static FeatherModuleOperations FeatherModule()
+        {
+            return new FeatherModuleOperations();
+        }
     }
 }

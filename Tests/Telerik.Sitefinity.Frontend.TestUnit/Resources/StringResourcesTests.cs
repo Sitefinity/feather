@@ -24,6 +24,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
     {
         #region Public Methods and Operators
 
+        [Ignore]
         [TestMethod]
         [Owner("EGaneva")]
         [Description("The test ensures that designer resources are correct.")]
@@ -33,6 +34,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
             this.TestResourceType<DesignerResources>();
         }
 
+        [Ignore]
         [TestMethod]
         [Owner("EGaneva")]
         [Description("The test ensures that client component resources are correct.")]
