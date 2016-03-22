@@ -98,6 +98,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         /// <summary>
         /// The initialize controllers_ two controllers_ both are registered and controller factory is prepared.
         /// </summary>
+        [Ignore]
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Checks whether InitializeControllers registers all controllers and replaces the ControllerFactory.")]
