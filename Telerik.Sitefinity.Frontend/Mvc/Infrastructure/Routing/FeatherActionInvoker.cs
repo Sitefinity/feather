@@ -50,6 +50,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return result;
         }
 
+        /// <summary>
+        /// Gets the prefix parameters mapper.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <returns></returns>
+        internal IUrlParamsMapper GetPrefixParamsMapper(ControllerBase controller)
+        {
+            IUrlParamsMapper result = null;
+            result = result
+                .SetLast(this.GetInferredPagingMapper(controller, "Index"));
+
+            // If no other mappers are added we skip the default one.
+            if (result != null)
+                result.SetLast(new DefaultUrlParamsMapper(controller));
+
+            return result;
+        }
+
         /// <inheritdoc/>
         protected override bool ShouldProcessRequest(MvcProxyBase proxyControl)
         {
@@ -78,7 +96,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     var originalParams = MvcRequestContextBuilder.GetRouteParams(originalContext);
                     var requestContext = proxyControl.RequestContext;
 
-                    paramsMapper.ResolveUrlParams(originalParams, requestContext);
+                    var model = controller.GetType().GetProperty("Model").GetValue(controller, null);
+                    var modelUrlKeyProperty = model == null ? null : model.GetType().GetProperty("UrlKeyPrefix");
+                    var modelUrlKeyPrefix = modelUrlKeyProperty == null ? null : (string)modelUrlKeyProperty.GetValue(model, null);
+                    var expectedUrlKeyPrefix = string.IsNullOrEmpty(modelUrlKeyPrefix) ? null : "!" + modelUrlKeyPrefix;
+                    var currentUrlKeyPrefix = originalParams == null ? null : originalParams.FirstOrDefault(p => p.StartsWith("!", StringComparison.OrdinalIgnoreCase));
+
+                    if (expectedUrlKeyPrefix == currentUrlKeyPrefix)
+                    {
+                        paramsMapper.ResolveUrlParams(originalParams, requestContext);
+                    }
+                    else
+                    {
+                        this.GetPrefixParamsMapper(controller).ResolveUrlParams(originalParams, requestContext);
+                        RouteHelper.SetUrlParametersResolved();
+                    }
 
                     if (!proxyControl.ContentTypeName.IsNullOrEmpty())
                         controller.RouteData.Values.Add("contentTypeName", proxyControl.ContentTypeName);

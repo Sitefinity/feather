@@ -28,6 +28,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public string CssClass { get; set; }
 
         /// <summary>
+        /// Gets or sets the URL key prefix.
+        /// </summary>
+        /// <value>The URL key prefix.</value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
+        public virtual string UrlKeyPrefix { get; set; }
+
+        /// <summary>
         /// Gets an enumerable of the items that should be displayed.
         /// </summary>
         /// <value>
