@@ -127,6 +127,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         /// <summary>
         /// The initialize_ calls register virtual paths and initialize controllers.
         /// </summary>
+        [Ignore]
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Verifies that Initialize will call RegisterVirtualPaths and InitializeControllers methods.")]
@@ -259,6 +260,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
         /// <summary>
         /// The register controller_ dummy controller_ is registered in store.
         /// </summary>
+        [Ignore]
         [TestMethod]
         [Owner("Boyko-Karadzhov")]
         [Description("Checks whether RegisterController method registers the controller and its string resources, and in the same time no routes are registered.")]
