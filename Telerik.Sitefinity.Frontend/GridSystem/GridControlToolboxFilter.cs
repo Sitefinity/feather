@@ -28,7 +28,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// <returns><c>true</c> if it should be visible.</returns>
         public bool IsSectionVisible(IToolboxSection section)
         {
-            if (section.Name == GridWidgetRegistrator.GridSectionName && section.Title == GridWidgetRegistrator.GridSectionTitle)
+            if (section != null && section.Name == GridWidgetRegistrator.GridSectionName && section.Title == GridWidgetRegistrator.GridSectionTitle)
                 return SystemManager.GetModule("Feather") != null;
 
             return true;
