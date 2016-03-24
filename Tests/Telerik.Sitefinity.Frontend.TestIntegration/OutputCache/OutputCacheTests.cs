@@ -28,14 +28,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.OutputCache
             var pageUrl = "featherpage";
             var widgetName = "DateTimeWidet";
             var placeholder = "Contentplaceholder1";
-            var templateTitle = "Bootstrap.default";
             var url = UrlPath.ResolveAbsoluteUrl("~/" + pageUrl);
 
             try
             {
                 DateTimeController.Count = 0;
                 PageManager pageManager = PageManager.GetManager();
-                var template = pageManager.GetTemplates().Where(t => t.Name == templateTitle).FirstOrDefault();
+                var template = pageManager.GetTemplates().FirstOrDefault(t => (t.Name == "Bootstrap.default" && t.Title == "default") || t.Title == "Bootstrap.default");
                 Assert.IsNotNull(template, "Template was not found");
 
                 Guid pageId = FeatherServerOperations.Pages().CreatePageWithTemplate(template, pageTitle, pageUrl);

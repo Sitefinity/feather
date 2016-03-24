@@ -47,7 +47,7 @@ namespace Telerik.Sitefinity.Frontend
         private static void RegisterStringResources()
         {
             if (SystemManager.GetModule("Feather") == null)
-                ControllerContainerInitializer.RegisterStringResources();
+                new ControllerContainerInitializer().RegisterStringResources();
         }
 
         private static void AddWidgetValidating()
