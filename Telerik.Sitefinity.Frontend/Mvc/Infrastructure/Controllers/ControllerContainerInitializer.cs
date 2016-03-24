@@ -40,7 +40,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <value>
         /// The controller container assemblies.
         /// </value>
-        public static IEnumerable<Assembly> ControllerContainerAssemblies
+        public IEnumerable<Assembly> ControllerContainerAssemblies
         {
             get
             {
@@ -50,7 +50,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                     {
                         if (ControllerContainerInitializer.controllerContainerAssemblies == null)
                         {
-                            ControllerContainerInitializer.controllerContainerAssemblies = new ControllerContainerInitializer().RetrieveAssemblies();
+                            ControllerContainerInitializer.controllerContainerAssemblies = this.RetrieveAssemblies();
                         }
                     }
                 }
@@ -70,9 +70,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <summary>
         /// Registers the string resources.
         /// </summary>
-        public static void RegisterStringResources()
+        public void RegisterStringResources()
         {
-            ControllerContainerInitializer.ControllerContainerAssemblies
+            this.ControllerContainerAssemblies
                 .SelectMany(asm => asm.GetExportedTypes().Where(FrontendManager.ControllerFactory.IsController))
                 .ToList()
                 .ForEach(ControllerContainerInitializer.RegisterStringResources);
@@ -85,14 +85,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
-            this.RegisterVirtualPaths(ControllerContainerInitializer.ControllerContainerAssemblies);
+            this.RegisterVirtualPaths(this.ControllerContainerAssemblies);
 
-            var controllerTypes = this.GetControllers(ControllerContainerInitializer.ControllerContainerAssemblies);
+            var controllerTypes = this.GetControllers(this.ControllerContainerAssemblies);
             this.InitializeControllers(controllerTypes);
 
             this.InitializeCustomRouting();
 
-            this.RegisterPrecompiledViewEngines(ControllerContainerInitializer.ControllerContainerAssemblies);
+            this.RegisterPrecompiledViewEngines(this.ControllerContainerAssemblies);
         }
 
         /// <summary>
@@ -100,16 +100,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         public virtual void Uninitialize()
         {
-            ControllerContainerInitializer.RegisterStringResources();
+            this.RegisterStringResources();
 
             this.UninitializeGlobalFilters();
 
-            foreach (var assembly in ControllerContainerInitializer.ControllerContainerAssemblies)
+            foreach (var assembly in this.ControllerContainerAssemblies)
             {
                 this.UninitializeControllerContainer(assembly);
             }
 
-            ControllerContainerInitializer.ControllerContainerAssemblies = null;
+            this.ControllerContainerAssemblies = null;
 
             // Clears all controllers
             foreach (var ctrl in ControllerStore.Controllers().ToList())
