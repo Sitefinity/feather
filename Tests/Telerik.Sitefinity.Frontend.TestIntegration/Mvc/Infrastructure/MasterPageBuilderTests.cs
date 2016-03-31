@@ -9,6 +9,7 @@ using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc.TestUtilities.Data;
 using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.Web;
+using System.Text.RegularExpressions;
 
 namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Infrastructure
 {
@@ -49,8 +50,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Infrastructure
 
                 Assert.IsTrue(responseContent.Contains(descriptionTag), "The response content doesn't contain description meta tag.");
 
-                var contentWithoutDescr = responseContent.Replace(descriptionTag, string.Empty);
-                Assert.IsFalse(contentWithoutDescr.Contains(descriptionTag), "The response content contains description meta tag more than once.");
+                int descriptionTagCount = Regex.Matches(responseContent, Regex.Escape(descriptionTag)).Count;
+                Assert.IsFalse(descriptionTagCount == 1, "The response content contains description meta tag more than once.");
             }
         }
     }

@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <param name="currentPage">The current page.</param>
         /// <param name="totalPagesCount">The total pages count.</param>
         /// <param name="redirectUrlTemplate">The template of the URL used for redirecting.</param>
-        /// <returns></returns>
+        /// <returns>The "Pager" partial view result</returns>
         [OutputCache(Duration = 1)]
         public PartialViewResult Index(int currentPage, int totalPagesCount, string redirectUrlTemplate)
         {
@@ -29,15 +29,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
 
             // Build the pager
             int startIndex = 1;
-            if (model.CurrentPage > model.DisplayCount)
+            if (model.CurrentPage <= model.TotalPagesCount)
             {
                 if (model.CurrentPage <= 0)
                     model.CurrentPage = 1;
 
-                startIndex = ((int)Math.Floor((double)(model.CurrentPage - 1) / model.DisplayCount) * model.DisplayCount) + 1;
+                startIndex = ((model.CurrentPage - 1) * model.DisplayCount) + 1;
             }
 
-            int endIndex = Math.Min(model.TotalPagesCount, (startIndex + model.DisplayCount) - 1);
+            int endIndex = startIndex + model.DisplayCount - 1;
 
             // Check to see if we need a Previous Button Node
             if (startIndex > model.DisplayCount)
@@ -57,7 +57,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             }
 
             // Check to see if we need a Next Button Node
-            if (endIndex < model.TotalPagesCount)
+            if (endIndex <= (model.DisplayCount * (model.TotalPagesCount - 1)))
             {
                 model.NextNode = new Pager.PagerNumericItem(endIndex + 1);
             }
