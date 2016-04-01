@@ -28,7 +28,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels
         /// <param name="currentPage">The current page.</param>
         /// <param name="totalPagesCount">The total pages count.</param>
         /// <param name="redirectUrlTemplate">The redirect URL template.</param>
-        /// <param name="redirectUrlTemplate">The amount of page nodes to render</param>
+        /// <param name="displayCount">The amount of page nodes to render</param>
         public PagerViewModel(int currentPage, int totalPagesCount, string redirectUrlTemplate, int displayCount)
         {
             this.CurrentPage = currentPage;

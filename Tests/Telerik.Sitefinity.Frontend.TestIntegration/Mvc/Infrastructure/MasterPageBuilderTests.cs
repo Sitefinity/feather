@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MbUnit.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
@@ -47,10 +48,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Infrastructure
 
                 string responseContent = WebRequestHelper.GetPageWebContent(url);
 
-                Assert.IsTrue(responseContent.Contains(descriptionTag), "The response content doesn't contain description meta tag.");
-
-                var contentWithoutDescr = responseContent.Replace(descriptionTag, string.Empty);
-                Assert.IsFalse(contentWithoutDescr.Contains(descriptionTag), "The response content contains description meta tag more than once.");
+                var responseContentDescriptionTagsCount = Regex.Matches(responseContent, descriptionTag).Count;
+                Assert.IsTrue(responseContentDescriptionTagsCount == 1, "The response content does not contain description meta tag exactly once.");
             }
         }
     }
