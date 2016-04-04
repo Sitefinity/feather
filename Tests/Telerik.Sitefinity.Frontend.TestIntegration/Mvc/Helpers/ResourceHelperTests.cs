@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using MbUnit.Framework;
-using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations.ActionFilters;
@@ -47,7 +47,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         /// Ensures that a JavaScript is registered only in ScriptManager for hybrid pages.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that a JavaScript is registered only in ScriptManager for hybrid pages.")]
         public void RegisterScript_HybridPage_AddedInScriptManagerOnly()
         {
@@ -68,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
                 Assert.IsTrue(string.IsNullOrEmpty(result.Content), "The script should not be added outside of ScriptManager.");
 
                 var httpContext = ActionExecutionRegister.ExecutedActionInfos[i].CurrentHttpContext;
-                var scriptManagerScripts = System.Web.UI.ScriptManager.GetCurrent(httpContext.Handler as System.Web.UI.Page).Scripts;
+                var scriptManagerScripts = System.Web.UI.ScriptManager.GetCurrent(httpContext.Handler.GetPageHandler()).Scripts;
                 Assert.AreEqual(3, scriptManagerScripts.Count(), "The script is not added correctly");
             }          
         }
@@ -77,7 +77,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         /// Ensures that a JavaScript is registered only in ScriptManager for pure MVC pages.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that a JavaScript is registered only in ScriptManager for pure MVC pages.")]
         public void RegisterScript_PureMvcPage_AddedOnce()
         {
@@ -121,7 +121,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         }
 
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that when two widgets on a page based on a layout register the same script in two sections only the reference in the top section is rendered.")]
         public void PageBasedOnLayoutTwoWidgets_RegisterBottomAndTopSameScript_TopReferenceRendered()
         {
@@ -143,7 +143,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         }
 
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that when two widgets on a page based on a layout register the same script, one inline and one on in top section, the one in the section is rendered.")]
         public void PageBasedOnLayoutTwoWidgets_RegisterInlineAndTopSameScript_TopReferenceRendered()
         {
@@ -164,7 +164,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Helpers
         }
 
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that when two widgets on a page based on a layout register the same script, both inline, only one is rendered.")]
         public void PageBasedOnLayoutTwoWidgets_RegisteredScriptInline_RenderedOnce()
         {

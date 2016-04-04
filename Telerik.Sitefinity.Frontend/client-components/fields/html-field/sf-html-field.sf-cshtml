@@ -1,12 +1,13 @@
 ﻿<textarea id="editor" style="height: 340px;"
-    kendo-editor ng-model="sfModel"
+    kendo-editor="editorWidget" ng-model="sfModel"
+	k-scope-field="editorWidget"
     sf-toggle-commands="strikethrough, justifyFull, subscript, superscript, fontName, fontSize, foreColor, backColor, print"
     k-encoded="false"
     k-stylesheets='["{{htmlFieldCssUrl}}"]',
     k-tools='[
     "formatting",
-    "bold", "italic", "underline", "trikethrough",
-    "justifyLeft", "justifyCenter", "justifyRight",
+    "bold", "italic", "underline", "strikethrough",
+    "justifyLeft", "justifyCenter", "justifyRight", "justifyFull",
     "insertUnorderedList", "insertOrderedList", "indent", "outdent",
     {
         name: "createLink",
@@ -23,23 +24,23 @@
     },
     {
         name: "insertVideo",
-        template: "<a href=\"\" class=\"k-button custom-tool\" title=\"@(Res.Get<ClientComponentsResources>().InsertVideo)\" ng-click=\"openVideoSelector()\"><span class=\"glyphicon glyphicon-facetime-video\"></span></a>"
+        template: "<a href=\"\" class=\"k-tool custom-tool\" title=\"@(Res.Get<ClientComponentsResources>().InsertVideo)\" ng-click=\"openVideoSelector()\"><span class=\"glyphicon glyphicon-facetime-video\"></span></a>"
     },
     "createTable", "addColumnLeft", "addColumnRight", "addRowAbove", "addRowBelow", "deleteRow", "deleteColumn",
     "cleanFormatting",
-    "strikethrough", "justifyFull", "subscript", "superscript","fontName", "fontSize", "foreColor", "backColor", "print",
+    "strikethrough", "subscript", "superscript","fontName", "fontSize", "foreColor", "backColor", "print",
     {
         name: "showAll",
-        template: "<a class=\"custom-tool show-all-button k-button\" title=\"@(Res.Get<ClientComponentsResources>().AllTools)\" ng-click=\"toggleAllTools()\"><span class=\"glyphicon glyphicon-option-horizontal\"></span></a>"
-    },
-    {
-        name: "htmlView",
-        template: "<button class=\"custom-tool k-button pull-right js-custom-tool\" ng-click=\"toggleHtmlView()\">\{\{htmlViewLabel\}\}</button>"
+        template: "<a class=\"k-tool custom-tool show-all-button\" title=\"@(Res.Get<ClientComponentsResources>().AllTools)\" ng-click=\"toggleAllTools()\"><span class=\"glyphicon glyphicon-option-horizontal\"></span></a>"
     },
     {
         name: "fullscreen",
-        template: "<a class=\"k-button js-custom-tool custom-tool\" title=\"Fullscreen\" ng-click=\"toggleFullScreen()\"><span class=\"js-fullScreen glyphicon\"></span></a>"
-    }
+        template: "<a class=\"k-tool js-custom-tool custom-tool\" title=\"Fullscreen\" ng-click=\"toggleFullScreen()\"><span class=\"js-fullScreen glyphicon\"></span></a>"
+	},
+    {
+        name: "htmlView",
+        template: "<button class=\"custom-tool btn btn-default btn-xs pull-right js-htmlview js-custom-tool\" ng-click=\"toggleHtmlView()\">\{\{htmlViewLabel\}\}</button>"
+	}
     ]'>
 </textarea>
 
@@ -50,7 +51,7 @@
      modal
      size="normal"
      existing-scope="true"
-     window-class="sf-designer-dlg sf-timespan-selector-dlg"
+     window-class="sf-designer-dlg sf-timespan-selector-dlg sf-backend-wrp"
      dialog-controller="{{sfMediaPropertiesController}}">
 </div>
 

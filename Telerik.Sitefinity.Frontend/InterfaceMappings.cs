@@ -11,6 +11,8 @@ namespace Telerik.Sitefinity.Frontend
         public override void Load()
         {
             Bind<IDesignerModel>().To<DesignerModel>();
+            Bind<IGridDesignerModel>().To<GridDesignerModel>();
+            Bind<IPersonalizationDesignerModel>().To<PersonalizationDesignerModel>();
         }
     }
 }

@@ -45,7 +45,7 @@
                 redirectTo: '/' + resolveDefaultView(serverData)
             });
 
-        $httpProvider.interceptors.push(function () {
+        $httpProvider.interceptors.push(function ($q, $window) {
             return {
                 'request': function (config) {
                     if (config && config.method === 'GET' && config.headers && config.headers.SF_UI_CULTURE === undefined && config.url && endsWith(config.url, '.sf-cshtml')) {
@@ -53,6 +53,14 @@
                     }
 
                     return config;
+                },
+                'responseError': function (rejection) {
+                    if (rejection.status === 401 || rejection.status === 403) {
+                        rejection.data = rejection.statusText;
+                        $window.onbeforeunload = null;
+                        $window.location.reload();
+                    }
+                    return $q.reject(rejection);
                 }
             };
         });
@@ -92,8 +100,14 @@
             restrict: 'AC',
             link: function (scope, element, attr) {
                 var placeholder = $('[placeholder="' + attr.section + '"]');
+                var selectedScope;
+                if (attr.useElementScope === 'true') {
+                    selectedScope = scope;
+                } else {
+                    selectedScope = angular.element('.modal-body').scope();
+                }
                 if (placeholder.length > 0) {
-                    placeholder.html($compile(element.html())(scope));
+                    placeholder.html($compile(element.html())(selectedScope));
                 }
             }
         };
@@ -118,7 +132,7 @@
                 if (data) {
                     $scope.properties = propertyService.toAssociativeArray(data.Items);
                 }
-            }, 
+            },
             function (data) {
                 $scope.feedback.showError = true;
                 if (data)
@@ -224,7 +238,7 @@
                     $modalInstance.close();
                 } catch (e) { }
 
-                if (typeof ($telerik) != 'undefined')
+                if (typeof ($telerik) !== 'undefined')
                     $telerik.$(document).trigger('modalDialogClosed');
             };
 
@@ -233,7 +247,7 @@
             $scope.isCurrentView = function (view) {
                 return $route.current && $route.current.params.view === view;
             };
-            
+
             $scope.hideError = function () {
                 $scope.feedback.showError = false;
                 $scope.feedback.errorMessage = null;

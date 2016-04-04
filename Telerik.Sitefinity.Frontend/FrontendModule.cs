@@ -2,25 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using Ninject;
-using Telerik.Microsoft.Practices.Unity;
+using Telerik.OpenAccess;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
-using Telerik.Sitefinity.Frontend.Designers;
-using Telerik.Sitefinity.Frontend.FilesMonitoring;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
-using Telerik.Sitefinity.Frontend.Resources;
-using Telerik.Sitefinity.Frontend.Services.FilesService;
-using Telerik.Sitefinity.Frontend.Services.ListsService;
-using Telerik.Sitefinity.Frontend.Services.ReviewsService;
-using Telerik.Sitefinity.Modules.Pages;
-using Telerik.Sitefinity.Modules.Pages.Configuration;
-using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
-using Telerik.Sitefinity.Services.Comments.Notifications;
 
 namespace Telerik.Sitefinity.Frontend
 {
@@ -82,10 +69,7 @@ namespace Telerik.Sitefinity.Frontend
         /// <param name="initializer">The initializer.</param>
         public override void Install(SiteInitializer initializer)
         {
-            if (this.FrontendServiceExists())
-            {
-                this.InitialUpgrade(initializer);
-            }
+            FrontendModuleInstaller.Install(initializer);
         }
 
         /// <summary>
@@ -99,14 +83,14 @@ namespace Telerik.Sitefinity.Frontend
             Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
             Bootstrapper.Initialized += this.Bootstrapper_Initialized;
 
-            SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
-            SystemManager.RegisterServiceStackPlugin(new FilesServiceStackPlugin());
-            SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
+            this.ninjectDependencyResolver = this.CreateKernel();
 
-            this.controllerAssemblies = new ControllerContainerInitializer().RetrieveAssemblies();
+            FrontendModuleInstaller.Initialize(this.DependencyResolver);
 
-            this.ninjectDependencyResolver = new StandardKernel();
-            this.ninjectDependencyResolver.Load(this.controllerAssemblies);
+            App.WorkWith()
+                .Module(settings.Name)
+                    .Initialize()
+                    .Configuration<FeatherConfig>();
         }
 
         /// <summary>
@@ -115,12 +99,20 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         public override void Unload()
         {
-            if (this.ninjectDependencyResolver != null && !this.ninjectDependencyResolver.IsDisposed)
-                this.ninjectDependencyResolver.Dispose();
-
-            Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
-
+            this.Uninitialize();
+            FrontendModuleUninstaller.Unload(this.initializers.Value);
             base.Unload();
+        }
+
+        /// <summary>
+        /// Uninstall the module from Sitefinity system. Deletes the module artifacts added with Install method.
+        /// </summary>
+        /// <param name="initializer">The site initializer instance.</param>
+        public override void Uninstall(SiteInitializer initializer)
+        {
+            this.Uninitialize();
+            FrontendModuleUninstaller.Uninstall(this.initializers.Value);
+            base.Uninstall(initializer);
         }
 
         /// <summary>
@@ -131,18 +123,7 @@ namespace Telerik.Sitefinity.Frontend
         public override void Upgrade(SiteInitializer initializer, Version upgradeFrom)
         {
             base.Upgrade(initializer, upgradeFrom);
-
-            if (upgradeFrom < new Version(1, 2, 140, 0))
-            {
-                this.DeleteOldGridSection();
-                this.UpdateContentBlockTitle();
-            }
-
-            if (upgradeFrom <= new Version(1, 2, 180, 1))
-            {
-                this.RemoveMvcWidgetToolboxItems();
-                this.RenameDynamicContentMvcToolboxItems();
-            }
+            FrontendModuleUpgrader.Upgrade(upgradeFrom);
         }
 
         /// <summary>
@@ -150,7 +131,21 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         protected override ConfigSection GetModuleConfig()
         {
-            return null;
+            return Config.Get<FeatherConfig>();
+        }
+
+        /// <summary>
+        /// Creates Ninject kernel.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IKernel CreateKernel()
+        {
+            var bootstrapper = new Ninject.Web.Common.Bootstrapper();
+
+            if (bootstrapper.Kernel != null)
+                return bootstrapper.Kernel;
+
+            return new StandardKernel();
         }
 
         /// <summary>
@@ -161,215 +156,21 @@ namespace Telerik.Sitefinity.Frontend
         protected virtual void Bootstrapper_Initialized(object sender, ExecutedEventArgs e)
         {
             if (e.CommandName == "Bootstrapped")
-            {
-                var resourcesInitializer = new ResourcesInitializer();
-                resourcesInitializer.Initialize();
-
-                var fileMonitoringInitilizer = new FileMonitoringInitializer();
-                fileMonitoringInitilizer.Initialize();
-
-                var controllerContainerInitializer = new ControllerContainerInitializer();
-                controllerContainerInitializer.Initialize(this.controllerAssemblies);
-                this.controllerAssemblies = null; // We won't be needing those anymore. Set them free.
-
-                var layoutsInitializer = new LayoutInitializer();
-                layoutsInitializer.Initialize();
-
-                var designerInitializer = new DesignerInitializer();
-                designerInitializer.Initialize();
-
-                ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, Telerik.Sitefinity.Frontend.Modules.Comments.ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
-            }
+                FrontendModuleInstaller.Bootstrapper_Initialized(this.initializers.Value);
         }
-
-        private void InitialUpgrade(SiteInitializer initializer)
+        
+        // Called both by Unload and Uninstall
+        private void Uninitialize()
         {
-            this.RemoveFrontendService();
-            this.RenameControllers(initializer);
-            this.ClearToolboxItems();
+            if (this.ninjectDependencyResolver != null && !this.ninjectDependencyResolver.IsDisposed)
+                this.ninjectDependencyResolver.Dispose();
+
+            Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
         }
 
-        private void ClearToolboxItems()
-        {
-            var configManager = ConfigManager.GetManager();
-            var toolboxesConfig = configManager.GetSection<ToolboxesConfig>();
-
-            var pagesToolbox = toolboxesConfig.Toolboxes["PageControls"];
-            if (pagesToolbox == null)
-                return;
-
-            var mvcWidgetsSection = pagesToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
-            if (mvcWidgetsSection != null)
-            {
-                this.RemoveToolboxItemIfExists(mvcWidgetsSection, "ContentBlock");
-                this.RemoveToolboxItemIfExists(mvcWidgetsSection, "Navigation");
-                this.RemoveToolboxItemIfExists(mvcWidgetsSection, "News");
-
-                configManager.SaveSection(toolboxesConfig);
-            }
-        }
-
-        private void RemoveToolboxItemIfExists(ToolboxSection mvcWidgetsSection, string toolName)
-        {
-            var tool = mvcWidgetsSection.Tools.FirstOrDefault<ToolboxItem>(t => t.Name == toolName);
-            if (tool != null)
-                mvcWidgetsSection.Tools.Remove(tool);
-        }
-
-        private void RenameControllers(SiteInitializer initializer)
-        {
-            var manager = initializer.PageManager;
-            var controllerNameProperties = manager.GetControls<ControlData>()
-                .Where(c => c.ObjectType == "Telerik.Sitefinity.Mvc.Proxy.MvcControllerProxy" || c.ObjectType == "Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.MvcWidgetProxy, Telerik.Sitefinity.Frontend")
-                .SelectMany(c => c.Properties.Where(p => p.Name == "ControllerName"));
-
-            foreach (var property in controllerNameProperties)
-            {
-                if (property.Value == "News.Mvc.Controllers.NewsController")
-                {
-                    property.Value = "Telerik.Sitefinity.Frontend.News.Mvc.Controllers.NewsController";
-                }
-                else if (property.Value == "ContentBlock.Mvc.Controllers.ContentBlockController")
-                {
-                    property.Value = "Telerik.Sitefinity.Frontend.ContentBlock.Mvc.Controllers.ContentBlockController";
-                }
-                else if (property.Value == "Navigation.Mvc.Controllers.NavigationController")
-                {
-                    property.Value = "Telerik.Sitefinity.Frontend.Navigation.Mvc.Controllers.NavigationController";
-                }
-                else if (property.Value == "SocialShare.Mvc.Controllers.SocialShareController")
-                {
-                    property.Value = "Telerik.Sitefinity.Frontend.SocialShare.Mvc.Controllers.SocialShareController";
-                }
-                else if (property.Value == "DynamicContent.Mvc.Controllers.DynamicContentController")
-                {
-                    property.Value = "Telerik.Sitefinity.Frontend.DynamicContent.Mvc.Controllers.DynamicContentController";
-                }
-            }
-        }
-
-        private void RemoveMvcWidgetToolboxItems()
-        {
-            var configManager = ConfigManager.GetManager();
-            using (new ElevatedConfigModeRegion())
-            {
-                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
-                var pageControls = toolboxConfig.Toolboxes["PageControls"];
-
-                foreach (var section in pageControls.Sections)
-                {
-                    var widgets = section.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.", StringComparison.Ordinal) && !t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.DynamicContent", StringComparison.Ordinal)).ToArray();
-                    foreach (ToolboxItem tool in widgets)
-                    {
-                        section.Tools.Remove(tool);
-                    }
-                }
-
-                var mvcWidgetsSection = pageControls.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
-                if (mvcWidgetsSection != null)
-                {
-                    pageControls.Sections.Remove(mvcWidgetsSection);
-                }
-
-                configManager.SaveSection(toolboxConfig);
-            }
-        }
-
-        private void RenameDynamicContentMvcToolboxItems()
-        {
-            var configManager = ConfigManager.GetManager();
-            using (new ElevatedConfigModeRegion())
-            {
-                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
-                var pageControls = toolboxConfig.Toolboxes["PageControls"];
-
-                foreach (var section in pageControls.Sections)
-                {
-                    var widgets = section.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.DynamicContent", StringComparison.Ordinal)).ToArray();
-                    foreach (ToolboxItem tool in widgets)
-                    {
-                        tool.CssClass = "sfNewsViewIcn sfMvcIcn";
-                        var indexOfMvcSuffix = tool.Title.LastIndexOf(" MVC", StringComparison.Ordinal);
-                        tool.Title = tool.Title.Substring(0, indexOfMvcSuffix);
-                    }
-                }
-
-                configManager.SaveSection(toolboxConfig);
-            }
-        }
-
-        private void RemoveFrontendService()
-        {
-            var configManager = ConfigManager.GetManager();
-            var systemConfig = configManager.GetSection<SystemConfig>();
-            systemConfig.SystemServices.Remove(FrontendModule.FrontendServiceName);
-            configManager.SaveSection(systemConfig);
-        }
-
-        private bool FrontendServiceExists()
-        {
-            var systemConfig = Config.Get<SystemConfig>();
-            return systemConfig.SystemServices.ContainsKey(FrontendModule.FrontendServiceName);
-        }
-
-        private void DeleteOldGridSection()
-        {
-            var configManager = ConfigManager.GetManager();
-            using (new ElevatedConfigModeRegion())
-            {
-                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
-                var layoutsToolbox = toolboxConfig.Toolboxes["PageLayouts"];
-                if (layoutsToolbox != null)
-                {
-                    var htmlLayoutsSection = layoutsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "HtmlLayouts");
-                    if (htmlLayoutsSection != null)
-                    {
-                        layoutsToolbox.Sections.Remove(htmlLayoutsSection);
-                        configManager.SaveSection(toolboxConfig);
-                    }
-                }
-            }
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Telerik.Sitefinity.Pages.Model.ControlData.set_Caption(System.String)")]
-        private void UpdateContentBlockTitle()
-        {
-            var configManager = ConfigManager.GetManager();
-            using (new ElevatedConfigModeRegion())
-            {
-                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
-                var controlsToolbox = toolboxConfig.Toolboxes["PageControls"];
-                if (controlsToolbox != null)
-                {
-                    var mvcWidgetsSection = controlsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
-                    if (mvcWidgetsSection != null)
-                    {
-                        var contentBlockTool = mvcWidgetsSection.Tools.FirstOrDefault<ToolboxItem>(t => t.Name == "ContentBlock");
-                        if (contentBlockTool != null)
-                        {
-                            contentBlockTool.Title = "Content Block";
-                            configManager.SaveSection(toolboxConfig);
-                        }
-                    }
-                }
-            }
-
-            var pageManager = PageManager.GetManager();
-            using (new ElevatedModeRegion(pageManager))
-            {
-                var contentBlocks = pageManager.GetControls<ControlData>().Where(c => c.ObjectType == "Telerik.Sitefinity.Mvc.Proxy.MvcControllerProxy" && c.Caption == "ContentBlock").ToArray();
-                foreach (var contentBlock in contentBlocks)
-                {
-                    contentBlock.Caption = "Content Block";
-                }
-
-                pageManager.SaveChanges();
-            }
-        }
-
+        private Lazy<IEnumerable<IInitializer>> initializers = new Lazy<IEnumerable<IInitializer>>(() =>
+            typeof(FrontendModule).Assembly.GetTypes().Where(t => typeof(IInitializer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).Select(t => Activator.CreateInstance(t) as IInitializer).ToList());
+        
         private IKernel ninjectDependencyResolver;
-        private IEnumerable<Assembly> controllerAssemblies;
-
-        private const string FrontendServiceName = "Telerik.Sitefinity.Frontend";
     }
 }

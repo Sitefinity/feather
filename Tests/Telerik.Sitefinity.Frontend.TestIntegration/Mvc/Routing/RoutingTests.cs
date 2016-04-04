@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using MbUnit.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
+using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
 using Telerik.Sitefinity.Mvc.Proxy;
 using Telerik.Sitefinity.News.Model;
 using Telerik.Sitefinity.TestIntegration.Data.Content;
@@ -20,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Routing
         /// Ensures that when two MVC widgets are on the page the page can be requested successfully when the second widget does not resolve the URL.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that when two MVC widgets are on the page the page can be requested successfully when the second widget does not resolve the URL.")]
         public void RequestDetailsPage_WithNewsWidgetAndContentBlock_ResponseOk()
         {
@@ -56,6 +57,35 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Routing
                 {
                     ServerOperations.News().DeleteNewsItem(newsItemName);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Ensures that attribute routing with relative routes on controller actions works.
+        /// </summary>
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Ensures that attribute routing with relative routes on controller actions works.")]
+        public void RequestPage_WithAttributeRoutedWidget_RoutedCorrectly()
+        {
+            using (var contentGenerator = new PageContentGenerator())
+            {
+                var testName = MethodInfo.GetCurrentMethod().Name;
+                var pageNamePrefix = testName + "MvcPage";
+                var pageTitlePrefix = testName + "Mvc Page";
+                var urlNamePrefix = testName + "mvc-page";
+                var index = 1;
+
+                var mvcProxy = new MvcControllerProxy();
+                mvcProxy.ControllerName = typeof(AttributeRoutingTestController).FullName;
+
+                contentGenerator.CreatePageWithWidget(mvcProxy, string.Empty, pageNamePrefix, pageTitlePrefix, urlNamePrefix, 1);
+
+                string url = UrlPath.ResolveAbsoluteUrl("~/" + urlNamePrefix + index + "/" + AttributeRoutingTestController.RoutePrefix + "/" + AttributeRoutingTestController.RelativeRoute);
+                string content = string.Empty;
+
+                Assert.DoesNotThrow(() => content = WebRequestHelper.GetPageWebContent(url), "Could not get the page successfully.");
+                Assert.Contains(content, AttributeRoutingTestController.Content, "The correct action was not rendered.");
             }
         }
 

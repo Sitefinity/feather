@@ -1,23 +1,27 @@
-﻿using System;
+﻿﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Hosting;
 using System.Web.UI;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Modules.Newsletters;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.HtmlParsing;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.Configuration;
-using Telerik.Sitefinity.Web.UI;
+﻿using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.GridSystem
 {
     /// <summary>
     /// The LayoutControl comprises the basic building block of Sitefinity layouts. GridControl adds the ability to use pure HTML templates.
     /// </summary>
+    [RequiresEmbeddedWebResource("Telerik.Sitefinity.Resources.Themes.LayoutsBasics.css", "Telerik.Sitefinity.Resources.Reference")]
     public class GridControl : LayoutControl
     {
         /// <summary>
@@ -25,6 +29,12 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// </summary>
         protected override ITemplate GetTemplate()
         {
+            if (SystemManager.GetModule("Feather") == null)
+            {
+                var markup = this.ProcessLayoutString(Res.Get<GridDesignerResources>().GridDoesNotWork, ensureSfColsWrapper: true);
+                return ControlUtilities.GetTemplate(null, markup.GetHashCode().ToString(CultureInfo.InvariantCulture), null, markup);
+            }
+
             var layout = this.Layout;
             bool isVirtualPath = layout.StartsWith("~/", StringComparison.Ordinal);
             bool isHtmlTemplate = layout.EndsWith(".html", StringComparison.OrdinalIgnoreCase) || layout.EndsWith(".htm", StringComparison.Ordinal);

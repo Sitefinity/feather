@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Web;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.TestUI.Arrangements;
-using Telerik.Sitefinity.TestUI.Arrangements.Core.Framework.Attributes;
+using Telerik.Sitefinity.TestArrangementService.Attributes;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -16,4 +16,4 @@ using Telerik.Sitefinity.TestUI.Arrangements.Core.Framework.Attributes;
 
 [assembly: PreApplicationStartMethod(typeof(ApplicationPreStart), "Init")]
 [assembly: UIArrangement]
-[assembly: ControllerContainer] 
+[assembly: ControllerContainer]

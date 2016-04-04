@@ -11,9 +11,8 @@
                   sf-popover-append-to-body="true"
                   sf-popover-title="{{item.Title}}"
                   sf-popover-content="
-                          <p>{{item.FoldersCount}}</p>
-                          <p>{{item.ItemsCount}}</p>
-                          <p>@(Res.Get<ClientComponentsResources>().CreatedOn) {{$parent.$parent.$parent.getDateCreated(item) | date : 'M/d/yyyy h:mm'}}</p>
+                          {{item.FoldersCount}}<br/>
+                          {{item.ItemsCount}}
                   ">
               i
           </span>
@@ -21,7 +20,7 @@
           <div class="Media-file-wrapper" ng-click="select(item)">
               <div class="Media-file-thumb">
                   <div class="Media-file-thumb-holder">
-                      <div><i class="glyphicon glyphicon-folder-close"></i></div>
+                      <div><i class="icon-folder"></i></div>
                       <strong>{{item.Title}}</strong>
                   </div>
               </div>

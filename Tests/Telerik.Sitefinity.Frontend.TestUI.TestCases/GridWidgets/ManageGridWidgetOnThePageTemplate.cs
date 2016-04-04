@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Wrappers.Backend.PageEditor;
+using Telerik.Sitefinity.TestUI.Framework.Utilities;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
 {
@@ -21,14 +22,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// UI test ManageGridWidgetOnThePageTemplate
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team2),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void ManageGridWidgetOnThePageTemplate()
         {
-            BAT.Macros().NavigateTo().Design().PageTemplates();
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/design/pagetemplates", true, null, new HtmlFindExpression("class=~sfMain")));
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
-            BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropLayoutWidgetToPlaceholder(LayoutCaption);
             BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption, GridCount1);
             this.DuplicateGridElement();
@@ -77,7 +78,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
             BAT.Arrange(this.TestName).ExecuteTearDown();
         }
 
-        private const string PageTemplateName = "Bootstrap.defaultNew";
+        private const string PageTemplateName = "defaultNew";
         private const string DuplicateOperation = "Duplicate";
         private const string DeleteOperation = "Delete";
         private const string LayoutCaption = "grid-3+9";

@@ -11,33 +11,58 @@
 		&:last-child
 			margin-right: 0
 
+		.k-editor-toolbar-wrap
+			position: relative
+			padding-left: 0
+
 		.k-editor-toolbar
 			position: relative
 			margin: -23px 0 0
-			padding: 10px 20px
-			min-height: 34px
+			padding: 0 110px 0 20px
+			min-height: 50px
 			background: #f2f2f2
+
+			&.sf-toolbar-short
+				position: absolute
+				top: 0
+				left: 0
+				right: 0
+				background: transparent
+				z-index: 10
+
+			&.sf-toolbar-full
+				li
+					opacity: 0.4
+
+				> li:last-child,
+				> li:nth-last-child(2)
+					position: static
 
 			> li:last-child,
 			> li:nth-last-child(2)
 				position: absolute
-				top: 10px
 
 			> li:last-child
+				top: 10px
 				right: 20px
 
 			> li:nth-last-child(2)
-				right: 55px
+				top: 0
+				right: 65px
 
 			.k-tool-group
 				.custom-tool
-					height: 30px
+					color: #797979
+
+					&:hover
+						color: #000
 
 					.glyphicon
-						padding-top: 2px
+						padding-top: 11px
 
-					.glyphicon-option-horizontal
-						padding-top: 4px
+					&.btn
+						margin-top: 1px
+						margin-right: -12px
 
 		.k-editable-area
 			vertical-align: top
@@ -56,10 +81,24 @@
 				padding: 20px
 				box-sizing: border-box
 
+		.k-tool
+			transition: 0.2s
+			&:hover
+				background: #ddd
+				.k-tool-icon
+					opacity: 1
+
+		.k-state-selected,
+		.k-tool.k-state-active
+				background: #ddd
+
 
 .kendo-content-block
 	display: block
 	margin: 3px -20px -20px
+
+	&.kendo-content-block--sh
+		margin: -21px -20px -51px
 
 .modal-full-screen
 	width: 100% !important
@@ -91,12 +130,3 @@
 
 .editor-lg
 	height: 540px
-
-
-.k-tool:hover
-	background-color: #b6bdca
-	.k-createLink
-		background-position: -312px -48px
-
-
-

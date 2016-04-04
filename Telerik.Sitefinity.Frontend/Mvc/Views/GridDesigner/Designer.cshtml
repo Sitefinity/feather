@@ -1,0 +1,65 @@
+@model Telerik.Sitefinity.Frontend.Mvc.Models.IGridDesignerModel
+
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers
+
+<div class="sf-backend-wrp">
+    <div class="grid-designer" modal dialog-controller="GridDialogCtrl" template-url="dialog-template" auto-open="true" window-class="sf-designer-dlg sf-backend-wrp">
+	    <server-data update-service-url="@Model.GridUpdateServiceUrl" control-id='@Model.ControlId'></server-data>
+
+	    <script type="text/ng-template" id="dialog-template">
+		    <div class="modal-header sf-widget-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel($event)">&times;</button>
+			    <h3 class="modal-title">@Html.Raw(Model.GridTitle)</h3>
+		    </div>
+
+		    <div class="modal-body">
+			    <sf-loading ng-show="feedback.showLoadingIndicator"></sf-loading>
+
+			    <div ng-show="feedback.showError" class="alert alert-danger">
+				    <a class="close" data-dismiss="alert" ng-click="hideError()">&times;</a>
+				    <strong>@Html.Resource("Error")</strong> <span ng-bind="feedback.errorMessage"></span>
+			    </div>
+
+                <tabset class="nav-tabs-wrapper">
+                    <tab heading="@Html.Resource("Classes")">
+			            <h3>
+                            @Html.Resource("Classes")
+                        </h3>
+
+                        <div data-ng-repeat="item in gridElements" class="form-group">
+                            <label for="prop-{{item.name}}" ng-bind="item.name"></label>
+                            <input id="prop-{{item.css}}" type="text" class="form-control" ng-model="item.css"/>
+                        </div>
+                    </tab>
+                    <tab heading="@Html.Resource("Labels")">
+                        <h3>
+                            @Html.Resource("Labels")
+                        </h3>
+
+                        <p class="description-note">@Html.Resource("LabelForYourConvenienceOnly")</p>
+
+                        <div data-ng-repeat="item in gridElements|filter:{isPlaceholder:true}" class="form-group">
+                            <label for="prop-{{item.name}}" ng-bind="item.name"></label>
+                            <input id="prop-{{item.label}}" type="text" class="form-control" ng-model="item.label"/>
+                        </div>	
+                    </tab>
+                </tabset>
+
+		    </div>
+
+		    <div class="modal-footer" ng-show="!feedback.showLoadingIndicator">
+			    <button class="btn btn-primary pull-left" ng-click="save()">@Html.Resource("Save")</button>
+			    <a class="btn btn-link pull-left" data-dismiss="modal" ng-click="cancel()">@Html.Resource("Cancel")</a>
+            </div>
+
+	    </script>
+    </div>
+</div>
+
+@Html.StyleSheet(Url.WidgetContent("assets/dist/css/sitefinity-backend.min.css"))
+
+@Html.Script(Url.WidgetContent("~/Telerik.Sitefinity.Frontend/ServerContext.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/server-data.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/grid-designer.js"))
+@Html.Script(Url.WidgetContent("Mvc/Scripts/Bootstrap/js/bootstrap.min.js"))

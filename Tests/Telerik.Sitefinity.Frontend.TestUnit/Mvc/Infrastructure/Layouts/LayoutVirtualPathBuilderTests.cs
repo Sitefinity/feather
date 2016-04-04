@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Layouts
 
             // Act
             var layoutVirtualPathBuilder = new DummyLayoutVirtualPathBuilder();
-            var resultVirtualPath = layoutVirtualPathBuilder.BuildPathFromTitle(templateTitle);
+            var resultVirtualPath = layoutVirtualPathBuilder.BuildPathFromName(templateTitle);
 
             // Assert
             Assert.AreEqual(expectedVirtualPath, resultVirtualPath, "The virtual path is not constructed correctly.");

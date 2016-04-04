@@ -87,6 +87,16 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return url;
         }
 
+        /// <summary>
+        /// Checks whether a given package exists.
+        /// </summary>
+        /// <param name="packageName">Name of the package.</param>
+        public bool PackageExists(string packageName)
+        {
+            var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(packageName));
+            return path != null && Directory.Exists(path);
+        }
+
         #endregion
 
         #region Private methods
@@ -117,6 +127,38 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var keys = requestContext.RouteData.Values["Params"] as string[];
 
             return (keys != null && keys.Length > 0) ? keys[0] : null;
+        }
+
+        /// <summary>
+        /// Gets the package from template.
+        /// </summary>
+        /// <param name="template">The template.</param>
+        /// <returns></returns>
+        private string GetPackageFromTemplate(PageTemplate template)
+        {
+            var currentTemplate = template;
+            while (currentTemplate != null)
+            {
+                var name = currentTemplate.Name ?? (currentTemplate.Title != null ? currentTemplate.Title.ToString() : null);
+                if (!name.IsNullOrEmpty())
+                {
+                    var parts = name.Split('.');
+                    if (parts.Length > 1)
+                    {
+                        var expectedPackageName = this.StripInvalidCharacters(parts[0]);
+                        var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
+                        if (path != null && Directory.Exists(path))
+                        {
+                            SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
+                            return expectedPackageName;
+                        }
+                    }
+                }
+
+                currentTemplate = currentTemplate.ParentTemplate;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -158,35 +200,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var template = pageManager.GetTemplate(id);
 
             return this.GetPackageFromTemplate(template);
-        }
-
-        /// <summary>
-        /// Gets the package from template.
-        /// </summary>
-        /// <param name="template">The template.</param>
-        /// <returns></returns>
-        private string GetPackageFromTemplate(PageTemplate template)
-        {
-            var currentTemplate = template;
-            while (currentTemplate != null)
-            {
-                var title = currentTemplate.Title.ToString();
-                var parts = title.Split('.');
-                if (parts.Length > 1)
-                {
-                    var expectedPackageName = this.StripInvalidCharacters(parts[0]);
-                    var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
-                    if (path != null && Directory.Exists(path))
-                    {
-                        SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
-                        return expectedPackageName;
-                    }
-                }
-
-                currentTemplate = currentTemplate.ParentTemplate;
-            }
-
-            return null;
         }
 
         /// <summary>

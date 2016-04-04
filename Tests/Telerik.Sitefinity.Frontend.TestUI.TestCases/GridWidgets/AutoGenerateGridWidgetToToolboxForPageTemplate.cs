@@ -4,6 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Wrappers.Backend.PageEditor;
+using Telerik.TestUI.Core.Utilities;
+using ArtOfTest.WebAii.Core;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
 {
@@ -17,14 +19,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// UI test AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team2),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox()
         {
-            BAT.Macros().NavigateTo().Design().PageTemplates();
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/design/pagetemplates", true, null, new HtmlFindExpression("class=~sfMain")));
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().User().EnsureAdminLoggedIn());
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
-            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
-            BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
+            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);            
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropLayoutWidgetToPlaceholder(LayoutCaption);
             BAT.Wrappers().Backend().Pages().PageLayoutEditorWrapper().VerifyLayoutWidgetPageEditor(LayoutCaption);
             BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().PublishTemplate();
@@ -37,7 +39,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
             BAT.Macros().NavigateTo().Design().PageTemplates();
             BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().SwitchEditorLayoutMode(EditorLayoutMode.Layout);
-            BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickBootstrapGridWidgetButton();
+            
             Assert.IsFalse(
                 BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().IsLayoutWidgetPresentInToolbox(LayoutCaption),
                 "Layout widget is found in the toolbox");
@@ -61,8 +63,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// Performs Server Setup and prepare the system with needed data.
         /// </summary>
         protected override void ServerSetup()
-        {
-            BAT.Macros().User().EnsureAdminLoggedIn();
+        {           
             BAT.Arrange(this.TestName).ExecuteSetUp();
         }
 
@@ -74,7 +75,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
             BAT.Arrange(this.TestName).ExecuteTearDown();
         }
 
-        private const string PageTemplateName = "Bootstrap.defaultNew";
+        private const string PageTemplateName = "defaultNew";
         private const string PageName = "GridPage";
         private const string LayoutCaption = "grid-grid";
         private const string LayoutRenamed = "renamed-grid";

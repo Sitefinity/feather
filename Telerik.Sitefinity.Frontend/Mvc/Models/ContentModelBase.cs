@@ -235,11 +235,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (page < 1)
                 throw new ArgumentException("'page' argument has to be at least 1.", "page");
 
+            var viewModel = this.CreateListViewModelInstance();
+            viewModel.UrlKeyPrefix = this.UrlKeyPrefix;
             var query = this.GetItemsQuery();
             if (query == null)
-                return this.CreateListViewModelInstance();
+                return viewModel;
 
-            var viewModel = this.CreateListViewModelInstance();
             if (taxonFilter != null)
             {
                 var taxonomy = taxonFilter.Taxonomy.RootTaxonomy ?? taxonFilter.Taxonomy;

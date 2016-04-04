@@ -1,106 +1,51 @@
-﻿// It is important to keep the namespace. This way these extensions take precedence over the default System.Web.Mvc.Html.PartialExtensions.
-namespace ASP
+﻿namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
-    using System;
-    using System.Globalization;
-    using System.IO;
-    using System.Text;
+    using System.Collections.Generic;
     using System.Web.Mvc;
+    using Telerik.Sitefinity.Services;
 
     /// <summary>
-    /// <see cref="HtmlHelper"/> extensions methods for rendering partial views.
+    /// Helepr method for HTML markup generation.
     /// </summary>
-    public static class PartialExtensions
+    public static class HtmlHelperExtensions
     {
         /// <summary>
-        /// Renders the partial view with the specified name.
+        /// Gets a unique element id with the given prefix.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
-        /// <param name="partialViewName">Name of the partial view.</param>
-        /// <returns>Rendered partial view.</returns>
-        public static System.Web.Mvc.MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName)
+        /// <param name="prefix">The prefix of the identifier.</param>
+        /// <returns>Unique Id for an HTML element.</returns>
+        public static MvcHtmlString UniqueId(this HtmlHelper htmlHelper, string prefix)
         {
-            return PartialExtensions.Partial(htmlHelper, partialViewName, null, htmlHelper.ViewData);
-        }
-
-        /// <summary>
-        /// Renders the partial view with the specified name.
-        /// </summary>
-        /// <param name="htmlHelper">The HTML helper.</param>
-        /// <param name="partialViewName">Name of the partial view.</param>
-        /// <param name="viewData">The view data.</param>
-        /// <returns>
-        /// Rendered partial view.
-        /// </returns>
-        public static System.Web.Mvc.MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName, ViewDataDictionary viewData)
-        {
-            return PartialExtensions.Partial(htmlHelper, partialViewName, null, viewData);
-        }
-
-        /// <summary>
-        /// Renders the partial view with the specified name.
-        /// </summary>
-        /// <param name="htmlHelper">The HTML helper.</param>
-        /// <param name="partialViewName">Name of the partial view.</param>
-        /// <param name="model">The model.</param>
-        /// <returns>
-        /// Rendered partial view.
-        /// </returns>
-        public static System.Web.Mvc.MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName, object model)
-        {
-            return PartialExtensions.Partial(htmlHelper, partialViewName, model, htmlHelper.ViewData);
-        }
-
-        /// <summary>
-        /// Renders the partial view with the specified name.
-        /// </summary>
-        /// <param name="htmlHelper">The HTML helper.</param>
-        /// <param name="partialViewName">Name of the partial view.</param>
-        /// <param name="model">The model.</param>
-        /// <param name="viewData">The view data.</param>
-        /// <returns>
-        /// Rendered partial view.
-        /// </returns>
-        public static System.Web.Mvc.MvcHtmlString Partial(this HtmlHelper htmlHelper, string partialViewName, object model, ViewDataDictionary viewData)
-        {
-            using (var writer = new StringWriter(CultureInfo.CurrentCulture))
+            if (!htmlHelper.ViewData.ContainsKey(HtmlHelperExtensions.ElementIdsKey))
             {
-                PartialExtensions.RenderPartial(htmlHelper, partialViewName, viewData, model, writer);
-                return MvcHtmlString.Create(writer.ToString());
-            }
-        }
-
-        private static void RenderPartial(HtmlHelper htmlHelper, string partialViewName, ViewDataDictionary viewData, object model, TextWriter writer)
-        {
-            ViewDataDictionary newViewData;
-            if (model == null)
-            {
-                newViewData = viewData == null ? new ViewDataDictionary(htmlHelper.ViewData) : new ViewDataDictionary(viewData);
-            }
-            else
-            {
-                newViewData = viewData == null ? new ViewDataDictionary(model) : new ViewDataDictionary(viewData) { Model = model };
+                htmlHelper.ViewData.Add(HtmlHelperExtensions.ElementIdsKey, new Dictionary<string, string>());
             }
 
-            var controller = htmlHelper.ViewContext.Controller as Controller;
-            var viewEngineCollection = controller != null ? controller.ViewEngineCollection : ViewEngines.Engines;
-            var newViewContext = new ViewContext(htmlHelper.ViewContext, htmlHelper.ViewContext.View, newViewData, htmlHelper.ViewContext.TempData, writer);
-            var result = viewEngineCollection.FindPartialView(newViewContext, partialViewName);
-            if (result.View != null)
+            var keysDictionary = (IDictionary<string, string>)htmlHelper.ViewData[HtmlHelperExtensions.ElementIdsKey];
+            if (!keysDictionary.ContainsKey(prefix))
             {
-                result.View.Render(newViewContext, writer);
-            }
-            else
-            {
-                var locationsText = new StringBuilder();
-                foreach (string location in result.SearchedLocations)
+                if (!SystemManager.CurrentHttpContext.Items.Contains(HtmlHelperExtensions.IdCountersKey))
                 {
-                    locationsText.AppendLine();
-                    locationsText.Append(location);
+                    SystemManager.CurrentHttpContext.Items[HtmlHelperExtensions.IdCountersKey] = new Dictionary<string, int>();
                 }
 
-                throw new InvalidOperationException("The partial view '{0}' was not found or no view engine supports the searched locations. The following locations were searched: {1}".Arrange(partialViewName, locationsText));
+                var counters = (IDictionary<string, int>)SystemManager.CurrentHttpContext.Items[HtmlHelperExtensions.IdCountersKey];
+                if (!counters.ContainsKey(prefix))
+                {
+                    counters[prefix] = 0;
+                }
+
+                var counter = counters[prefix] + 1;
+                counters[prefix] = counter;
+                keysDictionary[prefix] = prefix + "-" + counter.ToString();
             }
+
+            var uniqueId = keysDictionary[prefix];
+            return MvcHtmlString.Create(uniqueId);
         }
+
+        private const string ElementIdsKey = "sf-element-ids";
+        private const string IdCountersKey = "sf-element-id-counters";
     }
 }

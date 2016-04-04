@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
+using Telerik.Sitefinity.TestArrangementService.Attributes;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
-using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
@@ -14,6 +14,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerArrangement]
         public void AddNewLayoutFile()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
             string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(PackageName, LayoutFileName);
             FeatherServerOperations.ResourcePackages().AddNewResource(FileResource, filePath);
         }
@@ -21,6 +22,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
 
             string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(PackageName, LayoutFileName);           
@@ -30,6 +33,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayout.cshtml";
         private const string PackageName = "Foundation";
         private const string LayoutFileName = "TestLayout.cshtml";
-        private const string TemplateTitle = "Foundation.TestLayout";
+        private const string TemplateTitle = "TestLayout";
+        private const string AdminUserName = "admin";
+        private const string AdminPass = "admin@2";
     }
 }

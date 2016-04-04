@@ -1,0 +1,40 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <PrecompileRazorFiles Condition=" '$(PrecompileRazorFiles)' == '' ">true</PrecompileRazorFiles>
+        <RazorGeneratorMsBuildPath Condition=" '$(RazorGeneratorMsBuildPath)' == '' ">$(MSBuildThisFileDirectory)\..\tools\RazorGenerator.MsBuild.dll</RazorGeneratorMsBuildPath>
+        <RazorViewsCodeGenDirectory Condition=" '$(RazorViewsCodeGenDirectory)' == '' ">$(MsBuildProjectDirectory)\obj\CodeGen\</RazorViewsCodeGenDirectory>
+      
+        <CompileDependsOn Condition=" '$(PrecompileRazorFiles)' == 'true' ">
+            PrecompileRazorFiles;
+            $(CompileDependsOn);
+        </CompileDependsOn>
+    </PropertyGroup>
+
+    <Target Name="_ResolveRazorFiles">
+        <ItemGroup>
+            <RazorSrcFiles Condition=" '@(RazorSrcFiles)' == '' and '%(Extension)' == '.cshtml' "
+                Include="@(Content);@(None)" />
+            <RazorSrcFiles Condition=" '@(RazorSrcFiles)' == '' "
+                Include="**\*.cshtml" />
+            <RazorOutputFiles
+                Include="@(RazorSrcFiles -> '$(RazorViewsCodeGenDirectory)%(RelativeDir)%(Filename)%(Extension).cs')" />
+        </ItemGroup>
+    </Target>
+
+    <UsingTask AssemblyFile="$(RazorGeneratorMsBuildPath)" TaskName="RazorCodeGen" />
+    <Target Name="PrecompileRazorFiles"
+                    DependsOnTargets="_ResolveRazorFiles"
+                    Inputs="@(RazorSrcFiles)"
+                    Outputs="@(RazorOutputFiles)">
+        <RazorCodeGen ProjectRoot="$(MsBuildProjectDirectory)"
+                                    FilesToPrecompile="@(RazorSrcFiles)"
+                                    CodeGenDirectory="$(RazorViewsCodeGenDirectory)"
+                                    RootNamespace="$(RootNamespace)">
+            <Output TaskParameter="GeneratedFiles" ItemName="FilesGenerated" />
+        </RazorCodeGen>
+        <ItemGroup>
+          <Compile Include="@(FilesGenerated)" Condition=" '@(RazorOutputFiles)' == '' "/>
+          <Compile Include="@(RazorOutputFiles)" />
+        </ItemGroup>
+    </Target>
+</Project>

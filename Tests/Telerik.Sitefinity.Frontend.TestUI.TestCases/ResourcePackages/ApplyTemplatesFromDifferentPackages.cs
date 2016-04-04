@@ -18,8 +18,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         /// UI test ApplyTwoDifferentTemplatesFromDifferentPackagesToPages.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team2),
-        TestCategory(FeatherTestCategories.PagesAndContent), Ignore]
+        Owner(FeatherTeams.FeatherTeam),
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void ApplyTwoDifferentTemplatesFromDifferentPackagesToPages()
         {
             BAT.Macros().NavigateTo().Design().PageTemplates();
@@ -58,8 +58,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
             BAT.Arrange(this.TestName).ExecuteTearDown();
         }
           
-        private const string Template1Title = "Package1.test-layout";
-        private const string Template2Title = "Package2.test-layout";
+        private const string Template1Title = "Package11.test-layout";
+        private const string Template2Title = "Package22.test-layout";
         private const string Page1Title = "page1";
         private const string Page2Title = "page2";
         private const string Package1LayoutText = "Package1 - test layout";

@@ -84,6 +84,10 @@
                 },
                 link: function (scope, element, attrs, ctrl) {
 
+                    // Ensures that modal is styled correctly.
+
+                    element.parents('.modal[role=dialog]').first().addClass('modal-fluid');
+
                     /*
                     * Filters inner logic
                     */

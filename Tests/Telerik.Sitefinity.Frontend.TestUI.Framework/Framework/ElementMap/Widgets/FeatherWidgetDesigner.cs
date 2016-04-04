@@ -136,11 +136,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         /// Gets the selected tab.
         /// </summary>
         /// <value>The selected tab.</value>
-        public HtmlAnchor SelectedTab
+        public HtmlSpan SelectedTab
         {
             get
             {
-                return this.Get<HtmlAnchor>("class=k-link", "innertext=~Selected");
+                return this.Get<HtmlSpan>("class=k-link", "innertext=~Selected");
             }
         }
 
@@ -148,11 +148,11 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         /// Gets the all tab.
         /// </summary>
         /// <value>The all tab.</value>
-        public HtmlAnchor AllTab
+        public HtmlSpan AllTab
         {
             get
             {
-                return this.Get<HtmlAnchor>("class=k-link", "innertext=~All");
+                return this.Get<HtmlSpan>("class=k-link", "innertext=~All");
             }
         }
 
@@ -201,6 +201,18 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
             get
             {
                 return this.Get<HtmlDiv>("class=~k-content k-state-active");
+            }
+        }
+
+        /// <summary>
+        /// Gets the html field.
+        /// </summary>
+        /// <value>The html field.</value>
+        public HtmlControl HtmlField
+        {
+            get
+            {
+                return this.Get<HtmlControl>("tagname=sf-html-field");
             }
         }
     }

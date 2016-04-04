@@ -44,5 +44,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </value>
         [DataMember(Name = "components")]
         public IList<string> Components { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is auto generated.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is generated; otherwise, <c>false</c>.
+        /// </value>
+        [IgnoreDataMember]
+        public bool IsGenerated { get; set; }
     }
 }

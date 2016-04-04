@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Telerik.Sitefinity.TestArrangementService.Attributes;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
-using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
@@ -19,8 +19,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
-            Guid templateId = ServerOperations.Templates().GetTemplateIdByTitle(PageTemplateName);
-            ServerOperations.Pages().CreatePage(PageName, templateId);
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
+            ServerOperations.Pages().CreatePage(PageName);
         }
 
         /// <summary>
@@ -29,10 +30,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             ServerOperations.Pages().DeleteAllPages();
         }
 
         private const string PageName = "GridPage";
-        private const string PageTemplateName = "Bootstrap.default";
+        private const string AdminUserName = "admin";
+        private const string AdminPass = "admin@2";
     }
 }

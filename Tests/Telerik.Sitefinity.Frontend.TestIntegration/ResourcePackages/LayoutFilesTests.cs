@@ -23,7 +23,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
     {
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds new layout file to existing resource package, verifies the automatically generated page template and creates a page based on the template in order to verify the content.")]
         public void FoundationResourcePackage_AddNewLayoutFile_VerifyGeneratedTemplateAndCreatedPageContent()
         {
@@ -60,10 +60,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds a resource package with layout files, renames one of the layout files and verify that new template is generated.")]
         public void ResourcePackageLayoutFiles_RenameLayoutFile_VerifyGeneratedTemplate()
         {
+            string adminUserName = "admin";
+            string adminPass = "admin@2";
             int templatesCount = this.PageManager.GetTemplates().Count();
 
             try
@@ -87,6 +89,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
             finally
             {
+                AuthenticationHelper.AuthenticateUser(adminUserName, adminPass, true);
+
                 string[] templates = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3, Constants.TemplateTestLayout1Renamed };
 
                 foreach (var template in templates)
@@ -101,7 +105,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds a resource package with layout files, delete one of the layout files and verify that the template is no longer based on it.")]
         [Ignore("It will work if the page is republished but this is would not be a valid test. We need cache dependency in the page resolver to its master page.")]
         public void ResourcePackageLayoutFiles_DeleteLayoutFile_VerifyTemplateAndPageNotBasedToLayout()
@@ -156,7 +160,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds a resource package with layout files, edits one of the layout files and verifies that the template and page are updated.")]
         public void ResourcePackageLayoutFiles_EditLayoutFile_VerifyTemplateAndPageBasedOnTheLayoutFile()
         {
@@ -210,17 +214,20 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds a resource package with layout files, deletes a page template based on the layout file and verifies the layout file still exists and no new template is generated.")]
         public void ResourcePackageLayoutFiles_DeleteTemplateBasedOnLayoutFile_VerifyLayoutFileExistsAndNoTemplateGenerated()
         {
             int templatesCount = this.PageManager.GetTemplates().Count();
+            string adminUserName = "admin";
+            string adminPass = "admin@2";
 
             try
             {
                 FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageResource);
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 3);
 
+                AuthenticationHelper.AuthenticateUser(adminUserName, adminPass, true);
                 ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout1);
 
                 string layoutFile = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(Constants.TestPackageName, Constants.TestLayoutFileName);
@@ -231,6 +238,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
             finally
             {
+                AuthenticationHelper.AuthenticateUser(adminUserName, adminPass, true);
                 ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout2);
                 ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout3);
 
@@ -241,7 +249,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling"), Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds a resource package with layout files, renames a page template based on one of the layout file and verifies the template and page based on it.")]
         [Ignore("Failing because of bug ID: 145083")]
         public void ResourcePackageLayoutFiles_RenameTemplateBasedOnLayoutFile_VerifyTemplateAndPage()
@@ -296,7 +304,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds a resource package with layout files, replaces a layout file from the package and verifies the template and page based on it.")]
         public void ResourcePackageLayoutFiles_ReplaceLayoutFile_VerifyTemplateAndPage()
         {
@@ -307,7 +315,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             string backFileName = "test-layout.cshtml.bac";
             string sitefinityPath = FeatherServerOperations.ResourcePackages().SfPath;
             string tempFolder = "Temp";
-            string templateTitle = "Package1.test-layout";
+            string templateTitle = "test-layout";
             string layoutTemplateText = "Package1 - test layout";
             string layoutTemplateTextReplaced = "Package1 - test layout REPLACED";
             string page = "featherpage";
@@ -361,7 +369,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.LayoutFiles)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds a resource package, creates a template in Sitefinity and then adds new layout file in the package; verifies the public page before and after")]
         public void ResourcePackageLayoutFiles_CreateTemplateAndAddLayoutFile_VerifyPublicPage()
         {
@@ -378,7 +386,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
             try
             {
-                var templateId = ServerOperations.Templates().CreatePureMVCPageTemplate(templateTitle);
+                var templateId = FeatherServerOperations.Pages().CreatePureMvcTemplate(templateTitle);
                 Guid pageId = ServerOperations.Pages().CreatePage(pageTitle, templateId);
 
                 var filePath = Path.Combine(packagePath, "MVC", "Views", "Layouts", layoutName);

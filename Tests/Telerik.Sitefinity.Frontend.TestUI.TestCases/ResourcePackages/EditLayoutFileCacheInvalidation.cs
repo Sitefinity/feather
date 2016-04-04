@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         /// UI test EditLayoutFileFromPackageCacheInvalidation.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team2),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void EditLayoutFileFromPackageCacheInvalidation()
         {

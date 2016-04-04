@@ -11,9 +11,8 @@
                   sf-popover-append-to-body="true"
                   sf-popover-title="{{item.Title}}"
                   sf-popover-content="
-                          <p>{{item.LibrariesCount}}</p>
-                          <p>{{item.DocumentsCount}}</p>
-                          <p>@(Res.Get<ClientComponentsResources>().CreatedOn) {{$parent.$parent.$parent.getDateCreated(item) | date : 'M/d/yyyy h:mm'}}</p>
+                          {{item.LibrariesCount}}<br/>
+                          {{item.DocumentsCount}}
                   ">
               i
           </span>
@@ -21,7 +20,7 @@
           <div class="Media-file-wrapper" ng-click="select(item)">
               <div class="Media-file-thumb">
                   <div class="Media-file-thumb-holder">
-                      <div><i class="glyphicon glyphicon-folder-close"></i></div>
+                      <div><i class="icon-folder"></i></div>
                       <strong>{{item.Title}}</strong>
                   </div>
               </div>
@@ -65,30 +64,27 @@
 
             <div class="Media-file-wrapper">
 
-				<div class="Media-file-thumb">
-                    <div class="Media-file-thumb-holder">
-                        
-                          <i ng-class="{ 'icon-lg' : $parent.$parent.isGrid, 'icon-md' : $parent.$parent.isList }" class="icon-file icon-txt">
-                              <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
-                          </i>
-
-                        <div class="Media-item-title">{{item.Title}}</div>
-                    </div>
-				</div>
-
-                <div class="Media-item-title">
-                    {{item.Title}}
+				      <div class="Media-file-thumb">
+                <div class="Media-file-thumb-holder">
+                      <i ng-class="{ 'icon-lg' : $parent.$parent.isGrid, 'icon-md' : $parent.$parent.isList }" class="icon-file icon-txt">
+                          <span class="icon-txt-{{item.Extension.substring(1).toLowerCase()}}">{{item.Extension.substring(1)}}</span>
+                      </i>                  
                 </div>
+				      </div>
+              
+              <div class="Media-item-title">
+                  {{item.Title}}
+              </div>
 
-                <div class="Media-item-meta">
-                    {{item.Extension.toUpperCase().replace(".", "")}}<br />
-                    {{item.TotalSize + "KB"}}<br />
-                </div>
+              <div class="Media-item-meta">
+                  {{item.Extension.toUpperCase().replace(".", "")}}<br />
+                  {{item.TotalSize + "KB"}}<br />
+              </div>
 
-				<div class="Media-item-date">
-					{{item.LastModified | date : 'M/dd/yyyy h:mm'}}<br />
-          @(Res.Get<ClientComponentsResources>().By) {{item.Author}}
-				</div>
+			        <div class="Media-item-date">
+				        {{item.LastModified | date : 'M/dd/yyyy h:mm'}}<br />
+                @(Res.Get<ClientComponentsResources>().By) {{item.Author}}
+			        </div>
 
             </div>
         </div>

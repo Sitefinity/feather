@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
@@ -266,7 +267,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
             else
             {
-                var page = HttpContext.Current.Handler as Page ?? new PageProxy(null);
+                var page = HttpContext.Current.Handler.GetPageHandler() ?? new PageProxy(null);
 
                 resourceUrl = page.ClientScript.GetWebResourceUrl(
                     TypeResolutionService.ResolveType("Telerik.Sitefinity.Resources.Reference"),
@@ -319,7 +320,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             MvcHtmlString result = MvcHtmlString.Empty;
 
             // No section name renders the script inline if it hasn't been rendered
-            if (string.IsNullOrEmpty(sectionName) || !SectionRenderer.IsAvailable(httpContext.Handler as Page, sectionName))
+            if (string.IsNullOrEmpty(sectionName) || !SectionRenderer.IsAvailable(httpContext.Handler.GetPageHandler(), sectionName))
             {
                 if (!register.IsRegistered(resourcePath, sectionName: null))
                 {
@@ -382,7 +383,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
         private static Page GetTopMostPageFromHandler(IHttpHandler httpHandler)
         {
-            var page = httpHandler as Page;
+            var page = httpHandler.GetPageHandler();
 
             if (page != null)
             {

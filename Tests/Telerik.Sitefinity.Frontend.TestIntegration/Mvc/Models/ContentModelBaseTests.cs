@@ -43,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Models
         /// Ensures that the ContentModelBase retrieves the correct data when second page of filtered by taxon items are requested.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Ensures that the ContentModelBase retrieves the correct data when second page of filtered by taxon items are requested.")]
         public void CreateListViewModel_SecondPageTaxonFilteredNews_ContainsCorrectData()
         {

@@ -109,6 +109,13 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
 
             using (new ObjectFactoryContainerRegion())
             {
+                ObjectFactory.Container.RegisterType<ConfigManager, ConfigManager>(typeof(XmlConfigProvider).Name.ToUpperInvariant(), new InjectionConstructor(typeof(XmlConfigProvider).Name));
+                ObjectFactory.Container.RegisterType<XmlConfigProvider, DummyConfigProvider>();
+                Config.RegisterSection<VirtualPathSettingsConfig>();
+                Config.RegisterSection<ControlsConfig>();
+                Config.RegisterSection<ProjectConfig>();
+                Config.RegisterSection<ResourcesConfig>();
+
                 initializer.RegisterControllerFactoryMock = () => ObjectFactory.Container.RegisterType<ISitefinityControllerFactory, DummyControllerFactory>();
 
                 initializer.RegisterControllerMock = registeredControllers.Add;
@@ -165,7 +172,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Mvc.Infrastructure.Controllers
                 };
 
             // Act
-            initializer.Initialize(null);
+            initializer.Initialize();
 
             // Assert
             Assert.IsTrue(registerVirtualPathsCalled, "RegisterVirtualPaths was not called.");

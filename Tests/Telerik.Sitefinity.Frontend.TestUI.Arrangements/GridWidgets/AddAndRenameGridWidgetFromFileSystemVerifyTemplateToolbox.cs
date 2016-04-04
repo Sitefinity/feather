@@ -9,8 +9,8 @@ using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
+using Telerik.Sitefinity.TestArrangementService.Attributes;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
-using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
@@ -26,6 +26,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             string templateFileOriginal = FileInjectHelper.GetDestinationFilePath(this.layoutTemplatePath);
             string templateFileCopy = FileInjectHelper.GetDestinationFilePath(this.newLayoutTemplatePath);
 
@@ -66,6 +68,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             string templateFileCopy = FileInjectHelper.GetDestinationFilePath(this.newLayoutTemplatePath);
             string newFilePath = FileInjectHelper.GetDestinationFilePath(this.newGridPath);
@@ -79,13 +83,15 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             FeatherServerOperations.GridWidgets().RemoveGridControlFromToolboxesConfig(GridTitle);
         }
 
+        private const string AdminUserName = "admin";
+        private const string AdminPass = "admin@2";
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Data.grid-grid.html";
         private const string GridFileName = "grid-grid.html";
         private const string NewGridFileName = "renamed-grid.html";
         private const string GridTitle = "grid-grid";
         private const string GridCss = "sfL25_75";
         private const string PageName = "GridPage";
-        private const string PageTemplateName = "Bootstrap.defaultNew";
+        private const string PageTemplateName = "defaultNew";
         private readonly string layoutTemplatePath = Path.Combine("ResourcePackages", "Bootstrap", "MVC", "Views", "Layouts", "default.cshtml");
         private readonly string newLayoutTemplatePath = Path.Combine("ResourcePackages", "Bootstrap", "MVC", "Views", "Layouts", "defaultNew.cshtml");
         private readonly string gridPath = Path.Combine("ResourcePackages", "Bootstrap", "GridSystem", "Templates", GridFileName);

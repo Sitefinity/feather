@@ -265,10 +265,6 @@ describe('items tree tests', function  () {
             deferedSelection.resolve(['3.2']);
             deferedItems.resolve(predecessorsLevels[0]);
 
-            // Looks like kendo is using a timeout in its widgets
-            // so this method is executing all callbacks of the $timeout mock.
-            $timeout.flush(1000);
-
             expect(scope.getPredecessors).not.toHaveBeenCalled();
         });
 

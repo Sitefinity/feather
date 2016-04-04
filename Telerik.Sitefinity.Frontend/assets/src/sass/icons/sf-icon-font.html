@@ -31,6 +31,7 @@
 		.icons__item i {
 			line-height:2em;
 			cursor:pointer;
+			overflow:hidden;
 			}
 		.icons__item:hover {
 			color:#3c90be;
@@ -54,11 +55,11 @@
 /* Based on https://github.com/endtwist/fontcustom/blob/master/lib/fontcustom/templates/fontcustom.css */
 @font-face {
   font-family: "sf-icon-font";
-  src: url("../../../dist/fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.eot");
-  src: url("../../../dist/fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.eot?#iefix") format("embedded-opentype"),
-		url("../../../dist/fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.svg?#sf-icon-font") format("svg"),
-		url("../../../dist/fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.woff") format("woff"),
-		url("../../../dist/fonts/sf-icon-font-33a8f9a01aebe13c3e6d147f423b4e63.ttf") format("truetype");
+  src: url("../../../dist/fonts/sf-icon-font.eot?225ce12d87a8c8c92bcb2ef116247b06");
+  src: url("../../../dist/fonts/sf-icon-font.eot?#iefix") format("embedded-opentype"),
+		url("../../../dist/fonts/sf-icon-font.woff?225ce12d87a8c8c92bcb2ef116247b06") format("woff"),
+		url("../../../dist/fonts/sf-icon-font.ttf?225ce12d87a8c8c92bcb2ef116247b06") format("truetype"),
+		url("../../../dist/fonts/sf-icon-font.svg?225ce12d87a8c8c92bcb2ef116247b06#sf-icon-font") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -90,32 +91,44 @@
 .icon-align-left-single {content:"\b2";}
 .icon-align-none-single {content:"\b3";}
 .icon-align-right-single {content:"\b4";}
-.icon-bin-single {content:"\b5";}
-.icon-draft-single {content:"\b6";}
-.icon-file-single {content:"\b7";}
-.icon-homepage-single {content:"\b8";}
-.icon-locked-single {content:"\b9";}
-.icon-no-image-single {content:"\ba";}
-.icon-published-single {content:"\bb";}
-.icon-scheduled-single {content:"\bc";}
-.icon-settings-single {content:"\bd";}
-.icon-unpublished-single {content:"\be";}
+.icon-awaitingapproval-single {content:"\b5";}
+.icon-awaitingpublishing-single {content:"\b6";}
+.icon-bin-single {content:"\b7";}
+.icon-draft-single {content:"\b8";}
+.icon-file-single {content:"\b9";}
+.icon-folder-open-single {content:"\ba";}
+.icon-folder-single {content:"\bb";}
+.icon-homepage-single {content:"\bc";}
+.icon-locked-single {content:"\bd";}
+.icon-no-file-single {content:"\be";}
+.icon-no-image-single {content:"\bf";}
+.icon-no-video-single {content:"\c0";}
+.icon-published-single {content:"\c1";}
+.icon-scheduled-single {content:"\c2";}
+.icon-settings-single {content:"\c3";}
+.icon-unpublished-single {content:"\c4";}
 
 /* Icons */
 .icon-align-center:before {content:"\b1";}
 .icon-align-left:before {content:"\b2";}
 .icon-align-none:before {content:"\b3";}
 .icon-align-right:before {content:"\b4";}
-.icon-bin:before {content:"\b5";}
-.icon-draft:before {content:"\b6";}
-.icon-file:before {content:"\b7";}
-.icon-homepage:before {content:"\b8";}
-.icon-locked:before {content:"\b9";}
-.icon-no-image:before {content:"\ba";}
-.icon-published:before {content:"\bb";}
-.icon-scheduled:before {content:"\bc";}
-.icon-settings:before {content:"\bd";}
-.icon-unpublished:before {content:"\be";}
+.icon-awaitingapproval:before {content:"\b5";}
+.icon-awaitingpublishing:before {content:"\b6";}
+.icon-bin:before {content:"\b7";}
+.icon-draft:before {content:"\b8";}
+.icon-file:before {content:"\b9";}
+.icon-folder-open:before {content:"\ba";}
+.icon-folder:before {content:"\bb";}
+.icon-homepage:before {content:"\bc";}
+.icon-locked:before {content:"\bd";}
+.icon-no-file:before {content:"\be";}
+.icon-no-image:before {content:"\bf";}
+.icon-no-video:before {content:"\c0";}
+.icon-published:before {content:"\c1";}
+.icon-scheduled:before {content:"\c2";}
+.icon-settings:before {content:"\c3";}
+.icon-unpublished:before {content:"\c4";}
 
 
 
@@ -135,6 +148,14 @@
   @extend .icon-align-right-single
 }
 
+.icon-item-awaitingapproval:after {
+  @extend .icon-awaitingapproval-single
+}
+
+.icon-item-awaitingpublishing:after {
+  @extend .icon-awaitingpublishing-single
+}
+
 .icon-item-bin:after {
   @extend .icon-bin-single
 }
@@ -147,6 +168,14 @@
   @extend .icon-file-single
 }
 
+.icon-item-folder-open:after {
+  @extend .icon-folder-open-single
+}
+
+.icon-item-folder:after {
+  @extend .icon-folder-single
+}
+
 .icon-item-homepage:after {
   @extend .icon-homepage-single
 }
@@ -155,8 +184,16 @@
   @extend .icon-locked-single
 }
 
+.icon-item-no-file:after {
+  @extend .icon-no-file-single
+}
+
 .icon-item-no-image:after {
   @extend .icon-no-image-single
+}
+
+.icon-item-no-video:after {
+  @extend .icon-no-video-single
 }
 
 .icon-item-published:after {
@@ -191,17 +228,29 @@
 			
 				<div class="icons__item" data-name="align-right"><i class=" icon-align-right"></i> icon-align-right</div>
 			
+				<div class="icons__item" data-name="awaitingapproval"><i class=" icon-awaitingapproval"></i> icon-awaitingapproval</div>
+			
+				<div class="icons__item" data-name="awaitingpublishing"><i class=" icon-awaitingpublishing"></i> icon-awaitingpublishing</div>
+			
 				<div class="icons__item" data-name="bin"><i class=" icon-bin"></i> icon-bin</div>
 			
 				<div class="icons__item" data-name="draft"><i class=" icon-draft"></i> icon-draft</div>
 			
 				<div class="icons__item" data-name="file"><i class=" icon-file"></i> icon-file</div>
 			
+				<div class="icons__item" data-name="folder-open"><i class=" icon-folder-open"></i> icon-folder-open</div>
+			
+				<div class="icons__item" data-name="folder"><i class=" icon-folder"></i> icon-folder</div>
+			
 				<div class="icons__item" data-name="homepage"><i class=" icon-homepage"></i> icon-homepage</div>
 			
 				<div class="icons__item" data-name="locked"><i class=" icon-locked"></i> icon-locked</div>
 			
+				<div class="icons__item" data-name="no-file"><i class=" icon-no-file"></i> icon-no-file</div>
+			
 				<div class="icons__item" data-name="no-image"><i class=" icon-no-image"></i> icon-no-image</div>
+			
+				<div class="icons__item" data-name="no-video"><i class=" icon-no-video"></i> icon-no-video</div>
 			
 				<div class="icons__item" data-name="published"><i class=" icon-published"></i> icon-published</div>
 			

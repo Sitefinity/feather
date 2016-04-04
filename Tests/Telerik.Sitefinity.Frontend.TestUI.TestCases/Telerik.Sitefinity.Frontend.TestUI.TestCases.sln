@@ -12,9 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Telerik.Sitefinity.Frontend.TestUI.TestCases1.vsmdi = Telerik.Sitefinity.Frontend.TestUI.TestCases1.vsmdi
 		UITestCasesLocal.testsettings = UITestCasesLocal.testsettings
+		UITestCasesRemote.testsettings = UITestCasesRemote.testsettings
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SetupScripts", "SetupScripts", "{09C90231-CCE5-4897-9F10-6568A15D4744}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.Sitefinity.Frontend.TestUI.TestCases", "Telerik.Sitefinity.Frontend.TestUI.TestCases.csproj", "{E90A06CF-7889-4A32-A941-4FD76332C179}"
 EndProject

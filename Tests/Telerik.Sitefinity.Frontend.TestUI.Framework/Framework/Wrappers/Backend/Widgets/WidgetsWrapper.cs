@@ -11,7 +11,7 @@ using ArtOfTest.WebAii.ObjectModel;
 namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
 {
     /// <summary>
-    /// Widgets base actions. 
+    /// Widgets base actions.
     /// </summary>
     public class WidgetsWrapper : BaseWrapper
     {
@@ -34,6 +34,25 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         public void WaitForSaveButtonToAppear()
         {
             Manager.Current.Wait.For(this.WaitForSaveButton, Manager.Current.Settings.ClientReadyTimeout);
+            ActiveBrowser.RefreshDomTree();
+        }
+
+        /// <summary>
+        /// When the first control is added to a form a done button is automatically added to the page. 
+        /// This method waits for the done button to be added.
+        /// </summary>
+        public void WaitForDoneButtonToAppear()
+        {
+            Manager.Current.Wait.For(this.WaitForDoneButton, Manager.Current.Settings.ClientReadyTimeout);
+            ActiveBrowser.RefreshDomTree();
+        }
+
+        /// <summary>
+        /// This method waits for the expander to be added.
+        /// </summary>
+        public void WaitForExpanderToAppear(int expectedCount)
+        {
+            Manager.Current.Wait.For(() => this.CountExpanders(expectedCount), Manager.Current.Settings.ClientReadyTimeout);
             ActiveBrowser.RefreshDomTree();
         }
 
@@ -197,7 +216,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// </summary>
         public void OpenSelectedTab()
         {
-            HtmlAnchor selectedTab = this.EM.Widgets.FeatherWidget.SelectedTab
+            HtmlSpan selectedTab = this.EM.Widgets.FeatherWidget.SelectedTab
                                          .AssertIsPresent("selected tab");
             selectedTab.Click();
             ActiveBrowser.WaitForAsyncRequests();
@@ -209,7 +228,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// </summary>
         public void OpenAllTab()
         {
-            HtmlAnchor allTab = this.EM.Widgets.FeatherWidget.AllTab
+            HtmlSpan allTab = this.EM.Widgets.FeatherWidget.AllTab
                                     .AssertIsPresent("all tab");
 
             allTab.Click();
@@ -344,6 +363,28 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
+        /// Verifies if the expander count is as expected.
+        /// </summary>
+        /// <param name="expected">The expected expanders count.</param>
+        /// <returns>True or false depending on the expander count.</returns>
+        public bool CountExpanders(int expected)
+        {
+            ActiveBrowser.RefreshDomTree();
+            var designer = this.EM.Widgets.FeatherWidget;
+
+            var expanders = designer.Find.AllByExpression<HtmlAnchor>("class=Options-toggler ng-binding");
+            int count = expanders.Count;
+
+            if (count > 1)
+            {
+                expanders[count - 1].ScrollToVisible();
+            }
+
+            bool isCountCorrect = expected <= count;
+            return isCountCorrect;
+        }
+
+        /// <summary>
         /// Verifies the collection contains any items
         /// </summary>
         /// <returns>True or False depending on the items count.</returns>
@@ -395,6 +436,16 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
                     Assert.IsNotNull(spanElement);
                 }
             }
+        }
+
+        /// <summary>
+        /// Verifies the content of the HTML field.
+        /// </summary>
+        public void VerifyHtmlFieldContent()
+        {
+            var htmlField = this.EM.Widgets.FeatherWidget.HtmlField;
+
+            htmlField.Find.ByExpression<HtmlTableCell>("TagName=td", "class=k-editable-area").AssertIsNotNull("Kendo editor is not presented!");
         }
 
         /// <summary>
@@ -463,6 +514,44 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             Assert.AreEqual(expectedSpanCount, actualSpanCount, "Expected and actual count of span elements are not equal.");
         }
 
+        /// <summary>
+        /// Selects expander in the widget designer
+        /// </summary>
+        /// <param name="title">The title.</param>
+        public void ExpandOptions(string title)
+        {
+            HtmlAnchor expander = EM.Widgets.FeatherWidget.Get<HtmlAnchor>("class=Options-toggler ng-binding", "innerText={0}".Arrange(title)).AssertIsPresent("{0} span".Arrange(title));
+
+            expander.ScrollToVisible();
+            expander.Focus();
+            expander.MouseClick();
+
+            ActiveBrowser.RefreshDomTree();
+            expander.Refresh();
+        }
+
+        /// <summary>
+        /// Verify if element By InnerText is present.
+        /// </summary>
+        /// <param name="innerText">The inner text of the element.</param>
+        /// <returns>If element is present.</returns>
+        public bool IsElementByInnerTextPresent(string innerText)
+        {
+            ActiveBrowser.WaitUntilReady();
+            ActiveBrowser.RefreshDomTree();
+
+            HtmlControl element = Manager.Current.ActiveBrowser.Find.ByExpression<HtmlControl>("innertext=~" + innerText);
+
+            bool result = false;
+
+            if (element != null)
+            {
+                result = element.IsVisible();
+            }
+
+            return result;
+        }
+
         private Element GetContentSelectorByName(string cssClass)
         {
             var contentContainer = this.EM.Widgets.FeatherWidget.ContentContainer.AssertIsPresent("Content container");
@@ -474,6 +563,16 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         {
             Manager.Current.ActiveBrowser.RefreshDomTree();
             var saveButton = this.EM.Widgets.FeatherWidget.SaveButton;
+
+            bool result = saveButton != null && saveButton.IsVisible();
+
+            return result;
+        }
+
+        private bool WaitForDoneButton()
+        {
+            Manager.Current.ActiveBrowser.RefreshDomTree();
+            var saveButton = this.EM.Widgets.FeatherWidget.DoneButton;
 
             bool result = saveButton != null && saveButton.IsVisible();
 

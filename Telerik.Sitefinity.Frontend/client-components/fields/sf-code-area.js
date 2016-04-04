@@ -28,9 +28,10 @@
                 });
 
                 // forces a refresh after current $digest is finished.
+                codeArea.focus();
                 setTimeout(codeArea.refresh, 0);
-
                 scope.$watch('sfModel', function (newVal, oldVal) {
+                    
                     if (codeArea.getValue() !== newVal) {
                         // Prevent error in the codeArea if the new value is undefined.
                         if (!newVal) newVal = '';

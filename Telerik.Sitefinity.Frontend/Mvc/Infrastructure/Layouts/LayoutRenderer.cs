@@ -51,7 +51,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 routeData.Values.Add("controller", "Generic");
             }
 
-            controller.UpdateViewEnginesCollection(this.GetPathTransformations());
+            controller.UpdateViewEnginesCollection(() => this.GetPathTransformations());
 
             // here we create the context for the controller passing the just created controller the httpcontext and the route data that we built above
             controller.ControllerContext = new ControllerContext(context, routeData, controller);
@@ -89,12 +89,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 // assigning the model so it can be available to the view 
                 context.Controller.ViewData.Model = null;
 
-                var builtView = view as BuildManagerCompiledView;
+                var viewVirtualPath = FrontendManager.VirtualPathBuilder.GetViewPath(view);
                 using (var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture))
                 {
-                    if (placeholdersOnly && builtView != null)
+                    if (placeholdersOnly && !viewVirtualPath.IsNullOrEmpty())
                     {
-                        this.RenderContentPlaceHolders(builtView.ViewPath, writer);
+                        this.RenderContentPlaceHolders(viewVirtualPath, writer);
                     }
                     else
                     {
@@ -109,10 +109,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
                 // Add cache dependency on the virtual file that is used for rendering the view.
                 var httpContext = SystemManager.CurrentHttpContext;
-                if (httpContext != null && builtView != null)
+                if (httpContext != null && !viewVirtualPath.IsNullOrEmpty())
                 {
                     var virtualPathDependency = HostingEnvironment.VirtualPathProvider != null ?
-                        HostingEnvironment.VirtualPathProvider.GetCacheDependency(builtView.ViewPath, null, DateTime.UtcNow) : null;
+                        HostingEnvironment.VirtualPathProvider.GetCacheDependency(viewVirtualPath, null, DateTime.UtcNow) : null;
                     if (virtualPathDependency != null)
                     {
                         httpContext.Response.AddCacheDependency(virtualPathDependency);
@@ -204,12 +204,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             if (viewEngineResult != null && viewEngineResult.View != null)
             {
-                var builtView = viewEngineResult.View as BuildManagerCompiledView;
-                if (builtView != null)
-                {
-                    result = builtView.ViewPath;
-                }
-
+                result = FrontendManager.VirtualPathBuilder.GetViewPath(viewEngineResult.View);
                 viewEngineResult.ViewEngine.ReleaseView(genericController.ControllerContext, viewEngineResult.View);
             }
 
@@ -250,6 +245,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         private void RenderContentPlaceHolders(string layoutPath, StringWriter writer)
         {
             writer.WriteLine("<%@ Master Language=\"C#\" %>");
+            writer.WriteLine("<html><head runat=\"server\"></head><body>");
 
             string layoutText;
             using (var layoutFile = new StreamReader(HostingEnvironment.VirtualPathProvider.GetFile(layoutPath).Open()))
@@ -257,7 +253,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 layoutText = layoutFile.ReadToEnd();
             }
 
-            var matches = new Regex(@"@Html\.SfPlaceHolder(?:\(\""(?<placeHolder>\w*)\""\)|(?<placeHolder>\(\)))").Matches(layoutText);
+            var matches = new Regex(@"@Html\.SfPlaceHolder(?:\(\s*\""(?<placeHolder>\w*)\""\s*\)|(?<placeHolder>\(\)))").Matches(layoutText);
             foreach (Match match in matches)
             {
                 var group = match.Groups["placeHolder"];
@@ -270,6 +266,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                     }
                 }
             }
+
+            writer.Write("</body></html>");
         }
 
         #endregion

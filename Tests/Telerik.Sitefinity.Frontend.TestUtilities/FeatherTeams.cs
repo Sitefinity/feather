@@ -11,13 +11,13 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities
     public static class FeatherTeams
     {
         /// <summary>
-        /// Team 2
+        /// Feather team
         /// </summary>
-        public const string Team2 = "Team2";
+        public const string FeatherTeam = "Feather team";
 
         /// <summary>
-        /// Team 7
+        /// Sitefinity Team 6
         /// </summary>
-        public const string Team7 = "Team7";
+        public const string SitefinityTeam6 = "Sitefinity Team 6";
     }
 }

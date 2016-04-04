@@ -9,8 +9,8 @@ using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
+using Telerik.Sitefinity.TestArrangementService.Attributes;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
-using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
@@ -26,6 +26,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             Stream destination = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -46,6 +48,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerArrangement]
         public void DeleteGridWidgetFromFileSystem()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             File.Delete(filePath);
         }
@@ -56,12 +60,16 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
+
             ServerOperations.Pages().DeleteAllPages();
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             File.Delete(filePath);
             FeatherServerOperations.GridWidgets().RemoveGridControlFromToolboxesConfig(GridTitle);
         }
 
+        private const string AdminUserName = "admin";
+        private const string AdminPass = "admin@2";
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUI.Arrangements.Data.grid-grid.html";
         private const string GridFileName = "grid-grid.html";
         private const string GridTitle = "grid-grid";

@@ -35,9 +35,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArtOfTest.WebAii, Version=2015.1.319.0, Culture=neutral, PublicKeyToken=4fd5f65be123776c, processorArchitecture=MSIL">
+    <Reference Include="ArtOfTest.WebAii, Version=2015.3.1015.0, Culture=neutral, PublicKeyToken=4fd5f65be123776c, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.TestStudio.Framework.2.1.4\lib\net40\ArtOfTest.WebAii.dll</HintPath>
       <Private>True</Private>
-      <HintPath>packages\Telerik.ArtOfTest.WebAii.2015.1.319.0\lib\net40\ArtOfTest.WebAii.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <SpecificVersion>False</SpecificVersion>
@@ -45,6 +46,7 @@
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Configuration">
       <HintPath>.\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
     <Reference Include="System" />
@@ -59,54 +61,79 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ReferenceAssemblies\Telerik.Sitefinity.Frontend.TestUtilities.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.MS.TestUI.Framework">
-      <HintPath>packages\Telerik.Sitefinity.MS.TestUI.Framework.1.0.6\lib\net45\Telerik.Sitefinity.MS.TestUI.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Sitefinity.TestUI.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Sitefinity.MS.TestUI.Framework, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.MS.TestUI.Framework.1.1.0\lib\net45\Telerik.Sitefinity.MS.TestUI.Framework.dll</HintPath>
+      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Telerik.Sitefinity.TestUI.Core.1.0.6\lib\net45\Telerik.Sitefinity.TestUI.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.TestUI.Framework">
-      <HintPath>packages\Telerik.Sitefinity.TestUI.Framework.1.0.7\lib\net40\Telerik.Sitefinity.TestUI.Framework.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.TestUI.Core, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.TestUI.Core.1.1.0\lib\net45\Telerik.Sitefinity.TestUI.Core.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Telerik.Sitefinity.TestUI.Framework, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.TestUI.Framework.1.1.0\lib\net40\Telerik.Sitefinity.TestUI.Framework.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.UIArrangement">
-      <HintPath>.\packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.0\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Sitefinity.TestUtilities, Version=8.0.5700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.1\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Telerik.Sitefinity.TestUtilities.8.0.5700.0\lib\net40\Telerik.Sitefinity.TestUtilities.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.TestUI.Core, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Sitefinity.TestUtilities">
+      <HintPath>packages\Telerik.Sitefinity.TestUtilities.8.2.5990.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Telerik.TestUI.Core.1.5.2\lib\net40\Telerik.TestUI.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.WebAii.Controls.Html, Version=2015.1.319.0, Culture=neutral, PublicKeyToken=528163f3e645de45, processorArchitecture=MSIL">
+    <Reference Include="Telerik.TestUI.Core, Version=1.5.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.TestUI.Core.1.5.5\lib\net40\Telerik.TestUI.Core.dll</HintPath>
       <Private>True</Private>
-      <HintPath>packages\Telerik.WebAii.Controls.2015.1.319.0\lib\net40\Telerik.WebAii.Controls.Html.dll</HintPath>
-    </Reference>
-    <Reference Include="UITests.Configuration, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\UITests.Core.1.6.2\lib\net45\UITests.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="UITests.Core, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Telerik.WebAii.Controls.Html, Version=2015.3.1015.0, Culture=neutral, PublicKeyToken=528163f3e645de45, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.TestStudio.Framework.2.1.4\lib\net40\Telerik.WebAii.Controls.Html.dll</HintPath>
+      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\UITests.Core.1.6.2\lib\net45\UITests.Core.dll</HintPath>
     </Reference>
-    <Reference Include="UITests.Web, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="UITests.Configuration, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UITests.Core.1.6.5\lib\net40\UITests.Configuration.dll</HintPath>
+      <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\UITests.Core.1.6.2\lib\net45\UITests.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="UITests.Core, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UITests.Core.1.6.5\lib\net40\UITests.Core.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UITests.Web, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UITests.Core.1.6.5\lib\net40\UITests.Web.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\AssemblyInfoShare\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Designers\DesignerAllComponentsNoJsonNoJs.cs" />
+    <Compile Include="Designers\DesignerAllComponentsNoJsonWithJs.cs" />
+    <Compile Include="Designers\DesignerAllComponentsWithJsonNoJs.cs" />
+    <Compile Include="Designers\DesignerNoJsonWithJs.cs" />
+    <Compile Include="Designers\DesignerWithJsonNoJs.cs" />
+    <Compile Include="Designers\DesignerNoJsonNoJs.cs" />
     <Compile Include="GridWidgets\AutoGenerateGridWidgetToToolboxForPage.cs" />
     <Compile Include="GridWidgets\AutoGenerateGridWidgetToToolboxForPageTemplate.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
     <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />
     <Compile Include="LayoutTemplates\LayoutTemplateWithMultiplePlaceholders.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromHybridPage.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromHybridPageTemplate.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromPurePage.cs" />
+    <Compile Include="Module\UninstallFeatherAndDeleteWidgetFromPurePageTemplate.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromHybridPageTemplate.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromHybridPage.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromPurePageTemplate.cs" />
+    <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromPurePage.cs" />
     <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
     <Compile Include="MvcWidgets\MvcReorderSelectedNewsItems.cs" />
     <Compile Include="MvcWidgets\MvcSelectManyDynamicItems.cs" />

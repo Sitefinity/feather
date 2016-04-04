@@ -5,13 +5,16 @@
         ng-repeat="item in sfExternalPages track by item.Id">
         <input type="checkbox" ng-checked="isItemSelected(item.Id, item.Status)" ng-click="itemClicked(item)" />
         <section class="row row-xs">
-            <a class="pull-right" ng-click="removeItem($index, item)"><i class="glyphicon glyphicon-remove-circle"></i></a>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <input class="form-control-highlight" type="text" ng-model="item.TitlesPath" ng-change="itemChanged(item)" placeholder="@(Res.Get<ClientComponentsResources>().EnterTitle)" sf-editable />
             </div>
-
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <input class="form-control-highlight" type="text" ng-model="item.Url" ng-change="itemChanged(item)" placeholder="@(Res.Get<ClientComponentsResources>().EnterUrl)" sf-editable />
+            </div>
+            <div class="col-md-1 text-right">
+              <a class="text-danger" ng-click="removeItem($index, item)">
+                <i class="glyphicon glyphicon-remove"></i>
+              </a>
             </div>
         </section>
     </div>

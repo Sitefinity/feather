@@ -5,8 +5,7 @@
     <DeploymentItem filename="Telerik.Sitefinity.Frontend.TestUI.TestCases\app.config" />
   </Deployment>
   <NamingScheme baseName="TestExecution@Sitefinity_UITestCases" useDefault="false" />
-  <RemoteController name="featherci" />
-  <Execution location="Remote">
+  <Execution>
     <Timeouts agentNotRespondingTimeout="90000" scriptTimeout="600000" />
     <TestTypeSpecific>
       <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">
@@ -24,8 +23,8 @@
           </Headers>
         </Browser>
       </WebTestRunConfiguration>
-      </TestTypeSpecific>
-    <AgentRule name="AllAgentsDefaultRole">
+    </TestTypeSpecific>
+    <AgentRule name="LocalMachineDefaultRole">
     </AgentRule>
   </Execution>
 </TestSettings>

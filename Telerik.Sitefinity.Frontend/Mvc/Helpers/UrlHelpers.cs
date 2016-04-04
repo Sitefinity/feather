@@ -112,7 +112,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns>The resource URL.</returns>
         public static string EmbeddedResource(this UrlHelper helper, string type, string path)
         {
-            var page = helper.RequestContext.HttpContext.Handler as Page ?? new PageProxy(null);
+            var page = helper.RequestContext.HttpContext.Handler.GetPageHandler() ?? new PageProxy(null);
             return page.ClientScript.GetWebResourceUrl(TypeResolutionService.ResolveType(type), path);
         }
 

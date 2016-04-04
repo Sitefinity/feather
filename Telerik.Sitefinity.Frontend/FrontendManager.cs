@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Security;
 using Telerik.Sitefinity.Mvc;
@@ -38,7 +39,7 @@ namespace Telerik.Sitefinity.Frontend
         }
 
         /// <summary>
-        /// Gets or sets an instance of authentication evaluator
+        /// Gets or sets an instance of authentication evaluator.
         /// </summary>
         public static AuthenticationEvaluator AuthenticationEvaluator
         {
@@ -53,7 +54,22 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
+        /// <summary>
+        /// Gets the attribute routing manager.
+        /// </summary>
+        /// <value>
+        /// The attribute routing manager.
+        /// </value>
+        internal static AttributeRoutingManager AttributeRouting
+        {
+            get
+            {
+                return FrontendManager.attributeRouting ?? (FrontendManager.attributeRouting = new AttributeRoutingManager());
+            }
+        }
+
         private static VirtualPathBuilder virtualPathBuilder;
         private static AuthenticationEvaluator authenticationEvaluator;
+        private static AttributeRoutingManager attributeRouting;
     }
 }

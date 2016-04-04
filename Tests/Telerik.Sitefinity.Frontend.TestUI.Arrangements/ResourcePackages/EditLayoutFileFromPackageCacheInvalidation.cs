@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.TestArrangementService.Attributes;
 using Telerik.Sitefinity.TestUI.Arrangements.Framework;
-using Telerik.Sitefinity.TestUI.Arrangements.Framework.Attributes;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
@@ -52,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.TestLayout.cshtml";
         private const string PackageName = "Foundation";
         private const string LayoutFileName = "TestLayout.cshtml";
-        private const string TemplateTitle = "Foundation.TestLayout";
+        private const string TemplateTitle = "TestLayout";
         private const string PageTitle = "FeatherPage";
         private const string LayoutFileText = "Test Layout";
         private const string LayoutFileNewText = "New Text";

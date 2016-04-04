@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
     {
         [Test]
         [Category(TestCategories.Packages)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds new package with layout files and verifies the generated page templates.")]
         public void ResourcePackage_AddNewPackageWithLayoutFiles_VerifyGeneratedTemplates()
         {
@@ -56,7 +56,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.Packages)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds new package without layout files and verifies there are no new generated page templates.")]
         public void ResourcePackage_AddNewPackageWithNoLayoutFiles_VerifyNotGeneratedTemplates()
         {
@@ -78,7 +78,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.Packages)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds new resource package with layout files, rename the package and verifies the newly generated page templates.")]
         [Ignore("Failed integration test")]
         public void ResourcePackage_RenamePackageWithLayoutFiles_VerifyGeneratedTemplates()
@@ -133,7 +133,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.Packages)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Renames ResourcePackages folder and verifies that the templates are no loger based on the layout files.")]
         public void ResourcePackage_RenameMainPackagesFolder_VerifyTemplatesNotBasedOnLayouts()
         {
@@ -144,8 +144,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
             string page2 = "page2";
 
-            string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath("Foundation", Constants.LayoutFileName);
-            string file2Path = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath("Bootstrap", Constants.LayoutFileName);
+            string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath("Foundation", Constants.LayoutFileNameFoundation);
+            string file2Path = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath("Bootstrap", Constants.LayoutFileNameBootstrap);
 
             string folderPath = Path.Combine(FeatherServerOperations.ResourcePackages().SfPath, "ResourcePackages");
             string folderName = "ResourcePackages";
@@ -159,7 +159,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
                 // Verify template is generated successfully
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
-                var template1 = this.PageManager.GetTemplates().Where(t => t.Title == template1Title).FirstOrDefault();
+                var template1 = this.PageManager.GetTemplates().FirstOrDefault(t => t.Name == "Foundation." + template1Title);
                 Assert.IsNotNull(template1, "Template was not found");
 
                 // Add layout file to Bootstrap package
@@ -167,8 +167,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
                 // Verify template is generated successfully
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 2);
-                var template2 = this.PageManager.GetTemplates().Where(t => t.Title == template2Title).FirstOrDefault();
-                Assert.IsNotNull(template1, "Template was not found");
+                var template2 = this.PageManager.GetTemplates().FirstOrDefault(t => t.Name == "Bootstrap." + template2Title);
+                Assert.IsNotNull(template2, "Template was not found");
 
                 // Create page with template from Foundation package and verify content
                 Guid page1Id = FeatherServerOperations.Pages().CreatePageWithTemplate(template1, Constants.PageTitle, Constants.PageUrl);
@@ -235,18 +235,19 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.Packages)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds new package with sample view for Mvc widget, creates new template based on the package and verifies the view is applied.")]
+        [Ignore("")]
         public void ResourcePackage_CreateTemplateBasedOnlyOnThePackage_VerifyViewFromThePackage()
         {
             string pageName = "FeatherPage";
             string widgetCaption = "TestMvcWidget";
-            string placeHolderId = "Body";
+            string placeHolderId = "Contentplaceholder1";
             string packageName = "Bootstrap";
             string viewFileName = "Default.cshtml";
             string widgetName = "MvcTest";
             string fileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Default.cshtml";
-            string templateTitle = "Bootstrap.MyTestTemplate";
+            string templateTitle = "Bootstrap.default";
             string text = "This is a view from package.";
 
             try
@@ -254,7 +255,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageMvcViewDestinationFilePath(packageName, widgetName, viewFileName);
                 FeatherServerOperations.ResourcePackages().AddNewResource(fileResource, filePath);
 
-                Guid templateId = FeatherServerOperations.Pages().CreatePureMvcTemplate(templateTitle);
+                Guid templateId = PageManager.GetManager().GetTemplates().FirstOrDefault(t => t.Name == templateTitle).Id;
 
                 Guid pageId = ServerOperations.Pages().CreatePage(pageName, templateId);
                 pageId = ServerOperations.Pages().GetPageNodeId(pageId);
@@ -267,7 +268,6 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             finally
             {
                 ServerOperations.Pages().DeleteAllPages();
-                ServerOperations.Templates().DeletePageTemplate(templateTitle);
 
                 string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageMvcViewDestinationFilePath(packageName, widgetName, viewFileName);
 
@@ -280,7 +280,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.Packages)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds new package without layout file and adds new widget view to the package, renames the template, keeping the package in the title and verifies the template content"),
         Ignore("Not stable")]
         public void ResourcePackage_RenameTemplateAndKeepThePackageInTheTitle_VerifyTemplateAndPage()
@@ -294,10 +294,10 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             string widgetName = "MvcTest";
             string fileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Default.cshtml";
             string packageResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Package1.zip";
-            string templateTitle = "Package1.test-layout";
+            string templateTitle = "test-layout";
             string viewText = "This is a view from package.";
             string layoutText = "Package1 - test layout";
-            string templateRenamed = "Package1.TemplateRenamed";
+            string templateRenamed = "TemplateRenamed";
 
             int templatesCount = this.PageManager.GetTemplates().Count();
 
@@ -308,7 +308,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
 
                 // Verify template is generated successfully
-                var template = this.PageManager.GetTemplates().Where(t => t.Title == templateTitle).FirstOrDefault();
+                var template = this.PageManager.GetTemplates().FirstOrDefault(t => t.Name == templateTitle);
                 Assert.IsNotNull(template, "Template was not found"); 
 
                 // Add new view to the package
@@ -353,7 +353,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.Packages)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds new package without layout file, creates a template and page, removes the package and verifies the page content")]
         [Ignore("The page returns a Server error after removing the package.")]
         public void ResourcePackage_DeleteResourcePackage_VerifyTemplateAndPageNotBasedOnLayout()
@@ -373,7 +373,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             FeatherServerOperations.ResourcePackages().AddNewResourcePackage(packageResource);
             FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
 
-            var template = pm.GetTemplates().Where(t => t.Title == templateTitle).FirstOrDefault();
+            var template = pm.GetTemplates().FirstOrDefault(t => t.Name == templateTitle);
             Assert.IsNotNull(template, "Template was not found");
 
             string path = FeatherServerOperations.ResourcePackages().GetResourcePackagesDestination(packageName);
@@ -412,7 +412,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
 
         [Test]
         [Category(TestCategories.Packages)]
-        [Author(FeatherTeams.Team2)]
+        [Author(FeatherTeams.FeatherTeam)]
         [Description("Adds new package without layout file, replaces it with the same package with different layouts and verifies new templates are generated"),
         Ignore("Unstable test")]
         public void ResourcePackage_ReplaceExistingPackage_VerifyNewTemplatesGenerated()
@@ -433,7 +433,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             FeatherServerOperations.ResourcePackages().AddNewResourcePackage(packageResource);
             FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
 
-            var template = pm.GetTemplates().Where(t => t.Title == templateTitle).FirstOrDefault();
+            var template = pm.GetTemplates().FirstOrDefault(t => t.Name == templateTitle);
             Assert.IsNotNull(template, "Template was not found");
 
             var packagePath = Path.Combine(sitefinityPath, packagesFolder, packageName);
@@ -459,7 +459,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 2);
                 Assert.IsTrue(pm.GetTemplates().Count().Equals(templatesCount + 2), "templates count is not correct");
 
-                var newTemplate = pm.GetTemplates().Where(t => t.Title == newTemplateTitle).FirstOrDefault();
+                var newTemplate = pm.GetTemplates().FirstOrDefault(t => t.Name == newTemplateTitle);
                 Assert.IsNotNull(newTemplate, "New template was not found");
             }
             finally

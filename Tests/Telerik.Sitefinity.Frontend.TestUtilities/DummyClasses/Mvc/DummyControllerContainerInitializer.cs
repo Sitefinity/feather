@@ -123,6 +123,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc
         /// </param>
         public void RegisterControllerPublic(Type widgetType)
         {
+            typeof(ControllerContainerInitializer).GetMethod("RegisterStringResources", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new object[] { widgetType });
             this.RegisterController(widgetType);
         }
 

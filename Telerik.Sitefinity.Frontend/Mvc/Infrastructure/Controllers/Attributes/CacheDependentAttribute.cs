@@ -28,12 +28,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
                 {
                     var viewResult = filterContext.Result as ViewResultBase;
 
-                    if (viewResult != null)
+                    if (viewResult != null && viewResult.View != null)
                     {
-                        var builtView = viewResult.View as BuildManagerCompiledView;
-                        if (builtView != null)
+                        var viewPath = FrontendManager.VirtualPathBuilder.GetViewPath(viewResult.View);
+                        if (!viewPath.IsNullOrEmpty())
                         {
-                            var cacheDependency = this.GetCacheDependency(builtView.ViewPath);
+                            var cacheDependency = this.GetCacheDependency(viewPath);
                             if (cacheDependency != null)
                             {
                                 context.Response.AddCacheDependency(cacheDependency);
@@ -52,7 +52,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
         {
             if (HostingEnvironment.VirtualPathProvider != null)
             {
-                return HostingEnvironment.VirtualPathProvider.GetCacheDependency(virtualPath, null, DateTime.UtcNow);
+                // Sitefinity 8.1 and older throw exception if the second argument of this method is null so we pass an empty array.
+                return HostingEnvironment.VirtualPathProvider.GetCacheDependency(virtualPath, new string[0], DateTime.UtcNow);
             }
 
             return null;

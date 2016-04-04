@@ -1,4 +1,4 @@
-﻿<div kendo-tab-strip class="k-tabstrip--selection">
+﻿<div kendo-tab-strip k-animation="false" class="k-tabstrip--selection">
     <ul ng-show="multiselect">
         <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
             @(Res.Get<ClientComponentsResources>().All)
@@ -47,16 +47,27 @@
                     <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-hide="itemDisabled(item) || !multiselect">
 
                     <div>
-                        <i class='pull-left icon-item-{{item.Status.toLowerCase()}}'></i>
-                        <span class="pull-left">
-                            <span ng-bind="bindIdentifierField(item)" />
-                            <span class='u-db small' ng-class="{'text-muted': !isItemSelectedInDialog(item)}">{{item.Status}}</span>
-                            <span class="u-db" ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
-                                <span sf-shrinked-breadcrumb="{{item.ParentTitlesPath}}" sf-max-length="60"></span>
+                        <div class="row">
+                          
+                          <div class="col-xs-8">
+                            <i class='pull-left icon-item-{{item.Status.toLowerCase()}}'></i>
+                            <span class="pull-left">
+                              <span ng-bind="bindIdentifierField(item)" />
+                              <span class='u-db small' ng-class="{'text-muted': !isItemSelectedInDialog(item)}">{{item.Status}}</span>
                             </span>
-                        </span>
 
-                        <div ng-show="itemDisabled(item)">(@(Res.Get<ClientComponentsResources>().NotTranslated))</div>
+                            <div ng-show="itemDisabled(item)">
+                              (@(Res.Get<ClientComponentsResources>().NotTranslated))</div>
+                          </div>
+                          
+                          <div class="col-xs-4">
+                            <span ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
+                              <span sf-shrinked-breadcrumb="{{item.ParentTitlesPath}}" sf-max-length="60"></span>
+                            </span>
+                          </div>
+                          
+                        </div>
+
                     </div>
 
 

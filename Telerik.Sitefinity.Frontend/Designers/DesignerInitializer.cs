@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.UI;
@@ -14,27 +16,36 @@ namespace Telerik.Sitefinity.Frontend.Designers
     /// <summary>
     /// This class contains logic for initializing the MVC designer.
     /// </summary>
-    internal class DesignerInitializer
+    internal class DesignerInitializer : IInitializer
     {
         /// <summary>
         /// Initializes the MVC designer.
         /// </summary>
         public void Initialize()
         {
-            if (RouteTable.Routes["MvcDesigner"] == null)
+            if (RouteTable.Routes[DesignerInitializer.MvcDesignerRouteName] == null)
             {
-                RouteTable.Routes.MapRoute("MvcDesigner", "Telerik.Sitefinity.Frontend/{controller}/Master/{widgetName}", new { controller = "DesignerController", action = "Master" });
+                RouteTable.Routes.MapRoute(DesignerInitializer.MvcDesignerRouteName, "Telerik.Sitefinity.Frontend/{controller}/Master/{widgetName}", new { controller = "DesignerController", action = "Master" });
             }
 
-            if (RouteTable.Routes["MvcDesignerView"] == null)
+            if (RouteTable.Routes[DesignerInitializer.MvcDesignerViewRouteName] == null)
             {
-                RouteTable.Routes.MapRoute("MvcDesignerView", "Telerik.Sitefinity.Frontend/{controller}/View/{widgetName}/{viewType}", new { controller = "DesignerController", action = "View", viewType = "PropertyGrid" });
+                RouteTable.Routes.MapRoute(DesignerInitializer.MvcDesignerViewRouteName, "Telerik.Sitefinity.Frontend/{controller}/View/{widgetName}/{viewType}", new { controller = "DesignerController", action = "View", viewType = "PropertyGrid" });
             }
 
             ObjectFactory.Container.RegisterType<IDesignerResolver, DesignerResolver>(new ContainerControlledLifetimeManager());
 
             EventHub.Unsubscribe<IScriptsRegisteringEvent>(this.RegisteringScriptsHandler);
             EventHub.Subscribe<IScriptsRegisteringEvent>(this.RegisteringScriptsHandler);
+        }
+
+        /// <summary>
+        /// Uninitializes the MVC designer.
+        /// </summary>
+        public void Uninitialize()
+        {
+            RouteTable.Routes.Remove(RouteTable.Routes[DesignerInitializer.MvcDesignerRouteName]);
+            RouteTable.Routes.Remove(RouteTable.Routes[DesignerInitializer.MvcDesignerViewRouteName]);
         }
 
         /// <summary>
@@ -57,10 +68,8 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 ////    @event.Scripts.Add(scriptRef);
                 ////}
      
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/kendo.all.min.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor-services.js"));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Designers/Scripts/page-editor.js"));
-                ////@event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/Kendo/angular-kendo.js"));
                 
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + "Mvc/Scripts/LABjs/LAB.min.js"));
 
@@ -83,8 +92,21 @@ namespace Telerik.Sitefinity.Frontend.Designers
                         "sf_package",
                         packageVar + sb,
                         addScriptTags: true);
+
+                    var zoneEditor = @event.Sender as ZoneEditor;
+                    if (zoneEditor != null)
+                    {
+                        var urlhelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+                        var url = urlhelper.Content("~/ResourcePackages/{0}/assets/dist/css/styles.min.css".Arrange(currentPackage));
+                        var packageStyleMarkup = "<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\">".Arrange(url);
+                        var packageStyleLiteralControl = new LiteralControl(packageStyleMarkup);
+                        zoneEditor.Page.Header.Controls.Add(packageStyleLiteralControl);
+                    }
                 }
             }
         }
+
+        private const string MvcDesignerRouteName = "MvcDesigner";
+        private const string MvcDesignerViewRouteName = "MvcDesignerView";
     }
 }

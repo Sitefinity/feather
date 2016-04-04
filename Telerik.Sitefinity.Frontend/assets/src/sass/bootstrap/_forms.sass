@@ -1,23 +1,26 @@
 //Styles, that should be applied in the designer dialog only
-.sf-designer-dlg
-	.form-group-list
+.form-group--tall
+	min-height: 90px
+
+.form-group-list
+	margin-bottom: 15px
+	h5
+		margin-top: 40px
 		margin-bottom: 15px
-		h5
-			margin-top: 40px
-			margin-bottom: 15px
-		
-		.form-group + .form-group
-			margin-top: 0
 
 	.form-group + .form-group
-	  margin-top: 20px
-	  margin-bottom: 0
-	.form-group
-		h5
-			margin-top: 40px
-			margin-bottom: 15px
-		strong + .radio
-			margin-top: 5px
+		margin-top: 0
+
+.form-group + .form-group
+  margin-top: 20px
+  margin-bottom: 0
+.form-group
+	h5
+		margin-top: 40px
+		margin-bottom: 15px
+	strong + .radio,
+	strong + .checkbox
+		margin-top: 5px
 
 
 .form-control-highlight[type=text]
@@ -51,3 +54,6 @@
 	.form-control-sm
 		height: 27px !important
 		padding: 0 7px !important
+
+.input-group-addon
+	background: #fff

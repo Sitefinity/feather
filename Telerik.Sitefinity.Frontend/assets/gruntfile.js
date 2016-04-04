@@ -62,13 +62,21 @@ module.exports = function (grunt) {
     },
 
     sass: {
-      options: {
-        sourceComments: 'normal'
-      },
       dist: {
         files: {
           '<%= dist.path %>/css/sitefinity-backend.css': '<%= src.path %>/sass/sitefinity-backend.sass',
-          '<%= dist.path %>/css/html-field.css': '<%= src.path %>/sass/html-field.sass'
+          '<%= dist.path %>/css/html-field.css': '<%= src.path %>/sass/html-field.sass',
+          '<%= dist.path %>/css/loading.css': '<%= src.path %>/sass/loading.sass'
+        }
+      },
+      dev: {
+        options: {
+          sourceComments: 'normal'
+        },
+        files: {
+          '<%= dist.path %>/css/sitefinity-backend.css': '<%= src.path %>/sass/sitefinity-backend.sass',
+          '<%= dist.path %>/css/html-field.css': '<%= src.path %>/sass/html-field.sass',
+          '<%= dist.path %>/css/loading.css': '<%= src.path %>/sass/loading.sass'
         }
       }
     },
@@ -104,10 +112,10 @@ module.exports = function (grunt) {
           partialPrefix: true,
           relativeFontPath: '../fonts/',
           template: 'feather-icons.css',
-          order: 'eot,svg,woff,ttf',
+          types: 'eot,woff,ttf,svg',
+          order: 'eot,woff,ttf,svg',
           startCodepoint: 0x00b1,
           normalize: true,
-          // if you decide to change the next two 4096 numbers I will murder you
           fontHeight: 4096,
           ascent: 4096,
           descent: 0
@@ -195,6 +203,17 @@ module.exports = function (grunt) {
     'clean:all',
     'sass:dist',
     // 'uncss',
+    'cssmin',
+    'uglify:dist',
+    'newer:csslint:dev',
+    'newer:imagemin',
+    'concurrent:dev'
+  ]);
+
+  // Dev
+  grunt.registerTask('dev', [
+    'clean:all',
+    'sass:dev',
     'cssmin',
     'uglify:dist',
     'newer:csslint:dev',

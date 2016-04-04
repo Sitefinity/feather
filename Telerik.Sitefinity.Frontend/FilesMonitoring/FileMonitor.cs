@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Hosting;
 using Telerik.Sitefinity.Abstractions;
@@ -25,30 +27,33 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="directoriesInfo">The monitored directories.</param>
         public void Start(IList<MonitoredDirectory> directoriesInfo)
         {
-            if (this.rootWatcher == null)
+            lock (FileMonitor.FileMonitorStartLockObj)
             {
-                this.AddRootWatcher();
-            }
-
-            foreach (var directory in directoriesInfo)
-            {
-                var direcotryPath = this.MapPath(directory.Path);
-
-                if (this.WatchedFoldersAndPackages.Contains(directory))
-                    continue;
-
-                DirectoryInfo dir = new DirectoryInfo(direcotryPath);
-
-                if (!dir.Exists)
+                if (this.rootWatcher == null)
                 {
-                    this.QueuedFoldersAndPackages.Add(directory);
-                    continue;
+                    this.AddRootWatcher();
                 }
-                else
+                
+                foreach (var directory in directoriesInfo)
                 {
-                    this.WatchedFoldersAndPackages.Add(directory);
-                    this.ProcessDirecotryFiles(dir);
-                    this.AddFileWatcher(directory);
+                    var direcotryPath = this.MapPath(directory.Path);
+
+                    if (this.WatchedFoldersAndPackages.Contains(directory))
+                        continue;
+
+                    DirectoryInfo dir = new DirectoryInfo(direcotryPath);
+
+                    if (!dir.Exists)
+                    {
+                        this.QueuedFoldersAndPackages.Add(directory);
+                        continue;
+                    }
+                    else
+                    {
+                        this.WatchedFoldersAndPackages.Add(directory);
+                        this.ProcessDirecotryFiles(dir);
+                        this.AddFileWatcher(directory);
+                    }
                 }
             }
         }
@@ -114,7 +119,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             {
                 FilePath = virtualFilePath,
                 ChangeType = changeType,
-                OldFilePath = oldFileVirtualPath, 
+                OldFilePath = oldFileVirtualPath,
                 PackageName = packageName,
                 ResourceFolder = resourceFolder,
                 FileName = fileName
@@ -216,6 +221,40 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         #endregion
 
         #region Private methods
+
+        private static void CreateFiles(FileMonitor monitor)
+        {
+            if (FileMonitor.filesNeedCreation)
+            {
+                lock (FileMonitor.FilesNeedCreationLockObj)
+                {
+                    if (FileMonitor.filesNeedCreation)
+                    {
+                        FileMonitor.filesNeedCreation = false;
+
+                        SystemManager.BackgroundTasksService.EnqueueTask(() =>
+                        {
+                            Thread.Sleep(1000);
+                            string file;
+                            lock (FileMonitor.FileMonitorStartLockObj)
+                            {
+                                while (FileMonitor.FilesToCreate.TryDequeue(out file))
+                                {
+                                    monitor.FileChanged(file, FileChangeType.Created);
+                                }
+                            }
+
+                            Thread.Sleep(1000);
+                            FileMonitor.filesNeedCreation = true;
+                            if (!FileMonitor.FilesToCreate.IsEmpty)
+                            {
+                                CreateFiles(monitor);
+                            }
+                        });
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Adds the root watcher.
@@ -386,7 +425,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             if (string.IsNullOrEmpty(Path.GetExtension(e.FullPath)))
                 return;
 
-            this.FileChanged(e.FullPath, FileChangeType.Created);
+            FilesToCreate.Enqueue(e.FullPath);
+            CreateFiles(this);
         }
 
         /// <summary>
@@ -413,7 +453,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var queuedDirInfo = this.WatchedFoldersAndPackages.FirstOrDefault(dirInfo => dirInfo.Path.StartsWith(virtualFilePath, StringComparison.OrdinalIgnoreCase));
 
             if (queuedDirInfo == null)
-                return;           
+                return;
 
             this.QueuedFoldersAndPackages.Add(queuedDirInfo);
 
@@ -493,6 +533,11 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         private FileSystemWatcher rootWatcher = null;
         private IList<MonitoredDirectory> queuedFoldersAndPackages;
         private IList<MonitoredDirectory> watchedFoldersAndPackages;
+
+        private static readonly ConcurrentQueue<string> FilesToCreate = new ConcurrentQueue<string>();
+        private static bool filesNeedCreation = true;
+        private static readonly object FilesNeedCreationLockObj = new object();
+        private static readonly object FileMonitorStartLockObj = new object();
 
         #endregion
 

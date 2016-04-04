@@ -81,12 +81,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// Insert a image
+        /// Insert an image
         /// </summary>
-        /// <value>Insert a image</value>
+        /// <value>Insert an image</value>
         [ResourceEntry("InsertImage",
-            Value = "Insert a image",
-            Description = "phrase: Insert a image",
+            Value = "Insert an image",
+            Description = "phrase: Insert an image",
             LastModified = "2015/03/21")]
         public string InsertImage
         {
@@ -125,6 +125,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["InsertFile"];
+            }
+        }
+
+        /// <summary>
+        /// Insert this file
+        /// </summary>
+        /// <value>Insert this file</value>
+        [ResourceEntry("InsertThisFile",
+            Value = "Insert this file",
+            Description = "phrase: Insert this file",
+            LastModified = "2015/06/26")]
+        public string InsertThisFile
+        {
+            get
+            {
+                return this["InsertThisFile"];
             }
         }
 
@@ -1396,9 +1412,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         /// <value>Insert link</value>
         [ResourceEntry("InsertLinkButton",
-            Value = "Insert link",
-            Description = "phrase: Insert link",
-            LastModified = "2015/03/23")]
+            Value = "Insert this link",
+            Description = "phrase: Insert this link",
+            LastModified = "2015/06/12")]
         public string InsertLinkButton
         {
             get
@@ -3048,6 +3064,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["MailingListSelectorHeader"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: No forms
+        /// </summary>
+        /// <value>No forms</value>
+        [ResourceEntry("NoForms",
+            Value = "No forms have been created yet",
+            Description = "phrase: No forms have been vreated yet",
+            LastModified = "2015/09/04")]
+        public string NoForms
+        {
+            get
+            {
+                return this["NoForms"];
             }
         }
     }

@@ -10,9 +10,12 @@ using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.DynamicModules.Builder;
 using Telerik.Sitefinity.DynamicModules.Builder.Model;
+using Telerik.Sitefinity.Frontend.Mvc.Controllers;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -27,8 +30,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// Updates the view engines collection of the given <paramref name="controller"/> by making the engines aware of the controller's container virtual path.
         /// </summary>
         /// <param name="controller">The controller.</param>
+        /// <param name="pathTransformationsFunc">Transformations func that have to be applied to each view engine search path.</param>
+        /// <exception cref="System.ArgumentNullException">controller</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
+        public static void UpdateViewEnginesCollection(this Controller controller, Func<IList<Func<string, string>>> pathTransformationsFunc)
+        {
+            if (pathTransformationsFunc == null)
+                throw new ArgumentNullException("pathTransformationsFunc");
+
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+
+            controller.ViewEngineCollection = GetViewEngineCollection(controller, pathTransformationsFunc);
+        }
+
+        /// <summary>
+        /// Updates the view engines collection of the given <paramref name="controller"/> by making the engines aware of the controller's container virtual path.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
         /// <exception cref="System.ArgumentNullException">controller</exception>
         /// <param name="pathTransformations">Transformations that have to be applied to each view engine search path.</param>
+        [Obsolete("Use the UpdateViewEnginesCollection with the Func<IList<Func<string, string>>> overload")]
         public static void UpdateViewEnginesCollection(this Controller controller, IList<Func<string, string>> pathTransformations)
         {
             if (pathTransformations == null)
@@ -37,23 +59,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controller == null)
                 throw new ArgumentNullException("controller");
 
-            var viewEngines = new ViewEngineCollection();
-
-            foreach (var globalEngine in ViewEngines.Engines)
-            {
-                var vppEngine = globalEngine as VirtualPathProviderViewEngine;
-                var newEngine = vppEngine != null ? ControllerExtensions.GetViewEngine(vppEngine, pathTransformations) : globalEngine;
-                viewEngines.Add(newEngine);
-            }
-
-            controller.ViewEngineCollection = viewEngines;
+            controller.ViewEngineCollection = GetViewEngineCollection(controller, () => pathTransformations);
         }
 
         /// <summary>
         /// Gets the partial views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public static IEnumerable<string> GetPartialViews(this Controller controller)
+        /// <param name="fullViewPaths">The full view paths.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
+        public static IEnumerable<string> GetPartialViews(this Controller controller, IList<string> fullViewPaths = null)
         {
             var viewLocations = ControllerExtensions.GetPartialViewLocations(controller);
             return ControllerExtensions.GetViews(controller, viewLocations);
@@ -63,7 +78,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// Gets the views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        public static IEnumerable<string> GetViews(this Controller controller)
+        /// <param name="fullViewPaths">The full view paths.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
+        public static IEnumerable<string> GetViews(this Controller controller, IList<string> fullViewPaths = null)
         {
             var viewLocations = ControllerExtensions.GetViewLocations(controller);
             return ControllerExtensions.GetViews(controller, viewLocations);
@@ -90,7 +107,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 dependencies = SystemManager.CurrentHttpContext.Items[PageCacheDependencyKeys.PageData] as IList<CacheDependencyKey>;
             }
-            
+
             if (dependencies == null)
             {
                 dependencies = new List<CacheDependencyKey>();
@@ -191,18 +208,152 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return dynamicContentType;
         }
 
+        /// <summary>
+        /// Determines whether this controller will produce output when rendered in-memory by the search engine.
+        /// </summary>
+        public static IndexRenderModes GetIndexRenderMode(this IController controller)
+        {
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+
+            var searchableControl = controller as ISearchIndexBehavior;
+            if (searchableControl != null)
+            {
+                var exclude = searchableControl.ExcludeFromSearchIndex;
+                if (exclude)
+                    return IndexRenderModes.NoOutput;
+                else
+                    return IndexRenderModes.Normal;
+            }
+
+            var attribute = controller.GetType().GetCustomAttributes(true).OfType<IndexRenderModeAttribute>().LastOrDefault();
+            return attribute == null ? IndexRenderModes.Normal : attribute.Mode;
+        }
+
+        #endregion
+
+        #region Internal methods
+
+        /// <summary>
+        /// Gets the partial views that are available to the controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="viewFilesMappings">The view files mappings.</param>
+        /// <param name="fullViewPaths">The full view paths.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
+        internal static IEnumerable<string> GetPartialViews(this Controller controller, ref Dictionary<string, string> viewFilesMappings, IList<string> fullViewPaths = null)
+        {
+            var viewLocations = ControllerExtensions.GetPartialViewLocations(controller);
+            return ControllerExtensions.GetViews(controller, viewLocations, ref viewFilesMappings);
+        }
+
         #endregion
 
         #region Private methods
+
+        /// <summary>
+        /// Gets an already cached view engine collection from the dictionary or builds a new one.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="pathTransformationsFunc">The path transformations function.</param>
+        private static ViewEngineCollection GetViewEngineCollection(Controller controller, Func<IList<Func<string, string>>> pathTransformationsFunc)
+        {
+            var key = ControllerExtensions.GetKey(controller);
+
+            if (!ControllerExtensions.ViewEngineCollections.ContainsKey(key))
+            {
+                lock (ControllerExtensions.ViewEngineCollections)
+                {
+                    if (!ControllerExtensions.ViewEngineCollections.ContainsKey(key))
+                    {
+                        var viewEngineCollection = ControllerExtensions.BuildViewEngineCollection(pathTransformationsFunc());
+                        ControllerExtensions.ViewEngineCollections.Add(key, viewEngineCollection);
+                    }
+                }
+            }
+
+            return ControllerExtensions.ViewEngineCollections[key];
+        }
+
+        /// <summary>
+        /// Gets the key to be used in the view engine collection dictionary based on the controller type and the widget name.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        private static string GetKey(Controller controller)
+        {
+            const string WidgetNameKey = "widgetName";
+
+            var key = controller.GetType().FullName;
+
+            if (controller.RouteData != null && controller.RouteData.Values != null && controller.RouteData.Values.ContainsKey(WidgetNameKey))
+            {
+                var widgetName = (string)controller.RouteData.Values[WidgetNameKey];
+                key = string.Format("{0}-{1}", key, widgetName);
+            }
+
+            var currentPackage = new PackageManager().GetCurrentPackage();
+            if (!currentPackage.IsNullOrEmpty())
+            {
+                key += "-" + currentPackage;
+            }
+
+            return key;
+        }
+
+        /// <summary>
+        /// Builds the view engine collection by applying the passed path transformations to each view engine.
+        /// </summary>
+        /// <param name="pathTransformations">The path transformations.</param>
+        private static ViewEngineCollection BuildViewEngineCollection(IList<Func<string, string>> pathTransformations)
+        {
+            var viewEngines = new ViewEngineCollection();
+
+            foreach (var globalEngine in ViewEngines.Engines)
+            {
+                var vppEngine = globalEngine as VirtualPathProviderViewEngine;
+                var newEngine = vppEngine != null ? ControllerExtensions.GetViewEngine(vppEngine, pathTransformations) : globalEngine;
+                if (newEngine != null)
+                {
+                    viewEngines.Add(newEngine);
+                }
+            }
+
+            return viewEngines;
+        }
 
         /// <summary>
         /// Gets a view engine that is a clone of the given <paramref name="viewEngine"/> and has enhanced search locations.
         /// </summary>
         /// <param name="viewEngine">The view engine.</param>
         /// <param name="pathTransformations">Transformations that have to be applied to each view engine search path.</param>
-        private static IViewEngine GetViewEngine(VirtualPathProviderViewEngine viewEngine,  IList<Func<string, string>> pathTransformations)
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        private static IViewEngine GetViewEngine(VirtualPathProviderViewEngine viewEngine, IList<Func<string, string>> pathTransformations)
         {
-            var newEngine = (VirtualPathProviderViewEngine)Activator.CreateInstance(viewEngine.GetType());
+            VirtualPathProviderViewEngine newEngine;
+            var precompiledEngine = viewEngine as CompositePrecompiledMvcEngineWrapper;
+            if (precompiledEngine != null)
+            {
+                if (!precompiledEngine.PackageName.IsNullOrEmpty() &&
+                    !string.Equals(precompiledEngine.PackageName, new PackageManager().GetCurrentPackage(), StringComparison.OrdinalIgnoreCase))
+                {
+                    return null;
+                }
+
+                newEngine = precompiledEngine.Clone();
+            }
+            else
+            {
+                var viewEngineType = viewEngine.GetType();
+                var defaultCtor = viewEngineType.GetConstructor(Type.EmptyTypes);
+                if (defaultCtor != null)
+                    newEngine = (VirtualPathProviderViewEngine)Activator.CreateInstance(viewEngineType);
+                else
+                    return null;
+            }
+
+            newEngine.ViewLocationCache = DefaultViewLocationCache.Null;
+
             newEngine.AreaViewLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.AreaViewLocationFormats, pathTransformations);
             newEngine.AreaMasterLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.AreaPartialViewLocationFormats, pathTransformations);
             newEngine.AreaPartialViewLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.AreaPartialViewLocationFormats, pathTransformations);
@@ -210,7 +361,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             newEngine.MasterLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.MasterLocationFormats, pathTransformations);
             newEngine.PartialViewLocationFormats = ControllerExtensions.AppendControllerVirtualPath(viewEngine.PartialViewLocationFormats, pathTransformations);
 
-            newEngine.ViewLocationCache = DefaultViewLocationCache.Null;
+            if (precompiledEngine != null)
+            {
+                newEngine.AreaViewLocationFormats = newEngine.AreaViewLocationFormats.Select(p => FrontendManager.VirtualPathBuilder.RemoveParams(p)).ToArray();
+                newEngine.AreaMasterLocationFormats = newEngine.AreaMasterLocationFormats.Select(p => FrontendManager.VirtualPathBuilder.RemoveParams(p)).ToArray();
+                newEngine.AreaPartialViewLocationFormats = newEngine.AreaPartialViewLocationFormats.Select(p => FrontendManager.VirtualPathBuilder.RemoveParams(p)).ToArray();
+                newEngine.ViewLocationFormats = newEngine.ViewLocationFormats.Select(p => FrontendManager.VirtualPathBuilder.RemoveParams(p)).ToArray();
+                newEngine.MasterLocationFormats = newEngine.MasterLocationFormats.Select(p => FrontendManager.VirtualPathBuilder.RemoveParams(p)).ToArray();
+                newEngine.PartialViewLocationFormats = newEngine.PartialViewLocationFormats.Select(p => FrontendManager.VirtualPathBuilder.RemoveParams(p)).ToArray();
+            }
 
             return newEngine;
         }
@@ -278,12 +437,41 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return baseFiles;
         }
 
+        private static IEnumerable<string> GetViews(Controller controller, IEnumerable<string> viewLocations, ref Dictionary<string, string> viewFilesMappings)
+        {
+            var viewExtensions = ControllerExtensions.GetViewFileExtensions(controller);
+            var widgetName = controller.RouteData != null ? controller.RouteData.Values["widgetName"] as string : null;
+
+            var baseFiles = ControllerExtensions.GetViewsForAssembly(controller.GetType().Assembly, viewLocations, viewExtensions, ref viewFilesMappings);
+            if (!widgetName.IsNullOrEmpty())
+            {
+                var widgetAssembly = FrontendManager.ControllerFactory.ResolveControllerType(widgetName).Assembly;
+                var widgetFiles = ControllerExtensions.GetViewsForAssembly(widgetAssembly, viewLocations, viewExtensions, ref viewFilesMappings);
+                return baseFiles.Union(widgetFiles);
+            }
+
+            return baseFiles;
+        }
+
         private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions)
         {
             var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly);
             return viewLocations
                 .SelectMany(l => ControllerExtensions.GetViewsForPath(pathDef, l, viewExtensions))
                 .Distinct();
+        }
+
+        private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions, ref Dictionary<string, string> viewFilesMappings)
+        {
+            var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly);
+            var views = new List<string>();
+
+            foreach (var viewLocation in viewLocations)
+            {
+                views.AddRange(ControllerExtensions.GetViewsForPath(pathDef, viewLocation, viewExtensions, ref viewFilesMappings));
+            }
+
+            return views.Distinct();
         }
 
         private static IEnumerable<string> GetViewsForPath(PathDefinition definition, string path, IEnumerable<string> viewExtensions)
@@ -303,6 +491,37 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             return new string[] { };
         }
+
+        private static IEnumerable<string> GetViewsForPath(PathDefinition definition, string path, IEnumerable<string> viewExtensions, ref Dictionary<string, string> viewFilesMappings)
+        {
+            var views = new List<string>();
+            var files = ObjectFactory.Resolve<IResourceResolverStrategy>().GetFiles(definition, path);
+
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    if (viewExtensions.Any(e => file.EndsWith(e, StringComparison.Ordinal)))
+                    {
+                        var fileName = VirtualPathUtility.GetFileName(file);
+                        var fileNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(fileName);
+                        if (!viewFilesMappings.ContainsKey(fileNameWithoutExtension))
+                        {
+                            viewFilesMappings.Add(fileNameWithoutExtension, file);
+                            views.Add(fileNameWithoutExtension);
+                        }
+                    }
+                }
+            }
+
+            return views;
+        }
+
+        #endregion
+
+        #region Private Fields
+
+        private static readonly Dictionary<string, ViewEngineCollection> ViewEngineCollections = new Dictionary<string, ViewEngineCollection>();
 
         #endregion
     }

@@ -19,20 +19,16 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// UI test MvcWidgetUseViewFromLayoutFolderAndPackage.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.Team2),
+        Owner(FeatherTeams.FeatherTeam),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcWidgetUseViewFromLayoutFolderAndPackage()
         {
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewText), "Default view text is not correct.");
-
             BAT.Arrange(this.TestName).ExecuteArrangement("AddNewViewToLayoutsFolder");
-
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromLayoutsFolderText), "Default view text from Layouts folder is not correct.");
-
             BAT.Arrange(this.TestName).ExecuteArrangement("AddNewViewToPackage");
-
             BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromPackageText), "Default view text from package is not correct.");
         }

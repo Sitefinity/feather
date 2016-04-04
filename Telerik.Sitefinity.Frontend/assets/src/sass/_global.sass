@@ -1,18 +1,27 @@
-a,
-[ng-click="toggle()"]
-	cursor: pointer
-
-// font-size needed because Foundation and Bootstrap
-// show no love between each other
-ul, ol, dl, textarea
+.sf-backend-wrp
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif
 	font-size: 14px
+	line-height: 1.428571429
+	color: #333
 
-textarea
-	line-height: 1.5
+	ul
+		margin-left: 0
 
-fieldset
-	padding: 0
-	border: 0
+	a,
+	[ng-click="toggle()"]
+		cursor: pointer
 
-fieldset[disabled="disabled"]
-	opacity: 0.4
+	// font-size needed because Foundation and Bootstrap
+	// show no love between each other
+	ul, ol, dl, textarea
+		font-size: 14px
+
+	textarea
+		line-height: 1.5
+
+	fieldset
+		padding: 0
+		border: 0
+
+	fieldset[disabled="disabled"]
+		opacity: 0.4

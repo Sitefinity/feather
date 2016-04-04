@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Web;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 
 // General Information about an assembly is controlled through the following 
@@ -16,3 +17,6 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 [assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestUnit")]
 [assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestUtilities")]
 [assembly: InternalsVisibleTo("Telerik.Sitefinity.Frontend.TestIntegration")]
+
+[assembly: PreApplicationStartMethod(typeof(Telerik.Sitefinity.Frontend.Startup), "OnPreApplicationStart")]
+[assembly: InternalsVisibleTo("FeatherWidgets.TestIntegration")]
