@@ -650,6 +650,20 @@
 	"components" : ["sf-services", "sf-selectors", "sf-multisite-page-selector" ]
 },
 
+"_____EVENTS_____" : {"scripts" : [], "angularModules": [], "components" : []},
+
+
+"sf-calendar-selector" : {
+	"scripts" : [
+		"client-components/selectors/events/sf-calendar-service.js",
+		"client-components/selectors/events/sf-calendar-selector.js"
+	],
+	"angularModules": [
+		"sfSelectors"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
 
 "_____BLOGS_____" : {"scripts" : [], "angularModules": [], "components" : []},
 
