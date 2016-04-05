@@ -143,8 +143,8 @@
             });
     }]);
 
-    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', '$route', 'propertyService', 'widgetContext',
-        function ($rootScope, $scope, $q, $modalInstance, $route, propertyService, widgetContext) {
+    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$uibModalInstance', '$route', 'propertyService', 'widgetContext',
+        function ($rootScope, $scope, $q, $uibModalInstance, $route, propertyService, widgetContext) {
             var isSaveToAllTranslations = true;
 
             // ------------------------------------------------------------------------
@@ -235,7 +235,7 @@
 
             $scope.close = function () {
                 try {
-                    $modalInstance.close();
+                    $uibModalInstance.close();
                 } catch (e) { }
 
                 if (typeof ($telerik) !== 'undefined')

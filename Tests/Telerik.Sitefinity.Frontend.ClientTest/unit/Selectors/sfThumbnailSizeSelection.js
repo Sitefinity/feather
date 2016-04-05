@@ -232,7 +232,7 @@ describe("image thumbnail size selector", function () {
 
             createController = function (modalInstance, model) {
                 return $controller('sfCustomThumbnailSizeCtrl', {
-                    '$scope': $rootScope, '$modalInstance': modalInstance, 'model': model
+                    '$scope': $rootScope, '$uibModalInstance': modalInstance, 'model': model
                 });
             };
         }));

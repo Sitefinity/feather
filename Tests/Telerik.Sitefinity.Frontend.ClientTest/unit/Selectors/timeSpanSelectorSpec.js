@@ -83,7 +83,7 @@ describe("timeSpan selector", function () {
         var s = scope.$$childHead;
 
         //mock the call to the modal service.
-        s.$modalInstance = { close: function () { } };
+        s.$uibModalInstance = { close: function () { } };
 
         s.selectedItemInTheDialog.periodType = 'customRange';
         s.selectedItemInTheDialog.fromDate = new Date("12/17/2012");
@@ -120,7 +120,7 @@ describe("timeSpan selector", function () {
         var s = scope.$$childHead;
 
         //mock the call to the modal service.
-        s.$modalInstance = { close: function () { } };   
+        s.$uibModalInstance = { close: function () { } };
 
         s.selectedItemInTheDialog.periodType = 'periodToNow';
         s.selectedItemInTheDialog.timeSpanValue = 3;

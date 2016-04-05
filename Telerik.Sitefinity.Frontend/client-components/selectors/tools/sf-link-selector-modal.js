@@ -15,11 +15,11 @@ angular.module('sfSelectors').directive('sfLinkSelectorModal', function ($inject
             var selectedItem = angular.element("#linkSelector").scope().selectedItem;
             var htmlLinkObj = linkService.getHtmlLink(selectedItem);
 
-            $scope.$modalInstance.close(htmlLinkObj[0]);
+            $scope.$uibModalInstance.close(htmlLinkObj[0]);
         };
 
         $scope.cancel = function () {
-            $scope.$modalInstance.dismiss();
+            $scope.$uibModalInstance.dismiss();
         };
 
         $scope.isDisabled = function (selectedItem) {

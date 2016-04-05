@@ -3,7 +3,7 @@ describe('designer tests.', function () {
     beforeEach(module('designer'));
 
     describe('DialogCtrl test.', function () {
-        var createController, $rootScope, $scope, propertyService, $httpBackend, $modalInstance, $timeout;
+        var createController, $rootScope, $scope, propertyService, $httpBackend, $uibModalInstance, $timeout;
 
         beforeEach(inject(function ($injector, _$location_, _$timeout_) {
 
@@ -14,7 +14,7 @@ describe('designer tests.', function () {
 
             var $controller = $injector.get('$controller');
             var $q = $injector.get('$q');
-            $modalInstance = $injector.get('modalInstanceMock');
+            $uibModalInstance = $injector.get('modalInstanceMock');
 
             var $route = $injector.get('$route');
             var propertyService = $injector.get('PropertyServiceMock');
@@ -29,7 +29,7 @@ describe('designer tests.', function () {
                     '$rootScope': $rootScope,
                     '$scope': $scope,
                     '$q': $q,
-                    '$modalInstance': $modalInstance,
+                    '$uibModalInstance': $uibModalInstance,
                     '$route': $route,
                     'propertyService': propertyService,
                     'widgetContext': widgetContext
@@ -49,7 +49,7 @@ describe('designer tests.', function () {
             $scope.$digest();
 
             expect(handlerCalled).toBe(true);
-            expect($modalInstance.isClosed).toBe(true);
+            expect($uibModalInstance.isClosed).toBe(true);
         });
 
         it('[Boyko-Karadzhov] / Saving handler that throws error is called and dialog is not closed.', function () {
@@ -69,7 +69,7 @@ describe('designer tests.', function () {
             expect(handlerCalled).toBe(true);
             expect($scope.feedback.showError).toBe(true);
             expect($scope.feedback.errorMessage).toEqual(expectedException);
-            expect($modalInstance.isClosed).not.toBe(true);
+            expect($uibModalInstance.isClosed).not.toBe(true);
         });
 
         it('[Boyko-Karadzhov] / Canceling handler is called and dialog is closed.', function () {
@@ -84,7 +84,7 @@ describe('designer tests.', function () {
             $scope.$digest();
 
             expect(handlerCalled).toBe(true);
-            expect($modalInstance.isClosed).toBe(true);
+            expect($uibModalInstance.isClosed).toBe(true);
         });
 
         it('[Boyko-Karadzhov] / Canceling handler that throws error is called and dialog is not closed.', function () {
@@ -104,7 +104,7 @@ describe('designer tests.', function () {
             expect(handlerCalled).toBe(true);
             expect($scope.feedback.showError).toBe(true);
             expect($scope.feedback.errorMessage).toEqual(expectedException);
-            expect($modalInstance.isClosed).not.toBe(true);
+            expect($uibModalInstance.isClosed).not.toBe(true);
         });
 
         it('[Boyko-Karadzhov] / Can save and close after one failed attempt.', function () {
@@ -124,14 +124,14 @@ describe('designer tests.', function () {
             expect(handlerCalled).toBe(true);
             expect($scope.feedback.showError).toBe(true);
             expect($scope.feedback.errorMessage).toEqual(expectedException);
-            expect($modalInstance.isClosed).not.toBe(true);
+            expect($uibModalInstance.isClosed).not.toBe(true);
 
             $scope.save();
 
             $scope.$digest();
 
             expect(handlerCalled).toBe(true);
-            expect($modalInstance.isClosed).toBe(true);
+            expect($uibModalInstance.isClosed).toBe(true);
         });
     });
 });

@@ -1,6 +1,6 @@
 ﻿<div>
     <div id="selectedItemsPlaceholder">
-        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+      <uib-alert type="danger" ng-show="showError">{{errorMessage}}</uib-alert>
 
         <div ng-hide="showError">
             <span class="label label-taxon label-full" ng-bind="sfSelectedItem.displayText"></span>
@@ -22,7 +22,7 @@
     <div class="modal-body">
 
 
-        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+      <uib-alert type="danger" ng-show="showError">{{errorMessage}}</uib-alert>
 
         <h4>@(Res.Get<ClientComponentsResources>().DisplayPublishedItems)</h4>
         <form name="periodSelection">

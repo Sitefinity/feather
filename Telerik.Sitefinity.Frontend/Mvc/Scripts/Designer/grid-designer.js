@@ -12,8 +12,8 @@
 
     var gridDesignerModule = angular.module('gridDesigner', ['pageEditorServices', 'modalDialog', 'serverDataModule']);
 
-    gridDesignerModule.controller('GridDialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', 'serverData', 'gridService',
-    function ($rootScope, $scope, $q, $modalInstance, serverData, gridService) {
+    gridDesignerModule.controller('GridDialogCtrl', ['$rootScope', '$scope', '$q', '$uibModalInstance', 'serverData', 'gridService',
+    function ($rootScope, $scope, $q, $uibModalInstance, serverData, gridService) {
 
         // ------------------------------------------------------------------------
         // Event handlers
@@ -78,7 +78,7 @@
 
         $scope.close = function () {
             try {
-                $modalInstance.close();
+                $uibModalInstance.close();
             } catch (e) { }
 
             if (typeof ($telerik) != 'undefined')

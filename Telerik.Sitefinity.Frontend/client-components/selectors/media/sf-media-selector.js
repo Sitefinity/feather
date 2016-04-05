@@ -808,8 +808,8 @@
         * Upload properties controller
         */
 
-        .controller('SfMediaSelectorUploadPropertiesCtrl', ['$scope', '$modalInstance', 'sfMediaService', 'sfFileModel', 'sfProvider', 'sfLabels',
-        function myfunction($scope, $modalInstance, sfMediaService, sfFileModel, sfProvider, sfLabels) {
+        .controller('SfMediaSelectorUploadPropertiesCtrl', ['$scope', '$uibModalInstance', 'sfMediaService', 'sfFileModel', 'sfProvider', 'sfLabels',
+        function myfunction($scope, $uibModalInstance, sfMediaService, sfFileModel, sfProvider, sfLabels) {
             $scope.model = sfFileModel;
             $scope.provider = sfProvider;
             $scope.sfLabels = sfLabels;
@@ -826,7 +826,7 @@
             var successAction = function (data) {
                 data = data || {};
                 $scope.model.uploadInProgress = false;
-                $modalInstance.close(data[0]);
+                $uibModalInstance.close(data[0]);
             };
 
             var progressAction = function (progress) {
@@ -835,7 +835,7 @@
 
             var errorAction = function (err) {
                 console.log(err);
-                $modalInstance.dismiss();
+                $uibModalInstance.dismiss();
             };
 
             $scope.upload = function () {
@@ -844,7 +844,7 @@
             };
 
             $scope.cancelUpload = function () {
-                $modalInstance.dismiss();
+                $uibModalInstance.dismiss();
             };
         }])
 

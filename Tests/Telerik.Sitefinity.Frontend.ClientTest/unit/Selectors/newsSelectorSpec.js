@@ -250,7 +250,7 @@ describe("news selector", function () {
             var s = scope.$$childHead;
 
             //mock the call to the modal service.
-            s.$modalInstance = { close: function () { } };
+            s.$uibModalInstance = { close: function () { } };
 
             expect(s.sfSelectedItem).toBeFalsy();
             expect(s.sfSelectedItemId).toBeFalsy();
@@ -523,7 +523,7 @@ describe("news selector", function () {
             var s = scope.$$childHead;
 
             //mock the call to the modal service.
-            s.$modalInstance = { close: function () { } };
+            s.$uibModalInstance = { close: function () { } };
 
             expect(s.sfSelectedItems).toBeFalsy();
             expect(s.sfSelectedIds).toBeFalsy();

@@ -1,4 +1,4 @@
-﻿<alert type="danger" ng-show="showError">{{::errorMessage}}</alert>
+﻿<uib-alert type="danger" ng-show="showError">{{::errorMessage}}</uib-alert>
 
 <div ng-show="sfCultures && sfCultures.length > 1">
 <label>@(Res.Get<ClientComponentsResources>().Language)</label>
