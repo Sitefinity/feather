@@ -112,7 +112,7 @@
 
                                 scope.sfSelectedItem = scope.selectedItemInTheDialog;
 
-                                scope.$modalInstance.close();
+                                scope.$uibModalInstance.close();
                             }
                         };
 
@@ -129,7 +129,7 @@
                             try {
                                 scope.showError = false;
                                 scope.errorMessage = '';
-                                scope.$modalInstance.close();
+                                scope.$uibModalInstance.close();
                             } catch (e) { }
                         };
 

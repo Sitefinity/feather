@@ -170,7 +170,7 @@
                 $scope.sizeSelection = $scope.sizeOptions[0];
             };
         }])
-        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$modalInstance', 'model', 'serverContext', function ($scope, $modalInstance, model, serverContext) {
+        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$uibModalInstance', 'model', 'serverContext', function ($scope, $uibModalInstance, model, serverContext) {
             $scope.quality = ['High', 'Medium', 'Low'];
 
             $scope.methodOptions = [{
@@ -206,11 +206,11 @@
             };
 
             $scope.done = function () {
-                $modalInstance.close($scope.model);
+                $uibModalInstance.close($scope.model);
             };
 
             $scope.cancelResizing = function () {
-                $modalInstance.dismiss();
+                $uibModalInstance.dismiss();
             };
         }]);
 })();
