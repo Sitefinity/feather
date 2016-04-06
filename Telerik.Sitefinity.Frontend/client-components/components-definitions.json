@@ -738,7 +738,6 @@
 
 "_____FEEDS_____" : {"scripts" : [], "angularModules": [], "components" : []},
 
-
 "sf-feed-selector" : {
 	"scripts" : [
 		"client-components/selectors/feeds/sf-feeds-service.js",
@@ -748,12 +747,9 @@
 		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
-}
-
-,
+},
 
 "_____MAILING LISTS_____" : {"scripts" : [], "angularModules": [], "components" : []},
-
 
 "sf-mailing-list-selector" : {
 	"scripts" : [
@@ -764,5 +760,18 @@
 		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
+"_____EVENTS_____" : {"scripts" : [], "angularModules": [], "components" : []},
+
+"sf-event-selector" : {
+	"scripts" : [
+		"client-components/selectors/events/sf-event-selector.js",
+		"client-components/selectors/events/sf-event-service.js"
+	],
+	"angularModules": [
+		"sfSelectors"
+	],
+	"components" : ["sf-selectors"]
 }
 }

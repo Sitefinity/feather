@@ -672,6 +672,7 @@
     <EmbeddedResource Include="Mvc\Views\PersonalizationDesigner\Personalization.cshtml" />
     <EmbeddedResource Include="client-components\selectors\events\sf-calendar-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\events\sf-calendar-filter.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\events\sf-event-selector.sf-cshtml" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -844,6 +845,8 @@
     <EmbeddedResource Include="client-components\selectors\events\sf-calendar-selector.js" />
     <EmbeddedResource Include="client-components\selectors\events\sf-calendar-service.js" />
     <EmbeddedResource Include="client-components\selectors\events\sf-calendar-filter.js" />
+    <EmbeddedResource Include="client-components\selectors\events\sf-event-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\events\sf-event-service.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
