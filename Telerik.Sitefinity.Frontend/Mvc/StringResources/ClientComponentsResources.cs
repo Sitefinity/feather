@@ -879,6 +879,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// word: Calendar
+        /// </summary>
+        /// <value>Calendar</value>
+        [ResourceEntry("Calendar",
+            Value = "Calendar",
+            Description = "word: Calendar",
+            LastModified = "2016/04/06")]
+        public string Calendar
+        {
+            get
+            {
+                return this["Calendar"];
+            }
+        }
+
+        /// <summary>
+        /// word: Calendar...
+        /// </summary>
+        /// <value>Calendar...</value>
+        [ResourceEntry("CalendarDotDotDot",
+            Value = "Calendar...",
+            Description = "word: Calendar...",
+            LastModified = "2016/04/06")]
+        public string CalendarDotDotDot
+        {
+            get
+            {
+                return this["CalendarDotDotDot"];
+            }
+        }
+
+        /// <summary>
         /// phrase: Other filter options
         /// </summary>
         /// <value>Other filter options</value>

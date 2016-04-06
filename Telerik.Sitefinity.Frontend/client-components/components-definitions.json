@@ -222,7 +222,7 @@
 	"angularModules": [
 		"sfSelectors"
 	],
-	"components" : ["sf-services", "sf-selectors", "sf-taxon-filter", "sf-date-filter"]
+	"components" : ["sf-services", "sf-selectors", "sf-taxon-filter", "sf-date-filter", "sf-calendar-filter"]
 },
 
 "sf-items-tree" : {
@@ -662,6 +662,16 @@
 		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
+"sf-calendar-filter" : {
+	"scripts" : [
+		"client-components/selectors/events/sf-calendar-filter.js"
+	],
+	"angularModules": [
+		"sfSelectors"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-list-selector", "sf-calendar-selector"]
 },
 
 
