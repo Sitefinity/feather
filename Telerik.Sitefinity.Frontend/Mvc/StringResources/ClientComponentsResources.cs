@@ -3082,5 +3082,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["NoForms"];
             }
         }
+
+        /// <summary>
+        /// phrase: Select events
+        /// </summary>
+        /// <value>Select events</value>
+        [ResourceEntry("SelectEvents",
+            Value = "Select events",
+            Description = "phrase: Select events",
+            LastModified = "2016/04/06")]
+        public string SelectEvents
+        {
+            get
+            {
+                return this["SelectEvents"];
+            }
+        }
     }
 }

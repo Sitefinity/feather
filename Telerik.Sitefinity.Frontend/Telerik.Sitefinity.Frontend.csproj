@@ -670,6 +670,7 @@
     <EmbeddedResource Include="client-components\selectors\forms\sf-form-collection.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\form-field\sf-form-field.sf-cshtml" />
     <EmbeddedResource Include="Mvc\Views\PersonalizationDesigner\Personalization.cshtml" />
+    <EmbeddedResource Include="client-components\selectors\events\sf-event-selector.sf-cshtml" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -839,6 +840,8 @@
     <EmbeddedResource Include="client-components\selectors\forms\sf-form-service.js" />
     <EmbeddedResource Include="client-components\fields\form-field\sf-form-field.js" />
     <EmbeddedResource Include="client-components\personalization\services\personalization-services.js" />
+    <EmbeddedResource Include="client-components\selectors\events\sf-event-selector.js" />
+    <EmbeddedResource Include="client-components\selectors\events\sf-event-service.js" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />
@@ -864,12 +867,14 @@
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties OpenAccess_EnhancementOutputLevel="1" OpenAccess_UpdateDatabase="False" OpenAccess_Enhancing="False" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_ConfigFile="App.config" />
+      <UserProperties OpenAccess_ConfigFile="App.config" OpenAccess_ConnectionId="DatabaseConnection1" OpenAccess_Enhancing="False" OpenAccess_UpdateDatabase="False" OpenAccess_EnhancementOutputLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent></PostBuildEvent>
-    <PreBuildEvent></PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- Telerik OpenAccess Enhancement -->
   <!-- Fluent API Mapping -->
