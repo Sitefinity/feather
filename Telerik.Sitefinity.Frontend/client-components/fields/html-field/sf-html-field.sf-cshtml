@@ -6,7 +6,7 @@
     k-stylesheets='["{{htmlFieldCssUrl}}"]',
     k-tools='[
     "formatting",
-    "bold", "italic", "underline", "strikethrough",
+    "bold", "italic", "underline",
     "justifyLeft", "justifyCenter", "justifyRight", "justifyFull",
     "insertUnorderedList", "insertOrderedList", "indent", "outdent",
     {
