@@ -1,6 +1,6 @@
 ﻿<div class="checkbox" >
-    <label for="dateInput">
-        <input id="dateInput" type="checkbox"
+    <label>
+        <input type="checkbox"
             ng-click="toggleDateSelection(sfGroupName)"
             ng-checked="selectedDateFilters.hasOwnProperty(sfGroupName)"  />
         <span ng-if="!sfFilterLabel">
@@ -10,7 +10,8 @@
         </span>
     </label>
 
-    <sf-timespan-selector class="label-content" sf-change="change" sf-selected-item="selectedDateFilters[sfGroupName]" sf-is-upcoming-period = "sfIsUpcomingPeriod"
-    ng-show="selectedDateFilters.hasOwnProperty(sfGroupName)" sf-custom-range-min-date="sfCustomRangeMinDate" sf-custom-range-max-date="sfCustomRangeMaxDate"></sf-timespan-selector>
+    <sf-timespan-selector class="label-content" sf-change="change" sf-selected-item="selectedDateFilters[sfGroupName]" 
+      sf-is-upcoming-period = "sfIsUpcomingPeriod" sf-filter-title-label="sfFilterTitleLabel"
+      ng-show="selectedDateFilters.hasOwnProperty(sfGroupName)" sf-custom-range-min-date="sfCustomRangeMinDate" sf-custom-range-max-date="sfCustomRangeMaxDate"></sf-timespan-selector>
 </div>
 

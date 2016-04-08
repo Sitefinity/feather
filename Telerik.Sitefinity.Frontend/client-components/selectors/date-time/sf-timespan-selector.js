@@ -13,7 +13,8 @@
                     sfChange: '=',
                     sfIsUpcomingPeriod: '=?',
                     sfCustomRangeMinDate: '=?',
-                    sfCustomRangeMaxDate: '=?'
+                    sfCustomRangeMaxDate: '=?',
+                    sfFilterTitleLabel: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';

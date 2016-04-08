@@ -24,7 +24,8 @@
 
         <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
 
-        <h4>@(Res.Get<ClientComponentsResources>().DisplayPublishedItems)</h4>
+        <h4 ng-if="!sfFilterTitleLabel">@(Res.Get<ClientComponentsResources>().DisplayPublishedItems)</h4>
+        <h4 ng-if="sfFilterTitleLabel" ng-bind="sfFilterTitleLabel"></h4>
         <form name="periodSelection">
             <div class="radio">
                 <label for="anyTime">

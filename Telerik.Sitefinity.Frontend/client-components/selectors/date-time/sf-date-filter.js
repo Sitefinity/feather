@@ -20,6 +20,7 @@
                     sfQueryFieldName: '@',
                     sfGroupName: '@',
                     sfFilterLabel: '@',
+                    sfFilterTitleLabel: '@',
                     sfIsUpcomingPeriod: '=?',
                     sfCustomRangeMinDate: '=?',
                     sfCustomRangeMaxDate: '=?',
