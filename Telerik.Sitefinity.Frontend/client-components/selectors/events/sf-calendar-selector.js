@@ -17,7 +17,7 @@
                                 return item.AvailableLanguages.indexOf(uiCulture) >= 0;
                             }
                             return true;
-                        };
+                        }
 
                         ctrl.getItems = function (skip, take, search, frontendLanguages) {
                             var provider = ctrl.$scope.sfProvider;

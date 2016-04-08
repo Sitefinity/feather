@@ -1264,6 +1264,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// word: Next
+        /// </summary>
+        /// <value>Last</value>
+        [ResourceEntry("Next",
+            Value = "Next",
+            Description = "word: Next",
+            LastModified = "2016/04/08")]
+        public string Next
+        {
+            get
+            {
+                return this["Next"];
+            }
+        }
+
+        /// <summary>
         /// word: day
         /// </summary>
         /// <value>day</value>

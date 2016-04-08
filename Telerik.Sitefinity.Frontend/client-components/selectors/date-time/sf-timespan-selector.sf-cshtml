@@ -33,17 +33,22 @@
                 </label>
             </div>
             <div class="radio form-inline">
-                <label for="periodToNow">
+                <label for="periodToNow" ng-if="!sfIsUpcomingPeriod">
                     <input id="periodToNow" type="radio" value="periodToNow" ng-model="selectedItemInTheDialog.periodType"/>
                     @(Res.Get<ClientComponentsResources>().Last)
                 </label>
 
+                <label for="periodFromNow" ng-if="sfIsUpcomingPeriod">
+                  <input id="periodFromNow" type="radio" value="periodFromNow" ng-model="selectedItemInTheDialog.periodType"/>
+                  @(Res.Get<ClientComponentsResources>().Next)
+                </label>
+
                 <input type="number" min="1" ng-model="selectedItemInTheDialog.timeSpanValue"
-                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'"
+                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow' || selectedItemInTheDialog.periodType!='periodFromNow'"
                         style="width: 70px" class="form-control input-sm" />
 
                 <select ng-model="selectedItemInTheDialog.timeSpanInterval"
-                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'"
+                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow' || selectedItemInTheDialog.periodType!='periodFromNow'"
                         class="form-control input-sm">
                     <option value="days">
                         @(Res.Get<ClientComponentsResources>().Day)@(Res.Get<ClientComponentsResources>().Plural)

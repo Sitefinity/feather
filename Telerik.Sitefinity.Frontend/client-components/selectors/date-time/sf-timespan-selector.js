@@ -11,6 +11,7 @@
                 scope: {
                     sfSelectedItem: '=?',                   
                     sfChange: '=',
+                    sfIsUpcomingPeriod: '=?',
                     sfCustomRangeMinDate: '=?',
                     sfCustomRangeMaxDate: '=?'
                 },
@@ -29,8 +30,12 @@
                                 return;
 
                             if (item.periodType == 'periodToNow') {
-                                var label = $('#periodToNow').parent().text().trim();
-                                item.displayText = label + ' ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
+                                var periodToNowLabel = $('#periodToNow').parent().text().trim();
+                                item.displayText = periodToNowLabel + ' ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
+                            }
+                            else if (item.periodType == 'periodFromNow') {
+                                var periodFromNowLabel = $('#periodFromNow').parent().text().trim();
+                                item.displayText = periodFromNowLabel + ' ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
                             }
                             else if (item.periodType == 'customRange') {
                                 var fromLabel = $('#fromLabel').text();
@@ -70,7 +75,7 @@
                         };
 
                         validate = function (item) {
-                            if (item.periodType == 'periodToNow' && !item.timeSpanValue) {
+                            if ((item.periodType == 'periodToNow' || item.periodType == 'periodFromNow') && !item.timeSpanValue) {
                                 scope.errorMessage = 'Invalid period!';
                                 scope.showError = true;
 

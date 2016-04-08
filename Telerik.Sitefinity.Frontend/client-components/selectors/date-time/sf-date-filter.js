@@ -20,6 +20,7 @@
                     sfQueryFieldName: '@',
                     sfGroupName: '@',
                     sfFilterLabel: '@',
+                    sfIsUpcomingPeriod: '=?',
                     sfCustomRangeMinDate: '=?',
                     sfCustomRangeMaxDate: '=?'
                 },
@@ -33,16 +34,17 @@
                         // ------------------------------------------------------------------------
                         // helper methods
                         // ------------------------------------------------------------------------
-                        var constructDateFilterExpressionValue = function (timeSpanValue, timeSpanInterval) {
+                        var constructDateFilterExpressionValue = function (timeSpanValue, timeSpanInterval, periodType) {
                             var value;
+                            var periodTypeSign = periodType === 'periodToNow' ? '-' : '';
                             if (timeSpanInterval == 'days')
-                                value = 'DateTime.UtcNow.AddDays(-' + timeSpanValue.toFixed(1) + ')';
+                                value = 'DateTime.UtcNow.AddDays(' + periodTypeSign + timeSpanValue.toFixed(1) + ')';
                             else if (timeSpanInterval == 'weeks')
-                                value = 'DateTime.UtcNow.AddDays(-' + (timeSpanValue * 7).toFixed(1) + ')';
+                                value = 'DateTime.UtcNow.AddDays(' + periodTypeSign + (timeSpanValue * 7).toFixed(1) + ')';
                             else if (timeSpanInterval == 'months')
-                                value = 'DateTime.UtcNow.AddMonths(-' + timeSpanValue + ')';
+                                value = 'DateTime.UtcNow.AddMonths(' + periodTypeSign + timeSpanValue + ')';
                             else if (timeSpanInterval == 'years')
-                                value = 'DateTime.UtcNow.AddYears(-' + timeSpanValue + ')';
+                                value = 'DateTime.UtcNow.AddYears(' + periodTypeSign + timeSpanValue + ')';
 
                             return value;
                         };
@@ -91,7 +93,14 @@
                                     }
                                 }
                                 else if (operator == '<') {
-                                    result.toDate = new Date(item.Value);
+                                    if (item.Value.indexOf('DateTime.UtcNow') == -1) {
+                                        result.toDate = new Date(item.Value);
+                                        result.periodType = "customRange";
+                                    }
+                                    else {
+                                        translateDateFilterToTimeSpanItem(item.Value, result);
+                                        result.periodType = "periodFromNow";
+                                    }
                                 }
                             }
 
@@ -104,10 +113,11 @@
                             if (!groupItem)
                                 groupItem = scope.sfQueryData.addGroup(groupName, scope.sfGroupLogicalOperator);
 
-                            if (dateItem.periodType == 'periodToNow') {
-                                var queryValue = constructDateFilterExpressionValue(dateItem.timeSpanValue, dateItem.timeSpanInterval);
+                            if (dateItem.periodType == 'periodToNow' || dateItem.periodType == 'periodFromNow') {
+                                var queryValue = constructDateFilterExpressionValue(dateItem.timeSpanValue, dateItem.timeSpanInterval, dateItem.periodType);
                                 var queryName = scope.sfQueryFieldName + '.' + queryValue;
-                                scope.sfQueryData.addChildToGroup(groupItem, queryName, scope.sfItemLogicalOperator, scope.sfQueryFieldName, 'System.DateTime', '>', queryValue);
+                                var operator = (dateItem.periodType == 'periodToNow') ? '>' : '<';
+                                scope.sfQueryData.addChildToGroup(groupItem, queryName, scope.sfItemLogicalOperator, scope.sfQueryFieldName, 'System.DateTime', operator, queryValue);
                             }
                             else if (dateItem.periodType == 'customRange') {
                                 if (dateItem.fromDate) {
