@@ -91,8 +91,8 @@
                                         result.periodType = "customRange";
                                     }
                                     else {
-                                        translateDateFilterToTimeSpanItem(item.Value, result, result.periodType);
                                         result.periodType = "periodToNow";
+                                        translateDateFilterToTimeSpanItem(item.Value, result, result.periodType);
                                     }
                                 }
                                 else if (operator == '<') {
@@ -101,8 +101,8 @@
                                         result.periodType = "customRange";
                                     }
                                     else {
-                                        translateDateFilterToTimeSpanItem(item.Value, result, result.periodType);
                                         result.periodType = "periodFromNow";
+                                        translateDateFilterToTimeSpanItem(item.Value, result, result.periodType);
                                     }
                                 }
                             }
