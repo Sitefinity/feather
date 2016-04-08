@@ -125,7 +125,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (currentContext.Items.Contains("IsBackendRequest"))
                 isBackendRequest = (bool)currentContext.Items["IsBackendRequest"];
 
-            if (!isBackendRequest && currentContext.Items.Contains("ServedPageNode") && currentContext.Items["ServedPageNode"] is PageSiteNode)
+            if ((!isBackendRequest || SystemManager.IsPreviewMode) && currentContext.Items.Contains("ServedPageNode") && currentContext.Items["ServedPageNode"] is PageSiteNode)
             {
                 var servedPageNode = currentContext.Items["ServedPageNode"] as PageSiteNode;
 
