@@ -44,11 +44,11 @@
                 </label>
 
                 <input type="number" min="1" ng-model="selectedItemInTheDialog.timeSpanValue"
-                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow' || selectedItemInTheDialog.periodType!='periodFromNow'"
+                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow' && selectedItemInTheDialog.periodType!='periodFromNow'"
                         style="width: 70px" class="form-control input-sm" />
 
                 <select ng-model="selectedItemInTheDialog.timeSpanInterval"
-                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow' || selectedItemInTheDialog.periodType!='periodFromNow'"
+                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow' && selectedItemInTheDialog.periodType!='periodFromNow'"
                         class="form-control input-sm">
                     <option value="days">
                         @(Res.Get<ClientComponentsResources>().Day)@(Res.Get<ClientComponentsResources>().Plural)

@@ -22,7 +22,8 @@
                     sfFilterLabel: '@',
                     sfIsUpcomingPeriod: '=?',
                     sfCustomRangeMinDate: '=?',
-                    sfCustomRangeMaxDate: '=?'
+                    sfCustomRangeMaxDate: '=?',
+                    sfFilterChanged: '='
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -49,9 +50,11 @@
                             return value;
                         };
 
-                        var translateDateFilterToTimeSpanItem = function (filterValue, timeSpanItem) {
+                        var translateDateFilterToTimeSpanItem = function (filterValue, timeSpanItem, periodType) {
                             var spanValue = filterValue.match(/\(([^)]+)\)/)[1];
-                            spanValue = -parseInt(spanValue);
+
+                            if (periodType === 'periodToNow')
+                                spanValue = -parseInt(spanValue);
                             timeSpanItem.timeSpanValue = spanValue;
 
                             if (filterValue.indexOf('AddDays') > 0) {
@@ -88,7 +91,7 @@
                                         result.periodType = "customRange";
                                     }
                                     else {
-                                        translateDateFilterToTimeSpanItem(item.Value, result);
+                                        translateDateFilterToTimeSpanItem(item.Value, result, result.periodType);
                                         result.periodType = "periodToNow";
                                     }
                                 }
@@ -98,7 +101,7 @@
                                         result.periodType = "customRange";
                                     }
                                     else {
-                                        translateDateFilterToTimeSpanItem(item.Value, result);
+                                        translateDateFilterToTimeSpanItem(item.Value, result, result.periodType);
                                         result.periodType = "periodFromNow";
                                     }
                                 }
@@ -172,6 +175,10 @@
 
                             if (newSelectedDateItem.periodType != "anyTime")
                                 addChildDateQueryItem(newSelectedDateItem, scope.sfGroupName);
+
+                            if (scope.sfFilterChanged) {
+                                scope.sfFilterChanged.call(scope.$parent);
+                            }
                         };
                         
                         scope.toggleDateSelection = function (groupFilterName) {
