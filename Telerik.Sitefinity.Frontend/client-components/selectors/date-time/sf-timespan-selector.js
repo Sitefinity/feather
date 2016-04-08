@@ -10,7 +10,9 @@
                 transclude: true,
                 scope: {
                     sfSelectedItem: '=?',                   
-                    sfChange: '='
+                    sfChange: '=',
+                    sfCustomRangeMinDate: '=?',
+                    sfCustomRangeMaxDate: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';

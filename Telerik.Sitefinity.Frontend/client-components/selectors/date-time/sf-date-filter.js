@@ -17,7 +17,11 @@
                     sfQueryData: '=',
                     sfGroupLogicalOperator: '@',
                     sfItemLogicalOperator: '@',
-                    sfQueryFieldName: '@'
+                    sfQueryFieldName: '@',
+                    sfGroupName: '@',
+                    sfFilterLabel: '@',
+                    sfCustomRangeMinDate: '=?',
+                    sfCustomRangeMaxDate: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -103,29 +107,29 @@
                             if (dateItem.periodType == 'periodToNow') {
                                 var queryValue = constructDateFilterExpressionValue(dateItem.timeSpanValue, dateItem.timeSpanInterval);
                                 var queryName = scope.sfQueryFieldName + '.' + queryValue;
-                                scope.sfQueryData.addChildToGroup(groupItem, queryName, scope.sfItemLogicalOperator, groupName, 'System.DateTime', '>', queryValue);
+                                scope.sfQueryData.addChildToGroup(groupItem, queryName, scope.sfItemLogicalOperator, scope.sfQueryFieldName, 'System.DateTime', '>', queryValue);
                             }
                             else if (dateItem.periodType == 'customRange') {
                                 if (dateItem.fromDate) {
                                     var fromQueryValue = dateItem.fromDate.toUTCString();
                                     var fromQueryName = scope.sfQueryFieldName + '.' + fromQueryValue;
-                                    scope.sfQueryData.addChildToGroup(groupItem, fromQueryName, scope.sfItemLogicalOperator, groupName, 'System.DateTime', '>', fromQueryValue);
+                                    scope.sfQueryData.addChildToGroup(groupItem, fromQueryName, scope.sfItemLogicalOperator, scope.sfQueryFieldName, 'System.DateTime', '>', fromQueryValue);
                                 }
                                 if (dateItem.toDate) {
                                     var toQueryValue = dateItem.toDate.toUTCString();
                                     var toQueryName = scope.sfQueryFieldName + '.' + toQueryValue;
-                                    scope.sfQueryData.addChildToGroup(groupItem, toQueryName, scope.sfItemLogicalOperator, groupName, 'System.DateTime', '<', toQueryValue);
+                                    scope.sfQueryData.addChildToGroup(groupItem, toQueryName, scope.sfItemLogicalOperator, scope.sfQueryFieldName, 'System.DateTime', '<', toQueryValue);
                                 }
                             }
                         };
 
-                        var constructFilterItem = function (selectedDateFilterKey) {
+                        var constructFilterItem = function (selectedGroupFilterKey) {
                             var selectedDateQueryItems = scope.sfQueryData.QueryItems.filter(function (f) {
                                 return f.Condition &&
-                                    f.Condition.FieldName == selectedDateFilterKey &&
+                                    f.Condition.FieldName == scope.sfQueryFieldName &&
                                     f.Condition.FieldType == 'System.DateTime';
                             });
-                            scope.selectedDateFilters[selectedDateFilterKey] = translateQueryItems(selectedDateQueryItems);
+                            scope.selectedDateFilters[selectedGroupFilterKey] = translateQueryItems(selectedDateQueryItems);
                         };
 
                         var populateSelectedDateFilters = function () {
@@ -146,25 +150,26 @@
                         // ------------------------------------------------------------------------
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
+                        scope.sfGroupName = scope.sfGroupName ? scope.sfGroupName : scope.sfQueryFieldName;
 
                         scope.change = function (changeArgs) {
                             var newSelectedDateItem = changeArgs.newSelectedItem;
                             
-                            var groupToRemove = scope.sfQueryData.getItemByName(scope.sfQueryFieldName);
+                            var groupToRemove = scope.sfQueryData.getItemByName(scope.sfGroupName);
 
                             if (groupToRemove)
                                 scope.sfQueryData.removeGroup(groupToRemove);
 
                             if (newSelectedDateItem.periodType != "anyTime")
-                                addChildDateQueryItem(newSelectedDateItem, scope.sfQueryFieldName);
+                                addChildDateQueryItem(newSelectedDateItem, scope.sfGroupName);
                         };
                         
-                        scope.toggleDateSelection = function (filterName) {
+                        scope.toggleDateSelection = function (groupFilterName) {
                             // is currently selected
-                            if (filterName in scope.selectedDateFilters) {
-                                delete scope.selectedDateFilters[filterName];
+                            if (groupFilterName in scope.selectedDateFilters) {
+                                delete scope.selectedDateFilters[groupFilterName];
 
-                                var groupToRemove = scope.sfQueryData.getItemByName(filterName);
+                                var groupToRemove = scope.sfQueryData.getItemByName(groupFilterName);
 
                                 if (groupToRemove)
                                     scope.sfQueryData.removeGroup(groupToRemove);
@@ -172,7 +177,7 @@
 
                             // is newly selected
                             else {
-                                constructFilterItem(filterName);
+                                constructFilterItem(groupFilterName);
                             }
                         };
 

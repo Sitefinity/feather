@@ -9,7 +9,9 @@
                     ngModel: '=?',
                     sfShowMeridian: '@?',
                     sfHourStep: '@?',
-                    sfMinuteStep: '@?'
+                    sfMinuteStep: '@?',
+                    sfMinDate: '=?',
+                    sfMaxDate: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -94,6 +96,8 @@
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
 
+                        scope.datePickerOptions = { 'show-weeks': 'false', 'starting-day': '1', 'min-date': scope.sfMinDate, 'max-date': scope.sfMaxDate };
+
                         scope.openDatePicker = function ($event) {
                             $event.preventDefault();
                             $event.stopPropagation();
@@ -123,7 +127,7 @@
                             else
                                 setMinutes(mstep, true);
                         };
-                        
+
                         populateHoursArray();
                         populateMinutesArray();
                         scope.showMinutesDropdown = false;
