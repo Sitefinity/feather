@@ -19,6 +19,7 @@
                     sfItemLogicalOperator: '@',
                     sfQueryFieldName: '@',
                     sfGroupName: '@',
+                    sfParentGroupName: '@',
                     sfFilterLabel: '@',
                     sfFilterTitleLabel: '@',
                     sfIsUpcomingPeriod: '=?',
@@ -113,9 +114,14 @@
 
                         var addChildDateQueryItem = function (dateItem, groupName) {
                             var groupItem = scope.sfQueryData.getItemByName(groupName);
+                            var parentGroup = scope.sfQueryData.getItemByName(scope.sfParentGroupName);
+                            if (scope.sfParentGroupName && !parentGroup) {
+                                scope.sfQueryData.addGroup(scope.sfParentGroupName, 'AND');
+                                parentGroup = scope.sfQueryData.getItemByName(scope.sfParentGroupName);
+                            }
 
                             if (!groupItem)
-                                groupItem = scope.sfQueryData.addGroup(groupName, scope.sfGroupLogicalOperator);
+                                groupItem = scope.sfQueryData.addGroup(groupName, scope.sfGroupLogicalOperator, parentGroup);
 
                             if (dateItem.periodType == 'periodToNow' || dateItem.periodType == 'periodFromNow') {
                                 var queryValue = constructDateFilterExpressionValue(dateItem.timeSpanValue, dateItem.timeSpanInterval, dateItem.periodType);
@@ -165,7 +171,6 @@
                         // Scope variables and setup
                         // ------------------------------------------------------------------------
                         scope.sfGroupName = scope.sfGroupName ? scope.sfGroupName : scope.sfQueryFieldName;
-
                         scope.change = function (changeArgs) {
                             var newSelectedDateItem = changeArgs.newSelectedItem;
                             
