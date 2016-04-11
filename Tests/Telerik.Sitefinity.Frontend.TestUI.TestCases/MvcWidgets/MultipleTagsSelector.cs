@@ -19,7 +19,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// Verifies selected tab in multiple selector and ordering in all tab of selected items.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.FeatherTeam),
+        Owner(FeatherTeams.SitefinityTeam2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MultipleTagsSelectorVerifySelectedTabAndOrderingInAllTab()
         {
