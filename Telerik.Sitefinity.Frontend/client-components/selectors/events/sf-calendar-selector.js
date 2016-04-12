@@ -35,7 +35,8 @@
                         };
 
                         ctrl.getSpecificItems = function (ids) {
-                            var itemsPromise = calendarService.getSpecificItems(ids);
+                            var provider = ctrl.$scope.sfProvider;
+                            var itemsPromise = calendarService.getSpecificItems(ids, provider);
                             if (fromCurrentLanguageOnly) {
                                 return itemsPromise.then(function (data) {
                                     data.Items = data.Items.filter(function (item) {

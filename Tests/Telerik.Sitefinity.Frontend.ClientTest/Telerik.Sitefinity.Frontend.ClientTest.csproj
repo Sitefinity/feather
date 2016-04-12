@@ -56,6 +56,7 @@
     <Content Include="unit\fields\sfFlatTaxonFieldSpecs.js" />
     <Content Include="unit\search\sfSearchBoxSpec.js" />
     <Content Include="unit\httpProvider\httpProviderSpec.js" />
+    <Content Include="unit\selectors\calendarSelectorSpec.js" />
     <Content Include="unit\selectors\sfFilesUrlSelectorSpec.js" />
     <Content Include="unit\selectors\sfUserSelectorSpec.js" />
     <Content Include="unit\selectors\librarySelectorSpec.js" />
