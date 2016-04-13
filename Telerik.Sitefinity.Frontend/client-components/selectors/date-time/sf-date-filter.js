@@ -24,7 +24,8 @@
                     sfIsUpcomingPeriod: '=?',
                     sfCustomRangeMinDate: '=?',
                     sfCustomRangeMaxDate: '=?',
-                    sfFilterChanged: '='
+                    sfFilterChanged: '=?',
+                    sfFilterClicked: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -194,6 +195,10 @@
                             // is newly selected
                             else {
                                 constructFilterItem(groupFilterName);
+                            }
+
+                            if (scope.sfFilterClicked) {
+                                scope.sfFilterClicked.call(scope.$parent);
                             }
                         };
 
