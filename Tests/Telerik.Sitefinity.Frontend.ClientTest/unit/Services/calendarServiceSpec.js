@@ -5,9 +5,19 @@ describe('sfCalendarService', function () {
     var dataItems = {
         Items: [{
             Id: '4c003fb0-2a77-61ec-be54-ff00007864f4'
+        },
+        {
+            Id: '4c003fb0-2a77-61ec-be54-ff00007864f5'
+        }],
+        TotalCount: 2
+    };
+
+    var filterItems = {
+        Items: [{
+            Id: '4c003fb0-2a77-61ec-be54-ff00007864f4'
         }],
         TotalCount: 1
-    }; 
+    };
     
     var errorResponse = {
         Detail: 'Error'
@@ -62,6 +72,19 @@ describe('sfCalendarService', function () {
         expect(data).toEqualData(dataItems);
     };
 
+    var assertSpecificItems = function (params) {
+        var data;
+        dataService.getSpecificItems.apply(dataService, params).then(function (res) {
+            data = res;
+        });
+
+        expect(data).toBeUndefined();
+
+        $httpBackend.flush();
+
+        expect(data).toEqualData(filterItems);
+    };
+
     var assertError = function (params) {
         var data;
         dataService.getItem.apply(dataService, params).then(function (res) {
@@ -111,6 +134,13 @@ describe('sfCalendarService', function () {
         .respond(dataItems);
 
         assertItem(['4c003fb0-2a77-61ec-be54-ff00007864f4', 'OpenAccessDataProvider']);
+    });
+
+    it('[EGaneva] / should retrieve specific items.', function () {
+        $httpBackend.expectGET('http://mysite.com:9999/myapp/Sitefinity/Services/Content/CalendarService.svc/?filter=(Id%3D4c003fb0-2a77-61ec-be54-ff00007864f4)&itemSurrogateType=Telerik.Sitefinity.GenericContent.Model.Content&itemType=Telerik.Sitefinity.GenericContent.Model.Content&skip=0&take=100')
+                    .respond(filterItems);
+
+        assertSpecificItems([['4c003fb0-2a77-61ec-be54-ff00007864f4'], null]);
     });
 
     it('[EGaneva] / should return error.', function () {
