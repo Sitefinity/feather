@@ -75,6 +75,7 @@
     <EmbeddedResource Include="unit\selectors\sfRoleSelectorSpec.js" />
     <Content Include="unit\selectors\sfThumbnailSizeSelection.js" />
     <Content Include="unit\services\calendarServiceSpec.js" />
+    <Content Include="unit\services\eventServiceSpec.js" />
     <Content Include="unit\services\personalizationServiceSpec.js" />
     <Content Include="unit\services\languageServiceSpec.js" />
     <Content Include="unit\services\feedsServiceSpec.js" />
