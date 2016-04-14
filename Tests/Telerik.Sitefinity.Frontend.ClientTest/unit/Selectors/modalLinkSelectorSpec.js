@@ -86,15 +86,15 @@ describe("link selector modal", function () {
             commonMethods.compileDirective(template, scope);
 
             // Since the compileDirective method is having trouble compiling the inner modal dialog,
-            // we mock the $modalInstance here.
-            scope.$$childHead.$modalInstance = {
+            // we mock the $uibModalInstance here.
+            scope.$$childHead.$uibModalInstance = {
                 close: jasmine.createSpy('close')
             };
 
             scope.$$childHead.insertLink();
 
             expect(linkSelectorScopeMock).toHaveBeenCalled();
-            expect(scope.$$childHead.$modalInstance.close).toHaveBeenCalledWith(testLink);
+            expect(scope.$$childHead.$uibModalInstance.close).toHaveBeenCalledWith(testLink);
         });
 
         describe('when isDisabled is called', function () {

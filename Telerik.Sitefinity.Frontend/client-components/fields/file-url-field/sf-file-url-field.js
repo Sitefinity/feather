@@ -51,17 +51,17 @@
 		        }
 		    };
 		})
-        .controller('sfFileUrlFieldDialogController', ['$scope', '$modalInstance', 'title', 'extension', 'sfModel', function ($scope, $modalInstance, title, extension, sfModel) {
+        .controller('sfFileUrlFieldDialogController', ['$scope', '$uibModalInstance', 'title', 'extension', 'sfModel', function ($scope, $uibModalInstance, title, extension, sfModel) {
             $scope.selectedUrl = sfModel;
             $scope.title = title;
             $scope.extension = extension;
 
             $scope.done = function () {
-                $modalInstance.close($scope.selectedUrl);
+                $uibModalInstance.close($scope.selectedUrl);
             };
 
             $scope.cancel = function () {
-                $modalInstance.dismiss();
+                $uibModalInstance.dismiss();
             };
         }]);
 })();

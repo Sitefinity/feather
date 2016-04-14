@@ -466,7 +466,7 @@
                                 ctrl.onDoneSelecting();
                             }
 
-                            scope.$modalInstance.close();
+                            scope.$uibModalInstance.close();
                         };
 
                         scope.cancel = function () {
@@ -476,7 +476,7 @@
                                 ctrl.onCancel();
                             }
 
-                            scope.$modalInstance.close();
+                            scope.$uibModalInstance.close();
                         };
 
                         scope.open = function () {

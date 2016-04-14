@@ -35,7 +35,14 @@
 
     <!--TODO evaluate if the @(Content) and @(None) lists are not a better search locations instead of the file system-->
     <ItemGroup>
-      <FeatherRazorSrcFiles Include="$(FeatherResourcePackagesFolderName)\**\*.cshtml"/>
+      <FeatherRazorSrcFiles Include="$(FeatherResourcePackagesFolderName)\*.cshtml"/>
+      <FeatherRazorSrcFiles Include="$(FeatherResourcePackagesFolderName)\*\*.cshtml"/>
+      <FeatherRazorSrcFiles Include="$(FeatherResourcePackagesFolderName)\*\*\*.cshtml"/>
+      <FeatherRazorSrcFiles Include="$(FeatherResourcePackagesFolderName)\*\*\*\*.cshtml"/>
+      <FeatherRazorSrcFiles Include="$(FeatherResourcePackagesFolderName)\*\*\*\*\*.cshtml"/>
+      <FeatherRazorSrcFiles Include="$(FeatherResourcePackagesFolderName)\*\*\*\*\*\*.cshtml"/>
+      <FeatherRazorSrcFiles Include="$(FeatherResourcePackagesFolderName)\*\*\*\*\*\*\*.cshtml"/>
+      <FeatherRazorSrcFiles Include="$(FeatherResourcePackagesFolderName)\*\*\*\*\*\*\*\*.cshtml"/>
     </ItemGroup>
   </Target>
 

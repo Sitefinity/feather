@@ -263,7 +263,7 @@ describe("library selector", function () {
             var s = scope.$$childHead;
 
             //mock the call to the modal service.
-            s.$modalInstance = { close: function () { } };
+            s.$uibModalInstance = { close: function () { } };
 
             expect(s.sfSelectedItem).not.toBeDefined();
 

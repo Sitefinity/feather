@@ -1,12 +1,12 @@
 ﻿﻿<div class="Media">
     <div class="Media-content" sf-drag-drop sf-data-transfer-callback="dataTransferDropped(dataTransferObject)">
-        <alert type="danger" ng-show="error.show">
+        <uib-alert type="danger" ng-show="error.show">
             <div>
                 {{error.message}}
 
                 <button class="close" ng-click="error.show = false">&times;</button>
             </div>
-        </alert>
+        </uib-alert>
 
         <!--Upload image-->
         <input type="file" accept=".jpg, .jpeg, .png, .gif, .bmp" class="file-upload-chooser-input" style="display: none !important" />

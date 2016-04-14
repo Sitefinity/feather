@@ -3,15 +3,15 @@ describe('modal directive', function () {
     var scope;
     var dialogResult = { result: null };
     var dialogResultDefer;
-    var $modal = {
-        open: jasmine.createSpy('$modal.open').andReturn(dialogResult)
+    var $uibModal = {
+        open: jasmine.createSpy('$uibModal.open').andReturn(dialogResult)
     };
     var dialogsService;
 
     beforeEach(module('modalDialog'));
 
     beforeEach(module(function ($provide) {
-        $provide.value('$modal', $modal);
+        $provide.value('$uibModal', $uibModal);
     }));
 
     beforeEach(inject(function ($rootScope, $q, _dialogsService_) {
@@ -35,7 +35,7 @@ describe('modal directive', function () {
     var assertOpenWithController = function (templateId, skipClean) {
         var tmplId = templateId || 'dialog-template';
 
-        var mostRecent = $modal.open.mostRecentCall;
+        var mostRecent = $uibModal.open.mostRecentCall;
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -47,12 +47,12 @@ describe('modal directive', function () {
         expect(args.controller).toBe('TestCtrl');
 
         if (!skipClean) {
-            $modal.open.reset();
+            $uibModal.open.reset();
         }
     };
 
     var assertOpenWithScope = function () {
-        var mostRecent = $modal.open.mostRecentCall;
+        var mostRecent = $uibModal.open.mostRecentCall;
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -64,7 +64,7 @@ describe('modal directive', function () {
         expect(args.templateUrl).toBe('dialog-template');
         expect(args.controller).toBeUndefined();
 
-        $modal.open.reset();
+        $uibModal.open.reset();
     };
 
     it('[GMateev] / should open dialog on page load with given controller.]', function () {
@@ -110,7 +110,7 @@ describe('modal directive', function () {
 
         commonMethods.compileDirective(template, scope);
 
-        expect($modal.open).not.toHaveBeenCalled();
+        expect($uibModal.open).not.toHaveBeenCalled();
 
         $('#openSelectorBtn').click();
 
@@ -136,7 +136,7 @@ describe('modal directive', function () {
 
         commonMethods.compileDirective(template, scope);        
 
-        expect($modal.open.callCount).toBe(1);
+        expect($uibModal.open.callCount).toBe(1);
         expect(dialogsService.count()).toBe(1);
 
         assertOpenWithController("outside-dialog-template", true);
@@ -145,7 +145,7 @@ describe('modal directive', function () {
 
         $('#openSelectorBtn').click();
 
-        expect($modal.open.callCount).toBe(2);
+        expect($uibModal.open.callCount).toBe(2);
         expect(dialogsService.count()).toBe(2);
 
         assertOpenWithScope();

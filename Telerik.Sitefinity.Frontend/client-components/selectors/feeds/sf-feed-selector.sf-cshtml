@@ -15,7 +15,7 @@
         <div>
             <div ng-show="noItemsExist" class="alert alert-info">@(Res.Get<ClientComponentsResources>().NoItemsCreated)</div>
 
-            <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+          <uib-alert type="danger" ng-show="showError">{{errorMessage}}</uib-alert>
 
             <div ng-hide="noItemsExist || showError">
                 <div class="input-group m-bottom-sm">

@@ -20,8 +20,8 @@
 				    <strong>@Html.Resource("Error")</strong> <span ng-bind="feedback.errorMessage"></span>
 			    </div>
 
-                <tabset class="nav-tabs-wrapper">
-                    <tab heading="@Html.Resource("Classes")">
+                <uib-tabset class="nav-tabs-wrapper">
+                    <uib-tab heading="@Html.Resource("Classes")">
 			            <h3>
                             @Html.Resource("Classes")
                         </h3>
@@ -30,8 +30,8 @@
                             <label for="prop-{{item.name}}" ng-bind="item.name"></label>
                             <input id="prop-{{item.css}}" type="text" class="form-control" ng-model="item.css"/>
                         </div>
-                    </tab>
-                    <tab heading="@Html.Resource("Labels")">
+                    </uib-tab>
+                    <uib-tab heading="@Html.Resource("Labels")">
                         <h3>
                             @Html.Resource("Labels")
                         </h3>
@@ -42,8 +42,8 @@
                             <label for="prop-{{item.name}}" ng-bind="item.name"></label>
                             <input id="prop-{{item.label}}" type="text" class="form-control" ng-model="item.label"/>
                         </div>	
-                    </tab>
-                </tabset>
+                    </uib-tab>
+                </uib-tabset>
 
 		    </div>
 
