@@ -1,0 +1,18 @@
+﻿<div class="checkbox" >
+  <label for="calendarInput">
+    <input id="calendarInput" type="checkbox"
+        ng-click="toggleCalendarSelection(sfQueryFieldName)"
+        ng-checked="selectedCalendars.hasOwnProperty(sfQueryFieldName)"  />
+
+    @(Res.Get<ClientComponentsResources>().CalendarDotDotDot)
+    </label>
+    <sf-list-selector class="label-content"
+        sf-calendar-selector
+        sf-dialog-header="@(Res.Get<ClientComponentsResources>().Select) @(Res.Get<ClientComponentsResources>().Calendar)"
+        sf-multiselect="true"
+        sf-provider="sfProvider"
+		    sf-selected-ids="selectedCalendars[sfQueryFieldName]"
+        ng-show="selectedCalendars.hasOwnProperty(sfQueryFieldName)"
+        sf-change="change"></sf-list-selector>
+</div>
+

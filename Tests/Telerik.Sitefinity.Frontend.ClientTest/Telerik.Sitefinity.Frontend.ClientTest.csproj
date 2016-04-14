@@ -54,8 +54,11 @@
     <Content Include="unit\collections\sfTreeSpec.js" />
     <Content Include="unit\fields\sfDragDropSpec.js" />
     <Content Include="unit\fields\sfFlatTaxonFieldSpecs.js" />
+    <Content Include="unit\filters\sfCalendarFilterSpecs.js" />
     <Content Include="unit\search\sfSearchBoxSpec.js" />
     <Content Include="unit\httpProvider\httpProviderSpec.js" />
+    <Content Include="unit\selectors\calendarSelectorSpec.js" />
+    <Content Include="unit\selectors\eventSelectorSpec.js" />
     <Content Include="unit\selectors\sfFilesUrlSelectorSpec.js" />
     <Content Include="unit\selectors\sfUserSelectorSpec.js" />
     <Content Include="unit\selectors\librarySelectorSpec.js" />
@@ -72,6 +75,8 @@
     <Content Include="unit\selectors\sfHierarchicalTaxonSelector.js" />
     <EmbeddedResource Include="unit\selectors\sfRoleSelectorSpec.js" />
     <Content Include="unit\selectors\sfThumbnailSizeSelection.js" />
+    <Content Include="unit\services\calendarServiceSpec.js" />
+    <Content Include="unit\services\eventServiceSpec.js" />
     <Content Include="unit\services\personalizationServiceSpec.js" />
     <Content Include="unit\services\languageServiceSpec.js" />
     <Content Include="unit\services\feedsServiceSpec.js" />

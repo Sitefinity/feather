@@ -879,6 +879,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// word: Calendar
+        /// </summary>
+        /// <value>Calendar</value>
+        [ResourceEntry("Calendar",
+            Value = "Calendar",
+            Description = "word: Calendar",
+            LastModified = "2016/04/06")]
+        public string Calendar
+        {
+            get
+            {
+                return this["Calendar"];
+            }
+        }
+
+        /// <summary>
+        /// word: Calendar...
+        /// </summary>
+        /// <value>Calendar...</value>
+        [ResourceEntry("CalendarDotDotDot",
+            Value = "Calendar...",
+            Description = "word: Calendar...",
+            LastModified = "2016/04/06")]
+        public string CalendarDotDotDot
+        {
+            get
+            {
+                return this["CalendarDotDotDot"];
+            }
+        }
+
+        /// <summary>
         /// phrase: Other filter options
         /// </summary>
         /// <value>Other filter options</value>
@@ -1228,6 +1260,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["Last"];
+            }
+        }
+
+        /// <summary>
+        /// word: Next
+        /// </summary>
+        /// <value>Last</value>
+        [ResourceEntry("Next",
+            Value = "Next",
+            Description = "word: Next",
+            LastModified = "2016/04/08")]
+        public string Next
+        {
+            get
+            {
+                return this["Next"];
             }
         }
 
@@ -3080,6 +3128,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
             get
             {
                 return this["NoForms"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: Select events
+        /// </summary>
+        /// <value>Select events</value>
+        [ResourceEntry("SelectEvents",
+            Value = "Select events",
+            Description = "phrase: Select events",
+            LastModified = "2016/04/06")]
+        public string SelectEvents
+        {
+            get
+            {
+                return this["SelectEvents"];
             }
         }
     }
