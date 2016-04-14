@@ -281,7 +281,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 throw new ArgumentNullException("relatedItem");
 
             int? totalCount = 0;
-            var query = this.GetRelatedItems(relatedItem, 1, ref totalCount);
+            var query = this.GetRelatedItems(relatedItem, page, ref totalCount);
 
             var viewModel = this.CreateListViewModelInstance();
 
@@ -372,6 +372,46 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
         }
 
+        /// <summary>
+        /// Sets the properties of the model needed to retrieve the related data.
+        /// </summary>
+        /// <param name="relatedItem">The related item.</param>
+        /// <param name="relatedDataViewModel">The related data view model.</param>
+        public virtual void SetRelatedDataProperties(IDataItem relatedItem, RelatedDataViewModel relatedDataViewModel)
+        {
+            this.RelatedItemType = relatedDataViewModel.RelatedItemType;
+            this.RelatedItemProviderName = ((IDataProviderBase)relatedItem.Provider).Name;
+            this.RelationTypeToDisplay = (RelationDirection)Enum.Parse(typeof(RelationDirection), relatedDataViewModel.RelationTypeToDisplay);
+            this.RelatedFieldName = relatedDataViewModel.RelatedFieldName;
+
+            if (this.RelatedItemProviderName.IsNullOrEmpty())
+            {
+                var manager = ManagerBase.GetMappedManager(this.RelatedItemType, this.RelatedItemProviderName);
+                this.RelatedItemProviderName = manager.Provider.Name;
+            }
+        }
+
+        /// <summary>
+        /// Sets the model properties by given view model.
+        /// </summary>
+        /// <param name="viewModel">The view model.</param>
+        public virtual void SetModelProperties(ContentListSettingsViewModel viewModel)
+        {
+            if (viewModel == null) return;
+
+            this.DisableCanonicalUrlMetaTag = viewModel.DisableCanonicalUrlMetaTag;
+            this.DisplayMode = viewModel.DisplayMode;
+            this.EnableSocialSharing = viewModel.EnableSocialSharing;
+            this.FilterExpression = viewModel.FilterExpression;
+
+            if (viewModel.ItemsPerPage > 0)
+                this.ItemsPerPage = viewModel.ItemsPerPage;
+
+            this.ListCssClass = viewModel.ListCssClass;
+            this.SelectionMode = viewModel.SelectionMode;
+            this.SerializedAdditionalFilters = viewModel.SerializedAdditionalFilters;
+            this.SortExpression = viewModel.SortExpression;
+        }
         #endregion
 
         #region Protected methods
@@ -725,10 +765,35 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var filterExpression = ContentHelper.AdaptMultilingualFilterExpression(this.FilterExpression);
             int? skip = (page - 1) * this.ItemsPerPage;
 
-            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, relatedItem.Id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay)
+            Guid id = this.GetLifecycleItemRelevantId(relatedItem);
+
+            var relatedItems = relatedDataSource.GetRelatedItems(this.RelatedItemType, this.RelatedItemProviderName, id, this.RelatedFieldName, this.ContentType, ContentLifecycleStatus.Live, filterExpression, this.SortExpression, skip, this.ItemsPerPage, ref totalCount, this.RelationTypeToDisplay)
                 .OfType<IDataItem>();
 
             return relatedItems;
+        }
+
+        private Guid GetLifecycleItemRelevantId(IDataItem item)
+        {
+            Guid id;
+            var lifecycleItem = item as ILifecycleDataItemGeneric;
+            if (lifecycleItem != null)
+            {
+                if (lifecycleItem.Status == ContentLifecycleStatus.Master)
+                {
+                    id = lifecycleItem.Id;
+                }
+                else
+                {
+                    id = lifecycleItem.OriginalContentId;
+                }
+            }
+            else
+            {
+                id = item.Id;
+            }
+
+            return id;
         }
         #endregion
 
