@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfCalendarFilter', function () {
+        .directive('sfCalendarFilter', ['serverContext', function (serverContext) {
 
             return {
                 restrict: 'EA',
@@ -14,7 +14,7 @@
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
                     var url = attrs.sfTemplateUrl || 'client-components/selectors/events/sf-calendar-filter.sf-cshtml';
-                    return sitefinity.getEmbeddedResourceUrl(assembly, url);
+                    return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
@@ -110,5 +110,5 @@
                     }
                 }
             };
-        });
+        }]);
 })(jQuery);
