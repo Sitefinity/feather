@@ -32,7 +32,7 @@ describe("page selector", function () {
 
     //Mock news item service. It returns promises.
     var pagesService = {
-        getItems: jasmine.createSpy('sfPageService.getItems').andCallFake(function (parentId, siteId, provider, search) {
+        getItems: jasmine.createSpy('sfPageService.getItems').and.callFake(function (parentId, siteId, provider, search) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -49,7 +49,7 @@ describe("page selector", function () {
 
             return serviceResult.promise;
         }),
-        getSpecificItems: jasmine.createSpy('sfPageService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfPageService.getSpecificItems').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -59,7 +59,7 @@ describe("page selector", function () {
             return serviceResult.promise;
         }),
         getPredecessors: jasmine.createSpy('sfPageService.getPredecessors'),
-        getPageTitleByCulture: jasmine.createSpy('sfPageService.getPageTitleByCulture').andCallFake(function (item) {
+        getPageTitleByCulture: jasmine.createSpy('sfPageService.getPageTitleByCulture').and.callFake(function (item) {
             return item.Title.Value;
         })
     };

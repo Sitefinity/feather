@@ -26,7 +26,7 @@ describe("calendar selector", function () {
 
     //Mock calendar service. It returns promises.
     var calendarService = {
-        getItems: jasmine.createSpy('sfCalendarService.getItems').andCallFake(function (provider, skip, take, filter) {
+        getItems: jasmine.createSpy('sfCalendarService.getItems').and.callFake(function (provider, skip, take, filter) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -43,7 +43,7 @@ describe("calendar selector", function () {
 
             return serviceResult.promise;
         }),
-        getSpecificItems: jasmine.createSpy('sfCalendarService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfCalendarService.getSpecificItems').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -58,7 +58,7 @@ describe("calendar selector", function () {
 
             return serviceResult.promise;
         }),
-        getItem: jasmine.createSpy('sfCalendarService.getItem').andCallFake(function (itemId, provider) {
+        getItem: jasmine.createSpy('sfCalendarService.getItem').and.callFake(function (itemId, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -126,7 +126,7 @@ describe("calendar selector", function () {
     });
 
     var getCalendarServiceGetItemsArgs = function () {
-        var mostRecent = calendarService.getItems.mostRecentCall;
+        var mostRecent = calendarService.getItems.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -134,7 +134,7 @@ describe("calendar selector", function () {
     };
 
     var getCalendarServiceGetSpecificItemsArgs = function () {
-        var mostRecent = calendarService.getSpecificItems.mostRecentCall;
+        var mostRecent = calendarService.getSpecificItems.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 

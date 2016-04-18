@@ -52,7 +52,7 @@ describe('site selecor directive', function () {
 
     var sfMultisiteServiceMock = {
         getSitesForUserPromise: jasmine.createSpy('getSitesForUserPromise')
-            .andCallFake(function (defaultParams) {
+            .and.callFake(function (defaultParams) {
                 var result = $q.defer();
 
                 result.resolve({
@@ -65,7 +65,7 @@ describe('site selecor directive', function () {
 
     var sfMultisiteServiceErrorMock = {
         getSitesForUserPromise: jasmine.createSpy('getSitesForUserPromise')
-            .andCallFake(function (defaultParams) {
+            .and.callFake(function (defaultParams) {
                 var result = $q.defer();
 
                 result.reject('Error!');

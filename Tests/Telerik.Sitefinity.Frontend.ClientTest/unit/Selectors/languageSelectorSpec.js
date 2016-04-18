@@ -86,7 +86,7 @@ describe("language selector", function () {
 
     describe('multilingual', function () {
         var languageService = {
-            getLocalizationSettings: jasmine.createSpy('languageService.getLocalizationSettings').andCallFake(function () {
+            getLocalizationSettings: jasmine.createSpy('languageService.getLocalizationSettings').and.callFake(function () {
                 if ($q) {
                     serviceResult = $q.defer();
                 }
@@ -316,7 +316,7 @@ describe("language selector", function () {
         };
 
         var languageServiceMonolingual = {
-            getLocalizationSettings: jasmine.createSpy('languageService.getLocalizationSettings').andCallFake(function () {
+            getLocalizationSettings: jasmine.createSpy('languageService.getLocalizationSettings').and.callFake(function () {
                 if ($q) {
                     serviceResult = $q.defer();
                 }

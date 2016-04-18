@@ -59,7 +59,7 @@ describe("library selector", function () {
     var provide;
 
     var imagesObj = {
-        getFolders: jasmine.createSpy('sfMediaService.images.getFolders').andCallFake(function (options) {
+        getFolders: jasmine.createSpy('sfMediaService.images.getFolders').and.callFake(function (options) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -154,7 +154,7 @@ describe("library selector", function () {
     });
 
     var libraryServiceGetItemsArgs = function () {
-        var mostRecent = mediaService.images.getFolders.mostRecentCall;
+        var mostRecent = mediaService.images.getFolders.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 

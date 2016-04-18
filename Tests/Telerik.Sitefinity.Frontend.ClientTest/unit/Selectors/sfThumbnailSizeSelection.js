@@ -51,7 +51,7 @@ describe("image thumbnail size selector", function () {
     var provide;
 
     var imagesObj = {
-        thumbnailProfiles: jasmine.createSpy('sfMediaService.images.thumbnailProfiles').andCallFake(function () {
+        thumbnailProfiles: jasmine.createSpy('sfMediaService.images.thumbnailProfiles').and.callFake(function () {
             if ($q) {
                 serviceResult = $q.defer();
             }

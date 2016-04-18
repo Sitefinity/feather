@@ -38,7 +38,7 @@ describe("event selector", function () {
 
     //Mock event service. It returns promises.
     var eventService = {
-        getItems: jasmine.createSpy('sfEventService.getItems').andCallFake(function (provider, skip, take, filter) {
+        getItems: jasmine.createSpy('sfEventService.getItems').and.callFake(function (provider, skip, take, filter) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -55,7 +55,7 @@ describe("event selector", function () {
 
             return serviceResult.promise;
         }),
-        getSpecificItems: jasmine.createSpy('sfEventService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfEventService.getSpecificItems').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -70,7 +70,7 @@ describe("event selector", function () {
 
             return serviceResult.promise;
         }),
-        getItem: jasmine.createSpy('sfEventService.getItem').andCallFake(function (itemId, provider) {
+        getItem: jasmine.createSpy('sfEventService.getItem').and.callFake(function (itemId, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -88,7 +88,7 @@ describe("event selector", function () {
     };
 
     var eventServiceMockReturnMoreThan5Items = {
-        getSpecificItems: jasmine.createSpy('sfEventService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfEventService.getSpecificItems').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -149,7 +149,7 @@ describe("event selector", function () {
     });
 
     var getEventServiceGetItemsArgs = function () {
-        var mostRecent = eventService.getItems.mostRecentCall;
+        var mostRecent = eventService.getItems.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -157,7 +157,7 @@ describe("event selector", function () {
     };
 
     var getEventServiceGetItemArgs = function () {
-        var mostRecent = eventService.getItem.mostRecentCall;
+        var mostRecent = eventService.getItem.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -165,7 +165,7 @@ describe("event selector", function () {
     };
 
     var getEventServiceGetSpecificItemsArgs = function () {
-        var mostRecent = eventService.getSpecificItems.mostRecentCall;
+        var mostRecent = eventService.getSpecificItems.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 

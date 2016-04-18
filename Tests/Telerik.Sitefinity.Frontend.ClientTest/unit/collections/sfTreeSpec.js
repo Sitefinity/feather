@@ -203,7 +203,7 @@
         $('ul li span:contains("1") a.selector').click();
         scope.$digest();
 
-        expect(scope.selectedIds[0]).toEqual(null);
+        expect(scope.selectedIds[0]).toBeUndefined();
     });
 
     it('[dzhenko] / should deselect item if clicked for the second time if the tree is missing sf-deselectable attribute.', function () {

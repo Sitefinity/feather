@@ -40,7 +40,7 @@
     var dataItems =  [dataItem, dataItem2, dataItem3];
 
     var rolesService = {
-        getRoles: jasmine.createSpy('sfRolesService').andCallFake(
+        getRoles: jasmine.createSpy('sfRolesService').and.callFake(
             function (provider, skip, take, search, rolesToHide) {
                 var deferred = $q.defer();
                 
@@ -65,7 +65,7 @@
                     promise: deferred.promise,
                 };
             }),
-        getSpecificRoles: jasmine.createSpy('sfRolesServie.getSpecificRoles').andCallFake(
+        getSpecificRoles: jasmine.createSpy('sfRolesServie.getSpecificRoles').and.callFake(
             function (ids, provider) {
                 var deferred = $q.defer();
                 var items = [dataItem, dataItem2, dataItem3].filter(function (item) {
@@ -81,7 +81,7 @@
                     promise: deferred.promise,
                 };
             }),
-        getRoleProviders: jasmine.createSpy('sfRolesService.getRoleProviders').andCallFake(
+        getRoleProviders: jasmine.createSpy('sfRolesService.getRoleProviders').and.callFake(
             function (commaSeperatedAbilities) {
                 var deferred = $q.defer();
                 deferred.resolve({
@@ -131,7 +131,7 @@
     });
 
     var getRolesServiceGetRolesArgs = function () {
-        var mostRecent = rolesService.getRoles.mostRecentCall;
+        var mostRecent = rolesService.getRoles.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -139,7 +139,7 @@
     };
 
     var getRolesServiceGetSpecificRolesArgs = function () {
-        var mostRecent = rolesService.getSpecificRoles.mostRecentCall;
+        var mostRecent = rolesService.getSpecificRoles.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 

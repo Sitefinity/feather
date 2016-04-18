@@ -151,7 +151,7 @@ describe('items tree tests', function  () {
             sfHybridHierarchicalDataSource = _sfHybridHierarchicalDataSource_;
         }));
 
-        var getChildrenSpy = jasmine.createSpy('getChildren').andCallFake(function (id) {
+        var getChildrenSpy = jasmine.createSpy('getChildren').and.callFake(function (id) {
             var children = $q.defer();
             children.resolve(sortedLevels[2]);
             return children.promise;
@@ -218,7 +218,7 @@ describe('items tree tests', function  () {
                          'class="k-treeview--list-group"></sf-items-tree>';
 
             scope.getPredecessors = jasmine.createSpy('getPredecessors')
-                .andCallFake(function (itemId) {
+                .and.callFake(function (itemId) {
                     var defered = $q.defer();
                     var predecessors = constructPredecessorsCollection(predecessorsLevels);
                     defered.resolve({ Items: predecessors });

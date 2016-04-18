@@ -7,7 +7,7 @@
         directiveMarkup = '<sf-calendar-filter sf-query-data="sfQueryData" sf-provider="sfProvider" sf-query-field-name="Calendars" sf-group-logical-operator="AND" sf-item-logical-operator="OR"></sf-calendar-filter>';
 
     var calendarService = {
-        getSpecificItems: jasmine.createSpy('sfCalendarService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfCalendarService.getSpecificItems').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }

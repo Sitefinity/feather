@@ -39,7 +39,7 @@ describe("timeSpan selector", function () {
 
     beforeEach(inject(function ($templateCache) {
         //This method is called by the templateUrl property of the directive's definition object.
-        spyOn(sitefinity, 'getEmbeddedResourceUrl').andCallFake(function (assembly, url) {
+        spyOn(sitefinity, 'getEmbeddedResourceUrl').and.callFake(function (assembly, url) {
             return timespanSelectorTemplatePath;
         });
     }));
@@ -69,6 +69,8 @@ describe("timeSpan selector", function () {
         var template = "<sf-timespan-selector sf-selected-item='selectedItem'></sf-timespan-selector>";
 
         commonMethods.compileDirective(template, scope);
+		
+		expect(scope.selectedItem.displayText).toBe(' 12 Dec, 2012  14 Dec, 2012');
     });
 
     it('[EGaneva] / custom range is validated correctly.', function () {

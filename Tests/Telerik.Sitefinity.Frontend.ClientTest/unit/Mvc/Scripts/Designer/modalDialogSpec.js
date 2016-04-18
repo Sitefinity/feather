@@ -4,7 +4,7 @@ describe('modal directive', function () {
     var dialogResult = { result: null };
     var dialogResultDefer;
     var $uibModal = {
-        open: jasmine.createSpy('$uibModal.open').andReturn(dialogResult)
+        open: jasmine.createSpy('$uibModal.open').and.returnValue(dialogResult)
     };
     var dialogsService;
 
@@ -35,7 +35,7 @@ describe('modal directive', function () {
     var assertOpenWithController = function (templateId, skipClean) {
         var tmplId = templateId || 'dialog-template';
 
-        var mostRecent = $uibModal.open.mostRecentCall;
+        var mostRecent = $uibModal.open.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -52,7 +52,7 @@ describe('modal directive', function () {
     };
 
     var assertOpenWithScope = function () {
-        var mostRecent = $uibModal.open.mostRecentCall;
+        var mostRecent = $uibModal.open.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
