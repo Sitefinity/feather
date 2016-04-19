@@ -2,6 +2,7 @@
 (function ($) {
     if (typeof ($telerik) != 'undefined') {
         $telerik.$(document).one('dialogRendered', function () {
+            angular.$$csp().noInlineStyle = true;
             angular.bootstrap($('.designer'), ['designer']);
         });
     }
