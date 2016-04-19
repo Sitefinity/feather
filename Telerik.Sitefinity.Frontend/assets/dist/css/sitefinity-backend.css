@@ -12360,6 +12360,10 @@
     .sf-backend-wrp .modal-body .k-editor-widget .k-state-selected,
     .sf-backend-wrp .modal-body .k-editor-widget .k-tool.k-state-active {
       background: #ddd; }
+    .sf-backend-wrp .modal-body .k-editor-widget .k-button-group .k-tool {
+      vertical-align: top; }
+    .sf-backend-wrp .modal-body .k-editor-widget .k-button-group .k-tool-icon {
+      margin-top: 6px; }
   .sf-backend-wrp .kendo-content-block {
     display: block;
     margin: 3px -20px -20px; }

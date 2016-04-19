@@ -22,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
         /// UI test ManageGridWidgetOnThePage
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.FeatherTeam),
+        Owner(FeatherTeams.SitefinityTeam2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void ManageGridWidgetOnThePage()
         {

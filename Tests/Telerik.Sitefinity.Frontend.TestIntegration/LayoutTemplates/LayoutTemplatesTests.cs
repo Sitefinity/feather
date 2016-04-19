@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
     {
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Adds new layout file to Mvc/Views/Layouts, verifies the automatically generated page template and creates a page based on the template in order to verify the content.")]
         public void LayoutTemplates_AddNewLayoutFile_VerifyGeneratedTemplateAndCreatedPageContent()
         {
@@ -67,7 +67,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Adds new layout file to Mvc/Views/Layouts, edits the file and verifies the automatically generated page template and a page based on the template.")]
         public void LayoutTemplates_EditLayoutFile_VerifyGeneratedTemplateAndCreatedPageContent()
         {
@@ -124,7 +124,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Adds new layout file to Mvc/Views/Layouts calculating the current DateTime, verify the page content is not updated on the frontend.")]
         public void LayoutTemplates_AddLayoutFileRenderingDateTime_VerifyTemplateNotRecompiled()
         {
@@ -172,7 +172,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Creates a page template and adds new layout file to Mvc/Views/Layouts, verifies the template is based on the layout.")]
         public void LayoutTemplates_CreateTemplateAndAddLayoutFile_VerifyTemplateBasedOnLayout()
         {
@@ -208,7 +208,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Creates a page template and adds layout files to Mvc/Views/Layouts with special characters in the names, verifies the template is based on the correct layout.")]
         public void LayoutTemplates_CreateTemplateAndAddLayoutFilesUsingSpecialCharacters_VerifyTemplateBasedOnCorrectLayout()
         {
@@ -260,7 +260,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Renames layout file from Mvc/Views/Layouts, verifies new template is generated.")]
         public void LayoutTemplates_RenameLayoutFile_VerifyNewGeneratedTemplate()
         {
@@ -306,7 +306,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Replace layout file in Mvc/Views/Layouts, verifies the template and the page that uses it.")]
         public void LayoutTemplates_ReplaceLayoutFile_VerifyGeneratedTemplateAndCreatedPageContent()
         {
@@ -369,7 +369,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Rename template based on layout file in Mvc/Views/Layouts, verifies the template and the page that uses it.")]
         [Ignore("Ignored because of Bug ID 145083")]
         public void LayoutTemplates_RenameTemplateBasedOnLayoutFile_VerifyTemplateAndPage()
@@ -422,7 +422,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Deletes layout file from Mvc/Views/Layouts, verifies the template and the page no longer use it.")]
         [Ignore("It will work if the page is republished but this is would not be a valid test. We need cache dependency in the page resolver to its master page.")]
         public void LayoutTemplates_DeleteLayoutFile_VerifyTemplateAndPageNotBasedToLayout()
@@ -471,7 +471,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Creates template based on parent template generated from layout file from Mvc/Views/Layouts, verifies the page content that uses it.")]
         public void LayoutTemplates_CreateTemplateBasedOnGeneratedTemplate_VerifyPageContent()
         {
@@ -514,7 +514,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Creates template based on parent template generated from layout file from Mvc/Views/Layouts, edit the layout file and verifies the page content that uses the child template.")]
         public void LayoutTemplates_EditLayoutFile_VerifyTemplateBasedOnParentTemplateAndPageContent()
         {
@@ -569,7 +569,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Creates template with space in the name and verifies it is not based on layout file from Mvc/Views/Layouts")]
         public void LayoutTemplates_CreateTemplateUsingTitleWithSpace_VerifyTemplateNotBasedOnLayoutFile()
         {
@@ -621,7 +621,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.LayoutTemplates
 
         [Test]
         [Category(TestCategories.LayoutTemplates)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Adds layout file to Mvc/Views/Layouts folder, creates new template based on convention and verifies the page that uses it")]
         public void LayoutTemplates_AddLayoutFileAndCreateNewTemplate_VerifyPageContent()
         {

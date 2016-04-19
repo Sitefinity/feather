@@ -20,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.OutputCache
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings"), Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether page with MVC widget is cached properly.")]
         public void OutputCache_NoTempData_IsRetrievedFromCache()
         {

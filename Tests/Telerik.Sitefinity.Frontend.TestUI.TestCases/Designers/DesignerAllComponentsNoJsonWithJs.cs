@@ -22,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Designers
         /// UI test DesignerAllComponentsNoJsonWithJs.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.FeatherTeam),
+        Owner(FeatherTeams.SitefinityTeam2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void DesignerAllComponentsNoJsonWithJs()
         {
