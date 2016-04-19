@@ -543,7 +543,7 @@ describe('sfMediaService', function () {
                     send: sendSpy,
                 };
 
-                spyOn(window, "XMLHttpRequest").andReturn(xhrObj);
+                spyOn(window, "XMLHttpRequest").and.returnValue(xhrObj);
 
                 return xhrObj;
             };

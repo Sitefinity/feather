@@ -13,7 +13,7 @@ describe("link selector modal", function () {
 
     var linkServiceMock = {
         getHtmlLink: jasmine.createSpy('getHtmlLink')
-            .andCallFake(function (selectedItem) {
+            .and.callFake(function (selectedItem) {
                 return [testLink];
             })
     };
@@ -21,7 +21,7 @@ describe("link selector modal", function () {
     var linkSelectorScopeMock;
     beforeEach(function () {
         linkSelectorScopeMock = jasmine.createSpy('scope')
-            .andCallFake(function () {
+            .and.callFake(function () {
                 return {
 
                 };
@@ -31,7 +31,7 @@ describe("link selector modal", function () {
     var angularElementSpy;
     beforeEach(function () {
         var angularElementOriginal = angular.element;
-        angularElementSpy = spyOn(angular, 'element').andCallFake(function (selector) {
+        angularElementSpy = spyOn(angular, 'element').and.callFake(function (selector) {
             if (selector === '#linkSelector') {
                 return {
                     scope: linkSelectorScopeMock
