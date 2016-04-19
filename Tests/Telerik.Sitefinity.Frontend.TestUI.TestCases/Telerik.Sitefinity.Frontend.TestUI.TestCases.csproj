@@ -134,6 +134,7 @@
     <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromHybridPage.cs" />
     <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromPurePageTemplate.cs" />
     <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromPurePage.cs" />
+    <Compile Include="MvcWidgets\MvcWidgetUseMasterDetailContentController.cs" />
     <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
     <Compile Include="MvcWidgets\MvcReorderSelectedNewsItems.cs" />
     <Compile Include="MvcWidgets\MvcSelectManyDynamicItems.cs" />
