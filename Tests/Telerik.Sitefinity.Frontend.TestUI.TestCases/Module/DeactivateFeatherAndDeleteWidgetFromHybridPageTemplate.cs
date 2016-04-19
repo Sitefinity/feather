@@ -17,7 +17,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
         /// Deactivates the feather and delete widget from pure page template.
         /// </summary>
         [TestMethod]
-        [Owner(FeatherTeams.FeatherTeam)]
+        [Owner(FeatherTeams.SitefinityTeam2)]
         [TestCategory(FeatherTestCategories.PagesAndContent)]
         public void DeactivateFeatherAndDeleteWidgetFromHybridPageTemplate()
         {

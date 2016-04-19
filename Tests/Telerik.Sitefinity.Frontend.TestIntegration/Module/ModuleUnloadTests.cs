@@ -54,7 +54,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Check_RouteTable_Routes_MapRoute_ShouldBeUndone is not needed - Routes are in one collection checked by UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone
         /// </remarks>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather the Sitefinity application changes it has done are undone.")]
         public void DeactivatingFeatherShouldRestoreAppStateToPreFeatherActivation()
         {
@@ -79,7 +79,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Check_RouteTable_Routes_MapRoute_ShouldBeUndone is not needed - Routes are in one collection checked by UnloadingFeather_RouteTable_Routes_Insert_ShouldBeUndone
         /// </remarks>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather the Sitefinity application changes it has done are undone.")]
         public void UninstallingFeatherShouldRestoreAppStateToPreFeatherActivation()
         {
@@ -107,7 +107,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
         public void DeactivateFeather_GridWidgetsOnHybridPage_VerifyBackend()
         {
@@ -141,7 +141,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.")]
         public void DeactivateFeather_GridWidgetsOnPurePage_VerifyBackend()
         {
@@ -175,7 +175,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
         public void UninstallFeather_GridWidgetsOnHybridPage_VerifyBackend()
         {
@@ -210,7 +210,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.")]
         public void UninstallFeather_GridWidgetsOnPurePage_VerifyBackend()
         {
@@ -249,7 +249,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
         public void DeactivateFeather_GridWidgetsOnHybridPageTemplate_VerifyBackend()
         {
@@ -284,7 +284,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.")]
         public void DeactivateFeather_GridWidgetsOnPurePageTemplate_VerifyBackend()
         {
@@ -319,7 +319,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
         public void UninstallFeather_GridWidgetsOnHybridPageTemplate_VerifyBackend()
         {
@@ -355,7 +355,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.")]
         public void UninstallFeather_GridWidgetsOnPurePageTemplate_VerifyBackend()
         {
@@ -399,7 +399,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
         public void DeactivateFeather_GridWidgetsInToolboxHybridPage_VerifyBackend()
         {
@@ -432,7 +432,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.")]
         public void DeactivateFeather_GridWidgetsInToolboxPurePage_VerifyBackend()
         {
@@ -465,7 +465,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather the page edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
         public void UninstallFeather_GridWidgetsInToolboxHybridPage_VerifyBackend()
         {
@@ -514,7 +514,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather the page edit toolbox on pure page doesn't contain Feather grid widgets.")]
         public void UninstallFeather_GridWidgetsInToolboxPurePage_VerifyBackend()
         {
@@ -552,7 +552,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
         public void DeactivateFeather_GridWidgetsInToolboxHybridPageTemplate_VerifyBackend()
         {
@@ -586,7 +586,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.")]
         public void DeactivateFeather_GridWidgetsInToolboxPurePageTemplate_VerifyBackend()
         {
@@ -620,7 +620,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather the page template edit toolbox on hybrid page doesn't contain Feather grid widgets.")]
         public void UninstallFeather_GridWidgetsInToolboxHybridPageTemplate_VerifyBackend()
         {
@@ -655,7 +655,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather the page template edit toolbox on pure page template doesn't contain Feather grid widgets.")]
         public void UninstallFeather_GridWidgetsInToolboxPurePageTemplate_VerifyBackend()
         {

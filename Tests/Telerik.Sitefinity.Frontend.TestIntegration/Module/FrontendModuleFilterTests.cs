@@ -34,7 +34,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather, a hybrid page with widget on the frontend and show warning in the backend.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather, a hybrid page with widget on the frontend and show warning in the backend.")]
         public void DeactivateFeather_HybridPage_Verify()
         {
@@ -91,7 +91,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather, a pure page with widget on the frontend and show warning in the backend.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather, a pure page with widget on the frontend and show warning in the backend.")]
         public void DeactivateFeather_PurePage_Verify()
         {
@@ -148,7 +148,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather, a hybrid page with widget on the frontend and show warning in the backend.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather, a hybrid page with widget on the frontend and show warning in the backend.")]
         public void UninstallFeather_HybridPage_Verify()
         {
@@ -206,7 +206,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather, a pure page with widget on the frontend and show warning in the backend.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather, a pure page with widget on the frontend and show warning in the backend.")]
         public void UninstallFeather_PurePage_Verify()
         {
@@ -268,7 +268,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather, a hybrid template with widget and page based on it hide on the frontend and show warning in the backend.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather, a hybrid template with widget and page based on it hide on the frontend and show warning in the backend.")]
         public void DeactivateFeather_HybridPageTemplate_Verify()
         {
@@ -340,7 +340,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after deactivating Feather, a pure template with widget and page based on it hide on the frontend and show warning in the backend.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather, a pure template with widget and page based on it hide on the frontend and show warning in the backend.")]
         public void DeactivateFeather_PurePageTemplate_Verify()
         {
@@ -412,7 +412,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather, a hybrid template with widget and page based on it hide on the frontend and show warning in the backend.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather, a hybrid template with widget and page based on it hide on the frontend and show warning in the backend.")]
         public void UninstallFeather_HybridPageTemplate_Verify()
         {
@@ -485,7 +485,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         /// Checks whether after uninstalling Feather, a pure template with widget and page based on it hide on the frontend and show warning in the backend.
         /// </summary>
         [Test]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather, a pure template with widget and page based on it hide on the frontend and show warning in the backend.")]
         public void UninstallFeather_PurePageTemplate_Verify()
         {
