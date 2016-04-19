@@ -52,9 +52,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         {
             if (LayoutMvcPageResolver.IsLayoutPath(virtualPath))
             {
-                var httpContext = new HttpContextWrapper(new HttpContext(HttpContext.Current.Request, HttpContext.Current.Response));
-                httpContext.Items[PackageManager.CurrentPackageKey] = context.HttpContext.Items[PackageManager.CurrentPackageKey];
-                SystemManager.RunWithHttpContext(httpContext, () => base.BuildWithMasterPage(virtualPath, context, output, placeHolders, directives));
+                SystemManager.RunWithElevatedPrivilege((args) => 
+                {
+                    HttpContext.Current.Items[PackageManager.CurrentPackageKey] = context.HttpContext.Items[PackageManager.CurrentPackageKey];
+                    base.BuildWithMasterPage(virtualPath, context, output, placeHolders, directives);
+                });
             }
             else
             {

@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
         /// UI test AddWidgetToPageBasedOnLayoutWithMultiplePlaceholders.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.FeatherTeam),
+        Owner(FeatherTeams.SitefinityTeam2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void AddWidgetToPageBasedOnLayoutWithMultiplePlaceholders()
         {

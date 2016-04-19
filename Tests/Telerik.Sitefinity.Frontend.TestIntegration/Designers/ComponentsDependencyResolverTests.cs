@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
     {
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether ExtractComponents method returns the correct components on large designer markup with multiple client components.")]
         public void ExtractComponents_LargeDesignerFileWithMultipleClientComponents_ShouldReturnCorrectComponents()
         {
@@ -37,7 +37,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
 
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether ExtractComponents method parses components on large designer markup with multiple client components for acceptable time.")]
         public void ExtractComponents_LargeDesignerFileWithMultipleClientComponents_ShouldParseComponentsForAcceptableTime()
         {
@@ -57,7 +57,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
 
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether ExtractComponents method returns the correct components on large designer markup with no client components.")]
         public void ExtractComponents_DesignerFileWithNoClientComponents_ShouldReturnCorrectComponents()
         {
@@ -74,7 +74,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
 
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether ExtractComponents method returns the correct components on sample designer markup with news widget.")]
         public void ExtractComponents_SampleNewsWidgetDesignerFile_ShouldReturnCorrectComponents()
         {
@@ -93,7 +93,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
 
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether ExtractComponents method returns the correct components on sample designer markup with image widget.")]
         public void ExtractComponents_SampleImageWidgetDesignerFile_ShouldReturnCorrectComponents()
         {
@@ -112,7 +112,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
 
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether ExtractComponents method returns the correct components on sample designer markup with blog posts widget.")]
         public void ExtractComponents_SampleBlogPostsWidgetDesignerFile_ShouldReturnCorrectComponents()
         {
@@ -131,7 +131,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
 
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether ExtractComponents method handles invoking widget designer views with and without components correctly for acceptable time.")]
         public void ExtractComponents_InvokingWidgetDesignerWithAndWithoutJson_ShouldExtractComponentsCorrectlyForAcceptableTime()
         {
@@ -146,7 +146,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
 
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether invoking widget designer views with and without js populates angular modules correctly.")]
         public void ExtractModules_InvokingWidgetDesignerWithAndWithoutJs_ShouldExtractModulesCorrectly()
         {
@@ -168,7 +168,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
 
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether ExtractComponents method handles invoking widget designer with json with only scripts extracts modules correctly.")]
         public void ExtractModules_InvokingWidgetDesignerWithJsonWithOnlyScripts_ShouldExtractModulesCorrectly()
         {
@@ -183,7 +183,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
 
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether Designer model when views with json with priority 1 and without json does not set priority 1 to generated config.")]
         public void GenerateModel_WithAndWithoutJsonConfig_ShouldNotSetPriorityToTheGeneratedConfig()
         {
@@ -195,7 +195,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
 
         [Test]
         [Category(TestCategories.MvcCore)]
-        [Author(FeatherTeams.FeatherTeam)]
+        [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether Designer model when views without json does set priority 1 to generated config.")]
         public void GenerateModel_WithoutJsonConfig_ShouldSetPriorityToTheGeneratedConfig()
         {
