@@ -103,11 +103,15 @@ describe('items tree tests', function  () {
         }
 
         beforeEach(function () {
-            this.addMatchers({
+            jasmine.addMatchers({
                 // Used to compare two trees with given parents path from the root to the bottom
-                toEqualTree: function (expected) {
-                    return equalTree(this.actual, expected);
-                }
+                toEqualTree: function () {
+					return {
+						compare: function (expected, actual) {
+							return { pass: equalTree(expected, actual) };
+						}
+					};
+				}
             });
         });
 
@@ -172,7 +176,7 @@ describe('items tree tests', function  () {
                 var children = this.data();
 
                 expect(children).toEqualArrayOfObjects(sortedLevels[2], ['Id']);
-                expect(getChildrenSpy.callCount).toBe(0);
+                expect(getChildrenSpy.calls.count()).toBe(0);
             });
 
             dataSource.read({Id: '2.2'});
@@ -188,7 +192,7 @@ describe('items tree tests', function  () {
                 var children = this.data();
 
                 expect(children).toEqualArrayOfObjects(sortedLevels[2], ['Id']);
-                expect(getChildrenSpy.callCount).toBe(0);
+                expect(getChildrenSpy.calls.count()).toBe(0);
             });
 
             // The id is not in the tree.

@@ -147,7 +147,7 @@ describe("library selector", function () {
         childDataItem.RootPath = null;
         childDataItem.TitlesPath = null;
 
-        mediaService.images.getFolders.calls = [];
+        mediaService.images.getFolders.calls.reset();
 
         //Sets default mediaService mock.
         provide.value('sfMediaService', mediaService);

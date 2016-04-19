@@ -225,7 +225,7 @@
             expect(args[3]).toBeFalsy();
 
             // rolesToHide
-            expect(args[4]).toEqualArrayOfValues([]);
+            expect(args[4]).toBeFalsy();
         });
 
         it('[GeorgiMateev] / should retrieve selected roles from the service when the selector is loaded.', function () {

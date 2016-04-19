@@ -47,7 +47,7 @@ describe('modal directive', function () {
         expect(args.controller).toBe('TestCtrl');
 
         if (!skipClean) {
-            $uibModal.open.reset();
+            $uibModal.open.calls.reset();
         }
     };
 
@@ -64,7 +64,7 @@ describe('modal directive', function () {
         expect(args.templateUrl).toBe('dialog-template');
         expect(args.controller).toBeUndefined();
 
-        $uibModal.open.reset();
+        $uibModal.open.calls.reset();
     };
 
     it('[GMateev] / should open dialog on page load with given controller.]', function () {
@@ -136,7 +136,7 @@ describe('modal directive', function () {
 
         commonMethods.compileDirective(template, scope);        
 
-        expect($uibModal.open.callCount).toBe(1);
+        expect($uibModal.open.calls.count()).toBe(1);
         expect(dialogsService.count()).toBe(1);
 
         assertOpenWithController("outside-dialog-template", true);
@@ -145,7 +145,7 @@ describe('modal directive', function () {
 
         $('#openSelectorBtn').click();
 
-        expect($uibModal.open.callCount).toBe(2);
+        expect($uibModal.open.calls.count()).toBe(2);
         expect(dialogsService.count()).toBe(2);
 
         assertOpenWithScope();

@@ -115,9 +115,9 @@ describe("page selector", function () {
         var leftOver = $('.testDiv, .modal, .modal-backdrop');
         leftOver.empty();
         leftOver.remove();
-        pagesService.getItems.reset();
-        pagesService.getSpecificItems.reset();
-        pagesService.getPredecessors.reset();
+        pagesService.getItems.calls.reset();
+        pagesService.getSpecificItems.calls.reset();
+        pagesService.getPredecessors.calls.reset();
     });
 
     describe('check default properties initialization of page selector', function () {
