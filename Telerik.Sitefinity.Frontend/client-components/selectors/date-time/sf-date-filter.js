@@ -81,8 +81,17 @@
                         var translateQueryItems = function (collection) {
                             var result = new timeSpanItem();
 
-                            if (!collection || collection.length === 0 || collection.length > 2)
+                            if (!collection || collection.length === 0) {
                                 return result;
+                            } else if (collection.length > 2) {
+                                collection = collection.filter(function (el) {
+                                    return el && el.Value !== 'DateTime.UtcNow';
+                                });
+
+                                if (collection.length > 2) {
+                                    return result;
+                                }
+                            }
                             
                             for (var i = 0; i < collection.length; i++) {
                                 var item = collection[i];
