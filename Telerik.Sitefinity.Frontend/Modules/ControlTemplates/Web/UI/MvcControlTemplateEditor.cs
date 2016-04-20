@@ -84,6 +84,6 @@ namespace Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI
             return returnResult;
         }
 
-        private const string MvcControlTemplateEditorScript = "Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.Scripts.MvcControlTemplateEditor.js";
+        internal const string MvcControlTemplateEditorScript = "Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.Scripts.MvcControlTemplateEditor.js";
     }
 }
