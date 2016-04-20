@@ -81,13 +81,26 @@
                         var translateQueryItems = function (collection) {
                             var result = new timeSpanItem();
 
-                            if (!collection || collection.length === 0 || collection.length > 2)
+                            if (!collection || !collection.length) {
                                 return result;
+                            }
+
+                            var collectionToUse = collection.slice();;
+
+                            if (collectionToUse.length > 2) {
+                                collectionToUse = collectionToUse.filter(function (el) {
+                                    return el && el.Value !== 'DateTime.UtcNow';
+                                });
+
+                                if (collectionToUse.length > 2) {
+                                    return result;
+                                }
+                            }
                             
-                            for (var i = 0; i < collection.length; i++) {
-                                var item = collection[i];
+                            for (var i = 0; i < collectionToUse.length; i++) {
+                                var item = collectionToUse[i];
                                 var operator = item.Condition.Operator;
-                                if (operator == '>') {
+                                if (operator == '>=') {
                                     if (item.Value.indexOf('DateTime.UtcNow') == -1) {
                                         result.fromDate = new Date(item.Value);
                                         result.periodType = "customRange";
@@ -97,7 +110,7 @@
                                         translateDateFilterToTimeSpanItem(item.Value, result, result.periodType);
                                     }
                                 }
-                                else if (operator == '<') {
+                                else if (operator == '<=') {
                                     if (item.Value.indexOf('DateTime.UtcNow') == -1) {
                                         result.toDate = new Date(item.Value);
                                         result.periodType = "customRange";
@@ -120,19 +133,19 @@
                             if (dateItem.periodType == 'periodToNow' || dateItem.periodType == 'periodFromNow') {
                                 var queryValue = constructDateFilterExpressionValue(dateItem.timeSpanValue, dateItem.timeSpanInterval, dateItem.periodType);
                                 var queryName = scope.sfQueryFieldName + '.' + queryValue;
-                                var operator = (dateItem.periodType == 'periodToNow') ? '>' : '<';
+                                var operator = (dateItem.periodType == 'periodToNow') ? '>=' : '<=';
                                 scope.sfQueryData.addChildToGroup(groupItem, queryName, scope.sfItemLogicalOperator, scope.sfQueryFieldName, 'System.DateTime', operator, queryValue);
                             }
                             else if (dateItem.periodType == 'customRange') {
                                 if (dateItem.fromDate) {
                                     var fromQueryValue = dateItem.fromDate.toUTCString();
                                     var fromQueryName = scope.sfQueryFieldName + '.' + fromQueryValue;
-                                    scope.sfQueryData.addChildToGroup(groupItem, fromQueryName, scope.sfItemLogicalOperator, scope.sfQueryFieldName, 'System.DateTime', '>', fromQueryValue);
+                                    scope.sfQueryData.addChildToGroup(groupItem, fromQueryName, scope.sfItemLogicalOperator, scope.sfQueryFieldName, 'System.DateTime', '>=', fromQueryValue);
                                 }
                                 if (dateItem.toDate) {
                                     var toQueryValue = dateItem.toDate.toUTCString();
                                     var toQueryName = scope.sfQueryFieldName + '.' + toQueryValue;
-                                    scope.sfQueryData.addChildToGroup(groupItem, toQueryName, scope.sfItemLogicalOperator, scope.sfQueryFieldName, 'System.DateTime', '<', toQueryValue);
+                                    scope.sfQueryData.addChildToGroup(groupItem, toQueryName, scope.sfItemLogicalOperator, scope.sfQueryFieldName, 'System.DateTime', '<=', toQueryValue);
                                 }
                             }
                         };
