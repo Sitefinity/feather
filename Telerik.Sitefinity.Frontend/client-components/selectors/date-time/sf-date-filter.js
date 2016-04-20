@@ -81,20 +81,21 @@
                         var translateQueryItems = function (collection) {
                             var result = new timeSpanItem();
 
+                            var collectionToUse = collection;
                             if (!collection || collection.length === 0) {
                                 return result;
                             } else if (collection.length > 2) {
-                                collection = collection.filter(function (el) {
+                                collectionToUse = collection.filter(function (el) {
                                     return el && el.Value !== 'DateTime.UtcNow';
                                 });
 
-                                if (collection.length > 2) {
+                                if (collectionToUse.length > 2) {
                                     return result;
                                 }
                             }
                             
-                            for (var i = 0; i < collection.length; i++) {
-                                var item = collection[i];
+                            for (var i = 0; i < collectionToUse.length; i++) {
+                                var item = collectionToUse[i];
                                 var operator = item.Condition.Operator;
                                 if (operator == '>=') {
                                     if (item.Value.indexOf('DateTime.UtcNow') == -1) {
