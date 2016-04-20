@@ -103,6 +103,10 @@
                             $event.stopPropagation();
 
                             scope.isOpen = true;
+
+                            setTimeout(function () {
+                                element.find('.uib-datepicker-popup').show();
+                            }, 100);
                         };
 
                         scope.updateHours = function (hstep) {
