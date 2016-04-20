@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.TestIntegration.Helpers;
@@ -144,6 +146,20 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             pageManager.SaveChanges();
 
             return template;
+        }
+
+        /// <summary>
+        /// Enables the combine script for pages.
+        /// </summary>
+        /// <param name="enableScript">if set to <c>true</c> [enable script].</param>
+        public void EnableCombineScriptForPages(bool enableScript)
+        {
+            var configManager = ConfigManager.GetManager();
+            var pagesConfig = configManager.GetSection<PagesConfig>();
+
+            pagesConfig.CombineScriptsBackEnd = enableScript;
+
+            configManager.SaveSection(pagesConfig);
         }
     }
 }

@@ -114,6 +114,8 @@
     <Compile Include="Framework\ElementMap\Widgets\FeatherWidgetDesigner.cs" />
     <Compile Include="Framework\ElementMap\Widgets\GridWidgets.cs" />
     <Compile Include="Framework\ElementMap\Widgets\WidgetsMap.cs" />
+    <Compile Include="Framework\ElementMap\Widgets\WidgetTemplatesCreateEditBaseScreen.cs" />
+    <Compile Include="Framework\ElementMap\Widgets\WidgetTemplatesCreateScreenFrame.cs" />
     <Compile Include="Framework\Wrappers\Backend\BackendWrappersFacade.cs" />
     <Compile Include="Framework\Wrappers\Backend\Modules\FrontendModuleWrapper.cs" />
     <Compile Include="Framework\Wrappers\Backend\Modules\FrontendModuleWrapperFacade.cs" />
@@ -124,6 +126,8 @@
     <Compile Include="Framework\Wrappers\Backend\Widgets\GridWidgets.cs" />
     <Compile Include="Framework\Wrappers\Backend\Widgets\WidgetsWrapper.cs" />
     <Compile Include="Framework\Wrappers\Backend\Widgets\WidgetsWrapperFacade.cs" />
+    <Compile Include="Framework\Wrappers\Backend\Widgets\WidgetTemplatesCreateEditScreenWrapper.cs" />
+    <Compile Include="Framework\Wrappers\Backend\Widgets\WidgetTemplatesCreateScreenFrameWrapper.cs" />
     <Compile Include="Framework\Wrappers\BaseWrapper.cs" />
     <Compile Include="Framework\Wrappers\Frontend\FrontendWrappesFacade.cs" />
     <Compile Include="Framework\Wrappers\Frontend\Widgets\GridWidgets.cs" />

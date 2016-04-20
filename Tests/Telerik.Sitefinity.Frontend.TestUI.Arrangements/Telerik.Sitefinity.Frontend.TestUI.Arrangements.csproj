@@ -224,6 +224,7 @@
     <Compile Include="Module\ModuleTestsResources.cs" />
     <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromHybridPage.cs" />
     <Compile Include="Module\ModuleTestsController.cs" />
+    <Compile Include="MvcWidgets\CreateEditWidgetTemplateWhenCombineBackendScriptResourceIsFalse.cs" />
     <Compile Include="MvcWidgets\MvcWidgetUseMasterDetailContentController.cs" />
     <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
     <Compile Include="MvcWidgets\MvcReorderSelectedNewsItems.cs" />
