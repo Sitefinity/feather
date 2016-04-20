@@ -21,6 +21,15 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
+        /// Widgets templates create screen frame wrapper.
+        /// </summary>
+        /// <returns></returns>
+        public WidgetTemplatesCreateScreenFrameWrapper WidgetTemplatesCreateScreenFrameWrapper()
+        {
+            return new WidgetTemplatesCreateScreenFrameWrapper();
+        }
+
+        /// <summary>
         /// Creates an instance of GridWidgetsWrapper.
         /// </summary>
         /// <returns>Returns a new instance of the GridWidgets.</returns>
