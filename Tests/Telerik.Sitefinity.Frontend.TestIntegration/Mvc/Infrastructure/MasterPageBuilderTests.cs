@@ -68,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Infrastructure
         [Test]
         [Author(FeatherTeams.FeatherTeam)]
         [Description("Checks for default aspnetForm tag in preview mode.")]
-        public void CreatePage_Bootstrap_CheckFormTagExistPreviewMode()
+        public void CreatePage_Bootstrap_CheckFormTagNotExistPreviewMode()
         {
             Guid pageId = Guid.Empty;
             FeatherServerOperations.FeatherModule().EnsureFeatherEnabled();

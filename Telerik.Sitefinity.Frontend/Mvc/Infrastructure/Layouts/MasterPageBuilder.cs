@@ -136,10 +136,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 }
                 else
                 {
-                    var servedPageNode = currentContext.Items["ServedPageNode"] as PageSiteNode;
-                    if (servedPageNode.Framework == Pages.Model.PageTemplateFramework.Mvc)
+                    if (currentContext.Items.Contains("ServedPageNode") && currentContext.Items["ServedPageNode"] is PageSiteNode)
                     {
-                        insertFormTag = false;
+                        var servedPageNode = currentContext.Items["ServedPageNode"] as PageSiteNode;
+                        if (servedPageNode.Framework == Pages.Model.PageTemplateFramework.Mvc)
+                        {
+                            insertFormTag = false;
+                        }
                     }
                 }
             }
