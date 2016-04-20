@@ -85,7 +85,7 @@
                                 return result;
                             }
 
-                            var collectionToUse = collection.slice();;
+                            var collectionToUse = collection.slice();
 
                             if (collectionToUse.length > 2) {
                                 collectionToUse = collectionToUse.filter(function (el) {
