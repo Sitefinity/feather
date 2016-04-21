@@ -1,4 +1,4 @@
-﻿<sf-taxon-filter sf-query-data="sfQueryData" 
+﻿<sf-taxon-filter class="checkbox" sf-query-data="sfQueryData" 
     sf-taxonomy-fields="sfTaxonomyFields"
     sf-provider="sfProvider"
     sf-group-logical-operator="AND"
@@ -6,7 +6,7 @@
     class="sf-taxon-filter"
     ng-if="sfTaxonomyFields && sfTaxonomyFields.length"></sf-taxon-filter>
 
- <sf-date-filter sf-query-data="sfQueryData"
+ <sf-date-filter class="checkbox" sf-query-data="sfQueryData"
      sf-group-logical-operator="AND"
      sf-item-logical-operator="AND"
      sf-query-field-name="PublicationDate"
