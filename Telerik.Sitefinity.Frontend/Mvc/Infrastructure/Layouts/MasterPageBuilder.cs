@@ -108,7 +108,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             return layoutHtmlValue;
         }
 
-        #endregion 
+        #endregion
 
         #region Protected methods
 
@@ -125,12 +125,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             if (currentContext.Items.Contains("IsBackendRequest"))
                 isBackendRequest = (bool)currentContext.Items["IsBackendRequest"];
 
-            if ((!isBackendRequest || SystemManager.IsPreviewMode) && currentContext.Items.Contains("ServedPageNode") && currentContext.Items["ServedPageNode"] is PageSiteNode)
+            if (!isBackendRequest || SystemManager.IsPreviewMode)
             {
-                var servedPageNode = currentContext.Items["ServedPageNode"] as PageSiteNode;
-
-                if (servedPageNode.Framework == Pages.Model.PageTemplateFramework.Mvc)
-                    insertFormTag = false;
+                if (currentContext.Items.Contains("PageTemplateFramework") && currentContext.Items["PageTemplateFramework"] is PageTemplateFramework)
+                {
+                    if ((PageTemplateFramework)currentContext.Items["PageTemplateFramework"] == PageTemplateFramework.Mvc)
+                    {
+                        insertFormTag = false;
+                    }
+                }
+                else
+                {
+                    if (currentContext.Items.Contains("ServedPageNode") && currentContext.Items["ServedPageNode"] is PageSiteNode)
+                    {
+                        var servedPageNode = currentContext.Items["ServedPageNode"] as PageSiteNode;
+                        if (servedPageNode.Framework == Pages.Model.PageTemplateFramework.Mvc)
+                        {
+                            insertFormTag = false;
+                        }
+                    }
+                }
             }
 
             return insertFormTag;
