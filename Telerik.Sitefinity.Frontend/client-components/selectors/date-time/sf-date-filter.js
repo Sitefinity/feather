@@ -53,28 +53,33 @@
                         };
 
                         var translateDateFilterToTimeSpanItem = function (filterValue, timeSpanItem, periodType) {
-                            var spanValue = filterValue.match(/\(([^)]+)\)/)[1];
-
-                            if (periodType === 'periodToNow')
-                                spanValue = -parseInt(spanValue);
-                            timeSpanItem.timeSpanValue = spanValue;
-
-                            if (filterValue.indexOf('AddDays') > 0) {
-                                var weeksCount = Math.floor(spanValue / 7);
-                                var rem = spanValue % 7;
-                                if (rem === 0 && weeksCount !== 0) {
-                                    timeSpanItem.timeSpanInterval = 'weeks';
-                                    timeSpanItem.timeSpanValue = weeksCount;
+                            var spanValue = filterValue.match(/\(([^)]+)\)/);
+                            if (spanValue && spanValue[1]) {
+                                spanValue = spanValue[1];
+                                if (periodType === 'periodToNow') {
+                                    spanValue = -parseInt(spanValue);
                                 }
-                                else {
-                                    timeSpanItem.timeSpanInterval = 'days';
+
+                                timeSpanItem.timeSpanValue = spanValue;
+                                if (filterValue.indexOf('AddDays') > 0) {
+                                    var weeksCount = Math.floor(spanValue / 7);
+                                    var rem = spanValue % 7;
+                                    if (rem === 0 && weeksCount !== 0) {
+                                        timeSpanItem.timeSpanInterval = 'weeks';
+                                        timeSpanItem.timeSpanValue = weeksCount;
+                                    }
+                                    else {
+                                        timeSpanItem.timeSpanInterval = 'days';
+                                    }
                                 }
-                            }
-                            else if (filterValue.indexOf('AddMonths') > 0) {
-                                timeSpanItem.timeSpanInterval = 'months';
-                            }
-                            else if (filterValue.indexOf('AddYears') > 0){
-                                timeSpanItem.timeSpanInterval = 'years';
+                                else if (filterValue.indexOf('AddMonths') > 0) {
+                                    timeSpanItem.timeSpanInterval = 'months';
+                                }
+                                else if (filterValue.indexOf('AddYears') > 0) {
+                                    timeSpanItem.timeSpanInterval = 'years';
+                                }
+                            } else {
+                                timeSpanItem.periodType = 'anyTime';
                             }
                         };
 
@@ -151,11 +156,26 @@
                         };
 
                         var constructFilterItem = function (selectedGroupFilterKey) {
-                            var selectedDateQueryItems = scope.sfQueryData.QueryItems.filter(function (f) {
-                                return f.Condition &&
-                                    f.Condition.FieldName == scope.sfQueryFieldName &&
-                                    f.Condition.FieldType == 'System.DateTime';
+                            var selectedDateQueryItems = [];
+                            var groupQueryItem = scope.sfQueryData.QueryItems.filter(function (item) {
+                                return item && item.IsGroup && item.Name === selectedGroupFilterKey;
                             });
+
+                            if (groupQueryItem && groupQueryItem[0]) {
+                                var path = groupQueryItem[0].ItemPath;
+                                if (path) {
+                                    selectedDateQueryItems = scope.sfQueryData.QueryItems.filter(function (item) {
+                                        return item &&
+                                            item.ItemPath &&
+                                            item.ItemPath.startsWith(path) &&
+                                            item.IsGroup === false &&
+                                            item.Condition &&
+                                            item.Condition.FieldName == scope.sfQueryFieldName &&
+                                            item.Condition.FieldType == 'System.DateTime';
+                                    });
+                                }
+                            }
+
                             scope.selectedDateFilters[selectedGroupFilterKey] = translateQueryItems(selectedDateQueryItems);
                         };
 
