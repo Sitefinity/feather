@@ -122,6 +122,7 @@
     <Compile Include="Designers\DesignerNoJsonNoJs.cs" />
     <Compile Include="GridWidgets\AutoGenerateGridWidgetToToolboxForPage.cs" />
     <Compile Include="GridWidgets\AutoGenerateGridWidgetToToolboxForPageTemplate.cs" />
+    <Compile Include="GridWidgets\EditLayoutClassOfGridWidget.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePage.cs" />
     <Compile Include="GridWidgets\ManageGridWidgetOnThePageTemplate.cs" />
     <Compile Include="GridWidgets\OldLayoutWidgetAndNewGridWidgetOnTheSamePage.cs" />
