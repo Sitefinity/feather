@@ -19,6 +19,9 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         {
             this.CreateLayoutFolderAndCopyLayoutFile();
 
+            var templateId = ServerOperations.Templates().GetTemplateIdByTitle(TemplateTitle);
+            ServerOperations.Pages().CreatePage(PageTitle, templateId);
+
             this.CreateMvcWidget(typeof(SimpleTextController).FullName);
         }
 

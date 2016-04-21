@@ -27,14 +27,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
         public void SetPermissionsToPageBasedOnLayoutFile()
         {
             RuntimeSettingsModificator.ExecuteWithClientTimeout(800000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/pages", true, null, new HtmlFindExpression("class=~sfMain")));
-
-            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenCreatePageWindow();
-            BAT.Wrappers().Backend().Pages().CreatePageWrapper().SetPageTitle(PageTitle);
-            BAT.Wrappers().Backend().Pages().CreatePageWrapper().ClickSelectAnotherTemplateButton();
-            BAT.Wrappers().Backend().Pages().SelectTemplateWrapper().SelectATemplate(TemplateTitle);
-            BAT.Wrappers().Backend().Pages().SelectTemplateWrapper().ClickDoneButton();
-            BAT.Wrappers().Backend().Pages().PagesWrapper().SavePageDataAndContinue();
-            BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().WaitUntilReady();
+            BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageTitle);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropWidgetToPlaceholder(WidgetCaption, FirstPlaceHolderId);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropWidgetToPlaceholder(WidgetCaption, SecondPlaceHolderId);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption, dropZoneIndex: 0);
@@ -45,11 +38,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().ClickSaveButton();
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
             BAT.Wrappers().Backend().Pages().PagesWrapper().GetActionsLink(PageTitle, "Permissions");
-            BAT.Wrappers().Backend().Permissions().PermissionsContentWrapper().BreakInheritance();
-            BAT.Wrappers().Backend().Permissions().PermissionsContentWrapper().ClickChangePermissionsButton(PermissionTypes.View);
-            BAT.Wrappers().Backend().Permissions().PermissionsUserSelectionWrapper().SelectAdministratorsOnlyRadioButton();
-            BAT.Wrappers().Backend().Permissions().PermissionsUserSelectionWrapper().ClickDoneButton();
-            BAT.Wrappers().Backend().Permissions().PermissionsContentWrapper().ClickBackButton();
+            this.ChagePermissions();
 
             BAT.Macros().NavigateTo().CustomPage("~/" + PageTitle.ToLower(), false);
             Assert.IsTrue(ActiveBrowser.ContainsText(FirstWidgetText));
@@ -71,6 +60,30 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.LayoutTemplates
         protected override void ServerCleanup()
         {
             BAT.Arrange(this.TestName).ExecuteTearDown();
+        }
+
+        /// <summary>
+        /// Chages the permissions.
+        /// </summary>
+        public void ChagePermissions()
+        {
+            bool isInheritBtnPresent = BAT.Wrappers().Backend().Permissions().PermissionsContentWrapper().IsInheritPermissionsFromParentButtonPresent();
+
+            if (isInheritBtnPresent == true)
+            {
+                BAT.Wrappers().Backend().Permissions().PermissionsContentWrapper().ClickChangePermissionsButton(PermissionTypes.View);
+                BAT.Wrappers().Backend().Permissions().PermissionsUserSelectionWrapper().SelectAdministratorsOnlyRadioButton();
+                BAT.Wrappers().Backend().Permissions().PermissionsUserSelectionWrapper().ClickDoneButton();
+                BAT.Wrappers().Backend().Permissions().PermissionsContentWrapper().ClickBackButton();
+            }
+            else
+            {
+                BAT.Wrappers().Backend().Permissions().PermissionsContentWrapper().BreakInheritance();
+                BAT.Wrappers().Backend().Permissions().PermissionsContentWrapper().ClickChangePermissionsButton(PermissionTypes.View);
+                BAT.Wrappers().Backend().Permissions().PermissionsUserSelectionWrapper().SelectAdministratorsOnlyRadioButton();
+                BAT.Wrappers().Backend().Permissions().PermissionsUserSelectionWrapper().ClickDoneButton();
+                BAT.Wrappers().Backend().Permissions().PermissionsContentWrapper().ClickBackButton();
+            }
         }
 
         private const string PageTitle = "FeatherTestPage";
