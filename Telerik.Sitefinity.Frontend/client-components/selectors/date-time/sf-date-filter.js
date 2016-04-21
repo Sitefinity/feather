@@ -156,11 +156,26 @@
                         };
 
                         var constructFilterItem = function (selectedGroupFilterKey) {
-                            var selectedDateQueryItems = scope.sfQueryData.QueryItems.filter(function (f) {
-                                return f.Condition &&
-                                    f.Condition.FieldName == scope.sfQueryFieldName &&
-                                    f.Condition.FieldType == 'System.DateTime';
+                            var selectedDateQueryItems = [];
+                            var groupQueryItem = scope.sfQueryData.QueryItems.filter(function (item) {
+                                return item && item.IsGroup && item.Name === selectedGroupFilterKey;
                             });
+
+                            if (groupQueryItem && groupQueryItem[0]) {
+                                var path = groupQueryItem[0].ItemPath;
+                                if (path) {
+                                    selectedDateQueryItems = scope.sfQueryData.QueryItems.filter(function (item) {
+                                        return item &&
+                                            item.ItemPath &&
+                                            item.ItemPath.startsWith(path) &&
+                                            item.IsGroup === false &&
+                                            item.Condition &&
+                                            item.Condition.FieldName == scope.sfQueryFieldName &&
+                                            item.Condition.FieldType == 'System.DateTime';
+                                    });
+                                }
+                            }
+
                             scope.selectedDateFilters[selectedGroupFilterKey] = translateQueryItems(selectedDateQueryItems);
                         };
 
