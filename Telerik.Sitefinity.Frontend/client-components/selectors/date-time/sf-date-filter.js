@@ -53,28 +53,33 @@
                         };
 
                         var translateDateFilterToTimeSpanItem = function (filterValue, timeSpanItem, periodType) {
-                            var spanValue = filterValue.match(/\(([^)]+)\)/)[1];
-
-                            if (periodType === 'periodToNow')
-                                spanValue = -parseInt(spanValue);
-                            timeSpanItem.timeSpanValue = spanValue;
-
-                            if (filterValue.indexOf('AddDays') > 0) {
-                                var weeksCount = Math.floor(spanValue / 7);
-                                var rem = spanValue % 7;
-                                if (rem === 0 && weeksCount !== 0) {
-                                    timeSpanItem.timeSpanInterval = 'weeks';
-                                    timeSpanItem.timeSpanValue = weeksCount;
+                            var spanValue = filterValue.match(/\(([^)]+)\)/);
+                            if (spanValue && spanValue[1]) {
+                                spanValue = spanValue[1];
+                                if (periodType === 'periodToNow') {
+                                    spanValue = -parseInt(spanValue);
                                 }
-                                else {
-                                    timeSpanItem.timeSpanInterval = 'days';
+
+                                timeSpanItem.timeSpanValue = spanValue;
+                                if (filterValue.indexOf('AddDays') > 0) {
+                                    var weeksCount = Math.floor(spanValue / 7);
+                                    var rem = spanValue % 7;
+                                    if (rem === 0 && weeksCount !== 0) {
+                                        timeSpanItem.timeSpanInterval = 'weeks';
+                                        timeSpanItem.timeSpanValue = weeksCount;
+                                    }
+                                    else {
+                                        timeSpanItem.timeSpanInterval = 'days';
+                                    }
                                 }
-                            }
-                            else if (filterValue.indexOf('AddMonths') > 0) {
-                                timeSpanItem.timeSpanInterval = 'months';
-                            }
-                            else if (filterValue.indexOf('AddYears') > 0){
-                                timeSpanItem.timeSpanInterval = 'years';
+                                else if (filterValue.indexOf('AddMonths') > 0) {
+                                    timeSpanItem.timeSpanInterval = 'months';
+                                }
+                                else if (filterValue.indexOf('AddYears') > 0) {
+                                    timeSpanItem.timeSpanInterval = 'years';
+                                }
+                            } else {
+                                timeSpanItem.periodType = 'anyTime';
                             }
                         };
 
