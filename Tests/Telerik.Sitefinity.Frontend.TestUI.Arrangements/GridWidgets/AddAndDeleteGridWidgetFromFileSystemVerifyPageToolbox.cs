@@ -48,8 +48,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerArrangement]
         public void DeleteGridWidgetFromFileSystem()
         {
-            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
-
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             File.Delete(filePath);
         }
