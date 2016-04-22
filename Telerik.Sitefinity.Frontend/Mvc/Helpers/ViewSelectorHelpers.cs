@@ -55,5 +55,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return views;
         }
+
+        /// <summary>
+        /// Splits the camel case.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        public static string SplitCamelCase(this string input)
+        {
+            var inputWithSpaces = Regex.Replace(input, "([A-Z])", " $1", RegexOptions.Compiled);
+            var capitalizeOnlyFirstLater = inputWithSpaces.First().ToString().ToUpper() + inputWithSpaces.Substring(1).ToLower();
+
+            return capitalizeOnlyFirstLater;
+        }
     }
 }
