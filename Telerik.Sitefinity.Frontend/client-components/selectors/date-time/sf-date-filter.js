@@ -92,7 +92,7 @@
 
                             var collectionToUse = collection.slice();
 
-                            if (collectionToUse.length > 2) {
+                            if (collectionToUse.length > 1) {
                                 collectionToUse = collectionToUse.filter(function (el) {
                                     return el && el.Value !== 'DateTime.UtcNow';
                                 });
