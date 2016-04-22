@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfTimespanSelector', ['$timeout', '$filter', function ($timeout, $filter) {
+        .directive('sfTimespanSelector', ['$timeout', '$filter', '$templateCache', function ($timeout, $filter, $templateCache) {
 
             this.filter = $filter;
             var self = this;
@@ -9,7 +9,7 @@
                 restrict: 'E',
                 transclude: true,
                 scope: {
-                    sfSelectedItem: '=?',                   
+                    sfSelectedItem: '=?',
                     sfChange: '=',
                     sfIsUpcomingPeriod: '=?',
                     sfCustomRangeMinDate: '=?',
@@ -30,17 +30,18 @@
                             if (!item)
                                 return;
 
+                            var timeSpanSelectorContent = $templateCache.get('timespan-selector-content');
                             if (item.periodType == 'periodToNow') {
-                                var periodToNowLabel = $('#periodToNow').parent().text().trim();
+                                var periodToNowLabel = $(timeSpanSelectorContent).find('#periodToNow').parent().text().trim();
                                 item.displayText = periodToNowLabel + ' ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
                             }
                             else if (item.periodType == 'periodFromNow') {
-                                var periodFromNowLabel = $('#periodFromNow').parent().text().trim();
+                                var periodFromNowLabel = $(timeSpanSelectorContent).find('#periodFromNow').parent().text().trim();
                                 item.displayText = periodFromNowLabel + ' ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
                             }
                             else if (item.periodType == 'customRange') {
-                                var fromLabel = $('#fromLabel').text();
-                                var toLabel = $('#toLabel').text();
+                                var fromLabel = $(timeSpanSelectorContent).find('#fromLabel').text();
+                                var toLabel = $(timeSpanSelectorContent).find('#toLabel').text();
 
 
                                 if (item.fromDate && item.toDate)
@@ -51,7 +52,7 @@
                                     item.displayText = toLabel + ' ' + _getFormatedDate(item.toDate);
                             }
                             else {
-                                item.displayText = $('#anyTime').parent().text().trim();
+                                item.displayText = $(timeSpanSelectorContent).find('#anyTime').parent().text().trim();
                             }
                         };
 
@@ -60,7 +61,7 @@
                                 return;
 
                             var format = 'd MMM, y';
-                        
+
                             if (date.getHours() !== 0 || date.getMinutes() !== 0) {
                                 format = 'd MMM, y H:mm';
                             }
