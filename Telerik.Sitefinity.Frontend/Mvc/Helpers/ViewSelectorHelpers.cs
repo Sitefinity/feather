@@ -63,7 +63,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         public static string SplitCamelCase(this string input)
         {
-            var inputWithSpaces = Regex.Replace(input, "([A-Z])", " $1", RegexOptions.Compiled);
+            var inputWithSpaces = Regex.Replace(input, "([A-Z])", " $1", RegexOptions.Compiled).Trim();
             var capitalizeOnlyFirstLater = inputWithSpaces.First().ToString().ToUpper() + inputWithSpaces.Substring(1).ToLower();
 
             return capitalizeOnlyFirstLater;
