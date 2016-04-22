@@ -70,7 +70,7 @@ describe("timeSpan selector", function () {
 
         commonMethods.compileDirective(template, scope);
 		
-		expect(scope.selectedItem.displayText).toBe(' 12 Dec, 2012  14 Dec, 2012');
+        expect(scope.selectedItem.displayText).toBe('@(Res.Get().From) 12 Dec, 2012 @(res.get().to) 14 Dec, 2012');
     });
 
     it('[EGaneva] / custom range is validated correctly.', function () {
@@ -107,7 +107,7 @@ describe("timeSpan selector", function () {
             expect(args.newSelectedItem.timeSpanInterval).toBe("weeks");
 
             expect(args.oldSelectedItem).toBeDefined();
-            expect(args.oldSelectedItem.displayText).toBe('');
+            expect(args.oldSelectedItem.displayText).toBe('@(Res.Get().AnyTime)');
             expect(args.oldSelectedItem.periodType).toBe('anyTime');
             expect(args.oldSelectedItem.timeSpanValue).toBeFalsy();
             expect(args.oldSelectedItem.timeSpanInterval).toBe("days");
