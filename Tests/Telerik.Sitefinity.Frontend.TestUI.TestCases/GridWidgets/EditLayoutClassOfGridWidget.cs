@@ -35,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.GridWidgets
             BATFrontend.Wrappers().Backend().Widgets().GridWidgets().SetCustomCssToGridWidget(LayoutCaption);
             BATFrontend.Wrappers().Backend().Widgets().GridWidgets().ClickSaveButton();
             BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().PublishPage();
-            ////this.VerifyGridWidgetOnTheFrontend();
+            this.VerifyGridWidgetOnTheFrontend();
         }
         
         /// <summary>
