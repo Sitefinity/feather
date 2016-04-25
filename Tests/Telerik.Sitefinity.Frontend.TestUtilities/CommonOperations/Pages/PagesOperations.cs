@@ -77,8 +77,31 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// </summary>
         /// <param name="pageId">The id of the page.</param>
         /// <returns>The page content.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "2#")]
-        public string GetPageContent(Guid pageId, bool authenticated = false, string suffixUrl = "")
+        public string GetPageContent(Guid pageId)
+        {
+            return this.GetPageContent(pageId, false, string.Empty);
+        }
+
+        /// <summary>
+        /// Gets the public page content.
+        /// </summary>
+        /// <param name="pageId">The id of the page.</param>
+        /// <param name="authenticated">Authenticated page content.</param>
+        /// <returns>The page content.</returns>
+        public string GetPageContent(Guid pageId, bool authenticated)
+        {
+            return this.GetPageContent(pageId, authenticated, string.Empty);
+        }
+
+        /// <summary>
+        /// Gets the public page content.
+        /// </summary>
+        /// <param name="pageId">The id of the page.</param>
+        /// <param name="authenticated">Authenticated page content.</param>
+        /// <param name="suffixUrl">Suffix url.</param>
+        /// <returns>The page content.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "2#")]
+        public string GetPageContent(Guid pageId, bool authenticated, string suffixUrl)
         {
             PageManager pageManager = PageManager.GetManager();
 
