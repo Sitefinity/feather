@@ -46,7 +46,7 @@
           <input class="form-control" type="text" ng-model="model.alternativeText" />
 
     </div>
-    <expander expander-title='@(Res.Get<ClientComponentsResources>().CategoriesAndTags)'>
+    <div expander class="Options-arrows" expander-title='@(Res.Get<ClientComponentsResources>().CategoriesAndTags)'>
         <div class="form-group">
             <label>@(Res.Get<ClientComponentsResources>().Categories)</label>
             <sf-list-selector sf-hierarchical-taxon-selector
@@ -60,7 +60,7 @@
             <label>@(Res.Get<ClientComponentsResources>().Tags)</label>
             <sf-flat-taxon-field sf-model="model.tags" sf-taxonomy-id="CB0F3A19-A211-48a7-88EC-77495C0F5374" sf-enable-auto-complete="true"></sf-flat-taxon-field>
         </div>
-    </expander>
+    </div>
 </div>
 
 <div class="modal-footer">
