@@ -2,6 +2,10 @@
 	margin: 50px -20px -20px
 	border-top: 1px solid #e5e5e5
 
+	.glyphicon-triangle-right,
+	.glyphicon-triangle-bottom
+		display: none
+
 .Options-toggler
 	padding: 15px 20px
 	display: block
@@ -20,3 +24,32 @@
 
 .Options-simple-section
 	padding: 20px
+
+
+// Expander with arrows
+
+.Options-arrows
+	.Options
+		margin: 25px 0 50px
+		border: 0
+
+	.Options-toggler
+		padding-left: 5px
+		padding-bottom: 0
+
+		&:hover
+			background: transparent
+
+		+ div
+			padding-top: 0
+
+	.glyphicon-triangle-right,
+	.glyphicon-triangle-bottom
+		display: inline-block
+		font-size: 10px
+		color: #666
+
+	.Options-toggler
+		font-size: 13px
+		font-weight: bold
+		color: #333
