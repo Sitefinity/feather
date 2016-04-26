@@ -1,5 +1,7 @@
 ﻿<div class="Options">
     <a ng-click="toggle()" class="Options-toggler">
+        <span ng-show="!isExpanded" class="glyphicon glyphicon-triangle-right"></span>
+        <span ng-show="isExpanded" class="glyphicon glyphicon-triangle-bottom"></span>
         {{title}}
     </a>
     <div ng-show="isExpanded" ng-transclude></div>

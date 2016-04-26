@@ -3,7 +3,7 @@
 		.directive('expander', function () {
 			return {
 				restrict: 'EA',
-				replace: true,
+				replace: false,
 				transclude: true,
 				scope: { title: '@expanderTitle', startExpanded: '@startExpanded' },
 				templateUrl: sitefinity.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'Mvc/Scripts/Templates/expander.html'),
