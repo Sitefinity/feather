@@ -60,24 +60,21 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Infrastructure
         }
 
         /// <summary>
-        /// Checks whether default form tag exist in bootstrap package in preview mode
+        /// Checks whether default form tag exist for bootstrap package in preview mode
         /// </summary>
         [Test]
         [Author(FeatherTeams.FeatherTeam)]
-        [Description("Checks for default aspnetForm tag in preview mode.")]
+        [Description("Checks for default aspnetForm tag for Bootstrap package in preview mode.")]
         public void CreatePage_Bootstrap_CheckFormTagNotExistPreviewMode()
         {
             Guid bootstrapPageId = Guid.Empty;
-            Guid minimalPageId = Guid.Empty;
             FeatherServerOperations.FeatherModule().EnsureFeatherEnabled();
 
             try
             {
                 var suffix = Guid.NewGuid().ToString("N");
                 var bootstrapTemplate = this.GetDefaultBootstrapTemplate();
-                var minimalTemplate = this.GetDefaultMinimalTemplate();
                 var bootstrapPageName = "PageBootstrap";
-                var minimalPageName = "PageMinimal";
                 var previewFormTagPattern = "<form[\\s].*[\\s]?id=\"aspnetForm\".*>.*";
 
                 // page preview bootstrap
@@ -87,17 +84,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Infrastructure
                 // template preview bootstrap
                 var bootstrapTemplatePreviewFormTagsCount = this.TemplatePreviewFormTags(bootstrapTemplate, previewFormTagPattern);
 
-                // page preview minimal
-                minimalPageId = FeatherServerOperations.Pages().CreatePageWithTemplate(minimalTemplate, minimalPageName + suffix, minimalPageName + suffix);
-                var minimalPagePreviewFormTagsCount = this.PagePreviewFormTags(minimalPageId, previewFormTagPattern);
-
-                // template preview minimal
-                var minimalTemplatePreviewFormTagsCount = this.TemplatePreviewFormTags(minimalTemplate, previewFormTagPattern);
-
-                Assert.IsFalse(bootstrapPagePreviewFormTagsCount == 1, "Default ASP.Net form tag exist in Bootstrap page preview mode");
-                Assert.IsFalse(bootstrapTemplatePreviewFormTagsCount == 1, "Default ASP.Net form tag exist in Bootstrap template preview mode");
-                Assert.IsFalse(minimalPagePreviewFormTagsCount == 1, "Default ASP.Net form tag exist in Minimal page preview mode");
-                Assert.IsFalse(minimalTemplatePreviewFormTagsCount == 1, "Default ASP.Net form tag exist in Minimal template preview mode");
+                Assert.IsFalse(bootstrapPagePreviewFormTagsCount == 1, "Default ASP.Net form tag exist in Bootstrap package in page preview mode");
+                Assert.IsFalse(bootstrapTemplatePreviewFormTagsCount == 1, "Default ASP.Net form tag exist for Bootstrap package in template preview mode");
             }
             finally
             {
@@ -105,7 +93,40 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Infrastructure
                 {
                     ServerOperations.Pages().DeletePage(bootstrapPageId);
                 }
+            }
+        }
 
+        /// <summary>
+        /// Ignored - Minimal package is not enabled on Jenkins setup
+        /// </summary>
+        [Ignore]
+        [Test]
+        [Author(FeatherTeams.FeatherTeam)]
+        [Description("Checks for default aspnetForm tag for Minimal package in preview mode.")]
+        public void CreatePage_Minimal_CheckFormTagNotExistPreviewMode()
+        {
+            Guid minimalPageId = Guid.Empty;
+            FeatherServerOperations.FeatherModule().EnsureFeatherEnabled();
+
+            try
+            {
+                var suffix = Guid.NewGuid().ToString("N");
+                var minimalTemplate = this.GetDefaultMinimalTemplate();
+                var minimalPageName = "PageMinimal";
+                var previewFormTagPattern = "<form[\\s].*[\\s]?id=\"aspnetForm\".*>.*";
+
+                // page preview minimal
+                minimalPageId = FeatherServerOperations.Pages().CreatePageWithTemplate(minimalTemplate, minimalPageName + suffix, minimalPageName + suffix);
+                var minimalPagePreviewFormTagsCount = this.PagePreviewFormTags(minimalPageId, previewFormTagPattern);
+
+                // template preview minimal
+                var minimalTemplatePreviewFormTagsCount = this.TemplatePreviewFormTags(minimalTemplate, previewFormTagPattern);
+
+                Assert.IsFalse(minimalPagePreviewFormTagsCount == 1, "Default ASP.Net form tag exist for Minimal package in page preview mode");
+                Assert.IsFalse(minimalTemplatePreviewFormTagsCount == 1, "Default ASP.Net form tag exist for Minimal package in template preview mode");
+            }
+            finally
+            {
                 if (minimalPageId != Guid.Empty)
                 {
                     ServerOperations.Pages().DeletePage(minimalPageId);
@@ -113,27 +134,27 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Infrastructure
             }
         }
 
-        private int TemplatePreviewFormTags(PageTemplate bootstrapTemplate, string previewFormTagPattern)
+        private int TemplatePreviewFormTags(PageTemplate template, string previewFormTagPattern)
         {
-            var bootstrapTemplatePreviewPageUrl = string.Concat(
+            var templatePreviewPageUrl = string.Concat(
                 HttpContext.Current.Request.Url.Scheme,
                 "://",
                 HttpContext.Current.Request.Url.Host,
                 "/Sitefinity/Template/",
-                bootstrapTemplate.Id,
+                template.Id,
                 "/Preview/");
-            string bootstrapTemplatePreviewContent = this.GetContent(bootstrapTemplatePreviewPageUrl);
-            var bootstrapTemplatePreviewFormTagsCount = Regex.Matches(bootstrapTemplatePreviewContent, previewFormTagPattern, RegexOptions.IgnoreCase).Count;
+            string templatePreviewContent = this.GetContent(templatePreviewPageUrl);
+            var templatePreviewFormTagsCount = Regex.Matches(templatePreviewContent, previewFormTagPattern, RegexOptions.IgnoreCase).Count;
 
-            return bootstrapTemplatePreviewFormTagsCount;
+            return templatePreviewFormTagsCount;
         }
 
-        private int PagePreviewFormTags(Guid bootstrapPageId, string previewFormTagPattern)
+        private int PagePreviewFormTags(Guid pageId, string previewFormTagPattern)
         {
-            string bootstrapPagePreviewContent = FeatherServerOperations.Pages().GetPageContent(bootstrapPageId, true, "action/preview");
-            var bootstrapPagePreviewFormTagsCount = Regex.Matches(bootstrapPagePreviewContent, previewFormTagPattern, RegexOptions.IgnoreCase).Count;
+            string pagePreviewContent = FeatherServerOperations.Pages().GetPageContent(pageId, true, "action/preview");
+            var pagePreviewFormTagsCount = Regex.Matches(pagePreviewContent, previewFormTagPattern, RegexOptions.IgnoreCase).Count;
 
-            return bootstrapPagePreviewFormTagsCount;
+            return pagePreviewFormTagsCount;
         }
 
         private PageTemplate GetDefaultBootstrapTemplate()
