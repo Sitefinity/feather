@@ -30,13 +30,13 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations.Pages
                     using (Stream moduleStream = testsArrangementsAssembly.GetManifestResourceStream(moduleResource))
                     {
                         ServerOperations.ModuleBuilder().ImportModule(moduleStream);
-                        ServerOperations.ModuleBuilder().ActivateModule(moduleName, string.Empty, "Module Installations", false);
+                        ServerOperations.ModuleBuilder().ActivateModule(moduleName, string.Empty, "Module Installations");
                     }
                 }
                 else if (!ServerOperations.ModuleBuilder().IsModuleActive(moduleName))
                 {
                     restartApplication = true;
-                    ServerOperations.ModuleBuilder().ActivateModule(moduleName, string.Empty, "Module Installations", false);
+                    ServerOperations.ModuleBuilder().ActivateModule(moduleName, string.Empty, "Module Installations");
                 }
             }
 
