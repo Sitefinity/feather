@@ -148,6 +148,10 @@
                             scope.showError = false;
                             scope.errorMessage = '';
                             scope.selectedItemInTheDialog = jQuery.extend(true, {}, scope.sfSelectedItem);
+                            if (scope.selectedItemInTheDialog.timeSpanValue)
+                                scope.selectedItemInTheDialog.timeSpanValue = parseInt(scope.selectedItemInTheDialog.timeSpanValue);
+                            else
+                                scope.selectedItemInTheDialog.timeSpanValue = 1;
                         };
 
                         formatTimeSpanItem(scope.sfSelectedItem);
