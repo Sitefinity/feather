@@ -92,7 +92,6 @@ namespace Telerik.Sitefinity.Frontend.Designers
                         "sf_package",
                         packageVar + sb,
                         addScriptTags: true);
-
                 }
             }
         }
