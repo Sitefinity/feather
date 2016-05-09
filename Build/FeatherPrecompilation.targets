@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <RazorSrcFiles Include="MVC\**\*.cshtml" Exclude="$(FeatherResourcePackagesFolderName)\**\*.*" />
+    <EmbeddedResource Include="@(RazorSrcFiles)" Exclude="@(EmbeddedResource)" />
   </ItemGroup>
 
   <Target Name="_ResolveFeatherRazorFiles">
