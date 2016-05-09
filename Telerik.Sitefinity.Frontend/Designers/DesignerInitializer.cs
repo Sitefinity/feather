@@ -93,15 +93,6 @@ namespace Telerik.Sitefinity.Frontend.Designers
                         packageVar + sb,
                         addScriptTags: true);
 
-                    var zoneEditor = @event.Sender as ZoneEditor;
-                    if (zoneEditor != null)
-                    {
-                        var urlhelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-                        var url = urlhelper.Content("~/ResourcePackages/{0}/assets/dist/css/styles.min.css".Arrange(currentPackage));
-                        var packageStyleMarkup = "<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\">".Arrange(url);
-                        var packageStyleLiteralControl = new LiteralControl(packageStyleMarkup);
-                        zoneEditor.Page.Header.Controls.Add(packageStyleLiteralControl);
-                    }
                 }
             }
         }
