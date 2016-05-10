@@ -121,6 +121,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
+        /// Gets or sets the items limit count.
+        /// </summary>
+        /// <value>
+        /// The items limit.
+        /// </value>
+        public virtual int? LimitCount
+        {
+            get
+            {
+                if (this.limitCount == null)
+                {
+                    this.limitCount = this.ItemsPerPage;
+                }
+
+                return this.limitCount;
+            }
+
+            set
+            {
+                this.limitCount = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the sort expression.
         /// </summary>
         /// <value>
@@ -397,7 +421,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             int? itemsToSkip = (page - 1) * this.ItemsPerPage;
             itemsToSkip = this.DisplayMode == ListDisplayMode.Paging ? ((page - 1) * this.ItemsPerPage) : null;
             int? totalCount = 0;
-            int? take = this.DisplayMode == ListDisplayMode.All ? null : this.ItemsPerPage;
+            int? take = null;
+
+            if (this.DisplayMode == ListDisplayMode.Limit)
+            {
+                take = this.LimitCount;   
+            }
+            else if (this.DisplayMode == ListDisplayMode.Paging)
+            {
+                 take = this.ItemsPerPage;   
+            }
 
             IList<ItemViewModel> result = new List<ItemViewModel>();
 
@@ -740,6 +773,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         private string sortExpression = DefaultSortExpression;
         private string serializedSelectedItemsIds;
         private IList<string> selectedItemsIds = new List<string>();
+        private int? limitCount;
 
         #endregion
     }
