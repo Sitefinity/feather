@@ -187,7 +187,7 @@ textarea.k-textbox:hover,
   background-color: #f3f3f4;
 }
 .k-widget.k-tooltip {
-  background-image: url(http://cdn.kendostatic.com/2014.2.1008/styles/textures/highlight.png);
+  background-image: url(//kendo.cdn.telerik.com/2014.2.1008/styles/textures/highlight.png);
 }
 .k-block,
 .k-header,
@@ -230,23 +230,23 @@ html .km-pane-wrapper .k-header {
 .k-column-menu .k-sprite,
 .k-grid-mobile .k-resize-handle-inner:before,
 .k-grid-mobile .k-resize-handle-inner:after {
-  background-image: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/sprite.png');
+  background-image: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/sprite.png');
   border-color: transparent;
 }
 /* IE will ignore the above selectors if these are added too */
 .k-mobile-list .k-check:checked,
 .k-mobile-list .k-edit-field [type=checkbox]:checked,
 .k-mobile-list .k-edit-field [type=radio]:checked {
-  background-image: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/sprite.png');
+  background-image: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/sprite.png');
   border-color: transparent;
 }
 .k-loading,
 .k-state-hover .k-loading {
-  background-image: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/loading.gif');
+  background-image: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/loading.gif');
   background-position: 50% 50%;
 }
 .k-loading-image {
-  background-image: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/loading-image.gif');
+  background-image: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/loading-image.gif');
 }
 .k-loading-color {
   background-color: #ffffff;
@@ -312,7 +312,7 @@ html .km-pane-wrapper .k-header {
 .k-event,
 .k-task-complete {
   border-color: #b2e1ff;
-  background: #b2e1ff 0 -257px url(http://cdn.kendostatic.com/2014.2.1008/styles/textures/highlight.png) repeat-x;
+  background: #b2e1ff 0 -257px url(//kendo.cdn.telerik.com/2014.2.1008/styles/textures/highlight.png) repeat-x;
   color: #515967;
 }
 .k-event-inverse {
@@ -597,7 +597,7 @@ div.k-filebrowser-dropzone em,
   background-position: 50% 50%;
 }
 .k-tool-icon {
-  background-image: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/sprite.png');
+  background-image: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/sprite.png');
 }
 .k-state-hover > .k-link,
 .k-other-month.k-state-hover .k-link,
@@ -661,7 +661,7 @@ div.k-filebrowser-dropzone em {
 }
 /* Progressbar */
 .k-progressbar-indeterminate {
-  background: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/indeterminate.gif');
+  background: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/indeterminate.gif');
 }
 .k-progressbar-indeterminate .k-progress-status-wrap,
 .k-progressbar-indeterminate .k-state-selected {
@@ -675,10 +675,10 @@ div.k-filebrowser-dropzone em {
   background-color: #1984c8;
 }
 .k-slider-horizontal .k-tick {
-  background-image: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/slider-h.gif');
+  background-image: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/slider-h.gif');
 }
 .k-slider-vertical .k-tick {
-  background-image: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/slider-v.gif');
+  background-image: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/slider-v.gif');
 }
 /* Tooltip */
 .k-widget.k-tooltip {
@@ -766,7 +766,7 @@ div.k-filebrowser-dropzone em {
 }
 .k-tile .k-folder,
 .k-tile .k-file {
-  background-image: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/imagebrowser.png');
+  background-image: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/imagebrowser.png');
 }
 /* TreeMap */
 .k-leaf,
@@ -1186,7 +1186,7 @@ html .km-pane-wrapper .km-widget,
     color: #515967;
   }
   .km-pane-wrapper .k-icon {
-    background-image: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/sprite_2x.png');
+    background-image: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/sprite_2x.png');
     background-size: 21.2em 21em;
   }
 }
@@ -1491,7 +1491,7 @@ html .km-pane-wrapper .km-widget,
   .k-mobile-list .k-check:checked,
   .k-mobile-list .k-edit-field [type=checkbox]:checked,
   .k-mobile-list .k-edit-field [type=radio]:checked {
-    background-image: url('http://da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/sprite_2x.png');
+    background-image: url('//da7xgjtj801h2.cloudfront.net/2014.2.1008/styles/Silver/sprite_2x.png');
     background-size: 340px 336px;
   }
   .k-dropdown-wrap .k-input,
