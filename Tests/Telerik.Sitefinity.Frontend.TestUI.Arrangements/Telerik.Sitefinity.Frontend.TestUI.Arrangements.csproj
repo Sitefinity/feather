@@ -140,13 +140,13 @@
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.6.480.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.1.6.480.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.6.500.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.1.6.500.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.6.480.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.6.480.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.6.500.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.TestUtilities.1.6.500.0\lib\net45\Telerik.Sitefinity.Mvc.TestUtilities.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
