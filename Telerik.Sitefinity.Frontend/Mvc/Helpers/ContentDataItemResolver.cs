@@ -141,8 +141,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 {
                     if (typeof(DynamicContent) == contentParam.ParameterType)
                     {
-                        var controllerName = controller.ControllerContext.RouteData.Values["controller"] as string;
-                        var dynamicContentType = ControllerExtensions.GetDynamicContentType(controllerName);
+                        var controllerName = (string)controller.ViewBag.WidgetName;
+                        var dynamicContentType = controller.GetDynamicContentType(controllerName);
                         contentType = dynamicContentType != null ? TypeResolutionService.ResolveType(dynamicContentType.GetFullTypeName(), throwOnError: false) : null;
                     }
                     else
