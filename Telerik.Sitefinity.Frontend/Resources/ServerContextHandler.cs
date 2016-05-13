@@ -12,6 +12,7 @@ using Telerik.Sitefinity.Multisite.Model;
 using Telerik.Sitefinity.Security.Claims;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.Services;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {
@@ -37,6 +38,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <param name="context">An <see cref="T:System.Web.HttpContext" /> object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests.</param>
         public void ProcessRequest(HttpContext context)
         {
+            ServiceUtility.RequestBackendUserAuthentication();
+
             // Set that this is the backend in order to resolve the current site correctly
             context.Items[SystemManager.IsBackendRequestKey] = true;
 

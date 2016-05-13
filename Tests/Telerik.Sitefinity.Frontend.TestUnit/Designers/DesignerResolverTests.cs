@@ -2,6 +2,7 @@
 using System.Web;
 using global::Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.Designers;
+using Telerik.Sitefinity.Frontend.TestUnit.Resources;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Controls;
 using Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.TestUtilities.Mvc.Controllers;
@@ -62,7 +63,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
         public void GetUrl_ControllerWithPackage_ReturnsMvcDesignerUrlWithPackageQuery()
         {
             // Arrange
-            var resolver = new DesignerResolver();
+            var resolver = new DesignerResolver(new PackageManagerTests.OptimisticPackageManager());
             var context =
                 new HttpContextWrapper(
                     new HttpContext(

@@ -98,7 +98,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// Checks whether a given package exists.
         /// </summary>
         /// <param name="packageName">Name of the package.</param>
-        public bool PackageExists(string packageName)
+        public virtual bool PackageExists(string packageName)
         {
             var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(packageName));
             return path != null && Directory.Exists(path);

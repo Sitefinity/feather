@@ -12,6 +12,15 @@ namespace Telerik.Sitefinity.Frontend.Designers
     /// </summary>
     internal class DesignerResolver : IDesignerResolver
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DesignerResolver"/> class.
+        /// </summary>
+        /// <param name="packageManager">An instance of a package manager.</param>
+        public DesignerResolver(PackageManager packageManager = null)
+        {
+            this.packageManager = packageManager ?? new PackageManager();
+        }
+
         #region Public members
 
         /// <summary>
@@ -35,7 +44,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
             if (!this.TryResolveUrlFromAttribute(widgetType, out designerUrl))
                 designerUrl = this.GetDefaultUrl(widgetType);
 
-            return new PackageManager().EnhanceUrl(designerUrl);
+            return this.packageManager.EnhanceUrl(designerUrl);
         }
 
         #endregion
@@ -105,6 +114,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
 
         private const string DefaultActionUrlTemplate = "~/Telerik.Sitefinity.Frontend/Designer/Master/{0}";
         private const string DefaultGridActionUrlTemplate = "~/Telerik.Sitefinity.Frontend/GridDesigner/Master/GridDesigner";
+        private readonly PackageManager packageManager;
 
         #endregion
     }
