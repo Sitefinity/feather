@@ -39,9 +39,16 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (packageName.IsNullOrEmpty())
                 packageName = this.GetPackageFromPageInfo();
 
-            context.Items[PackageManager.CurrentPackageKey] = packageName;
+            if (packageName.IsNullOrEmpty() || this.PackageExists(packageName))
+            {
+                context.Items[PackageManager.CurrentPackageKey] = packageName;
 
-            return packageName;
+                return packageName;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
