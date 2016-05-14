@@ -38,7 +38,7 @@ describe("news selector", function () {
 
     //Mock news item service. It returns promises.
     var newsItemService = {
-        getItems: jasmine.createSpy('sfNewsItemService.getItems').andCallFake(function (provider, skip, take, filter) {
+        getItems: jasmine.createSpy('sfNewsItemService.getItems').and.callFake(function (provider, skip, take, filter) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -55,7 +55,7 @@ describe("news selector", function () {
 
             return serviceResult.promise;
         }),
-        getSpecificItems: jasmine.createSpy('sfNewsItemService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfNewsItemService.getSpecificItems').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -70,7 +70,7 @@ describe("news selector", function () {
 
             return serviceResult.promise;
         }),
-        getItem: jasmine.createSpy('sfNewsItemService.getItem').andCallFake(function (itemId, provider) {
+        getItem: jasmine.createSpy('sfNewsItemService.getItem').and.callFake(function (itemId, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -88,7 +88,7 @@ describe("news selector", function () {
     };
 
     var newsItemServiceMockReturnMoreThan5Items = {
-        getSpecificItems: jasmine.createSpy('sfNewsItemService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfNewsItemService.getSpecificItems').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -149,7 +149,7 @@ describe("news selector", function () {
     });
 
     var getNewsServiceGetItemsArgs = function () {
-        var mostRecent = newsItemService.getItems.mostRecentCall;
+        var mostRecent = newsItemService.getItems.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -157,7 +157,7 @@ describe("news selector", function () {
     };
 
     var getNewsServiceGetItemArgs = function () {
-        var mostRecent = newsItemService.getItem.mostRecentCall;
+        var mostRecent = newsItemService.getItem.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -165,7 +165,7 @@ describe("news selector", function () {
     };
 
     var getNewsServiceGetSpecificItemsArgs = function () {
-        var mostRecent = newsItemService.getSpecificItems.mostRecentCall;
+        var mostRecent = newsItemService.getSpecificItems.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -250,7 +250,7 @@ describe("news selector", function () {
             var s = scope.$$childHead;
 
             //mock the call to the modal service.
-            s.$modalInstance = { close: function () { } };
+            s.$uibModalInstance = { close: function () { } };
 
             expect(s.sfSelectedItem).toBeFalsy();
             expect(s.sfSelectedItemId).toBeFalsy();
@@ -523,7 +523,7 @@ describe("news selector", function () {
             var s = scope.$$childHead;
 
             //mock the call to the modal service.
-            s.$modalInstance = { close: function () { } };
+            s.$uibModalInstance = { close: function () { } };
 
             expect(s.sfSelectedItems).toBeFalsy();
             expect(s.sfSelectedIds).toBeFalsy();

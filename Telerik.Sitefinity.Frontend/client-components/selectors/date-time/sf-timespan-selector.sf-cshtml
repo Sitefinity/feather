@@ -1,6 +1,6 @@
 ﻿<div>
     <div id="selectedItemsPlaceholder">
-        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+      <uib-alert type="danger" ng-show="showError">{{errorMessage}}</uib-alert>
 
         <div ng-hide="showError">
             <span class="label label-taxon label-full" ng-bind="sfSelectedItem.displayText"></span>
@@ -22,9 +22,10 @@
     <div class="modal-body">
 
 
-        <alert type="danger" ng-show="showError">{{errorMessage}}</alert>
+      <uib-alert type="danger" ng-show="showError">{{errorMessage}}</uib-alert>
 
-        <h4>@(Res.Get<ClientComponentsResources>().DisplayPublishedItems)</h4>
+        <h4 ng-if="!sfFilterTitleLabel">@(Res.Get<ClientComponentsResources>().DisplayPublishedItems)</h4>
+        <h4 ng-if="sfFilterTitleLabel" ng-bind="sfFilterTitleLabel"></h4>
         <form name="periodSelection">
             <div class="radio">
                 <label for="anyTime">
@@ -33,17 +34,22 @@
                 </label>
             </div>
             <div class="radio form-inline">
-                <label for="periodToNow">
+                <label for="periodToNow" ng-if="!sfIsUpcomingPeriod">
                     <input id="periodToNow" type="radio" value="periodToNow" ng-model="selectedItemInTheDialog.periodType"/>
                     @(Res.Get<ClientComponentsResources>().Last)
                 </label>
 
+                <label for="periodFromNow" ng-if="sfIsUpcomingPeriod">
+                  <input id="periodFromNow" type="radio" value="periodFromNow" ng-model="selectedItemInTheDialog.periodType"/>
+                  @(Res.Get<ClientComponentsResources>().Next)
+                </label>
+
                 <input type="number" min="1" ng-model="selectedItemInTheDialog.timeSpanValue"
-                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'"
+                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow' && selectedItemInTheDialog.periodType!='periodFromNow'"
                         style="width: 70px" class="form-control input-sm" />
 
                 <select ng-model="selectedItemInTheDialog.timeSpanInterval"
-                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow'"
+                        ng-disabled="selectedItemInTheDialog.periodType!='periodToNow' && selectedItemInTheDialog.periodType!='periodFromNow'"
                         class="form-control input-sm">
                     <option value="days">
                         @(Res.Get<ClientComponentsResources>().Day)@(Res.Get<ClientComponentsResources>().Plural)
@@ -67,10 +73,10 @@
 
                 <div class="label-content" ng-show="selectedItemInTheDialog.periodType=='customRange'">
                   <strong id="fromLabel">@(Res.Get<ClientComponentsResources>().From)</strong>
-                    <sf-date-time-picker ng-model="selectedItemInTheDialog.fromDate" sf-show-meridian="true"></sf-date-time-picker >
+                    <sf-date-time-picker ng-model="selectedItemInTheDialog.fromDate" sf-show-meridian="true" sf-min-date="sfCustomRangeMinDate" sf-max-date="sfCustomRangeMaxDate"></sf-date-time-picker >
 
                     <strong id="toLabel">@(Res.Get<ClientComponentsResources>().To)</strong>
-                    <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate" sf-show-meridian="true"></sf-date-time-picker >
+                    <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate" sf-show-meridian="true" sf-min-date="sfCustomRangeMinDate" sf-max-date="sfCustomRangeMaxDate"></sf-date-time-picker >
                 </div>
 
             </div>

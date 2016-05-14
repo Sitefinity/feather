@@ -38,7 +38,7 @@ describe("lists selector", function () {
 
     //Mock lists item service. It returns promises.
     var listsService = {
-        getItems: jasmine.createSpy('sfListsService.getItems').andCallFake(function (provider, skip, take, filter) {
+        getItems: jasmine.createSpy('sfListsService.getItems').and.callFake(function (provider, skip, take, filter) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -55,7 +55,7 @@ describe("lists selector", function () {
 
             return serviceResult.promise;
         }),
-        getSpecificItems: jasmine.createSpy('sfListsService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfListsService.getSpecificItems').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -123,7 +123,7 @@ describe("lists selector", function () {
     });
 
     var getListsServiceGetItemsArgs = function () {
-        var mostRecent = listsService.getItems.mostRecentCall;
+        var mostRecent = listsService.getItems.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -131,7 +131,7 @@ describe("lists selector", function () {
     };
 
     var getListsServiceGetItemArgs = function () {
-        var mostRecent = listsService.getItem.mostRecentCall;
+        var mostRecent = listsService.getItem.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -139,7 +139,7 @@ describe("lists selector", function () {
     };
 
     var getListsServiceGetSpecificItemsArgs = function () {
-        var mostRecent = listsService.getSpecificItems.mostRecentCall;
+        var mostRecent = listsService.getSpecificItems.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -224,7 +224,7 @@ describe("lists selector", function () {
             var s = scope.$$childHead;
 
             //mock the call to the modal service.
-            s.$modalInstance = { close: function () { } };
+            s.$uibModalInstance = { close: function () { } };
 
             expect(s.sfSelectedItem).toBeFalsy();
             expect(s.sfSelectedItemId).toBeFalsy();
@@ -497,7 +497,7 @@ describe("lists selector", function () {
             var s = scope.$$childHead;
 
             //mock the call to the modal service.
-            s.$modalInstance = { close: function () { } };
+            s.$uibModalInstance = { close: function () { } };
 
             expect(s.sfSelectedItems).toBeFalsy();
             expect(s.sfSelectedIds).toBeFalsy();

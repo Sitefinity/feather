@@ -7,7 +7,7 @@
 
     //Helper methods
     var assertGetRoutedUrlCalled = function (context, expectedUrl) {
-        var mostRecent = context.getRootedUrl.mostRecentCall;
+        var mostRecent = context.getRootedUrl.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -15,7 +15,7 @@
     };
 
     var assertGetEmbeddedResourceUrlCalled = function (context, expectedAssembly, expectedUrl) {
-        var mostRecent = context.getEmbeddedResourceUrl.mostRecentCall;
+        var mostRecent = context.getEmbeddedResourceUrl.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -35,12 +35,12 @@
             originalGetEmbeddedResourceUrl = sitefinity.getEmbeddedResourceUrl;
 
             sitefinity.getRootedUrl = jasmine.createSpy()
-                .andCallFake(function (path) {
+                .and.callFake(function (path) {
                     return appPath + '/' + path;
                 });
 
             sitefinity.getEmbeddedResourceUrl = jasmine.createSpy()
-                .andCallFake(function (assembly, path) {
+                .and.callFake(function (assembly, path) {
                     return appPath + '/EmbeddedResource/' + path;
                 });
         });
@@ -83,12 +83,12 @@
     describe('custom context provided when "serverContextProvider" is configured.', function () {
         var context = {
             getRootedUrl: jasmine.createSpy()
-                .andCallFake(function (path) {
+                .and.callFake(function (path) {
                     return appPath + '/' + path;
                 }),
 
             getEmbeddedResourceUrl: jasmine.createSpy()
-                .andCallFake(function (assembly, path) {
+                .and.callFake(function (assembly, path) {
                     return appPath + '/EmbeddedResource/' + path;
                 }),
 

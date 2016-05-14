@@ -222,7 +222,7 @@
 	"angularModules": [
 		"sfSelectors"
 	],
-	"components" : ["sf-services", "sf-selectors", "sf-taxon-filter", "sf-date-filter"]
+	"components" : ["sf-services", "sf-selectors", "sf-taxon-filter", "sf-date-filter", "sf-calendar-filter"]
 },
 
 "sf-items-tree" : {
@@ -650,7 +650,6 @@
 	"components" : ["sf-services", "sf-selectors", "sf-multisite-page-selector" ]
 },
 
-
 "_____BLOGS_____" : {"scripts" : [], "angularModules": [], "components" : []},
 
 
@@ -714,7 +713,6 @@
 
 "_____FEEDS_____" : {"scripts" : [], "angularModules": [], "components" : []},
 
-
 "sf-feed-selector" : {
 	"scripts" : [
 		"client-components/selectors/feeds/sf-feeds-service.js",
@@ -724,12 +722,9 @@
 		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
-}
-
-,
+},
 
 "_____MAILING LISTS_____" : {"scripts" : [], "angularModules": [], "components" : []},
-
 
 "sf-mailing-list-selector" : {
 	"scripts" : [
@@ -740,5 +735,39 @@
 		"sfSelectors"
 	],
 	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
+"_____EVENTS_____" : {"scripts" : [], "angularModules": [], "components" : []},
+
+"sf-event-selector" : {
+	"scripts" : [
+		"client-components/selectors/events/sf-event-selector.js",
+		"client-components/selectors/events/sf-event-service.js"
+	],
+	"angularModules": [
+		"sfSelectors"
+	],
+	"components" : ["sf-selectors"]
+},
+
+"sf-calendar-selector" : {
+	"scripts" : [
+		"client-components/selectors/events/sf-calendar-service.js",
+		"client-components/selectors/events/sf-calendar-selector.js"
+	],
+	"angularModules": [
+		"sfSelectors"
+	],
+	"components" : ["sf-services", "sf-items-filter", "sf-endless-scroll", "sf-list-selector", "sf-loading", "sf-selected-items-view"]
+},
+
+"sf-calendar-filter" : {
+	"scripts" : [
+		"client-components/selectors/events/sf-calendar-filter.js"
+	],
+	"angularModules": [
+		"sfSelectors"
+	],
+	"components" : ["sf-services", "sf-selectors", "sf-list-selector", "sf-calendar-selector"]
 }
 }

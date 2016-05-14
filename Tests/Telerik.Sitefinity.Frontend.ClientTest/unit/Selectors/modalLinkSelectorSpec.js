@@ -13,7 +13,7 @@ describe("link selector modal", function () {
 
     var linkServiceMock = {
         getHtmlLink: jasmine.createSpy('getHtmlLink')
-            .andCallFake(function (selectedItem) {
+            .and.callFake(function (selectedItem) {
                 return [testLink];
             })
     };
@@ -21,7 +21,7 @@ describe("link selector modal", function () {
     var linkSelectorScopeMock;
     beforeEach(function () {
         linkSelectorScopeMock = jasmine.createSpy('scope')
-            .andCallFake(function () {
+            .and.callFake(function () {
                 return {
 
                 };
@@ -31,7 +31,7 @@ describe("link selector modal", function () {
     var angularElementSpy;
     beforeEach(function () {
         var angularElementOriginal = angular.element;
-        angularElementSpy = spyOn(angular, 'element').andCallFake(function (selector) {
+        angularElementSpy = spyOn(angular, 'element').and.callFake(function (selector) {
             if (selector === '#linkSelector') {
                 return {
                     scope: linkSelectorScopeMock
@@ -86,15 +86,15 @@ describe("link selector modal", function () {
             commonMethods.compileDirective(template, scope);
 
             // Since the compileDirective method is having trouble compiling the inner modal dialog,
-            // we mock the $modalInstance here.
-            scope.$$childHead.$modalInstance = {
+            // we mock the $uibModalInstance here.
+            scope.$$childHead.$uibModalInstance = {
                 close: jasmine.createSpy('close')
             };
 
             scope.$$childHead.insertLink();
 
             expect(linkSelectorScopeMock).toHaveBeenCalled();
-            expect(scope.$$childHead.$modalInstance.close).toHaveBeenCalledWith(testLink);
+            expect(scope.$$childHead.$uibModalInstance.close).toHaveBeenCalledWith(testLink);
         });
 
         describe('when isDisabled is called', function () {

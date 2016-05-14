@@ -2,6 +2,7 @@
 (function ($) {
     if (typeof ($telerik) != 'undefined') {
         $telerik.$(document).one('dialogRendered', function () {
+            angular.$$csp().noInlineStyle = true;
             angular.bootstrap($('.designer'), ['designer']);
         });
     }
@@ -143,8 +144,8 @@
             });
     }]);
 
-    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$modalInstance', '$route', 'propertyService', 'widgetContext',
-        function ($rootScope, $scope, $q, $modalInstance, $route, propertyService, widgetContext) {
+    designerModule.controller('DialogCtrl', ['$rootScope', '$scope', '$q', '$uibModalInstance', '$route', 'propertyService', 'widgetContext',
+        function ($rootScope, $scope, $q, $uibModalInstance, $route, propertyService, widgetContext) {
             var isSaveToAllTranslations = true;
 
             // ------------------------------------------------------------------------
@@ -235,7 +236,7 @@
 
             $scope.close = function () {
                 try {
-                    $modalInstance.close();
+                    $uibModalInstance.close();
                 } catch (e) { }
 
                 if (typeof ($telerik) !== 'undefined')

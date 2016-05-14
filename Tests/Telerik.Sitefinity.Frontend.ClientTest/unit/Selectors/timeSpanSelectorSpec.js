@@ -39,7 +39,7 @@ describe("timeSpan selector", function () {
 
     beforeEach(inject(function ($templateCache) {
         //This method is called by the templateUrl property of the directive's definition object.
-        spyOn(sitefinity, 'getEmbeddedResourceUrl').andCallFake(function (assembly, url) {
+        spyOn(sitefinity, 'getEmbeddedResourceUrl').and.callFake(function (assembly, url) {
             return timespanSelectorTemplatePath;
         });
     }));
@@ -69,6 +69,8 @@ describe("timeSpan selector", function () {
         var template = "<sf-timespan-selector sf-selected-item='selectedItem'></sf-timespan-selector>";
 
         commonMethods.compileDirective(template, scope);
+		
+        expect(scope.selectedItem.displayText).toBe('@(Res.Get().From) 12 Dec, 2012 @(res.get().to) 14 Dec, 2012');
     });
 
     it('[EGaneva] / custom range is validated correctly.', function () {
@@ -83,7 +85,7 @@ describe("timeSpan selector", function () {
         var s = scope.$$childHead;
 
         //mock the call to the modal service.
-        s.$modalInstance = { close: function () { } };
+        s.$uibModalInstance = { close: function () { } };
 
         s.selectedItemInTheDialog.periodType = 'customRange';
         s.selectedItemInTheDialog.fromDate = new Date("12/17/2012");
@@ -105,7 +107,7 @@ describe("timeSpan selector", function () {
             expect(args.newSelectedItem.timeSpanInterval).toBe("weeks");
 
             expect(args.oldSelectedItem).toBeDefined();
-            expect(args.oldSelectedItem.displayText).toBe('');
+            expect(args.oldSelectedItem.displayText).toBe('@(Res.Get().AnyTime)');
             expect(args.oldSelectedItem.periodType).toBe('anyTime');
             expect(args.oldSelectedItem.timeSpanValue).toBeFalsy();
             expect(args.oldSelectedItem.timeSpanInterval).toBe("days");
@@ -120,7 +122,7 @@ describe("timeSpan selector", function () {
         var s = scope.$$childHead;
 
         //mock the call to the modal service.
-        s.$modalInstance = { close: function () { } };   
+        s.$uibModalInstance = { close: function () { } };
 
         s.selectedItemInTheDialog.periodType = 'periodToNow';
         s.selectedItemInTheDialog.timeSpanValue = 3;

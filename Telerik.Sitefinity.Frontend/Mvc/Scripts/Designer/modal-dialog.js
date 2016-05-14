@@ -27,7 +27,7 @@
         };
     });
 
-    modalDialogModule.directive('modal', ['$modal', 'dialogsService', function ($modal, dialogsService) {
+    modalDialogModule.directive('modal', ['$uibModal', 'dialogsService', function ($uibModal, dialogsService) {
         var resolveControllerName = function (attrs) {
             if (!attrs.dialogController && !attrs.existingScope) {
                 throw 'Please either insert an attribute named "dialog-controller" with the name of the controller for the modal dialog next to the "modal" directive ' +
@@ -45,7 +45,7 @@
 
             var uniqueClass = modalDialogClass + dialogsService.count();
             var windowClass = attrs.windowClass ? attrs.windowClass + ' ' + uniqueClass : uniqueClass;
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
                 backdrop: 'static',
                 scope: attrs.existingScope && scope,
                 templateUrl: attrs.templateUrl,
@@ -54,11 +54,11 @@
                 resolve: resolve
             });
 
-            scope.$modalInstance = modalInstance;
+            scope.$uibModalInstance = modalInstance;
 
             dialogsService.pushSelector('.' + uniqueClass);
 
-            return scope.$modalInstance.result.finally(function () {
+            return scope.$uibModalInstance.result.finally(function () {
                 dialogsService.pop().remove();
 
                 if (dialogsService.count() > 0) {

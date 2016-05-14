@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Web;
+using Microsoft.Http;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
@@ -79,14 +81,55 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         /// <returns>The page content.</returns>
         public string GetPageContent(Guid pageId)
         {
+            return this.GetPageContent(pageId, false, string.Empty);
+        }
+
+        /// <summary>
+        /// Gets the public page content.
+        /// </summary>
+        /// <param name="pageId">The id of the page.</param>
+        /// <param name="authenticated">Authenticated page content.</param>
+        /// <returns>The page content.</returns>
+        public string GetPageContent(Guid pageId, bool authenticated)
+        {
+            return this.GetPageContent(pageId, authenticated, string.Empty);
+        }
+
+        /// <summary>
+        /// Gets the public page content.
+        /// </summary>
+        /// <param name="pageId">The id of the page.</param>
+        /// <param name="authenticated">Authenticated page content.</param>
+        /// <param name="suffixUrl">Suffix url.</param>
+        /// <returns>The page content.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "2#")]
+        public string GetPageContent(Guid pageId, bool authenticated, string suffixUrl)
+        {
             PageManager pageManager = PageManager.GetManager();
 
             var page = pageManager.GetPageNode(pageId);
             var pageUrl = page.GetFullUrl(SystemManager.CurrentContext.AppSettings.DefaultFrontendLanguage, true);
             pageUrl = RouteHelper.GetAbsoluteUrl(pageUrl);
+
+            if (!string.IsNullOrWhiteSpace(suffixUrl))
+            {
+                pageUrl = Sitefinity.Web.Url.Combine(pageUrl, suffixUrl);
+            }
+
             pageUrl = UrlTransformations.AppendParam(pageUrl, "t", Guid.NewGuid().ToString());
 
-            string pageContent = WebRequestHelper.GetPageWebContent(pageUrl);
+            string pageContent = WebRequestHelper.GetPageWebContent(
+                pageUrl,
+                null,
+                (HttpClient client) =>
+                {
+                    if (authenticated)
+                    {
+                        client.DefaultHeaders["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
+                        client.TransportSettings.Cookies = new System.Net.CookieContainer();
+                        client.TransportSettings.CachePolicy = new System.Net.Cache.HttpRequestCachePolicy();
+                    }
+                });
 
             return pageContent;
         }

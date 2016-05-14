@@ -12,8 +12,8 @@
 
     var personalizationDesignerModule = angular.module('personalizationDesigner', ['pageEditorServices', 'modalDialog', 'serverDataModule', 'personalizationServices']);
 
-    personalizationDesignerModule.controller('personalizationDialogCtrl', ['$rootScope', '$scope', '$q', '$filter', '$modalInstance', 'serverData', 'personalizationService',
-    function ($rootScope, $scope, $q, $filter, $modalInstance, serverData, personalizationService) {
+    personalizationDesignerModule.controller('personalizationDialogCtrl', ['$rootScope', '$scope', '$q', '$filter', '$uibModalInstance', 'serverData', 'personalizationService',
+    function ($rootScope, $scope, $q, $filter, $uibModalInstance, serverData, personalizationService) {
 
         // ------------------------------------------------------------------------
         var onError = function (data) {
@@ -92,7 +92,7 @@
 
         $scope.close = function () {
             try {
-                $modalInstance.close();
+                $uibModalInstance.close();
             } catch (e) { }
 
             if (typeof ($telerik) !== 'undefined')

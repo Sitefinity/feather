@@ -36,15 +36,6 @@ describe('sfSearchService', function () {
         dataService = $injector.get('sfSearchService');
     }));    
 
-    beforeEach(function () {
-        // Used to compare objects returned by $resource
-        this.addMatchers({
-            toEqualData: function (expected) {
-                return angular.equals(this.actual, expected);
-            }
-        });
-    });
-
     /* Helper methods */
     var assertItems = function (params) {
         var data;

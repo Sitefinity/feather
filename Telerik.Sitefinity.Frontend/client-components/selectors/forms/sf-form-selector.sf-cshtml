@@ -1,11 +1,11 @@
 ﻿<div>
-  <alert type="danger" ng-show="error.show">
+  <uib-alert type="danger" ng-show="error.show">
     <div>
       {{error.message}}
 
       <button class="close" ng-click="error.show = false">&times;</button>
     </div>
-  </alert>
+  </uib-alert>
 
   <div ng-hide="items.length || !initialized">
 

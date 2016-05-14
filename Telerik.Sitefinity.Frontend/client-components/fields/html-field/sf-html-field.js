@@ -323,8 +323,8 @@
                 }
             };
         }])
-        .controller('sfImagePropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
-            function ($scope, $modalInstance, serverContext, sfModel) {
+        .controller('sfImagePropertiesController', ['$scope', '$uibModalInstance', 'serverContext', 'sfModel',
+            function ($scope, $uibModalInstance, serverContext, sfModel) {
                 // undefined, because the image-field sets it to null if cancel is pressed and the watch is triggered
                 $scope.model = sfModel || { item: undefined };
 
@@ -345,17 +345,17 @@
                 });
 
                 $scope.done = function () {
-                    $modalInstance.close($scope.model);
+                    $uibModalInstance.close($scope.model);
                 };
 
                 $scope.cancel = function () {
-                    $modalInstance.dismiss();
+                    $uibModalInstance.dismiss();
                 };
 
                 $scope.thumbnailSizeTempalteUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-thumbnail-size-selection.html');
             }])
-        .controller('sfDocumentPropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
-            function ($scope, $modalInstance, serverContext, sfModel) {
+        .controller('sfDocumentPropertiesController', ['$scope', '$uibModalInstance', 'serverContext', 'sfModel',
+            function ($scope, $uibModalInstance, serverContext, sfModel) {
 
                 $scope.model = sfModel || { item: undefined };
 
@@ -371,15 +371,15 @@
                 });
 
                 $scope.done = function () {
-                    $modalInstance.close($scope.model);
+                    $uibModalInstance.close($scope.model);
                 };
 
                 $scope.cancel = function () {
-                    $modalInstance.dismiss();
+                    $uibModalInstance.dismiss();
                 };
             }])
-        .controller('sfVideoPropertiesController', ['$scope', '$modalInstance', 'serverContext', 'sfModel',
-            function ($scope, $modalInstance, serverContext, sfModel) {
+        .controller('sfVideoPropertiesController', ['$scope', '$uibModalInstance', 'serverContext', 'sfModel',
+            function ($scope, $uibModalInstance, serverContext, sfModel) {
 
                 $scope.model = sfModel || { item: undefined };
 
@@ -399,11 +399,11 @@
                     $scope.model.width = $scope.videoModel.aspectRatio === 'auto' ? null : $scope.videoModel.width;
                     $scope.model.height = $scope.videoModel.aspectRatio === 'auto' ? null : $scope.videoModel.height;
 
-                    $modalInstance.close($scope.model);
+                    $uibModalInstance.close($scope.model);
                 };
 
                 $scope.cancel = function () {
-                    $modalInstance.dismiss();
+                    $uibModalInstance.dismiss();
                 };
             }]);
 })(jQuery);

@@ -33,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         /// </summary>
         public void WaitForSaveButtonToAppear()
         {
-            Manager.Current.Wait.For(this.WaitForSaveButton, Manager.Current.Settings.ClientReadyTimeout);
+            Manager.Current.Wait.For(this.WaitForSaveButton, 120 * 1000); // 120s timeout
             ActiveBrowser.RefreshDomTree();
         }
 

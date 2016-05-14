@@ -93,7 +93,7 @@
             var markup = mediaMarkupService.image.markup(expectedProperties);
             var resultingProperties = mediaMarkupService.image.properties(markup);
 
-            expect(resultingProperties).toEqual(expectedProperties);
+            expect(resultingProperties).toBeJsonEqual(expectedProperties);
         });
 
         it('[Boyko-Karadzhov] / should preserve properties on render and properties extraction when wrapped.', function () {
@@ -104,7 +104,7 @@
             var markup = mediaMarkupService.image.markup(expectedProperties, null, true);
             var resultingProperties = mediaMarkupService.image.properties(markup);
 
-            expect(resultingProperties).toEqual(expectedProperties);
+            expect(resultingProperties).toBeJsonEqual(expectedProperties);
         });
     });
 
@@ -134,7 +134,7 @@
             var markup = mediaMarkupService.document.markup(expectedProperties, null);
             var resultingProperties = mediaMarkupService.document.properties(markup);
 
-            expect(resultingProperties).toEqual(expectedProperties);
+            expect(resultingProperties).toBeJsonEqual(expectedProperties);
         });
     });
 });

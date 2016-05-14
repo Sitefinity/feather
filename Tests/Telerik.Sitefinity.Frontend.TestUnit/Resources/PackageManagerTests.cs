@@ -55,7 +55,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
                         new HttpResponse(null)));
 
             // Act: Get the enhanced URL from the package manager.
-            SystemManager.RunWithHttpContext(context, () => { url = new PackageManager().EnhanceUrl(url); });
+            SystemManager.RunWithHttpContext(context, () => { url = new OptimisticPackageManager().EnhanceUrl(url); });
 
             // Assert: Verify if the manager appends package param.
             Assert.AreEqual(expectedEnhancedUrl, url, "The URL does not contain the package name.");
@@ -84,7 +84,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
         public void GetCurrentPackage_FakeContext_VerifyThePackageNameIsCorrect()
         {
             // Arrange: Initialize the PackageManager and create fake HttpContextWrapper which has fake package name set as parameter in its parameters collection
-            var packageManager = new PackageManager();
+            var packageManager = new OptimisticPackageManager();
             var packageName = string.Empty;
 
             var context = new HttpContextWrapper(new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null)));
@@ -103,7 +103,7 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
         public void GetPackageFromUrl_FakeCurrentUrlInHttpContext_VerifyThePackageNameIsCorrect()
         {
             // Arrange: Initialize the PackageManager and create fake HttpContextWrapper which has fake request URL with the package name set as query parameter
-            var packageManager = new PackageManager();
+            var packageManager = new OptimisticPackageManager();
             var packageName = string.Empty;
 
             var context =
@@ -159,6 +159,14 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Resources
 
             // Assert: Verify if the manager properly strips all invalid characters
             Assert.AreEqual("fake_Title_Name_With_Invalid_Chars_And_Symbols_Included", cleanedTitle, "Title is not striped correctly");
+        }
+
+        internal class OptimisticPackageManager : PackageManager
+        {
+            public override bool PackageExists(string packageName)
+            {
+                return true;
+            }
         }
 
         #endregion

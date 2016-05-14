@@ -88,7 +88,7 @@ describe('sfFilesUrlService', function () {
 
             $httpBackend.flush();
 
-            expect(response).toEqual([
+            expect(response).toBeJsonEqual([
                 { label: 'Folder1', path: '', url: '~/Folder1', isFolder: true, extension: null },
                 { label: 'Folder2', path: '', url: '~/Folder2', isFolder: true, extension: null },
                 { label: 'Folder3', path: '', url: '~/Folder3', isFolder: true, extension: null },

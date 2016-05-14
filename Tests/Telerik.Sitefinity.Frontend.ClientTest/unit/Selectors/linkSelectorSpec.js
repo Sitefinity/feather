@@ -84,13 +84,13 @@ describe("link selector", function () {
 
     //Mock site service.
     var siteService = {
-        getSites: jasmine.createSpy('siteService.getSites').andCallFake(function (editorContent) {
+        getSites: jasmine.createSpy('siteService.getSites').and.callFake(function (editorContent) {
             return sfSites;
         }),
-        getSiteByRootNoteId: jasmine.createSpy('siteService.getSiteByRootNoteId').andCallFake(function (rootNodeId) {
+        getSiteByRootNoteId: jasmine.createSpy('siteService.getSiteByRootNoteId').and.callFake(function (rootNodeId) {
             return sfSites[1];
         }),
-        getSitesForUserPromise: jasmine.createSpy('siteService.getSitesForUserPromise').andCallFake(function (editorContent) {
+        getSitesForUserPromise: jasmine.createSpy('siteService.getSitesForUserPromise').and.callFake(function (editorContent) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -102,7 +102,7 @@ describe("link selector", function () {
     };
 
     var languageService = {
-        getLocalizationSettings: jasmine.createSpy('languageService.getLocalizationSettings').andCallFake(function (editorContent) {
+        getLocalizationSettings: jasmine.createSpy('languageService.getLocalizationSettings').and.callFake(function (editorContent) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -115,7 +115,7 @@ describe("link selector", function () {
 
     //Mock page service. It returns promises.
     var pagesService = {
-        getItems: jasmine.createSpy('sfPageService.getItems').andCallFake(function (parentId, siteId, provider, search) {
+        getItems: jasmine.createSpy('sfPageService.getItems').and.callFake(function (parentId, siteId, provider, search) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -123,7 +123,7 @@ describe("link selector", function () {
 
             return serviceResult.promise;
         }),
-        getSpecificItems: jasmine.createSpy('sfPageService.getSpecificItems').andCallFake(function (ids, provider) {
+        getSpecificItems: jasmine.createSpy('sfPageService.getSpecificItems').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -131,7 +131,7 @@ describe("link selector", function () {
 
             return serviceResult.promise;
         }),
-        getPredecessors: jasmine.createSpy('sfPageService.getPredecessors').andCallFake(function (itemId, provider) {
+        getPredecessors: jasmine.createSpy('sfPageService.getPredecessors').and.callFake(function (itemId, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -139,7 +139,7 @@ describe("link selector", function () {
 
             return serviceResult.promise;
         }),
-        getPageTitleByCulture: jasmine.createSpy('sfPageService.getPageTitleByCulture').andCallFake(function (item) {
+        getPageTitleByCulture: jasmine.createSpy('sfPageService.getPageTitleByCulture').and.callFake(function (item) {
             return item.Title.Value;
         })
     };

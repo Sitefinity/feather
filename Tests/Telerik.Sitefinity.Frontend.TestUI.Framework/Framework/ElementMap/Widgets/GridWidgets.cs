@@ -34,5 +34,31 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
                 return this.Get<HtmlSpan>("tagname=span", "InnerText=Grid widgets");
             }
         }
+
+        /// <summary>
+        /// Gets the custom body text.
+        /// </summary>
+        /// <value>
+        /// The custom body text.
+        /// </value>
+        public HtmlInputText CustomBodyText
+        {
+            get
+            {
+                return this.Get<HtmlInputText>("id=prop-sf_1col_1in_100");
+            }
+        }
+
+        /// <summary>
+        /// Gets the Save button of the widget designer.
+        /// </summary>
+        /// <value>Save button.</value>
+        public HtmlButton SaveButton
+        {
+            get
+            {
+                return this.Get<HtmlButton>("tagname=button", "class=btn btn-primary pull-left");
+            }
+        }
     }
 }

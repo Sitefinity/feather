@@ -61,7 +61,7 @@ describe("user selector", function () {
 
     //Mock users service. It returns promises.
     var usersService = {
-        getUsers: jasmine.createSpy('sfUsersService.getUsers').andCallFake(function (provider, skip, take, filter) {
+        getUsers: jasmine.createSpy('sfUsersService.getUsers').and.callFake(function (provider, skip, take, filter) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -88,7 +88,7 @@ describe("user selector", function () {
                 promise: serviceResult.promise,
             };
         }),
-        getSpecificUsers: jasmine.createSpy('sfUsersService.getSpecificUsers').andCallFake(function (ids, provider) {
+        getSpecificUsers: jasmine.createSpy('sfUsersService.getSpecificUsers').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -105,7 +105,7 @@ describe("user selector", function () {
                 promise: serviceResult.promise
             };
         }),
-        getUserProviders: jasmine.createSpy('sfUsersService.getUserProviders').andCallFake(
+        getUserProviders: jasmine.createSpy('sfUsersService.getUserProviders').and.callFake(
             function () {
                 var deferred = $q.defer();
                 deferred.resolve({
@@ -119,7 +119,7 @@ describe("user selector", function () {
     };
 
     var usersServiceMockReturnMoreThan5Items = {
-        getSpecificUsers: jasmine.createSpy('sfUsersService.getSpecificUsers').andCallFake(function (ids, provider) {
+        getSpecificUsers: jasmine.createSpy('sfUsersService.getSpecificUsers').and.callFake(function (ids, provider) {
             if ($q) {
                 serviceResult = $q.defer();
             }
@@ -178,7 +178,7 @@ describe("user selector", function () {
     });
 
     var getUsersServiceGetItemsArgs = function () {
-        var mostRecent = usersService.getUsers.mostRecentCall;
+        var mostRecent = usersService.getUsers.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -186,7 +186,7 @@ describe("user selector", function () {
     };
 
     var getUsersServiceGetSpecificItemsArgs = function () {
-        var mostRecent = usersService.getSpecificUsers.mostRecentCall;
+        var mostRecent = usersService.getSpecificUsers.calls.mostRecent();
         expect(mostRecent).toBeDefined();
         expect(mostRecent.args).toBeDefined();
 
@@ -271,7 +271,7 @@ describe("user selector", function () {
             var s = scope.$$childHead;
 
             //mock the call to the modal service.
-            s.$modalInstance = { close: function () { } };
+            s.$uibModalInstance = { close: function () { } };
 
             expect(s.sfSelectedItem).toBeFalsy();
             expect(s.sfSelectedItemId).toBeFalsy();
@@ -669,7 +669,7 @@ describe("user selector", function () {
             var s = scope.$$childHead;
 
             //mock the call to the modal service.
-            s.$modalInstance = { close: function () { } };
+            s.$uibModalInstance = { close: function () { } };
 
             expect(s.sfSelectedItems).toBeFalsy();
             expect(s.sfSelectedIds).toBeFalsy();

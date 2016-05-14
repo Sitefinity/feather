@@ -202,7 +202,7 @@
                     };
 
                     scope.done = function () {
-                        scope.$modalInstance.close();
+                        scope.$uibModalInstance.close();
 
                         if (scope.model.selectedItems && scope.model.selectedItems.length) {
                             scope.sfProvider = scope.model.provider;
@@ -216,7 +216,7 @@
                             scope.sfModel = null;
                         }
 
-                        scope.$modalInstance.dismiss();
+                        scope.$uibModalInstance.dismiss();
                     };
 
                     scope.changeMedia = function () {
@@ -249,7 +249,7 @@
                     scope.$on(mediaType.getMediaUploadedEvent(), function (event, uploadedMediaInfo) {
                         scope.sfProvider = scope.model.provider;
                         getMedia(uploadedMediaInfo.ContentId);
-                        scope.$modalInstance.dismiss();
+                        scope.$uibModalInstance.dismiss();
                     });
 
                     scope.$watch('sfMedia.Id', function (newVal) {

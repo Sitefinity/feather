@@ -106,7 +106,7 @@
                     };
 
                     scope.done = function () {
-                        scope.$modalInstance.close();
+                        scope.$uibModalInstance.close();
 
                         if (scope.model.selectedItems && scope.model.selectedItems.length) {
                             scope.sfProvider = scope.model.provider;
@@ -122,7 +122,7 @@
                             scope.sfModel = null;
                         }
 
-                        scope.$modalInstance.dismiss();
+                        scope.$uibModalInstance.dismiss();
                     };
 
                     scope.changeImage = function () {
@@ -155,7 +155,7 @@
                     scope.$on('sf-image-selector-image-uploaded', function (event, uploadedImageInfo) {
                         scope.sfProvider = scope.model.provider;
                         getImage(uploadedImageInfo.ContentId);
-                        scope.$modalInstance.dismiss();
+                        scope.$uibModalInstance.dismiss();
                     });
 
                     scope.$watch('sfImage.Id', function (newVal) {

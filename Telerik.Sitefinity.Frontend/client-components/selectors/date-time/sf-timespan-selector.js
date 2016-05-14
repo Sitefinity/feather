@@ -1,6 +1,6 @@
 ﻿(function ($) {
     angular.module('sfSelectors')
-        .directive('sfTimespanSelector', ['$timeout', '$filter', function ($timeout, $filter) {
+        .directive('sfTimespanSelector', ['$timeout', '$filter', '$templateCache', function ($timeout, $filter, $templateCache) {
 
             this.filter = $filter;
             var self = this;
@@ -9,8 +9,12 @@
                 restrict: 'E',
                 transclude: true,
                 scope: {
-                    sfSelectedItem: '=?',                   
-                    sfChange: '='
+                    sfSelectedItem: '=?',
+                    sfChange: '=',
+                    sfIsUpcomingPeriod: '=?',
+                    sfCustomRangeMinDate: '=?',
+                    sfCustomRangeMaxDate: '=?',
+                    sfFilterTitleLabel: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -26,13 +30,18 @@
                             if (!item)
                                 return;
 
+                            var timeSpanSelectorContent = $templateCache.get('timespan-selector-content');
                             if (item.periodType == 'periodToNow') {
-                                var label = $('#periodToNow').parent().text().trim();
-                                item.displayText = label + ' ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
+                                var periodToNowLabel = $(timeSpanSelectorContent).find('#periodToNow').parent().text().trim();
+                                item.displayText = periodToNowLabel + ' ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
+                            }
+                            else if (item.periodType == 'periodFromNow') {
+                                var periodFromNowLabel = $(timeSpanSelectorContent).find('#periodFromNow').parent().text().trim();
+                                item.displayText = periodFromNowLabel + ' ' + item.timeSpanValue + ' ' + item.timeSpanInterval;
                             }
                             else if (item.periodType == 'customRange') {
-                                var fromLabel = $('#fromLabel').text();
-                                var toLabel = $('#toLabel').text();
+                                var fromLabel = $(timeSpanSelectorContent).find('#fromLabel').text();
+                                var toLabel = $(timeSpanSelectorContent).find('#toLabel').text();
 
 
                                 if (item.fromDate && item.toDate)
@@ -43,7 +52,7 @@
                                     item.displayText = toLabel + ' ' + _getFormatedDate(item.toDate);
                             }
                             else {
-                                item.displayText = $('#anyTime').parent().text().trim();
+                                item.displayText = $(timeSpanSelectorContent).find('#anyTime').parent().text().trim();
                             }
                         };
 
@@ -52,7 +61,7 @@
                                 return;
 
                             var format = 'd MMM, y';
-                        
+
                             if (date.getHours() !== 0 || date.getMinutes() !== 0) {
                                 format = 'd MMM, y H:mm';
                             }
@@ -68,7 +77,7 @@
                         };
 
                         validate = function (item) {
-                            if (item.periodType == 'periodToNow' && !item.timeSpanValue) {
+                            if ((item.periodType == 'periodToNow' || item.periodType == 'periodFromNow') && !item.timeSpanValue) {
                                 scope.errorMessage = 'Invalid period!';
                                 scope.showError = true;
 
@@ -112,7 +121,7 @@
 
                                 scope.sfSelectedItem = scope.selectedItemInTheDialog;
 
-                                scope.$modalInstance.close();
+                                scope.$uibModalInstance.close();
                             }
                         };
 
@@ -129,7 +138,7 @@
                             try {
                                 scope.showError = false;
                                 scope.errorMessage = '';
-                                scope.$modalInstance.close();
+                                scope.$uibModalInstance.close();
                             } catch (e) { }
                         };
 
@@ -139,6 +148,10 @@
                             scope.showError = false;
                             scope.errorMessage = '';
                             scope.selectedItemInTheDialog = jQuery.extend(true, {}, scope.sfSelectedItem);
+                            if (scope.selectedItemInTheDialog.timeSpanValue)
+                                scope.selectedItemInTheDialog.timeSpanValue = parseInt(scope.selectedItemInTheDialog.timeSpanValue);
+                            else
+                                scope.selectedItemInTheDialog.timeSpanValue = 1;
                         };
 
                         formatTimeSpanItem(scope.sfSelectedItem);
