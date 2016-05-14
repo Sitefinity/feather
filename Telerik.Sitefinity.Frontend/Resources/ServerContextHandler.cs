@@ -12,6 +12,7 @@ using Telerik.Sitefinity.Multisite.Model;
 using Telerik.Sitefinity.Security.Claims;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.Services;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {
