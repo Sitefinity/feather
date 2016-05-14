@@ -552,6 +552,44 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
             return result;
         }
 
+        /// <summary>
+        /// Combines the backend script resources.
+        /// </summary>
+        /// <param name="isSet">The is set.</param>
+        public void CombineBackendScriptResources(string isSet)
+        {
+            Manager.Current.ActiveBrowser.RefreshDomTree();
+            HtmlInputText backendScript = Manager.Current.ActiveBrowser.Find.ByCustom<HtmlInputText>(n => n.ID == "Value14");
+
+            backendScript.ScrollToVisible();
+            backendScript.Focus();
+            backendScript.MouseClick();
+
+            Manager.Current.Desktop.KeyBoard.KeyDown(System.Windows.Forms.Keys.Control);
+            Manager.Current.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.A);
+            Manager.Current.Desktop.KeyBoard.KeyUp(System.Windows.Forms.Keys.Control);
+            Manager.Current.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Delete);
+
+            Manager.Current.Desktop.KeyBoard.TypeText(isSet);
+        }
+
+        /// <summary>
+        /// Creates the template.
+        /// </summary>
+        public void CreateTemplate()
+        {
+            HtmlAnchor createButton = Manager.Current.ActiveBrowser.Find.ByExpression<HtmlAnchor>("id=?_createTemplateWidget_ctl00_ctl00_createATemplate");
+
+            if (createButton == null)
+            {
+                createButton = ActiveBrowser.Find.ByExpression<HtmlAnchor>("tagname=a", "id = ctl04_controlTemplatesBackendList_ctl00_ctl00_noItemsExistScreen_ctl00_ctl00_actionsRepeater_actionLink_0");
+            }
+
+            createButton.Click();
+            ActiveBrowser.WaitForAsyncRequests();
+            ActiveBrowser.RefreshDomTree();
+        }
+
         private Element GetContentSelectorByName(string cssClass)
         {
             var contentContainer = this.EM.Widgets.FeatherWidget.ContentContainer.AssertIsPresent("Content container");

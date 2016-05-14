@@ -2,6 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Web;
+using System.Web.UI;
+using Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 
 // General Information about an assembly is controlled through the following 
@@ -20,3 +22,5 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 
 [assembly: PreApplicationStartMethod(typeof(Telerik.Sitefinity.Frontend.Startup), "OnPreApplicationStart")]
 [assembly: InternalsVisibleTo("FeatherWidgets.TestIntegration")]
+
+[assembly: WebResource(MvcControlTemplateEditor.MvcControlTemplateEditorScript, "text/javascript")]

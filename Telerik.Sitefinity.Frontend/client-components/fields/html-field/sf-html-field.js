@@ -4,11 +4,6 @@
 
     angular.module('sfHtmlField', ['kendo.directives', 'sfServices', 'sfImageField', 'sfThumbnailSizeSelection', 'sfAspectRatioSelection'])
         .directive('sfHtmlField', ['serverContext', '$compile', 'sfMediaService', 'sfMediaMarkupService', function (serverContext, $compile, mediaService, mediaMarkupService) {
-            var editor = null;
-            var content = null;
-            var fullScreenIcon = null;
-            var showAllCommands = false;
-
             return {
                 restrict: "E",
                 scope: {
@@ -21,6 +16,13 @@
                 },
                 link: {
                     pre: function (scope, element) {
+                        var htmlElement = element;
+                        scope.editor = null;
+                        scope.content = null;
+                        scope.fullScreenIcon = null;
+                        scope.showAllCommands = false;
+
+
                         scope.htmlFieldCssUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/css/html-field.min.css');
 
                         scope.getPackageResourceUrl = function (resourcePath) {
@@ -30,46 +32,47 @@
                         scope.$on('kendoWidgetCreated', function (event, widget) {
                             if (widget.wrapper && widget.wrapper.is('.k-editor')) {
                                 widget.focus();
-                                editor = widget;
-                                content = editor.wrapper.find('iframe.k-content').first();
+                                scope.editor = widget;
+                                scope.content = scope.editor.wrapper.find('iframe.k-content').first();
 
-                                fullScreenIcon = $(".js-fullScreen");
-                                fullScreenIcon.addClass("glyphicon-resize-full");
+                                scope.fullScreenIcon = htmlElement.find(".js-fullScreen");
+                                scope.fullScreenIcon.addClass("glyphicon-resize-full");
 
                                 scope.toggleAllTools();
                             }
                         });
 
                         scope.toggleAllTools = function () {
-                            if (!editor) {
+                            if (!scope.editor) {
                                 return;
                             }
-                            var toolbar = editor.toolbar.element.eq(0);
+                            var toolbar = scope.editor.toolbar.element.eq(0);
 
-                            var commands = editor.element.eq(0).attr('sf-toggle-commands');
+                            var commands = scope.editor.element.eq(0).attr('sf-toggle-commands');
 
                             if (commands) {
                                 commands.split(',').forEach(function (command) {
                                     var selector = String.format("select.k-{0},a.k-{0},span.k-{0}", command.trim());
                                     var anchor = toolbar.find(selector).parents('li');
-                                    var func = showAllCommands ? anchor.show : anchor.hide;
+                                    var func = scope.showAllCommands ? anchor.show : anchor.hide;
                                     func.call(anchor);
                                 });
                             }
                             else {
                                 toolbar.find('.show-all-button').parents('li').hide();
                             }
-                            if (showAllCommands) {
+                            if (scope.showAllCommands) {
                                 toolbar.find('.show-all-button').addClass('k-state-active');
                             } else {
                                 toolbar.find('.show-all-button').removeClass('k-state-active');
                             }
-                            showAllCommands = !showAllCommands;
+                            scope.showAllCommands = !scope.showAllCommands;
                         };
                     },
                     post: function (scope, element) {
                         scope.htmlViewLabel = 'HTML';
 
+                        var htmlElement = element;
                         var isInHtmlView = false;
                         var isFullScreen = false;
                         var originalEditorSizes = null;
@@ -78,7 +81,7 @@
                         var customButtons = null;
 
                         function getPropertiesFromTag(type, wrapperClass, tag) {
-                            var range = editor.getRange();
+                            var range = scope.editor.getRange();
                             var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
 
                             var properties = null;
@@ -93,7 +96,7 @@
                         }
 
                         function getAnchorElement(range) {
-                            var command = editor.toolbar.tools.createLink.command({ range: range });
+                            var command = scope.editor.toolbar.tools.createLink.command({ range: range });
 
                             var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
                             var aTag = nodes.length ? command.formatter.finder.findSuitable(nodes[0]) : null;
@@ -108,7 +111,7 @@
 
                         // If an anchor is in the range, preserve it and insert the given markup in it.
                         function preserveWrapperATag(newMarkup) {
-                            var range = editor.getRange();
+                            var range = scope.editor.getRange();
                             var anchor = getAnchorElement(range);
                             if (anchor) {
                                 $(anchor).html(newMarkup);
@@ -120,19 +123,19 @@
                         }
 
                         scope.openLinkSelector = function () {
-                            var range = editor.getRange();
+                            var range = scope.editor.getRange();
                             var aTag = getAnchorElement(range);
 
                             if (aTag) {
                                 scope.selectedHtml = aTag;
                             }
                             else {
-                                scope.selectedHtml = editor.selectedHtml();
+                                scope.selectedHtml = scope.editor.selectedHtml();
                             }
 
-                            angular.element("#linkSelectorModal").scope().$openModalDialog().then(function (data) {
+                            angular.element(htmlElement.find("#linkSelectorModal")).scope().$openModalDialog().then(function (data) {
                                 scope.selectedHtml = data;
-                                editor.exec("insertHtml", { html: data.outerHTML, split: true, range: range });
+                                scope.editor.exec("insertHtml", { html: data.outerHTML, split: true, range: range });
                             });
                         };
 
@@ -141,12 +144,12 @@
                                     serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-document-properties-content-block.sf-cshtml');
                             scope.sfMediaPropertiesController = "sfDocumentPropertiesController";
 
-                            var range = editor.getRange();
+                            var range = scope.editor.getRange();
                             var aTag = getAnchorElement(range);
                             var properties = aTag ? mediaMarkupService.document.properties(aTag.outerHTML) : null;
 
                             setTimeout(function () {
-                                angular.element('.mediaPropertiesModal')
+                                angular.element(htmlElement.find('.mediaPropertiesModal'))
                                     .scope()
                                     .$openModalDialog({ sfModel: function () { return properties; } })
                                     .then(function (data) {
@@ -155,7 +158,7 @@
                                     })
                                     .then(function (settings) {
                                         var markup = mediaMarkupService.document.markup(properties, settings);
-                                        editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                        scope.editor.exec('insertHtml', { html: markup, split: true, range: range });
                                     });
                             }, 0);
                         };
@@ -168,7 +171,8 @@
                             var properties = getPropertiesFromTag('image', 'span.sf-Image-wrapper', 'img');
 
                             setTimeout(function () {
-                                angular.element('.mediaPropertiesModal').scope()
+                                angular.element(htmlElement.find('.mediaPropertiesModal'))
+                                    .scope()
                                     .$openModalDialog({ sfModel: function () { return properties; } })
                                     .then(function (data) {
                                         properties = data;
@@ -206,7 +210,7 @@
                                         // so we have to preserve the anchor and put the image inside it.
                                         markup = preserveWrapperATag(markup);
 
-                                        editor.exec('insertHtml', { html: markup, split: true });
+                                        scope.editor.exec('insertHtml', { html: markup, split: true });
                                     });
                             }, 0);
                         };
@@ -216,11 +220,11 @@
                                     serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-video-properties-content-block.sf-cshtml');
                             scope.sfMediaPropertiesController = "sfVideoPropertiesController";
 
-                            var range = editor.getRange();
+                            var range = scope.editor.getRange();
                             var properties = getPropertiesFromTag('video', null, 'video');
 
                             setTimeout(function () {
-                                angular.element('.mediaPropertiesModal')
+                                angular.element(htmlElement.find('.mediaPropertiesModal'))
                                     .scope()
                                     .$openModalDialog({ sfModel: function () { return properties; } })
                                     .then(function (data) {
@@ -229,25 +233,25 @@
                                     })
                                     .then(function (settings) {
                                         var markup = mediaMarkupService.video.markup(properties, settings);
-                                        editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                        scope.editor.exec('insertHtml', { html: markup, split: true, range: range });
                                     });
                             }, 0);
                         };
 
                         scope.toggleHtmlView = function () {
-                            if (editor === null)
+                            if (scope.editor === null)
                                 return;
 
                             if (isInHtmlView === false) {
-                                $(".js-htmlview").addClass("active");
+                                $(htmlElement.find(".js-htmlview")).addClass("active");
 
                                 var htmlEditor = $('<textarea class="html k-content" ng-model="sfModel" style="resize: none">');
                                 $compile(htmlEditor)(scope);
-                                htmlEditor.insertAfter(content);
-                                content.hide();
+                                htmlEditor.insertAfter(scope.content);
+                                scope.content.hide();
 
                                 if (!fullToolbar) {
-                                    fullToolbar = $(".k-editor-toolbar");
+                                    fullToolbar = $(htmlElement.find(".k-editor-toolbar"));
                                 }
 
                                 if (!customButtons) {
@@ -267,45 +271,45 @@
                                 shortToolbar.show();
                                 shortToolbar.append(customButtons);
                             } else {
-                                $(".js-htmlview").removeClass("active");
+                                $(htmlElement.find(".js-htmlview")).removeClass("active");
                                 fullToolbar.removeClass("sf-toolbar-full");
                                 shortToolbar.removeClass("sf-toolbar-short");
 
-                                scope.sfModel = editor.value();
+                                scope.sfModel = scope.editor.value();
 
                                 shortToolbar.hide();
                                 fullToolbar.show();
                                 fullToolbar.append(customButtons);
 
-                                var html = editor.wrapper.find('.html');
+                                var html = scope.editor.wrapper.find('.html');
                                 html.remove();
-                                content.show();
+                                scope.content.show();
                             }
 
                             isInHtmlView = !isInHtmlView;
                         };
 
                         scope.toggleFullScreen = function () {
-                            if (editor === null) {
+                            if (scope.editor === null) {
                                 return;
                             }
 
-                            fullScreenIcon = $(".js-fullScreen");
+                            scope.fullScreenIcon = htmlElement.find(".js-fullScreen");
 
-                            var modalHeaderAndFooter = $(".modal-dialog > .modal-content > .modal-header, .modal-dialog > .modal-content > .modal-footer");
+                            var modalHeaderAndFooter = htmlElement.find(".modal-dialog > .modal-content > .modal-header, .modal-dialog > .modal-content > .modal-footer");
 
-                            var mainDialog = $(".modal-dialog");
+                            var mainDialog = htmlElement.find(".modal-dialog");
 
                             if (isFullScreen === false) {
                                 mainDialog.addClass("modal-full-screen");
-                                fullScreenIcon.removeClass("glyphicon-resize-full");
-                                fullScreenIcon.addClass("glyphicon-resize-small");
+                                scope.fullScreenIcon.removeClass("glyphicon-resize-full");
+                                scope.fullScreenIcon.addClass("glyphicon-resize-small");
                             }
                             else {
                                 mainDialog.removeClass("modal-full-screen");
 
-                                fullScreenIcon.removeClass("glyphicon-resize-small");
-                                fullScreenIcon.addClass("glyphicon-resize-full");
+                                scope.fullScreenIcon.removeClass("glyphicon-resize-small");
+                                scope.fullScreenIcon.addClass("glyphicon-resize-full");
                             }
 
                             modalHeaderAndFooter.toggle();
@@ -313,7 +317,7 @@
                         };
 
                         scope.$on("close", function () {
-                            scope.sfModel = editor.value();
+                            scope.sfModel = scope.editor.value();
                         });
                     }
                 }
