@@ -278,6 +278,76 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
+        /// Places the script before the end of the body.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="script">The script.</param>
+        public static void PlaceScriptBeforeBodyEnd(this Page page, string script)
+        {
+            /* There is a literal control in the FrontendMVC.aspx which is used as a mark where scripts should be placed.*/
+            int insertAt = page.Controls.Count - 1;
+            MasterPage master = null;
+            bool hasLiteral = false;
+            for (int i = page.Controls.Count - 1; i >= 0; i--)
+            {
+                if (page.Controls[i] is LiteralControl)
+                {
+                    insertAt = i;
+                    hasLiteral = true;
+                    break;
+                }
+                else if (page.Controls[i] is MasterPage)
+                {
+                    master = page.Controls[i] as MasterPage;
+                    break;
+                }
+            }
+
+            if (master != null)
+            {
+                for (int i = master.Controls.Count - 1; i >= 0; i--)
+                {
+                    if (master.Controls[i] is LiteralControl)
+                    {
+                        insertAt = i;
+                        hasLiteral = true;
+                        break;
+                    }
+                }
+            }
+
+            if (hasLiteral)
+            {
+                if (master != null)
+                {
+                    master.Controls.AddAt(insertAt, new LiteralControl(script));
+                }
+                else
+                {
+                    if (page.Form != null)
+                    {
+                        page.Form.Controls.Add(new LiteralControl(script));
+                    }
+                    else
+                    {
+                        page.Controls.AddAt(insertAt, new LiteralControl(script));
+                    }
+                }
+            }
+            else
+            {
+                if (page.Form != null)
+                {
+                    page.Form.Controls.Add(new LiteralControl(script));
+                }
+                else
+                {
+                    page.Controls.Add(new LiteralControl(script));
+                }
+            }
+        }
+
+        /// <summary>
         /// Renders all scripts.
         /// </summary>
         /// <param name="context">The context.</param>
