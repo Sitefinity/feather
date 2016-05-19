@@ -298,7 +298,7 @@
 
                             var modalHeaderAndFooter = htmlElement.find(".modal-dialog > .modal-content > .modal-header, .modal-dialog > .modal-content > .modal-footer");
 
-                            var mainDialog = htmlElement.find(".modal-dialog");
+                            var mainDialog = htmlElement.closest(".modal-dialog");
 
                             if (isFullScreen === false) {
                                 mainDialog.addClass("modal-full-screen");
