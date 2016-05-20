@@ -130,11 +130,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         {
             get
             {
-                if (this.limitCount == null)
-                {
-                    this.limitCount = this.ItemsPerPage;
-                }
-
                 return this.limitCount;
             }
 
@@ -770,10 +765,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         private const string DefaultSortExpression = "PublicationDate DESC";
 
         private int? itemsPerPage = 20;
+        private int? limitCount = 20;
         private string sortExpression = DefaultSortExpression;
         private string serializedSelectedItemsIds;
         private IList<string> selectedItemsIds = new List<string>();
-        private int? limitCount;
 
         #endregion
     }
