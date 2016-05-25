@@ -288,7 +288,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Gets the flat taxons.
         /// </summary>
         /// <param name="fieldName">Name of the field.</param>
-        /// <param name="classificationId">The classification identifier.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Taxons")]
         public virtual IList<FlatTaxon> GetFlatTaxons(string fieldName)
@@ -302,7 +301,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             TaxonomyManager manager = TaxonomyManager.GetManager();
 
             var taxonNames = manager.GetTaxa<FlatTaxon>()
-                    .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == fieldName).ToList();
+                    .Where(t => taxonIds.Contains(t.Id)).ToList();
 
             this.cachedFieldValues[cahcedResultKey] = taxonNames;
 
@@ -323,17 +322,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 return cachedResult as IList<HierarchicalTaxon>;
 
             var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
-            string taxonomyName;
             TaxonomyManager manager = TaxonomyManager.GetManager();
-            if (fieldName == "Category")
-                taxonomyName = "Categories";
-            else if (fieldName == "Department")
-                taxonomyName = "Departments";
-            else
-                taxonomyName = fieldName;
-
+           
             var taxonNames = manager.GetTaxa<HierarchicalTaxon>()
-                   .Where(t => taxonIds.Contains(t.Id) && t.Taxonomy.Name == taxonomyName).ToList();
+                   .Where(t => taxonIds.Contains(t.Id)).ToList();
             this.cachedFieldValues[cahcedResultKey] = taxonNames;
 
             return taxonNames;
