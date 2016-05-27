@@ -169,8 +169,22 @@ namespace Telerik.Sitefinity.Frontend
         }
 
         private Lazy<IEnumerable<IInitializer>> initializers = new Lazy<IEnumerable<IInitializer>>(() =>
-            typeof(FrontendModule).Assembly.GetTypes().Where(t => typeof(IInitializer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).Select(t => Activator.CreateInstance(t) as IInitializer).ToList());
-        
+        {
+            try
+            {
+                return typeof(FrontendModule).Assembly.GetTypes().Where(t => typeof(IInitializer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract).Select(t => Activator.CreateInstance(t) as IInitializer).ToList();
+            }
+            catch (System.Reflection.ReflectionTypeLoadException ex)
+            {
+                string message = string.Join(" ", ex.LoaderExceptions.Select(e => e.Message));
+                throw new InvalidOperationException(message, ex);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        });
+
         private IKernel ninjectDependencyResolver;
     }
 }
