@@ -25,6 +25,7 @@
     <FeatherResourcePackagesFolder Condition=" '$(FeatherResourcePackagesFolder)' == '' ">$(MSBuildThisFileDirectory)$(FeatherResourcePackagesFolderName)</FeatherResourcePackagesFolder>
     <FeatherResourcePackageAttributeFullName Condition=" '$(FeatherResourcePackageAttributeFullName)' == '' ">Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes.ResourcePackage</FeatherResourcePackageAttributeFullName>
 	<EnhancerDoNotCheckVersionOfReferencedAssemblies>true</EnhancerDoNotCheckVersionOfReferencedAssemblies>
+	<FeatherCodeGenDirectory>$(MsBuildProjectDirectory)\obj\FeatherCodeGen\</FeatherCodeGenDirectory>
   </PropertyGroup>
 
   <ItemGroup>
@@ -73,20 +74,20 @@
 	<!-- Please uncomment this in case of using Feather Razor precompilation -->
 	<RazorCodeGen ProjectRoot="$(MsBuildProjectDirectory)\$(FeatherResourcePackagesFolderName)\%(FeatherRazorSrcFiles.PackageName)\"
                                 FilesToPrecompile="@(FeatherRazorSrcFiles)"
-                                CodeGenDirectory="$(RazorViewsCodeGenDirectory)$(FeatherResourcePackagesFolderName)\%(FeatherRazorSrcFiles.PackageName)"
+                                CodeGenDirectory="$(FeatherCodeGenDirectory)$(FeatherResourcePackagesFolderName)\%(FeatherRazorSrcFiles.PackageName)"
                                 RootNamespace="$(RootNamespace).$(FeatherResourcePackagesFolderName).%(FeatherRazorSrcFiles.PackageName)">
       <Output TaskParameter="GeneratedFiles" ItemName="FeatherRazorOutputFiles" />
     </RazorCodeGen>
     <ItemGroup>
-      <RazorGeneratedCsFiles Include="$(RazorViewsCodeGenDirectory)$(FeatherResourcePackagesFolderName)\%(FeatherRazorSrcFiles.PackageName)\**\*.cs">
+      <RazorGeneratedCsFiles Include="$(FeatherCodeGenDirectory)$(FeatherResourcePackagesFolderName)\%(FeatherRazorSrcFiles.PackageName)\**\*.cs">
         <PackageName>%(FeatherRazorSrcFiles.PackageName)</PackageName>
       </RazorGeneratedCsFiles>
     </ItemGroup>
   </Target>
 
-  <Target Name="GenerateAssemblyInfoFilesForResourcePackageDlls" Inputs="@(RazorGeneratedCsFiles)" Outputs="$(RazorViewsCodeGenDirectory)%(RazorGeneratedCsFiles.PackageName)AssemblyInfo.cs">
+  <Target Name="GenerateAssemblyInfoFilesForResourcePackageDlls" Inputs="@(RazorGeneratedCsFiles)" Outputs="$(FeatherCodeGenDirectory)%(RazorGeneratedCsFiles.PackageName)AssemblyInfo.cs">
     <PropertyGroup>
-      <PrecompiledViewsAssemblyInfoFile>$(RazorViewsCodeGenDirectory)%(RazorGeneratedCsFiles.PackageName)AssemblyInfo.cs</PrecompiledViewsAssemblyInfoFile>
+      <PrecompiledViewsAssemblyInfoFile>$(FeatherCodeGenDirectory)%(RazorGeneratedCsFiles.PackageName)AssemblyInfo.cs</PrecompiledViewsAssemblyInfoFile>
     </PropertyGroup>
     <ItemGroup>
       <AssemblyAttributes Include="$(FeatherResourcePackageAttributeFullName)">
@@ -151,5 +152,6 @@
 
   <Target Name="CleanRazorCsFiles">
     <RemoveDir Condition="$(RazorViewsCodeGenDirectory)!=''" ContinueOnError="true" Directories="$(RazorViewsCodeGenDirectory)"/>
+    <RemoveDir Condition="$(FeatherCodeGenDirectory)!=''" ContinueOnError="true" Directories="$(FeatherCodeGenDirectory)"/>
   </Target>
 </Project>

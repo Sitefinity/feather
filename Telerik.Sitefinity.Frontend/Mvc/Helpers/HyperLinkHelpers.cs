@@ -9,8 +9,11 @@ using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Localization.UrlLocalizationStrategies;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.DataResolving;
+using Telerik.Sitefinity.Web.UrlEvaluation;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -167,6 +170,34 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Builds the query string parameters for filtering by taxon.
+        /// </summary>
+        /// <param name="taxon">The taxon.</param>
+        /// <param name="urlKeyPrefix">The URL key prefix.</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#")]
+        public static string BuildTaxonQueryStringParams(ITaxon taxon, string urlKeyPrefix)
+        {
+            var evaluator = new TaxonomyEvaluator();
+            var taxonBuildOptions = TaxonBuildOptions.None;
+            string taxonRelativeUrl = null;
+
+            if (taxon.Taxonomy is HierarchicalTaxonomy)
+            {
+                taxonBuildOptions = TaxonBuildOptions.Hierarchical;
+                taxonRelativeUrl = (taxon as HierarchicalTaxon).FullUrl;
+            }
+            else if (taxon.Taxonomy is FlatTaxonomy)
+            {
+                taxonBuildOptions = TaxonBuildOptions.Flat;
+                taxonRelativeUrl = taxon.UrlName.Value;
+            }
+
+            var taxonQueryStringParams = evaluator.BuildUrl(taxon.Taxonomy.Name, taxonRelativeUrl, taxon.Taxonomy.Name, taxonBuildOptions, UrlEvaluationMode.QueryString, urlKeyPrefix);
+            return taxonQueryStringParams;
         }
     }
 }
