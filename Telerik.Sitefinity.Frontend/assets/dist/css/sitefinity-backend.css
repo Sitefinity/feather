@@ -16435,15 +16435,15 @@
   width: 100%; }
 
 .sf-backend-wrp .modal-header {
-  padding: 15px 20px;
+  padding: 20px 20px;
   border: 0; }
 
 .sf-backend-wrp .modal-footer {
   padding: 15px 20px; }
 
 .sf-backend-wrp .sf-widget-header {
-  padding-top: 15px;
-  padding-bottom: 15px; }
+  padding-top: 20px;
+  padding-bottom: 20px; }
   .sf-backend-wrp .sf-widget-header h3 {
     font-size: 10px;
     color: #666;
@@ -16500,7 +16500,7 @@
 
 .sf-backend-wrp.modal-fluid .modal-body {
   position: absolute;
-  top: 65px;
+  top: 72px;
   right: 0;
   bottom: 65px;
   left: 0; }
@@ -16702,9 +16702,15 @@
     margin-top: -5px; }
 
 .sf-backend-wrp .nav-wrapper {
-  margin: 0 0 20px;
+  margin: 0px -20px 20px;
   padding: 15px 20px;
-  background: #fff; }
+  background: #fff;
+  border-top: 1px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
+  background: #f2f2f2; }
+  .sf-backend-wrp .nav-wrapper.nav-wrapper--light {
+    border-color: #e4e4e4;
+    background: transparent; }
 
 .sf-backend-wrp .nav-tabs-wrapper .nav.nav-tabs {
   margin: 0 0 20px;
@@ -16775,6 +16781,7 @@
   height: 30px; }
 
 .sf-backend-wrp .label-taxon {
+  padding: 3px 6px;
   max-width: 33%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -16786,8 +16793,8 @@
   color: #000;
   font-family: open_sansregular, Arial, Verdana, sans-serif;
   vertical-align: top;
-  line-height: 1.7em;
-  font-size: 86%; }
+  line-height: 1.5;
+  font-size: 13px; }
   .sf-backend-wrp .label-taxon:last-child {
     margin-right: 0; }
 
@@ -17269,7 +17276,8 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  overflow-y: auto; }
+  overflow-y: auto;
+  border-top: 1px solid #e4e4e4; }
 
 .sf-backend-wrp .Media-content {
   right: 260px;
@@ -17568,7 +17576,8 @@
   color: #000; }
 
 .sf-backend-wrp .nav-stacked li.active > a, .sf-backend-wrp .nav-stacked li.active > a:hover {
-  background-color: #428bca; }
+  background-color: #e4e4e4;
+  color: #000; }
 
 .sf-backend-wrp .Media-file.Media-file--doc .Media-file-thumb-holder {
   height: 120px;
@@ -17714,10 +17723,10 @@
   overflow: hidden;
   white-space: nowrap; }
   .sf-backend-wrp .sf-Tree-item span:hover, .sf-backend-wrp .sf-Tree-item span:focus {
-    background-color: #eee; }
+    background-color: transparent; }
   .sf-backend-wrp .sf-Tree-item span.is-selected {
-    background-color: #428bca;
-    color: #fff; }
+    background-color: #e4e4e4;
+    color: #000; }
 
 .sf-backend-wrp .sf-Tree-item label {
   cursor: pointer; }
