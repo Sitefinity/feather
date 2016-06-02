@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.ContentLocations;
@@ -15,7 +13,7 @@ using Telerik.Sitefinity.GenericContent.Model;
 using Telerik.Sitefinity.Lifecycle;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.GenericContent;
-using Telerik.Sitefinity.Mvc;
+using Telerik.Sitefinity.Mvc.Proxy.Security;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
@@ -84,13 +82,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 }
             }
 
-            IDataItem item;
+            IDataItem item = null;
             var contentManager = manager as IContentManager;
             if (contentManager != null)
             {
-                var isPublished = !this.IsPreviewRequested() ||
-                    this.ResolveRequestedItemStatus() == ContentLifecycleStatus.Live;
-                item = contentManager.GetItemFromUrl(itemType, url, isPublished, out redirectUrl);
+                var isPublished = !this.IsPreviewRequested() || this.ResolveRequestedItemStatus() == ContentLifecycleStatus.Live;
+                try
+                {
+                    item = contentManager.GetItemFromUrl(itemType, url, isPublished, out redirectUrl);
+                }
+                catch (System.UnauthorizedAccessException e)
+                {
+                    redirectUrl = null;
+                    ItemAccessException access = new ItemAccessException(e.Message, e.InnerException);
+                    access.Data["ItemType"] = itemType.Name;
+
+                    throw access;
+                }
 
                 if (item != null)
                 {
