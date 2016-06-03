@@ -21,6 +21,7 @@
                     sfGroupName: '@',
                     sfFilterLabel: '@',
                     sfFilterTitleLabel: '@',
+                    sfAnyTimeLabel: '@?',
                     sfIsUpcomingPeriod: '=?',
                     sfCustomRangeMinDate: '=?',
                     sfCustomRangeMaxDate: '=?',
@@ -85,6 +86,7 @@
 
                         var translateQueryItems = function (collection) {
                             var result = new timeSpanItem();
+                            result.displayText = scope.sfAnyTimeLabel;
 
                             if (!collection || !collection.length) {
                                 return result;
@@ -182,12 +184,15 @@
                         var populateSelectedDateFilters = function () {
                             if (!scope.selectedDateFilters) {
                                 scope.selectedDateFilters = [];
+                                if (scope.sfQueryData && scope.sfQueryData.QueryItems && scope.sfQueryData.QueryItems.length === 0) {
+                                    constructFilterItem(scope.sfGroupName);
+                                }
                             }
 
                             if (scope.sfQueryData.QueryItems) {
                                 scope.sfQueryData.QueryItems.forEach(function (queryItem) {
                                     {
-                                        if (queryItem.IsGroup)
+                                        if (queryItem.IsGroup && queryItem.Name === scope.sfGroupName)
                                             constructFilterItem(queryItem.Name);
                                     }
                                 });
