@@ -10,4 +10,5 @@
      sf-group-logical-operator="AND"
      sf-item-logical-operator="AND"
      sf-query-field-name="PublicationDate"
+     sf-any-time-label='@(Res.Get<ClientComponentsResources>().AnyTime)'
      class="sf-date-filter"></sf-date-filter>
