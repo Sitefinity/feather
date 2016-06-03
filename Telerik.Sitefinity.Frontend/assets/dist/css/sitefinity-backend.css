@@ -16259,6 +16259,7 @@
 
 .sf-backend-wrp .description-note {
   margin-top: -6px;
+  margin-bottom: 5px;
   color: #777; }
 
 .sf-backend-wrp .sf-loading:before, .sf-backend-wrp .sf-loading:after, .sf-backend-wrp .sf-loading > span {
@@ -16452,6 +16453,11 @@
 .sf-backend-wrp .modal-header .close {
   margin-top: -4px; }
 
+.sf-backend-wrp .modal-title {
+  font-size: 10px;
+  color: #666;
+  text-transform: uppercase; }
+
 .sf-backend-wrp .modal-body {
   padding: 20px;
   padding-top: 0; }
@@ -16507,9 +16513,10 @@
 
 .sf-backend-wrp .modal-settings {
   display: block;
-  margin: -20px -20px 20px -20px;
+  margin-bottom: 20px;
   padding: 20px;
-  background: #f2f2f2; }
+  background: transparent;
+  border: 1px solid #e5e5e5; }
 
 .sf-backend-wrp .modal-settings-space {
   margin-top: -35px;
@@ -17957,15 +17964,23 @@
   margin-top: -20px;
   margin-bottom: -50px;
   cursor: text; }
+  .sf-backend-wrp .sf-code.sf-code--down {
+    margin-top: 0; }
   .sf-backend-wrp .sf-code .CodeMirror-scroll {
     margin-left: -20px;
-    margin-right: -20px; }
+    margin-right: -20px;
+    border-top: 1px solid #f2f2f2; }
   .sf-backend-wrp .sf-code pre {
-    overflow: visible; }
+    margin: 0;
+    overflow: visible;
+    border-radius: 0; }
 
 .sf-backend-wrp .sf-code-tips {
   position: relative;
   margin-top: -30px; }
+
+.sf-backend-wrp .CodeMirror pre {
+  font-family: Courier, monospace; }
 
 .sf-backend-wrp .sf-textarea {
   margin: -20px -20px -50px; }
