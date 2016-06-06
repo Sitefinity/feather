@@ -75,6 +75,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                             .Replace("{{frontendLanguages}}", this.GetFrontendLanguages())
                             .Replace("{{currentFrontendRootNodeId}}", this.CurrentFrontendRootNodeId.ToString())
                             .Replace("{{currentUserId}}", currentUserId)
+                            .Replace("{{siteId}}", currentSiteId.ToString())
                             .Replace("{{isMultisiteMode}}", SystemManager.CurrentContext.IsMultisiteMode.ToString());
 
                         cache.Add(
