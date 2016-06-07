@@ -12,34 +12,39 @@
       pointer-events: none
   
   .k-tabstrip-items
-    margin: 0 -20px 20px
-    padding: 10px 20px
-    background: #f2f2f2
+    margin: 0 0 20px
+    padding: 0
+    background: transparent
+    border-bottom: 1px solid #e5e5e5
 
     .k-item
-      margin: 0 10px 0 0
+      margin-bottom: -1px
       text-transform: none
-      border-radius: 4px
-      border: none
       background: none
+      border: 0
       
     .k-link
-      padding: 5px 10px
+      margin-right: 2px
+      padding: 10px 15px
       color: #337cb7
+      border: 1px solid transparent
+      border-radius: 4px 4px 0 0
       .badge
+        background-color: #aeaeae
         margin: -4px -4px -4px 0
 
     .k-state-hover
-      color: #23547c
-      background: #eee
+      color: #0a3870
+      background: transparent
 
     .k-state-active
-      background: #428bca
+      background: transparent
 
       .k-link
-        color: #fff
-        .badge
-          background: none
+        color: #555
+        background-color: #fff
+        border: 1px solid #e5e5e5
+        border-bottom-color: transparent
 
     .k-loading
       border: none
