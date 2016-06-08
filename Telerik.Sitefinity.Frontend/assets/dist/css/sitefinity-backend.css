@@ -15922,7 +15922,8 @@
       margin-top: 9px; }
   .sf-backend-wrp .kendo-content-block {
     display: block;
-    margin: 0 -30px -20px; }
+    margin: 0 -30px -20px;
+    border-bottom: 1px solid #e5e5e5; }
     .sf-backend-wrp .kendo-content-block.kendo-content-block--sh {
       margin: -21px -20px -51px; }
   .sf-backend-wrp .modal-full-screen {
@@ -16009,7 +16010,7 @@
         border-radius: 4px 4px 0 0; }
         .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-tabstrip-items .k-link .badge {
           background-color: #aeaeae;
-          margin: -4px -4px -4px 0; }
+          margin: -7px -4px -4px 0; }
       .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-tabstrip-items .k-state-hover {
         color: #0a3870;
         background: transparent; }
@@ -16071,7 +16072,7 @@
     .sf-backend-wrp .k-treeview.k-treeview--list-group a:hover:after, .sf-backend-wrp .k-treeview.k-treeview--list-group a:focus:after {
       content: "";
       position: absolute;
-      background: #f5f5f5;
+      background: #f9f9f9;
       height: 100%;
       width: 200%;
       left: -100%;
@@ -16087,11 +16088,6 @@
       width: 200%;
       left: -100%;
       top: 0; }
-    .sf-backend-wrp .k-treeview.k-treeview--list-group a.active [class*=" icon-item-"]:before,
-    .sf-backend-wrp .k-treeview.k-treeview--list-group a.active [class^=icon-item-]:before {
-      color: #fff; }
-    .sf-backend-wrp .k-treeview.k-treeview--list-group a.active .small {
-      color: #9CC5F7; }
     .sf-backend-wrp .k-treeview.k-treeview--list-group a.disabled [class*=" icon-item-"],
     .sf-backend-wrp .k-treeview.k-treeview--list-group a.disabled [class^=icon-item-] {
       opacity: .5;
@@ -16119,9 +16115,7 @@
     box-shadow: none; }
   .sf-backend-wrp .k-treeview.k-treeview--list-group > .k-group {
     overflow: hidden;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    border-top: 0; }
+    border-bottom: 1px solid #ddd; }
     .sf-backend-wrp .k-treeview.k-treeview--list-group > .k-group > li {
       padding-left: 0;
       position: relative; }
@@ -16294,8 +16288,8 @@
   display: none; }
 
 .sf-backend-wrp .side-to-side {
-  margin-left: -20px;
-  margin-right: -20px; }
+  margin-left: -30px;
+  margin-right: -30px; }
 
 .sf-backend-wrp .description-note {
   margin-top: -6px;
@@ -16485,7 +16479,8 @@
   border: 0; }
 
 .sf-backend-wrp .modal-footer {
-  padding: 20px 30px; }
+  padding: 20px 30px;
+  border: 0; }
 
 .sf-backend-wrp .sf-widget-header {
   padding-top: 20px;
@@ -16555,15 +16550,13 @@
   position: absolute;
   top: 72px;
   right: 0;
-  bottom: 65px;
+  bottom: 73px;
   left: 0; }
 
 .sf-backend-wrp .modal-settings {
   display: block;
   margin-bottom: 20px;
-  padding: 20px;
-  background: transparent;
-  border: 1px solid #e5e5e5; }
+  background: transparent; }
 
 .sf-backend-wrp .modal-settings-space {
   margin-top: -35px;
@@ -16752,8 +16745,7 @@
 
 .sf-backend-wrp .list-group-endless {
   max-height: 500px;
-  overflow-y: auto;
-  border-radius: 4px; }
+  overflow-y: auto; }
 
 .sf-backend-wrp .list-group-external .list-group-item {
   padding: 10px 5px 5px 30px; }
@@ -16764,11 +16756,10 @@
   margin: 0px -30px 20px;
   padding: 15px 20px;
   background: #fff;
-  border-top: 1px solid #f2f2f2;
-  border-bottom: 1px solid #f2f2f2;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
   background: #f2f2f2; }
   .sf-backend-wrp .nav-wrapper.nav-wrapper--light {
-    border-color: #e4e4e4;
     background: transparent; }
 
 .sf-backend-wrp .nav-tabs-wrapper .nav.nav-tabs {
@@ -17298,7 +17289,8 @@
 
 .sf-backend-wrp .Options {
   margin: 50px -30px -20px;
-  border-top: 1px solid #e5e5e5; }
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5; }
   .sf-backend-wrp .Options .glyphicon-triangle-right,
   .sf-backend-wrp .Options .glyphicon-triangle-bottom {
     display: none; }
@@ -18036,7 +18028,8 @@
   .sf-backend-wrp .sf-code .CodeMirror-scroll {
     margin-left: -30px;
     margin-right: -30px;
-    border-top: 1px solid #f2f2f2; }
+    margin-top: -1px;
+    border-top: 1px solid #e5e5e5; }
   .sf-backend-wrp .sf-code pre {
     margin: 0;
     overflow: visible;
