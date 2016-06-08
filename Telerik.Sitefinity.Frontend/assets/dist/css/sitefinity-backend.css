@@ -15842,9 +15842,9 @@
     line-height: 2em; }
   .sf-backend-wrp .modal-body .k-editor-widget {
     margin-right: 6px;
-    background: transparent;
     border: none;
-    border-collapse: collapse; }
+    border-collapse: collapse;
+    background: #f2f2f2; }
     .sf-backend-wrp .modal-body .k-editor-widget:last-child {
       margin-right: 0; }
     .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar-wrap {
@@ -15852,10 +15852,8 @@
       padding-left: 0; }
     .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar {
       position: relative;
-      margin: -23px 0 0;
-      padding: 0 110px 0 20px;
-      min-height: 50px;
-      background: #f2f2f2; }
+      margin: 0;
+      padding: 0 80px 0 20px; }
       .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar.sf-toolbar-short {
         position: absolute;
         top: 0;
@@ -15875,14 +15873,19 @@
         top: 10px;
         right: 20px; }
       .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar > li:nth-last-child(2) {
-        top: 0;
-        right: 65px; }
+        top: -56px;
+        right: 49px; }
+        .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar > li:nth-last-child(2) .custom-tool {
+          color: #666; }
+          .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar > li:nth-last-child(2) .custom-tool:hover {
+            background: transparent;
+            color: #333; }
       .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .custom-tool {
         color: #797979; }
         .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .custom-tool:hover {
           color: #000; }
         .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .custom-tool .glyphicon {
-          padding-top: 11px; }
+          padding-top: 16px; }
         .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .custom-tool.btn {
           margin-top: 1px;
           margin-right: -12px; }
@@ -15898,7 +15901,7 @@
         min-height: 347px;
         max-width: 900px; }
       .sf-backend-wrp .modal-body .k-editor-widget .k-editable-area textarea.html {
-        padding: 20px;
+        padding: 30px;
         box-sizing: border-box; }
     .sf-backend-wrp .modal-body .k-editor-widget .k-tool {
       transition: 0.2s; }
@@ -15906,16 +15909,20 @@
         background: #ddd; }
         .sf-backend-wrp .modal-body .k-editor-widget .k-tool:hover .k-tool-icon {
           opacity: 1; }
+      .sf-backend-wrp .modal-body .k-editor-widget .k-tool.k-state-hover {
+        border-radius: 0; }
     .sf-backend-wrp .modal-body .k-editor-widget .k-state-selected,
     .sf-backend-wrp .modal-body .k-editor-widget .k-tool.k-state-active {
       background: #ddd; }
     .sf-backend-wrp .modal-body .k-editor-widget .k-button-group .k-tool {
       vertical-align: top; }
     .sf-backend-wrp .modal-body .k-editor-widget .k-button-group .k-tool-icon {
-      margin-top: 6px; }
+      margin-top: 12px; }
+    .sf-backend-wrp .modal-body .k-editor-widget .k-dropdown-wrap .k-icon {
+      margin-top: 9px; }
   .sf-backend-wrp .kendo-content-block {
     display: block;
-    margin: 3px -20px -20px; }
+    margin: 0 -30px -20px; }
     .sf-backend-wrp .kendo-content-block.kendo-content-block--sh {
       margin: -21px -20px -51px; }
   .sf-backend-wrp .modal-full-screen {
@@ -15943,6 +15950,32 @@
         border: 1px dashed #999; }
   .sf-backend-wrp .editor-lg {
     height: 540px; }
+  .sf-backend-wrp .sf-maximize {
+    position: relative;
+    display: block; }
+    .sf-backend-wrp .sf-maximize:before, .sf-backend-wrp .sf-maximize:after {
+      content: "";
+      display: block;
+      height: 8px;
+      width: 8px;
+      border: 2px solid #666;
+      border-radius: 3px;
+      position: absolute;
+      background: #fff;
+      box-sizing: content-box; }
+    .sf-backend-wrp .sf-maximize:before {
+      top: 21px;
+      left: 17px;
+      z-index: 2; }
+    .sf-backend-wrp .sf-maximize:after {
+      top: 18px;
+      left: 20px; }
+    .sf-backend-wrp .sf-maximize.sf-minimize:after {
+      display: none; }
+    .sf-backend-wrp .sf-maximize.sf-minimize:before {
+      top: 20px; }
+    .sf-backend-wrp .sf-maximize:hover:after, .sf-backend-wrp .sf-maximize:hover:before {
+      border-color: #333; }
   .sf-backend-wrp .k-tabstrip.k-tabstrip--selection {
     border: none;
     background: none; }
@@ -16293,7 +16326,8 @@
 .sf-backend-wrp .sf-loading-wrapper {
   position: absolute;
   z-index: 902;
-  background: rgba(0, 0, 0, 0.5);
+  background: #666;
+  opacity: 0.6;
   top: 0;
   left: 0;
   right: 0;
@@ -16457,7 +16491,13 @@
     text-transform: uppercase; }
 
 .sf-backend-wrp .modal-header .close {
-  margin-top: -4px; }
+  margin-top: -4px;
+  font-size: 14px;
+  opacity: 1; }
+  .sf-backend-wrp .modal-header .close i {
+    color: #666; }
+    .sf-backend-wrp .modal-header .close i:hover {
+      color: #333; }
 
 .sf-backend-wrp .modal-title {
   font-size: 10px;
@@ -16469,9 +16509,6 @@
   .sf-backend-wrp .modal-body .modal-body {
     padding: 0;
     min-height: 0; }
-
-.sf-backend-wrp .modal-backdrop {
-  bottom: 0; }
 
 .sf-backend-wrp .modal-content {
   border-radius: 3px; }
@@ -16719,7 +16756,7 @@
     margin-top: -5px; }
 
 .sf-backend-wrp .nav-wrapper {
-  margin: 0px -20px 20px;
+  margin: 0px -30px 20px;
   padding: 15px 20px;
   background: #fff;
   border-top: 1px solid #f2f2f2;
@@ -16839,6 +16876,21 @@
   background: transparent;
   font-family: open_sansregular, Arial, Verdana, sans-serif;
   font-size: 13px; }
+
+.modal-backdrop {
+  bottom: 0;
+  background: #666;
+  opacity: 0.6; }
+
+.modal-open .k-list-container .k-item.k-state-hover {
+  border: 0;
+  background-image: none;
+  background-color: #eee;
+  border-radius: 0; }
+
+.modal-open .k-list-container .k-item.k-state-focused {
+  border: 0;
+  box-shadow: none; }
 
 .popover {
   z-index: 9999;
@@ -17977,8 +18029,8 @@
   .sf-backend-wrp .sf-code.sf-code--down {
     margin-top: 0; }
   .sf-backend-wrp .sf-code .CodeMirror-scroll {
-    margin-left: -20px;
-    margin-right: -20px;
+    margin-left: -30px;
+    margin-right: -30px;
     border-top: 1px solid #f2f2f2; }
   .sf-backend-wrp .sf-code pre {
     margin: 0;
