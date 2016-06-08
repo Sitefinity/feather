@@ -15956,24 +15956,29 @@
     .sf-backend-wrp .sf-maximize:before, .sf-backend-wrp .sf-maximize:after {
       content: "";
       display: block;
-      height: 8px;
-      width: 8px;
+      height: 5px;
+      width: 5px;
       border: 2px solid #666;
-      border-radius: 3px;
       position: absolute;
       background: #fff;
       box-sizing: content-box; }
     .sf-backend-wrp .sf-maximize:before {
-      top: 21px;
-      left: 17px;
-      z-index: 2; }
+      top: 20px;
+      left: 20px;
+      width: 7px;
+      border-top-width: 4px; }
     .sf-backend-wrp .sf-maximize:after {
+      display: none; }
+    .sf-backend-wrp .sf-maximize.sf-minimize:after {
+      display: block;
       top: 18px;
       left: 20px; }
-    .sf-backend-wrp .sf-maximize.sf-minimize:after {
-      display: none; }
     .sf-backend-wrp .sf-maximize.sf-minimize:before {
-      top: 20px; }
+      top: 21px;
+      left: 17px;
+      width: 5px;
+      z-index: 2;
+      border-top-width: 2px; }
     .sf-backend-wrp .sf-maximize:hover:after, .sf-backend-wrp .sf-maximize:hover:before {
       border-color: #333; }
   .sf-backend-wrp .k-tabstrip.k-tabstrip--selection {

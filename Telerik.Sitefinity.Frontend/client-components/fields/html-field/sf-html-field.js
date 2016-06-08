@@ -36,7 +36,6 @@
                                 scope.content = scope.editor.wrapper.find('iframe.k-content').first();
 
                                 scope.fullScreenIcon = htmlElement.find(".js-fullScreen");
-                                scope.fullScreenIcon.addClass("glyphicon-resize-full");
 
                                 scope.toggleAllTools();
                             }
@@ -302,14 +301,12 @@
 
                             if (isFullScreen === false) {
                                 mainDialog.addClass("modal-full-screen");
-                                scope.fullScreenIcon.removeClass("glyphicon-resize-full");
-                                scope.fullScreenIcon.addClass("glyphicon-resize-small");
+                                scope.fullScreenIcon.addClass("sf-minimize");
                             }
                             else {
                                 mainDialog.removeClass("modal-full-screen");
+                                scope.fullScreenIcon.removeClass("sf-minimize");
 
-                                scope.fullScreenIcon.removeClass("glyphicon-resize-small");
-                                scope.fullScreenIcon.addClass("glyphicon-resize-full");
                             }
 
                             modalHeaderAndFooter.toggle();

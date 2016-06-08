@@ -155,27 +155,31 @@
 	&:after
 		content: ""
 		display: block
-		height: 8px
-		width: 8px
+		height: 5px
+		width: 5px
 		border: 2px solid #666
-		border-radius: 3px
 		position: absolute
 		background: #fff
 		box-sizing: content-box
 	&:before
-		top: 21px
-		left: 17px
-		z-index: 2
-	&:after
-		top: 18px
+		top: 20px
 		left: 20px
+		width: 7px
+		border-top-width: 4px
+	&:after
+		display: none
 
 	&.sf-minimize
 		&:after
-			display: none
+			display: block
+			top: 18px
+			left: 20px
 		&:before
-			top: 20px
-
+			top: 21px
+			left: 17px
+			width: 5px
+			z-index: 2
+			border-top-width: 2px
 	&:hover
 		&:after,
 		&:before
