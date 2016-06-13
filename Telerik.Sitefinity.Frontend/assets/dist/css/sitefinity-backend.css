@@ -16830,6 +16830,10 @@
 .sf-backend-wrp .input-group-sm > .input-group-btn > input.btn {
   height: 30px; }
 
+.sf-backend-wrp .input-group-btn .glyphicon,
+.sf-backend-wrp .btn .glyphicon {
+  line-height: inherit; }
+
 .sf-backend-wrp .label-taxon {
   padding: 3px 6px;
   max-width: 33%;
@@ -17315,7 +17319,7 @@
   padding: 20px; }
 
 .sf-backend-wrp .Options-arrows .Options {
-  margin: 25px 0 50px;
+  margin: 0;
   border: 0; }
 
 .sf-backend-wrp .Options-arrows .Options-toggler {
@@ -17324,7 +17328,8 @@
   .sf-backend-wrp .Options-arrows .Options-toggler:hover {
     background: transparent; }
   .sf-backend-wrp .Options-arrows .Options-toggler + div {
-    padding-top: 0; }
+    padding-top: 0;
+    padding-bottom: 0; }
 
 .sf-backend-wrp .Options-arrows .glyphicon-triangle-right,
 .sf-backend-wrp .Options-arrows .glyphicon-triangle-bottom {
@@ -17531,7 +17536,7 @@
   padding: 9px 20px;
   line-height: 26px;
   border-top: 1px solid #e5e5e5;
-  border-bottom: none;
+  border-bottom: 1px solid #e5e5e5;
   background: none; }
   .sf-backend-wrp .Media-settings--bottom a {
     color: #777; }
