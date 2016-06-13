@@ -16360,6 +16360,7 @@
   color: #a9a9a9; }
 
 .sf-backend-wrp h5, .sf-backend-wrp .h5 {
+  margin-bottom: 30px;
   font-family: open_sanssemibold, Arial, Verdana, sans-serif;
   font-size: 16px; }
 
@@ -16383,6 +16384,10 @@
 
 .sf-backend-wrp p {
   margin-bottom: 0; }
+
+.sf-backend-wrp strong {
+  font-weight: normal;
+  font-family: open_sanssemibold, Arial, Verdana, sans-serif; }
 
 .sf-backend-wrp .row-none {
   margin-right: 0px;
@@ -16834,6 +16839,15 @@
 .sf-backend-wrp .btn .glyphicon {
   line-height: inherit; }
 
+.sf-backend-wrp .radio label,
+.sf-backend-wrp .checkbox label {
+  font-weight: normal;
+  font-family: open_sansregular, Arial, Verdana, sans-serif; }
+
+.sf-backend-wrp label.radio-inline {
+  font-weight: normal;
+  font-family: open_sansregular, Arial, Verdana, sans-serif; }
+
 .sf-backend-wrp .label-taxon {
   padding: 3px 6px;
   max-width: 33%;
@@ -16861,8 +16875,12 @@
   margin-top: 5px; }
 
 .sf-backend-wrp .badge,
-.sf-backend-wrp .label {
+.sf-backend-wrp .label,
+.sf-backend-wrp label {
   font-weight: normal; }
+
+.sf-backend-wrp label {
+  font-family: open_sanssemibold, Arial, Verdana, sans-serif; }
 
 .sf-backend-wrp .badge {
   max-width: 100%;
