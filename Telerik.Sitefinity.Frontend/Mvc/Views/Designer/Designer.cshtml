@@ -15,7 +15,7 @@
 			    <sf-loading ng-show="feedback.showLoadingIndicator"></sf-loading>
 
 			    <div ng-show="feedback.showError" class="alert alert-danger">
-				    <a class="close" data-dismiss="alert" ng-click="hideError()">&times;</a>
+				    <a class="close" data-dismiss="alert" ng-click="hideError()"><i class="fa fa-times"></i></a>
 				    <strong>@Html.Resource("Error")</strong> <span ng-bind="feedback.errorMessage"></span>
 			    </div>
 
