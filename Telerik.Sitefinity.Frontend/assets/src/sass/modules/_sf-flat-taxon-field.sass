@@ -23,19 +23,18 @@
 		list-style-type: none
 
 	.tag-item
-		padding: 0.1em .6em 0.2em
+		padding: 2px 10px 3px
 		float: left
-		background-color: #e4e4e4
+		background-color: #ddecf4
 		color: #000
-		font-weight: 400
+		font-family: $font-family-sans-serif
 		vertical-align: top
-		line-height: 1.7em
-		font-size: 86%
-		border-radius: .25em
+		line-height: 1.5
+		font-size: 13px
+		border-radius: 10px
 		margin-right: 0.2em
 		margin-bottom: 2px
 		position: relative
-		max-width: 33%
 		text-overflow: ellipsis
 		overflow: hidden
 		border: 1px solid transparent
@@ -43,35 +42,34 @@
 		&:first-child
 			margin-left: 0
 
-		&:hover,
-		&.selected
-			.remove-button
-				display: block
-
 		&.selected
 			background: #f2dede
 			border: 1px solid #ebccd1
 
 	.remove-button
-		display: none
-		position: absolute
-		right: 4px
-		top: 4px
-		color: #fff
-		border-radius: 50%
-		background: #ED2C2C
-		width: 16px
-		text-indent: 3px
-		height: 16px
-		font-size: 16px
+		display: inline-block
+		width: 13px
+		height: 13px
+		overflow: hidden
 		vertical-align: middle
-		font-weight: 700
-		line-height: 18px
+		margin-left: 5px
+		cursor: pointer
+		font-family: $font-family-bold
+		color: #999
+		&:before
+			display: inline-block
+			font-family: FontAwesome
+			content: "\f057"
+			vertical-align: top
+			line-height: 13px
+			font-size: 14px
+			color: #999
 
 		&:focus,
 		&:hover
-			text-decoration: none
-			background-color: #9E0C0C
+			&:before
+				text-decoration: none
+				color: #666
 
 	.input
 		border: 0
@@ -80,22 +78,21 @@
 		padding: 1px 0 4px 5px
 		float: left
 		line-height: 1.7em
-		font-size: 86%
+		font-size: 13px
 
 	// Auto complete
 	.autocomplete
 		position: relative
 
 	.suggestion-list
+		margin-top: -1px
 		overflow: hidden
 		position: absolute
 		background: #fff
 		width: 100%
 		border: 1px solid $input-border
-		border-radius: $input-border-radius
 		padding-top: 10px
 		padding-left: 0
-		margin-top: -10px
 		list-style: none
 		z-index: 1
 
@@ -103,13 +100,12 @@
 			padding: 2px 6px
 
 			> em
-				font-weight: 700
+				font-family: $font-family-bold
 				font-style: normal
 
 			&:hover,
 			&.selected
-				background: #428BCA
-				color: #fff
+				background: #e6f2f8
 				cursor: pointer
 
 
