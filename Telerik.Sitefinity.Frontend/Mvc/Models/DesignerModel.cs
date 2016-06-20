@@ -122,6 +122,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 throw new ArgumentNullException("filename");
 
             var parts = filename.Split('.');
+            if (filename.EndsWith(".cshtml", StringComparison.Ordinal))
+            {
+                parts = parts.Take(parts.Length - 1).ToArray();
+            }
 
             if (parts.Length > 2)
             {
