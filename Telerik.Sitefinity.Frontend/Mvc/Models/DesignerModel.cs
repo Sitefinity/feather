@@ -125,7 +125,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             if (parts.Length > 2)
             {
-                return string.Join(".", parts.Skip(1).Take(parts.Length - 2));
+                return string.Join(".", parts.Skip(1).Take(parts.Length - 1));
             }
 
             if (parts.Length == 2)
