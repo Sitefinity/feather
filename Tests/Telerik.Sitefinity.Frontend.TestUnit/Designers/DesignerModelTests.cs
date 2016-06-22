@@ -70,6 +70,46 @@ namespace Telerik.Sitefinity.Frontend.TestUnit.Designers
         }
 
         /// <summary>
+        /// The extract view name_ longer correct file name_ extracts view name.
+        /// </summary>
+        [TestMethod]
+        [Owner("VDinev")]
+        [Description(
+            "Checks whether ExtractViewName method returns the correct view name from file name which contains more than one '.'.")]
+        public void ExtractViewName_LongerCorrectFileName_ExtractsViewName()
+        {
+            // Arrange
+            var dummyModel = new DummyDesignerModel();
+            string fileName = "DesignerView.SomeViewName.OtherViewName.AnotherViewName";
+
+            // Act
+            string viewName = dummyModel.ExtractViewNamePublic(fileName);
+
+            // Assert
+            Assert.AreEqual("SomeViewName.OtherViewName.AnotherViewName", viewName, "The viewName is not extracted correctly.");
+        }
+
+        /// <summary>
+        /// The extract view name_ longer full file name_ extracts view name.
+        /// </summary>
+        [TestMethod]
+        [Owner("VDinev")]
+        [Description(
+            "Checks whether ExtractViewName method returns the correct view name from full file name which contains more than one '.'.")]
+        public void ExtractViewName_LongerFullFileName_ExtractsViewName()
+        {
+            // Arrange
+            var dummyModel = new DummyDesignerModel();
+            string fileName = "DesignerView.SomeViewName.OtherViewName.AnotherViewName.cshtml";
+
+            // Act
+            string viewName = dummyModel.ExtractViewNamePublic(fileName);
+
+            // Assert
+            Assert.AreEqual("SomeViewName.OtherViewName.AnotherViewName", viewName, "The viewName is not extracted correctly.");
+        }
+
+        /// <summary>
         /// The get view script file name_ view name with dot_ construct script name.
         /// </summary>
         [TestMethod]
