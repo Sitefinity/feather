@@ -21,12 +21,11 @@
               <div class="Media-file-thumb">
                   <div class="Media-file-thumb-holder">
                       <div><i class="icon-folder"></i></div>
-                      <strong>{{item.Title}}</strong>
+                      <strong ng-bind-html="item.Title"></strong>
                   </div>
               </div>
 
-              <div class="Media-folder-title" ng-class="{'Media-folder-title--wa' : !item.metricsAvailable}">
-                  {{item.Title}}
+              <div class="Media-folder-title" ng-class="{'Media-folder-title--wa' : !item.metricsAvailable}" ng-bind-html="item.Title">
               </div>
 
               <div class="Media-item-meta" ng-show="item.metricsAvailable">
@@ -72,8 +71,7 @@
                 </div>
 				      </div>
               
-              <div class="Media-item-title">
-                  {{item.Title}}
+              <div class="Media-item-title" ng-bind-html="item.Title">
               </div>
 
               <div class="Media-item-meta">
