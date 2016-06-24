@@ -29,7 +29,7 @@
 						<ol class="pull-left breadcrumb" ng-show="breadcrumbs && breadcrumbs.length > 0">
 							<li ng-click="onBreadcrumbItemClick()"><a>@(Res.Get<ClientComponentsResources>().AllLibraries)</a></li>
 							<li ng-repeat="item in breadcrumbs" ng-click="onBreadcrumbItemClick(item)">
-								<a>{{::item.Title}}</a>
+								<a ng-bind-html="::item.Title"></a>
 							</li>
 						</ol>
 					</div>
@@ -112,6 +112,7 @@
             <div ng-show="selectedFilterOption == 1">
                 <div class="m-bottom-xs m-left-sm"><strong>@(Res.Get<ClientComponentsResources>().Libraries)</strong></div>
                 <div class="library-filter" sf-tree
+				     sf-item-template-url="client-components/selectors/media/sf-library-tree-item.html"
                      sf-identifier="Id"
                      sf-model="filters.library.selected"
                      sf-request-children="filters.library.getChildren(parent)"

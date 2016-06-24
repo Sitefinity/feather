@@ -29,6 +29,7 @@
 
                 <div class="list-group list-group-endless">
                     <sf-items-tree ng-show="filter.isEmpty"
+                                   sf-template-url="client-components/selectors/media/sf-library-items-tree.sf-cshtml"
                                    sf-multiselect="multiselect"
                                    sf-expand-selection="expandSelection"
                                    sf-items-promise="itemsPromise"

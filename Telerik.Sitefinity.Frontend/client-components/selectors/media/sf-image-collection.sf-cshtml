@@ -21,12 +21,11 @@
 
         <div class="Media-file-thumb-holder">
           <div><i class="icon-folder"></i></div>
-          <strong>{{item.Title}}</strong>
+          <strong ng-bind-html="item.Title"></strong>
         </div>
 			</div>
 
-			<div class="Media-folder-title">
-				{{item.Title}}
+			<div class="Media-folder-title" ng-bind-html="item.Title">
 			</div>
 
 			<div class="Media-item-meta">
@@ -68,8 +67,7 @@
 					</div>
 				</div>
 
-				<div class="Media-item-title">
-					{{item.Title}}
+				<div class="Media-item-title" ng-bind-html="item.Title">
 				</div>
 
 				<div class="Media-item-meta">
