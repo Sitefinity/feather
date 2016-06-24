@@ -10,8 +10,9 @@
         </span>
     </label>
 
-    <sf-timespan-selector class="label-content" sf-change="change" sf-selected-item="selectedDateFilters[sfGroupName]" 
+    <sf-timespan-selector class="label-content" sf-change="change" sf-selected-item="selectedDateFilters[sfGroupName]"
       sf-is-upcoming-period = "sfIsUpcomingPeriod" sf-filter-title-label="sfFilterTitleLabel"
-      ng-show="selectedDateFilters.hasOwnProperty(sfGroupName)" sf-custom-range-min-date="sfCustomRangeMinDate" sf-custom-range-max-date="sfCustomRangeMaxDate"></sf-timespan-selector>
+      ng-show="selectedDateFilters.hasOwnProperty(sfGroupName)" sf-custom-range-min-date="sfCustomRangeMinDate" sf-custom-range-max-date="sfCustomRangeMaxDate" 
+      sf-date-groups="sfDateGroups"></sf-timespan-selector>
 </div>
 
