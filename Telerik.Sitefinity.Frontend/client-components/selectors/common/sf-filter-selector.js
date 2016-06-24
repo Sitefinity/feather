@@ -6,7 +6,8 @@
                 scope: {
                     sfTaxonomyFields: '=',
                     sfQueryData: '=',
-                    sfProvider: '=?'
+                    sfProvider: '=?',
+                    sfDateGroups: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';

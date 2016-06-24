@@ -6,7 +6,8 @@
     class="sf-taxon-filter"
     ng-if="sfTaxonomyFields && sfTaxonomyFields.length"></sf-taxon-filter>
 
- <sf-date-filter class="checkbox" sf-query-data="sfQueryData"
+ <sf-date-filter class="checkbox" sf-query-data="sfQueryData" 
+     sf-date-groups="sfDateGroups"
      sf-group-logical-operator="AND"
      sf-item-logical-operator="AND"
      sf-query-field-name="PublicationDate"
