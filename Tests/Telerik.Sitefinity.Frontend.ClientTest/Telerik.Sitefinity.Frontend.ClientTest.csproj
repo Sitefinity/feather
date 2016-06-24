@@ -48,6 +48,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="helpers\angular-sanitize.min.js" />
     <Content Include="helpers\common-methods.js" />
     <Content Include="helpers\jquery.min.js" />
     <Content Include="unit\collections\sfInfiniteScrollSpec.js" />
