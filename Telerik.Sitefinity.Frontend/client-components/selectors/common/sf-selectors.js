@@ -148,7 +148,7 @@
                     var maxLength = attrs.sfMaxLength;
 
                     if (value.length <= maxLength) {
-                        element.text(value);
+                        element.html(value);
                         return;
                     }
 
@@ -170,7 +170,7 @@
                     parts.splice(lastDroppedIndex, 0, skipSymbol);
 
                     var text = parts.join('');
-                    element.text(trimEnd(text, maxLength));
+                    element.html(trimEnd(text, maxLength));
                 });
             }
         };
