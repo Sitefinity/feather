@@ -43,7 +43,9 @@ namespace Telerik.Sitefinity.Frontend
             SystemManager.RegisterServiceStackPlugin(new FilesServiceStackPlugin());
             SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
 
-            ninjectDependencyResolver.Load(new ControllerContainerInitializer().ControllerContainerAssemblies);
+            var controllerContainerInitializer = new ControllerContainerInitializer();
+            ninjectDependencyResolver.Load(controllerContainerInitializer.ControllerContainerAssemblies);
+            controllerContainerInitializer.RegisterStringResources();
         }
 
         /// <summary>
