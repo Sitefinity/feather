@@ -160,7 +160,7 @@
                     if(parts.length === 1) {
                         // If very long item on root level is selected.
                         var trimmed = trimEnd(parts[0], maxLength);
-                        element.text(trimmed);
+                        element.html(trimmed);
                         return;
                     }
 
