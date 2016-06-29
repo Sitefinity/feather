@@ -145,32 +145,33 @@
                     // Do nothing if there is no value or it is empty string.
                     if (!value) return;
 
+                    var decodedValue = jQuery('<div/>').html(value).text();
                     var maxLength = attrs.sfMaxLength;
 
-                    if (value.length <= maxLength) {
-                        element.html(value);
+                    if (decodedValue.length <= maxLength) {
+                        element.text(decodedValue);
                         return;
                     }
 
                     var splitSymbol = ' > ',
                         skipSymbol = '... > ';
                         
-                    var parts = splitIntoParts(value, splitSymbol);
+                    var parts = splitIntoParts(decodedValue, splitSymbol);
 
                     if(parts.length === 1) {
                         // If very long item on root level is selected.
                         var trimmed = trimEnd(parts[0], maxLength);
-                        element.html(trimmed);
+                        element.text(trimmed);
                         return;
                     }
 
-                    var lastDroppedIndex = dropExtraParts(parts, maxLength, value.length, skipSymbol);                        
+                    var lastDroppedIndex = dropExtraParts(parts, maxLength, decodedValue.length, skipSymbol);
                     
                     // Insert the skip symbol.
                     parts.splice(lastDroppedIndex, 0, skipSymbol);
 
                     var text = parts.join('');
-                    element.html(trimEnd(text, maxLength));
+                    element.text(trimEnd(text, maxLength));
                 });
             }
         };
