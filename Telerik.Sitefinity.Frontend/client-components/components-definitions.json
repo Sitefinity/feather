@@ -430,7 +430,7 @@
 		"client-components/selectors/taxonomies/sf-hierarchical-taxon-service.js"
 	],
 	"angularModules": [
-		"sfSelectors"
+		"sfSelectors", "ngSanitize"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
@@ -446,7 +446,7 @@
 		"client-components/selectors/taxonomies/sf-hierarchical-taxon-service.js"
 	],
 	"angularModules": [
-		"sfSelectors"
+		"sfSelectors", "ngSanitize"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
@@ -472,7 +472,7 @@
 		"client-components/selectors/taxonomies/sf-hierarchical-taxon-service.js"
 	],
 	"angularModules": [
-		"sfSelectors"
+		"sfSelectors", "ngSanitize"
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
@@ -485,7 +485,7 @@
 		"client-components/selectors/media/sf-media-service.js"
 	],
 	"angularModules": [
-		"sfSelectors"
+		"sfSelectors", "ngSanitize"
 	],
 	"components" : ["sf-services", "sf-shrinked-breadcrumb", "sf-items-filter", "sf-items-tree", "sf-selected-items-view", "sf-list-selector"]
 },

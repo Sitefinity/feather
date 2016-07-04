@@ -3,7 +3,9 @@
     <div>
       {{error.message}}
 
-      <button class="close" ng-click="error.show = false">&times;</button>
+      <button class="close" ng-click="error.show = false">
+        <i class=" fa fa-times"></i>
+      </button>
     </div>
   </uib-alert>
 

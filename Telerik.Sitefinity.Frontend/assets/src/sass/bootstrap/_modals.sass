@@ -1,13 +1,15 @@
 .modal-header
-	padding: 15px 20px
+	padding: 20px 30px
+	border: 0
 
 .modal-footer
-	padding: 15px 20px
+	padding: 20px 30px
+	border: 0
 
 .sf-widget-header
-	padding-top: 15px
-	padding-bottom: 15px
-	border-bottom: 1px solid #e5e5e5
+	padding-top: 20px
+	padding-bottom: 20px
+
 	h3
 		font-size: 10px
 		color: #666
@@ -15,15 +17,24 @@
 
 .modal-header .close
 	margin-top: -4px
+	font-size: 14px
+	opacity: 1
+	i
+		color: #666
+		&:hover
+			color: #333
+
+.modal-title
+	font-size: 10px
+	color: #666
+	text-transform: uppercase
 
 .modal-body
-	padding: 20px
+	padding: 0 30px 20px
+
 	.modal-body
 		padding: 0
 		min-height: 0
-
-.modal-backdrop
-	bottom: 0
 
 .modal-content
 	border-radius: 3px
@@ -65,17 +76,15 @@
 
 	.modal-body
 		position: absolute
-		top: 65px
+		top: 54px
 		right: 0
-		bottom: 65px
+		bottom: 73px
 		left: 0
-
 
 .modal-settings
 	display: block
-	margin: -20px -20px 20px -20px
-	padding: 20px
-	background: #f2f2f2
+	margin-bottom: 20px
+	background: transparent
 
 .modal-settings-space
 	margin-top: -35px

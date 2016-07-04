@@ -2,6 +2,7 @@ describe('libraries breadcrumb in image selector', function () {
     //Load the module that contains the cached templates.
     beforeEach(module('templates'));
     beforeEach(module('sfImageSelector'));
+    beforeEach(module('ngSanitize'));
 
     var $rootScope;
     var $q;

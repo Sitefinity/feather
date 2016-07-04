@@ -3,6 +3,7 @@ describe('sfMediaFilter', function () {
     var mediaFilter;
 
     beforeEach(module('sfServices'));
+    beforeEach(module('ngSanitize'));
 
     beforeEach(inject(function ($injector) {
         mediaFilter = $injector.get('sfMediaFilter');

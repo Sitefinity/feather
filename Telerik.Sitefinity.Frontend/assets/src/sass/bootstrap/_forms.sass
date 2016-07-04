@@ -18,9 +18,10 @@
 	h5
 		margin-top: 40px
 		margin-bottom: 15px
-	strong + .radio,
-	strong + .checkbox
-		margin-top: 5px
+	label
+		+ .radio,
+		+ .checkbox,
+			margin-top: 0
 
 
 .form-control-highlight[type=text]
@@ -30,7 +31,7 @@
 	box-shadow: none
 	margin-bottom: 0 !important
 	padding: 0 4px
-	font-size: 14px
+	font-size: $font-size-base
 
 	&:hover
 		background: #ffc
@@ -61,3 +62,17 @@
 input.input-sm
 	height: $input-height-small
 
+.input-group-btn,
+.btn
+	.glyphicon
+		line-height: inherit
+
+.radio,
+.checkbox,
+	label
+		font-weight: normal
+		font-family: $font-family-sans-serif
+		
+label.radio-inline
+	font-weight: normal
+	font-family: $font-family-sans-serif
