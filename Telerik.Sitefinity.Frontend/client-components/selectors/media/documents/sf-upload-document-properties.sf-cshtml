@@ -1,5 +1,7 @@
 ﻿<div class="modal-header">
-    <button type="button" class="close" ng-click="cancelUpload()" ng-disabled="model.uploadInProgress">&times;</button>
+    <button type="button" class="close" ng-click="cancelUpload()" ng-disabled="model.uploadInProgress">
+      <i class="fa fa-times"></i>
+    </button>
     <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().UploadDocument)</h3>
 </div>
 
@@ -14,7 +16,9 @@
                 </i>
                 <span class="sf-Progress-title" ng-bind="model.file.name"></span>
                 <div class="pull-right">
-                  <a type="button" class="sf-Progress-close" ng-hide="model.uploadInProgress" ng-click="cancelUpload()">×</a>
+                  <a type="button" class="sf-Progress-close" ng-hide="model.uploadInProgress" ng-click="cancelUpload()">
+                    <i class="fa fa-times"></i>
+                  </a>
                 </div>
                 <span class="pull-right" ng-bind="model.file.textSize"></span>
             </div>
@@ -44,7 +48,7 @@
 
     </div>
     <div expander class="Options-arrows" expander-title='@(Res.Get<ClientComponentsResources>().CategoriesAndTags)'>
-        <div class="form-group">
+        <div class="form-group m-top-md">
             <label>@(Res.Get<ClientComponentsResources>().Categories)</label>
             <sf-list-selector sf-hierarchical-taxon-selector
                               sf-dialog-header="@(Res.Get<ClientComponentsResources>().CategorySelectorHeader)"

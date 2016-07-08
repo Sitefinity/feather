@@ -6,6 +6,7 @@
 
     beforeEach(module('templates'));
     beforeEach(module('sfImageSelector'));
+    beforeEach(module('ngSanitize'));
 
     beforeEach(module(function ($provide) {
         $provide.value('sfMediaService', fakeMediaService);

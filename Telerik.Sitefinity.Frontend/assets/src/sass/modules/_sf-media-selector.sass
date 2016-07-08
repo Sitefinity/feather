@@ -5,6 +5,7 @@
 	top: 0
 	bottom: 0
 	overflow-y: auto
+	border-top: 1px solid #e4e4e4
 
 // Content
 .Media-content
@@ -128,7 +129,7 @@
 		background: #eee
 
 	&.is-selected
-		background-color: #428BCA
+		background-color: #e6f2f8
 		color: #fff
 
 
@@ -137,13 +138,13 @@
 			background: #F2F2F2
 
 		&.is-selected
-			background-color: #428BCA
+			background-color: #e6f2f8
 			color: #fff
 
 			.Media-item-title,
 			.Media-item-meta,
 			.Media-item-date
-				color: #fff
+				color: #000
 
 .Media-file-thumb
 	vertical-align: middle
@@ -182,12 +183,11 @@
 	height: 16px
 	line-height: 16px
 	color: #fff
-	font-family: Georgia
 	font-size: 12px
 	text-align: center
 	opacity: 0
 	transition: opacity .3s ease
-	font-weight: 700
+	font-family: $font-family-bold
 
 .Media-file:hover .Media-item-info,
 .Media-folder:hover .Media-item-info
@@ -225,7 +225,7 @@
 	padding: 9px 20px
 	line-height: 26px
 	border-top: 1px solid #e5e5e5
-	border-bottom: none
+	border-bottom: 1px solid #e5e5e5
 	background: none
 
 	a
@@ -346,7 +346,8 @@
 	li.active > a
 		&,
 		&:hover
-			background-color: #428bca
+			background-color: #e4e4e4
+			color: #000
 
 
 
@@ -465,7 +466,7 @@
 
 	.Media-folder-title
 		display: table-cell
-		font-weight: 700
+		font-family: $font-family-bold
 
 	.Media-folder
 		i

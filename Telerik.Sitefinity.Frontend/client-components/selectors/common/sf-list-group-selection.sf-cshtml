@@ -1,4 +1,4 @@
-﻿<div class="list-group list-group-selection list-group-sm m-bottom-sm" ng-show="sfSelectedItems.length > 0">
+﻿<div class="list-group list-group-selection m-bottom-sm" ng-show="sfSelectedItems.length > 0">
     <div ng-repeat="item in sfSelectedItems | limitTo:5"
          data-index="{{$index}}"
          class="list-group-item">

@@ -5,9 +5,10 @@
 .modal-body
 	.k-editor-widget
 		margin-right: 6px
-		background: transparent
+		//background: transparent
 		border: none
 		border-collapse: collapse
+		background: #f2f2f2
 		&:last-child
 			margin-right: 0
 
@@ -17,10 +18,10 @@
 
 		.k-editor-toolbar
 			position: relative
-			margin: -23px 0 0
-			padding: 0 110px 0 20px
-			min-height: 50px
-			background: #f2f2f2
+			margin: 0
+			padding: 0 80px 0 20px
+			// min-height: 50px
+			// background: #f2f2f2
 
 			&.sf-toolbar-short
 				position: absolute
@@ -47,8 +48,13 @@
 				right: 20px
 
 			> li:nth-last-child(2)
-				top: 0
-				right: 65px
+				top: -56px
+				right: 49px
+				.custom-tool
+					color: #666
+					&:hover
+						background: transparent
+						color: #333
 
 			.k-tool-group
 				.custom-tool
@@ -58,7 +64,7 @@
 						color: #000
 
 					.glyphicon
-						padding-top: 11px
+						padding-top: 16px
 
 					&.btn
 						margin-top: 1px
@@ -78,7 +84,7 @@
 				max-width: 900px
 
 			textarea.html
-				padding: 20px
+				padding: 30px
 				box-sizing: border-box
 
 		.k-tool
@@ -87,20 +93,27 @@
 				background: #ddd
 				.k-tool-icon
 					opacity: 1
+			&.k-state-hover
+				border-radius: 0
 
 		.k-state-selected,
 		.k-tool.k-state-active
 				background: #ddd
 
 		.k-button-group
-			.k-tool
+			.k-tool,
+			.k-tool-icon
 				vertical-align: top
 			.k-tool-icon
-				margin-top: 6px
+				margin-top: 12px
+		.k-dropdown-wrap
+			.k-icon
+				margin-top: 9px
 
 .kendo-content-block
 	display: block
-	margin: 3px -20px -20px
+	margin: 0 -30px -20px
+	border-bottom: 1px solid #e5e5e5
 
 	&.kendo-content-block--sh
 		margin: -21px -20px -51px
@@ -135,3 +148,41 @@
 
 .editor-lg
 	height: 540px
+
+.sf-maximize
+	position: relative
+	display: block
+
+	&:before,
+	&:after
+		content: ""
+		display: block
+		height: 5px
+		width: 5px
+		border: 2px solid #666
+		position: absolute
+		background: #fff
+		box-sizing: content-box
+	&:before
+		top: 20px
+		left: 20px
+		width: 7px
+		border-top-width: 4px
+	&:after
+		display: none
+
+	&.sf-minimize
+		&:after
+			display: block
+			top: 18px
+			left: 20px
+		&:before
+			top: 21px
+			left: 17px
+			width: 5px
+			z-index: 2
+			border-top-width: 2px
+	&:hover
+		&:after,
+		&:before
+			border-color: #333
