@@ -1,5 +1,7 @@
 ﻿<div class="modal-header">
-  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <button type="button" class="close" ng-click="cancel()">
+    <i class=" fa fa-times"></i>
+  </button>
   <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().RoleSelectorHeader)</h3>
 </div>
 <div class="modal-body">
@@ -18,7 +20,7 @@
           <uib-alert type="danger" ng-show="showError">{{errorMessage}}</uib-alert>
 
             <div ng-hide="noItemsExist || showError">
-                <div class="row" ng-show="rolesProviders.length">
+                <div class="row row--noMargin" ng-show="rolesProviders.length">
                     <div class="col-xs-5">
                         <select class="form-control m-bottom-sm" ng-model="sfProvider" ng-change="providerChanged(sfProvider)" ng-options="provider.RoleProviderName as provider.RoleProviderTitle for provider in rolesProviders">
                             <option style="display:none" value=""></option>

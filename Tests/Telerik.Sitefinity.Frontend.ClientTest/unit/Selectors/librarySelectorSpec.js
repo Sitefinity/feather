@@ -94,6 +94,7 @@ describe("library selector", function () {
 
     //Load the module under test.
     beforeEach(module('sfSelectors'));
+    beforeEach(module('ngSanitize'));
 
     //Load the module that contains the cached templates.
     beforeEach(module('templates'));

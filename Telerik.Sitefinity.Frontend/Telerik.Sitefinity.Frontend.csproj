@@ -166,23 +166,23 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.9.2.6200.0\lib\net40\Telerik.Sitefinity.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.9.2.6200.0\lib\net45\Telerik.Sitefinity.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.ContentModules, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Content.9.2.6200.0\lib\net40\Telerik.Sitefinity.ContentModules.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.9.2.6200.0\lib\net45\Telerik.Sitefinity.ContentModules.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Ecommerce, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Content.9.2.6200.0\lib\net40\Telerik.Sitefinity.Ecommerce.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.9.2.6200.0\lib\net45\Telerik.Sitefinity.Ecommerce.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Forums, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Content.9.2.6200.0\lib\net40\Telerik.Sitefinity.Forums.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.9.2.6200.0\lib\net45\Telerik.Sitefinity.Forums.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Model, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.9.2.6200.0\lib\net40\Telerik.Sitefinity.Model.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.9.2.6200.0\lib\net45\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Mvc, Version=1.7.600.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -194,71 +194,71 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Personalization.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Personalization.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization.Impl, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.RecurrentRules, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Content.9.2.6200.0\lib\net40\Telerik.Sitefinity.RecurrentRules.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.9.2.6200.0\lib\net45\Telerik.Sitefinity.RecurrentRules.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Resources, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.9.2.6200.0\lib\net40\Telerik.Sitefinity.Resources.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.9.2.6200.0\lib\net45\Telerik.Sitefinity.Resources.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Search, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Search.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Search.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Search.Impl, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Search.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Search.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.Comments.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments.Impl, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Documents, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.Documents.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.Documents.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Documents.Impl, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.Documents.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.Documents.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Events, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.Events.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.Events.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications.Impl, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.Notifications.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.Notifications.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.RecycleBin, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.RecycleBin.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.RecycleBin.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.RecycleBin.Impl, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.RecycleBin.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.RecycleBin.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Statistics, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.Statistics.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Statistics.Impl, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net40\Telerik.Sitefinity.Services.Statistics.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.9.2.6200.0\lib\net45\Telerik.Sitefinity.Services.Statistics.Impl.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUtilities, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -266,20 +266,20 @@
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities, Version=9.2.6200.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Telerik.Sitefinity.Core.9.2.6200.0\lib\net40\Telerik.Sitefinity.Utilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.9.2.6200.0\lib\net45\Telerik.Sitefinity.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.Design">
-      <HintPath>..\packages\Telerik.Web.UI.2016.1.225.40\lib\net40\Telerik.Web.Design.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2016.2.607.40\lib\net40\Telerik.Web.Design.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Web.UI">
-      <HintPath>..\packages\Telerik.Web.UI.2016.1.225.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2016.2.607.40\lib\net40\Telerik.Web.UI.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Web.UI.Skins">
-      <HintPath>..\packages\Telerik.Web.UI.2016.1.225.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2016.2.607.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
       <Private>True</Private>
     </Reference>
@@ -581,6 +581,10 @@
     <EmbeddedResource Include="assets\dist\fonts\sf-icon-font.woff" />
     <None Include="assets\feather-icons.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.woff2" />
+    <EmbeddedResource Include="assets\fonts\OpenSans\OpenSans-Regular-webfont.ttf" />
+    <EmbeddedResource Include="assets\fonts\OpenSans\OpenSans-Regular-webfont.woff" />
+    <EmbeddedResource Include="assets\fonts\OpenSans\OpenSans-Semibold-webfont.ttf" />
+    <EmbeddedResource Include="assets\fonts\OpenSans\OpenSans-Semibold-webfont.woff" />
     <None Include="assets\jshint.json" />
     <None Include="assets\package.json" />
     <None Include="assets\src\sass\bootstrap\_alerts.sass" />
@@ -626,7 +630,9 @@
     <EmbeddedResource Include="client-components\fields\document-field\sf-document-modal-template.sf-cshtml" />
     <EmbeddedResource Include="client-components\fields\document-field\sf-document-field.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\media\sf-media-collection.sf-cshtml" />
-    <EmbeddedResource Include="client-components\selectors\media\sf-upload-media-properties.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-upload-media-properties.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-post-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\blogs\sf-blog-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\identity\sf-user-selector.sf-cshtml" />
@@ -651,6 +657,9 @@
     <EmbeddedResource Include="client-components\selectors\events\sf-calendar-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\events\sf-calendar-filter.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\events\sf-event-selector.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-items-tree.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -685,6 +694,7 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\Angular\angular-sanitize.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Designer\personalization-designer.js" />
     <EmbeddedResource Include="Mvc\Scripts\Designer\grid-designer.js" />
     <EmbeddedResource Include="Resources\PageTemplateImages\LeftSidebarHeaderFooter.gif" />
@@ -741,7 +751,9 @@
     <EmbeddedResource Include="client-components\search\sf-search-box.js" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.html" />
     <EmbeddedResource Include="client-components\sorting\sf-sort-box.js" />
-    <EmbeddedResource Include="client-components\selectors\media\sf-upload-image-properties.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-upload-image-properties.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\fields\flat-taxon-field\sf-flat-taxon-field.html" />
     <EmbeddedResource Include="client-components\fields\flat-taxon-field\sf-flat-taxon-field.js" />
     <EmbeddedResource Include="client-components\selectors\media\sf-library-selector.sf-cshtml" />
@@ -777,7 +789,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="client-components\fields\media-field\sf-media-field.js" />
     <EmbeddedResource Include="client-components\fields\html-field\sf-document-properties-content-block.sf-cshtml" />
-    <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.sf-cshtml" />
+    <EmbeddedResource Include="client-components\selectors\media\documents\sf-upload-document-properties.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\media\documents\sf-document-collection.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\pages\sf-page-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\search\sf-search-service.js" />
@@ -825,6 +839,7 @@
     <EmbeddedResource Include="client-components\selectors\events\sf-calendar-filter.js" />
     <EmbeddedResource Include="client-components\selectors\events\sf-event-selector.js" />
     <EmbeddedResource Include="client-components\selectors\events\sf-event-service.js" />
+    <EmbeddedResource Include="client-components\selectors\media\sf-library-tree-item.html" />
     <Content Include="Mvc\assets\mvc.css" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB-debug.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\LABjs\LAB.js" />

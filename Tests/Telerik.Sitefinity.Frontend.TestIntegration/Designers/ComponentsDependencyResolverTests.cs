@@ -150,7 +150,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Designers
         [Description("Checks whether invoking widget designer views with and without js populates angular modules correctly.")]
         public void ExtractModules_InvokingWidgetDesignerWithAndWithoutJs_ShouldExtractModulesCorrectly()
         {
-            var expectedWithoutJsModuleDependencies = new string[] { "expander", "sfCollection", "sfSelectors", "sfFields", "sfSearchBox", "sfSortBox", "sfAspectRatioSelection", "sfThumbnailSizeSelection" };
+            var expectedWithoutJsModuleDependencies = new string[] { "expander", "sfCollection", "sfSelectors", "sfFields", "sfSearchBox", "sfSortBox", "sfAspectRatioSelection", "sfThumbnailSizeSelection", "ngSanitize" };
 
             var withJsResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithJsonController.WidgetName);
             var withoutJsResult = this.ExecuteDesignerControllerMasterAction(ComponentsDependencyResolverTestsLargeDesignerWithoutJsController.WidgetName);
