@@ -22,8 +22,7 @@
 
         <PackageSource Include="\\feather-ci\C$\FeatherFeed\FeatherFeed\Packages"/>
 
-        <PackageSource Include="\\telerik.com\distributions\OfficialReleases\Sitefinity\nuget\feather" />
-        <PackageSource Include="http://feather-ci.cloudapp.net:8088/nuget/" />
+        <PackageSource Include="http://feather-ci.cloudapp.net:8090/nuget/" />
         <PackageSource Include="https://www.nuget.org/api/v2/" />
         <PackageSource Include="http://nuget.sitefinity.com/nuget/" />
 
