@@ -219,19 +219,23 @@
                         if (!scope.sfExternalPages)
                             scope.sfExternalPages = [];
 
+                        var kendoRenderedHandler = function (event) {
+                            for (var i = 0; i < scope.kendoTabStrips.length; i++) {
+                                scope.kendoTabStrips[i].activateTab('li.k-state-active');
+                            }
+                        };
 
                         scope.kendoTabStrips = [];
                         scope.$on('kendoWidgetCreated', function (event, widget) {
                             if (widget.wrapper && widget.wrapper.is('.k-tabstrip')) {
                                 scope.kendoTabStrips.push(widget);
+                            } else {
+                                // if multiple selectors kendoRendered is called once
+                                kendoRenderedHandler(event);
                             }
                         });
 
-                        scope.$on('kendoRendered', function (event) {
-                            for (var i = 0; i < scope.kendoTabStrips.length; i++) {
-                                scope.kendoTabStrips[i].activateTab('li.k-state-active');
-                            }
-                        });
+                        scope.$on('kendoRendered', kendoRenderedHandler);
                     },
                     post: function (scope, element, attrs, ctrl, transclude) {
                         // ------------------------------------------------------------------------
