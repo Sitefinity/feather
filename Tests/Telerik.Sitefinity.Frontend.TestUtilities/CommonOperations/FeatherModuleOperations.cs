@@ -76,6 +76,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
             using (new UnrestrictedModeRegion())
             {
                 var module = this.GetFeatherModule;
+                module.StartupType = StartupType.OnApplicationStart;
                 ServerOperations.StaticModules().ExecuteStaticModuleOperation(module, ModuleOperationProxy.Install);
             }
         }
