@@ -231,7 +231,10 @@
                                 scope.kendoTabStrips.push(widget);
                             } else {
                                 // if multiple selectors kendoRendered is called once
-                                kendoRenderedHandler(event);
+                                try {
+                                    kendoRenderedHandler(event);
+                                } catch (err) {
+                                }
                             }
                         });
 
