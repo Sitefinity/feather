@@ -234,7 +234,6 @@
                                 try {
                                     kendoRenderedHandler(event);
                                 } catch (err) {
-                                    console.log(err);
                                 }
                             }
                         });
