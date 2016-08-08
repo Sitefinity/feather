@@ -29,7 +29,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 if (originalWithSlash.StartsWith(nodeUrl, StringComparison.OrdinalIgnoreCase))
                 {
                     var newPath = originalWithSlash.Right(originalWithSlash.Length - nodeUrl.Length);
-                    if (newPath.Equals("Action/Edit/", StringComparison.OrdinalIgnoreCase))
+                    bool? isFrontendPageEdit = context.Items["IsFrontendPageEdit"] as bool?;
+                    if (isFrontendPageEdit.HasValue && isFrontendPageEdit.Value)
                         newPath = string.Empty;
 
                     this.context.RewritePath("~/" + newPath);
