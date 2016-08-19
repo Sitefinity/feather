@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using System.Web.Routing;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -10,12 +11,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// Socials the share options. Redirect to the SocialShare control if exist else render error message
         /// </summary>
         /// <param name="helper">The HTML helper.</param>
-        public static System.Web.Mvc.MvcHtmlString SocialShareOptions(this HtmlHelper helper)
+        public static System.Web.Mvc.MvcHtmlString SocialShareOptions(this HtmlHelper helper, Telerik.Sitefinity.Model.IHasTitle dataItem)
         {
             System.Web.Mvc.MvcHtmlString result;
             try
             {
-                result = helper.Action(ActionName, ControllerName);
+                RouteValueDictionary routeValues = new RouteValueDictionary();
+                routeValues.Add(SocialShareHelpers.DataItemKey, dataItem);
+                result = helper.Action(ActionName, ControllerName, routeValues);
             }
             catch (HttpException)
             {
@@ -24,6 +27,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return result;
         }
+
+        public const string DataItemKey = "DataItem";
 
         private const string ActionName = "Index";
         private const string ControllerName = "SocialShare";
