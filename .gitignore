@@ -137,3 +137,4 @@ Tests/Telerik.Sitefinity.Frontend.ClientTest/templates.js
 
 Tests/Telerik.Sitefinity.Frontend.ClientTest/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 Feather.sln.GhostDoc.xml
+/.vs/config/applicationhost.config

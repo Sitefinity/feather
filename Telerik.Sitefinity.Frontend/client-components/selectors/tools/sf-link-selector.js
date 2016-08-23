@@ -34,8 +34,9 @@
                                        }
 
                                        var selectedItem = linkService.constructLinkItem(jQuery(scope.sfLinkHtml));
-                                       
-                                       scope.sfSite = siteService.getSiteByRootNoteId(selectedItem.rootNodeId);
+
+                                       var rootNodeId = serverContext.getCurrentFrontendRootNodeId();
+                                       scope.sfSite = siteService.getSiteByRootNoteId(rootNodeId);
                                        scope.sfCulture = { Culture: selectedItem.language };
 
                                        scope.sfSelectedItem = selectedItem;
