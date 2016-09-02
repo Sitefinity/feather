@@ -177,11 +177,11 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 
             var parent = pageManager.GetTemplates().Where(t => t.Title == parentTemplateTitle).FirstOrDefault();
 
-             template.ParentTemplate = parent;
+            template.ParentTemplate = parent;
 
-             var master = pageManager.TemplatesLifecycle.Edit(template);
-             pageManager.TemplatesLifecycle.Publish(master);
-             pageManager.SaveChanges();
+            var master = pageManager.TemplatesLifecycle.Edit(template);
+            pageManager.TemplatesLifecycle.Publish(master);
+            pageManager.SaveChanges();
 
             return template;
         }
