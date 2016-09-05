@@ -142,9 +142,8 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         public Guid CreatePureMvcTemplate(string templateTitle)
         {
-            Guid templateId = Guid.Empty;
-            var fluent = App.WorkWith();
-            templateId = fluent.PageTemplate()
+            var templateFacade = App.WorkWith().PageTemplate();
+            var template = templateFacade
                                .CreateNew()
                                .Do(t =>
                                {
@@ -156,13 +155,10 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
                                    t.Visible = true;
                                })
                                .SaveAndContinue()
-                               .Get()
-                               .Id;
-            var pageManager = PageManager.GetManager();
-            var template = pageManager.GetTemplates().Where(t => t.Id == templateId).SingleOrDefault();
-            var master = pageManager.TemplatesLifecycle.Edit(template);
-            pageManager.TemplatesLifecycle.Publish(master);
-            pageManager.SaveChanges();
+                               .Get();
+
+            var master = templateFacade.PageManager.TemplatesLifecycle.Edit(template);
+            templateFacade.PageManager.TemplatesLifecycle.Publish(master);
 
             return template.Id;
         }
