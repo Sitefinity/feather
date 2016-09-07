@@ -240,6 +240,7 @@
     <Compile Include="GridSystem\GridControlToolboxFilterTests.cs" />
     <Compile Include="GridSystem\GridWidgetRegistratorTests.cs" />
     <Compile Include="InlineEditing\InlineEditingTests.cs" />
+    <Compile Include="Mvc\Controllers\ContentPagerControllerTests.cs" />
     <Compile Include="Mvc\Helpers\LayoutsHelpersTests.cs" />
     <Compile Include="Mvc\Helpers\LocalizationHelpersTests.cs" />
     <Compile Include="Mvc\Helpers\ResourceHelperTests.cs" />
@@ -340,4 +341,9 @@
   </Target>
   -->
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Name="Telerik.Sitefinity.Frontend.TestUnit" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
