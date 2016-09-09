@@ -35,10 +35,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArtOfTest.WebAii, Version=2015.3.1015.0, Culture=neutral, PublicKeyToken=4fd5f65be123776c, processorArchitecture=MSIL">
-      <HintPath>packages\Telerik.Sitefinity.TestStudio.Framework.2.1.4\lib\net40\ArtOfTest.WebAii.dll</HintPath>
+    <Reference Include="ArtOfTest.WebAii, Version=2016.2.630.0, Culture=neutral, PublicKeyToken=4fd5f65be123776c, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.TestStudio.Framework.2.1.5\lib\net40\ArtOfTest.WebAii.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
+    <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <SpecificVersion>False</SpecificVersion>
@@ -61,20 +61,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ReferenceAssemblies\Telerik.Sitefinity.Frontend.TestUtilities.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.MS.TestUI.Framework, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Telerik.Sitefinity.MS.TestUI.Framework.1.1.0\lib\net45\Telerik.Sitefinity.MS.TestUI.Framework.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.MS.TestUI.Framework, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.MS.TestUI.Framework.1.1.1\lib\net45\Telerik.Sitefinity.MS.TestUI.Framework.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
+    <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.TestUI.Core, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Telerik.Sitefinity.TestUI.Core.1.1.0\lib\net45\Telerik.Sitefinity.TestUI.Core.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.TestUI.Core, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.TestUI.Core.1.1.1\lib\net45\Telerik.Sitefinity.TestUI.Core.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
+    <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.TestUI.Framework, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Telerik.Sitefinity.TestUI.Framework.1.1.0\lib\net40\Telerik.Sitefinity.TestUI.Framework.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.TestUI.Framework, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.TestUI.Framework.1.1.1\lib\net40\Telerik.Sitefinity.TestUI.Framework.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
+    <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.UIArrangement">
       <HintPath>packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.1\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
@@ -84,30 +84,30 @@
       <HintPath>packages\Telerik.Sitefinity.TestUtilities.8.2.5990.0\lib\net45\Telerik.Sitefinity.TestUtilities.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Telerik.TestUI.Core, Version=1.5.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Telerik.TestUI.Core.1.5.5\lib\net40\Telerik.TestUI.Core.dll</HintPath>
+    <Reference Include="Telerik.TestUI.Core, Version=1.5.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.TestUI.Core.1.5.6\lib\net45\Telerik.TestUI.Core.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
+    <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Telerik.WebAii.Controls.Html, Version=2015.3.1015.0, Culture=neutral, PublicKeyToken=528163f3e645de45, processorArchitecture=MSIL">
-      <HintPath>packages\Telerik.Sitefinity.TestStudio.Framework.2.1.4\lib\net40\Telerik.WebAii.Controls.Html.dll</HintPath>
+    <Reference Include="Telerik.WebAii.Controls.Html, Version=2016.2.630.0, Culture=neutral, PublicKeyToken=528163f3e645de45, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.TestStudio.Framework.2.1.5\lib\net40\Telerik.WebAii.Controls.Html.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
+    <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="UITests.Configuration, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UITests.Core.1.6.5\lib\net40\UITests.Configuration.dll</HintPath>
+    <Reference Include="UITests.Configuration, Version=1.6.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UITests.Core.1.6.6\lib\net40\UITests.Configuration.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
+    <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="UITests.Core, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UITests.Core.1.6.5\lib\net40\UITests.Core.dll</HintPath>
+    <Reference Include="UITests.Core, Version=1.6.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UITests.Core.1.6.6\lib\net40\UITests.Core.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
+    <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="UITests.Web, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UITests.Core.1.6.5\lib\net40\UITests.Web.dll</HintPath>
+    <Reference Include="UITests.Web, Version=1.6.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UITests.Core.1.6.6\lib\net40\UITests.Web.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
+  <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
