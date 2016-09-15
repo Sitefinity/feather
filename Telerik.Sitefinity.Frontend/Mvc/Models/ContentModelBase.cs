@@ -439,17 +439,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             query = this.UpdateExpression(query, itemsToSkip, take, ref totalCount);
 
-            var queryResult = query.ToArray<IDataItem>();
+            var queryResult = this.FetchItems(query);
 
             foreach (var item in queryResult)
             {
                 result.Add(this.CreateItemViewModelInstance(item));
             }
 
-            totalPages = (int)Math.Ceiling(totalCount.Value / (double)this.ItemsPerPage.Value);
+            totalPages = (totalCount.Value + this.itemsPerPage.Value - 1) / this.ItemsPerPage.Value;
             totalPages = this.DisplayMode == ListDisplayMode.Paging ? totalPages : null;
 
             return result;
+        }
+
+        /// <summary>
+        /// Fetches the items from a queryable.
+        /// </summary>
+        /// <param name="query">The queryable.</param>
+        /// <returns>Fetched items.</returns>
+        protected virtual IEnumerable<IDataItem> FetchItems(IQueryable<IDataItem> query)
+        {
+            var queryResult = query.ToArray<IDataItem>();
+            return queryResult;
         }
 
         /// <summary>
