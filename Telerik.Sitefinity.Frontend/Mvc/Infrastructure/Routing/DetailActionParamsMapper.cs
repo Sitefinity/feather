@@ -5,6 +5,7 @@ using System.Web.Routing;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.GenericContent.Model;
 using Telerik.Sitefinity.Lifecycle;
 using Telerik.Sitefinity.Model;
@@ -72,7 +73,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             var url = RouteHelper.GetUrlParameterString(urlParams);
             string redirectUrl;
-            var item = this.GetItemByUrl(url, out redirectUrl);
+            var providerName = this.providerNameResolver != null ? this.providerNameResolver() : null;
+            var contentItemResolver = new ContentDataItemResolver();
+            var item = contentItemResolver.GetItemByUrl(url, this.ItemType, providerName, out redirectUrl);
 
             if (item != null)
             {
@@ -115,128 +118,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
 
             RouteHelper.SetUrlParametersResolved();
-        }
-
-        /// <summary>
-        /// Gets content item by URL.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <param name="redirectUrl">The redirect URL.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "1#")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
-        protected virtual IDataItem GetItemByUrl(string url, out string redirectUrl)
-        {
-            var manager = this.ResolveManager();
-            if (manager == null)
-            {
-                redirectUrl = null;
-                return null;
-            }
-
-            var itemIdFromQueryParam = (SystemManager.CurrentHttpContext.Request.Params["sf-itemId"] ?? SystemManager.CurrentHttpContext.Items["sf-itemId"]) as string;
-            if (!itemIdFromQueryParam.IsNullOrEmpty())
-            {
-                Guid itemIdGuid;
-                if (Guid.TryParse(itemIdFromQueryParam, out itemIdGuid))
-                {
-                    redirectUrl = null;
-                    return manager.GetItem(this.ItemType, itemIdGuid) as IDataItem;
-                }
-            }
-
-            IDataItem item;
-            var contentManager = manager as IContentManager;
-            if (contentManager != null)
-            {
-                var isPublished = !this.IsPreviewRequested() ||
-                    this.ResolveRequestedItemStatus() == ContentLifecycleStatus.Live;
-                item = contentManager.GetItemFromUrl(this.ItemType, url, isPublished, out redirectUrl);
-
-                if (item != null)
-                {
-                    var type = item.GetType();
-                    if (!type.Equals(this.ItemType) && !(type.Module != null && type.Module.ScopeName == "OpenAccessDynamic" && type.BaseType != null && type.BaseType.Equals(this.ItemType)))
-                    {
-                        item = null;
-                    }
-                }
-            }
-            else
-            {
-                item = ((IUrlProvider)manager.Provider).GetItemFromUrl(this.ItemType, url, out redirectUrl);
-            }
-
-            var lifecycleItem = item as ILifecycleDataItem;
-            var lifecycleManager = manager as ILifecycleManager;
-            if (lifecycleItem != null && lifecycleManager != null)
-            {
-                if (lifecycleItem.Status != ContentLifecycleStatus.Live)
-                {
-                    item = lifecycleManager.Lifecycle.GetLive(lifecycleItem);
-                }
-
-                object requestedItem;
-                if (ContentLocatableViewExtensions.TryGetItemWithRequestedStatus(lifecycleItem, lifecycleManager, out requestedItem))
-                {
-                    item = requestedItem as IDataItem;
-                }
-            }
-
-            return item;
-        }
-
-        /// <summary>
-        /// Resolves the manager.
-        /// </summary>
-        /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        protected IManager ResolveManager()
-        {
-            var providerName = this.providerNameResolver != null ? this.providerNameResolver() : null;
-
-            IManager manager;
-
-            try
-            {
-                ManagerBase.TryGetMappedManager(this.ItemType, providerName, out manager);
-            }
-            catch (Exception ex)
-            {
-                Log.Write(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Exception occurred in the routing functionality, details: {0}", ex));
-                manager = null;
-            }
-
-            return manager;
-        }
-
-        /// <summary>
-        /// This method returns the requested item status based on content location url parameters.
-        /// </summary>
-        /// <remarks>Copied from IContentLocatableView in Sitefinity. Should use it instead when it goes public.</remarks>
-        /// <returns>Requested item status.</returns>
-        private ContentLifecycleStatus ResolveRequestedItemStatus()
-        {
-            var itemStatusParam = SystemManager.CurrentHttpContext.Request.Params["sf-lc-status"] ?? SystemManager.CurrentHttpContext.Items["sf-lc-status"];
-            ContentLifecycleStatus status = ContentLifecycleStatus.Live;
-            if (itemStatusParam != null)
-            {
-                if (!Enum.TryParse<ContentLifecycleStatus>(itemStatusParam as string, out status))
-                    status = ContentLifecycleStatus.Live;
-            }
-
-            return status;
-        }
-
-        /// <summary>
-        /// Determines whether preview of the item is requested.
-        /// </summary>
-        /// <remarks>Copied from IContentLocatableView in Sitefinity. Should use it instead when it goes public.</remarks>
-        /// <returns>Whether preview is requested.</returns>
-        private bool IsPreviewRequested()
-        {
-            var actionParam = SystemManager.CurrentHttpContext.Request.Params["sf-content-action"];
-            bool isPreview = actionParam != null && actionParam == "preview";
-            return isPreview;
         }
 
         protected Type ItemType { get; set; }

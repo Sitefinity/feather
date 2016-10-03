@@ -187,7 +187,8 @@
 
                     return customContext && customContext.uiCulture;
                 },
-                isMultisiteEnabled: customContext.isMultisiteEnabled || sitefinity.isMultisiteEnabled
+                isMultisiteEnabled: customContext.isMultisiteEnabled || sitefinity.isMultisiteEnabled,
+                siteId: customContext.getSiteId || sitefinity.getSiteId
             };
         };
 

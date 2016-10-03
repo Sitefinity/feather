@@ -5,8 +5,7 @@
         <div ng-hide="showError">
             <span class="label label-taxon label-full" ng-bind="sfSelectedItem.displayText"></span>
             <button class="btn btn-xs btn-default openSelectorBtn" ng-click="open()">
-                <span ng-hide="isItemSelected()">@(Res.Get<ClientComponentsResources>().Select)</span>
-                <span ng-show="isItemSelected()">@(Res.Get<ClientComponentsResources>().Change)</span>
+                <span>@(Res.Get<ClientComponentsResources>().Change)</span>
             </button>
         </div>
     </div>

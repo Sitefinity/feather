@@ -1796,8 +1796,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         /// <value>Select content</value>
         [ResourceEntry("DynamicItemsSelectorHeader",
-            Value = "Select content",
-            Description = "phrase: Select content",
+            Value = "Select",
+            Description = "phrase: Select",
             LastModified = "2015/03/24")]
         public string DynamicItemsSelectorHeader
         {

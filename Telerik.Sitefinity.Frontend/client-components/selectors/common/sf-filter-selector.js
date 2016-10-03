@@ -6,11 +6,12 @@
                 scope: {
                     sfTaxonomyFields: '=',
                     sfQueryData: '=',
-                    sfProvider: '=?'
+                    sfProvider: '=?',
+                    sfDateGroups: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
-                    var url = attrs.sfTemplateUrl || 'client-components/selectors/common/sf-filter-selector.html';
+                    var url = attrs.sfTemplateUrl || 'client-components/selectors/common/sf-filter-selector.sf-cshtml';
                     return sitefinity.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: {

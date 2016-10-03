@@ -9,7 +9,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.Configs
     public class DummyConfigProvider : XmlConfigProvider
     {
         /// <inheritdoc />
-        public override bool LoadSection(Configuration.ConfigSection section, Configuration.ConfigPolicyHandler policyHandler, string policyName)
+        public override bool LoadSection(Configuration.ConfigSection section)
         {
             return true;
         }

@@ -21,11 +21,13 @@
                     sfGroupName: '@',
                     sfFilterLabel: '@',
                     sfFilterTitleLabel: '@',
+                    sfAnyTimeLabel: '@?',
                     sfIsUpcomingPeriod: '=?',
                     sfCustomRangeMinDate: '=?',
                     sfCustomRangeMaxDate: '=?',
                     sfFilterChanged: '=?',
-                    sfFilterClicked: '=?'
+                    sfFilterClicked: '=?',
+                    sfDateGroups: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -85,6 +87,7 @@
 
                         var translateQueryItems = function (collection) {
                             var result = new timeSpanItem();
+                            result.displayText = scope.sfAnyTimeLabel;
 
                             if (!collection || !collection.length) {
                                 return result;
@@ -182,12 +185,16 @@
                         var populateSelectedDateFilters = function () {
                             if (!scope.selectedDateFilters) {
                                 scope.selectedDateFilters = [];
+                                var hasQueryItems = scope.sfQueryData && scope.sfQueryData.QueryItems && scope.sfQueryData.QueryItems.length === 0;
+                                if (hasQueryItems && scope.sfDateGroups) {
+                                    constructFilterItem(scope.sfGroupName);
+                                }
                             }
 
                             if (scope.sfQueryData.QueryItems) {
                                 scope.sfQueryData.QueryItems.forEach(function (queryItem) {
                                     {
-                                        if (queryItem.IsGroup)
+                                        if (queryItem.IsGroup && queryItem.Name === scope.sfGroupName)
                                             constructFilterItem(queryItem.Name);
                                     }
                                 });
@@ -218,6 +225,7 @@
                             // is currently selected
                             if (groupFilterName in scope.selectedDateFilters) {
                                 delete scope.selectedDateFilters[groupFilterName];
+                                scope.sfDateGroups = null;
 
                                 var groupToRemove = scope.sfQueryData.getItemByName(groupFilterName);
 
@@ -228,6 +236,7 @@
                             // is newly selected
                             else {
                                 constructFilterItem(groupFilterName);
+                                scope.sfDateGroups = groupFilterName;
                             }
 
                             if (scope.sfFilterClicked) {

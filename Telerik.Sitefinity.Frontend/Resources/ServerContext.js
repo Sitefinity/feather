@@ -8,6 +8,7 @@
     var currentUserId = '{{currentUserId}}';
     var categoriesTaxonomyId = "e5cd6d69-1543-427b-ad62-688a99f5e7d4";
     var isMultisiteMode = '{{isMultisiteMode}}';
+    var siteId = '{{siteId}}';
 
     if (applicationPath.length === 0 || applicationPath.charAt(applicationPath.length - 1) !== '/')
         applicationPath = applicationPath + '/';
@@ -102,7 +103,7 @@
 
     sitefinity.getCurrentUserId = function () {
         return currentUserId;
-    }
+    };
 
     sitefinity.isMultisiteEnabled = function () {
         if (isMultisiteMode.toLowerCase() == "true")
@@ -112,5 +113,9 @@
         else {
             return Boolean(isMultisiteMode);
         }
-    }
+    };
+
+    sitefinity.getSiteId = function () {
+        return siteId;
+    };
 })();

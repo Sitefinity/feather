@@ -341,8 +341,6 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                         this.AddLayoutControls(pageManager, template, layoutControls);
 
-                        pageManager.SaveChanges();
-
                         var master = pageManager.TemplatesLifecycle.Edit(template);
                         pageManager.TemplatesLifecycle.Publish(master);
                         pageManager.SaveChanges();

@@ -56,6 +56,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         [Test]
         [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after deactivating Feather the Sitefinity application changes it has done are undone.")]
+        [Ignore]
         public void DeactivatingFeatherShouldRestoreAppStateToPreFeatherActivation()
         {
             FeatherServerOperations.FeatherModule().EnsureFeatherEnabled();
@@ -81,6 +82,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         [Test]
         [Author(FeatherTeams.SitefinityTeam2)]
         [Description("Checks whether after uninstalling Feather the Sitefinity application changes it has done are undone.")]
+        [Ignore]
         public void UninstallingFeatherShouldRestoreAppStateToPreFeatherActivation()
         {
             FeatherServerOperations.FeatherModule().EnsureFeatherEnabled();

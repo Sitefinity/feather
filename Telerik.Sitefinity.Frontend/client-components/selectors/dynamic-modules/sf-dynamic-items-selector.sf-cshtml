@@ -2,7 +2,7 @@
   <button type="button" class="close" ng-click="cancel()">
     <i class=" fa fa-times"></i>
   </button>
-  <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().DynamicItemsSelectorHeader)</h3>
+  <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().DynamicItemsSelectorHeader) {{sfTitle}}</h3>
 </div>
 <div class="modal-body">
     <div kendo-tab-strip k-animation="false" class="k-tabstrip--selection">
