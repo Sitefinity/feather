@@ -1,22 +1,22 @@
 <div class="form-group nav-wrapper">
 	<span class="m-right-sm">@(Res.Get<ClientComponentsResources>().LinkTo)</span>
 
-	<label class="radio-inline" for="webAddressRadio">
+	<label class="radio-inline">
 		<input id="webAddressRadio" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.WebAddress" />
     @(Res.Get<ClientComponentsResources>().WebAddress)
 	</label>
 
-	<label class="radio-inline" for="pagesFromThisSiteRadio">
+	<label class="radio-inline">
 		<input id="pagesFromThisSiteRadio" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.InternalPage" />
     @(Res.Get<ClientComponentsResources>().PageFromThisSite)
   </label>
 
-	<label class="radio-inline" for="anchorRadio">
+	<label class="radio-inline">
 		<input id="anchorRadio" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.Anchor" />
     @(Res.Get<ClientComponentsResources>().Anchor)
 	</label>
 
-	<label class="radio-inline" for="emailRadio">
+	<label class="radio-inline">
 		<input id="emailRadio" type="radio" ng-model="sfSelectedItem.mode" ng-value="sfLinkMode.EmailAddress" />
     @(Res.Get<ClientComponentsResources>().Email)
 	</label>
@@ -48,7 +48,7 @@
 	</div>
 
 	<div class="form-group checkbox">
-		<label for="openInNewWin1">
+		<label>
 			<input type="checkbox" id="openInNewWin1" ng-model="sfSelectedItem.openInNewWindow" />
       @(Res.Get<ClientComponentsResources>().OpenInNewWindow)
     </label>
@@ -79,7 +79,7 @@
 		</div>
 	</div>
 	<div class="form-group checkbox">
-		<label for="openInNewWin2">
+		<label>
 			<input type="checkbox" id="openInNewWin2" ng-model="sfSelectedItem.openInNewWindow" />
       @(Res.Get<ClientComponentsResources>().OpenInNewWindow)
     </label>

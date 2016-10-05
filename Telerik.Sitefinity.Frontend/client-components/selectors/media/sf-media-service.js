@@ -37,7 +37,7 @@
         };
 
         var getById = function (id, provider, itemType, serviceUrl) {
-            var url = serviceUrl + id;
+            var url = serviceUrl + id + '/';
 
             return serviceHelper.getResource(url).get(
                 {
