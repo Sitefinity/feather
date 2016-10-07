@@ -105,6 +105,7 @@
                             scope.isOpen = true;
 
                             setTimeout(function () {
+                                element.parent().find(".uib-datepicker-popup").hide();
                                 element.find('.uib-datepicker-popup').show();
                             }, 100);
                         };

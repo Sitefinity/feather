@@ -132,8 +132,18 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             var requestContext = context.Items[RouteHandler.RequestContextKey] as RequestContext ?? context.Request.RequestContext;
             var keys = requestContext.RouteData.Values["Params"] as string[];
-
-            return (keys != null && keys.Length > 0) ? keys[0] : null;
+            if (keys != null && keys.Length > 0)
+            {
+                return keys[0];
+            }
+            else if (requestContext.RouteData.Values.ContainsKey("itemId"))
+            {
+                return requestContext.RouteData.Values["itemId"] as string;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>

@@ -22,15 +22,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             this.originalPath = context.Request.AppRelativeCurrentExecutionFilePath;
             var originalWithSlash = VirtualPathUtility.AppendTrailingSlash(this.originalPath);
 
+            bool? isFrontendPageEdit = context.Items["IsFrontendPageEdit"] as bool?;
             var currentNode = SiteMapBase.GetCurrentNode();
-            if (currentNode != null)
+            if (currentNode != null && !(isFrontendPageEdit.HasValue && isFrontendPageEdit.Value))
             {
                 var nodeUrl = currentNode.Url.StartsWith("~/", StringComparison.Ordinal) ? RouteHelper.ResolveUrl(currentNode.Url, UrlResolveOptions.ApplicationRelative | UrlResolveOptions.AppendTrailingSlash) : currentNode.Url;
                 if (originalWithSlash.StartsWith(nodeUrl, StringComparison.OrdinalIgnoreCase))
                 {
                     var newPath = originalWithSlash.Right(originalWithSlash.Length - nodeUrl.Length);
-                    if (newPath.Equals("Action/Edit/", StringComparison.OrdinalIgnoreCase))
-                        newPath = string.Empty;
 
                     this.context.RewritePath("~/" + newPath);
                 }

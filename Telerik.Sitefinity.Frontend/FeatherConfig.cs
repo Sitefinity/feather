@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Precompilation")]
         [ConfigurationProperty("disablePrecompilation")]
         [ObjectInfo(typeof(InfrastructureResources), Title = "DisablePrecompilationCaption", Description = "DisablePrecompilationDescription")]
-        public bool DisablePrecompilation
+        public bool DisablePrecompilation 
         {
             get
             {
