@@ -389,10 +389,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             MvcHtmlString result = MvcHtmlString.Empty;
 
-            // No section name renders the script inline if it hasn't been rendered
-            if (string.IsNullOrEmpty(sectionName) || !SectionRenderer.IsAvailable(httpContext.Handler.GetPageHandler(), sectionName))
+            if (!string.IsNullOrWhiteSpace(sectionName))
             {
-                if (!register.IsRegistered(resourcePath, sectionName: null))
+                var pageHandler = httpContext.CurrentHandler.GetPageHandler();
+                if (pageHandler != null && pageHandler.Master is MvcMasterPage)
+                {
+                    if (!throwException && !SectionRenderer.IsAvailable(pageHandler, sectionName))
+                        sectionName = null;
+                }
+                else
+                {
+                    if (!SectionRenderer.IsAvailable(pageHandler, sectionName))
+                        sectionName = null;
+                }
+            }
+            else
+            {
+                sectionName = null;
+            }
+
+            // No section name renders the script inline if it hasn't been rendered
+            if (sectionName == null)
+            {
+                if (!register.IsRegistered(resourcePath, sectionName))
                 {
                     result = MvcHtmlString.Create(ResourceHelper.BuildSingleResourceMarkup(resourcePath, resourceType));
                 }
