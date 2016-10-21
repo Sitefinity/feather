@@ -241,6 +241,8 @@
 
                 if (typeof ($telerik) !== 'undefined')
                     $telerik.$(document).trigger('modalDialogClosed');
+
+                $rootScope.$destroy();
             };
 
             $scope.hideSaveAllTranslations = widgetContext.hideSaveAllTranslations;
