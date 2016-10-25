@@ -6,6 +6,7 @@ using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.DesignerToolbox;
 using Telerik.Sitefinity.Frontend.GridSystem;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc.Store;
@@ -19,6 +20,8 @@ namespace Telerik.Sitefinity.Frontend
     /// </summary>
     public static class Startup
     {
+        #region Public Methods
+
         /// <summary>
         /// Called before the Asp.Net application is started.
         /// </summary>
@@ -29,7 +32,13 @@ namespace Telerik.Sitefinity.Frontend
 
             if (!GlobalFilters.Filters.Any(f => f.Instance.GetType() == typeof(FrontendModuleFilter)))
                 GlobalFilters.Filters.Add(new FrontendModuleFilter());
+
+            EnableViewCompilationTracking();
         }
+
+        #endregion
+
+        #region Private Methods
 
         private static void Bootstrapper_Initialized(object sender, Data.ExecutedEventArgs e)
         {
@@ -86,5 +95,17 @@ namespace Telerik.Sitefinity.Frontend
             var framework = (PageTemplateFramework)contextItems["PageTemplateFramework"];
             return framework;
         }
+
+        private static void EnableViewCompilationTracking()
+        {
+            var razorViewEngine = ViewEngines.Engines.FirstOrDefault(v => v.GetType() == typeof(RazorViewEngine)) as RazorViewEngine;
+            if (razorViewEngine != null)
+            {
+                var index = ViewEngines.Engines.IndexOf(razorViewEngine);
+                ViewEngines.Engines[index] = new CompilationPerformanceRazorViewEngine();
+            }
+        }
+
+        #endregion
     }
 }
