@@ -61,7 +61,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
                 if (this.ShouldMeasurePerformance(this.ViewPath))
                     this.RenderWithPerformanceMeasurement(viewContext, writer);
             }
-            finally
+            catch
             {
                 base.Render(viewContext, writer);
             }
