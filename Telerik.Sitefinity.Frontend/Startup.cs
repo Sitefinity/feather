@@ -33,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend
             if (!GlobalFilters.Filters.Any(f => f.Instance.GetType() == typeof(FrontendModuleFilter)))
                 GlobalFilters.Filters.Add(new FrontendModuleFilter());
 
-            EnableViewCompilationTracking();
+            Startup.EnableViewCompilationTracking();
         }
 
         #endregion
@@ -98,11 +98,12 @@ namespace Telerik.Sitefinity.Frontend
 
         private static void EnableViewCompilationTracking()
         {
-            var razorViewEngine = ViewEngines.Engines.FirstOrDefault(v => v.GetType() == typeof(RazorViewEngine)) as RazorViewEngine;
-            if (razorViewEngine != null)
+            for (int i = 0; i < ViewEngines.Engines.Count; i++)
             {
-                var index = ViewEngines.Engines.IndexOf(razorViewEngine);
-                ViewEngines.Engines[index] = new CompilationPerformanceRazorViewEngine();
+                if (ViewEngines.Engines[i] is RazorViewEngine)
+                {
+                    ViewEngines.Engines[i] = new CompilationPerformanceRazorViewEngine();
+                }
             }
         }
 
