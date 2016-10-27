@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Web;
+using System.Web.Compilation;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
@@ -60,97 +61,105 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
         /// </summary>
         /// <param name="viewContext">Information related to rendering a view, such as view data, temporary data, and form context.</param>
         /// <param name="writer">The writer object.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "The try-catch block is used to exclude exceptions caused by the performance measurement logic. Thus, we are not interested in the type of that exception. In case it is not caused by the performance measurement the base render method is called.")]
         public override void Render(ViewContext viewContext, TextWriter writer)
         {
-            try
-            {
-                if (this.ShouldMeasurePerformance(this.ViewPath))
-                    this.RenderWithPerformanceMeasurement(viewContext, writer);
-            }
-            catch
-            {
+            if (!this.ShouldMeasurePerformance(this.ViewPath) || !this.RenderWithPerformanceMeasurement(viewContext, writer))
                 base.Render(viewContext, writer);
-            }
         }
 
         #endregion
 
         #region Private Methods
 
-        private void RenderWithPerformanceMeasurement(ViewContext viewContext, TextWriter writer)
+        private bool RenderWithPerformanceMeasurement(ViewContext viewContext, TextWriter writer)
         {
             if (viewContext == null)
-                throw new ArgumentNullException("viewContext");
+                return false;
+
+            var region = this.GetMethodPerformanceRegion(viewContext);
+            if (region == null)
+                return false;
 
             Type compiledType = null;
-
-            using (this.GetMethodPerformanceRegion(viewContext))
-                compiledType = System.Web.Compilation.BuildManager.GetCompiledType(this.ViewPath);
-
-            object obj = null;
-            if (compiledType != null)
-                obj = this.viewPageActivator.Create(this.controllerContext, compiledType);
-
-            if (obj == null)
+            try
             {
-                string message = string.Format(CultureInfo.CurrentCulture, CompilationPerformanceRazorView.CshtmlViewCouldNotBeCreated, new[] { this.ViewPath });
-                throw new InvalidOperationException(message);
+                compiledType = System.Web.Compilation.BuildManager.GetCompiledType(this.ViewPath);
+            }
+            finally
+            {
+                region.Dispose();
             }
 
+            if (compiledType == null)
+                return false;
+
+            var obj = this.viewPageActivator.Create(this.controllerContext, compiledType);
+            if (obj == null)
+                return false;
+
             this.RenderView(viewContext, writer, obj);
+
+            return true;
         }
 
         private bool ShouldMeasurePerformance(string virtualPath)
         {
-            bool fileExists = HostingEnvironment.VirtualPathProvider.FileExists(virtualPath);
-            bool isCompiled = System.Web.Compilation.BuildManager.GetCachedBuildDependencySet(System.Web.HttpContext.Current, virtualPath) != null;
+            if (virtualPath == null || HttpContext.Current == null)
+                return false;
 
-            return fileExists && !isCompiled;
+            return HostingEnvironment.VirtualPathProvider.FileExists(virtualPath) && BuildManager.GetCachedBuildDependencySet(HttpContext.Current, virtualPath) == null;
         }
 
         private MethodPerformanceRegion GetMethodPerformanceRegion(ViewContext viewContext)
         {
-            PageSiteNode pageNode = null;
-            if (SystemManager.HttpContextItems.Contains(SiteMapBase.CurrentNodeKey))
-                pageNode = SystemManager.HttpContextItems[SiteMapBase.CurrentNodeKey] as PageSiteNode;
+            if (SystemManager.HttpContextItems == null || !SystemManager.HttpContextItems.Contains(SiteMapBase.CurrentNodeKey) || !(SystemManager.HttpContextItems[SiteMapBase.CurrentNodeKey] is PageSiteNode))
+                return null;
 
-            int slashIndex = this.ViewPath.LastIndexOf('/');
-            var fullViewName = this.ViewPath.Substring(slashIndex + 1);
+            var pageNode = (PageSiteNode)SystemManager.HttpContextItems[SiteMapBase.CurrentNodeKey];
 
-            int hashIndex = fullViewName.IndexOf('#');
-            var viewName = hashIndex < 0 ? fullViewName : fullViewName.Substring(0, hashIndex);
-
-            var actionName = (string)viewContext.RequestContext.RouteData.Values["action"];
-            var virtualPath = hashIndex < 0 ? this.ViewPath : this.ViewPath.Substring(0, slashIndex + hashIndex + 1);
-            var packageManager = new PackageManager();
-            var resourcePackage = packageManager.GetCurrentPackage();
-            var controllerName = viewContext.Controller.GetType().FullName;
-            var widgetName = this.GetWidgetName(this.controllerContext);
-
-            var isBackendRequest = bool.Parse(SystemManager.CurrentHttpContext.Items[SystemManager.IsBackendRequestKey].ToString());
-            var rootNodeId = isBackendRequest ? SiteInitializer.BackendRootNodeId : SiteInitializer.CurrentFrontendRootNodeId;
-            var siteId = SystemManager.CurrentContext.CurrentSite.Id;
-            var machineName = Environment.MachineName;
-
-            var key = string.Format("Compile view \"{0}\" of controller \"{1}\"", fullViewName, controllerName);
-            var data = new Dictionary<string, object>()
+            try
             {
-                { CompilationPerformanceRazorView.ViewNameKey, viewName },
-                { CompilationPerformanceRazorView.PageIdKey, pageNode.PageId },
-                { CompilationPerformanceRazorView.PageTitleKey, pageNode.Title },
-                { CompilationPerformanceRazorView.ResourcePackageKey, resourcePackage ?? string.Empty },
-                { CompilationPerformanceRazorView.ActionNameKey, actionName },
-                { CompilationPerformanceRazorView.ControllerNameKey, controllerName },
-                { CompilationPerformanceRazorView.WidgetNameKey, widgetName ?? string.Empty },
-                { CompilationPerformanceRazorView.VirtualPathKey, this.ViewPath },
-                { CompilationPerformanceRazorView.MachineNameKey, machineName },
-                { CompilationPerformanceRazorView.SiteIdKey, siteId },
-                { CompilationPerformanceRazorView.RootNodeIdKey, rootNodeId },
-                { CompilationPerformanceRazorView.SourceKey, virtualPath }
-            };
+                int slashIndex = this.ViewPath.LastIndexOf('/');
+                var fullViewName = this.ViewPath.Substring(slashIndex + 1);
 
-            return new MethodPerformanceRegion(key, CompilationPerformanceRazorView.ViewCompilationCategory, data);
+                int hashIndex = fullViewName.IndexOf('#');
+                var viewName = hashIndex < 0 ? fullViewName : fullViewName.Substring(0, hashIndex);
+
+                var actionName = (string)viewContext.RequestContext.RouteData.Values["action"];
+                var virtualPath = hashIndex < 0 ? this.ViewPath : this.ViewPath.Substring(0, slashIndex + hashIndex + 1);
+                var packageManager = new PackageManager();
+                var resourcePackage = packageManager.GetCurrentPackage();
+                var controllerName = viewContext.Controller.GetType().FullName;
+                var widgetName = this.GetWidgetName(this.controllerContext);
+
+                var isBackendRequest = bool.Parse(SystemManager.CurrentHttpContext.Items[SystemManager.IsBackendRequestKey].ToString());
+                var rootNodeId = isBackendRequest ? SiteInitializer.BackendRootNodeId : SiteInitializer.CurrentFrontendRootNodeId;
+                var siteId = SystemManager.CurrentContext.CurrentSite.Id;
+                var machineName = Environment.MachineName;
+
+                var key = string.Format("Compile view \"{0}\" of controller \"{1}\"", fullViewName, controllerName);
+                var data = new Dictionary<string, object>()
+                {
+                    { CompilationPerformanceRazorView.ViewNameKey, viewName },
+                    { CompilationPerformanceRazorView.PageIdKey, pageNode.PageId },
+                    { CompilationPerformanceRazorView.PageTitleKey, pageNode.Title },
+                    { CompilationPerformanceRazorView.ResourcePackageKey, resourcePackage ?? string.Empty },
+                    { CompilationPerformanceRazorView.ActionNameKey, actionName },
+                    { CompilationPerformanceRazorView.ControllerNameKey, controllerName },
+                    { CompilationPerformanceRazorView.WidgetNameKey, widgetName ?? string.Empty },
+                    { CompilationPerformanceRazorView.VirtualPathKey, this.ViewPath },
+                    { CompilationPerformanceRazorView.MachineNameKey, machineName },
+                    { CompilationPerformanceRazorView.SiteIdKey, siteId },
+                    { CompilationPerformanceRazorView.RootNodeIdKey, rootNodeId },
+                    { CompilationPerformanceRazorView.SourceKey, virtualPath }
+                };
+
+                return new MethodPerformanceRegion(key, CompilationPerformanceRazorView.ViewCompilationCategory, data);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private string GetWidgetName(ControllerContext context)
@@ -186,8 +195,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
         internal const string SiteIdKey = "SiteId";
         internal const string RootNodeIdKey = "RootNodeId";
         internal const string SourceKey = "Source";
-
-        private const string CshtmlViewCouldNotBeCreated = "The view {0} could not be created.";
 
         #endregion
     }
