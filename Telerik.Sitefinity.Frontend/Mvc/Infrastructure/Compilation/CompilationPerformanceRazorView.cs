@@ -133,7 +133,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
             var siteId = SystemManager.CurrentContext.CurrentSite.Id;
             var machineName = Environment.MachineName;
 
-            var key = string.Format("Compile view \"{0}\" of widget \"{1}\"", fullViewName, widgetName);
+            var key = string.Format("Compile view \"{0}\" of controller \"{1}\"", fullViewName, controllerName);
             var data = new Dictionary<string, object>()
             {
                 { CompilationPerformanceRazorView.ViewNameKey, viewName },
