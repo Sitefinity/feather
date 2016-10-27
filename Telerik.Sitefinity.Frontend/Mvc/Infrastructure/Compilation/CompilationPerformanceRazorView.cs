@@ -60,7 +60,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
         /// </summary>
         /// <param name="viewContext">Information related to rendering a view, such as view data, temporary data, and form context.</param>
         /// <param name="writer">The writer object.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification="The try-catch block is used to exclude exceptions caused by the performance measurement. Thus, we are not interested in the type of that exception. In case it is not caused by the performance measurement the base method is called.")]
         public override void Render(ViewContext viewContext, TextWriter writer)
         {
             try
