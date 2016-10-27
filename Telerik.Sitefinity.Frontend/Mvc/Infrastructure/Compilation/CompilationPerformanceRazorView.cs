@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -143,6 +142,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
                 {
                     { CompilationPerformanceRazorView.ViewNameKey, viewName },
                     { CompilationPerformanceRazorView.PageIdKey, pageNode.PageId },
+                    { CompilationPerformanceRazorView.PageTitleKey, pageNode.Title },
                     { CompilationPerformanceRazorView.ResourcePackageKey, resourcePackage ?? string.Empty },
                     { CompilationPerformanceRazorView.ActionNameKey, actionName },
                     { CompilationPerformanceRazorView.ControllerNameKey, controllerName },
@@ -185,6 +185,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
 
         internal const string ViewNameKey = "View";
         internal const string PageIdKey = "PageId";
+        internal const string PageTitleKey = "PageTitle";
         internal const string ResourcePackageKey = "ResourcePackage";
         internal const string ActionNameKey = "Action";
         internal const string ControllerNameKey = "Controller";
