@@ -100,7 +100,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             for (int i = 0; i < ViewEngines.Engines.Count; i++)
             {
-                if (ViewEngines.Engines[i] is RazorViewEngine)
+                if (ViewEngines.Engines[i] != null && ViewEngines.Engines[i].GetType() == typeof(RazorViewEngine))
                 {
                     ViewEngines.Engines[i] = new CompilationPerformanceRazorViewEngine();
                 }
