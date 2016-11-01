@@ -7,6 +7,8 @@ using System.Web.Compilation;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.DynamicModules.Builder;
+using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.HealthMonitoring;
 using Telerik.Sitefinity.Mvc.Store;
@@ -110,6 +112,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
             return HostingEnvironment.VirtualPathProvider.FileExists(virtualPath) && BuildManager.GetCachedBuildDependencySet(HttpContext.Current, virtualPath) == null;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "The type of the thrown exception is not of interest in this scenario. We are only interested in marking the start of the performance measurement as failed.")]
         private MethodPerformanceRegion GetMethodPerformanceRegion(ViewContext viewContext)
         {
             if (SystemManager.HttpContextItems == null || !SystemManager.HttpContextItems.Contains(SiteMapBase.CurrentNodeKey) || !(SystemManager.HttpContextItems[SiteMapBase.CurrentNodeKey] is PageSiteNode))
@@ -165,13 +168,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
         private string GetWidgetName(ControllerContext context)
         {
             var controllerType = context.Controller.GetType();
+
+            // Check in controller store
             var controllerInfo = ControllerStore.Controllers()
                 .SingleOrDefault(c => c.ControllerType == controllerType);
 
-            if (controllerInfo == null)
-                return string.Empty;
+            if (controllerInfo != null && !controllerInfo.DefaultToolboxItemTitle.IsNullOrEmpty())
+                return controllerInfo.DefaultToolboxItemTitle;
 
-            return controllerInfo.DefaultToolboxItemTitle;
+            // Check for dynamic type
+            var modelProperty = controllerType.GetProperty("Model");
+            if (modelProperty != null)
+            {
+                var model = modelProperty.GetValue(context.Controller) as ContentModelBase;
+                if (model != null)
+                {
+                    var contentType = model.ContentType;
+                    var manager = ModuleBuilderManager.GetManager().Provider;
+                    var dynamicType = manager.GetDynamicModuleTypes().FirstOrDefault(t => t.TypeName == contentType.Name && t.TypeNamespace == contentType.Namespace);
+                    if (dynamicType != null)
+                        return dynamicType.DisplayName;
+                }
+            }
+
+            return string.Empty;
         }
 
         #endregion
