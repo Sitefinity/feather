@@ -8,6 +8,7 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.DynamicModules.Builder;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.HealthMonitoring;
@@ -191,7 +192,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
                 }
             }
 
-            return string.Empty;
+            var controllerName = FrontendManager.ControllerFactory.GetControllerName(controllerType);
+
+            return controllerName;
         }
 
         #endregion
