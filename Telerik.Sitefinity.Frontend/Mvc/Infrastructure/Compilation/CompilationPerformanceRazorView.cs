@@ -192,6 +192,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
                 }
             }
 
+            if (this.ViewPath.StartsWith(CompilationPerformanceRazorView.LayoutVirtualPathBeginning, StringComparison.OrdinalIgnoreCase))
+                return CompilationPerformanceRazorView.Layout;
+
             var controllerName = FrontendManager.ControllerFactory.GetControllerName(controllerType);
 
             return controllerName;
@@ -218,6 +221,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
         internal const string SiteIdKey = "SiteId";
         internal const string RootNodeIdKey = "RootNodeId";
         internal const string SourceKey = "Source";
+
+        private const string LayoutVirtualPathBeginning = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/Mvc/Views/Layouts";
+        private const string Layout = "Layout";
 
         #endregion
     }
