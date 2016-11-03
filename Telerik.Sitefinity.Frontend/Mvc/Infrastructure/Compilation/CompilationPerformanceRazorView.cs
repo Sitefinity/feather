@@ -12,6 +12,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.HealthMonitoring;
+using Telerik.Sitefinity.Modules.Forms;
 using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
@@ -135,6 +136,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
                 var resourcePackage = packageManager.GetCurrentPackage();
                 var controllerName = viewContext.Controller.GetType().FullName;
                 var widgetName = this.GetWidgetName(this.controllerContext);
+                if (this.ViewPath.StartsWith(CompilationPerformanceRazorView.FormsResolverPath, StringComparison.OrdinalIgnoreCase) && viewName.EndsWith(CompilationPerformanceRazorView.RazorViewSuffix, StringComparison.OrdinalIgnoreCase))
+                {
+                    Guid formId;
+                    var formIdString = viewName.Left(viewName.Length - CompilationPerformanceRazorView.RazorViewSuffix.Length);
+                    if (Guid.TryParse(formIdString, out formId))
+                    {
+                        var form = FormsManager.GetManager().GetForms().FirstOrDefault(f => f.Id == formId);
+                        if (form != null)
+                        {
+                            viewName = form.Title + " (" + formIdString + ")";
+                        }
+                    }
+                }
 
                 var isBackendRequest = bool.Parse(SystemManager.CurrentHttpContext.Items[SystemManager.IsBackendRequestKey].ToString());
                 var rootNodeId = isBackendRequest ? SiteInitializer.BackendRootNodeId : SiteInitializer.CurrentFrontendRootNodeId;
@@ -224,6 +238,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
 
         private const string LayoutVirtualPathBeginning = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/Mvc/Views/Layouts";
         private const string Layout = "Layout";
+        private const string FormsResolverPath = "~/Mvc-Form-View/";
+        private const string RazorViewSuffix = ".cshtml";
 
         #endregion
     }
