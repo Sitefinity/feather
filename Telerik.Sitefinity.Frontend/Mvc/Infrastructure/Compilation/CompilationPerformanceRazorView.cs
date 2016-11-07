@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Compilation;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -13,7 +14,9 @@ using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.HealthMonitoring;
 using Telerik.Sitefinity.Modules.Forms;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc.Store;
+using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 
@@ -132,6 +135,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
 
                 var actionName = (string)viewContext.RequestContext.RouteData.Values["action"];
                 var virtualPath = hashIndex < 0 ? this.ViewPath : this.ViewPath.Substring(0, slashIndex + hashIndex + 1);
+                var source = this.GetSource(this.ViewPath);
                 var packageManager = new PackageManager();
                 var resourcePackage = packageManager.GetCurrentPackage();
                 var controllerName = viewContext.Controller.GetType().FullName;
@@ -169,7 +173,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
                     { CompilationPerformanceRazorView.MachineNameKey, machineName },
                     { CompilationPerformanceRazorView.SiteIdKey, siteId },
                     { CompilationPerformanceRazorView.RootNodeIdKey, rootNodeId },
-                    { CompilationPerformanceRazorView.SourceKey, virtualPath }
+                    { CompilationPerformanceRazorView.SourceKey, virtualPath },
+                    { CompilationPerformanceRazorView.ViewSourceKey, source }
                 };
 
                 return new MethodPerformanceRegion(key, CompilationPerformanceRazorView.ViewCompilationCategory, data);
@@ -178,6 +183,47 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
             {
                 return null;
             }
+        }
+
+        private string GetSource(string viewPath)
+        {
+            var cacheDep = HostingEnvironment.VirtualPathProvider.GetCacheDependency(viewPath, new object[0], DateTime.UtcNow);
+            var getFileDependencies = typeof(CacheDependency).GetMethod("GetFileDependencies", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            var getDependencyArray = typeof(AggregateCacheDependency).GetMethod("GetDependencyArray", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+
+            while (cacheDep is AggregateCacheDependency)
+            {
+                var deps = getDependencyArray.Invoke(cacheDep, null) as CacheDependency[];
+                if (deps == null || deps.Length == 0)
+                    break;
+
+                cacheDep = deps[deps.Length - 1];
+            }
+
+            if (cacheDep is Abstractions.VirtualPath.ControlPresentationCacheDependency)
+            {
+                return "Widget template: " + this.ExtractTemplateTitle((Abstractions.VirtualPath.ControlPresentationCacheDependency)cacheDep) + " (DB)";
+            }
+
+            var files = getFileDependencies.Invoke(cacheDep, null) as string[];
+            if (files != null && files.Length > 0)
+                return files[files.Length - 1];
+            else
+                return viewPath;
+        }
+
+        private string ExtractTemplateTitle(Abstractions.VirtualPath.ControlPresentationCacheDependency cacheDep)
+        {
+            var id = Guid.Parse(cacheDep.GetUniqueID().Right(cacheDep.GetUniqueID().Length - cacheDep.UniquePrefix.Length - 1));
+            var manager = PageManager.GetManager();
+
+            string title;
+            using (new Data.ElevatedModeRegion(manager))
+            {
+                title = manager.GetPresentationItem<ControlPresentation>(id).Name;
+            }
+
+            return title;
         }
 
         private string GetWidgetName(ControllerContext context)
@@ -235,6 +281,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
         internal const string SiteIdKey = "SiteId";
         internal const string RootNodeIdKey = "RootNodeId";
         internal const string SourceKey = "Source";
+        internal const string ViewSourceKey = "ViewSource";
 
         private const string LayoutVirtualPathBeginning = "~/Frontend-Assembly/Telerik.Sitefinity.Frontend/Mvc/Views/Layouts";
         private const string Layout = "Layout";
