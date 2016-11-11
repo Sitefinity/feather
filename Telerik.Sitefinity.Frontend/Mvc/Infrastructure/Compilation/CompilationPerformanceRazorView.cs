@@ -232,7 +232,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
 
             // Check in controller store
             var controllerInfo = ControllerStore.Controllers()
-                .SingleOrDefault(c => c.ControllerType == controllerType);
+                .FirstOrDefault(c => c.ControllerType == controllerType);
 
             if (controllerInfo != null && !controllerInfo.DefaultToolboxItemTitle.IsNullOrEmpty())
                 return controllerInfo.DefaultToolboxItemTitle;
