@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Compilation;
@@ -118,7 +119,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "The type of the thrown exception is not of interest in this scenario. We are only interested in marking the start of the performance measurement as failed.")]
-        private MethodPerformanceRegion GetMethodPerformanceRegion(ViewContext viewContext)
+        private IDisposable GetMethodPerformanceRegion(ViewContext viewContext)
         {
             if (SystemManager.HttpContextItems == null || !SystemManager.HttpContextItems.Contains(SiteMapBase.CurrentNodeKey) || !(SystemManager.HttpContextItems[SiteMapBase.CurrentNodeKey] is PageSiteNode))
                 return null;
@@ -177,7 +178,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
                     { CompilationPerformanceRazorView.ViewSourceKey, source }
                 };
 
-                return new MethodPerformanceRegion(key, CompilationPerformanceRazorView.ViewCompilationCategory, data);
+                return (IDisposable)Activator.CreateInstance(CompilationPerformanceRazorView.methodPerformanceRegionType, new object[] { key, CompilationPerformanceRazorView.ViewCompilationCategory, data });
             }
             catch
             {
@@ -287,6 +288,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
         private const string Layout = "Layout";
         private const string FormsResolverPath = "~/Mvc-Form-View/";
         private const string RazorViewSuffix = ".cshtml";
+
+        private static Type methodPerformanceRegionType = Assembly.GetAssembly(typeof(SystemManager)).GetType("Telerik.Sitefinity.HealthMonitoring.MethodPerformanceRegion", false);
 
         #endregion
     }
