@@ -203,7 +203,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
 
             if (cacheDep is Abstractions.VirtualPath.ControlPresentationCacheDependency)
             {
-                return "Widget template: " + this.ExtractTemplateTitle((Abstractions.VirtualPath.ControlPresentationCacheDependency)cacheDep) + " (DB)";
+                var title = this.ExtractTemplateTitle((Abstractions.VirtualPath.ControlPresentationCacheDependency)cacheDep);
+                if (title != null)
+                {
+                    return "Widget template: " + title + " (DB)";
+                }
             }
 
             var files = getFileDependencies.Invoke(cacheDep, null) as string[];
@@ -215,9 +219,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
 
         private string ExtractTemplateTitle(Abstractions.VirtualPath.ControlPresentationCacheDependency cacheDep)
         {
-            var id = Guid.Parse(cacheDep.GetUniqueID().Right(cacheDep.GetUniqueID().Length - cacheDep.UniquePrefix.Length - 1));
-            var manager = PageManager.GetManager();
+            var cacheDepId = cacheDep.GetUniqueID().Right(cacheDep.GetUniqueID().Length - cacheDep.UniquePrefix.Length - 1);
+            Guid id;
+            if (!Guid.TryParse(cacheDepId, out id))
+                return null;
 
+            var manager = PageManager.GetManager();
             string title;
             using (new Data.ElevatedModeRegion(manager))
             {
