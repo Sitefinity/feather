@@ -212,7 +212,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
 
             var files = getFileDependencies.Invoke(cacheDep, null) as string[];
             if (files != null && files.Length > 0)
-                return files[files.Length - 1];
+                return files[files.Length - 1].Replace(HostingEnvironment.ApplicationPhysicalPath, "~\\");
             else
                 return viewPath;
         }
