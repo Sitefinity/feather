@@ -428,11 +428,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             if (this.DisplayMode == ListDisplayMode.Limit)
             {
-                take = this.LimitCount;   
+                take = this.LimitCount;
             }
             else if (this.DisplayMode == ListDisplayMode.Paging)
             {
-                 take = this.ItemsPerPage;   
+                take = this.ItemsPerPage;
             }
 
             IList<ItemViewModel> result = new List<ItemViewModel>();
@@ -446,8 +446,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 result.Add(this.CreateItemViewModelInstance(item));
             }
 
-            totalPages = (totalCount.Value + this.itemsPerPage.Value - 1) / this.ItemsPerPage.Value;
-            totalPages = this.DisplayMode == ListDisplayMode.Paging ? totalPages : null;
+            if (this.itemsPerPage.HasValue && this.itemsPerPage.Value > 0)
+            {
+                totalPages = (totalCount.Value + this.itemsPerPage.Value - 1) / this.ItemsPerPage.Value;
+                totalPages = this.DisplayMode == ListDisplayMode.Paging ? totalPages : null;
+            }
+            else
+            {
+                totalPages = 1;
+            }
 
             return result;
         }
