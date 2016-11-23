@@ -113,6 +113,7 @@
 
                     serverData.refresh();
                     scope.labels = serverData.getAll();
+                    scope.mediaItemDeleted = false;
 
                     var autoOpenSelector = attrs.sfAutoOpenSelector !== undefined && attrs.sfAutoOpenSelector.toLowerCase() !== 'false';
 
@@ -126,15 +127,26 @@
                         mediaType.service.getById(id, scope.sfProvider).then(function (data) {
                             if (data && data.Item && data.Item.Visible) {
                                 refreshScopeInfo(data.Item);
+                            } else {
+                                refreshScopeInfo(null);
                             }
+                        }, function (err) {
+                            refreshScopeInfo(null);
                         });
                     };
 
                     var refreshScopeInfo = function (item) {
-                        scope.sfMedia = item;
-
-                        scope.mediaSize = Math.ceil(item.TotalSize / 1024) + " KB";
-                        scope.uploaded = getDateFromString(item.DateCreated);
+                        if (item) {
+                            scope.mediaItemDeleted = false;
+                            scope.sfMedia = item;
+                            scope.mediaSize = Math.ceil(item.TotalSize / 1024) + " KB";
+                            scope.uploaded = getDateFromString(item.DateCreated);
+                        } else {
+                            scope.mediaItemDeleted = true;
+                            scope.sfMedia = null;
+                            scope.mediaSize = null;
+                            scope.uploaded = null;
+                        }
                     };
 
                     scope.showEditPropertiesButton = (window && window.radopen);
