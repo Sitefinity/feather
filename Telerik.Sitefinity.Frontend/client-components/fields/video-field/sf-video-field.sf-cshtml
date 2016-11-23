@@ -8,7 +8,7 @@
       <div class="sf-Media-play-button glyphicon glyphicon-play"></div>
     </div>
   </div>
-  <div ng-hide="sfMedia">
+  <div ng-show="!sfMedia && mediaItemDeleted">
     <span>
       @(Res.Get<ClientComponentsResources>().VideoHasBeenDeleted)</span>
   </div>
