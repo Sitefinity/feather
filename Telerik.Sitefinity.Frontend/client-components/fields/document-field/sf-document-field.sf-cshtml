@@ -5,7 +5,7 @@
     </i>
   </div>
 </div>
-<div ng-show="!sfMedia">
+<div ng-show="!sfMedia && mediaItemDeleted">
     <span>@(Res.Get<ClientComponentsResources>().DocumentHasBeenDeleted)</span>
 </div>
 

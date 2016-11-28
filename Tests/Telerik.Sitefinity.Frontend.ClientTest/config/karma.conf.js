@@ -7,6 +7,7 @@ module.exports = function (config) {
 	              'helpers/angular.js',
                   'helpers/angular-route.js',
                   'helpers/angular-resource.js',
+				  'helpers/angular-sanitize.min.js',
                   'helpers/angular-mocks.js',
                   'helpers/kendo.all.min.js',
                   'helpers/common-methods.js',
