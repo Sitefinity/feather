@@ -35,6 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
                     model.CurrentPage = 1;
 
                 startIndex = ((int)Math.Floor((double)(model.CurrentPage - 1) / model.DisplayCount) * model.DisplayCount) + 1;
+                model.CurrentPage %= model.DisplayCount;
             }
 
             int endIndex = Math.Min(model.TotalPagesCount, (startIndex + model.DisplayCount) - 1);

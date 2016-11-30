@@ -8,7 +8,7 @@
                 </i>
               </div>
             </div>
-            <div ng-show="!sfMedia">
+            <div ng-show="!sfMedia && mediaItemDeleted">
                 <span>{{labels.mediaDeletedLabel}}</span>
             </div>
         </div>
