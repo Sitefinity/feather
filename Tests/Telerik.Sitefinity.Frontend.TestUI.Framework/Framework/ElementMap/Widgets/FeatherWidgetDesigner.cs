@@ -169,6 +169,32 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.ElementMap.Widgets
         }
 
         /// <summary>
+        /// Gets the done button.
+        /// </summary>
+        /// <value>The done button.</value>
+        public HtmlButton DoneSelectingButton
+        {
+            get
+            {
+                return this.Get<HtmlButton>("ng-click=done()");
+            }
+        }
+
+        /// <summary>
+        /// Gets the change document button.
+        /// </summary>
+        /// <value>
+        /// The change document button.
+        /// </value>
+        public HtmlButton ChangeDocumentButton
+        {
+            get
+            {
+                return this.Get<HtmlButton>("ng-click=changeMedia()");
+            }
+        }
+
+        /// <summary>
         /// Gets the search input.
         /// </summary>
         /// <value>The search input.</value>
