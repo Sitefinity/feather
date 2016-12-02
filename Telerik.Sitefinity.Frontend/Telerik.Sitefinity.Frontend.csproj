@@ -305,6 +305,8 @@
     <Compile Include="Mvc\Controllers\PersonalizationDesignerController.cs" />
     <Compile Include="Mvc\Controllers\GridDesignerController.cs" />
     <Compile Include="Mvc\Helpers\ContentDataItemResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Compilation\CompilationPerformanceRazorView.cs" />
+    <Compile Include="Mvc\Infrastructure\Compilation\CompilationPerformanceRazorViewEngine.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\FeatherEnabledToolboxFilter.cs" />
     <Compile Include="Mvc\Controllers\PrecompiledViewAssemblyWrapper.cs" />
     <Compile Include="Mvc\Helpers\AspHtmlHelperExtensions.cs" />
@@ -873,10 +875,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PostBuildEvent></PostBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
   <!-- Telerik OpenAccess Enhancement -->
   <!-- Fluent API Mapping -->

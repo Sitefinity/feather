@@ -24,5 +24,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases
         /// UnstableTests test category.
         /// </summary>
         public const string UnstableTests = "UnstableTests";
+
+        /// <summary>
+        /// UnstableTests test category.
+        /// </summary>
+        public const string IgnoredInReadOnly = "IgnoredInReadOnly";
     }
 }
