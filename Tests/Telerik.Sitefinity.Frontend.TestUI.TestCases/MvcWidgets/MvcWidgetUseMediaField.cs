@@ -20,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.SitefinityTeam2),
-        TestCategory(FeatherTestCategories.PagesAndContent)]
+        TestCategory(FeatherTestCategories.PagesAndContent), Ignore]
         public void MvcWidgetUseMediaField()
         {
             BAT.Macros().NavigateTo().Pages();
