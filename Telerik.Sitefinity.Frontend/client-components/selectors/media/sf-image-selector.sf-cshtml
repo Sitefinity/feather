@@ -9,7 +9,7 @@
         </uib-alert>
 
         <!--Upload image-->
-        <input type="file" accept=".jpg, .jpeg, .png, .gif, .bmp" class="file-upload-chooser-input" style="display: none !important" />
+        <input type="file" accept=".jpg, .jpeg, .png, .gif, .bmp, .svg" class="file-upload-chooser-input" style="display: none !important" />
         <div ng-show="isInUploadMode" class="Media-upload-text text-center">
 			<div class="icon-no-image"></div>
             <div class="lead"><a ng-click="openSelectFileDialog()">@(Res.Get<ClientComponentsResources>().SelectImageFromComputer)</a></div>
