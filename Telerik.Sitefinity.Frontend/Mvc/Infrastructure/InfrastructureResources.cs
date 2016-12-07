@@ -175,5 +175,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
                 return this["LogPrecompiledViewUsageDescription"];
             }
         }
+
+        /// <summary>
+        /// Detailed error message when cannot find template in MVC form.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "Telerik.Sitefinity.Localization.Resource.get_Item(System.String)"), ResourceEntry("CannotFindTemplateMvcForm",
+            Value = "Cannot find template \"{0}\". Most probably it is specific for a particular resource package which is not applied in the current context. Try duplicating the template in SitefinityWebApp root folder while keeping the same folder hierarchy.",
+            Description = "Detailed error message when cannot find template in MVC form.",
+            LastModified = "2016/11/28")]
+        public string CannotFindTemplateMvcForm
+        {
+            get
+            {
+                return base["CannotFindTemplateMvcForm"];
+            }
+        }
     }
 }
