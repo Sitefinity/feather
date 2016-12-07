@@ -311,7 +311,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
         #region Fields and Constants
 
-        private const string PartialViewRegexPattern = "@Html.Partial\\(\"(.*)\"\\)";
+        private const string PartialViewRegexPattern = "@Html.Partial\\(\"(.*)\",?(.*)\\)";
 
         #endregion
     }
