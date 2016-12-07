@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Utilities;
+using Telerik.TestUI.Core.Attributes;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Designers
 {
@@ -22,8 +23,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Designers
         /// UI test DesignerAllComponentsWithJsonNoJs.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.SitefinityTeam2),
+        Microsoft.VisualStudio.TestTools.UnitTesting.Owner(FeatherTeams.SitefinityTeam2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
+        [KnownIssue(BugId = 207398),
+        Ignore]
         public void DesignerAllComponentsWithJsonNoJs()
         {
             RuntimeSettingsModificator.ExecuteWithClientTimeout(1600000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/pages", false));
