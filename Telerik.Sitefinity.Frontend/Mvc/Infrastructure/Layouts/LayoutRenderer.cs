@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Hosting;
@@ -74,7 +75,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             if (viewPath == null)
                 throw new ArgumentNullException("viewPath");
-            
+
             string result = null;
             IView view = null;
 
@@ -253,6 +254,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 layoutText = layoutFile.ReadToEnd();
             }
 
+            layoutText = this.RenderPartialViews(layoutPath, layoutText, new HashSet<string>());
+
             var matches = new Regex(@"@Html\.SfPlaceHolder(?:\(\s*\""(?<placeHolder>\w*)\""\s*\)|(?<placeHolder>\(\)))").Matches(layoutText);
             foreach (Match match in matches)
             {
@@ -269,6 +272,46 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
             writer.Write("</body></html>");
         }
+
+        private string RenderPartialViews(string layoutPath, string layoutText, ISet<string> processedPaths)
+        {
+            if (processedPaths.Contains(layoutPath))
+                return layoutText;
+
+            processedPaths.Add(layoutPath);
+
+            var matches = new Regex(LayoutRenderer.PartialViewRegexPattern).Matches(layoutText);
+            if (matches.Count == 0)
+                return layoutText;
+
+            var controller = this.CreateController();
+            foreach (Match match in matches)
+            {
+                var view = match.Groups[1].Value;
+
+                var result = this.GetViewEngineResult(controller.ControllerContext, view);
+                if (result == null || result.View == null)
+                    continue;
+
+                var viewPath = FrontendManager.VirtualPathBuilder.GetViewPath(result.View);
+                using (var reader = new StreamReader(HostingEnvironment.VirtualPathProvider.GetFile(viewPath).Open()))
+                {
+                    var content = reader.ReadToEnd();
+                    content = this.RenderPartialViews(view, content, processedPaths);
+
+                    var htmlHelperStatement = match.Groups[0].Value;
+                    layoutText = layoutText.Replace(htmlHelperStatement, content);
+                }
+            }
+
+            return layoutText;
+        }
+
+        #endregion
+
+        #region Fields and Constants
+
+        private const string PartialViewRegexPattern = "@Html.Partial\\(\"(.*)\"\\)";
 
         #endregion
     }
