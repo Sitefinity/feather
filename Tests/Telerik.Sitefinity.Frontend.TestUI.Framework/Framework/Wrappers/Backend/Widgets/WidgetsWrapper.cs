@@ -250,6 +250,78 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Framework.Wrappers.Backend
         }
 
         /// <summary>
+        /// Confirms the selecting.
+        /// </summary>
+        public void DoneSelectingOfDocument()
+        {
+            HtmlButton doneButton = this.EM.Widgets.FeatherWidget.DoneSelectingButton
+                                        .AssertIsPresent("done button");
+
+            doneButton.Click();
+            ActiveBrowser.WaitForAsyncRequests();
+            ActiveBrowser.RefreshDomTree();
+        }
+
+        /// <summary>
+        /// Changes the document button.
+        /// </summary>
+        public void ChangeDocumentButton()
+        {
+            HtmlButton changeButton = this.EM.Widgets.FeatherWidget.ChangeDocumentButton
+                                        .AssertIsPresent("Change document button");
+
+            changeButton.Click();
+            ActiveBrowser.WaitForAsyncRequests();
+            ActiveBrowser.RefreshDomTree();
+        }
+
+        /// <summary>
+        /// Changes the document button.
+        /// </summary>
+        public void IsMessageAppear(bool isVisble)
+        {
+            ActiveBrowser.RefreshDomTree();
+            HtmlDiv elementIsVisible = ActiveBrowser.Find.ByExpression<HtmlDiv>("tagName=div", "class=" + "", "ng-show=!sfMedia && mediaItemDeleted");
+            HtmlDiv elementIsNotVisible = ActiveBrowser.Find.ByExpression<HtmlDiv>("tagName=div", "class=ng-hide" ,"ng-show=!sfMedia && mediaItemDeleted");
+            HtmlDiv elementIsPressent = ActiveBrowser.Find.ByExpression<HtmlDiv>("tagName=div", "ng-show=!sfMedia && mediaItemDeleted");
+
+            if (isVisble)
+            {
+                elementIsPressent.AssertIsPresent("Element is not visible");
+            }
+            else 
+            {
+                Assert.IsNotNull(elementIsNotVisible, "Element is not visible");
+                Assert.IsNull(elementIsVisible, "Element is visible");
+            }
+           
+        }
+
+        /// <summary>
+        /// Selects media from media selector.
+        /// </summary>
+        /// <param name="title">The media title.</param>
+        public void SelectMediaFile(string title, bool isDocumentFile = false)
+        {
+            ActiveBrowser.WaitUntilReady();
+
+            HtmlControl element;
+            if (isDocumentFile)
+            {
+                element = ActiveBrowser.Find.ByExpression<HtmlDiv>("tagName=div", "class=Media-item-title ng-binding", "innertext=" + title);
+            }
+            else
+            {
+                element = ActiveBrowser.Find.ByExpression<HtmlImage>("tagName=img", "alt=" + title);
+            }
+
+            Assert.IsNotNull(element, "Could not find element for media item \"" + title + "\" to select.");
+            element.ScrollToVisible();
+            element.Focus();
+            element.MouseClick();
+        }
+
+        /// <summary>
         /// Verifies the selected item.
         /// </summary>
         /// <param name="itemName">Name of the item.</param>
