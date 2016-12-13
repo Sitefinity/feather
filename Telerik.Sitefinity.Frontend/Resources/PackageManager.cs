@@ -190,15 +190,15 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 return null;
 
             var pageManager = PageManager.GetManager();
-
             var pageNode = pageManager.GetPageNode(id);
+            var pageData = pageNode.GetPageData();
+
             if (SystemManager.IsDesignMode)
             {
-                var draft = pageManager.GetPageDraft(pageNode.PageId);
+                var draft = pageManager.GetPageDraft(pageData.Id);
                 return draft.TemplateId != Guid.Empty ? this.GetPackageFromTemplateId(draft.TemplateId.ToString()) : null;
             }
 
-            var pageData = pageNode.GetPageData();
             return this.GetPackageFromTemplate(pageData.Template);
         }
 
