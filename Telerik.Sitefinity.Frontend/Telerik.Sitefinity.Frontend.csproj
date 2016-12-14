@@ -271,17 +271,17 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Web.Design">
-      <HintPath>..\packages\Telerik.Web.UI.2016.3.1018.40\lib\net40\Telerik.Web.Design.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2016.3.1027.40\lib\net40\Telerik.Web.Design.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Web.UI">
-      <HintPath>..\packages\Telerik.Web.UI.2016.3.1018.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2016.3.1027.40\lib\net40\Telerik.Web.UI.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Web.UI.Skins">
-      <HintPath>..\packages\Telerik.Web.UI.2016.3.1018.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
+      <HintPath>..\packages\Telerik.Web.UI.2016.3.1027.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
       <Private>True</Private>
     </Reference>
