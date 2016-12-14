@@ -22,13 +22,16 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Mvc.Models
         public void SetUp()
         {
             ServerOperations.Taxonomies().CreateTag(ContentModelBaseTests.TagName);
-
+            var tag = TaxonomyManager.GetManager().GetTaxa<FlatTaxon>().First();
+            var metaFieldName = "Tags";
+            
             for (var i = 0; i < 10; i++)
             {
                 var title = "news" + i.ToString(CultureInfo.InvariantCulture);
-
-                // Tag is automatically linked.
                 ServerOperations.News().CreateNewsItem(title);
+
+                var newsItemId = ServerOperations.News().GetNewsItemId(title);
+                ServerOperations.News().AssignTaxonToNewsItem(newsItemId, metaFieldName, tag.Id);
             }
         }
 
