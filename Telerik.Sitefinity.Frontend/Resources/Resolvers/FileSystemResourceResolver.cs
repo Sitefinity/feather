@@ -39,26 +39,34 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         protected override CacheDependency GetCurrentCacheDependency(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
             var fn = this.GetFileName(definition, virtualPath);
-            if (fn == null)
+            if (string.IsNullOrWhiteSpace(fn))
             {
                 return null;
             }
 
             var dir = Path.GetDirectoryName(fn);
-
-            // We can't monitor file changes on non-existing directories.
-            if (Directory.Exists(dir))
+            if (!string.IsNullOrWhiteSpace(dir))
             {
-                return new CacheDependency(fn, utcStart);
+                // We can't monitor file changes on non-existing directories.
+                if (Directory.Exists(dir))
+                {
+                    return new CacheDependency(fn, utcStart);
+                }
+
+                var parentDir = Path.GetDirectoryName(dir);
+                while (!parentDir.IsNullOrEmpty() && !Directory.Exists(parentDir))
+                {
+                    dir = parentDir;
+                    parentDir = Path.GetDirectoryName(dir);
+                }
+
+                if (!string.IsNullOrWhiteSpace(parentDir))
+                {
+                    return new CacheDependency(dir, utcStart);
+                }
             }
 
-            do
-            {
-                dir = Path.GetDirectoryName(dir);
-            } 
-            while (!dir.IsNullOrEmpty() && !Directory.Exists(dir));
-
-            return new CacheDependency(dir, utcStart);
+            return null;
         }
 
         /// <inheritdoc />

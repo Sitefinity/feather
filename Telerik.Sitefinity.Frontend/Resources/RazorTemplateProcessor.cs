@@ -117,7 +117,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
         private void EnsureTemplateIsCompiled(string templatePath)
         {
-            if (!this.templateDependencies.ContainsKey(templatePath) || this.templateDependencies[templatePath].HasChanged)
+            if (!this.templateDependencies.ContainsKey(templatePath) || (this.templateDependencies[templatePath] != null && this.templateDependencies[templatePath].HasChanged))
             {
                 lock (this.templateDependencies)
                 {
@@ -127,10 +127,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                         this.service.Compile(markup, null, templatePath);
 
                         var dependency = this.virtualPathProvider.GetCacheDependency(templatePath, null, DateTime.UtcNow);
-                        if (dependency != null)
-                        {
-                            this.templateDependencies[templatePath] = dependency;
-                        }
+                        this.templateDependencies[templatePath] = dependency;
                     }
                 }
             }
