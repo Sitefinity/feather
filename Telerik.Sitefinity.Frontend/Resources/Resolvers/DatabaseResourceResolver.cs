@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
@@ -33,7 +34,8 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                     result = cacheManager[key] as bool?;
                     if (result == null)
                     {
-                        var controlPresentation = this.GetControlPresentation(definition, virtualPath);
+                        bool isValidControlPresentationPath;
+                        ControlPresentation controlPresentation = this.GetControlPresentation(definition, virtualPath, out isValidControlPresentationPath);
                         result = controlPresentation != null && !controlPresentation.Data.IsNullOrEmpty();
 
                         cacheManager.Add(key, result, Microsoft.Practices.EnterpriseLibrary.Caching.CacheItemPriority.Normal, null, this.GetControlPresentationsCacheExpirations());
@@ -47,7 +49,14 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <inheritdoc />
         protected override System.Web.Caching.CacheDependency GetCurrentCacheDependency(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            var controlPresentation = this.GetControlPresentation(definition, virtualPath);
+            bool isValidControlPresentationPath;
+            ControlPresentation controlPresentation = this.GetControlPresentation(definition, virtualPath, out isValidControlPresentationPath);
+            if (!isValidControlPresentationPath)
+            {
+                // Return null for virtual paths that are not ControlPresentation paths since they do not depend on Control Presentations.
+                return null;
+            }
+
             if (controlPresentation != null)
             {
                 return new ControlPresentationCacheDependency(controlPresentation.Id.ToString());
@@ -60,7 +69,8 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <inheritdoc />
         protected override Stream CurrentOpen(PathDefinition definition, string virtualPath)
         {
-            var controlPresentation = this.GetControlPresentation(definition, virtualPath);
+            bool isValidControlPresentationPath;
+            ControlPresentation controlPresentation = this.GetControlPresentation(definition, virtualPath, out isValidControlPresentationPath);
             if (controlPresentation != null && !controlPresentation.Data.IsNullOrEmpty())
             {
                 var bytes = RouteHelper.GetContentWithPreamble(controlPresentation.Data);
@@ -117,8 +127,12 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// </summary>
         /// <param name="virtualPathDefinition">The virtual path definition.</param>
         /// <param name="virtualPath">The virtual path.</param>
+        /// <param name="isValidControlPresentationPath">Value indicating whether virtualPath is valid control presentation path.</param>
+        /// <returns>
+        /// The control presentation for the given path.
+        /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
-        protected virtual ControlPresentation GetControlPresentation(PathDefinition virtualPathDefinition, string virtualPath)
+        protected virtual ControlPresentation GetControlPresentation(PathDefinition virtualPathDefinition, string virtualPath, out bool isValidControlPresentationPath)
         {
             if (virtualPathDefinition == null)
                 throw new ArgumentNullException("virtualPathDefinition");
@@ -126,6 +140,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             if (virtualPath == null)
                 throw new ArgumentNullException("virtualPath");
 
+            isValidControlPresentationPath = false;
             var extension = Path.GetExtension(virtualPath);
 
             /// TODO: Fix - currently allowed only for razor views
@@ -133,14 +148,18 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             {
                 var name = Path.GetFileNameWithoutExtension(virtualPath);
                 var controllers = this.GetControllersFullNames(virtualPathDefinition);
-
-                if (controllers == null)
-                    return null;
-
                 var pathNames = virtualPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                if (pathNames == null)
-                    return null;
 
+                if (controllers == null || pathNames == null)
+                {
+                    return null;
+                }
+
+                if (Regex.IsMatch(virtualPath, DatabaseResourceResolver.ControlPresentationViewPathPattern, RegexOptions.IgnoreCase))
+                {
+                    isValidControlPresentationPath = true;
+                }
+                
                 string controllerName;
                 if (pathNames.Length > 0)
                     controllerName = pathNames[pathNames.Length - 2];
@@ -278,5 +297,10 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// Lock per instance since the cache key depends on the current resolver instance. Multiple instances won't clash.
         /// </summary>
         private readonly object getFilesLock = new object();
+
+        /// <summary>
+        /// Relative path for field templates
+        /// </summary>
+        private const string ControlPresentationViewPathPattern = @"Views[/|\\][^/\\]+[/|\\][^/\\]+\.cshtml";
     }
 }
