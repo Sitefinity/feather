@@ -58,12 +58,8 @@
             });
 
             $scope.$watch('[model.item.Width, model.item.Height]', function (newVal, oldVal) {
-                if ($scope.model.item && $scope.model.item.Extension && $scope.model.item.Extension == ".svg") {
-                    if (thumbnailProfiles && thumbnailProfiles.length > 0) {
-                        populateOptions();
-                    }
-                }
-                else if (newVal[0] && newVal[1]) {
+                var hasNewValues = newVal[0] && newVal[1];
+                if (isVectorGraphics() || hasNewValues) {
                     if (thumbnailProfiles && thumbnailProfiles.length > 0) {
                         populateOptions();
                     }
@@ -81,6 +77,10 @@
 
             var openModalDialog = function () {
                 return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: function () { return $scope.model.customSize; } });
+            };
+
+            var isVectorGraphics = function () {
+                return $scope.model.item && $scope.model.item.Extension && $scope.model.item.Extension == ".svg";
             };
 
             var populateOptions = function () {
@@ -102,7 +102,7 @@
                 });
 
                 for (var i = 0; i < thumbnailProfiles.length; i++) {
-                    if ($scope.model.item && $scope.model.item.Extension && $scope.model.item.Extension != ".svg") {
+                    if (!isVectorGraphics()) {
                         var profile = thumbnailProfiles[i];
 
                         $scope.sizeOptions.push({
