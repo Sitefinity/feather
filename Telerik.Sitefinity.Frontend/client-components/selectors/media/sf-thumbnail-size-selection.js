@@ -58,7 +58,8 @@
             });
 
             $scope.$watch('[model.item.Width, model.item.Height]', function (newVal, oldVal) {
-                if (newVal[0] && newVal[1]) {
+                var hasNewValues = newVal[0] && newVal[1];
+                if (isVectorGraphics() || hasNewValues) {
                     if (thumbnailProfiles && thumbnailProfiles.length > 0) {
                         populateOptions();
                     }
@@ -76,6 +77,10 @@
 
             var openModalDialog = function () {
                 return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: function () { return $scope.model.customSize; } });
+            };
+
+            var isVectorGraphics = function () {
+                return $scope.model.item && $scope.model.item.Extension && $scope.model.item.Extension == ".svg";
             };
 
             var populateOptions = function () {
@@ -97,21 +102,24 @@
                 });
 
                 for (var i = 0; i < thumbnailProfiles.length; i++) {
-                    var profile = thumbnailProfiles[i];
-                    $scope.sizeOptions.push({
-                        index: $scope.sizeOptions.length,
-                        type: displayMode.thumbnail,
-                        title: profile.Title,
-                        thumbnail: {
-                            url: null,
-                            name: profile.Id
-                        },
-                        customSize: null,
-                        openDialog: false
-                    });
+                    if (!isVectorGraphics()) {
+                        var profile = thumbnailProfiles[i];
+
+                        $scope.sizeOptions.push({
+                            index: $scope.sizeOptions.length,
+                            type: displayMode.thumbnail,
+                            title: profile.Title,
+                            thumbnail: {
+                                url: null,
+                                name: profile.Id
+                            },
+                            customSize: null,
+                            openDialog: false
+                        });
+                    }
                 }
 
-                if(!$scope.disableCustomSizeSelection) {
+                if (!$scope.disableCustomSizeSelection) {
                     var existingCustomSizeTitle;
                     if ($scope.model.customSize) {
                         if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments') {
@@ -121,7 +129,7 @@
                             existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
                         }
                     }
-                
+
                     var newCustomSizeTitle = 'Custom size...';
 
                     if (existingCustomSizeTitle) {
