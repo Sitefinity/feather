@@ -2,9 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Web;
+using Microsoft.Http;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
@@ -92,19 +95,15 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 
         private void MakePutRequest(string url, string payload)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-            httpWebRequest.CookieContainer = new CookieContainer();
-            httpWebRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
-            httpWebRequest.ContentType = "text/json";
-            httpWebRequest.Method = "PUT";
-            httpWebRequest.Timeout = 5 * 60 * 1000;
-
-            using (var writer = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                writer.Write(payload);
-            }
-
-            var response = httpWebRequest.GetResponse();
+            var client = new SitefinityClient();
+            client.RequestAuthenticate();
+            var request = new HttpRequestMessage("put", url);
+            
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(payload);
+            request.Headers.ContentType = "text/json";
+            request.Headers.ContentLength = bytes.Length;
+            request.Content = HttpContent.Create(bytes);
+            var response = client.Send(request);
         }
     }
 }
