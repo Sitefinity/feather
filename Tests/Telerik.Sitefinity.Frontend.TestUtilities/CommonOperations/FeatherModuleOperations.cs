@@ -1,15 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Web;
 using Telerik.Sitefinity.Restriction;
-using Microsoft.Http;
 using Telerik.Sitefinity.Services;
-using Telerik.Sitefinity.TestIntegration.Helpers;
-using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
 {
@@ -17,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
     /// Provides common feather module operations
     /// </summary>
     public class FeatherModuleOperations
-    {        
+    {
         private ModuleViewModelProxy GetFeatherModule
         {
             get
@@ -28,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
                     this.featherSettings.ClientId = "Feather";
                     this.featherSettings.Key = "Feather";
                     this.featherSettings.Type = "Telerik.Sitefinity.Frontend.FrontendModule, Telerik.Sitefinity.Frontend";
-                    this.featherSettings.ModuleId = new Guid("00000000-0000-0000-0000-000000000000"); 
+                    this.featherSettings.ModuleId = new Guid("00000000-0000-0000-0000-000000000000");
                     this.featherSettings.Name = "Feather";
 
                     return this.featherSettings;
