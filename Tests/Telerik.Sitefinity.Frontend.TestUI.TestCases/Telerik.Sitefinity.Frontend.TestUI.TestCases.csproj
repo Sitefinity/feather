@@ -135,6 +135,7 @@
     <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromHybridPage.cs" />
     <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromPurePageTemplate.cs" />
     <Compile Include="Module\DeactivateFeatherAndDeleteWidgetFromPurePage.cs" />
+    <Compile Include="MvcWidgets\MvcWidgetUseMediaField.cs" />
     <Compile Include="MvcWidgets\CreateEditWidgetTemplateWhenCombineBackendScriptResourceIsFalse.cs" />
     <Compile Include="MvcWidgets\MvcWidgetUseMasterDetailContentController.cs" />
     <Compile Include="MvcWidgets\MultipleTagsSelector.cs" />
@@ -163,6 +164,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Settings.aiis" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Telerik.Sitefinity.Frontend.TestUI.Framework\Telerik.Sitefinity.Frontend.TestUI.Framework.csproj">
@@ -178,6 +180,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />  
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Name="Telerik.Sitefinity.Frontend.TestUI.TestCases" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

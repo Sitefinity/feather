@@ -18,7 +18,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
         /// </summary>
         [TestMethod]
         [Owner(FeatherTeams.SitefinityTeam2)]
-        [TestCategory(FeatherTestCategories.PagesAndContent)]
+        [TestCategory(FeatherTestCategories.PagesAndContent),
+        TestCategory(FeatherTestCategories.IgnoredInReadOnly)]
         public void DeactivateFeatherAndDeleteWidgetFromPurePage()
         {
             var featherDeactivated = false;
