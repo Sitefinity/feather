@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         /// </summary>
         public static void Init()
         {
-            if (!RouteTable.Routes.Any(x => (x as ServiceRoute) != null && (x as ServiceRoute).Url.StartsWith(TestsArrangemetsService.UiTestsWebServiceUrl)))
+            if(!RouteTable.Routes.Any(x => (x as ServiceRoute) != null && (x as ServiceRoute).Url.StartsWith(TestsArrangemetsService.UiTestsWebServiceUrl)))
             {
                 var uiTestsServiceRoute = new ServiceRoute(TestsArrangemetsService.UiTestsWebServiceUrl, new WebServiceHostFactory(), typeof(TestsArrangemetsService));
                 RouteTable.Routes.Add("ui-tests", uiTestsServiceRoute);
