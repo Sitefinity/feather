@@ -7,11 +7,8 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Hosting;
 using MbUnit.Framework;
-using Microsoft.Http;
 using Telerik.Sitefinity.Frontend.Services.FilesService;
 using Telerik.Sitefinity.Frontend.Services.FilesService.DTO;
-using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
-using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.TestUtilities;
 using Telerik.Sitefinity.Web;
 
@@ -33,9 +30,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
         {
             // Arrange
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             // Act
-            var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+            var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
             var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
             // Assert
@@ -51,9 +52,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             // Arrange
             var fileFormat = "unsupported";
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension={0}", fileFormat)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             // Act
-            var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+            var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
             var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
             // Assert
@@ -74,9 +79,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             var forbiddenSymbol = "..";
             var parentPath = "fakePath/" + forbiddenSymbol;
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension=css&path={0}", parentPath)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             // Act
-            var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+            var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
             var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
             // Assert
@@ -93,9 +102,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             var forbiddenSymbol = "~";
             var parentPath = "fakePath/" + forbiddenSymbol;
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension=css&path={0}", parentPath)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             // Act
-            var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+            var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
             var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
             // Assert
@@ -111,9 +124,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             // Arrange
             var parentPath = "unexistingParentPath/";
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension=css&path={0}", parentPath)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             // Act
-            var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+            var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
             var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
             // Assert
@@ -133,9 +150,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             // Arrange
             var skip = -1;
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension=css&skip={0}", skip)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             // Act
-            var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+            var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
             var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
             // Assert
@@ -151,9 +172,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             // Arrange
             var take = FilesWebServiceConstants.MaxItemsPerRequest + 1;
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension=css&take={0}", take)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             // Act
-            var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+            var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
             var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
             // Assert
@@ -169,9 +194,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             // Arrange
             var take = -1;
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension=css&take={0}", take)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             // Act
-            var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+            var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
             var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
             // Assert
@@ -193,10 +222,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             // Arrange
             var fileExtension = "css";
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension={0}", fileExtension)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             var tempDirName = string.Format("__tempDirectoryNameUsedForTest{0}", Guid.NewGuid());
             var tempDirPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, tempDirName);
-
+            
             var tempFileName = string.Format("__tempFileNameUsedForTest{0}.{1}", Guid.NewGuid(), fileExtension);
             var tempFilePath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, tempFileName);
 
@@ -206,7 +238,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
                 Directory.CreateDirectory(tempDirPath);
                 File.Create(tempFilePath).Close();
 
-                var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+                var webResponse = (HttpWebResponse)webRequest.GetResponse();
+                var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
                 var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
                 // Assert
@@ -231,6 +264,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             // Arrange
             var fileExtension = "js";
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension={0}", fileExtension)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             var tempDirName = string.Format("__tempDirectoryNameUsedForTest{0}", Guid.NewGuid());
             var tempDirPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, tempDirName);
@@ -244,7 +280,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
                 Directory.CreateDirectory(tempDirPath);
                 File.Create(tempFilePath).Close();
 
-                var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+                var webResponse = (HttpWebResponse)webRequest.GetResponse();
+                var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
                 var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
                 // Assert
@@ -269,6 +306,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             // Arrange
             var fileExtension = "html";
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension={0}", fileExtension)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             var tempDirName = string.Format("__tempDirectoryNameUsedForTest{0}", Guid.NewGuid());
             var tempDirPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, tempDirName);
@@ -282,7 +322,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
                 Directory.CreateDirectory(tempDirPath);
                 File.Create(tempFilePath).Close();
 
-                var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+                var webResponse = (HttpWebResponse)webRequest.GetResponse();
+                var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
                 var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
                 // Assert
@@ -307,6 +348,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             // Arrange
             var fileExtension = "css";
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension={0}&take=1", fileExtension)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             var tempDirName = string.Format("__tempDirectoryNameUsedForTest{0}", Guid.NewGuid());
             var tempDirPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, tempDirName);
@@ -320,7 +364,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
                 Directory.CreateDirectory(tempDirPath);
                 File.Create(tempFilePath).Close();
 
-                var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+                var webResponse = (HttpWebResponse)webRequest.GetResponse();
+                var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
                 var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
                 // Assert
@@ -350,6 +395,9 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
             var tempFilePath = Path.Combine(tempDirPath, tempFileName);
 
             var url = new Uri(UrlPath.ResolveAbsoluteUrl(FilesServiceTests.ServiceRootUrl + string.Format("?extension={0}&path={1}", fileExtension, tempDirName)));
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
 
             // Act
             try
@@ -357,7 +405,8 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Services
                 Directory.CreateDirectory(tempDirPath);
                 File.Create(tempFilePath).Close();
 
-                var responseString = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url.ToString());
+                var webResponse = (HttpWebResponse)webRequest.GetResponse();
+                var responseString = (new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8)).ReadToEnd();
                 var filesViewModel = Json.Decode<FilesViewModel>(responseString);
 
                 // Assert

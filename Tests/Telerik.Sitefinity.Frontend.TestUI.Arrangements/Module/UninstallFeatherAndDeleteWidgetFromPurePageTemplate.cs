@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
-            AuthenticationHelper.AuthenticateUser(AdminEmail, AdminPass, true);
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
             Guid templateId = ServerOperations.Templates().CreatePureMVCPageTemplate(PageTemplateName);
             ServerOperations.Pages().CreatePage(PageName, templateId);
         }
@@ -29,12 +29,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
-            AuthenticationHelper.AuthenticateUser(AdminEmail, AdminPass, true);
+            AuthenticationHelper.AuthenticateUser(AdminUserName, AdminPass, true);
             ServerOperations.Pages().DeletePage(PageName);
             ServerOperations.Templates().DeletePageTemplate(PageTemplateName);
         }
 
-        private const string AdminEmail = "admin@test.test";
+        private const string AdminUserName = "admin";
         private const string AdminPass = "admin@2";
         private const string PageName = "Page_UninstallFeatherAndDeleteWidgetFromPurePageTemplate";
         private const string PageTemplateName = "Template_UninstallFeatherAndDeleteWidgetFromPurePageTemplate";

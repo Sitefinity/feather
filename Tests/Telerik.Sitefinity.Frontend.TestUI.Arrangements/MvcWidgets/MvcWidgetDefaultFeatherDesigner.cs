@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
-            AuthenticationHelper.AuthenticateUser(AdminEmail, AdminPass);
+            AuthenticationHelper.AuthenticateUser(UserName, Password);
             Guid pageId = ServerOperations.Pages().CreatePage(PageName);
             ServerOperations.Widgets().AddMvcWidgetToPage(pageId, typeof(DummyTextController).FullName, WidgetCaption);
         }
@@ -27,7 +27,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "DummyWidget";
-        private const string AdminEmail = "admin@test.test";
-        private const string AdminPass = "admin@2";
+        private const string UserName = "admin";
+        private const string Password = "admin@2";
     }
 }

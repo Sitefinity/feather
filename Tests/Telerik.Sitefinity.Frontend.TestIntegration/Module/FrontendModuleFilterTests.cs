@@ -8,14 +8,12 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using MbUnit.Framework;
-using Microsoft.Http;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc.Proxy;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.TestIntegration.Data.Content;
-using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.TestIntegration.SDK;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Web;
@@ -60,7 +58,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
 
                 FeatherServerOperations.FeatherModule().DeactivateFeather();
                 featherActivated = false;
-
+                
                 var backendPageContentAfterDeactivate = this.GetContent(pageUrl, openInEdit: true);
                 Assert.IsFalse(backendPageContentAfterDeactivate.Contains(FrontendModuleFilterTests.DummyController.ResponseString));
                 Assert.IsTrue(backendPageContentAfterDeactivate.Contains(FrontendModuleFilterTests.FeatherModuleUnavailableMessage));
@@ -88,7 +86,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 ServerOperations.Pages().DeletePage(pageId);
             }
         }
-
+        
         /// <summary>
         /// Checks whether after deactivating Feather, a pure page with widget on the frontend and show warning in the backend.
         /// </summary>
@@ -627,9 +625,18 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         {
             url += openInEdit ? "/Action/Edit?t=" + Guid.NewGuid().ToString() : "?t=" + Guid.NewGuid().ToString();
 
-            var webResponseContent = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(url);
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.Timeout = 120 * 1000;
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
+            webRequest.CachePolicy = new RequestCachePolicy();
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
 
-            return webResponseContent;
+            string responseContent;
+            using (var sr = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8))
+                responseContent = sr.ReadToEnd();
+
+            return responseContent;
         }
 
         #endregion

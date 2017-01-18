@@ -22,8 +22,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         /// </summary>
         [TestMethod,
         Owner(FeatherTeams.SitefinityTeam2),
-        TestCategory(FeatherTestCategories.PagesAndContent),
-        TestCategory(FeatherTestCategories.IgnoredInReadOnly)]
+        TestCategory(FeatherTestCategories.PagesAndContent)]
         public void CreateEditWidgetTemplateWhenCombineBackendScriptResourceIsFalse()
         {            
             this.NavigateToValidationSectionInAdvancedSettings(this.sectionNames);

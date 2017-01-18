@@ -4,7 +4,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.Sitefinity.TestUI.Framework.Utilities;
-using Telerik.TestUI.Core;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
 {
@@ -19,14 +18,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
         /// </summary>
         [TestMethod]
         [Owner(FeatherTeams.SitefinityTeam2)]
-        [TestCategory(FeatherTestCategories.PagesAndContent),
-        TestCategory(FeatherTestCategories.IgnoredInReadOnly)]
+        [TestCategory(FeatherTestCategories.PagesAndContent)]
         public void DeactivateFeatherAndDeleteWidgetFromHybridPage()
         {
             var featherDeactivated = false;
 
             try
-
             {
                 // Add widget to page
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().User().EnsureAdminLoggedIn());

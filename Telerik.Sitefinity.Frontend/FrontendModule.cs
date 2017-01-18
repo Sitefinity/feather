@@ -73,32 +73,24 @@ namespace Telerik.Sitefinity.Frontend
         }
 
         /// <summary>
-        /// Initializes the module with specified settings.
+        /// Initializes the service with specified settings.
         /// </summary>
         /// <param name="settings">The settings.</param>
         public override void Initialize(ModuleSettings settings)
         {
             base.Initialize(settings);
 
-            App.WorkWith()
-                .Module(settings.Name)
-                    .Initialize()
-                    .Configuration<FeatherConfig>();
-        }
-
-        /// <summary>
-        /// Integrate the module into the system.
-        /// </summary>
-        public override void Load()
-        {
-            base.Load();
+            Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
+            Bootstrapper.Initialized += this.Bootstrapper_Initialized;
 
             this.ninjectDependencyResolver = this.CreateKernel();
 
             FrontendModuleInstaller.Initialize(this.DependencyResolver);
 
-            Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
-            Bootstrapper.Initialized += this.Bootstrapper_Initialized;
+            App.WorkWith()
+                .Module(settings.Name)
+                    .Initialize()
+                    .Configuration<FeatherConfig>();
         }
 
         /// <summary>

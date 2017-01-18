@@ -11,7 +11,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using MbUnit.Framework;
-using Microsoft.Http;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
@@ -31,7 +30,6 @@ using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Events;
 using Telerik.Sitefinity.TestIntegration.Data.Content;
-using Telerik.Sitefinity.TestIntegration.Helpers;
 using Telerik.Sitefinity.TestIntegration.SDK;
 using Telerik.Sitefinity.TestUtilities.CommonOperations;
 using Telerik.Sitefinity.Web;
@@ -126,12 +124,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 pageId = this.CreatePage(PageTemplateFramework.Hybrid, out pageUrl);
                 this.AddGridToPage(pageId, PageTemplateFramework.Hybrid);
 
-                var pageContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
 
                 moduleOperations.DeactivateFeather();
 
-                var pageContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsTrue(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
@@ -160,12 +158,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 pageId = this.CreatePage(PageTemplateFramework.Mvc, out pageUrl);
                 this.AddGridToPage(pageId, PageTemplateFramework.Mvc);
 
-                var pageContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
 
                 moduleOperations.DeactivateFeather();
 
-                var pageContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsTrue(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
@@ -194,13 +192,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 pageId = this.CreatePage(PageTemplateFramework.Hybrid, out pageUrl);
                 this.AddGridToPage(pageId, PageTemplateFramework.Hybrid);
 
-                var pageContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
 
                 moduleOperations.DeactivateFeather();
                 moduleOperations.UninstallFeather();
 
-                var pageContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsTrue(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
@@ -229,13 +227,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 pageId = this.CreatePage(PageTemplateFramework.Mvc, out pageUrl);
                 this.AddGridToPage(pageId, PageTemplateFramework.Mvc);
 
-                var pageContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
 
                 moduleOperations.DeactivateFeather();
                 moduleOperations.UninstallFeather();
 
-                var pageContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsTrue(pageContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
@@ -269,12 +267,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 this.AddGridToPageTemplate(templateId, PageTemplateFramework.Hybrid);
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
-                var templateContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsFalse(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
 
                 moduleOperations.DeactivateFeather();
 
-                var templateContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsTrue(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
@@ -304,12 +302,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 this.AddGridToPageTemplate(templateId, PageTemplateFramework.Mvc);
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
-                var templateContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsFalse(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
 
                 moduleOperations.DeactivateFeather();
 
-                var templateContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsTrue(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
@@ -339,13 +337,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 this.AddGridToPageTemplate(templateId, PageTemplateFramework.Hybrid);
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
-                var templateContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsFalse(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
 
                 moduleOperations.DeactivateFeather();
                 moduleOperations.UninstallFeather();
 
-                var templateContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsTrue(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
@@ -375,13 +373,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 this.AddGridToPageTemplate(templateId, PageTemplateFramework.Mvc);
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
-                var templateContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsFalse(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
 
                 moduleOperations.DeactivateFeather();
                 moduleOperations.UninstallFeather();
 
-                var templateContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsTrue(templateContentAfterDeactivate.Contains(ModuleUnloadTests.GridUnavailableMessage));
             }
             finally
@@ -396,7 +394,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         #endregion
 
         #region Toolbox
-
+        
         #region Page edit
 
         /// <summary>
@@ -417,12 +415,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 string pageUrl;
                 pageId = this.CreatePage(PageTemplateFramework.Hybrid, out pageUrl);
 
-                var pageContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsTrue(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
 
                 moduleOperations.DeactivateFeather();
 
-                var pageContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
             }
             finally
@@ -450,12 +448,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 string pageUrl;
                 pageId = this.CreatePage(PageTemplateFramework.Mvc, out pageUrl);
 
-                var pageContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsTrue(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
 
                 moduleOperations.DeactivateFeather();
 
-                var pageContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
             }
             finally
@@ -483,13 +481,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 string pageUrl;
                 pageId = this.CreatePage(PageTemplateFramework.Hybrid, out pageUrl);
 
-                var pageContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsTrue(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
 
                 moduleOperations.DeactivateFeather();
                 moduleOperations.UninstallFeather();
 
-                var pageContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
 
                 var configManager = ConfigManager.GetManager();
@@ -532,13 +530,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 string pageUrl;
                 pageId = this.CreatePage(PageTemplateFramework.Mvc, out pageUrl);
 
-                var pageContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentBeforeDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsTrue(pageContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
 
                 moduleOperations.DeactivateFeather();
                 moduleOperations.UninstallFeather();
 
-                var pageContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(pageUrl + this.AppendEditUrl());
+                var pageContentAfterDeactivate = this.ExecuteWebRequest(pageUrl + this.AppendEditUrl());
                 Assert.IsFalse(pageContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
             }
             finally
@@ -571,12 +569,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 templateId = templatesOperations.CreateHybridMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
-                var templateContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsTrue(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
 
                 moduleOperations.DeactivateFeather();
 
-                var templateContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
             }
             finally
@@ -605,12 +603,12 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 templateId = templatesOperations.CreatePureMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
-                var templateContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsTrue(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
 
                 moduleOperations.DeactivateFeather();
 
-                var templateContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
             }
             finally
@@ -639,13 +637,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 templateId = templatesOperations.CreateHybridMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
-                var templateContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsTrue(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
 
                 moduleOperations.DeactivateFeather();
                 moduleOperations.UninstallFeather();
 
-                var templateContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
             }
             finally
@@ -674,13 +672,13 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
                 templateId = templatesOperations.CreatePureMVCPageTemplate(ModuleUnloadTests.PageTemplateTitle + Guid.NewGuid().ToString("N"));
                 string templateUrl = UrlPath.ResolveAbsoluteUrl(ModuleUnloadTests.SitefinityTemplateRoutePrefix + templateId.ToString());
 
-                var templateContentBeforeDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentBeforeDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsTrue(templateContentBeforeDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
 
                 moduleOperations.DeactivateFeather();
                 moduleOperations.UninstallFeather();
 
-                var templateContentAfterDeactivate = FeatherServerOperations.FeatherWebRequests().GetResponseContentFromAuthenticateGetRequest(templateUrl + this.AppendUncacheUrl());
+                var templateContentAfterDeactivate = this.ExecuteWebRequest(templateUrl + this.AppendUncacheUrl());
                 Assert.IsFalse(templateContentAfterDeactivate.Contains(ModuleUnloadTests.FeatherGridToolboxItemMarkup));
             }
             finally
@@ -693,7 +691,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         #endregion
 
         #endregion
-
+        
         #region Private members
 
         #region Checks
@@ -909,6 +907,22 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
             SampleUtilities.AddControlToTemplate(pageTemplateId, control, placeholder, "9 + 3");
         }
 
+        private string ExecuteWebRequest(string url)
+        {
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.Timeout = 120 * 1000;
+            webRequest.CookieContainer = new CookieContainer();
+            webRequest.Headers["Authorization"] = HttpContext.Current.Request.Headers["Authorization"];
+            webRequest.CachePolicy = new RequestCachePolicy();
+            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+
+            string responseContent;
+            using (var sr = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8))
+                responseContent = sr.ReadToEnd();
+
+            return responseContent;
+        }
+        
         private string AppendEditUrl()
         {
             return "/Action/Edit" + this.AppendUncacheUrl();
@@ -920,7 +934,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.Module
         }
 
         #endregion
-
+        
         #region Constants
 
         private const string FrontendAssemblyPrefix = "Telerik.Sitefinity.Frontend";

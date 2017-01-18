@@ -64,7 +64,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         [Description("Adds a resource package with layout files, renames one of the layout files and verify that new template is generated.")]
         public void ResourcePackageLayoutFiles_RenameLayoutFile_VerifyGeneratedTemplate()
         {
-            string adminEmail = "admin@test.test";
+            string adminUserName = "admin";
             string adminPass = "admin@2";
             int templatesCount = this.PageManager.GetTemplates().Count();
 
@@ -89,7 +89,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
             finally
             {
-                AuthenticationHelper.AuthenticateUser(adminEmail, adminPass, true);
+                AuthenticationHelper.AuthenticateUser(adminUserName, adminPass, true);
 
                 string[] templates = new string[] { Constants.TemplateTestLayout1, Constants.TemplateTestLayout2, Constants.TemplateTestLayout3, Constants.TemplateTestLayout1Renamed };
 
@@ -219,7 +219,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
         public void ResourcePackageLayoutFiles_DeleteTemplateBasedOnLayoutFile_VerifyLayoutFileExistsAndNoTemplateGenerated()
         {
             int templatesCount = this.PageManager.GetTemplates().Count();
-            string adminEmail = "admin@test.test";
+            string adminUserName = "admin";
             string adminPass = "admin@2";
 
             try
@@ -227,7 +227,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
                 FeatherServerOperations.ResourcePackages().AddNewResourcePackage(Constants.PackageResource);
                 FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 3);
 
-                AuthenticationHelper.AuthenticateUser(adminEmail, adminPass, true);
+                AuthenticationHelper.AuthenticateUser(adminUserName, adminPass, true);
                 ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout1);
 
                 string layoutFile = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(Constants.TestPackageName, Constants.TestLayoutFileName);
@@ -238,7 +238,7 @@ namespace Telerik.Sitefinity.Frontend.TestIntegration.ResourcePackages
             }
             finally
             {
-                AuthenticationHelper.AuthenticateUser(adminEmail, adminPass, true);
+                AuthenticationHelper.AuthenticateUser(adminUserName, adminPass, true);
                 ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout2);
                 ServerOperations.Templates().DeletePageTemplate(Constants.TemplateTestLayout3);
 

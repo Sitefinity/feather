@@ -55,14 +55,5 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations
         {
             return new FeatherModuleOperations();
         }
-
-        /// <summary>
-        /// Entry point for Feather Web Requests
-        /// </summary>
-        /// <returns>FeatherWebRequestsOperations instance</returns>
-        public static FeatherWebRequestsOperations FeatherWebRequests()
-        {
-            return new FeatherWebRequestsOperations();
-        }
     }
 }

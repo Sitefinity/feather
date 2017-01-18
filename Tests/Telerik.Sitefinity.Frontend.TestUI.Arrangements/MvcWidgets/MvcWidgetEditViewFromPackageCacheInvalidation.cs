@@ -23,13 +23,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string FileResource = "Telerik.Sitefinity.Frontend.TestUtilities.Data.Default.cshtml";
         private const string TextToReplace = "This is a view from package.";
         private const string NewText = "This is a view from package after edit.";
-        private const string AdminEmail = "admin@test.test";
-        private const string AdminPass = "admin@2";
+        private const string UserName = "admin";
+        private const string Password = "admin@2";
 
         [ServerSetUp]
         public void SetUp()
         {
-            AuthenticationHelper.AuthenticateUser(AdminEmail, AdminPass);
+            AuthenticationHelper.AuthenticateUser(UserName, Password);
 
             Guid templateId = ServerOperations.Templates().GetTemplateIdByTitle(BootstrapTemplate);
             Guid pageId = ServerOperations.Pages().CreatePage(PageName, templateId);
@@ -52,7 +52,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
-            AuthenticationHelper.AuthenticateUser(AdminEmail, AdminPass);
+            AuthenticationHelper.AuthenticateUser(UserName, Password);
 
             ServerOperations.Pages().DeleteAllPages();
 
