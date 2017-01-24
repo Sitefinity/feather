@@ -17,6 +17,7 @@ using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
@@ -221,8 +222,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                 if (manager != null)
                 {
-                    return manager.Providers.Select(p => p.Name);
-                }
+					var providerNames = manager.Providers.Select(p => p.Name);
+					if (SystemManager.CurrentContext.IsMultisiteMode)
+					{
+						var links = SystemManager.CurrentContext.CurrentSite.SiteDataSourceLinks;
+						if (links != null)
+						{
+							var intersection = providerNames.Intersect(links.Select(x => x.ProviderName));
+							return intersection;
+						}
+					}
+
+					return providerNames;
+				}
                 else
                 {
                     return new string[0];
