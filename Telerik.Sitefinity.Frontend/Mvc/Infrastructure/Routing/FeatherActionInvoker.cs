@@ -233,6 +233,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 							
 							return links.Select(x => x.ProviderName);
 						}
+
 						return new string[0];
 					}
 					else
