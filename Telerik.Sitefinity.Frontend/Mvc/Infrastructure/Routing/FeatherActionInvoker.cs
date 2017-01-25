@@ -223,7 +223,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                 if (manager != null)
                 {
-					if (SystemManager.CurrentContext.IsMultisiteMode)
+					if (SystemManager.CurrentContext.IsMultisiteMode && typeof(DynamicContent).IsAssignableFrom(contentType))
 					{
 						var moduleBuilderManager = ModuleBuilderManager.GetManager();
 						if (moduleBuilderManager != null)
