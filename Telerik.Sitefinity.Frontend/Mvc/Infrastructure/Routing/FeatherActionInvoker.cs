@@ -223,7 +223,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                 if (manager != null)
                 {
-					var providerNames = manager.Providers.Select(p => p.Name);
 					if (SystemManager.CurrentContext.IsMultisiteMode)
 					{
 						var moduleBuilderManager = ModuleBuilderManager.GetManager();
@@ -234,9 +233,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 							
 							return links.Select(x => x.ProviderName);
 						}
+						return new string[0];
 					}
-
-					return providerNames;
+					else
+					{
+						return manager.Providers.Select(p => p.Name);
+					}
 				}
                 else
                 {
