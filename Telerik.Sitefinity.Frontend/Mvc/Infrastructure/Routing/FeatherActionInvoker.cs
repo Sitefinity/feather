@@ -10,6 +10,7 @@ using System.Web.UI;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.DynamicModules.Builder;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Localization;
@@ -225,11 +226,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 					var providerNames = manager.Providers.Select(p => p.Name);
 					if (SystemManager.CurrentContext.IsMultisiteMode)
 					{
-						var links = SystemManager.CurrentContext.CurrentSite.SiteDataSourceLinks;
-						if (links != null)
+						var moduleBuilderManager = ModuleBuilderManager.GetManager();
+						if (moduleBuilderManager != null)
 						{
-							var intersection = providerNames.Intersect(links.Select(x => x.ProviderName));
-							return intersection;
+							var dynamicModuleType = moduleBuilderManager.Provider.GetDynamicModuleTypes().Where(t => t.TypeName == contentType.Name && t.TypeNamespace == contentType.Namespace).Single();
+							var links = SystemManager.CurrentContext.CurrentSite.SiteDataSourceLinks.Where(x => dynamicModuleType != null && x.DataSourceName == dynamicModuleType.ModuleName);
+							
+							return links.Select(x => x.ProviderName);
 						}
 					}
 
