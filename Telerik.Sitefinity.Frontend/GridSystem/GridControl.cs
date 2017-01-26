@@ -6,6 +6,7 @@ using System.Text;
 using System.Web.Hosting;
 using System.Web.UI;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Modules.Newsletters;
@@ -14,7 +15,7 @@ using Telerik.Sitefinity.Utilities.HtmlParsing;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.Configuration;
-﻿using Telerik.Sitefinity.Web.UI;
+using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.GridSystem
 {
@@ -104,7 +105,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             {
                 if (!HostingEnvironment.VirtualPathProvider.FileExists(layout))
                 {
-                    throw new ArgumentException(Res.Get<ErrorMessages>("CannotFindTemplate", layout));
+                    throw new ArgumentException(Res.Get<InfrastructureResources>("CannotFindTemplateMvcForm", layout));
                 }
 
                 using (var reader = new StreamReader(HostingEnvironment.VirtualPathProvider.GetFile(layout).Open()))

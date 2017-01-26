@@ -19,14 +19,10 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.DummyClasses.ResourceResolve
         /// </summary>
         public readonly Dictionary<string, ControlPresentation> ControlPresentationResult = new Dictionary<string, ControlPresentation>(StringComparer.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// Gets the control presentation that contains the requested resource from the database.
-        /// </summary>
-        /// <param name="virtualPathDefinition">The definition.</param>
-        /// <param name="virtualPath">The virtual path.</param>
-        /// <returns></returns>
-        protected override ControlPresentation GetControlPresentation(PathDefinition virtualPathDefinition, string virtualPath)
+        /// <inheritdoc />
+        protected override ControlPresentation GetControlPresentation(PathDefinition virtualPathDefinition, string virtualPath, out bool isValidControlPresentationPath)
         {
+            isValidControlPresentationPath = true;
             if (this.ControlPresentationResult.ContainsKey(virtualPath))
                 return this.ControlPresentationResult[virtualPath];
             else
