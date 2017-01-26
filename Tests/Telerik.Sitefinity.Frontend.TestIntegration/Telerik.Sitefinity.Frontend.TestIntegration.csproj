@@ -151,8 +151,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Telerik.Sitefinity.Core.9.2.6200.0\lib\net45\Telerik.Sitefinity.Model.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.7.670.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.1.7.670.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Mvc, Version=1.7.680.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik.Sitefinity.Mvc.1.7.680.0\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Mvc.TestUtilities, Version=1.7.670.0, Culture=neutral, processorArchitecture=MSIL">
@@ -258,6 +258,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Settings.aiis" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Telerik.Sitefinity.Frontend\Telerik.Sitefinity.Frontend.csproj">
@@ -280,4 +281,9 @@
   </Target>
   -->
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Name="Telerik.Sitefinity.Frontend.TestIntegration" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
