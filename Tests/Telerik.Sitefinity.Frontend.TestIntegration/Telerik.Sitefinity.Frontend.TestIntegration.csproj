@@ -258,7 +258,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Settings.aiis" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Telerik.Sitefinity.Frontend\Telerik.Sitefinity.Frontend.csproj">
@@ -281,9 +280,4 @@
   </Target>
   -->
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties Name="Telerik.Sitefinity.Frontend.TestIntegration" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>
