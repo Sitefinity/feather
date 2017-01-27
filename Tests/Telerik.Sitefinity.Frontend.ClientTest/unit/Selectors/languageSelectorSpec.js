@@ -202,7 +202,7 @@ describe("language selector", function () {
                 });
             });
 
-            describe('on page from the not default site with culture that is not default and does not exist on the default site', function () {
+            describe('on page from the not default site with culture that is not default and doesnt exist on the default site', function () {
                 beforeEach(inject(function (serverContext) {
                     serverContext.getCurrentFrontendRootNodeId = function () {
                         return "f669d9a7-009d-4d83-ddaa-000000000002";
@@ -221,7 +221,7 @@ describe("language selector", function () {
                     scope.sfSite = fakeSites[1];
                 });
 
-                it('[NPetrova] / should init default language selector values: site2 and tr-TR culture.', function () {
+                it('Should init default language selector values: site2 and tr-TR culture.', function () {
                     var template = '<sf-language-selector sf-site="sfSite" sf-culture="sfCulture"></sf-language-selector>';
 
                     commonMethods.compileDirective(template, scope);
@@ -239,7 +239,7 @@ describe("language selector", function () {
                     expect(childScope.sfCultures[2].Culture).toEqual('tr-TR');
                 });
 
-                it('[NPetrova] / when site is changed to site1 the sfCulture must be the default culture for site1 (en).', function () {
+                it('When site is changed to site1 the sfCulture must be en (default one)', function () {
                     var template = '<sf-language-selector sf-site="sfSite" sf-culture="sfCulture"></sf-language-selector>';
 
                     commonMethods.compileDirective(template, scope);
