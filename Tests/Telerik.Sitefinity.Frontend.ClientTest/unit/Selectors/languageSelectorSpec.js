@@ -202,7 +202,8 @@ describe("language selector", function () {
                 });
             });
 
-            describe('on page from the not default site with culture that is not default and does not exist on the default site', function () {
+			// on page from the not default site with culture that is not default and does not exist on the default site
+            describe('nonDefaultSiteNonDefaultCulture', function () {
                 beforeEach(inject(function (serverContext) {
                     serverContext.getCurrentFrontendRootNodeId = function () {
                         return "f669d9a7-009d-4d83-ddaa-000000000002";
