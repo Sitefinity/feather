@@ -4,6 +4,16 @@
     sf-toggle-commands="strikethrough, justifyFull, subscript, superscript, fontName, fontSize, foreColor, backColor, print"
     k-encoded="false"
     k-stylesheets='["{{htmlFieldCssUrl}}"]',
+	k-paste-cleanup="{
+        all: false,
+        css: true,
+        keepNewLines: false,
+        msAllFormatting: true,
+        msConvertLists: true,
+        msTags: true,
+        none: false,
+        span: true
+    }",
     k-tools='[
     "formatting",
     "bold", "italic", "underline",
