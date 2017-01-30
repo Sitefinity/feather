@@ -16817,6 +16817,10 @@
   font-weight: normal;
   font-family: open_sansregular, Arial, Verdana, sans-serif; }
 
+.sf-backend-wrp .sf-flex-vertical-center-children {
+  display: flex;
+  align-items: center; }
+
 .sf-backend-wrp .label-taxon {
   padding: 2px 10px 3px;
   max-width: 33%;
