@@ -1,10 +1,10 @@
 ﻿<textarea id="editor" style="height: 340px;"
     kendo-editor="editorWidget" ng-model="sfModel"
-	k-scope-field="editorWidget"
+    k-scope-field="editorWidget"
     sf-toggle-commands="strikethrough, justifyFull, subscript, superscript, fontName, fontSize, foreColor, backColor, print"
     k-encoded="false"
     k-stylesheets='["{{htmlFieldCssUrl}}"]',
-	k-paste-cleanup="{
+    k-paste-cleanup="{
         all: false,
         css: true,
         keepNewLines: false,
@@ -46,11 +46,11 @@
     {
         name: "fullscreen",
         template: "<a class=\"k-tool js-custom-tool custom-tool\" title=\"Fullscreen\" ng-click=\"toggleFullScreen()\"><span class=\"js-fullScreen sf-maximize\"></span></a>"
-	},
+    },
     {
         name: "htmlView",
         template: "<button class=\"custom-tool btn btn-default btn-xs pull-right js-htmlview js-custom-tool\" ng-click=\"toggleHtmlView()\">\{\{htmlViewLabel\}\}</button>"
-	}
+    }
     ]'>
 </textarea>
 
