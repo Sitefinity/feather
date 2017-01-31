@@ -138,7 +138,7 @@ describe('sfMediaService', function () {
 
         $httpBackend.flush();
 
-        var expectedRegex = new RegExp('^' + mediaType + '\/(gif|jpg|jpeg|png|bmp)$', 'i');
+        var expectedRegex = new RegExp('^' + mediaType + '\/(gif|jpg|jpeg|png|bmp)', 'i');
         expect(data.AllowedExensionsRegex).toEqual(expectedRegex);
 
         delete data.AllowedExensionsRegex;
