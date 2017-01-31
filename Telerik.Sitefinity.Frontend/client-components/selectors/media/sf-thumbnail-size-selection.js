@@ -80,7 +80,10 @@
             };
 
             var isVectorGraphics = function () {
-                return $scope.model.item && $scope.model.item.Extension && $scope.model.item.Extension == ".svg";
+                if ($scope && $scope.model && $scope.model.item && $scope.model.item.Extension) {
+                    return $scope.model.item.Extension == ".svg";
+                }
+                return false;
             };
 
             var populateOptions = function () {
