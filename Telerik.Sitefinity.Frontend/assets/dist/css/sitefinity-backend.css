@@ -224,9 +224,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale; }
   .sf-backend-wrp .glyphicon-asterisk:before {
-    content: "\2a"; }
+    content: "\002a"; }
   .sf-backend-wrp .glyphicon-plus:before {
-    content: "\2b"; }
+    content: "\002b"; }
   .sf-backend-wrp .glyphicon-euro:before,
   .sf-backend-wrp .glyphicon-eur:before {
     content: "\20ac"; }
@@ -1871,6 +1871,9 @@
       color: #999; }
     .sf-backend-wrp .form-control::-webkit-input-placeholder {
       color: #999; }
+    .sf-backend-wrp .form-control::-ms-expand {
+      border: 0;
+      background-color: transparent; }
     .sf-backend-wrp .form-control[disabled], .sf-backend-wrp .form-control[readonly],
     fieldset[disabled] .sf-backend-wrp .form-control {
       background-color: #eeeeee;
@@ -1888,43 +1891,27 @@
     .sf-backend-wrp input[type="datetime-local"].form-control,
     .sf-backend-wrp input[type="month"].form-control {
       line-height: 32px; }
-    .sf-backend-wrp input[type="date"].input-sm, .sf-backend-wrp .input-group-sm > input[type="date"].form-control,
-    .sf-backend-wrp .input-group-sm > input[type="date"].input-group-addon,
-    .sf-backend-wrp .input-group-sm > .input-group-btn > input[type="date"].btn,
+    .sf-backend-wrp input[type="date"].input-sm, .sf-backend-wrp .input-group-sm > input[type="date"].form-control, .sf-backend-wrp .input-group-sm > input[type="date"].input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > input[type="date"].btn,
     .input-group-sm .sf-backend-wrp input[type="date"],
-    .sf-backend-wrp input[type="time"].input-sm, .sf-backend-wrp .input-group-sm > input[type="time"].form-control,
-    .sf-backend-wrp .input-group-sm > input[type="time"].input-group-addon,
-    .sf-backend-wrp .input-group-sm > .input-group-btn > input[type="time"].btn,
+    .sf-backend-wrp input[type="time"].input-sm, .sf-backend-wrp .input-group-sm > input[type="time"].form-control, .sf-backend-wrp .input-group-sm > input[type="time"].input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > input[type="time"].btn,
     .input-group-sm
     .sf-backend-wrp input[type="time"],
-    .sf-backend-wrp input[type="datetime-local"].input-sm, .sf-backend-wrp .input-group-sm > input[type="datetime-local"].form-control,
-    .sf-backend-wrp .input-group-sm > input[type="datetime-local"].input-group-addon,
-    .sf-backend-wrp .input-group-sm > .input-group-btn > input[type="datetime-local"].btn,
+    .sf-backend-wrp input[type="datetime-local"].input-sm, .sf-backend-wrp .input-group-sm > input[type="datetime-local"].form-control, .sf-backend-wrp .input-group-sm > input[type="datetime-local"].input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > input[type="datetime-local"].btn,
     .input-group-sm
     .sf-backend-wrp input[type="datetime-local"],
-    .sf-backend-wrp input[type="month"].input-sm, .sf-backend-wrp .input-group-sm > input[type="month"].form-control,
-    .sf-backend-wrp .input-group-sm > input[type="month"].input-group-addon,
-    .sf-backend-wrp .input-group-sm > .input-group-btn > input[type="month"].btn,
+    .sf-backend-wrp input[type="month"].input-sm, .sf-backend-wrp .input-group-sm > input[type="month"].form-control, .sf-backend-wrp .input-group-sm > input[type="month"].input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > input[type="month"].btn,
     .input-group-sm
     .sf-backend-wrp input[type="month"] {
       line-height: 30px; }
-    .sf-backend-wrp input[type="date"].input-lg, .sf-backend-wrp .input-group-lg > input[type="date"].form-control,
-    .sf-backend-wrp .input-group-lg > input[type="date"].input-group-addon,
-    .sf-backend-wrp .input-group-lg > .input-group-btn > input[type="date"].btn,
+    .sf-backend-wrp input[type="date"].input-lg, .sf-backend-wrp .input-group-lg > input[type="date"].form-control, .sf-backend-wrp .input-group-lg > input[type="date"].input-group-addon, .sf-backend-wrp .input-group-lg > .input-group-btn > input[type="date"].btn,
     .input-group-lg .sf-backend-wrp input[type="date"],
-    .sf-backend-wrp input[type="time"].input-lg, .sf-backend-wrp .input-group-lg > input[type="time"].form-control,
-    .sf-backend-wrp .input-group-lg > input[type="time"].input-group-addon,
-    .sf-backend-wrp .input-group-lg > .input-group-btn > input[type="time"].btn,
+    .sf-backend-wrp input[type="time"].input-lg, .sf-backend-wrp .input-group-lg > input[type="time"].form-control, .sf-backend-wrp .input-group-lg > input[type="time"].input-group-addon, .sf-backend-wrp .input-group-lg > .input-group-btn > input[type="time"].btn,
     .input-group-lg
     .sf-backend-wrp input[type="time"],
-    .sf-backend-wrp input[type="datetime-local"].input-lg, .sf-backend-wrp .input-group-lg > input[type="datetime-local"].form-control,
-    .sf-backend-wrp .input-group-lg > input[type="datetime-local"].input-group-addon,
-    .sf-backend-wrp .input-group-lg > .input-group-btn > input[type="datetime-local"].btn,
+    .sf-backend-wrp input[type="datetime-local"].input-lg, .sf-backend-wrp .input-group-lg > input[type="datetime-local"].form-control, .sf-backend-wrp .input-group-lg > input[type="datetime-local"].input-group-addon, .sf-backend-wrp .input-group-lg > .input-group-btn > input[type="datetime-local"].btn,
     .input-group-lg
     .sf-backend-wrp input[type="datetime-local"],
-    .sf-backend-wrp input[type="month"].input-lg, .sf-backend-wrp .input-group-lg > input[type="month"].form-control,
-    .sf-backend-wrp .input-group-lg > input[type="month"].input-group-addon,
-    .sf-backend-wrp .input-group-lg > .input-group-btn > input[type="month"].btn,
+    .sf-backend-wrp input[type="month"].input-lg, .sf-backend-wrp .input-group-lg > input[type="month"].form-control, .sf-backend-wrp .input-group-lg > input[type="month"].input-group-addon, .sf-backend-wrp .input-group-lg > .input-group-btn > input[type="month"].btn,
     .input-group-lg
     .sf-backend-wrp input[type="month"] {
       line-height: 45px; } }
@@ -1990,32 +1977,20 @@
     padding-bottom: 7px;
     margin-bottom: 0;
     min-height: 31px; }
-    .sf-backend-wrp .form-control-static.input-lg, .sf-backend-wrp .input-group-lg > .form-control-static.form-control,
-    .sf-backend-wrp .input-group-lg > .form-control-static.input-group-addon,
-    .sf-backend-wrp .input-group-lg > .input-group-btn > .form-control-static.btn, .sf-backend-wrp .form-control-static.input-sm, .sf-backend-wrp .input-group-sm > .form-control-static.form-control,
-    .sf-backend-wrp .input-group-sm > .form-control-static.input-group-addon,
-    .sf-backend-wrp .input-group-sm > .input-group-btn > .form-control-static.btn {
+    .sf-backend-wrp .form-control-static.input-lg, .sf-backend-wrp .input-group-lg > .form-control-static.form-control, .sf-backend-wrp .input-group-lg > .form-control-static.input-group-addon, .sf-backend-wrp .input-group-lg > .input-group-btn > .form-control-static.btn, .sf-backend-wrp .form-control-static.input-sm, .sf-backend-wrp .input-group-sm > .form-control-static.form-control, .sf-backend-wrp .input-group-sm > .form-control-static.input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > .form-control-static.btn {
       padding-left: 0;
       padding-right: 0; }
-  .sf-backend-wrp .input-sm, .sf-backend-wrp .input-group-sm > .form-control,
-  .sf-backend-wrp .input-group-sm > .input-group-addon,
-  .sf-backend-wrp .input-group-sm > .input-group-btn > .btn {
+  .sf-backend-wrp .input-sm, .sf-backend-wrp .input-group-sm > .form-control, .sf-backend-wrp .input-group-sm > .input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > .btn {
     height: 30px;
     padding: 5px 10px;
     font-size: 12px;
     line-height: 1.5;
     border-radius: 3px; }
-  .sf-backend-wrp select.input-sm, .sf-backend-wrp .input-group-sm > select.form-control,
-  .sf-backend-wrp .input-group-sm > select.input-group-addon,
-  .sf-backend-wrp .input-group-sm > .input-group-btn > select.btn {
+  .sf-backend-wrp select.input-sm, .sf-backend-wrp .input-group-sm > select.form-control, .sf-backend-wrp .input-group-sm > select.input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > select.btn {
     height: 30px;
     line-height: 30px; }
-  .sf-backend-wrp textarea.input-sm, .sf-backend-wrp .input-group-sm > textarea.form-control,
-  .sf-backend-wrp .input-group-sm > textarea.input-group-addon,
-  .sf-backend-wrp .input-group-sm > .input-group-btn > textarea.btn,
-  .sf-backend-wrp select[multiple].input-sm, .sf-backend-wrp .input-group-sm > select[multiple].form-control,
-  .sf-backend-wrp .input-group-sm > select[multiple].input-group-addon,
-  .sf-backend-wrp .input-group-sm > .input-group-btn > select[multiple].btn {
+  .sf-backend-wrp textarea.input-sm, .sf-backend-wrp .input-group-sm > textarea.form-control, .sf-backend-wrp .input-group-sm > textarea.input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > textarea.btn,
+  .sf-backend-wrp select[multiple].input-sm, .sf-backend-wrp .input-group-sm > select[multiple].form-control, .sf-backend-wrp .input-group-sm > select[multiple].input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > select[multiple].btn {
     height: auto; }
   .sf-backend-wrp .form-group-sm .form-control {
     height: 30px;
@@ -2035,25 +2010,17 @@
     padding: 6px 10px;
     font-size: 12px;
     line-height: 1.5; }
-  .sf-backend-wrp .input-lg, .sf-backend-wrp .input-group-lg > .form-control,
-  .sf-backend-wrp .input-group-lg > .input-group-addon,
-  .sf-backend-wrp .input-group-lg > .input-group-btn > .btn {
+  .sf-backend-wrp .input-lg, .sf-backend-wrp .input-group-lg > .form-control, .sf-backend-wrp .input-group-lg > .input-group-addon, .sf-backend-wrp .input-group-lg > .input-group-btn > .btn {
     height: 45px;
     padding: 10px 16px;
     font-size: 17px;
     line-height: 1.3333333;
     border-radius: 6px; }
-  .sf-backend-wrp select.input-lg, .sf-backend-wrp .input-group-lg > select.form-control,
-  .sf-backend-wrp .input-group-lg > select.input-group-addon,
-  .sf-backend-wrp .input-group-lg > .input-group-btn > select.btn {
+  .sf-backend-wrp select.input-lg, .sf-backend-wrp .input-group-lg > select.form-control, .sf-backend-wrp .input-group-lg > select.input-group-addon, .sf-backend-wrp .input-group-lg > .input-group-btn > select.btn {
     height: 45px;
     line-height: 45px; }
-  .sf-backend-wrp textarea.input-lg, .sf-backend-wrp .input-group-lg > textarea.form-control,
-  .sf-backend-wrp .input-group-lg > textarea.input-group-addon,
-  .sf-backend-wrp .input-group-lg > .input-group-btn > textarea.btn,
-  .sf-backend-wrp select[multiple].input-lg, .sf-backend-wrp .input-group-lg > select[multiple].form-control,
-  .sf-backend-wrp .input-group-lg > select[multiple].input-group-addon,
-  .sf-backend-wrp .input-group-lg > .input-group-btn > select[multiple].btn {
+  .sf-backend-wrp textarea.input-lg, .sf-backend-wrp .input-group-lg > textarea.form-control, .sf-backend-wrp .input-group-lg > textarea.input-group-addon, .sf-backend-wrp .input-group-lg > .input-group-btn > textarea.btn,
+  .sf-backend-wrp select[multiple].input-lg, .sf-backend-wrp .input-group-lg > select[multiple].form-control, .sf-backend-wrp .input-group-lg > select[multiple].input-group-addon, .sf-backend-wrp .input-group-lg > .input-group-btn > select[multiple].btn {
     height: auto; }
   .sf-backend-wrp .form-group-lg .form-control {
     height: 45px;
@@ -2088,17 +2055,13 @@
     line-height: 32px;
     text-align: center;
     pointer-events: none; }
-  .sf-backend-wrp .input-lg + .form-control-feedback, .sf-backend-wrp .input-group-lg > .form-control + .form-control-feedback,
-  .sf-backend-wrp .input-group-lg > .input-group-addon + .form-control-feedback,
-  .sf-backend-wrp .input-group-lg > .input-group-btn > .btn + .form-control-feedback,
+  .sf-backend-wrp .input-lg + .form-control-feedback, .sf-backend-wrp .input-group-lg > .form-control + .form-control-feedback, .sf-backend-wrp .input-group-lg > .input-group-addon + .form-control-feedback, .sf-backend-wrp .input-group-lg > .input-group-btn > .btn + .form-control-feedback,
   .sf-backend-wrp .input-group-lg + .form-control-feedback,
   .sf-backend-wrp .form-group-lg .form-control + .form-control-feedback {
     width: 45px;
     height: 45px;
     line-height: 45px; }
-  .sf-backend-wrp .input-sm + .form-control-feedback, .sf-backend-wrp .input-group-sm > .form-control + .form-control-feedback,
-  .sf-backend-wrp .input-group-sm > .input-group-addon + .form-control-feedback,
-  .sf-backend-wrp .input-group-sm > .input-group-btn > .btn + .form-control-feedback,
+  .sf-backend-wrp .input-sm + .form-control-feedback, .sf-backend-wrp .input-group-sm > .form-control + .form-control-feedback, .sf-backend-wrp .input-group-sm > .input-group-addon + .form-control-feedback, .sf-backend-wrp .input-group-sm > .input-group-btn > .btn + .form-control-feedback,
   .sf-backend-wrp .input-group-sm + .form-control-feedback,
   .sf-backend-wrp .form-group-sm .form-control + .form-control-feedback {
     width: 30px;
@@ -2253,7 +2216,7 @@
     right: 15px; }
   @media (min-width: 768px) {
     .sf-backend-wrp .form-horizontal .form-group-lg .control-label {
-      padding-top: 14.333333px;
+      padding-top: 11px;
       font-size: 17px; } }
   @media (min-width: 768px) {
     .sf-backend-wrp .form-horizontal .form-group-sm .control-label {
@@ -2327,13 +2290,10 @@
     .sf-backend-wrp .btn-default:active, .sf-backend-wrp .btn-default.active,
     .open > .sf-backend-wrp .btn-default.dropdown-toggle {
       background-image: none; }
-    .sf-backend-wrp .btn-default.disabled, .sf-backend-wrp .btn-default.disabled:hover, .sf-backend-wrp .btn-default.disabled:focus, .sf-backend-wrp .btn-default.disabled.focus, .sf-backend-wrp .btn-default.disabled:active, .sf-backend-wrp .btn-default.disabled.active, .sf-backend-wrp .btn-default[disabled], .sf-backend-wrp .btn-default[disabled]:hover, .sf-backend-wrp .btn-default[disabled]:focus, .sf-backend-wrp .btn-default[disabled].focus, .sf-backend-wrp .btn-default[disabled]:active, .sf-backend-wrp .btn-default[disabled].active,
-    fieldset[disabled] .sf-backend-wrp .btn-default,
+    .sf-backend-wrp .btn-default.disabled:hover, .sf-backend-wrp .btn-default.disabled:focus, .sf-backend-wrp .btn-default.disabled.focus, .sf-backend-wrp .btn-default[disabled]:hover, .sf-backend-wrp .btn-default[disabled]:focus, .sf-backend-wrp .btn-default[disabled].focus,
     fieldset[disabled] .sf-backend-wrp .btn-default:hover,
     fieldset[disabled] .sf-backend-wrp .btn-default:focus,
-    fieldset[disabled] .sf-backend-wrp .btn-default.focus,
-    fieldset[disabled] .sf-backend-wrp .btn-default:active,
-    fieldset[disabled] .sf-backend-wrp .btn-default.active {
+    fieldset[disabled] .sf-backend-wrp .btn-default.focus {
       background-color: #fff;
       border-color: #ccc; }
     .sf-backend-wrp .btn-default .badge {
@@ -2366,13 +2326,10 @@
     .sf-backend-wrp .btn-primary:active, .sf-backend-wrp .btn-primary.active,
     .open > .sf-backend-wrp .btn-primary.dropdown-toggle {
       background-image: none; }
-    .sf-backend-wrp .btn-primary.disabled, .sf-backend-wrp .btn-primary.disabled:hover, .sf-backend-wrp .btn-primary.disabled:focus, .sf-backend-wrp .btn-primary.disabled.focus, .sf-backend-wrp .btn-primary.disabled:active, .sf-backend-wrp .btn-primary.disabled.active, .sf-backend-wrp .btn-primary[disabled], .sf-backend-wrp .btn-primary[disabled]:hover, .sf-backend-wrp .btn-primary[disabled]:focus, .sf-backend-wrp .btn-primary[disabled].focus, .sf-backend-wrp .btn-primary[disabled]:active, .sf-backend-wrp .btn-primary[disabled].active,
-    fieldset[disabled] .sf-backend-wrp .btn-primary,
+    .sf-backend-wrp .btn-primary.disabled:hover, .sf-backend-wrp .btn-primary.disabled:focus, .sf-backend-wrp .btn-primary.disabled.focus, .sf-backend-wrp .btn-primary[disabled]:hover, .sf-backend-wrp .btn-primary[disabled]:focus, .sf-backend-wrp .btn-primary[disabled].focus,
     fieldset[disabled] .sf-backend-wrp .btn-primary:hover,
     fieldset[disabled] .sf-backend-wrp .btn-primary:focus,
-    fieldset[disabled] .sf-backend-wrp .btn-primary.focus,
-    fieldset[disabled] .sf-backend-wrp .btn-primary:active,
-    fieldset[disabled] .sf-backend-wrp .btn-primary.active {
+    fieldset[disabled] .sf-backend-wrp .btn-primary.focus {
       background-color: #4CB861;
       border-color: transparent; }
     .sf-backend-wrp .btn-primary .badge {
@@ -2405,13 +2362,10 @@
     .sf-backend-wrp .btn-success:active, .sf-backend-wrp .btn-success.active,
     .open > .sf-backend-wrp .btn-success.dropdown-toggle {
       background-image: none; }
-    .sf-backend-wrp .btn-success.disabled, .sf-backend-wrp .btn-success.disabled:hover, .sf-backend-wrp .btn-success.disabled:focus, .sf-backend-wrp .btn-success.disabled.focus, .sf-backend-wrp .btn-success.disabled:active, .sf-backend-wrp .btn-success.disabled.active, .sf-backend-wrp .btn-success[disabled], .sf-backend-wrp .btn-success[disabled]:hover, .sf-backend-wrp .btn-success[disabled]:focus, .sf-backend-wrp .btn-success[disabled].focus, .sf-backend-wrp .btn-success[disabled]:active, .sf-backend-wrp .btn-success[disabled].active,
-    fieldset[disabled] .sf-backend-wrp .btn-success,
+    .sf-backend-wrp .btn-success.disabled:hover, .sf-backend-wrp .btn-success.disabled:focus, .sf-backend-wrp .btn-success.disabled.focus, .sf-backend-wrp .btn-success[disabled]:hover, .sf-backend-wrp .btn-success[disabled]:focus, .sf-backend-wrp .btn-success[disabled].focus,
     fieldset[disabled] .sf-backend-wrp .btn-success:hover,
     fieldset[disabled] .sf-backend-wrp .btn-success:focus,
-    fieldset[disabled] .sf-backend-wrp .btn-success.focus,
-    fieldset[disabled] .sf-backend-wrp .btn-success:active,
-    fieldset[disabled] .sf-backend-wrp .btn-success.active {
+    fieldset[disabled] .sf-backend-wrp .btn-success.focus {
       background-color: #5cb85c;
       border-color: #4cae4c; }
     .sf-backend-wrp .btn-success .badge {
@@ -2444,13 +2398,10 @@
     .sf-backend-wrp .btn-info:active, .sf-backend-wrp .btn-info.active,
     .open > .sf-backend-wrp .btn-info.dropdown-toggle {
       background-image: none; }
-    .sf-backend-wrp .btn-info.disabled, .sf-backend-wrp .btn-info.disabled:hover, .sf-backend-wrp .btn-info.disabled:focus, .sf-backend-wrp .btn-info.disabled.focus, .sf-backend-wrp .btn-info.disabled:active, .sf-backend-wrp .btn-info.disabled.active, .sf-backend-wrp .btn-info[disabled], .sf-backend-wrp .btn-info[disabled]:hover, .sf-backend-wrp .btn-info[disabled]:focus, .sf-backend-wrp .btn-info[disabled].focus, .sf-backend-wrp .btn-info[disabled]:active, .sf-backend-wrp .btn-info[disabled].active,
-    fieldset[disabled] .sf-backend-wrp .btn-info,
+    .sf-backend-wrp .btn-info.disabled:hover, .sf-backend-wrp .btn-info.disabled:focus, .sf-backend-wrp .btn-info.disabled.focus, .sf-backend-wrp .btn-info[disabled]:hover, .sf-backend-wrp .btn-info[disabled]:focus, .sf-backend-wrp .btn-info[disabled].focus,
     fieldset[disabled] .sf-backend-wrp .btn-info:hover,
     fieldset[disabled] .sf-backend-wrp .btn-info:focus,
-    fieldset[disabled] .sf-backend-wrp .btn-info.focus,
-    fieldset[disabled] .sf-backend-wrp .btn-info:active,
-    fieldset[disabled] .sf-backend-wrp .btn-info.active {
+    fieldset[disabled] .sf-backend-wrp .btn-info.focus {
       background-color: #5bc0de;
       border-color: #46b8da; }
     .sf-backend-wrp .btn-info .badge {
@@ -2483,13 +2434,10 @@
     .sf-backend-wrp .btn-warning:active, .sf-backend-wrp .btn-warning.active,
     .open > .sf-backend-wrp .btn-warning.dropdown-toggle {
       background-image: none; }
-    .sf-backend-wrp .btn-warning.disabled, .sf-backend-wrp .btn-warning.disabled:hover, .sf-backend-wrp .btn-warning.disabled:focus, .sf-backend-wrp .btn-warning.disabled.focus, .sf-backend-wrp .btn-warning.disabled:active, .sf-backend-wrp .btn-warning.disabled.active, .sf-backend-wrp .btn-warning[disabled], .sf-backend-wrp .btn-warning[disabled]:hover, .sf-backend-wrp .btn-warning[disabled]:focus, .sf-backend-wrp .btn-warning[disabled].focus, .sf-backend-wrp .btn-warning[disabled]:active, .sf-backend-wrp .btn-warning[disabled].active,
-    fieldset[disabled] .sf-backend-wrp .btn-warning,
+    .sf-backend-wrp .btn-warning.disabled:hover, .sf-backend-wrp .btn-warning.disabled:focus, .sf-backend-wrp .btn-warning.disabled.focus, .sf-backend-wrp .btn-warning[disabled]:hover, .sf-backend-wrp .btn-warning[disabled]:focus, .sf-backend-wrp .btn-warning[disabled].focus,
     fieldset[disabled] .sf-backend-wrp .btn-warning:hover,
     fieldset[disabled] .sf-backend-wrp .btn-warning:focus,
-    fieldset[disabled] .sf-backend-wrp .btn-warning.focus,
-    fieldset[disabled] .sf-backend-wrp .btn-warning:active,
-    fieldset[disabled] .sf-backend-wrp .btn-warning.active {
+    fieldset[disabled] .sf-backend-wrp .btn-warning.focus {
       background-color: #f0ad4e;
       border-color: #eea236; }
     .sf-backend-wrp .btn-warning .badge {
@@ -2522,13 +2470,10 @@
     .sf-backend-wrp .btn-danger:active, .sf-backend-wrp .btn-danger.active,
     .open > .sf-backend-wrp .btn-danger.dropdown-toggle {
       background-image: none; }
-    .sf-backend-wrp .btn-danger.disabled, .sf-backend-wrp .btn-danger.disabled:hover, .sf-backend-wrp .btn-danger.disabled:focus, .sf-backend-wrp .btn-danger.disabled.focus, .sf-backend-wrp .btn-danger.disabled:active, .sf-backend-wrp .btn-danger.disabled.active, .sf-backend-wrp .btn-danger[disabled], .sf-backend-wrp .btn-danger[disabled]:hover, .sf-backend-wrp .btn-danger[disabled]:focus, .sf-backend-wrp .btn-danger[disabled].focus, .sf-backend-wrp .btn-danger[disabled]:active, .sf-backend-wrp .btn-danger[disabled].active,
-    fieldset[disabled] .sf-backend-wrp .btn-danger,
+    .sf-backend-wrp .btn-danger.disabled:hover, .sf-backend-wrp .btn-danger.disabled:focus, .sf-backend-wrp .btn-danger.disabled.focus, .sf-backend-wrp .btn-danger[disabled]:hover, .sf-backend-wrp .btn-danger[disabled]:focus, .sf-backend-wrp .btn-danger[disabled].focus,
     fieldset[disabled] .sf-backend-wrp .btn-danger:hover,
     fieldset[disabled] .sf-backend-wrp .btn-danger:focus,
-    fieldset[disabled] .sf-backend-wrp .btn-danger.focus,
-    fieldset[disabled] .sf-backend-wrp .btn-danger:active,
-    fieldset[disabled] .sf-backend-wrp .btn-danger.active {
+    fieldset[disabled] .sf-backend-wrp .btn-danger.focus {
       background-color: #d9534f;
       border-color: #d43f3a; }
     .sf-backend-wrp .btn-danger .badge {
@@ -2819,12 +2764,14 @@
     border-radius: 0; }
   .sf-backend-wrp .btn-group-vertical > .btn:first-child:not(:last-child) {
     border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0; }
   .sf-backend-wrp .btn-group-vertical > .btn:last-child:not(:first-child) {
-    border-bottom-left-radius: 4px;
     border-top-right-radius: 0;
-    border-top-left-radius: 0; }
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px; }
   .sf-backend-wrp .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn {
     border-radius: 0; }
   .sf-backend-wrp .btn-group-vertical > .btn-group:first-child:not(:last-child) > .btn:last-child,
@@ -2869,6 +2816,8 @@
       float: left;
       width: 100%;
       margin-bottom: 0; }
+      .sf-backend-wrp .input-group .form-control:focus {
+        z-index: 3; }
   .sf-backend-wrp .input-group-addon,
   .sf-backend-wrp .input-group-btn,
   .sf-backend-wrp .input-group .form-control {
@@ -2892,15 +2841,11 @@
     background-color: #eeeeee;
     border: 1px solid #ccc;
     border-radius: 4px; }
-    .sf-backend-wrp .input-group-addon.input-sm,
-    .sf-backend-wrp .input-group-sm > .input-group-addon,
-    .sf-backend-wrp .input-group-sm > .input-group-btn > .input-group-addon.btn {
+    .sf-backend-wrp .input-group-addon.input-sm, .sf-backend-wrp .input-group-sm > .input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > .input-group-addon.btn {
       padding: 5px 10px;
       font-size: 12px;
       border-radius: 3px; }
-    .sf-backend-wrp .input-group-addon.input-lg,
-    .sf-backend-wrp .input-group-lg > .input-group-addon,
-    .sf-backend-wrp .input-group-lg > .input-group-btn > .input-group-addon.btn {
+    .sf-backend-wrp .input-group-addon.input-lg, .sf-backend-wrp .input-group-lg > .input-group-addon, .sf-backend-wrp .input-group-lg > .input-group-btn > .input-group-addon.btn {
       padding: 10px 16px;
       font-size: 17px;
       border-radius: 6px; }
@@ -3478,7 +3423,7 @@
     .sf-backend-wrp .pagination > li > a:hover, .sf-backend-wrp .pagination > li > a:focus,
     .sf-backend-wrp .pagination > li > span:hover,
     .sf-backend-wrp .pagination > li > span:focus {
-      z-index: 3;
+      z-index: 2;
       color: #0a3870;
       background-color: #eeeeee;
       border-color: #ddd; }
@@ -3486,7 +3431,7 @@
     .sf-backend-wrp .pagination > .active > span,
     .sf-backend-wrp .pagination > .active > span:hover,
     .sf-backend-wrp .pagination > .active > span:focus {
-      z-index: 2;
+      z-index: 3;
       color: #fff;
       background-color: #337ab7;
       border-color: #337ab7;
@@ -3660,7 +3605,9 @@
       border-top-color: #d5d5d5; }
     .container .sf-backend-wrp .jumbotron,
     .container-fluid .sf-backend-wrp .jumbotron {
-      border-radius: 6px; }
+      border-radius: 6px;
+      padding-left: 15px;
+      padding-right: 15px; }
     .sf-backend-wrp .jumbotron .container {
       max-width: 100%; }
     @media screen and (min-width: 768px) {
@@ -4404,8 +4351,12 @@
       filter: alpha(opacity=50); }
   .sf-backend-wrp .modal-header {
     padding: 15px;
-    border-bottom: 1px solid #e5e5e5;
-    min-height: 16.428571429px; }
+    border-bottom: 1px solid #e5e5e5; }
+    .sf-backend-wrp .modal-header:before, .sf-backend-wrp .modal-header:after {
+      content: " ";
+      display: table; }
+    .sf-backend-wrp .modal-header:after {
+      clear: both; }
   .sf-backend-wrp .modal-header .close {
     margin-top: -2px; }
   .sf-backend-wrp .modal-title {
@@ -4621,7 +4572,8 @@
     font-size: 20px;
     color: #fff;
     text-align: center;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    background-color: transparent; }
     .sf-backend-wrp .carousel-control.left {
       background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
       background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
@@ -4715,14 +4667,14 @@
     .sf-backend-wrp .carousel-control .icon-next {
       width: 30px;
       height: 30px;
-      margin-top: -15px;
+      margin-top: -10px;
       font-size: 30px; }
     .sf-backend-wrp .carousel-control .glyphicon-chevron-left,
     .sf-backend-wrp .carousel-control .icon-prev {
-      margin-left: -15px; }
+      margin-left: -10px; }
     .sf-backend-wrp .carousel-control .glyphicon-chevron-right,
     .sf-backend-wrp .carousel-control .icon-next {
-      margin-right: -15px; }
+      margin-right: -10px; }
     .sf-backend-wrp .carousel-caption {
       left: 20%;
       right: 20%;
@@ -5089,8 +5041,12 @@
 
 .modal-header {
   padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
-  min-height: 16.428571429px; }
+  border-bottom: 1px solid #e5e5e5; }
+  .modal-header:before, .modal-header:after {
+    content: " ";
+    display: table; }
+  .modal-header:after {
+    clear: both; }
 
 .modal-header .close {
   margin-top: -2px; }
@@ -16658,6 +16614,8 @@
 
 .sf-backend-wrp .list-group-item-draggable-2 {
   padding: 5px 15px;
+  border-left: 1px solid;
+  border-right: 1px solid;
   border-color: transparent;
   cursor: default; }
   .sf-backend-wrp .list-group-item-draggable-2:first-child {
@@ -16725,6 +16683,15 @@
 .sf-backend-wrp .list-group-item-hint {
   width: 550px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
+  .sf-backend-wrp .list-group-item-hint.list-group-item-hint-2 {
+    padding: 5px; }
+    .sf-backend-wrp .list-group-item-hint.list-group-item-hint-2 .close {
+      display: none; }
+    .sf-backend-wrp .list-group-item-hint.list-group-item-hint-2.list-group-item-draggable > div {
+      padding-left: 35px; }
+    .sf-backend-wrp .list-group-item-hint.list-group-item-hint-2.list-group-item-draggable input[type=radio] + div,
+    .sf-backend-wrp .list-group-item-hint.list-group-item-hint-2.list-group-item-draggable input[type=checkbox] + div {
+      padding-left: 46px; }
 
 .sf-backend-wrp .list-group-item-placeholder {
   background: #ffff99;
@@ -16834,9 +16801,7 @@
 .sf-backend-wrp .input-group-addon {
   background: #fff; }
 
-.sf-backend-wrp input.input-sm, .sf-backend-wrp .input-group-sm > input.form-control,
-.sf-backend-wrp .input-group-sm > input.input-group-addon,
-.sf-backend-wrp .input-group-sm > .input-group-btn > input.btn {
+.sf-backend-wrp input.input-sm, .sf-backend-wrp .input-group-sm > input.form-control, .sf-backend-wrp .input-group-sm > input.input-group-addon, .sf-backend-wrp .input-group-sm > .input-group-btn > input.btn {
   height: 30px; }
 
 .sf-backend-wrp .input-group-btn .glyphicon,
@@ -16851,6 +16816,10 @@
 .sf-backend-wrp label.radio-inline {
   font-weight: normal;
   font-family: open_sansregular, Arial, Verdana, sans-serif; }
+
+.sf-backend-wrp .sf-flex-vertical-center-children {
+  display: flex;
+  align-items: center; }
 
 .sf-backend-wrp .label-taxon {
   padding: 2px 10px 3px;
