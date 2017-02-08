@@ -1,7 +1,7 @@
 ﻿<textarea id="editor" style="height: 340px;"
     kendo-editor="editorWidget" ng-model="sfModel"
     k-scope-field="editorWidget"
-    sf-toggle-commands="strikethrough, justifyFull, subscript, superscript, fontName, fontSize, foreColor, backColor, print"
+    sf-toggle-commands="strikethrough, justify-full, subscript, superscript, fontName, fontSize, foreColor, backColor, print"
     k-encoded="false"
     k-stylesheets='["{{htmlFieldCssUrl}}"]',
     k-paste-cleanup="{
