@@ -48,8 +48,8 @@
 							<dl class='dl-half'>
 								<dt>@(Res.Get<ClientComponentsResources>().Library)</dt>
 								<dd>{{item.FolderTitle || item.LibraryTitle}}</dd>
-								<dt>@(Res.Get<ClientComponentsResources>().Dimensions)</dt>
-								<dd>{{item.Width + 'x' + item.Height}}</dd>
+								<dt ng-if='item.IsVectorGraphics === false'>@(Res.Get<ClientComponentsResources>().Dimensions)</dt>
+								<dd ng-if='item.IsVectorGraphics === false'>{{item.Width + 'x' + item.Height}}</dd>
 								<dt>@(Res.Get<ClientComponentsResources>().Type)</dt>
 								<dd>{{item.Extension.toUpperCase()}}</dd>
 								<dt>@(Res.Get<ClientComponentsResources>().ModifiedOn)</dt>
@@ -72,7 +72,7 @@
 
 				<div class="Media-item-meta">
 					{{item.Extension.toUpperCase().replace(".", "")}}<br />
-					{{item.Width + "x" + item.Height}}<br />
+          {{item.IsVectorGraphics === false ? item.Width + "x" + item.Height : ""}}<br ng-if="item.IsVectorGraphics === false" />
 					{{item.TotalSize + "KB"}}<br />
 				</div>
 
