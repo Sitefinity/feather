@@ -6,13 +6,13 @@
     k-stylesheets='["{{htmlFieldCssUrl}}"]',
     k-paste-cleanup="{
         all: false,
-        css: true,
+        css: false,
         keepNewLines: false,
         msAllFormatting: true,
         msConvertLists: true,
         msTags: true,
         none: false,
-        span: true
+        span: false
     }",
     k-tools='[
     "formatting",
