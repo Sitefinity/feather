@@ -5,5 +5,8 @@
         <option ng-repeat="cssClass in cssClasses" value="{{cssClass.value}}" ng-selected="selectedClass==cssClass.value">
             {{cssClass.title}}
         </option>
+        <option value="{{customSelectedClass}}" ng-if="customSelectedClass" ng-selected="selectedClass && !getElementByPropValue(cssClasses, 'value', selectedClass)">
+            @(Res.Get<ClientComponentsResources>().Custom)
+        </option>
     </select>
 </div>
