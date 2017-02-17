@@ -76,12 +76,12 @@
             });
 
             var openModalDialog = function () {
-                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: function () { return $scope.model.customSize; } });
+                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: function () { return $scope.model.customSize; }, isVectorGraphics: function () { return isVectorGraphics(); } });
             };
 
             var isVectorGraphics = function () {
                 if ($scope && $scope.model && $scope.model.item && $scope.model.item.Extension) {
-                    return $scope.model.item.Extension == ".svg";
+                    return $scope.model.item.IsVectorGraphics === true;
                 }
                 return false;
             };
@@ -125,6 +125,9 @@
                 if (!$scope.disableCustomSizeSelection) {
                     var existingCustomSizeTitle;
                     if ($scope.model.customSize) {
+                        if (isVectorGraphics()) {
+                            $scope.model.customSize.Method = 'ResizeFitToAreaArguments';
+                        }
                         if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments') {
                             existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
                         }
@@ -181,16 +184,24 @@
                 $scope.sizeSelection = $scope.sizeOptions[0];
             };
         }])
-        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$uibModalInstance', 'model', 'serverContext', function ($scope, $uibModalInstance, model, serverContext) {
+        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$uibModalInstance', 'model', 'serverContext', 'isVectorGraphics', function ($scope, $uibModalInstance, model, serverContext, isVectorGraphics) {
             $scope.quality = ['High', 'Medium', 'Low'];
+            $scope.isVectorGraphics = isVectorGraphics;
 
-            $scope.methodOptions = [{
+            var resizeToArea = {
                 value: 'ResizeFitToAreaArguments',
                 title: 'Resize to area'
-            }, {
+            };
+            var cropToArea = {
                 value: 'CropCropArguments',
                 title: 'Crop to area'
-            }];
+            };
+
+            if (isVectorGraphics === true) {
+                $scope.methodOptions = [resizeToArea];
+            } else {
+                $scope.methodOptions = [resizeToArea, cropToArea];
+            }
 
             $scope.model = model || {  // Keep the names of those properties as they are in order to support old HTML field.
                 MaxWidth: null,
@@ -201,6 +212,11 @@
                 Quality: $scope.quality[0],
                 Method: $scope.methodOptions[0].value
             };
+
+            // set method 'ResizeFitToAreaArguments' for vector graphics
+            if (isVectorGraphics === true) {
+                $scope.model.Method = $scope.methodOptions[0].value;
+            }
 
             $scope.resizeToAreaUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/img/resize-to-area.png');
             $scope.cropToAreaUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/img/crop-to-area.png');
