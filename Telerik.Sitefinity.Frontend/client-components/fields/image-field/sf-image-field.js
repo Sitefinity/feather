@@ -27,15 +27,24 @@
                     };
 
                     var getImage = function (id) {
-                        sfMediaService.images.getById(id, scope.sfProvider).then(function (data) {
-                            if (data && data.Item) {
-                                refreshScopeInfo(data.Item);
+                        sfMediaService.images.getById(id, scope.sfProvider).then(function (dataCtx) {
+                            if (dataCtx && dataCtx.Item) {
+                                refreshScopeInfo(dataCtx);
                             }
                         });
                     };
 
-                    var refreshScopeInfo = function (item) {
+                    var refreshScopeInfo = function (dataCtx) {
+                        var item = dataCtx.Item;
                         scope.sfImage = item;
+                        var isVectorGraphics = false;
+                        if (dataCtx.SfAdditionalInfo) {
+                            var isVectorGraphicsItems = $.grep(dataCtx.SfAdditionalInfo, function (e) { return e.Key === "IsVectorGraphics"; });
+                            if (isVectorGraphicsItems.length == 1) {
+                                isVectorGraphics = isVectorGraphicsItems[0].Value
+                            }
+                        }
+                        scope.sfImage.IsVectorGraphics = isVectorGraphics;
                         scope.sfImageIsVisible = scope.sfImage.ThumbnailUrl && scope.sfImage.ThumbnailUrl !== "";
                         scope.imageSize = Math.ceil(item.TotalSize / 1024) + " KB";
                         scope.uploaded = getDateFromString(item.DateCreated);
