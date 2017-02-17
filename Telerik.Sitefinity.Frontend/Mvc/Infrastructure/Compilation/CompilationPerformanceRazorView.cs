@@ -191,7 +191,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
             var cacheDep = HostingEnvironment.VirtualPathProvider.GetCacheDependency(viewPath, new object[0], DateTime.UtcNow);
 
             // We are looking for both public and non-public method GetFileDependencies because of differences in the .NET Framework versions
-            var getFileDependencies = typeof(CacheDependency).GetMethod("GetFileDependencies", System.Reflection.BindingFlags.Instance| System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+            var getFileDependencies = typeof(CacheDependency).GetMethod("GetFileDependencies", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
             var getDependencyArray = typeof(AggregateCacheDependency).GetMethod("GetDependencyArray", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
 
             while (cacheDep is AggregateCacheDependency)
