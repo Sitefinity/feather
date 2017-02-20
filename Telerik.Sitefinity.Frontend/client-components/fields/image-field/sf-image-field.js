@@ -41,7 +41,7 @@
                         if (dataCtx.SfAdditionalInfo) {
                             var isVectorGraphicsItems = $.grep(dataCtx.SfAdditionalInfo, function (e) { return e.Key === "IsVectorGraphics"; });
                             if (isVectorGraphicsItems.length == 1) {
-                                isVectorGraphics = isVectorGraphicsItems[0].Value
+                                isVectorGraphics = isVectorGraphicsItems[0].Value;
                             }
                         }
                         scope.sfImage.IsVectorGraphics = isVectorGraphics;
