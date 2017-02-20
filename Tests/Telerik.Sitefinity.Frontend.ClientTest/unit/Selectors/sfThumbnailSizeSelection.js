@@ -230,9 +230,9 @@ describe("image thumbnail size selector", function () {
             // The $controller service is used to create instances of controllers
             var $controller = $injector.get('$controller');
 
-            createController = function (modalInstance, model) {
+            createController = function (modalInstance, model, isVectorGraphics) {
                 return $controller('sfCustomThumbnailSizeCtrl', {
-                    '$scope': $rootScope, '$uibModalInstance': modalInstance, 'model': model
+                    '$scope': $rootScope, '$uibModalInstance': modalInstance, 'model': model, "isVectorGraphics": isVectorGraphics
                 });
             };
         }));
