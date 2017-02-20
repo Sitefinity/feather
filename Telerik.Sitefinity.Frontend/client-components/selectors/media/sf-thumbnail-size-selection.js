@@ -89,6 +89,11 @@
             var populateOptions = function () {
                 $scope.sizeOptions = [];
                 var originalSizeTitle = 'Original size';
+
+                if ($scope.model.thumbnail) {
+                    $scope.model.thumbnail.url = null;
+                }
+
                 if ($scope.model.item &&
                     $scope.model.item.Width &&
                     $scope.model.item.Height) {
@@ -128,10 +133,10 @@
                         if (isVectorGraphics()) {
                             $scope.model.customSize.Method = 'ResizeFitToAreaArguments';
                         }
-                        if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments') {
+                        if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments' && $scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
                             existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
                         }
-                        else if ($scope.model.customSize.Method === 'CropCropArguments') {
+                        else if ($scope.model.customSize.Method === 'CropCropArguments' && $scope.model.customSize.Width && $scope.model.customSize.Height) {
                             existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
                         }
                     }
