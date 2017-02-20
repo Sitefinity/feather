@@ -187,7 +187,7 @@
                         jElementToInsert.attr('data-method', properties.customSize.Method);
                         jElementToInsert.attr('data-customsizemethodproperties', escapeDoubleQuote(JSON.stringify(properties.customSize)));
 
-                        if (properties.item.IsVectorGraphics == true) {
+                        if (properties.item.IsVectorGraphics === true) {
                             if (properties.customSize.MaxWidth) {
                                 jElementToInsert.attr("width", properties.customSize.MaxWidth);
                             }
