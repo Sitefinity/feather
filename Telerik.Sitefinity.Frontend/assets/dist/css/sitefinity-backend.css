@@ -15843,6 +15843,11 @@
         .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .custom-tool.btn {
           margin-top: 1px;
           margin-right: -12px; }
+      .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .k-i-unlink {
+        background-position: -288px -72px; }
+      .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .k-state-hover .k-i-unlink, .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group .k-state-selected .k-i-unlink {
+        background-position: -312px -72px;
+        background-position: -288px -72px; }
       .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-tool-group,
       .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-tool:not(.k-state-disabled),
       .sf-backend-wrp .modal-body .k-editor-widget .k-editor-toolbar .k-select {
