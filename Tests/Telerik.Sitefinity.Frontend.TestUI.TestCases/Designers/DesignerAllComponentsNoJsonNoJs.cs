@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.Sitefinity.Frontend.TestUI.Framework;
 using Telerik.Sitefinity.Frontend.TestUtilities;
 using Telerik.TestUI.Core.Utilities;
+using Telerik.TestUI.Core.Attributes;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Designers
 {
@@ -22,12 +23,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Designers
         /// UI test DesignerAllComponentsNoJsonNoJs.
         /// </summary>
         [TestMethod,
-        Owner(FeatherTeams.SitefinityTeam2),
+        Microsoft.VisualStudio.TestTools.UnitTesting.Owner(FeatherTeams.SitefinityTeam2),
         TestCategory(FeatherTestCategories.PagesAndContent)]
+        [KnownIssue(BugId= 207399),
+        Ignore]
         public void DesignerAllComponentsNoJsonNoJs()
         {
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(1600000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/pages", false));
-            RuntimeSettingsModificator.ExecuteWithClientTimeout(1600000, () => BAT.Macros().User().EnsureAdminLoggedIn());
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(3000000, () => BAT.Macros().NavigateTo().CustomPage("~/sitefinity/pages", false));
+            RuntimeSettingsModificator.ExecuteWithClientTimeout(3000000, () => BAT.Macros().User().EnsureAdminLoggedIn());
             BAT.Wrappers().Backend().Pages().PagesWrapper().OpenPageZoneEditor(PageName);
             BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().EditWidget(WidgetCaption);
             BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().WaitForSaveButtonToAppear();

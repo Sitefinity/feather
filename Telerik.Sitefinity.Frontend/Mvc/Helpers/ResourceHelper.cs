@@ -391,7 +391,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             if (!string.IsNullOrWhiteSpace(sectionName))
             {
-                var pageHandler = httpContext.CurrentHandler.GetPageHandler();
+                var pageHandler = httpContext.Handler.GetPageHandler();
                 if (pageHandler != null && pageHandler.Master is MvcMasterPage)
                 {
                     if (!throwException && !SectionRenderer.IsAvailable(pageHandler, sectionName))

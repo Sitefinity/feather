@@ -10,7 +10,7 @@
         <label>@(Res.Get<ClientComponentsResources>().ResizeImage)</label>
 
         <div class="row row-xs">
-            <div class="col-xs-4">
+            <div class="col-xs-4" ng-show='isVectorGraphics === false'>
                 <select class="form-control" ng-model="model.Method" ng-options="method.value as method.title for method in methodOptions"></select>
             </div>
             <div class="col-xs-4 m-top-xs">
@@ -83,7 +83,7 @@
             </div>
         </div>
 
-        <div ng-show="model.Method==methodOptions[1].value">
+        <div ng-show="model.Method == methodOptions[1].value && isVectorGraphics === false">
             <div class="form-group" ng-class="{ 'has-error' : !model.Width }">
                 <label for="width">@(Res.Get<ClientComponentsResources>().Width)</label>
                 <div class="row row-xs">
@@ -121,7 +121,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-show='isVectorGraphics === false'>
             <div class="checkbox">
                 <label>
                     <input type="checkbox" ng-model="model.ScaleUp" />
@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-show='isVectorGraphics === false'>
             <div class="row row-xs">
                 <div class="col-xs-4">
                     <label>@(Res.Get<ClientComponentsResources>().Quality)</label>

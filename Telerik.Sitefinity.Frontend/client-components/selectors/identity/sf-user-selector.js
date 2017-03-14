@@ -127,8 +127,8 @@
                         };
 
                         ctrl.selectorType = 'UserSelector';
-                        ctrl.setIdentifierField("UserName");
-                        ctrl.$scope.searchIdentifierField = "UserName";
+                        ctrl.setIdentifierField("DisplayName");
+                        ctrl.$scope.searchIdentifierField = "DisplayName";
 
                         ctrl.dialogTemplateUrl = 'client-components/selectors/identity/sf-user-selector.sf-cshtml';
                         ctrl.$scope.dialogTemplateId = 'sf-user-selector-template';
