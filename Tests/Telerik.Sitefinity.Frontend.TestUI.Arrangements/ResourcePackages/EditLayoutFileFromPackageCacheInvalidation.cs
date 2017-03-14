@@ -16,7 +16,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void AddNewLayoutFile()
         {
-            AuthenticationHelper.AuthenticateUser(UserName, Password);
+            AuthenticationHelper.AuthenticateUser(AdminEmail, AdminPass);
 
             PageManager manager = PageManager.GetManager();
             int templatesCount = manager.GetTemplates().Count();
@@ -40,7 +40,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
-            AuthenticationHelper.AuthenticateUser(UserName, Password);
+            AuthenticationHelper.AuthenticateUser(AdminEmail, AdminPass);
 
             ServerOperations.Pages().DeleteAllPages();
             ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
@@ -56,7 +56,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string PageTitle = "FeatherPage";
         private const string LayoutFileText = "Test Layout";
         private const string LayoutFileNewText = "New Text";
-        private const string UserName = "admin";
-        private const string Password = "admin@2";
+        private const string AdminEmail = "admin@test.test";
+        private const string AdminPass = "admin@2";
     }
 }

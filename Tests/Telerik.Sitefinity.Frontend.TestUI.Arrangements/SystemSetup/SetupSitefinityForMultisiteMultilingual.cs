@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerArrangement]
         public void CreateMultilingualSite()
         {
-            AuthenticationHelper.AuthenticateUser(Admin, Password);
+            AuthenticationHelper.AuthenticateUser(AdminEmail, AdminPass);
             var siteName = ArrangementConfig.GetArrangementSite();
             var siteUrl = ArrangementConfig.GetArrangementSiteUrl();
             var siteCultures = ArrangementConfig.GetArrangementSiteCultures();
@@ -42,7 +42,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string Url = "http://localhost:83/";
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private static readonly List<string> Cultures = new List<string>() { "en", "bg-bg" };
-        private const string Admin = "admin";
-        private const string Password = "admin@2";
+        private const string AdminEmail = "admin@test.test";
+        private const string AdminPass = "admin@2";
     }
 }

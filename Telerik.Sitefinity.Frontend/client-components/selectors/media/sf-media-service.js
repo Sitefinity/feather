@@ -329,7 +329,7 @@
                                 }
                                 if (mediaSettings.AllowedExensionsSettings) {
                                     var mediaExt = mediaSettings.AllowedExensionsSettings.replace(/,/g, '|').replace(/ |\./g, '');
-                                    var regExp = '^' + constants[mediaType].extensionsRegExPrefix + '\/(' + mediaExt + ')$';
+                                    var regExp = '^' + constants[mediaType].extensionsRegExPrefix + '\/(' + mediaExt + ')';
                                     mediaSettings.AllowedExensionsRegex = new RegExp(regExp, 'i');
                                 }
                                 return mediaSettings;

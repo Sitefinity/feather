@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerSetUp]
         public void SetUp()
         {
-            AuthenticationHelper.AuthenticateUser(UserName, Password);
+            AuthenticationHelper.AuthenticateUser(AdminEmail, Password);
 
             for (int i = 0; i < 3; i++)
             {
@@ -59,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         private const string NewsItemAuthor = "NewsWriter";
 
         private const string TagTitle = "Tag Title";
-        private const string UserName = "admin";
+        private const string AdminEmail = "admin@test.test";
         private const string Password = "admin@2";
     }
 }

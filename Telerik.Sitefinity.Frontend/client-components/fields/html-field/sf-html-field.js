@@ -36,7 +36,7 @@
                                 scope.content = scope.editor.wrapper.find('iframe.k-content').first();
 
                                 scope.fullScreenIcon = htmlElement.find(".js-fullScreen");
-
+                                
                                 scope.toggleAllTools();
                             }
                         });
@@ -51,7 +51,7 @@
 
                             if (commands) {
                                 commands.split(',').forEach(function (command) {
-                                    var selector = String.format("select.k-{0},a.k-{0},span.k-{0}", command.trim());
+                                    var selector = String.format("select.k-{0},a.k-{0},span.k-{0},select.k-i-{0},a.k-i-{0},span.k-i-{0}", command.trim());
                                     var anchor = toolbar.find(selector).parents('li');
                                     var func = scope.showAllCommands ? anchor.show : anchor.hide;
                                     func.call(anchor);

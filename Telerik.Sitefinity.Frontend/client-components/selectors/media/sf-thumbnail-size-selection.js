@@ -58,7 +58,8 @@
             });
 
             $scope.$watch('[model.item.Width, model.item.Height]', function (newVal, oldVal) {
-                if (newVal[0] && newVal[1]) {
+                var hasNewValues = newVal[0] && newVal[1];
+                if (isVectorGraphics() || hasNewValues) {
                     if (thumbnailProfiles && thumbnailProfiles.length > 0) {
                         populateOptions();
                     }
@@ -75,12 +76,24 @@
             });
 
             var openModalDialog = function () {
-                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: function () { return $scope.model.customSize; } });
+                return angular.element('.thumbnailSizeModal').scope().$openModalDialog({ model: function () { return $scope.model.customSize; }, isVectorGraphics: function () { return isVectorGraphics(); } });
+            };
+
+            var isVectorGraphics = function () {
+                if ($scope && $scope.model && $scope.model.item && $scope.model.item.Extension) {
+                    return $scope.model.item.IsVectorGraphics === true;
+                }
+                return false;
             };
 
             var populateOptions = function () {
                 $scope.sizeOptions = [];
                 var originalSizeTitle = 'Original size';
+
+                if ($scope.model.thumbnail) {
+                    $scope.model.thumbnail.url = null;
+                }
+
                 if ($scope.model.item &&
                     $scope.model.item.Width &&
                     $scope.model.item.Height) {
@@ -97,31 +110,37 @@
                 });
 
                 for (var i = 0; i < thumbnailProfiles.length; i++) {
-                    var profile = thumbnailProfiles[i];
-                    $scope.sizeOptions.push({
-                        index: $scope.sizeOptions.length,
-                        type: displayMode.thumbnail,
-                        title: profile.Title,
-                        thumbnail: {
-                            url: null,
-                            name: profile.Id
-                        },
-                        customSize: null,
-                        openDialog: false
-                    });
+                    if (!isVectorGraphics()) {
+                        var profile = thumbnailProfiles[i];
+
+                        $scope.sizeOptions.push({
+                            index: $scope.sizeOptions.length,
+                            type: displayMode.thumbnail,
+                            title: profile.Title,
+                            thumbnail: {
+                                url: null,
+                                name: profile.Id
+                            },
+                            customSize: null,
+                            openDialog: false
+                        });
+                    }
                 }
 
-                if(!$scope.disableCustomSizeSelection) {
+                if (!$scope.disableCustomSizeSelection) {
                     var existingCustomSizeTitle;
                     if ($scope.model.customSize) {
-                        if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments') {
+                        if (isVectorGraphics()) {
+                            $scope.model.customSize.Method = 'ResizeFitToAreaArguments';
+                        }
+                        if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments' && $scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
                             existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
                         }
-                        else if ($scope.model.customSize.Method === 'CropCropArguments') {
+                        else if ($scope.model.customSize.Method === 'CropCropArguments' && $scope.model.customSize.Width && $scope.model.customSize.Height) {
                             existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
                         }
                     }
-                
+
                     var newCustomSizeTitle = 'Custom size...';
 
                     if (existingCustomSizeTitle) {
@@ -170,16 +189,24 @@
                 $scope.sizeSelection = $scope.sizeOptions[0];
             };
         }])
-        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$uibModalInstance', 'model', 'serverContext', function ($scope, $uibModalInstance, model, serverContext) {
+        .controller('sfCustomThumbnailSizeCtrl', ['$scope', '$uibModalInstance', 'model', 'serverContext', 'isVectorGraphics', function ($scope, $uibModalInstance, model, serverContext, isVectorGraphics) {
             $scope.quality = ['High', 'Medium', 'Low'];
+            $scope.isVectorGraphics = isVectorGraphics;
 
-            $scope.methodOptions = [{
+            var resizeToArea = {
                 value: 'ResizeFitToAreaArguments',
                 title: 'Resize to area'
-            }, {
+            };
+            var cropToArea = {
                 value: 'CropCropArguments',
                 title: 'Crop to area'
-            }];
+            };
+
+            if (isVectorGraphics === true) {
+                $scope.methodOptions = [resizeToArea];
+            } else {
+                $scope.methodOptions = [resizeToArea, cropToArea];
+            }
 
             $scope.model = model || {  // Keep the names of those properties as they are in order to support old HTML field.
                 MaxWidth: null,
@@ -190,6 +217,11 @@
                 Quality: $scope.quality[0],
                 Method: $scope.methodOptions[0].value
             };
+
+            // set method 'ResizeFitToAreaArguments' for vector graphics
+            if (isVectorGraphics === true) {
+                $scope.model.Method = $scope.methodOptions[0].value;
+            }
 
             $scope.resizeToAreaUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/img/resize-to-area.png');
             $scope.cropToAreaUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'assets/dist/img/crop-to-area.png');

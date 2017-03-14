@@ -10,7 +10,6 @@ using System.Web.UI;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
-using Telerik.Sitefinity.DynamicModules.Builder;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Localization;
@@ -18,7 +17,6 @@ using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy;
-using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
@@ -223,24 +221,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                 if (manager != null)
                 {
-					if (SystemManager.CurrentContext.IsMultisiteMode && typeof(DynamicContent).IsAssignableFrom(contentType))
-					{
-						var moduleBuilderManager = ModuleBuilderManager.GetManager();
-						if (moduleBuilderManager != null)
-						{
-							var dynamicModuleType = moduleBuilderManager.Provider.GetDynamicModuleTypes().Where(t => t.TypeName == contentType.Name && t.TypeNamespace == contentType.Namespace).Single();
-							var links = SystemManager.CurrentContext.CurrentSite.SiteDataSourceLinks.Where(x => dynamicModuleType != null && x.DataSourceName == dynamicModuleType.ModuleName);
-							
-							return links.Select(x => x.ProviderName);
-						}
-
-						return new string[0];
-					}
-					else
-					{
-						return manager.Providers.Select(p => p.Name);
-					}
-				}
+                    return manager.Providers.Select(p => p.Name);
+                }
                 else
                 {
                     return new string[0];
