@@ -300,6 +300,9 @@
     <Compile Include="Mvc\Controllers\PrecompiledViewAssemblyWrapper.cs" />
     <Compile Include="Mvc\Helpers\AspHtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Infrastructure\Controllers\Attributes\ResourcePackageAttribute.cs" />
+    <Compile Include="Mvc\Infrastructure\Personalization\PersonalizationInitializer.cs" />
+    <Compile Include="Mvc\Infrastructure\Personalization\PersonalizedMvcWidgetResolver.cs" />
+    <Compile Include="Mvc\Infrastructure\Personalization\PersonalizedWidgetProxy.cs" />
     <Compile Include="Mvc\Infrastructure\Routing\AttributeRoutingManager.cs" />
     <Compile Include="FilesMonitoring\GridFileManager.cs" />
     <Compile Include="FilesMonitoring\FileChangeType.cs" />
