@@ -31,7 +31,7 @@
 
             $scope.isUndefined = function (value) {
                 return typeof value === 'undefined';
-            }
+            };
         }]);
 
     //filters property hierarchy
