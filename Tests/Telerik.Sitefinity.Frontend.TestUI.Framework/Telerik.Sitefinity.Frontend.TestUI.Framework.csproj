@@ -62,11 +62,13 @@
     <Reference Include="Telerik.Sitefinity.TestUI.Core, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUI.Core.1.1.2.0\lib\net45\Telerik.Sitefinity.TestUI.Core.dll</HintPath>
       <Private>True</Private>
-<SpecificVersion>False</SpecificVersion>    </Reference>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.Framework, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUI.Framework.1.1.2.0\lib\net40\Telerik.Sitefinity.TestUI.Framework.dll</HintPath>
       <Private>True</Private>
-<SpecificVersion>False</SpecificVersion>    </Reference>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Telerik.Sitefinity.TestUI.UIArrangement">
       <HintPath>..\Telerik.Sitefinity.Frontend.TestUI.TestCases\packages\Telerik.Sitefinity.TestUI.UIArrangement.1.0.1\lib\net40\Telerik.Sitefinity.TestUI.UIArrangement.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -135,7 +137,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">      
+    <None Include="packages.config">
     </None>
   </ItemGroup>
   <ItemGroup />
