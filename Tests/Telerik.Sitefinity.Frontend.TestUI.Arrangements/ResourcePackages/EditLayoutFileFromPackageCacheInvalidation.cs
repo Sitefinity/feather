@@ -11,7 +11,7 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
-    public class EditLayoutFileFromPackageCacheInvalidation : ITestArrangement
+    public class EditLayoutFileFromPackageCacheInvalidation : TestArrangementBase
     {
         [ServerSetUp]
         public void AddNewLayoutFile()
@@ -25,6 +25,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             FeatherServerOperations.ResourcePackages().AddNewResource(FileResource, filePath);
 
             FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+            ServerOperations.Templates().SharePageTemplateWithSite(TemplateTitle, "SecondSite");
 
             Guid templateId = ServerOperations.Templates().GetTemplateIdByTitle(TemplateTitle);
             ServerOperations.Pages().CreatePage(PageTitle, templateId);            
@@ -43,6 +44,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             AuthenticationHelper.AuthenticateUser(AdminEmail, AdminPass);
 
             ServerOperations.Pages().DeleteAllPages();
+            ServerOperations.Templates().UnSharePageTemplateWithSite(TemplateTitle, "SecondSite");
             ServerOperations.Templates().DeletePageTemplate(TemplateTitle);
 
             string filePath = FeatherServerOperations.ResourcePackages().GetResourcePackageDestinationFilePath(PackageName, LayoutFileName);

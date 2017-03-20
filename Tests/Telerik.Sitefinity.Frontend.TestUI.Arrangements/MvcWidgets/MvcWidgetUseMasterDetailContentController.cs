@@ -8,7 +8,7 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
-    public class MvcWidgetUseMasterDetailContentController : ITestArrangement
+    public class MvcWidgetUseMasterDetailContentController : TestArrangementBase
     {
         [ServerSetUp]
         public void SetUp()

@@ -10,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
     /// <summary>
     /// UninstallFeatherAndDeleteWidgetFromHybridPageTemplate arragement.
     /// </summary>
-    public class UninstallFeatherAndDeleteWidgetFromHybridPageTemplate : ITestArrangement
+    public class UninstallFeatherAndDeleteWidgetFromHybridPageTemplate : TestArrangementBase
     {
         /// <summary>
         /// Server side set up. 

@@ -5,6 +5,7 @@ using System.Text;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
+using Telerik.Sitefinity.Restriction;
 
 namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations.Pages
 {
@@ -22,7 +23,10 @@ namespace Telerik.Sitefinity.Frontend.TestUtilities.CommonOperations.Pages
             var itemToDelete = section.Tools.FirstOrDefault<ToolboxItem>(e => e.Name == gridName);
             section.Tools.Remove(itemToDelete);
 
-            configurationManager.SaveSection(toolboxesConfig);
+            using (new UnrestrictedModeRegion())
+            {
+                configurationManager.SaveSection(toolboxesConfig, true);
+            }
         }
     }
 }

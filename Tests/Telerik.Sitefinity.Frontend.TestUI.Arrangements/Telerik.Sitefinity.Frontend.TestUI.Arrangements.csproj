@@ -201,6 +201,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationPreStart.cs" />
+    <Compile Include="Framework\TestArrangementBase.cs" />
+    <Compile Include="Framework\Utilities\Utilities.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Designers\DesignerAllComponentsNoJsonNoJs.cs" />
     <Compile Include="Designers\DesignerAllComponentsNoJsonWithJs.cs" />

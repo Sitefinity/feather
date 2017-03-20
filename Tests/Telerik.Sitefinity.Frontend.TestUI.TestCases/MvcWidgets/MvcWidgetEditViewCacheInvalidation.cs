@@ -23,10 +23,10 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcWidgetEditViewFromPackageCacheInvalidation()
         {
-            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false, this.Culture);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromPackageText), "Default view text is not correct.");
             BAT.Arrange(this.TestName).ExecuteArrangement("EditViewFromPackage");
-            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false, this.Culture);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromPackageEditedText), "Default view text after edit is not correct.");
         }
 
