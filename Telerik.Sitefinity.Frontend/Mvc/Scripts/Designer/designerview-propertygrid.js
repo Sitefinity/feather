@@ -28,6 +28,10 @@
                 $scope.propertyPath = propertyPath;
                 $scope.propertyName = propertyName;
             };
+
+            $scope.isUndefined = function (value) {
+                return typeof value === 'undefined';
+            };
         }]);
 
     //filters property hierarchy

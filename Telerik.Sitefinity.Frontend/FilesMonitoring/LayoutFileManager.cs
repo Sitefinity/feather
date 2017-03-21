@@ -62,10 +62,13 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <returns>The id of the category.</returns>
         public virtual Guid GetOrCreateTemplateCategoryId(string templateCategoryName, bool createIfNotExist = true)
         {
+            if (string.IsNullOrWhiteSpace(templateCategoryName))
+                return SiteInitializer.CustomTemplatesCategoryId;
+
             var taxonomyManager = TaxonomyManager.GetManager();
 
             var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
-            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Name.Equals(templateCategoryName, StringComparison.OrdinalIgnoreCase));
+            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Name != null && t.Name.Equals(templateCategoryName, StringComparison.OrdinalIgnoreCase));
 
             if (templateCategory == null && createIfNotExist)
             {

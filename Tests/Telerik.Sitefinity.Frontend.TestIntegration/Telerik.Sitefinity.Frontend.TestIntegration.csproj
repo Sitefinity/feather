@@ -420,9 +420,4 @@
   </Target>
   -->
   <Import Project="$(SolutionDir)\StyleCop\StyleCop.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties Name="Telerik.Sitefinity.Frontend.TestIntegration" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>
