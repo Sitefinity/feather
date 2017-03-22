@@ -11,7 +11,7 @@ using Telerik.Sitefinity.TestUtilities.CommonOperations;
 
 namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
 {
-    public class MvcWidgetEditViewFromPackageCacheInvalidation : ITestArrangement
+    public class MvcWidgetEditViewFromPackageCacheInvalidation : TestArrangementBase
     {
         private const string PageName = "FeatherPage";
         private const string WidgetCaption = "TestMvcWidget";

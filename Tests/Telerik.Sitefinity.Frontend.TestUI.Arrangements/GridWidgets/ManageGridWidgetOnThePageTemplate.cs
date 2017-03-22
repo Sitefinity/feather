@@ -15,7 +15,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
     /// <summary>
     /// ManageGridWidgetOnThePageTemplate arragement.
     /// </summary>
-    public class ManageGridWidgetOnThePageTemplate : ITestArrangement
+    public class ManageGridWidgetOnThePageTemplate : TestArrangementBase
     {
         /// <summary>
         /// Server side set up. 
@@ -30,6 +30,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             int templatesCount = pageManager.GetTemplates().Count();
             File.Copy(templateFileOriginal, templateFileCopy);
             FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+            ServerOperations.Templates().SharePageTemplateWithSite(PageTemplateName, "SecondSite");
         }
 
         /// <summary>
@@ -38,10 +39,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         [ServerTearDown]
         public void TearDown()
         {
+            var template = ServerOperations.Templates().GetTemplateIdByTitle(PageTemplateName);
+            
+            ServerOperations.Templates().UnSharePageTemplateWithSite(PageTemplateName, "SecondSite");
+            ServerOperations.Templates().DeletePageTemplate(template);            
+
             string templateFileCopy = FileInjectHelper.GetDestinationFilePath(this.newLayoutTemplatePath);
             File.Delete(templateFileCopy);
-
-            ServerOperations.Templates().DeletePageTemplate(PageTemplateName);
         }
 
         private const string PageTemplateName = "defaultNew";

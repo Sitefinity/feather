@@ -23,13 +23,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcWidgetUseViewFromLayoutFolderAndPackage()
         {
-            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false, this.Culture);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewText), "Default view text is not correct.");
             BAT.Arrange(this.TestName).ExecuteArrangement("AddNewViewToLayoutsFolder");
-            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false, this.Culture);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromLayoutsFolderText), "Default view text from Layouts folder is not correct.");
             BAT.Arrange(this.TestName).ExecuteArrangement("AddNewViewToPackage");
-            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false, this.Culture);
             Assert.IsTrue(ActiveBrowser.ContainsText(DefaultViewFromPackageText), "Default view text from package is not correct.");
         }
 

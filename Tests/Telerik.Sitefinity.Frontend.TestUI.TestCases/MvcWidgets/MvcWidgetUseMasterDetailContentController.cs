@@ -23,8 +23,8 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.MvcWidgets
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void MvcWidgetUseMasterDetailContentController()
         {
-            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false);
-            Assert.IsTrue(ActiveBrowser.ContainsText(PageText), "Page text is not correct.");           
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageName.ToLower(), false, this.Culture);
+            Assert.IsTrue(ActiveBrowser.ContainsText(PageText), "Page text is not correct.");
         }
 
         /// <summary>

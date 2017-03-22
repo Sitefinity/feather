@@ -18,7 +18,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
     /// <summary>
     /// AutoGenerateGridWidgetToToolboxForPageTemplate arragement.
     /// </summary>
-    public class AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox : ITestArrangement
+    public class AddAndRenameGridWidgetFromFileSystemVerifyTemplateToolbox : TestArrangementBase
     {
         /// <summary>
         /// Server side set up. 
@@ -35,6 +35,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             int templatesCount = pageManager.GetTemplates().Count();
             File.Copy(templateFileOriginal, templateFileCopy);
             FeatherServerOperations.ResourcePackages().WaitForTemplatesCountToIncrease(templatesCount, 1);
+            ServerOperations.Templates().SharePageTemplateWithSite(PageTemplateName, "SecondSite");
 
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
@@ -70,6 +71,13 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
         {
             AuthenticationHelper.AuthenticateUser(AdminEmail, AdminPass, true);
 
+            var template = ServerOperations.Templates().GetTemplateIdByTitle(PageTemplateName);
+            
+            ServerOperations.Pages().DeleteAllPages();
+            ServerOperations.Templates().UnSharePageTemplateWithSite(PageTemplateName, "SecondSite");
+            ServerOperations.Templates().DeletePageTemplate(template);
+            FeatherServerOperations.GridWidgets().RemoveGridControlFromToolboxesConfig(GridTitle);
+
             string filePath = FileInjectHelper.GetDestinationFilePath(this.gridPath);
             string templateFileCopy = FileInjectHelper.GetDestinationFilePath(this.newLayoutTemplatePath);
             string newFilePath = FileInjectHelper.GetDestinationFilePath(this.newGridPath);
@@ -77,10 +85,6 @@ namespace Telerik.Sitefinity.Frontend.TestUI.Arrangements
             File.Delete(filePath);
             File.Delete(templateFileCopy);
             File.Delete(newFilePath);
-
-            ServerOperations.Pages().DeleteAllPages();
-            ServerOperations.Templates().DeletePageTemplate(PageTemplateName);
-            FeatherServerOperations.GridWidgets().RemoveGridControlFromToolboxesConfig(GridTitle);
         }
 
         private const string AdminEmail = "admin@test.test";

@@ -22,12 +22,12 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.ResourcePackages
         TestCategory(FeatherTestCategories.PagesAndContent)]
         public void EditLayoutFileFromPackageCacheInvalidation()
         {
-            BAT.Macros().NavigateTo().CustomPage("~/" + PageTitle.ToLower(), false);
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageTitle.ToLower(), false, this.Culture);
             Assert.IsTrue(ActiveBrowser.ContainsText(LayoutFileText), "Layout text is not correct.");
 
             BAT.Arrange(this.TestName).ExecuteArrangement("EditLayoutFile");
 
-            BAT.Macros().NavigateTo().CustomPage("~/" + PageTitle.ToLower(), false);
+            BAT.Macros().NavigateTo().CustomPage("~/" + PageTitle.ToLower(), false, this.Culture);
             Assert.IsTrue(ActiveBrowser.ContainsText(LayoutFileNewText), "Layout text after edit is not correct.");
         }
 

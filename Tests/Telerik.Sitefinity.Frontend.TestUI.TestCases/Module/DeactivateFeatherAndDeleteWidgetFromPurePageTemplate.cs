@@ -29,13 +29,14 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
                 // Add widget to template
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().User().EnsureAdminLoggedIn());
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageTemplatesPageUrl, false, null, new HtmlFindExpression("InnerText=" + PageTemplateName)));
+                BAT.Wrappers().Backend().MLOperations().MLGridOperations().ChangeLanguageFromDropdownMenuML(1);
                 BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
                 BATFrontend.Wrappers().Backend().Pages().PageZoneEditorWrapper().DragAndDropWidgetToPlaceholder(WidgetName, Placeholder);
                 Assert.IsTrue(BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().IsHtmlControlPresent(WidgetContent));
                 BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().PublishTemplate();
 
                 // Verify on frontend
-                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageUrl, false, null, new HtmlFindExpression("InnerText=~" + WidgetContent)));
+                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageUrl, false, this.Culture, new HtmlFindExpression("InnerText=~" + WidgetContent)));
                 Assert.IsTrue(BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().IsElementByInnerTextPresent(WidgetContent));
 
                 // Deactivate Feather
@@ -43,26 +44,27 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
                 featherDeactivated = true;
 
                 // Verify on frontend
-                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageUrl, false));
+                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageUrl, false, this.Culture));
                 Assert.IsFalse(BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().IsElementByInnerTextPresent(WidgetContent));
 
                 // Remove widget from template
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().User().EnsureAdminLoggedIn());
                 RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageTemplatesPageUrl, false, null, new HtmlFindExpression("InnerText=" + PageTemplateName)));
+                BAT.Wrappers().Backend().MLOperations().MLGridOperations().ChangeLanguageFromDropdownMenuML(1);
                 BAT.Wrappers().Backend().PageTemplates().PageTemplateMainScreen().OpenTemplateEditor(PageTemplateName);
                 BAT.Wrappers().Backend().Pages().PageZoneEditorWrapper().DeleteWidget(WidgetName);
                 Assert.IsFalse(BAT.Wrappers().Frontend().Pages().PagesWrapperFrontend().IsHtmlControlPresent(WidgetContent));
                 BAT.Wrappers().Backend().PageTemplates().PageTemplateModifyScreen().PublishTemplate();
 
                 // Verify on frontend
-                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageUrl, false));
+                RuntimeSettingsModificator.ExecuteWithClientTimeout(ClientTimeoutInterval, () => BAT.Macros().NavigateTo().CustomPage(PageUrl, false, this.Culture));
                 Assert.IsFalse(BATFrontend.Wrappers().Backend().Widgets().WidgetsWrapper().IsElementByInnerTextPresent(WidgetContent));
 
                 // Activate Feather
                 BATFrontend.Wrappers().Backend().FrontendModule().FrontendModule().ActivateFeather(ActiveBrowser);
                 featherDeactivated = false;
             }
-            finally 
+            finally
             {
                 if (featherDeactivated)
                 {
@@ -71,7 +73,7 @@ namespace Telerik.Sitefinity.Frontend.TestUI.TestCases.Module
                 }
             }
         }
-        
+
         /// <summary>
         /// Performs Server Setup and prepare the system with needed data.
         /// </summary>
