@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 
@@ -98,7 +97,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// </returns>
         public bool Register(string resourceKey, string sectionName = null, bool throwException = false)
         {
-            if (sectionName != null && !ResourceHelper.RenderScriptSection)
+            if (sectionName != null)
             {
                 var page = this.Context.Handler.GetPageHandler();
                 if (throwException && page != null && (page.Master is MvcMasterPage) && !SectionRenderer.IsAvailable(page, sectionName))

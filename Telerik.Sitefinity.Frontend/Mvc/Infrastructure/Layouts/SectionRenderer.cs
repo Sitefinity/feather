@@ -27,9 +27,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <returns>True if the section is available on the page and false otherwise.</returns>
         internal static bool IsAvailable(Page page, string sectionName)
         {
-            if (ResourceHelper.RenderScriptSection)
-                return true;
-
             if (sectionName == null)
                 throw new ArgumentNullException("sectionName");
 

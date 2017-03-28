@@ -12,7 +12,6 @@ using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc.Rendering;
-using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
@@ -22,23 +21,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
     /// </summary>
     public static class ResourceHelper
     {
-        /// <summary>
-        /// Gets a value indicating whether section name of the scripts should be rendered.
-        /// This value is used client side for placing scripts tag within personalized widgets.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if section name of the scripts should be rendered; otherwise, <c>false</c>.
-        /// </value>
-        internal static bool RenderScriptSection
-        {
-            get
-            {
-                return SystemManager.CurrentHttpContext != null &&
-                       SystemManager.CurrentHttpContext.Items.Contains("RenderScriptSection") &&
-                       (bool)SystemManager.CurrentHttpContext.Items["RenderScriptSection"];
-            }
-        }
-
         /// <summary>
         /// Registers JavaScript reference and ensures that it loads maximum once for a page.
         /// </summary>
@@ -427,12 +409,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             // No section name renders the script inline if it hasn't been rendered
-            if (sectionName == null ||
-                ResourceHelper.RenderScriptSection)
+            if (sectionName == null)
             {
                 if (!register.IsRegistered(resourcePath, sectionName))
                 {
-                    result = MvcHtmlString.Create(ResourceHelper.BuildSingleResourceMarkup(resourcePath, resourceType, sectionName));
+                    result = MvcHtmlString.Create(ResourceHelper.BuildSingleResourceMarkup(resourcePath, resourceType));
                 }
             }
 
@@ -517,7 +498,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             {
                 if (!resourceRegister.IsRendered(resource))
                 {
-                    output.Append(ResourceHelper.BuildSingleResourceMarkup(resource, resourceType, sectionName));
+                    output.Append(ResourceHelper.BuildSingleResourceMarkup(resource, resourceType));
                     resourceRegister.MarkAsRendered(resource);
                 }
             }
@@ -525,12 +506,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return output.ToString();
         }
 
-        private static string BuildSingleResourceMarkup(string resourceKey, ResourceType resourceType, string sectionName)
+        private static string BuildSingleResourceMarkup(string resourceKey, ResourceType resourceType)
         {
             string result;
 
             if (resourceType == ResourceType.Js)
-                result = ResourceHelper.BuildScriptMarkup(resourceKey, sectionName);
+                result = ResourceHelper.BuildScriptMarkup(resourceKey);
             else if (resourceType == ResourceType.Css)
                 result = ResourceHelper.BuildStyleSheetMarkup(resourceKey);
             else
@@ -539,17 +520,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             return result;
         }
 
-        private static string BuildScriptMarkup(string resourceKey, string sectionName)
+        private static string BuildScriptMarkup(string resourceKey)
         {
             var tag = new TagBuilder("script");
 
             tag.Attributes["src"] = resourceKey;
             tag.Attributes["type"] = "text/javascript";
-
-            if (ResourceHelper.RenderScriptSection && !string.IsNullOrWhiteSpace(sectionName))
-            {
-                tag.Attributes["data-sf-section"] = sectionName;
-            }
 
             return tag.ToString(TagRenderMode.Normal);
         }
