@@ -278,13 +278,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 {
                     var filter = string.Format(CultureInfo.InvariantCulture, "{0}.Contains({{{1}}})", taxonomyField, taxonFilter.Id);
                     query = query.Where(filter);
-                }
-                else
-                {
-                    viewModel.Items = Enumerable.Empty<ItemViewModel>();
-                    this.SetViewModelProperties(viewModel, page, null);
-                    return viewModel;
-                }
+                }                
             }
 
             this.PopulateListViewModel(page, query, viewModel);
