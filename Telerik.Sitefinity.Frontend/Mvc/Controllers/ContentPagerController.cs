@@ -35,7 +35,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
                     model.CurrentPage = 1;
 
                 startIndex = ((int)Math.Floor((double)(model.CurrentPage - 1) / model.DisplayCount) * model.DisplayCount) + 1;
-                model.CurrentPage %= model.DisplayCount;
             }
 
             int endIndex = Math.Min(model.TotalPagesCount, (startIndex + model.DisplayCount) - 1);
@@ -100,14 +99,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         private void TryStorePaginationUrls(PagerViewModel model)
         {
             string nextUrl;
+            var adjustedCurrentPage = model.CurrentPage % model.DisplayCount;
+
             if (model.CurrentPage > 0 && model.CurrentPage < model.PagerNodes.Count)
-                nextUrl = ContentPagerController.PageNodeUrl(model.PagerNodes[model.CurrentPage], model.RedirectUrlTemplate);
+                nextUrl = ContentPagerController.PageNodeUrl(model.PagerNodes[adjustedCurrentPage], model.RedirectUrlTemplate);
             else
                 nextUrl = null;
 
             string previousUrl;
-            if (model.CurrentPage > 1)
-                previousUrl = ContentPagerController.PageNodeUrl(model.PagerNodes[model.CurrentPage - 2], model.RedirectUrlTemplate);
+
+            if (adjustedCurrentPage > 1)
+                previousUrl = ContentPagerController.PageNodeUrl(model.PagerNodes[adjustedCurrentPage - 2], model.RedirectUrlTemplate);
             else
                 previousUrl = null;
 
