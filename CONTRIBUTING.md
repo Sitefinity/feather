@@ -1,0 +1,1 @@
+To contribute to this project please submit your request in our feedback portal ([https://feedback.telerik.com/Project/153](https://feedback.telerik.com/Project/153)) with detailed description. This repo is a mirror of our codebase and represents the latest state of it without having control on it.

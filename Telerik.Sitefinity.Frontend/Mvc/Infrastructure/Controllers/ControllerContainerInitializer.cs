@@ -134,6 +134,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                     this.InitializeControllerContainer(assembly);
 
                     result.Add(assembly);
+
+                    // avoid adding the same assembly twice in case it's marked with both ControllerContainer and ResourcePackage Attributes
+                    continue;
                 }
 
                 if (this.IsMarkedAssembly<ResourcePackageAttribute>(assemblyFileName))

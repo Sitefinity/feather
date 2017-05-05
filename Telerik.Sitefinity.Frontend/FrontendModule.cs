@@ -7,6 +7,7 @@ using Telerik.OpenAccess;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Services;
 
 namespace Telerik.Sitefinity.Frontend
@@ -59,7 +60,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             get
             {
-                return this.ninjectDependencyResolver;
+                return ninjectDependencyResolver;
             }
         }
 
@@ -93,9 +94,9 @@ namespace Telerik.Sitefinity.Frontend
         {
             base.Load();
 
-            this.ninjectDependencyResolver = this.CreateKernel();
+            this.InitializeDependencyResolver();
 
-            FrontendModuleInstaller.Initialize(this.DependencyResolver);
+            FrontendModuleInstaller.Initialize();
 
             Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
             Bootstrapper.Initialized += this.Bootstrapper_Initialized;
@@ -153,7 +154,7 @@ namespace Telerik.Sitefinity.Frontend
             if (bootstrapper.Kernel != null)
                 return bootstrapper.Kernel;
 
-            return new StandardKernel();
+            return new SitefinityKernel();
         }
 
         /// <summary>
@@ -170,10 +171,27 @@ namespace Telerik.Sitefinity.Frontend
         // Called both by Unload and Uninstall
         private void Uninitialize()
         {
-            if (this.ninjectDependencyResolver != null && !this.ninjectDependencyResolver.IsDisposed)
-                this.ninjectDependencyResolver.Dispose();
+            this.UninitializeDependencyResolver();
 
             Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
+        }
+
+        private void InitializeDependencyResolver()
+        {
+            if (ninjectDependencyResolver != null)
+                return;
+
+            ninjectDependencyResolver = this.CreateKernel();
+            ninjectDependencyResolver.Load(new ControllerContainerInitializer().ControllerContainerAssemblies);
+        }
+
+        private void UninitializeDependencyResolver()
+        {
+            if (ninjectDependencyResolver != null && !ninjectDependencyResolver.IsDisposed && ninjectDependencyResolver is SitefinityKernel)
+            {
+                ninjectDependencyResolver.Dispose();
+                ninjectDependencyResolver = null;
+            }
         }
 
         private Lazy<IEnumerable<IInitializer>> initializers = new Lazy<IEnumerable<IInitializer>>(() =>
@@ -193,6 +211,14 @@ namespace Telerik.Sitefinity.Frontend
             }
         });
 
-        private IKernel ninjectDependencyResolver;
+        private static IKernel ninjectDependencyResolver;
+
+        private class SitefinityKernel : StandardKernel
+        {
+            public SitefinityKernel()
+                : base()
+            {
+            }
+        }
     }
 }
