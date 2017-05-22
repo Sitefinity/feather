@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.DynamicModules;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
@@ -83,13 +84,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             IDataItem item = null;
-            var contentManager = manager as IContentManager;
-            if (contentManager != null)
+            if (manager is IContentManager || manager is DynamicModuleManager)
             {
-                var isPublished = !this.IsPreviewRequested() || this.ResolveRequestedItemStatus() == ContentLifecycleStatus.Live;
                 try
                 {
-                    item = contentManager.GetItemFromUrl(itemType, url, isPublished, out redirectUrl);
+                    item = this.GetItemFromUrl(manager, itemType, url, out redirectUrl);
                 }
                 catch (System.UnauthorizedAccessException e)
                 {
@@ -128,6 +127,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 {
                     item = requestedItem as IDataItem;
                 }
+            }
+
+            return item;
+        }
+
+        private IDataItem GetItemFromUrl(IManager manager, Type itemType, string url, out string redirectUrl)
+        {
+            IDataItem item = null;
+            var isPublished = !this.IsPreviewRequested() || this.ResolveRequestedItemStatus() == ContentLifecycleStatus.Live;
+
+            if (manager is IContentManager)
+            {
+                var contentManager = manager as IContentManager;
+                item = contentManager.GetItemFromUrl(itemType, url, isPublished, out redirectUrl);
+            }
+            else
+            {
+                var dynamicManager = manager as DynamicModuleManager;
+                item = dynamicManager.Provider.GetItemFromUrl(itemType, url, isPublished, out redirectUrl);
             }
 
             return item;
