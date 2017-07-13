@@ -1,6 +1,6 @@
 ﻿(function () {
     var GUID_REGEX = /([a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})/g;
-    var LANG_REGEX = /\|lng:([^\]]+)/;
+    var LANG_REGEX = /\|lng%3A([^\]]+)/;
 
     angular.module('sfSelectors')
         .factory('sfLinkMode', [function () {
@@ -165,7 +165,7 @@
                             }
                             var sfref = '[' + key;
                             if (selectedCulture) {
-                                sfref += '|lng:' + selectedCulture;
+                                sfref += '|lng%3A' + selectedCulture;
                             }
                             sfref += ']' + selectedPageId;
 

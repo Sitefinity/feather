@@ -2,6 +2,7 @@
 using Telerik.OpenAccess;
 using Telerik.OpenAccess.Metadata.Fluent;
 using Telerik.Sitefinity.Model;
+using Telerik.OpenAccess.Metadata.Fluent.Advanced;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 {
@@ -48,6 +49,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
             fileDataMapping.HasProperty(p => p.FileName).ToColumn("file_name");
             fileDataMapping.HasProperty(p => p.FilePath).ToColumn("file_path");
             fileDataMapping.HasProperty(p => p.PackageName).ToColumn("package_name");
+
+            fileDataMapping.HasIndex(p => new { p.FilePath }).IsUnique().WithName("idx_sf_fls_mntr_dta_path");
 
             mappings.Add(fileDataMapping);
         }

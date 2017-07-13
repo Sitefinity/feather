@@ -1,13 +1,13 @@
-The Feather Project
-========
+The Feather Project 
+=======
 
 This repository contains the core infrastructure related to [Project Feather](http://projectfeather.sitefinity.com).
 
 
 | Test | Status |
 |----|----|
-| Unit | [![Build Status](https://feather-ci.sitefinity.com/buildStatus/icon?job=Feather.Master.Unit)](https://feather-ci.sitefinity.com/job/Master_FeatherUnitTests/) |
-| Integration | [![Build Status](https://feather-ci.sitefinity.com/buildStatus/icon?job=Feather.Master.Int)](https://feather-ci.sitefinity.com/job/Master_FeatherIntegrationTests/) |
+| Unit | [![Build Status](https://feather-ci.sitefinity.com/buildStatus/icon?job=Master_FeatherUnitTests)](https://feather-ci.sitefinity.com/job/Master_FeatherUnitTests/) |
+| Integration | [![Build Status](https://feather-ci.sitefinity.com/buildStatus/icon?job=Master_FeatherIntegrationTests)](https://feather-ci.sitefinity.com/job/Master_FeatherIntegrationTests/) |
 
 # Related Repositories
 

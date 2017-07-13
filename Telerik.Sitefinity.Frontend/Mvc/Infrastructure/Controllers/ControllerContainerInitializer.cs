@@ -24,6 +24,7 @@ using Telerik.Sitefinity.Mvc.Proxy.TypeDescription;
 using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages;
 using Telerik.Sitefinity.Services;
+using System.Threading.Tasks;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -83,16 +84,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         public virtual void Initialize()
         {
-            GlobalFilters.Filters.Add(new CacheDependentAttribute());
+                GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
-            this.RegisterVirtualPaths(this.ControllerContainerAssemblies);
+                this.RegisterVirtualPaths(this.ControllerContainerAssemblies);
 
-            var controllerTypes = this.GetControllers(this.ControllerContainerAssemblies);
-            this.InitializeControllers(controllerTypes);
+                var controllerTypes = this.GetControllers(this.ControllerContainerAssemblies);
+                this.InitializeControllers(controllerTypes);
 
-            this.InitializeCustomRouting();
+                this.InitializeCustomRouting();
 
-            this.RegisterPrecompiledViewEngines(this.ControllerContainerAssemblies);
+                this.RegisterPrecompiledViewEngines(this.ControllerContainerAssemblies);
         }
 
         /// <summary>
@@ -123,24 +124,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         public virtual IEnumerable<Assembly> RetrieveAssemblies()
         {
-            var assemblyFileNames = this.RetrieveAssembliesFileNames().ToArray();
-            var result = new List<Assembly>();
+            IEnumerable<string> assemblyFileNames;
 
-            foreach (var assemblyFileName in assemblyFileNames)
+            assemblyFileNames = this.RetrieveAssembliesFileNames().Distinct().ToArray();
+
+            IDictionary<string, Task<Assembly>> retrieveAssemblyTasks = new Dictionary<string, Task<Assembly>>();
+
+            foreach (string assemblyFileName in assemblyFileNames)
             {
-                if (this.IsControllerContainer(assemblyFileName))
-                {
-                    var assembly = this.LoadAssembly(assemblyFileName);
-                    this.InitializeControllerContainer(assembly);
-
-                    result.Add(assembly);
-                }
-
-                if (this.IsMarkedAssembly<ResourcePackageAttribute>(assemblyFileName))
-                {
-                    result.Add(this.LoadAssembly(assemblyFileName));
-                }
+                retrieveAssemblyTasks.Add(assemblyFileName, this.RetrieveAssemblyAsync(assemblyFileName));
             }
+
+            Task.WaitAll(retrieveAssemblyTasks.Values.ToArray());
+
+            IEnumerable<Assembly> result = retrieveAssemblyTasks.Values
+                .Select(v => v.Result)
+                .Where(a => a != null);
 
             return result;
         }
@@ -314,6 +313,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #endregion
 
         #region Private members
+
+        private Task<Assembly> RetrieveAssemblyAsync(string assemblyFileName)
+        {
+            return Task.Run(() => this.RetrieveAssembly(assemblyFileName));
+        }
+
+        private Assembly RetrieveAssembly(string assemblyFileName)
+        {
+            if (this.IsControllerContainer(assemblyFileName))
+            {
+                Assembly assembly = this.LoadAssembly(assemblyFileName);
+                this.InitializeControllerContainer(assembly);
+
+                return assembly;
+            }
+
+            if (this.IsMarkedAssembly<ResourcePackageAttribute>(assemblyFileName))
+            {
+                Assembly assembly = this.LoadAssembly(assemblyFileName);
+
+                return assembly;
+            }
+
+            return null;
+        }
         
         /// <summary>
         /// Registers the controller string resources.
@@ -328,7 +352,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 var resourceClass = localAttr.ResourceClass;
                 var resourceClassId = Res.GetResourceClassId(resourceClass);
 
-                if (!ObjectFactory.Container.IsRegistered(resourceClass, resourceClassId))
+                if (!ObjectFactory.IsTypeRegistered(resourceClass, null, resourceClassId, false))
                 {
                     Res.RegisterResource(resourceClass);
                 }

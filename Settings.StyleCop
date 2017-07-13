@@ -1,6 +1,5 @@
 <StyleCopSettings Version="105">
   <GlobalSettings>
-    <StringProperty Name="MergeSettingsFiles">NoMerge</StringProperty>
     <CollectionProperty Name="DictionaryFolders">
       <Value>\..\Builds\StyleCop\StyleCop 4.7\</Value>
     </CollectionProperty>

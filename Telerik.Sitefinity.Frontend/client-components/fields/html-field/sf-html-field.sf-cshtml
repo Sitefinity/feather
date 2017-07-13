@@ -1,7 +1,7 @@
 ﻿<textarea id="editor" style="height: 340px;"
     kendo-editor="editorWidget" ng-model="sfModel"
     k-scope-field="editorWidget"
-    sf-toggle-commands="strikethrough, justify-full, subscript, superscript, fontName, fontSize, foreColor, backColor, print"
+    sf-toggle-commands="strikethrough, align-justify, sub-script, sup-script, fontName, fontSize, foreground-color, colorpicker, print"
     k-encoded="false"
     k-stylesheets='["{{htmlFieldCssUrl}}"]',
     k-paste-cleanup="{
@@ -12,8 +12,8 @@
         msConvertLists: true,
         msTags: true,
         none: false,
-        span: false
-    }",
+        span: true
+   	}",
     k-tools='[
     "formatting",
     "bold", "italic", "underline",
@@ -21,16 +21,16 @@
     "insertUnorderedList", "insertOrderedList", "indent", "outdent",
     {
         name: "createLink",
-        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openLinkSelector()\"><span class=\"k-tool-icon k-createLink\"></span></a>"
+        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openLinkSelector()\" title=\"@(Res.Get<ClientComponentsResources>().InsertHyperlink)\"><span class=\"k-tool-icon k-icon k-i-link-horizontal\"></span></a>"
     },
     "unlink",
     {
         name: "insertImage",
-        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openImageSelector()\"><span class=\"k-tool-icon k-insertImage\"></span></a>"
+        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openImageSelector()\" title=\"@(Res.Get<ClientComponentsResources>().InsertImage)\"><span class=\"k-tool-icon k-icon k-i-image\"></span></a>"
     },
     {
         name: "insertFile",
-        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openDocumentSelector()\"><span class=\"k-tool-icon k-insertFile\"></span></a>"
+        template: "<a href=\"\" class=\"k-tool k-group-start\" ng-click=\"openDocumentSelector()\" title=\"@(Res.Get<ClientComponentsResources>().InsertFile)\"><span class=\"k-tool-icon k-icon k-i-attachment\"></span></a>"
     },
     {
         name: "insertVideo",
@@ -45,7 +45,7 @@
     },
     {
         name: "fullscreen",
-        template: "<a class=\"k-tool js-custom-tool custom-tool\" title=\"Fullscreen\" ng-click=\"toggleFullScreen()\"><span class=\"js-fullScreen sf-maximize\"></span></a>"
+        template: "<a class=\"k-tool js-custom-tool custom-tool\" title=\"@(Res.Get<ClientComponentsResources>().Fullscreen)\" ng-click=\"toggleFullScreen()\"><span class=\"js-fullScreen sf-maximize\"></span></a>"
     },
     {
         name: "htmlView",
@@ -64,6 +64,3 @@
      window-class="sf-designer-dlg sf-timespan-selector-dlg sf-backend-wrp"
      dialog-controller="{{sfMediaPropertiesController}}">
 </div>
-
-
-

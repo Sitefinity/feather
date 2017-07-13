@@ -117,8 +117,10 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var fileMonitorDataManager = FileMonitorDataManager.GetManager();
 
             var fileData = fileMonitorDataManager.GetFilesData().Where(file => file.FilePath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-
-            this.CreateTemplateAndFileData(fileName, filePath, packageName, fileMonitorDataManager, fileData);
+            if (fileData == null && this.CreateTemplateAndFileData(fileName, filePath, packageName, fileMonitorDataManager, ref fileData))
+            {
+                fileMonitorDataManager.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -154,9 +156,22 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var fileData = fileMonitorDataManager.GetFilesData().Where(file => file.FilePath.Equals(oldFilePath, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
 
             if (fileData != null)
-                this.CreateTemplateAndFileData(newFileName, newFilePath, packageName, fileMonitorDataManager, fileData);
+            {
+                fileData.FilePath = newFilePath;
+                if (this.CreateTemplateAndFileData(newFileName, newFilePath, packageName, fileMonitorDataManager, ref fileData))
+                {
+                    fileMonitorDataManager.SaveChanges();
+                }
+                else
+                {
+                    fileMonitorDataManager.Delete(fileData);
+                    fileMonitorDataManager.SaveChanges();
+                }
+            }
             else
+            {
                 this.FileAdded(newFileName, newFilePath, packageName);
+            }
         }
 
         internal void CreateDefaultTemplates(string packageName, string layoutFile)
@@ -269,31 +284,59 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <param name="packageName">Name of the package.</param>
         /// <param name="fileMonitorDataManager">The file monitor data manager.</param>
         /// <param name="fileData">The file data.</param>
-        private void CreateTemplateAndFileData(string fileName, string filePath, string packageName, FileMonitorDataManager fileMonitorDataManager, FileData fileData)
+        /// <returns></returns>
+        private bool CreateTemplateAndFileData(string fileName, string filePath, string packageName, FileMonitorDataManager fileMonitorDataManager, ref FileData fileData)
         {
             var absolutePath = FrontendManager.VirtualPathBuilder.MapPath(filePath);
 
-            if (!this.IsFileInValidFolder(absolutePath, packageName))
-                return;
-
-            var extension = fileName.Split('.').LastOrDefault();
-            var fileNameWithoutExtension = fileName.Substring(0, fileName.Length - (extension.Length + 1));
-
-            var viewFileExtensions = this.GetViewExtensions();
-
-            if (viewFileExtensions.Contains(extension, StringComparer.Ordinal))
+            if (this.IsFileInValidFolder(absolutePath, packageName))
             {
-                if (fileData == null)
-                    fileData = fileMonitorDataManager.CreateFileData();
+                var extension = fileName.Split('.').LastOrDefault();
+                var fileNameWithoutExtension = fileName.Substring(0, fileName.Length - (extension.Length + 1));
 
-                fileData.FilePath = filePath;
-                fileData.FileName = fileName;
-                fileData.PackageName = packageName;
+                var viewFileExtensions = this.GetViewExtensions();
 
-                fileMonitorDataManager.SaveChanges();
+                if (viewFileExtensions.Contains(extension, StringComparer.Ordinal))
+                {
+                    var changed = false;
+                    if (fileData == null)
+                    {
+                        fileData = fileMonitorDataManager.CreateFileData();
+                        fileData.FilePath = filePath;
+                        fileData.FileName = fileName;
+                        fileData.PackageName = packageName;
+                        changed = true;
+                    }
+                    else
+                    {
+                        if (fileData.FilePath != filePath)
+                        {
+                            fileData.FilePath = filePath;
+                            changed = true;
+                        }
 
-                this.CreateTemplate(packageName, fileNameWithoutExtension);
+                        if (fileData.FileName != fileName)
+                        {
+                            fileData.FileName = fileName;
+                            changed = true;
+                        }
+
+                        if (fileData.PackageName != packageName)
+                        {
+                            fileData.PackageName = packageName;
+                            changed = true;
+                        }
+                    }
+
+                    if (changed)
+                    {
+                        this.CreateTemplate(packageName, fileNameWithoutExtension);
+                        return true;
+                    }
+                }
             }
+
+            return false;
         }
 
         /// <summary>

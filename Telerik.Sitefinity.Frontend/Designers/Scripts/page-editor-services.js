@@ -178,6 +178,14 @@
             save: function (saveMode, modifiedData) {
                 if (!modifiedData || modifiedData.length === 0) {
                     modifiedData = this.getDirty();
+
+                    // If any of the property values is not string - convert it to json
+                    for (var i = 0; i < modifiedData.length; i++) {
+                        var value = modifiedData[i].PropertyValue;
+                        if (value !== null && typeof value !== 'string') {
+                            modifiedData[i].PropertyValue = JSON.stringify(value);
+                        }
+                    }
                 }
 
                 var deferred = $q.defer();

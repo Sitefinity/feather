@@ -36,14 +36,11 @@ namespace Telerik.Sitefinity.Frontend
         /// <summary>
         /// Initializes the specified settings.
         /// </summary>
-        /// <param name="ninjectDependencyResolver">The ninject dependency resolver.</param>
-        public static void Initialize(IKernel ninjectDependencyResolver)
+        public static void Initialize()
         {
             SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
             SystemManager.RegisterServiceStackPlugin(new FilesServiceStackPlugin());
             SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
-
-            ninjectDependencyResolver.Load(new ControllerContainerInitializer().ControllerContainerAssemblies);
         }
 
         /// <summary>
@@ -53,7 +50,12 @@ namespace Telerik.Sitefinity.Frontend
         public static void Bootstrapper_Initialized(IEnumerable<IInitializer> initializers)
         {
             foreach (var initializer in initializers)
-                initializer.Initialize();
+            {
+                using (new HealthMonitoring.MethodPerformanceRegion("Initializing '{0}'.".Arrange(initializer.GetType().Name)))
+                {
+                    initializer.Initialize();
+                }
+            }
 
             ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
         }

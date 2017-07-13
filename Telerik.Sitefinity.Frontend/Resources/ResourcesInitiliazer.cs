@@ -44,14 +44,14 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
             var resourceClass = typeof(InfrastructureResources);
             var resourceClassId = Res.GetResourceClassId(resourceClass);
-            if (!ObjectFactory.Container.IsRegistered(resourceClass, resourceClassId))
+            if (!ObjectFactory.IsTypeRegistered<InfrastructureResources>(resourceClassId))
             {
                 Res.RegisterResource(resourceClass);
             }
 
             var clientComponentsResourcesClass = typeof(ClientComponentsResources);
             var clientComponentsResourcesClassId = Res.GetResourceClassId(clientComponentsResourcesClass);
-            if (!ObjectFactory.Container.IsRegistered(clientComponentsResourcesClass, clientComponentsResourcesClassId))
+            if (!ObjectFactory.IsTypeRegistered<ClientComponentsResources>(clientComponentsResourcesClassId))
             {
                 Res.RegisterResource(clientComponentsResourcesClass);
             }

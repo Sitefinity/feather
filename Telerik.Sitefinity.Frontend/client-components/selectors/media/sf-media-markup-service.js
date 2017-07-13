@@ -67,7 +67,7 @@
                 }
 
                 if (thumbnailName && thumbnailName !== '') {
-                    sfref += '|tmb:' + thumbnailName;
+                    sfref += '|tmb%3A' + thumbnailName;
                 }
 
                 sfref += ']' + id;
@@ -89,10 +89,10 @@
                     var startIdx = sfref.indexOf("[");
                     var endIdx = sfref.indexOf("]");
                     if (startIdx > -1 && endIdx > -1) {
-                        var parts = sfref.substring(startIdx + 1, endIdx).split("|");
+                        var parts = sfref.substring(startIdx + 1, endIdx).split(new RegExp(['%7C', '\\\|'].join('|'), 'ig'));
                         if (parts.length > 1) {
                             for (var i = 1; i < parts.length; i++) {
-                                if (parts[i].indexOf(":") === -1)
+                                if (parts[i].indexOf(":") === -1 || parts[i].toLowerCase().indexOf("%3a") === -1)
                                     return parts[i];
                             }
                         }
@@ -106,12 +106,16 @@
                     var startIdx = sfref.indexOf("[");
                     var endIdx = sfref.indexOf("]");
                     if (startIdx > -1 && endIdx > -1) {
-                        var parts = sfref.substring(startIdx + 1, endIdx).split("|");
+                        var parts = sfref.substring(startIdx + 1, endIdx).split(new RegExp(['%7C', '\\\|'].join('|'), 'ig'));
                         if (parts.length > 1) {
+                            var thumbnail = "tmb:", encodedThumbnail = "tmb%3a";
                             for (var i = 1; i < parts.length; i++) {
-                                var indx = parts[i].indexOf('tmb:');
+                                var indx = parts[i].toLowerCase().indexOf(thumbnail);
                                 if (indx === 0)
-                                    return parts[i].substring(indx + 4);
+                                    return parts[i].toLowerCase().substring(indx + thumbnail.length);
+                                indx = parts[i].toLowerCase().indexOf(encodedThumbnail.length);
+                                if (indx === 0)
+                                    return parts[i].toLowerCase().substring(indx + encodedThumbnail.length);
                             }
                         }
                     }
