@@ -23,29 +23,59 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// <param name="oldFileName">Old name of the file.</param>
         public void RegisterToolboxItem(string fileName, string oldFileName = "")
         {
-            var configManager = ConfigManager.GetManager();
-            using (new ElevatedConfigModeRegion())
+            ConfigManager configManager = null;
+            var toolboxConfig = Config.Get<ToolboxesConfig>();
+            var layoutsToolbox = toolboxConfig.Toolboxes[ToolboxesConfig.LayoutsToolboxName];
+            var htmlLayoutsSection = layoutsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == GridWidgetRegistrator.GridSectionName);
+            if (htmlLayoutsSection == null)
             {
-                var toolboxConfig = configManager.GetSection<ToolboxesConfig>();
-                var sectionName = GridWidgetRegistrator.GridSectionName;
-                var sectionTitle = GridWidgetRegistrator.GridSectionTitle;
-                bool needsSaveSection = false;
-                var htmlLayoutsSection = this.GetOrCreateToolBoxSection(toolboxConfig, sectionName, sectionTitle, ref needsSaveSection);
+                configManager = ConfigManager.GetManager();
+                toolboxConfig = configManager.GetSection<ToolboxesConfig>();
+                layoutsToolbox = toolboxConfig.Toolboxes[ToolboxesConfig.LayoutsToolboxName];
+                htmlLayoutsSection = this.CreateToolBoxSection(layoutsToolbox, GridWidgetRegistrator.GridSectionName, GridWidgetRegistrator.GridSectionTitle);
+            }
 
-                var layoutControl = this.CreateGridControlsData(fileName);
-                this.AddOrRenameGridControl(htmlLayoutsSection.Tools, layoutControl, ref needsSaveSection, oldFileName);
+            var layoutControl = this.CreateGridControlsData(fileName);
 
-                if (needsSaveSection)
+            string toolboxItemName;
+            if (oldFileName.IsNullOrEmpty())
+            {
+                toolboxItemName = layoutControl.Name;
+            }
+            else
+            {
+                var oldFileNameWithoutExtension = this.GetFileNameWithoutExtension(oldFileName);
+                toolboxItemName = oldFileNameWithoutExtension;
+            }
+
+            ToolboxItem toolboxItem = null;
+            if (configManager == null)
+                toolboxItem = htmlLayoutsSection.Tools.FirstOrDefault<ToolboxItem>(t => t.Name == toolboxItemName);
+
+            if (toolboxItem == null || (toolboxItem.Name != layoutControl.Name || toolboxItem.Title != layoutControl.Title || toolboxItem.LayoutTemplate != layoutControl.LayoutTemplatePath))
+            {
+                if (configManager == null)
                 {
-                    configManager.SaveSection(toolboxConfig);
+                    configManager = ConfigManager.GetManager();
+                    toolboxConfig = configManager.GetSection<ToolboxesConfig>();
+                    layoutsToolbox = toolboxConfig.Toolboxes[ToolboxesConfig.LayoutsToolboxName];
+                    htmlLayoutsSection = layoutsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == GridWidgetRegistrator.GridSectionName);
                 }
+
+                this.AddOrRenameGridControl(htmlLayoutsSection, layoutControl, toolboxItemName);
+            }
+
+            if (configManager != null)
+            {
+                using (new ElevatedConfigModeRegion())
+                    configManager.SaveSection(toolboxConfig);
             }
         }
 
         /// <summary>
         /// Unregisters the toolbox item.
         /// </summary>
-        /// <param name="contentTypeName">Name of the content type.</param>
+        /// <param name="fileName">Name of the content type.</param>
         public virtual void UnregisterToolboxItem(string fileName)
         {
             var configurationManager = ConfigManager.GetManager();
@@ -85,7 +115,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             var baseTemplatePath = string.Format(
             CultureInfo.InvariantCulture,
             GridWidgetRegistrator.GridFolderPathStringTemplate,
-            FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendService).Assembly));
+            FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendModule).Assembly));
 
             var properties = pageManger.GetProperties().Where(prop => prop.Name == "Layout" && prop.Value == baseTemplatePath + oldFileName).ToList();
             var newCaption = this.GetFileNameWithoutExtension(newFileName);
@@ -105,26 +135,19 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// <summary>
         /// Gets existing or create a tool box section for the grid controls.
         /// </summary>
-        /// <param name="toolboxConfig">The toolbox configuration.</param>
+        /// <param name="toolbox">The toolbox configuration.</param>
         /// <param name="sectionName">Name of the section.</param>
         /// <param name="sectionTitle">The section title.</param>
-        /// <returns></returns>
-        protected virtual ToolboxSection GetOrCreateToolBoxSection(ToolboxesConfig toolboxConfig, string sectionName, string sectionTitle, ref bool needsSaveSection)
+        /// <returns>The section.</returns>
+        protected virtual ToolboxSection CreateToolBoxSection(Toolbox toolbox, string sectionName, string sectionTitle)
         {
-            var layoutsToolbox = toolboxConfig.Toolboxes["PageLayouts"];
+            var htmlLayoutsSection = new ToolboxSection(toolbox.Sections);
+            htmlLayoutsSection.Name = sectionName;
 
-            var htmlLayoutsSection = layoutsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == sectionName);
-            if (htmlLayoutsSection == null)
-            {
-                htmlLayoutsSection = new ToolboxSection(layoutsToolbox.Sections);
-                htmlLayoutsSection.Name = sectionName;
+            /// TODO: Set resource class id and use resource keys for Title and Description.
+            htmlLayoutsSection.Title = sectionTitle;
 
-                /// TODO: Set resource class id and use resource keys for Title and Description.
-                htmlLayoutsSection.Title = sectionTitle;
-
-                layoutsToolbox.Sections.Add(htmlLayoutsSection);
-                needsSaveSection = true;
-            }
+            toolbox.Sections.Add(htmlLayoutsSection);
 
             return htmlLayoutsSection;
         }
@@ -132,41 +155,25 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// <summary>
         /// Adds or renames the grid control.
         /// </summary>
-        /// <param name="parent">The parent.</param>
+        /// <param name="section">The parent toolbox section.</param>
         /// <param name="data">The data.</param>
-        /// <param name="oldFileName">Old name of the file.</param>
+        /// <param name="toolboxItemName">Old name of the file.</param>
         /// <exception cref="System.ArgumentNullException">data</exception>
-        protected virtual void AddOrRenameGridControl(ConfigElementList<ToolboxItem> parent, GridControlData data,  ref bool needsSaveSection, string oldFileName = "")
+        protected virtual void AddOrRenameGridControl(ToolboxSection section, GridControlData data, string toolboxItemName = default(string))
         {
             if (data == null)
                 throw new ArgumentNullException("data");
 
-            string toolboxItemName;
-            if (oldFileName.IsNullOrEmpty())
-            {
-                toolboxItemName = data.Name;
-            }
-            else
-            {
-                var oldFileNameWithoutExtension = this.GetFileNameWithoutExtension(oldFileName);
-                toolboxItemName = oldFileNameWithoutExtension;
-            }
+            var tools = section.Tools;
 
-            var control = parent.FirstOrDefault<ToolboxItem>(t => t.Name == toolboxItemName);
+            var control = tools.FirstOrDefault<ToolboxItem>(t => t.Name == toolboxItemName);
 
             if (control == null)
             {
-                control = new ToolboxItem(parent);
+                control = new ToolboxItem(tools);
                 control.ControlType = typeof(GridControl).AssemblyQualifiedName;
                 control.CssClass = data.CssClass;
-                parent.Add(control);
-
-                needsSaveSection = true;
-            }
-
-            if (!needsSaveSection)
-            {
-                needsSaveSection = control.Name != data.Name || control.Title != data.Title || control.LayoutTemplate != data.LayoutTemplatePath;
+                tools.Add(control);
             }
 
             control.Name = data.Name;
@@ -184,7 +191,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             var baseTemplatePath = string.Format(
                 System.Globalization.CultureInfo.InvariantCulture,
                 GridWidgetRegistrator.GridFolderPathStringTemplate,
-                FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendService).Assembly));
+                FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(FrontendModule).Assembly));
 
             var fileNameWithoutExtension = this.GetFileNameWithoutExtension(fileName);
             var cssClass = this.GetInferredCssClass(fileNameWithoutExtension);

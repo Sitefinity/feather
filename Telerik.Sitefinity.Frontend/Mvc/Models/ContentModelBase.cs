@@ -434,6 +434,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             query = this.UpdateExpression(query, itemsToSkip, take, ref totalCount);
 
             var queryResult = this.FetchItems(query);
+            queryResult.SetRelatedDataSourceContext();
 
             foreach (var item in queryResult)
             {

@@ -17,20 +17,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
     /// <summary>
     /// This class extends the <see cref="SitefinityControllerFactory"/> by adding additional virtual paths for controller view engines.
     /// </summary>
-    public class FrontendControllerFactory : SitefinityControllerFactory, IDisposable
+    public class FrontendControllerFactory : SitefinityControllerFactory
     {
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrontendControllerFactory"/> class.
-        /// </summary>
-        public FrontendControllerFactory()
-        {
-            this.ninjectKernel = new StandardKernel();
-        }
-
-        #endregion
-
         #region Public members
 
         /// <summary>
@@ -60,15 +48,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
         /// Enhances the view engines.
         /// </summary>
         /// <param name="controller">The controller.</param>
@@ -81,24 +60,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
         }
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        /// <param name="cleanManagedResources">If <value>false</value> cleans up native resources, otherwise cleans up both managed and native resources.</param>
-        protected virtual void Dispose(bool cleanManagedResources)
-        {
-            if (cleanManagedResources)
-                this.ninjectKernel.Dispose();
-        }
-
         #endregion
 
         #region Protected members
 
         /// <inheritdoc />
-        protected override IController GetControllerInstance(System.Web.Routing.RequestContext requestContext, Type controllerType)
+        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
-            return (IController)this.ninjectKernel.Get(controllerType);
+            object controllerObject = FrontendModule.Current.DependencyResolver.Get(controllerType);
+            IController controller = (IController)controllerObject;
+
+            return controller;
         }
 
         #endregion
@@ -225,8 +197,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #endregion
 
         #region Fields
-
-        private IKernel ninjectKernel;
 
         private static readonly Dictionary<string, EnhanceViewEnginesAttribute> EnhanceAttributes = new Dictionary<string, EnhanceViewEnginesAttribute>();
 

@@ -1,4 +1,4 @@
-﻿<div ng-show="isListEmpty()" class="alert alert-info">@(Res.Get<ClientComponentsResources>().NoItemsSelected)</div>
+﻿<div ng-show="isListEmpty()" class="text-muted">@(Res.Get<ClientComponentsResources>().NoItemsSelected)</div>
 
 <uib-alert type="danger" ng-show="showError">{{errorMessage}}</uib-alert>
 

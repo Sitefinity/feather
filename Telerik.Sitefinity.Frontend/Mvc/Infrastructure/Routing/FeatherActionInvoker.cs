@@ -13,6 +13,7 @@ using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.DynamicModules.Builder;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Personalization;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
@@ -148,6 +149,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         protected override void ExecuteController(MvcProxyBase proxyControl)
         {
+              // Stop processing, personalized widgets are executed asynchronously
+            if (proxyControl is PersonalizedWidgetProxy)
+                return;
+
             var controller = proxyControl.GetController();
             if (proxyControl.IsIndexingMode() && controller.GetIndexRenderMode() == IndexRenderModes.NoOutput)
                 return;

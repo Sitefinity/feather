@@ -3100,6 +3100,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// phrase: Full screen
+        /// </summary>
+        /// <value>Full screen</value>
+        [ResourceEntry("Fullscreen",
+            Value = "Full screen",
+            Description = "phrase: Full screen",
+            LastModified = "2017/06/09")]
+        public string Fullscreen
+        {
+            get
+            {
+                return this["Fullscreen"];
+            }
+        }
+
+        /// <summary>
         /// phrase: Select a mailing list
         /// </summary>
         /// <value>Select a mailing list</value>

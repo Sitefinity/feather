@@ -50,7 +50,12 @@ namespace Telerik.Sitefinity.Frontend
         public static void Bootstrapper_Initialized(IEnumerable<IInitializer> initializers)
         {
             foreach (var initializer in initializers)
-                initializer.Initialize();
+            {
+                using (new HealthMonitoring.MethodPerformanceRegion("Initializing '{0}'.".Arrange(initializer.GetType().Name)))
+                {
+                    initializer.Initialize();
+                }
+            }
 
             ObjectFactory.Container.RegisterType<ICommentNotificationsStrategy, ReviewNotificationStrategy>(new ContainerControlledLifetimeManager());
         }

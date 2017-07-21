@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
 
@@ -60,6 +61,11 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 if (this.Context.Items.Contains(this.name))
                 {
                     this.container = (Dictionary<string, List<string>>)this.Context.Items[this.name];
+
+                    if (this.container == null)
+                    {
+                        this.container = new Dictionary<string, List<string>>();
+                    }
                 }
                 else
                 {
@@ -97,7 +103,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// </returns>
         public bool Register(string resourceKey, string sectionName = null, bool throwException = false)
         {
-            if (sectionName != null)
+            if (sectionName != null && !ResourceHelper.RenderScriptSection)
             {
                 var page = this.Context.Handler.GetPageHandler();
                 if (throwException && page != null && (page.Master is MvcMasterPage) && !SectionRenderer.IsAvailable(page, sectionName))

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using Ninject;
-using Telerik.OpenAccess;
+using Ninject.Modules;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
@@ -28,7 +29,7 @@ namespace Telerik.Sitefinity.Frontend
         {
             get
             {
-                return (FrontendModule)SystemManager.GetModule("Feather");
+                return (FrontendModule)SystemManager.GetModule(FrontendModule.ModuleName);
             }
         }
 
@@ -47,7 +48,7 @@ namespace Telerik.Sitefinity.Frontend
         /// <value>An array of <see cref="Type"/> objects.</value>
         public override Type[] Managers
         {
-            get { return new Type[0]; }
+            get { return managerTypes; }
         }
 
         /// <summary>
@@ -144,6 +145,17 @@ namespace Telerik.Sitefinity.Frontend
         }
 
         /// <summary>
+        /// Gets the meta data aggregation mode of the module persistence.
+        /// </summary>
+        protected override ManagersInitializationMode ManagersInitializationMode
+        {
+            get
+            {
+                return ManagersInitializationMode.OnStartup;
+            }
+        }
+
+        /// <summary>
         /// Creates Ninject kernel.
         /// </summary>
         /// <returns></returns>
@@ -165,7 +177,15 @@ namespace Telerik.Sitefinity.Frontend
         protected virtual void Bootstrapper_Initialized(object sender, ExecutedEventArgs e)
         {
             if (e.CommandName == "Bootstrapped")
-                FrontendModuleInstaller.Bootstrapper_Initialized(this.initializers.Value);
+            {
+                //System.Threading.Tasks.Task.Run(() =>
+                //{
+                    using (new HealthMonitoring.MethodPerformanceRegion("Feather"))
+                    {
+                        FrontendModuleInstaller.Bootstrapper_Initialized(this.initializers.Value);
+                    }
+                //});
+            }
         }
         
         // Called both by Unload and Uninstall
@@ -182,7 +202,30 @@ namespace Telerik.Sitefinity.Frontend
                 return;
 
             ninjectDependencyResolver = this.CreateKernel();
-            ninjectDependencyResolver.Load(new ControllerContainerInitializer().ControllerContainerAssemblies);
+            var assemblies = new ControllerContainerInitializer().ControllerContainerAssemblies;
+            var loadedModules = ninjectDependencyResolver.GetModules();
+
+            foreach (var assembly in assemblies)
+            {
+                var assemblyModules = this.GetNinjectModules(assembly);
+                    
+                // check assembly for already registered ninject modules
+                var registeredAssemblyModules = assemblyModules.Where(module => loadedModules.Where(loadedModule => loadedModule.Name.Equals(module.Name, StringComparison.OrdinalIgnoreCase)).Any());
+                if (registeredAssemblyModules.Any())
+                {
+                    foreach (var module in assemblyModules)
+	                {
+                        if (!registeredAssemblyModules.Any(registeredModule => registeredModule.Name.Equals(module.Name, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            ninjectDependencyResolver.Load(module);
+                        }
+	                } 
+                }
+                else
+                {
+                    ninjectDependencyResolver.Load(assembly);
+                }    
+            }
         }
 
         private void UninitializeDependencyResolver()
@@ -211,6 +254,22 @@ namespace Telerik.Sitefinity.Frontend
             }
         });
 
+        private IEnumerable<INinjectModule> GetNinjectModules(Assembly assembly)
+        {
+            return assembly.GetExportedTypes().Where<Type>(new Func<Type, bool>(this.IsLoadableModule)).Select<Type, INinjectModule>((Type type) => Activator.CreateInstance(type) as INinjectModule);
+        }
+
+        private bool IsLoadableModule(Type type)
+        {
+            if (!typeof(INinjectModule).IsAssignableFrom(type) || type.IsAbstract || type.IsInterface)
+            {
+                return false;
+            }
+
+            return type.GetConstructor(Type.EmptyTypes) != null;
+        }
+
+        public const string ModuleName = "Feather";
         private static IKernel ninjectDependencyResolver;
 
         private class SitefinityKernel : StandardKernel
@@ -220,5 +279,6 @@ namespace Telerik.Sitefinity.Frontend
             {
             }
         }
+        private static readonly Type[] managerTypes = new Type[] { typeof(FilesMonitoring.Data.FileMonitorDataManager) };
     }
 }

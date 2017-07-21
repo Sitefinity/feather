@@ -87,7 +87,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <summary>
         /// Takes appropriate actions based on the resource file type
         /// </summary>
-        /// <param name="path">The file path.</param>
+        /// <param name="filePath">The file path.</param>
         /// <param name="changeType">Type of the change.</param>
         /// <param name="oldFilePath">The old file path.</param>
         protected virtual void FileChanged(string filePath, FileChangeType changeType, string oldFilePath = "")
@@ -124,6 +124,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 ResourceFolder = resourceFolder,
                 FileName = fileName
             });
+
             SystemManager.RunWithElevatedPrivilege(elevDelegate);
         }
 
@@ -165,7 +166,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <summary>
         /// Gets the resource file manager.
         /// </summary>
-        /// <param name="resourceType">Type of the resource.</param>
+        /// <param name="resourceFolder">The resource folder.</param>
+        /// <param name="resourcePath">The resource path.</param>
         /// <returns>FileManager</returns>
         protected virtual IFileManager GetResourceFileManager(string resourceFolder, string resourcePath)
         {
@@ -186,7 +188,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// Gets the type of the resource.
         /// </summary>
         /// <param name="resourceFolder">The resource folder.</param>
-        /// <returns></returns>
+        /// <param name="resourcePath">The resource path.</param>
+        /// <returns>Resource type</returns>
         protected virtual ResourceType? GetResourceType(string resourceFolder, string resourcePath)
         {
             if (resourcePath.Contains("/GridSystem/Templates/"))

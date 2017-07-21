@@ -72,8 +72,10 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var fileMonitorDataManager = FileMonitorDataManager.GetManager();
             var fileData = fileMonitorDataManager.GetFilesData().Where(file => file.FilePath.Equals(filePath, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
-            this.AddToToolboxAndFileData(fileMonitorDataManager, fileName, filePath, packageName, fileData);
-            fileMonitorDataManager.SaveChanges();
+            if (this.AddToToolboxAndFileData(fileMonitorDataManager, fileName, filePath, packageName, fileData))
+            {
+                fileMonitorDataManager.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -108,25 +110,25 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var fileMonitorDataManager = FileMonitorDataManager.GetManager();
             var fileData = fileMonitorDataManager.GetFilesData().Where(file => file.FilePath.Equals(oldFilePath, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
-            this.AddToToolboxAndFileData(fileMonitorDataManager, newFileName, newFilePath, packageName, fileData, oldFileName);
-
-            this.WidgetRegistrator.UpdateControlData(newFileName, oldFileName);
-
-            fileMonitorDataManager.SaveChanges();
+            if (this.AddToToolboxAndFileData(fileMonitorDataManager, newFileName, newFilePath, packageName, fileData, oldFileName))
+            {
+                this.WidgetRegistrator.UpdateControlData(newFileName, oldFileName);
+                fileMonitorDataManager.SaveChanges();
+            }
         }
 
         #endregion
 
         #region Private methods
 
-        private void AddToToolboxAndFileData(FileMonitorDataManager fileMonitorDataManager, string newFileName, string newFilePath, string packageName, FileData fileData, string oldFileName = "")
+        private bool AddToToolboxAndFileData(FileMonitorDataManager fileMonitorDataManager, string newFileName, string newFilePath, string packageName, FileData fileData, string oldFileName = "")
         {
             if (!this.IsFileValid(newFileName, newFilePath, packageName))
-                return;
+                return false;
 
             this.WidgetRegistrator.RegisterToolboxItem(newFileName, oldFileName);
 
-            this.CreateOrUpdateFileData(fileMonitorDataManager, newFileName, newFilePath, packageName, fileData);
+            return this.CreateOrUpdateFileData(fileMonitorDataManager, newFileName, newFilePath, packageName, fileData);
         }
 
         /// <summary>
@@ -178,14 +180,29 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             return isValid;
         }
 
-        private void CreateOrUpdateFileData(FileMonitorDataManager dataManager, string fileName, string filePath, string packageName, FileData fileData)
+        private bool CreateOrUpdateFileData(FileMonitorDataManager dataManager, string fileName, string filePath, string packageName, FileData fileData)
         {
+            var changed = false;
             if (fileData == null)
+            {
                 fileData = dataManager.CreateFileData();
+                fileData.FilePath = filePath;
+                changed = true;
+            }
 
-            fileData.FilePath = filePath;
-            fileData.FileName = fileName;
-            fileData.PackageName = packageName;
+            if (fileData.FileName != fileName)
+            {
+                fileData.FileName = fileName;
+                changed = true;
+            }
+
+            if (fileData.PackageName != packageName)
+            {
+                fileData.PackageName = packageName;
+                changed = true;
+            }
+
+            return changed;
         }
 
         /// <summary>
