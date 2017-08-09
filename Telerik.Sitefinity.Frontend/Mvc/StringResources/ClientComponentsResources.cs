@@ -3146,5 +3146,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["SelectEvents"];
             }
         }
+
+        /// <summary>
+        /// The entered URL is invalid.
+        /// </summary>
+        /// <value>The entered URL is invalid.</value>
+        [ResourceEntry("InvalidUrlMessage",
+            Value = "The entered URL is invalid.",
+            Description = "The entered URL is invalid.",
+            LastModified = "2017/07/27")]
+        public string InvalidUrlMessage
+        {
+            get
+            {
+                return this["InvalidUrlMessage"];
+            }
+        }
     }
 }

@@ -23,12 +23,14 @@
 </div>
 
 <!-- Web address content -->
-<div ng-show="sfSelectedItem.mode==sfLinkMode.WebAddress">
+<div ng-show="sfSelectedItem.mode==sfLinkMode.WebAddress" ng-form name="webAddressForm">
 	<div class="form-group">
 		<label for="webAddress">@(Res.Get<ClientComponentsResources>().WebAddress)</label>
 		<div class="row">
 			<div class="col-xs-9">
-				<input class="form-control" type="text" id="webAddress" ng-model="sfSelectedItem.webAddress" />
+        <input class="form-control" type="text" name="webAddressInput" id="webAddress" ng-model="sfSelectedItem.webAddress" pattern="^(http|ftp|https|ftps):\/\/[\w-]+([\.:][\w-]+)+([\w.,@?^=%&:\/~+*#-]*[\w@?^*_=%&\/~+#-])?$"/>
+        <span ng-show="webAddressForm.webAddressInput.$error.pattern && webAddressForm.webAddressInput.$touched">
+          @(Res.Get<ClientComponentsResources>().InvalidUrlMessage)</span>
 			</div>
 		</div>
 		<div class="text-muted">
