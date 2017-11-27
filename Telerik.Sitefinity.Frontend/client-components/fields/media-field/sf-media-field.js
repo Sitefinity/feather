@@ -92,6 +92,7 @@
                     sfAutoOpenSelector: '@',
                     sfMediaType: '@',
                     sfSelectorModelTemplate: '@',
+                    sfMediaSettings: '=?'
                 },
                 controller: function ($scope) {
                     if (!$scope.sfSelectorModelTemplate) {

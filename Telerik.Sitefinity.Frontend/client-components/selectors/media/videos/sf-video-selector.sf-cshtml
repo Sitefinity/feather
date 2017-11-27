@@ -5,7 +5,8 @@
     sf-multiselect="{{sfMultiselect}}"
     sf-deselectable="{{sfDeselectable}}"
     sf-media-type="videos"
-    sf-labels="labels"></sf-media-selector>
+    sf-labels="labels"
+    sf-media-settings="sfMediaSettings"></sf-media-selector>
 
 <server-data
     select-item-from-computer="@(Res.Get<ClientComponentsResources>().SelectVideoFromComputer)"

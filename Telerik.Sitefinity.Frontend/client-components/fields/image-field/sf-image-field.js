@@ -10,7 +10,8 @@
                     sfModel: '=',
                     sfImage: '=?',
                     sfProvider: '=?',
-                    sfAutoOpenSelector: '@'
+                    sfAutoOpenSelector: '@',
+                    sfMediaSettings: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';

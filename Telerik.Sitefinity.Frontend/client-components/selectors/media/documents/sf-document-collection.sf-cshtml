@@ -9,7 +9,7 @@
                   sf-popover-placement="right"
                   sf-popover-trigger="hover"
                   sf-popover-append-to-body="true"
-                  sf-popover-title="{{item.Title}}"
+                  sf-popover-title="{{item.Title ? item.Title.htmlEncode() : ''}}"
                   sf-popover-content="
                           {{item.LibrariesCount}}<br/>
                           {{item.DocumentsCount}}
@@ -45,11 +45,11 @@
 						sf-popover-placement="right"
 						sf-popover-trigger="hover"
 						sf-popover-append-to-body="true"
-						sf-popover-title="{{item.Title}}"
+						sf-popover-title="{{item.Title ? item.Title.htmlEncode() : ''}}"
 						sf-popover-content="
 							<dl class='dl-half'>
 								<dt>@(Res.Get<ClientComponentsResources>().Library)</dt>
-								<dd>{{item.FolderTitle || item.LibraryTitle}}</dd>
+								<dd>{{item.FolderTitle ? item.FolderTitle.htmlEncode() : item.LibraryTitle ? item.LibraryTitle.htmlEncode() : ''}}</dd>
 								<dt>@(Res.Get<ClientComponentsResources>().Size)</dt>
 								<dd>{{item.TotalSize}} KB</dd>
 								<dt>@(Res.Get<ClientComponentsResources>().Type)</dt>

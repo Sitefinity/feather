@@ -2,7 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Sitefinity.Security.Sanitizers;
     using Telerik.Sitefinity.Services;
+    using Telerik.Sitefinity.Web.UI;
 
     /// <summary>
     /// Helepr method for HTML markup generation.
@@ -43,6 +45,33 @@
 
             var uniqueId = keysDictionary[prefix];
             return MvcHtmlString.Create(uniqueId);
+        }
+
+        /// <summary>
+        /// Sanitizes html string using the registered <see cref="IHtmlSanitizer"/>. This method should be used when you want to handle text that is supposed to be HTML, but comes from untrusted source.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper which this method is extending.</param>
+        /// <param name="html">The HTML string to be sanitized.</param>
+        /// <returns></returns>
+        public static MvcHtmlString HtmlSanitize(this HtmlHelper htmlHelper, string html)
+        {
+            var sanitizedHtml = ControlUtilities.Sanitize(html);
+
+            return MvcHtmlString.Create(sanitizedHtml);
+        }
+
+
+        /// <summary>
+        /// Sanitizes url string using the registered <see cref="IHtmlSanitizer"/>. It will also attribute encode the string.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper which this method is extending.</param>
+        /// <param name="url">The url string to be sanitized.</param>
+        /// <returns></returns>
+        public static MvcHtmlString UrlSanitize(this HtmlHelper htmlHelper, string url)
+        {
+            var sanitizedUrl = ControlUtilities.SanitizeUrl(url);
+
+            return MvcHtmlString.Create(sanitizedUrl);
         }
 
         private const string ElementIdsKey = "sf-element-ids";

@@ -65,8 +65,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             this.ItemType = itemType;
         }
 
-        /// <inheritdoc />
-        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
+        private bool TryMatchUrl(string[] urlParams, RequestContext requestContext, bool setUrlParametersResolved)
         {
             if (urlParams == null || urlParams.Length == 0)
                 return false;
@@ -81,18 +80,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             {
                 SystemManager.CurrentHttpContext.Items["detailItem"] = item;
 
-                this.AddContentItemToRouteData(requestContext, redirectUrl, item);
+                this.AddContentItemToRouteData(requestContext, redirectUrl, item, setUrlParametersResolved);
 
                 return true;
             }
             else if (urlParams.Length > 1)
             {
-                this.TryMatchUrl(urlParams.Take(urlParams.Length - 1).ToArray(), requestContext);
+                this.TryMatchUrl(urlParams.Take(urlParams.Length - 1).ToArray(), requestContext, false);
 
                 return false;
             }
 
             return false;
+        }
+
+        /// <inheritdoc />
+        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
+        {
+            return this.TryMatchUrl(urlParams, requestContext, true);
         }
 
         /// <summary>
@@ -101,8 +106,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="requestContext">The request context.</param>
         /// <param name="redirectUrl">The redirect URL.</param>
         /// <param name="item">The item.</param>
+        /// <param name="setUrlParametersResolved">Whether to set the url parameters resolved</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#")]
-        protected virtual void AddContentItemToRouteData(RequestContext requestContext, string redirectUrl, IDataItem item)
+        protected virtual void AddContentItemToRouteData(RequestContext requestContext, string redirectUrl, IDataItem item, bool setUrlParametersResolved = true)
         {
             requestContext.RouteData.Values[UrlParamsMapperBase.ActionNameKey] = this.actionName;
 
@@ -117,7 +123,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 requestContext.RouteData.Values[parameters[1].ParameterName] = redirectUrl;
             }
 
-            RouteHelper.SetUrlParametersResolved();
+            if (setUrlParametersResolved)
+            {
+                RouteHelper.SetUrlParametersResolved();
+            }
         }
 
         protected Type ItemType { get; set; }

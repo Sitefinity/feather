@@ -1,4 +1,4 @@
-﻿; (function ($) {
+﻿(function ($) {
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfDocumentSelector');
 
@@ -75,7 +75,8 @@
                     filterObject: '=?sfFilter',
                     provider: '=?sfProvider',
                     sfMultiselect: '@',
-                    sfDeselectable: '@'
+                    sfDeselectable: '@',
+                    sfMediaSettings: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -229,7 +230,7 @@
                                 }
                             }
 
-                            sfMediaService.documents.get(options, scope.filterObject, appendItems)
+                            sfMediaService.documents.get(options, scope.filterObject, appendItems, scope.sfMediaSettings)
                                 .then(function (response) {
                                     if (response && response.Items) {
 
@@ -259,7 +260,7 @@
                                             if (item.LibrariesCount) {
                                                 item.LibrariesCount = removeNonNumeric(item.LibrariesCount);
                                                 item.LibrariesCount = item.LibrariesCount + (item.LibrariesCount == 1 ? " folder" : " folders");
-                                            }
+                                            }                                            
                                         }
 
                                         if (appendItems) {
@@ -303,8 +304,7 @@
 
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
                             var file = dataTransferObject.files[0];
-
-                            sfMediaService.documents.getSettings().then(function (settings) {
+                            var processUpload = function (settings) {
                                 if (isNotAllowedExtension(settings, file)) {
                                     scope.error = {
                                         show: true,
@@ -341,7 +341,15 @@
                                     }
                                 }
                                 openUploadPropertiesDialog(file);
-                            });
+                            };
+
+                            if (scope.sfMediaSettings) {
+                                processUpload(scope.sfMediaSettings);
+                            } else {
+                                sfMediaService.documents.getSettings().then(function (settings) {
+                                    processUpload(settings);
+                                });
+                            }
                         }
                     };
 
@@ -352,7 +360,7 @@
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
                                 var file = fileInput.files[0];
-                                sfMediaService.documents.getSettings().then(function (settings) {
+                                var processUpload = function (settings) {
                                     if (isNotAllowedExtension(settings, file)) {
                                         scope.error = {
                                             show: true,
@@ -368,7 +376,15 @@
                                         scope.model.categories = [];
                                     }
                                     openUploadPropertiesDialog(file);
-                                });
+                                };
+
+                                if (scope.sfMediaSettings) {
+                                    processUpload(scope.sfMediaSettings);
+                                } else {
+                                    sfMediaService.documents.getSettings().then(function (settings) {
+                                        processUpload(settings);
+                                    });
+                                }
                             }
                         });
                     });
@@ -758,7 +774,7 @@
                         else {
                             scope.filterObject.attachEvent(refresh);
                         }
-                        sfMediaService.documents.getSettings();
+                        //sfMediaService.documents.getSettings();
                     }());
                 }
             };

@@ -1,4 +1,4 @@
-﻿; (function ($) {
+﻿(function ($) {
     var sfSelectors = angular.module('sfSelectors');
     //sfSelectors.requires.push('sfMediaSelector');
 
@@ -70,7 +70,8 @@
                     sfMultiselect: '@',
                     sfDeselectable: '@',
                     sfMediaType: '@',
-                    sfLabels: '='
+                    sfLabels: '=',
+                    sfMediaSettings: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -230,7 +231,7 @@
                                 }
                             }
 
-                            sfMediaService[scope.sfMediaType].get(options, scope.filterObject, appendItems)
+                            sfMediaService[scope.sfMediaType].get(options, scope.filterObject, appendItems, scope.sfMediaSettings)
                                 .then(function (response) {
                                     if (response && response.Items) {
                                         mutateItemsWithMediaMetrics(response.Items);
@@ -317,8 +318,7 @@
 
                         if (dataTransferObject.files && dataTransferObject.files[0]) {
                             var file = dataTransferObject.files[0];
-
-                            sfMediaService[scope.sfMediaType].getSettings().then(function (settings) {
+                            var processUpload = function (settings) {
                                 if (isNotAllowedExtension(settings, file)) {
                                     scope.error = {
                                         show: true,
@@ -355,7 +355,15 @@
                                     }
                                 }
                                 openUploadPropertiesDialog(file);
-                            });
+                            };
+
+                            if (scope.sfMediaSettings) {
+                                processUpload(scope.sfMediaSettings);
+                            } else {
+                                sfMediaService[scope.sfMediaType].getSettings().then(function (settings) {
+                                    processUpload(settings);
+                                });
+                            }
                         }
                     };
 
@@ -366,7 +374,7 @@
                             var fileInput = fileUploadInput.get(0);
                             if (fileInput.files && fileInput.files[0]) {
                                 var file = fileInput.files[0];
-                                sfMediaService[scope.sfMediaType].getSettings().then(function (settings) {
+                                var processUpload = function (settings) {
                                     if (isNotAllowedExtension(settings, file)) {
                                         scope.error = {
                                             show: true,
@@ -382,7 +390,15 @@
                                         scope.model.categories = [];
                                     }
                                     openUploadPropertiesDialog(file);
-                                });
+                                };
+
+                                if (scope.sfMediaSettings) {
+                                    processUpload(scope.sfMediaSettings);
+                                } else {
+                                    sfMediaService[scope.sfMediaType].getSettings().then(function (settings) {
+                                        processUpload(settings);
+                                    });
+                                }
                             }
                         });
                     });
@@ -798,7 +814,7 @@
                         else {
                             scope.filterObject.attachEvent(refresh);
                         }
-                        sfMediaService[scope.sfMediaType].getSettings();
+                        //sfMediaService[scope.sfMediaType].getSettings();
                     }());
                 }
             };

@@ -8,7 +8,7 @@
 						sf-popover-placement="right"
 						sf-popover-trigger="hover"
 						sf-popover-append-to-body="true"
-						sf-popover-title="{{item.Title}}"
+						sf-popover-title="{{item.Title ? item.Title.htmlEncode() : ''}}"
 						sf-popover-content="
               {{item.LibrariesCount}}<br/>
               {{item.ImagesCount}}
@@ -43,11 +43,11 @@
 						sf-popover-placement="right"
 						sf-popover-trigger="hover"
 						sf-popover-append-to-body="true"
-						sf-popover-title="{{item.Title}}"
+						sf-popover-title="{{item.Title ? item.Title.htmlEncode() : ''}}"
 						sf-popover-content="
 							<dl class='dl-half'>
 								<dt>@(Res.Get<ClientComponentsResources>().Library)</dt>
-								<dd>{{item.FolderTitle || item.LibraryTitle}}</dd>
+								<dd>{{item.FolderTitle ? item.FolderTitle.htmlEncode() : item.LibraryTitle ? item.LibraryTitle.htmlEncode() : ''}}</dd>
 								<dt ng-if='item.IsVectorGraphics === false'>@(Res.Get<ClientComponentsResources>().Dimensions)</dt>
 								<dd ng-if='item.IsVectorGraphics === false'>{{item.Width + 'x' + item.Height}}</dd>
 								<dt>@(Res.Get<ClientComponentsResources>().Type)</dt>

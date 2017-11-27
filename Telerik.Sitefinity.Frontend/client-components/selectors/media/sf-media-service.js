@@ -182,9 +182,9 @@
             return serviceHelper.getResource(thumbnailProfilesServiceUrl).get({ libraryType: libraryType }).$promise;
         };
 
-        var checkCustomThumbnailParams = function (methodName, params) {
+        var checkCustomThumbnailParams = function (methodName, params, mediaSettings) {
             var checkThumbnailParamsServiceUrl = constants.thumbnailServiceUrl + 'custom-image-thumbnail/checkParameters';
-            return serviceHelper.getResource(checkThumbnailParamsServiceUrl).get({ methodName: methodName, parameters: params }).$promise;
+            return serviceHelper.getResource(checkThumbnailParamsServiceUrl).get({ methodName: methodName, parameters: params }, null, null, mediaSettings).$promise;
         };
 
         var getCustomThumbnailUrl = function (imageId, customUrlParams, libraryProvider) {
@@ -223,7 +223,7 @@
                 getContent: function (options) {
                     return getItems(options, null, constants[mediaType].serviceUrl, constants[mediaType].itemType);
                 },
-                get: function (options, filterObject, appendItems) {
+                get: function (options, filterObject, appendItems, mediaSettings) {
                     var callback;
                     if (filterObject.query) {
                         callback = this.getContent;
@@ -252,6 +252,27 @@
                     else {
                         // custom filter is used (Libraries / Taxons / Dates)
                         callback = this.getContent;
+                    }
+
+                    if (mediaSettings) {
+                        var allLanguageSearch = mediaSettings.EnableAllLanguagesSearch;
+                        options.filter = filterObject.composeExpression(allLanguageSearch);
+
+                        var selectedFolderSearch = mediaSettings.EnableSelectedFolderSearch;
+                        if (filterObject.query) {
+                            if (selectedFolderSearch) {
+                                options.parent = filterObject.parent;
+                                options.recursive = true;
+                                options.excludeFolders = true;
+                            }
+                            else {
+                                options.parent = null;
+                                options.recursive = false;
+                                options.excludeFolders = false;
+                            }
+                        }
+
+                        return callback(options);
                     }
 
                     return getLibrarySettings()
@@ -340,6 +361,15 @@
                         deferred.resolve(mediaSettings);
                         return deferred.promise;
                     }
+                },
+                getAllowedExtensionsRegex: function (settings) {
+                    if (settings.AllowedExensionsSettings) {
+                        var mediaExt = settings.AllowedExensionsSettings.replace(/,/g, '|').replace(/ |\./g, '');
+                        var regExp = '^' + constants[mediaType].extensionsRegExPrefix + '\/(' + mediaExt + ')';
+                        return new RegExp(regExp, 'i');
+                    }
+
+                    return null;
                 }
             };
         };

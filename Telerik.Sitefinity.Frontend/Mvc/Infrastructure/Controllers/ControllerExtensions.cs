@@ -199,6 +199,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (SystemManager.GetModule("ModuleBuilder") == null)
                 return null;
 
+            // TODO: use ModuleBuilderManager.GetModules()
             var moduleProvider = ModuleBuilderManager.GetManager().Provider;
             var dynamicContentType = moduleProvider.GetDynamicModules()
                 .Where(m => m.Status == DynamicModuleStatus.Active)

@@ -146,7 +146,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 templatePath += "#" + packageName;
             }
 
-            var output = this.parser.Process(templatePath);
+            string output;
+            this.parser.Process(templatePath, out output);
 
             this.WriteToOutput(context, context.Response.ContentEncoding.GetBytes(output));
         }

@@ -5,7 +5,7 @@
     <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().SelectDocument)</h3>
 </div>
 <div class="modal-body">
-    <sf-document-selector sf-model="model.selectedItems" sf-filter="model.filterObject" sf-provider="model.provider"></sf-document-selector>
+    <sf-document-selector sf-model="model.selectedItems" sf-filter="model.filterObject" sf-provider="model.provider" sf-media-settings="sfMediaSettings"></sf-document-selector>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-primary pull-left" ng-click="done()" ng-disabled="!model.selectedItems.length">
