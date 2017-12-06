@@ -171,6 +171,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="err">The exception.</param>
         protected virtual void HandleControllerException(Exception err)
         {
+            var cryptoException = err as System.Security.Cryptography.CryptographicException;
+            if (cryptoException != null)
+            {
+                Thread.Sleep(0);
+                return;
+            }
+
             if (!(err is ThreadAbortException))
                 if (Exceptions.HandleException(err, ExceptionPolicyName.IgnoreExceptions))
                     throw err;
