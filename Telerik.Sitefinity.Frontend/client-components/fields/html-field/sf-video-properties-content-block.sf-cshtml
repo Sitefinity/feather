@@ -13,7 +13,8 @@
                         sf-model="model.item.Id"
                         sf-media="model.item"
                         sf-media-type="videos"
-                        sf-provider="model.provider"></sf-media-field>
+                        sf-provider="model.provider"
+                        sf-media-settings="sfVideosSettings"></sf-media-field>
 
 
         <div sf-aspect-ratio-selection="" sf-model="videoModel"></div>

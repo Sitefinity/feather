@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Descriptors;
 using Telerik.Sitefinity.Model;
+using Telerik.Sitefinity.Modules;
 using Telerik.Sitefinity.RelatedData;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
@@ -57,7 +59,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 var relatedDataInfo = propInfo as RelatedDataPropertyDescriptor;
                 if (relatedDataInfo == null)
                 {
-                    return propInfo.GetValue(this.item.DataItem);
+                    var value = propInfo.GetValue(this.item.DataItem);
+                    var fieldType = propInfo.GetFieldType();
+                    if (fieldType != null && fieldType == UserFriendlyDataType.LongText)
+                    {
+                        return HtmlFilterProvider.ApplyFilters(value as Lstring);
+                    }
+
+                    return value;
                 }
                 else
                 {

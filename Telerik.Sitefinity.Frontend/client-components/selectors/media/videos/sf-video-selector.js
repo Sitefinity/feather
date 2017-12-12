@@ -14,6 +14,7 @@ sfVideoSelector.directive('sfVideoSelector',
             provider: '=?sfProvider',
             sfMultiselect: '@',
             sfDeselectable: '@',
+            sfMediaSettings: '=?'
         },
         templateUrl: function (elem, attrs) {
             var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';

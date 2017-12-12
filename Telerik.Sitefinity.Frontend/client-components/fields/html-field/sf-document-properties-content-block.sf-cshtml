@@ -13,7 +13,8 @@
                         sf-model="model.item.Id"
                         sf-media="model.item"
                         sf-media-type="documents"
-                        sf-provider="model.provider"></sf-media-field>
+                        sf-provider="model.provider"
+                        sf-media-settings="sfDocumentsSettings"></sf-media-field>
 
         <form name="documentProperties">
             <div class="form-group" ng-class="{ 'has-error' : !model.title }">

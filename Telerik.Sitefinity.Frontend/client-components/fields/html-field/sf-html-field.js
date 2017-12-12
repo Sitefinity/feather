@@ -7,7 +7,10 @@
             return {
                 restrict: "E",
                 scope: {
-                    sfModel: '='
+                    sfModel: '=',
+                    sfDocumentsSettings: '=?',
+                    sfVideosSettings: '=?',
+                    sfImagesSettings: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -153,6 +156,9 @@
                                     .$openModalDialog({ sfModel: function () { return properties; } })
                                     .then(function (data) {
                                         properties = data;
+                                        if (scope.sfDocumentsSettings)
+                                            return;
+
                                         return mediaService.getLibrarySettings();
                                     })
                                     .then(function (settings) {
@@ -167,6 +173,7 @@
                                serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.sf-cshtml');
                             scope.sfMediaPropertiesController = "sfImagePropertiesController";
 
+                            var range = scope.editor.getRange();
                             var properties = getPropertiesFromTag('image', 'span.sf-Image-wrapper', 'img');
 
                             setTimeout(function () {
@@ -177,7 +184,7 @@
                                         properties = data;
 
                                         if (data.customSize)
-                                            return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize);
+                                            return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize, scope.sfImagesSettings);
                                         else
                                             return '';
 
@@ -199,6 +206,9 @@
                                             properties.thumbnail.url = thumbnailUrl;
                                         }
 
+                                        if (scope.sfImagesSettings)
+                                            return;
+
                                         return mediaService.getLibrarySettings();
                                     })
                                     .then(function (settings) {
@@ -209,7 +219,7 @@
                                         // so we have to preserve the anchor and put the image inside it.
                                         markup = preserveWrapperATag(markup);
 
-                                        scope.editor.exec('insertHtml', { html: markup, split: true });
+                                        scope.editor.exec('insertHtml', { html: markup, split: true, range: range });
                                     });
                             }, 0);
                         };
@@ -228,6 +238,10 @@
                                     .$openModalDialog({ sfModel: function () { return properties; } })
                                     .then(function (data) {
                                         properties = data;
+
+                                        if (scope.sfVideosSettings)
+                                            return;
+
                                         return mediaService.getLibrarySettings();
                                     })
                                     .then(function (settings) {
@@ -269,6 +283,7 @@
                                 shortToolbar.addClass("sf-toolbar-short");
                                 shortToolbar.show();
                                 shortToolbar.append(customButtons);
+                                scope.beautify();
                             } else {
                                 $(htmlElement.find(".js-htmlview")).removeClass("active");
                                 fullToolbar.removeClass("sf-toolbar-full");
@@ -316,6 +331,17 @@
                         scope.$on("close", function () {
                             scope.sfModel = scope.editor.value();
                         });
+
+                        scope.beautify = function () {
+
+                            if (!html_beautify) return;
+
+                            var source = scope.editor.value();
+                            var opts = {};
+                            var output = html_beautify(source, opts);
+
+                            scope.sfModel = output;
+                        }
                     }
                 }
             };
