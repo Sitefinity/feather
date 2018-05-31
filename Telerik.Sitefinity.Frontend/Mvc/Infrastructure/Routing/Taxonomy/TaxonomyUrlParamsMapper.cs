@@ -29,12 +29,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         /// <inheritdoc />
-        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
+        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext, string urlKeyPrefix)
         {
             ITaxon taxon;
             int pageIndex;
 
-            if (!this.taxonUrlEvaluator.TryMatch(urlParams, out taxon, out pageIndex))
+            if (!this.taxonUrlEvaluator.TryMatch(urlParams, urlKeyPrefix, out taxon, out pageIndex))
             {
                 return false;
             }

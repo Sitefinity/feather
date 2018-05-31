@@ -39,10 +39,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <inheritdoc />
         public void ResolveUrlParams(string[] urlParams, RequestContext requestContext)
         {
-            var isMatch = this.TryMatchUrl(urlParams, requestContext);
+            this.ResolveUrlParams(urlParams, requestContext, null);
+        }
+
+        /// <inheritdoc />
+        public void ResolveUrlParams(string[] urlParams, RequestContext requestContext, string urlKeyPrefix)
+        {
+            var isMatch = this.TryMatchUrl(urlParams, requestContext, urlKeyPrefix);
 
             if (!isMatch && this.Next != null)
-                this.Next.ResolveUrlParams(urlParams, requestContext);
+                this.Next.ResolveUrlParams(urlParams, requestContext, urlKeyPrefix);
         }
 
         /// <summary>
@@ -155,8 +161,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// </summary>
         /// <param name="urlParams">The URL parameters.</param>
         /// <param name="requestContext">The request context.</param>
+        /// <param name="urlKeyPrefix">The URL key prefix.</param>
         /// <returns>true if resolving was successful. In this case does not fallback to next mappers. Else returns false</returns>
-        protected abstract bool TryMatchUrl(string[] urlParams, RequestContext requestContext);
+        protected abstract bool TryMatchUrl(string[] urlParams, RequestContext requestContext, string urlKeyPrefix);
 
         /// <summary>
         /// The action name key for the RouteData values.

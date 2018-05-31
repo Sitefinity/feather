@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Descriptors;
 using Telerik.Sitefinity.DynamicModules;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
@@ -79,7 +80,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 metadataProperties.MetaDescription = this.GetDescriptionProperty(item, new[] { this.MetadataFields.MetaDescription, MetaDataProperties.MetaDescription });
             }
 
-            if (isOpenGraphEnabled) 
+            if (isOpenGraphEnabled)
             {
                 metadataProperties.OpenGraphTitle = this.GetTitleProperty(item, new[] { this.MetadataFields.OpenGraphTitle, MetaDataProperties.OpenGraphTitle });
                 metadataProperties.OpenGraphDescription = this.GetDescriptionProperty(item, new[] { this.MetadataFields.OpenGraphDescription, MetaDataProperties.OpenGraphDescription });
@@ -115,20 +116,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <returns></returns>
         internal virtual bool IsURLMatch(IDataItem item)
         {
+            IManager manager = null;
+            if (!ManagerBase.TryGetMappedManager(item.GetType(), string.Empty, out manager))
+                return true;
+
             var locationsService = SystemManager.GetContentLocationService();
             var locations = locationsService.GetItemLocations(item);
             var currentNode = (PageSiteNode)SystemManager.CurrentHttpContext.Items[SiteMapBase.CurrentNodeKey];
             var itemUrl = HyperLinkHelpers.GetDetailPageUrl(item, currentNode.Id);
 
             // TODO: compare urls better
-            var urlMatch = locations.Where(location => location.ItemAbsoluteUrl == itemUrl).ToList();
-
-            if (urlMatch.Count <= 0)
-            {
-                return false;
-            }
-
-            return true;
+            return locations.Any(location => location.ItemAbsoluteUrl == itemUrl);
         }
 
         /// <summary>
@@ -141,6 +139,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings", Justification = "The url is needed here as a string.")]
         internal virtual string GetDefaultCanonicalUrl(IDataItem item)
         {
+            IManager manager = null;
+            if (!ManagerBase.TryGetMappedManager(item.GetType(), string.Empty, out manager))
+                return null;
+
             var locationsService = SystemManager.GetContentLocationService();
             var location = locationsService.GetItemDefaultLocation(item);
             if (location != null)

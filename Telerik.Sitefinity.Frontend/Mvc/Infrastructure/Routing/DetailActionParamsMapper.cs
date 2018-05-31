@@ -95,7 +95,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         /// <inheritdoc />
-        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
+        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext, string urlKeyPrefix)
         {
             return this.TryMatchUrl(urlParams, requestContext, true);
         }
@@ -116,6 +116,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (parameters.Length > 0 && parameters[0].ParameterType.IsAssignableFrom(this.ItemType))
             {
                 requestContext.RouteData.Values[parameters[0].ParameterName] = item;
+            }
+
+            if (!redirectUrl.IsNullOrEmpty())
+            {
+                requestContext.RouteData.Values[Telerik.Sitefinity.Mvc.ControllerActionInvoker.ShouldProcessRequestKey] = redirectUrl;
             }
 
             if (redirectUrl.IsNullOrEmpty() == false && parameters.Length > 1 && parameters[1].ParameterType == typeof(string))

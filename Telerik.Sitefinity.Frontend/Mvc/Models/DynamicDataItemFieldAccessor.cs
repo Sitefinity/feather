@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Descriptors;
 using Telerik.Sitefinity.Model;
+using Telerik.Sitefinity.Modules;
 using Telerik.Sitefinity.RelatedData;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
@@ -18,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DynamicDataItemFieldAccessor"/> class.
         /// </summary>
-        /// <param name="item">The data item.</param>
+        /// <param name="itemViewModel">The data item.</param>
         public DynamicDataItemFieldAccessor(ItemViewModel itemViewModel)
             : base()
         {
@@ -57,7 +59,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 var relatedDataInfo = propInfo as RelatedDataPropertyDescriptor;
                 if (relatedDataInfo == null)
                 {
-                    return propInfo.GetValue(this.item.DataItem);
+                    var value = propInfo.GetValue(this.item.DataItem);
+                    var fieldType = propInfo.GetFieldType();
+                    if (fieldType != null && fieldType == UserFriendlyDataType.LongText)
+                    {
+                        var stringValue = this.GetAppropriateStringValue(value);
+                        return HtmlFilterProvider.ApplyFilters(stringValue);
+                    }
+
+                    return value;
                 }
                 else
                 {
@@ -75,6 +85,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             {
                 return null;
             }
+        }
+
+        private string GetAppropriateStringValue(object value)
+        {
+            string stringValue = value as Lstring;
+            if (stringValue != null)
+            {
+                return stringValue;
+            }
+
+            return value as string;
         }
 
         private ItemViewModel item;

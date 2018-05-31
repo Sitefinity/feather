@@ -117,7 +117,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var lifecycleManager = manager as ILifecycleManager;
             if (lifecycleItem != null && lifecycleManager != null)
             {
-                if (lifecycleItem.Status != ContentLifecycleStatus.Live)
+                ContentLifecycleStatus requestedStatus = ContentLocatableViewExtensions.GetRequestedItemStatus();
+                if (lifecycleItem.Status != requestedStatus)
                 {
                     item = lifecycleManager.Lifecycle.GetLive(lifecycleItem);
                 }

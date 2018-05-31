@@ -127,6 +127,9 @@ var sitefinity = sitefinity || {};
                     separator = '?';
 
                 var url = this.widgetContext.url + separator + 'controlId=' + this.widgetContext.Id;
+                if (this.widgetContext.ModuleName) {
+                    url += '&moduleName=' + this.widgetContext.ModuleName;
+                }
                 $.get(url)
                     .done($.proxy(this.renderDialog, this))
                     .fail(function (data) {

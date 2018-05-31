@@ -2,7 +2,7 @@
     var sfSelectors = angular.module('sfSelectors');
     sfSelectors.requires.push('sfImageSelector');
 
-    var sfImageSelector = angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfDragDrop', 'expander', 'sfBootstrapPopover']);
+    var sfImageSelector = angular.module('sfImageSelector', ['sfServices', 'sfInfiniteScroll', 'sfCollection', 'sfTree', 'sfSearchBox', 'sfSortBox', 'sfDragDrop', 'expander', 'sfBootstrapPopover', 'ngSanitize']);
     sfImageSelector.directive('sfImageSelector', ['sfMediaService', 'sfMediaFilter', 'serverContext', 'serviceHelper', 'sfFlatTaxonService', 'sfHierarchicalTaxonService',
         function (sfMediaService, sfMediaFilter, serverContext, serviceHelper, sfFlatTaxonService, sfHierarchicalTaxonService) {
             var helpers = {

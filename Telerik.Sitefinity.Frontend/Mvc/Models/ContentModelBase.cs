@@ -16,6 +16,7 @@ using Telerik.Sitefinity.RelatedData;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web.Model;
+using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
@@ -227,6 +228,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>The URL key prefix.</value>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public virtual string UrlKeyPrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the display mode of the content view.
+        /// </summary>
+        /// <remarks>
+        /// Note that this enumeration differs from the FieldDisplayMode.
+        /// </remarks>
+        public virtual ContentViewDisplayMode ContentViewDisplayMode { get; set; }
 
         #endregion
 

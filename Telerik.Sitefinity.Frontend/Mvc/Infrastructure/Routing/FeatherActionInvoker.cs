@@ -110,7 +110,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                         if (expectedUrlKeyPrefix == currentUrlKeyPrefix)
                         {
-                            paramsMapper.ResolveUrlParams(originalParams, requestContext);
+                            paramsMapper.ResolveUrlParams(originalParams, requestContext, modelUrlKeyPrefix);
                         }
                         else
                         {
@@ -134,7 +134,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             else
             {
-                if (FrontendManager.AttributeRouting.UpdateRouteData(this.Context, controller.RouteData))
+                if (this.ShouldProcessRequest(controller) && FrontendManager.AttributeRouting.UpdateRouteData(this.Context, controller.RouteData))
                 {
                     //// Attribute routing was successful.
                     RouteHelper.SetUrlParametersResolved();

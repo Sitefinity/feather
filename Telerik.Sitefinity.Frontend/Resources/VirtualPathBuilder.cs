@@ -64,6 +64,16 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <param name="assembly">The assembly.</param>
         public PathDefinition GetPathDefinition(Assembly assembly)
         {
+            return this.GetPathDefinition(assembly, null);
+        }
+
+        /// <summary>
+        /// Gets the path definition for the given assembly that is used by the virtual file resolvers.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        /// <param name="moduleName">The dynamic module name.</param>
+        public PathDefinition GetPathDefinition(Assembly assembly, string moduleName)
+        {
             if (assembly == null)
                 throw new ArgumentNullException("assembly");
 
@@ -76,6 +86,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 ResourceLocation = assembly.CodeBase,
                 VirtualPath = string.Format(CultureInfo.InvariantCulture, "~/{0}", VirtualPathBuilder.FrontendAssemblyBasePath.Arrange(name))
             };
+
+            result.Parameters["ModuleName"] = moduleName;
 
             result.Items.Add("Assembly", assembly);
             return result;

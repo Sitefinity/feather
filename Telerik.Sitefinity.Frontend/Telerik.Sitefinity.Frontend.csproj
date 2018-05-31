@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Telerik.Sitefinity.Frontend</RootNamespace>
     <AssemblyName>Telerik.Sitefinity.Frontend</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SccProjectName>SAK</SccProjectName>
@@ -78,20 +78,20 @@
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="ServiceStack, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Signed.4.5.14\lib\net45\ServiceStack.dll</HintPath>
+    <Reference Include="ServiceStack, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.5.0.2\lib\net45\ServiceStack.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Client.Signed.4.5.14\lib\net45\ServiceStack.Client.dll</HintPath>
+    <Reference Include="ServiceStack.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Client.5.0.2\lib\net45\ServiceStack.Client.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Common.Signed.4.5.14\lib\net45\ServiceStack.Common.dll</HintPath>
+    <Reference Include="ServiceStack.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Common.5.0.2\lib\net45\ServiceStack.Common.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Interfaces.4.5.14\lib\portable-wp80+sl5+net45+win8+wpa81+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
+    <Reference Include="ServiceStack.Interfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Interfaces.5.0.2\lib\net45\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Text.Signed.4.5.14\lib\net45\ServiceStack.Text.dll</HintPath>
+    <Reference Include="ServiceStack.Text, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Text.5.0.2\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -151,14 +151,14 @@
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Telerik.Web.Design, Version=2017.3.913.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2017.3.913.40\lib\net40\Telerik.Web.Design.dll</HintPath>
+    <Reference Include="Telerik.Web.Design, Version=2018.1.117.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2018.1.117.40\lib\net40\Telerik.Web.Design.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI, Version=2017.3.913.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2017.3.913.40\lib\net40\Telerik.Web.UI.dll</HintPath>
+    <Reference Include="Telerik.Web.UI, Version=2018.1.117.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2018.1.117.40\lib\net40\Telerik.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI.Skins, Version=2017.3.913.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2017.3.913.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2018.1.117.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2018.1.117.40\lib\net40\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
@@ -180,6 +180,7 @@
     <Compile Include="Mvc\Controllers\PersonalizationDesignerController.cs" />
     <Compile Include="Mvc\Controllers\GridDesignerController.cs" />
     <Compile Include="Mvc\Helpers\ContentDataItemResolver.cs" />
+    <Compile Include="Mvc\Helpers\PagingHelpers.cs" />
     <Compile Include="Mvc\Helpers\SettingsHelpers.cs" />
     <Compile Include="Mvc\Infrastructure\Compilation\CompilationPerformanceRazorView.cs" />
     <Compile Include="Mvc\Infrastructure\Compilation\CompilationPerformanceRazorViewEngine.cs" />
@@ -455,9 +456,6 @@
     <None Include="..\..\snk\PublicKey.snk">
       <Link>PublicKey.snk</Link>
     </None>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="assets\csslint.json" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <EmbeddedResource Include="assets\fonts\glyphicons-halflings-regular.ttf" />
@@ -537,7 +535,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="client-components\selectors\forms\sf-form-collection.sf-cshtml" />
-    <EmbeddedResource Include="client-components\fields\form-field\sf-form-field.sf-cshtml" />
+    <EmbeddedResource Include="client-components\fields\form-field\sf-form-field.sf-cshtml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Mvc\Views\PersonalizationDesigner\Personalization.cshtml" />
     <EmbeddedResource Include="client-components\selectors\events\sf-calendar-selector.sf-cshtml" />
     <EmbeddedResource Include="client-components\selectors\events\sf-calendar-filter.sf-cshtml" />
@@ -579,6 +579,7 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mvc\Scripts\JSBeautifier\beautify-html.js" />
     <EmbeddedResource Include="Mvc\Scripts\Angular\angular-sanitize.min.js" />
     <EmbeddedResource Include="Mvc\Scripts\Designer\personalization-designer.js" />
     <EmbeddedResource Include="Mvc\Scripts\Designer\grid-designer.js" />
@@ -739,51 +740,51 @@
       <Name>Telerik.Sitefinity.Frontend.Data</Name>
     </ProjectReference>
     <Reference Include="Telerik.Sitefinity.Services.Comments.Impl">
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.10.2.6602\lib\net45\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.11.0.6700\lib\net471\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.Services.Comments.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Events">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.Services.Events.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.Services.Events.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.ContentModules">
-      <HintPath>..\packages\Telerik.Sitefinity.Content.10.2.6602\lib\net45\Telerik.Sitefinity.ContentModules.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.11.0.6700\lib\net471\Telerik.Sitefinity.ContentModules.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Model">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.Model.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization.Impl">
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.10.2.6602\lib\net45\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.11.0.6700\lib\net471\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.Personalization.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.Personalization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Resources">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.Resources.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.Resources.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.Utilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Mvc">
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.10.2.6602\lib\net45\Telerik.Sitefinity.Mvc.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.11.0.6700\lib\net471\Telerik.Sitefinity.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

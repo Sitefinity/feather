@@ -31,7 +31,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         /// <inheritdoc />
-        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
+        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext, string urlKeyPrefix)
         {
             if (urlParams == null)
                 return false;

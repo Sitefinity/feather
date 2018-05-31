@@ -30,6 +30,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="urlParams">The URL parameters.</param>
         /// <param name="requestContext">The request context.</param>
         void ResolveUrlParams(string[] urlParams, RequestContext requestContext);
+
+        /// <summary>
+        /// Resolves the URL parameters. Should call RouteHelper.SetUrlParametersResolved if the mapping was successful.
+        /// </summary>
+        /// <param name="urlParams">The URL parameters.</param>
+        /// <param name="requestContext">The request context.</param>
+        /// <param name="urlKeyPrefix">The URL key prefix.</param>
+        void ResolveUrlParams(string[] urlParams, RequestContext requestContext, string urlKeyPrefix);
     }
 
     internal static class UrlParamsMapperExtensions

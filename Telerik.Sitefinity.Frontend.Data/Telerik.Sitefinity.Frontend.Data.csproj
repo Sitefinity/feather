@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Telerik.Sitefinity.Frontend.Data</RootNamespace>
     <AssemblyName>Telerik.Sitefinity.Frontend.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -18,6 +18,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,9 +89,6 @@
     <None Include="..\..\snk\PublicKey.snk">
       <Link>PublicKey.snk</Link>
     </None>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="OpenAccessNuGet.targets">
       <SubType>Designer</SubType>
     </None>
@@ -100,15 +98,15 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Telerik.Sitefinity.Model">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.Model.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.10.2.6602\lib\net45\Telerik.Sitefinity.Utilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.11.0.6700\lib\net471\Telerik.Sitefinity.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

@@ -110,7 +110,8 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                         if (controllers == null)
                             return null;
 
-                        string areaName = this.GetAreaName(controllerName);
+                        string moduleName = definition.Parameters[ModuleNameParam];
+                        string areaName = this.GetAreaName(controllerName, moduleName);
 
                         result = this.GetViewPaths(path, controllers, areaName);
 
@@ -166,9 +167,12 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
                 else
                     controllerName = string.Empty;
 
-                string areaName = this.GetAreaName(controllerName);
-
-                return this.GetControlPresentationItem(controllers, name, areaName);
+                foreach (string areaName in this.FindAreaNames(controllerName, null))
+                {
+                    var item = this.GetControlPresentationItem(controllers, name, areaName);
+                    if (item == null) continue;
+                    return item;
+                }
             }
 
             return null;
@@ -230,21 +234,43 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// Gets the name of the area.
         /// </summary>
         /// <param name="controllerName">Name of the controller.</param>
+        /// <param name="moduleName">Name of dynamic module.</param>
         /// <returns></returns>
-        private string GetAreaName(string controllerName)
+        private string GetAreaName(string controllerName, string moduleName)
         {
-            var dynamicType = ControllerExtensions.GetDynamicContentType(controllerName);
-            string areaName = controllerName;
+            return this.FindAreaNames(controllerName, moduleName).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Gets the name of the area.
+        /// </summary>
+        /// <param name="controllerName">Name of the controller.</param>
+        /// <param name="moduleName">Name of dynamic module.</param>
+        /// <returns></returns>
+        private string[] FindAreaNames(string controllerName, string moduleName)
+        {
+            var dynamicTypes = ControllerExtensions.FindDynamicContentTypes(controllerName, moduleName).ToArray();
+            List<string> areaNames = new List<string>();
 
             // case for dynamic types
-            if (dynamicType != null)
+            if (dynamicTypes.Length > 0)
             {
-                var moduleProvider = Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager.GetManager().Provider;
-                var dynamicModule = moduleProvider.GetDynamicModule(dynamicType.ParentModuleId);
-                areaName = this.GetDynamicTypeAreaName(dynamicModule.Title, dynamicType.DisplayName);
+                foreach (var dynamicType in dynamicTypes)
+                {
+                    var moduleProvider = Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager.GetManager().Provider;
+                    var dynamicModule = moduleProvider.GetDynamicModule(dynamicType.ParentModuleId);
+                    var areaName = this.GetDynamicTypeAreaName(dynamicModule.Title, dynamicType.DisplayName);
+                    if (areaName == null) continue;
+
+                    areaNames.Add(areaName);
+                }
+            }
+            else
+            {
+                areaNames.Add(controllerName);
             }
 
-            return areaName;
+            return areaNames.ToArray();
         }
 
         /// <summary>
@@ -274,12 +300,14 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
         private string GetExistsCacheKey(PathDefinition definition, string virtualPath)
         {
-            return "{0}_{1}_Exists_{2}".Arrange(this.GetType().Name, definition.ResolverName, virtualPath.GetHashCode());
+            string moduleName = definition.Parameters[ModuleNameParam];
+            return "{0}_{1}_{2}_Exists_{3}".Arrange(this.GetType().Name, moduleName, definition.ResolverName, virtualPath.GetHashCode());
         }
 
         private string GetFilesCacheKey(PathDefinition definition, string virtualPath)
         {
-            return "{0}_{1}_GetFiles_{2}".Arrange(this.GetType().Name, definition.ResolverName, virtualPath.GetHashCode());
+            string moduleName = definition.Parameters[ModuleNameParam];
+            return "{0}_{1}_{2}_GetFiles_{3}".Arrange(this.GetType().Name, moduleName, definition.ResolverName, virtualPath.GetHashCode());
         }
 
         /// <summary>Template for area name used by dynamic content MVC widget</summary>
@@ -302,5 +330,10 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// Relative path for field templates
         /// </summary>
         private const string ControlPresentationViewPathPattern = @"Views[/|\\][^/\\]+[/|\\][^/\\]+\.cshtml";
+
+        /// <summary>
+        /// Name of module name parameters
+        /// </summary>
+        private const string ModuleNameParam = "ModuleName";
     }
 }

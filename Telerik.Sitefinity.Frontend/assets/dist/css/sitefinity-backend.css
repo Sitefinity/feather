@@ -16485,6 +16485,11 @@
   margin-left: -30px;
   margin-right: -30px; }
 
+.sf-backend-wrp .overflow-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
 .sf-backend-wrp .description-note {
   margin-top: -6px;
   margin-bottom: 5px;

@@ -28,9 +28,9 @@
 		<label for="webAddress">@(Res.Get<ClientComponentsResources>().WebAddress)</label>
 		<div class="row">
 			<div class="col-xs-9">
-				<input class="form-control" type="text" name="webAddressInput" id="webAddress" ng-model="sfSelectedItem.webAddress" pattern="^(http|ftp|https|ftps):\/\/[\w-]+([\.:][\w-]+)+([\w.,@?^=%&:\/~+*#-]*[\w@?^*_=%&\/~+#-])?$"/>
-        <span ng-show="webAddressForm.webAddressInput.$error.pattern && webAddressForm.webAddressInput.$touched">
-          @(Res.Get<ClientComponentsResources>().InvalidUrlMessage)</span>
+				<input class="form-control" type="text" name="webAddressInput" id="webAddress" ng-model="sfSelectedItem.webAddress" pattern="@(Res.Get<PageResources>().UrlValidationRegexJS)" />
+          <p ng-show="webAddressForm.webAddressInput.$error.pattern && webAddressForm.webAddressInput.$touched" class="text-danger">
+          @(Res.Get<ClientComponentsResources>().InvalidUrlMessage)</p>
 			</div>
 		</div>
 		<div class="text-muted">
@@ -56,9 +56,9 @@
     </label>
 	</div>
 
-	<div class="form-group" ng-hide="isTestLinkHidden()">
+	<div class="form-group overflow-ellipsis" ng-hide="isTestLinkHidden()">
 		<span class="text-muted">@(Res.Get<ClientComponentsResources>().TestThisLink)</span>
-		<a ng-href="{{sfSelectedItem.webAddress}}" target="_blank"> {{sfSelectedItem.displayText}} </a>
+		<a ng-href="{{sfSelectedItem.webAddress}}"  ng-attr-title="{{sfSelectedItem.displayText}}" target="_blank"> {{sfSelectedItem.displayText}} </a>
 	</div>
 </div>
 

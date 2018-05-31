@@ -134,12 +134,13 @@
 },
 
 "sf-html-field" : {
-	"scripts" : [
-		"client-components/selectors/media/sf-media-markup-service.js",
-		"client-components/fields/html-field/sf-html-field.js"
-	],
+  "scripts": [
+    "client-components/selectors/media/sf-media-markup-service.js",
+    "client-components/fields/html-field/sf-html-field.js",
+    "Mvc/Scripts/JSBeautifier/beautify-html.js"
+  ],
 	"angularModules": [
-		"sfFields"
+		"sfFields", "sfSelectors"
 	],
 	"components" : ["sf-services", "sf-fields", "sf-link-selector-modal", "sf-expander", "sf-image-field", "sf-document-field","sf-video-field", "sf-thumbnail-size-selection", "sf-aspect-ratio-selection"]
 },
@@ -150,10 +151,12 @@
        "client-components/selectors/media/sf-media-filter.js",
        "client-components/fields/media-field/sf-media-field.js"
    ],
-   "angularModules": [
-		"sfFields"
-	],
-   "components": ["sf-services", "sf-fields"]
+  "angularModules": [
+    "ngSanitize",
+    "sfSelectors",
+    "sfFields"
+  ],
+  "components": [ "sf-services", "sf-fields", "sf-selectors", "sf-document-selector", "sf-video-selector" ]
 },
 
 "sf-document-field" : {
@@ -205,7 +208,7 @@
 		"client-components/fields/form-field/sf-form-field.js"
 	],
 	"angularModules": ["sfFields"],
-	"components" : ["sf-form-selector"]
+  "components": [ "sf-fields", "sf-form-selector" ]
 },
 
 "__________SELECTORS__________" : {"scripts" : [], "angularModules": [], "components" : []},
