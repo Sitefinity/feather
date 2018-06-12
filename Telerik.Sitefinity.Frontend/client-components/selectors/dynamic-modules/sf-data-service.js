@@ -14,6 +14,28 @@
                 return serviceHelper.getResource(url);
             };
 
+            var getLiveItemsByParent = function (itemType, provider, skip, take, search, searchField, parentId) {
+                var filter = serviceHelper.filterBuilder()
+                    .parentIdFilter(parentId)
+                    .and()
+                    .searchFilter(search, null, searchField)
+                    .and()
+                    .cultureFilter()
+                    .getFilter();
+                dataItemPromise = getResource('live').get(
+                    {
+                        itemType: itemType,
+                        itemSurrogateType: itemType,
+                        provider: provider,
+                        skip: skip,
+                        take: take,
+                        filter: filter
+                    })
+                    .$promise;
+
+                return dataItemPromise;
+            };
+
             var getLiveItems = function (itemType, provider, skip, take, search, searchField) {
                 var filter = serviceHelper.filterBuilder()
                     .searchFilter(search, null, searchField)
@@ -111,6 +133,7 @@
 
             return {
                 /* Returns the data items. */
+                getLiveItemsByParent: getLiveItemsByParent,
                 getLiveItems: getLiveItems,
                 getSpecificLiveItems: getSpecificLiveItems,
                 getItems: getItems,

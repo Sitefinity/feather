@@ -67,6 +67,14 @@
                 this.filter += this.liveItemsFilter;
                 return this;
             },
+            parentIdFilter: function (parentId) {
+                if (parentId)
+                    this.filter += 'SystemParentId==' + parentId;
+                else
+                    return this.trimOperator();
+
+                return this;
+            },
             cultureFilter: function () {
                 var culture = serverContext.getUICulture();
                 if (culture) {
