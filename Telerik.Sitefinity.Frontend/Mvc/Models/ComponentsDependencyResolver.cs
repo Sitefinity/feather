@@ -104,7 +104,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var candidateComponents = new HashSet<string>();
             using (var reader = new StreamReader(fileStream))
             {
-                using (HtmlParser parser = new HtmlParser(reader.ReadToEnd()))
+                var readerString = reader.ReadToEnd();
+                // Removing the @* Comments *@
+                readerString = Regex.Replace(readerString, @"@\*([^\*@]*)\*@", string.Empty);
+                using (HtmlParser parser = new HtmlParser(readerString))
                 {
                     HtmlChunk chunk = null;
                     parser.SetChunkHashMode(false);

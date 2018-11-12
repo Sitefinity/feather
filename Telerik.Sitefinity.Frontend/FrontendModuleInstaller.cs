@@ -98,8 +98,6 @@ namespace Telerik.Sitefinity.Frontend
                     property.Value = "Telerik.Sitefinity.Frontend.ContentBlock.Mvc.Controllers.ContentBlockController";
                 else if (property.Value == "Navigation.Mvc.Controllers.NavigationController")
                     property.Value = "Telerik.Sitefinity.Frontend.Navigation.Mvc.Controllers.NavigationController";
-                else if (property.Value == "SocialShare.Mvc.Controllers.SocialShareController")
-                    property.Value = "Telerik.Sitefinity.Frontend.SocialShare.Mvc.Controllers.SocialShareController";
                 else if (property.Value == "DynamicContent.Mvc.Controllers.DynamicContentController")
                     property.Value = "Telerik.Sitefinity.Frontend.DynamicContent.Mvc.Controllers.DynamicContentController";
             }

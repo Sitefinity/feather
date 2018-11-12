@@ -5,6 +5,21 @@
 	border-right: 0
 	@include text-overflow()
 
+	&.list-group-multiline
+		line-height: 1.3em
+
+		> input[type="radio"],
+		> input[type="checkbox"]
+			top: 15px
+
+	.list-group-item-icon
+		line-height: 1.2
+
+	.list-group-item-note
+		display: block
+		line-height: 1
+		margin-top: -1px
+
 	&:first-child
 		border-top: 1px solid #ddd
 		border-radius: 0
@@ -76,6 +91,7 @@
 .list-group-item-draggable,
 .list-group-item-draggable-2
 	margin-bottom: 0
+	background-color: #fff
 
 	> input[type="checkbox"],
 	> input[type="radio"]
@@ -174,6 +190,8 @@
 .list-group-item-hint
 	width: 550px
 	box-shadow: 0 0 6px rgba(0, 0, 0, .4)
+	&:hover
+		background-color: #fff
 
 // Placeholder for the dragged item
 .list-group-item-placeholder

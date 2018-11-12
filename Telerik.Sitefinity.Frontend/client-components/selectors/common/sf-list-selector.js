@@ -358,7 +358,7 @@
                             } catch (e) {
                                 return false;
                             }
-                        }
+                        };
 
                         ctrl.beginLoadingItems = function () {
                             scope.showLoadingIndicator = true;

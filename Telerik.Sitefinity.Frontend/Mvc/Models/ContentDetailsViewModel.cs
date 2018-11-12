@@ -40,6 +40,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         ///   <c>true</c> if should enable social sharing; otherwise, <c>false</c>.
         /// </value>
+        [Obsolete("Social sharing module has been removed. This property is no longer used.")]
         public bool EnableSocialSharing { get; set; }
     }
 }

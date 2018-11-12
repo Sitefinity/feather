@@ -25,10 +25,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// <summary>
         /// Creates a controller instance and sets its ControllerContext depending on the current Http context.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="routeData">The route data.</param>
-        /// <param name="context">The context.</param>
         /// <returns></returns>
+        /// <exception cref="InvalidOperationException">Can not create ControllerContext if no active HttpContext instance is available.</exception>
         /// <exception cref="System.InvalidOperationException">Can't create Controller Context if no active HttpContext instance is available.</exception>
         public virtual Controller CreateController(RouteData routeData = null)
         {

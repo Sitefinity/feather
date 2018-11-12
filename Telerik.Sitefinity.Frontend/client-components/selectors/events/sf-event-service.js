@@ -13,9 +13,9 @@
             return serviceHelper.getResource(url);
         };
 
-        var getItems = function (provider, skip, take, search, frontendLanguages) {
+        var getItems = function (provider, skip, take, search, frontendLanguages, status) {
             var filter = serviceHelper.filterBuilder()
-                .lifecycleFilter()
+                .lifecycleFilter(status)
                 .and()
                 .cultureFilter()
                 .and()
@@ -44,9 +44,9 @@
             return dataItemPromise;
         };
 
-        var getSpecificItems = function (ids, provider) {
+        var getSpecificItems = function (ids, provider, status) {
             var filter = serviceHelper.filterBuilder()
-                .lifecycleFilter()
+                .lifecycleFilter(status)
                 .and()
                 .cultureFilter()
                 .and()

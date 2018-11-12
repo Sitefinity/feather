@@ -80,6 +80,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         ///   <c>true</c> if should enable social sharing; otherwise, <c>false</c>.
         /// </value>
+        [Obsolete("Social sharing module has been removed. This property is no longer used.")]
         public virtual bool EnableSocialSharing { get; set; }
 
         /// <summary>
@@ -184,6 +185,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public virtual string SerializedDateFilters { get; set; }
 
         /// <summary>
+        /// Gets or sets the group logical operator used for filtering.
+        /// </summary>
+        /// <value>
+        /// The group logical operator used for filtering.
+        /// </value>
+        public virtual LogicalOperator SelectionGroupLogicalOperator { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the canonical URL tag should be added to the page when the canonical meta tag should be added to the page.
         /// If the value is not set, the settings from SystemConfig -> ContentLocationsSettings -> DisableCanonicalURLs will be used. 
         /// </summary>
@@ -237,14 +246,32 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// </remarks>
         public virtual ContentViewDisplayMode ContentViewDisplayMode { get; set; }
 
-        #endregion
-
-        #region Public methods
-
         /// <summary>
-        /// Gets the information for all of the content types that a control is able to show.
+        /// Gets or sets a value indicating if the logical operator should be updated.
         /// </summary>
-        public virtual IEnumerable<IContentLocationInfo> GetLocations()
+        /// <value>
+        ///   <c>true</c> if logical operator should be updated; otherwise, <c>false</c>.
+        /// </value>
+        protected virtual bool RefreshLogicalOperator
+        {
+            get
+            {
+                return this.refreshLogicalOperator;
+            }
+
+            set
+            {
+                this.refreshLogicalOperator = value;
+            }
+        }
+    #endregion
+
+    #region Public methods
+
+    /// <summary>
+    /// Gets the information for all of the content types that a control is able to show.
+    /// </summary>
+    public virtual IEnumerable<IContentLocationInfo> GetLocations()
         {
             var location = new ContentLocationInfo();
             location.ContentType = this.ContentType;
@@ -342,7 +369,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             viewModel.Item = this.CreateItemViewModelInstance(item);
             viewModel.ContentType = this.ContentType;
             viewModel.ProviderName = this.ProviderName;
-            viewModel.EnableSocialSharing = this.EnableSocialSharing;
 
             return viewModel;
         }
@@ -363,7 +389,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             {
                 var contentResolvedType = this.ContentType;
                 var result = new List<CacheDependencyKey>(1);
-                result.Add(new CacheDependencyKey { Key = null, Type = contentResolvedType });
+                var manager = this.GetManager();
+                string applicationName = manager != null && manager.Provider != null ? manager.Provider.ApplicationName : string.Empty;
+                result.Add(new CacheDependencyKey { Key = string.Concat(ContentLifecycleStatus.Live.ToString(), applicationName), Type = contentResolvedType });
 
                 return result;
             }
@@ -517,6 +545,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     var additionalFilters = JsonSerializer.DeserializeFromString<QueryData>(this.SerializedAdditionalFilters);
                     if (additionalFilters.QueryItems != null && additionalFilters.QueryItems.Length > 0)
                     {
+                        if (this.RefreshLogicalOperator)
+                        {
+                            this.RefreshQueryGroupLogicalOperator(additionalFilters.GetZeroLevelItems());
+                        }
+
                         var queryExpression = Telerik.Sitefinity.Data.QueryBuilder.LinqTranslator.ToDynamicLinq(additionalFilters);
                         elements.Add(queryExpression);
                     }
@@ -729,6 +762,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             return query;
         }
+
+        /// <summary>
+        /// Refreshes query with the group logical operator.
+        /// </summary>
+        /// <param name="queryItems">The query items.</param>
+        protected void RefreshQueryGroupLogicalOperator(IEnumerable<QueryItem> queryItems)
+        {
+            foreach (var item in queryItems)
+            {
+                if (item.Join == this.SelectionGroupLogicalOperator.ToString())
+                    break;
+
+                item.Join = this.SelectionGroupLogicalOperator.ToString();
+            }
+        }
         #endregion
 
         #region Private methods
@@ -796,6 +844,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private int? itemsPerPage = 20;
         private int? limitCount = 20;
+        private bool refreshLogicalOperator = true;
         private string sortExpression = DefaultSortExpression;
         private string serializedSelectedItemsIds;
         private IList<string> selectedItemsIds = new List<string>();

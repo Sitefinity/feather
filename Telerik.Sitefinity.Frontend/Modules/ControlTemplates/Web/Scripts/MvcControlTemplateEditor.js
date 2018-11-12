@@ -17,7 +17,7 @@ Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEd
     },
 
     dispose: function () {
-        Telerik.Sitefinity.Modules.ControlTemplates.Web.UI.MvcControlTemplateEditor.callBaseMethod(this, "dispose");
+        Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEditor.callBaseMethod(this, "dispose");
     },
 
     _valueChangedHandler: function (sender, args) {

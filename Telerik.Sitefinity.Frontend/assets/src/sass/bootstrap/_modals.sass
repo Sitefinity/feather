@@ -44,6 +44,7 @@
 	.modal-dialog
 		width: 100% !important
 		height: 100%
+		max-width: none;
 		padding: 1%
 		margin: 0 !important
 		position: fixed !important
@@ -90,3 +91,48 @@
 	margin-top: -35px
 	padding-top: 45px
 	background: #fff
+
+&.modal.fade.in
+	opacity: 1;
+
+.modal-dialog
+	&.modal-full-screen
+		max-width: none;
+
+	.modal-content
+		width: auto;
+
+	.modal-header .close
+		order: 2;
+		margin-right: 0;
+
+	.modal-footer
+		justify-content: flex-start;
+
+		a.btn-default
+			margin-left: auto;
+
+	.lead,
+	.breadcrumb li a,
+	.btn-link,
+	.Tooltip
+		color: #105CB6;
+	
+	.Options-toggler
+		color: #777;
+
+	.sf-Progress-close
+		-webkit-appearance: none;
+
+		&,
+		&:hover
+			color: #fff;
+
+
+@media (min-width: $screen-sm-min)
+		.modal-dialog
+			max-width: $sf-modal-md; // 600px;
+
+@media (min-width: $screen-md-min)
+		.modal-lg
+			max-width: $sf-modal-lg; // 900px

@@ -228,7 +228,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns></returns>
         private string GetPackageFromPageInfo()
         {
-            string packageName;
+            string packageName = null;
             var context = SystemManager.CurrentHttpContext;
 
             if (context.Items.Contains("IsTemplate") && (bool)context.Items["IsTemplate"])
@@ -246,7 +246,15 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var pageNodeId = new Guid(context.Request.RequestContext.RouteData.Values["itemId"].ToString());
                 var page = PageManager.GetManager().GetPageData(pageNodeId);
 
-                packageName = this.GetPackageFromNodeId(page.NavigationNodeId.ToString()) ?? this.GetPackageFromTemplate(page.Template);
+                if (page.NavigationNodeId != Guid.Empty)
+                {
+                    packageName = this.GetPackageFromNodeId(page.NavigationNodeId.ToString());
+                }
+
+                if (packageName == null)
+                {
+                    packageName = this.GetPackageFromTemplate(page.Template);
+                }
             }
             else
             {

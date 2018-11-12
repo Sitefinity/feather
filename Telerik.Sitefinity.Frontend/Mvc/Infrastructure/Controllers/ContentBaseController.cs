@@ -11,11 +11,13 @@ using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Libraries.Model;
 using Telerik.Sitefinity.Model;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Configuration;
 using Telerik.Sitefinity.Taxonomies.Extensions;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.ContentLocations;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -27,7 +29,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #region Properties
 
         /// <summary>
-        /// Gets the metadata container.
+        /// Gets the metadata container.Title for search engines
+        /// 
         /// </summary>
         /// <value>
         /// The metadata container.
@@ -40,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 if (this.metadata == null)
                 {
                     this.metadata = new MetadataModel();
-                    this.metadata.OpenGraphType = OpenGraphTypes.Website;
+                    this.metadata.OpenGraphType = PageHelper.OpenGraphTypes.Website;
                     this.metadata.PageTitleMode = Telerik.Sitefinity.Mvc.ControllerActionInvoker.PageTitleModes.Replace;
                 }
 
@@ -62,32 +65,36 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <param name="item">The item.</param>
         protected void InitializeMetadataDetailsViewBag(IDataItem item)
         {
-            string parentMainValue = string.Empty;
-            var seoAndOpenGraphConfig = this.GetSeoAndOpenGraphConfig();
-            bool isSeoEnabled = seoAndOpenGraphConfig.EnabledSEO;
-            bool isOpenGraphEnabled = seoAndOpenGraphConfig.EnabledOpenGraph;
-
-            if ((!isSeoEnabled && !isOpenGraphEnabled) || !this.IsURLMatch(item))
+            if (this.IsDesignMode)
             {
                 return;
             }
 
+            string parentMainValue = string.Empty;
+            var seoAndOpenGraphConfig = this.GetSeoAndOpenGraphConfig();
             MetadataModel metadataProperties = new MetadataModel();
+
+            metadataProperties.SEOEnabled = seoAndOpenGraphConfig.EnabledSEO;
+            metadataProperties.OpenGraphEnabled = seoAndOpenGraphConfig.EnabledOpenGraph;
+            metadataProperties.SEOEnabledPerWidget = this.MetadataFields.SEOEnabled;
+            metadataProperties.OpenGraphEnabledPerWidget = this.MetadataFields.OpenGraphEnabled;
+            bool isSeoEnabled = metadataProperties.SEOEnabled && metadataProperties.SEOEnabledPerWidget;
+            bool isOpenGraphEnabled = metadataProperties.OpenGraphEnabled && metadataProperties.OpenGraphEnabledPerWidget;      
 
             if (isSeoEnabled)
             {
-                metadataProperties.MetaTitle = this.GetTitleProperty(item, new[] { this.MetadataFields.MetaTitle, MetaDataProperties.MetaTitle });
-                metadataProperties.MetaDescription = this.GetDescriptionProperty(item, new[] { this.MetadataFields.MetaDescription, MetaDataProperties.MetaDescription });
+                metadataProperties.MetaTitle = this.GetTitleProperty(item, new[] { this.MetadataFields.MetaTitle, PageHelper.MetaDataProperties.MetaTitle });
+                metadataProperties.MetaDescription = this.GetDescriptionProperty(item, new[] { this.MetadataFields.MetaDescription, PageHelper.MetaDataProperties.MetaDescription });
             }
 
             if (isOpenGraphEnabled)
             {
-                metadataProperties.OpenGraphTitle = this.GetTitleProperty(item, new[] { this.MetadataFields.OpenGraphTitle, MetaDataProperties.OpenGraphTitle });
-                metadataProperties.OpenGraphDescription = this.GetDescriptionProperty(item, new[] { this.MetadataFields.OpenGraphDescription, MetaDataProperties.OpenGraphDescription });
+                metadataProperties.OpenGraphTitle = this.GetTitleProperty(item, new[] { this.MetadataFields.OpenGraphTitle, PageHelper.MetaDataProperties.OpenGraphTitle });
+                metadataProperties.OpenGraphDescription = this.GetDescriptionProperty(item, new[] { this.MetadataFields.OpenGraphDescription, PageHelper.MetaDataProperties.OpenGraphDescription });
                 metadataProperties.Url = this.GetDefaultCanonicalUrl(item);
                 metadataProperties.OpenGraphType = this.MetadataFields.OpenGraphType;
-                metadataProperties.OpenGraphImage = this.GetFieldValue(item, new[] { this.MetadataFields.OpenGraphImage, MetaDataProperties.OpenGraphImage });
-                metadataProperties.OpenGraphVideo = this.GetFieldValue(item, new[] { this.MetadataFields.OpenGraphVideo, MetaDataProperties.OpenGraphVideo });
+                metadataProperties.OpenGraphImage = PageHelper.GetFieldValue(item, new[] { this.MetadataFields.OpenGraphImage, PageHelper.MetaDataProperties.OpenGraphImage });
+                metadataProperties.OpenGraphVideo = PageHelper.GetFieldValue(item, new[] { this.MetadataFields.OpenGraphVideo, PageHelper.MetaDataProperties.OpenGraphVideo });
                 metadataProperties.SiteName = SystemManager.CurrentContext.CurrentSite.Name;
             }
 
@@ -109,26 +116,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// Distinguish the currently opened content item and other content items on the same page that are in details mode.
-        /// The current navigated URL is a canonical URL for an item. We take its meta properties.
+        /// Determines whether the page is in design mode.
         /// </summary>
-        /// <param name="item">The item.</param>
-        /// <returns></returns>
-        internal virtual bool IsURLMatch(IDataItem item)
+        protected virtual bool IsDesignMode
         {
-            IManager manager = null;
-            if (!ManagerBase.TryGetMappedManager(item.GetType(), string.Empty, out manager))
-                return true;
-
-            var locationsService = SystemManager.GetContentLocationService();
-            var locations = locationsService.GetItemLocations(item);
-            var currentNode = (PageSiteNode)SystemManager.CurrentHttpContext.Items[SiteMapBase.CurrentNodeKey];
-            var itemUrl = HyperLinkHelpers.GetDetailPageUrl(item, currentNode.Id);
-
-            // TODO: compare urls better
-            return locations.Any(location => location.ItemAbsoluteUrl == itemUrl);
+            get
+            {
+                return SystemManager.IsDesignMode;
+            }
         }
-
+        
         /// <summary>
         /// Gets the item default location.
         /// </summary>
@@ -150,14 +147,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 return location.ItemAbsoluteUrl;
             }
 
-            return null;
-        }
+            var page = this.HttpContext.CurrentHandler.GetPageHandler();
+            var pageNode = SiteMapBase.GetActualCurrentNode();
+            var canonicalUrl = page.GetCanonicalUrlForPage(pageNode);
 
+            return canonicalUrl;
+        }
+        
         internal virtual SeoAndOpenGraphElement GetSeoAndOpenGraphConfig()
         {
             return Config.Get<SystemConfig>().SeoAndOpenGraphConfig;
         }
-
+        
         private string GetParentMainFiledValue(IDataItem item)
         {
             string parentMainValue = string.Empty;
@@ -184,75 +185,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var parentMainField = this.GetDynamicContentType().ParentModuleType.MainShortTextFieldName;
             string[] field = { parentMainField };
 
-            return this.GetFieldValue(itemValue, field);
-        }
-
-        private string GetMetaValue(object detailItem, string fieldName)
-        {
-            var property = TypeDescriptor.GetProperties(detailItem)[fieldName];
-
-            if (property == null)
-            {
-                return null;
-            }
-
-            var taxonProperty = property as TaxonomyPropertyDescriptor;
-            if (taxonProperty != null)
-            {
-                return this.GetTextFromTaxa(detailItem, taxonProperty);
-            }
-
-            var relatedProperty = property as RelatedDataPropertyDescriptor;
-            if (relatedProperty != null)
-            {
-                var mediaItem = detailItem as IDataItem;
-                var mediaItemViewModel = new ItemViewModel(mediaItem);
-                ItemViewModel relatedItem = null;
-
-                if (relatedProperty.MetaField.AllowMultipleRelations)
-                {
-                    relatedItem = mediaItemViewModel.RelatedItems(fieldName).FirstOrDefault();
-                }
-                else
-                {
-                    relatedItem = mediaItemViewModel.RelatedItem(fieldName);
-                }
-
-                if (relatedItem != null)
-                {
-                    var relatedMediaItem = relatedItem.DataItem as MediaContent;
-                    if (relatedMediaItem != null)
-                    {
-                        var relatedItemMediaUrl = relatedMediaItem.MediaUrl;
-                        if (relatedItemMediaUrl != null || !string.IsNullOrEmpty(relatedItemMediaUrl))
-                        {
-                            return relatedItemMediaUrl;
-                        }
-                    }
-                }
-
-                return null;
-            }
-
-            var value = property.GetValue(detailItem);
-            if (value == null || value.ToString().IsNullOrEmpty())
-            {
-                return null;
-            }
-
-            return value.ToString();
-        }
-
-        private string GetTextFromTaxa(object item, TaxonomyPropertyDescriptor descriptor)
-        {
-            var taxaText = descriptor.GetTaxaText(item);
-
-            if (!string.IsNullOrEmpty(taxaText))
-            {
-                return taxaText;
-            }
-
-            return null;
+            return PageHelper.GetFieldValue(itemValue, field);
         }
 
         private string GetTitleProperty(object detailItem, string[] propertyNames)
@@ -262,73 +195,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (typeof(IDynamicContentWidget).IsAssignableFrom(this.GetType()))
             {
                 var dynamicType = this.GetDynamicContentType();
-                var title = dynamicType == null ? MetaDataProperties.Title : dynamicType.MainShortTextFieldName;
+                var title = dynamicType == null ? PageHelper.MetaDataProperties.Title : dynamicType.MainShortTextFieldName;
                 fields.Add(title);
             }
             else
             {
-                fields.Add(MetaDataProperties.Title);
+                fields.Add(PageHelper.MetaDataProperties.Title);
             }
 
-            return this.GetFieldValue(detailItem, fields.ToArray());
+            return PageHelper.GetFieldValue(detailItem, fields.ToArray());
         }
 
         private string GetDescriptionProperty(object detailItem, string[] propertyNames)
         {
             var fields = new List<string>(propertyNames);
-            fields.Add(MetaDataProperties.Description);
+            fields.Add(PageHelper.MetaDataProperties.Description);
 
-            return this.GetFieldValue(detailItem, fields.ToArray());
-        }
-
-        private string GetFieldValue(object item, string[] propertyNames)
-        {
-            var i = 0;
-            foreach (var propertyName in propertyNames)
-            {
-                if (!string.IsNullOrEmpty(propertyName))
-                {
-                    var value = this.GetMetaValue(item, propertyName);
-                    // The first property is the main property.
-                    // If the user has specified such property and the property does not exist, 
-                    // the metadata should not be added.
-                    if (i == 0) { return value; }
-
-                    if (!string.IsNullOrEmpty(value))
-                    {
-                        return value;
-                    }
-                }
-
-                i++;
-            }
-
-            return null;
+            return PageHelper.GetFieldValue(detailItem, fields.ToArray());
         }
 
         #endregion
 
-        #region Fields and constants
-
-        protected struct OpenGraphTypes
-        {
-            public const string Website = "website";
-            public const string Article = "article";
-            public const string Video = "video";
-            public const string Image = "image";
-        }
-
-        private static class MetaDataProperties
-        {
-            internal const string MetaTitle = "MetaTitle";
-            internal const string MetaDescription = "MetaDescription";
-            internal const string OpenGraphTitle = "OpenGraphTitle";
-            internal const string OpenGraphDescription = "OpenGraphDescription";
-            internal const string OpenGraphImage = "OpenGraphImage";
-            internal const string OpenGraphVideo = "OpenGraphVideo";
-            internal const string Title = "Title";
-            internal const string Description = "Description";
-        }
+        #region Fields and constants    
 
         private MetadataModel metadata;
 

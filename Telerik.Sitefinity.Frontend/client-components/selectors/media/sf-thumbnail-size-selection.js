@@ -86,6 +86,45 @@
                 return false;
             };
 
+            var addCustomSizeSelection = function () {
+                var existingCustomSizeTitle;
+                if ($scope.model.customSize) {
+                    if (isVectorGraphics()) {
+                        $scope.model.customSize.Method = 'ResizeFitToAreaArguments';
+                    }
+                    if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments' && $scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
+                        existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
+                    }
+                    else if ($scope.model.customSize.Method === 'CropCropArguments' && $scope.model.customSize.Width && $scope.model.customSize.Height) {
+                        existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
+                    }
+                }
+
+                var newCustomSizeTitle = 'Custom size...';
+
+                if (existingCustomSizeTitle) {
+                    newCustomSizeTitle = 'Edit custom size...';
+
+                    $scope.sizeOptions.push({
+                        index: $scope.sizeOptions.length,
+                        type: displayMode.custom,
+                        title: existingCustomSizeTitle,
+                        thumbnail: $scope.model.thumbnail,
+                        customSize: $scope.model.customSize,
+                        openDialog: false
+                    });
+                }
+
+                $scope.sizeOptions.push({
+                    index: $scope.sizeOptions.length,
+                    type: displayMode.custom,
+                    title: newCustomSizeTitle,
+                    thumbnail: null,
+                    customSize: $scope.model.customSize,
+                    openDialog: true
+                });
+            };
+
             var populateOptions = function () {
                 $scope.sizeOptions = [];
                 var originalSizeTitle = 'Original size';
@@ -128,45 +167,23 @@
                 }
 
                 if (!$scope.disableCustomSizeSelection) {
-                    var existingCustomSizeTitle;
-                    if ($scope.model.customSize) {
-                        if (isVectorGraphics()) {
-                            $scope.model.customSize.Method = 'ResizeFitToAreaArguments';
-                        }
-                        if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments' && $scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
-                            existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
-                        }
-                        else if ($scope.model.customSize.Method === 'CropCropArguments' && $scope.model.customSize.Width && $scope.model.customSize.Height) {
-                            existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
-                        }
+                    if ($scope.model && $scope.model.item && $scope.model.item.BlobStorageProvider) {
+                        var service = mediaService[$scope.mediaType];
+                        service.customImageSizeAllowed($scope.model.item.BlobStorageProvider)
+                            .then(function (customSizeAllowed) {
+                                if (customSizeAllowed) {
+                                    addCustomSizeSelection();
+                                }
+                            }).finally(function () {
+                                updateSelection();
+                            });
+                    } else {
+                        addCustomSizeSelection();
+                        updateSelection();
                     }
-
-                    var newCustomSizeTitle = 'Custom size...';
-
-                    if (existingCustomSizeTitle) {
-                        newCustomSizeTitle = 'Edit custom size...';
-
-                        $scope.sizeOptions.push({
-                            index: $scope.sizeOptions.length,
-                            type: displayMode.custom,
-                            title: existingCustomSizeTitle,
-                            thumbnail: $scope.model.thumbnail,
-                            customSize: $scope.model.customSize,
-                            openDialog: false
-                        });
-                    }
-
-                    $scope.sizeOptions.push({
-                        index: $scope.sizeOptions.length,
-                        type: displayMode.custom,
-                        title: newCustomSizeTitle,
-                        thumbnail: null,
-                        customSize: $scope.model.customSize,
-                        openDialog: true
-                    });
+                } else {
+                    updateSelection();
                 }
-
-                updateSelection();
             };
 
             var updateSelection = function () {

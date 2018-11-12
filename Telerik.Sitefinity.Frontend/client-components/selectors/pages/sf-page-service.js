@@ -18,11 +18,14 @@
                 return serviceHelper.getResource(url);
             };
 
-            var getItems = function (parentId, siteId, provider, search, culture) {
+            var getItems = function (parentId, siteId, provider, search, culture, status) {
+                var filter;
                 if (search) {
-                    var filter = serviceHelper.filterBuilder()
-                                              .searchFilter(search)
-                                              .getFilter();
+                    filter = serviceHelper.filterBuilder()
+                        .lifecycleFilter(status)
+                        .and()
+                        .searchFilter(search)
+                        .getFilter();
 
                     return getResource(null, culture).get({
                         root: parentId,
@@ -31,12 +34,16 @@
                     }).$promise;
                 }
                 else {
+                    filter = serviceHelper.filterBuilder()
+                        .lifecycleFilter(status)
+                        .getFilter();
+
                     var promise = getResource().get({
                         root: parentId,
                         hierarchyMode: true,
                         sf_site: siteId,
                         provider: provider,
-                        filter: search
+                        filter: filter
                     }).$promise;
 
                     patchBugInSitefinityEndPointService(promise, siteId);
@@ -45,10 +52,12 @@
                 }
             };
 
-            var getSpecificItems = function (ids, provider, rootId) {
+            var getSpecificItems = function (ids, provider, rootId, status) {
                 var filter = serviceHelper.filterBuilder()
-                                          .specificItemsFilter(ids)
-                                          .getFilter();
+                    .lifecycleFilter(status)
+                    .and()
+                    .specificItemsFilter(ids)
+                    .getFilter();
 
                 return getResource().get({
                     root: rootId,

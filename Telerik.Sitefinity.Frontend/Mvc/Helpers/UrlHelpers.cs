@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
+using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -40,6 +43,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (contentPath.StartsWith("~", StringComparison.Ordinal) || contentPath.StartsWith("/", StringComparison.Ordinal) || contentPath.Contains("://"))
             {
                 var url = UrlTransformations.AppendParam(contentPath, PackageManager.PackageUrlParameterName, packageName);
+                url = UrlHelpers.AppendVersion(url);
                 return helper.Content(url);
             }
 
@@ -67,6 +71,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 var url = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(UrlHelpers).Assembly) + contentPath;
                 contentResolvedPath = UrlTransformations.AppendParam(url, PackageManager.PackageUrlParameterName, packageName);
             }
+
+            contentResolvedPath = UrlHelpers.AppendVersion(contentResolvedPath);
 
             return helper.Content(contentResolvedPath);
         }
@@ -141,5 +147,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return string.Empty;
         }
+
+        internal static string AppendVersion(string contentPath)
+        {
+            if (contentPath.EndsWith(".js"))
+            {
+                var bytes = Encoding.UTF8.GetBytes(GetAssemblyVersion());
+                var base64version = Convert.ToBase64String(bytes);
+                contentPath = UrlTransformations.AppendParam(contentPath, VersionQueryParam, base64version);
+            }
+
+            return contentPath;
+        }
+
+        /// <summary>
+        /// Returns the Assembly version.
+        /// </summary>
+        private static string GetAssemblyVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            return assembly.GetName().Version.ToString();
+        }
+
+        private const string VersionQueryParam = "v";
     }
 }

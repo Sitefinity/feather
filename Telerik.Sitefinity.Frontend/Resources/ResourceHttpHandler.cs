@@ -5,7 +5,9 @@ using System.Text;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.UI;
+using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Localization;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -125,6 +127,18 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var buffer = new byte[fileStream.Length];
             fileStream.Read(buffer, 0, (int)fileStream.Length);
             context.Response.ContentType = ResourceHttpHandler.GetMimeMapping(fileName);
+
+            // if the resource was requested with a version param it can be cached by cdns
+            var versionParam = context.Request.QueryString["v"];
+            if (!string.IsNullOrEmpty(versionParam))
+            {
+                var staticResourcesAge = Config.Get<SystemConfig>().CacheSettings.MaxAgeForStaticResources;
+                if (staticResourcesAge.HasValue)
+                {
+                    context.Response.Cache.SetCacheability(HttpCacheability.Public);
+                    context.Response.Cache.SetMaxAge(TimeSpan.FromSeconds(staticResourcesAge.Value));
+                }
+            }
 
             this.WriteToOutput(context, buffer);
         }

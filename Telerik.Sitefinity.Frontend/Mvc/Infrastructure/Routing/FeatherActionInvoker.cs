@@ -212,53 +212,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private IEnumerable<string> GetProviderNames(ControllerBase controller, Type contentType)
+        private string GetProviderName(ControllerBase controller, Type contentType)
         {
-            var providerNameProperty = controller.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "ProviderName" && p.PropertyType == typeof(string));
+            object wrapper;
+            var modelProperty = controller.GetType().GetProperty("Model");
 
-            if (providerNameProperty != null)
+            if (modelProperty != null)
             {
-                return new string[1] { providerNameProperty.GetValue(controller, null) as string };
+                wrapper = modelProperty.GetValue(controller, null);
             }
             else
             {
-                IManager manager;
-
-                try
-                {
-                    ManagerBase.TryGetMappedManager(contentType, string.Empty, out manager);
-                }
-                catch (Exception ex)
-                {
-                    Log.Write(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Exception occurred in the routing functionality, details: {0}", ex));
-                    manager = null;
-                }
-
-                if (manager != null)
-                {
-                    if (SystemManager.CurrentContext.IsMultisiteMode && typeof(DynamicContent).IsAssignableFrom(contentType))
-                    {
-                        var moduleBuilderManager = ModuleBuilderManager.GetManager();
-                        if (moduleBuilderManager != null)
-                        {
-                            var dynamicModuleType = moduleBuilderManager.Provider.GetDynamicModuleTypes().Where(t => t.TypeName == contentType.Name && t.TypeNamespace == contentType.Namespace).Single();
-                            var links = SystemManager.CurrentContext.CurrentSite.SiteDataSourceLinks.Where(x => dynamicModuleType != null && x.DataSourceName == dynamicModuleType.ModuleName);
-
-                            return links.Select(x => x.ProviderName);
-                        }
-
-                        return new string[0];
-                    }
-                    else
-                    {
-                        return manager.Providers.Select(p => p.Name);
-                    }
-                }
-                else
-                {
-                    return new string[0];
-                }
+                wrapper = controller;
             }
+
+            var providerNameProperty = wrapper.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "ProviderName" && p.PropertyType == typeof(string));
+
+            if (providerNameProperty != null)
+            {
+                return providerNameProperty.GetValue(wrapper, null) as string;
+            }
+
+            return null;
         }
 
         private IUrlParamsMapper GetInferredDetailActionParamsMapper(ControllerBase controller)
@@ -285,12 +260,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                     if (contentType != null)
                     {
-                        var providerNames = this.GetProviderNames(controller, contentType);
-                        foreach (var provider in providerNames)
-                        {
-                            var providerName = provider;
-                            result = result.SetLast(new DetailActionParamsMapper(controller, contentType, () => providerName));
-                        }
+                        var providerNames = this.GetProviderName(controller, contentType);
+                        result = result.SetLast(new DetailActionParamsMapper(controller, contentType, () => providerNames));
                     }
                 }
             }

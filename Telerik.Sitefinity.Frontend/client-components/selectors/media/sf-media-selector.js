@@ -806,6 +806,7 @@
 
                         if (!scope.filterObject) {
                             scope.filterObject = sfMediaFilter.newFilter();
+                            scope.filterObject.status = attrs.sfMaster === 'true' || attrs.sfMaster === 'True' ? 'master' : 'live';
                             scope.filterObject.attachEvent(refresh);
 
                             // initial open populates dialog with recent documents

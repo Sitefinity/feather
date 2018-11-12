@@ -5,12 +5,14 @@
             restrict: 'A',
             link: {
                 pre: function (scope, element, attrs, ctrl) {
+                    var status = attrs.sfMaster === 'true' || attrs.sfMaster === 'True' ? 'master' : 'live';
+
                     ctrl.getItems = function (skip, take, search, frontendLanguages) {
-                        return eventService.getItems(ctrl.$scope.sfProvider, skip, take, search, frontendLanguages);
+                        return eventService.getItems(ctrl.$scope.sfProvider, skip, take, search, frontendLanguages, status);
                     };
 
                     ctrl.getSpecificItems = function (ids) {
-                        return eventService.getSpecificItems(ids, ctrl.$scope.sfProvider);
+                        return eventService.getSpecificItems(ids, ctrl.$scope.sfProvider, status);
                     };
 
                     ctrl.selectorType = 'EventSelector';

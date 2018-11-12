@@ -199,6 +199,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         /// Appends the content of the required header.
         /// </summary>
         /// <param name="stringBuilder">The string builder.</param>
+        /// <param name="setTitle">if set to <c>true</c> will set the title.</param>
         /// <exception cref="System.InvalidOperationException">Invalid SiteMap node specified. Either the current group node doesn't have child nodes or the current user does not have rights to view any of the child nodes.</exception>
         private void AppendRequiredHeaderContent(StringBuilder stringBuilder, bool setTitle = true)
         {

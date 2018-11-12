@@ -59,12 +59,20 @@
         function FilterBuilder(baseFilter) {
             this.filter = baseFilter || '';
             this.liveItemsFilter = 'Visible==true AND Status==live';
+            this.masterItemsFilter = 'Visible==true AND Status==master';
+            this.visibleItemsFilter = 'Visible==true';
             this.andOperator = ' AND ';
         }
         FilterBuilder.prototype = {
             constructor: FilterBuilder,
-            lifecycleFilter: function () {
-                this.filter += this.liveItemsFilter;
+            lifecycleFilter: function (status) {
+                if (!status || status == 'live')
+                    this.filter += this.liveItemsFilter;
+
+                return this;
+            },
+            visibleFilter: function () {
+                this.filter += this.visibleItemsFilter;
                 return this;
             },
             cultureFilter: function () {
@@ -76,6 +84,13 @@
                 else {
                     return this.trimOperator();
                 }
+            },
+            parentIdFilter: function (parentId) {
+                if (parentId)
+                    this.filter += 'SystemParentId==' + parentId;
+                else
+                    return this.trimOperator();
+                return this;
             },
             searchFilter: function (search, frontendLanguages, searchField) {
                 if (!search) return this.trimOperator();

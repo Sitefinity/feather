@@ -33,7 +33,8 @@
             },
             uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/'),
-            thumbnailServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/')
+            thumbnailServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/'),
+            blobStorageServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/BlobStorage.svc/'),
         };
 
         var getById = function (id, provider, itemType, serviceUrl) {
@@ -180,6 +181,17 @@
         var thumbnailProfiles = function (libraryType) {
             var thumbnailProfilesServiceUrl = constants.thumbnailServiceUrl + 'thumbnail-profiles/';
             return serviceHelper.getResource(thumbnailProfilesServiceUrl).get({ libraryType: libraryType }).$promise;
+        };
+
+        var customImageSizeAllowed = function (blobStorageProviderName) {
+            var blobStorageSettingsServiceUrl = constants.blobStorageServiceUrl + 'provider-settings/';
+            return serviceHelper.getResource(blobStorageSettingsServiceUrl)
+                .get({ blobStorageProviderName: blobStorageProviderName })
+                .$promise
+                .then(function (data) {
+                    var customImageSizeAllowed = data ? data.CustomImageSizeAllowed : false;
+                    return customImageSizeAllowed;
+                });
         };
 
         var checkCustomThumbnailParams = function (methodName, params, mediaSettings) {
@@ -333,6 +345,9 @@
                 },
                 thumbnailProfiles: function () {
                     return thumbnailProfiles(constants[mediaType].parentItemType);
+                },
+                customImageSizeAllowed: function (blobStorageProviderName) {
+                    return customImageSizeAllowed(blobStorageProviderName);
                 },
                 getSettings: function () {
                     if (mediaSettings === null) {
