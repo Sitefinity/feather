@@ -2,6 +2,7 @@
 using System.Web;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -43,7 +44,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (urlKeyPrefix.IsNullOrWhitespace()) return;
 
             var key = string.Format(KeyFormat, urlKeyPrefix);
-            var pageString = SystemManager.CurrentHttpContext.Request.QueryString[key];
+            var pageString = SystemManager.CurrentHttpContext.Request.QueryStringGet(key);
 
             int queryPage;
             if (!int.TryParse(pageString, out queryPage))

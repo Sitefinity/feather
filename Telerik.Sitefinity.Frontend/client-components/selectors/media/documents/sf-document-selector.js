@@ -207,6 +207,7 @@
                             sort: scope.sortExpression,
                             provider: scope.provider
                         };
+                        var totalItemsCount = 0;
 
                         if (appendItems) {
                             options.skip = scope.items.length;
@@ -233,6 +234,7 @@
                             sfMediaService.documents.get(options, scope.filterObject, appendItems, scope.sfMediaSettings)
                                 .then(function (response) {
                                     if (response && response.Items) {
+                                        totalItemsCount = response.TotalCount;
 
                                         var removeNonNumeric = function (item) {
                                             return item.replace(/\D/g, "");
@@ -280,6 +282,13 @@
                                         // scrolls the collection of items to the top
                                         element.find('.Media-items').scrollTop(0);
                                     }
+
+                                    setTimeout(function() {
+                                        var shouldLoadMoreItems = totalItemsCount > scope.items.length && element.find('.Media-items-holder').height() < element.find('.Media-items').height();
+                                        if (shouldLoadMoreItems) {
+                                            refresh(true);
+                                        }
+                                    }, 0);
                                 });
                         }
                     };
@@ -708,6 +717,14 @@
                             }
 
                             scope.clearSearch = !scope.clearSearch;
+                        }
+                    });
+
+                    scope.$watch('selectedItems', function (newVal, oldVal) {
+                        if (!scope.provider || scope.provider.length === 0) {
+                            if (newVal && newVal.length > 0) {
+                                scope.provider = newVal[newVal.length - 1].ProviderName;
+                            }
                         }
                     });
 

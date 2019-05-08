@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -9,17 +8,15 @@ using System.Web.Mvc;
 using System.Web.UI;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
-using Telerik.Sitefinity.Data;
-using Telerik.Sitefinity.DynamicModules.Builder;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Personalization;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing.Date;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy;
-using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
@@ -44,6 +41,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 .SetLast(this.GetInferredDetailActionParamsMapper(controller))
                 .SetLast(this.GetInferredTaxonFilterMapper(controller, "ListByTaxon"))
                 .SetLast(this.GetInferredClassificationFilterMapper(controller, "ListByTaxon"))
+                .SetLast(this.GetInferredSuccessorsActionParamsMapper(controller))
+                .SetLast(this.GetInferredDateFilterMapper(controller, "ListByDate"))
                 .SetLast(this.GetInferredPagingMapper(controller, "Index"));
 
             // If no other mappers are added we skip the default one.
@@ -62,6 +61,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         {
             IUrlParamsMapper result = null;
             result = result
+                .SetLast(this.GetInferredSuccessorsActionParamsMapper(controller))
                 .SetLast(this.GetInferredPagingMapper(controller, "Index"));
 
             // If no other mappers are added we skip the default one.
@@ -149,7 +149,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         protected override void ExecuteController(MvcProxyBase proxyControl)
         {
-              // Stop processing, personalized widgets are executed asynchronously
+            // Stop processing, personalized widgets are executed asynchronously
             if (proxyControl is PersonalizedWidgetProxy)
                 return;
 
@@ -211,8 +211,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return customErrors.Mode == CustomErrorsMode.Off || (customErrors.Mode == CustomErrorsMode.RemoteOnly && HttpContext.Current.Request.IsLocal);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private string GetProviderName(ControllerBase controller, Type contentType)
+        private object GetModelProperty(ControllerBase controller, string propertyName)
         {
             object wrapper;
             var modelProperty = controller.GetType().GetProperty("Model");
@@ -226,11 +225,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 wrapper = controller;
             }
 
-            var providerNameProperty = wrapper.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "ProviderName" && p.PropertyType == typeof(string));
+            var providerNameProperty = wrapper.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == propertyName);
 
             if (providerNameProperty != null)
             {
-                return providerNameProperty.GetValue(wrapper, null) as string;
+                return providerNameProperty.GetValue(wrapper, null);
             }
 
             return null;
@@ -260,13 +259,47 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                     if (contentType != null)
                     {
-                        var providerNames = this.GetProviderName(controller, contentType);
+                        var providerNames = this.GetModelProperty(controller, "ProviderName") as string;
                         result = result.SetLast(new DetailActionParamsMapper(controller, contentType, () => providerNames));
                     }
                 }
             }
 
             return result;
+        }
+
+        private IUrlParamsMapper GetInferredSuccessorsActionParamsMapper(ControllerBase controller)
+        {
+            IUrlParamsMapper result = null;
+            var controllerType = controller.GetType();
+            if (controllerType.ImplementsInterface(typeof(ICanFilterByParent)))
+            {
+                var successorsAction = new ReflectedControllerDescriptor(controllerType).FindAction(controller.ControllerContext, SuccessorsActionParamsMapper.DefaultActionName);
+                if (successorsAction != null)
+                {
+                    ICanFilterByParent canFilterByParent = controller as ICanFilterByParent;
+                    var parentContentTypes = canFilterByParent.GetParentTypes();
+                    if (parentContentTypes != null && parentContentTypes.Count() > 0)
+                    {
+                        var providerName = this.GetModelProperty(controller, "ProviderName") as string;
+                        result = result.SetLast(new SuccessorsActionParamsMapper(controller, parentContentTypes, () => providerName));
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private IUrlParamsMapper GetInferredDateFilterMapper(ControllerBase controller, string actionName)
+        {
+            var actionDescriptor = new ReflectedControllerDescriptor(controller.GetType()).FindAction(controller.ControllerContext, actionName);
+
+            if (actionDescriptor == null || actionDescriptor.GetParameters().Length == 0)
+            {
+                return null;
+            }
+
+            return new DateUrlParamsMapper(controller, new DateUrlEvaluatorAdapter());
         }
 
         private IUrlParamsMapper GetInferredTaxonFilterMapper(ControllerBase controller, string actionName)

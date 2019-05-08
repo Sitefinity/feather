@@ -10,7 +10,8 @@
                     sfModel: '=',
                     sfDocumentsSettings: '=?',
                     sfVideosSettings: '=?',
-                    sfImagesSettings: '=?'
+                    sfImagesSettings: '=?',
+                    sfViewType: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';

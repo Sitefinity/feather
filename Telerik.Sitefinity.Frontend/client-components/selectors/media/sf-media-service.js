@@ -178,9 +178,9 @@
             });
         };
 
-        var thumbnailProfiles = function (libraryType) {
+        var thumbnailProfiles = function (libraryType, viewType) {
             var thumbnailProfilesServiceUrl = constants.thumbnailServiceUrl + 'thumbnail-profiles/';
-            return serviceHelper.getResource(thumbnailProfilesServiceUrl).get({ libraryType: libraryType }).$promise;
+            return serviceHelper.getResource(thumbnailProfilesServiceUrl).get({ libraryType: libraryType, viewType: viewType }).$promise;
         };
 
         var customImageSizeAllowed = function (blobStorageProviderName) {
@@ -343,8 +343,8 @@
                     };
                     return uploadItem(settings, mediaType);
                 },
-                thumbnailProfiles: function () {
-                    return thumbnailProfiles(constants[mediaType].parentItemType);
+                thumbnailProfiles: function (viewType) {
+                    return thumbnailProfiles(constants[mediaType].parentItemType, viewType);
                 },
                 customImageSizeAllowed: function (blobStorageProviderName) {
                     return customImageSizeAllowed(blobStorageProviderName);

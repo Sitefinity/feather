@@ -337,7 +337,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 return null;
             }
 
-            var controlId = controller.Request.QueryString["controlId"] as string;
+            var controlId = controller.Request.QueryStringGet("controlId") as string;
             Guid controlIdGuid;
             if (string.IsNullOrEmpty(controlId) || !Guid.TryParse(controlId, out controlIdGuid))
                 return null;

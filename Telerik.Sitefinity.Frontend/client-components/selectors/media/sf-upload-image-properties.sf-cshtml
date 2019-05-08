@@ -11,13 +11,13 @@
 
         <div class="sf-Progress">
             <div class="sf-Progress-file">
-                <span ng-bind="model.file.name"></span>
-                <div class="pull-right">
+                <span class="sf-Progress-title" ng-bind="model.file.name" title="{{model.file.name}}"></span>
+                <div class="sf-Progress-options">
+                  <span ng-bind="model.file.textSize"></span>
                   <a type="button" class="sf-Progress-close" ng-click="cancelUpload()">
                     <i class="fa fa-times"></i>
                   </a>
                 </div>
-                <span class="pull-right" ng-bind="model.file.textSize"></span>
             </div>
             <div class="sf-Progress-bar progress-bar"
                 role="progressbar"

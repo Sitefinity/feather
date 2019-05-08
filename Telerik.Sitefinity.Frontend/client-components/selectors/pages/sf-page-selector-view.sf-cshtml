@@ -101,7 +101,7 @@
           class='m-left-md'>
         (@(Res.Get<ClientComponentsResources>().NotTranslated))</em>
 
-      <span class='small text-muted' ng-bind='dataItem.Status'></span>
+      <span class='small text-muted' ng-bind='dataItem.StatusText'></span>
     </span>
   </a>
 </script>

@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Utilities.TypeConverters;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 {
@@ -49,13 +53,72 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         private void RegisterFileObservers()
         {
-            this.fileMonitor = ObjectFactory.Resolve<IFileMonitor>();
+            if (this.IsFileMonitoringEnabled())
+            {
+                this.fileMonitor = ObjectFactory.Resolve<IFileMonitor>();
 
-            var monitoredDirectories = new List<MonitoredDirectory>();
-            monitoredDirectories.Add(new MonitoredDirectory("~/" + PackageManager.PackagesFolder, true));
-            monitoredDirectories.Add(new MonitoredDirectory("~/Mvc/Views/Layouts", false));
+                var monitoredDirectories = new List<MonitoredDirectory>();
 
-            this.fileMonitor.Start(monitoredDirectories);
+                monitoredDirectories.Add(new MonitoredDirectory("~/" + PackageManager.PackagesFolder, true));
+                monitoredDirectories.Add(new MonitoredDirectory("~/Mvc/Views/Layouts", false));
+                monitoredDirectories.Add(new MonitoredDirectory("~/GridSystem/Templates", false));
+
+                this.fileMonitor.Start(monitoredDirectories);
+            }
+        }
+
+        private bool IsFileMonitoringEnabled()
+        {
+            // temporary solution to avoid any public APIs
+            var enableWatcherSetting = ConfigurationManager.AppSettings["sf:featherFileSystemWatcherBehaviour"];
+            if (!string.IsNullOrEmpty(enableWatcherSetting))
+            {
+                if (string.Equals(enableWatcherSetting, "true", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+                else if (string.Equals(enableWatcherSetting, "false", StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+            }
+
+            var sectionType = TypeResolutionService.ResolveType("Telerik.Sitefinity.SiteSync.Configuration.SiteSyncConfig", false);
+            if (sectionType != null)
+            {
+                try
+                {
+                    var siteSyncConfig = Config.Get(sectionType);
+                    var isTarget = (bool)siteSyncConfig["enabledAsTarget"];
+                    if (isTarget)
+                        return false;
+                }
+                catch (Exception)
+                {
+                    // the config is not available
+                }
+            }
+
+            sectionType = TypeResolutionService.ResolveType("Telerik.Sitefinity.Packaging.Configuration.PackagingConfig", false);
+            if (sectionType != null)
+            {
+                try
+                {
+                    var packagingConfig = Config.Get(sectionType);
+                    var packagingMode = packagingConfig["packagingMode"];
+
+                    var enumType = TypeResolutionService.ResolveType("Telerik.Sitefinity.Packaging.Restriction.PackagingMode", true);
+                    var enumName = Enum.GetName(enumType, packagingMode);
+                    if (enumName == "Target")
+                        return false;
+                }
+                catch (Exception)
+                {
+                    // the config is not available
+                }
+            }
+
+            return true;
         }
 
         private IFileMonitor fileMonitor;

@@ -175,7 +175,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var absolutePath = FrontendManager.VirtualPathBuilder.MapPath(filePath);
             var isSupproted = extension == GridFileManager.GridTemplateExtension;
 
-            var isValid = isSupproted && !packageName.IsNullOrEmpty() && this.IsFileInValidFolder(absolutePath, packageName);
+            var isValid = isSupproted && this.IsFileInValidFolder(absolutePath, packageName);
 
             return isValid;
         }

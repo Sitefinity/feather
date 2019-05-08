@@ -81,9 +81,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <returns>Base64 string of the MD5 hash of the data in the stream.</returns>
         internal static string ComputeHash(Stream stream)
         {
-            using (var md5 = MD5.Create())
+            using (var algorithm = SHA256.Create())
             {
-                return Convert.ToBase64String(md5.ComputeHash(stream));
+                return Convert.ToBase64String(algorithm.ComputeHash(stream));
             }
         }
 

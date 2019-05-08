@@ -72,7 +72,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 return null;
             }
 
-            var itemIdFromQueryParam = (SystemManager.CurrentHttpContext.Request.Params["sf-itemId"] ?? SystemManager.CurrentHttpContext.Items["sf-itemId"]) as string;
+            var itemIdFromQueryParam = (SystemManager.CurrentHttpContext.Request.ParamsGet("sf-itemId") ?? SystemManager.CurrentHttpContext.Items["sf-itemId"]) as string;
             if (!itemIdFromQueryParam.IsNullOrEmpty())
             {
                 Guid itemIdGuid;
@@ -189,7 +189,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns>Requested item status.</returns>
         private ContentLifecycleStatus ResolveRequestedItemStatus()
         {
-            var itemStatusParam = SystemManager.CurrentHttpContext.Request.Params["sf-lc-status"] ?? SystemManager.CurrentHttpContext.Items["sf-lc-status"];
+            var itemStatusParam = SystemManager.CurrentHttpContext.Request.ParamsGet("sf-lc-status") ?? SystemManager.CurrentHttpContext.Items["sf-lc-status"];
             ContentLifecycleStatus status = ContentLifecycleStatus.Live;
             if (itemStatusParam != null)
             {
@@ -207,7 +207,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns>Whether preview is requested.</returns>
         private bool IsPreviewRequested()
         {
-            var actionParam = SystemManager.CurrentHttpContext.Request.Params["sf-content-action"];
+            var actionParam = SystemManager.CurrentHttpContext.Request.ParamsGet("sf-content-action");
             bool isPreview = actionParam != null && actionParam == "preview";
             return isPreview;
         }

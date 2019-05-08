@@ -57,7 +57,7 @@ namespace Telerik.Sitefinity.Frontend.Designers
         {
             if (@event.Sender.GetType() == typeof(ZoneEditor))
             {
-                var scriptRootPath = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly);
+                var scriptRootPath = VirtualPathUtility.ToAbsolute("~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly));
                 
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + UrlHelpers.AppendVersion("Mvc/Scripts/Angular/angular.min.js")));
                 @event.Scripts.Add(new ScriptReference(scriptRootPath + UrlHelpers.AppendVersion("Mvc/Scripts/Angular/angular-route.min.js")));

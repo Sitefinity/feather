@@ -164,7 +164,12 @@
                     }
 
                     scope.$on('sf-image-selector-image-uploaded', function (event, uploadedImageInfo) {
+                        if (!scope.model.provider && uploadedImageInfo.ContentItem && uploadedImageInfo.ContentItem.ProviderName) {
+                            scope.model.provider = uploadedImageInfo.ContentItem.ProviderName;
+                        }
+
                         scope.sfProvider = scope.model.provider;
+
                         getImage(uploadedImageInfo.ContentId);
                         scope.$uibModalInstance.dismiss();
                     });

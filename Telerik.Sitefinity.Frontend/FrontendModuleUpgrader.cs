@@ -7,6 +7,7 @@ using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
 using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
@@ -61,6 +62,12 @@ namespace Telerik.Sitefinity.Frontend
             if (upgradeFrom <= new Version(1, 7, 600, 0))
             {
                 FrontendModuleUpgrader.UpgradeLimitCountProperty(initializer);
+            }
+
+            if (upgradeFrom < new Version(12, 0))
+            {
+                FrontendModuleUpgrader.CreateBootstrap4Templates();
+                FrontendModuleUpgrader.UpdateDefaultTemplateImages();
             }
         }
 
@@ -233,6 +240,24 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
+        private static void UpdateDefaultTemplateImages()
+        {
+            var librariesManager = LibrariesManager.GetManager("SystemLibrariesProvider");
+            if (librariesManager != null)
+            {
+                var suppressSecurityChecks = librariesManager.Provider.SuppressSecurityChecks;
+                try
+                {
+                    librariesManager.Provider.SuppressSecurityChecks = true;
+                    LayoutFileManager.UpdateDefaultTemplateImages(librariesManager);
+                }
+                finally
+                {
+                    librariesManager.Provider.SuppressSecurityChecks = suppressSecurityChecks;
+                }
+            }
+        }
+
         // 1, 3, 320, 0
         private static void UpdateGridWidgetsToolbox()
         {
@@ -316,7 +341,8 @@ namespace Telerik.Sitefinity.Frontend
         private static void UpgradeLimitCountProperty(SiteInitializer initializer)
         {
             var pageMan = initializer.PageManager;
-            string[] controllersList = {
+            string[] controllersList = 
+                {
                     "Telerik.Sitefinity.Frontend.Blogs.Mvc.Controllers.BlogController",
                     "Telerik.Sitefinity.Frontend.Blogs.Mvc.Controllers.BlogPostController",
                     "Telerik.Sitefinity.Frontend.News.Mvc.Controllers.NewsController",
@@ -360,6 +386,14 @@ namespace Telerik.Sitefinity.Frontend
                     }
                 }
             }
+        }
+
+        // 12.0
+        private static void CreateBootstrap4Templates()
+        {
+            var layoutManager = new LayoutFileManager();
+
+            layoutManager.CreateDefaultTemplates("Bootstrap4", "default");
         }
     }
 }

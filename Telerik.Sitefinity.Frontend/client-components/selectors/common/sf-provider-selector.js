@@ -13,16 +13,17 @@
                 link: function (scope, tElement, tAttrs, ngModelCtrl) {
                     var onGetProvidersSuccess = function (data) {
                         scope.providers = data.Items;
+                        scope.isProviderSelectorVisible = data && data.Items && data.Items.length >= 2;
                         if (ngModelCtrl.$viewValue) {
                             refreshSelectedProvider();
                         }
                         else {
-                            var defaultProvider = providerService.getDefault(data.Items);
-                            scope.selectedProvider = defaultProvider.Name;
-                            ngModelCtrl.$setViewValue(scope.selectedProvider);
+                            if (scope.isProviderSelectorVisible) {
+                                var defaultProvider = providerService.getDefault(data.Items);
+                                scope.selectedProvider = defaultProvider.Name;
+                                ngModelCtrl.$setViewValue(scope.selectedProvider);
+                            }
                         }
-
-                        scope.isProviderSelectorVisible = data && data.Items && data.Items.length >= 2;
                     };
 
                     var onGetProvidersError = function () {

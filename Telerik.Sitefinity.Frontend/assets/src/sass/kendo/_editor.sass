@@ -3,6 +3,18 @@
 // that's why we're cascading
 
 .modal-body
+	.k-editor-toolbar-wrap
+		padding-left: 0
+	.k-editor-toolbar
+		padding: 0 80px 0 20px
+
+		.k-tool-group, 
+		.k-tool:not(.k-state-disabled),
+		.k-select,
+			display: inline-flex
+			align-items: center
+			justify-content: center
+
 	.k-editor-widget
 		margin-right: 6px
 		//background: transparent
@@ -14,7 +26,6 @@
 
 		.k-editor-toolbar-wrap
 			position: relative
-			padding-left: 0
 		
 		.invisible-group
 		  display: none !important;
@@ -22,7 +33,6 @@
 		.k-editor-toolbar
 			position: relative
 			margin: 0
-			padding: 0 80px 0 20px
 			// min-height: 50px
 			// background: #f2f2f2
 
@@ -69,12 +79,6 @@
 					&.btn
 						margin-top: 1px
 						margin-right: -12px
-			.k-tool-group, 
-			.k-tool:not(.k-state-disabled),
-			.k-select,
-				display: inline-flex
-				align-items: center
-				justify-content: center
 
 		.k-editable-area
 			vertical-align: top
@@ -118,7 +122,10 @@
 	border-bottom: 1px solid #e5e5e5
 
 	&.kendo-content-block--sh
-		margin: -21px -20px -51px
+		margin-bottom: 0
+
+	.k-tool
+		background-color: transparent;
 
 .modal-full-screen
 	width: 100% !important

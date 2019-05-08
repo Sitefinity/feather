@@ -13,7 +13,8 @@ Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEd
     initialize: function () {
         Telerik.Sitefinity.Frontend.Modules.ControlTemplates.Web.UI.MvcControlTemplateEditor.callBaseMethod(this, "initialize");
 
-        this._containerToHide = jQuery(this._otherPropertiesContainer).parent();
+        this._containerToHide = this.getInsertSectionContainer();
+        this._containerToHide.hide();
     },
 
     dispose: function () {

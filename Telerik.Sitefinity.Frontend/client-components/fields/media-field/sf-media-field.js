@@ -261,6 +261,10 @@
                     }
 
                     scope.$on(mediaType.getMediaUploadedEvent(), function (event, uploadedMediaInfo) {
+                        if (!scope.model.provider && uploadedMediaInfo.ContentItem && uploadedMediaInfo.ContentItem.ProviderName) {
+                            scope.model.provider = uploadedMediaInfo.ContentItem.ProviderName;
+                        }
+
                         scope.sfProvider = scope.model.provider;
                         getMedia(uploadedMediaInfo.ContentId);
                         scope.$uibModalInstance.dismiss();

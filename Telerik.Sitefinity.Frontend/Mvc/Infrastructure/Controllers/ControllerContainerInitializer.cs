@@ -117,6 +117,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 ControllerStore.RemoveController(ctrl.ControllerType);
             }
+
+            var sitefinityViewEngines = ViewEngines.Engines.Where(v => v != null && v.GetType() == typeof(CompositePrecompiledMvcEngineWrapper)).ToList();
+            foreach (var sitefinityViewEngine in sitefinityViewEngines)
+            {
+                ViewEngines.Engines.Remove(sitefinityViewEngine);
+            }
+
+            var sitefinityViewEngineExists = ViewEngines.Engines.Any(v => v.GetType() == typeof(SitefinityViewEngine));
+            if (!sitefinityViewEngineExists)
+            {
+                // add Sitefinity view engine
+                ViewEngines.Engines.Add(new SitefinityViewEngine());
+            }
         }
 
         /// <summary>

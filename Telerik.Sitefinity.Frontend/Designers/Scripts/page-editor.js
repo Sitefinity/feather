@@ -136,9 +136,12 @@ var sitefinity = sitefinity || {};
              * Event handler that handles the needDialog event from the Sitefinity
              * page editor.
              */
-            openDialog: function (ev, args) {
-                this.showLoader(args.AppPath);
-                this.widgetContext = args;
+            openDialog: function (args) {
+                if (args.detail.openNewEditor)
+                    return true;
+
+                this.showLoader(args.detail.AppPath);
+                this.widgetContext = args.detail;
 
                 var separator;
                 if (this.widgetContext.url.indexOf('?') > -1)

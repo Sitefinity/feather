@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-
 using ServiceStack.Text;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
@@ -264,14 +263,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 this.refreshLogicalOperator = value;
             }
         }
-    #endregion
+        #endregion
 
-    #region Public methods
+        #region Public methods
 
-    /// <summary>
-    /// Gets the information for all of the content types that a control is able to show.
-    /// </summary>
-    public virtual IEnumerable<IContentLocationInfo> GetLocations()
+        /// <summary>
+        /// Gets the information for all of the content types that a control is able to show.
+        /// </summary>
+        public virtual IEnumerable<IContentLocationInfo> GetLocations()
         {
             var location = new ContentLocationInfo();
             location.ContentType = this.ContentType;
@@ -314,7 +313,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 {
                     var filter = string.Format(CultureInfo.InvariantCulture, "{0}.Contains({{{1}}})", taxonomyField, taxonFilter.Id);
                     query = query.Where(filter);
-                }                
+                }
             }
 
             this.PopulateListViewModel(page, query, viewModel);
@@ -357,6 +356,35 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
+        /// Creates the ListView model by date filter.
+        /// </summary>
+        /// <param name="from">The start date from the date filter.</param>
+        /// <param name="to">The end date from the date filter.</param>
+        /// <param name="page">The page.</param>
+        /// <returns>A list view model containing all descendant items from the given parent.</returns>
+        public virtual ContentListViewModel CreateListViewModelByDate(DateTime from, DateTime to, int page)
+        {
+            if (page < 1)
+            {
+                throw new ArgumentException("'page' argument has to be at least 1.", "page");
+            }
+
+            var viewModel = this.CreateListViewModelInstance();
+
+            var query = this.GetItemsQuery();
+            if (query == null)
+            {
+                return viewModel;
+            }
+
+            query = query.Where("(PublicationDate >= @0 && PublicationDate <= @1)", from, to);
+
+            this.PopulateListViewModel(page, query, viewModel);
+
+            return viewModel;
+        }
+
+        /// <summary>
         /// Creates the details view model.
         /// </summary>
         /// <param name="item">The item.</param>
@@ -391,7 +419,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 var result = new List<CacheDependencyKey>(1);
                 var manager = this.GetManager();
                 string applicationName = manager != null && manager.Provider != null ? manager.Provider.ApplicationName : string.Empty;
-                result.Add(new CacheDependencyKey { Key = string.Concat(ContentLifecycleStatus.Live.ToString(), applicationName), Type = contentResolvedType });
+                if (typeof(ILifecycleDataItem).IsAssignableFrom(this.ContentType))
+                {
+                    result.Add(new CacheDependencyKey { Key = string.Concat(ContentLifecycleStatus.Live.ToString(), applicationName), Type = contentResolvedType });
+                }
+                else
+                {
+                    result.Add(new CacheDependencyKey { Key = applicationName, Type = contentResolvedType });
+                }
+
+                this.AddCommonDependencies(result, this.ContentType);
 
                 return result;
             }
@@ -421,6 +458,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 {
                     result.Add(new CacheDependencyKey { Key = viewModel.Item.Fields.Id.ToString(), Type = contentResolvedType });
                 }
+
+                this.AddCommonDependencies(result, this.ContentType, viewModel.Item);
 
                 return result;
             }
@@ -581,7 +620,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         protected virtual void PopulateListViewModel(int page, IQueryable<IDataItem> query, ContentListViewModel viewModel)
         {
             int? totalPages = null;
-            if (this.SelectionMode == Models.SelectionMode.SelectedItems && this.selectedItemsIds.Count == 0)
+            if (this.SelectionMode == Models.SelectionMode.SelectedItems && (this.selectedItemsIds.Count == 0 || string.IsNullOrEmpty(this.GetSelectedItemsFilterExpression())))
             {
                 viewModel.Items = Enumerable.Empty<ItemViewModel>();
             }
@@ -803,8 +842,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return taxonomyPropertyDescriptor != null;
         }
 
+        /// <summary>
+        /// Gets the selected items filter expression
+        /// </summary>
+        /// <returns>The selected items filter expression. </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1002:AvoidToListOnIEnumerable")]
-        private string GetSelectedItemsFilterExpression()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "It would add too much risk now to change this to property and would not bring much value to code quality and maintenance.")]
+        protected virtual string GetSelectedItemsFilterExpression()
         {
             var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
             var masterIds = this.GetItemsQuery()
@@ -835,6 +879,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 .OfType<IDataItem>();
 
             return relatedItems;
+        }
+
+        private void AddCommonDependencies(IList<CacheDependencyKey> keys, Type contentType, ItemViewModel item = null)
+        {
+            if (contentType.ImplementsInterface(typeof(ICommentable)))
+                keys.Add(new CacheDependencyKey() { Type = typeof(Sitefinity.Services.Comments.IThread) });
         }
         #endregion
 
