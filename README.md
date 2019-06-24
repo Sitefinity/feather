@@ -3,12 +3,6 @@ The Feather Project
 
 This repository contains the core infrastructure related to [Project Feather](http://projectfeather.sitefinity.com).
 
-
-| Test | Status |
-|----|----|
-| Unit | [![Build Status](https://feather-ci.sitefinity.com/buildStatus/icon?job=Master_FeatherUnitTests)](https://feather-ci.sitefinity.com/job/Master_FeatherUnitTests/) |
-| Integration | [![Build Status](https://feather-ci.sitefinity.com/buildStatus/icon?job=Master_FeatherIntegrationTests)](https://feather-ci.sitefinity.com/job/Master_FeatherIntegrationTests/) |
-
 # Related Repositories
 
 [feather-widgets](https://github.com/Sitefinity/feather-widgets) - This repository contains custom MVC widgets which are part of the Feather project.
@@ -18,6 +12,8 @@ This repository contains the core infrastructure related to [Project Feather](ht
 [feather-samples](https://github.com/Sitefinity/feather-samples) - This repository contains code samples related to the Feather project.
 
 # Sitefinity  compatibility
+
+Since Sitefinity 10.2.6602.0 this project is included along with the standard Sitefinity distribution.
 
 | Feather version | Sitefinity version |
 |----|----|
