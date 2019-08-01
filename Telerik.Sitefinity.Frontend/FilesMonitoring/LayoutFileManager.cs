@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
 using Telerik.Sitefinity.Frontend.GridSystem;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Libraries.Model;
 using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
@@ -20,7 +24,6 @@ using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.RelatedData.Messages;
 using Telerik.Sitefinity.Taxonomies;
 using Telerik.Sitefinity.Taxonomies.Model;
-using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
@@ -65,25 +68,9 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             if (string.IsNullOrWhiteSpace(templateCategoryName))
                 return SiteInitializer.CustomTemplatesCategoryId;
 
-            var taxonomyManager = TaxonomyManager.GetManager();
+            var createdIds = this.CreateTemplateCategories(new HashSet<string>() { templateCategoryName }, createIfNotExist);
 
-            var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
-            var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Name != null && t.Name.Equals(templateCategoryName, StringComparison.OrdinalIgnoreCase));
-
-            if (templateCategory == null && createIfNotExist)
-            {
-                templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>();
-                templateCategory.Name = templateCategoryName;
-                templateCategory.UrlName = templateCategoryName;
-                templateCategory.RenderAsLink = false;
-                templateCategory.Title = templateCategoryName;
-                templateCategory.Description = string.Format("Represents category for {0} page templates.", templateCategoryName);
-
-                pageTemplatesTaxonomy.Taxa.Add(templateCategory);
-                taxonomyManager.SaveChanges();
-            }
-
-            return templateCategory.Id;
+            return createdIds[0];
         }
 
         /// <summary>
@@ -174,68 +161,155 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             }
         }
 
+        #endregion
+
+        #region Internal methods
+
+        /// <summary>
+        /// The same logic can be found in PageTemplateHelper -> UpdateDefaultTemplateImages(). In need of a change do it in both places
+        /// </summary>
+        internal static void UpdateDefaultTemplateImages(LibrariesManager librariesManager)
+        {
+            var imagesToUpgrade = new List<string>
+            {
+                LayoutFileManager.TemplateImage1Column,
+                LayoutFileManager.TemplateImage2Columns,
+                LayoutFileManager.TemplateImage3Columns,
+                LayoutFileManager.TemplateImage4Columns,
+                LayoutFileManager.TemplateImageLeftSidebar,
+                LayoutFileManager.TemplateImageRightSidebar,
+                "default"
+            };
+
+            var templateThumbsImageLibrary = librariesManager.GetAlbums().FirstOrDefault(lib => lib.Id == LibrariesModule.DefaultTemplateThumbnailsLibraryId);
+            if (templateThumbsImageLibrary != null)
+            {
+                foreach (var imageToUpgrade in imagesToUpgrade)
+                {
+                    var image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals("MVC_" + imageToUpgrade, StringComparison.OrdinalIgnoreCase) && i.Status == GenericContent.Model.ContentLifecycleStatus.Master);
+                    if (image != null)
+                    {
+                        var iconResource = string.Format(CultureInfo.InvariantCulture, LayoutFileManager.PageTemplateIconPathFormat, imageToUpgrade);
+                        if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Any(mrn => mrn.Equals(iconResource, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(iconResource))
+                            {
+                                using (var resourceImage = System.Drawing.Image.FromStream(imageStream))
+                                {
+                                    var resourceImageStream = new MemoryStream();
+                                    resourceImage.Save(resourceImageStream, System.Drawing.Imaging.ImageFormat.Png);
+
+                                    librariesManager.Upload(image, resourceImageStream, ".png", true);
+                                    librariesManager.Lifecycle.Publish(image);
+                                    librariesManager.SaveChanges();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        internal IList<Guid> CreateTemplateCategories(ISet<string> categoryNames, bool createIfNotExist)
+        {
+            var categoryIds = new List<Guid>();
+            var taxonomyManager = TaxonomyManager.GetManager();
+
+            foreach (var templateCategoryName in categoryNames)
+            {
+                var pageTemplatesTaxonomy = taxonomyManager.GetTaxonomy<HierarchicalTaxonomy>(SiteInitializer.PageTemplatesTaxonomyId);
+                var templateCategory = pageTemplatesTaxonomy.Taxa.SingleOrDefault(t => t.Name != null && t.Name.Equals(templateCategoryName, StringComparison.OrdinalIgnoreCase));
+
+                if (templateCategory == null && createIfNotExist)
+                {
+                    var guid = this.GuidFromString(templateCategoryName);
+                    templateCategory = taxonomyManager.CreateTaxon<HierarchicalTaxon>(guid);
+                    templateCategory.Name = templateCategoryName;
+                    templateCategory.UrlName = templateCategoryName;
+                    templateCategory.RenderAsLink = false;
+                    templateCategory.Title = templateCategoryName;
+                    templateCategory.Description = string.Format(CultureInfo.InvariantCulture, "Represents category for {0} page templates.", templateCategoryName);
+
+                    pageTemplatesTaxonomy.Taxa.Add(templateCategory);
+                    categoryIds.Add(guid);
+                }
+                else
+                {
+                    categoryIds.Add(templateCategory.Id);
+                }
+            }
+
+            taxonomyManager.SaveChanges();
+
+            return categoryIds;
+        }
+
         internal void CreateDefaultTemplates(string packageName, string layoutFile)
         {
-            var header = new LayoutControlDescription() 
-                    {
-                        Caption = LayoutFileManager.LayoutCaptionHeader,
-                        Description = LayoutFileManager.LayoutDescriptionHeader,
-                        Path = LayoutFileManager.GridTemplatePathContainer
-                    };
+            var header = new LayoutControlDescription()
+            {
+                Caption = LayoutFileManager.LayoutCaptionHeader,
+                Description = LayoutFileManager.LayoutDescriptionHeader,
+                Path = LayoutFileManager.GridTemplatePathContainer
+            };
 
             var content = new LayoutControlDescription()
-                    {
-                        Caption = LayoutFileManager.LayoutCaptionContent,
-                        Description = LayoutFileManager.LayoutDescriptionContent,
-                        Path = LayoutFileManager.GridTemplatePathContainer
-                    };
+            {
+                Caption = LayoutFileManager.LayoutCaptionContent,
+                Description = LayoutFileManager.LayoutDescriptionContent,
+                Path = LayoutFileManager.GridTemplatePathContainer
+            };
 
             var footer = new LayoutControlDescription()
-                    {
-                        Caption = LayoutFileManager.LayoutCaptionFooter,
-                        Description = LayoutFileManager.LayoutDescriptionFooter,
-                        Path = LayoutFileManager.GridTemplatePathContainer
-                    };
+            {
+                Caption = LayoutFileManager.LayoutCaptionFooter,
+                Description = LayoutFileManager.LayoutDescriptionFooter,
+                Path = LayoutFileManager.GridTemplatePathContainer
+            };
 
             var twoColumns = new LayoutControlDescription()
-                    {
-                        Caption = LayoutFileManager.LayoutCaption2Columns,
-                        Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                        Path = LayoutFileManager.GridTemplatePath2Columns
-                    };
+            {
+                Caption = LayoutFileManager.LayoutCaption2Columns,
+                Description = LayoutFileManager.LayoutDescriptionContentColumns,
+                Path = LayoutFileManager.GridTemplatePath2Columns
+            };
 
             var threeColumns = new LayoutControlDescription()
-                    {
-                        Caption = LayoutFileManager.LayoutCaption3Columns,
-                        Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                        Path = LayoutFileManager.GridTemplatePath3Columns
-                    };
+            {
+                Caption = LayoutFileManager.LayoutCaption3Columns,
+                Description = LayoutFileManager.LayoutDescriptionContentColumns,
+                Path = LayoutFileManager.GridTemplatePath3Columns
+            };
 
             var fourColumns = new LayoutControlDescription()
-                    {
-                        Caption = LayoutFileManager.LayoutCaption4Columns,
-                        Description = LayoutFileManager.LayoutDescriptionContentColumns,
-                        Path = LayoutFileManager.GridTemplatePath4Columns
-                    };
+            {
+                Caption = LayoutFileManager.LayoutCaption4Columns,
+                Description = LayoutFileManager.LayoutDescriptionContentColumns,
+                Path = LayoutFileManager.GridTemplatePath4Columns
+            };
 
             var leftSidebar = new LayoutControlDescription()
-                    {
-                        Caption = LayoutFileManager.LayoutCaptionContentSidebar,
-                        Description = LayoutFileManager.LayoutDescriptionContentSidebar,
-                        Path = LayoutFileManager.GridTemplatePathLeftSidebar
-                    };
+            {
+                Caption = LayoutFileManager.LayoutCaptionContentSidebar,
+                Description = LayoutFileManager.LayoutDescriptionContentSidebar,
+                Path = LayoutFileManager.GridTemplatePathLeftSidebar
+            };
 
             var rightSidebar = new LayoutControlDescription()
-                    {
-                        Caption = LayoutFileManager.LayoutCaptionContentSidebar,
-                        Description = LayoutFileManager.LayoutDescriptionContentSidebar,
-                        Path = LayoutFileManager.GridTemplatePathRightSidebar
-                    };
+            {
+                Caption = LayoutFileManager.LayoutCaptionContentSidebar,
+                Description = LayoutFileManager.LayoutDescriptionContentSidebar,
+                Path = LayoutFileManager.GridTemplatePathRightSidebar
+            };
+
+            if (!packageName.StartsWith("Bootstrap4"))
+            {
+                this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption2Columns, LayoutFileManager.TemplateImage2Columns, new LayoutControlDescription[] { header, twoColumns, footer });
+                this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption3Columns, LayoutFileManager.TemplateImage3Columns, new LayoutControlDescription[] { header, threeColumns, footer });
+                this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption4Columns, LayoutFileManager.TemplateImage4Columns, new LayoutControlDescription[] { header, fourColumns, footer });
+            }
 
             this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption1Column, LayoutFileManager.TemplateImage1Column, new LayoutControlDescription[] { header, content, footer });
-            this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption2Columns, LayoutFileManager.TemplateImage2Columns, new LayoutControlDescription[] { header, twoColumns, footer });
-            this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption3Columns, LayoutFileManager.TemplateImage3Columns, new LayoutControlDescription[] { header, threeColumns, footer });
-            this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption4Columns, LayoutFileManager.TemplateImage4Columns, new LayoutControlDescription[] { header, fourColumns, footer });
             this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaptionLeftSidebar, LayoutFileManager.TemplateImageLeftSidebar, new LayoutControlDescription[] { header, leftSidebar, footer });
             this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaptionRightSidebar, LayoutFileManager.TemplateImageRightSidebar, new LayoutControlDescription[] { header, rightSidebar, footer });
         }
@@ -270,7 +344,13 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             if (!string.IsNullOrEmpty(packageName))
                 expectedLayoutFolderStructure = packageName + Path.DirectorySeparatorChar + expectedLayoutFolderStructure;
 
-            if (directory.FullName.EndsWith(expectedLayoutFolderStructure, StringComparison.OrdinalIgnoreCase) && directory.FullName.StartsWith(HostingEnvironment.ApplicationPhysicalPath, StringComparison.OrdinalIgnoreCase))
+            var resourcePackagesPath = FrontendManager.VirtualPathBuilder.MapPath(string.Concat("~/", PackageManager.PackagesFolder));
+            if (directory.FullName.EndsWith(expectedLayoutFolderStructure, StringComparison.OrdinalIgnoreCase) && 
+                    (
+                        directory.FullName.StartsWith(HostingEnvironment.ApplicationPhysicalPath, StringComparison.OrdinalIgnoreCase) ||
+                        directory.FullName.StartsWith(resourcePackagesPath, StringComparison.OrdinalIgnoreCase)
+                     )
+                )
                 isFileInValidFolder = true;
 
             return isFileInValidFolder;
@@ -391,6 +471,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         pageManager.TemplatesLifecycle.Publish(master);
                         pageManager.SaveChanges();
 
+                        if (string.Equals(LayoutFileManager.Bootstrap4DefaultTemplateName, fullTemplateName, StringComparison.OrdinalIgnoreCase))
+                            this.CreateDefaultTemplates("Bootstrap4", "default");
                         if (string.Equals(LayoutFileManager.BootstrapDefaultTemplateName, fullTemplateName, StringComparison.OrdinalIgnoreCase))
                             this.CreateDefaultTemplates("Bootstrap", "default");
                         else if (string.Equals(LayoutFileManager.FoundationDefaultTemplateName, fullTemplateName, StringComparison.OrdinalIgnoreCase))
@@ -518,8 +600,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
         private void AddTemplateRelatedData(PageTemplate template, Image image, PageManager pageManager)
         {
-            var changedRelations = new ContentLinkChange[] 
-            { 
+            var changedRelations = new ContentLinkChange[]
+            {
                 new ContentLinkChange()
                 {
                     ChildItemId = image.Id,
@@ -534,6 +616,15 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var type = Type.GetType("Telerik.Sitefinity.RelatedData.RelatedDataHelper, Telerik.Sitefinity");
             var method = type.GetMethod("SaveRelatedDataChanges", BindingFlags.NonPublic | BindingFlags.Static);
             method.Invoke(null, new object[] { pageManager, template, changedRelations, false });
+        }
+
+        private Guid GuidFromString(string key)
+        {
+            using (var md5 = MD5.Create())
+            {
+                byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(key));
+                return new Guid(hash);
+            }
         }
 
         #endregion
@@ -567,15 +658,17 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         public const string PageTemplateIconPathFormat = "Telerik.Sitefinity.Frontend.Resources.PageTemplateImages.{0}.gif";
 
+        public const string Bootstrap4DefaultTemplateName = "Bootstrap4.default";
         public const string BootstrapDefaultTemplateName = "Bootstrap.default";
         public const string SemanticUIDefaultTemplateName = "SemanticUI.default";
         public const string FoundationDefaultTemplateName = "Foundation.default";
 
-        public static readonly string[] DefaultTemplateNames = new string[] 
-                { 
-                    LayoutFileManager.BootstrapDefaultTemplateName, 
-                    LayoutFileManager.SemanticUIDefaultTemplateName, 
-                    LayoutFileManager.FoundationDefaultTemplateName 
+        public static readonly string[] DefaultTemplateNames = new string[]
+                {
+                    LayoutFileManager.Bootstrap4DefaultTemplateName,
+                    LayoutFileManager.BootstrapDefaultTemplateName,
+                    LayoutFileManager.SemanticUIDefaultTemplateName,
+                    LayoutFileManager.FoundationDefaultTemplateName
                 };
 
         private const string TemplateCaption1Column = "1 Column, Header, Footer";

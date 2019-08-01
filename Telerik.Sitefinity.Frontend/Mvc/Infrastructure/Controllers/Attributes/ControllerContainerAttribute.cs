@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Mvc;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes
 {

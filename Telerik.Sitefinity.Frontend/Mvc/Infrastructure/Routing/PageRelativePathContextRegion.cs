@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
@@ -32,6 +33,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     var newPath = originalWithSlash.Right(originalWithSlash.Length - nodeUrl.Length);
 
                     this.context.RewritePath("~/" + newPath);
+                }
+                else if (currentNode.IsHomePage() &&
+                    RouteHelper.ResolveUrl(SystemManager.CurrentContext.CurrentSite.GetUri().AbsolutePath, UrlResolveOptions.ApplicationRelative | UrlResolveOptions.AppendTrailingSlash) == originalWithSlash)
+                {
+                    // The request is to the root of the site
+                    this.context.RewritePath("~/");
                 }
             }
             else

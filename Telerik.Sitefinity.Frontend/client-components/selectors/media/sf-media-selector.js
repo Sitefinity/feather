@@ -208,6 +208,7 @@
                             sort: scope.sortExpression,
                             provider: scope.provider
                         };
+                        var totalItemsCount = 0;
 
                         if (appendItems) {
                             options.skip = scope.items.length;
@@ -234,6 +235,8 @@
                             sfMediaService[scope.sfMediaType].get(options, scope.filterObject, appendItems, scope.sfMediaSettings)
                                 .then(function (response) {
                                     if (response && response.Items) {
+                                        totalItemsCount = response.TotalCount;
+
                                         mutateItemsWithMediaMetrics(response.Items);
 
                                         if (appendItems) {
@@ -253,6 +256,13 @@
                                         // scrolls the collection of items to the top
                                         element.find('.Media-items').scrollTop(0);
                                     }
+
+                                    setTimeout(function() {
+                                        var shouldLoadMoreItems = totalItemsCount > scope.items.length && element.find('.Media-items-holder').height() < element.find('.Media-items').height();
+                                        if (shouldLoadMoreItems) {
+                                            refresh(true);
+                                        }
+                                    }, 0);
                                 });
                         }
                     };
@@ -771,6 +781,14 @@
                         }
                     });
 
+                    scope.$watch('selectedItems', function (newVal, oldVal) {
+                        if (!scope.provider || scope.provider.length === 0) {
+                            if (newVal && newVal.length > 0) {
+                                scope.provider = newVal[newVal.length - 1].ProviderName;
+                            }
+                        }
+                    });
+
                     // Reacts when a folder is clicked.
                     scope.$on('sf-collection-item-selected', function (event, data) {
                         var item = data.item;
@@ -806,6 +824,7 @@
 
                         if (!scope.filterObject) {
                             scope.filterObject = sfMediaFilter.newFilter();
+                            scope.filterObject.status = attrs.sfMaster === 'true' || attrs.sfMaster === 'True' ? 'master' : 'live';
                             scope.filterObject.attachEvent(refresh);
 
                             // initial open populates dialog with recent documents

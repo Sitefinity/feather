@@ -4,14 +4,15 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
-using RazorGenerator.Mvc;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
@@ -23,8 +24,10 @@ using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy.TypeDescription;
 using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages;
+using Telerik.Sitefinity.Security;
 using Telerik.Sitefinity.Services;
-using System.Threading.Tasks;
+using Telerik.Sitefinity.Taxonomies;
+using Telerik.Sitefinity.Taxonomies.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -116,6 +119,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (var ctrl in ControllerStore.Controllers().ToList())
             {
                 ControllerStore.RemoveController(ctrl.ControllerType);
+            }
+
+            var sitefinityViewEngines = ViewEngines.Engines.Where(v => v != null && v.GetType() == typeof(CompositePrecompiledMvcEngineWrapper)).ToList();
+            foreach (var sitefinityViewEngine in sitefinityViewEngines)
+            {
+                ViewEngines.Engines.Remove(sitefinityViewEngine);
+            }
+
+            var sitefinityViewEngineExists = ViewEngines.Engines.Any(v => v.GetType() == typeof(SitefinityViewEngine));
+            if (!sitefinityViewEngineExists)
+            {
+                // add Sitefinity view engine
+                ViewEngines.Engines.Add(new SitefinityViewEngine());
             }
         }
 
@@ -301,8 +317,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             ObjectFactory.Container.RegisterType<IControllerActionInvoker, FeatherActionInvoker>();
             ObjectFactory.Container.RegisterType<IRouteParamResolver, IntParamResolver>("int");
-            ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
-            ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
+
+            Task.Run(() =>
+            {
+                this.RegisterTaxonomyRoutes();
+            });
+
+            TaxonomyManager.Executing += new EventHandler<ExecutingEventArgs>(OnPersistTaxonomy);
 
             string mvcControllerProxySettingsPropertyDescriptorName = string.Format("{0}.{1}", typeof(MvcWidgetProxy).FullName, "Settings");
             ObjectFactory.Container.RegisterType<IControlPropertyDescriptor, ControllerSettingsPropertyDescriptor>(mvcControllerProxySettingsPropertyDescriptorName);
@@ -313,6 +334,70 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #endregion
 
         #region Private members
+
+        private void OnPersistTaxonomy(object sender, ExecutingEventArgs args)
+        {
+            if (!(args.CommandName == "CommitTransaction" || args.CommandName == "FlushTransaction"))
+                return;
+
+            var taxonomyProvider = sender as TaxonomyDataProvider;
+
+            var dirtyItems = taxonomyProvider.GetDirtyItems();
+            if (dirtyItems.Count == 0)
+                return;
+
+            foreach (var item in dirtyItems)
+            {
+                if (item is Taxonomy taxonomy)
+                {
+                    var itemStatus = taxonomyProvider.GetDirtyItemStatus(item);
+                    var taxonomyName = taxonomy.Name;
+                    if (!string.IsNullOrEmpty(taxonomyName) &&
+                       (itemStatus == SecurityConstants.TransactionActionType.New || itemStatus == SecurityConstants.TransactionActionType.Updated))
+                    {
+                        taxonomyName = taxonomyName.ToLowerInvariant();
+                        if (!ObjectFactory.Container.IsRegistered(typeof(TaxonParamResolver), taxonomyName))
+                        {
+                            ObjectFactory.Container.RegisterType<IRouteParamResolver, TaxonParamResolver>(taxonomyName, new InjectionConstructor(taxonomyName));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RegisterTaxonomyRoutes()
+        {
+            var taxonomies = TaxonomyManager.GetTaxonomiesCache();
+
+            if (taxonomies.Count() > 0)
+            {
+                foreach (var taxonomy in taxonomies)
+                {
+                    var taxonomyName = this.GetTaxonomyName(taxonomy.Id, taxonomy.Name);
+                    ObjectFactory.Container.RegisterType<IRouteParamResolver, TaxonParamResolver>(taxonomyName, new InjectionConstructor(taxonomyName));
+                }
+            }
+        }
+
+        private string GetTaxonomyName(Guid id, string name)
+        {
+            var taxonomyName = string.Empty;
+
+            if (id == TaxonomyManager.TagsTaxonomyId)
+            {
+                taxonomyName = "tag";
+            }
+            else if (id == TaxonomyManager.CategoriesTaxonomyId)
+            {
+                taxonomyName = "category";
+            }
+            else
+            {
+                taxonomyName = name.ToLowerInvariant();
+            }
+
+            return taxonomyName;
+        }
 
         private Task<Assembly> RetrieveAssemblyAsync(string assemblyFileName)
         {

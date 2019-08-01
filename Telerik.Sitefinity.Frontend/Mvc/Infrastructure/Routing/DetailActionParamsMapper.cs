@@ -12,6 +12,7 @@ using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.GenericContent;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
@@ -67,7 +68,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
         private bool TryMatchUrl(string[] urlParams, RequestContext requestContext, bool setUrlParametersResolved)
         {
-            if (urlParams == null || urlParams.Length == 0)
+            if (urlParams == null || urlParams.Length == 0 || !this.IsDetailsModeSupported())
                 return false;
 
             var url = RouteHelper.GetUrlParameterString(urlParams);
@@ -84,18 +85,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                 return true;
             }
-            else if (urlParams.Length > 1)
-            {
-                this.TryMatchUrl(urlParams.Take(urlParams.Length - 1).ToArray(), requestContext, false);
-
-                return false;
-            }
 
             return false;
         }
 
         /// <inheritdoc />
-        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
+        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext, string urlKeyPrefix)
         {
             return this.TryMatchUrl(urlParams, requestContext, true);
         }
@@ -118,6 +113,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 requestContext.RouteData.Values[parameters[0].ParameterName] = item;
             }
 
+            if (!redirectUrl.IsNullOrEmpty())
+            {
+                requestContext.RouteData.Values[Telerik.Sitefinity.Mvc.ControllerActionInvoker.ShouldProcessRequestKey] = redirectUrl;
+            }
+
             if (redirectUrl.IsNullOrEmpty() == false && parameters.Length > 1 && parameters[1].ParameterType == typeof(string))
             {
                 requestContext.RouteData.Values[parameters[1].ParameterName] = redirectUrl;
@@ -127,6 +127,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             {
                 RouteHelper.SetUrlParametersResolved();
             }
+        }
+
+        /// <summary>
+        /// Check if the widget is configured to support details mode.
+        /// </summary>
+        protected bool IsDetailsModeSupported()
+        {
+            var modelProperty = this.Controller.GetType().GetProperty("Model");
+            if (modelProperty != null)
+            {
+                var model = modelProperty.GetValue(this.Controller, null);
+                var contentViewDisplayModeProperty = model == null ? null : model.GetType().GetProperty("ContentViewDisplayMode");
+                if (contentViewDisplayModeProperty != null)
+                {
+                    var contentViewDisplayModeValue = contentViewDisplayModeProperty.GetValue(model, null);
+                    if (contentViewDisplayModeValue != null && contentViewDisplayModeValue.ToString() == ContentViewDisplayMode.Master.ToString())
+                        return false;
+                }
+            }
+
+            return true;
         }
 
         protected Type ItemType { get; set; }

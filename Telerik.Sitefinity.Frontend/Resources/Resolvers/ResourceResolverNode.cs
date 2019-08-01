@@ -78,6 +78,15 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             return this.CurrentOpen(definition, virtualPath);
         }
 
+        public virtual string GetFileHash(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies)
+        {
+            var currentHash = this.CurrentGetFileHash(definition, virtualPath, virtualPathDependencies);
+            if (currentHash == null && this.Next != null)
+                return this.Next.GetFileHash(definition, virtualPath, virtualPathDependencies);
+
+            return currentHash;
+        }
+
         #endregion
 
         /// <summary>
@@ -124,6 +133,11 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         #endregion
 
         #region Abstract methods
+
+        protected virtual string CurrentGetFileHash(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies)
+        {
+            return null;
+        }
 
         /// <summary>
         /// Determines whether a file with the specified virtual path exists in the current resolver node.

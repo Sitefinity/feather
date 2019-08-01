@@ -146,6 +146,7 @@
                             scope.model.selectedItems.push(scope.sfImage);
                             scope.model.filterObject = sfMediaFilter.newFilter();
                             scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
+                            scope.model.filterObject.status = attrs.sfMaster === 'true' || attrs.sfMaster === 'True' ? 'master' : 'live';
                         }
 
                         var imageSelectorModalScope = element.find('.imageSelectorModal').scope();
@@ -163,7 +164,12 @@
                     }
 
                     scope.$on('sf-image-selector-image-uploaded', function (event, uploadedImageInfo) {
+                        if (!scope.model.provider && uploadedImageInfo.ContentItem && uploadedImageInfo.ContentItem.ProviderName) {
+                            scope.model.provider = uploadedImageInfo.ContentItem.ProviderName;
+                        }
+
                         scope.sfProvider = scope.model.provider;
+
                         getImage(uploadedImageInfo.ContentId);
                         scope.$uibModalInstance.dismiss();
                     });

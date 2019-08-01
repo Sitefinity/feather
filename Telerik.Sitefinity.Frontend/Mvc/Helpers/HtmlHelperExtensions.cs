@@ -60,7 +60,6 @@
             return MvcHtmlString.Create(sanitizedHtml);
         }
 
-
         /// <summary>
         /// Sanitizes url string using the registered <see cref="IHtmlSanitizer"/>. It will also attribute encode the string.
         /// </summary>

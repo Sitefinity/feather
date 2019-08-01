@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
     internal class FeatherEnabledToolboxFilter : IToolboxFilter
     {
         /// <inheritdoc />
-        public virtual bool IsSectionVisible(IToolboxSection section)
+        public virtual bool IsSectionVisible(IToolboxSection section, IToolboxFilterContext context)
         {
             return true;
         }

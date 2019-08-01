@@ -40,7 +40,7 @@
 				</div>
             </div>
 
-            <div ng-hide="items.length">
+            <div ng-hide="items.length || isLoading">
 
                 <div ng-hide="filterObject.query || selectedFilterOption != 1" class="Media-upload-text text-center">
                     <div class="icon-no-video"></div>
@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-			<div ng-show="items.length"
+			<div ng-show="items.length || isLoading"
                  sf-collection
                  sf-data="items"
                  sf-deselectable="{{isDeselectable}}"

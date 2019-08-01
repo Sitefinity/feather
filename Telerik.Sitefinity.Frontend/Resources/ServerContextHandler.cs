@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Hosting;
-using ServiceStack.Text;
 using Telerik.Microsoft.Practices.EnterpriseLibrary.Caching;
-using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Multisite.Model;
 using Telerik.Sitefinity.Security.Claims;
 using Telerik.Sitefinity.Services;
-using Telerik.Sitefinity.Web;
-using Telerik.Sitefinity.Web.Services;
 
 namespace Telerik.Sitefinity.Frontend.Resources
 {
@@ -57,7 +52,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var currentPackage = new PackageManager().GetCurrentPackage() ?? string.Empty;
             var currentSiteId = this.GetCurrentSiteId();
             var currentUserId = this.CurrentUserId.ToString();
-
             var cacheKey = string.Format(CultureInfo.InvariantCulture, ServerContextHandler.ScriptCacheKeyPattern, currentPackage, currentSiteId, currentUserId);
 
             var cache = this.GetCacheManager();
@@ -69,14 +63,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 {
                     if (script == null)
                     {
-                        script = this.GetRawScript()
-                            .Replace("{{applicationPath}}", this.GetApplicationPath())
-                            .Replace("{{currentPackage}}", currentPackage)
-                            .Replace("{{frontendLanguages}}", this.GetFrontendLanguages())
-                            .Replace("{{currentFrontendRootNodeId}}", this.CurrentFrontendRootNodeId.ToString())
-                            .Replace("{{currentUserId}}", currentUserId)
-                            .Replace("{{siteId}}", currentSiteId.ToString())
-                            .Replace("{{isMultisiteMode}}", SystemManager.CurrentContext.IsMultisiteMode.ToString());
+                        script = this.GetRawScript();
 
                         cache.Add(
                             cacheKey,
@@ -107,26 +94,12 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Gets the application path.
-        /// </summary>
-        /// <returns>The application path.</returns>
-        protected virtual string GetApplicationPath()
-        {
-            return RouteHelper.ResolveUrl("~/", UrlResolveOptions.Rooted);
-        }
-
-        /// <summary>
-        /// Gets the frontend languages for the current site.
+        /// Gets the cache manager.
         /// </summary>
         /// <returns></returns>
-        protected virtual string GetFrontendLanguages()
+        protected virtual ICacheManager GetCacheManager()
         {
-            var appSettings = SystemManager.CurrentContext.AppSettings;
-            var languages = appSettings.DefinedFrontendLanguages.Select(l => l.Name);
-
-            var serialziedLanguages = JsonSerializer.SerializeToString(languages);
-
-            return serialziedLanguages;
+            return SystemManager.GetCacheManager(CacheManagerInstance.Global);
         }
 
         /// <summary>
@@ -136,18 +109,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
         protected virtual Guid GetCurrentSiteId()
         {
             return SystemManager.CurrentContext.CurrentSite.Id;
-        }
-
-        /// <summary>
-        /// Gets the current front-end root node id.
-        /// </summary>
-        /// <value>The current front-end root node id.</value>
-        protected virtual Guid CurrentFrontendRootNodeId
-        {
-            get
-            {
-                return SiteInitializer.CurrentFrontendRootNodeId;
-            }
         }
 
         /// <summary>
@@ -165,15 +126,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Gets the cache manager.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual ICacheManager GetCacheManager()
-        {
-            return SystemManager.GetCacheManager(CacheManagerInstance.Global);
-        }
-
-        /// <summary>
         /// Gets the cache dependancy that will invalidate the script's cache.
         /// </summary>
         /// <param name="key">The key.</param>
@@ -184,9 +136,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         private static object scriptLock = new object();
-
         private const string ScriptPath = "~/{0}Resources/ServerContext.js";
-
         private const string ScriptCacheKeyPattern = "FeatherServerContext-{0}-{1}-{2}";
     }
 }

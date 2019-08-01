@@ -17,9 +17,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <exception cref="System.ArgumentException">When taxonomy with the given name is not found.</exception>
         public TaxonParamResolver(string taxonomyName)
         {
-            this.taxonomy = TaxonomyManager.GetManager().GetTaxonomies<Taxonomy>().FirstOrDefault(t => t.Name == taxonomyName);
+            this.taxonomy = GetTaxonomy(taxonomyName);
             if (this.taxonomy == null)
                 throw new ArgumentException("Taxonomy with name {0} was not found!".Arrange(taxonomyName));
+        }
+
+        private ITaxonomyProxy GetTaxonomy(string taxonomyName)
+        {
+            if (taxonomyName.Equals("category"))
+            {
+                taxonomyName = "Categories";
+            }
+            else if (taxonomyName.Equals("tag"))
+            {
+                taxonomyName = "Tags";
+            }
+
+            return TaxonomyManager.GetTaxonomiesCache().FirstOrDefault(t => t.Name.Equals(taxonomyName, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -28,7 +42,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <value>
         /// The taxonomy.
         /// </value>
-        protected Taxonomy Taxonomy 
+        protected ITaxonomyProxy Taxonomy 
         { 
             get
             {
@@ -39,10 +53,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <inheritdoc />
         protected override bool TryResolveParamInternal(string urlParam, out object value)
         {
-            value = this.Taxonomy.Taxa.FirstOrDefault(t => t.UrlName == urlParam);
+            value = TaxonomyManager.GetManager().GetTaxa<Taxon>().FirstOrDefault(t => t.TaxonomyId == this.Taxonomy.Id && t.UrlName == urlParam);
             return value != null;
         }
 
-        private Taxonomy taxonomy;
+        private ITaxonomyProxy taxonomy;
     }
 }

@@ -145,7 +145,7 @@
                                         '</div></div>');
                             },
                             placeholder: function (element) {
-                                return $('<div class="list-group-item list-group-item-placeholder"></div>');
+                                return $('<div class="list-group-item list-group-item-placeholder list-group-item-placeholder-2"></div>');
                             },
                             handler: ".handler",
                             axis: "y"

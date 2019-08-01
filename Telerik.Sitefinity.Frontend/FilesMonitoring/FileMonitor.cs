@@ -33,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 {
                     this.AddRootWatcher();
                 }
-                
+
                 foreach (var directory in directoriesInfo)
                 {
                     var direcotryPath = this.MapPath(directory.Path);
@@ -332,7 +332,28 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
             // converting the file path to a virtual file path
             if (!appPhysicalPath.IsNullOrEmpty() && !path.IsNullOrEmpty())
-                path = path.Substring(appPhysicalPath.Length - 1);
+            {
+                if (path.StartsWith(appPhysicalPath))
+                {
+                    // path within site root
+                    path = path.Substring(appPhysicalPath.Length - 1);
+                }
+                else
+                {
+                    // path within virtual directory
+                    foreach (var monitoredDirectory in this.WatchedFoldersAndPackages)
+                    {
+                        var physicalPath = this.MapPath(monitoredDirectory.Path);
+                        if (path.StartsWith(physicalPath))
+                        {
+                            // path within site root
+                            path = path.Substring(physicalPath.Length).Replace('\\', '/');
+                            path = string.Concat(monitoredDirectory.Path, path);
+                            return path;
+                        }
+                    }
+                }
+            }
 
             var virtualFilePath = path.Replace('\\', '/').Insert(0, "~");
 

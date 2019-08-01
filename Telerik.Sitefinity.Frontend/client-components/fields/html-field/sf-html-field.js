@@ -10,7 +10,8 @@
                     sfModel: '=',
                     sfDocumentsSettings: '=?',
                     sfVideosSettings: '=?',
-                    sfImagesSettings: '=?'
+                    sfImagesSettings: '=?',
+                    sfViewType: '@'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -56,8 +57,7 @@
                                 commands.split(',').forEach(function (command) {
                                     var selector = String.format("select.k-{0},a.k-{0},span.k-{0},select.k-i-{0},a.k-i-{0},span.k-i-{0}", command.trim());
                                     var anchor = toolbar.find(selector).parents('li');
-                                    var func = scope.showAllCommands ? anchor.show : anchor.hide;
-                                    func.call(anchor);
+                                    anchor.toggleClass("invisible-group", !scope.showAllCommands);
                                 });
                             }
                             else {
@@ -341,7 +341,7 @@
                             var output = html_beautify(source, opts);
 
                             scope.sfModel = output;
-                        }
+                        };
                     }
                 }
             };

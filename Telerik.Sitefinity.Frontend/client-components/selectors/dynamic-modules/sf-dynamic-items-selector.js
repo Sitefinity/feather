@@ -7,13 +7,14 @@
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
                         var master = attrs.sfMaster === 'true' || attrs.sfMaster === 'True';
+                        var parentId = attrs.sfParentId;
 
                         ctrl.getItems = function (skip, take, search) {
                             var provider = ctrl.$scope.sfProvider;
                             if (master)
-                                return dataService.getItems(ctrl.$scope.sfItemType, provider, skip, take, search, ctrl.identifierField);
+                                return dataService.getItems(ctrl.$scope.sfItemType, provider, skip, take, search, ctrl.identifierField, parentId);
                             else
-                                return dataService.getLiveItems(ctrl.$scope.sfItemType, provider, skip, take, search, ctrl.identifierField);
+                                return dataService.getLiveItems(ctrl.$scope.sfItemType, provider, skip, take, search, ctrl.identifierField, parentId);
                         };
 
                         ctrl.getSpecificItems = function (ids) {

@@ -28,7 +28,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// The default designer is located under <see cref="Telerik.Sitefinity.Frontend.Mvc.Views.Designer.Designer.cshtml"/>.
         /// </summary>
         /// <param name="widgetName">The name of the widget.</param>
-        public virtual ActionResult Master(string widgetName)
+        /// <param name="moduleName">The name of the widget dynamic module (if any). Default value is null.</param>
+        public virtual ActionResult Master(string widgetName, string moduleName = null)
         {
             this.GetHttpContext().Items[SystemManager.IsBackendRequestKey] = true;
 
@@ -37,7 +38,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             this.ViewBag.ControlName = widgetName;
             this.ViewBag.ControlId = controlId;
 
-            var model = this.GetModel(widgetName, Guid.Parse(controlId));
+            var model = this.GetModel(widgetName, Guid.Parse(controlId), moduleName);
             return this.View(DesignerController.DefaultView, model);
         }
 
@@ -97,13 +98,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <summary>
         /// Gets the model of the designer.
         /// </summary>
-        private IDesignerModel GetModel(string widgetName, Guid controlId)
+        private IDesignerModel GetModel(string widgetName, Guid controlId, string moduleName = null)
         {
             var viewFilesMappgings = new Dictionary<string, string>();
 
             var constructorParameters = new Dictionary<string, object> 
             {
-                { "views", this.GetPartialViews(ref viewFilesMappgings) },
+                { "views", this.GetPartialViews(ref viewFilesMappgings, moduleName) },
                 { "viewLocations", this.GetPartialViewLocations() },
                 { "widgetName", widgetName },
                 { "controlId", controlId },

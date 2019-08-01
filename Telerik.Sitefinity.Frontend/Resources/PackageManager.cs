@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Routing;
+using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
@@ -31,7 +33,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
             packageName = this.GetPackageFromContext();
 
-            if (packageName.IsNullOrEmpty())
+            if (packageName.IsNullOrEmpty() && this.AllowChangePackageAtRuntimeViaQueryString)
                 packageName = this.GetPackageFromUrl();
 
             if (packageName.IsNullOrEmpty())
@@ -100,6 +102,19 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(packageName));
             return path != null && Directory.Exists(path);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the package manager will try to resolve the package from URL.
+        /// </summary>
+        protected virtual bool AllowChangePackageAtRuntimeViaQueryString
+        {
+            get
+            {
+                return Telerik.Sitefinity.Abstractions.AppSettings.CurrentSettings.IsBackend || 
+                    Config.Get<Sitefinity.Modules.Pages.Configuration.PagesConfig>().AllowChangePageThemeAtRuntime ||
+                    (SystemManager.CurrentHttpContext.Items[SiteMapBase.CurrentNodeKey] as PageSiteNode) == null;
+            }
         }
 
         #endregion
@@ -228,7 +243,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns></returns>
         private string GetPackageFromPageInfo()
         {
-            string packageName;
+            string packageName = null;
             var context = SystemManager.CurrentHttpContext;
 
             if (context.Items.Contains("IsTemplate") && (bool)context.Items["IsTemplate"])
@@ -246,7 +261,15 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var pageNodeId = new Guid(context.Request.RequestContext.RouteData.Values["itemId"].ToString());
                 var page = PageManager.GetManager().GetPageData(pageNodeId);
 
-                packageName = this.GetPackageFromNodeId(page.NavigationNodeId.ToString()) ?? this.GetPackageFromTemplate(page.Template);
+                if (page.NavigationNodeId != Guid.Empty)
+                {
+                    packageName = this.GetPackageFromNodeId(page.NavigationNodeId.ToString());
+                }
+
+                if (packageName == null)
+                {
+                    packageName = this.GetPackageFromTemplate(page.Template);
+                }
             }
             else
             {
@@ -274,7 +297,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 packageName = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] as string;
             }
 
-            return packageName;
+            return packageName;     
         }
 
         /// <summary>
@@ -283,12 +306,42 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <returns></returns>
         private string GetPackageFromUrl()
         {
-            string packageName = SystemManager.CurrentHttpContext.Request.QueryString["package"];
-
+            string packageName = SystemManager.CurrentHttpContext.Request.QueryStringGet(
+                "package",
+                () => { return new PackageQueryParameterValidator() { Arguments = !this.GetType().Equals(typeof(PackageManager)) ? new string[] { this.GetType().Assembly.FullName, this.GetType().FullName } : null }; });
             return packageName;
         }
 
         #endregion
+
+        [Serializable]
+        class PackageQueryParameterValidator : CacheVariationParamValidator
+        {
+            protected override bool Validate(string paramValue, string[] arguments)
+            {
+                PackageManager packageManager = null;
+                if (arguments != null && arguments.Length == 2)
+                {
+                    try
+                    {
+                        var assembly = Assembly.Load(arguments[0]);
+                        if (assembly != null)
+                            packageManager = assembly.CreateInstance(arguments[1]) as PackageManager;
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                if (packageManager == null)
+                {
+                    packageManager = new PackageManager();
+                }
+
+                return packageManager.PackageExists(paramValue);
+            }
+        }
+
 
         #region Constants
 

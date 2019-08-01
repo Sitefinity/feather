@@ -78,7 +78,7 @@
                     <div class="col-xs-6">
                         <label>
                             @(Res.Get<ClientComponentsResources>().ImageThumbnail)</label>
-                        <div sf-thumbnail-size-selection="" sf-model="model"></div>
+                        <div sf-thumbnail-size-selection="" sf-model="model" sf-media-type="images" view-type="{{sfViewType}}"></div>
                     </div>
                 </div>
             </div>

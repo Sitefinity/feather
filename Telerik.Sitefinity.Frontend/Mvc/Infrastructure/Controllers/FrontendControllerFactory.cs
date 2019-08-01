@@ -107,29 +107,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         private static void AddDynamicControllerPathTransformations(Controller controller, string virtualPath, string currentPackage, List<Func<string, string>> pathTransformations)
         {
-            if (controller != null && controller.Request != null && controller.Request.QueryString != null && controller.RouteData != null && controller.RouteData.Values.ContainsKey("widgetName") && (string)controller.RouteData.Values["widgetName"] == "DynamicContent")
-            {
-                var controlId = controller.Request.QueryString["controlId"] as string;
-                Guid controlIdGuid;
+            var dynamicControllerWidgetName = controller.ResolveDynamicControllerWidgetName();
+            if (string.IsNullOrEmpty(dynamicControllerWidgetName))
+                return;
 
-                if (!string.IsNullOrEmpty(controlId) && Guid.TryParse(controlId, out controlIdGuid))
-                {
-                    var controlObjectData = PageManager.GetManager().GetControl<ObjectData>(controlIdGuid);
-
-                    if (controlObjectData != null && controlObjectData.Properties != null)
-                    {
-                        var controllerWidgetProperty = controlObjectData.Properties.FirstOrDefault(x => x.Name == "WidgetName");
-                        if (controllerWidgetProperty != null)
-                        {
-                            var dynamicControllerWidgetName = controllerWidgetProperty.Value;
-                            if (!string.IsNullOrEmpty(dynamicControllerWidgetName))
-                            {
-                                pathTransformations.Add(FrontendControllerFactory.GetPathTransformation(virtualPath, currentPackage, dynamicControllerWidgetName));
-                            }
-                        }
-                    }
-                }
-            }
+            pathTransformations.Add(FrontendControllerFactory.GetPathTransformation(virtualPath, currentPackage, dynamicControllerWidgetName));
         }
 
         private static Func<string, string> GetPathTransformation(string controllerVirtualPath, string currentPackage, string widgetName = null)

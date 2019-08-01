@@ -46,7 +46,7 @@ function (serviceHelper, serverContext, $http, $q) {
         var deferred = $q.defer();
 
         $http({
-            url: serviceUrl,
+            url: serviceUrl + "display/",
             method: "GET",
             params: {
                 skip: skip,
@@ -84,7 +84,7 @@ function (serviceHelper, serverContext, $http, $q) {
         var deferred = $q.defer();
 
         $http({
-            url: serviceUrl,
+            url: serviceUrl + "display/",
             method: "GET",
             params: {
                 provider: provider,

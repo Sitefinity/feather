@@ -1,14 +1,14 @@
 ﻿<sf-taxon-filter class="checkbox" sf-query-data="sfQueryData" 
     sf-taxonomy-fields="sfTaxonomyFields"
     sf-provider="sfProvider"
-    sf-group-logical-operator="AND"
+    sf-group-logical-operator="{{sfGroupLogicalOperator}}"
     sf-item-logical-operator="OR"
     class="sf-taxon-filter"
     ng-if="sfTaxonomyFields && sfTaxonomyFields.length"></sf-taxon-filter>
 
  <sf-date-filter class="checkbox" sf-query-data="sfQueryData" 
      sf-date-groups="sfDateGroups"
-     sf-group-logical-operator="AND"
+     sf-group-logical-operator="{{sfGroupLogicalOperator}}"
      sf-item-logical-operator="AND"
      sf-query-field-name="PublicationDate"
      sf-any-time-label='@(Res.Get<ClientComponentsResources>().AnyTime)'

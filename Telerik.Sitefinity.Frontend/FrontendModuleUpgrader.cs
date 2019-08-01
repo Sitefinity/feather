@@ -7,6 +7,7 @@ using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring;
 using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Pages.Model;
@@ -22,7 +23,8 @@ namespace Telerik.Sitefinity.Frontend
         /// Upgrades the specified upgrade from.
         /// </summary>
         /// <param name="upgradeFrom">The upgrade from.</param>
-        public static void Upgrade(Version upgradeFrom)
+        /// <param name="initializer">The site initializer.</param>
+        public static void Upgrade(Version upgradeFrom, SiteInitializer initializer)
         {
             if (upgradeFrom < new Version(1, 2, 140, 0))
             {
@@ -55,6 +57,17 @@ namespace Telerik.Sitefinity.Frontend
             {
                 FrontendModuleUpgrader.UpdateGridWidgetsToolbox();
                 FrontendModuleUpgrader.UpdateGridWidgetPaths();
+            }
+
+            if (upgradeFrom <= new Version(1, 7, 600, 0))
+            {
+                FrontendModuleUpgrader.UpgradeLimitCountProperty(initializer);
+            }
+
+            if (upgradeFrom < new Version(12, 0))
+            {
+                FrontendModuleUpgrader.CreateBootstrap4Templates();
+                FrontendModuleUpgrader.UpdateDefaultTemplateImages();
             }
         }
 
@@ -227,6 +240,24 @@ namespace Telerik.Sitefinity.Frontend
             }
         }
 
+        private static void UpdateDefaultTemplateImages()
+        {
+            var librariesManager = LibrariesManager.GetManager("SystemLibrariesProvider");
+            if (librariesManager != null)
+            {
+                var suppressSecurityChecks = librariesManager.Provider.SuppressSecurityChecks;
+                try
+                {
+                    librariesManager.Provider.SuppressSecurityChecks = true;
+                    LayoutFileManager.UpdateDefaultTemplateImages(librariesManager);
+                }
+                finally
+                {
+                    librariesManager.Provider.SuppressSecurityChecks = suppressSecurityChecks;
+                }
+            }
+        }
+
         // 1, 3, 320, 0
         private static void UpdateGridWidgetsToolbox()
         {
@@ -304,6 +335,65 @@ namespace Telerik.Sitefinity.Frontend
 
                 currentControl += BATCH;
             }
+        }
+
+        // 1, 7, 600, 0
+        private static void UpgradeLimitCountProperty(SiteInitializer initializer)
+        {
+            var pageMan = initializer.PageManager;
+            string[] controllersList = 
+                {
+                    "Telerik.Sitefinity.Frontend.Blogs.Mvc.Controllers.BlogController",
+                    "Telerik.Sitefinity.Frontend.Blogs.Mvc.Controllers.BlogPostController",
+                    "Telerik.Sitefinity.Frontend.News.Mvc.Controllers.NewsController",
+                    "Telerik.Sitefinity.Frontend.Events.Mvc.Controllers.EventController",
+                    "Telerik.Sitefinity.Frontend.Media.Mvc.Controllers.ImageGalleryController",
+                    "Telerik.Sitefinity.Frontend.Media.Mvc.Controllers.VideoGalleryController",
+                    "Telerik.Sitefinity.Frontend.Media.Mvc.Controllers.DocumentsListController",
+                    "Telerik.Sitefinity.Frontend.DynamicContent.Mvc.Controllers.DynamicContentController",
+                    "Telerik.Sitefinity.Frontend.Identity.Mvc.Controllers.UsersListController",
+                    "Telerik.Sitefinity.Frontend.Search.Mvc.Controllers.SearchResultsController"
+                };
+
+            foreach (var controller in controllersList)
+            {
+                var controlIds = pageMan.GetProperties()
+                .Where(x => x.Name == "ControllerName" && x.Value == controller)
+                .Select(x => x.Control.Id).ToList();
+
+                foreach (var controlId in controlIds)
+                {
+                    var settingids = pageMan.GetProperties().Where(x => x.Name == "Settings" && x.Control.Id == controlId).Select(x => x.Id).ToList();
+                    foreach (var settingId in settingids)
+                    {
+                        var models = pageMan.GetProperties().Where(x => x.Name == "Model" && x.ParentProperty.Id == settingId).ToList();
+                        foreach (var model in models)
+                        {
+                            var itemsPerPage = pageMan.GetProperties().Where(x => x.Name == "ItemsPerPage" && x.ParentProperty.Id == model.Id).FirstOrDefault();
+                            if (itemsPerPage != null)
+                            {
+                                var limitCount = pageMan.GetProperties().Where(x => x.Name == "LimitCount" && x.ParentProperty.Id == model.Id).FirstOrDefault();
+                                if (limitCount == null)
+                                {
+                                    limitCount = pageMan.CreateProperty();
+                                    pageMan.CopyProperty(itemsPerPage, limitCount);
+                                    limitCount.Name = "LimitCount";
+                                    limitCount.Language = itemsPerPage.Language;
+                                    limitCount.ParentProperty = model;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // 12.0
+        private static void CreateBootstrap4Templates()
+        {
+            var layoutManager = new LayoutFileManager();
+
+            layoutManager.CreateDefaultTemplates("Bootstrap4", "default");
         }
     }
 }

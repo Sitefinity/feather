@@ -177,6 +177,36 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
         }
 
         /// <summary>
+        /// Caption of the 'Log usage of precompiled views' checkbox.
+        /// </summary>
+        [ResourceEntry("UseNamedParametersRoutingCaption",
+            Value = "Use named route parameters",
+            Description = "Caption of the 'Use named route parameters' checkbox.",
+            LastModified = "2019/6/20")]
+        public string UseNamedParametersRoutingCaption
+        {
+            get
+            {
+                return this["UseNamedParametersRoutingCaption"];
+            }
+        }
+
+        /// <summary>
+        /// Description of the 'Log usage of precompiled views' checkbox.
+        /// </summary>
+        [ResourceEntry("UseNamedParametersRoutingDescription",
+            Value = "If enabled, the frontend routes will work only with named params (e.g /tag/london/page/2); otherwise, the route will be /london/2.",
+            Description = "Description of the 'Use named route parameters' checkbox.",
+            LastModified = "2019/6/20")]
+        public string UseNamedParametersRoutingDescription
+        {
+            get
+            {
+                return this["UseNamedParametersRoutingDescription"];
+            }
+        }
+
+        /// <summary>
         /// Detailed error message when cannot find template in MVC form.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "Telerik.Sitefinity.Localization.Resource.get_Item(System.String)"), ResourceEntry("CannotFindTemplateMvcForm",

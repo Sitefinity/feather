@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.Text;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -11,11 +12,14 @@ using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.DynamicModules.Builder;
 using Telerik.Sitefinity.DynamicModules.Builder.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
+using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
+using Telerik.Sitefinity.Security.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.UI;
+using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -25,6 +29,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
     public static class ControllerExtensions
     {
         #region Public methods
+
+        /// <summary>
+        /// Determines whether the controller should return the details view.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="contentViewDisplayMode">Display mode of the view.</param>
+        /// <param name="viewModel">A view model containing list of selected items.</param>
+        /// <returns>A value indicating whether the controller should return the details view.</returns>
+        public static bool ShouldReturnDetails(this Controller controller, ContentViewDisplayMode contentViewDisplayMode, ContentListViewModel viewModel)
+        {
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+            
+            if (contentViewDisplayMode == ContentViewDisplayMode.Detail && viewModel != null && viewModel.Items.Count() == 1)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Updates the view engines collection of the given <paramref name="controller"/> by making the engines aware of the controller's container virtual path.
@@ -82,8 +106,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
         public static IEnumerable<string> GetViews(this Controller controller, IList<string> fullViewPaths = null)
         {
+            return ControllerExtensions.GetViews(controller, fullViewPaths, null);
+        }
+
+        /// <summary>
+        /// Gets the views that are available to the controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="fullViewPaths">The full view paths.</param>
+        /// <param name="moduleName">The name of dynamic module (if any). Default is null.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
+        public static IEnumerable<string> GetViews(this Controller controller, IList<string> fullViewPaths, string moduleName)
+        {
             var viewLocations = ControllerExtensions.GetViewLocations(controller);
-            return ControllerExtensions.GetViews(controller, viewLocations);
+            return ControllerExtensions.GetViews(controller, viewLocations, moduleName);
         }
 
         /// <summary>
@@ -117,6 +153,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (var key in keys)
                 dependencies.Add(key);
         }
+
+        /// <summary>
+        /// Adds cache dependencies for the current response.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="contentType">The type of the content.</param>
+        /// <param name="providerName">The name of the provider.</param>
+        public static void AddCacheVariations(this Controller controller, Type contentType, string providerName = null)
+        {
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+
+            if (contentType == null)
+                throw new ArgumentNullException("contentType");
+
+            PageRouteHandler.RegisterContentListCacheVariation(contentType, providerName);
+        }
+
 
         /// <summary>
         /// Gets the partial view paths of the given controller.
@@ -181,7 +235,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controllerName == null)
                 throw new ArgumentNullException("controllerName");
 
-            return ControllerExtensions.GetDynamicContentType(controllerName);
+            var moduleName = controller.ViewBag.ModuleName as string;
+
+            return ControllerExtensions.GetDynamicContentType(controllerName, moduleName);
         }
 
         /// <summary>
@@ -193,20 +249,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </returns>
         public static DynamicModuleType GetDynamicContentType(string controllerName)
         {
-            if (controllerName == null)
-                throw new ArgumentNullException("controllerName");
+            return ControllerExtensions.GetDynamicContentType(controllerName, null);
+        }
 
-            if (SystemManager.GetModule("ModuleBuilder") == null)
-                return null;
-
-            // TODO: use ModuleBuilderManager.GetModules()
-            var moduleProvider = ModuleBuilderManager.GetManager().Provider;
-            var dynamicContentType = moduleProvider.GetDynamicModules()
-                .Where(m => m.Status == DynamicModuleStatus.Active)
-                .Join(moduleProvider.GetDynamicModuleTypes().Where(t => t.TypeName == controllerName), m => m.Id, t => t.ParentModuleId, (m, t) => t)
-                .FirstOrDefault();
-
-            return dynamicContentType;
+        /// <summary>
+        /// Gets the type of the dynamic content that is inferred for the given controller name.
+        /// </summary>
+        /// <param name="controllerName">Name of the controller.</param>
+        /// <param name="moduleName">The name of the module. If empty or null will search all dynamic modules. Default value is null.</param>
+        /// <returns>
+        /// The dynamic module type.
+        /// </returns>
+        public static DynamicModuleType GetDynamicContentType(string controllerName, string moduleName)
+        {
+            return ControllerExtensions.FindDynamicContentTypes(controllerName, moduleName).FirstOrDefault();
         }
 
         /// <summary>
@@ -236,17 +292,85 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         #region Internal methods
 
         /// <summary>
+        /// Gets the type of the dynamic content that is inferred for the given controller name.
+        /// </summary>
+        /// <param name="controllerName">Name of the controller.</param>
+        /// <param name="moduleName">The name of the module. If empty or null will search all dynamic modules.</param>
+        /// <returns>
+        /// The dynamic module types.
+        /// </returns>
+        internal static IQueryable<DynamicModuleType> FindDynamicContentTypes(string controllerName, string moduleName)
+        {
+            if (controllerName == null)
+                throw new ArgumentNullException("controllerName");
+
+            if (SystemManager.GetModule("ModuleBuilder") == null)
+                return Enumerable.Empty<DynamicModuleType>().AsQueryable();
+
+            // TODO: use ModuleBuilderManager.GetModules()
+            var moduleProvider = ModuleBuilderManager.GetManager().Provider;
+
+            var dynamicModuleTypes = moduleProvider.GetDynamicModuleTypes().Where(t => t.TypeName == controllerName);
+            if (!moduleName.IsNullOrWhitespace())
+            {
+                dynamicModuleTypes = dynamicModuleTypes.Where(t => t.ModuleName == moduleName);
+            }
+
+            var dynamicContentTypes = moduleProvider.GetDynamicModules()
+                .Where(m => m.Status == DynamicModuleStatus.Active)
+                .Join(dynamicModuleTypes, m => m.Id, t => t.ParentModuleId, (m, t) => t);
+
+            return dynamicContentTypes;
+        }
+
+        /// <summary>
         /// Gets the partial views that are available to the controller.
         /// </summary>
         /// <param name="controller">The controller.</param>
         /// <param name="viewFilesMappings">The view files mappings.</param>
-        /// <param name="fullViewPaths">The full view paths.</param>
+        /// <param name="moduleName">The name of dynamic module name.</param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "fullViewPaths")]
-        internal static IEnumerable<string> GetPartialViews(this Controller controller, ref Dictionary<string, string> viewFilesMappings, IList<string> fullViewPaths = null)
+        internal static IEnumerable<string> GetPartialViews(this Controller controller, ref Dictionary<string, string> viewFilesMappings, string moduleName)
         {
             var viewLocations = ControllerExtensions.GetPartialViewLocations(controller);
-            return ControllerExtensions.GetViews(controller, viewLocations, ref viewFilesMappings);
+            return ControllerExtensions.GetViews(controller, viewLocations, ref viewFilesMappings, moduleName);
+        }
+
+        /// <summary>
+        /// Resolves the widget name of the dynamic widget controller.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <returns>
+        /// The widget name.
+        /// </returns>
+        internal static string ResolveDynamicControllerWidgetName(this Controller controller)
+        {
+            if (controller == null ||
+                controller.Request == null ||
+                controller.Request.QueryString == null ||
+                controller.RouteData == null ||
+                !controller.RouteData.Values.ContainsKey("widgetName") ||
+                (string)controller.RouteData.Values["widgetName"] != "DynamicContent")
+            {
+                return null;
+            }
+
+            var controlId = controller.Request.QueryStringGet("controlId") as string;
+            Guid controlIdGuid;
+            if (string.IsNullOrEmpty(controlId) || !Guid.TryParse(controlId, out controlIdGuid))
+                return null;
+
+            var pageManager = Telerik.Sitefinity.Modules.Pages.PageManager.GetManager();
+            var controlObjectData = pageManager.GetControl<Telerik.Sitefinity.Pages.Model.ObjectData>(controlIdGuid);
+            if (controlObjectData == null || controlObjectData.Properties == null)
+                return null;
+
+            var controllerWidgetProperty = controlObjectData.Properties.FirstOrDefault(x => x.Name == "WidgetName");
+            if (controllerWidgetProperty == null)
+                return null;
+
+            return controllerWidgetProperty.Value;
         }
 
         #endregion
@@ -291,6 +415,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             {
                 var widgetName = (string)controller.RouteData.Values[WidgetNameKey];
                 key = string.Format("{0}-{1}", key, widgetName);
+
+                var dynamicControllerWidgetName = controller.ResolveDynamicControllerWidgetName();
+                if (!string.IsNullOrEmpty(dynamicControllerWidgetName))
+                    key = string.Format("{0}-{1}", key, dynamicControllerWidgetName);
             }
 
             var currentPackage = new PackageManager().GetCurrentPackage();
@@ -422,12 +550,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 .Distinct();
         }
 
-        private static IEnumerable<string> GetViews(Controller controller, IEnumerable<string> viewLocations)
+        private static IEnumerable<string> GetViews(Controller controller, IEnumerable<string> viewLocations, string moduleName = null)
         {
             var viewExtensions = ControllerExtensions.GetViewFileExtensions(controller);
             var widgetName = controller.RouteData != null ? controller.RouteData.Values["widgetName"] as string : null;
 
-            var baseFiles = ControllerExtensions.GetViewsForAssembly(controller.GetType().Assembly, viewLocations, viewExtensions);
+            var assembly = controller.GetType().Assembly;
+            var baseFiles = ControllerExtensions.GetViewsForAssembly(assembly, viewLocations, viewExtensions, moduleName);
             if (!widgetName.IsNullOrEmpty())
             {
                 var widgetAssembly = FrontendManager.ControllerFactory.ResolveControllerType(widgetName).Assembly;
@@ -438,33 +567,36 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return baseFiles;
         }
 
-        private static IEnumerable<string> GetViews(Controller controller, IEnumerable<string> viewLocations, ref Dictionary<string, string> viewFilesMappings)
+        private static IEnumerable<string> GetViews(Controller controller, IEnumerable<string> viewLocations, ref Dictionary<string, string> viewFilesMappings, string moduleName = null)
         {
             var viewExtensions = ControllerExtensions.GetViewFileExtensions(controller);
             var widgetName = controller.RouteData != null ? controller.RouteData.Values["widgetName"] as string : null;
 
-            var baseFiles = ControllerExtensions.GetViewsForAssembly(controller.GetType().Assembly, viewLocations, viewExtensions, ref viewFilesMappings);
+            var baseFiles = ControllerExtensions.GetViewsForAssembly(controller.GetType().Assembly, viewLocations, viewExtensions, 
+                                                                     ref viewFilesMappings, moduleName);
             if (!widgetName.IsNullOrEmpty())
             {
                 var widgetAssembly = FrontendManager.ControllerFactory.ResolveControllerType(widgetName).Assembly;
-                var widgetFiles = ControllerExtensions.GetViewsForAssembly(widgetAssembly, viewLocations, viewExtensions, ref viewFilesMappings);
+                var widgetFiles = ControllerExtensions.GetViewsForAssembly(widgetAssembly, viewLocations, viewExtensions, 
+                                                                           ref viewFilesMappings, moduleName);
                 return baseFiles.Union(widgetFiles);
             }
 
             return baseFiles;
         }
 
-        private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions)
+        private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions, string moduleName = null)
         {
-            var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly);
+            var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly, moduleName);
             return viewLocations
                 .SelectMany(l => ControllerExtensions.GetViewsForPath(pathDef, l, viewExtensions))
                 .Distinct();
         }
 
-        private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions, ref Dictionary<string, string> viewFilesMappings)
+        private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions, 
+                                                               ref Dictionary<string, string> viewFilesMappings, string moduleName = null)
         {
-            var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly);
+            var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly, moduleName);
             var views = new List<string>();
 
             foreach (var viewLocation in viewLocations)

@@ -30,8 +30,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             this.routeTemplateResolver = routeTemplateResolver;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomActionParamsMapper"/> class.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="routeTemplateResolver">This function should return the route template that the mapper will use.</param>
+        /// <param name="actionName">Name of the action.</param>
+        /// <exception cref="System.ArgumentNullException">routeTemplateResolver</exception>
+        public CustomActionParamsMapper(ControllerBase controller, Func<string> routeTemplateResolver, string actionName, string[] urlParamNames)
+            : this(controller, routeTemplateResolver, actionName)
+        {
+            this.urlParamNames = urlParamNames;
+        }
+
         /// <inheritdoc />
-        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext)
+        protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext, string urlKeyPrefix)
         {
             if (urlParams == null)
                 return false;
@@ -41,7 +54,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var metaParams = routeTemplate
                 .Split(new []{'/'}, StringSplitOptions.RemoveEmptyEntries);
 
-            var parameterMap = this.MapParams(this.actionMethod, metaParams, urlParams);
+            var parameterMap = this.MapParams(this.actionMethod, metaParams, urlParams, this.urlParamNames);
 
             if (parameterMap == null)
                 return false;
@@ -64,6 +77,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         private string actionName;
         private MethodInfo actionMethod;
         private Func<string> routeTemplateResolver;
+        private string[] urlParamNames;
         private const string DefaultActionName = "Index";
     }
 }

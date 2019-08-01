@@ -75,5 +75,26 @@ namespace Telerik.Sitefinity.Frontend
                 this["logPrecompiledViewUsage"] = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to require parameter naming in the widget routings.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the routes will work only with named params (e.g /tag/london/page/2); otherwise, <c>false</c> when the route will be /london/2.
+        /// </value>
+        [ConfigurationProperty("useNamedParametersRouting")]
+        [ObjectInfo(typeof(InfrastructureResources), Title = "UseNamedParametersRoutingCaption", Description = "UseNamedParametersRoutingDescription")]
+        public bool UseNamedParametersRouting
+        {
+            get
+            {
+                return (bool)this["useNamedParametersRouting"];
+            }
+
+            set
+            {
+                this["useNamedParametersRouting"] = value;
+            }
+        }
     }
 }

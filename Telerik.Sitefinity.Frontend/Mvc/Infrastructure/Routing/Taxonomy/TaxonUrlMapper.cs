@@ -33,10 +33,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// Tries to parce a valid taxon from the route data.
         /// </summary>
         /// <param name="urlParams">The URL params.</param>
+        /// <param name="urlKeyPrefix">The URL key prefix.</param>
         /// <param name="taxon">The taxon.</param>
         /// <param name="pageIndex">Index of the page.</param>
         /// <returns></returns>
-        public bool TryMatch(string[] urlParams, out ITaxon taxon, out int pageIndex)
+        public bool TryMatch(string[] urlParams, string urlKeyPrefix, out ITaxon taxon, out int pageIndex)
         {
             taxon = null;
             pageIndex = 1;
@@ -47,8 +48,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
 
             string url = string.Join(@"/", urlParams);
-
-            if (!this.taxonomyEvaluator.TryGetTaxonFromUrl(url, out taxon))
+            
+            if (!this.taxonomyEvaluator.TryGetTaxonFromUrl(url, urlKeyPrefix, out taxon))
             {
                 return false;
             }
@@ -58,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 return true;
             }
 
-            bool hasPageIndex = this.TryGetLastPageIndex(urlParams, out pageIndex);
+            bool hasPageIndex = this.TryGetPageIndex(urlParams, out pageIndex, taxon.Name);
 
             return this.CheckForValidFlatTaxonUrl(urlParams, hasPageIndex);
         }
@@ -89,13 +90,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             ITaxon taxon;
             int pageIndex;
 
-            bool hasPageIndex = this.TryGetLastPageIndex(urlParams, out pageIndex);
+            bool hasPageIndex = this.TryGetPageIndex(urlParams, out pageIndex);
 
             string[] urlSegments = urlParams.Take(urlParams.Length - 1).ToArray();
 
             string url = string.Join(@"/", urlSegments);
 
-            bool hasTaxon = this.taxonomyEvaluator.TryGetTaxonFromUrl(url, out taxon);
+            bool hasTaxon = this.taxonomyEvaluator.TryGetTaxonFromUrl(url, null, out taxon);
 
             if (!hasPageIndex && hasTaxon)
             {
@@ -118,12 +119,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// </summary>
         /// <param name="urlParams">The URL params.</param>
         /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="taxonName">The taxon which is filtered.</param>
         /// <returns></returns>
-        private bool TryGetLastPageIndex(string[] urlParams, out int pageIndex)
+        private bool TryGetPageIndex(string[] urlParams, out int pageIndex, string taxonName = null)
         {
             string last = urlParams.LastOrDefault();
 
-            return int.TryParse(last, out pageIndex);
+            if (int.TryParse(last, out pageIndex))
+            {
+                if (last.Equals(taxonName))
+                {
+                    pageIndex = 0;
+                    return false;
+                }
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

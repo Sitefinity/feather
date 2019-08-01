@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
+using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.UI;
+using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc.Rendering;
+using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
@@ -40,6 +46,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (contentPath.StartsWith("~", StringComparison.Ordinal) || contentPath.StartsWith("/", StringComparison.Ordinal) || contentPath.Contains("://"))
             {
                 var url = UrlTransformations.AppendParam(contentPath, PackageManager.PackageUrlParameterName, packageName);
+                url = UrlHelpers.AppendVersion(url);
                 return helper.Content(url);
             }
 
@@ -67,6 +74,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 var url = "~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(typeof(UrlHelpers).Assembly) + contentPath;
                 contentResolvedPath = UrlTransformations.AppendParam(url, PackageManager.PackageUrlParameterName, packageName);
             }
+
+            contentResolvedPath = UrlHelpers.AppendVersion(contentResolvedPath);
 
             return helper.Content(contentResolvedPath);
         }
@@ -117,6 +126,44 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
+        /// Gets the URL template used for the paging.
+        /// </summary>
+        /// <returns>The URL template.</returns>
+        public static string GetRedirectPagingUrl()
+        {
+            string redirectUrl;
+            if (UrlParamsMapperBase.UseNamedParametersRouting)
+            {
+                redirectUrl = "/" + FeatherActionInvoker.PagingNamedParameter + "/{0}";
+            }
+            else
+            {
+                redirectUrl = "/{0}";
+            }
+
+            return redirectUrl;
+        }
+
+        /// <summary>
+        /// Gets the URL template used for the paging when filtered by taxonomy.
+        /// </summary>
+        /// <returns>The URL template.</returns>
+        public static string GetRedirectPagingUrl(ITaxon taxonFilter)
+        {
+            string redirectUrl;
+            if (UrlParamsMapperBase.UseNamedParametersRouting)
+            {
+                redirectUrl = string.Format("/{0}/{1}/{2}", taxonFilter.Taxonomy.Name, taxonFilter.UrlName, FeatherActionInvoker.PagingNamedParameter) + "/{0}";
+            }
+            else
+            {
+                redirectUrl = "/" + taxonFilter.UrlName + "/{0}";
+            }
+
+            return redirectUrl;
+        }
+
+        /// <summary>
         /// Gets the resource path.
         /// </summary>
         /// <param name="controllerName">Name of the controller.</param>
@@ -141,5 +188,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             return string.Empty;
         }
+
+        internal static string AppendVersion(string contentPath)
+        {
+            if (contentPath.EndsWith(".js") || contentPath.Contains(".js?"))
+            {
+                var hash = VirtualPathManager.GetFileHash(contentPath, null);
+                if (hash != null)
+                {
+                    var bytes = Encoding.UTF8.GetBytes(hash);
+                    var base64version = Convert.ToBase64String(bytes);
+                    contentPath = UrlTransformations.AppendParam(contentPath, VersionQueryParam, base64version);
+                }
+            }
+
+            return contentPath;
+        }
+
+        private const string VersionQueryParam = "v";
     }
 }

@@ -48,7 +48,7 @@ namespace Telerik.Sitefinity.Frontend
         /// <value>An array of <see cref="Type"/> objects.</value>
         public override Type[] Managers
         {
-            get { return managerTypes; }
+            get { return ManagerTypes; }
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Telerik.Sitefinity.Frontend
         public override void Upgrade(SiteInitializer initializer, Version upgradeFrom)
         {
             base.Upgrade(initializer, upgradeFrom);
-            FrontendModuleUpgrader.Upgrade(upgradeFrom);
+            FrontendModuleUpgrader.Upgrade(upgradeFrom, initializer);
         }
 
         /// <summary>
@@ -178,16 +178,13 @@ namespace Telerik.Sitefinity.Frontend
         {
             if (e.CommandName == "Bootstrapped")
             {
-                //System.Threading.Tasks.Task.Run(() =>
-                //{
-                    using (new HealthMonitoring.MethodPerformanceRegion("Feather"))
-                    {
-                        FrontendModuleInstaller.Bootstrapper_Initialized(this.initializers.Value);
-                    }
-                //});
+                using (new HealthMonitoring.MethodPerformanceRegion("Feather"))
+                {
+                    FrontendModuleInstaller.Bootstrapper_Initialized(this.initializers.Value);
+                }
             }
         }
-        
+
         // Called both by Unload and Uninstall
         private void Uninitialize()
         {
@@ -208,23 +205,23 @@ namespace Telerik.Sitefinity.Frontend
             foreach (var assembly in assemblies)
             {
                 var assemblyModules = this.GetNinjectModules(assembly);
-                    
+
                 // check assembly for already registered ninject modules
                 var registeredAssemblyModules = assemblyModules.Where(module => loadedModules.Where(loadedModule => loadedModule.Name.Equals(module.Name, StringComparison.OrdinalIgnoreCase)).Any());
                 if (registeredAssemblyModules.Any())
                 {
                     foreach (var module in assemblyModules)
-	                {
+                    {
                         if (!registeredAssemblyModules.Any(registeredModule => registeredModule.Name.Equals(module.Name, StringComparison.OrdinalIgnoreCase)))
                         {
                             ninjectDependencyResolver.Load(module);
                         }
-	                } 
+                    }
                 }
                 else
                 {
                     ninjectDependencyResolver.Load(assembly);
-                }    
+                }
             }
         }
 
@@ -269,8 +266,13 @@ namespace Telerik.Sitefinity.Frontend
             return type.GetConstructor(Type.EmptyTypes) != null;
         }
 
+        /// <summary>
+        /// The <see cref="FrontendModule"/> name.
+        /// </summary>
         public const string ModuleName = "Feather";
+
         private static IKernel ninjectDependencyResolver;
+        private static readonly Type[] ManagerTypes = new Type[] { typeof(FilesMonitoring.Data.FileMonitorDataManager) };
 
         private class SitefinityKernel : StandardKernel
         {
@@ -279,6 +281,5 @@ namespace Telerik.Sitefinity.Frontend
             {
             }
         }
-        private static readonly Type[] managerTypes = new Type[] { typeof(FilesMonitoring.Data.FileMonitorDataManager) };
     }
 }

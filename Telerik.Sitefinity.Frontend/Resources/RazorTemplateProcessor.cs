@@ -121,7 +121,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             {
                 lock (this.templateDependencies)
                 {
-                    if (!this.templateDependencies.ContainsKey(templatePath) || this.templateDependencies[templatePath].HasChanged)
+                    if (!this.templateDependencies.ContainsKey(templatePath) || (this.templateDependencies[templatePath] != null && this.templateDependencies[templatePath].HasChanged))
                     {
                         var markup = this.GetTemplate(templatePath);
                         this.service.Compile(markup, null, templatePath);

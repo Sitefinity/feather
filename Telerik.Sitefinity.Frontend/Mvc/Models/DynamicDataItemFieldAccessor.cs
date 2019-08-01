@@ -20,7 +20,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DynamicDataItemFieldAccessor"/> class.
         /// </summary>
-        /// <param name="item">The data item.</param>
+        /// <param name="itemViewModel">The data item.</param>
         public DynamicDataItemFieldAccessor(ItemViewModel itemViewModel)
             : base()
         {
@@ -63,7 +63,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     var fieldType = propInfo.GetFieldType();
                     if (fieldType != null && fieldType == UserFriendlyDataType.LongText)
                     {
-                        return HtmlFilterProvider.ApplyFilters(value as Lstring);
+                        var stringValue = this.GetAppropriateStringValue(value);
+                        return HtmlFilterProvider.ApplyFilters(stringValue);
                     }
 
                     return value;
@@ -84,6 +85,17 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             {
                 return null;
             }
+        }
+
+        private string GetAppropriateStringValue(object value)
+        {
+            string stringValue = value as Lstring;
+            if (stringValue != null)
+            {
+                return stringValue;
+            }
+
+            return value as string;
         }
 
         private ItemViewModel item;

@@ -1,5 +1,6 @@
 ﻿using System;
 using Telerik.Sitefinity.DesignerToolbox;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.TypeConverters;
@@ -25,11 +26,12 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         /// Determines whether a toolbox section should be visible in the <see cref="ZoneEditor"/>.
         /// </summary>
         /// <param name="section">The section in question.</param>
+        /// <param name="context">The filter context passed externally.</param>
         /// <returns><c>true</c> if it should be visible.</returns>
-        public bool IsSectionVisible(IToolboxSection section)
+        public bool IsSectionVisible(IToolboxSection section, IToolboxFilterContext context)
         {
-            if (section != null && section.Name == GridWidgetRegistrator.GridSectionName && section.Title == GridWidgetRegistrator.GridSectionTitle)
-                return SystemManager.GetModule("Feather") != null;
+            if (section != null && context != null && section.Name == GridWidgetRegistrator.GridSectionName && section.Title == GridWidgetRegistrator.GridSectionTitle)
+                return SystemManager.GetModule("Feather") != null && !(context.ContainerId == "LayoutToolboxContainer" && (context.MediaType == DesignMediaType.NewsletterCampaign || context.MediaType == DesignMediaType.NewsletterTemplate));
 
             return true;
         }

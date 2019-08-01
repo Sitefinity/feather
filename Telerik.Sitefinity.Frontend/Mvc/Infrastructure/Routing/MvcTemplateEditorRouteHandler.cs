@@ -10,7 +10,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// <summary>
     /// Extended version of the TemplateEditorRouteHandler that injects logic handling MVC layout files.
     /// </summary>
-    internal class MvcTemplateEditorRouteHandler : TemplateEditorRouteHandler
+    public class MvcTemplateEditorRouteHandler : TemplateEditorRouteHandler
     {
         /// <summary>
         /// Builds the handler.

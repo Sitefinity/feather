@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Telerik.OpenAccess;
 using Telerik.OpenAccess.Metadata.Fluent;
-using Telerik.Sitefinity.Model;
 using Telerik.OpenAccess.Metadata.Fluent.Advanced;
+using Telerik.Sitefinity.Model;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring.Data
 {

@@ -5,7 +5,9 @@ using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.UrlEvaluation;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
@@ -21,6 +23,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         public UrlParamsMapperBase(ControllerBase controller)
         {
             this.Controller = controller;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether to require parameter naming in the widget routings.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the routes will work only with named params (e.g /tag/sofia/page/2); otherwise, <c>false</c> when the route will be /sofia/2.
+        /// </value>
+        public static bool UseNamedParametersRouting
+        {
+            get
+            {
+                return Config.Get<FeatherConfig>().UseNamedParametersRouting;
+            }
         }
 
         /// <inheritdoc />
@@ -39,10 +55,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <inheritdoc />
         public void ResolveUrlParams(string[] urlParams, RequestContext requestContext)
         {
-            var isMatch = this.TryMatchUrl(urlParams, requestContext);
+            this.ResolveUrlParams(urlParams, requestContext, null);
+        }
+
+        /// <inheritdoc />
+        public void ResolveUrlParams(string[] urlParams, RequestContext requestContext, string urlKeyPrefix)
+        {
+            var isMatch = this.TryMatchUrl(urlParams, requestContext, urlKeyPrefix);
 
             if (!isMatch && this.Next != null)
-                this.Next.ResolveUrlParams(urlParams, requestContext);
+                this.Next.ResolveUrlParams(urlParams, requestContext, urlKeyPrefix);
         }
 
         /// <summary>
@@ -59,28 +81,69 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="actionMethod">The action method.</param>
         /// <param name="metaParams">The meta parameters.</param>
         /// <param name="urlParams">The URL parameters.</param>
+        /// <param name="urlParamNames">The URL parameter names.</param>
         /// <returns></returns>
-        protected virtual IList<UrlSegmentInfo> MapParams(MethodInfo actionMethod, string[] metaParams, string[] urlParams)
+        protected virtual IList<UrlSegmentInfo> MapParams(MethodInfo actionMethod, string[] metaParams, string[] urlParams, string[] urlParamNames)
         {
-            if (metaParams.Length != urlParams.Length)
+            var useNamedParams = UrlParamsMapperBase.UseNamedParametersRouting;
+            if (!useNamedParams && (metaParams.Length != urlParams.Length || metaParams.Length != urlParamNames.Length))
+                return null;
+            if (useNamedParams && metaParams.Length != urlParamNames.Length)
                 return null;
 
             var parameterInfos = new List<UrlSegmentInfo>();
-            for (int i = 0; i < urlParams.Length; i++)
+
+            for (int i = 0; i < urlParamNames.Length; i++)
             {
+                string currentParam = useNamedParams ? this.MapNamedParam(urlParams, urlParamNames[i], i) : urlParams[i];
+
                 if (metaParams[i].Length > 2 && metaParams[i].First() == '{' && metaParams[i].Last() == '}')
                 {
                     var routeParam = metaParams[i].Sub(1, metaParams[i].Length - 2);
-                    if (!this.TryResolveRouteParam(actionMethod, routeParam, urlParams[i], parameterInfos))
+                    if (!this.TryResolveRouteParam(actionMethod, routeParam, currentParam, parameterInfos))
                         return null;
                 }
-                else if (!string.Equals(metaParams[i], urlParams[i], StringComparison.OrdinalIgnoreCase))
+                else if (!string.Equals(metaParams[i], currentParam, StringComparison.OrdinalIgnoreCase))
                 {
                     return null;
                 }
             }
 
             return parameterInfos;
+        }
+
+        /// <summary>
+        /// Maps the URL parameter to a value from the provided URL template
+        /// </summary>
+        /// <param name="urlParams">The URL parameters.</param>
+        /// <param name="urlParamName">The URL parameter name.</param>
+        /// <param name="paramNameIndex">The index of the named parameter in the URL.</param>
+        /// <returns></returns>
+        protected virtual string MapNamedParam(string[] urlParams, string urlParamName, int paramNameIndex)
+        {
+            string currentParam;
+            var urlParamActualIndex = 2 * paramNameIndex;
+            if (urlParamName != FeatherActionInvoker.TaxonNamedParamter)
+            {
+                var namedParamIndex = Array.IndexOf(urlParams, urlParamName);
+                if (namedParamIndex == -1 || urlParams.Length < namedParamIndex)
+                    return null;
+
+                currentParam = urlParams[namedParamIndex + 1];
+            }
+            else if (urlParamName == FeatherActionInvoker.TaxonNamedParamter && urlParams.Length > (urlParamActualIndex + 1))
+            {
+                // in this case, in the url will be presented the name of the taxonomy, ex. tag/tag1/page/2 ;  category/cat1/page/2
+                currentParam = urlParams[urlParamActualIndex + 1];
+                var taxonomyName = urlParams[urlParamActualIndex];
+                var isResolverRegistered = ObjectFactory.IsTypeRegistered<IRouteParamResolver>(taxonomyName);
+                if (!isResolverRegistered)
+                    return null;
+            }
+            else
+                return null;
+
+            return currentParam;
         }
 
         /// <summary>
@@ -92,7 +155,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="actionMethod">The action method.</param>
         /// <param name="routeParam">The route parameter.</param>
         /// <param name="urlParam">The URL parameter.</param>
-        /// <param name="parameterMap">The parameter map.</param>
+        /// <param name="parameterInfos">The parameter info.</param>
         /// <returns></returns>
         protected bool TryResolveRouteParam(MethodInfo actionMethod, string routeParam, string urlParam, IList<UrlSegmentInfo> parameterInfos)
         {
@@ -155,8 +218,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// </summary>
         /// <param name="urlParams">The URL parameters.</param>
         /// <param name="requestContext">The request context.</param>
+        /// <param name="urlKeyPrefix">The URL key prefix.</param>
         /// <returns>true if resolving was successful. In this case does not fallback to next mappers. Else returns false</returns>
-        protected abstract bool TryMatchUrl(string[] urlParams, RequestContext requestContext);
+        protected abstract bool TryMatchUrl(string[] urlParams, RequestContext requestContext, string urlKeyPrefix);
 
         /// <summary>
         /// The action name key for the RouteData values.

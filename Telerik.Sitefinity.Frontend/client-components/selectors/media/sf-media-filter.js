@@ -38,6 +38,8 @@
             // Filter by any taxon
             this.taxon = new TaxonFilter();
 
+            this.status = 'live';
+
             this.attachEvent = function (callback) {
                 if (typeof callback === 'function') {
                     events.push(callback);
@@ -48,7 +50,7 @@
                 var expression = serviceHelper.filterBuilder();
 
                 if (this.basic !== this.constants.basic.allLibraries) {
-                    expression = expression.lifecycleFilter();
+                    expression = expression.lifecycleFilter(this.status);
                 }
 
                 if (this.query) {

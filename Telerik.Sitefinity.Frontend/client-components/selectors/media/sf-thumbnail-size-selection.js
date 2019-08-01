@@ -11,7 +11,8 @@
                 restrict: 'AE',
                 scope: {
                     model: '=sfModel',
-                    mediaType: '@sfMediaType'
+                    mediaType: '@sfMediaType',
+                    viewType: '@viewType'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -29,10 +30,6 @@
             $scope.sizeSelection = null;
             $scope.sizeOptions = [];
             $scope.customThumbnailSizeTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-custom-thumbnail-size.sf-cshtml');
-
-            if (typeof $scope.mediaType === 'undefined' || !$scope.mediaType) {
-                $scope.mediaType = 'images';
-            }
 
             var thumbnailProfiles = [];
 
@@ -66,7 +63,7 @@
                 }
             }, true);
 
-            mediaService[$scope.mediaType].thumbnailProfiles().then(function (data) {
+            mediaService[$scope.mediaType].thumbnailProfiles($scope.viewType).then(function (data) {
                 if (data && data.Items) {
                     thumbnailProfiles = data.Items;
                     if ($scope.model) {
@@ -84,6 +81,45 @@
                     return $scope.model.item.IsVectorGraphics === true;
                 }
                 return false;
+            };
+
+            var addCustomSizeSelection = function () {
+                var existingCustomSizeTitle;
+                if ($scope.model.customSize) {
+                    if (isVectorGraphics()) {
+                        $scope.model.customSize.Method = 'ResizeFitToAreaArguments';
+                    }
+                    if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments' && $scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
+                        existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
+                    }
+                    else if ($scope.model.customSize.Method === 'CropCropArguments' && $scope.model.customSize.Width && $scope.model.customSize.Height) {
+                        existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
+                    }
+                }
+
+                var newCustomSizeTitle = 'Custom size...';
+
+                if (existingCustomSizeTitle) {
+                    newCustomSizeTitle = 'Edit custom size...';
+
+                    $scope.sizeOptions.push({
+                        index: $scope.sizeOptions.length,
+                        type: displayMode.custom,
+                        title: existingCustomSizeTitle,
+                        thumbnail: $scope.model.thumbnail,
+                        customSize: $scope.model.customSize,
+                        openDialog: false
+                    });
+                }
+
+                $scope.sizeOptions.push({
+                    index: $scope.sizeOptions.length,
+                    type: displayMode.custom,
+                    title: newCustomSizeTitle,
+                    thumbnail: null,
+                    customSize: $scope.model.customSize,
+                    openDialog: true
+                });
             };
 
             var populateOptions = function () {
@@ -128,45 +164,23 @@
                 }
 
                 if (!$scope.disableCustomSizeSelection) {
-                    var existingCustomSizeTitle;
-                    if ($scope.model.customSize) {
-                        if (isVectorGraphics()) {
-                            $scope.model.customSize.Method = 'ResizeFitToAreaArguments';
-                        }
-                        if ($scope.model.customSize.Method === 'ResizeFitToAreaArguments' && $scope.model.customSize.MaxWidth && $scope.model.customSize.MaxHeight) {
-                            existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.MaxWidth + 'x' + $scope.model.customSize.MaxHeight + ' px';
-                        }
-                        else if ($scope.model.customSize.Method === 'CropCropArguments' && $scope.model.customSize.Width && $scope.model.customSize.Height) {
-                            existingCustomSizeTitle = 'Custom size: ' + $scope.model.customSize.Width + 'x' + $scope.model.customSize.Height + ' px';
-                        }
+                    if ($scope.model && $scope.model.item && $scope.model.item.BlobStorageProvider) {
+                        var service = mediaService[$scope.mediaType];
+                        service.customImageSizeAllowed($scope.model.item.BlobStorageProvider)
+                            .then(function (customSizeAllowed) {
+                                if (customSizeAllowed) {
+                                    addCustomSizeSelection();
+                                }
+                            }).finally(function () {
+                                updateSelection();
+                            });
+                    } else {
+                        addCustomSizeSelection();
+                        updateSelection();
                     }
-
-                    var newCustomSizeTitle = 'Custom size...';
-
-                    if (existingCustomSizeTitle) {
-                        newCustomSizeTitle = 'Edit custom size...';
-
-                        $scope.sizeOptions.push({
-                            index: $scope.sizeOptions.length,
-                            type: displayMode.custom,
-                            title: existingCustomSizeTitle,
-                            thumbnail: $scope.model.thumbnail,
-                            customSize: $scope.model.customSize,
-                            openDialog: false
-                        });
-                    }
-
-                    $scope.sizeOptions.push({
-                        index: $scope.sizeOptions.length,
-                        type: displayMode.custom,
-                        title: newCustomSizeTitle,
-                        thumbnail: null,
-                        customSize: $scope.model.customSize,
-                        openDialog: true
-                    });
+                } else {
+                    updateSelection();
                 }
-
-                updateSelection();
             };
 
             var updateSelection = function () {

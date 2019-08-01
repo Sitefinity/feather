@@ -3,8 +3,11 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.UI;
+using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
@@ -40,6 +43,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
+        /// Gets a value indicating whether the site is in debug mode acording to the web.config
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the site is in debug mode; otherwise, <c>false</c>.
+        /// </value>
+        internal static bool IsDebugMode
+        {
+            get
+            {
+                if (ResourceHelper.isDebugMode.HasValue)
+                    return ResourceHelper.isDebugMode.Value;
+
+                CompilationSection compilationSection = (CompilationSection)System.Configuration.ConfigurationManager.GetSection(@"system.web/compilation");
+
+                return compilationSection.Debug;
+            }
+            set
+            {
+                ResourceHelper.isDebugMode = value;
+            }
+        }
+
+        /// <summary>
         /// Registers JavaScript reference and ensures that it loads maximum once for a page.
         /// </summary>
         /// <param name="helper">The helper.</param>
@@ -53,9 +79,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// This method uses directly the resource from the <see cref="scriptPath" />.
         /// In case you want to use embedded scripts from Sitefinity check <see cref="ResourceHelper.Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)" />.
         /// </remarks>
-        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, bool tryUseScriptManager = true)
+        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, bool tryUseScriptManager)
         {
             return ResourceHelper.Script(helper, scriptPath, null, false, tryUseScriptManager);
+        }
+
+        /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="scriptPath">The path to the JavaScript file.</param>
+        /// If it is used the script will always be loaded on the top section of the page.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        /// <remarks>
+        /// This method uses directly the resource from the <see cref="scriptPath" />.
+        /// In case you want to use embedded scripts from Sitefinity check <see cref="ResourceHelper.Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)" />.
+        /// </remarks>
+        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath)
+        {
+            return ResourceHelper.Script(helper, scriptPath, null, false, true);
         }
 
         /// <summary>
@@ -84,6 +128,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <param name="scriptPath">The path to the JavaScript file.</param>
         /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
         /// <param name="throwException">Indicates whether to throw an exception if the specified section does not exist.</param>
+        /// If it is used the script will always be loaded on the top section of the page.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        /// <remarks>
+        /// This method uses directly the resource from the <see cref="scriptPath" />.
+        /// In case you want to use embedded scripts from Sitefinity check <see cref="ResourceHelper.Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)" />.
+        /// </remarks>
+        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, string sectionName, bool throwException)
+        {
+            return ResourceHelper.Script(helper, scriptPath, sectionName, throwException, true);
+        }
+
+        /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="scriptPath">The path to the JavaScript file.</param>
+        /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
+        /// <param name="throwException">Indicates whether to throw an exception if the specified section does not exist.</param>
         /// <param name="tryUseScriptManager">Indicates whether to use script manager(if exists) when register JavaScript reference. 
         /// If it is used the script will always be loaded on the top section of the page.</param>
         /// <returns>
@@ -93,7 +157,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// This method uses directly the resource from the <see cref="scriptPath" />.
         /// In case you want to use embedded scripts from Sitefinity check <see cref="ResourceHelper.Script(this HtmlHelper helper, ScriptRef scriptReference, bool throwException = false)" />.
         /// </remarks>
-        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, string sectionName, bool throwException, bool tryUseScriptManager = true)
+        public static MvcHtmlString Script(this HtmlHelper helper, string scriptPath, string sectionName, bool throwException, bool tryUseScriptManager)
         {
             if (tryUseScriptManager && ResourceHelper.TryConfigureScriptManager(scriptPath, helper.ViewContext.HttpContext.CurrentHandler))
                 return MvcHtmlString.Empty;
@@ -114,9 +178,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns>
         /// MvcHtmlString
         /// </returns>
-        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, bool tryUseScriptManager = true)
+        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, bool tryUseScriptManager)
         {
             return ResourceHelper.Script(helper, scriptReference, null, false, tryUseScriptManager);
+        }
+
+        /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <remarks>
+        /// This helper references the same resource existing in Sitefinity.
+        /// </remarks>
+        /// <param name="helper">The helper.</param>
+        /// <param name="scriptReference">The script reference.</param>
+        /// If it is used the script will always be loaded on the top section of the page.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference)
+        {
+            return ResourceHelper.Script(helper, scriptReference, null, false, true);
         }
 
         /// <summary>
@@ -152,7 +233,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns>
         /// MvcHtmlString
         /// </returns>
-        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, string sectionName, bool throwException, bool tryUseScriptManager = true)
+        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, string sectionName, bool throwException, bool tryUseScriptManager)
         {
             if (tryUseScriptManager && ResourceHelper.TryConfigureScriptManager(scriptReference, helper.ViewContext.HttpContext.CurrentHandler))
                 return System.Web.Mvc.MvcHtmlString.Empty;
@@ -168,6 +249,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return MvcHtmlString.Create(outputMarkup.ToString());
+        }
+
+        /// <summary>
+        /// Registers JavaScript reference and ensures that it loads maximum once for a page.
+        /// </summary>
+        /// <remarks>
+        /// This helper references the same resource existing in Sitefinity.
+        /// </remarks>
+        /// <param name="helper">The helper.</param>
+        /// <param name="scriptReference">The script reference.</param>
+        /// <param name="sectionName">The name of the section that will render this script. If null it will render on the same place of the page</param>
+        /// <param name="throwException">Indicates whether to throw an exception if the specified section does not exist.</param>
+        /// If it is used the script will always be loaded on the top section of the page.</param>
+        /// <returns>
+        /// MvcHtmlString
+        /// </returns>
+        public static MvcHtmlString Script(this HtmlHelper helper, ScriptRef scriptReference, string sectionName, bool throwException)
+        {
+            return ResourceHelper.Script(helper, scriptReference, sectionName, throwException, true);
         }
 
         /// <summary>
@@ -265,7 +365,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var result = new StringBuilder();
             var urlHelper = new UrlHelper(helper.ViewContext.HttpContext.Request.RequestContext);
-            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource(typeof(Telerik.Sitefinity.Resources.Reference).FullName, "Telerik.Sitefinity.Resources.Scripts.JSBeautifier.beautify-html.js")).ToHtmlString());
+            result.Append(ResourceHelper.Script(helper, urlHelper.EmbeddedResource("Telerik.Sitefinity.Frontend.Startup", "Telerik.Sitefinity.Frontend.Mvc.Scripts.JSBeautifier.beautify-html.js")).ToHtmlString());
             return MvcHtmlString.Create(result.ToString());
         }
 
@@ -506,7 +606,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
                 if (scriptManager != null)
                 {
-                    scriptManager.Scripts.Add(new ScriptReference(scriptReference));
+                    var updatedScriptReference = GetResourceOrMinified(scriptReference);
+                    scriptManager.Scripts.Add(new ScriptReference(updatedScriptReference));
                     return true;
                 }
             }
@@ -568,6 +669,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var tag = new TagBuilder("script");
 
+            resourceKey = GetResourceOrMinified(resourceKey);
+
             tag.Attributes["src"] = resourceKey;
             tag.Attributes["type"] = "text/javascript";
 
@@ -577,6 +680,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return tag.ToString(TagRenderMode.Normal);
+        }
+
+        private static string GetResourceOrMinified(string resourceKey)
+        {
+            if (!ResourceHelper.IsDebugMode)
+            {
+                var extensionIndex = resourceKey.LastIndexOf(".js");
+                if (extensionIndex > 0 && !resourceKey.Contains(".min.js"))
+                {
+                    var minFilePath = resourceKey.Insert(extensionIndex, ".min");
+                    var minPathWithoutParams = resourceKey.Substring(0, extensionIndex) + ".min.js";
+
+                    if (VirtualPathManager.FileExists(minPathWithoutParams) || VirtualPathManager.FileExists(minFilePath))
+                    {
+                        resourceKey = minFilePath;
+                    }
+                }
+            }
+
+            return resourceKey;
         }
 
         private static string BuildStyleSheetMarkup(string resourceKey)
@@ -639,5 +762,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             Js,
             Css
         }
+
+        private static bool? isDebugMode;
     }
 }

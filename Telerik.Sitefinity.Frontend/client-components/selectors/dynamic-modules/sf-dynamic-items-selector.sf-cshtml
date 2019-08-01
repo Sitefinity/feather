@@ -28,12 +28,15 @@
                 </div>
                 <div sf-endless-scroll sf-paging='paging' class="list-group list-group-endless">
                     <div ng-repeat="item in items"
-                         ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
+                         ng-class="{'list-group-item':true, 'list-group-multiline': true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
                          ng-click="itemClicked($index, item)">
 
-                        <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
-
-                        <div ng-bind="bindIdentifierField(item)"></div>
+                        <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect"/>
+                        <div>
+                          <sf-icon class="list-group-item-icon" sf-item='item'></sf-icon>
+                          <span ng-bind="bindIdentifierField(item)"></span>
+                          <span class="list-group-item-note small text-muted">{{item.Lifecycle.IsLocked ? "Locked" : item.Lifecycle.WorkflowStatus}}</span>
+                        </div>
                     </div>
                 </div>
                 <div ng-hide="items.length || showLoadingIndicator"><i>@(Res.Get<ClientComponentsResources>().NoItemsFound)</i></div>

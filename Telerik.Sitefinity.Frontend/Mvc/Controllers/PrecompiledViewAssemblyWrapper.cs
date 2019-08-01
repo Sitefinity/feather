@@ -56,12 +56,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             if (virtualPath.StartsWith(this.basePath, StringComparison.OrdinalIgnoreCase))
             {
                 var relativePath = virtualPath.Right(virtualPath.Length - this.basePath.Length);
-                relativePath = Regex.Replace(relativePath, @"[ \-]", "_").Replace('/', '.');
-                var resourcePath = this.assembly.GetName().Name + "." + relativePath;
+                var relativePathWithoutSpaces = Regex.Replace(relativePath, @"[ \-]", "_").Replace('/', '.');
+                var resourcePathWithoutSpaces = this.assembly.GetName().Name + "." + relativePathWithoutSpaces;
+                var relativePathWithSpaces = Regex.Replace(relativePath, @"[\-]", "_").Replace('/', '.');
+                var resourcePathWithSpaces = this.assembly.GetName().Name + "." + relativePathWithSpaces;
 
-                if (this.embeddedResourceHashes.ContainsKey(resourcePath))
+                if (this.embeddedResourceHashes.ContainsKey(resourcePathWithoutSpaces))
                 {
-                    return this.embeddedResourceHashes[resourcePath];
+                    return this.embeddedResourceHashes[resourcePathWithoutSpaces];
+                }
+                else if (this.embeddedResourceHashes.ContainsKey(resourcePathWithSpaces))
+                {
+                    return this.embeddedResourceHashes[resourcePathWithSpaces];
                 }
             }
 

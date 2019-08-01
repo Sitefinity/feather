@@ -12,6 +12,8 @@
                         var itemUrl = ctrl.$scope.sfItemTemplateUrl || 'client-components/selectors/pages/sf-page-selector-view.sf-cshtml';
                         ctrl.$scope.itemTemplateUrl = serverContext.getEmbeddedResourceUrl(itemAssembly, itemUrl);
 
+                        var status = attrs.sfMaster === 'false' || attrs.sfMaster === 'False' ? 'live' : 'master';
+
                         // <------- Begin: Helper methods ------
                         var getSiteMapRootNodeId = function () {
                             var selectedSite = scope.$eval(attrs.sfPageSelector);
@@ -26,7 +28,7 @@
                             var provider = ctrl.$scope.sfProvider;
                             var siteId = getSiteId();
                             var culture = getCulture();
-                            return pageService.getItems(parentId, siteId, provider, search, culture);
+                            return pageService.getItems(parentId, siteId, provider, search, culture, status);
                         };
 
                         var allowLoadingItems = function (newSite, oldSite) {
@@ -121,7 +123,7 @@
 
                             var rootId = getSiteMapRootNodeId();
 
-                            var specificItemsPromise = pageService.getSpecificItems(ids, provider, rootId);
+                            var specificItemsPromise = pageService.getSpecificItems(ids, provider, rootId, status);
 
                             ctrl.$scope.selectedIdsPromise = specificItemsPromise.then(function (data) {
                                 return data.Items.map(function (item) {

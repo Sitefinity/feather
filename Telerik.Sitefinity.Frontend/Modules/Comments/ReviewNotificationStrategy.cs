@@ -4,6 +4,7 @@ using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Comments;
 using Telerik.Sitefinity.Services.Comments.Impl.Notifications;
 using Telerik.Sitefinity.Services.Comments.Notifications;
+using Telerik.Sitefinity.Services.Notifications;
 
 namespace Telerik.Sitefinity.Frontend.Modules.Comments
 {
@@ -16,42 +17,33 @@ namespace Telerik.Sitefinity.Frontend.Modules.Comments
         /// Gets the message template unique identifier for the specified <see cref="ICommentEvent"/> event.
         /// </summary>
         /// <param name="event">The event.</param>
-        protected override Guid GetMessageTemplateId(ICommentEvent @event)
+        protected override IMessageTemplateRequest GetMessageTemplate(ICommentEvent @event)
         {
-            IComment comment = @event.Item;
+            if (@event == null || @event.Item == null)
+                return null;
 
+            IMessageTemplateRequest messageTemplate;
+            IComment comment = @event.Item;
             ICommentService cs = SystemManager.GetCommentsService();
             IThread thread = cs.GetThread(comment.ThreadKey);
 
-            var ns = SystemManager.GetNotificationService();
-            Guid messageTemplateId;
-
             if (this.IsReviewThread(thread))
             {
-                messageTemplateId = ns.GetMessageTemplates(this.ServiceContext, null)
-                    .Where(mt => mt.Subject == "A new review was posted")
-                    .Select(m => m.Id).FirstOrDefault();
+                messageTemplate = this.GetNewReviewMessageTemplate();
             }
             else
             {
-                messageTemplateId = ns.GetMessageTemplates(this.ServiceContext, null)
-                    .Where(mt => mt.Subject == "A new comment was posted")
-                    .Select(m => m.Id).FirstOrDefault();
+                messageTemplate = this.GetNewCommentMessageTemplate();
             }
 
-            if (messageTemplateId == Guid.Empty)
-            {
-                messageTemplateId = base.GetMessageTemplateId(@event);
-            }
-
-            return messageTemplateId;
+            return messageTemplate;
         }
 
         private bool IsReviewThread(IThread thread)
         {
             var isReview = false;
 
-            if (thread.Behavior == null)
+            if (thread.Behavior.IsNullOrEmpty())
             {
                 isReview = thread.Key.EndsWith("_review", StringComparison.Ordinal);
             }

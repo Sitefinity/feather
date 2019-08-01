@@ -1,0 +1,13 @@
+﻿@model Telerik.Sitefinity.Frontend.Mvc.Models.ServerContext
+
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers
+
+<input type="hidden" id="sf-application-path" value="@Model.ApplicationPath" />
+<input type="hidden" id="sf-current-package" value="@Model.CurrentPackage" />
+<input type="hidden" id="sf-frontend-languages" value="@Model.FrontendLanguages" />
+<input type="hidden" id="sf-currentfrontend-root-node" value="@Model.CurrentFrontendRootNodeId" />
+<input type="hidden" id="sf-current-user-id" value="@Model.CurrentUserId" />
+<input type="hidden" id="sf-site-id" value="@Model.CurrentSiteId" />
+<input type="hidden" id="sf-is-multisite-mode" value="@Model.IsMultisiteMode" />
+
+@Html.Script(Url.WidgetContent("Resources/ServerContext.js"))

@@ -75,7 +75,7 @@
                     <sf-date-time-picker ng-model="selectedItemInTheDialog.fromDate" sf-show-meridian="true" sf-min-date="sfCustomRangeMinDate" sf-max-date="sfCustomRangeMaxDate"></sf-date-time-picker >
 
                     <strong id="toLabel">@(Res.Get<ClientComponentsResources>().To)</strong>
-                    <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate" sf-show-meridian="true" sf-min-date="sfCustomRangeMinDate" sf-max-date="sfCustomRangeMaxDate"></sf-date-time-picker >
+                    <sf-date-time-picker ng-model="selectedItemInTheDialog.toDate" sf-show-meridian="true" sf-min-date="sfCustomRangeMinDate" sf-max-date="sfCustomRangeMaxDate" sf-include-date="true"></sf-date-time-picker >
                 </div>
 
             </div>

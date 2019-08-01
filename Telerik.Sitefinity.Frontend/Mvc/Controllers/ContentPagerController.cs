@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers.ViewModels;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
+using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.UI;
 
@@ -12,6 +13,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
     /// <summary>
     /// This class represents controller for pager widget.
     /// </summary>
+    [Localization(typeof(ContentPagerResources))]
     [ControllerMetadata(IsTemplatableControl = false)]
     public class ContentPagerController : Controller
     {

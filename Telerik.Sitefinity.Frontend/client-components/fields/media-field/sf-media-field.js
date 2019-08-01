@@ -243,6 +243,7 @@
                             scope.model.selectedItems.push(scope.sfMedia);
                             scope.model.filterObject = sfMediaFilter.newFilter();
                             scope.model.filterObject.set.parent.to(mediaType.getParentId(scope.sfMedia));
+                            scope.model.filterObject.status = attrs.sfMaster === 'true' || attrs.sfMaster === 'True' ? 'master' : 'live';
                         }
 
                         var mediaSelectorModalScope = angular.element('.mediaSelectorModal').scope();
@@ -260,6 +261,10 @@
                     }
 
                     scope.$on(mediaType.getMediaUploadedEvent(), function (event, uploadedMediaInfo) {
+                        if (!scope.model.provider && uploadedMediaInfo.ContentItem && uploadedMediaInfo.ContentItem.ProviderName) {
+                            scope.model.provider = uploadedMediaInfo.ContentItem.ProviderName;
+                        }
+
                         scope.sfProvider = scope.model.provider;
                         getMedia(uploadedMediaInfo.ContentId);
                         scope.$uibModalInstance.dismiss();

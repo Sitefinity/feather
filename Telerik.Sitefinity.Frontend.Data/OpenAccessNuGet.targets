@@ -25,7 +25,7 @@ Copyright (C) 2007-2015 Telerik AD. All rights reserved.
     <EnhancerVerboseMode Condition="'$(EnhancerVerboseMode)'==''">3</EnhancerVerboseMode>
     <Use64BitEnhancer Condition="'$(Use64BitEnhancer)'=='' And '$(PlatformTarget)'=='x64'">true</Use64BitEnhancer>
     <ValidateMapping Condition="'$(ValidateMapping)'==''">false</ValidateMapping>
-    <EnhancerDoNotCheckVersionOfReferencedAssemblies Condition="'$(EnhancerDoNotCheckVersionOfReferencedAssemblies)'==''">true</EnhancerDoNotCheckVersionOfReferencedAssemblies>
+    <EnhancerDoNotCheckVersionOfReferencedAssemblies Condition="'$(EnhancerDoNotCheckVersionOfReferencedAssemblies)'==''">false</EnhancerDoNotCheckVersionOfReferencedAssemblies>
   </PropertyGroup>
 
   <!-- Register the enhancement tasks from the enhancer assembly -->

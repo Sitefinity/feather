@@ -11,7 +11,8 @@
                     sfHourStep: '@?',
                     sfMinuteStep: '@?',
                     sfMinDate: '=?',
-                    sfMaxDate: '=?'
+                    sfMaxDate: '=?',
+                    sfIncludeDate: '@?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -98,6 +99,24 @@
 
                         scope.datePickerOptions = { 'show-weeks': 'false', 'starting-day': '1', 'minDate': scope.sfMinDate, 'maxDate': scope.sfMaxDate };
 
+						scope.$watch(
+						   'ngModel',
+							function (newDate, oldDate) {
+								if (newDate !== oldDate) {
+									if(newDate && oldDate && (newDate.getHours() != oldDate.getHours() || newDate.getMinutes() != oldDate.getMinutes()))
+										return;
+									
+									if(scope.sfIncludeDate && newDate && !oldDate) {
+										setHours(23, false);
+
+                                        //set minutes to last available value in the minutes dropdown
+										setMinutes(scope.msteps[scope.msteps.length-1].value, false);
+									}
+								}
+							},
+							true
+						);
+		
                         scope.openDatePicker = function ($event) {
                             $event.preventDefault();
                             $event.stopPropagation();

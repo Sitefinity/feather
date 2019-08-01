@@ -60,9 +60,9 @@
                               (@(Res.Get<ClientComponentsResources>().NotTranslated))</div>
                           </div>
                           
-                          <div class="col-xs-4">
+                          <div class="col-xs-4 sfTextEllipsis">
                             <span ng-class="{'text-muted': !isItemSelectedInDialog(item)}">
-                              <span sf-shrinked-breadcrumb="{{item.ParentTitlesPath}}" sf-max-length="60"></span>
+                              <span title="{{item.ParentTitlesPath}}" sf-shrinked-breadcrumb="{{item.ParentTitlesPath}}" sf-max-length="60"></span>
                             </span>
                           </div>
                           
@@ -101,7 +101,7 @@
           class='m-left-md'>
         (@(Res.Get<ClientComponentsResources>().NotTranslated))</em>
 
-      <span class='small text-muted' ng-bind='dataItem.Status'></span>
+      <span class='small text-muted' ng-bind='dataItem.StatusText'></span>
     </span>
   </a>
 </script>

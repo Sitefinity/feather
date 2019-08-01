@@ -7,7 +7,10 @@ var sitefinity = sitefinity || {};
         var loader,
         loaderMarkup = '<div class="sf-loading-wrapper"><div class="sf-loading"><span></span></div></div>',
         loaderTemplate = kendo.template(loaderMarkup),
-        dialog;
+        dialog,
+        pageScripts = $('script').map(function () {
+            return $(this).attr('src');
+        }).toArray();
 
         function isScriptTag(tag) {
             return tag.tagName == 'SCRIPT' && (!tag.type || tag.type.toLowerCase() == 'text/javascript');
@@ -46,12 +49,27 @@ var sitefinity = sitefinity || {};
         function loadScripts(container, scriptTags, loadHandler) {
             var lab = $LAB.setOptions({
                 AlwaysPreserveOrder: true,
-                AllowDuplicates: true
+                AllowDuplicates: true,
+            });
+
+            var labNoDuplicates = $LAB.setOptions({
+                AlwaysPreserveOrder: true,
+                AllowDuplicates: false
             });
 
             for (var i = 0; i < scriptTags.length; i++) {
                 if (scriptTags[i].src) {
-                    lab = lab.script(scriptTags[i].src);
+                    // Hack to not load bootstrap multiple times, should be removed with the next version of bootstrap or with feather designer script refactoring
+                    if (scriptTags[i].src.indexOf('Mvc/Scripts/Bootstrap/js/bootstrap.min.js') >= 0) {
+                        var src = $(scriptTags[i]).attr('src');
+
+                        if (pageScripts.indexOf(src) < 0) {
+                            labNoDuplicates.script(src);
+                        }
+                    }
+                    else {
+                        lab = lab.script(scriptTags[i].src);
+                    }
                 }
                 else if (scriptTags[i].text) {
                     var text = scriptTags[i].text;
@@ -59,7 +77,9 @@ var sitefinity = sitefinity || {};
                 }
             }
 
-            lab.wait(loadHandler);
+            labNoDuplicates.wait(function () {
+                lab.wait(loadHandler);
+            });
         }
 
         /**
@@ -116,9 +136,12 @@ var sitefinity = sitefinity || {};
              * Event handler that handles the needDialog event from the Sitefinity
              * page editor.
              */
-            openDialog: function (ev, args) {
-                this.showLoader(args.AppPath);
-                this.widgetContext = args;
+            openDialog: function (args) {
+                if (args.detail.openNewEditor)
+                    return true;
+
+                this.showLoader(args.detail.AppPath);
+                this.widgetContext = args.detail;
 
                 var separator;
                 if (this.widgetContext.url.indexOf('?') > -1)
@@ -127,6 +150,9 @@ var sitefinity = sitefinity || {};
                     separator = '?';
 
                 var url = this.widgetContext.url + separator + 'controlId=' + this.widgetContext.Id;
+                if (this.widgetContext.ModuleName) {
+                    url += '&moduleName=' + this.widgetContext.ModuleName;
+                }
                 $.get(url)
                     .done($.proxy(this.renderDialog, this))
                     .fail(function (data) {

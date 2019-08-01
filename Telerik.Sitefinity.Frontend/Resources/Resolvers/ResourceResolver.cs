@@ -14,7 +14,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// <remarks>
     /// This class is registered as a virtual file resolver in Sitefinity's VirtualPathManager.
     /// </remarks>
-    internal class ResourceResolver : IVirtualFileResolver
+    internal class ResourceResolver : IHashedVirtualFileResolver
     {
         /// <summary>
         /// Determines whether a file with the specified virtual path exists.
@@ -56,6 +56,13 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
             var resolverStrategy = ObjectFactory.Resolve<IResourceResolverStrategy>();
             return resolverStrategy.Open(definition, virtualPath);
+        }
+
+        public string GetFileHash(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies)
+        {
+            virtualPath = this.virtualPathBuilder.RemoveParams(virtualPath);
+            var resolverStrategy = ObjectFactory.Resolve<IResourceResolverStrategy>();
+            return resolverStrategy.GetFileHash(definition, virtualPath, virtualPathDependencies);
         }
 
         private VirtualPathBuilder virtualPathBuilder = new VirtualPathBuilder();

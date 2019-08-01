@@ -100,6 +100,11 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             }
         }
 
+        public string GetFileHash(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies)
+        {
+            return this.First.GetFileHash(definition, virtualPath, virtualPathDependencies);
+        }
+
         private IResourceResolverNode first;
     }
 }

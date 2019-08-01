@@ -6,14 +6,15 @@
                 restrict: 'A',
                 link: {
                     pre: function (scope, element, attrs, ctrl) {
+                        var status = attrs.sfMaster === 'true' || attrs.sfMaster === 'True' ? 'master' : 'live';
                         ctrl.getItems = function (skip, take, search, frontendLanguages) {
                             var provider = ctrl.$scope.sfProvider;
-                            return newsItemService.getItems(provider, skip, take, search, frontendLanguages);
+                            return newsItemService.getItems(provider, skip, take, search, frontendLanguages, status);
                         };
 
                         ctrl.getSpecificItems = function (ids) {
                             var provider = ctrl.$scope.sfProvider;
-                            return newsItemService.getSpecificItems(ids, provider);
+                            return newsItemService.getSpecificItems(ids, provider, status);
                         };
 
                         ctrl.selectorType = 'NewsSelector';

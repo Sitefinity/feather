@@ -7,6 +7,10 @@ module.exports = function (grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		
 		jshint: {
+            options: {
+                reporter: "Tests/Telerik.Sitefinity.Frontend.ClientTest/jshint-reporter.js",
+                reporterOutput: "Tests/Telerik.Sitefinity.Frontend.ClientTest/TestResults/hint.xml"
+            },
 			//define the files to lint
 			files: ['gruntfile.js',
 					'Telerik.Sitefinity.Frontend/Designers/Scripts/*.js',
@@ -60,7 +64,7 @@ module.exports = function (grunt) {
 							{type: 'cobertura', options: {dir: 'Tests/Telerik.Sitefinity.Frontend.ClientTest/coverage/cobertura'}},
 							{type: 'text-summary'}
 						]
-					}
+    }
 				}
 			}
 		},

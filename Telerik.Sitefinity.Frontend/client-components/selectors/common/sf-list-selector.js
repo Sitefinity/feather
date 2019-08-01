@@ -350,6 +350,16 @@
                             return false;
                         };
 
+                        var isJsonArray = function (str) {
+                            try {
+                                var jsonObject = JSON.parse(str);
+                                var isArray = jsonObject instanceof Array;
+                                return isArray;
+                            } catch (e) {
+                                return false;
+                            }
+                        };
+
                         ctrl.beginLoadingItems = function () {
                             scope.showLoadingIndicator = true;
 
@@ -533,6 +543,33 @@
                             return scope.selectedItemsInTheDialog.length;
                         };
 
+                        scope.getSelectedIds = function () {
+                            if (scope.multiselect) {
+                                if (scope.sfSelectedIds && scope.sfSelectedIds.length) {
+                                    var selectedIdsArray = isJsonArray(scope.sfSelectedIds) ? JSON.parse(scope.sfSelectedIds) : scope.sfSelectedIds;
+
+                                    return selectedIdsArray.filter(function (id) {
+                                        return id;
+                                    });
+                                }
+                                else if (scope.sfSelectedItems && scope.sfSelectedItems.length > 0) {
+                                    return scope.sfSelectedItems.map(function (item) {
+                                        return item.Id;
+                                    }).filter(function (id) {
+                                        return id;
+                                    });
+                                }
+                            }
+                            else {
+                                var id = (scope.sfSelectedItem && scope.sfSelectedItem.Id) || scope.sfSelectedItemId;
+                                if (id && id !== emptyGuid) {
+                                    return [id];
+                                }
+                            }
+
+                            return [];
+                        };
+
                         attrs.$observe('sfMultiselect', function () {
                             scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == 'true') ? true : false;
 
@@ -542,8 +579,10 @@
                         });
 
                         scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == 'true') ? true : false;
-                        if (!scope.sfSelectedItemId && scope.sfSelectedIds && scope.sfSelectedIds.length)
-                            scope.sfSelectedItemId = scope.sfSelectedIds[0];
+
+                        var selectedIds = scope.getSelectedIds();
+                        if (!scope.sfSelectedItemId && selectedIds && selectedIds.length)
+                            scope.sfSelectedItemId = selectedIds[0];
 
                         scope.selectButtonText = attrs.sfSelectButtonText;
                         scope.changeButtonText = attrs.sfChangeButtonText;
@@ -572,31 +611,6 @@
                             return false;
                         };
 
-                        scope.getSelectedIds = function () {
-                            if (scope.multiselect) {
-                                if (scope.sfSelectedIds && scope.sfSelectedIds.length > 0) {
-                                    return scope.sfSelectedIds.filter(function (id) {
-                                        return id;
-                                    });
-                                }
-                                else if (scope.sfSelectedItems && scope.sfSelectedItems.length > 0) {
-                                    return scope.sfSelectedItems.map(function (item) {
-                                        return item.Id;
-                                    }).filter(function (id) {
-                                        return id;
-                                    });
-                                }
-                            }
-                            else {
-                                var id = (scope.sfSelectedItem && scope.sfSelectedItem.Id) || scope.sfSelectedItemId;
-                                if (id && id !== emptyGuid) {
-                                    return [id];
-                                }
-                            }
-
-                            return [];
-                        };
-
                         scope.collectSelectedItems = function () {
                             if (scope.multiselect) {
                                 scope.selectedItemsViewData = [];
@@ -605,12 +619,6 @@
                         };
 
                         scope.removeUnselectedItems = ctrl.removeUnselectedItems;
-
-                        if (scope.sfSelectedIds && scope.sfSelectedIds.length !== 0) {
-                            scope.sfSelectedIds = scope.sfSelectedIds.filter(function (value) {
-                                return value && value !== "";
-                            });
-                        }
 
                         ctrl.fetchSelectedItems();
 

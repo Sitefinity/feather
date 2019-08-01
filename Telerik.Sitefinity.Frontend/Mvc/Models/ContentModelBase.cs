@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-
 using ServiceStack.Text;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
@@ -16,6 +15,7 @@ using Telerik.Sitefinity.RelatedData;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web.Model;
+using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
@@ -79,6 +79,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <value>
         ///   <c>true</c> if should enable social sharing; otherwise, <c>false</c>.
         /// </value>
+        [Obsolete("Social sharing module has been removed. This property is no longer used.")]
         public virtual bool EnableSocialSharing { get; set; }
 
         /// <summary>
@@ -183,6 +184,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public virtual string SerializedDateFilters { get; set; }
 
         /// <summary>
+        /// Gets or sets the group logical operator used for filtering.
+        /// </summary>
+        /// <value>
+        /// The group logical operator used for filtering.
+        /// </value>
+        public virtual LogicalOperator SelectionGroupLogicalOperator { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the canonical URL tag should be added to the page when the canonical meta tag should be added to the page.
         /// If the value is not set, the settings from SystemConfig -> ContentLocationsSettings -> DisableCanonicalURLs will be used. 
         /// </summary>
@@ -228,6 +237,32 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public virtual string UrlKeyPrefix { get; set; }
 
+        /// <summary>
+        /// Gets or sets the display mode of the content view.
+        /// </summary>
+        /// <remarks>
+        /// Note that this enumeration differs from the FieldDisplayMode.
+        /// </remarks>
+        public virtual ContentViewDisplayMode ContentViewDisplayMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating if the logical operator should be updated.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if logical operator should be updated; otherwise, <c>false</c>.
+        /// </value>
+        protected virtual bool RefreshLogicalOperator
+        {
+            get
+            {
+                return this.refreshLogicalOperator;
+            }
+
+            set
+            {
+                this.refreshLogicalOperator = value;
+            }
+        }
         #endregion
 
         #region Public methods
@@ -278,7 +313,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 {
                     var filter = string.Format(CultureInfo.InvariantCulture, "{0}.Contains({{{1}}})", taxonomyField, taxonFilter.Id);
                     query = query.Where(filter);
-                }                
+                }
             }
 
             this.PopulateListViewModel(page, query, viewModel);
@@ -321,6 +356,35 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
+        /// Creates the ListView model by date filter.
+        /// </summary>
+        /// <param name="from">The start date from the date filter.</param>
+        /// <param name="to">The end date from the date filter.</param>
+        /// <param name="page">The page.</param>
+        /// <returns>A list view model containing all descendant items from the given parent.</returns>
+        public virtual ContentListViewModel CreateListViewModelByDate(DateTime from, DateTime to, int page)
+        {
+            if (page < 1)
+            {
+                throw new ArgumentException("'page' argument has to be at least 1.", "page");
+            }
+
+            var viewModel = this.CreateListViewModelInstance();
+
+            var query = this.GetItemsQuery();
+            if (query == null)
+            {
+                return viewModel;
+            }
+
+            query = query.Where("(PublicationDate >= @0 && PublicationDate <= @1)", from, to);
+
+            this.PopulateListViewModel(page, query, viewModel);
+
+            return viewModel;
+        }
+
+        /// <summary>
         /// Creates the details view model.
         /// </summary>
         /// <param name="item">The item.</param>
@@ -333,7 +397,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             viewModel.Item = this.CreateItemViewModelInstance(item);
             viewModel.ContentType = this.ContentType;
             viewModel.ProviderName = this.ProviderName;
-            viewModel.EnableSocialSharing = this.EnableSocialSharing;
 
             return viewModel;
         }
@@ -354,7 +417,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             {
                 var contentResolvedType = this.ContentType;
                 var result = new List<CacheDependencyKey>(1);
-                result.Add(new CacheDependencyKey { Key = null, Type = contentResolvedType });
+                var manager = this.GetManager();
+                var provider = manager != null ? manager.Provider : null;
+
+                string applicationName = provider != null ? provider.ApplicationName : string.Empty;
+                if (typeof(ILifecycleDataItem).IsAssignableFrom(this.ContentType))
+                {
+                    result.Add(new CacheDependencyKey { Key = string.Concat(ContentLifecycleStatus.Live.ToString(), applicationName), Type = contentResolvedType });
+                }
+                else
+                {
+                    result.Add(new CacheDependencyKey { Key = applicationName, Type = contentResolvedType });
+                }
+
+                this.AddCommonDependencies(result, this.ContentType);
 
                 return result;
             }
@@ -384,6 +460,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 {
                     result.Add(new CacheDependencyKey { Key = viewModel.Item.Fields.Id.ToString(), Type = contentResolvedType });
                 }
+
+                this.AddCommonDependencies(result, this.ContentType, viewModel.Item);
 
                 return result;
             }
@@ -508,6 +586,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     var additionalFilters = JsonSerializer.DeserializeFromString<QueryData>(this.SerializedAdditionalFilters);
                     if (additionalFilters.QueryItems != null && additionalFilters.QueryItems.Length > 0)
                     {
+                        if (this.RefreshLogicalOperator)
+                        {
+                            this.RefreshQueryGroupLogicalOperator(additionalFilters.GetZeroLevelItems());
+                        }
+
                         var queryExpression = Telerik.Sitefinity.Data.QueryBuilder.LinqTranslator.ToDynamicLinq(additionalFilters);
                         elements.Add(queryExpression);
                     }
@@ -539,7 +622,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         protected virtual void PopulateListViewModel(int page, IQueryable<IDataItem> query, ContentListViewModel viewModel)
         {
             int? totalPages = null;
-            if (this.SelectionMode == Models.SelectionMode.SelectedItems && this.selectedItemsIds.Count == 0)
+            if (this.SelectionMode == Models.SelectionMode.SelectedItems && (this.selectedItemsIds.Count == 0 || string.IsNullOrEmpty(this.GetSelectedItemsFilterExpression())))
             {
                 viewModel.Items = Enumerable.Empty<ItemViewModel>();
             }
@@ -720,6 +803,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             return query;
         }
+
+        /// <summary>
+        /// Refreshes query with the group logical operator.
+        /// </summary>
+        /// <param name="queryItems">The query items.</param>
+        protected void RefreshQueryGroupLogicalOperator(IEnumerable<QueryItem> queryItems)
+        {
+            foreach (var item in queryItems)
+            {
+                if (item.Join == this.SelectionGroupLogicalOperator.ToString())
+                    break;
+
+                item.Join = this.SelectionGroupLogicalOperator.ToString();
+            }
+        }
         #endregion
 
         #region Private methods
@@ -746,8 +844,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return taxonomyPropertyDescriptor != null;
         }
 
+        /// <summary>
+        /// Gets the selected items filter expression
+        /// </summary>
+        /// <returns>The selected items filter expression. </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Telerik.Sitefinity", "SF1002:AvoidToListOnIEnumerable")]
-        private string GetSelectedItemsFilterExpression()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "It would add too much risk now to change this to property and would not bring much value to code quality and maintenance.")]
+        protected virtual string GetSelectedItemsFilterExpression()
         {
             var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
             var masterIds = this.GetItemsQuery()
@@ -760,6 +863,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
 
             return selectedItemsFilterExpression;
+        }
+
+        /// <summary>
+        /// Adds common dependencies to the list. 
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <param name="contentType"></param>
+        /// <param name="item"></param>
+        protected virtual void AddCommonDependencies(IList<CacheDependencyKey> keys, Type contentType, ItemViewModel item = null)
+        {
+            if (contentType.ImplementsInterface(typeof(ICommentable)))
+                keys.Add(new CacheDependencyKey() { Type = typeof(Sitefinity.Services.Comments.IThread) });
         }
 
         private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
@@ -779,6 +894,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             return relatedItems;
         }
+
         #endregion
 
         #region Private fields and constants
@@ -787,6 +903,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private int? itemsPerPage = 20;
         private int? limitCount = 20;
+        private bool refreshLogicalOperator = true;
         private string sortExpression = DefaultSortExpression;
         private string serializedSelectedItemsIds;
         private IList<string> selectedItemsIds = new List<string>();

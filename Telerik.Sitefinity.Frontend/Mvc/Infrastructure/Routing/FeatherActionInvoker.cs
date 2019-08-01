@@ -9,17 +9,16 @@ using System.Web.Mvc;
 using System.Web.UI;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
-using Telerik.Sitefinity.Data;
-using Telerik.Sitefinity.DynamicModules.Builder;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Personalization;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing.Date;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy;
-using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Taxonomies;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
@@ -42,8 +41,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             IUrlParamsMapper result = null;
             result = result
                 .SetLast(this.GetInferredDetailActionParamsMapper(controller))
+                .SetLast(this.GetInferredSuccessorsActionParamsMapper(controller))
                 .SetLast(this.GetInferredTaxonFilterMapper(controller, "ListByTaxon"))
                 .SetLast(this.GetInferredClassificationFilterMapper(controller, "ListByTaxon"))
+                .SetLast(this.GetInferredDateFilterMapper(controller, "ListByDate"))
                 .SetLast(this.GetInferredPagingMapper(controller, "Index"));
 
             // If no other mappers are added we skip the default one.
@@ -62,6 +63,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         {
             IUrlParamsMapper result = null;
             result = result
+                .SetLast(this.GetInferredSuccessorsActionParamsMapper(controller))
                 .SetLast(this.GetInferredPagingMapper(controller, "Index"));
 
             // If no other mappers are added we skip the default one.
@@ -110,7 +112,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                         if (expectedUrlKeyPrefix == currentUrlKeyPrefix)
                         {
-                            paramsMapper.ResolveUrlParams(originalParams, requestContext);
+                            paramsMapper.ResolveUrlParams(originalParams, requestContext, modelUrlKeyPrefix);
                         }
                         else
                         {
@@ -134,10 +136,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             else
             {
-                if (FrontendManager.AttributeRouting.UpdateRouteData(this.Context, controller.RouteData))
+                 if (this.ShouldProcessRequest(controller))
                 {
-                    //// Attribute routing was successful.
-                    RouteHelper.SetUrlParametersResolved();
+                    // in indexing mode, we only request pages, therefore there in no need to update data for relative routes
+                    if (!proxyControl.IsIndexingMode())
+                    {
+                        if (FrontendManager.AttributeRouting.UpdateRouteData(this.Context, controller.RouteData))
+                        {
+                            RouteHelper.SetUrlParametersResolved();
+                        }
+                    }
+                    else
+                    {
+                        //// Attribute routing was successful.
+                        RouteHelper.SetUrlParametersResolved();
+                    }
                 }
             }
         }
@@ -149,7 +162,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         protected override void ExecuteController(MvcProxyBase proxyControl)
         {
-              // Stop processing, personalized widgets are executed asynchronously
+            // Stop processing, personalized widgets are executed asynchronously
             if (proxyControl is PersonalizedWidgetProxy)
                 return;
 
@@ -211,54 +224,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return customErrors.Mode == CustomErrorsMode.Off || (customErrors.Mode == CustomErrorsMode.RemoteOnly && HttpContext.Current.Request.IsLocal);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private IEnumerable<string> GetProviderNames(ControllerBase controller, Type contentType)
+        private object GetModelProperty(ControllerBase controller, string propertyName)
         {
-            var providerNameProperty = controller.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == "ProviderName" && p.PropertyType == typeof(string));
+            object wrapper;
+            var modelProperty = controller.GetType().GetProperty("Model");
 
-            if (providerNameProperty != null)
+            if (modelProperty != null)
             {
-                return new string[1] { providerNameProperty.GetValue(controller, null) as string };
+                wrapper = modelProperty.GetValue(controller, null);
             }
             else
             {
-                IManager manager;
-
-                try
-                {
-                    ManagerBase.TryGetMappedManager(contentType, string.Empty, out manager);
-                }
-                catch (Exception ex)
-                {
-                    Log.Write(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Exception occurred in the routing functionality, details: {0}", ex));
-                    manager = null;
-                }
-
-                if (manager != null)
-                {
-                    if (SystemManager.CurrentContext.IsMultisiteMode && typeof(DynamicContent).IsAssignableFrom(contentType))
-                    {
-                        var moduleBuilderManager = ModuleBuilderManager.GetManager();
-                        if (moduleBuilderManager != null)
-                        {
-                            var dynamicModuleType = moduleBuilderManager.Provider.GetDynamicModuleTypes().Where(t => t.TypeName == contentType.Name && t.TypeNamespace == contentType.Namespace).Single();
-                            var links = SystemManager.CurrentContext.CurrentSite.SiteDataSourceLinks.Where(x => dynamicModuleType != null && x.DataSourceName == dynamicModuleType.ModuleName);
-
-                            return links.Select(x => x.ProviderName);
-                        }
-
-                        return new string[0];
-                    }
-                    else
-                    {
-                        return manager.Providers.Select(p => p.Name);
-                    }
-                }
-                else
-                {
-                    return new string[0];
-                }
+                wrapper = controller;
             }
+
+            var providerNameProperty = wrapper.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(p => p.Name == propertyName);
+
+            if (providerNameProperty != null)
+            {
+                return providerNameProperty.GetValue(wrapper, null);
+            }
+
+            return null;
         }
 
         private IUrlParamsMapper GetInferredDetailActionParamsMapper(ControllerBase controller)
@@ -285,17 +272,47 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                     if (contentType != null)
                     {
-                        var providerNames = this.GetProviderNames(controller, contentType);
-                        foreach (var provider in providerNames)
-                        {
-                            var providerName = provider;
-                            result = result.SetLast(new DetailActionParamsMapper(controller, contentType, () => providerName));
-                        }
+                        var providerNames = this.GetModelProperty(controller, "ProviderName") as string;
+                        result = result.SetLast(new DetailActionParamsMapper(controller, contentType, () => providerNames));
                     }
                 }
             }
 
             return result;
+        }
+
+        private IUrlParamsMapper GetInferredSuccessorsActionParamsMapper(ControllerBase controller)
+        {
+            IUrlParamsMapper result = null;
+            var controllerType = controller.GetType();
+            if (controllerType.ImplementsInterface(typeof(ICanFilterByParent)))
+            {
+                var successorsAction = new ReflectedControllerDescriptor(controllerType).FindAction(controller.ControllerContext, SuccessorsActionParamsMapper.DefaultActionName);
+                if (successorsAction != null)
+                {
+                    ICanFilterByParent canFilterByParent = controller as ICanFilterByParent;
+                    var parentContentTypes = canFilterByParent.GetParentTypes();
+                    if (parentContentTypes != null && parentContentTypes.Count() > 0)
+                    {
+                        var providerName = this.GetModelProperty(controller, "ProviderName") as string;
+                        result = result.SetLast(new SuccessorsActionParamsMapper(controller, parentContentTypes, () => providerName));
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private IUrlParamsMapper GetInferredDateFilterMapper(ControllerBase controller, string actionName)
+        {
+            var actionDescriptor = new ReflectedControllerDescriptor(controller.GetType()).FindAction(controller.ControllerContext, actionName);
+
+            if (actionDescriptor == null || actionDescriptor.GetParameters().Length == 0)
+            {
+                return null;
+            }
+
+            return new DateUrlParamsMapper(controller, new DateUrlEvaluatorAdapter());
         }
 
         private IUrlParamsMapper GetInferredTaxonFilterMapper(ControllerBase controller, string actionName)
@@ -308,17 +325,50 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             IUrlParamsMapper result = null;
             if (actionDescriptor.GetParameters()[0].ParameterType == typeof(ITaxon))
             {
+                string routeTemplate = GenerateRouteTemplate();
                 var taxonParamName = actionDescriptor.GetParameters()[0].ParameterName;
                 if (actionDescriptor.GetParameters()[1].ParameterType == typeof(int?))
                 {
                     var pageParamName = actionDescriptor.GetParameters()[1].ParameterName;
-                    result = new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":category,tag}/{" + pageParamName + "}", actionName);
+                    var urlParamNames = new string[] { FeatherActionInvoker.TaxonNamedParamter, FeatherActionInvoker.PagingNamedParameter };
+                    result = new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":" + routeTemplate + "}/{" + pageParamName + "}", actionName, urlParamNames);
                 }
-
-                result = result.SetLast(new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":category,tag}", actionName));
+                
+                var urlTaxonParamNames = new string[] { FeatherActionInvoker.TaxonNamedParamter};
+                result = result.SetLast(new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":" + routeTemplate + "}", actionName, urlTaxonParamNames));
             }
 
             return result;
+        }
+
+        private string GenerateRouteTemplate()
+        {
+            string routeTemplate = string.Empty;
+
+            var taxonomies = TaxonomyManager.GetTaxonomiesCache();
+
+            if (taxonomies.Count() > 0)
+            {
+                var taxonomyNames = new List<string>();
+                foreach (var taxonomy in taxonomies)
+                {
+                    if (taxonomy.Id == TaxonomyManager.TagsTaxonomyId)
+                    {
+                        taxonomyNames.Add("tag");
+                    }
+                    else if (taxonomy.Id == TaxonomyManager.CategoriesTaxonomyId)
+                    {
+                        taxonomyNames.Add("category");
+                    }
+                    else
+                    {
+                        taxonomyNames.Add(taxonomy.Name.ToLowerInvariant());
+                    }
+                }
+                routeTemplate = string.Join(",", taxonomyNames);
+            }
+
+            return routeTemplate;
         }
 
         private IUrlParamsMapper GetInferredClassificationFilterMapper(ControllerBase controller, string actionName)
@@ -338,7 +388,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (actionDescriptor == null || actionDescriptor.GetParameters().Length == 0 || actionDescriptor.GetParameters()[0].ParameterType != typeof(int?))
                 return null;
 
-            return new CustomActionParamsMapper(controller, () => "/{" + actionDescriptor.GetParameters()[0].ParameterName + ":int}", actionName);
+            var urlParamNames = new string[] { FeatherActionInvoker.PagingNamedParameter };
+
+            return new CustomActionParamsMapper(controller, () => "/{" + actionDescriptor.GetParameters()[0].ParameterName + ":int}", actionName, urlParamNames);
         }
 
         private void SetControllerRouteParam(MvcProxyBase proxyControl)
@@ -423,5 +475,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// The controller name key
         /// </summary>
         public const string ControllerNameKey = "controller";
+
+        /// <summary>
+        /// The name of the page route parameter
+        /// </summary>
+        internal const string PagingNamedParameter = "page";
+
+        /// <summary>
+        /// The name of the taxon route parameter
+        /// </summary>
+        internal const string TaxonNamedParamter = "taxon";
     }
 }

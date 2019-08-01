@@ -269,7 +269,7 @@
 
         var getInnerElements = function (layoutRoot) {
             var gridElements = [];
-            var elements = $(layoutRoot).find('[data-sf-element]');
+            var elements = $(layoutRoot).findExcludeNested('[data-sf-element]');
 
             //Sort out the inner columns
             for (var i = 0; i < elements.length; i++) {
@@ -291,7 +291,7 @@
             var tempLayout = $(gridContext.layoutRoot).clone();
 
             for (var i = 0; i < elements.length; i++) {
-                var innerDiv = elements[i].id ? $(tempLayout).find('#' + elements[i].id) : $(tempLayout).find('[data-sf-element=' + elements[i].name + ']');
+                var innerDiv = elements[i].id ? $(tempLayout).findExcludeNested('#' + elements[i].id) : $(tempLayout).findExcludeNested('[data-sf-element=' + elements[i].name + ']');
 
                 if (innerDiv) {
                     var label = elements[i].label;
@@ -319,7 +319,7 @@
 
         var refreshContainer = function (elements) {
             for (var i = 0; i < elements.length; i++) {
-                var innerDiv = elements[i].id ? $(gridContext.layoutContainer).find('#' + elements[i].id) : $(gridContext.layoutContainer).find('[data-sf-element=' + elements[i].name + ']');
+                var innerDiv = elements[i].id ? $(gridContext.layoutContainer).findExcludeNested('#' + elements[i].id) : $(gridContext.layoutContainer).findExcludeNested('[data-sf-element=' + elements[i].name + ']');
 
                 if (innerDiv) {
                     var css = elements[i].isPlaceholder ? 'sf_colsIn ' + elements[i].css : elements[i].css;
@@ -344,6 +344,27 @@
                     }
                 }
             }
+        };
+
+        // find all child elements until you find child grid widget inside the current grid
+        $.fn.findExcludeNested = function (selector, result) {
+
+            // Default result to an empty jQuery object if not provided
+            result = typeof result !== 'undefined' ? result : new jQuery();
+
+            // Iterate through all children, except those with the RadDockZone class
+            this.children().each(function () {
+
+                var thisObject = jQuery(this);
+                if (thisObject.is(selector))
+                    result.push(this);
+
+                // Recursively seek children without RadDockZone class
+                if (!thisObject.hasClass('RadDockZone'))
+                    thisObject.findExcludeNested(selector, result);
+            });
+
+            return result;
         };
 
         var invokePut = function (url, data, deferred, success) {

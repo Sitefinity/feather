@@ -33,7 +33,8 @@
             },
             uploadHandlerUrl: serverContext.getRootedUrl('Telerik.Sitefinity.Html5UploadHandler.ashx'),
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/'),
-            thumbnailServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/')
+            thumbnailServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/'),
+            blobStorageServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/BlobStorage.svc/'),
         };
 
         var getById = function (id, provider, itemType, serviceUrl) {
@@ -177,9 +178,20 @@
             });
         };
 
-        var thumbnailProfiles = function (libraryType) {
+        var thumbnailProfiles = function (libraryType, viewType) {
             var thumbnailProfilesServiceUrl = constants.thumbnailServiceUrl + 'thumbnail-profiles/';
-            return serviceHelper.getResource(thumbnailProfilesServiceUrl).get({ libraryType: libraryType }).$promise;
+            return serviceHelper.getResource(thumbnailProfilesServiceUrl).get({ libraryType: libraryType, viewType: viewType }).$promise;
+        };
+
+        var customImageSizeAllowed = function (blobStorageProviderName) {
+            var blobStorageSettingsServiceUrl = constants.blobStorageServiceUrl + 'provider-settings/';
+            return serviceHelper.getResource(blobStorageSettingsServiceUrl)
+                .get({ blobStorageProviderName: blobStorageProviderName })
+                .$promise
+                .then(function (data) {
+                    var customImageSizeAllowed = data ? data.CustomImageSizeAllowed : false;
+                    return customImageSizeAllowed;
+                });
         };
 
         var checkCustomThumbnailParams = function (methodName, params, mediaSettings) {
@@ -331,8 +343,11 @@
                     };
                     return uploadItem(settings, mediaType);
                 },
-                thumbnailProfiles: function () {
-                    return thumbnailProfiles(constants[mediaType].parentItemType);
+                thumbnailProfiles: function (viewType) {
+                    return thumbnailProfiles(constants[mediaType].parentItemType, viewType);
+                },
+                customImageSizeAllowed: function (blobStorageProviderName) {
+                    return customImageSizeAllowed(blobStorageProviderName);
                 },
                 getSettings: function () {
                     if (mediaSettings === null) {

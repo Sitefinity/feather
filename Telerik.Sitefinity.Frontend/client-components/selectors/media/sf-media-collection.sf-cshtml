@@ -99,6 +99,6 @@
   </div>
 
   <div class="text-center">
-      <sf-loading ng-show="$parent.isLoading"></sf-loading>
+      <sf-loading ng-class="{'u-vh': !$parent.isLoading}"></sf-loading>
   </div>
 </div>
