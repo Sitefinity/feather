@@ -3178,5 +3178,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
                 return this["InvalidUrlMessage"];
             }
         }
+
+        /// <summary>
+        /// phrase: You have exceeded the selection limit. Reduce the number of selected items to 100 or less.
+        /// </summary>
+        /// <value>You have exceeded the selection limit. Reduce the number of selected items to 100 or less.</value>
+        [ResourceEntry("ExceededSelectionLimit",
+            Value = "You have exceeded the selection limit. Reduce the number of selected items to 100 or less.",
+            Description = "phrase: You have exceeded the selection limit. Reduce the number of selected items to 100 or less.",
+            LastModified = "2019/09/19")]
+        public string ExceededSelectionLimit
+        {
+            get
+            {
+                return this["ExceededSelectionLimit"];
+            }
+        }
     }
 }

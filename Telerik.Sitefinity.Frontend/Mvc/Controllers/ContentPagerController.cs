@@ -102,15 +102,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         {
             string nextUrl;
             var highlightedIndex = model.CurrentPage % model.DisplayCount;
+            if (highlightedIndex == 0)
+            {
+                highlightedIndex = model.DisplayCount;
+            }
 
-            if (model.CurrentPage > 0 && model.CurrentPage < model.PagerNodes.Count)
-                nextUrl = ContentPagerController.PageNodeUrl(model.PagerNodes[highlightedIndex], model.RedirectUrlTemplate);
+            if (model.CurrentPage > 0 && model.CurrentPage < model.TotalPagesCount)
+                if (highlightedIndex == model.DisplayCount)
+                    nextUrl = ContentPagerController.PageNodeUrl(model.NextNode, model.RedirectUrlTemplate);
+                else
+                    nextUrl = ContentPagerController.PageNodeUrl(model.PagerNodes[highlightedIndex], model.RedirectUrlTemplate);
             else
                 nextUrl = null;
 
             string previousUrl;
-            if (highlightedIndex > 1)
-                previousUrl = ContentPagerController.PageNodeUrl(model.PagerNodes[highlightedIndex - 2], model.RedirectUrlTemplate);
+            if (model.CurrentPage > 1)
+                if (highlightedIndex > 1)
+                    previousUrl = ContentPagerController.PageNodeUrl(model.PagerNodes[highlightedIndex - 2], model.RedirectUrlTemplate);
+                else
+                    previousUrl = ContentPagerController.PageNodeUrl(model.PreviousNode, model.RedirectUrlTemplate);
             else
                 previousUrl = null;
 

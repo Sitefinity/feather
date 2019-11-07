@@ -132,8 +132,10 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             // Add sf_cols wrapper for back end pages and email campaigns.
             var currentNode = SiteMapBase.GetActualCurrentNode();
             var rootNode = currentNode != null ? currentNode.RootNode as PageSiteNode : null;
-            var ensureSfColsWrapper = this.IsBackend() || rootNode == null || rootNode.Id == NewslettersModule.standardCampaignRootNodeId ||
-                System.Web.HttpContext.Current.Items[SiteMapBase.CurrentNodeKey] == null;
+            var ensureSfColsWrapper = (this.IsBackend() && !SystemManager.IsPreviewMode) 
+                                    || rootNode == null 
+                                    || rootNode.Id == NewslettersModule.standardCampaignRootNodeId 
+                                    || System.Web.HttpContext.Current.Items[SiteMapBase.CurrentNodeKey] == null;
             layout = this.ProcessLayoutString(layout, ensureSfColsWrapper);
 
             return ControlUtilities.GetTemplate(null, layout.GetHashCode().ToString(System.Globalization.CultureInfo.InvariantCulture), null, layout);

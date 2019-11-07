@@ -7,10 +7,13 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.UI;
+using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc.Rendering;
+using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
@@ -123,6 +126,44 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
+        /// Gets the URL template used for the paging.
+        /// </summary>
+        /// <returns>The URL template.</returns>
+        public static string GetRedirectPagingUrl()
+        {
+            string redirectUrl;
+            if (UrlParamsMapperBase.UseNamedParametersRouting)
+            {
+                redirectUrl = "/" + FeatherActionInvoker.PagingNamedParameter + "/{0}";
+            }
+            else
+            {
+                redirectUrl = "/{0}";
+            }
+
+            return redirectUrl;
+        }
+
+        /// <summary>
+        /// Gets the URL template used for the paging when filtered by taxonomy.
+        /// </summary>
+        /// <returns>The URL template.</returns>
+        public static string GetRedirectPagingUrl(ITaxon taxonFilter)
+        {
+            string redirectUrl;
+            if (UrlParamsMapperBase.UseNamedParametersRouting)
+            {
+                redirectUrl = string.Format("/{0}/{1}/{2}", taxonFilter.Taxonomy.Name, taxonFilter.UrlName, FeatherActionInvoker.PagingNamedParameter) + "/{0}";
+            }
+            else
+            {
+                redirectUrl = "/" + taxonFilter.UrlName + "/{0}";
+            }
+
+            return redirectUrl;
+        }
+
+        /// <summary>
         /// Gets the resource path.
         /// </summary>
         /// <param name="controllerName">Name of the controller.</param>
@@ -150,23 +191,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
         internal static string AppendVersion(string contentPath)
         {
-            if (contentPath.EndsWith(".js"))
+            if (contentPath.EndsWith(".js") || contentPath.Contains(".js?"))
             {
-                var bytes = Encoding.UTF8.GetBytes(GetAssemblyVersion());
-                var base64version = Convert.ToBase64String(bytes);
-                contentPath = UrlTransformations.AppendParam(contentPath, VersionQueryParam, base64version);
+                var hash = VirtualPathManager.GetFileHash(contentPath, null);
+                if (hash != null)
+                {
+                    var bytes = Encoding.UTF8.GetBytes(hash);
+                    var base64version = Convert.ToBase64String(bytes);
+                    contentPath = UrlTransformations.AppendParam(contentPath, VersionQueryParam, base64version);
+                }
             }
 
             return contentPath;
-        }
-
-        /// <summary>
-        /// Returns the Assembly version.
-        /// </summary>
-        private static string GetAssemblyVersion()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            return assembly.GetName().Version.ToString();
         }
 
         private const string VersionQueryParam = "v";

@@ -7,6 +7,7 @@ using ServiceStack.Text;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Data.Linq.Dynamic;
+using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.GenericContent.Model;
 using Telerik.Sitefinity.Lifecycle;
 using Telerik.Sitefinity.Model;
@@ -276,7 +277,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             location.ContentType = this.ContentType;
             location.ProviderName = this.GetManager().Provider.Name;
 
-            var filterExpression = this.CompileFilterExpression();
+            string filterExpression;
+            switch (this.ContentViewDisplayMode)
+            {
+                case ContentViewDisplayMode.Detail:
+                    location.Filters.Add(this.CompileSingleItemFilterExpression(location.ContentType)); ;
+
+                    return new[] { location };
+                case ContentViewDisplayMode.Automatic:
+                    filterExpression = this.CompileFilterExpression();
+                    break;
+                default:
+                    return null;
+            }
+
             if (!string.IsNullOrEmpty(filterExpression))
             {
                 location.Filters.Add(new BasicContentLocationFilter(filterExpression));
@@ -418,7 +432,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 var contentResolvedType = this.ContentType;
                 var result = new List<CacheDependencyKey>(1);
                 var manager = this.GetManager();
-                string applicationName = manager != null && manager.Provider != null ? manager.Provider.ApplicationName : string.Empty;
+                var provider = manager != null ? manager.Provider : null;
+
+                string applicationName = provider != null ? provider.ApplicationName : string.Empty;
                 if (typeof(ILifecycleDataItem).IsAssignableFrom(this.ContentType))
                 {
                     result.Add(new CacheDependencyKey { Key = string.Concat(ContentLifecycleStatus.Live.ToString(), applicationName), Type = contentResolvedType });
@@ -567,6 +583,51 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         protected virtual ItemViewModel CreateItemViewModelInstance(IDataItem item)
         {
             return new ItemViewModel(item);
+        }
+
+        /// <summary>
+        /// Generates single item filter for specified content location
+        /// </summary>
+        /// <returns>The single item filter.</returns>
+        protected virtual ContentLocationSingleItemFilter CompileSingleItemFilterExpression(Type itemType)
+        {
+            if (!typeof(Content).IsAssignableFrom(itemType) && !typeof(DynamicContent).IsAssignableFrom(itemType))
+            {
+                throw new ArgumentException("The type must be Content or Dynamic content");
+            }
+
+            var selectedItemGuid = this.selectedItemsIds.Select(id => new Guid(id)).FirstOrDefault();
+
+            var items = this.GetItemsQuery();
+            IQueryable<string> itemIds = new List<string>().AsQueryable();
+            IQueryable<string> itemMasterIds = new List<string>().AsQueryable();
+
+            if (typeof(Content).IsAssignableFrom(itemType))
+            {
+                var typedItems = items.OfType<Content>().Where(c => c.Id == selectedItemGuid || c.OriginalContentId == selectedItemGuid);
+                itemIds = items.Select(n => n.Id.ToString());
+                itemMasterIds = typedItems.Where(i => i.OriginalContentId != Guid.Empty).Select(n => n.OriginalContentId.ToString());
+            }
+            else
+            {
+                var typedItems = items.OfType<ILifecycleDataItemGeneric>().Where(c => c.Id == selectedItemGuid || c.OriginalContentId == selectedItemGuid);
+                itemIds = items.Select(n => n.Id.ToString());
+                itemMasterIds = typedItems.Where(i => i.OriginalContentId != Guid.Empty).Select(n => n.OriginalContentId.ToString());
+            }
+
+            var itemIdsList = itemIds.Distinct().ToList();
+
+            foreach (var item in itemMasterIds.Distinct())
+            {
+                if (!itemIds.Contains(item))
+                {
+                    itemIdsList.Add(item);
+                }
+            }
+
+            var filter = new ContentLocationSingleItemFilter(itemIdsList);
+
+            return filter;
         }
 
         /// <summary>
@@ -863,6 +924,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return selectedItemsFilterExpression;
         }
 
+        /// <summary>
+        /// Adds common dependencies to the list. 
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <param name="contentType"></param>
+        /// <param name="item"></param>
+        protected virtual void AddCommonDependencies(IList<CacheDependencyKey> keys, Type contentType, ItemViewModel item = null)
+        {
+            if (contentType.ImplementsInterface(typeof(ICommentable)))
+                keys.Add(new CacheDependencyKey() { Type = typeof(Sitefinity.Services.Comments.IThread) });
+        }
+
         private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
         {
             var manager = this.GetManager();
@@ -881,11 +954,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return relatedItems;
         }
 
-        private void AddCommonDependencies(IList<CacheDependencyKey> keys, Type contentType, ItemViewModel item = null)
-        {
-            if (contentType.ImplementsInterface(typeof(ICommentable)))
-                keys.Add(new CacheDependencyKey() { Type = typeof(Sitefinity.Services.Comments.IThread) });
-        }
         #endregion
 
         #region Private fields and constants

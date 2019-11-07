@@ -4,14 +4,16 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
-using RazorGenerator.Mvc;
+using System.Web.Script.Serialization;
 using Telerik.Microsoft.Practices.Unity;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
@@ -23,8 +25,10 @@ using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy.TypeDescription;
 using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages;
+using Telerik.Sitefinity.Security;
 using Telerik.Sitefinity.Services;
-using System.Threading.Tasks;
+using Telerik.Sitefinity.Taxonomies;
+using Telerik.Sitefinity.Taxonomies.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -84,16 +88,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         public virtual void Initialize()
         {
-                GlobalFilters.Filters.Add(new CacheDependentAttribute());
+            GlobalFilters.Filters.Add(new CacheDependentAttribute());
 
-                this.RegisterVirtualPaths(this.ControllerContainerAssemblies);
+            this.RegisterVirtualPaths(this.ControllerContainerAssemblies);
 
-                var controllerTypes = this.GetControllers(this.ControllerContainerAssemblies);
-                this.InitializeControllers(controllerTypes);
+            var controllerTypes = this.GetControllers(this.ControllerContainerAssemblies);
+            this.InitializeControllers(controllerTypes);
 
-                this.InitializeCustomRouting();
+            this.InitializeCustomRouting();
 
-                this.RegisterPrecompiledViewEngines(this.ControllerContainerAssemblies);
+            this.RegisterPrecompiledViewEngines(this.ControllerContainerAssemblies);
         }
 
         /// <summary>
@@ -137,22 +141,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         public virtual IEnumerable<Assembly> RetrieveAssemblies()
         {
-            IEnumerable<string> assemblyFileNames;
-
-            assemblyFileNames = this.RetrieveAssembliesFileNames().Distinct().ToArray();
-
-            IDictionary<string, Task<Assembly>> retrieveAssemblyTasks = new Dictionary<string, Task<Assembly>>();
+            IEnumerable<string> assemblyFileNames = this.RetrieveControllerAssembliesFileNames().Distinct().ToArray();
+            IList<Task<Assembly>> retrieveAssemblyTasks = new List<Task<Assembly>>();
 
             foreach (string assemblyFileName in assemblyFileNames)
             {
-                retrieveAssemblyTasks.Add(assemblyFileName, this.RetrieveAssemblyAsync(assemblyFileName));
+                retrieveAssemblyTasks.Add(this.LoadControllerAssemblyAsync(assemblyFileName));
             }
 
-            Task.WaitAll(retrieveAssemblyTasks.Values.ToArray());
+            Task.WaitAll(retrieveAssemblyTasks.ToArray());
 
-            IEnumerable<Assembly> result = retrieveAssemblyTasks.Values
+            IEnumerable<Assembly> result = retrieveAssemblyTasks
                 .Select(v => v.Result)
-                .Where(a => a != null);
+                .Where(v => v != null);
 
             return result;
         }
@@ -170,9 +171,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (container == null)
                 throw new ArgumentNullException("container");
 
-            var containerAttribute = container.GetCustomAttributes(false).Single(attr => attr.GetType().AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName) as ControllerContainerAttribute;
+            var containerAttribute = container.GetCustomAttributes(false).FirstOrDefault(attr => attr.GetType().AssemblyQualifiedName == typeof(ControllerContainerAttribute).AssemblyQualifiedName) as ControllerContainerAttribute;
 
-            if (containerAttribute.InitializationType == null || containerAttribute.InitializationMethod.IsNullOrWhitespace())
+            if (containerAttribute == null || containerAttribute.InitializationType == null || containerAttribute.InitializationMethod.IsNullOrWhitespace())
                 return;
 
             var initializationMethod = containerAttribute.InitializationType.GetMethod(containerAttribute.InitializationMethod);
@@ -241,12 +242,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             this.RegisterControllerFactory();
             this.RemoveSitefinityViewEngine();
             this.ReplaceControllerFactory();
-
-            foreach (var controller in controllers)
-            {
-                this.RegisterController(controller);
-                ControllerContainerInitializer.RegisterStringResources(controller);
-            }
+            this.RegisterControllers(controllers);
         }
 
         protected virtual void UninitializeGlobalFilters()
@@ -280,12 +276,53 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         }
 
         /// <summary>
-        /// Gets the assemblies file names that will be inspected for controllers.
+        /// Gets the assemblies file names from the controller container assembly cache.
         /// </summary>
-        protected virtual IEnumerable<string> RetrieveAssembliesFileNames()
+        protected virtual IEnumerable<string> RetrieveControllerAssembliesFileNames()
         {
+            var isFeatherenabled = SystemManager.GetApplicationModule(FrontendModule.ModuleName) != null;
+            bool useCachedControllerContainerAssemblies = false;
+            if (isFeatherenabled)
+            {
+                useCachedControllerContainerAssemblies = Config.Get<FeatherConfig>().UseCachedControllerContainerAssemblies;
+            }
+
             var controllerAssemblyPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "bin");
-            return Directory.EnumerateFiles(controllerAssemblyPath, "*.dll", SearchOption.TopDirectoryOnly);
+
+            if (useCachedControllerContainerAssemblies)
+            {
+                var pathToCacheFile = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "bin", "ControllerContainerAsembliesLocation.json");
+                if (File.Exists(pathToCacheFile))
+                {
+                    try
+                    {
+                        var file = File.ReadAllText(pathToCacheFile);
+                        var filesFromcache = new JavaScriptSerializer().Deserialize<string[]>(file);
+
+                        // append path to the bin in order to be able to load the assemblies
+                        return filesFromcache.Select(x => Path.Combine(controllerAssemblyPath, x));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Write(string.Format("Attempt to read from ControllerContainerAsembliesLocation.json was unsuccessful: {0}", ex.Message), ConfigurationPolicy.ErrorLog);
+                    }
+                }
+            }
+
+            var allAssemblyNames = Directory.EnumerateFiles(controllerAssemblyPath, "*.dll", SearchOption.TopDirectoryOnly);
+            IList<Task<string>> retrieveAssemblyTasks = new List<Task<string>>();
+
+            foreach (string assemblyFileName in allAssemblyNames)
+            {
+                retrieveAssemblyTasks.Add(this.RetrieveControllerAssemblyAsync(assemblyFileName));
+            }
+
+            Task.WaitAll(retrieveAssemblyTasks.ToArray());
+            var controllerAssembliesNames = retrieveAssemblyTasks
+                .Select(x => x.Result)
+                .Where(x => !string.IsNullOrEmpty(x));
+
+            return controllerAssembliesNames;
         }
 
         /// <summary>
@@ -314,8 +351,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             ObjectFactory.Container.RegisterType<IControllerActionInvoker, FeatherActionInvoker>();
             ObjectFactory.Container.RegisterType<IRouteParamResolver, IntParamResolver>("int");
-            ObjectFactory.Container.RegisterType<IRouteParamResolver, CategoryParamResolver>("category");
-            ObjectFactory.Container.RegisterType<IRouteParamResolver, TagParamResolver>("tag");
+
+            Task.Run(() =>
+            {
+                this.RegisterTaxonomyRoutes();
+            });
+
+            TaxonomyManager.Executing += new EventHandler<ExecutingEventArgs>(OnPersistTaxonomy);
 
             string mvcControllerProxySettingsPropertyDescriptorName = string.Format("{0}.{1}", typeof(MvcWidgetProxy).FullName, "Settings");
             ObjectFactory.Container.RegisterType<IControlPropertyDescriptor, ControllerSettingsPropertyDescriptor>(mvcControllerProxySettingsPropertyDescriptorName);
@@ -323,35 +365,121 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             FrontendManager.AttributeRouting.MapMvcAttributeRoutes();
         }
 
+        /// <summary>
+        /// Register controllers into the store
+        /// </summary>
+        /// <param name="controllers">The controllers to be registered.</param>
+        protected virtual void RegisterControllers(IEnumerable<Type> controllers)
+        {
+            var controllerStore = new ControllerStore();
+            controllerStore.AddControllers(controllers.ToArray(), ConfigManager.GetManager());
+            controllers.ToList().ForEach(c => ControllerContainerInitializer.RegisterStringResources(c));
+        }
+
         #endregion
 
         #region Private members
 
-        private Task<Assembly> RetrieveAssemblyAsync(string assemblyFileName)
+        private void OnPersistTaxonomy(object sender, ExecutingEventArgs args)
+        {
+            if (!(args.CommandName == "CommitTransaction" || args.CommandName == "FlushTransaction"))
+                return;
+
+            var taxonomyProvider = sender as TaxonomyDataProvider;
+
+            var dirtyItems = taxonomyProvider.GetDirtyItems();
+            if (dirtyItems.Count == 0)
+                return;
+
+            foreach (var item in dirtyItems)
+            {
+                if (item is Taxonomy taxonomy)
+                {
+                    var itemStatus = taxonomyProvider.GetDirtyItemStatus(item);
+                    var taxonomyName = taxonomy.Name;
+                    if (!string.IsNullOrEmpty(taxonomyName) &&
+                       (itemStatus == SecurityConstants.TransactionActionType.New || itemStatus == SecurityConstants.TransactionActionType.Updated))
+                    {
+                        taxonomyName = taxonomyName.ToLowerInvariant();
+                        if (!ObjectFactory.Container.IsRegistered(typeof(TaxonParamResolver), taxonomyName))
+                        {
+                            ObjectFactory.Container.RegisterType<IRouteParamResolver, TaxonParamResolver>(taxonomyName, new InjectionConstructor(taxonomyName));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RegisterTaxonomyRoutes()
+        {
+            var taxonomies = TaxonomyManager.GetTaxonomiesCache();
+
+            if (taxonomies.Count() > 0)
+            {
+                foreach (var taxonomy in taxonomies)
+                {
+                    var taxonomyName = this.GetTaxonomyName(taxonomy.Id, taxonomy.Name);
+                    ObjectFactory.Container.RegisterType<IRouteParamResolver, TaxonParamResolver>(taxonomyName, new InjectionConstructor(taxonomyName));
+                }
+            }
+        }
+
+        private string GetTaxonomyName(Guid id, string name)
+        {
+            var taxonomyName = string.Empty;
+
+            if (id == TaxonomyManager.TagsTaxonomyId)
+            {
+                taxonomyName = "tag";
+            }
+            else if (id == TaxonomyManager.CategoriesTaxonomyId)
+            {
+                taxonomyName = "category";
+            }
+            else
+            {
+                taxonomyName = name.ToLowerInvariant();
+            }
+
+            return taxonomyName;
+        }
+
+        private Task<string> RetrieveControllerAssemblyAsync(string assemblyFileName)
         {
             return Task.Run(() => this.RetrieveAssembly(assemblyFileName));
         }
 
-        private Assembly RetrieveAssembly(string assemblyFileName)
+        private Task<Assembly> LoadControllerAssemblyAsync(string assemblyFileName)
         {
-            if (this.IsControllerContainer(assemblyFileName))
+            return Task.Run(() => this.LoadControllerAssembly(assemblyFileName));
+        }
+
+        private Assembly LoadControllerAssembly(string assemblyFileName)
+        {
+            try
             {
                 Assembly assembly = this.LoadAssembly(assemblyFileName);
                 this.InitializeControllerContainer(assembly);
-
                 return assembly;
             }
-
-            if (this.IsMarkedAssembly<ResourcePackageAttribute>(assemblyFileName))
+            catch (Exception)
             {
-                Assembly assembly = this.LoadAssembly(assemblyFileName);
-
-                return assembly;
+                Log.Write(string.Format("Attempt to load {0} failed. Check if the assembly is present in the bin", assemblyFileName), ConfigurationPolicy.ErrorLog);
             }
 
             return null;
         }
-        
+
+        private string RetrieveAssembly(string assemblyFileName)
+        {
+            if (this.IsControllerContainer(assemblyFileName) || this.IsMarkedAssembly<ResourcePackageAttribute>(assemblyFileName))
+            {
+                return assemblyFileName;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Registers the controller string resources.
         /// </summary>

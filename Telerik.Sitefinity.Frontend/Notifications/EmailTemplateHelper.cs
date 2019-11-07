@@ -24,7 +24,7 @@ namespace Telerik.Sitefinity.Frontend.Notifications
             IQueryable<ControlPresentation> allTemplates;
             allTemplates = pageManager.GetPresentationItems<ControlPresentation>();
             var layoutTemplates = allTemplates.Where(tmpl => tmpl.DataType == Presentation.EmailTemplate);
-            int? totalCount = 0;
+            int? totalCount = null;
             var filteredTemplates = DataProviderBase.SetExpressions(layoutTemplates, filterExpression, string.Empty, 0, 0, ref totalCount);
 
             IDictionary<Guid, string> templateViewModel = new Dictionary<Guid, string>();

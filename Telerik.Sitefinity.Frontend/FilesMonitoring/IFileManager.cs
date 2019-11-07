@@ -1,4 +1,6 @@
-﻿namespace Telerik.Sitefinity.Frontend.FilesMonitoring
+﻿using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
+
+namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 {
     /// <summary>
     /// Classes that implement this interface should define the Sitefinity's behavior when a file is moved over the application folder structure.
@@ -10,8 +12,9 @@
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <param name="filePath">The file path.</param>
+        /// <param name="fileData">The file data.</param>
         /// <param name="packageName">Name of the package.</param>
-        void FileAdded(string fileName, string filePath, string packageName = "");
+        void FileAdded(string fileName, string filePath, FileData fileData, string packageName = "");
 
         /// <summary>
         /// Reacts on file deletion.

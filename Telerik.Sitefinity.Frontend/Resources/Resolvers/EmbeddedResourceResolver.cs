@@ -63,6 +63,12 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             return null;
         }
 
+        protected override string CurrentGetFileHash(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies)
+        {
+            var assembly = this.GetAssembly(definition);
+            return assembly.GetName().Version.ToString();
+        }
+
         /// <summary>
         /// Gets the resource name based on the virtual path.
         /// </summary>

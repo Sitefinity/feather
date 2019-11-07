@@ -95,7 +95,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <returns></returns>
         protected override bool FileExists(ControllerContext controllerContext, string virtualPath)
         {
-            return !Config.Get<FeatherConfig>().DisablePrecompilation && base.FileExists(controllerContext, virtualPath) && (Config.Get<FeatherConfig>().AlwaysUsePrecompiledVersion || this.ShouldServe(virtualPath));
+            return !Config.Get<FeatherConfig>().DisablePrecompilation && base.FileExists(controllerContext, virtualPath) && (Config.Get<FeatherConfig>().AlwaysUsePrecompiledVersion || this.ShouldServe(controllerContext, virtualPath));
         }
 
         /// <summary>
@@ -138,8 +138,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             }
         }
 
-        private bool ShouldServe(string virtualPath)
+        // If  for any of the location we find newer version of the file outside the precompiled assebly we add "servePrecompiled" flag in the RotueData.
+        // This way we ensure that view with  bigger prority will be served instead of the first view found from the precompiled view engine.
+        // See #299642
+        private bool ShouldServe(ControllerContext controllerContext, string virtualPath)
         {
+            if (controllerContext.RouteData.Values.ContainsKey("servePrecompiled") && controllerContext.RouteData.Values["servePrecompiled"].ToString() == "false")
+                return false;
+
             string precompiledFileHash = null;
             foreach (var asm in this.precompiledAssemblies)
             {
@@ -157,7 +163,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
                 virtualResourceHash = this.VirtualResourceHash(virtualPath);
             }
 
-            return virtualResourceHash == null || virtualResourceHash == precompiledFileHash;
+            var shouldServe = virtualResourceHash == null || virtualResourceHash == precompiledFileHash;
+
+            if (!shouldServe)
+            {
+                controllerContext.RouteData.Values.Add("servePrecompiled", "false");
+            }
+
+            return shouldServe;
         }
 
         private string VirtualResourceHash(string virtualPath)

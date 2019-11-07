@@ -113,7 +113,7 @@
                                 var indx = parts[i].toLowerCase().indexOf(thumbnail);
                                 if (indx === 0)
                                     return parts[i].toLowerCase().substring(indx + thumbnail.length);
-                                indx = parts[i].toLowerCase().indexOf(encodedThumbnail.length);
+                                indx = parts[i].toLowerCase().indexOf(encodedThumbnail);
                                 if (indx === 0)
                                     return parts[i].toLowerCase().substring(indx + encodedThumbnail.length);
                             }

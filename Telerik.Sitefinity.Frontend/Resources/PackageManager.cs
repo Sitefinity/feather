@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Routing;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.HealthMonitoring;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
@@ -32,6 +33,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 return null;
 
             packageName = this.GetPackageFromContext();
+            if (!packageName.IsNullOrEmpty())
+                return packageName;
 
             if (packageName.IsNullOrEmpty() && this.AllowChangePackageAtRuntimeViaQueryString)
                 packageName = this.GetPackageFromUrl();

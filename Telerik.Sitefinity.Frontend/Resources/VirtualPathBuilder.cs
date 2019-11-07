@@ -1,10 +1,10 @@
-﻿using System;
+﻿using RazorGenerator.Mvc;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using RazorGenerator.Mvc;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -129,9 +129,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (!virtualPath.StartsWith("~/", StringComparison.Ordinal))
                 throw new ArgumentException("virtualPath has to be a virtual path starting \"~/\".");
 
-            var mappedPath = HostingEnvironment.MapPath("~/");
-            if (mappedPath != null)
-                mappedPath = Path.Combine(mappedPath, virtualPath.Substring(2).Replace('/', '\\'));
+            var mappedPath = HostingEnvironment.MapPath(virtualPath);
 
             return mappedPath;
         }

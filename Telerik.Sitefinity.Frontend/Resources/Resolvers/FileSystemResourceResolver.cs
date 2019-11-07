@@ -95,6 +95,25 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             return null;
         }
 
+        protected override string CurrentGetFileHash(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies)
+        {
+            var fileName = this.GetFileName(definition, virtualPath);
+            if (fileName != null)
+            {
+                var questionMarkIndex = fileName.IndexOf("?");
+                if (questionMarkIndex != -1)
+                    fileName = fileName.Sub(0, questionMarkIndex - 1);
+
+                if (File.Exists(fileName))
+                {
+                    var dateTime = File.GetLastWriteTimeUtc(fileName);
+                    return dateTime.GetHashCode().ToString();
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Gets the filename of the requested resource.
         /// </summary>

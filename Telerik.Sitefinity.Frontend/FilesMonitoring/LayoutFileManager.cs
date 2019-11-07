@@ -14,6 +14,7 @@ using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.FilesMonitoring.Data;
 using Telerik.Sitefinity.Frontend.GridSystem;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Libraries.Model;
 using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
@@ -23,7 +24,6 @@ using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.RelatedData.Messages;
 using Telerik.Sitefinity.Taxonomies;
 using Telerik.Sitefinity.Taxonomies.Model;
-using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.FilesMonitoring
@@ -98,12 +98,12 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         /// <param name="fileName">The virtual file name.</param>
         /// <param name="filePath">The virtual file path.</param>
+        /// <param name="fileData">The file data</param>
         /// <param name="packageName">Name of the package.</param>
-        public void FileAdded(string fileName, string filePath, string packageName = "")
+        public void FileAdded(string fileName, string filePath, FileData fileData, string packageName = "")
         {
             var fileMonitorDataManager = FileMonitorDataManager.GetManager();
 
-            var fileData = fileMonitorDataManager.GetFilesData().Where(file => file.FilePath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
             if (fileData == null && this.CreateTemplateAndFileData(fileName, filePath, packageName, fileMonitorDataManager, ref fileData))
             {
                 fileMonitorDataManager.SaveChanges();
@@ -157,7 +157,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             }
             else
             {
-                this.FileAdded(newFileName, newFilePath, packageName);
+                this.FileAdded(newFileName, newFilePath, null, packageName);
             }
         }
 
@@ -344,7 +344,13 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             if (!string.IsNullOrEmpty(packageName))
                 expectedLayoutFolderStructure = packageName + Path.DirectorySeparatorChar + expectedLayoutFolderStructure;
 
-            if (directory.FullName.EndsWith(expectedLayoutFolderStructure, StringComparison.OrdinalIgnoreCase) && directory.FullName.StartsWith(HostingEnvironment.ApplicationPhysicalPath, StringComparison.OrdinalIgnoreCase))
+            var resourcePackagesPath = FrontendManager.VirtualPathBuilder.MapPath(string.Concat("~/", PackageManager.PackagesFolder));
+            if (directory.FullName.EndsWith(expectedLayoutFolderStructure, StringComparison.OrdinalIgnoreCase) &&
+                    (
+                        directory.FullName.StartsWith(HostingEnvironment.ApplicationPhysicalPath, StringComparison.OrdinalIgnoreCase) ||
+                        directory.FullName.StartsWith(resourcePackagesPath, StringComparison.OrdinalIgnoreCase)
+                     )
+                )
                 isFileInValidFolder = true;
 
             return isFileInValidFolder;
@@ -526,7 +532,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     if (templateThumbsImageLibrary != null)
                     {
                         // Try get image from library
-                        image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals("MVC_" + imageName, StringComparison.OrdinalIgnoreCase));
+                        image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals("MVC_" + imageName, StringComparison.OrdinalIgnoreCase) && i.Status == GenericContent.Model.ContentLifecycleStatus.Master);
                         if (image == null)
                         {
                             // Check if image is in the resources and upload it

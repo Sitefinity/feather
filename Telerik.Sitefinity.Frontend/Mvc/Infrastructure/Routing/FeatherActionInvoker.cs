@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -8,15 +10,18 @@ using System.Web.Mvc;
 using System.Web.UI;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.DynamicModules;
 using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Personalization;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing.Date;
+using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy;
+using Telerik.Sitefinity.Taxonomies;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
@@ -39,9 +44,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             IUrlParamsMapper result = null;
             result = result
                 .SetLast(this.GetInferredDetailActionParamsMapper(controller))
+                .SetLast(this.GetInferredSuccessorsActionParamsMapper(controller))
                 .SetLast(this.GetInferredTaxonFilterMapper(controller, "ListByTaxon"))
                 .SetLast(this.GetInferredClassificationFilterMapper(controller, "ListByTaxon"))
-                .SetLast(this.GetInferredSuccessorsActionParamsMapper(controller))
                 .SetLast(this.GetInferredDateFilterMapper(controller, "ListByDate"))
                 .SetLast(this.GetInferredPagingMapper(controller, "Index"));
 
@@ -114,7 +119,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                         }
                         else
                         {
-                            this.GetPrefixParamsMapper(controller).ResolveUrlParams(originalParams, requestContext);
+                            this.GetPrefixParamsMapper(controller)?.ResolveUrlParams(originalParams, requestContext);
                             RouteHelper.SetUrlParametersResolved();
                         }
                     }
@@ -134,10 +139,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             else
             {
-                if (this.ShouldProcessRequest(controller) && FrontendManager.AttributeRouting.UpdateRouteData(this.Context, controller.RouteData))
+                 if (this.ShouldProcessRequest(controller))
                 {
-                    //// Attribute routing was successful.
-                    RouteHelper.SetUrlParametersResolved();
+                    // in indexing mode, we only request pages, therefore there in no need to update data for relative routes
+                    if (!proxyControl.IsIndexingMode())
+                    {
+                        if (FrontendManager.AttributeRouting.UpdateRouteData(this.Context, controller.RouteData))
+                        {
+                            RouteHelper.SetUrlParametersResolved();
+                        }
+                    }
+                    else
+                    {
+                        //// Attribute routing was successful.
+                        RouteHelper.SetUrlParametersResolved();
+                    }
                 }
             }
         }
@@ -211,7 +227,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return customErrors.Mode == CustomErrorsMode.Off || (customErrors.Mode == CustomErrorsMode.RemoteOnly && HttpContext.Current.Request.IsLocal);
         }
 
-        private object GetModelProperty(ControllerBase controller, string propertyName)
+        internal static object GetModelProperty(ControllerBase controller, string propertyName)
         {
             object wrapper;
             var modelProperty = controller.GetType().GetProperty("Model");
@@ -259,7 +275,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                     if (contentType != null)
                     {
-                        var providerNames = this.GetModelProperty(controller, "ProviderName") as string;
+                        var providerNames = GetModelProperty(controller, "ProviderName") as string;
                         result = result.SetLast(new DetailActionParamsMapper(controller, contentType, () => providerNames));
                     }
                 }
@@ -281,7 +297,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     var parentContentTypes = canFilterByParent.GetParentTypes();
                     if (parentContentTypes != null && parentContentTypes.Count() > 0)
                     {
-                        var providerName = this.GetModelProperty(controller, "ProviderName") as string;
+                        var providerName = GetModelProperty(controller, "ProviderName") as string;
                         result = result.SetLast(new SuccessorsActionParamsMapper(controller, parentContentTypes, () => providerName));
                     }
                 }
@@ -309,20 +325,78 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (actionDescriptor == null || actionDescriptor.GetParameters().Length == 0)
                 return null;
 
+            var contentType = GetModelProperty(controller, "ContentType") as Type;
+            if (contentType == null && controller is IDynamicContentWidget)
+            {
+                var dynamicType = controller.GetDynamicContentType();
+                if (dynamicType != null)
+                {
+                    contentType = TypeResolutionService.ResolveType(dynamicType.GetFullTypeName());
+                }
+            }
+
+            ISet<Guid> taxonomiesForType = null;
+            if (contentType != null)
+            {
+                var properties = TypeDescriptor.GetProperties(contentType);
+                taxonomiesForType = properties.OfType<TaxonomyPropertyDescriptor>().Select(x => x.TaxonomyId).ToHashSet();
+            }
+
+            if (taxonomiesForType != null && taxonomiesForType.Count == 0)
+            {
+                return null;
+            }
+
             IUrlParamsMapper result = null;
             if (actionDescriptor.GetParameters()[0].ParameterType == typeof(ITaxon))
             {
+                string routeTemplate = GenerateRouteTemplate(taxonomiesForType);
                 var taxonParamName = actionDescriptor.GetParameters()[0].ParameterName;
                 if (actionDescriptor.GetParameters()[1].ParameterType == typeof(int?))
                 {
                     var pageParamName = actionDescriptor.GetParameters()[1].ParameterName;
-                    result = new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":category,tag}/{" + pageParamName + "}", actionName);
+                    var urlParamNames = new string[] { FeatherActionInvoker.TaxonNamedParamter, FeatherActionInvoker.PagingNamedParameter };
+                    result = new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":" + routeTemplate + "}/{" + pageParamName + "}", actionName, urlParamNames);
                 }
-
-                result = result.SetLast(new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":category,tag}", actionName));
+                
+                var urlTaxonParamNames = new string[] { FeatherActionInvoker.TaxonNamedParamter};
+                result = result.SetLast(new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":" + routeTemplate + "}", actionName, urlTaxonParamNames));
             }
 
             return result;
+        }
+
+        private string GenerateRouteTemplate(ISet<Guid> taxonomiesForType)
+        {
+            string routeTemplate = string.Empty;
+
+            var taxonomies = TaxonomyManager.GetTaxonomiesCache();
+
+            if (taxonomies.Count() > 0)
+            {
+                var taxonomyNames = new List<string>();
+                foreach (var taxonomy in taxonomies)
+                {
+                    if (taxonomiesForType != null && !taxonomiesForType.Contains(taxonomy.Id))
+                        continue;
+
+                    if (taxonomy.Id == TaxonomyManager.TagsTaxonomyId)
+                    {
+                        taxonomyNames.Add("tag");
+                    }
+                    else if (taxonomy.Id == TaxonomyManager.CategoriesTaxonomyId)
+                    {
+                        taxonomyNames.Add("category");
+                    }
+                    else
+                    {
+                        taxonomyNames.Add(taxonomy.Name.ToLowerInvariant());
+                    }
+                }
+                routeTemplate = string.Join(",", taxonomyNames);
+            }
+
+            return routeTemplate;
         }
 
         private IUrlParamsMapper GetInferredClassificationFilterMapper(ControllerBase controller, string actionName)
@@ -342,7 +416,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             if (actionDescriptor == null || actionDescriptor.GetParameters().Length == 0 || actionDescriptor.GetParameters()[0].ParameterType != typeof(int?))
                 return null;
 
-            return new CustomActionParamsMapper(controller, () => "/{" + actionDescriptor.GetParameters()[0].ParameterName + ":int}", actionName);
+            var urlParamNames = new string[] { FeatherActionInvoker.PagingNamedParameter };
+
+            return new CustomActionParamsMapper(controller, () => "/{" + actionDescriptor.GetParameters()[0].ParameterName + ":int}", actionName, urlParamNames);
         }
 
         private void SetControllerRouteParam(MvcProxyBase proxyControl)
@@ -427,5 +503,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// The controller name key
         /// </summary>
         public const string ControllerNameKey = "controller";
+
+        /// <summary>
+        /// The name of the page route parameter
+        /// </summary>
+        internal const string PagingNamedParameter = "page";
+
+        /// <summary>
+        /// The name of the taxon route parameter
+        /// </summary>
+        internal const string TaxonNamedParamter = "taxon";
     }
 }

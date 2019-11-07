@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
-using Telerik.Sitefinity.Descriptors;
 using Telerik.Sitefinity.DynamicModules;
-using Telerik.Sitefinity.Frontend.Mvc.Helpers;
-using Telerik.Sitefinity.Frontend.Mvc.Models;
-using Telerik.Sitefinity.Libraries.Model;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Configuration;
-using Telerik.Sitefinity.Taxonomies.Extensions;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.ContentLocations;
 
@@ -65,7 +58,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <param name="item">The item.</param>
         protected void InitializeMetadataDetailsViewBag(IDataItem item)
         {
-            if (this.IsDesignMode)
+            if (this.IsDesignMode && !this.IsPreviewMode)
             {
                 return;
             }
@@ -89,8 +82,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             if (isOpenGraphEnabled)
             {
-                metadataProperties.OpenGraphTitle = this.GetTitleProperty(item, new[] { this.MetadataFields.OpenGraphTitle, PageHelper.MetaDataProperties.OpenGraphTitle });
-                metadataProperties.OpenGraphDescription = this.GetDescriptionProperty(item, new[] { this.MetadataFields.OpenGraphDescription, PageHelper.MetaDataProperties.OpenGraphDescription });
+                metadataProperties.OpenGraphTitle = this.GetTitleProperty(item, new[] { this.MetadataFields.OpenGraphTitle, PageHelper.MetaDataProperties.OpenGraphTitle, this.MetadataFields.MetaTitle, PageHelper.MetaDataProperties.MetaTitle });
+                metadataProperties.OpenGraphDescription = this.GetDescriptionProperty(item, new[] { this.MetadataFields.OpenGraphDescription, PageHelper.MetaDataProperties.OpenGraphDescription, this.MetadataFields.MetaDescription, PageHelper.MetaDataProperties.MetaDescription });
                 metadataProperties.Url = this.GetDefaultCanonicalUrl(item);
                 metadataProperties.OpenGraphType = this.MetadataFields.OpenGraphType;
                 metadataProperties.OpenGraphImage = PageHelper.GetFieldValue(item, new[] { this.MetadataFields.OpenGraphImage, PageHelper.MetaDataProperties.OpenGraphImage });
@@ -125,7 +118,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 return SystemManager.IsDesignMode;
             }
         }
-        
+
+        /// <summary>
+        /// Gets a value indicating whether the current request is for page in preview mode.
+        /// </summary>
+        protected virtual bool IsPreviewMode
+        {
+            get
+            {
+                return SystemManager.IsPreviewMode;
+            }
+        }
+
         /// <summary>
         /// Gets the item default location.
         /// </summary>

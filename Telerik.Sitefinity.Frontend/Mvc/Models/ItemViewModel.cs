@@ -229,7 +229,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (fieldValue == null)
                 return null;
 
-            var formattedValue = string.Format(fieldValue.ToString(), format);
+            var formattedValue = fieldValue.ToString(format);
 
             return formattedValue;
         }

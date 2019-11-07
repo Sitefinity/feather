@@ -177,6 +177,36 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
         }
 
         /// <summary>
+        /// Caption of the 'Log usage of precompiled views' checkbox.
+        /// </summary>
+        [ResourceEntry("UseNamedParametersRoutingCaption",
+            Value = "Use named route parameters",
+            Description = "Caption of the 'Use named route parameters' checkbox.",
+            LastModified = "2019/6/20")]
+        public string UseNamedParametersRoutingCaption
+        {
+            get
+            {
+                return this["UseNamedParametersRoutingCaption"];
+            }
+        }
+
+        /// <summary>
+        /// Description of the 'Log usage of precompiled views' checkbox.
+        /// </summary>
+        [ResourceEntry("UseNamedParametersRoutingDescription",
+            Value = "If enabled, the frontend routes will work only with named params (e.g /tag/london/page/2); otherwise, the route will be /london/2.",
+            Description = "Description of the 'Use named route parameters' checkbox.",
+            LastModified = "2019/6/20")]
+        public string UseNamedParametersRoutingDescription
+        {
+            get
+            {
+                return this["UseNamedParametersRoutingDescription"];
+            }
+        }
+
+        /// <summary>
         /// Detailed error message when cannot find template in MVC form.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "Telerik.Sitefinity.Localization.Resource.get_Item(System.String)"), ResourceEntry("CannotFindTemplateMvcForm",
@@ -188,6 +218,66 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
             get
             {
                 return base["CannotFindTemplateMvcForm"];
+            }
+        }
+
+        /// <summary>
+        /// Title of the "Use cached controller container assemblies" setting
+        /// </summary>
+        [ResourceEntry("UseCachedControllerContainerAssembliesTitle",
+            Value = "Use cached controller container assemblies",
+            Description = "Title of the setting",
+            LastModified = "2019/9/04")]
+        public string UseCachedControllerContainerAssembliesTitle
+        {
+            get
+            {
+                return this["UseCachedControllerContainerAssembliesTitle"];
+            }
+        }
+
+        /// <summary>
+        /// Description of the "Use cached controller container assemblies" setting
+        /// </summary>
+        [ResourceEntry("UseCachedControllerContainerAssembliesDescription",
+            Value = "Use a JSON with the location to the assemblies that contain controllers.",
+            Description = "Description of the setting",
+            LastModified = "2019/9/04")]
+        public string UseCachedControllerContainerAssembliesDescription
+        {
+            get
+            {
+                return this["UseCachedControllerContainerAssembliesDescription"];
+            }
+        }
+
+        /// <summary>
+        /// Caption of the NinjectLoadExtensions config property
+        /// </summary>
+        [ResourceEntry("NinjectLoadExtensionsTitle",
+            Value = "Automatically load Ninject extensions",
+            Description = "Caption of the NinjectLoadExtensions config property",
+            LastModified = "2019/09/18")]
+        public string NinjectLoadExtensionsTitle
+        {
+            get
+            {
+                return this["NinjectLoadExtensionsTitle"];
+            }
+        }
+
+        /// <summary>
+        /// Description of the NinjectLoadExtensions config property
+        /// </summary>
+        [ResourceEntry("NinjectLoadExtensionsDescription",
+            Value = "Indicates whether the Ninject kernel should automatically load extensions at startup",
+            Description = "Description of the NinjectLoadExtensions config property",
+            LastModified = "2019/09/18")]
+        public string NinjectLoadExtensionsDescription
+        {
+            get
+            {
+                return this["NinjectLoadExtensionsDescription"];
             }
         }
     }

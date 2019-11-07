@@ -3,8 +3,11 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.UI;
+using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts;
@@ -36,6 +39,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 return SystemManager.CurrentHttpContext != null &&
                        SystemManager.CurrentHttpContext.Items.Contains("RenderScriptSection") &&
                        (bool)SystemManager.CurrentHttpContext.Items["RenderScriptSection"];
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the site is in debug mode acording to the web.config
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the site is in debug mode; otherwise, <c>false</c>.
+        /// </value>
+        internal static bool IsDebugMode
+        {
+            get
+            {
+                if (ResourceHelper.isDebugMode.HasValue)
+                    return ResourceHelper.isDebugMode.Value;
+
+                CompilationSection compilationSection = (CompilationSection)System.Configuration.ConfigurationManager.GetSection(@"system.web/compilation");
+
+                return compilationSection.Debug;
+            }
+            set
+            {
+                ResourceHelper.isDebugMode = value;
             }
         }
 
@@ -580,7 +606,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
                 if (scriptManager != null)
                 {
-                    scriptManager.Scripts.Add(new ScriptReference(scriptReference));
+                    var updatedScriptReference = GetResourceOrMinified(scriptReference);
+                    scriptManager.Scripts.Add(new ScriptReference(updatedScriptReference));
                     return true;
                 }
             }
@@ -642,6 +669,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             var tag = new TagBuilder("script");
 
+            resourceKey = GetResourceOrMinified(resourceKey);
+
             tag.Attributes["src"] = resourceKey;
             tag.Attributes["type"] = "text/javascript";
 
@@ -651,6 +680,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return tag.ToString(TagRenderMode.Normal);
+        }
+
+        private static string GetResourceOrMinified(string resourceKey)
+        {
+            if (!ResourceHelper.IsDebugMode)
+            {
+                var extensionIndex = resourceKey.LastIndexOf(".js");
+                if (extensionIndex > 0 && !resourceKey.Contains(".min.js"))
+                {
+                    var minFilePath = resourceKey.Insert(extensionIndex, ".min");
+                    var minPathWithoutParams = resourceKey.Substring(0, extensionIndex) + ".min.js";
+
+                    if (VirtualPathManager.FileExists(minPathWithoutParams) || VirtualPathManager.FileExists(minFilePath))
+                    {
+                        resourceKey = minFilePath;
+                    }
+                }
+            }
+
+            return resourceKey;
         }
 
         private static string BuildStyleSheetMarkup(string resourceKey)
@@ -713,5 +762,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             Js,
             Css
         }
+
+        private static bool? isDebugMode;
     }
 }

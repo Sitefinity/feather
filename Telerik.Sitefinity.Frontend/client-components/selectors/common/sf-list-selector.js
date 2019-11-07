@@ -25,7 +25,8 @@
 
                     sfExternalPages: '=?',
                     sfOpenExternalsInNewTab: '=',
-                    sfTitle: '@?'
+                    sfTitle: '@?',
+                    sfMaxItemsLimitation: '='
                 },
                 controller: function ($scope) {
                     this.defaultIdentifierField = 'Title';
@@ -362,6 +363,7 @@
 
                         ctrl.beginLoadingItems = function () {
                             scope.showLoadingIndicator = true;
+                            scope.sfMaxItemsLimitation.showErrorMessage = false;
 
                             scope.itemsPromise = ctrl.getItems(scope.paging.skip, scope.paging.take)
                                                      .then(onFirstPageLoadedSuccess, ctrl.onError);
@@ -396,6 +398,8 @@
                         });
 
                         scope.showError = false;
+                        scope.sfMaxSelectedItemsCount = 100;
+                        scope.sfMaxItemsLimitation = { showErrorMessage: false };
                         scope.selectedItemsViewData = [];
                         scope.items = [];
                         scope.filter = {
@@ -473,6 +477,8 @@
                                     updateSelectedItems();
                                 }
                             }
+
+                            scope.sfMaxItemsLimitation.showErrorMessage = scope.getSelectedItemsCount() > scope.sfMaxSelectedItemsCount;
                         };
 
                         scope.doneSelecting = function () {
@@ -571,14 +577,14 @@
                         };
 
                         attrs.$observe('sfMultiselect', function () {
-                            scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == 'true') ? true : false;
+                            scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() === 'true') ? true : false;
 
                             if (!scope.multiselect && scope.sfSelectedItems && scope.sfSelectedItems.length > 1) {
                                 ctrl.updateSelection([scope.sfSelectedItems[0]]);
                             }
                         });
 
-                        scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() == 'true') ? true : false;
+                        scope.multiselect = (attrs.sfMultiselect && attrs.sfMultiselect.toLowerCase() === 'true') ? true : false;
 
                         var selectedIds = scope.getSelectedIds();
                         if (!scope.sfSelectedItemId && selectedIds && selectedIds.length)

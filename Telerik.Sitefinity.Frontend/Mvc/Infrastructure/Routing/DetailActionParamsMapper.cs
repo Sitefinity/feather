@@ -21,6 +21,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// </summary>
     internal class DetailActionParamsMapper : UrlParamsMapperBase
     {
+        private bool showDetailsViewOnChildDetailsView;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DetailActionParamsMapper"/> class.
         /// </summary>
@@ -64,6 +66,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 throw new ArgumentException("The controller {0} does not have action '{1}'.".Arrange(controller.GetType().Name, actionName));
 
             this.ItemType = itemType;
+
+            var value = FeatherActionInvoker.GetModelProperty(controller, "ShowDetailsViewOnChildDetailsView");
+            if (value != null && value is bool)
+            {
+                this.showDetailsViewOnChildDetailsView = (bool)value;
+            }
         }
 
         private bool TryMatchUrl(string[] urlParams, RequestContext requestContext, bool setUrlParametersResolved)
@@ -84,6 +92,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 this.AddContentItemToRouteData(requestContext, redirectUrl, item, setUrlParametersResolved);
 
                 return true;
+            }
+            else if (this.showDetailsViewOnChildDetailsView)
+            {
+                return this.TryMatchUrl(urlParams.Take(urlParams.Length - 1).ToArray(), requestContext, setUrlParametersResolved);
             }
 
             return false;

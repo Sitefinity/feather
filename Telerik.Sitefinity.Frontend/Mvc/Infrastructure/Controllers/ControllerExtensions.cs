@@ -15,6 +15,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
+using Telerik.Sitefinity.Security.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.UI;
@@ -152,6 +153,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             foreach (var key in keys)
                 dependencies.Add(key);
         }
+
+        /// <summary>
+        /// Adds cache dependencies for the current response.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="contentType">The type of the content.</param>
+        /// <param name="providerName">The name of the provider.</param>
+        public static void AddCacheVariations(this Controller controller, Type contentType, string providerName = null)
+        {
+            if (controller == null)
+                throw new ArgumentNullException("controller");
+
+            if (contentType == null)
+                throw new ArgumentNullException("contentType");
+
+            PageRouteHandler.RegisterContentListCacheVariation(contentType, providerName);
+        }
+
 
         /// <summary>
         /// Gets the partial view paths of the given controller.

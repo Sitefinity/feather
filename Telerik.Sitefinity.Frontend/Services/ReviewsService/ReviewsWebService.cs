@@ -183,7 +183,12 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
             IComment newComment = cs.CreateComment(commentProxy);
 
             var result = CommentsUtilitiesReflector.GetCommentResponse(newComment, ClaimsManager.GetCurrentIdentity().IsBackendUser);
-            
+
+            if (commentData.Captcha != null)
+            {
+                CommentsUtilitiesReflector.RemoveCaptchaFromTempStorage(commentData.Captcha.Key);
+            }
+
             ServiceUtility.DisableCache();
 
             return result;

@@ -8,7 +8,9 @@
                     sfSelectedItems: '=?',
                     sfIdentifierField: '=?',
                     sfSearchIdentifierField: '=?',
-                    sfSortable: '@'
+                    sfSortable: '@',
+                    sfMaxSelectedItemsCount: '=',
+                    sfMaxItemsLimitation: '='
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';
@@ -33,6 +35,10 @@
                             $scope.sfSelectedItems = [];
                         }
 
+                        if (!$scope.sfMaxItemsLimitation) {
+                            $scope.sfMaxItemsLimitation = { showErrorMessage: false };
+                        }
+
                         var selectedItemIndex;
                         var alreadySelected = false;
                         for (var i = 0; i < $scope.sfSelectedItems.length; i++) {
@@ -49,6 +55,8 @@
                         else {
                             $scope.sfSelectedItems.push(item);
                         }
+
+                        $scope.sfMaxItemsLimitation.showErrorMessage = $scope.sfSelectedItems.length > $scope.sfMaxSelectedItemsCount; 
                     };
                 },
                 link: {

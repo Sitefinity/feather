@@ -22,7 +22,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             if (urlKeyPrefix.IsNullOrWhitespace())
             {
-                return string.Concat(pageUrl, "/{0}", SystemManager.CurrentHttpContext.Request.QueryString.ToQueryString(true));
+                return string.Concat(pageUrl, UrlHelpers.GetRedirectPagingUrl(), SystemManager.CurrentHttpContext.Request.QueryString.ToQueryString(true));
             }
 
             var key = string.Format(KeyFormat, urlKeyPrefix);
