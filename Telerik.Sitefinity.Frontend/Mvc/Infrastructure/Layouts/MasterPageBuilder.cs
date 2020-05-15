@@ -205,31 +205,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
         {
             var pageData = MasterPageBuilder.GetRequestedPageData();
 
-            if (pageData != null)
+            if (pageData != null && setTitle)
             {
-                stringBuilder.Append(this.ResourceRegistrations());
-
-                if (setTitle)
-                    stringBuilder.Append("\r\n\t<title>" + pageData.HtmlTitle.ToString() + "\r\n\t</title>");
+                stringBuilder.Append("\r\n\t<title>" + pageData.HtmlTitle.ToString() + "\r\n\t</title>");
             }
-        }
-
-        /// <summary>
-        /// Generates scripts tag needed on the page. Doesn't include any resources for the default themes as opposite to the hybrid mode which always includes the default frontend theme.
-        /// </summary>
-        /// <returns></returns>
-        private string ResourceRegistrations()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            string appPath = System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
-
-            if (!appPath.EndsWith("/", StringComparison.Ordinal))
-                appPath = string.Concat(appPath, "/");
-
-            sb.Append(string.Concat("\t<script type=\"text/javascript\">var sf_appPath='", HttpUtility.HtmlEncode(appPath), "';</script>"));
-
-            return sb.ToString();
         }
 
         #endregion

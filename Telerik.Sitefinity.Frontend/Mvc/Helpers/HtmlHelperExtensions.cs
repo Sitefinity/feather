@@ -7,7 +7,7 @@
     using Telerik.Sitefinity.Web.UI;
 
     /// <summary>
-    /// Helepr method for HTML markup generation.
+    /// Helper method for HTML markup generation.
     /// </summary>
     public static class HtmlHelperExtensions
     {

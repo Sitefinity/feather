@@ -23,11 +23,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <param name="currentPage">The current page.</param>
         /// <param name="totalPagesCount">The total pages count.</param>
         /// <param name="redirectUrlTemplate">The template of the URL used for redirecting.</param>
+        /// <param name="displayCount">The display count of the pages.</param>
         /// <returns></returns>
         [OutputCache(Duration = 1)]
-        public PartialViewResult Index(int currentPage, int totalPagesCount, string redirectUrlTemplate)
+        public PartialViewResult Index(int currentPage, int totalPagesCount, string redirectUrlTemplate, int displayCount = 10)
         {
-            var model = new PagerViewModel(currentPage, totalPagesCount, redirectUrlTemplate);
+            var model = new PagerViewModel(currentPage, totalPagesCount, redirectUrlTemplate, displayCount);
 
             // Build the pager
             int startIndex = 1;

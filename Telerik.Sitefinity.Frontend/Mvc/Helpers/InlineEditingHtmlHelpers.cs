@@ -122,7 +122,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
-        /// Returns if the inline editin section should be rendered.
+        /// Returns if the inline editing section should be rendered.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <returns></returns>

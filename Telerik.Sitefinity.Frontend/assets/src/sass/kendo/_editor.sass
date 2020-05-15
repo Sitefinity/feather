@@ -7,6 +7,7 @@
 		padding-left: 0
 	.k-editor-toolbar
 		padding: 0 80px 0 20px
+		box-sizing: border-box;
 
 		.k-tool-group, 
 		.k-tool:not(.k-state-disabled),
@@ -24,17 +25,35 @@
 		&:last-child
 			margin-right: 0
 
+		.k-dropdown
+			width: 110px
+			
+		.k-dropdown-wrap
+			box-sizing: border-box
+			.k-input
+				font-size: 13px;
+
 		.k-editor-toolbar-wrap
 			position: relative
 		
 		.invisible-group
 		  display: none !important;
 
+		.k-state-border-down
+			&:not(.k-overflow-anchor)
+				&:not(.k-colorpicker)
+					.k-input
+						background-color: transparent
+
 		.k-editor-toolbar
 			position: relative
 			margin: 0
 			// min-height: 50px
 			// background: #f2f2f2
+
+			.k-tool
+				color: inherit
+				padding: 0
 
 			&.sf-toolbar-short
 				position: absolute
@@ -70,6 +89,8 @@
 						color: #333
 
 			.k-tool-group
+				+ .k-tool-group
+					border-left: 0
 				.custom-tool
 					color: #797979
 

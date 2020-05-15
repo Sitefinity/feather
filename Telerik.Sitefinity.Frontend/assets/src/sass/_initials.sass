@@ -1,0 +1,44 @@
+@import "mixins";
+
+a, article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary,
+button, input, optgroup, select, textarea,
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, span,
+dl, dd, ol, ul, li,
+form, fieldset, legend, label,
+table, th, td, caption,
+hr,
+.btn, .btn-primary, .btn-default, .btn-link, .btn-group,
+.pagination,
+.modal, .modal-header, .modal-title, .modal-body, .modal-footer, .modal-settings, .modal-content,
+.alert,
+.close,
+.form-inline, .form-group-list, .form-group, .form-control,
+.nav-wrapper, .nav-tabs-wrapper, .nav-item,
+.tab-content, .tab-pane,
+.row, [class*="col-"],
+.radio, .radio-inline,
+.checkbox,
+.label-content,
+.list-group, .list-group-item,
+.control-label,
+.input-group, .input-group-addon,
+.glyphicon,
+.media,
+.text-muted,
+[class*="m-top"], [class*="m-bottom"], [class*="m-left"], [class*="m-right"],
+[class*="icon-"],
+.fa
+  +all-initials();
+
+input
+  +input-initials();
+
+textarea
+  +textarea-initials();
+
+sf-search-box
+  width: 100%
+
+.fa
+  font-family: FontAwesome

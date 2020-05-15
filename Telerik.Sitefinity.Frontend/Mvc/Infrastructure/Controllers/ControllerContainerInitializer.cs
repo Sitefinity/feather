@@ -401,7 +401,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                        (itemStatus == SecurityConstants.TransactionActionType.New || itemStatus == SecurityConstants.TransactionActionType.Updated))
                     {
                         taxonomyName = taxonomyName.ToLowerInvariant();
-                        if (!ObjectFactory.Container.IsRegistered(typeof(TaxonParamResolver), taxonomyName))
+                        if (!ObjectFactory.IsTypeRegistered<TaxonParamResolver>(taxonomyName))
                         {
                             ObjectFactory.Container.RegisterType<IRouteParamResolver, TaxonParamResolver>(taxonomyName, new InjectionConstructor(taxonomyName));
                         }
@@ -454,17 +454,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             return Task.Run(() => this.LoadControllerAssembly(assemblyFileName));
         }
 
-        private Assembly LoadControllerAssembly(string assemblyFileName)
+        private Assembly LoadControllerAssembly(string assemblyFileNameWithPath)
         {
             try
             {
-                Assembly assembly = this.LoadAssembly(assemblyFileName);
+                Assembly assembly = this.LoadAssembly(assemblyFileNameWithPath);
                 this.InitializeControllerContainer(assembly);
                 return assembly;
             }
             catch (Exception)
             {
-                Log.Write(string.Format("Attempt to load {0} failed. Check if the assembly is present in the bin", assemblyFileName), ConfigurationPolicy.ErrorLog);
+                var lastIndexOfPathSeperator = assemblyFileNameWithPath.LastIndexOf("\\");
+                var fileNameFailedToLoad = assemblyFileNameWithPath.Substring(lastIndexOfPathSeperator >= 0 ? lastIndexOfPathSeperator : 0);
+                Log.Write(string.Format("Attempt to load {0} failed. Check if the assembly is present in the bin", fileNameFailedToLoad), ConfigurationPolicy.ErrorLog);
             }
 
             return null;

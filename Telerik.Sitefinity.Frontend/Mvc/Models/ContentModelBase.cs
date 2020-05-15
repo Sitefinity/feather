@@ -16,6 +16,7 @@ using Telerik.Sitefinity.RelatedData;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web.Model;
+using Telerik.Sitefinity.Web.OutputCache;
 using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
@@ -433,16 +434,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 var result = new List<CacheDependencyKey>(1);
                 var manager = this.GetManager();
                 var provider = manager != null ? manager.Provider : null;
-
                 string applicationName = provider != null ? provider.ApplicationName : string.Empty;
-                if (typeof(ILifecycleDataItem).IsAssignableFrom(this.ContentType))
-                {
-                    result.Add(new CacheDependencyKey { Key = string.Concat(ContentLifecycleStatus.Live.ToString(), applicationName), Type = contentResolvedType });
-                }
-                else
-                {
-                    result.Add(new CacheDependencyKey { Key = applicationName, Type = contentResolvedType });
-                }
+
+                result.AddRange(OutputCacheDependencyHelper.GetPublishedContentCacheDependencyKeys(contentResolvedType, applicationName));
 
                 this.AddCommonDependencies(result, this.ContentType);
 
@@ -472,7 +466,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 var result = new List<CacheDependencyKey>(1);
                 if (viewModel.Item != null && viewModel.Item.Fields.Id != Guid.Empty)
                 {
-                    result.Add(new CacheDependencyKey { Key = viewModel.Item.Fields.Id.ToString(), Type = contentResolvedType });
+                    result.AddRange(OutputCacheDependencyHelper.GetPublishedContentCacheDependencyKeys(contentResolvedType, viewModel.Item.Fields.Id));
                 }
 
                 this.AddCommonDependencies(result, this.ContentType, viewModel.Item);
@@ -508,7 +502,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 throw new ArgumentException("'page' argument has to be at least 1.", "page");
 
             int? itemsToSkip = (page - 1) * this.ItemsPerPage;
-            itemsToSkip = this.DisplayMode == ListDisplayMode.Paging ? ((page - 1) * this.ItemsPerPage) : null;
+            itemsToSkip = this.DisplayMode == ListDisplayMode.Paging && this.ContentViewDisplayMode != ContentViewDisplayMode.Detail ? ((page - 1) * this.ItemsPerPage) : null;
             int? totalCount = 0;
             int? take = null;
 

@@ -14,6 +14,10 @@ module.exports = function (grunt) {
 
   // show elapsed time at the end
   require('time-grunt')(grunt);
+
+  // load custom CSS !important task
+  require('./tasks/css-important.js')(grunt);
+
   // Init
   grunt.initConfig({
     timestamp: '<%= new Date().getTime() %>',
@@ -25,6 +29,30 @@ module.exports = function (grunt) {
     },
     dist: {
       path       : 'dist'
+    },
+
+    css_important: {
+      dist: {
+        options: {
+          minified: true,
+          skipProperties: [
+            'display',
+            'z-index',
+            'visibility',
+            'position',
+            'top',
+            'bottom',
+            'left',
+            'right'
+          ],
+          skipSelectors: [{
+            selector: 'progress-bar',
+            properties: ['width']
+          }]
+        },
+        src: ['<%= dist.path %>/css/sitefinity-backend.min.css'],
+        dest: '<%= dist.path %>/css/sitefinity-backend.min.css'
+      }
     },
 
     // clean all generated files
@@ -175,7 +203,7 @@ module.exports = function (grunt) {
       },
       styles: {
         files: ['<%= src.path %>/**/*.{scss,sass}'],
-        tasks: ['sass:dist', 'cssmin']
+        tasks: ['sass:dist', 'cssmin', 'css_important:dist']
         // tasks: ['sass:dist', 'uncss', 'cssmin']
       },
       js: {
@@ -194,6 +222,10 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.registerTask('important', [
+    'css_important:dist'
+  ]);
+
   grunt.registerTask('iconfont', [
     'webfont'
   ]);
@@ -204,6 +236,7 @@ module.exports = function (grunt) {
     'sass:dist',
     // 'uncss',
     'cssmin',
+    'css_important:dist',
     'uglify:dist',
     'newer:csslint:dev',
     'newer:imagemin',
@@ -215,6 +248,7 @@ module.exports = function (grunt) {
     'clean:all',
     'sass:dev',
     'cssmin',
+    'css_important:dist',
     'uglify:dist',
     'newer:csslint:dev',
     'newer:imagemin',

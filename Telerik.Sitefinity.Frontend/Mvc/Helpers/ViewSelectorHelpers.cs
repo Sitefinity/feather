@@ -28,6 +28,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 throw new ArgumentException("Controller cannot be resolved.");
             }
 
+            if (controller.RouteData != null && controller.RouteData.Values["controller"] as string != null)
+            {
+                controller.RouteData.Values["controller"] = controllerName;
+            }
             var regex = new Regex(templateNamePattern, RegexOptions.IgnoreCase);
             var views = controller.GetViews().Where(view => Regex.IsMatch(view, templateNamePattern)).Select(view => regex.Match(view).Groups["viewName"].Value);
 

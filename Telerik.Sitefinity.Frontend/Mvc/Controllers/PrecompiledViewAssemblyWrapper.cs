@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using RazorGenerator.Mvc;
@@ -72,6 +74,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             }
 
             return null;
+        }
+
+        public IEnumerable<string> GetViews(string virtualFolderPath)
+        {
+            if (virtualFolderPath.StartsWith(this.basePath, StringComparison.OrdinalIgnoreCase))
+            {
+                var relativePath = virtualFolderPath.Right(virtualFolderPath.Length - this.basePath.Length);
+                var relativePathWithSpaces = Regex.Replace(relativePath, @"[\-]", "_").Replace('/', '.');
+                var resourcePathWithSpaces = this.assembly.GetName().Name + "." + relativePathWithSpaces;
+
+                var resources = this.embeddedResourceHashes.Keys
+                    .Where(resourceKey => resourceKey.ToUpperInvariant().Contains(resourcePathWithSpaces.ToUpperInvariant()))
+                    .Select(key => Path.GetFileNameWithoutExtension(Regex.Replace(key, resourcePathWithSpaces, string.Empty, RegexOptions.IgnoreCase)));
+
+                return resources;
+            }
+
+            return new List<string>();
         }
 
         private string ComputeHashForResource(string resourceName)

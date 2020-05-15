@@ -135,6 +135,12 @@
                         scope.$uibModalInstance.dismiss();
                     };
 
+                    scope.clearImage = function () {
+                        scope.sfImage = null;
+                        scope.sfProvider = null;
+                        scope.sfImageIsVisible = false;
+                    };
+
                     scope.changeImage = function () {
                         scope.model = {
                             selectedItems: [],

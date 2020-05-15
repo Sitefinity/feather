@@ -453,7 +453,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                     if (!pageManager.GetTemplates().Any(pt => (string.Compare(pt.Name, fullTemplateName, true) == 0 && string.Compare(pt.Title, title, true) == 0) || string.Compare(pt.Title, fullTemplateName, true) == 0))
                     {
-                        var template = pageManager.CreateTemplate();
+                        var templateGuid = this.GuidFromString(string.Concat(fullTemplateName, title));
+                        var template = pageManager.CreateTemplate(templateGuid);
 
                         template.Category = this.GetOrCreateTemplateCategoryId(packageName);
                         template.Name = fullTemplateName;
@@ -481,6 +482,10 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                             this.CreateDefaultTemplates("SemanticUI", "default");
                     }
                 }
+            }
+            catch (Exception)
+            {
+                Log.Write("Automatic template generation failed. To disable the automatic generation, set 'sf:featherFileSystemWatcherBehaviour' to false in the AppSettings in web.config.", ConfigurationPolicy.ErrorLog);
             }
             finally
             {

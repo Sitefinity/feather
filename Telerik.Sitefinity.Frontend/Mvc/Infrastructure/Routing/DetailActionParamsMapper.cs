@@ -127,7 +127,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             if (!redirectUrl.IsNullOrEmpty())
             {
-                requestContext.RouteData.Values[Telerik.Sitefinity.Mvc.ControllerActionInvoker.ShouldProcessRequestKey] = redirectUrl;
+                requestContext.RouteData.Values[Telerik.Sitefinity.Mvc.ControllerActionInvoker.SfRedirectUrlKey] = redirectUrl;
             }
 
             if (redirectUrl.IsNullOrEmpty() == false && parameters.Length > 1 && parameters[1].ParameterType == typeof(string))

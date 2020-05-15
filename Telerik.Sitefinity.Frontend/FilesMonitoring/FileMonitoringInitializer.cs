@@ -83,40 +83,40 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 }
             }
 
-            var sectionType = TypeResolutionService.ResolveType("Telerik.Sitefinity.SiteSync.Configuration.SiteSyncConfig", false);
-            if (sectionType != null)
-            {
-                try
-                {
-                    var siteSyncConfig = Config.Get(sectionType);
-                    var isTarget = (bool)siteSyncConfig["enabledAsTarget"];
-                    if (isTarget)
-                        return false;
-                }
-                catch (Exception)
-                {
-                    // the config is not available
-                }
-            }
+            ////var sectionType = TypeResolutionService.ResolveType("Telerik.Sitefinity.SiteSync.Configuration.SiteSyncConfig", false);
+            ////if (sectionType != null)
+            ////{
+            ////    try
+            ////    {
+            ////        var siteSyncConfig = Config.Get(sectionType);
+            ////        var isTarget = (bool)siteSyncConfig["enabledAsTarget"];
+            ////        if (isTarget)
+            ////            return false;
+            ////    }
+            ////    catch (Exception)
+            ////    {
+            ////        // the config is not available
+            ////    }
+            ////}
 
-            sectionType = TypeResolutionService.ResolveType("Telerik.Sitefinity.Packaging.Configuration.PackagingConfig", false);
-            if (sectionType != null)
-            {
-                try
-                {
-                    var packagingConfig = Config.Get(sectionType);
-                    var packagingMode = packagingConfig["packagingMode"];
+            ////var sectionType = TypeResolutionService.ResolveType("Telerik.Sitefinity.Packaging.Configuration.PackagingConfig", false);
+            ////if (sectionType != null)
+            ////{
+            ////    try
+            ////    {
+            ////        var packagingConfig = Config.Get(sectionType);
+            ////        var packagingMode = packagingConfig["packagingMode"];
 
-                    var enumType = TypeResolutionService.ResolveType("Telerik.Sitefinity.Packaging.Restriction.PackagingMode", true);
-                    var enumName = Enum.GetName(enumType, packagingMode);
-                    if (enumName == "Target")
-                        return false;
-                }
-                catch (Exception)
-                {
-                    // the config is not available
-                }
-            }
+            ////        var enumType = TypeResolutionService.ResolveType("Telerik.Sitefinity.Packaging.Restriction.PackagingMode", true);
+            ////        var enumName = Enum.GetName(enumType, packagingMode);
+            ////        if (enumName == "Target")
+            ////            return false;
+            ////    }
+            ////    catch (Exception)
+            ////    {
+            ////        // the config is not available
+            ////    }
+            ////}
 
             return true;
         }
