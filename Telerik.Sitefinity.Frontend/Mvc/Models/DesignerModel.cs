@@ -8,6 +8,8 @@ using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Modules;
+using Telerik.Sitefinity.Modules.Forms;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 
@@ -29,6 +31,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// <param name="viewFilesMappings">Map of the view file location for each view.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView, Dictionary<string, string> viewFilesMappings)
+            : this(views, viewLocations, widgetName, controlId, preselectedView, viewFilesMappings, DesignMediaType.Page)
+        {
+           
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DesignerModel"/> class.
+        /// </summary>
+        /// <param name="views">The views that are available to the controller.</param>
+        /// <param name="viewLocations">The locations where view files can be found.</param>
+        /// <param name="widgetName">Name of the widget that is being edited.</param>
+        /// <param name="controlId">Id of the control that is edited.</param>
+        /// <param name="preselectedView">Name of the preselected view if there is one. Otherwise use null.</param>
+        /// <param name="viewFilesMappings">Map of the view file location for each view.</param>
+        /// <param name="mediaType">The type of the design media.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DesignerModel(IEnumerable<string> views, IEnumerable<string> viewLocations, string widgetName, Guid controlId, string preselectedView, Dictionary<string, string> viewFilesMappings, DesignMediaType mediaType)
         {
             this.Caption = widgetName;
 
@@ -53,7 +72,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             this.defaultView = viewConfigs.OrderByDescending(c => c.Value.Priority).Select(c => c.Key).FirstOrDefault();
 
-            this.Control = this.LoadControl(controlId);
+            this.Control = this.LoadControl(controlId, mediaType);
         }
 
         /// <inheritdoc />
@@ -141,7 +160,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         }
 
         /// <summary>
-        /// Populates the script references and dependant modules.
+        /// Populates the script references and dependent modules.
         /// </summary>
         /// <param name="widgetName">Name of the widget.</param>
         /// <param name="viewConfigs">The view configs.</param>
@@ -367,12 +386,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             return scriptVirtualPath;
         }
 
-        private Control LoadControl(Guid controlId)
+        private Control LoadControl(Guid controlId, DesignMediaType designMediaType)
         {
             if (controlId != Guid.Empty)
             {
-                var pageManager = PageManager.GetManager();
-                var objectData = pageManager.GetControl<ObjectData>(controlId);
+                var manager = this.GetControlManager(designMediaType);
+                var objectData = manager.GetControl<ObjectData>(controlId);
 
                 var controlData = objectData as ControlData;
                 if (controlData != null && !controlData.Caption.IsNullOrEmpty())
@@ -380,11 +399,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                     this.Caption = controlData.Caption;
                 }
 
-                return pageManager.LoadControl(objectData);
+                return manager.LoadControl(objectData);
             }
             else
             {
                 return null;
+            }
+        }
+
+        private IControlManager GetControlManager(DesignMediaType designMediaType)
+        {
+            if (designMediaType == DesignMediaType.Form)
+            {
+                return FormsManager.GetManager();
+            }
+            else
+            {
+                return PageManager.GetManager();
             }
         }
 

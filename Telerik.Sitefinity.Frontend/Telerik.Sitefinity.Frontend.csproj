@@ -79,23 +79,23 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="ServiceStack, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.5.8.0\lib\net45\ServiceStack.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.5.9.0\lib\net45\ServiceStack.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Client.5.8.0\lib\net45\ServiceStack.Client.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Client.5.9.0\lib\net45\ServiceStack.Client.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Common.5.8.0\lib\net45\ServiceStack.Common.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Common.5.9.0\lib\net45\ServiceStack.Common.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Interfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Interfaces.5.8.0\lib\net45\ServiceStack.Interfaces.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Interfaces.5.9.0\lib\net45\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Text.5.8.0\lib\net45\ServiceStack.Text.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Text.5.9.0\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -105,15 +105,15 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -148,26 +148,26 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.OpenAccess, Version=2018.0.1127.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2018.0.1127.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
+    <Reference Include="Telerik.OpenAccess, Version=2020.0.428.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2020.0.428.1\lib\net40\Telerik.OpenAccess.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2018.0.1127.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2018.0.1127.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2020.0.428.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2020.0.428.1\lib\net40\Telerik.OpenAccess.35.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2018.0.1127.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2018.0.1127.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
+    <Reference Include="Telerik.OpenAccess.40.Extensions, Version=2020.0.428.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2020.0.428.1\lib\net40\Telerik.OpenAccess.40.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.OpenAccess.Runtime, Version=2018.0.1127.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.DataAccess.Core.2018.0.1127.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
+    <Reference Include="Telerik.OpenAccess.Runtime, Version=2020.0.428.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.DataAccess.Core.2020.0.428.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.Design, Version=2020.1.114.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2020.1.114.45\lib\net45\Telerik.Web.Design.dll</HintPath>
+    <Reference Include="Telerik.Web.Design, Version=2020.2.512.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2020.2.512.45\lib\net45\Telerik.Web.Design.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI, Version=2020.1.114.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2020.1.114.45\lib\net45\Telerik.Web.UI.dll</HintPath>
+    <Reference Include="Telerik.Web.UI, Version=2020.2.512.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2020.2.512.45\lib\net45\Telerik.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI.Skins, Version=2020.1.114.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2020.1.114.45\lib\net45\Telerik.Web.UI.Skins.dll</HintPath>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2020.2.512.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2020.2.512.45\lib\net45\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
@@ -483,22 +483,25 @@
     <EmbeddedResource Include="assets\fonts\OpenSans\OpenSans-Regular-webfont.woff" />
     <EmbeddedResource Include="assets\fonts\OpenSans\OpenSans-Semibold-webfont.ttf" />
     <EmbeddedResource Include="assets\fonts\OpenSans\OpenSans-Semibold-webfont.woff" />
-    <EmbeddedResource Include="assets\fonts\glyphs\WebComponentsIcons.eot" />
-    <EmbeddedResource Include="assets\fonts\glyphs\WebComponentsIcons.ttf" />
-    <EmbeddedResource Include="assets\fonts\glyphs\WebComponentsIcons.woff" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSans-Bold.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSans.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSansMono.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
-    <EmbeddedResource Include="assets\fonts\DejaVu\DejaVuSerif.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\glyphs\WebComponentsIcons.eot" />
+    <EmbeddedResource Include="assets\Kendo\fonts\glyphs\WebComponentsIcons.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\glyphs\WebComponentsIcons.woff" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSans.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <EmbeddedResource Include="assets\Kendo\fonts\DejaVu\DejaVuSerif.ttf" />
+    <None Include="assets\Kendo\fonts\glyphs\KendoUIGlyphs.eot" />
+    <None Include="assets\Kendo\fonts\glyphs\KendoUIGlyphs.ttf" />
+    <None Include="assets\Kendo\fonts\glyphs\KendoUIGlyphs.woff" />
     <None Include="assets\jshint.json" />
     <None Include="assets\package.json" />
     <None Include="assets\src\sass\bootstrap\_alerts.sass" />
@@ -519,6 +522,7 @@
     <None Include="assets\src\sass\kendo\_tabstrip.sass" />
     <None Include="assets\src\sass\kendo\_treeview.sass" />
     <None Include="assets\src\sass\modules\_options.sass" />
+    <None Include="assets\src\sass\modules\_sf-code.sass" />
     <None Include="assets\src\sass\modules\_sf-drag.sass" />
     <None Include="assets\src\sass\modules\_sf-flat-taxon-field.sass" />
     <None Include="assets\src\sass\modules\_sf-input.sass" />
@@ -614,12 +618,58 @@
     <EmbeddedResource Include="Mvc\Scripts\Templates\style-dropdown.sf-cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="assets\textures\image-default.png" />
-    <EmbeddedResource Include="assets\fonts\glyphs\WebComponentsIcons.svg" />
-    <Content Include="assets\fonts\DejaVu\LICENSE.txt" />
+    <Content Include="assets\Kendo\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="assets\Kendo\textures\brushed-metal.png" />
+    <Content Include="assets\Kendo\textures\dots1.png" />
+    <Content Include="assets\Kendo\textures\dots10.png" />
+    <Content Include="assets\Kendo\textures\dots11.png" />
+    <Content Include="assets\Kendo\textures\dots12.png" />
+    <Content Include="assets\Kendo\textures\dots13.png" />
+    <Content Include="assets\Kendo\textures\dots2.png" />
+    <Content Include="assets\Kendo\textures\dots3.png" />
+    <Content Include="assets\Kendo\textures\dots4.png" />
+    <Content Include="assets\Kendo\textures\dots5.png" />
+    <Content Include="assets\Kendo\textures\dots6.png" />
+    <Content Include="assets\Kendo\textures\dots7.png" />
+    <Content Include="assets\Kendo\textures\dots8.png" />
+    <Content Include="assets\Kendo\textures\dots9.png" />
+    <Content Include="assets\Kendo\textures\glass-lighter.png" />
+    <Content Include="assets\Kendo\textures\glass.png" />
+    <Content Include="assets\Kendo\textures\highlight.png" />
+    <Content Include="assets\Kendo\textures\hsv-gradient.png" />
+    <Content Include="assets\Kendo\textures\hue.png" />
+    <Content Include="assets\Kendo\textures\leather1.png" />
+    <Content Include="assets\Kendo\textures\leather2.png" />
+    <Content Include="assets\Kendo\textures\noise.png" />
+    <Content Include="assets\Kendo\textures\stripe1.png" />
+    <Content Include="assets\Kendo\textures\stripe2.png" />
+    <Content Include="assets\Kendo\textures\stripe3.png" />
+    <Content Include="assets\Kendo\textures\stripe4.png" />
+    <Content Include="assets\Kendo\textures\stripe5.png" />
+    <Content Include="assets\Kendo\textures\stripe6.png" />
+    <Content Include="assets\Kendo\textures\transparency-reversed.png" />
+    <EmbeddedResource Include="assets\Kendo\textures\image-default.png" />
+    <EmbeddedResource Include="assets\Kendo\fonts\glyphs\WebComponentsIcons.svg" />
+    <Content Include="assets\Kendo\fonts\DejaVu\LICENSE.txt" />
+    <Content Include="assets\Kendo\Material\editor.png" />
+    <Content Include="assets\Kendo\Material\imagebrowser.png" />
+    <Content Include="assets\Kendo\Material\indeterminate.gif" />
+    <Content Include="assets\Kendo\Material\loading-image.gif" />
+    <Content Include="assets\Kendo\Material\loading.gif" />
+    <Content Include="assets\Kendo\Material\loading_2x.gif" />
+    <Content Include="assets\Kendo\Material\markers.png" />
+    <Content Include="assets\Kendo\Material\markers_2x.png" />
+    <Content Include="assets\Kendo\Material\slider-h.gif" />
+    <Content Include="assets\Kendo\Material\slider-v.gif" />
+    <Content Include="assets\Kendo\Material\sprite.png" />
+    <Content Include="assets\Kendo\Material\sprite_2x.png" />
+    <Content Include="assets\Kendo\Material\sprite_kpi.png" />
+    <Content Include="assets\Kendo\Material\sprite_kpi_2x.png" />
+    <Content Include="assets\src\sass\codemirror\codemirror.css" />
+    <Content Include="assets\src\sass\codemirror\Theme\default.css" />
     <Content Include="assets\tasks\css-important.js" />
-    <EmbeddedResource Include="assets\textures\transparency.png" />
-    <EmbeddedResource Include="assets\textures\transtexture.png" />
+    <EmbeddedResource Include="assets\Kendo\textures\transparency.png" />
+    <EmbeddedResource Include="assets\Kendo\textures\transtexture.png" />
     <EmbeddedResource Include="assets\src\sass\kendo\kendo_common-material_min.css" />
     <EmbeddedResource Include="assets\src\sass\kendo\kendo_material_min.css" />
     <EmbeddedResource Include="client-components\components\icon\sf-icon.js" />
@@ -782,51 +832,51 @@
       <Name>Telerik.Sitefinity.Frontend.Data</Name>
     </ProjectReference>
     <Reference Include="Telerik.Sitefinity.Services.Comments.Impl">
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.13.0.7300\lib\net472\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.13.1.7400\lib\net472\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.13.0.7300\lib\net472\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.13.1.7400\lib\net472\Telerik.Sitefinity.Services.Comments.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Events">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.13.0.7300\lib\net472\Telerik.Sitefinity.Services.Events.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.13.1.7400\lib\net472\Telerik.Sitefinity.Services.Events.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.13.0.7300\lib\net472\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.13.1.7400\lib\net472\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.ContentModules">
-      <HintPath>..\packages\Telerik.Sitefinity.Content.13.0.7300\lib\net472\Telerik.Sitefinity.ContentModules.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.13.1.7400\lib\net472\Telerik.Sitefinity.ContentModules.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Model">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.13.0.7300\lib\net472\Telerik.Sitefinity.Model.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.13.1.7400\lib\net472\Telerik.Sitefinity.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization.Impl">
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.13.0.7300\lib\net472\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.13.1.7400\lib\net472\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.13.0.7300\lib\net472\Telerik.Sitefinity.Personalization.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.13.1.7400\lib\net472\Telerik.Sitefinity.Personalization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Resources">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.13.0.7300\lib\net472\Telerik.Sitefinity.Resources.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.13.1.7400\lib\net472\Telerik.Sitefinity.Resources.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.13.0.7300\lib\net472\Telerik.Sitefinity.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.13.1.7400\lib\net472\Telerik.Sitefinity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.13.0.7300\lib\net472\Telerik.Sitefinity.Utilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.13.1.7400\lib\net472\Telerik.Sitefinity.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Mvc">
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.13.0.7300\lib\net472\Telerik.Sitefinity.Mvc.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.13.1.7400\lib\net472\Telerik.Sitefinity.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

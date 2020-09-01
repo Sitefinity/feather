@@ -168,6 +168,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
                 container.Peek().Controls.Add(sectionRenderer);
             }
+            else if (chunk.TagName.Equals("meta", StringComparison.OrdinalIgnoreCase))
+            {
+                this.AddIfNotEmpty(currentLiteralText.ToString(), container.Peek());
+                currentLiteralText.Clear();
+
+                this.AddIfNotEmpty(chunk.Html, container.Peek());
+            }
             else if (chunk.TagName == "%@")
             {
                 //// Ignore
@@ -215,6 +222,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 //// Ignore
             }
             else if (chunk.TagName.Equals(LayoutsHelpers.SectionTag, StringComparison.OrdinalIgnoreCase))
+            {
+                //// Ignore
+            }
+            else if (chunk.TagName.Equals("meta", StringComparison.OrdinalIgnoreCase))
             {
                 //// Ignore
             }

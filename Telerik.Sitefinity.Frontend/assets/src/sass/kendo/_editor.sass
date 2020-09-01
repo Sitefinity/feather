@@ -7,11 +7,12 @@
 		padding-left: 0
 	.k-editor-toolbar
 		padding: 0 80px 0 20px
-		box-sizing: border-box;
+		box-sizing: border-box
+		overflow: visible
 
 		.k-tool-group, 
 		.k-tool:not(.k-state-disabled),
-		.k-select,
+		.k-select
 			display: inline-flex
 			align-items: center
 			justify-content: center
@@ -31,13 +32,13 @@
 		.k-dropdown-wrap
 			box-sizing: border-box
 			.k-input
-				font-size: 13px;
+				font-size: 13px
 
 		.k-editor-toolbar-wrap
 			position: relative
 		
 		.invisible-group
-		  display: none !important;
+		  display: none !important
 
 		.k-state-border-down
 			&:not(.k-overflow-anchor)
@@ -54,6 +55,8 @@
 			.k-tool
 				color: inherit
 				padding: 0
+				&.k-state-disabled
+					display: none
 
 			&.sf-toolbar-short
 				position: absolute
@@ -62,6 +65,7 @@
 				right: 0
 				background: transparent
 				z-index: 10
+				border-bottom: 0
 
 			&.sf-toolbar-full
 				li
@@ -89,8 +93,12 @@
 						color: #333
 
 			.k-tool-group
+				margin: 0 6px 0 0
 				+ .k-tool-group
 					border-left: 0
+				.k-tool
+					height: 48px
+					width: 48px
 				.custom-tool
 					color: #797979
 
@@ -105,6 +113,7 @@
 			vertical-align: top
 			border: none
 			padding: 0
+			background-color: transparent
 
 			iframe,
 			textarea.html
@@ -113,10 +122,14 @@
 				padding: 0
 				min-height: 347px
 				max-width: 900px
+				background-color: #fff
 
 			textarea.html
 				padding: 30px
 				box-sizing: border-box
+				resize: none
+				width: 100%
+				height: 100%
 
 		.k-tool
 			transition: 0.2s
@@ -146,7 +159,12 @@
 		margin-bottom: 0
 
 	.k-tool
-		background-color: transparent;
+		background-color: transparent
+
+.modal-dialog:not(.modal-full-screen)
+	.k-editable-area
+			textarea.html
+				border: 0
 
 .modal-full-screen
 	width: 100% !important
@@ -175,7 +193,7 @@
 
 		&:hover
 			border: 1px dashed #999
-
+			
 .editor-lg
 	height: 540px
 

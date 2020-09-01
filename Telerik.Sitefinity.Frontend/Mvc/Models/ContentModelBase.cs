@@ -590,7 +590,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 throw new ArgumentException("The type must be Content or Dynamic content");
             }
 
-            var selectedItemGuid = this.selectedItemsIds.Select(id => new Guid(id)).FirstOrDefault();
+            var selectedItemGuid = this.selectedItemsIds.Select(id => new Guid(id)).SingleOrDefault();
 
             var items = this.GetItemsQuery();
             IQueryable<string> itemIds = new List<string>().AsQueryable();
@@ -599,13 +599,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (typeof(Content).IsAssignableFrom(itemType))
             {
                 var typedItems = items.OfType<Content>().Where(c => c.Id == selectedItemGuid || c.OriginalContentId == selectedItemGuid);
-                itemIds = items.Select(n => n.Id.ToString());
+                itemIds = typedItems.Select(n => n.Id.ToString());
                 itemMasterIds = typedItems.Where(i => i.OriginalContentId != Guid.Empty).Select(n => n.OriginalContentId.ToString());
             }
             else
             {
                 var typedItems = items.OfType<ILifecycleDataItemGeneric>().Where(c => c.Id == selectedItemGuid || c.OriginalContentId == selectedItemGuid);
-                itemIds = items.Select(n => n.Id.ToString());
+                itemIds = typedItems.Select(n => n.Id.ToString());
                 itemMasterIds = typedItems.Where(i => i.OriginalContentId != Guid.Empty).Select(n => n.OriginalContentId.ToString());
             }
 
@@ -772,7 +772,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             CultureInfo uiCulture;
             if (SystemManager.CurrentContext.AppSettings.Multilingual)
             {
-                uiCulture = System.Globalization.CultureInfo.CurrentUICulture;
+                uiCulture = Telerik.Sitefinity.Services.SystemManager.CurrentContext.Culture;
             }
             else
             {

@@ -153,6 +153,10 @@ var sitefinity = sitefinity || {};
                 if (this.widgetContext.ModuleName) {
                     url += '&moduleName=' + this.widgetContext.ModuleName;
                 }
+                if (this.widgetContext.MediaType) {
+                    url += '&mediaType=' + this.widgetContext.MediaType;
+                }
+
                 $.get(url)
                     .done($.proxy(this.renderDialog, this))
                     .fail(function (data) {

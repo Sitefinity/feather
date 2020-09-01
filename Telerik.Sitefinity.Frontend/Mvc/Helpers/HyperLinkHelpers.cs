@@ -106,7 +106,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 url = DataResolver.Resolve(item.DataItem, "URL", null, detailsPageId.ToString());
             }
 
-            url = url.Replace("//", "/");
+            url = RemoveDoubleSlash(url);
 
             return UrlPath.ResolveUrl(url, true);
         }
@@ -134,8 +134,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             url = url + "?itemIndex=" + itemIndex;
-
-            url = url.Replace("//", "/");
+            url = RemoveDoubleSlash(url);
 
             return UrlPath.ResolveUrl(url, true);
         }
@@ -198,6 +197,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             var taxonQueryStringParams = evaluator.BuildUrl(taxon.Taxonomy.Name, taxonRelativeUrl, taxon.Taxonomy.Name, taxonBuildOptions, UrlEvaluationMode.QueryString, urlKeyPrefix);
             return taxonQueryStringParams;
+        }
+
+        private static string RemoveDoubleSlash(string url)
+        {
+            // If the url is absolute we should not replace first // with /. Ex: http://domain...
+            Uri result = null;
+            if (Uri.TryCreate(url, UriKind.Absolute, out result))
+            {
+                UriBuilder builder = new UriBuilder(url);
+                builder.Path = builder.Path.Replace("//", "/");
+
+                url = builder.Uri.ToString();
+            }
+            else
+            {
+                url = url.Replace("//", "/");
+            }
+
+            return url;
         }
     }
 }

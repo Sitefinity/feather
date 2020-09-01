@@ -563,7 +563,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 var compositeViewEngine = viewEngine as CompositePrecompiledMvcEngineWrapper;
                 if (compositeViewEngine != null)
                 {
-                    var files = compositeViewEngine.GetViews(controller.ControllerContext, viewLocations);
+                    var files = compositeViewEngine.GetViews(viewLocations);
                     baseFiles.AddRange(files);
                 }
             }

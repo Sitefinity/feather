@@ -184,9 +184,11 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var templateThumbsImageLibrary = librariesManager.GetAlbums().FirstOrDefault(lib => lib.Id == LibrariesModule.DefaultTemplateThumbnailsLibraryId);
             if (templateThumbsImageLibrary != null)
             {
+                var images = templateThumbsImageLibrary.Images().ToList();
                 foreach (var imageToUpgrade in imagesToUpgrade)
                 {
-                    var image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals("MVC_" + imageToUpgrade, StringComparison.OrdinalIgnoreCase) && i.Status == GenericContent.Model.ContentLifecycleStatus.Master);
+                    var image = images.FirstOrDefault(i => i.Title == "MVC_" + imageToUpgrade && i.Status == GenericContent.Model.ContentLifecycleStatus.Master);
+
                     if (image != null)
                     {
                         var iconResource = string.Format(CultureInfo.InvariantCulture, LayoutFileManager.PageTemplateIconPathFormat, imageToUpgrade);
@@ -461,7 +463,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         template.Title = title;
                         template.Framework = Pages.Model.PageTemplateFramework.Mvc;
                         template.Theme = ThemeController.NoThemeName;
-                        var languageData = pageManager.CreatePublishedInvarianLanguageData();
+                        var languageData = pageManager.CreatePublishedLanguageData();
                         template.LanguageData.Add(languageData);
 
                         this.AttachImageToTemplate(template, pageManager, image ?? "default");
@@ -537,7 +539,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     if (templateThumbsImageLibrary != null)
                     {
                         // Try get image from library
-                        image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals("MVC_" + imageName, StringComparison.OrdinalIgnoreCase) && i.Status == GenericContent.Model.ContentLifecycleStatus.Master);
+                        image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title == "MVC_" + imageName && i.Status == GenericContent.Model.ContentLifecycleStatus.Master);
                         if (image == null)
                         {
                             // Check if image is in the resources and upload it

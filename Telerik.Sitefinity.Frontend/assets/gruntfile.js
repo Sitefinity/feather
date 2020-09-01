@@ -48,6 +48,9 @@ module.exports = function (grunt) {
           skipSelectors: [{
             selector: 'progress-bar',
             properties: ['width']
+          }, {
+            selector: 'CodeMirror-gutter',
+            properties: ['height']
           }]
         },
         src: ['<%= dist.path %>/css/sitefinity-backend.min.css'],

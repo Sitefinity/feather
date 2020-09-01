@@ -59,7 +59,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         public string IsMultisiteMode
         {
-            get { return SystemManager.CurrentContext.IsMultisiteMode.ToString(); }
+            get { return true.ToString(); }
         }
     }
 }

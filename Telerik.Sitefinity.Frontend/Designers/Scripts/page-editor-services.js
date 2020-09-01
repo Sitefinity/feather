@@ -72,7 +72,7 @@
          */
         var getUrl = function () {
             if (!httpGetUrl) {
-                httpGetUrl = widgetContext.webServiceUrl + widgetContext.widgetId + '/?pageId=' + widgetContext.pageId;
+                httpGetUrl = widgetContext.webServiceUrl + widgetContext.widgetId + '/?pageId=' + widgetContext.pageId + "&mediaType=" + widgetContext.mediaType;
             }
             return httpGetUrl;
         };

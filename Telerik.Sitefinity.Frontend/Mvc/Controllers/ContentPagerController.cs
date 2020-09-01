@@ -117,7 +117,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
                 nextUrl = null;
 
             string previousUrl;
-            if (model.CurrentPage > 1)
+            if (model.CurrentPage > 1 && model.CurrentPage <= model.TotalPagesCount)
                 if (highlightedIndex > 1)
                     previousUrl = ContentPagerController.PageNodeUrl(model.PagerNodes[highlightedIndex - 2], model.RedirectUrlTemplate);
                 else

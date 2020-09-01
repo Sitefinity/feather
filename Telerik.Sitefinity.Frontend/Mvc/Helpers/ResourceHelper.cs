@@ -376,7 +376,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         /// <returns></returns>
         public static MvcHtmlString RenderLangAttribute(this HtmlHelper helper)
         {
-            return RenderLangAttribute(helper, CultureInfo.CurrentUICulture.Name);
+            return RenderLangAttribute(helper, Telerik.Sitefinity.Services.SystemManager.CurrentContext.Culture.Name);
         }
 
         /// <summary>

@@ -97,6 +97,11 @@
 
             if (typeof ($telerik) !== 'undefined')
                 $telerik.$(document).trigger('modalDialogClosed');
+
+            if (typeof CustomEvent == "function") {
+                var evt = new CustomEvent('sfModalDialogClosed');
+                document.dispatchEvent(evt);
+            }
         };
 
         $scope.hideError = function () {

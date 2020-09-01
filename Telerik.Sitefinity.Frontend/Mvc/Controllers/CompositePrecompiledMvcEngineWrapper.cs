@@ -87,7 +87,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             }
         }
 
-        internal IEnumerable<string> GetViews(ControllerContext controllerContext, IEnumerable<string> viewLocations)
+        internal IEnumerable<string> GetViews(IEnumerable<string> viewLocations)
         {
             var views = new List<string>();
             if (Config.Get<FeatherConfig>().DisablePrecompilation)
