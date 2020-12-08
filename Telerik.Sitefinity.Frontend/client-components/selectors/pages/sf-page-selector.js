@@ -24,11 +24,11 @@
                             return rootPage;
                         };
 
-                        var getItems = function (parentId, search) {
+                        var getItems = function (parentId, search, skip, take) {
                             var provider = ctrl.$scope.sfProvider;
                             var siteId = getSiteId();
                             var culture = getCulture();
-                            return pageService.getItems(parentId, siteId, provider, search, culture, status);
+                            return pageService.getItems(parentId, siteId, provider, search, culture, status, skip, take);
                         };
 
                         var allowLoadingItems = function (newSite, oldSite) {
@@ -102,7 +102,7 @@
                         ctrl.getItems = function (skip, take, search) {
                             var siteMapRootNodeId = getSiteMapRootNodeId();
 
-                            return getItems(siteMapRootNodeId, search);
+                            return getItems(siteMapRootNodeId, search, skip, take);
                         };
 
                         ctrl.getChildren = function (parentId, search) {

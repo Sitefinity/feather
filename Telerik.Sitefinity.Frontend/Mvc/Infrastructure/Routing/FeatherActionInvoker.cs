@@ -15,7 +15,6 @@ using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Personalization;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing.Date;
-using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages.Configuration;
@@ -45,6 +44,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             result = result
                 .SetLast(this.GetInferredDetailActionParamsMapper(controller))
                 .SetLast(this.GetInferredSuccessorsActionParamsMapper(controller))
+                .SetLast(this.GetInferredTaxonFilterQueryParamsMapper(controller, "ListByTaxon"))
                 .SetLast(this.GetInferredTaxonFilterMapper(controller, "ListByTaxon"))
                 .SetLast(this.GetInferredClassificationFilterMapper(controller, "ListByTaxon"))
                 .SetLast(this.GetInferredDateFilterMapper(controller, "ListByDate"))
@@ -139,7 +139,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             else
             {
-                 if (this.ShouldProcessRequest(controller))
+                if (this.ShouldProcessRequest(controller))
                 {
                     // in indexing mode, we only request pages, therefore there in no need to update data for relative routes
                     if (!proxyControl.IsIndexingMode())
@@ -318,6 +318,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return new DateUrlParamsMapper(controller, new DateUrlEvaluatorAdapter());
         }
 
+        private IUrlParamsMapper GetInferredTaxonFilterQueryParamsMapper(ControllerBase controller, string actionName)
+        {
+            IUrlParamsMapper result = null;
+
+            var actionDescriptor = new ReflectedControllerDescriptor(controller.GetType()).FindAction(controller.ControllerContext, actionName);
+            if (actionDescriptor == null || actionDescriptor.GetParameters().Length == 0)
+            {
+                return null;
+            }
+
+            var queryParams = controller.ControllerContext.RequestContext.HttpContext.Request.QueryString;
+            if (actionDescriptor.GetParameters()[0].ParameterType == typeof(ITaxon) && queryParams.Count == 3)
+            {
+                if (queryParams.Keys.Contains("taxonomy"))
+                {
+                    result = new TaxonomyUrlParamsMapper(controller, new TaxonUrlMapper(new TaxonUrlEvaluatorAdapter()));
+                }
+            }
+
+            return result;
+        }
+
         private IUrlParamsMapper GetInferredTaxonFilterMapper(ControllerBase controller, string actionName)
         {
             var actionDescriptor = new ReflectedControllerDescriptor(controller.GetType()).FindAction(controller.ControllerContext, actionName);
@@ -358,8 +380,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     var urlParamNames = new string[] { FeatherActionInvoker.TaxonNamedParamter, FeatherActionInvoker.PagingNamedParameter };
                     result = new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":" + routeTemplate + "}/{" + pageParamName + "}", actionName, urlParamNames);
                 }
-                
-                var urlTaxonParamNames = new string[] { FeatherActionInvoker.TaxonNamedParamter};
+
+                var urlTaxonParamNames = new string[] { FeatherActionInvoker.TaxonNamedParamter };
                 result = result.SetLast(new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":" + routeTemplate + "}", actionName, urlTaxonParamNames));
             }
 

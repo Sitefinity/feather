@@ -77,7 +77,8 @@
                 }
 
                 function scrolledToBottom(element) {
-                    return element.scrollTop !== 0 && element.scrollTop + element.offsetHeight >= element.scrollHeight;
+                    // We use the Math.round method since the 'scrollTop' may return a decimal value on systems using display scaling
+                    return element.scrollTop !== 0 && Math.round(element.scrollTop) + element.offsetHeight >= element.scrollHeight;
                 }
             }
         };

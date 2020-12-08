@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
+using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using System.Web.UI;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing;
 using Telerik.Sitefinity.Frontend.Resources;
-using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc.Rendering;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Utilities.TypeConverters;
@@ -158,6 +153,61 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             else
             {
                 redirectUrl = "/" + taxonFilter.UrlName + "/{0}";
+            }
+
+            return redirectUrl;
+        }
+
+        /// <summary>
+        /// Gets the URL template used for the paging when filtered by taxonomy and url evaluation mode.
+        /// </summary>
+        /// <returns>The URL template.</returns>
+        public static string GetRedirectPagingUrl(ITaxon taxonFilter, string[] urlParams, string queryString)
+        {
+            bool addQueryString = !string.IsNullOrEmpty(queryString);
+            string redirectUrl;
+            if (UrlParamsMapperBase.UseNamedParametersRouting)
+            {
+                redirectUrl = string.Format("/{0}/{1}/{2}", taxonFilter.Taxonomy.Name, taxonFilter.UrlName, FeatherActionInvoker.PagingNamedParameter) + "/{0}";
+            }
+            else
+            {
+                // 3 because we have the following structure /-in-tags/tags/tagName
+                if (urlParams != null && urlParams.Length >= 3)
+                {
+                    if (taxonFilter is FlatTaxon)
+                    {
+                        redirectUrl = string.Format("/{0}/{1}/{2}", urlParams[0], urlParams[1], urlParams[2]);
+                    }
+                    else
+                    {
+                        if (urlParams[urlParams.Length - 1].Equals(taxonFilter.UrlName))
+                        {
+                            // url is like /-in-category/categories/cat1/cat2
+                            string taxonFilterParams = string.Join("/", urlParams);
+                            redirectUrl = "/" + taxonFilterParams;
+                        }
+                        else
+                        {
+                            // url is like /-in-category/categories/cat1/cat2/2 where '2' is the page so we want to exclude it from redirect url
+                            string taxonFilterParams = string.Join("/", urlParams.Take(urlParams.Length - 1));
+                            redirectUrl = "/" + taxonFilterParams;
+                        }
+                    }
+
+                    // add /{0} at the very end for the page number
+                    redirectUrl += "/{0}";
+                }
+                else
+                {
+                    addQueryString = false;
+                    redirectUrl = "/{0}" + queryString;
+                }
+            }
+
+            if (addQueryString)
+            {
+                redirectUrl += queryString;
             }
 
             return redirectUrl;

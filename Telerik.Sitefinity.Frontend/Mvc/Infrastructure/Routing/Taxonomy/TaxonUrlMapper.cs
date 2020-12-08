@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Telerik.Sitefinity.Pages.Model;
+using System.Web.Routing;
 using Telerik.Sitefinity.Taxonomies.Model;
-using Telerik.Sitefinity.Web.UrlEvaluation;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
@@ -36,30 +35,43 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <param name="urlKeyPrefix">The URL key prefix.</param>
         /// <param name="taxon">The taxon.</param>
         /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="requestContext">The reqy.</param>
         /// <returns></returns>
-        public bool TryMatch(string[] urlParams, string urlKeyPrefix, out ITaxon taxon, out int pageIndex)
+        public bool TryMatch(string[] urlParams, string urlKeyPrefix, out ITaxon taxon, out int pageIndex, RequestContext requestContext = null)
         {
             taxon = null;
             pageIndex = 1;
 
             if (urlParams == null || urlParams.Length < 3)
             {
-                return false;
+                if (requestContext == null)
+                {
+                    return false;
+                }
+
+                taxon = TaxonUrlEvaluator.GetTaxonFromQuery(requestContext.HttpContext, null);
+
+                if (urlParams != null && taxon != null)
+                {
+                    this.TryGetPageIndex(urlParams, out pageIndex, taxon.Name);
+                }
+
+                return taxon != null;
             }
 
             string url = string.Join(@"/", urlParams);
-            
+
             if (!this.taxonomyEvaluator.TryGetTaxonFromUrl(url, urlKeyPrefix, out taxon))
             {
                 return false;
             }
 
+            bool hasPageIndex = this.TryGetPageIndex(urlParams, out pageIndex, taxon.Name);
+
             if (!this.IsFlatTaxon(taxon))
             {
                 return true;
             }
-
-            bool hasPageIndex = this.TryGetPageIndex(urlParams, out pageIndex, taxon.Name);
 
             return this.CheckForValidFlatTaxonUrl(urlParams, hasPageIndex);
         }

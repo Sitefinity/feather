@@ -112,8 +112,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
         private void HandleOpenTag(Stack<Control> container, HtmlChunk chunk, StringBuilder currentLiteralText)
         {
-            if (chunk.TagName.Equals("title", StringComparison.OrdinalIgnoreCase))
+            if (chunk.TagName.Equals("title", StringComparison.OrdinalIgnoreCase) && isCurrentlyInHeadTag)
             {
+                // if we are not currently parsing the <head> tag, then this title must be in the body and we should skip it 
                 this.AddIfNotEmpty(currentLiteralText.ToString(), container.Peek());
                 var title = new HtmlTitle();
                 container.Peek().Controls.Add(title);
@@ -126,6 +127,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 var head = new HtmlHead();
                 container.Peek().Controls.Add(head);
                 container.Push(head);
+                isCurrentlyInHeadTag = true;
             }
             else if (chunk.TagName.Equals("asp:ContentPlaceHolder", StringComparison.OrdinalIgnoreCase))
             {
@@ -187,8 +189,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
 
         private void HandleCloseTag(Stack<Control> container, HtmlChunk chunk, StringBuilder currentLiteralText)
         {
-            if (chunk.TagName.Equals("title", StringComparison.OrdinalIgnoreCase))
+            if (chunk.TagName.Equals("title", StringComparison.OrdinalIgnoreCase) && isCurrentlyInHeadTag)
             {
+                // if we are not currently parsing the <head> tag, then this title must be in the body and we should skip it 
                 if (container.Peek() is HtmlTitle)
                 {
                     ((HtmlTitle)container.Pop()).Text = currentLiteralText.ToString();
@@ -204,6 +207,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             {
                 this.AddIfNotEmpty(currentLiteralText.ToString(), container.Pop());
                 currentLiteralText.Clear();
+                isCurrentlyInHeadTag = false;                
             }
             else if (chunk.TagName.Equals("form", StringComparison.OrdinalIgnoreCase))
             {
@@ -260,5 +264,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
                 this.InstantiateInContentPlaceHolder(placeHolder, (ITemplate)this.ContentTemplates[placeHolder.ID]);
             }
         }
+
+        private bool isCurrentlyInHeadTag = false;
     }
 }

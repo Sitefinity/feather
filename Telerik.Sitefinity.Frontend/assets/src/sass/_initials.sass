@@ -29,16 +29,11 @@ hr,
 [class*="m-top"], [class*="m-bottom"], [class*="m-left"], [class*="m-right"],
 [class*="icon-"],
 .fa
-  +all-initials();
+    &:not(.sf-custom)
+       +all-initials();
 
-input
+input:not(.sf-custom)
   +input-initials();
 
-textarea
+textarea:not(.sf-custom)
   +textarea-initials();
-
-sf-search-box
-  width: 100%
-
-.fa
-  font-family: FontAwesome

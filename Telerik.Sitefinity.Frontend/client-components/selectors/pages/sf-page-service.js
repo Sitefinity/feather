@@ -18,7 +18,7 @@
                 return serviceHelper.getResource(url);
             };
 
-            var getItems = function (parentId, siteId, provider, search, culture, status) {
+            var getItems = function (parentId, siteId, provider, search, culture, status, skip, take) {
                 var filter;
                 if (search) {
                     filter = serviceHelper.filterBuilder()
@@ -30,7 +30,9 @@
                     return getResource(null, culture).get({
                         root: parentId,
                         provider: provider,
-                        filter: filter
+                        filter: filter,
+                        skip: skip,
+                        take: take
                     }).$promise;
                 }
                 else {
@@ -43,7 +45,9 @@
                         hierarchyMode: true,
                         sf_site: siteId,
                         provider: provider,
-                        filter: filter
+                        filter: filter,
+                        skip: skip,
+                        take: take
                     }).$promise;
 
                     patchBugInSitefinityEndPointService(promise, siteId);

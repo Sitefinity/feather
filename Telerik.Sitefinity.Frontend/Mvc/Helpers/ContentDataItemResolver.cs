@@ -168,7 +168,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 {
                     if (typeof(DynamicContent) == contentParam.ParameterType)
                     {
-                        var controllerName = (string)controller.ViewBag.WidgetName;
+                        var controllerName = this.GetControllerName(controller);
                         var dynamicContentType = controller.GetDynamicContentType(controllerName);
                         contentType = dynamicContentType != null ? TypeResolutionService.ResolveType(dynamicContentType.GetFullTypeName(), throwOnError: false) : null;
                     }
@@ -180,6 +180,19 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return contentType;
+        }
+
+        private string GetControllerName(ControllerBase controller)
+        {
+            var widgetName = (string)controller.ViewBag.WidgetName;
+
+            if (!string.IsNullOrEmpty(widgetName))
+            {
+                return widgetName;
+            }
+
+            var controllerName = controller.GetType().Name.Replace("Controller", "");
+            return controllerName;
         }
 
         /// <summary>
