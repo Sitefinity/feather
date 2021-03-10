@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
@@ -46,13 +47,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <inheritdoc />
         protected override bool TryMatchUrl(string[] urlParams, RequestContext requestContext, string urlKeyPrefix)
         {
-            if (urlParams == null)
+            if (urlParams == null || !this.IsPaginationAllowed())
                 return false;
 
             var routeTemplate = this.routeTemplateResolver();
 
             var metaParams = routeTemplate
-                .Split(new []{'/'}, StringSplitOptions.RemoveEmptyEntries);
+                .Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
             var parameterMap = this.MapParams(this.actionMethod, metaParams, urlParams, this.urlParamNames);
 
@@ -62,6 +63,32 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             requestContext.RouteData.Values[UrlParamsMapperBase.ActionNameKey] = this.actionName;
             this.PopulateRouteData(requestContext.RouteData.Values, parameterMap);
             RouteHelper.SetUrlParametersResolved();
+
+            return true;
+        }
+
+        private bool IsPaginationAllowed()
+        {
+            if (this.actionName == "Index")
+            {
+                var modelProperty = this.Controller.GetType().GetProperty("Model");
+                if (modelProperty != null)
+                {
+                    var model = modelProperty.GetValue(this.Controller, null);
+                    if (model != null)
+                    {
+                        var displayModeProp = model.GetType().GetProperty("DisplayMode");
+                        if (displayModeProp != null)
+                        {
+                            var displayModeValue = displayModeProp.GetValue(model, null);
+                            if (displayModeValue != null && displayModeValue.ToString() != ListDisplayMode.Paging.ToString())
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
 
             return true;
         }

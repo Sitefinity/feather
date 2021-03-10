@@ -51,7 +51,16 @@ module.exports = function (grunt) {
           }, {
             selector: 'CodeMirror-gutter',
             properties: ['height']
-          }]
+              },
+            {
+                selector: 'textarea',
+                properties: ['height']
+              },
+              {
+                  selector: '.form-control',
+                  properties: ['height']
+              },
+          ]
         },
         src: ['<%= dist.path %>/css/sitefinity-backend.min.css'],
         dest: '<%= dist.path %>/css/sitefinity-backend.min.css'

@@ -25,7 +25,6 @@ using Telerik.Sitefinity.Mvc;
 using Telerik.Sitefinity.Mvc.Proxy.TypeDescription;
 using Telerik.Sitefinity.Mvc.Store;
 using Telerik.Sitefinity.Pages;
-using Telerik.Sitefinity.Security;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies;
 using Telerik.Sitefinity.Taxonomies.Model;
@@ -357,7 +356,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 this.RegisterTaxonomyRoutes();
             });
 
-            TaxonomyManager.Executing += new EventHandler<ExecutingEventArgs>(OnPersistTaxonomy);
+            CacheDependency.Subscribe(typeof(Taxonomy), this.OnTaxonomiesUpdated);
 
             string mvcControllerProxySettingsPropertyDescriptorName = string.Format("{0}.{1}", typeof(MvcWidgetProxy).FullName, "Settings");
             ObjectFactory.Container.RegisterType<IControlPropertyDescriptor, ControllerSettingsPropertyDescriptor>(mvcControllerProxySettingsPropertyDescriptorName);
@@ -380,36 +379,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
         #region Private members
 
-        private void OnPersistTaxonomy(object sender, ExecutingEventArgs args)
-        {
-            if (!(args.CommandName == "CommitTransaction" || args.CommandName == "FlushTransaction"))
-                return;
-
-            var taxonomyProvider = sender as TaxonomyDataProvider;
-
-            var dirtyItems = taxonomyProvider.GetDirtyItems();
-            if (dirtyItems.Count == 0)
-                return;
-
-            foreach (var item in dirtyItems)
-            {
-                if (item is Taxonomy taxonomy)
-                {
-                    var itemStatus = taxonomyProvider.GetDirtyItemStatus(item);
-                    var taxonomyName = taxonomy.Name;
-                    if (!string.IsNullOrEmpty(taxonomyName) &&
-                       (itemStatus == SecurityConstants.TransactionActionType.New || itemStatus == SecurityConstants.TransactionActionType.Updated))
-                    {
-                        taxonomyName = taxonomyName.ToLowerInvariant();
-                        if (!ObjectFactory.IsTypeRegistered<TaxonParamResolver>(taxonomyName))
-                        {
-                            ObjectFactory.Container.RegisterType<IRouteParamResolver, TaxonParamResolver>(taxonomyName, new InjectionConstructor(taxonomyName));
-                        }
-                    }
-                }
-            }
-        }
-
         private void RegisterTaxonomyRoutes()
         {
             var taxonomies = TaxonomyManager.GetTaxonomiesCache();
@@ -419,7 +388,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 foreach (var taxonomy in taxonomies)
                 {
                     var taxonomyName = this.GetTaxonomyName(taxonomy.Id, taxonomy.Name);
-                    ObjectFactory.Container.RegisterType<IRouteParamResolver, TaxonParamResolver>(taxonomyName, new InjectionConstructor(taxonomyName));
+                    if (!ObjectFactory.IsTypeRegistered<TaxonParamResolver>(taxonomyName))
+                        ObjectFactory.Container.RegisterType<IRouteParamResolver, TaxonParamResolver>(taxonomyName, new InjectionConstructor(taxonomyName));
                 }
             }
         }
@@ -666,6 +636,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 return null;
             else
                 return attribute.Name;
+        }
+
+        private void OnTaxonomiesUpdated(ICacheDependencyHandler caller, Type itemType, string itemKey)
+        {
+            // needs to run on a separate thread otherwise messes up the open access cache for som reason
+            // no time to investigate and I see this method has already been called in the same fashion in earlier checkins
+            Task.Run(() =>
+            {
+                RegisterTaxonomyRoutes();
+            });
         }
 
         #endregion

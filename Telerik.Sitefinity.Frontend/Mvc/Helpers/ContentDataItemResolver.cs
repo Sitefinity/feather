@@ -272,7 +272,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
                 if (manager != null)
                 {
-                    return manager.Providers.Select(p => p.Name);
+                    IList<string> providers = manager.GetContextProviders().Select(p => p.Name).ToList();
+
+                    if (!providers.Contains(manager.Provider.Name))
+                        providers.Add(manager.Provider.Name);
+
+                    return providers;
                 }
                 else
                 {

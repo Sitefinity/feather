@@ -10,6 +10,6 @@
 </div>
 
 <script type="text/ng-template" id="mainTemplate">
-    <div ng-include="getDialogTemplate()" />
+  <div ng-include="getDialogTemplate()"></div>
 </script>
 

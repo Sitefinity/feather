@@ -85,7 +85,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var contentItemResolver = new ContentDataItemResolver();
             var item = contentItemResolver.GetItemByUrl(url, this.ItemType, providerName, out redirectUrl);
 
-            if (item != null)
+            if (item != null && this.CanDisplayItem(item))
             {
                 SystemManager.CurrentHttpContext.Items["detailItem"] = item;
 
@@ -99,6 +99,43 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
 
             return false;
+        }
+
+        private bool CanDisplayItem(IDataItem item)
+        {
+            bool isParentSelected = true;
+            var modelProperty = this.Controller.GetType().GetProperty("Model");
+            if (modelProperty != null)
+            {
+                var model = modelProperty.GetValue(this.Controller);
+                if (item is IHasParent)
+                {
+                    var serializedSelectedParentsIdsProperty = model.GetType().GetProperty("SerializedSelectedParentsIds");
+                    if (serializedSelectedParentsIdsProperty != null)
+                    {
+                        var serializedSelectedParentsIds = serializedSelectedParentsIdsProperty.GetValue(model);
+                        if (serializedSelectedParentsIds != null)
+                        {
+                            isParentSelected = serializedSelectedParentsIds.ToString().Contains((item as IHasParent).Parent.Id.ToString());
+                            
+                            if (!isParentSelected)
+                            {
+                                var folderIdProperty = item.GetType().GetProperty("FolderId");
+                                if (folderIdProperty != null)
+                                {
+                                    var folderId = folderIdProperty.GetValue(item);
+                                    if (folderId != null)
+                                    {
+                                        isParentSelected = serializedSelectedParentsIds.ToString().Contains(folderId.ToString()); 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return isParentSelected;
         }
 
         /// <inheritdoc />

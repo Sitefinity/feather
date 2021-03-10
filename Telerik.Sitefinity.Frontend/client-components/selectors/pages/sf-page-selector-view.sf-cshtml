@@ -44,7 +44,7 @@
                         ng-class="{'list-group-item':true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
                         ng-click="itemClicked($index, item)">
 
-                    <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-hide="itemDisabled(item) || !multiselect">
+                    <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-hide="itemDisabled(item) || !multiselect" />
 
                     <div>
                         <div class="row">
@@ -52,7 +52,7 @@
                           <div class="col-xs-8">
                             <i class='pull-left icon-item-{{item.Status.toLowerCase()}}'></i>
                             <span class="pull-left">
-                              <span ng-bind="bindIdentifierField(item)" />
+                              <span ng-bind="bindIdentifierField(item)"></span>
                               <span class='u-db small' ng-class="{'text-muted': !isItemSelectedInDialog(item)}">{{item.Status}}</span>
                             </span>
 

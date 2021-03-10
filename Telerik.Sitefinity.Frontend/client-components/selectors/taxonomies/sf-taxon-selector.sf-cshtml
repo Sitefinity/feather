@@ -34,9 +34,12 @@
                          ng-class="{'list-group-item': true, 'active': isItemSelectedInDialog(item), 'list-group-item-multiselect': multiselect }"
                          ng-click="itemClicked($index, item)">
 
-                        <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect">
+                        <input type="checkbox" ng-checked="isItemSelectedInDialog(item)" ng-show="multiselect" ng-hide="itemDisabled(item)">
 
-                        <div ng-bind="bindIdentifierField(item)"></div>
+                         <span class="m-left-lg">
+                            <span ng-bind="bindIdentifierField(item)" ng-class="{'text-muted': itemDisabled(item)}"></span>
+                            <em ng-show="itemDisabled(item)" class="m-left-md">(@(Res.Get<ClientComponentsResources>().NotTranslated))</em>
+                         </span>
                     </div>
                 </div>
                 <div ng-hide="items.length || showLoadingIndicator"><i>@(Res.Get<ClientComponentsResources>().NoItemsFound)</i></div>

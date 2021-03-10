@@ -29,16 +29,19 @@
 
                         ctrl.getItems = function (skip, take, search, frontendLanguages) {
                             var itemsPromise = flatTaxonService.getTaxons(taxonomyId, skip, take, search, frontendLanguages);
-                            if (fromCurrentLanguageOnly) {
-                                return itemsPromise.then(function (data) {
-                                    data.Items = data.Items.filter(function (item) {
-                                        return isItemTranslated(item);
-                                    });
-                                    return data;
-                                });
-                            }
 
                             return itemsPromise;
+                        };
+
+                        ctrl.itemDisabled = function (item) {
+                            if (!fromCurrentLanguageOnly) return false;
+
+                            var uiCulture = serverContext.getUICulture();
+
+                            if (uiCulture && item.AvailableLanguages && item.AvailableLanguages.length > 0) {
+                                return item.AvailableLanguages.indexOf(uiCulture) < 0;
+                            }
+                            return false;
                         };
 
                         ctrl.getSpecificItems = function (ids) {

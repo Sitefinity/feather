@@ -32,6 +32,18 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (context == null)
                 return null;
 
+            if (context.Request.Path.Contains("/Sitefinity/Versioning"))
+            {
+                // If we are in the versioning try get tha package from page info
+                if (SystemManager.CurrentHttpContext.Items.Contains(PackageManager.CurrentVersionTemplateId))
+                {
+                    var templateId = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentVersionTemplateId] as string;
+                    packageName = this.GetPackageFromTemplateId(templateId);
+                    if (!packageName.IsNullOrEmpty())
+                        return packageName;
+                }
+            }
+
             packageName = this.GetPackageFromContext();
             if (!packageName.IsNullOrEmpty())
                 return packageName;
@@ -217,7 +229,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (SystemManager.IsDesignMode)
             {
                 var draft = pageManager.GetPageDraft(pageData.Id);
-                return draft.TemplateId != Guid.Empty ? this.GetPackageFromTemplateId(draft.TemplateId.ToString()) : null;
+                if (draft != null)
+                {
+                    return draft.TemplateId != Guid.Empty ? this.GetPackageFromTemplateId(draft.TemplateId.ToString()) : null;
+                }
             }
 
             return this.GetPackageFromTemplate(pageData.Template);
@@ -367,6 +382,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// The current package key
         /// </summary>
         public const string CurrentPackageKey = "CurrentResourcePackage";
+
+        public const string CurrentVersionTemplateId = "CurrentVersionTemplateId";
 
         public const string PackageUrlParameterName = "package";
 
