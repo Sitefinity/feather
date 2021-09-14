@@ -65,7 +65,8 @@
                     scope.isLoadingData = true;
                     scope.sfPaging.getPage(scope.sfPaging.skip, scope.sfPaging.take)
                         .then(function (data) {
-                            if (data.Items.length < scope.sfPaging.take) {
+                            // There are cases when we return all of the items ignoring skip and take. Hence we set that all items are loaded
+                            if (data.Items.length < scope.sfPaging.take || data.Items.length > scope.sfPaging.take) {
                                 scope.sfPaging.areAllItemsLoaded = true;
                             }
 

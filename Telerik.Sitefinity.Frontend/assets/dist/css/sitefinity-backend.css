@@ -5328,7 +5328,7 @@
 
 :root:root:root:root:root .sf-backend-wrp {
   /** 
- * Kendo UI v2021.1.119 (http://www.telerik.com/kendo-ui)                                                                                                                                               
+ * Kendo UI v2021.2.511 (http://www.telerik.com/kendo-ui)                                                                                                                                               
  * Copyright 2021 Progress Software Corporation and/or one of its subsidiaries or affiliates. All rights reserved.                                                                                      
  *                                                                                                                                                                                                      
  * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
@@ -5353,7 +5353,7 @@
 */
   /*# sourceMappingURL=kendo.common-material.min.css.map */
   /** 
- * Kendo UI v2021.1.119 (http://www.telerik.com/kendo-ui)                                                                                                                                               
+ * Kendo UI v2021.2.511 (http://www.telerik.com/kendo-ui)                                                                                                                                               
  * Copyright 2021 Progress Software Corporation and/or one of its subsidiaries or affiliates. All rights reserved.                                                                                      
  *                                                                                                                                                                                                      
  * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
@@ -5875,15 +5875,15 @@
   :root:root:root:root:root .sf-backend-wrp .k-pointer-events-auto {
     pointer-events: auto !important; }
   :root:root:root:root:root .sf-backend-wrp .k-pos-static, :root:root:root:root:root .sf-backend-wrp .k-static {
-    position: static; }
+    position: static !important; }
   :root:root:root:root:root .sf-backend-wrp .k-pos-relative, :root:root:root:root:root .sf-backend-wrp .k-relative {
-    position: relative; }
+    position: relative !important; }
   :root:root:root:root:root .sf-backend-wrp .k-absolute, :root:root:root:root:root .sf-backend-wrp .k-pos-absolute {
-    position: absolute; }
+    position: absolute !important; }
   :root:root:root:root:root .sf-backend-wrp .k-fixed, :root:root:root:root:root .sf-backend-wrp .k-pos-fixed {
-    position: fixed; }
+    position: fixed !important; }
   :root:root:root:root:root .sf-backend-wrp .k-pos-sticky, :root:root:root:root:root .sf-backend-wrp .k-sticky {
-    position: sticky; }
+    position: sticky !important; }
   :root:root:root:root:root .sf-backend-wrp .k-pos-top, :root:root:root:root:root .sf-backend-wrp .k-top {
     top: 0; }
   :root:root:root:root:root .sf-backend-wrp .k-pos-right, :root:root:root:root:root .sf-backend-wrp .k-right {
@@ -7160,8 +7160,28 @@
     border-style: solid;
     border-width: 1px;
     -webkit-appearance: none; }
-  :root:root:root:root:root .sf-backend-wrp .k-textarea > .k-input, :root:root:root:root:root .sf-backend-wrp .k-textbox > .k-input {
-    border: 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-searchbox > .k-input, :root:root:root:root:root .sf-backend-wrp .k-textarea > .k-input, :root:root:root:root:root .sf-backend-wrp .k-textbox > .k-input {
+    margin: 0;
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+    box-shadow: none;
+    color: inherit;
+    background: 0 0;
+    font: inherit;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-appearance: none; }
   :root:root:root:root:root .sf-backend-wrp .k-block, :root:root:root:root:root .sf-backend-wrp .k-draghandle, :root:root:root:root:root .sf-backend-wrp .k-inline-block, :root:root:root:root:root .sf-backend-wrp .k-widget {
     border-style: solid;
     border-width: 1px;
@@ -7273,14 +7293,12 @@
     left: 0;
     z-index: 2; }
   :root:root:root:root:root .sf-backend-wrp .k-loading-color {
-    filter: alpha(opacity=30);
     opacity: .3; }
   :root:root:root:root:root .sf-backend-wrp .k-content-frame {
     border: 0;
     width: 100%;
     height: 100%; }
   :root:root:root:root:root .sf-backend-wrp .k-pane > .k-splitter-overlay {
-    filter: alpha(opacity=0);
     opacity: 0;
     position: absolute; }
   :root:root:root:root:root .sf-backend-wrp .k-drag-clue {
@@ -7541,6 +7559,8 @@
     text-align: right; }
   :root:root:root:root:root .sf-backend-wrp .k-text-align-justify, :root:root:root:root:root .sf-backend-wrp .k-text-justify {
     text-align: justify; }
+  :root:root:root:root:root .sf-backend-wrp script {
+    display: none !important; }
   :root:root:root:root:root .sf-backend-wrp .k-button {
     margin: 0;
     padding: 8px 14px;
@@ -8138,6 +8158,10 @@
   :root:root:root:root:root .sf-backend-wrp .k-tabstrip > .k-content {
     display: none;
     overflow: auto; }
+  :root:root:root:root:root .sf-backend-wrp .k-tabstrip > .k-content:focus {
+    outline-width: 1px;
+    outline-style: dotted;
+    outline-offset: -1px; }
   :root:root:root:root:root .sf-backend-wrp .k-tabstrip > .k-content.km-scroll-wrapper {
     padding: 0; }
   :root:root:root:root:root .sf-backend-wrp .k-tabstrip > .k-content > .km-scroll-container {
@@ -8943,7 +8967,6 @@
     margin: .5em; }
   :root:root:root:root:root .sf-backend-wrp .k-multicheck-wrap {
     overflow: auto;
-    overflow-x: hidden;
     white-space: nowrap;
     max-height: 300px; }
   :root:root:root:root:root .sf-backend-wrp .k-multicheck-wrap .k-item {
@@ -9110,7 +9133,6 @@
     width: 100%;
     height: 100%; }
   :root:root:root:root:root .sf-backend-wrp .k-marquee-color {
-    filter: alpha(opacity=60);
     opacity: .6; }
   :root:root:root:root:root .sf-backend-wrp .k-ie9 .k-column-menu {
     width: 160px; }
@@ -9125,6 +9147,24 @@
   :root:root:root:root:root .sf-backend-wrp .k-columns-item .k-group {
     max-height: 200px;
     overflow: auto; }
+  :root:root:root:root:root .sf-backend-wrp .k-filter-menu.k-popup, :root:root:root:root:root .sf-backend-wrp .k-grid-filter-popup.k-popup {
+    padding: 12px 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-filter-menu.k-popup .k-filter-menu-container, :root:root:root:root:root .sf-backend-wrp .k-grid-filter-popup.k-popup .k-filter-menu-container {
+    width: 230px; }
+  :root:root:root:root:root .sf-backend-wrp .k-filter-menu.k-popup .k-multicheck-wrap, :root:root:root:root:root .sf-backend-wrp .k-grid-filter-popup.k-popup .k-multicheck-wrap {
+    padding: 0 3px; }
+  :root:root:root:root:root .sf-backend-wrp .k-filter-menu.k-popup .k-multicheck-wrap .k-item, :root:root:root:root:root .sf-backend-wrp .k-grid-filter-popup.k-popup .k-multicheck-wrap .k-item {
+    padding: 0 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-filter-menu.k-popup .k-multicheck-wrap .k-check-all-wrap, :root:root:root:root:root .sf-backend-wrp .k-grid-filter-popup.k-popup .k-multicheck-wrap .k-check-all-wrap {
+    padding-bottom: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid; }
+  :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-filter-menu-container {
+    padding: 8px 14px;
+    box-sizing: border-box; }
+  :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-searchbox {
+    margin-bottom: 8px;
+    width: 100%; }
   :root:root:root:root:root .sf-backend-wrp .k-grid-columnmenu-popup {
     margin: 0;
     width: 230px;
@@ -9235,6 +9275,7 @@
   :root:root:root:root:root .sf-backend-wrp .k-column-menu .k-menu:not(.k-context-menu) {
     font-weight: 400; }
   :root:root:root:root:root .sf-backend-wrp .k-column-menu .k-expander {
+    border: 0;
     background: inherit; }
   :root:root:root:root:root .sf-backend-wrp .k-column-menu .k-expander .k-columnmenu-item {
     display: -ms-flexbox;
@@ -9282,7 +9323,6 @@
     left: 0;
     z-index: 100; }
   :root:root:root:root:root .sf-backend-wrp .k-loading-pdf-mask .k-loading-color {
-    filter: alpha(opacity=50);
     opacity: .5; }
   :root:root:root:root:root .sf-backend-wrp .k-loading-pdf-mask .k-loading-pdf-progress {
     margin: auto;
@@ -10103,7 +10143,7 @@
   :root:root:root:root:root .sf-backend-wrp .k-autocomplete, :root:root:root:root:root .sf-backend-wrp .k-colorpicker, :root:root:root:root:root .sf-backend-wrp .k-combobox, :root:root:root:root:root .sf-backend-wrp .k-datepicker, :root:root:root:root:root .sf-backend-wrp .k-datetimepicker, :root:root:root:root:root .sf-backend-wrp .k-dropdown, :root:root:root:root:root .sf-backend-wrp .k-dropdowntree, :root:root:root:root:root .sf-backend-wrp .k-numerictextbox, :root:root:root:root:root .sf-backend-wrp .k-selectbox, :root:root:root:root:root .sf-backend-wrp .k-timepicker {
     white-space: nowrap; }
   :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-autocomplete, :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-combobox, :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-datepicker, :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-datetimepicker, :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-dropdown, :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-dropdowntree, :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-numerictextbox, :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-textbox, :root:root:root:root:root .sf-backend-wrp .k-filter-menu .k-timepicker {
-    width: 13.2em; }
+    width: 100%; }
   :root:root:root:root:root .sf-backend-wrp .k-colorpicker {
     width: auto; }
   :root:root:root:root:root .sf-backend-wrp .k-datetimepicker {
@@ -10547,6 +10587,12 @@
   :root:root:root:root:root .sf-backend-wrp .k-input {
     font-size: inherit;
     padding: .25em 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-input-separator {
+    margin: 0;
+    width: 0;
+    height: 16px;
+    border-width: 0 0 0 1px;
+    border-style: solid; }
   :root:root:root:root:root .sf-backend-wrp .k-input, :root:root:root:root:root .sf-backend-wrp .k-textarea > textarea, :root:root:root:root:root .sf-backend-wrp .k-textbox > input {
     outline: 0;
     -webkit-tap-highlight-color: transparent; }
@@ -10896,6 +10942,45 @@
   :root:root:root:root:root .sf-backend-wrp .k-input-label.k-rtl, :root:root:root:root:root .sf-backend-wrp .k-input-label[dir=rtl], :root:root:root:root:root .sf-backend-wrp .k-rtl .k-input-label, :root:root:root:root:root .sf-backend-wrp [dir=rtl] .k-input-label {
     margin-right: 0;
     margin-left: .8em; }
+  :root:root:root:root:root .sf-backend-wrp .k-input-prefix, :root:root:root:root:root .sf-backend-wrp .k-input-suffix {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-negative: 0;
+    flex-shrink: 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-input-prefix > *, :root:root:root:root:root .sf-backend-wrp .k-input-suffix > * {
+    -ms-flex-negative: 0;
+    flex-shrink: 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-input-prefix > .k-icon, :root:root:root:root:root .sf-backend-wrp .k-input-suffix > .k-icon {
+    width: calc(20px + .35714286em);
+    height: calc(20px + .35714286em);
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-negative: 0;
+    flex-shrink: 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-input-prefix > .k-clear-value, :root:root:root:root:root .sf-backend-wrp .k-input-suffix > .k-clear-value {
+    width: calc(20px + .35714286em);
+    height: calc(20px + .35714286em);
+    position: relative; }
+  :root:root:root:root:root .sf-backend-wrp .k-input-prefix > .k-clear-value::after, :root:root:root:root:root .sf-backend-wrp .k-input-suffix > .k-clear-value::after {
+    content: "";
+    opacity: 0;
+    display: none;
+    pointer-events: none;
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    top: -1px;
+    bottom: -1px; }
+  :root:root:root:root:root .sf-backend-wrp .k-input-prefix > .k-clear-value.k-state-focused::after, :root:root:root:root:root .sf-backend-wrp .k-input-prefix > .k-clear-value:focus::after, :root:root:root:root:root .sf-backend-wrp .k-input-suffix > .k-clear-value.k-state-focused::after, :root:root:root:root:root .sf-backend-wrp .k-input-suffix > .k-clear-value:focus::after {
+    display: block; }
   :root:root:root:root:root .sf-backend-wrp .k-colorpicker .k-picker-wrap {
     line-height: 2.42857143em; }
   :root:root:root:root:root .sf-backend-wrp .k-colorpicker .k-selected-color {
@@ -11363,7 +11448,6 @@
     padding: 0;
     outline: 0; }
   :root:root:root:root:root .sf-backend-wrp .k-state-disabled .k-slider-wrap {
-    filter: alpha(opacity=60);
     opacity: .6; }
   :root:root:root:root:root .sf-backend-wrp .k-state-disabled .k-slider-wrap .k-slider-items {
     color: #333; }
@@ -11730,7 +11814,6 @@
     cursor: default;
     min-height: 1.3em; }
   :root:root:root:root:root .sf-backend-wrp .k-event-drag-hint {
-    filter: alpha(opacity=60);
     opacity: .6;
     cursor: -moz-grabbing; }
   :root:root:root:root:root .sf-backend-wrp .k-scheduler-header .k-event {
@@ -11783,7 +11866,6 @@
   :root:root:root:root:root .sf-backend-wrp .k-event .k-resize-handle:after {
     content: "";
     position: absolute;
-    filter: alpha(opacity=50);
     opacity: .5; }
   :root:root:root:root:root .sf-backend-wrp .k-scheduler-mobile .k-event .k-resize-handle:after {
     -webkit-filter: none;
@@ -12633,8 +12715,7 @@
     width: 100%;
     height: 100%;
     background-color: #fff;
-    background-color: rgba(255, 255, 255, 0.01);
-    filter: alpha(opacity=1); }
+    background-color: rgba(255, 255, 255, 0.01); }
   :root:root:root:root:root .sf-backend-wrp .k-handle {
     background: #d2d2d2;
     width: 7px;
@@ -12666,13 +12747,7 @@
     position: absolute;
     height: 100%;
     background-color: #fff;
-    filter: alpha(opacity=80);
     opacity: .8; }
-  :root:root:root:root:root .sf-backend-wrp .k-border {
-    background: #d2d2d2;
-    width: 1px;
-    height: 100%;
-    position: absolute; }
   :root:root:root:root:root .sf-backend-wrp .k-navigator-hint div {
     position: absolute; }
   :root:root:root:root:root .sf-backend-wrp .k-navigator-hint .k-scroll {
@@ -17191,6 +17266,8 @@
     font-size: 18px;
     -ms-flex-negative: 0;
     flex-shrink: 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-drawer-item .k-icon.k-i-none {
+    margin: 0; }
   :root:root:root:root:root .sf-backend-wrp .k-drawer-item .k-item-text {
     padding: 0 8px;
     display: inline-block;
@@ -18351,6 +18428,7 @@
     border-width: 0;
     border-style: solid;
     line-height: 1.42857143;
+    box-sizing: border-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
     -ms-flex-direction: column;
@@ -18465,50 +18543,50 @@
     opacity: 0;
     zoom: 1; }
   :root:root:root:root:root .sf-backend-wrp .k-resize-n {
-    top: -3px;
+    top: 0;
     left: 0;
     width: 100%;
     height: 6px;
     cursor: n-resize; }
   :root:root:root:root:root .sf-backend-wrp .k-resize-e {
     top: 0;
-    right: -3px;
+    right: 0;
     width: 6px;
     height: 100%;
     cursor: e-resize; }
   :root:root:root:root:root .sf-backend-wrp .k-resize-s {
-    bottom: -3px;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 6px;
     cursor: s-resize; }
   :root:root:root:root:root .sf-backend-wrp .k-resize-w {
     top: 0;
-    left: -3px;
+    left: 0;
     width: 6px;
     height: 100%;
     cursor: w-resize; }
   :root:root:root:root:root .sf-backend-wrp .k-resize-se {
-    bottom: -3px;
-    right: -3px;
+    bottom: 0;
+    right: 0;
     width: 6px;
     height: 6px;
     cursor: se-resize; }
   :root:root:root:root:root .sf-backend-wrp .k-resize-sw {
-    bottom: -3px;
-    left: -3px;
+    bottom: 0;
+    left: 0;
     width: 6px;
     height: 6px;
     cursor: sw-resize; }
   :root:root:root:root:root .sf-backend-wrp .k-resize-ne {
-    top: -3px;
-    right: -3px;
+    top: 0;
+    right: 0;
     width: 6px;
     height: 6px;
     cursor: ne-resize; }
   :root:root:root:root:root .sf-backend-wrp .k-resize-nw {
-    top: -3px;
-    left: -3px;
+    top: 0;
+    left: 0;
     width: 6px;
     height: 6px;
     cursor: nw-resize; }
@@ -18785,6 +18863,10 @@
     align-items: stretch;
     -ms-flex-pack: justify;
     justify-content: space-between; }
+  :root:root:root:root:root .sf-backend-wrp .k-wizard-step.k-state-focused, :root:root:root:root:root .sf-backend-wrp .k-wizard-step:focus {
+    outline-width: 1px;
+    outline-style: dotted;
+    outline-offset: -1px; }
   :root:root:root:root:root .sf-backend-wrp .k-wizard-content {
     overflow-y: auto; }
   :root:root:root:root:root .sf-backend-wrp .k-wizard-buttons {
@@ -19049,31 +19131,31 @@
     position: absolute;
     background-color: #fff;
     opacity: 0; }
-  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table-resize-handle-wrapper {
+  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-element-resize-handle-wrapper {
     position: absolute;
     width: 5px;
     height: 5px;
     background-color: #fff;
     border: 1px solid #000;
     z-index: 100; }
-  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table-resize-handle-wrapper .k-table-resize-handle {
+  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-element-resize-handle-wrapper .k-element-resize-handle {
     width: 100%;
     height: 100%; }
-  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table-resize-handle-wrapper .k-table-resize-handle.k-resize-east {
+  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-element-resize-handle-wrapper .k-element-resize-handle.k-resize-east {
     cursor: e-resize; }
-  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table-resize-handle-wrapper .k-table-resize-handle.k-resize-north {
+  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-element-resize-handle-wrapper .k-element-resize-handle.k-resize-north {
     cursor: n-resize; }
-  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table-resize-handle-wrapper .k-table-resize-handle.k-resize-northeast {
+  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-element-resize-handle-wrapper .k-element-resize-handle.k-resize-northeast {
     cursor: ne-resize; }
-  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table-resize-handle-wrapper .k-table-resize-handle.k-resize-northwest {
+  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-element-resize-handle-wrapper .k-element-resize-handle.k-resize-northwest {
     cursor: nw-resize; }
-  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table-resize-handle-wrapper .k-table-resize-handle.k-resize-south {
+  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-element-resize-handle-wrapper .k-element-resize-handle.k-resize-south {
     cursor: s-resize; }
-  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table-resize-handle-wrapper .k-table-resize-handle.k-resize-southeast {
+  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-element-resize-handle-wrapper .k-element-resize-handle.k-resize-southeast {
     cursor: se-resize; }
-  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table-resize-handle-wrapper .k-table-resize-handle.k-resize-southwest {
+  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-element-resize-handle-wrapper .k-element-resize-handle.k-resize-southwest {
     cursor: sw-resize; }
-  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table-resize-handle-wrapper .k-table-resize-handle.k-resize-west {
+  :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-element-resize-handle-wrapper .k-element-resize-handle.k-resize-west {
     cursor: w-resize; }
   :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-column-resize-handle-wrapper {
     position: absolute;
@@ -19101,7 +19183,7 @@
   :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-table td {
     min-width: 1px;
     padding: .2em .3em; }
-  :root:root:root:root:root .sf-backend-wrp .k-table.k-table-resizing {
+  :root:root:root:root:root .sf-backend-wrp .k-table.k-element-resizing {
     opacity: .6; }
   :root:root:root:root:root .sf-backend-wrp .k-editor-inline .k-row-resize-handle-wrapper {
     position: absolute;
@@ -19878,25 +19960,26 @@
     -ms-flex: 0 0 auto;
     flex: 0 0 auto; }
   :root:root:root:root:root .sf-backend-wrp .k-expander {
-    border-width: 0;
+    border-width: 1px;
     border-style: solid;
     box-sizing: border-box;
     overflow: hidden;
     outline: 0;
     font-family: inherit;
-    font-size: inherit;
+    font-size: 14px;
     line-height: 1.42857143;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
-    background-clip: padding-box;
     -webkit-touch-callout: none;
-    -webkit-tap-highlight-color: transparent; }
-  :root:root:root:root:root .sf-backend-wrp .k-expander .k-expander-header {
-    padding: 8px 0;
-    border-width: 0 0 2px;
-    border-style: solid;
+    -webkit-tap-highlight-color: transparent;
+    background-clip: padding-box; }
+  :root:root:root:root:root .sf-backend-wrp .k-expander.k-rtl .k-expander-indicator, :root:root:root:root:root .sf-backend-wrp .k-expander[dir=rtl] .k-expander-indicator, :root:root:root:root:root .sf-backend-wrp .k-rtl .k-expander .k-expander-indicator {
+    margin-left: 0;
+    margin-right: 7px; }
+  :root:root:root:root:root .sf-backend-wrp .k-expander-header {
+    padding: 16px 21px;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-pack: justify;
@@ -19904,20 +19987,21 @@
     -ms-flex-align: center;
     align-items: center;
     cursor: pointer; }
-  :root:root:root:root:root .sf-backend-wrp .k-expander .k-expander-spacer {
+  :root:root:root:root:root .sf-backend-wrp .k-expander-spacer {
     -ms-flex: 1 1 auto;
     flex: 1 1 auto; }
-  :root:root:root:root:root .sf-backend-wrp .k-expander .k-expander-title {
-    font-weight: 700;
+  :root:root:root:root:root .sf-backend-wrp .k-expander-title {
+    font-weight: 500;
     text-transform: uppercase; }
-  :root:root:root:root:root .sf-backend-wrp .k-expander .k-expander-indicator {
-    margin-left: 12px; }
-  :root:root:root:root:root .sf-backend-wrp .k-expander .k-expander-content {
-    padding: 24px 20px;
+  :root:root:root:root:root .sf-backend-wrp .k-expander-indicator {
+    margin-left: 7px; }
+  :root:root:root:root:root .sf-backend-wrp .k-expander-content {
+    padding: 24px 21px;
     box-sizing: border-box; }
-  :root:root:root:root:root .sf-backend-wrp .k-expander[dir=rtl] .k-expander-indicator, :root:root:root:root:root .sf-backend-wrp .k-rtl .k-expander .k-expander-indicator {
-    margin-left: 0;
-    margin-right: 12px; }
+  :root:root:root:root:root .sf-backend-wrp .k-expander + .k-expander.k-expanded, :root:root:root:root:root .sf-backend-wrp .k-expander.k-expanded + .k-expander {
+    margin-top: 16px; }
+  :root:root:root:root:root .sf-backend-wrp .k-expander:not(.k-expanded) + .k-expander:not(.k-expanded) {
+    border-top-width: 0; }
   :root:root:root:root:root .sf-backend-wrp .k-fab {
     padding: 0;
     border-width: 0;
@@ -20024,6 +20108,126 @@
   :root:root:root:root:root .sf-backend-wrp .k-rtl .k-fab-item.k-text-right {
     -ms-flex-direction: row-reverse;
     flex-direction: row-reverse; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    overflow: hidden; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet {
+    padding: 0;
+    width: 360px;
+    max-width: 100%;
+    max-height: 50vh;
+    border-width: 0;
+    border-style: solid;
+    border-color: transparent;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-family: inherit;
+    line-height: 1.42857143;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: fixed;
+    z-index: 10002; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-header {
+    padding: 8px 16px;
+    border-width: 0;
+    border-bottom-width: 0;
+    border-style: solid;
+    border-color: transparent;
+    box-sizing: border-box;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-items {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-item {
+    padding: 0;
+    box-sizing: border-box; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-action {
+    margin: 0;
+    padding: 8px 16px;
+    min-height: 40px;
+    box-sizing: border-box;
+    color: inherit;
+    text-decoration: none;
+    outline: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 12px; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-item-icon {
+    font-size: 16px; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-item-text {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: column nowrap;
+    flex-flow: column nowrap; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-item-title {
+    font-weight: 400;
+    text-transform: none; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-item-description {
+    font-size: .875em;
+    opacity: .75; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet > .k-hr {
+    margin: 0;
+    border-color: inherit; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-top {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-width: 0;
+    border-top-width: 0;
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%); }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-bottom {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-width: 0;
+    border-bottom-width: 0;
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%); }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-width: 0;
+    border-left-width: 0;
+    left: 0;
+    top: 50%;
+    -webkit-transform: translatey(-50%);
+    -ms-transform: translatey(-50%);
+    transform: translatey(-50%); }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-right {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-width: 0;
+    border-right-width: 0;
+    right: 0;
+    top: 50%;
+    -webkit-transform: translatey(-50%);
+    -ms-transform: translatey(-50%);
+    transform: translatey(-50%); }
+  :root:root:root:root:root .sf-backend-wrp .k-animation-container > .k-actionsheet {
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto; }
   :root:root:root:root:root .sf-backend-wrp .k-bottom-nav {
     padding: 4px 4px;
     width: 100%;
@@ -20099,6 +20303,356 @@
   :root:root:root:root:root .sf-backend-wrp .k-bottom-nav.k-pos-absolute, :root:root:root:root:root .sf-backend-wrp .k-bottom-nav.k-pos-fixed {
     bottom: 0;
     z-index: 1; }
+  :root:root:root:root:root .sf-backend-wrp .k-searchbox {
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.42857143;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-align: center;
+    align-items: center;
+    vertical-align: middle;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    position: relative;
+    overflow: hidden;
+    background-clip: padding-box; }
+  :root:root:root:root:root .sf-backend-wrp .k-searchbox > .k-input {
+    padding: 4px 16px; }
+  :root:root:root:root:root .sf-backend-wrp .k-skeleton {
+    display: block; }
+  :root:root:root:root:root .sf-backend-wrp .k-skeleton-text {
+    border-radius: 2px;
+    -webkit-transform: scale(1, 0.6);
+    -ms-transform: scale(1, 0.6);
+    transform: scale(1, 0.6); }
+  :root:root:root:root:root .sf-backend-wrp .k-skeleton-text:empty::before {
+    content: "\00a0"; }
+  :root:root:root:root:root .sf-backend-wrp .k-skeleton-circle {
+    border-radius: 9999px; }
+
+@-webkit-keyframes k-skeleton-wave {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%); }
+  60% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%); }
+  100% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%); } }
+
+@keyframes k-skeleton-wave {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%); }
+  60% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%); }
+  100% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%); } }
+  :root:root:root:root:root .sf-backend-wrp .k-skeleton-wave .k-skeleton, :root:root:root:root:root .sf-backend-wrp .k-skeleton-wave.k-skeleton {
+    position: relative;
+    overflow: hidden; }
+  :root:root:root:root:root .sf-backend-wrp .k-skeleton-wave .k-skeleton::after, :root:root:root:root:root .sf-backend-wrp .k-skeleton-wave.k-skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-animation: k-skeleton-wave 1.6s linear .5s infinite;
+    animation: k-skeleton-wave 1.6s linear .5s infinite; }
+
+@-webkit-keyframes k-skeleton-pulse {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: .4; }
+  100% {
+    opacity: 1; } }
+
+@keyframes k-skeleton-pulse {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: .4; }
+  100% {
+    opacity: 1; } }
+  :root:root:root:root:root .sf-backend-wrp .k-skeleton-pulse .k-skeleton, :root:root:root:root:root .sf-backend-wrp .k-skeleton-pulse.k-skeleton {
+    -webkit-animation: k-skeleton-pulse 1.5s ease-in-out .5s infinite;
+    animation: k-skeleton-pulse 1.5s ease-in-out .5s infinite; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard {
+    padding: null null;
+    box-sizing: border-box;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: 1.42857143;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative; }
+  :root:root:root:root:root .sf-backend-wrp .k-toolbar.k-taskboard-toolbar {
+    padding: 16px 16px;
+    border-width: 0;
+    box-shadow: none;
+    background: 0 0;
+    background-image: none; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-content {
+    padding: 0 16px 16px;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    overflow-x: auto; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-columns-container {
+    outline: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    overflow: hidden;
+    gap: 16px;
+    overflow-x: visible; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column {
+    width: 320px;
+    border-width: 1px;
+    border-radius: 4px;
+    border-style: solid;
+    outline: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    overflow: hidden; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-header {
+    padding: 8px 8px;
+    font-weight: 500;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 4px; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-header-actions {
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+    gap: 8px; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-cards-container {
+    padding: 0 8px;
+    outline: 0;
+    overflow: auto;
+    margin-bottom: 8px;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-cards {
+    padding: 0 0;
+    min-height: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 8px 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-new {
+    max-height: calc(2.42142857em + 16px); }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-edit .k-taskboard-column-header, :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-new .k-taskboard-column-header {
+    font-weight: inherit; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-edit .k-taskboard-column-header-text, :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-new .k-taskboard-column-header-text {
+    -ms-flex: 1 1 100%;
+    flex: 1 1 100%; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-edit .k-textbox, :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-new .k-textbox {
+    width: 100%; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-pane {
+    padding: 16px 16px;
+    width: 320px;
+    border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 2;
+    gap: 16px; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-pane-header {
+    font-weight: 500;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-pane-header-text {
+    word-break: break-word; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-pane-header-actions {
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+    -ms-flex-negative: 0;
+    flex-shrink: 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-pane-content {
+    margin: 0 -16px;
+    padding: 0 16px;
+    overflow: auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-pane-actions {
+    padding: 0 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-pane-start {
+    right: auto;
+    left: 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card {
+    border-radius: 4px;
+    border-width: 1px; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card.k-taskboard-card-category {
+    border-left-width: 4px; }
+  :root:root:root:root:root .sf-backend-wrp .k-rtl .k-taskboard-card.k-taskboard-card-category, :root:root:root:root:root .sf-backend-wrp .k-taskboard-card.k-taskboard-card-category.k-rtl, :root:root:root:root:root .sf-backend-wrp .k-taskboard-card.k-taskboard-card-category[dir=rtl], :root:root:root:root:root .sf-backend-wrp [dir=rtl] .k-taskboard-card.k-taskboard-card-category {
+    border-left-width: 1px;
+    border-right-width: 4px; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-footer, :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-header .k-card-body {
+    padding: 16px 16px; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-header {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-title {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    word-break: break-word; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-title.k-state-focus, :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-title.k-state-hover, :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-title:focus, :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-title:hover {
+    text-decoration: underline; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-header-actions {
+    -ms-flex-item-align: start;
+    align-self: flex-start; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-drag-placeholder {
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    position: relative; }
+  :root:root:root:root:root .sf-backend-wrp .k-ie .k-taskboard-column:not(:last-child) {
+    margin-right: 16px; }
+  :root:root:root:root:root .sf-backend-wrp .k-ie .k-rtl .k-taskboard-column:not(:last-child) {
+    margin-right: 0;
+    margin-left: 16px; }
+  :root:root:root:root:root .sf-backend-wrp .k-ie .k-taskboard-column-cards-container {
+    margin-bottom: 24px; }
+  :root:root:root:root:root .sf-backend-wrp .k-ie .k-taskboard-column-cards > .k-taskboard-card:not(:last-child) {
+    margin-bottom: 8px; }
+  :root:root:root:root:root .sf-backend-wrp .k-ie .k-taskboard-column-header-actions > .k-button:not(:last-child) {
+    margin-right: 8px; }
+  :root:root:root:root:root .sf-backend-wrp .k-ie .k-rtl .k-taskboard-column-header-actions > .k-button:not(:last-child) {
+    margin-right: 0;
+    margin-left: 8px; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-layout-flex {
+    overflow: auto; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-layout-flex .k-scheduler-head {
+    position: sticky;
+    top: 0;
+    z-index: 3; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-layout-flex .k-scheduler-body {
+    position: relative; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-layout-flex .k-scheduler-body, :root:root:root:root:root .sf-backend-wrp .k-scheduler-layout-flex .k-scheduler-head {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 100%;
+    flex: 100%;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-scheduler-body {
+    padding: 12px 12px;
+    -ms-flex-pack: center;
+    justify-content: center; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-calendar {
+    width: 100%;
+    border-width: 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-calendar .k-calendar-view {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-pack: center;
+    justify-content: center; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-calendar .k-content {
+    -ms-flex: 0;
+    flex: 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-calendar .k-month-header {
+    font-size: inherit;
+    font-weight: 700;
+    opacity: 1; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-calendar .k-link {
+    position: relative; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-calendar td.k-state-selected {
+    background-color: inherit; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-day-indicator {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    position: absolute;
+    top: calc(100% - .65em);
+    left: calc(50% - 1.5px); }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-tooltip {
+    padding: 14px 14px;
+    color: inherit; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-tooltip .k-tooltip-title {
+    margin-bottom: 8px; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-tooltip .k-tooltip-title .k-month {
+    font-size: 12px;
+    text-transform: uppercase; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-tooltip .k-tooltip-title .k-day {
+    font-size: 24px; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-tooltip .k-tooltip-events-container {
+    overflow: auto; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-tooltip .k-tooltip-events {
+    max-height: 250px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 8px; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-tooltip .k-tooltip-event {
+    padding: 8px 14px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    -ms-flex-align: center;
+    align-items: center;
+    position: relative;
+    gap: 7px; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-tooltip .k-tooltip-event .k-event-time {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    font-size: inherit; }
+  :root:root:root:root:root .sf-backend-wrp .k-ie .k-scheduler-tooltip .k-tooltip-event:not(:last-child) {
+    margin-bottom: 7px; }
 
 @font-face {
   :root:root:root:root:root .sf-backend-wrp {
@@ -20715,6 +21269,22 @@
     background: #3f51b5; }
   :root:root:root:root:root .sf-backend-wrp .k-button.k-bare.k-primary, :root:root:root:root:root .sf-backend-wrp .k-button.k-bare.k-primary.k-state-active, :root:root:root:root:root .sf-backend-wrp .k-button.k-bare.k-primary.k-state-hover, :root:root:root:root:root .sf-backend-wrp .k-button.k-bare.k-primary:active, :root:root:root:root:root .sf-backend-wrp .k-button.k-bare.k-primary:hover, :root:root:root:root:root .sf-backend-wrp .k-button.k-bare.k-primary:hover.k-state-active, :root:root:root:root:root .sf-backend-wrp .k-button.k-bare.k-primary:hover:active, :root:root:root:root:root .sf-backend-wrp .k-button.k-flat.k-primary, :root:root:root:root:root .sf-backend-wrp .k-button.k-flat.k-primary.k-state-active, :root:root:root:root:root .sf-backend-wrp .k-button.k-flat.k-primary.k-state-hover, :root:root:root:root:root .sf-backend-wrp .k-button.k-flat.k-primary:active, :root:root:root:root:root .sf-backend-wrp .k-button.k-flat.k-primary:hover, :root:root:root:root:root .sf-backend-wrp .k-button.k-flat.k-primary:hover.k-state-active, :root:root:root:root:root .sf-backend-wrp .k-button.k-flat.k-primary:hover:active {
     color: #3f51b5; }
+  :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear {
+    border-color: transparent !important;
+    color: #444;
+    background: 0 0 !important;
+    box-shadow: none !important; }
+  :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear::before {
+    display: none; }
+  :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear::after {
+    display: block; }
+  :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear.k-state-active, :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear.k-state-focused, :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear.k-state-hover, :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear:active, :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear:focus, :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear:hover {
+    color: #232323; }
+  :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear.k-state-active::after, :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear:active::after {
+    background: 0 0; }
+  :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear.k-state-focused::after, :root:root:root:root:root .sf-backend-wrp .k-button.k-button-clear.k-state-focused:active::after {
+    background-color: #444;
+    opacity: .1; }
   :root:root:root:root:root .sf-backend-wrp .k-rtl .k-button-group .k-button {
     border-radius: 0; }
   :root:root:root:root:root .sf-backend-wrp .k-rtl .k-button-group .k-button:first-child, :root:root:root:root:root .sf-backend-wrp .k-rtl .k-button-group .k-group-start {
@@ -21552,6 +22122,8 @@
   :root:root:root:root:root .sf-backend-wrp .k-chart-tooltip-inverse {
     color: #000; }
   :root:root:root:root:root .sf-backend-wrp .k-wizard-step.k-state-focused, :root:root:root:root:root .sf-backend-wrp .k-wizard-step:focus {
+    outline-color: #656565; }
+  :root:root:root:root:root .sf-backend-wrp .k-ie .k-wizard-step.k-state-focused, :root:root:root:root:root .sf-backend-wrp .k-ie .k-wizard-step:focus {
     box-shadow: inset 0 0 0 2px #e6e6e6;
     outline: 0; }
   :root:root:root:root:root .sf-backend-wrp .k-textarea {
@@ -21777,16 +22349,19 @@
     border-color: #e6e6e6;
     color: #444;
     background-color: #fff; }
-  :root:root:root:root:root .sf-backend-wrp .k-expander .k-expander-header {
-    border-color: #444;
+  :root:root:root:root:root .sf-backend-wrp .k-expander-header {
     color: #444;
     background-color: #fff;
     outline: 0; }
-  :root:root:root:root:root .sf-backend-wrp .k-expander .k-expander-header .k-expander-sub-title {
-    opacity: .65; }
-  :root:root:root:root:root .sf-backend-wrp .k-expander .k-expander-header.k-state-focused {
+  :root:root:root:root:root .sf-backend-wrp .k-expander-header.k-state-hover, :root:root:root:root:root .sf-backend-wrp .k-expander-header:hover {
+    background-color: rgba(0, 0, 0, 0.04); }
+  :root:root:root:root:root .sf-backend-wrp .k-expander-header.k-state-focused, :root:root:root:root:root .sf-backend-wrp .k-expander-header:focus {
     background-color: rgba(0, 0, 0, 0.12);
     box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.13); }
+  :root:root:root:root:root .sf-backend-wrp .k-expander-title {
+    color: #3f51b5; }
+  :root:root:root:root:root .sf-backend-wrp .k-expander-sub-title {
+    opacity: .62; }
   :root:root:root:root:root .sf-backend-wrp .k-fab {
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.14), 0 1px 10px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.2); }
   :root:root:root:root:root .sf-backend-wrp .k-fab.k-fab-primary {
@@ -21958,6 +22533,17 @@
     opacity: 1; }
   :root:root:root:root:root .sf-backend-wrp .k-popup.k-fab-popup {
     box-shadow: none; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet {
+    border-color: #e6e6e6;
+    color: #444;
+    background-color: #fff;
+    box-shadow: 0 8px 10px -5px rgba(0, 0, 0, 0.2), 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12); }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-header {
+    box-shadow: null; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-action.k-state-hover, :root:root:root:root:root .sf-backend-wrp .k-actionsheet-action:hover {
+    background-color: #ebebeb; }
+  :root:root:root:root:root .sf-backend-wrp .k-actionsheet-action.k-state-focus, :root:root:root:root:root .sf-backend-wrp .k-actionsheet-action:focus {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 2px 3px rgba(0, 0, 0, 0.05); }
   :root:root:root:root:root .sf-backend-wrp .k-bottom-nav-solid.k-bottom-nav-primary {
     color: #bcc2e5;
     background-color: #3f51b5; }
@@ -22118,6 +22704,85 @@
     background-color: rgba(68, 68, 68, 0.05); }
   :root:root:root:root:root .sf-backend-wrp .k-ie .k-bottom-nav-item {
     background-color: transparent; }
+  :root:root:root:root:root .sf-backend-wrp .k-searchbox {
+    border-color: #f0f0f0;
+    color: #444;
+    background-color: #fff; }
+  :root:root:root:root:root .sf-backend-wrp .k-searchbox.k-state-hover, :root:root:root:root:root .sf-backend-wrp .k-searchbox:hover {
+    border-color: #f5f5f5;
+    color: #444;
+    background-color: #fff; }
+  :root:root:root:root:root .sf-backend-wrp .k-searchbox.k-state-focus, :root:root:root:root:root .sf-backend-wrp .k-searchbox:focus {
+    border-color: #f5f5f5;
+    color: #444;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 2px 3px rgba(0, 0, 0, 0.05); }
+  :root:root:root:root:root .sf-backend-wrp .k-searchbox:focus-within {
+    border-color: #f5f5f5;
+    color: #444;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 2px 3px rgba(0, 0, 0, 0.05); }
+  :root:root:root:root:root .sf-backend-wrp .k-searchbox.k-state-disabled, :root:root:root:root:root .sf-backend-wrp .k-searchbox:disabled {
+    outline: 0;
+    cursor: default;
+    opacity: .6;
+    -webkit-filter: grayscale(0.1);
+    filter: grayscale(0.1);
+    pointer-events: none;
+    box-shadow: none; }
+  :root:root:root:root:root .sf-backend-wrp .k-skeleton {
+    background-color: rgba(0, 0, 0, 0.2); }
+  :root:root:root:root:root .sf-backend-wrp .k-skeleton-wave .k-skeleton::after, :root:root:root:root:root .sf-backend-wrp .k-skeleton-wave.k-skeleton::after {
+    background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.04), transparent); }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column {
+    border-color: transparent;
+    background-color: #f2f2f2; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column.k-state-focus, :root:root:root:root:root .sf-backend-wrp .k-taskboard-column:focus {
+    border-color: #b8b8b8; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-column-header-text {
+    color: #444; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-pane {
+    border-color: #e6e6e6;
+    color: #444;
+    background-color: #fff; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card {
+    border-color: #e6e6e6;
+    color: #444;
+    background-color: #fff; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-header {
+    color: #444;
+    background-color: #fff; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-footer {
+    background-color: #fff; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-title {
+    color: #3f51b5; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-title.k-state-focus, :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-title:focus {
+    color: #2e3b84; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-title.k-state-hover, :root:root:root:root:root .sf-backend-wrp .k-taskboard-card .k-card-title:hover {
+    color: #6b7acb; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card.k-state-focus, :root:root:root:root:root .sf-backend-wrp .k-taskboard-card:focus {
+    box-shadow: none;
+    border-color: #bcbcbc; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card.k-state-hover, :root:root:root:root:root .sf-backend-wrp .k-taskboard-card:hover {
+    border-color: #cfcfcf; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-card.k-state-selected {
+    border-color: #6b7acb;
+    color: #444;
+    background-color: #fff;
+    background-image: none; }
+  :root:root:root:root:root .sf-backend-wrp .k-taskboard-drag-placeholder {
+    border-color: #e6e6e6;
+    background-color: rgba(255, 255, 255, 0.2); }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-calendar {
+    background-color: #fff; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-month-header {
+    color: #444; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-day-indicator {
+    background-color: #3f51b5; }
+  :root:root:root:root:root .sf-backend-wrp .k-scheduler-yearview .k-state-selected .k-day-indicator {
+    background-color: #fff; }
+  :root:root:root:root:root .sf-backend-wrp .k-tooltip.k-scheduler-tooltip .k-tooltip-title .k-day {
+    color: #fff; }
   :root:root:root:root:root .sf-backend-wrp .k-in, :root:root:root:root:root .sf-backend-wrp .k-item {
     border-color: transparent; }
   :root:root:root:root:root .sf-backend-wrp a.k-icon {
@@ -22617,6 +23282,8 @@
   :root:root:root:root:root .sf-backend-wrp .k-tabstrip .k-content.k-state-active {
     background-color: #fff;
     color: #444; }
+  :root:root:root:root:root .sf-backend-wrp .k-tabstrip .k-content.k-state-focused, :root:root:root:root:root .sf-backend-wrp .k-tabstrip .k-content:focus {
+    outline-color: #656565; }
   :root:root:root:root:root .sf-backend-wrp .k-menu .k-item, :root:root:root:root:root .sf-backend-wrp .k-menu.k-header {
     border-color: #e6e6e6; }
   :root:root:root:root:root .sf-backend-wrp .k-column-menu, :root:root:root:root:root .sf-backend-wrp .k-column-menu .k-item, :root:root:root:root:root .sf-backend-wrp .k-columnmenu-item-wrapper, :root:root:root:root:root .sf-backend-wrp .k-grid-columnmenu-popup {
@@ -22927,7 +23594,6 @@
     color: #444; }
   :root:root:root:root:root .sf-backend-wrp .k-chart .k-mask {
     background-color: #fff;
-    filter: alpha(opacity=68);
     opacity: .68; }
   :root:root:root:root:root .sf-backend-wrp .k-chart .k-selection {
     border-color: #e5e5e5; }
@@ -23349,9 +24015,13 @@
   :root:root:root:root:root .sf-backend-wrp .k-footer-template .k-grid-footer-sticky, :root:root:root:root:root .sf-backend-wrp .k-grid-header .k-grid-header-sticky, :root:root:root:root:root .sf-backend-wrp .k-grouping-row .k-grid-content-sticky, :root:root:root:root:root .sf-backend-wrp .k-master-row .k-grid-content-sticky {
     border-left-color: #999;
     border-right-color: #999; }
+  :root:root:root:root:root .sf-backend-wrp .k-grid-header .k-filter-row .k-grid-header-sticky {
+    background-color: #fafafa; }
   :root:root:root:root:root .sf-backend-wrp .k-grid-content-locked, :root:root:root:root:root .sf-backend-wrp .k-grid-content-locked td, :root:root:root:root:root .sf-backend-wrp .k-grid-header-locked, :root:root:root:root:root .sf-backend-wrp .k-grid-header-locked .k-header {
     border-left-color: #999;
     border-right-color: #999; }
+  :root:root:root:root:root .sf-backend-wrp .k-check-all-wrap {
+    border-color: #e6e6e6; }
   :root:root:root:root:root .sf-backend-wrp .modal-body .k-editor-toolbar-wrap {
     padding-left: 0; }
   :root:root:root:root:root .sf-backend-wrp .modal-body .k-editor-toolbar {
@@ -23695,6 +24365,11 @@
     color: #fff;
     background-color: #b6bdca;
     border-color: #dbdbde; }
+
+.k-editor-dialog.k-editor-table-wizard-dialog.k-window-content {
+  font-size: 13px; }
+  .k-editor-dialog.k-editor-table-wizard-dialog.k-window-content .k-tabstrip-wrapper .k-content {
+    overflow: auto; }
 
 :root:root:root:root:root .sf-backend-wrp {
   font-family: open_sansregular, Arial, Verdana, sans-serif;
@@ -24556,10 +25231,12 @@
     color: #000;
     background-color: #eee; }
 
+:root:root:root:root:root .sf-backend-wrp.popover,
 :root:root:root:root:root .sf-backend-wrp .popover {
   z-index: 9999;
   min-height: 90px;
   max-width: 570px; }
+  :root:root:root:root:root .sf-backend-wrp.popover .popover-title,
   :root:root:root:root:root .sf-backend-wrp .popover .popover-title {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -24570,10 +25247,13 @@
     background-color: #f7f7f7;
     border-bottom: 1px solid #ebebeb;
     border-radius: 5px 5px 0 0; }
+  :root:root:root:root:root .sf-backend-wrp.popover.popover.fade.in,
   :root:root:root:root:root .sf-backend-wrp .popover.popover.fade.in {
     opacity: 1; }
+  :root:root:root:root:root .sf-backend-wrp.popover.popover.right > .arrow,
   :root:root:root:root:root .sf-backend-wrp .popover.popover.right > .arrow {
-    left: -16px; }
+    margin-left: 0;
+    margin-right: 0; }
 
 :root:root:root:root:root .sf-backend-wrp .popover-table {
   width: 500px; }

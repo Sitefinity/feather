@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Routing;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.HealthMonitoring;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
@@ -38,9 +39,12 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 if (SystemManager.CurrentHttpContext.Items.Contains(PackageManager.CurrentVersionTemplateId))
                 {
                     var templateId = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentVersionTemplateId] as string;
-                    packageName = this.GetPackageFromTemplateId(templateId);
-                    if (!packageName.IsNullOrEmpty())
-                        return packageName;
+                    if (Guid.TryParse(templateId, out Guid templateIdParsed) && templateIdParsed != Guid.Empty)
+                    {
+                        packageName = this.GetPackageFromTemplateId(templateId);
+                        if (!packageName.IsNullOrEmpty())
+                            return packageName;
+                    }
                 }
             }
 
@@ -126,7 +130,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             get
             {
-                return Telerik.Sitefinity.Abstractions.AppSettings.CurrentSettings.IsBackend || 
+                return Telerik.Sitefinity.Abstractions.AppSettings.CurrentSettings.IsBackend ||
                     Config.Get<Sitefinity.Modules.Pages.Configuration.PagesConfig>().AllowChangePageThemeAtRuntime ||
                     (SystemManager.CurrentHttpContext.Items[SiteMapBase.CurrentNodeKey] as PageSiteNode) == null;
             }
@@ -218,7 +222,14 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 return null;
 
             var pageManager = PageManager.GetManager();
-            var pageNode = pageManager.GetPageNode(id);
+
+            PageNode pageNode;
+
+            using (new ElevatedModeRegion(pageManager))
+            {
+                pageNode = pageManager.GetPageNode(id);
+            }
+
             var pageData = pageNode.GetPageData();
 
             if (pageData == null)
@@ -315,7 +326,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 packageName = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] as string;
             }
 
-            return packageName;     
+            return packageName;
         }
 
         /// <summary>

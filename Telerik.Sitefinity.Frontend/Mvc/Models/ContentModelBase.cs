@@ -278,7 +278,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             location.ContentType = this.ContentType;
             location.ProviderName = this.GetManager().Provider.Name;
 
-            string filterExpression;
             switch (this.ContentViewDisplayMode)
             {
                 case ContentViewDisplayMode.Detail:
@@ -286,15 +285,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
                     return new[] { location };
                 case ContentViewDisplayMode.Automatic:
-                    filterExpression = this.CompileFilterExpression();
+                    if (this.SelectionMode == SelectionMode.SelectedItems && string.IsNullOrEmpty(this.FilterExpression))
+                    {
+                        var masterIdsList = this.GetMasterIdsFromSelection();
+                        location.Filters.Add(new ItemsSelectionLocationFilter(masterIdsList.Select(x => x.ToString())));
+                    }
+                    else
+                    {
+                        var filterExpression = this.CompileFilterExpression();
+                        if (!string.IsNullOrEmpty(filterExpression))
+                        {
+                            location.Filters.Add(new BasicContentLocationFilter(filterExpression));
+                        }
+                    }
                     break;
                 default:
                     return null;
-            }
-
-            if (!string.IsNullOrEmpty(filterExpression))
-            {
-                location.Filters.Add(new BasicContentLocationFilter(filterExpression));
             }
 
             return new[] { location };
@@ -591,37 +597,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             var selectedItemGuid = this.selectedItemsIds.Select(id => new Guid(id)).SingleOrDefault();
-
-            var items = this.GetItemsQuery();
-            IQueryable<string> itemIds = new List<string>().AsQueryable();
-            IQueryable<string> itemMasterIds = new List<string>().AsQueryable();
-
-            if (typeof(Content).IsAssignableFrom(itemType))
-            {
-                var typedItems = items.OfType<Content>().Where(c => c.Id == selectedItemGuid || c.OriginalContentId == selectedItemGuid);
-                itemIds = typedItems.Select(n => n.Id.ToString());
-                itemMasterIds = typedItems.Where(i => i.OriginalContentId != Guid.Empty).Select(n => n.OriginalContentId.ToString());
-            }
-            else
-            {
-                var typedItems = items.OfType<ILifecycleDataItemGeneric>().Where(c => c.Id == selectedItemGuid || c.OriginalContentId == selectedItemGuid);
-                itemIds = typedItems.Select(n => n.Id.ToString());
-                itemMasterIds = typedItems.Where(i => i.OriginalContentId != Guid.Empty).Select(n => n.OriginalContentId.ToString());
-            }
-
-            var itemIdsList = itemIds.Distinct().ToList();
-
-            foreach (var item in itemMasterIds.Distinct())
-            {
-                if (!itemIds.Contains(item))
-                {
-                    itemIdsList.Add(item);
-                }
-            }
-
-            var filter = new ContentLocationSingleItemFilter(itemIdsList);
-
-            return filter;
+            return ContentLocatableViewExtensions.GetSingleItemFilter(selectedItemGuid, itemType, this.GetManager());
         }
 
         /// <summary>
@@ -905,12 +881,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "It would add too much risk now to change this to property and would not bring much value to code quality and maintenance.")]
         protected virtual string GetSelectedItemsFilterExpression()
         {
-            var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
-            var masterIds = this.GetItemsQuery()
-                .OfType<ILifecycleDataItemGeneric>()
-                .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
-                .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id)
-                .Distinct();
+            var masterIds = this.GetMasterIdsFromSelection();
 
             var selectedItemConditions = masterIds.Select(id => "Id = {0} OR OriginalContentId = {0}".Arrange(id.ToString("D")));
             var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
@@ -928,6 +899,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         {
             if (contentType.ImplementsInterface(typeof(ICommentable)))
                 keys.Add(new CacheDependencyKey() { Type = typeof(Sitefinity.Services.Comments.IThread) });
+        }
+
+        private IEnumerable<Guid> GetMasterIdsFromSelection()
+        {
+            var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
+            var masterIds = this.GetItemsQuery()
+                .OfType<ILifecycleDataItemGeneric>()
+                .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
+                .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id)
+                .Distinct();
+
+            return masterIds;
         }
 
         private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)

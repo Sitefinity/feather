@@ -17,6 +17,8 @@ using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Libraries.Model;
 using Telerik.Sitefinity.Modules.Libraries;
+using Telerik.Sitefinity.Modules.Libraries.ImageProcessing;
+using Telerik.Sitefinity.Modules.Libraries.Images;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Multisite;
 using Telerik.Sitefinity.Pages.Model;
@@ -196,7 +198,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         {
                             using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(iconResource))
                             {
-                                using (var resourceImage = System.Drawing.Image.FromStream(imageStream))
+                                using (var resourceImage = ImagesHelper.CurrentImageProcessor.GetImageFromStream(imageStream))
                                 {
                                     var resourceImageStream = new MemoryStream();
                                     resourceImage.Save(resourceImageStream, System.Drawing.Imaging.ImageFormat.Png);
@@ -576,7 +578,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                 using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(iconResource))
                 {
-                    using (var resourceImage = System.Drawing.Image.FromStream(imageStream))
+                    using (var resourceImage = ImagesHelper.CurrentImageProcessor.GetImageFromStream(imageStream))
                     {
                         var resourceImageStream = new MemoryStream();
                         resourceImage.Save(resourceImageStream, System.Drawing.Imaging.ImageFormat.Png);

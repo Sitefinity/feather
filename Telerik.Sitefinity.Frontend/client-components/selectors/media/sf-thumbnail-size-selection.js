@@ -30,6 +30,7 @@
             $scope.sizeSelection = null;
             $scope.sizeOptions = [];
             $scope.customThumbnailSizeTemplateUrl = serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/selectors/media/sf-custom-thumbnail-size.sf-cshtml');
+            var isResponsiveOptionAvailable = $scope.viewType && ($scope.viewType === 'Telerik.Sitefinity.Frontend.Media.Mvc.Controllers.ImageController');
 
             var thumbnailProfiles = [];
 
@@ -43,12 +44,20 @@
                     $scope.model.displayMode = selection.type;
                     $scope.model.thumbnail = selection.thumbnail;
                     $scope.model.customSize = selection.customSize;
+
+                    if (isResponsiveOptionAvailable) {
+                        $scope.model.responsive = selection.responsive;
+                    }
                 }
                 else {
                     openModalDialog().then(function (model) {
                         $scope.model.displayMode = selection.type;
                         $scope.model.thumbnail = selection.thumbnail;
                         $scope.model.customSize = model;
+
+                        if (isResponsiveOptionAvailable) {
+                            $scope.model.responsive = selection.responsive;
+                        }
                         populateOptions();
                     });
                 }
@@ -125,6 +134,7 @@
             var populateOptions = function () {
                 $scope.sizeOptions = [];
                 var originalSizeTitle = 'Original size';
+                var responsiveTitle = 'Responsive';
 
                 if ($scope.model.thumbnail) {
                     $scope.model.thumbnail.url = null;
@@ -144,6 +154,18 @@
                     customSize: null,
                     openDialog: false
                 });
+
+                if (isResponsiveOptionAvailable) {
+                    $scope.sizeOptions.push({
+                        index: $scope.sizeOptions.length,
+                        type: displayMode.original,
+                        title: responsiveTitle,
+                        thumbnail: null,
+                        customSize: null,
+                        responsive: true,
+                        openDialog: false
+                    });
+                }
 
                 for (var i = 0; i < thumbnailProfiles.length; i++) {
                     if (!isVectorGraphics()) {
@@ -191,7 +213,7 @@
                     var option = $scope.sizeOptions[i];
 
                     if (option.type === $scope.model.displayMode) {
-                        if (option.type === displayMode.original ||
+                        if (option.type === displayMode.original && option.responsive === $scope.model.responsive ||
                             (option.type === displayMode.thumbnail && option.thumbnail.name === $scope.model.thumbnail.name) ||
                             (option.type === displayMode.custom && !option.openDialog)) {
                             $scope.sizeSelection = option;

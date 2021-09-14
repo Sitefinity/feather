@@ -5,6 +5,7 @@ using System.Web.UI;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Personalization.Impl.Configuration;
 using Telerik.Sitefinity.Personalization.Impl.Web.UI;
@@ -92,10 +93,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Personalization
                 var currentNode = SiteMapBase.GetActualCurrentNode();
                 if (currentNode != null && currentNode.Framework == PageTemplateFramework.Mvc)
                 {
-                    var registeredScripts = SystemManager.CurrentHttpContext.Items[ResourceHelper.JsRegisterName] as Dictionary<string, List<string>>;
+                    var registeredScripts = SystemManager.CurrentHttpContext.Items[ResourceHelper.JsRegisterName] as Dictionary<string, List<ResourceItem>>;
                     if (registeredScripts != null)
                     {
-                        this.personalizedViewWrapper.LoadedScripts = registeredScripts.SelectMany(p => p.Value);
+                        this.personalizedViewWrapper.LoadedScripts = registeredScripts.SelectMany(p => p.Value.Select(x => x.ResourceKey));
                     }
                 }
                 else

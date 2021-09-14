@@ -54,22 +54,22 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <summary>
         /// Gets the current container that contains the registered resources.
         /// </summary>
-        protected virtual Dictionary<string, List<string>> Container
+        protected virtual Dictionary<string, List<ResourceItem>> Container
         {
             get
             {
                 if (this.Context.Items.Contains(this.name))
                 {
-                    this.container = (Dictionary<string, List<string>>)this.Context.Items[this.name];
+                    this.container = (Dictionary<string, List<ResourceItem>>)this.Context.Items[this.name];
 
                     if (this.container == null)
                     {
-                        this.container = new Dictionary<string, List<string>>();
+                        this.container = new Dictionary<string, List<ResourceItem>>();
                     }
                 }
                 else
                 {
-                    this.container = new Dictionary<string, List<string>>();
+                    this.container = new Dictionary<string, List<ResourceItem>>();
                     this.Context.Items.Add(this.name, this.container);
                 }
 
@@ -103,6 +103,23 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// </returns>
         public bool Register(string resourceKey, string sectionName = null, bool throwException = false)
         {
+            var successfullyRegistered = this.Register(resourceKey, sectionName, throwException, null);
+
+            return successfullyRegistered;
+        }
+
+        /// <summary>
+        /// Registers a client resource. A return value indicates whether the registration succeeded.
+        /// </summary>
+        /// <param name="resourceKey">The attributes associated with the resource.</param>
+        /// <param name="sectionName">The section name in which the resource should be rendered.</param>
+        /// <param name="throwException">The section name in which the resource should be rendered.</param>
+        /// <param name="attributes">The attributes that should be added to the resource.</param>
+        /// <returns>
+        /// <value>true</value> if s was registered successfully; otherwise, <value>false</value>.
+        /// </returns>
+        public bool Register(string resourceKey, string sectionName = null, bool throwException = false, List<KeyValuePair<string, string>> attributes = null)
+        {
             if (sectionName != null && !ResourceHelper.RenderScriptSection)
             {
                 var page = this.Context.Handler.GetPageHandler();
@@ -121,15 +138,17 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
             bool successfullyRegistered = true;
 
+            var resourceItem = new ResourceItem(resourceKey, attributes);
             if (this.Container.ContainsKey(sectionName))
             {
-                if (this.Container[sectionName].Contains(resourceKey))
+                if (this.Container[sectionName].Any(x => x.ResourceKey == resourceKey))
                     successfullyRegistered = false;
                 else
-                    this.Container[sectionName].Add(resourceKey);
+                    this.Container[sectionName].Add(resourceItem);
             }
             else
-                this.Container.Add(sectionName, new List<string>() { resourceKey });
+                this.Container.Add(sectionName, new List<ResourceItem>() { resourceItem });
+
 
             return successfullyRegistered;
         }
@@ -147,7 +166,27 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (string.IsNullOrEmpty(sectionName))
                 sectionName = ResourceRegister.DefaultSectionNameKey;
 
-            return this.Container.ContainsKey(sectionName) && this.Container[sectionName].Contains(resourceKey);
+            return this.Container.ContainsKey(sectionName) && this.Container[sectionName].Any(r => r.ResourceKey == resourceKey);
+        }
+
+        /// <summary>
+        /// Checks if a client resource is registered for a page.
+        /// </summary>
+        /// <param name="resourceKey">The attributes associated with the resource.</param>
+        /// <returns>
+        /// <value>true</value> if s was registered; otherwise, <value>false</value>.
+        /// </returns>
+        internal bool IsRegistered(string resourceKey)
+        {
+            foreach (var section in this.Container.Values)
+            {
+                if (section.Any(r => r.ResourceKey == resourceKey))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -172,31 +211,31 @@ namespace Telerik.Sitefinity.Frontend.Resources
         }
 
         /// <summary>
-        /// Get all resources for a section.
+        /// Get all resource items for a section.
         /// </summary>
         /// <param name="sectionName">The name of the section key.</param>
         /// <returns>
-        /// A collection of all resources for a section.
+        /// A collection of all resource items for a section.
         /// </returns>
-        public IEnumerable<string> GetResourcesForSection(string sectionName)
+        public IEnumerable<ResourceItem> GetResourceItemsForSection(string sectionName)
         {
             if (this.Container.ContainsKey(sectionName))
             {
                 return this.Container[sectionName];
             }
 
-            return new List<string>();
+            return new List<ResourceItem>();
         }
 
         /// <summary>
-        /// Get all inline resources.
+        /// Get all inline resources with their attributes.
         /// </summary>
         /// <returns>
-        /// A collection of all inline resources.
+        /// A collection of all inline resources and their attributes.
         /// </returns>
-        public IEnumerable<string> GetInlineResources()
+        public IEnumerable<ResourceItem> GetInlineResourceItems()
         {
-            return this.GetResourcesForSection(ResourceRegister.DefaultSectionNameKey);
+            return this.GetResourceItemsForSection(ResourceRegister.DefaultSectionNameKey);
         }
 
         #endregion
@@ -204,7 +243,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         #region Fields
 
         private HttpContextBase context;
-        private Dictionary<string, List<string>> container;
+        private Dictionary<string, List<ResourceItem>> container;
         private HashSet<string> renderedRes;
         private string name;
 
