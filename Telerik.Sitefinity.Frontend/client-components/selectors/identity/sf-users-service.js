@@ -57,10 +57,9 @@ function (serviceHelper, serverContext, $http, $q) {
             },
             timeout: canceller.promise
         })
-        .success(function (result) {
-            deferred.resolve(result);
-        })
-        .error(function (error, status, headers, config) {
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
             deferred.reject(getError(error, status, headers, config));
         });
 
@@ -93,10 +92,9 @@ function (serviceHelper, serverContext, $http, $q) {
             },
             timeout: canceller.promise
         })
-        .success(function (result) {
-            deferred.resolve(result);
-        })
-        .error(function (error, status, headers, config) {
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
             deferred.reject(getError(error, status, headers, config));
         });
 
@@ -123,10 +121,9 @@ function (serviceHelper, serverContext, $http, $q) {
             method: "GET",
             timeout: canceller.promise
         })
-        .success(function (result) {
-            deferred.resolve(result);
-        })
-        .error(function (error, status, headers, config) {
+        .then(function (response) {
+            deferred.resolve(response.data);
+        }, function (response) {
             deferred.reject(getError(error, status, headers, config));
         });
 

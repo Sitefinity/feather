@@ -38,13 +38,12 @@
 		            "PageId": widgetContext.pageId
 		        };
 
-		        $http.get(url, reqOptions)
-				    .success(function (data) {
-				        deferred.resolve(data);
-				    })
-				    .error(function (data) {
-				        deferred.reject(data);
-				    });
+				$http.get(url, reqOptions)
+					.then(function (response) {
+						deferred.resolve(response.data);
+					}, function (response) {
+						deferred.reject(response.data);
+					});
 
 		        return deferred.promise;
 		    };
@@ -60,13 +59,12 @@
 		            "PageId": widgetContext.pageId
 		        };
 
-		        $http.post(url, data, requestOptions())
-				    .success(function (data) {
-				        deferred.resolve({ Id: data, SegmentName: model.segmentName });
-				    })
-				    .error(function (data) {
-				        deferred.reject(data);
-				    });
+				$http.post(url, data, requestOptions())
+					.then(function (response) {
+						deferred.resolve({ Id: response.data, SegmentName: model.segmentName });
+					}, function (response) {
+						deferred.reject(response.data);
+					});
 
 		        return deferred.promise;
 		    };

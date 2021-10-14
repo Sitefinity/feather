@@ -58,10 +58,9 @@
                 },
                 timeout: canceller.promise
             })
-            .success(function (result) {
-                deferred.resolve(result);
-            })
-            .error(function (error, status, headers, config) {
+            .then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
                 deferred.reject(getError(error, status, headers, config));
             });
 
@@ -100,10 +99,9 @@
                 },
                 timeout: canceller.promise
             })
-            .success(function (result) {
-                deferred.resolve(result);
-            })
-            .error(function (error, status, headers, config) {
+            .then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
                 deferred.reject(getError(error, status, headers, config));
             });
 
@@ -134,10 +132,9 @@
                 },
                 timeout: canceller.promise
             })
-            .success(function (result) {
-                deferred.resolve(result);
-            })
-            .error(function (error, status, headers, config) {
+            .then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
                 deferred.reject(getError(error, status, headers, config));
             });
 

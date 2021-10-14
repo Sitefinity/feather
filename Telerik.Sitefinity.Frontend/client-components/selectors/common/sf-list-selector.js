@@ -16,7 +16,7 @@
                     sfMissingSelectedItems: "=?",
 
                     sfProvider: '=?',
-                    sfChange: '=',
+                    sfChange: '=?',
                     sfSortable: '=?',
                     sfItemType: '=?', /* sf-dynamic-items-selector */
                     sfIdentifierField: '@?',
@@ -24,9 +24,9 @@
                     sfKeepSelectedItemsBound: '@?',
 
                     sfExternalPages: '=?',
-                    sfOpenExternalsInNewTab: '=',
+                    sfOpenExternalsInNewTab: '=?',
                     sfTitle: '@?',
-                    sfMaxItemsLimitation: '='
+                    sfMaxItemsLimitation: '=?'
                 },
                 controller: function ($scope) {
                     this.defaultIdentifierField = 'Title';

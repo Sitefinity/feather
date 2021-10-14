@@ -40,12 +40,11 @@
                             }
                         };
 
-                        var that = this;
                         scope.$watch(
                                'sfGroupLogicalOperator',
                                 function (newLogicalOperator, oldLogicalOperator) {
                                     if (newLogicalOperator.toUpperCase() === 'OR' || newLogicalOperator.toUpperCase() === 'AND') {
-                                        that.refreshQueryGroupLogicalOperator();
+                                        this.refreshQueryGroupLogicalOperator();
                                     }
                                 },
                                 true

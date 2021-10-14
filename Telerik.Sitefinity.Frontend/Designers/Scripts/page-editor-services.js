@@ -122,16 +122,15 @@
             var deferred = $q.defer();
 
             $http.get(getUrl(), requestOptions())
-                .success(function (data) {
-                    properties = data;
+                .then(function (response) {
+                    properties = response.data;
                     //clone the result in initialData
-                    initialData = $.extend(true, {}, data);
+                    initialData = $.extend(true, {}, response.data);
                     loadingPromise = null;
-                    deferred.resolve(data);
-                })
-                .error(function (data) {
+                    deferred.resolve(response.data);
+                }, function (response) {
                     loadingPromise = null;
-                    deferred.reject(data);
+                    deferred.reject(response.data);
                 });
 
             loadingPromise = deferred.promise;
@@ -191,12 +190,11 @@
                 var deferred = $q.defer();
 
                 $http.put(updateUrl(saveMode), modifiedData, requestOptions())
-                    .success(function (data) {
+                    .then(function (response) {
                         initialData = $.extend(true, {}, properties);
-                        deferred.resolve(data);
-                    })
-                    .error(function (data) {
-                        deferred.reject(data);
+                        deferred.resolve(response.data);
+                    }, function (response) {
+                        deferred.reject(response.data);
                     });
 
                 return deferred.promise;
