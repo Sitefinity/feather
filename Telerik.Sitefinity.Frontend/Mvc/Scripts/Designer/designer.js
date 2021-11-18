@@ -21,7 +21,7 @@
 
     var resolveTemplateUrl = function (view, serverData) {
         var widgetName = serverData.get('widgetName');
-        var templatePath = String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}?controlId={2}', widgetName, view, serverData.get('controlId'));
+        var templatePath = String.format('Telerik.Sitefinity.Frontend/Designer/View/{0}/{1}?controlId={2}&mediaType={3}', widgetName, view, serverData.get('controlId'), serverData.get("mediaType"));
 
         var moduleName = serverData.get('moduleName');
         if (moduleName) {
@@ -246,6 +246,11 @@
 
                 if (typeof ($telerik) !== 'undefined')
                     $telerik.$(document).trigger('modalDialogClosed');
+
+                if (typeof CustomEvent == "function") {
+                    var evt = new CustomEvent('sfModalDialogClosed');
+                    document.dispatchEvent(evt);
+                }
 
                 $rootScope.$destroy();
             };

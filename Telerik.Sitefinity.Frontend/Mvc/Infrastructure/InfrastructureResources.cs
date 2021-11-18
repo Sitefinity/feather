@@ -220,5 +220,65 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure
                 return base["CannotFindTemplateMvcForm"];
             }
         }
+
+        /// <summary>
+        /// Title of the "Use cached controller container assemblies" setting
+        /// </summary>
+        [ResourceEntry("UseCachedControllerContainerAssembliesTitle",
+            Value = "Use cached controller container assemblies",
+            Description = "Title of the setting",
+            LastModified = "2019/9/04")]
+        public string UseCachedControllerContainerAssembliesTitle
+        {
+            get
+            {
+                return this["UseCachedControllerContainerAssembliesTitle"];
+            }
+        }
+
+        /// <summary>
+        /// Description of the "Use cached controller container assemblies" setting
+        /// </summary>
+        [ResourceEntry("UseCachedControllerContainerAssembliesDescription",
+            Value = "Use a JSON with the location to the assemblies that contain controllers.",
+            Description = "Description of the setting",
+            LastModified = "2019/9/04")]
+        public string UseCachedControllerContainerAssembliesDescription
+        {
+            get
+            {
+                return this["UseCachedControllerContainerAssembliesDescription"];
+            }
+        }
+
+        /// <summary>
+        /// Caption of the NinjectLoadExtensions config property
+        /// </summary>
+        [ResourceEntry("NinjectLoadExtensionsTitle",
+            Value = "Automatically load Ninject extensions",
+            Description = "Caption of the NinjectLoadExtensions config property",
+            LastModified = "2019/09/18")]
+        public string NinjectLoadExtensionsTitle
+        {
+            get
+            {
+                return this["NinjectLoadExtensionsTitle"];
+            }
+        }
+
+        /// <summary>
+        /// Description of the NinjectLoadExtensions config property
+        /// </summary>
+        [ResourceEntry("NinjectLoadExtensionsDescription",
+            Value = "Indicates whether the Ninject kernel should automatically load extensions at startup",
+            Description = "Description of the NinjectLoadExtensions config property",
+            LastModified = "2019/09/18")]
+        public string NinjectLoadExtensionsDescription
+        {
+            get
+            {
+                return this["NinjectLoadExtensionsDescription"];
+            }
+        }
     }
 }

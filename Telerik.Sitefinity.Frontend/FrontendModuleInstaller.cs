@@ -40,7 +40,11 @@ namespace Telerik.Sitefinity.Frontend
         {
             SystemManager.RegisterServiceStackPlugin(new ListsServiceStackPlugin());
             SystemManager.RegisterServiceStackPlugin(new FilesServiceStackPlugin());
-            SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
+            IModule module = SystemManager.GetApplicationModule("Comments");
+            if (module != null && !(module is InactiveModule))
+            {
+                SystemManager.RegisterServiceStackPlugin(new ReviewsServiceStackPlugin());
+            }
         }
 
         /// <summary>

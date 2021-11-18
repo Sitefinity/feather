@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Ninject;
 using Ninject.Modules;
 using Telerik.Sitefinity.Abstractions;
@@ -86,6 +88,8 @@ namespace Telerik.Sitefinity.Frontend
                 .Module(settings.Name)
                     .Initialize()
                     .Configuration<FeatherConfig>();
+
+            this.PreloadControllerTypeCacheAsync();
         }
 
         /// <summary>
@@ -162,11 +166,17 @@ namespace Telerik.Sitefinity.Frontend
         protected virtual IKernel CreateKernel()
         {
             var bootstrapper = new Ninject.Web.Common.Bootstrapper();
-
+            IKernel kernel;
             if (bootstrapper.Kernel != null)
-                return bootstrapper.Kernel;
+                kernel = bootstrapper.Kernel;
+            else
+            {
+                var ninjectSettings = new NinjectSettings();
+                ninjectSettings.LoadExtensions = Config.Get<FeatherConfig>().NinjectLoadExtensions;
+                kernel = new SitefinityKernel(ninjectSettings);
+            }
 
-            return new SitefinityKernel();
+            return kernel;
         }
 
         /// <summary>
@@ -191,6 +201,27 @@ namespace Telerik.Sitefinity.Frontend
             this.UninitializeDependencyResolver();
 
             Bootstrapper.Initialized -= this.Bootstrapper_Initialized;
+        }
+
+        /// <summary>
+        /// Triggers the initialization of the controller type cache for the default controller factory asynchroniously.
+        /// </summary>
+        private void PreloadControllerTypeCacheAsync()
+        {
+            Task.Run(() => this.InitializeControllerTypeCache());
+        }
+
+        /// <summary>
+        /// Initializes the controller type cache of the default controller factory.
+        /// </summary>
+        private void InitializeControllerTypeCache()
+        {
+            DefaultControllerFactory defaultControllerFactory =
+                System.Web.Mvc.DependencyResolver.Current.GetService<IControllerFactory>() as DefaultControllerFactory ??
+                (ControllerBuilder.Current.GetControllerFactory() as DefaultControllerFactory ?? new DefaultControllerFactory());
+
+            MethodInfo getControllerTypesMethod = defaultControllerFactory.GetType().GetMethod("GetControllerTypes", BindingFlags.Instance | BindingFlags.NonPublic);
+            getControllerTypesMethod.Invoke(defaultControllerFactory, null);
         }
 
         private void InitializeDependencyResolver()
@@ -278,6 +309,11 @@ namespace Telerik.Sitefinity.Frontend
         {
             public SitefinityKernel()
                 : base()
+            {
+            }
+
+            public SitefinityKernel(INinjectSettings settings)
+                : base(settings)
             {
             }
         }

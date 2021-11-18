@@ -87,6 +87,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             }
         }
 
+        internal IEnumerable<string> GetViews(IEnumerable<string> viewLocations)
+        {
+            var views = new List<string>();
+            if (Config.Get<FeatherConfig>().DisablePrecompilation)
+                return views;
+
+            foreach (var viewLocation in viewLocations)
+            {
+                foreach (var asm in this.precompiledAssemblies)
+                {
+                    var precompiledViews = asm.GetViews(viewLocation);
+                    if (precompiledViews != null)
+                    {
+                        views.AddRange(precompiledViews);
+                    }
+                }
+            }
+
+            return views;
+        }
+
         /// <summary>
         /// Files the exists.
         /// </summary>

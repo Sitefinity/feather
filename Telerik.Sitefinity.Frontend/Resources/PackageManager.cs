@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Routing;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.HealthMonitoring;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
@@ -31,7 +33,24 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (context == null)
                 return null;
 
+            if (context.Request.Path.Contains("/Sitefinity/Versioning"))
+            {
+                // If we are in the versioning try get tha package from page info
+                if (SystemManager.CurrentHttpContext.Items.Contains(PackageManager.CurrentVersionTemplateId))
+                {
+                    var templateId = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentVersionTemplateId] as string;
+                    if (Guid.TryParse(templateId, out Guid templateIdParsed) && templateIdParsed != Guid.Empty)
+                    {
+                        packageName = this.GetPackageFromTemplateId(templateId);
+                        if (!packageName.IsNullOrEmpty())
+                            return packageName;
+                    }
+                }
+            }
+
             packageName = this.GetPackageFromContext();
+            if (!packageName.IsNullOrEmpty())
+                return packageName;
 
             if (packageName.IsNullOrEmpty() && this.AllowChangePackageAtRuntimeViaQueryString)
                 packageName = this.GetPackageFromUrl();
@@ -111,7 +130,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
         {
             get
             {
-                return Telerik.Sitefinity.Abstractions.AppSettings.CurrentSettings.IsBackend || 
+                return Telerik.Sitefinity.Abstractions.AppSettings.CurrentSettings.IsBackend ||
                     Config.Get<Sitefinity.Modules.Pages.Configuration.PagesConfig>().AllowChangePageThemeAtRuntime ||
                     (SystemManager.CurrentHttpContext.Items[SiteMapBase.CurrentNodeKey] as PageSiteNode) == null;
             }
@@ -203,7 +222,14 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 return null;
 
             var pageManager = PageManager.GetManager();
-            var pageNode = pageManager.GetPageNode(id);
+
+            PageNode pageNode;
+
+            using (new ElevatedModeRegion(pageManager))
+            {
+                pageNode = pageManager.GetPageNode(id);
+            }
+
             var pageData = pageNode.GetPageData();
 
             if (pageData == null)
@@ -214,7 +240,10 @@ namespace Telerik.Sitefinity.Frontend.Resources
             if (SystemManager.IsDesignMode)
             {
                 var draft = pageManager.GetPageDraft(pageData.Id);
-                return draft.TemplateId != Guid.Empty ? this.GetPackageFromTemplateId(draft.TemplateId.ToString()) : null;
+                if (draft != null)
+                {
+                    return draft.TemplateId != Guid.Empty ? this.GetPackageFromTemplateId(draft.TemplateId.ToString()) : null;
+                }
             }
 
             return this.GetPackageFromTemplate(pageData.Template);
@@ -297,7 +326,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 packageName = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] as string;
             }
 
-            return packageName;     
+            return packageName;
         }
 
         /// <summary>
@@ -364,6 +393,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// The current package key
         /// </summary>
         public const string CurrentPackageKey = "CurrentResourcePackage";
+
+        public const string CurrentVersionTemplateId = "CurrentVersionTemplateId";
 
         public const string PackageUrlParameterName = "package";
 

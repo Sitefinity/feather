@@ -7,6 +7,7 @@ using ServiceStack.Text;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Data.Linq.Dynamic;
+using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.GenericContent.Model;
 using Telerik.Sitefinity.Lifecycle;
 using Telerik.Sitefinity.Model;
@@ -15,6 +16,7 @@ using Telerik.Sitefinity.RelatedData;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web.Model;
+using Telerik.Sitefinity.Web.OutputCache;
 using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
@@ -276,10 +278,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             location.ContentType = this.ContentType;
             location.ProviderName = this.GetManager().Provider.Name;
 
-            var filterExpression = this.CompileFilterExpression();
-            if (!string.IsNullOrEmpty(filterExpression))
+            switch (this.ContentViewDisplayMode)
             {
-                location.Filters.Add(new BasicContentLocationFilter(filterExpression));
+                case ContentViewDisplayMode.Detail:
+                    location.Filters.Add(this.CompileSingleItemFilterExpression(location.ContentType)); ;
+
+                    return new[] { location };
+                case ContentViewDisplayMode.Automatic:
+                    if (this.SelectionMode == SelectionMode.SelectedItems && string.IsNullOrEmpty(this.FilterExpression))
+                    {
+                        var masterIdsList = this.GetMasterIdsFromSelection();
+                        location.Filters.Add(new ItemsSelectionLocationFilter(masterIdsList.Select(x => x.ToString())));
+                    }
+                    else
+                    {
+                        var filterExpression = this.CompileFilterExpression();
+                        if (!string.IsNullOrEmpty(filterExpression))
+                        {
+                            location.Filters.Add(new BasicContentLocationFilter(filterExpression));
+                        }
+                    }
+                    break;
+                default:
+                    return null;
             }
 
             return new[] { location };
@@ -337,14 +358,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 throw new ArgumentNullException("relatedItem");
 
             int? totalCount = 0;
-            var query = this.GetRelatedItems(relatedItem, 1, ref totalCount);
+            var query = this.GetRelatedItems(relatedItem, page, ref totalCount);
 
             var viewModel = this.CreateListViewModelInstance();
 
             viewModel.Items = query.ToArray().Select(item => this.CreateItemViewModelInstance(item)).ToArray();
 
             if (this.ItemsPerPage != 0)
-                viewModel.TotalPagesCount = totalCount / this.ItemsPerPage;
+                viewModel.TotalPagesCount = (totalCount + this.ItemsPerPage - 1) / this.ItemsPerPage;
 
             viewModel.CurrentPage = page;
             viewModel.ProviderName = this.ProviderName;
@@ -419,16 +440,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 var result = new List<CacheDependencyKey>(1);
                 var manager = this.GetManager();
                 var provider = manager != null ? manager.Provider : null;
-
                 string applicationName = provider != null ? provider.ApplicationName : string.Empty;
-                if (typeof(ILifecycleDataItem).IsAssignableFrom(this.ContentType))
-                {
-                    result.Add(new CacheDependencyKey { Key = string.Concat(ContentLifecycleStatus.Live.ToString(), applicationName), Type = contentResolvedType });
-                }
-                else
-                {
-                    result.Add(new CacheDependencyKey { Key = applicationName, Type = contentResolvedType });
-                }
+
+                result.AddRange(OutputCacheDependencyHelper.GetPublishedContentCacheDependencyKeys(contentResolvedType, applicationName));
 
                 this.AddCommonDependencies(result, this.ContentType);
 
@@ -458,7 +472,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 var result = new List<CacheDependencyKey>(1);
                 if (viewModel.Item != null && viewModel.Item.Fields.Id != Guid.Empty)
                 {
-                    result.Add(new CacheDependencyKey { Key = viewModel.Item.Fields.Id.ToString(), Type = contentResolvedType });
+                    result.AddRange(OutputCacheDependencyHelper.GetPublishedContentCacheDependencyKeys(contentResolvedType, viewModel.Item.Fields.Id));
                 }
 
                 this.AddCommonDependencies(result, this.ContentType, viewModel.Item);
@@ -494,7 +508,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 throw new ArgumentException("'page' argument has to be at least 1.", "page");
 
             int? itemsToSkip = (page - 1) * this.ItemsPerPage;
-            itemsToSkip = this.DisplayMode == ListDisplayMode.Paging ? ((page - 1) * this.ItemsPerPage) : null;
+            itemsToSkip = this.DisplayMode == ListDisplayMode.Paging && this.ContentViewDisplayMode != ContentViewDisplayMode.Detail ? ((page - 1) * this.ItemsPerPage) : null;
             int? totalCount = 0;
             int? take = null;
 
@@ -569,6 +583,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         protected virtual ItemViewModel CreateItemViewModelInstance(IDataItem item)
         {
             return new ItemViewModel(item);
+        }
+
+        /// <summary>
+        /// Generates single item filter for specified content location
+        /// </summary>
+        /// <returns>The single item filter.</returns>
+        protected virtual ContentLocationSingleItemFilter CompileSingleItemFilterExpression(Type itemType)
+        {
+            if (!typeof(Content).IsAssignableFrom(itemType) && !typeof(DynamicContent).IsAssignableFrom(itemType))
+            {
+                throw new ArgumentException("The type must be Content or Dynamic content");
+            }
+
+            var selectedItemGuid = this.selectedItemsIds.Select(id => new Guid(id)).SingleOrDefault();
+            return ContentLocatableViewExtensions.GetSingleItemFilter(selectedItemGuid, itemType, this.GetManager());
         }
 
         /// <summary>
@@ -719,7 +748,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             CultureInfo uiCulture;
             if (SystemManager.CurrentContext.AppSettings.Multilingual)
             {
-                uiCulture = System.Globalization.CultureInfo.CurrentUICulture;
+                uiCulture = Telerik.Sitefinity.Services.SystemManager.CurrentContext.Culture;
             }
             else
             {
@@ -852,12 +881,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "It would add too much risk now to change this to property and would not bring much value to code quality and maintenance.")]
         protected virtual string GetSelectedItemsFilterExpression()
         {
-            var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
-            var masterIds = this.GetItemsQuery()
-                .OfType<ILifecycleDataItemGeneric>()
-                .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
-                .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id)
-                .Distinct();
+            var masterIds = this.GetMasterIdsFromSelection();
 
             var selectedItemConditions = masterIds.Select(id => "Id = {0} OR OriginalContentId = {0}".Arrange(id.ToString("D")));
             var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
@@ -875,6 +899,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         {
             if (contentType.ImplementsInterface(typeof(ICommentable)))
                 keys.Add(new CacheDependencyKey() { Type = typeof(Sitefinity.Services.Comments.IThread) });
+        }
+
+        private IEnumerable<Guid> GetMasterIdsFromSelection()
+        {
+            var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
+            var masterIds = this.GetItemsQuery()
+                .OfType<ILifecycleDataItemGeneric>()
+                .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
+                .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id)
+                .Distinct();
+
+            return masterIds;
         }
 
         private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)

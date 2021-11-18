@@ -53,6 +53,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
         /// <inheritdoc />
         protected override bool TryResolveParamInternal(string urlParam, out object value)
         {
+            if (urlParam == null)
+            {
+                value = null;
+                return false;
+            }
+
             value = TaxonomyManager.GetManager().GetTaxa<Taxon>().FirstOrDefault(t => t.TaxonomyId == this.Taxonomy.Id && t.UrlName == urlParam);
             return value != null;
         }

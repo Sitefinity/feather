@@ -21,6 +21,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
     /// </summary>
     internal class DetailActionParamsMapper : UrlParamsMapperBase
     {
+        private bool showDetailsViewOnChildDetailsView;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DetailActionParamsMapper"/> class.
         /// </summary>
@@ -64,6 +66,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 throw new ArgumentException("The controller {0} does not have action '{1}'.".Arrange(controller.GetType().Name, actionName));
 
             this.ItemType = itemType;
+
+            var value = FeatherActionInvoker.GetModelProperty(controller, "ShowDetailsViewOnChildDetailsView");
+            if (value != null && value is bool)
+            {
+                this.showDetailsViewOnChildDetailsView = (bool)value;
+            }
         }
 
         private bool TryMatchUrl(string[] urlParams, RequestContext requestContext, bool setUrlParametersResolved)
@@ -77,7 +85,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var contentItemResolver = new ContentDataItemResolver();
             var item = contentItemResolver.GetItemByUrl(url, this.ItemType, providerName, out redirectUrl);
 
-            if (item != null)
+            if (item != null && this.CanDisplayItem(item))
             {
                 SystemManager.CurrentHttpContext.Items["detailItem"] = item;
 
@@ -85,8 +93,49 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
                 return true;
             }
+            else if (this.showDetailsViewOnChildDetailsView)
+            {
+                return this.TryMatchUrl(urlParams.Take(urlParams.Length - 1).ToArray(), requestContext, setUrlParametersResolved);
+            }
 
             return false;
+        }
+
+        private bool CanDisplayItem(IDataItem item)
+        {
+            bool isParentSelected = true;
+            var modelProperty = this.Controller.GetType().GetProperty("Model");
+            if (modelProperty != null)
+            {
+                var model = modelProperty.GetValue(this.Controller);
+                if (item is IHasParent)
+                {
+                    var serializedSelectedParentsIdsProperty = model.GetType().GetProperty("SerializedSelectedParentsIds");
+                    if (serializedSelectedParentsIdsProperty != null)
+                    {
+                        var serializedSelectedParentsIds = serializedSelectedParentsIdsProperty.GetValue(model);
+                        if (serializedSelectedParentsIds != null)
+                        {
+                            isParentSelected = serializedSelectedParentsIds.ToString().Contains((item as IHasParent).Parent.Id.ToString());
+                            
+                            if (!isParentSelected)
+                            {
+                                var folderIdProperty = item.GetType().GetProperty("FolderId");
+                                if (folderIdProperty != null)
+                                {
+                                    var folderId = folderIdProperty.GetValue(item);
+                                    if (folderId != null)
+                                    {
+                                        isParentSelected = serializedSelectedParentsIds.ToString().Contains(folderId.ToString()); 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return isParentSelected;
         }
 
         /// <inheritdoc />
@@ -115,7 +164,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             if (!redirectUrl.IsNullOrEmpty())
             {
-                requestContext.RouteData.Values[Telerik.Sitefinity.Mvc.ControllerActionInvoker.ShouldProcessRequestKey] = redirectUrl;
+                requestContext.RouteData.Values[Telerik.Sitefinity.Mvc.ControllerActionInvoker.SfRedirectUrlKey] = redirectUrl;
             }
 
             if (redirectUrl.IsNullOrEmpty() == false && parameters.Length > 1 && parameters[1].ParameterType == typeof(string))

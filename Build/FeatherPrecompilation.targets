@@ -69,7 +69,7 @@
   <Target Name="PrecompileFeatherRazorFiles"
           DependsOnTargets="$(PrecompileFeatherRazorFilesDependsOn)"
           Inputs="@(FeatherRazorSrcFiles)"
-          Outputs="%(FeatherRazorSrcFiles.PackageName).csFilesGenerated">
+          Outputs="%(FeatherRazorSrcFiles.PackageName).csFilesGenerated" Condition="'$(Language)'!='VB'">
 
 	<!-- Please uncomment this in case of using Feather Razor precompilation -->
 	<RazorCodeGen ProjectRoot="$(MsBuildProjectDirectory)\$(FeatherResourcePackagesFolderName)\%(FeatherRazorSrcFiles.PackageName)\"

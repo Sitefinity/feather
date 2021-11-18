@@ -9,3 +9,177 @@ $sizes:  0,      5,    10,   15,   25
 
     .#{$class}-#{$item}
       #{$property}: nth($sizes, $i) * 1px
+
+// Mixin for reseting styles to initials
+=all-initials()
+  animation: none;
+  backface-visibility: visible;
+  background: transparent none;
+  border: 0;
+  bottom: auto;
+  box-decoration-break: slice;
+  box-shadow: none;
+  box-sizing: border-box; // not initial
+  break-after: auto;
+  break-before: auto;
+  break-inside: auto;
+  caption-side: top;
+  caret-color: auto;
+  clear: none;
+  clip: auto;
+  clip-path: none;
+  color: inherit;
+  columns: auto;
+  content: normal;
+  counter-increment: none;
+  counter-reset: none;
+  //cursor: auto;
+  //display: inline; // ??????
+  empty-cells: show;
+  font-family: inherit;
+  font-weight: normal;
+  filter: none;
+  float: none;
+  font-feature-settings: normal;
+  font-kerning: auto;
+  font-language-override: normal;
+  font-size-adjust: none;
+  font-stretch: normal;
+  font-synthesis: weight style;
+  grid: none;
+  height: auto;
+  hyphens: manual;
+  image-orientation: 0deg;
+  image-rendering: auto;
+  image-resolution: 1dppx;
+  ime-mode: auto;
+  inline-size: auto;
+  isolation: auto;
+  left: auto;
+  letter-spacing: normal;
+  line-break: auto;
+  line-height: unset;
+  margin: 0;
+  max-height: none;
+  max-width: none;
+  min-height: 0;
+  min-width: 0;
+  object-fit: fill;
+  object-position: 50% 50%;
+  opacity: 1.0;
+  order: 0;
+  orphans: 2;
+  outline: medium invert initial;
+  outline-offset: 0;
+  overflow: visible;
+  overflow-wrap: normal;
+  overflow-x: visible;
+  overflow-y: visible;
+  padding: 0;
+  page-break-after: auto;
+  page-break-before: auto;
+  page-break-inside: auto;
+  perspective: none;
+  perspective-origin: 50% 50%;
+  position: static;
+  quotes: initial;
+  resize: none;
+  right: auto;
+  ruby-align: space-around;
+  ruby-merge: separate;
+  ruby-position: over;
+  scroll-behavior: auto;
+  scroll-snap-coordinate: none;
+  scroll-snap-destination: 0 0;
+  scroll-snap-points-x: none;
+  scroll-snap-points-y: none;
+  scroll-snap-type: none;
+  shape-image-threshold: 0.0;
+  shape-margin: 0;
+  shape-outside: none;
+  tab-size: 8;
+  table-layout: auto;
+  text-align: inherit; // not initial
+  text-align-last: auto;
+  text-combine-upright: none;
+  text-decoration: none;
+  text-emphasis: none;
+  text-indent: 0;
+  text-justify: auto;
+  text-orientation: mixed;
+  text-overflow: clip;
+  text-rendering: auto;
+  text-shadow: none;
+  text-transform: inherit; //not initial
+  text-underline-position: auto;
+  top: auto;
+  touch-action: auto;
+  transform: none;
+  transform-box: border-box;
+  transform-origin: 50% 50% 0;
+  transform-style: flat;
+  transition: all 0s ease 0s;
+  vertical-align: baseline;
+  //visibility: visible;
+  white-space: inherit; //not initial
+  widows: 2;
+  width: auto;
+  will-change: auto;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+  z-index: auto;
+
+// Mixin for reseting styles of input to initials
+=input-initials()
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  margin: 0em;
+  padding: 1px;
+  background-color: #ffffff;
+  border-width: 2px;
+  border-style: inset;
+  border-color: #eeeeee;
+  border-image: initial;
+  background-position-x: initial !important;
+  background-position-y: initial !important;
+  border-radius: 0;
+  // Mozilla specific
+  background-color: -moz-Field !important;
+  color: -moz-FieldText !important;
+
+  &:disabled
+    background-color: #ebebe4;
+    cursor: default;
+
+=textarea-initials()
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  background-color: #ffffff;
+  flex-direction: column;
+  resize: auto;
+  cursor: text;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  margin: 0em;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #a9a9a9;
+  border-image: initial;
+  padding: 2px;
+
+  &:disabled
+    background-color: #ebebe4;
+    cursor: default;

@@ -42,8 +42,7 @@
                     '&itemType=Telerik.Sitefinity.Multisite.Web.Services.ViewModel.SiteDataSourceLinkViewModel' +
                     '&itemSurrogateType=Telerik.Sitefinity.Multisite.Web.Services.ViewModel.SiteDataSourceLinkViewModel' +
                     '&allProviders=true' +
-                    '&skip=0' +
-                    '&take=50';
+                    '&skip=0';
 
                 var deferred = $q.defer();
                 $http.get(getUrl, { cache: false })

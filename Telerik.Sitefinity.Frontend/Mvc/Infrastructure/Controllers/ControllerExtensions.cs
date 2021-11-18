@@ -556,15 +556,27 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var widgetName = controller.RouteData != null ? controller.RouteData.Values["widgetName"] as string : null;
 
             var assembly = controller.GetType().Assembly;
-            var baseFiles = ControllerExtensions.GetViewsForAssembly(assembly, viewLocations, viewExtensions, moduleName);
+            var baseFiles = ControllerExtensions.GetViewsForAssembly(assembly, viewLocations, viewExtensions, moduleName).ToList();
+
+            foreach (var viewEngine in controller.ViewEngineCollection)
+            {
+                var compositeViewEngine = viewEngine as CompositePrecompiledMvcEngineWrapper;
+                if (compositeViewEngine != null)
+                {
+                    var files = compositeViewEngine.GetViews(viewLocations);
+                    baseFiles.AddRange(files);
+                }
+            }
+            var filesForBasePath = baseFiles.Distinct();
+
             if (!widgetName.IsNullOrEmpty())
             {
                 var widgetAssembly = FrontendManager.ControllerFactory.ResolveControllerType(widgetName).Assembly;
                 var widgetFiles = ControllerExtensions.GetViewsForAssembly(widgetAssembly, viewLocations, viewExtensions);
-                return baseFiles.Union(widgetFiles);
+                return filesForBasePath.Union(widgetFiles);
             }
 
-            return baseFiles;
+            return filesForBasePath;
         }
 
         private static IEnumerable<string> GetViews(Controller controller, IEnumerable<string> viewLocations, ref Dictionary<string, string> viewFilesMappings, string moduleName = null)

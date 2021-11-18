@@ -8,6 +8,8 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Mvc.StringResources;
+using Telerik.Sitefinity.Modules;
+using Telerik.Sitefinity.Modules.Forms;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
@@ -34,11 +36,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             this.GetHttpContext().Items[SystemManager.IsBackendRequestKey] = true;
 
             var controlId = this.Request != null ? this.Request["controlId"] ?? Guid.Empty.ToString() : Guid.Empty.ToString();
+            var mediaType = this.Request != null ? this.Request["mediaType"] ?? DesignMediaType.Page.ToString() : DesignMediaType.Page.ToString();
 
             this.ViewBag.ControlName = widgetName;
             this.ViewBag.ControlId = controlId;
+            this.ViewBag.MediaType = mediaType;
 
-            var model = this.GetModel(widgetName, Guid.Parse(controlId), moduleName);
+            var model = this.GetModel(widgetName, Guid.Parse(controlId), moduleName, (DesignMediaType)Enum.Parse(typeof(DesignMediaType), mediaType));
             return this.View(DesignerController.DefaultView, model);
         }
 
@@ -56,14 +60,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             this.GetHttpContext().Items[SystemManager.IsBackendRequestKey] = true;
 
             var viewName = DesignerController.DesignerViewTemplate.Arrange(viewType);
+            var mediaType = this.Request != null ? this.Request["mediaType"] ?? DesignMediaType.Page.ToString() : DesignMediaType.Page.ToString();
+            var designMediaType = (DesignMediaType)Enum.Parse(typeof(DesignMediaType), mediaType);
 
-            var model = this.GetViewModel();
+            var model = this.GetViewModel(designMediaType);
 
             // Passing the DesignerModel to the view model 	 	
             var controlIdParam = this.GetControlIdParam(); 	 	
             if (controlIdParam.HasValue) 	 	
             { 	 	
-                ViewBag.DesignerModel = this.GetModel(widgetName, controlIdParam.Value); 	 	
+                ViewBag.DesignerModel = this.GetModel(widgetName, controlIdParam.Value, designMediaType: designMediaType); 	 	
             } 
 
             return this.PartialView(viewName, model);
@@ -98,7 +104,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
         /// <summary>
         /// Gets the model of the designer.
         /// </summary>
-        private IDesignerModel GetModel(string widgetName, Guid controlId, string moduleName = null)
+        private IDesignerModel GetModel(string widgetName, Guid controlId, string moduleName = null, DesignMediaType designMediaType = DesignMediaType.Page)
         {
             var viewFilesMappgings = new Dictionary<string, string>();
 
@@ -109,13 +115,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
                 { "widgetName", widgetName },
                 { "controlId", controlId },
                 { "preselectedView", this.Request != null ? this.Request["view"] : null },
-                { "viewFilesMappings", viewFilesMappgings }
+                { "viewFilesMappings", viewFilesMappgings },
+                { "mediaType", designMediaType }
             };
 
             return ControllerModelFactory.GetModel<IDesignerModel>(typeof(DesignerController), constructorParameters);
         }
 
-        private Control GetViewModel()
+        private Control GetViewModel(DesignMediaType designMediaType)
         {
             var controlIdParam = this.GetControlIdParam();
 
@@ -123,7 +130,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
                 return null;
 
             var controlId = controlIdParam.Value;
-            var manager = PageManager.GetManager();
+            var manager = this.GetControlManager(designMediaType);
             var viewModel = manager.LoadControl(manager.GetControl<ObjectData>(controlId));
 
             var widgetProxy = viewModel as MvcWidgetProxy;
@@ -136,6 +143,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Controllers
             }
 
             return viewModel;
+        }
+
+        private IControlManager GetControlManager(DesignMediaType designMediaType)
+        {
+            if (designMediaType == DesignMediaType.Form)
+            {
+                return FormsManager.GetManager();
+            } 
+            else 
+            {
+                return PageManager.GetManager();
+            }
         }
 
         private const string DefaultView = "Designer";

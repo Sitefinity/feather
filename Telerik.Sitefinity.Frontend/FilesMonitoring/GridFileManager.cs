@@ -54,13 +54,13 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// <summary>
         /// Process the file if such is added to the existing folder.
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="filePath"></param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="filePath">The file path.</param>
+        /// <param name="fileData">The file data.</param>
         /// <param name="packageName">Name of the package.</param>
-        public void FileAdded(string fileName, string filePath, string packageName = "")
+        public void FileAdded(string fileName, string filePath, FileData fileData, string packageName = "")
         {
             var fileMonitorDataManager = FileMonitorDataManager.GetManager();
-            var fileData = fileMonitorDataManager.GetFilesData().Where(file => file.FilePath.Equals(filePath, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
             if (this.AddToToolboxAndFileData(fileMonitorDataManager, fileName, filePath, packageName, fileData))
             {
@@ -100,10 +100,23 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var fileMonitorDataManager = FileMonitorDataManager.GetManager();
             var fileData = fileMonitorDataManager.GetFilesData().Where(file => file.FilePath.Equals(oldFilePath, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
-            if (this.AddToToolboxAndFileData(fileMonitorDataManager, newFileName, newFilePath, packageName, fileData, oldFileName))
+            if (fileData != null)
             {
-                this.WidgetRegistrator.UpdateControlData(newFileName, oldFileName);
-                fileMonitorDataManager.SaveChanges();
+                fileData.FilePath = newFilePath;
+                if (this.AddToToolboxAndFileData(fileMonitorDataManager, newFileName, newFilePath, packageName, fileData, oldFileName))
+                {
+                    this.WidgetRegistrator.UpdateControlData(newFileName, oldFileName);
+                    fileMonitorDataManager.SaveChanges();
+                }
+                else
+                {
+                    fileMonitorDataManager.Delete(fileData);
+                    fileMonitorDataManager.SaveChanges();
+                }
+            }
+            else
+            {
+                this.FileAdded(newFileName, newFilePath, null, packageName);
             }
         }
 
@@ -147,7 +160,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 expectedGridFolderStructure = expectedGridFolderStructure.Insert(0, packageName + Path.DirectorySeparatorChar);
 
             var resourcePackagesPath = FrontendManager.VirtualPathBuilder.MapPath(string.Concat("~/", PackageManager.PackagesFolder));
-            if (directory.FullName.EndsWith(expectedGridFolderStructure, StringComparison.OrdinalIgnoreCase) && 
+            if (directory.FullName.EndsWith(expectedGridFolderStructure, StringComparison.OrdinalIgnoreCase) &&
                     (
                         directory.FullName.StartsWith(HostingEnvironment.ApplicationPhysicalPath, StringComparison.OrdinalIgnoreCase) ||
                         directory.FullName.StartsWith(resourcePackagesPath, StringComparison.OrdinalIgnoreCase)

@@ -62,7 +62,7 @@
 
             personalizationService.personalize($scope.model)
                 .then(function (args) {
-                    $scope.close();
+                    $scope.close(false);
                     $telerik.$(document).trigger('personalizationDialogClosed', args);
                 }, onError)
                 .finally(function () {
@@ -79,7 +79,7 @@
             var canceling = $q.defer();
             canceling.promise
                 .then(function () {
-                    $scope.close();
+                    $scope.close(true);
                 })
                 .catch(onError)
                 .finally(function () {
@@ -90,13 +90,18 @@
             canceling.resolve();
         };
 
-        $scope.close = function () {
+        $scope.close = function (fireModalClosedEvent) {
             try {
                 $uibModalInstance.close();
             } catch (e) { }
 
-            if (typeof ($telerik) !== 'undefined')
+            if (typeof ($telerik) !== 'undefined' && fireModalClosedEvent)
                 $telerik.$(document).trigger('modalDialogClosed');
+
+            if (typeof CustomEvent == "function") {
+                var evt = new CustomEvent('sfModalDialogClosed');
+                document.dispatchEvent(evt);
+            }
         };
 
         $scope.hideError = function () {

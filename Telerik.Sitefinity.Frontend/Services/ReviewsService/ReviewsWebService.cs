@@ -115,7 +115,7 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
                         group = cs.CreateGroup(groupProxy);
                     }
 
-                    var threadProxy = new ThreadProxy(request.Thread.Title, request.Thread.Type, group.Key, author)
+                    var threadProxy = new ThreadProxy(request.Thread.Title, request.Thread.Type, group.Key, author, SystemManager.CurrentContext.Culture)
                     {
                         Key = request.Thread.Key,
                         Language = request.Thread.Language,
@@ -183,7 +183,12 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
             IComment newComment = cs.CreateComment(commentProxy);
 
             var result = CommentsUtilitiesReflector.GetCommentResponse(newComment, ClaimsManager.GetCurrentIdentity().IsBackendUser);
-            
+
+            if (commentData.Captcha != null)
+            {
+                CommentsUtilitiesReflector.RemoveCaptchaFromTempStorage(commentData.Captcha.Key);
+            }
+
             ServiceUtility.DisableCache();
 
             return result;

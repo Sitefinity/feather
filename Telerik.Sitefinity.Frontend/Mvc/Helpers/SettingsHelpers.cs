@@ -43,7 +43,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                     {
                         AllowedExensionsSettings = libratiesConfig.Documents.AllowedExensionsSettings,
                         EnableAllLanguagesSearch = libratiesConfig.EnableAllLanguagesSearch,
-                        EnableSelectedFolderSearch = libratiesConfig.EnableSelectedFolderSearch
+                        EnableSelectedFolderSearch = libratiesConfig.EnableSelectedFolderSearch,
+                        AllowedExensions = libratiesConfig.Documents.AllowedExensions
                     };
                     break;
                 default:

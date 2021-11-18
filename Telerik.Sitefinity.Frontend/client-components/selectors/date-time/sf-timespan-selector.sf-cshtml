@@ -45,7 +45,7 @@
 
                 <input type="number" min="1" ng-model="selectedItemInTheDialog.timeSpanValue"
                         ng-disabled="selectedItemInTheDialog.periodType!='periodToNow' && selectedItemInTheDialog.periodType!='periodFromNow'"
-                        style="width: 70px" class="form-control input-sm" />
+                        class="form-control input-sm sf-input sf-input--md" />
 
                 <select ng-model="selectedItemInTheDialog.timeSpanInterval"
                         ng-disabled="selectedItemInTheDialog.periodType!='periodToNow' && selectedItemInTheDialog.periodType!='periodFromNow'"

@@ -6,8 +6,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
-using Telerik.Sitefinity.Web;
-using Telerik.Sitefinity.Web.UrlEvaluation;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
@@ -88,7 +86,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var useNamedParams = UrlParamsMapperBase.UseNamedParametersRouting;
             if (!useNamedParams && (metaParams.Length != urlParams.Length || metaParams.Length != urlParamNames.Length))
                 return null;
-            if (useNamedParams && metaParams.Length != urlParamNames.Length)
+            if (useNamedParams && ((2 * metaParams.Length) != urlParams.Length || metaParams.Length != urlParamNames.Length))
                 return null;
 
             var parameterInfos = new List<UrlSegmentInfo>();
@@ -100,6 +98,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 if (metaParams[i].Length > 2 && metaParams[i].First() == '{' && metaParams[i].Last() == '}')
                 {
                     var routeParam = metaParams[i].Sub(1, metaParams[i].Length - 2);
+                    routeParam = useNamedParams ? this.MapNamedRouteParam(urlParams, urlParamNames[i], i, routeParam) : routeParam;
                     if (!this.TryResolveRouteParam(actionMethod, routeParam, currentParam, parameterInfos))
                         return null;
                 }
@@ -136,7 +135,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 // in this case, in the url will be presented the name of the taxonomy, ex. tag/tag1/page/2 ;  category/cat1/page/2
                 currentParam = urlParams[urlParamActualIndex + 1];
                 var taxonomyName = urlParams[urlParamActualIndex];
-                var isResolverRegistered = ObjectFactory.IsTypeRegistered<IRouteParamResolver>(taxonomyName);
+
+                if (taxonomyName.ToLowerInvariant() == "categories")
+                    taxonomyName = "category";
+                if (taxonomyName.ToLowerInvariant() == "tags")
+                    taxonomyName = "tag";
+
+                var isResolverRegistered = ObjectFactory.IsTypeRegistered<IRouteParamResolver>(taxonomyName.ToLowerInvariant());
                 if (!isResolverRegistered)
                     return null;
             }
@@ -144,6 +149,38 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 return null;
 
             return currentParam;
+        }
+
+        /// <summary>
+        /// Maps the classification URL parameter to a value from the provided URL template
+        /// </summary>
+        /// <param name="urlParams">The URL parameters.</param>
+        /// <param name="urlParamName">The URL parameter name.</param>
+        /// <param name="paramNameIndex">The index of the named parameter in the URL.</param>
+        /// <param name="routeParam">The value of the route param from meta params.</param>
+        /// <returns></returns>
+        protected virtual string MapNamedRouteParam(string[] urlParams, string urlParamName, int paramNameIndex, string routeParam)
+        {
+            var urlParamActualIndex = 2 * paramNameIndex;
+            if (routeParam.IndexOf(":") > 0 && urlParamName == FeatherActionInvoker.TaxonNamedParamter && urlParams.Length > (urlParamActualIndex + 1))
+            {
+                // in this case, in the url will be presented the name of the taxonomy, ex. tag/tag1/page/2 ;  category/cat1/page/2
+                var taxonomyName = urlParams[urlParamActualIndex];
+
+                if (taxonomyName.ToLowerInvariant() == "categories")
+                    taxonomyName = "category";
+                if (taxonomyName.ToLowerInvariant() == "tags")
+                    taxonomyName = "tag";
+
+                var isResolverRegistered = ObjectFactory.IsTypeRegistered<IRouteParamResolver>(taxonomyName.ToLowerInvariant());
+                if (!isResolverRegistered)
+                    return null;
+
+                var parts = routeParam.Split(':');
+                return parts[0] + ":" + taxonomyName;
+            }
+
+            return routeParam;
         }
 
         /// <summary>

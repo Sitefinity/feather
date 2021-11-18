@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using Telerik.Sitefinity.Frontend.Services.ReviewsService.DTO;
-using Telerik.Sitefinity.Modules.UserProfiles;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Comments;
 using Telerik.Sitefinity.Services.Comments.DTO;
@@ -66,7 +63,7 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
 
             return comments;
         }
-        
+
         /// <summary>
         /// Gets the comment response.
         /// </summary>
@@ -103,6 +100,15 @@ namespace Telerik.Sitefinity.Frontend.Services.ReviewsService
             result.EnableRatings = threadKey.EndsWith("_review", StringComparison.Ordinal);
 
             return result;
+        }
+
+        /// <summary>
+        /// Removes specified key from temp storage.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        public static void RemoveCaptchaFromTempStorage(string key)
+        {
+            CommentsUtilitiesReflector.Reflect("RemoveCaptchaFromTempStorage", key);
         }
 
         private static object Reflect(string methodName, params object[] args)

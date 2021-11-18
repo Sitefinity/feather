@@ -20,7 +20,7 @@
         <div ng-hide="isInUploadMode">
             <div class="Media-settings">
                 <div class="row row-xs">
-					<div class="col-xs-9">
+					<div class="col-xs-9 p-top-xs">
 						<sf-provider-selector sf-manager-type="Telerik.Sitefinity.Modules.Libraries.LibrariesManager"
 										ng-model="provider"
 										class="pull-left m-right-md">

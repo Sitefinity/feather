@@ -403,7 +403,7 @@
                         var enableExtensionFiltering = true;
 
                         if(settings.hasOwnProperty('AllowedExensions')) {
-                            enableExtensionFiltering = scope.$eval(settings.AllowedExensions.toLowerCase());
+                            enableExtensionFiltering = scope.$eval(settings.AllowedExensions.toString().toLowerCase());
                         }
 
                         return enableExtensionFiltering && allowedExensions && allowedExensions.search(getExtension(file.name)) == -1;

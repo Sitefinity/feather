@@ -2,6 +2,7 @@
 	margin-top: -20px
 	margin-bottom: -50px
 	cursor: text
+
 	&.sf-code--down
 		margin-top: 0
 
@@ -11,6 +12,12 @@
 		margin-top: -1px
 		border-top: 1px solid #e5e5e5
 
+	pre.CodeMirror-cursor
+		border-left-width: 1px !important
+
+	.CodeMirror pre	
+    	font-family: Courier, monospace
+
 	pre
 		margin: 0
 		overflow: visible
@@ -18,8 +25,4 @@
 
 .sf-code-tips
 	position: relative
-	margin-top: -30px
-
-.CodeMirror
-	pre
-		font-family: Courier, monospace
+	margin-top: -30px		

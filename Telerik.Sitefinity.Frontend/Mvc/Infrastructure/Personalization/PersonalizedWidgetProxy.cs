@@ -5,6 +5,7 @@ using System.Web.UI;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
+using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Personalization.Impl.Configuration;
 using Telerik.Sitefinity.Personalization.Impl.Web.UI;
@@ -86,20 +87,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Personalization
         {
             var isMvcDetailsView = (string)(this.Controller.RouteData.Values["action"]) == "Details";
             this.personalizedViewWrapper.RaiseEvents = !isMvcDetailsView;
-            this.personalizedViewWrapper.RenderControl(writer);
 
             if (this.Page.Items["ScriptSourcesLoaded"] == null)
             {
                 var currentNode = SiteMapBase.GetActualCurrentNode();
                 if (currentNode != null && currentNode.Framework == PageTemplateFramework.Mvc)
                 {
-                    var registeredScripts = SystemManager.CurrentHttpContext.Items[ResourceHelper.JsRegisterName] as Dictionary<string, List<string>>;
+                    var registeredScripts = SystemManager.CurrentHttpContext.Items[ResourceHelper.JsRegisterName] as Dictionary<string, List<ResourceItem>>;
                     if (registeredScripts != null)
                     {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
-                        writer.RenderBeginTag(HtmlTextWriterTag.Script);
-                        writer.Write(this.CreateScriptsObject(registeredScripts.SelectMany(p => p.Value)));
-                        writer.RenderEndTag();
+                        this.personalizedViewWrapper.LoadedScripts = registeredScripts.SelectMany(p => p.Value.Select(x => x.ResourceKey));
                     }
                 }
                 else
@@ -108,24 +105,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Personalization
                     if (scriptManager != null && scriptManager.Scripts != null && scriptManager.Scripts.Count > 0)
                     {
                         var scriptRef = scriptManager.Scripts.Select(r => new ResourceHelper.MvcScriptReference(r));
-                        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "sf_loaded_scripts", this.CreateScriptsObject(scriptRef.Select(r => r.GetResourceUrl())), true);
+                        this.personalizedViewWrapper.LoadedScripts = scriptRef.Select(r => r.GetResourceUrl());
                     }
                 }
 
                 this.Page.Items["ScriptSourcesLoaded"] = true;
             }
-        }
 
-        private string CreateScriptsObject(IEnumerable<string> scripts)
-        {
-            string script = string.Empty; 
-           
-            if (scripts != null && scripts.Any())
-            {
-                script = string.Concat("var sf_loaded_scripts = [", string.Join(",", scripts.Distinct().Select(p => string.Concat("'", p, "'"))), "];");
-            }
-            
-            return script;
+            this.personalizedViewWrapper.RenderControl(writer);
         }
 
         #endregion

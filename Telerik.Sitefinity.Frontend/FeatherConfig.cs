@@ -21,7 +21,7 @@ namespace Telerik.Sitefinity.Frontend
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Precompilation")]
         [ConfigurationProperty("disablePrecompilation")]
         [ObjectInfo(typeof(InfrastructureResources), Title = "DisablePrecompilationCaption", Description = "DisablePrecompilationDescription")]
-        public bool DisablePrecompilation 
+        public bool DisablePrecompilation
         {
             get
             {
@@ -94,6 +94,48 @@ namespace Telerik.Sitefinity.Frontend
             set
             {
                 this["useNamedParametersRouting"] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether cached controller assemblies to be used
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the cached controller assemblies are used; otherwise, <c>false</c>
+        /// </value>
+        [ConfigurationProperty("useCachedControllerContainerAssemblies", DefaultValue = true)]
+        [ObjectInfo(typeof(InfrastructureResources), Title = "UseCachedControllerContainerAssembliesTitle", Description = "UseCachedControllerContainerAssembliesDescription")]
+        public bool UseCachedControllerContainerAssemblies
+        {
+            get
+            {
+                return (bool)this["useCachedControllerContainerAssemblies"];
+            }
+
+            set
+            {
+                this["useCachedControllerContainerAssemblies"] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Ninject kernel should automatically load extensions at startup
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the Ninject kernel should automatically load extensions at startup; otherwise, <c>false</c>
+        /// </value>
+        [ConfigurationProperty("ninjectLoadExtensions", DefaultValue = true)]
+        [ObjectInfo(typeof(InfrastructureResources), Title = "NinjectLoadExtensionsTitle", Description = "NinjectLoadExtensionsDescription")]
+        public bool NinjectLoadExtensions
+        {
+            get
+            {
+                return (bool)this["ninjectLoadExtensions"];
+            }
+
+            set
+            {
+                this["ninjectLoadExtensions"] = value;
             }
         }
     }

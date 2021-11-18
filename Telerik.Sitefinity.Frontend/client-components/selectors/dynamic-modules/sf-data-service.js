@@ -30,7 +30,8 @@
                         provider: provider,
                         skip: skip,
                         take: take,
-                        filter: filter
+                        filter: filter,
+                        published: true
                     })
                     .$promise;
 

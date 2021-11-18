@@ -65,7 +65,8 @@
                     scope.isLoadingData = true;
                     scope.sfPaging.getPage(scope.sfPaging.skip, scope.sfPaging.take)
                         .then(function (data) {
-                            if (data.Items.length < scope.sfPaging.take) {
+                            // There are cases when we return all of the items ignoring skip and take. Hence we set that all items are loaded
+                            if (data.Items.length < scope.sfPaging.take || data.Items.length > scope.sfPaging.take) {
                                 scope.sfPaging.areAllItemsLoaded = true;
                             }
 
@@ -77,7 +78,8 @@
                 }
 
                 function scrolledToBottom(element) {
-                    return element.scrollTop !== 0 && element.scrollTop + element.offsetHeight >= element.scrollHeight;
+                    // We use the Math.round method since the 'scrollTop' may return a decimal value on systems using display scaling
+                    return element.scrollTop !== 0 && Math.round(element.scrollTop) + element.offsetHeight >= element.scrollHeight;
                 }
             }
         };

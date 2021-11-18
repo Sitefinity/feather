@@ -26,7 +26,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             var selfRouting = this.Controller as IRouteMapper;
             if (urlParams != null && selfRouting != null && selfRouting.TryMapRouteParameters(urlParams, requestContext))
             {
-                RouteHelper.SetUrlParametersResolved(true);
+                RouteHelper.SetUrlParametersResolved();
                 return true;
             }
 

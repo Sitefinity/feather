@@ -15,7 +15,8 @@
          * otherwise returns false.
          */
         var atBottom = function (element) {
-            return ($(element).scrollTop() + $(element).innerHeight()) >= $(element).get(0).scrollHeight;
+            var offset = 1;
+            return ($(element).scrollTop() + $(element).innerHeight() + offset) >= $(element).get(0).scrollHeight;
         };
 
         /*

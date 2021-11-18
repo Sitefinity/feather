@@ -1,12 +1,8 @@
-using System;
-using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web;
-using Telerik.Sitefinity.Web.UrlEvaluation;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 {
@@ -34,12 +30,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             ITaxon taxon;
             int pageIndex;
 
-            if (!this.taxonUrlEvaluator.TryMatch(urlParams, urlKeyPrefix, out taxon, out pageIndex))
+            if (!this.taxonUrlEvaluator.TryMatch(urlParams, urlKeyPrefix, out taxon, out pageIndex, requestContext))
             {
                 return false;
             }
 
             this.SetControllerActionParams(requestContext, taxon, pageIndex);
+
+            this.Controller.ViewBag.UrlParams = urlParams;
 
             RouteHelper.SetUrlParametersResolved();
 

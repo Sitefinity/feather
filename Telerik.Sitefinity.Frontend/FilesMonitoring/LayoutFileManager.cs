@@ -17,6 +17,8 @@ using Telerik.Sitefinity.Frontend.GridSystem;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Libraries.Model;
 using Telerik.Sitefinity.Modules.Libraries;
+using Telerik.Sitefinity.Modules.Libraries.ImageProcessing;
+using Telerik.Sitefinity.Modules.Libraries.Images;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Multisite;
 using Telerik.Sitefinity.Pages.Model;
@@ -98,12 +100,12 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         /// <param name="fileName">The virtual file name.</param>
         /// <param name="filePath">The virtual file path.</param>
+        /// <param name="fileData">The file data</param>
         /// <param name="packageName">Name of the package.</param>
-        public void FileAdded(string fileName, string filePath, string packageName = "")
+        public void FileAdded(string fileName, string filePath, FileData fileData, string packageName = "")
         {
             var fileMonitorDataManager = FileMonitorDataManager.GetManager();
 
-            var fileData = fileMonitorDataManager.GetFilesData().Where(file => file.FilePath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
             if (fileData == null && this.CreateTemplateAndFileData(fileName, filePath, packageName, fileMonitorDataManager, ref fileData))
             {
                 fileMonitorDataManager.SaveChanges();
@@ -157,7 +159,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             }
             else
             {
-                this.FileAdded(newFileName, newFilePath, packageName);
+                this.FileAdded(newFileName, newFilePath, null, packageName);
             }
         }
 
@@ -184,9 +186,11 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
             var templateThumbsImageLibrary = librariesManager.GetAlbums().FirstOrDefault(lib => lib.Id == LibrariesModule.DefaultTemplateThumbnailsLibraryId);
             if (templateThumbsImageLibrary != null)
             {
+                var images = templateThumbsImageLibrary.Images().ToList();
                 foreach (var imageToUpgrade in imagesToUpgrade)
                 {
-                    var image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals("MVC_" + imageToUpgrade, StringComparison.OrdinalIgnoreCase) && i.Status == GenericContent.Model.ContentLifecycleStatus.Master);
+                    var image = images.FirstOrDefault(i => i.Title == "MVC_" + imageToUpgrade && i.Status == GenericContent.Model.ContentLifecycleStatus.Master);
+
                     if (image != null)
                     {
                         var iconResource = string.Format(CultureInfo.InvariantCulture, LayoutFileManager.PageTemplateIconPathFormat, imageToUpgrade);
@@ -194,7 +198,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         {
                             using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(iconResource))
                             {
-                                using (var resourceImage = System.Drawing.Image.FromStream(imageStream))
+                                using (var resourceImage = ImagesHelper.CurrentImageProcessor.GetImageFromStream(imageStream))
                                 {
                                     var resourceImageStream = new MemoryStream();
                                     resourceImage.Save(resourceImageStream, System.Drawing.Imaging.ImageFormat.Png);
@@ -345,7 +349,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 expectedLayoutFolderStructure = packageName + Path.DirectorySeparatorChar + expectedLayoutFolderStructure;
 
             var resourcePackagesPath = FrontendManager.VirtualPathBuilder.MapPath(string.Concat("~/", PackageManager.PackagesFolder));
-            if (directory.FullName.EndsWith(expectedLayoutFolderStructure, StringComparison.OrdinalIgnoreCase) && 
+            if (directory.FullName.EndsWith(expectedLayoutFolderStructure, StringComparison.OrdinalIgnoreCase) &&
                     (
                         directory.FullName.StartsWith(HostingEnvironment.ApplicationPhysicalPath, StringComparison.OrdinalIgnoreCase) ||
                         directory.FullName.StartsWith(resourcePackagesPath, StringComparison.OrdinalIgnoreCase)
@@ -453,14 +457,15 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                     if (!pageManager.GetTemplates().Any(pt => (string.Compare(pt.Name, fullTemplateName, true) == 0 && string.Compare(pt.Title, title, true) == 0) || string.Compare(pt.Title, fullTemplateName, true) == 0))
                     {
-                        var template = pageManager.CreateTemplate();
+                        var templateGuid = this.GuidFromString(string.Concat(fullTemplateName, title));
+                        var template = pageManager.CreateTemplate(templateGuid);
 
                         template.Category = this.GetOrCreateTemplateCategoryId(packageName);
                         template.Name = fullTemplateName;
                         template.Title = title;
                         template.Framework = Pages.Model.PageTemplateFramework.Mvc;
                         template.Theme = ThemeController.NoThemeName;
-                        var languageData = pageManager.CreatePublishedInvarianLanguageData();
+                        var languageData = pageManager.CreatePublishedLanguageData();
                         template.LanguageData.Add(languageData);
 
                         this.AttachImageToTemplate(template, pageManager, image ?? "default");
@@ -481,6 +486,10 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                             this.CreateDefaultTemplates("SemanticUI", "default");
                     }
                 }
+            }
+            catch (Exception)
+            {
+                Log.Write("Automatic template generation failed. To disable the automatic generation, set 'sf:featherFileSystemWatcherBehaviour' to false in the AppSettings in web.config.", ConfigurationPolicy.ErrorLog);
             }
             finally
             {
@@ -532,7 +541,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                     if (templateThumbsImageLibrary != null)
                     {
                         // Try get image from library
-                        image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title.Equals("MVC_" + imageName, StringComparison.OrdinalIgnoreCase));
+                        image = templateThumbsImageLibrary.Images().FirstOrDefault(i => i.Title == "MVC_" + imageName && i.Status == GenericContent.Model.ContentLifecycleStatus.Master);
                         if (image == null)
                         {
                             // Check if image is in the resources and upload it
@@ -569,7 +578,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
                 using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(iconResource))
                 {
-                    using (var resourceImage = System.Drawing.Image.FromStream(imageStream))
+                    using (var resourceImage = ImagesHelper.CurrentImageProcessor.GetImageFromStream(imageStream))
                     {
                         var resourceImageStream = new MemoryStream();
                         resourceImage.Save(resourceImageStream, System.Drawing.Imaging.ImageFormat.Png);

@@ -1,11 +1,17 @@
 ﻿<div class="sf-Media--info-image">
-    <img ng-show="sfImageIsVisible" ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
+    <div style="position: relative" ng-show="sfImageIsVisible" ng-mouseover="showClearBtn=true" ng-mouseout="showClearBtn=false">
+      <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
+      <div ng-show="showClearBtn" class="sf-Media-remove-button glyphicon glyphicon-remove" tabindex="0" title="Remove images" ng-click="clearImage()"></div>
+    </div>
     <div ng-hide="sfImage.ThumbnailUrl" class="sf-Media-empty--image icon-no-image">
         {{sfImage.ThumbnailUrl}}
     </div>
 </div>
 
 <ul class="list-unstyled" ng-show="sfModel && sfModel !== guidEmpty">
+  <li>
+    {{sfImage.Title.Value}}
+  </li>
   <li>
     <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
     {{sfImage.Extension}}

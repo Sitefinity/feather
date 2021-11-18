@@ -72,7 +72,7 @@
          */
         var getUrl = function () {
             if (!httpGetUrl) {
-                httpGetUrl = widgetContext.webServiceUrl + widgetContext.widgetId + '/?pageId=' + widgetContext.pageId;
+                httpGetUrl = widgetContext.webServiceUrl + widgetContext.widgetId + '/?pageId=' + widgetContext.pageId + "&mediaType=" + widgetContext.mediaType;
             }
             return httpGetUrl;
         };
@@ -291,7 +291,7 @@
             var tempLayout = $(gridContext.layoutRoot).clone();
 
             for (var i = 0; i < elements.length; i++) {
-                var innerDiv = elements[i].id ? $(tempLayout).findExcludeNested('#' + elements[i].id) : $(tempLayout).findExcludeNested('[data-sf-element=' + elements[i].name + ']');
+                var innerDiv = elements[i].id ? $(tempLayout).findExcludeNested('#' + elements[i].id) : $(tempLayout).findExcludeNested('[data-sf-element="' + elements[i].name + '"]');
 
                 if (innerDiv) {
                     var label = elements[i].label;
@@ -319,7 +319,7 @@
 
         var refreshContainer = function (elements) {
             for (var i = 0; i < elements.length; i++) {
-                var innerDiv = elements[i].id ? $(gridContext.layoutContainer).findExcludeNested('#' + elements[i].id) : $(gridContext.layoutContainer).findExcludeNested('[data-sf-element=' + elements[i].name + ']');
+                var innerDiv = elements[i].id ? $(gridContext.layoutContainer).findExcludeNested('#' + elements[i].id) : $(gridContext.layoutContainer).findExcludeNested('[data-sf-element="' + elements[i].name + '"]');
 
                 if (innerDiv) {
                     var css = elements[i].isPlaceholder ? 'sf_colsIn ' + elements[i].css : elements[i].css;

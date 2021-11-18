@@ -9,11 +9,11 @@
 @import "_bootstrap"
 
 // Bootstrap ui styles
-.sf-backend-wrp
+:root:root:root:root:root .sf-backend-wrp
 	@import "bootstrap-ui/bootstrap-ui"
 
 // Overwrite Kendo styles
-.sf-backend-wrp
+:root:root:root:root:root .sf-backend-wrp
 	@import "kendo/kendo_common-material_min"
 	@import "kendo/kendo_material_min"
 	@import "kendo/_editor"
@@ -22,16 +22,17 @@
 	@import "kendo/_checkbox"
 	@import "kendo/_widget.sass"
 	@import "kendo/_button.sass"
-
+//Kendo styles outside sf-backend-wrp
+@import "kendo/_table-wizard.sass"
 // Global styles
 @import "_global"
-.sf-backend-wrp
+:root:root:root:root:root .sf-backend-wrp
 	@import "_utility-classes"
 	@import "_typography"
 	@import "loading"
 
 // Overwrite Bootstrap styles
-.sf-backend-wrp
+:root:root:root:root:root .sf-backend-wrp
 	@import "bootstrap/_type"
 	@import "bootstrap/_grid"
 	@import "bootstrap/_datepicker"
@@ -40,7 +41,7 @@
 	@import "bootstrap/_utilities"
 	@import "bootstrap/_modals"
 
-.sf-backend-wrp
+:root:root:root:root:root .sf-backend-wrp
 	@import "bootstrap/_list-group"
 	@import "bootstrap/_navs"
 	@import "bootstrap/_forms"
@@ -48,17 +49,25 @@
 	@import "bootstrap/_badges"
 	@import "bootstrap/_code"
 
-@import "external-overwrites"
-@import "bootstrap/_popovers"
+:root:root:root:root:root .sf-backend-wrp
+	@import "external-overwrites"
+	@import "bootstrap/_popovers"
+
 // Icon font
-@import "icons/_sf-icon-font"
-@import "icons/_icons"
+:root:root:root:root:root .sf-backend-wrp
+	@import "icons/_sf-icon-font"
+	@import "icons/_icons"
 
 // Needed for foundation overwrites
 @import "_foundation-overwrites"
 
+// CodeMirror styles
+:root:root:root:root:root .sf-backend-wrp
+	@import "codemirror/codemirror"
+	@import "codemirror/Theme/default"
+
 // Custom styles
-.sf-backend-wrp
+:root:root:root:root:root .sf-backend-wrp
 	@import "modules/_tooltip"
 	@import "modules/_options"
 	@import "modules/_sf-media-selector"
@@ -68,3 +77,5 @@
 	@import "modules/_sf-Progress"
 	@import "modules/_sf-code"
 	@import "modules/_sf-textarea"
+	@import "modules/_sf-input"
+	@import "modules/_sf-search"

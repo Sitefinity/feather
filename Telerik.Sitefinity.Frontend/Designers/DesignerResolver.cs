@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Mvc;
+using Telerik.Sitefinity.Mvc.Proxy;
 using Telerik.Sitefinity.Web.UI.ControlDesign;
 
 namespace Telerik.Sitefinity.Frontend.Designers
@@ -45,6 +51,44 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 designerUrl = this.GetDefaultUrl(widgetType);
 
             return this.packageManager.EnhanceUrl(designerUrl);
+        }
+
+        /// <summary>
+        /// Checks if there are separate custom desiger views for the particular control type.
+        /// </summary>
+        /// <param name="controlType">The type of the control.</param>
+        /// <returns></returns>
+        public bool HasCustomDesigners(string controlType)
+        {
+            var mvcProxy = new MvcControllerProxy();
+            mvcProxy.ControllerName = controlType;
+            var controller = mvcProxy.GetController() as Controller;
+
+            if (controller == null)
+                return true;
+
+            var designerNamePattern = "DesignerView.*";
+            var views = controller.GetViews(null).Where(view => Regex.IsMatch(view, designerNamePattern));
+
+            return views.Count() > 0;
+        }
+
+        /// <summary>
+        /// Gets all view names that match a pattern.
+        /// </summary>
+        /// <param name="controlType">The control type.</param>
+        /// <param name="viewNamePattern">The view name pattern</param>
+        /// <returns></returns>
+        public IEnumerable<string> GetViewNames(string controlType, string viewNamePattern)
+        {
+            var mvcProxy = new MvcControllerProxy();
+            mvcProxy.ControllerName = controlType;
+            var controller = mvcProxy.GetController() as Controller;
+
+            if (controller == null)
+                return new List<string>();
+
+            return ViewSelectorHelpers.GetViewNames(null, controller, viewNamePattern);
         }
 
         #endregion
@@ -115,6 +159,8 @@ namespace Telerik.Sitefinity.Frontend.Designers
         private const string DefaultActionUrlTemplate = "~/Telerik.Sitefinity.Frontend/Designer/Master/{0}";
         private const string DefaultGridActionUrlTemplate = "~/Telerik.Sitefinity.Frontend/GridDesigner/Master/GridDesigner";
         private readonly PackageManager packageManager;
+
+        public object ViewSelectorHelper { get; private set; }
 
         #endregion
     }

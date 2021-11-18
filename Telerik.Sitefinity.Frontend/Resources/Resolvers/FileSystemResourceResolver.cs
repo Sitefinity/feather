@@ -16,6 +16,17 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
     /// </summary>
     internal class FileSystemResourceResolver : ResourceResolverNode
     {
+        private readonly static bool enableCacheDependencies;
+
+        static FileSystemResourceResolver()
+        {
+            var enableCacheDependenciesString = System.Configuration.ConfigurationManager.AppSettings["sf:enableFileSystemCacheDependencies"];
+            if (enableCacheDependenciesString.IsNullOrEmpty() || !bool.TryParse(enableCacheDependenciesString, out enableCacheDependencies))
+            {
+                enableCacheDependencies = true;
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FileSystemResourceResolver"/> class.
         /// </summary>
@@ -38,6 +49,9 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         /// <inheritdoc />
         protected override CacheDependency GetCurrentCacheDependency(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
+            if (!enableCacheDependencies)
+                return null;
+
             var fn = this.GetFileName(definition, virtualPath);
             if (string.IsNullOrWhiteSpace(fn))
             {

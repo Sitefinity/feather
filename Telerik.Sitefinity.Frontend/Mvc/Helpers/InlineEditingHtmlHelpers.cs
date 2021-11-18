@@ -2,8 +2,10 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Frontend.InlineEditing;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Utilities.TypeConverters;
 using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
@@ -47,10 +49,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             {
                 htmlString = string.Format(HtmlProcessor.InlineEditingHtmlWrapper, propName, fieldType, propValue);
             }
-            
+
             return new System.Web.Mvc.MvcHtmlString(htmlString);
         }
-       
+
         /// <summary>
         /// HTML helper which adds an InlineEditing region. This should be added once at the top of the page, and the whole region will support InlineEditing.
         /// </summary>
@@ -62,14 +64,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         public static HtmlRegion InlineEditingRegion(
                                    this HtmlHelper htmlHelper,
                                    string providerName,
-                                   string type, 
+                                   string type,
                                    Guid id)
         {
             var htmlProcessor = new HtmlProcessor();
             return htmlProcessor.CreateInlineEditingRegion(
                 htmlHelper.ViewContext.Writer,
-                providerName, 
-                type, 
+                providerName,
+                type,
                 id);
         }
 
@@ -84,6 +86,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         {
             if (!SystemManager.IsInlineEditingMode)
                 return htmlHelper.Raw(string.Empty);
+
+            if (string.IsNullOrEmpty(providerName))
+            {
+                providerName = GetProviderName(type);
+            }
 
             var providerNameEncoded = providerName != null ? htmlHelper.Encode(providerName) : providerName;
             var typeEncoded = htmlHelper.Encode(type);
@@ -122,7 +129,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
-        /// Returns if the inline editin section should be rendered.
+        /// Returns if the inline editing section should be rendered.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <returns></returns>
@@ -149,6 +156,32 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             }
 
             return shouldRender;
+        }
+
+        private static string GetProviderName(string type)
+        {
+            string providerName = null;
+
+            if (type != null)
+            {
+                var itemType = TypeResolutionService.ResolveType(type);
+                if (itemType != null)
+                {
+                    Type managerType;
+                    ManagerBase.TryGetMappedManagerType(itemType, out managerType);
+                    if (managerType != null)
+                    {
+                        var currentSite = SystemManager.CurrentContext.CurrentSite;
+                        var provider = currentSite.GetDefaultProvider(managerType.FullName);
+                        if (provider != null)
+                        {
+                            providerName = provider.ProviderName;
+                        }
+                    }
+                }
+            }
+
+            return providerName;
         }
     }
 }
