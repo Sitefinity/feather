@@ -128,9 +128,9 @@
                     initialData = $.extend(true, {}, response.data);
                     loadingPromise = null;
                     deferred.resolve(response.data);
-                }, function (response) {
+                }, function (err) {
                     loadingPromise = null;
-                    deferred.reject(response.data);
+                    deferred.reject(err);
                 });
 
             loadingPromise = deferred.promise;
@@ -193,8 +193,8 @@
                     .then(function (response) {
                         initialData = $.extend(true, {}, properties);
                         deferred.resolve(response.data);
-                    }, function (response) {
-                        deferred.reject(response.data);
+                    }, function (err) {
+                        deferred.reject(err);
                     });
 
                 return deferred.promise;

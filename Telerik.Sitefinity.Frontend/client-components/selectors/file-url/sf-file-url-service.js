@@ -33,9 +33,10 @@
 
             var deferred = $q.defer();
             $http.get(url).
-                success(function (data, status, headers, config) {
+                then(function (response) {
                     var rootedPath = '~/' + path;
                     var items = [];
+                    var data = response.data;
                     if (data.Items && data.Items.length > 0) {
                         for (var i = 0; i < data.Items.length; i++) {
                             var item = data.Items[i];
@@ -56,9 +57,8 @@
                     }
 
                     deferred.resolve(items);
-                }).
-                error(function (data, status, headers, config) {
-                    deferred.reject(data);
+                }, function (err) {
+                    deferred.reject(err);
                 });
 
             return deferred.promise;

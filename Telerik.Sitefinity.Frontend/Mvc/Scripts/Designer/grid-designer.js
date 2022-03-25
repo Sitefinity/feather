@@ -19,10 +19,10 @@
         // Event handlers
         // ------------------------------------------------------------------------
 
-        var onError = function (data) {
+        var onError = function (errorData) {
             $scope.feedback.showError = true;
-            if (data)
-                $scope.feedback.errorMessage = data.Detail ? data.Detail : data;
+            if (errorData && errorData.data)
+                $scope.feedback.errorMessage = errorData.data.Detail ? errorData.data.Detail : errorData.data;
 
             $scope.feedback.showLoadingIndicator = false;
         };

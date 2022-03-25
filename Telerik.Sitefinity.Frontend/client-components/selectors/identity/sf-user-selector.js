@@ -22,6 +22,9 @@
                                 data.Items.map(function (item) {
                                     item.Id = item.UserID;
                                 });
+                            }).catch(function (err) {
+                                // This catch is added to prevent "Possibly unhandled rejection" errors
+                                // from being logged in the console for canceled/aborted requests.
                             });
 
                             return usersRequest.promise;
@@ -36,6 +39,9 @@
                                 data.Items.map(function (item) {
                                     item.Id = item.UserID;
                                 });
+                            }).catch(function (err) {
+                                // This catch is added to prevent "Possibly unhandled rejection" errors
+                                // from being logged in the console for canceled/aborted requests.
                             });
 
                             return specificItemsRequest.promise;

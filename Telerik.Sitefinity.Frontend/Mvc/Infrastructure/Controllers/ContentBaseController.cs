@@ -11,6 +11,7 @@ using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Services.Configuration;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.ContentLocations;
+using Telerik.Sitefinity.Lifecycle;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 {
@@ -145,6 +146,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 return null;
 
             var locationsService = SystemManager.GetContentLocationService();
+            if (item is ILifecycleDataItemGeneric lifecycleDataItem && 
+                lifecycleDataItem.Status != GenericContent.Model.ContentLifecycleStatus.Master && 
+                manager is ILifecycleManager lifecycleManager)
+            {
+                item = lifecycleManager.Lifecycle.GetMaster(lifecycleDataItem);
+            }
+
             var location = locationsService.GetItemDefaultLocation(item);
             if (location != null)
             {
@@ -156,6 +164,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var canonicalUrl = page.GetCanonicalUrlForPage(pageNode);
 
             return canonicalUrl;
+        }
+
+        /// <summary>
+        /// Adds the canonical tag in the page headers HTML tag, like <link rel="canonical" href="http://www.test.com/item1" />.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="item">The item.</param>
+        protected void AddCanonicalUrlTagIfEnabled(System.Web.UI.Page page, IDataItem item)
+        {
+            var contentView = this as IContentLocatableView;
+            if (contentView != null)
+            {
+                var defaultCanonicalUrl = this.GetDefaultCanonicalUrl(item);
+                contentView.AddCanonicalUrlTagIfEnabled(page, defaultCanonicalUrl);
+            }
         }
         
         internal virtual SeoAndOpenGraphElement GetSeoAndOpenGraphConfig()

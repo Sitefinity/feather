@@ -25,9 +25,7 @@
                                 return site.SiteMapRootNodeId === currentSiteMapRootNodeId;
                             })[0];
                         }
-                    });
-
-                    getSitesForUserPromise.catch(function (error) {
+                    }, function (error) {
                         scope.showError = true;
                         scope.errorMessage = error;
                     });

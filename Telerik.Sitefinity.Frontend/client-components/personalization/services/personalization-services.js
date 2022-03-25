@@ -41,8 +41,8 @@
 				$http.get(url, reqOptions)
 					.then(function (response) {
 						deferred.resolve(response.data);
-					}, function (response) {
-						deferred.reject(response.data);
+					}, function (err) {
+						deferred.reject(err);
 					});
 
 		        return deferred.promise;
@@ -62,8 +62,8 @@
 				$http.post(url, data, requestOptions())
 					.then(function (response) {
 						deferred.resolve({ Id: response.data, SegmentName: model.segmentName });
-					}, function (response) {
-						deferred.reject(response.data);
+					}, function (err) {
+						deferred.reject(err);
 					});
 
 		        return deferred.promise;

@@ -792,6 +792,6 @@
 	"angularModules": [
 		"sfComponents"
 	],
-	"components": [ "sf-components", "sf-services" ]
+	"components": [ "sf-services" ]
 }
 }

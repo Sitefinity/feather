@@ -117,7 +117,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                         if (serializedSelectedParentsIds != null)
                         {
                             isParentSelected = serializedSelectedParentsIds.ToString().Contains((item as IHasParent).Parent.Id.ToString());
-                            
+
                             if (!isParentSelected)
                             {
                                 var folderIdProperty = item.GetType().GetProperty("FolderId");
@@ -126,7 +126,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                                     var folderId = folderIdProperty.GetValue(item);
                                     if (folderId != null)
                                     {
-                                        isParentSelected = serializedSelectedParentsIds.ToString().Contains(folderId.ToString()); 
+                                        isParentSelected = serializedSelectedParentsIds.ToString().Contains(folderId.ToString());
                                     }
                                 }
                             }
@@ -164,6 +164,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             if (!redirectUrl.IsNullOrEmpty())
             {
+                if (requestContext.HttpContext.Request.QueryString.Count > 0)
+                {
+                    redirectUrl = $"{redirectUrl}?{requestContext.HttpContext.Request.QueryString}";
+                }
+
                 requestContext.RouteData.Values[Telerik.Sitefinity.Mvc.ControllerActionInvoker.SfRedirectUrlKey] = redirectUrl;
             }
 

@@ -20,14 +20,14 @@
 
             var getFilter = function (search) {
                 var filter = serviceHelper.filterBuilder()
-                                          .searchFilter(search)
-                                          .getFilter();
+                    .searchFilter(search)
+                    .getFilter();
 
                 return filter;
             };
 
             var getSearchIndexes = function (skip, take, search) {
-                var queryParams =  String.format('providerName={0}&pipeTypeName={1}', searchProviderName, pipeName);
+                var queryParams = String.format('providerName={0}&pipeTypeName={1}', searchProviderName, pipeName);
                 var endpoint = "pipes";
                 var filter = getFilter(search);
 
@@ -42,10 +42,18 @@
 
                 return dataItemPromise;
             };
-           
+
+            var getScoringSettingsNames = function (indexId) {
+                var searchWebServiceUrl = serverContext.getRootedUrl('restapi/search');
+                var scoringSettingsNamesRoute = String.format('{0}/scoring-settings?SearchIndexPipeId={1}', searchWebServiceUrl, indexId);
+
+                return serviceHelper.getResource(scoringSettingsNamesRoute).get().$promise;
+            };
+
             return {
                 /* Returns the data items. */
-                getSearchIndexes: getSearchIndexes
+                getSearchIndexes: getSearchIndexes,
+                getScoringSettings: getScoringSettingsNames
             };
         }]);
 })();

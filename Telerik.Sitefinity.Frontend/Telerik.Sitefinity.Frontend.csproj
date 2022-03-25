@@ -166,17 +166,17 @@
     <Reference Include="Telerik.OpenAccess.Runtime, Version=2020.0.428.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL">
       <HintPath>..\packages\Telerik.DataAccess.Core.2020.0.428.1\lib\net40\Telerik.OpenAccess.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.Design, Version=2021.2.511.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2021.2.511.45\lib\net45\Telerik.Web.Design.dll</HintPath>
+    <Reference Include="Telerik.Web.Design, Version=2021.3.914.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2021.3.914.45\lib\net45\Telerik.Web.Design.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.Spreadsheet, Version=2021.2.511.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2021.2.511.45\lib\net45\Telerik.Web.Spreadsheet.dll</HintPath>
+    <Reference Include="Telerik.Web.Spreadsheet, Version=2021.3.914.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2021.3.914.45\lib\net45\Telerik.Web.Spreadsheet.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI, Version=2021.2.511.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2021.2.511.45\lib\net45\Telerik.Web.UI.dll</HintPath>
+    <Reference Include="Telerik.Web.UI, Version=2021.3.914.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2021.3.914.45\lib\net45\Telerik.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI.Skins, Version=2021.2.511.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Web.UI.2021.2.511.45\lib\net45\Telerik.Web.UI.Skins.dll</HintPath>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2021.3.914.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Web.UI.2021.3.914.45\lib\net45\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
@@ -341,6 +341,7 @@
     <Compile Include="Resources\RazorTemplateProcessor.cs" />
     <Compile Include="Resources\ResourceItem.cs" />
     <Compile Include="Resources\ServerContextHandler.cs" />
+    <Compile Include="Security\AntiCsrfHelpers.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Resources\GenericRouteHandler.cs" />
     <Compile Include="Resources\ResourceRegister.cs" />
@@ -846,51 +847,51 @@
       <Name>Telerik.Sitefinity.Frontend.Data</Name>
     </ProjectReference>
     <Reference Include="Telerik.Sitefinity.Services.Comments.Impl">
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.14.0.7700\lib\net48\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.14.1.7821\lib\net48\Telerik.Sitefinity.Services.Comments.Impl.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Comments">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.14.0.7700\lib\net48\Telerik.Sitefinity.Services.Comments.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.14.1.7821\lib\net48\Telerik.Sitefinity.Services.Comments.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Events">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.14.0.7700\lib\net48\Telerik.Sitefinity.Services.Events.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.14.1.7821\lib\net48\Telerik.Sitefinity.Services.Events.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Services.Notifications">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.14.0.7700\lib\net48\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.14.1.7821\lib\net48\Telerik.Sitefinity.Services.Notifications.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.ContentModules">
-      <HintPath>..\packages\Telerik.Sitefinity.Content.14.0.7700\lib\net48\Telerik.Sitefinity.ContentModules.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Content.14.1.7821\lib\net48\Telerik.Sitefinity.ContentModules.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Model">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.14.0.7700\lib\net48\Telerik.Sitefinity.Model.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.14.1.7821\lib\net48\Telerik.Sitefinity.Model.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization.Impl">
-      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.14.0.7700\lib\net48\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.ServicesImpl.14.1.7821\lib\net48\Telerik.Sitefinity.Personalization.Impl.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Personalization">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.14.0.7700\lib\net48\Telerik.Sitefinity.Personalization.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.14.1.7821\lib\net48\Telerik.Sitefinity.Personalization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Resources">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.14.0.7700\lib\net48\Telerik.Sitefinity.Resources.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.14.1.7821\lib\net48\Telerik.Sitefinity.Resources.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.14.0.7700\lib\net48\Telerik.Sitefinity.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.14.1.7821\lib\net48\Telerik.Sitefinity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Utilities">
-      <HintPath>..\packages\Telerik.Sitefinity.Core.14.0.7700\lib\net48\Telerik.Sitefinity.Utilities.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Core.14.1.7821\lib\net48\Telerik.Sitefinity.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Mvc">
-      <HintPath>..\packages\Telerik.Sitefinity.Mvc.14.0.7700\lib\net48\Telerik.Sitefinity.Mvc.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Mvc.14.1.7821\lib\net48\Telerik.Sitefinity.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

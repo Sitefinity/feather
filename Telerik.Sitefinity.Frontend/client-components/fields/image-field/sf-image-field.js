@@ -101,18 +101,49 @@
                         sender.remove_close(closeEditAllProperties);
                     };
 
+                    var forceAngularJsDigest = function () {
+                        scope.$digest();
+
+                        document.removeEventListener("forceAngularJsDigest", forceAngularJsDigest);
+                    };
+
+                    var getCultureFromUrl = function () {
+                        var editSegment = "Edit/";
+                        var path = this.window.location.pathname;
+                        var culture = path.substr(path.indexOf(editSegment) + editSegment.length);
+                        return culture;
+                    };
+
                     scope.editAllProperties = function () {
                         var parentId = scope.sfImage.ParentId || scope.sfImage.Album.Id;
-                        var fullEditAllPropertiesUrl = editAllPropertiesUrl + ('&parentId=' + parentId);
 
-                        var dialogManager = window.top.GetDialogManager();
-                        editDialog = createDialog(dialogManager);
-                        editDialog.setUrl(fullEditAllPropertiesUrl);
+                        var isAdminAppActive = window.location.pathname.toLowerCase().includes("adminapp");
 
-                        var dialogName = editDialog.get_name();
-                        var dialogContext = getDialogContext(editDialog, parentId);
+                        if (isAdminAppActive) {
+                            var irisEvent = new CustomEvent("openIrisContent", {
+                                detail: {
+                                    parentId: parentId,
+                                    itemId: scope.sfImage.OriginalContentId,
+                                    mediaType: "images",
+                                    provider: scope.sfProvider,
+                                    culture: serverContext.getUICulture() || getCultureFromUrl()
+                                }
+                            });
+                            document.dispatchEvent(irisEvent);
 
-                        dialogManager.openDialog(dialogName, null, dialogContext);
+                            document.addEventListener("forceAngularJsDigest", forceAngularJsDigest);
+                        } else {
+                            var fullEditAllPropertiesUrl = editAllPropertiesUrl + ('&parentId=' + parentId);
+
+                            var dialogManager = window.top.GetDialogManager();
+                            editDialog = createDialog(dialogManager);
+                            editDialog.setUrl(fullEditAllPropertiesUrl);
+
+                            var dialogName = editDialog.get_name();
+                            var dialogContext = getDialogContext(editDialog, parentId);
+
+                            dialogManager.openDialog(dialogName, null, dialogContext);
+                        }                       
                     };
 
                     scope.done = function () {

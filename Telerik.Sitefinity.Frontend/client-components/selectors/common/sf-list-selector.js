@@ -188,6 +188,12 @@
                             }
                             errorMessage = error.statusText;
                         }
+                        else if (error && error.error && error.error.xhrStatus) {
+                            if (error.error.xhrStatus === 'abort') {
+                                return;
+                            }
+                            errorMessage = error.error.xhrStatus;
+                        }
 
                         $scope.showError = true;
                         $scope.errorMessage = errorMessage;

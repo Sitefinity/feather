@@ -7,14 +7,14 @@
         function ($scope, propertyService) {
 
             var onGetPropertiesSuccess = function (data) {
-                if (data.Items)
+                if (data && data.Items)
                     $scope.items = data.Items;
             };
 
-            var onGetError = function (data) {
+            var onGetError = function (errorData) {
                 $scope.feedback.showError = true;
-                if (data)
-                    $scope.feedback.errorMessage = data.Detail;
+                if (errorData && errorData.data)
+                    $scope.feedback.errorMessage = errorData.data.Detail;
             };
 
             propertyService.get().then(onGetPropertiesSuccess, onGetError)

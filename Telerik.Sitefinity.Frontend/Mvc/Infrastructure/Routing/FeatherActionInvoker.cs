@@ -117,11 +117,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                         {
                             paramsMapper.ResolveUrlParams(originalParams, requestContext, modelUrlKeyPrefix);
                         }
-                        else
-                        {
-                            this.GetPrefixParamsMapper(controller)?.ResolveUrlParams(originalParams, requestContext);
-                            RouteHelper.SetUrlParametersResolved();
-                        }
                     }
                     else
                     {
@@ -378,7 +373,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                 {
                     var pageParamName = actionDescriptor.GetParameters()[1].ParameterName;
                     var urlParamNames = new string[] { FeatherActionInvoker.TaxonNamedParamter, FeatherActionInvoker.PagingNamedParameter };
-                    result = new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":" + routeTemplate + "}/{" + pageParamName + "}", actionName, urlParamNames);
+                    result = new CustomActionParamsMapper(controller, () => "/{" + taxonParamName + ":" + routeTemplate + "}/{" + pageParamName + ":int}", actionName, urlParamNames);
                 }
 
                 var urlTaxonParamNames = new string[] { FeatherActionInvoker.TaxonNamedParamter };

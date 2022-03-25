@@ -22,7 +22,7 @@
                var url = 'Sitefinity/Services/Multisite/Multisite.svc/' + siteId + '/Telerik.Sitefinity.Modules.Libraries.LibrariesManager/availablelinks/';
                $http.get(sitefinity.getRootedUrl(url), { cache: false })
                    .then(function (response) {
-                       if (response.data && response.data.Items) {
+                       if (response && response.data && response.data.Items) {
                            response.data.Items.forEach(function (item) {
                                if (item.Link && item.Link.IsDefault === true) {
                                    defaultProviderName = item.Link.ProviderName;
@@ -48,8 +48,8 @@
                 $http.get(getUrl, { cache: false })
                     .then(function (response) {
                         deferred.resolve(response.data);
-                    }, function (response) {
-                        deferred.reject(response.data);
+                    }, function (err) {
+                        deferred.reject(err);
                     });
 
                 return deferred.promise;

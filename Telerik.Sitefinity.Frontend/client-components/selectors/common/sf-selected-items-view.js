@@ -9,8 +9,8 @@
                     sfIdentifierField: '=?',
                     sfSearchIdentifierField: '=?',
                     sfSortable: '@',
-                    sfMaxSelectedItemsCount: '=',
-                    sfMaxItemsLimitation: '='
+                    sfMaxSelectedItemsCount: '=?',
+                    sfMaxItemsLimitation: '=?'
                 },
                 templateUrl: function (elem, attrs) {
                     var assembly = attrs.sfTemplateAssembly || 'Telerik.Sitefinity.Frontend';

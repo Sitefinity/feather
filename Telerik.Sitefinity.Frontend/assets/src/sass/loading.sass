@@ -35,6 +35,25 @@
 	> span
 		@extend %sf-loading-line
 
+	&.sf-loading--small
+		height: 15px;
+		width: 3px;
+
+		&:before,
+		&:after
+			height: 15px
+			width: 3px
+
+		&:before
+			left: -7px	
+
+		&:after
+			right: -7px
+
+		> span
+			height: 15px
+			width: 3px
+
 .sf-loading-wrapper
 	position: absolute
 	z-index: 902

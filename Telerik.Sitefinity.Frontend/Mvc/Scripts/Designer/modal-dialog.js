@@ -58,7 +58,7 @@
 
             dialogsService.pushSelector('.' + uniqueClass);
 
-            var closeDialog = function () {
+            return scope.$uibModalInstance.result.finally(function () {
                 dialogsService.pop().remove();
 
                 if (dialogsService.count() > 0) {
@@ -67,16 +67,9 @@
                 else {
                     $(backdropClass).remove();
                 }
-            }
-
-            return scope.$uibModalInstance.result
-                .then(function () {
-                    closeDialog()
-                }, function () {
-                })
-                .finally(function () {
-                    closeDialog()
-                })
+            })
+            .catch(function () {
+            });
         };
 
         return {

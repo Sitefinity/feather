@@ -135,14 +135,14 @@
 
         propertyService.get()
             .then(function (data) {
-                if (data) {
+                if (data && data.Items) {
                     $scope.properties = propertyService.toAssociativeArray(data.Items);
                 }
             },
-            function (data) {
+            function (errorData) {
                 $scope.feedback.showError = true;
-                if (data)
-                    $scope.feedback.errorMessage = data.Detail;
+                if (errorData && errorData.data)
+                    $scope.feedback.errorMessage = errorData.data.Detail;
             })
             .finally(function () {
                 $scope.feedback.showLoadingIndicator = false;
@@ -157,10 +157,10 @@
             // Event handlers
             // ------------------------------------------------------------------------
 
-            var onError = function (data) {
+            var onError = function (errorData) {
                 $scope.feedback.showError = true;
-                if (data)
-                    $scope.feedback.errorMessage = data.Detail ? data.Detail : data;
+                if (errorData && errorData.data)
+                    $scope.feedback.errorMessage = errorData.data.Detail ? errorData.data.Detail : errorData.data;
             };
 
             // ------------------------------------------------------------------------

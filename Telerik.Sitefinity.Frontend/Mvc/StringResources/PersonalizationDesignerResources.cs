@@ -70,29 +70,29 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// Add
+        /// Add personalized version
         /// </summary>
-        /// <value>Add</value>
-        [ResourceEntry("Add",
-            Value = "Add",
-            Description = "Add",
-            LastModified = "2015/09/09")]
-        public string Add
+        /// <value>Add personalized version</value>
+        [ResourceEntry("AddPersonalizedVersion",
+            Value = "Add personalized version",
+            Description = "Add personalized version",
+            LastModified = "2021/10/15")]
+        public string AddPersonalizedVersion
         {
             get
             {
-                return this["Add"];
+                return this["AddPersonalizedVersion"];
             }
         }
 
         /// <summary>
         /// Caption for personalization dialog window
         /// </summary>
-        /// <value>Add personalizaed version of this widget</value>
+        /// <value>Add personalized version of this widget</value>
         [ResourceEntry("PersonalizationDialogCaption",
-            Value = "Add personalizaed version of this widget",
+            Value = "Add personalized version of this widget",
             Description = "Caption for personalization dialog window",
-            LastModified = "2015/09/09")]
+            LastModified = "2021/10/15")]
         public string PersonalizationDialogCaption
         {
             get
@@ -122,9 +122,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         /// <value>You cannot create other personalization</value>
         [ResourceEntry("AllSegmentsCreatedLabel",
-            Value = "You cannot create other personalization",
-            Description = "Label displayed when you have created versions of the widget for all segments",
-            LastModified = "2015/09/10")]
+            Value = "You cannot create other personalization.",
+            Description = "Label displayed when you have created versions of the widget for all segments.",
+            LastModified = "2021/10/15")]
         public string AllSegmentsCreatedLabel
         {
             get
@@ -154,9 +154,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         /// <value>No user segments have been created yet</value>
         [ResourceEntry("NoSegmentsCreatedLabel",
-            Value = "No user segments have been created yet",
+            Value = "No user segments have been created yet.",
             Description = "Label displayed when you have not created any segments",
-            LastModified = "2015/09/10")]
+            LastModified = "2021/10/15")]
         public string NoSegmentsCreatedLabel
         {
             get
@@ -170,9 +170,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         /// </summary>
         /// <value>To personalize this widget you should have at least one user segment</value>
         [ResourceEntry("NoSegmentsCreatedMessage",
-            Value = "To personalize this widget you should have at least one user segment",
+            Value = "To personalize this widget you should have at least one user segment.",
             Description = "Message displayed when you have not created any segments",
-            LastModified = "2015/09/10")]
+            LastModified = "2021/10/15")]
         public string NoSegmentsCreatedMessage
         {
             get
@@ -182,18 +182,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
-        /// Go to create a segment
+        /// Create a user segment
         /// </summary>
-        /// <value>Go to create a segment</value>
-        [ResourceEntry("GoToCreateSegment",
-            Value = "Go to create a segment",
-            Description = "Go to create a segment",
-            LastModified = "2015/09/15")]
-        public string GoToCreateSegment
+        /// <value>Create a user segment</value>
+        [ResourceEntry("CreateUserSegment",
+            Value = "Create a user segment",
+            Description = "Create a user segment",
+            LastModified = "2021/10/15")]
+        public string CreateUserSegment
         {
             get
             {
-                return this["GoToCreateSegment"];
+                return this["CreateUserSegment"];
             }
         }
     }

@@ -306,7 +306,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                 Path = LayoutFileManager.GridTemplatePathRightSidebar
             };
 
-            if (!packageName.StartsWith("Bootstrap4"))
+            if (!packageName.StartsWith("Bootstrap4") && !packageName.StartsWith("Bootstrap5"))
             {
                 this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption2Columns, LayoutFileManager.TemplateImage2Columns, new LayoutControlDescription[] { header, twoColumns, footer });
                 this.CreateTemplate(packageName, layoutFile, LayoutFileManager.TemplateCaption3Columns, LayoutFileManager.TemplateImage3Columns, new LayoutControlDescription[] { header, threeColumns, footer });
@@ -476,6 +476,8 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
                         pageManager.TemplatesLifecycle.Publish(master);
                         pageManager.SaveChanges();
 
+                        if (string.Equals(LayoutFileManager.Bootstrap5DefaultTemplateName, fullTemplateName, StringComparison.OrdinalIgnoreCase))
+                            this.CreateDefaultTemplates("Bootstrap5", "default");
                         if (string.Equals(LayoutFileManager.Bootstrap4DefaultTemplateName, fullTemplateName, StringComparison.OrdinalIgnoreCase))
                             this.CreateDefaultTemplates("Bootstrap4", "default");
                         if (string.Equals(LayoutFileManager.BootstrapDefaultTemplateName, fullTemplateName, StringComparison.OrdinalIgnoreCase))
@@ -667,6 +669,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
         /// </summary>
         public const string PageTemplateIconPathFormat = "Telerik.Sitefinity.Frontend.Resources.PageTemplateImages.{0}.gif";
 
+        public const string Bootstrap5DefaultTemplateName = "Bootstrap5.default";
         public const string Bootstrap4DefaultTemplateName = "Bootstrap4.default";
         public const string BootstrapDefaultTemplateName = "Bootstrap.default";
         public const string SemanticUIDefaultTemplateName = "SemanticUI.default";
@@ -674,6 +677,7 @@ namespace Telerik.Sitefinity.Frontend.FilesMonitoring
 
         public static readonly string[] DefaultTemplateNames = new string[]
                 {
+                    LayoutFileManager.Bootstrap5DefaultTemplateName,
                     LayoutFileManager.Bootstrap4DefaultTemplateName,
                     LayoutFileManager.BootstrapDefaultTemplateName,
                     LayoutFileManager.SemanticUIDefaultTemplateName,

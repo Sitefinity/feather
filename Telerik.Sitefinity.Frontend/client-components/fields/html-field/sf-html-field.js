@@ -136,8 +136,10 @@
                             }
 
                             angular.element(htmlElement.find("#linkSelectorModal")).scope().$openModalDialog().then(function (data) {
-                                scope.selectedHtml = data;
-                                scope.editor.exec("insertHtml", { html: data.outerHTML, split: true, range: range });
+                                if (data) {
+                                    scope.selectedHtml = data;
+                                    scope.editor.exec("insertHtml", { html: data.outerHTML, split: true, range: range });
+                                }
                             });
                         };
 
@@ -160,10 +162,12 @@
                                             return;
 
                                         return mediaService.getLibrarySettings();
-                                    })
+                                    }, function () { })
                                     .then(function (settings) {
-                                        var markup = mediaMarkupService.document.markup(properties, settings);
-                                        scope.editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                        if (properties) {
+                                            var markup = mediaMarkupService.document.markup(properties, settings);
+                                            scope.editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                        }
                                     });
                             }, 0);
                         };
@@ -181,19 +185,20 @@
                                     .scope()
                                     .$openModalDialog({ sfModel: function () { return properties; } })
                                     .then(function (data) {
-                                        properties = data;
+                                        if (data) {
+                                            properties = data;
 
-                                        if (data.customSize)
-                                            return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize, scope.sfImagesSettings);
-                                        else
-                                            return '';
-
-                                    })
+                                            if (data.customSize)
+                                                return mediaService.checkCustomThumbnailParams(data.customSize.Method, data.customSize, scope.sfImagesSettings);
+                                            else
+                                                return '';
+                                        }
+                                    }, function () { })
                                     .then(function (errorMessage) {
-                                        if (properties.thumbnail && properties.thumbnail.url) {
+                                        if (properties && properties.thumbnail && properties.thumbnail.url) {
                                             return properties.thumbnail.url;
                                         }
-                                        else if (properties.customSize) {
+                                        else if (properties && properties.customSize) {
                                             return mediaService.getCustomThumbnailUrl(properties.item.Id, properties.customSize);
                                         }
                                         else {
@@ -201,7 +206,7 @@
                                         }
                                     })
                                     .then(function (thumbnailUrl) {
-                                        if (thumbnailUrl) {
+                                        if (properties && thumbnailUrl) {
                                             properties.thumbnail = properties.thumbnail || {};
                                             properties.thumbnail.url = thumbnailUrl;
                                         }
@@ -212,14 +217,16 @@
                                         return mediaService.getLibrarySettings();
                                     })
                                     .then(function (settings) {
-                                        var wrapIt = true;
-                                        var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
+                                        if (properties) {
+                                            var wrapIt = true;
+                                            var markup = mediaMarkupService.image.markup(properties, settings, wrapIt);
 
-                                        // If the image is wrapped in a link, insertHtml will override the link with the image,
-                                        // so we have to preserve the anchor and put the image inside it.
-                                        markup = preserveWrapperATag(markup);
+                                            // If the image is wrapped in a link, insertHtml will override the link with the image,
+                                            // so we have to preserve the anchor and put the image inside it.
+                                            markup = preserveWrapperATag(markup);
 
-                                        scope.editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                            scope.editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                        }
                                     });
                             }, 0);
                         };
@@ -243,10 +250,12 @@
                                             return;
 
                                         return mediaService.getLibrarySettings();
-                                    })
+                                    }, function () { })
                                     .then(function (settings) {
-                                        var markup = mediaMarkupService.video.markup(properties, settings);
-                                        scope.editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                        if (properties) {
+                                            var markup = mediaMarkupService.video.markup(properties, settings);
+                                            scope.editor.exec('insertHtml', { html: markup, split: true, range: range });
+                                        }
                                     });
                             }, 0);
                         };

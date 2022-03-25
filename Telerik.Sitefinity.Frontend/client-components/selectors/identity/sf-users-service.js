@@ -59,7 +59,7 @@ function (serviceHelper, serverContext, $http, $q) {
         })
         .then(function (response) {
             deferred.resolve(response.data);
-        }, function (response) {
+        }, function (error, status, headers, config) {
             deferred.reject(getError(error, status, headers, config));
         });
 
@@ -94,7 +94,7 @@ function (serviceHelper, serverContext, $http, $q) {
         })
         .then(function (response) {
             deferred.resolve(response.data);
-        }, function (response) {
+        }, function (error, status, headers, config) {
             deferred.reject(getError(error, status, headers, config));
         });
 
@@ -123,7 +123,7 @@ function (serviceHelper, serverContext, $http, $q) {
         })
         .then(function (response) {
             deferred.resolve(response.data);
-        }, function (response) {
+        }, function (error, status, headers, config) {
             deferred.reject(getError(error, status, headers, config));
         });
 

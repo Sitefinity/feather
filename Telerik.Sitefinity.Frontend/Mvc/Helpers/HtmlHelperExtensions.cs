@@ -3,7 +3,12 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Sitefinity.Security.Sanitizers;
+    using Telerik.Sitefinity.Abstractions;
+    using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
+    using Telerik.Sitefinity.Mvc.Rendering;
+    using Telerik.Sitefinity.Security.CSRF;
     using Telerik.Sitefinity.Services;
+    using Telerik.Sitefinity.Utilities.TypeConverters;
     using Telerik.Sitefinity.Web.UI;
 
     /// <summary>
@@ -71,6 +76,39 @@
             var sanitizedUrl = ControlUtilities.SanitizeUrl(url);
 
             return MvcHtmlString.Create(sanitizedUrl);
+        }
+
+        /// <summary>
+        /// Adds an antiforgery markup and scripts to the view.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper which this method is extending.</param>
+        /// <param name="retrievalScriptPath">The path to the token retrieval script.</param>
+        /// <returns></returns>
+        public static MvcHtmlString AddSitefinityAntiforgeryToken(this HtmlHelper htmlHelper, string retrievalScriptPath = null)
+        {
+            var antiForgery = ObjectFactory.IsTypeRegistered<IAntiCsrf>() ? ObjectFactory.Resolve<IAntiCsrf>() : null;
+            var antiForgeryEnabled = antiForgery != null && antiForgery.Enabled;
+            if (antiForgeryEnabled)
+            {
+                if (retrievalScriptPath == null)
+                {
+                    var page = htmlHelper.ViewContext.HttpContext.Handler.GetPageHandler() ?? new PageProxy(null);
+                    retrievalScriptPath = page.ClientScript.GetWebResourceUrl(TypeResolutionService.ResolveType("Telerik.Sitefinity.WebSecurity.WebSecurityModule"),
+                        "Telerik.Sitefinity.WebSecurity.CSRF.TokenRetrieval.js");
+                }
+
+                htmlHelper.Script(retrievalScriptPath, "bottom", false);
+                var result = 
+                    $@"<input type=""hidden"" value="""" name=""{antiForgery.HiddenFieldName}"" />
+<input type=""hidden"" value='{antiForgery.ServicePath}' name='antiCsrfService' />
+<input type=""hidden"" value='{antiForgery.CustomHeaderName}' name='antiCsrfCustomHeaderName' />";
+
+                return MvcHtmlString.Create(result);
+            }
+            else
+            {
+                return MvcHtmlString.Empty;
+            }
         }
 
         private const string ElementIdsKey = "sf-element-ids";

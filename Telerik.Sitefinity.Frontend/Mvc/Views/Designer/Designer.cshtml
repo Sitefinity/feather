@@ -68,6 +68,11 @@
 <script type="text/javascript">
     (function () {
         var desingerModule = angular.module('designer');
+        // remove the default "!" prefix, explained here:
+        // https://github.com/angular/angular.js/commit/aa077e81129c740041438688dff2e8d20c3d7b52
+        desingerModule.config(['$locationProvider', function ($locationProvider) {
+            $locationProvider.hashPrefix("");
+        }]);
 		@foreach(var module in Model.ModuleDependencies){
 		    <text>
                 desingerModule.requires.push("@module");

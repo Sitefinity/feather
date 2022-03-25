@@ -52,14 +52,12 @@
               promise
                   .then(function (data) {
                       sfSites = data.Items;
-                  })
-                  .then(function (data) {
                       angular.forEach(handlers, function (promise) {
                           if (typeof promise === 'function') {
                               promise();
                           }
                       });
-                  });
+                  }, function (e) { });
 
               return promise;
           };

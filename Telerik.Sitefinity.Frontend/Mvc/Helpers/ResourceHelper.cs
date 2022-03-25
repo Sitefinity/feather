@@ -562,6 +562,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         /// <summary>
+        /// Renders the dir attribute when language is right to left.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <returns></returns>
+        public static MvcHtmlString RenderDirAttribute(this HtmlHelper helper)
+        {
+            return RenderDirAttribute(helper, Telerik.Sitefinity.Services.SystemManager.CurrentContext.Culture.Name);
+        }
+
+        /// <summary>
+        /// Renders the dir attribute when language is right to left.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public static MvcHtmlString RenderDirAttribute(this HtmlHelper helper, string culture)
+        {
+            var isRtl = (Array.Find(rtlLanguages, s => culture.ToString().StartsWith(s)) != null) || culture.ToString().ToLower().Contains("arab");
+            string attributeString = isRtl && (!SystemManager.IsDesignMode || SystemManager.IsPreviewMode) ? "dir=\"rtl\"" : "";
+
+            return new MvcHtmlString(attributeString);
+        }
+
+        /// <summary>
         /// Gets the web resource URL.
         /// </summary>
         /// <param name="scriptReference">The script reference.</param>
@@ -949,5 +973,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
         }
 
         private static bool? isDebugMode;
+
+        private static string[] rtlLanguages = { "ar", "he", "fa", "ku", "ur", "dv", "ps", "ha", "ks", "yi" };
     }
 }

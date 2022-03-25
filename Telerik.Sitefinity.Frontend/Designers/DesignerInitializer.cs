@@ -59,10 +59,10 @@ namespace Telerik.Sitefinity.Frontend.Designers
             {
                 var scriptRootPath = VirtualPathUtility.ToAbsolute("~/" + FrontendManager.VirtualPathBuilder.GetVirtualPath(this.GetType().Assembly));
                 
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + UrlHelpers.AppendVersion("Mvc/Scripts/Angular/angular.min.js")));
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + UrlHelpers.AppendVersion("Mvc/Scripts/Angular/angular-route.min.js")));
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + UrlHelpers.AppendVersion("Mvc/Scripts/Angular/angular-sanitize.min.js")));
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + UrlHelpers.AppendVersion("Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls.min.js")));
+                @event.Scripts.Add(new ScriptReference(UrlHelpers.AppendVersion(scriptRootPath + "Mvc/Scripts/Angular/angular.min.js")));
+                @event.Scripts.Add(new ScriptReference(UrlHelpers.AppendVersion(scriptRootPath + "Mvc/Scripts/Angular/angular-route.min.js")));
+                @event.Scripts.Add(new ScriptReference(UrlHelpers.AppendVersion(scriptRootPath + "Mvc/Scripts/Angular/angular-sanitize.min.js")));
+                @event.Scripts.Add(new ScriptReference(UrlHelpers.AppendVersion(scriptRootPath + "Mvc/Scripts/Bootstrap/js/ui-bootstrap-tpls.min.js")));
            
                 ////var references = PageManager.GetScriptReferences(ScriptRef.KendoAll);
                 ////foreach (var scriptRef in references)
@@ -70,10 +70,10 @@ namespace Telerik.Sitefinity.Frontend.Designers
                 ////    @event.Scripts.Add(scriptRef);
                 ////}
      
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + UrlHelpers.AppendVersion("Designers/Scripts/page-editor-services.js")));
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + UrlHelpers.AppendVersion("Designers/Scripts/page-editor.js")));
+                @event.Scripts.Add(new ScriptReference(UrlHelpers.AppendVersion(scriptRootPath + "Designers/Scripts/page-editor-services.js")));
+                @event.Scripts.Add(new ScriptReference(UrlHelpers.AppendVersion(scriptRootPath + "Designers/Scripts/page-editor.js")));
                 
-                @event.Scripts.Add(new ScriptReference(scriptRootPath + UrlHelpers.AppendVersion("Mvc/Scripts/LABjs/LAB.min.js")));
+                @event.Scripts.Add(new ScriptReference(UrlHelpers.AppendVersion(scriptRootPath + "Mvc/Scripts/LABjs/LAB.min.js")));
 
                 var currentPackage = new PackageManager().GetCurrentPackage();
                 if (!currentPackage.IsNullOrEmpty())

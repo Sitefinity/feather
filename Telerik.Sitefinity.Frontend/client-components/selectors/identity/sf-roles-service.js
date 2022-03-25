@@ -60,7 +60,7 @@
             })
             .then(function (response) {
                 deferred.resolve(response.data);
-            }, function (response) {
+            }, function (error) {
                 deferred.reject(getError(error, status, headers, config));
             });
 
@@ -101,7 +101,7 @@
             })
             .then(function (response) {
                 deferred.resolve(response.data);
-            }, function (response) {
+            }, function (error) {
                 deferred.reject(getError(error, status, headers, config));
             });
 
@@ -134,7 +134,7 @@
             })
             .then(function (response) {
                 deferred.resolve(response.data);
-            }, function (response) {
+            }, function (error) {
                 deferred.reject(getError(error, status, headers, config));
             });
 

@@ -41,11 +41,20 @@
                     };
 
                     scope.loadMoreItems = function () {
-                        sfFormService.getItems(scope.filterObject.provider, scope.items.length, scope.filterObject.take || defaultItemsTake, scope.filterObject.search)
-                            .then(function (items) {
-                                items = items || {};
-                                Array.prototype.push.apply(scope.items, items.Items || []);
-                            });
+                        if (scope.loading) {
+                            return;
+                        } else {
+                            scope.loading = true;
+
+                            sfFormService.getItems(scope.filterObject.provider, scope.items.length, scope.filterObject.take || defaultItemsTake, scope.filterObject.search)
+                                .then(function (items) {
+                                    items = items || {};
+                                    Array.prototype.push.apply(scope.items, items.Items || []);
+                                })
+                                .finally(function () {
+                                    scope.loading = false;
+                                });
+                        }
                     };
 
                     loadItems();

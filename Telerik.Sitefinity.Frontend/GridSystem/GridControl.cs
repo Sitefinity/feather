@@ -56,7 +56,6 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 parser.AutoExtractBetweenTagsOnly = false;
                 parser.CompressWhiteSpaceBeforeTag = false;
                 parser.KeepRawHTML = true;
-                bool hasSfCols = false;
                 var output = new StringBuilder();
                 HtmlChunk chunk;
                 while ((chunk = parser.ParseNext()) != null)
@@ -68,9 +67,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                         if (cssClass != null)
                         {
                             var classes = cssClass.Split(new char[] { ' ' });
-                            var chunkHasSfCols = classes.Contains("sf_cols", StringComparer.Ordinal);
-                            hasSfCols = hasSfCols || chunkHasSfCols;
-                            if (chunkHasSfCols ||
+                            if (classes.Contains("sf_cols", StringComparer.Ordinal) ||
                                 classes.Contains("sf_colsIn", StringComparer.Ordinal) ||
                                 classes.Contains("sf_colsOut", StringComparer.Ordinal))
                             {
@@ -83,7 +80,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                     output.Append(modified ? chunk.GenerateHtml() : chunk.Html);
                 }
 
-                if (!hasSfCols && ensureSfColsWrapper)
+                if (ensureSfColsWrapper)
                 {
                     return "<div runat=\"server\" class=\"sf_cols\">" + output.ToString() + "</div>";
                 }

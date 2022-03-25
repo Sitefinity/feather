@@ -20,10 +20,11 @@
                 </div>
                 
                 <div id="viewsPlaceholder" ng-show="!feedback.showLoadingIndicator" ng-view>
-                    <div class="form-group">
+                    <div class="form-group m-bottom-none">
                         <div ng-if="segments.length === 0">
-                            <label for="segmentSelector"><strong>@Html.Resource("NoSegmentsCreatedLabel")</strong></label>
-                            <label for="segmentSelector">@Html.Resource("NoSegmentsCreatedMessage")</label>
+                            <span for="segmentSelector">@Html.Resource("NoSegmentsCreatedLabel")</span>
+                            <br>
+                            <span for="segmentSelector">@Html.Resource("NoSegmentsCreatedMessage")</span>
                         </div>
                         <div ng-if="segments.length > 0">
                             <label ng-if="filteredSegments.length > 0" for="segmentSelector">@Html.Resource("PersonalizationSegmentsLabel")</label>
@@ -35,16 +36,17 @@
                                 </div>
                             </div>
                             <div ng-if="filteredSegments.length === 0">
-                                <label for="segmentSelector"><strong>@Html.Resource("AllSegmentsCreatedLabel")</strong></label>
-                                <label for="segmentSelector">@Html.Resource("AllSegmentsCreatedMessage")</label>
+                                <span for="segmentSelector">@Html.Resource("AllSegmentsCreatedLabel")</span>
+                                <br>
+                                <span for="segmentSelector">@Html.Resource("AllSegmentsCreatedMessage")</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer" ng-show="!feedback.showLoadingIndicator" placeholder="modal-footer">
-                <button type="button" ng-if="(segments.length === 0) || (filteredSegments.length === 0)" class="btn btn-primary pull-left" ng-click="goToCreateSegment()">@Html.Resource("GoToCreateSegment")</button>
-                <button type="button" ng-if="filteredSegments.length > 0" class="btn btn-primary pull-left" ng-click="addPersonalization()">@Html.Resource("Add")</button>
+                <button type="button" ng-if="(segments.length === 0) || (filteredSegments.length === 0)" class="btn btn-primary pull-left" ng-click="goToCreateSegment()">@Html.Resource("CreateUserSegment")</button>
+                <button type="button" ng-if="filteredSegments.length > 0" class="btn btn-primary pull-left" ng-click="addPersonalization()">@Html.Resource("AddPersonalizedVersion")</button>
                 <a class="btn btn-link pull-left" data-dismiss="modal" ng-click="cancel()">@Html.Resource("Cancel")</a>
             </div>
         </script>
