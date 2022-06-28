@@ -1,6 +1,8 @@
 .k-tabstrip.k-tabstrip--selection
   border: none
   background: none
+  font-size: $font-size-base
+  font-family: open_sansregular, Arial, Verdana, sans-serif;
   &:focus
     box-shadow: none
 
@@ -13,6 +15,7 @@
 
   .k-tabstrip-items-wrapper
     background-color: transparent
+    border: 0
   
   .k-tabstrip-items
     margin: 0 0 20px
@@ -20,6 +23,9 @@
     background: transparent
     border-bottom: 1px solid #e5e5e5
     width: 100%
+
+    .k-item.k-state-active::after
+        border-color: #e5e5e5
 
     .k-item
       margin-bottom: -1px
@@ -45,7 +51,7 @@
 
     .k-state-active
       background: transparent
-
+    
       .k-link
         color: #555
         background-color: #fff
@@ -62,4 +68,3 @@
 
   .k-content .text-muted
     font-size: $font-size-base
-

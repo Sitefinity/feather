@@ -8,6 +8,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Localization.UrlLocalizationStrategies;
 using Telerik.Sitefinity.Model;
+using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Taxonomies.Model;
@@ -197,6 +198,28 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             var taxonQueryStringParams = evaluator.BuildUrl(taxon.Taxonomy.Name, taxonRelativeUrl, taxon.Taxonomy.Name, taxonBuildOptions, UrlEvaluationMode.QueryString, urlKeyPrefix);
             return taxonQueryStringParams;
+        }
+
+        /// <summary>
+        /// Retrieves the thumbnail url for the video
+        /// </summary>
+        /// <param name="librariesManager">The librarires manager</param>
+        /// <param name="videoId">The video id</param>
+        /// <returns></returns>
+        public static string GetVideoThumbnailUrl(LibrariesManager librariesManager, Guid videoId)
+        {
+            try
+            {
+                var video = librariesManager.GetVideo(videoId);
+
+                return video.ResolveThumbnailUrl();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Exceptions.HandleException(ex, ExceptionPolicyName.IgnoreExceptions);
+
+                return string.Empty;
+            }
         }
 
         private static string RemoveDoubleSlash(string url)
