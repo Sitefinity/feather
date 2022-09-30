@@ -117,7 +117,9 @@
                     scope.mediaItemDeleted = false;
 
                     var autoOpenSelector = attrs.sfAutoOpenSelector !== undefined && attrs.sfAutoOpenSelector.toLowerCase() !== 'false';
-
+                    
+                    var mediaElement = element;
+                    
                     var mediaType = sfMediaTypeResolver.get(scope.sfMediaType);
 
                     var getDateFromString = function (dateStr) {
@@ -277,7 +279,18 @@
                             scope.model.filterObject.status = attrs.sfMaster === 'true' || attrs.sfMaster === 'True' ? 'master' : 'live';
                         }
 
-                        var mediaSelectorModalScope = angular.element('.mediaSelectorModal').scope();
+                        var mediaSelector = angular.element('.mediaSelectorModal');
+
+                        //Add below lines of code to solve multiple sf-media-field selector in same designer view
+                        if (mediaElement && mediaElement.length > 0) {
+                            var el = mediaElement[0].querySelector('.mediaSelectorModal');
+                            if (el) {
+                                var ngEl = angular.element(el);
+                                if (ngEl) {
+                                    mediaSelector = ngEl;
+                                }
+                            }
+                        }
 
                         if (mediaSelectorModalScope)
                             mediaSelectorModalScope.$openModalDialog();
